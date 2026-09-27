@@ -1,0 +1,65 @@
+name: Build WordPress migration preview
+
+on:
+  push:
+    branches: [wordpress-independent]
+    paths:
+      - 'app/**'
+      - 'components/**'
+      - 'data/**'
+      - 'lib/**'
+      - 'public/**'
+      - 'vendor/**'
+      - 'wordpress/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/build-wordpress-preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Build WordPress preview
+        run: node wordpress/build.mjs
+
+      - name: Verify WordPress package
+        run: |
+          test -f wordpress/plugin/pmsv-app.php
+          test -f wordpress/plugin/routes.json
+          test -f wordpress/plugin/assets/.vite/manifest.json
+          ! grep -R -Ei 'chatgpt\.site|chatgpt\.com|openai\.com|modelContext' wordpress/plugin
+          grep -q '"/updates"' wordpress/plugin/routes.json
+          grep -q '"/about"' wordpress/plugin/routes.json
+
+      - name: Package plugin
+        run: |
+          rm -rf dist-wordpress
+          mkdir -p dist-wordpress/pmsv-original-app-preview
+          cp -R wordpress/plugin/. dist-wordpress/pmsv-original-app-preview/
+          cd dist-wordpress
+          zip -qr ../pmsv-original-app-preview-v0.4.0.zip pmsv-original-app-preview
+
+      - name: Upload plugin ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmsv-original-app-preview-v0.4.0
+          path: pmsv-original-app-preview-v0.4.0.zip
+          if-no-files-found: error
+          retention-days: 14
