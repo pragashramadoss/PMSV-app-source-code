@@ -1,6 +1,6 @@
 /* PMSV common checklist VISUAL layer only.
    No scoring, grading, rating, NC or audit-state calculations are performed here. */
-(()=>{if(!document.querySelector('script[data-pmsv-forum-shell]')){const sh=document.createElement('script');sh.src='forum-shell.js?v=1';sh.dataset.pmsvForumShell='1';document.head.appendChild(sh)}if(document.getElementById('pmsvCommonVisualUi'))return;
+(()=>{if(!document.querySelector('.pmsv-audit-nav')&&!document.querySelector('script[data-pmsv-forum-shell]')){const sh=document.createElement('script');sh.src='forum-shell.js?v=1';sh.dataset.pmsvForumShell='1';document.head.appendChild(sh)}if(document.getElementById('pmsvCommonVisualUi'))return;
 const st=document.createElement('style');st.id='pmsvCommonVisualUi';st.textContent=`
 :root{--pmsv-green:#3155d9;--pmsv-green2:#243e79;--pmsv-bg:#f0f3f9;--pmsv-line:#e2e7f0;--pmsv-text:#18243e;--pmsv-red:#b42318;--pmsv-c:#e9f7ef;--pmsv-pc:#fff4cf;--pmsv-nc:#fde5e3;--pmsv-na:#e9f1f6;--pmsv-crit:#eceff1}
 *{box-sizing:border-box}html,body{margin:0}body{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif!important;background:var(--pmsv-bg)!important;color:var(--pmsv-text)!important;font-size:16px!important}

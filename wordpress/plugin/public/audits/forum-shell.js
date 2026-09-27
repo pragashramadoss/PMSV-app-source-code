@@ -1,6 +1,6 @@
 (()=>{if(window.__pmsvForumShell)return;window.__pmsvForumShell=true;
 function mount(){
- if(document.querySelector('.pmsv-forum-sidebar'))return;
+ if(document.querySelector('.pmsv-forum-sidebar,.pmsv-audit-nav'))return;
  const path=location.pathname,marker='/audits/',i=path.indexOf(marker),appBase=i>=0?path.slice(0,i):'';
  const href=p=>appBase?(appBase+p):(p==='/'?'../':('../'+p.replace(/^\//,'')));
  const style=document.createElement('style');style.id='pmsvForumShellStyle';style.textContent=`

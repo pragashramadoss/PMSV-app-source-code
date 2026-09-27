@@ -1,4 +1,4 @@
-(()=>{if(!document.querySelector('script[data-pmsv-forum-shell]')){const sh=document.createElement('script');sh.src='forum-shell.js?v=1';sh.dataset.pmsvForumShell='1';document.head.appendChild(sh)}const KEY='pmsvHygieneRatingAudits';
+(()=>{if(!document.querySelector('.pmsv-audit-nav')&&!document.querySelector('script[data-pmsv-forum-shell]')){const sh=document.createElement('script');sh.src='forum-shell.js?v=1';sh.dataset.pmsvForumShell='1';document.head.appendChild(sh)}const KEY='pmsvHygieneRatingAudits';
 function rows(){return [...document.querySelectorAll('tbody tr[data-n]')]}
 function list(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return[]}}
 function markRows(){rows().forEach(r=>{r.classList.remove('answered','answer-C','answer-PC','answer-NC','answer-NA');const v=r.querySelector('select')?.value||'';if(v)r.classList.add('answered','answer-'+v)})}
