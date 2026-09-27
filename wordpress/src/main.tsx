@@ -8,9 +8,9 @@ import bodyLogos from '../../data/body-logos.json';
 import {regions,type View} from '../../lib/news-model';
 import {professionalBodies} from '../../lib/professional-bodies';
 import '../../app/globals.css';
-declare global {interface Window {PMSV:{base:string}}}
-window.PMSV ??= {base:''};
-for(const logo of Object.values(bodyLogos))if(logo.image.startsWith('/'))logo.image=window.PMSV.base+logo.image;
+declare global {interface Window {PMSV:{base:string;publicBase:string}}}
+window.PMSV ??= {base:'',publicBase:''};
+for(const logo of Object.values(bodyLogos))if(logo.image.startsWith('/'))logo.image=window.PMSV.publicBase+logo.image.slice(1);
 const path=location.pathname.slice(window.PMSV.base.length).replace(/\/+$/,'')||'/';
 const parts=path.split('/').filter(Boolean);let view:View|null=null;
 if(!parts.length)view={kind:'home'};
