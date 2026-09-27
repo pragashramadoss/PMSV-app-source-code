@@ -4,11 +4,11 @@
 
 Build from the repository root with `node wordpress/build.mjs` after installing the existing locked dependencies. The WordPress ZIP consists only of `wordpress/plugin/`, with a top-level folder named `pmsv-original-app-preview`. The active WordPress theme is not rendered: this plugin supplies its own document, original React bundle, original CSS and assets at `/pmsv-app-review/`. PHP is used only for WordPress serving, database storage, updater authorization and push service operations. No Node, AI service, OpenAI key or Work session is required on the WordPress server.
 
-The build imports the original React components. A narrow build adapter prefixes original root-relative URLs with the isolated test path, excludes the optional browser modelContext registration, and changes the privacy hosting description to WordPress. It does not redraw cards, alter navigation, or replace business logic. Original source files remain unchanged and can still build with their original toolchain.
+The WordPress build imports the PMSV React components and prefixes app routes for the isolated preview path. Packaged local images are served from the plugin directory. The WordPress migration source contains no browser modelContext registration or OpenAI runtime dependency.
 
-External runtime dependencies: WordPress hosting/database; existing GitHub Actions collector and GitHub OIDC public keys; existing regulator/media/blog sources; original external logo hosts; browser push providers. Collector destination must be parameterized/tested before cutover; it is not changed by this preview.
+External runtime dependencies: WordPress hosting/database; the GitHub Actions collector and GitHub OIDC public keys; existing regulator/media/blog sources; original external logo hosts; browser push providers; and the separate PMSV audit project on GitHub Pages.
 
-No audit, inspection, hygiene-rating, saved-audit, NC or audit-report code is included.
+The home page links to the separate PMSV audit project on GitHub Pages. That project contains the FSSAI Schedule IV Inspection and Hygiene Rating tools, including Saved Audits, NC Management/NC Follow-up and reports. Audit scoring code remains maintained separately rather than being duplicated in this plugin.
 
 The 605-row seed is a read-only real archive export as of 27 September 2026. It is only the initial import; `/api/updater` supports future signed batches and durable append-only history. A preview is not proof that the existing production workflow has been switched.
 
