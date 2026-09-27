@@ -7,7 +7,7 @@ export function validEndpoint(value:unknown):value is string{
 }
 export async function authorization(endpoint:string,jwk:JsonWebKey,publicKey:string){
  const header=encode(new TextEncoder().encode(JSON.stringify({typ:'JWT',alg:'ES256'})));
- const payload=encode(new TextEncoder().encode(JSON.stringify({aud:new URL(endpoint).origin,exp:Math.floor(Date.now()/1000)+3600,sub:'https://pmsv-food-safety-updates.pragash-ramadoss.chatgpt.site'})));
+ const payload=encode(new TextEncoder().encode(JSON.stringify({aud:new URL(endpoint).origin,exp:Math.floor(Date.now()/1000)+3600,sub:'mailto:pragash.ramadoss@gmail.com'})));
  const key=await crypto.subtle.importKey('jwk',jwk,{name:'ECDSA',namedCurve:'P-256'},false,['sign']);
  const signature=await crypto.subtle.sign({name:'ECDSA',hash:'SHA-256'},key,new TextEncoder().encode(header+'.'+payload));
  return 'vapid t='+header+'.'+payload+'.'+encode(new Uint8Array(signature))+', k='+publicKey;
