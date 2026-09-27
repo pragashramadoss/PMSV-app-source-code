@@ -46,6 +46,77 @@ async function integrateAudits(dir){
 }
 await integrateAudits(auditDir);
 
+// Browser-only GitHub preview. This is not used by WordPress; it lets the generated
+// plugin UI be inspected directly from the repository before installation.
+const previewManifest=JSON.parse(await readFile(path.join(target,'assets/.vite/manifest.json'),'utf8'))['index.html'];
+const previewCss=(previewManifest.css||[]).map(css=>'<link rel="stylesheet" href="./'+css+'">').join('');
+const previewHtml=`<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#3155d9"><title>PMSV Food Safety & Quality Forum — Build Preview</title>
+<script>
+(function(){
+  const originalPath=location.pathname;
+  const previewFile=location.origin+originalPath;
+  const root=originalPath.replace(/\\/preview\\.html$/,'');
+  const route=new URLSearchParams(location.search).get('route')||'/';
+  const base=document.createElement('base');base.href=location.origin+root+'/assets/';document.head.appendChild(base);
+  window.PMSV={base:root,publicBase:root+'/public/'};
+
+  const nativeFetch=window.fetch.bind(window);
+  window.fetch=async function(input,init){
+    try{
+      const raw=typeof input==='string'?input:input.url;
+      const u=new URL(raw,location.origin);
+      if(u.pathname===root+'/api/news'){
+        const r=await nativeFetch(root+'/archive-seed.json',{cache:'no-store'});
+        const news=await r.json();
+        return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
+      }
+      if(u.pathname===root+'/api/updater')return new Response(JSON.stringify({active:false,checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});
+      if(u.pathname===root+'/api/push')return new Response(JSON.stringify({error:'Preview only'}),{status:503,headers:{'Content-Type':'application/json'}});
+    }catch(e){}
+    return nativeFetch(input,init);
+  };
+
+  if(route.startsWith('/audits/')){location.replace(root+'/public'+route);return;}
+  history.replaceState(null,'',root+(route==='/'?'/':route));
+
+  function fixImage(img){
+    const prefix='/wp-content/plugins/pmsv-original-app-preview/public/';
+    const src=img.getAttribute&&img.getAttribute('src');
+    if(src&&src.startsWith(prefix))img.setAttribute('src',root+'/public/'+src.slice(prefix.length));
+  }
+  new MutationObserver(records=>records.forEach(r=>r.addedNodes.forEach(n=>{
+    if(n.nodeType!==1)return;
+    if(n.tagName==='IMG')fixImage(n);
+    n.querySelectorAll&&n.querySelectorAll('img').forEach(fixImage);
+  }))).observe(document.documentElement,{childList:true,subtree:true});
+
+  document.addEventListener('click',function(e){
+    const a=e.target.closest&&e.target.closest('a');if(!a)return;
+    let u;try{u=new URL(a.href,location.origin)}catch{return}
+    if(u.origin!==location.origin||!u.pathname.startsWith(root+'/'))return;
+    const rel=u.pathname.slice(root.length)||'/';
+    if(rel.startsWith('/public/')||rel.startsWith('/assets/')||rel==='/archive-seed.json')return;
+    e.preventDefault();
+    if(rel.startsWith('/audits/'))location.href=root+'/public'+rel;
+    else location.href=previewFile+'?route='+encodeURIComponent(rel);
+  },true);
+
+  window.addEventListener('load',()=>history.replaceState(null,'',previewFile+'?route='+encodeURIComponent(route)));
+})();
+</script>
+${previewCss}</head><body class="antialiased"><div id="root"></div><script type="module" src="./${previewManifest.file}"></script></body></html>`;
+await writeFile(path.join(target,'preview.html'),previewHtml);
+
+// When an audit is opened through the GitHub browser preview, keep its Workspace
+// links inside the same preview instead of sending the user to non-existent raw paths.
+for(const e of await readdir(auditDir,{withFileTypes:true})){
+  if(e.isDirectory()||!e.name.endsWith('.html'))continue;
+  const file=path.join(auditDir,e.name);let html=await readFile(file,'utf8');
+  const bridge=`<script>(function(){if(location.hostname!=='raw.githack.com')return;const marker='/public/audits/',i=location.pathname.indexOf(marker);if(i<0)return;const root=location.pathname.slice(0,i),preview=root+'/preview.html';addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.workspace-link').forEach(a=>{const t=a.textContent||'';if(t.includes('Updates'))a.href=preview+'?route=%2Fupdates';else if(t.includes('Blogs'))a.href=preview+'?route=%2Fblogs';else if(t.includes('Audits'))a.href=root+'/public/audits/index.html'});document.querySelectorAll('.pmsv-audit-home,.pmsv-audit-brand').forEach(a=>a.href=preview+'?route=%2F')})})();</script>`;
+  if(!html.includes("location.hostname!=='raw.githack.com'"))html=html.replace(/<\\/body>/i,bridge+'</body>');
+  await writeFile(file,html);
+}
+
 async function files(dir,base=''){let out=[];for(const e of await readdir(dir,{withFileTypes:true})){const name=base+e.name;if(e.isDirectory())out.push(...await files(dir+'/'+e.name,name+'/'));else out.push(name);}return out;}
 await writeFile(target+'/public-files.json',JSON.stringify(await files('public')));
 const bodies=JSON.parse(await readFile('data/professional-sources.json','utf8'));
