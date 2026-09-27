@@ -20,9 +20,11 @@ export default defineConfig({
    const result=await transformAsync(code,{filename:id,configFile:false,babelrc:false,parserOpts:{plugins:['typescript','jsx']},plugins:[({types:t})=>({visitor:{StringLiteral(p){
     if(!p.node.value.startsWith('/')||p.node.value.startsWith('//'))return;
     const isPublicAsset=['/brand/','/logos/','/icons/'].some(prefix=>p.node.value.startsWith(prefix));
-    const prop=isPublicAsset?'publicBase':'base';
     const suffix=isPublicAsset?p.node.value.slice(1):p.node.value;
-    const expr=t.binaryExpression('+',t.memberExpression(t.memberExpression(t.identifier('window'),t.identifier('PMSV')),t.identifier(prop)),t.stringLiteral(suffix));
+    const left=isPublicAsset
+      ? t.stringLiteral('/wp-content/plugins/pmsv-original-app-preview/public/')
+      : t.memberExpression(t.memberExpression(t.identifier('window'),t.identifier('PMSV')),t.identifier('base'));
+    const expr=t.binaryExpression('+',left,t.stringLiteral(suffix));
     if(p.parentPath.isJSXAttribute())p.replaceWith(t.jsxExpressionContainer(expr));else p.replaceWith(expr);
     p.skip();
    }}})]});
