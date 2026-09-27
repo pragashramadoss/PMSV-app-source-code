@@ -1,7 +1,7 @@
 const CACHE='pmsv-offline-v1';
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.add('/offline.html')));self.skipWaiting()});
-self.addEventListener('activate',event=>{event.waitUntil(self.clients.claim())});
-self.addEventListener('fetch',event=>{if(event.request.mode==='navigate')event.respondWith(fetch(event.request).catch(()=>caches.match('/offline.html')))});
+self.addEventListener('activate',event=>{event.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k!==CACHE&&k.startsWith('pmsv-')).map(k=>caches.delete(k)));await self.clients.claim()})())});
+self.addEventListener('fetch',event=>{if(event.request.mode==='navigate')event.respondWith(fetch(event.request,{cache:'no-store'}).catch(()=>caches.match('/offline.html')))});
 self.addEventListener('push',event=>{event.waitUntil((async()=>{
  let alert={title:'PMSV Food Safety Updates',body:'New food safety updates are available. Open PMSV to read them.',url:'/',tag:'pmsv-news'};
  try{const response=await fetch('/api/push/latest',{cache:'no-store',signal:AbortSignal.timeout(7000)});if(response.ok)alert=await response.json()}catch{}
