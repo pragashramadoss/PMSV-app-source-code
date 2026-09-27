@@ -113,7 +113,7 @@ for(const e of await readdir(auditDir,{withFileTypes:true})){
   if(e.isDirectory()||!e.name.endsWith('.html'))continue;
   const file=path.join(auditDir,e.name);let html=await readFile(file,'utf8');
   const bridge=`<script>(function(){if(location.hostname!=='raw.githack.com')return;const marker='/public/audits/',i=location.pathname.indexOf(marker);if(i<0)return;const root=location.pathname.slice(0,i),preview=root+'/preview.html';addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.workspace-link').forEach(a=>{const t=a.textContent||'';if(t.includes('Updates'))a.href=preview+'?route=%2Fupdates';else if(t.includes('Blogs'))a.href=preview+'?route=%2Fblogs';else if(t.includes('Audits'))a.href=root+'/public/audits/index.html'});document.querySelectorAll('.pmsv-audit-home,.pmsv-audit-brand').forEach(a=>a.href=preview+'?route=%2F')})})();</script>`;
-  if(!html.includes("location.hostname!=='raw.githack.com'"))html=html.replace(/<\\/body>/i,bridge+'</body>');
+  if(!html.includes("location.hostname!=='raw.githack.com'"))html=html.replace('</body>',bridge+'</body>');
   await writeFile(file,html);
 }
 
