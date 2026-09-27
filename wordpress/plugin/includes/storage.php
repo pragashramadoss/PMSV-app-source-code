@@ -32,6 +32,7 @@ function pmsv_wp_archive() {
 function pmsv_wp_valid_item($n,$sources) {
     if(!is_array($n))return false;
     foreach(['title','published','url','tab','region','source','sourceType','summary','category'] as $k)if(!is_string($n[$k]??null))return false;
+    if(isset($n['tags'])){if(!is_array($n['tags'])||count($n['tags'])>20)return false;foreach($n['tags'] as $tag)if(!is_string($tag)||$tag===''||strlen($tag)>300)return false;}
     if(strlen($n['title'])<($n['tab']==='blogs'?1:12)||strlen($n['title'])>2400||strlen($n['summary'])>1800||strlen($n['url'])>2000||strlen($n['category'])>300||strlen($n['sourceType'])>240)return false;
     if(!preg_match('/^\d{4}-\d{2}-\d{2}$/',$n['published'])||!checkdate((int)substr($n['published'],5,2),(int)substr($n['published'],8,2),(int)substr($n['published'],0,4))||$n['published']<'2025-01-01'||$n['published']>gmdate('Y-m-d'))return false;
     $u=wp_parse_url($n['url']);if(!is_array($u)||($u['scheme']??'')!=='https'||isset($u['user'])||isset($u['pass'])||isset($u['port'])||isset($u['fragment']))return false;
@@ -55,7 +56,18 @@ function pmsv_wp_ingest() {
     }catch(Throwable $e){return pmsv_wp_reply(['error'=>'Invalid update batch'],400);}
     global $wpdb;$t=pmsv_wp_table('news');$now=gmdate('Y-m-d\TH:i:s.000\Z');$added=0;
     foreach($data['items'] as $n){
-        if($wpdb->get_var($wpdb->prepare("SELECT id FROM $t WHERE url_hash=%s OR title_hash=%s LIMIT 1",hash('sha256',$n['url']),hash('sha256',strtolower($n['title'])))))continue;
+        $existing=$wpdb->get_row($wpdb->prepare("SELECT id,payload FROM $t WHERE url_hash=%s OR title_hash=%s LIMIT 1",hash('sha256',$n['url']),hash('sha256',strtolower($n['title']))),ARRAY_A);
+        if($existing){
+            if(($n['tab']??'')==='blogs'&&!empty($n['tags'])){
+                $old=json_decode($existing['payload'],true);
+                if(is_array($old)){
+                    $old['tags']=$n['tags'];$old['category']=$n['category'];$old['verifiedAt']=$now;
+                    if(empty($old['summary'])&&!empty($n['summary']))$old['summary']=$n['summary'];
+                    $wpdb->update($t,['payload'=>wp_json_encode($old)],['id'=>$existing['id']],['%s'],['%s']);
+                }
+            }
+            continue;
+        }
         $n['id']='auto-'.substr(pmsv_wp_digest($n['url']),0,24);$n['firstSeen']=$now;$n['verifiedAt']=$now;$added+=pmsv_wp_insert($n);
     }
     if($data['checks']){$old=get_option('pmsv_wp_updater',[]);$success=false;foreach($data['checks'] as $c)if($c['status']!=='error'&&$c['items']>0)$success=true;
