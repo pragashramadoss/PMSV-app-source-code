@@ -19,7 +19,10 @@ export default defineConfig({
    if(id.endsWith('/privacy/page.tsx'))code=code.replace('PMSV uses OpenAI Sites and Cloudflare hosting and database infrastructure.','PMSV uses WordPress.com hosting and WordPress database infrastructure.');
    const result=await transformAsync(code,{filename:id,configFile:false,babelrc:false,parserOpts:{plugins:['typescript','jsx']},plugins:[({types:t})=>({visitor:{StringLiteral(p){
     if(!p.node.value.startsWith('/')||p.node.value.startsWith('//'))return;
-    const expr=t.binaryExpression('+',t.memberExpression(t.memberExpression(t.identifier('window'),t.identifier('PMSV')),t.identifier('base')),t.stringLiteral(p.node.value));
+    const isPublicAsset=['/brand/','/logos/','/icons/'].some(prefix=>p.node.value.startsWith(prefix));
+    const prop=isPublicAsset?'publicBase':'base';
+    const suffix=isPublicAsset?p.node.value.slice(1):p.node.value;
+    const expr=t.binaryExpression('+',t.memberExpression(t.memberExpression(t.identifier('window'),t.identifier('PMSV')),t.identifier(prop)),t.stringLiteral(suffix));
     if(p.parentPath.isJSXAttribute())p.replaceWith(t.jsxExpressionContainer(expr));else p.replaceWith(expr);
     p.skip();
    }}})]});
