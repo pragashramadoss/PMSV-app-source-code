@@ -1,7 +1,8 @@
 import sources from '@/data/updater-sources.json';
-export type UpdateItem={title:string;published:string;url:string;tab:string;region:string;source:string;sourceType:string;summary:string;category:string};
+export type UpdateItem={title:string;published:string;url:string;tab:string;region:string;source:string;sourceType:string;summary:string;category:string;tags?:string[]};
 export function validUpdate(n:UpdateItem){
  if(!n||!['title','published','url','tab','region','source','sourceType','summary','category'].every(k=>typeof n[k as keyof UpdateItem]==='string'))return false;
+ if(n.tags!==undefined&&(!Array.isArray(n.tags)||n.tags.length>20||n.tags.some(t=>typeof t!=='string'||!t.trim()||t.length>100)))return false;
  if(n.title.length<(n.tab==='blogs'?1:12)||n.title.length>800||n.summary.length>600||n.url.length>2000||n.category.length>100||n.sourceType.length>80)return false;
  if(!/^\d{4}-\d{2}-\d{2}$/.test(n.published)||!Number.isFinite(Date.parse(n.published))||new Date(n.published).toISOString().slice(0,10)!==n.published)return false;
  if(n.published<'2025-01-01'||n.published>new Date().toISOString().slice(0,10))return false;
