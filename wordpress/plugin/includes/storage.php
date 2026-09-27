@@ -23,10 +23,29 @@ function pmsv_wp_insert($n) {
     $result=$wpdb->query($wpdb->prepare("INSERT IGNORE INTO $t (id,url_hash,title_hash,published,first_seen,payload) VALUES (%s,%s,%s,%s,%s,%s)",$n['id'],hash('sha256',$n['url']),hash('sha256',strtolower($n['title'])),$n['published'],$n['firstSeen'],wp_json_encode($n)));
     if($result===false)throw new RuntimeException('Archive insert failed');return $result;
 }
+function pmsv_wp_native_blogs() {
+    $posts=get_posts(['post_type'=>'post','post_status'=>'publish','numberposts'=>-1,'orderby'=>'date','order'=>'DESC','suppress_filters'=>false]);
+    $items=[];
+    foreach($posts as $post){
+        $tags=wp_get_post_tags($post->ID,['fields'=>'names']);
+        $tags=is_array($tags)?array_values(array_filter(array_map('wp_strip_all_tags',$tags))):[];
+        $excerpt=has_excerpt($post)?get_the_excerpt($post):wp_trim_words(wp_strip_all_tags($post->post_content),55,'…');
+        $items[]=[
+            'id'=>'wp-blog-'.$post->ID,'tab'=>'blogs','region'=>'global',
+            'title'=>wp_strip_all_tags(get_the_title($post)),'summary'=>wp_strip_all_tags($excerpt),
+            'published'=>get_post_time('Y-m-d',true,$post),'category'=>$tags[0]??'Uncategorized','tags'=>$tags,
+            'source'=>'Pragash Ramadoss','url'=>get_permalink($post),'sourceType'=>'Author blog',
+            'firstSeen'=>get_post_time('c',true,$post),'verifiedAt'=>get_post_modified_time('c',true,$post)
+        ];
+    }
+    return $items;
+}
 function pmsv_wp_archive() {
     global $wpdb;$t=pmsv_wp_table('news');$rows=$wpdb->get_col("SELECT payload FROM $t ORDER BY published DESC");
     if($wpdb->last_error)throw new RuntimeException('Archive read failed');
     $news=array_map(fn($r)=>json_decode($r,true,512,JSON_THROW_ON_ERROR),$rows);
+    $news=array_values(array_filter($news,fn($n)=>($n['tab']??'')!=='blogs'));
+    $news=array_merge($news,pmsv_wp_native_blogs());
     usort($news,fn($a,$b)=>strcmp($b['published'],$a['published'])?:strcmp($a['title'],$b['title']));return $news;
 }
 function pmsv_wp_valid_item($n,$sources) {
