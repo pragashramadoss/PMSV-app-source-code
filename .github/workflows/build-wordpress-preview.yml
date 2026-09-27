@@ -18,6 +18,9 @@ on:
 
 permissions:
   contents: write
+concurrency:
+  group: wordpress-preview-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
