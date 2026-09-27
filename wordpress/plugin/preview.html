@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#3155d9"><title>PMSV Food Safety & Quality Forum — Build Preview</title>
+<script>
+(function(){
+  const originalPath=location.pathname;
+  const previewFile=location.origin+originalPath;
+  const root=originalPath.replace(/\/preview\.html$/,'');
+  const route=new URLSearchParams(location.search).get('route')||'/';
+  const base=document.createElement('base');base.href=location.origin+root+'/assets/';document.head.appendChild(base);
+  window.PMSV={base:root,publicBase:root+'/public/'};
+
+  const nativeFetch=window.fetch.bind(window);
+  window.fetch=async function(input,init){
+    try{
+      const raw=typeof input==='string'?input:input.url;
+      const u=new URL(raw,location.origin);
+      if(u.pathname===root+'/api/news'){
+        const r=await nativeFetch(root+'/archive-seed.json',{cache:'no-store'});
+        const news=await r.json();
+        return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
+      }
+      if(u.pathname===root+'/api/updater')return new Response(JSON.stringify({active:false,checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});
+      if(u.pathname===root+'/api/push')return new Response(JSON.stringify({error:'Preview only'}),{status:503,headers:{'Content-Type':'application/json'}});
+    }catch(e){}
+    return nativeFetch(input,init);
+  };
+
+  if(route.startsWith('/audits/')){location.replace(root+'/public'+route);return;}
+  history.replaceState(null,'',root+(route==='/'?'/':route));
+
+  function fixImage(img){
+    const prefix='/wp-content/plugins/pmsv-original-app-preview/public/';
+    const src=img.getAttribute&&img.getAttribute('src');
+    if(src&&src.startsWith(prefix))img.setAttribute('src',root+'/public/'+src.slice(prefix.length));
+  }
+  new MutationObserver(records=>records.forEach(r=>r.addedNodes.forEach(n=>{
+    if(n.nodeType!==1)return;
+    if(n.tagName==='IMG')fixImage(n);
+    n.querySelectorAll&&n.querySelectorAll('img').forEach(fixImage);
+  }))).observe(document.documentElement,{childList:true,subtree:true});
+
+  document.addEventListener('click',function(e){
+    const a=e.target.closest&&e.target.closest('a');if(!a)return;
+    let u;try{u=new URL(a.href,location.origin)}catch{return}
+    if(u.origin!==location.origin||!u.pathname.startsWith(root+'/'))return;
+    const rel=u.pathname.slice(root.length)||'/';
+    if(rel.startsWith('/public/')||rel.startsWith('/assets/')||rel==='/archive-seed.json')return;
+    e.preventDefault();
+    if(rel.startsWith('/audits/'))location.href=root+'/public'+rel;
+    else location.href=previewFile+'?route='+encodeURIComponent(rel);
+  },true);
+
+  window.addEventListener('load',()=>history.replaceState(null,'',previewFile+'?route='+encodeURIComponent(route)));
+})();
+</script>
+<link rel="stylesheet" href="./assets/index-CkS_cJVL.css"></head><body class="antialiased"><div id="root"></div><script type="module" src="./assets/index-lGfhk5iP.js"></script></body></html>
