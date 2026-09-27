@@ -6,7 +6,7 @@ export const regions=[
  {id:'uk',code:'UK',name:'United Kingdom',agency:'FSA · Food Standards Scotland',description:'UK food safety authorities',detail:'Food Standards Agency and Food Standards Scotland updates, recalls, enforcement and food safety news.'},
  {id:'australia',code:'AU',name:'Australia',agency:'FSANZ · State authorities',description:'Food Standards Australia New Zealand',detail:'FSANZ standards announcements and Australian food safety news. FSANZ is a joint Australia–New Zealand standards body.'}
 ];
-export type View={kind:'home'|'regulatory'|'country'|'news'|'feed'|'topic'|'blogs';region?:string;topic?:string;body?:string};
+export type View={kind:'home'|'updates'|'regulatory'|'country'|'news'|'feed'|'topic'|'blogs';region?:string;topic?:string;body?:string};
 export function regionName(id:string){return regions.find(r=>r.id===id)?.name||(id==='global'?'International':id)}
 export function isFssaiWebsite(n:News){try{return /(^|\.)fssai\.gov\.in$/.test(new URL(n.url).hostname)}catch{return false}}
 export function classifyNews(n:News):News{
@@ -21,7 +21,8 @@ export function safeSourceUrl(value:unknown):value is string {
 export function selectNews(news:News[],region='all',kind='all',query=''){
  const searchText=(value:string)=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
  const q=searchText(query.trim());
- const filtered=news.map(classifyNews).filter(n=>safeSourceUrl(n.url)&&(region==='all'||(n.region||'india')===region)&&(kind==='all'||(kind==='official'?n.tab==='fssai':kind==='news'?isFoodNews(n):kind==='regulatory'?n.tab==='fssai':n.tab===kind))&&searchText(`${n.title} ${n.summary} ${n.source} ${n.category} ${n.published} ${regionName(n.region||'india')}`).includes(q)).sort((a,b)=>b.published.localeCompare(a.published)||a.title.localeCompare(b.title));
+ const inRegion=(n:News)=>region==='all'||(region==='global'?(n.region||'india')!=='india':(n.region||'india')===region);
+ const filtered=news.map(classifyNews).filter(n=>safeSourceUrl(n.url)&&inRegion(n)&&(kind==='all'||(kind==='official'?n.tab==='fssai':kind==='news'?isFoodNews(n):kind==='regulatory'?n.tab==='fssai':n.tab===kind))&&searchText(`${n.title} ${n.summary} ${n.source} ${n.category} ${n.published} ${regionName(n.region||'india')}`).includes(q)).sort((a,b)=>b.published.localeCompare(a.published)||a.title.localeCompare(b.title));
  const seen=new Set<string>();return filtered.filter(n=>{let key=n.url;try{const u=new URL(n.url);u.hash='';key=u.href}catch{}if(seen.has(key))return false;seen.add(key);return true});
 }
 export function dateLabel(s:string){return new Date((s.length===7?s+'-01':s)+'T12:00:00Z').toLocaleDateString('en-IN',{...(s.length===7?{}:{day:'numeric' as const}),month:'short',year:'numeric'})}
@@ -31,11 +32,14 @@ export function indiaToday(now=new Date()){
 }
 export function dailyHighlights(items:News[],today=indiaToday()){
  const sorted=selectNews(items);
+ if(!sorted.length)return [];
  const current=sorted.filter(n=>n.published===today);
- return [...current,...sorted.filter(n=>n.published<today).slice(0,Math.max(0,3-current.length))];
+ const displayDay=current.length?today:sorted[0].published;
+ const dayItems=sorted.filter(n=>n.published===displayDay);
+ return [...dayItems,...sorted.filter(n=>n.published<displayDay).slice(0,Math.max(0,3-dayItems.length))];
 }
 
 export function sectionHighlights(items:News[],view:View,today=indiaToday()){
- const tab=view.kind==='home'?null:view.kind==='regulatory'?'fssai':view.kind==='news'||view.kind==='feed'?'general':view.kind==='blogs'?'blogs':view.kind==='topic'?view.topic:null;
+ const tab=view.kind==='home'||view.kind==='updates'?null:view.kind==='regulatory'?'fssai':view.kind==='news'||view.kind==='feed'?'general':view.kind==='blogs'?'blogs':view.kind==='topic'?view.topic:null;
  return dailyHighlights(tab?items.map(classifyNews).filter(n=>n.tab===tab):items,today);
 }
