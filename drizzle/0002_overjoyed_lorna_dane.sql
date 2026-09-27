@@ -1,0 +1,1 @@
+ALTER TABLE `news_archive` ADD `region` text DEFAULT 'india' NOT NULL;
