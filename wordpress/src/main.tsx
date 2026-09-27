@@ -1,0 +1,21 @@
+import {createRoot} from 'react-dom/client';
+import Newsroom from '../../app/newsroom';
+import Privacy from '../../app/privacy/page';
+import Manage from '../../app/subscriptions/manage/page';
+import news from '../../data/news.json';
+import status from '../../data/status.json';
+import bodyLogos from '../../data/body-logos.json';
+import {regions,type View} from '../../lib/news-model';
+import {professionalBodies} from '../../lib/professional-bodies';
+import '../../app/globals.css';
+declare global {interface Window {PMSV:{base:string}}}
+window.PMSV ??= {base:''};
+for(const logo of Object.values(bodyLogos))if(logo.image.startsWith('/'))logo.image=window.PMSV.base+logo.image;
+const path=location.pathname.slice(window.PMSV.base.length).replace(/\/+$/,'')||'/';
+const parts=path.split('/').filter(Boolean);let view:View|null=null;
+if(!parts.length)view={kind:'home'};
+else if(parts.length===1&&['regulatory','news','blogs'].includes(parts[0]))view={kind:parts[0] as 'regulatory'|'news'|'blogs'};
+else if(parts[0]==='regulatory'&&parts.length===2&&regions.some(r=>r.id===parts[1]))view={kind:'country',region:parts[1]};
+else if(parts[0]==='news'&&parts.length===2&&['india','global'].includes(parts[1]))view={kind:'feed',region:parts[1]};
+else if(['quality','excellence','certifications'].includes(parts[0])&&(parts.length===1||(parts.length===2&&professionalBodies.some(b=>b.id===parts[1]&&b.topics.includes(parts[0])))))view={kind:'topic',topic:parts[0],body:parts[1]};
+createRoot(document.getElementById('root')!).render(path==='/privacy'?<Privacy/>:path==='/subscriptions/manage'?<Manage/>:view?<Newsroom initialNews={news} status={status} view={view}/>:<main><h1>Page not found</h1><a href={window.PMSV.base+'/'}>Return to PMSV</a></main>);
