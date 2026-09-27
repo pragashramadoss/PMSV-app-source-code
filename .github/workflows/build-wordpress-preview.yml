@@ -69,6 +69,15 @@ jobs:
           test -f wordpress/plugin/public/audits/hygiene-rating-home.html
           test -f wordpress/plugin/public/audits/nc-management.html
           test -f wordpress/plugin/public/audits/hygiene-rating-nc-management.html
+          test -f wordpress/plugin/public/audits/audit-forum.css
+          for f in general-manufacturing milk-processing meat-processing fish-processing slaughter-house catering retail transport storage-warehouse; do
+            grep -q 'pmsv-audit-nav' "wordpress/plugin/public/audits/$f.html"
+            grep -q 'audit-forum.css?v=20' "wordpress/plugin/public/audits/$f.html"
+            grep -q 'checklist-ui.js?v=20' "wordpress/plugin/public/audits/$f.html"
+          done
+          grep -q 'pmsv-audit-nav' wordpress/plugin/public/audits/index.html
+          grep -q 'Scoring Table' wordpress/plugin/public/audits/checklist-ui.js
+          grep -q 'Rating / Grading Table' wordpress/plugin/public/audits/checklist-ui.js
           ! grep -R -Ei 'chatgpt\.site|chatgpt\.com|openai\.com|modelContext' wordpress/plugin
           grep -q '"/updates"' wordpress/plugin/routes.json
           grep -q '"/about"' wordpress/plugin/routes.json
@@ -80,7 +89,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add wordpress/plugin
           if ! git diff --cached --quiet; then
-            git commit -m "Build WordPress preview 0.5.4 [skip ci]"
+            git commit -m "Build WordPress preview 0.5.5 [skip ci]"
             git push origin HEAD:wordpress-independent
           fi
 
@@ -90,12 +99,12 @@ jobs:
           mkdir -p dist-wordpress/pmsv-original-app-preview
           cp -R wordpress/plugin/. dist-wordpress/pmsv-original-app-preview/
           cd dist-wordpress
-          zip -qr ../pmsv-original-app-preview-v0.5.4.zip pmsv-original-app-preview
+          zip -qr ../pmsv-original-app-preview-v0.5.5.zip pmsv-original-app-preview
 
       - name: Upload plugin ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: pmsv-original-app-preview-v0.5.4
-          path: pmsv-original-app-preview-v0.5.4.zip
+          name: pmsv-original-app-preview-v0.5.5
+          path: pmsv-original-app-preview-v0.5.5.zip
           if-no-files-found: error
           retention-days: 14
