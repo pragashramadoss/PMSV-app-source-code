@@ -2,7 +2,7 @@
 /**
  * Plugin Name: PMSV Original Application — Migration Preview
  * Description: Original PMSV React application with isolated WordPress serving and storage. Preview path only.
- * Version: 0.3.0-preview
+ * Version: 0.3.1-preview
  * Requires PHP: 8.1
  * Author: PMSV Group
  */
