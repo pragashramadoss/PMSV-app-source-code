@@ -6,9 +6,9 @@ Build from the repository root with `node wordpress/build.mjs` after installing 
 
 The WordPress build imports the PMSV React components and prefixes app routes for the isolated preview path. Packaged local images are served from the plugin directory. The WordPress migration source contains no browser modelContext registration or OpenAI runtime dependency.
 
-External runtime dependencies: WordPress hosting/database; the GitHub Actions collector and GitHub OIDC public keys; existing regulator/media/blog sources; original external logo hosts; browser push providers; and the separate PMSV audit project on GitHub Pages.
+External runtime dependencies: WordPress hosting/database; the GitHub Actions collector and GitHub OIDC public keys; existing regulator/media/blog sources; original external logo hosts; and browser push providers. The separate PMSV audit repository is imported during the build, so the deployed audit pages run from WordPress rather than depending on GitHub Pages at runtime.
 
-The home page links to the separate PMSV audit project on GitHub Pages. That project contains the FSSAI Schedule IV Inspection and Hygiene Rating tools, including Saved Audits, NC Management/NC Follow-up and reports. Audit scoring code remains maintained separately rather than being duplicated in this plugin.
+The build imports the separate `pragashramadoss/pmsv-fssai-audit` repository into `public/audits`. The WordPress app therefore serves the FSSAI Schedule IV Inspection and Hygiene Rating tools itself, including Saved Audits, NC Management/NC Follow-up and reports. Audit source and scoring logic remain maintained in the separate GitHub repository.
 
 The 605-row seed is a read-only real archive export as of 27 September 2026. It is only the initial import; `/api/updater` supports future signed batches and durable append-only history. A preview is not proof that the existing production workflow has been switched.
 
