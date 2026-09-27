@@ -9,7 +9,7 @@ export default function PrivacyPage() {
   return <main className="privacy-page">
     <Link href="/">← Back to PMSV</Link>
     <header><img src="/icons/pmsv-family-64.png" alt="PMSV" width="64" height="64"/><div><h1>Privacy policy</h1><p>PMSV Food Safety Updates</p></div></header>
-    <p><strong>Effective date: 22 September 2026</strong></p>
+    <p><strong>Effective date: 27 September 2026</strong></p>
     <p>PMSV Food Safety Updates is operated by Pragash Ramadoss under the PMSV name. This policy covers pmsvgroup.com and the PMSV app that displays this service. For support or privacy requests, email <a href="mailto:Pragash.ramadoss@gmail.com">Pragash.ramadoss@gmail.com</a>.</p>
 
     <h2>Reading and searching</h2>
@@ -23,7 +23,7 @@ export default function PrivacyPage() {
     <p>PMSV stores your notification preference, a subscription management token and whether a permission prompt has been shown in your browser. A service worker caches an offline information page. This storage supports app functions and is not used for advertising. It stays on your device until it is cleared or removed by the browser.</p>
 
     <h2>Hosting, security and service providers</h2>
-    <p>PMSV uses OpenAI Sites and Cloudflare hosting and database infrastructure. These providers process network information, such as IP addresses and request details, and may retain operational and security logs to run and protect the service. Their infrastructure log and backup retention is governed by their own practices; PMSV does not set a fixed retention period for those records.</p>
+    <p>PMSV uses WordPress hosting and database infrastructure. Daily source collection and publication checks run through GitHub Actions. These services may process network and operational information needed to run and protect the service, including request details and security logs. Their infrastructure log and backup retention is governed by their own practices; PMSV does not set a fixed retention period for those records.</p>
     <p>For abuse prevention, the application stores a time-windowed hash derived from the request IP address and an attempt count. These rate-limit records expire after approximately two hours and are cleared on subsequent notification requests. Application connections use HTTPS, and subscription changes require a management token. No internet service can guarantee absolute security.</p>
     <p>PMSV does not sell notification subscription data or use it for targeted advertising. Service providers process information needed for hosting, security and notification delivery. Information may be processed outside your country.</p>
 
