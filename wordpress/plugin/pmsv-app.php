@@ -2,7 +2,7 @@
 /**
  * Plugin Name: PMSV Original Application — Migration Preview
  * Description: Original PMSV React application with isolated WordPress serving and storage. Preview path only.
- * Version: 0.3.1-preview
+ * Version: 0.3.2-preview
  * Requires PHP: 8.1
  * Author: PMSV Group
  */
@@ -52,8 +52,9 @@ add_action('template_redirect', function () {
     status_header(in_array(rtrim($route, '/') ?: '/', $routes, true) ? 200 : 404);
     nocache_headers();
     $manifest = json_decode(file_get_contents(PMSV_WP_DIR . 'assets/.vite/manifest.json'), true)['index.html'];
-    $assets = plugins_url('assets/', __FILE__);
-    ?><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#3155d9"><meta name="apple-mobile-web-app-capable" content="yes"><title>PMSV Food Safety Updates</title><link rel="manifest" href="<?php echo esc_url($base . '/manifest.webmanifest'); ?>"><link rel="icon" href="<?php echo esc_url($base . '/icons/pmsv-family-64.png'); ?>"><link rel="apple-touch-icon" href="<?php echo esc_url($base . '/icons/pmsv-family-192.png'); ?>"><?php foreach($manifest['css'] ?? [] as $css): ?><link rel="stylesheet" href="<?php echo esc_url($assets . $css); ?>"><?php endforeach; ?></head><body class="antialiased"><div id="root"></div><script>window.PMSV=<?php echo wp_json_encode(['base'=>$base,'publicBase'=>plugins_url('public/', __FILE__)], JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT); ?>;</script><script type="module" src="<?php echo esc_url($assets . $manifest['file']); ?>"></script></body></html><?php
+    $assets = trailingslashit(plugins_url('assets', __FILE__));
+    $public = trailingslashit(plugins_url('public', __FILE__));
+    ?><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#3155d9"><meta name="apple-mobile-web-app-capable" content="yes"><title>PMSV Food Safety Updates</title><link rel="manifest" href="<?php echo esc_url($base . '/manifest.webmanifest'); ?>"><link rel="icon" href="<?php echo esc_url($public . 'icons/pmsv-family-64.png'); ?>"><link rel="apple-touch-icon" href="<?php echo esc_url($public . 'icons/pmsv-family-192.png'); ?>"><?php foreach($manifest['css'] ?? [] as $css): ?><link rel="stylesheet" href="<?php echo esc_url($assets . $css . '?v=0.3.2'); ?>"><?php endforeach; ?></head><body class="antialiased"><div id="root"></div><script>window.PMSV=<?php echo wp_json_encode(['base'=>$base,'publicBase'=>$public], JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT); ?>;</script><script type="module" src="<?php echo esc_url($assets . $manifest['file'] . '?v=0.3.2'); ?>"></script></body></html><?php
     exit;
 }, 0);
 function pmsv_wp_reply($body, $status=200) { status_header($status); nocache_headers(); header('Content-Type: application/json'); echo wp_json_encode($body); }
