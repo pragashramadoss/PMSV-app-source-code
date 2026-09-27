@@ -1,31 +1,29 @@
 # Migration verification status — 27 September 2026
 
-Not production ready. Not installed on WordPress.com. Live PMSV and DNS unchanged.
+Not production ready. The migration preview is installed on WordPress staging; version 0.5.0-preview is built and awaiting installation/testing. Live PMSV home and DNS are unchanged.
 
-## Passed locally
-- Original app, data, component, asset and business-rule files are byte-for-byte unchanged from source commit 77f5225.
-- Vite WordPress frontend build, 32 route inventory, no audit routes or audit code.
-- All original packaged images/assets match their source bytes.
-- Seed export contains 605 real live news records with unique IDs and required fields; no generated sample data.
-- Compiled JavaScript excludes ChatGPT-host URLs, OpenAI API endpoints, ChatGPT authentication, Cloudflare Worker imports and optional modelContext registration.
-- Original eight security/regression groups and updater OIDC regression tests passed.
-- All PHP files pass PHP 8.3 WASM syntax checks.
-- PHP tests: push endpoint restrictions, malformed-token rejection, allowed-source checks, invalid date rejection, VAPID P-256 key generation and signature verification.
-
-- Local WordPress HTTP tests preserve all 605 archive rows and return all 32 route shells; unknown routes return 404, unauthorized publishing returns 401 and foreign-origin notification writes return 403. App shells exclude theme CSS. These are HTTP checks, not browser interaction tests.
-- Fixed archive import loss: records with distinct IDs but shared source URLs are preserved; future updater deduplication remains enabled.
+## Passed
+- WordPress frontend build completed successfully in GitHub Actions.
+- 34 React route shells are packaged, including `/updates` and `/about`.
+- The separate `pragashramadoss/pmsv-fssai-audit` project is imported at build time into `public/audits` with 35 allowed audit files, including both FSSAI Schedule IV Inspection and Hygiene Rating flows, Saved Audits, NC Management/NC Follow-up and reports.
+- The WordPress app no longer renders the stale bundled news snapshot first; it starts with an empty/loading state and reads the WordPress `/api/news` archive.
+- Global News excludes India.
+- Latest-update sections show every item from the latest publication day and top up with recent items only when fewer than three are available.
+- The FSANZ/Australia local SVG has been adjusted for visibility on the light UI.
+- The About us page is included with the PMSV purpose and Pragash Ramadoss contact details.
+- The packaged WordPress plugin was scanned and contains no `chatgpt.site`, `chatgpt.com`, `openai.com` or `modelContext` runtime strings.
+- The independent GitHub updater now targets the WordPress staging API through `PMSV_BASE_URL`; its 27 September 2026 migration run completed successfully, authenticated with GitHub OIDC, imported against WordPress, and completed push dispatch with no failed deliveries.
+- Existing archive rows remain durable in WordPress and updater imports are idempotent.
+- Original production/main branch remains separate from the migration branch.
 
 ## Not yet passed / release blockers
-- WordPress.com admin browser sign-in; custom plugin installation. Google sign-in returned a 502 page; a fresh WordPress admin tab still shows login.
-- Remaining WordPress database/API integration: cold notification-key generation currently returns HTTP 503 in the local Playground test; pre-provisioned key path passes registration, conflict and deletion checks. Do not count the full suite as passed.
-- Staging theme isolation and visual checks on the actual WordPress host.
-- Browser route traversal, direct access, refresh and Back behavior for all 32 routes.
-- Visual/mobile comparison, search, tabs, empty/error screens and network/console review.
-- Real daily collector ingestion; production workflow still targets the old host and is intentionally unchanged.
-- Secure migration of VAPID private key and existing device registrations. Preview uses a separate origin/path and new keys. Never distribute old device data in this repository.
-- Live-device notifications, opt-out and provider failure/retry behavior.
-- Legacy subscription cancellation backend is fail-closed (503) in preview; must resolve before production.
-- Domain cutover without DNS changes: WordPress currently reports no mapped custom domain. Must inspect existing domain/proxy routing; do not assume WordPress currently serves pmsvgroup.com.
+- Install and visually test version 0.5.0-preview on the actual WordPress staging site.
+- Verify all navigation, direct URL refresh, browser Back, search, tabs, mobile layout and error/loading states in the browser.
+- Verify both bundled audit families end-to-end on the WordPress origin, including new audit, saved audit, reports and NC follow-up. LocalStorage data previously created on the GitHub Pages origin will not automatically migrate to the WordPress origin.
+- Cold notification-key generation previously returned HTTP 503 in the local Playground test; pre-provisioned key generation path passed. Real-device notification enable/disable and delivery still require staging verification.
+- Legacy subscription cancellation backend remains fail-closed (503) in preview and should be resolved or retired before production.
+- Map/cut over `pmsvgroup.com` only after staging verification. WordPress currently reports no mapped custom domain for the staging site.
+- Complete host-side backup/rollback verification immediately before production cutover.
 
 ## Preservation and rollback
-Original GitHub main remains unchanged. Migration work is isolated to a separate branch and wordpress/ directory. A local git bundle preserves baseline repository history. Existing WordPress v0.2.0 plugin is untouched; its original ZIP was recovered. Migration preview uses /pmsv-app-review and separate pmsv_app_* tables/options. Disable the preview plugin to stop its routes; no drop-table/uninstall or live-DNS action is included. Production backup/cutover/rollback still requires host-side verification.
+The migration remains isolated to `wordpress-independent`. The existing WordPress v0.2.0 plugin has not been replaced. The migration preview uses `/pmsv-app-review` and separate `pmsv_app_*` tables/options. Deactivating the migration-preview plugin stops its routes; there is no uninstall hook that drops the migration tables.
