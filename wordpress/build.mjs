@@ -10,5 +10,5 @@ const bodies=JSON.parse(await readFile('data/professional-sources.json','utf8'))
 const routes=['/','/updates','/regulatory','/news','/quality','/excellence','/certifications','/blogs','/about','/privacy','/subscriptions/manage',...['india','us','eu','uk','australia'].map(x=>'/regulatory/'+x),'/news/india','/news/global'];
 for(const b of bodies)for(const t of b.topics)routes.push('/'+t+'/'+b.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,''));
 await writeFile(target+'/routes.json',JSON.stringify(routes,null,2));
-await writeFile(target+'/SOURCE.json',JSON.stringify({repository:'pragashramadoss/PMSV-app-source-code',auditSource:'https://pragashramadoss.github.io/pmsv-fssai-audit/',auditIntegration:'linked-github-pages',releaseStatus:'preview-not-approved-for-production',routes:routes.length},null,2));
-console.log('PMSV WordPress preview packaged:',routes.length,'routes; audit tools linked from the separate GitHub project.');
+await writeFile(target+'/SOURCE.json',JSON.stringify({repository:'pragashramadoss/PMSV-app-source-code',auditSource:'pragashramadoss/pmsv-fssai-audit',auditIntegration:'bundled-from-github-at-build',releaseStatus:'preview-not-approved-for-production',routes:routes.length},null,2));
+console.log('PMSV WordPress preview packaged:',routes.length,'routes; audit tools are bundled from the separate GitHub project when public/audits is populated.');
