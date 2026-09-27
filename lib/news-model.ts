@@ -1,4 +1,4 @@
-export type News={id:string;tab:string;region?:string;title:string;summary:string;published:string;category:string;source:string;url:string;sourceType:string;firstSeen:string;verifiedAt:string};
+export type News={id:string;tab:string;region?:string;title:string;summary:string;published:string;category:string;source:string;url:string;sourceType:string;firstSeen:string;verifiedAt:string;tags?:string[]};
 export const regions=[
  {id:'india',code:'IN',name:'India',agency:'FSSAI',description:'Food Safety and Standards Authority of India',detail:'Official FSSAI website notifications, advisories, orders and press releases.'},
  {id:'us',code:'US',name:'United States',agency:'US FDA',description:'U.S. Food and Drug Administration',detail:'FDA food-program announcements, guidance, recalls and food safety news from the United States.'},
@@ -6,8 +6,10 @@ export const regions=[
  {id:'uk',code:'UK',name:'United Kingdom',agency:'FSA · Food Standards Scotland',description:'UK food safety authorities',detail:'Food Standards Agency and Food Standards Scotland updates, recalls, enforcement and food safety news.'},
  {id:'australia',code:'AU',name:'Australia',agency:'FSANZ · State authorities',description:'Food Standards Australia New Zealand',detail:'FSANZ standards announcements and Australian food safety news. FSANZ is a joint Australia–New Zealand standards body.'}
 ];
-export type View={kind:'home'|'updates'|'regulatory'|'country'|'news'|'feed'|'topic'|'blogs';region?:string;topic?:string;body?:string};
+export type View={kind:'home'|'updates'|'regulatory'|'country'|'news'|'feed'|'topic'|'blogs'|'blog-tag';region?:string;topic?:string;body?:string;tag?:string};
 export function regionName(id:string){return regions.find(r=>r.id===id)?.name||(id==='global'?'International':id)}
+export function blogTagSlug(tag:string){return tag.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/&/g,' and ').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80)||'uncategorized'}
+export function blogTags(n:News){const tags=Array.isArray(n.tags)?n.tags.filter(t=>typeof t==='string'&&t.trim()).map(t=>t.trim()):[];return tags.length?Array.from(new Set(tags)):['Uncategorized']}
 export function isFssaiWebsite(n:News){try{return /(^|\.)fssai\.gov\.in$/.test(new URL(n.url).hostname)}catch{return false}}
 export function classifyNews(n:News):News{
  if((n.region||'india')!=='india'||!['general','fssai'].includes(n.tab))return n;
@@ -40,6 +42,6 @@ export function dailyHighlights(items:News[],today=indiaToday()){
 }
 
 export function sectionHighlights(items:News[],view:View,today=indiaToday()){
- const tab=view.kind==='home'||view.kind==='updates'?null:view.kind==='regulatory'?'fssai':view.kind==='news'||view.kind==='feed'?'general':view.kind==='blogs'?'blogs':view.kind==='topic'?view.topic:null;
+ const tab=view.kind==='home'||view.kind==='updates'?null:view.kind==='regulatory'?'fssai':view.kind==='news'||view.kind==='feed'?'general':view.kind==='blogs'||view.kind==='blog-tag'?'blogs':view.kind==='topic'?view.topic:null;
  return dailyHighlights(tab?items.map(classifyNews).filter(n=>n.tab===tab):items,today);
 }
