@@ -49,7 +49,9 @@ add_action('template_redirect', function () {
         else readfile(PMSV_WP_DIR . 'public/' . $relative); exit;
     }
     $routes = json_decode(file_get_contents(PMSV_WP_DIR . 'routes.json'), true);
-    status_header(in_array(rtrim($route, '/') ?: '/', $routes, true) ? 200 : 404);
+    $normalized = rtrim($route, '/') ?: '/';
+    $dynamic_blog = preg_match('~^/blogs/[a-z0-9][a-z0-9-]{0,79}$~', $normalized) === 1;
+    status_header(in_array($normalized, $routes, true) || $dynamic_blog ? 200 : 404);
     nocache_headers();
     $manifest = json_decode(file_get_contents(PMSV_WP_DIR . 'assets/.vite/manifest.json'), true)['index.html'];
     $assets = trailingslashit(plugins_url('assets', __FILE__));
