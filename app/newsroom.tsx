@@ -8,7 +8,7 @@ import {BookOpen,Search,FileText,Newspaper,ArrowUpRight,ArrowRight,ShieldCheck,X
 import {Tabs,TabsList,TabsTrigger,TabsContent} from '@/components/ui/tabs';
 import {regions,regionName,selectNews,dateLabel,sectionHighlights,indiaToday,blogTagSlug,blogTags,type News,type View} from '@/lib/news-model';
 export type {News} from '@/lib/news-model';
-const publicAsset=(path:string)=>{const base=typeof window!=='undefined'?(window as unknown as {PMSV?:{publicBase?:string}}).PMSV?.publicBase:'';const clean=path.startsWith('/')?path.slice(1):path;return base?base+clean+(base.includes('?')?'&':'?')+'v=0.5.3':path};
+const publicAsset=(path:string)=>{const base=typeof window!=='undefined'?(window as unknown as {PMSV?:{publicBase?:string}}).PMSV?.publicBase:'';const clean=path.startsWith('/')?path.slice(1):path;return base?base+clean+(base.includes('?')?'&':'?')+'v=0.5.4':path};
 const logoPath=(id:string)=>publicAsset('/logos/'+id+(['india','uk'].includes(id)?'.png':'.svg'));
 const topicIcon=(id:string)=>id==='quality'?<BadgeCheck/>:id==='excellence'?<TrendingUp/>:<Award/>;
 type Status={topicChecks?:Record<string,string>;topicCoverage?:Record<string,string>;checkedAt:string;scheduleEnabled:boolean;coverage:string;regionChecks?:Record<string,string>};
