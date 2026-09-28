@@ -49,10 +49,8 @@ function escapeAuditText(value){
 function stripLegacyScoringCards(html){
   html=html.replace(/<p\b[^>]*>\s*<b>Scoring:\s*<\/b>[\s\S]*?<\/p>/gi,'');
   return html.replace(/<section\b[^>]*class=["'][^"']*\bcard\b[^"']*["'][^>]*>([\s\S]*?)<\/section>/gi,(full,inner)=>{
-    let text=cleanAuditText(inner);
-    if(!/\bScoring\s*:/i.test(text))return full;
-    text=text.replace(/Scoring\s*:[\s\S]*?(?:Any critical NC\s*=\s*Non Compliance\s*\/\s*No Grade\.|Failure of any asterisk\s*\(\*\)\s*requirement results in Non-Compliance and no Hygiene Rating\.)/i,'').trim();
-    return text?'<section class="card audit-source-note">'+escapeAuditText(text)+'</section>':'';
+    const text=cleanAuditText(inner);
+    return /\bScoring\s*:/i.test(text)?'':full;
   });
 }
 function preRenderChecklist(html,kind){
