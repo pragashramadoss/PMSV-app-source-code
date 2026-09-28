@@ -28,6 +28,7 @@ const auditShell=`
 
 const scheduleScoring=`<section class="pmsv-rules"><h3>Scoring Table</h3><table class="rules-table"><thead><tr><th>Assessment</th><th>Normal Requirement</th><th>Critical Requirement (*)</th></tr></thead><tbody><tr><td><b>C — Compliance</b></td><td>2 marks</td><td>4 marks</td></tr><tr><td><b>PC — Partial Compliance</b></td><td>1 mark</td><td>Not permitted</td></tr><tr><td><b>NC — Non-Compliance</b></td><td>0 marks</td><td>0 marks</td></tr><tr><td><b>NA — Not Applicable</b></td><td colspan="2">Excluded from applicable maximum</td></tr></tbody></table></section>`;
 const scheduleGrade=`<section class="grade-bottom"><h3>Rating / Grading Table</h3><table class="rules-table"><thead><tr><th>Score</th><th>Grade</th><th>Result</th></tr></thead><tbody><tr><td>90% and above</td><td><b>A+</b></td><td>Compliance – Exemplar</td></tr><tr><td>80% to &lt;90%</td><td><b>A</b></td><td>Compliance – Satisfactory</td></tr><tr><td>50% to &lt;80%</td><td><b>B</b></td><td>Needs Improvement</td></tr><tr><td>Below 50%</td><td><b>No Grade</b></td><td>Non Compliance</td></tr></tbody></table><div class="critical-note">Any NC against a Critical (*) requirement results in Non Compliance / No Grade irrespective of percentage score.</div></section>`;
+const hygieneScoring=scheduleScoring;
 const hygieneRating=`<section class="rating-bottom"><h3>Hygiene Rating</h3><table class="rating-table"><thead><tr><th>Rating</th><th>Category</th><th>Percentage Score</th></tr></thead><tbody><tr><td>5</td><td>Excellent</td><td>81–100%</td></tr><tr><td>4</td><td>Very Good</td><td>61–80%</td></tr><tr><td>3</td><td>Good</td><td>41–60%</td></tr><tr><td>2</td><td>Needs Improvement</td><td>21–40%</td></tr><tr><td>1</td><td>Poor</td><td>20% or below</td></tr></tbody></table><div class="critical-note">Failure of any Critical (*) requirement results in Non-Compliance and no Hygiene Rating.</div></section>`;
 
 function staticRibbon(html,kind){
@@ -62,6 +63,10 @@ function preRenderChecklist(html,kind){
     if(!html.includes('class="pmsv-rules"'))html=html.replace(/<div class=["']tablewrap["']>/i,scheduleScoring+'<div class="tablewrap">');
     if(!html.includes('class="grade-bottom"'))html=html.replace(/<button class=["']finish["'] id=["']finish["']/i,scheduleGrade+'<button class="finish" id="finish"');
   }else{
+    if(!html.includes('class="hyg-rules"')){
+      const table=hygieneScoring.replace('class="pmsv-rules"','class="hyg-rules"');
+      html=html.replace(/<div class=["']tablewrap["']>/i,table+'<div class="tablewrap">');
+    }
     if(!html.includes('class="rating-bottom"')){
       if(/<div class=["']actions["']>/i.test(html))html=html.replace(/<div class=["']actions["']>/i,hygieneRating+'<div class="actions">');
       else html=html.replace(/<button[^>]*id=["']finish["'][^>]*>/i,m=>hygieneRating+m);
