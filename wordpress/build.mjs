@@ -124,16 +124,8 @@ const previewHtml=`<!doctype html><html lang="en"><head><meta charset="UTF-8"><m
       if(u.pathname===root+'/api/news'){
         const [r,b]=await Promise.all([nativeFetch(root+'/archive-seed.json',{cache:'no-store'}),nativeFetch(root+'/preview-blogs.json',{cache:'no-store'})]);
         let news=await r.json();const blogs=await b.json();
-        const fallback=n=>{if(String(n.summary||'').trim())return n;const title=String(n.title||'').trim(),source=String(n.source||'PMSV source').trim();if(!title)return n;let summary;
-          let m=title.match(/^Gazette Notification of\\s+(.+)$/i);if(m)summary=source+' published a Gazette notification concerning '+m[1].trim()+'.';
-          else if((m=title.match(/^Advisory on\\s+(.+)$/i)))summary=source+' issued an advisory on '+m[1].trim()+'.';
-          else if((m=title.match(/^Notification of\\s+(.+)$/i)))summary=source+' published a notification concerning '+m[1].trim()+'.';
-          else if((m=title.match(/^Draft\\s+(.+)$/i)))summary=source+' published a draft update concerning '+m[1].trim()+'.';
-          else if(n.tab==='general')summary=source+' reported on: '+title+'.';
-          else if(source.toLowerCase().includes('linkedin'))summary=source+' shared an update on: '+title+'.';
-          else summary=source+' published an update on: '+title+'.';
-          return {...n,summary:summary.slice(0,520)}};
-        news=news.filter(n=>n.tab!=='blogs').map(fallback).concat(Array.isArray(blogs)?blogs:[]);
+        const useful=(n)=>{const title=String(n.title||'').trim(),summary=String(n.summary||'').trim();if(summary.length<45)return {...n,summary:''};const norm=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();const t=norm(title),s=norm(summary);if(!s||s===t)return {...n,summary:''};const boiler=summary.replace(/^(?:the\s+)?[^:]{1,80}\s+(?:reported on|published an? update on|shared an? update on)\s*:\s*/i,'');if(norm(boiler).replace(/[ .]+$/,'')===t.replace(/[ .]+$/,''))return {...n,summary:''};return n};
+        news=news.filter(n=>n.tab!=='blogs').map(useful).concat(Array.isArray(blogs)?blogs:[]);
         return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
       }
       if(u.pathname===root+'/api/updater')return new Response(JSON.stringify({active:false,checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});
