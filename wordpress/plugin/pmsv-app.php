@@ -2,7 +2,7 @@
 /**
  * Plugin Name: PMSV Food Safety & Quality Forum
  * Description: PMSV Food Safety & Quality Forum production application.
- * Version: 1.0.7
+ * Version: 1.0.8
  * Requires PHP: 8.1
  * Author: PMSV Group
  */
@@ -17,6 +17,33 @@ register_activation_hook(__FILE__, 'pmsv_wp_install');
 add_action('template_redirect', function () {
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?: '/';
     $base = pmsv_wp_base();
+
+    // WordPress.com/nginx can return 404 for virtual root files such as /sw.js
+    // before WordPress routing runs. Serve PWA resources through the real root
+    // document with query parameters instead. The script URL path is "/", so
+    // Chrome permits a root service-worker scope without a special static-file rule.
+    if (isset($_GET['pmsv_manifest'])) {
+        status_header(200);
+        $manifest = json_decode(file_get_contents(PMSV_WP_DIR . 'public/manifest.webmanifest'), true);
+        foreach (['id','start_url','scope'] as $key) $manifest[$key] = $base . '/';
+        $manifest['prefer_related_applications'] = false;
+        $icon_base = trailingslashit(plugins_url('public', __FILE__));
+        foreach ($manifest['icons'] as &$icon) $icon['src'] = $icon_base . ltrim($icon['src'], '/');
+        header('Content-Type: application/manifest+json');
+        header('Cache-Control: no-cache, must-revalidate');
+        echo wp_json_encode($manifest);
+        exit;
+    }
+    if (isset($_GET['pmsv-sw'])) {
+        status_header(200);
+        header('Content-Type: application/javascript; charset=UTF-8');
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Service-Worker-Allowed: ' . $base . '/');
+        $sw = file_get_contents(PMSV_WP_DIR . 'public/sw.js');
+        $sw = preg_replace("/pmsv-offline-v\\d+/", 'pmsv-wp-v1.0.8', $sw);
+        echo preg_replace_callback("~(['\"])(/[^'\"]*)\\1~", fn($m) => $m[1] . $base . $m[2] . $m[1], $sw);
+        exit;
+    }
 
     // Never take over WordPress administration, login, REST/API, cron or direct core/plugin assets.
     foreach (['/wp-admin','/wp-login.php','/wp-json','/xmlrpc.php','/wp-cron.php','/wp-content','/wp-includes'] as $reserved) {
@@ -35,6 +62,7 @@ add_action('template_redirect', function () {
     header('Referrer-Policy: strict-origin-when-cross-origin');
     if (str_starts_with($route, '/api/')) { pmsv_wp_api(substr($route, 5)); exit; }
     if ($route === '/manifest.webmanifest') {
+        status_header(200);
         $manifest = json_decode(file_get_contents(PMSV_WP_DIR . 'public/manifest.webmanifest'), true);
         foreach (['id','start_url','scope'] as $key) $manifest[$key] = $base . '/';
         $manifest['prefer_related_applications'] = false;
@@ -46,7 +74,7 @@ add_action('template_redirect', function () {
         header('Content-Type: application/javascript'); header('Cache-Control: no-cache');
         header('Service-Worker-Allowed: ' . $base . '/');
         $sw = file_get_contents(PMSV_WP_DIR . 'public/sw.js');
-        $sw = preg_replace("/pmsv-offline-v\\d+/", 'pmsv-wp-v1.0.7', $sw);
+        $sw = preg_replace("/pmsv-offline-v\\d+/", 'pmsv-wp-v1.0.8', $sw);
         echo preg_replace_callback("~(['\"])(/[^'\"]*)\\1~", fn($m) => $m[1] . $base . $m[2] . $m[1], $sw); exit;
     }
     // Exact packaged public files only; never PHP, source files or arbitrary paths.
@@ -93,7 +121,7 @@ add_action('template_redirect', function () {
     $manifest = json_decode(file_get_contents(PMSV_WP_DIR . 'assets/.vite/manifest.json'), true)['index.html'];
     $assets = trailingslashit(plugins_url('assets', __FILE__));
     $public = trailingslashit(plugins_url('public', __FILE__));
-    ?><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#3155d9"><meta name="apple-mobile-web-app-capable" content="yes"><title>PMSV Food Safety & Quality Forum</title><script>window.PMSV=<?php echo wp_json_encode(['base'=>$base,'publicBase'=>$public], JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT); ?>;window.PMSV.installPrompt=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.PMSV.installPrompt=e;window.dispatchEvent(new Event('pmsv-install-available'));});window.addEventListener('appinstalled',function(){window.PMSV.installPrompt=null;});</script><link rel="manifest" href="<?php echo esc_url($base . '/manifest.webmanifest'); ?>"><link rel="icon" href="/wp-content/plugins/pmsv-original-app-preview/public/icons/pmsv-family-64.png"><link rel="apple-touch-icon" href="/wp-content/plugins/pmsv-original-app-preview/public/icons/pmsv-family-192.png"><?php foreach($manifest['css'] ?? [] as $css): ?><link rel="stylesheet" href="<?php echo esc_url($assets . $css . '?v=1.0.7'); ?>"><?php endforeach; ?></head><body class="antialiased"><div id="root"></div><script>window.addEventListener('load',function(){if('serviceWorker' in navigator){navigator.serviceWorker.register((window.PMSV.base||'')+'/sw.js',{scope:(window.PMSV.base||'')+'/',updateViaCache:'none'}).catch(function(){});}});</script><script type="module" src="<?php echo esc_url($assets . $manifest['file'] . '?v=1.0.7'); ?>"></script></body></html><?php
+    ?><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#3155d9"><meta name="apple-mobile-web-app-capable" content="yes"><title>PMSV Food Safety & Quality Forum</title><script>window.PMSV=<?php echo wp_json_encode(['base'=>$base,'publicBase'=>$public], JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT); ?>;window.PMSV.installPrompt=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.PMSV.installPrompt=e;window.dispatchEvent(new Event('pmsv-install-available'));});window.addEventListener('appinstalled',function(){window.PMSV.installPrompt=null;});</script><link rel="manifest" href="<?php echo esc_url($base . '/?pmsv_manifest=1&v=1.0.8'); ?>"><link rel="icon" href="/wp-content/plugins/pmsv-original-app-preview/public/icons/pmsv-family-64.png"><link rel="apple-touch-icon" href="/wp-content/plugins/pmsv-original-app-preview/public/icons/pmsv-family-192.png"><?php foreach($manifest['css'] ?? [] as $css): ?><link rel="stylesheet" href="<?php echo esc_url($assets . $css . '?v=1.0.8'); ?>"><?php endforeach; ?></head><body class="antialiased"><div id="root"></div><script>window.addEventListener('load',function(){if('serviceWorker' in navigator){navigator.serviceWorker.register((window.PMSV.base||'')+'/?pmsv-sw=1&v=1.0.8',{scope:(window.PMSV.base||'')+'/',updateViaCache:'none'}).catch(function(){});}});</script><script type="module" src="<?php echo esc_url($assets . $manifest['file'] . '?v=1.0.8'); ?>"></script></body></html><?php
     exit;
 }, 0);
 function pmsv_wp_reply($body, $status=200) { status_header($status); nocache_headers(); header('Content-Type: application/json'); echo wp_json_encode($body); }
