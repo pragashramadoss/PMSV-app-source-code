@@ -104,8 +104,9 @@ const previewHtml=`<!doctype html><html lang="en"><head><meta charset="UTF-8"><m
       const raw=typeof input==='string'?input:input.url;
       const u=new URL(raw,location.origin);
       if(u.pathname===root+'/api/news'){
-        const r=await nativeFetch(root+'/archive-seed.json',{cache:'no-store'});
-        const news=await r.json();
+        const [r,b]=await Promise.all([nativeFetch(root+'/archive-seed.json',{cache:'no-store'}),nativeFetch(root+'/preview-blogs.json',{cache:'no-store'})]);
+        let news=await r.json();const blogs=await b.json();
+        news=news.filter(n=>n.tab!=='blogs').concat(Array.isArray(blogs)?blogs:[]);
         return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
       }
       if(u.pathname===root+'/api/updater')return new Response(JSON.stringify({active:false,checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});
