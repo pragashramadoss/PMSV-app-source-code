@@ -13,10 +13,10 @@ export default defineConfig({
    const result=await transformAsync(code,{filename:id,configFile:false,babelrc:false,parserOpts:{plugins:['typescript','jsx']},plugins:[({types:t})=>({visitor:{StringLiteral(p){
     if(!p.node.value.startsWith('/')||p.node.value.startsWith('//'))return;
     const isPublicAsset=['/brand/','/logos/','/icons/'].some(prefix=>p.node.value.startsWith(prefix));
+    const helperCall=isPublicAsset&&p.parentPath.isCallExpression()&&t.isIdentifier(p.parentPath.node.callee)&&['publicAsset','assetUrl'].includes(p.parentPath.node.callee.name);
+    if(helperCall)return;
     const suffix=isPublicAsset?p.node.value.slice(1):p.node.value;
-    const left=isPublicAsset
-      ? t.stringLiteral('/wp-content/plugins/pmsv-original-app-preview/public/')
-      : t.memberExpression(t.memberExpression(t.identifier('window'),t.identifier('PMSV')),t.identifier('base'));
+    const left=t.memberExpression(t.memberExpression(t.identifier('window'),t.identifier('PMSV')),t.identifier(isPublicAsset?'publicBase':'base'));
     const expr=t.binaryExpression('+',left,t.stringLiteral(suffix));
     if(p.parentPath.isJSXAttribute())p.replaceWith(t.jsxExpressionContainer(expr));else p.replaceWith(expr);
     p.skip();
