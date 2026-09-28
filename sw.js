@@ -1,14 +1,20 @@
-const CACHE='pmsv-pages-test-v3';
+const CACHE='pmsv-pages-test-v4';
 const APP_ROOT='/PMSV-app-source-code/';
 self.addEventListener('install',event=>{self.skipWaiting();});
-self.addEventListener('activate',event=>{event.waitUntil((async()=>{await self.clients.claim();})());});
+self.addEventListener('activate',event=>{event.waitUntil(self.clients.claim());});
 self.addEventListener('fetch',event=>{
  if(event.request.mode==='navigate'){
   event.respondWith((async()=>{
-   try{return await fetch(event.request,{cache:'no-store'});}
-   catch{
-    return fetch(APP_ROOT,{cache:'no-store'});
+   const url=new URL(event.request.url);
+   if(url.origin!==self.location.origin)return fetch(event.request);
+   if(url.pathname.startsWith(APP_ROOT+'audits/')||url.pathname.startsWith(APP_ROOT+'public/')){
+    return fetch(event.request,{cache:'no-store'});
    }
+   try{
+    const direct=await fetch(event.request,{cache:'no-store'});
+    if(direct.ok)return direct;
+   }catch{}
+   return fetch(APP_ROOT+'index.html',{cache:'no-store'});
   })());
  }
 });
