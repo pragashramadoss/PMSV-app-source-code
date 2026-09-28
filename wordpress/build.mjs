@@ -6,41 +6,79 @@ const result=spawnSync(process.execPath,['node_modules/vite/bin/vite.js','build'
 const target=path.join(root,'wordpress/plugin');await cp('public',target+'/public',{recursive:true});
 
 const auditDir=path.join(target,'public/audits');
-const auditShell=`
+const auditWorkspacePages=new Set(['index.html','fssai-inspection-app.html','fssai-inspection.html','hygiene-rating-home.html','hygiene-rating-new.html']);
+const scheduleChecklistPages=new Set(['general-manufacturing.html','milk-processing.html','meat-processing.html','fish-processing.html','slaughter-house.html','catering.html','retail.html','transport.html','storage-warehouse.html']);
+const hygieneChecklistPages=new Set(['hygiene-rating.html','hygiene-rating-sweet-shop.html','hygiene-rating-meat.html']);
+
+const auditShell=\`
 <aside class="pmsv-audit-nav" aria-label="PMSV workspace">
   <div class="nav-caption">WORKSPACE</div>
-  <a class="workspace-link" href="../updates"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2.5"/><path d="M8 7h6M8 11h6"/></svg></span><span>Food Safety/Quality<br>Updates</span></a>
-  <a class="workspace-link active" href="index.html" aria-current="page"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span>Food Safety/Quality<br>Audits</span></a>
-  <a class="workspace-link" href="../blogs"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4.5A2.5 2.5 0 0 1 4.5 2H9a3 3 0 0 1 3 3v15a3 3 0 0 0-3-3H2z"/><path d="M22 4.5A2.5 2.5 0 0 0 19.5 2H15a3 3 0 0 0-3 3v15a3 3 0 0 1 3-3h7z"/></svg></span><span>Food Safety/Quality<br>Blogs</span></a>
-  <div class="nav-bottom"><img src="../brand/pmsv-family.png?v=0.5.6" alt="PMSV family logo"><span>PMSV<small>Food Safety &amp; Quality Forum</small></span></div>
+  <a class="workspace-link" href="../updates"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2.5"/><path d="M8 7h6M8 11h6"/></svg></span><span>Updates/News</span></a>
+  <a class="workspace-link active" href="index.html" aria-current="page"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span>Audits</span></a>
+  <a class="workspace-link" href="../blogs"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4.5A2.5 2.5 0 0 1 4.5 2H9a3 3 0 0 1 3 3v15a3 3 0 0 0-3-3H2z"/><path d="M22 4.5A2.5 2.5 0 0 0 19.5 2H15a3 3 0 0 0-3 3v15a3 3 0 0 1 3-3h7z"/></svg></span><span>Blogs</span></a>
+  <div class="nav-bottom"><img src="../brand/pmsv-family.png?v=0.5.8" alt="PMSV family logo"><span>PMSV<small>Food Safety &amp; Quality Forum</small></span></div>
 </aside>
 <div class="pmsv-audit-masthead">
   <a class="pmsv-audit-brand" href="../">
-    <span class="pmsv-audit-brand-logo"><img src="../brand/pmsv-family.png?v=0.5.6" alt="PMSV family logo"></span>
+    <span class="pmsv-audit-brand-logo"><img src="../brand/pmsv-family.png?v=0.5.8" alt="PMSV family logo"></span>
     <span><span class="pmsv-audit-brand-name">PMSV <span>Food Safety &amp; Quality Forum</span></span><span class="pmsv-audit-brand-sub">FOOD SAFETY · QUALITY · EXCELLENCE</span></span>
   </a>
   <a class="pmsv-audit-home" href="../">← Back to Forum Home</a>
-</div>`;
+</div>\`;
+
+const scheduleScoring=\`<section class="pmsv-rules"><h3>Scoring Table</h3><table class="rules-table"><thead><tr><th>Assessment</th><th>Normal Requirement</th><th>Critical Requirement (*)</th></tr></thead><tbody><tr><td><b>C — Compliance</b></td><td>2 marks</td><td>4 marks</td></tr><tr><td><b>PC — Partial Compliance</b></td><td>1 mark</td><td>Not permitted</td></tr><tr><td><b>NC — Non-Compliance</b></td><td>0 marks</td><td>0 marks</td></tr><tr><td><b>NA — Not Applicable</b></td><td colspan="2">Excluded from applicable maximum</td></tr></tbody></table></section>\`;
+const scheduleGrade=\`<section class="grade-bottom"><h3>Rating / Grading Table</h3><table class="rules-table"><thead><tr><th>Score</th><th>Grade</th><th>Result</th></tr></thead><tbody><tr><td>90% and above</td><td><b>A+</b></td><td>Compliance – Exemplar</td></tr><tr><td>80% to &lt;90%</td><td><b>A</b></td><td>Compliance – Satisfactory</td></tr><tr><td>50% to &lt;80%</td><td><b>B</b></td><td>Needs Improvement</td></tr><tr><td>Below 50%</td><td><b>No Grade</b></td><td>Non Compliance</td></tr></tbody></table><div class="critical-note">Any NC against a Critical (*) requirement results in Non Compliance / No Grade irrespective of percentage score.</div></section>\`;
+const hygieneScoring=\`<section class="hyg-rules"><h3>Scoring Table</h3><table class="rules-table"><thead><tr><th>Assessment</th><th>Normal Requirement</th><th>Critical Requirement (*)</th></tr></thead><tbody><tr><td><b>C — Compliance</b></td><td>2 marks</td><td>4 marks</td></tr><tr><td><b>PC — Partial Compliance</b></td><td>1 mark</td><td>Not permitted</td></tr><tr><td><b>NC — Non-Compliance</b></td><td>0 marks</td><td>0 marks</td></tr><tr><td><b>NA — Not Applicable</b></td><td colspan="2">Excluded from applicable maximum</td></tr></tbody></table></section>\`;
+const hygieneRating=\`<section class="rating-bottom"><h3>Hygiene Rating</h3><table class="rating-table"><thead><tr><th>Rating</th><th>Category</th><th>Percentage Score</th></tr></thead><tbody><tr><td>5</td><td>Excellent</td><td>81–100%</td></tr><tr><td>4</td><td>Very Good</td><td>61–80%</td></tr><tr><td>3</td><td>Good</td><td>41–60%</td></tr><tr><td>2</td><td>Needs Improvement</td><td>21–40%</td></tr><tr><td>1</td><td>Poor</td><td>20% or below</td></tr></tbody></table><div class="critical-note">Failure of any Critical (*) requirement results in Non-Compliance and no Hygiene Rating.</div></section>\`;
+
+function staticRibbon(html,kind){
+  const count=(html.match(/<span id=["']ans["']>0<\/span>\/(\d+)/i)||[])[1];
+  if(!count)return html;
+  const max=(html.match(/<span id=["']max["']>([^<]*)<\/span>/i)||[])[1]||'';
+  const valueId=kind==='hygiene'?(html.includes('id="ratingOut"')?'ratingOut':'rating'):'grade';
+  const valueLabel=kind==='hygiene'?'Rating':'Grade';
+  const ribbon=\`<div class="scorebar"><div class="wrap"><span class="score-chip answered-chip">Answered <span id="ans">0</span>/\${count}</span><span class="score-chip score-value-chip">Score <span id="score">0</span>/<span id="max">\${max}</span> (<span id="pct">0%</span>)</span><span class="score-chip grade-chip">\${valueLabel} <span id="\${valueId}">—</span></span><span class="score-chip critical-chip critical-ribbon">Critical NC <span id="cnc">0</span></span><button class="pmsv-draft" type="button">Save Draft</button><button class="pmsv-reset" type="button">Reset</button></div></div>\`;
+  return html.replace(/<div class=["'](?:scorebar|score)["']>\s*<div class=["']wrap["']>[\s\S]*?<\/div>\s*<\/div>/i,ribbon);
+}
+function preRenderChecklist(html,kind){
+  // Remove page-specific legacy visual CSS. Final audit-forum.css is present before first paint.
+  html=html.replace(/<style>[\s\S]*?<\/style>/gi,'');
+  html=staticRibbon(html,kind);
+  if(kind==='schedule'){
+    if(!html.includes('class="pmsv-rules"'))html=html.replace(/<div class=["']tablewrap["']>/i,scheduleScoring+'<div class="tablewrap">');
+    if(!html.includes('class="grade-bottom"'))html=html.replace(/<button class=["']finish["'] id=["']finish["']/i,scheduleGrade+'<button class="finish" id="finish"');
+  }else{
+    if(!html.includes('class="hyg-rules"'))html=html.replace(/<div class=["']tablewrap["']>/i,hygieneScoring+'<div class="tablewrap">');
+    if(!html.includes('class="rating-bottom"')){
+      if(/<div class=["']actions["']>/i.test(html))html=html.replace(/<div class=["']actions["']>/i,hygieneRating+'<div class="actions">');
+      else html=html.replace(/<button[^>]*id=["']finish["'][^>]*>/i,m=>hygieneRating+m);
+    }
+  }
+  return html;
+}
 async function integrateAudits(dir){
   let entries=[];try{entries=await readdir(dir,{withFileTypes:true})}catch{return}
   for(const e of entries){
-    if(e.isDirectory())continue;
-    if(!e.name.endsWith('.html'))continue;
+    if(e.isDirectory()||!e.name.endsWith('.html'))continue;
     const file=path.join(dir,e.name);let html=await readFile(file,'utf8');
     if(!/<body(?:\s|>)/i.test(html))continue;
     html=html
       .replace(/<link rel="stylesheet" href="audit-forum\.css[^"]*">/gi,'')
       .replace(/<script src="forum-shell\.js[^"]*"><\/script>/gi,'')
-      .replace(/app-ui\.css\?v=\d+/g,'app-ui.css?v=20')
-      .replace(/audit-ui\.js\?v=\d+/g,'audit-ui.js?v=20')
-      .replace(/checklist-ui\.js\?v=\d+/g,'checklist-ui.js?v=20')
-      .replace(/hygiene-checklist-ui\.js\?v=\d+/g,'hygiene-checklist-ui.js?v=20');
-    if(!html.includes('audit-forum.css?v=20'))html=html.replace(/<\/head>/i,'<link rel="stylesheet" href="audit-forum.css?v=20"></head>');
+      .replace(/app-ui\.css\?v=\d+/g,'app-ui.css?v=28')
+      .replace(/audit-ui\.js\?v=\d+/g,'audit-ui.js?v=28')
+      .replace(/checklist-ui\.js\?v=\d+/g,'checklist-ui.js?v=28')
+      .replace(/hygiene-checklist-ui\.js\?v=\d+/g,'hygiene-checklist-ui.js?v=28');
+    if(scheduleChecklistPages.has(e.name))html=preRenderChecklist(html,'schedule');
+    if(hygieneChecklistPages.has(e.name))html=preRenderChecklist(html,'hygiene');
+    if(!html.includes('audit-forum.css?v=28'))html=html.replace(/<\/head>/i,'<link rel="stylesheet" href="audit-forum.css?v=28"></head>');
+    const deep=!auditWorkspacePages.has(e.name);
     html=html.replace(/<body([^>]*)>/i,(m,attrs)=>{
-      const clean=attrs.replace(/\sclass=(["'])(.*?)\1/i,(x,q,cls)=>' class='+q+(cls+' pmsv-audit-integrated').trim()+q);
-      return /\sclass=/.test(clean)?'<body'+clean+'>':'<body'+clean+' class="pmsv-audit-integrated">';
+      const wanted='pmsv-audit-integrated'+(deep?' pmsv-audit-deep':'');
+      const clean=attrs.replace(/\sclass=(["'])(.*?)\1/i,(x,q,cls)=>' class='+q+(cls+' '+wanted).trim()+q);
+      return /\sclass=/.test(clean)?'<body'+clean+'>':'<body'+clean+' class="'+wanted+'">';
     });
-    if(!html.includes('class="pmsv-audit-nav"'))html=html.replace(/<body[^>]*>/i,m=>m+auditShell);
+    if(!deep&&!html.includes('class="pmsv-audit-nav"'))html=html.replace(/<body[^>]*>/i,m=>m+auditShell);
     await writeFile(file,html);
   }
 }
