@@ -40,9 +40,24 @@ function staticRibbon(html,kind){
   const ribbon=`<div class="scorebar"><div class="wrap"><span class="score-chip answered-chip">Answered <span id="ans">0</span>/${count}</span><span class="score-chip score-value-chip">Score <span id="score">0</span>/<span id="max">${max}</span> (<span id="pct">0%</span>)</span><span class="score-chip grade-chip">${valueLabel} <span id="${valueId}">—</span></span><span class="score-chip critical-chip critical-ribbon">Critical NC <span id="cnc">0</span></span><button class="pmsv-draft" type="button">Save Draft</button><button class="pmsv-reset" type="button">Reset</button></div></div>`;
   return html.replace(/<div class=["'](?:scorebar|score)["']>\s*<div class=["']wrap["']>[\s\S]*?<\/div>\s*<\/div>/i,ribbon);
 }
+function cleanAuditText(value){
+  return value.replace(/<[^>]+>/g,' ').replace(/&nbsp;/gi,' ').replace(/&amp;/gi,'&').replace(/&lt;/gi,'<').replace(/&gt;/gi,'>').replace(/\s+/g,' ').trim();
+}
+function escapeAuditText(value){
+  return value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function stripLegacyScoringCards(html){
+  return html.replace(/<section\b[^>]*class=["'][^"']*\bcard\b[^"']*["'][^>]*>([\s\S]*?)<\/section>/gi,(full,inner)=>{
+    let text=cleanAuditText(inner);
+    if(!/\bScoring\s*:/i.test(text))return full;
+    text=text.replace(/Scoring\s*:[\s\S]*?(?:Any critical NC\s*=\s*Non Compliance\s*\/\s*No Grade\.|Failure of any asterisk\s*\(\*\)\s*requirement results in Non-Compliance and no Hygiene Rating\.)/i,'').trim();
+    return text?'<section class="card audit-source-note">'+escapeAuditText(text)+'</section>':'';
+  });
+}
 function preRenderChecklist(html,kind){
-  // Remove page-specific legacy visual CSS. Final audit-forum.css is present before first paint.
+  // Remove page-specific legacy visual CSS and scoring prose before first paint.
   html=html.replace(/<style>[\s\S]*?<\/style>/gi,'');
+  html=stripLegacyScoringCards(html);
   html=staticRibbon(html,kind);
   if(kind==='schedule'){
     if(!html.includes('class="pmsv-rules"'))html=html.replace(/<div class=["']tablewrap["']>/i,scheduleScoring+'<div class="tablewrap">');
