@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#3155d9">
+<title>PMSV Food Safety & Quality Forum — v0.5.7 Preview</title>
+<link rel="stylesheet" href="https://raw.githack.com/pragashramadoss/PMSV-app-source-code/wordpress-independent/wordpress/plugin/assets/assets/index-CkS_cJVL.css?v=057">
+<script>
+(function(){
+  const root='/pragashramadoss/PMSV-app-source-code/wordpress-independent/preview';
+  const q=new URLSearchParams(location.search);
+  const requested=q.get('route')||'/';
+  history.replaceState(null,'',root+(requested==='/'?'/':requested));
+  window.PMSV={base:root,publicBase:'/pragashramadoss/PMSV-app-source-code/wordpress-independent/wordpress/plugin/public/'};
+  const realFetch=window.fetch.bind(window);
+  window.fetch=async function(input,init){
+    const raw=typeof input==='string'?input:(input&&input.url)||'';
+    const url=new URL(raw,location.href);
+    if(url.pathname===root+'/api/news'){
+      const r=await realFetch('https://raw.githack.com/pragashramadoss/PMSV-app-source-code/wordpress-independent/wordpress/plugin/archive-seed.json?v=057',{cache:'no-store'});
+      const news=await r.json();
+      return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
+    }
+    if(url.pathname===root+'/api/updater'){
+      return new Response(JSON.stringify({active:false,lastSuccessfulAt:'',lastAttemptAt:'',checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});
+    }
+    if(url.pathname.startsWith(root+'/api/')){
+      return new Response(JSON.stringify({error:'Unavailable in standalone preview'}),{status:404,headers:{'Content-Type':'application/json'}});
+    }
+    return realFetch(input,init);
+  };
+  document.addEventListener('click',function(e){
+    const a=e.target.closest&&e.target.closest('a');
+    if(!a||a.target==='_blank'||a.hasAttribute('download'))return;
+    const u=new URL(a.href,location.href);
+    if(u.origin!==location.origin)return;
+    if(!u.pathname.startsWith(root))return;
+    const route=u.pathname.slice(root.length)||'/';
+    e.preventDefault();
+    if(route.startsWith('/audits/')){
+      location.href='https://raw.githack.com/pragashramadoss/PMSV-app-source-code/wordpress-independent/wordpress/plugin/public'+route+'?v=057';
+      return;
+    }
+    location.href='https://raw.githack.com/pragashramadoss/PMSV-app-source-code/wordpress-independent/preview/v057.html?route='+encodeURIComponent(route);
+  },true);
+})();
+</script>
+</head>
+<body class="antialiased">
+<div id="root"></div>
+<script type="module" src="https://raw.githack.com/pragashramadoss/PMSV-app-source-code/wordpress-independent/preview/app-preview-v057.js?v=057"></script>
+</body>
+</html>
