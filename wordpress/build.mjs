@@ -5,38 +5,6 @@ const root=path.resolve(import.meta.dirname,'..');process.chdir(root);
 const result=spawnSync(process.execPath,['node_modules/vite/bin/vite.js','build','--config','wordpress/vite.config.mjs'],{stdio:'inherit'});if(result.status)process.exit(result.status);
 const target=path.join(root,'wordpress/plugin');await cp('public',target+'/public',{recursive:true});
 
-const officialLogoDir=path.join(target,'public/logos');
-await mkdir(officialLogoDir,{recursive:true});
-const officialLogos=[
-  ['asq.ico',['https://asq.org/favicon.ico','https://asq.org/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://asq.org/&sz=128']],
-  ['qci.png',['https://upload.wikimedia.org/wikipedia/commons/d/df/Quality_Council_of_India_Logo_2.png']],
-  ['cqi-irca.ico',['https://www.quality.org/favicon.ico','https://www.quality.org/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.quality.org/&sz=128']],
-  ['efqm.ico',['https://efqm.org/favicon.ico','https://efqm.org/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://efqm.org/&sz=128']],
-  ['lei.ico',['https://www.lean.org/favicon.ico','https://www.lean.org/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.lean.org/&sz=128']],
-  ['fssc.ico',['https://www.fssc.com/favicon.ico','https://www.fssc.com/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.fssc.com/&sz=128']],
-  ['brcgs.ico',['https://www.brcgs.com/favicon.ico','https://www.brcgs.com/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.brcgs.com/&sz=128']],
-  ['sqf.svg',['https://www.sqfi.com/images/sqfilibraries/theme/sqfilogo.svg']],
-  ['bsi.ico',['https://www.bsigroup.com/favicon.ico','https://www.bsigroup.com/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.bsigroup.com/&sz=128']],
-  ['iso.ico',['https://www.iso.org/favicon.ico','https://www.iso.org/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.iso.org/&sz=128']],
-  ['ifs.ico',['https://www.ifs-certification.com/favicon.ico','https://www.ifs-certification.com/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.ifs-certification.com/&sz=128']],
-  ['aib.ico',['https://aibinternational.com/favicon.ico','https://aibinternational.com/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://aibinternational.com/&sz=128']]
-];
-const logoStatus=[];
-for(const [name,urls] of officialLogos){
-  let ok=false,last='';
-  for(const url of urls){
-    try{
-      const r=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0 PMSV-Build/1.0','Accept':'image/*,*/*;q=0.8'},redirect:'follow'});
-      if(!r.ok)throw new Error('HTTP '+r.status);
-      const b=Buffer.from(await r.arrayBuffer());
-      if(b.length<200)throw new Error('asset too small');
-      await writeFile(path.join(officialLogoDir,name),b);
-      logoStatus.push({name,url,bytes:b.length});ok=true;break;
-    }catch(e){last=String(e)}
-  }
-  if(!ok)throw new Error('Official logo download failed for '+name+': '+last);
-}
-await writeFile(path.join(officialLogoDir,'official-logo-status.json'),JSON.stringify(logoStatus,null,2));
 
 const auditDir=path.join(target,'public/audits');
 const auditWorkspacePages=new Set(['index.html','fssai-inspection-app.html','fssai-inspection.html','hygiene-rating-home.html','hygiene-rating-new.html']);
