@@ -8,18 +8,18 @@ const target=path.join(root,'wordpress/plugin');await cp('public',target+'/publi
 const officialLogoDir=path.join(target,'public/logos');
 await mkdir(officialLogoDir,{recursive:true});
 const officialLogos=[
-  ['asq.ico',['https://asq.org/favicon.ico','https://asq.org/apple-touch-icon.png']],
+  ['asq.ico',['https://asq.org/favicon.ico','https://asq.org/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://asq.org/&sz=128']],
   ['qci.png',['https://upload.wikimedia.org/wikipedia/commons/d/df/Quality_Council_of_India_Logo_2.png']],
-  ['cqi-irca.ico',['https://www.quality.org/favicon.ico','https://www.quality.org/apple-touch-icon.png']],
-  ['efqm.ico',['https://efqm.org/favicon.ico','https://efqm.org/apple-touch-icon.png']],
-  ['lei.ico',['https://www.lean.org/favicon.ico','https://www.lean.org/apple-touch-icon.png']],
-  ['fssc.ico',['https://www.fssc.com/favicon.ico','https://www.fssc.com/apple-touch-icon.png']],
-  ['brcgs.ico',['https://www.brcgs.com/favicon.ico','https://www.brcgs.com/apple-touch-icon.png']],
+  ['cqi-irca.ico',['https://www.quality.org/favicon.ico','https://www.quality.org/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.quality.org/&sz=128']],
+  ['efqm.ico',['https://efqm.org/favicon.ico','https://efqm.org/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://efqm.org/&sz=128']],
+  ['lei.ico',['https://www.lean.org/favicon.ico','https://www.lean.org/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.lean.org/&sz=128']],
+  ['fssc.ico',['https://www.fssc.com/favicon.ico','https://www.fssc.com/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.fssc.com/&sz=128']],
+  ['brcgs.ico',['https://www.brcgs.com/favicon.ico','https://www.brcgs.com/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.brcgs.com/&sz=128']],
   ['sqf.svg',['https://www.sqfi.com/images/sqfilibraries/theme/sqfilogo.svg']],
-  ['bsi.ico',['https://www.bsigroup.com/favicon.ico','https://www.bsigroup.com/apple-touch-icon.png']],
-  ['iso.ico',['https://www.iso.org/favicon.ico','https://www.iso.org/apple-touch-icon.png']],
-  ['ifs.ico',['https://www.ifs-certification.com/favicon.ico','https://www.ifs-certification.com/apple-touch-icon.png']],
-  ['aib.ico',['https://aibinternational.com/favicon.ico','https://aibinternational.com/apple-touch-icon.png']]
+  ['bsi.ico',['https://www.bsigroup.com/favicon.ico','https://www.bsigroup.com/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.bsigroup.com/&sz=128']],
+  ['iso.ico',['https://www.iso.org/favicon.ico','https://www.iso.org/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.iso.org/&sz=128']],
+  ['ifs.ico',['https://www.ifs-certification.com/favicon.ico','https://www.ifs-certification.com/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://www.ifs-certification.com/&sz=128']],
+  ['aib.ico',['https://aibinternational.com/favicon.ico','https://aibinternational.com/apple-touch-icon.png','https://www.google.com/s2/favicons?domain_url=https://aibinternational.com/&sz=128']]
 ];
 const logoStatus=[];
 for(const [name,urls] of officialLogos){
