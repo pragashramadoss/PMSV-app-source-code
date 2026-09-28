@@ -198,3 +198,26 @@ img[src*="australia.svg"]{background:#143352;border-radius:5px;padding:6px}.nav-
  .home-primary-launcher .launch-icon svg{width:21px!important;height:21px!important}
  .home-primary-launcher strong{font-size:13px!important}
 }
+
+/* Make main-app mobile Workspace identical to the Audit landing bottom navigation. */
+@media(max-width:760px){
+ .app-dashboard{padding-bottom:78px!important}
+ .app-dashboard .primary-nav{
+   inset:auto 0 0!important;width:100%!important;height:74px!important;
+   display:flex!important;flex-direction:row!important;align-items:stretch!important;justify-content:space-around!important;
+   background:#fff!important;border:0!important;border-top:1px solid #dfe5f0!important;
+   box-shadow:0 -4px 24px #18284c08!important;padding:7px 4px max(7px,env(safe-area-inset-bottom))!important;
+   gap:2px!important;overflow:visible!important;z-index:3000!important;
+ }
+ .app-dashboard .primary-nav>.nav-caption,.app-dashboard .primary-nav .nav-regions,.app-dashboard .primary-nav .nav-bottom{display:none!important}
+ .app-dashboard .primary-nav>a{
+   min-width:0!important;flex:1!important;display:flex!important;flex-direction:column!important;
+   align-items:center!important;justify-content:center!important;gap:3px!important;
+   padding:7px 2px!important;border:0!important;border-radius:10px!important;
+   color:#8591a6!important;font-size:11px!important;font-weight:700!important;line-height:1.2!important;
+   text-align:center!important;white-space:nowrap!important;overflow:visible!important;
+ }
+ .app-dashboard .primary-nav>a>span{white-space:nowrap!important;overflow:visible!important}
+ .app-dashboard .primary-nav>a svg{width:20px!important;height:20px!important;flex-shrink:0!important}
+ .app-dashboard .primary-nav>a[aria-current=page]{background:#edf2ff!important;color:#3155d9!important;box-shadow:none!important}
+}
