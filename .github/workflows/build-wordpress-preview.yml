@@ -70,10 +70,9 @@ jobs:
           test -f wordpress/plugin/public/audits/nc-management.html
           test -f wordpress/plugin/public/audits/hygiene-rating-nc-management.html
           test -f wordpress/plugin/public/audits/audit-forum.css
-          for logo in asq.ico qci.png cqi-irca.ico efqm.ico lei.ico fssc.ico brcgs.ico sqf.svg bsi.ico iso.ico ifs.ico aib.ico australia.svg eu.svg india.png uk.png us.svg; do
+          for logo in qci.png sqf.svg australia.svg eu.svg india.png uk.png us.svg; do
             test -s "wordpress/plugin/public/logos/$logo"
           done
-          test -s wordpress/plugin/public/logos/official-logo-status.json
           for f in general-manufacturing milk-processing meat-processing fish-processing slaughter-house catering retail transport storage-warehouse; do
             grep -q 'pmsv-audit-deep' "wordpress/plugin/public/audits/$f.html"
             ! grep -q 'pmsv-audit-nav' "wordpress/plugin/public/audits/$f.html"
@@ -113,16 +112,12 @@ jobs:
           grep -q 'overflow:hidden!important;white-space:nowrap!important' wordpress/plugin/public/audits/audit-forum.css
           grep -q 'overflow-x:clip!important' wordpress/plugin/public/audits/audit-forum.css
           grep -q 'position:-webkit-sticky!important' wordpress/plugin/public/audits/audit-forum.css
-          ! grep -Eq 'https://.*(ASQ|CQI|EFQM|lean-enterprise|FSSC|BRCGS|SQF|BSI|IFS|AIB)' wordpress/plugin/assets/assets/*.js
           ! grep -R -q '/wp-content/plugins/pmsv-original-app-preview/public/' wordpress/plugin/assets/assets/*.js
-          grep -R -q 'logos/asq.ico' wordpress/plugin/assets/assets/*.js
           grep -R -q 'logos/qci.png' wordpress/plugin/assets/assets/*.js
-          grep -R -q 'logos/cqi-irca.ico' wordpress/plugin/assets/assets/*.js
-          grep -R -q 'logos/fssc.ico' wordpress/plugin/assets/assets/*.js
-          grep -R -q 'logos/brcgs.ico' wordpress/plugin/assets/assets/*.js
           grep -R -q 'logos/sqf.svg' wordpress/plugin/assets/assets/*.js
-          grep -R -q 'logos/iso.ico' wordpress/plugin/assets/assets/*.js
-          grep -R -q 'logos/aib.ico' wordpress/plugin/assets/assets/*.js
+          test "$(grep -Rho 'data:image/webp;base64,' wordpress/plugin/assets/assets/*.js | wc -l | tr -d ' ')" -ge 10
+          ! grep -REq 'logos/(asq|cqi-irca|efqm|lei|fssc|brcgs|bsi|iso|ifs|aib)\.(ico|svg|png|jpg|jpeg)' wordpress/plugin/assets/assets/*.js
+          ! test -e wordpress/plugin/public/logos/official-logo-status.json
           ! grep -R -Ei 'chatgpt\.site|chatgpt\.com|openai\.com|modelContext' wordpress/plugin
           grep -q '"/updates"' wordpress/plugin/routes.json
           grep -q '"/about"' wordpress/plugin/routes.json
