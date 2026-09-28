@@ -19,7 +19,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: wordpress-preview-${{ github.ref }}
+  group: wordpress-preview-${{ github.ref }}-${{ github.sha }}
   cancel-in-progress: true
 
 jobs:
