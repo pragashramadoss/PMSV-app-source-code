@@ -1,11 +1,21 @@
 <?php
 if (!defined('ABSPATH')) exit;
 function pmsv_wp_keys() {
-    $keys=get_option('pmsv_wp_vapid');if($keys)return $keys;
-    $key=openssl_pkey_new(['private_key_type'=>OPENSSL_KEYTYPE_EC,'curve_name'=>'prime256v1','config'=>__DIR__.'/openssl.cnf']);if(!$key)throw new RuntimeException('OpenSSL P-256 unavailable');
-    if(!openssl_pkey_export($key,$pem,null,['config'=>__DIR__.'/openssl.cnf']))throw new RuntimeException('Key export failed');$details=openssl_pkey_get_details($key);
+    $keys=get_option('pmsv_wp_vapid');
+    if(is_array($keys)&&!empty($keys['privateKey'])&&!empty($keys['publicKey']))return $keys;
+    // Prefer the host OpenSSL configuration. Fall back to the bundled minimal config only if needed.
+    $options=['private_key_type'=>OPENSSL_KEYTYPE_EC,'curve_name'=>'prime256v1'];
+    $key=openssl_pkey_new($options);
+    if(!$key)$key=openssl_pkey_new($options+['config'=>__DIR__.'/openssl.cnf']);
+    if(!$key)throw new RuntimeException('Notification key generation is unavailable');
+    if(!openssl_pkey_export($key,$pem)) {
+        if(!openssl_pkey_export($key,$pem,null,['config'=>__DIR__.'/openssl.cnf']))throw new RuntimeException('Notification key export failed');
+    }
+    $details=openssl_pkey_get_details($key);
+    if(!is_array($details)||empty($details['ec']['x'])||empty($details['ec']['y']))throw new RuntimeException('Notification key details unavailable');
     $keys=['privateKey'=>$pem,'publicKey'=>pmsv_wp_b64("\x04".str_pad($details['ec']['x'],32,"\0",STR_PAD_LEFT).str_pad($details['ec']['y'],32,"\0",STR_PAD_LEFT))];
-    add_option('pmsv_wp_vapid',$keys,'',false);return get_option('pmsv_wp_vapid');
+    update_option('pmsv_wp_vapid',$keys,false);
+    return $keys;
 }
 function pmsv_wp_change_push($remove) {
     if(!pmsv_wp_origin())return pmsv_wp_reply(['error'=>'Use this app to manage notifications.'],403);
