@@ -120,17 +120,25 @@ export default function AppNotifications(){
 
  async function installApp(){
   setMessage('');
-  const event=install||(window as PMSVWindow).PMSV?.installPrompt||null;
-  if(!event)return;
   try{
+   if('serviceWorker' in navigator){await serviceWorkerRegistration();await navigator.serviceWorker.ready}
+   let event=install||(window as PMSVWindow).PMSV?.installPrompt||null;
+   if(!event){
+    event=await new Promise<InstallEvent|null>(resolve=>{
+     const onReady=()=>{window.removeEventListener('pmsv-install-available',onReady);resolve((window as PMSVWindow).PMSV?.installPrompt||null)};
+     window.addEventListener('pmsv-install-available',onReady,{once:true});
+     window.setTimeout(()=>{window.removeEventListener('pmsv-install-available',onReady);resolve((window as PMSVWindow).PMSV?.installPrompt||null)},2500);
+    });
+   }
+   if(!event){setMessage('Install is temporarily unavailable in this browser.');return}
    await event.prompt();
    const choice=await event.userChoice;
    if(choice.outcome==='accepted'){
     setInstall(null);
     if((window as PMSVWindow).PMSV)(window as PMSVWindow).PMSV!.installPrompt=null;
    }
-  }catch{}
+  }catch{setMessage('Install is temporarily unavailable in this browser.')}
  }
 
- return <><div className="app-notification-actions">{!installed&&install&&<button onClick={()=>{void installApp()}} aria-label="Install PMSV"><Download size={18}/><span>Install app</span></button>}<button onClick={()=>setOpen(true)} aria-label={enabled?'Manage app notifications':'Turn on app notifications'}>{enabled?<BellRing size={19}/>:<Bell size={19}/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></div><Dialog open={open} onOpenChange={setOpen}><DialogContent className="subscription-dialog"><DialogHeader><DialogTitle>App notifications</DialogTitle><DialogDescription>Turn on alerts for new PMSV updates.</DialogDescription></DialogHeader><p className="push-privacy">No email, phone number or sign-in is needed.</p>{supported&&Notification.permission!=='denied'?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{!enabled&&<button className="text-button" disabled={busy} onClick={()=>{void disable()}}>Keep notifications off</button>}</>:<p className="push-status">Notifications are blocked by the browser.</p>}<p role="status" className="push-status">{message}</p></DialogContent></Dialog></>;
+ return <><div className="app-notification-actions">{!installed&&<button onClick={()=>{void installApp()}} aria-label="Install PMSV"><Download size={18}/><span>Install app</span></button>}<button onClick={()=>setOpen(true)} aria-label={enabled?'Manage app notifications':'Turn on app notifications'}>{enabled?<BellRing size={19}/>:<Bell size={19}/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></div><Dialog open={open} onOpenChange={setOpen}><DialogContent className="subscription-dialog"><DialogHeader><DialogTitle>App notifications</DialogTitle><DialogDescription>Turn on alerts for new PMSV updates.</DialogDescription></DialogHeader><p className="push-privacy">No email, phone number or sign-in is needed.</p>{supported&&Notification.permission!=='denied'?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{!enabled&&<button className="text-button" disabled={busy} onClick={()=>{void disable()}}>Keep notifications off</button>}</>:<p className="push-status">Notifications are blocked by the browser.</p>}<p role="status" className="push-status">{message}</p></DialogContent></Dialog></>;
 }
