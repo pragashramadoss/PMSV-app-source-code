@@ -73,16 +73,22 @@ function pmsv_wp_ingest() {
         foreach($data['checks'] as $c){$known=false;foreach($sources as $s)if(($c['name']??'')===$s['name']&&($c['tab']??'')===$s['tab']&&($c['region']??'')===$s['region'])$known=true;
             if(!$known||!in_array($c['status']??'',['ok','partial','error'],true)||!is_string($c['detail']??null)||strlen($c['detail'])>900||!is_int($c['items']??null)||$c['items']<0||!is_string($c['checkedAt']??null)||strtotime($c['checkedAt'])===false)throw new RuntimeException();}
     }catch(Throwable $e){return pmsv_wp_reply(['error'=>'Invalid update batch'],400);}
-    global $wpdb;$t=pmsv_wp_table('news');$now=gmdate('Y-m-d\TH:i:s.000\Z');$added=0;
+    global $wpdb;$t=pmsv_wp_table('news');$now=gmdate('Y-m-d\TH:i:s.000\Z');$added=0;$updated=0;
     foreach($data['items'] as $n){
         $existing=$wpdb->get_row($wpdb->prepare("SELECT id,payload FROM $t WHERE url_hash=%s OR title_hash=%s LIMIT 1",hash('sha256',$n['url']),hash('sha256',strtolower($n['title']))),ARRAY_A);
         if($existing){
-            if(($n['tab']??'')==='blogs'&&!empty($n['tags'])){
-                $old=json_decode($existing['payload'],true);
-                if(is_array($old)){
-                    $old['tags']=$n['tags'];$old['category']=$n['category'];$old['verifiedAt']=$now;
-                    if(empty($old['summary'])&&!empty($n['summary']))$old['summary']=$n['summary'];
-                    $wpdb->update($t,['payload'=>wp_json_encode($old)],['id'=>$existing['id']],['%s'],['%s']);
+            $old=json_decode($existing['payload'],true);$changed=false;
+            if(is_array($old)){
+                // Enrich an existing story instead of discarding better metadata merely because its URL already exists.
+                if(trim((string)($old['summary']??''))===''&&trim((string)($n['summary']??''))!==''){$old['summary']=$n['summary'];$changed=true;}
+                if(($n['tab']??'')==='blogs'&&!empty($n['tags'])){
+                    if(($old['tags']??[])!==$n['tags']){$old['tags']=$n['tags'];$changed=true;}
+                    if(($old['category']??'')!==$n['category']){$old['category']=$n['category'];$changed=true;}
+                }
+                if($changed){
+                    $old['verifiedAt']=$now;
+                    $result=$wpdb->update($t,['payload'=>wp_json_encode($old)],['id'=>$existing['id']],['%s'],['%s']);
+                    if($result!==false)$updated++;
                 }
             }
             continue;
@@ -91,5 +97,5 @@ function pmsv_wp_ingest() {
     }
     if($data['checks']){$old=get_option('pmsv_wp_updater',[]);$success=false;foreach($data['checks'] as $c)if($c['status']!=='error'&&$c['items']>0)$success=true;
         update_option('pmsv_wp_updater',['active'=>$success||($old['active']??false),'lastAttemptAt'=>$now,'lastSuccessfulAt'=>$success?$now:($old['lastSuccessfulAt']??null),'checks'=>$data['checks']],false);}
-    return pmsv_wp_reply(['added'=>$added,'received'=>count($data['items'])]);
+    return pmsv_wp_reply(['added'=>$added,'updated'=>$updated,'received'=>count($data['items'])]);
 }
