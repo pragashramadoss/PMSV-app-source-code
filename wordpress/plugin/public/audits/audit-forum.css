@@ -126,3 +126,44 @@ body.pmsv-audit-integrated .finding-link{color:var(--pmsv-primary)!important}
  body.pmsv-audit-integrated .rules-table,body.pmsv-audit-integrated .rating-table{font-size:12px!important}
 }
 @media print{body.pmsv-audit-integrated{padding:0!important}.pmsv-audit-nav,.pmsv-audit-masthead{display:none!important}.scorebar,.score{position:static!important}}
+
+/* Deep audit workflow: maximise working space; Workspace only belongs on audit landing/selection screens. */
+body.pmsv-audit-integrated.pmsv-audit-deep{padding-left:0!important;padding-bottom:0!important}
+body.pmsv-audit-integrated.pmsv-audit-deep .pmsv-audit-nav,
+body.pmsv-audit-integrated.pmsv-audit-deep .pmsv-audit-masthead{display:none!important}
+body.pmsv-audit-integrated.pmsv-audit-deep>header,
+body.pmsv-audit-integrated.pmsv-audit-deep>.top{padding-top:18px!important}
+body.pmsv-audit-integrated.pmsv-audit-deep>main,
+body.pmsv-audit-integrated.pmsv-audit-deep main.wrap{max-width:1450px!important}
+
+/* The live score ribbon is genuinely floating and remains one physical row. */
+body.pmsv-audit-integrated.pmsv-audit-deep .scorebar,
+body.pmsv-audit-integrated.pmsv-audit-deep .score{
+  position:sticky!important;top:0!important;z-index:4000!important;padding:7px 16px!important;
+  box-shadow:0 6px 18px rgba(17,33,62,.16)!important
+}
+body.pmsv-audit-integrated .scorebar>.wrap,
+body.pmsv-audit-integrated .score>.wrap{
+  display:flex!important;align-items:center!important;gap:6px!important;flex-wrap:nowrap!important;
+  white-space:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none!important
+}
+body.pmsv-audit-integrated .scorebar>.wrap::-webkit-scrollbar,
+body.pmsv-audit-integrated .score>.wrap::-webkit-scrollbar{display:none!important}
+body.pmsv-audit-integrated .score-chip{flex:0 0 auto!important;padding:6px 8px!important;font-size:10.5px!important;line-height:1!important}
+body.pmsv-audit-integrated .pmsv-draft,
+body.pmsv-audit-integrated .pmsv-reset{flex:0 0 auto!important;padding:6px 8px!important;font-size:10.5px!important;line-height:1!important;white-space:nowrap!important}
+
+@media(max-width:760px){
+ body.pmsv-audit-integrated.pmsv-audit-deep{padding-bottom:0!important}
+ body.pmsv-audit-integrated.pmsv-audit-deep>header,
+ body.pmsv-audit-integrated.pmsv-audit-deep>.top{padding:14px 12px 5px!important}
+ body.pmsv-audit-integrated.pmsv-audit-deep>header h1,
+ body.pmsv-audit-integrated.pmsv-audit-deep>.top h1{font-size:23px!important}
+ body.pmsv-audit-integrated.pmsv-audit-deep>main,
+ body.pmsv-audit-integrated.pmsv-audit-deep main.wrap{padding:10px 8px 24px!important}
+ body.pmsv-audit-integrated.pmsv-audit-deep .scorebar,
+ body.pmsv-audit-integrated.pmsv-audit-deep .score{top:0!important;padding:6px 7px!important}
+ body.pmsv-audit-integrated .score-chip{font-size:9.5px!important;padding:5px 6px!important}
+ body.pmsv-audit-integrated .pmsv-draft,
+ body.pmsv-audit-integrated .pmsv-reset{font-size:9.5px!important;padding:5px 6px!important}
+}
