@@ -73,8 +73,8 @@ jobs:
           for f in general-manufacturing milk-processing meat-processing fish-processing slaughter-house catering retail transport storage-warehouse; do
             grep -q 'pmsv-audit-deep' "wordpress/plugin/public/audits/$f.html"
             ! grep -q 'pmsv-audit-nav' "wordpress/plugin/public/audits/$f.html"
-            grep -q 'audit-forum.css?v=31' "wordpress/plugin/public/audits/$f.html"
-            grep -q 'checklist-ui.js?v=31' "wordpress/plugin/public/audits/$f.html"
+            grep -q 'audit-forum.css?v=32' "wordpress/plugin/public/audits/$f.html"
+            grep -q 'checklist-ui.js?v=32' "wordpress/plugin/public/audits/$f.html"
             grep -q 'score-chip' "wordpress/plugin/public/audits/$f.html"
             grep -q 'Scoring Table' "wordpress/plugin/public/audits/$f.html"
             grep -q 'Rating / Grading Table' "wordpress/plugin/public/audits/$f.html"
@@ -93,6 +93,12 @@ jobs:
           grep -q 'Updates/News' wordpress/plugin/public/audits/index.html
           grep -q 'Audits' wordpress/plugin/public/audits/index.html
           grep -q 'Blogs' wordpress/plugin/public/audits/index.html
+          grep -q 'grid-template-areas:"no question" "max status" "comment comment"' wordpress/plugin/public/audits/audit-forum.css
+          grep -q 'overflow:hidden!important;white-space:nowrap!important' wordpress/plugin/public/audits/audit-forum.css
+          for f in asq cqi-irca efqm lei fssc brcgs sqf bsi ifs aib; do
+            test -f "wordpress/plugin/public/logos/$f.svg"
+          done
+          ! grep -Eq 'https://.*(ASQ|CQI|EFQM|lean-enterprise|FSSC|BRCGS|SQF|BSI|IFS|AIB)' wordpress/plugin/assets/assets/*.js
           ! grep -R -Ei 'chatgpt\.site|chatgpt\.com|openai\.com|modelContext' wordpress/plugin
           grep -q '"/updates"' wordpress/plugin/routes.json
           grep -q '"/about"' wordpress/plugin/routes.json
@@ -104,7 +110,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add wordpress/plugin
           if ! git diff --cached --quiet; then
-            git commit -m "Build WordPress preview 0.5.10 [skip ci]"
+            git commit -m "Build WordPress preview 0.5.11 [skip ci]"
             git push origin HEAD:wordpress-independent
           fi
 
@@ -114,12 +120,12 @@ jobs:
           mkdir -p dist-wordpress/pmsv-original-app-preview
           cp -R wordpress/plugin/. dist-wordpress/pmsv-original-app-preview/
           cd dist-wordpress
-          zip -qr ../pmsv-original-app-preview-v0.5.10.zip pmsv-original-app-preview
+          zip -qr ../pmsv-original-app-preview-v0.5.11.zip pmsv-original-app-preview
 
       - name: Upload plugin ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: pmsv-original-app-preview-v0.5.10
-          path: pmsv-original-app-preview-v0.5.10.zip
+          name: pmsv-original-app-preview-v0.5.11
+          path: pmsv-original-app-preview-v0.5.11.zip
           if-no-files-found: error
           retention-days: 14
