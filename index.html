@@ -4,9 +4,8 @@
 <link rel="manifest" href="./manifest.webmanifest?v=4">
 <script>
 (function(){
-  const originalPath=location.pathname;
-  const indexFile=location.origin+originalPath;
-  const root=originalPath.replace(/\/index\.html$/,'').replace(/\/$/,'');
+  const root='/PMSV-app-source-code';
+  const indexFile=location.origin+root+'/';
   const route=new URLSearchParams(location.search).get('route')||'/';
   window.PMSV={base:root,publicBase:root+'/public/',installPrompt:null};
 
