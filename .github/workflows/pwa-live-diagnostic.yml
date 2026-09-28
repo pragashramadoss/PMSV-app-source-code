@@ -1,46 +1,15 @@
-name: Diagnose live PMSV PWA
+name: Check PMSV assetlinks path
 on:
   push:
     branches: [pwa-diagnostic]
 jobs:
-  diagnose:
+  check:
     runs-on: ubuntu-latest
     steps:
-      - name: Live PWA endpoint checks
+      - name: Check assetlinks endpoint
         shell: bash
         run: |
           set -euxo pipefail
-          echo "=== ROOT ==="
-          curl -L -sS -D /tmp/root.h -o /tmp/root.html https://pmsvgroup.com/
-          head -40 /tmp/root.h
-          grep -oE '<link[^>]+rel="manifest"[^>]*>|navigator\.serviceWorker\.register\([^;]+' /tmp/root.html || true
-
-          echo "=== MANIFEST QUERY ENDPOINT ==="
-          curl -L -sS -D /tmp/manifest.h -o /tmp/manifest.json 'https://pmsvgroup.com/?pmsv_manifest=1&v=1.0.8'
-          head -40 /tmp/manifest.h
-          cat /tmp/manifest.json
-
-          echo "=== SERVICE WORKER QUERY ENDPOINT ==="
-          curl -L -sS -D /tmp/sw.h -o /tmp/sw.js 'https://pmsvgroup.com/?pmsv-sw=1&v=1.0.8'
-          head -40 /tmp/sw.h
-          head -80 /tmp/sw.js
-
-          echo "=== VALIDATION ==="
-          python - <<'PY'
-          import json,re
-          from pathlib import Path
-          mh=Path('/tmp/manifest.h').read_text()
-          sh=Path('/tmp/sw.h').read_text()
-          root=Path('/tmp/root.html').read_text()
-          manifest=json.load(open('/tmp/manifest.json'))
-          assert re.search(r'^HTTP/\S+ 200\b',mh,re.M), mh
-          assert re.search(r'^HTTP/\S+ 200\b',sh,re.M), sh
-          assert manifest.get('id')=='/', manifest
-          assert manifest.get('start_url')=='/', manifest
-          assert manifest.get('scope')=='/', manifest
-          assert manifest.get('display') in ('standalone','fullscreen','minimal-ui'), manifest
-          assert len(manifest.get('icons',[]))>=2, manifest
-          assert 'pmsv_manifest=1' in root, 'root page is not linking to query manifest'
-          assert 'pmsv-sw=1' in root, 'root page is not registering query service worker'
-          print('PWA ENDPOINT CHECK: PASS')
-          PY
+          curl -L -sS -D /tmp/h -o /tmp/b https://pmsvgroup.com/.well-known/assetlinks.json || true
+          cat /tmp/h || true
+          cat /tmp/b || true
