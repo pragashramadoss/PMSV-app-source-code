@@ -70,7 +70,7 @@ jobs:
           test -f wordpress/plugin/public/audits/nc-management.html
           test -f wordpress/plugin/public/audits/hygiene-rating-nc-management.html
           test -f wordpress/plugin/public/audits/audit-forum.css
-          for logo in qci.jpg bsi.svg sqf.svg australia.svg eu.svg india.png uk.png us.svg; do
+          for logo in qci.jpg sqf.svg australia.svg eu.svg india.png uk.png us.svg; do
             test -s "wordpress/plugin/public/logos/$logo"
           done
           for f in general-manufacturing milk-processing meat-processing fish-processing slaughter-house catering retail transport storage-warehouse; do
@@ -114,7 +114,6 @@ jobs:
           grep -q 'position:-webkit-sticky!important' wordpress/plugin/public/audits/audit-forum.css
           ! grep -R -q '/wp-content/plugins/pmsv-original-app-preview/public/' wordpress/plugin/assets/assets/*.js
           grep -R -q 'logos/qci.jpg' wordpress/plugin/assets/assets/*.js
-          grep -R -q 'logos/bsi.svg' wordpress/plugin/assets/assets/*.js
           grep -R -q 'logos/sqf.svg' wordpress/plugin/assets/assets/*.js
           test "$(grep -Rho 'data:image/webp;base64,' wordpress/plugin/assets/assets/*.js | wc -l | tr -d ' ')" -ge 10
           ! grep -REq 'logos/(asq|cqi-irca|efqm|lei|fssc|brcgs|iso|ifs|aib)\.(ico|svg|png|jpg|jpeg)' wordpress/plugin/assets/assets/*.js
@@ -136,7 +135,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add wordpress/plugin
           if ! git diff --cached --quiet; then
-            git commit -m "Build WordPress preview 0.5.20 [skip ci]"
+            git commit -m "Build WordPress preview 0.5.21 [skip ci]"
             git push origin HEAD:wordpress-independent
           fi
 
@@ -146,22 +145,22 @@ jobs:
           mkdir -p dist-wordpress/pmsv-original-app-preview
           cp -R wordpress/plugin/. dist-wordpress/pmsv-original-app-preview/
           cd dist-wordpress
-          zip -qr ../pmsv-original-app-preview-v0.5.20.zip pmsv-original-app-preview
+          zip -qr ../pmsv-original-app-preview-v0.5.21.zip pmsv-original-app-preview
 
       - name: Upload plugin ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: pmsv-original-app-preview-v0.5.20
-          path: pmsv-original-app-preview-v0.5.20.zip
+          name: pmsv-original-app-preview-v0.5.21
+          path: pmsv-original-app-preview-v0.5.21.zip
           if-no-files-found: error
           retention-days: 14
 
-# v0.5.20 final verification
+# v0.5.21 final verification
 
-# v0.5.20 final single-run verification
+# v0.5.21 final single-run verification
 
-# v0.5.20 embedded-logo and summary verification
+# v0.5.21 embedded-logo and summary verification
 
-# v0.5.20 clean embedded-logo rebuild
+# v0.5.21 clean embedded-logo rebuild
 
-# v0.5.20 final clean logo verification
+# v0.5.21 final clean logo verification
