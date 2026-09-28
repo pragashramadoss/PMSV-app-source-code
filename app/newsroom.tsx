@@ -8,7 +8,7 @@ import {BookOpen,Search,FileText,Newspaper,ArrowUpRight,ArrowRight,ShieldCheck,X
 import {Tabs,TabsList,TabsTrigger,TabsContent} from '@/components/ui/tabs';
 import {regions,regionName,selectNews,dateLabel,sectionHighlights,indiaToday,blogTagSlug,blogTags,type News,type View} from '@/lib/news-model';
 export type {News} from '@/lib/news-model';
-const publicAsset=(path:string)=>{const base=typeof window!=='undefined'?((window as unknown as {PMSV?:{publicBase?:string}}).PMSV?.publicBase||''):'';const clean=path.replace(/^\/+/, '');return base?base+clean:path};
+const publicAsset=(path:string)=>{const base=typeof window!=='undefined'?((window as unknown as {PMSV?:{publicBase?:string}}).PMSV?.publicBase||''):'';if(base&&path.startsWith(base))return path;const legacy='/wp-content/plugins/pmsv-original-app-preview/public/';const clean=(path.startsWith(legacy)?path.slice(legacy.length):path).replace(/^\/+/, '');return base?base+clean:path};
 const assetUrl=(value:string)=>value.startsWith('/')?publicAsset(value):value;
 const logoPath=(id:string)=>publicAsset('/logos/'+id+(['india','uk'].includes(id)?'.png':'.svg'));
 const topicIcon=(id:string)=>id==='quality'?<BadgeCheck/>:id==='excellence'?<TrendingUp/>:<Award/>;
