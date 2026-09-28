@@ -4,13 +4,11 @@ import Privacy from '../../app/privacy/page';
 import About from '../../app/about/page';
 import Manage from '../../app/subscriptions/manage/page';
 import status from '../../data/status.json';
-import bodyLogos from '../../data/body-logos.json';
 import {regions,type View} from '../../lib/news-model';
 import {professionalBodies} from '../../lib/professional-bodies';
 import '../../app/globals.css';
 declare global {interface Window {PMSV:{base:string;publicBase:string}}}
 window.PMSV ??= {base:'',publicBase:''};
-for(const logo of Object.values(bodyLogos))if(logo.image.startsWith('/'))logo.image='/wp-content/plugins/pmsv-original-app-preview/public/'+logo.image.slice(1)+'?v=0.5.8';
 const path=location.pathname.slice(window.PMSV.base.length).replace(/\/+$/,'')||'/';
 const parts=path.split('/').filter(Boolean);let view:View|null=null;
 if(!parts.length)view={kind:'home'};
