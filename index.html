@@ -5,8 +5,6 @@
 <script>
 (function(){
   const root='/PMSV-app-source-code';
-  const indexFile=location.origin+root+'/';
-  const route=new URLSearchParams(location.search).get('route')||'/';
   window.PMSV={base:root,publicBase:root+'/public/',installPrompt:null};
 
   window.addEventListener('beforeinstallprompt',function(e){
@@ -38,22 +36,6 @@
     }catch(e){}
     return nativeFetch(input,init);
   };
-
-  history.replaceState(null,'',indexFile+(route==='/'?'':'?route='+encodeURIComponent(route)));
-
-  document.addEventListener('click',function(e){
-    const a=e.target.closest&&e.target.closest('a');if(!a)return;
-    let u;try{u=new URL(a.href,location.origin)}catch{return}
-    if(u.origin!==location.origin)return;
-    const p=u.pathname;
-    if(p.startsWith(root+'/public/')||p.startsWith(root+'/assets/'))return;
-    if(p==='/audits/index.html'){e.preventDefault();location.href=root+'/public/audits/index.html';return;}
-    if(p.startsWith('/')){
-      e.preventDefault();
-      location.href=indexFile+'?route='+encodeURIComponent(p);
-    }
-  },true);
-
   window.addEventListener('load',function(){
     if('serviceWorker' in navigator)navigator.serviceWorker.register(root+'/sw.js',{scope:root+'/',updateViaCache:'none'}).catch(()=>{});
   });
