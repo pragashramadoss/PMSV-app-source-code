@@ -118,6 +118,10 @@ jobs:
           test "$(grep -Rho 'data:image/webp;base64,' wordpress/plugin/assets/assets/*.js | wc -l | tr -d ' ')" -ge 10
           ! grep -REq 'logos/(asq|cqi-irca|efqm|lei|fssc|brcgs|bsi|iso|ifs|aib)\.(ico|svg|png|jpg|jpeg)' wordpress/plugin/assets/assets/*.js
           ! test -e wordpress/plugin/public/logos/official-logo-status.json
+          for stale in asq cqi-irca efqm lei fssc brcgs bsi iso ifs aib; do
+            ! test -e "wordpress/plugin/public/logos/$stale.ico"
+            ! test -e "wordpress/plugin/public/logos/$stale.svg"
+          done
           ! grep -R -Ei 'chatgpt\.site|chatgpt\.com|openai\.com|modelContext' wordpress/plugin
           grep -q '"/updates"' wordpress/plugin/routes.json
           grep -q '"/about"' wordpress/plugin/routes.json
@@ -156,3 +160,5 @@ jobs:
 # v0.5.19 final single-run verification
 
 # v0.5.19 embedded-logo and summary verification
+
+# v0.5.19 clean embedded-logo rebuild
