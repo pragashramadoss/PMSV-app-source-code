@@ -16,7 +16,7 @@ function saveDraft(btn){
  const rec={id,status:'Draft',type,businessType:type,date:m.date||'',fbo:m.fbo||m.fboName||'',fboName:m.fbo||m.fboName||'',auditor:m.auditor||'',license:m.lic||m.license||'',address:m.address||'',meta:m,items:rows().map(itemObject),savedAt:new Date().toISOString()};
  const i=all.findIndex(x=>x.id===id);i>=0?all[i]=rec:all.unshift(rec);put(all);
  if(!p.get('draft')){p.set('draft',id);history.replaceState(null,'',location.pathname+'?'+p.toString())}
- if(btn){btn.textContent='Saved ✓';setTimeout(()=>btn.textContent='Save Draft',1300)}
+ if(btn){btn.textContent='✓';setTimeout(()=>btn.textContent='Save',1300)}
 }
 function restore(){
  const id=new URLSearchParams(location.search).get('draft');if(!id)return;const d=list().find(x=>x.id===id);if(!d)return;
