@@ -2,59 +2,143 @@
 import {useEffect,useState} from 'react';
 import {Bell,BellRing,Download} from 'lucide-react';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
+
 type InstallEvent=Event&{prompt:()=>Promise<void>;userChoice:Promise<{outcome:string}>};
+type PMSVWindow=Window&{PMSV?:{base?:string;publicBase?:string;installPrompt?:InstallEvent|null}};
+
+function basePath(){
+ const base=((window as PMSVWindow).PMSV?.base||'').replace(/\/$/,'');
+ return base;
+}
+function appUrl(path:string){
+ const base=basePath();
+ return base+(path.startsWith('/')?path:'/'+path);
+}
+function pushKey(value:string){
+ const clean=value.replace(/-/g,'+').replace(/_/g,'/');
+ const padded=clean+'='.repeat((4-clean.length%4)%4);
+ const raw=atob(padded);
+ return Uint8Array.from(raw,c=>c.charCodeAt(0));
+}
+async function serviceWorkerRegistration(){
+ const existing=await navigator.serviceWorker.getRegistration(appUrl('/'));
+ if(existing){void existing.update().catch(()=>{});return existing}
+ return navigator.serviceWorker.register(appUrl('/sw.js'),{scope:appUrl('/'),updateViaCache:'none'});
+}
+
 export default function AppNotifications(){
  const [open,setOpen]=useState(false),[enabled,setEnabled]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[supported,setSupported]=useState(false),[installed,setInstalled]=useState(false),[install,setInstall]=useState<InstallEvent|null>(null);
+
  useEffect(()=>{
-  const standalone=matchMedia('(display-mode: standalone)').matches||(navigator as Navigator&{standalone?:boolean}).standalone===true;setInstalled(standalone);
-  setSupported('serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window);
-  if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js',{scope:'/',updateViaCache:'none'}).then(async reg=>{
+  const standalone=matchMedia('(display-mode: standalone)').matches||(navigator as Navigator&{standalone?:boolean}).standalone===true;
+  setInstalled(standalone);
+  setSupported(window.isSecureContext&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window);
+
+  const cached=(window as PMSVWindow).PMSV?.installPrompt||null;
+  if(cached)setInstall(cached);
+  const prompt=(e:Event)=>{
+   e.preventDefault();
+   const event=e as InstallEvent;
+   if((window as PMSVWindow).PMSV)(window as PMSVWindow).PMSV!.installPrompt=event;
+   setInstall(event);
+  };
+  const available=()=>{
+   const event=(window as PMSVWindow).PMSV?.installPrompt||null;
+   if(event)setInstall(event);
+  };
+  const done=()=>{
+   setInstalled(true);setInstall(null);
+   if((window as PMSVWindow).PMSV)(window as PMSVWindow).PMSV!.installPrompt=null;
+  };
+  window.addEventListener('beforeinstallprompt',prompt);
+  window.addEventListener('pmsv-install-available',available);
+  window.addEventListener('appinstalled',done);
+
+  if('serviceWorker' in navigator)serviceWorkerRegistration().then(async reg=>{
    if(!('PushManager' in window)||!('Notification' in window))return;
    const sub=await reg.pushManager.getSubscription(),token=localStorage.getItem('pmsv-push-token');
    let preference=localStorage.getItem('pmsv-push-preference');
-   // Preserve opt-outs made before the explicit preference was introduced.
    if(!preference&&token&&!sub){preference='off';localStorage.setItem('pmsv-push-preference','off')}
-   if(preference==='off'){if(sub)await disable();return;}
+   if(preference==='off')return;
    if(Notification.permission==='granted'){
     if(sub&&token&&preference==='on')setEnabled(true);
-    else await enable(false);
-   }
-   else if(Notification.permission==='default'&&!localStorage.getItem('pmsv-push-prompt-shown')){
+    else if(preference==='on')await enable(false);
+   }else if(Notification.permission==='default'&&!localStorage.getItem('pmsv-push-prompt-shown')){
     localStorage.setItem('pmsv-push-prompt-shown','true');setOpen(true);
    }
   }).catch(()=>{});
-  const prompt=(e:Event)=>{e.preventDefault();setInstall(e as InstallEvent)};const done=()=>{setInstalled(true);setInstall(null)};
-  window.addEventListener('beforeinstallprompt',prompt);window.addEventListener('appinstalled',done);return()=>{window.removeEventListener('beforeinstallprompt',prompt);window.removeEventListener('appinstalled',done)};
+
+  return()=>{
+   window.removeEventListener('beforeinstallprompt',prompt);
+   window.removeEventListener('pmsv-install-available',available);
+   window.removeEventListener('appinstalled',done);
+  };
  },[]);
+
  async function enable(askPermission=true){
   setBusy(true);setMessage('');let created:PushSubscription|null=null;
   try{
-   // Invoke directly from the button, before network awaits, for Safari's user gesture requirement.
-   const permission=askPermission?await Notification.requestPermission():Notification.permission;if(permission!=='granted')throw Error('Notifications are blocked or were not allowed. You can allow them in your browser or phone notification settings.');
-   const reg=await navigator.serviceWorker.ready;const response=await fetch('/api/push',{signal:AbortSignal.timeout(10000)});const config=await response.json() as {publicKey:string;error?:string};if(!response.ok)throw Error(config.error);
+   if(!window.isSecureContext)throw Error('Notifications require the secure HTTPS version of PMSV.');
+   if(!('Notification' in window)||!('serviceWorker' in navigator)||!('PushManager' in window))throw Error('This browser does not support PMSV notifications.');
+   const permission=askPermission?await Notification.requestPermission():Notification.permission;
+   if(permission!=='granted')throw Error(permission==='denied'?'Notifications are blocked for PMSV. Open Chrome site settings → Notifications and allow pmsvgroup.com.':'Notification permission was not allowed.');
+   const reg=await serviceWorkerRegistration();
+   await navigator.serviceWorker.ready;
+   const response=await fetch(appUrl('/api/push'),{cache:'no-store',credentials:'same-origin',signal:AbortSignal.timeout(12000)});
+   const config=await response.json().catch(()=>({})) as {publicKey?:string;error?:string};
+   if(!response.ok||!config.publicKey)throw Error(config.error||'PMSV could not prepare notifications. Please try again.');
    let sub=await reg.pushManager.getSubscription(),token=localStorage.getItem('pmsv-push-token');
    if(sub&&!token){await sub.unsubscribe();sub=null}
    if(!token){token=crypto.randomUUID()+crypto.randomUUID();localStorage.setItem('pmsv-push-token',token)}
-   if(!sub){const key=Uint8Array.from(atob(config.publicKey.replace(/-/g,'+').replace(/_/g,'/')),(c:string)=>c.charCodeAt(0));sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:key});created=sub}
-   const result=await fetch('/api/push',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:sub.endpoint,token}),signal:AbortSignal.timeout(10000)});const data=await result.json() as {error?:string};if(!result.ok)throw Error(data.error);
-   localStorage.setItem('pmsv-push-preference','on');setEnabled(true);setMessage('Notifications are enabled for this device. Alerts follow successful publication and notification delivery.');
-  }catch(e){if(created)await created.unsubscribe().catch(()=>{});setMessage(e instanceof Error?e.message:'Could not turn on notifications. Try again.')}finally{setBusy(false)}
+   if(!sub){sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:pushKey(config.publicKey)});created=sub}
+   const result=await fetch(appUrl('/api/push'),{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:sub.endpoint,token}),signal:AbortSignal.timeout(12000)});
+   const data=await result.json().catch(()=>({})) as {error?:string};
+   if(!result.ok)throw Error(data.error||'PMSV could not save this notification subscription.');
+   localStorage.setItem('pmsv-push-preference','on');setEnabled(true);setMessage('Notifications are enabled for this device.');
+  }catch(e){
+   if(created)await created.unsubscribe().catch(()=>{});
+   setEnabled(false);
+   setMessage(e instanceof Error?e.message:'Could not turn on notifications. Try again.');
+  }finally{setBusy(false)}
  }
+
  async function disable(){
   setBusy(true);setMessage('');
   try{
    localStorage.setItem('pmsv-push-preference','off');
-   const reg=await navigator.serviceWorker.ready,sub=await reg.pushManager.getSubscription();
+   const reg=await serviceWorkerRegistration(),sub=await reg.pushManager.getSubscription();
    let serverRemoved=true;
    if(sub){
-    // Revocation at the browser must still run when the server is unreachable.
-    try{const response=await fetch('/api/push',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:sub.endpoint,token:localStorage.getItem('pmsv-push-token')}),signal:AbortSignal.timeout(8000)});serverRemoved=response.ok}catch{serverRemoved=false}
+    try{
+     const response=await fetch(appUrl('/api/push'),{method:'DELETE',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:sub.endpoint,token:localStorage.getItem('pmsv-push-token')}),signal:AbortSignal.timeout(8000)});
+     serverRemoved=response.ok;
+    }catch{serverRemoved=false}
     await sub.unsubscribe();
     if(await reg.pushManager.getSubscription())throw Error('Your browser could not turn notifications off. Please block them in device settings.');
    }
-   setEnabled(false);setMessage(serverRemoved?'Notifications are off on this device.':'Notifications are off on this device. Server cleanup is pending; the expired push address will be removed after a delivery attempt.');
+   setEnabled(false);setMessage(serverRemoved?'Notifications are off on this device.':'Notifications are off on this device. Server cleanup will complete after an expired delivery attempt.');
   }catch(e){setMessage(e instanceof Error?e.message:'Could not turn off notifications. Please use device settings.')}finally{setBusy(false)}
  }
- async function installApp(){if(install){await install.prompt();const choice=await install.userChoice;if(choice.outcome==='accepted')setInstall(null)}else setMessage('Android: open this app in Chrome, then use the browser menu → Install app or Add to Home screen. iPhone/iPad: open in Safari → Share → Add to Home Screen, then launch it from your Home Screen.')}
- return <><div className="app-notification-actions">{!installed&&<button onClick={()=>{setOpen(true);void installApp()}}><Download size={18}/><span>Install app</span></button>}<button onClick={()=>setOpen(true)} aria-label={enabled?'Manage app notifications':'Turn on app notifications'}>{enabled?<BellRing size={19}/>:<Bell size={19}/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></div><Dialog open={open} onOpenChange={setOpen}><DialogContent className="subscription-dialog"><DialogHeader><DialogTitle>App notifications</DialogTitle><DialogDescription>Notifications stay on after you allow them, unless you turn them off. Tap an alert to open the latest updates.</DialogDescription></DialogHeader><p className="push-privacy">No email, phone number or sign-in needed. We store this browser’s push address to deliver alerts. You can turn them off here at any time.</p>{!installed&&<div className="push-install"><strong>Keep PMSV on your Home Screen</strong><p>On iPhone and iPad, install and open the Home Screen app before enabling notifications.</p><button onClick={installApp}><Download size={17}/>Install app / instructions</button></div>}{supported?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{!enabled&&<button className="text-button" disabled={busy} onClick={()=>{void disable()}}>Keep notifications off</button>}</>:<p>This browser does not offer app notifications here. Try Chrome on Android or open the installed Home Screen app on iPhone/iPad.</p>}<p role="status" className="push-status">{message}</p><p className="subscription-privacy">Alerts follow successful daily updates. Device settings, connectivity and browser support can affect delivery. Older stories are not sent when you first subscribe.</p></DialogContent></Dialog></>;
+
+ async function installApp(){
+  setMessage('');
+  const event=install||(window as PMSVWindow).PMSV?.installPrompt||null;
+  if(event){
+   try{
+    await event.prompt();
+    const choice=await event.userChoice;
+    if(choice.outcome==='accepted'){
+     setInstall(null);
+     if((window as PMSVWindow).PMSV)(window as PMSVWindow).PMSV!.installPrompt=null;
+    }
+    return;
+   }catch{}
+  }
+  const ua=navigator.userAgent;
+  if(/Android/i.test(ua))setMessage('In Chrome, tap ⋮ at the top-right → Add to Home screen → Install. If Install is not shown, refresh PMSV once and try again.');
+  else if(/iPhone|iPad|iPod/i.test(ua))setMessage('In Safari, tap Share → Add to Home Screen → Add.');
+  else setMessage('Use your browser menu and choose Install app or Add to Home screen.');
+ }
+
+ return <><div className="app-notification-actions">{!installed&&<button onClick={()=>{setOpen(true);void installApp()}}><Download size={18}/><span>Install app</span></button>}<button onClick={()=>setOpen(true)} aria-label={enabled?'Manage app notifications':'Turn on app notifications'}>{enabled?<BellRing size={19}/>:<Bell size={19}/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></div><Dialog open={open} onOpenChange={setOpen}><DialogContent className="subscription-dialog"><DialogHeader><DialogTitle>App notifications</DialogTitle><DialogDescription>Install PMSV on your Home Screen and allow alerts for new updates.</DialogDescription></DialogHeader><p className="push-privacy">No email, phone number or sign-in is needed. PMSV stores only this browser’s push address and a random management token.</p>{!installed&&<div className="push-install"><strong>Keep PMSV on your Home Screen</strong><p>Tap below to install. If your browser cannot show the install prompt, PMSV will show the exact browser-menu steps.</p><button onClick={()=>{void installApp()}}><Download size={17}/>Install PMSV</button></div>}{supported?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{!enabled&&<button className="text-button" disabled={busy} onClick={()=>{void disable()}}>Keep notifications off</button>}</>:<p>This browser cannot provide PMSV notifications here. Use Chrome on Android, or the installed Home Screen app on supported iPhone/iPad versions.</p>}<p role="status" className="push-status">{message}</p><p className="subscription-privacy">You can change notification permission later in your browser or phone settings.</p></DialogContent></Dialog></>;
 }
