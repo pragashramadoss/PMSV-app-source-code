@@ -23,18 +23,21 @@ function pmsv_wp_insert($n) {
     $result=$wpdb->query($wpdb->prepare("INSERT IGNORE INTO $t (id,url_hash,title_hash,published,first_seen,payload) VALUES (%s,%s,%s,%s,%s,%s)",$n['id'],hash('sha256',$n['url']),hash('sha256',strtolower($n['title'])),$n['published'],$n['firstSeen'],wp_json_encode($n)));
     if($result===false)throw new RuntimeException('Archive insert failed');return $result;
 }
+function pmsv_wp_summary_is_useful($title,$summary) {
+    $title=trim(wp_strip_all_tags((string)$title));$summary=trim(wp_strip_all_tags((string)$summary));
+    if(strlen($summary)<45)return false;
+    $norm=function($s){$s=strtolower($s);$s=preg_replace('/[^a-z0-9]+/',' ',$s);return trim($s);};
+    $t=$norm($title);$s=$norm($summary);
+    if($s===''||$s===$t)return false;
+    $boiler=preg_replace('/^(?:the\s+)?[^:]{1,80}\s+(?:reported on|published an? update on|shared an? update on)\s*:\s*/i','',$summary);
+    if(rtrim($norm($boiler),' .')===rtrim($t,' .'))return false;
+    return true;
+}
 function pmsv_wp_with_summary($n) {
-    if (!is_array($n) || trim((string)($n['summary']??''))!=='') return $n;
-    $title=trim(wp_strip_all_tags((string)($n['title']??'')));$source=trim(wp_strip_all_tags((string)($n['source']??'PMSV source')));$category=trim(wp_strip_all_tags((string)($n['category']??'update')));
-    if ($title==='') return $n;
-    if (preg_match('/^Gazette Notification of\\s+(.+)$/i',$title,$m)) $summary=$source.' published a Gazette notification concerning '.trim($m[1]).'.';
-    elseif (preg_match('/^Advisory on\\s+(.+)$/i',$title,$m)) $summary=$source.' issued an advisory on '.trim($m[1]).'.';
-    elseif (preg_match('/^Notification of\\s+(.+)$/i',$title,$m)) $summary=$source.' published a notification concerning '.trim($m[1]).'.';
-    elseif (preg_match('/^Draft\\s+(.+)$/i',$title,$m)) $summary=$source.' published a draft update concerning '.trim($m[1]).'.';
-    elseif (($n['tab']??'')==='general') $summary=$source.' reported on: '.$title.'.';
-    elseif (stripos($source,'LinkedIn')!==false) $summary=$source.' shared an update on: '.$title.'.';
-    else $summary=$source.' published an update on: '.$title.'.';
-    $n['summary']=function_exists('mb_substr')?mb_substr($summary,0,520):substr($summary,0,520);
+    if(!is_array($n))return $n;
+    $title=(string)($n['title']??'');$summary=(string)($n['summary']??'');
+    if(pmsv_wp_summary_is_useful($title,$summary))return $n;
+    $n['summary']='';
     return $n;
 }
 function pmsv_wp_native_blogs() {
