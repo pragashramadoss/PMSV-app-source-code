@@ -115,7 +115,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add wordpress/plugin
           if ! git diff --cached --quiet; then
-            git commit -m "Build WordPress preview 0.5.14 [skip ci]"
+            git commit -m "Build WordPress preview 0.5.15 [skip ci]"
             git push origin HEAD:wordpress-independent
           fi
 
@@ -125,12 +125,12 @@ jobs:
           mkdir -p dist-wordpress/pmsv-original-app-preview
           cp -R wordpress/plugin/. dist-wordpress/pmsv-original-app-preview/
           cd dist-wordpress
-          zip -qr ../pmsv-original-app-preview-v0.5.14.zip pmsv-original-app-preview
+          zip -qr ../pmsv-original-app-preview-v0.5.15.zip pmsv-original-app-preview
 
       - name: Upload plugin ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: pmsv-original-app-preview-v0.5.14
-          path: pmsv-original-app-preview-v0.5.14.zip
+          name: pmsv-original-app-preview-v0.5.15
+          path: pmsv-original-app-preview-v0.5.15.zip
           if-no-files-found: error
           retention-days: 14
