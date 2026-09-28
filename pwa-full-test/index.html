@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#3155d9">
+<title>PMSV Full PWA Test</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<script>
+(function(){
+  const original=location.pathname;
+  const root=original.replace(/\/index\.html$/,'').replace(/\/$/,'');
+  window.PMSV={base:root,publicBase:root+'/public/',installPrompt:null};
+  window.addEventListener('beforeinstallprompt',function(e){
+    e.preventDefault();window.PMSV.installPrompt=e;window.dispatchEvent(new Event('pmsv-install-available'));
+  });
+  window.addEventListener('appinstalled',function(){window.PMSV.installPrompt=null;});
+
+  const nativeFetch=window.fetch.bind(window);
+  window.fetch=async function(input,init){
+    try{
+      const raw=typeof input==='string'?input:input.url;
+      const u=new URL(raw,location.origin);
+      if(u.pathname===root+'/api/news'){
+        const [r,b]=await Promise.all([
+          nativeFetch('../wordpress/plugin/archive-seed.json',{cache:'no-store'}),
+          nativeFetch('../wordpress/plugin/preview-blogs.json',{cache:'no-store'})
+        ]);
+        const news=(await r.json()).filter(n=>n.tab!=='blogs').concat(await b.json());
+        return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
+      }
+      if(u.pathname===root+'/api/updater')return new Response(JSON.stringify({active:false,checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});
+      if(u.pathname===root+'/api/push'){
+        const method=(init&&init.method||'GET').toUpperCase();
+        if(method==='GET')return new Response(JSON.stringify({publicKey:'BNa79jwwxU83rco0CHY2vpZh5Odm1wRGuA04lymkfC_MeEfjM6dWpRyGM7KbPvtUFyfVm80AVVZ-r8OOe2nWHvs'}),{status:200,headers:{'Content-Type':'application/json'}});
+        return new Response(JSON.stringify({enabled:method!=='DELETE'}),{status:200,headers:{'Content-Type':'application/json'}});
+      }
+    }catch(e){}
+    return nativeFetch(input,init);
+  };
+
+  history.replaceState(null,'',root+'/');
+
+  function fixImage(img){
+    const src=img.getAttribute&&img.getAttribute('src');
+    if(!src)return;
+    if(src.startsWith('/wp-content/plugins/pmsv-original-app-preview/public/')){
+      img.setAttribute('src','../wordpress/plugin/public/'+src.split('/public/')[1]);
+    } else if(src.startsWith('/brand/')){
+      img.setAttribute('src','../wordpress/plugin/public'+src);
+    } else if(src.startsWith('/icons/')){
+      img.setAttribute('src','../wordpress/plugin/public'+src);
+    }
+  }
+  new MutationObserver(records=>records.forEach(r=>r.addedNodes.forEach(n=>{
+    if(n.nodeType!==1)return;
+    if(n.tagName==='IMG')fixImage(n);
+    n.querySelectorAll&&n.querySelectorAll('img').forEach(fixImage);
+  }))).observe(document.documentElement,{childList:true,subtree:true});
+
+  document.addEventListener('click',function(e){
+    const a=e.target.closest&&e.target.closest('a');if(!a)return;
+    let u;try{u=new URL(a.href,location.origin)}catch{return}
+    if(u.origin!==location.origin)return;
+    if(u.pathname.startsWith(root+'/'))return;
+    if(u.pathname.startsWith('/')){e.preventDefault();history.replaceState(null,'',root+'/');}
+  },true);
+})();
+</script>
+<link rel="stylesheet" href="../wordpress/plugin/assets/index-CkD0cvw0.css">
+</head>
+<body class="antialiased"><div id="root"></div><script type="module" src="../wordpress/plugin/assets/index-BKhB8Pe2.js"></script></body>
+</html>
