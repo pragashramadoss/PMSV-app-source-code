@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#3155d9"><title>PMSV Food Safety & Quality Forum — Build Preview</title>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#3155d9"><link rel="manifest" href="./manifest.webmanifest"><title>PMSV Food Safety & Quality Forum — Build Preview</title>
 <script>
 (function(){
   const originalPath=location.pathname;
@@ -6,7 +6,10 @@
   const root=originalPath.replace(/\/preview\.html$/,'');
   const route=new URLSearchParams(location.search).get('route')||'/';
   const base=document.createElement('base');base.href=location.origin+root+'/assets/';document.head.appendChild(base);
-  window.PMSV={base:root,publicBase:root+'/public/'};
+  window.PMSV={base:root,publicBase:root+'/public/',installPrompt:null};
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.PMSV.installPrompt=e;window.dispatchEvent(new Event('pmsv-install-available'));});
+  window.addEventListener('appinstalled',function(){window.PMSV.installPrompt=null;});
+  if('serviceWorker' in navigator){navigator.serviceWorker.register(root+'/sw.js',{scope:root+'/',updateViaCache:'none'}).catch(function(){});}
 
   const nativeFetch=window.fetch.bind(window);
   window.fetch=async function(input,init){
@@ -21,7 +24,10 @@
         return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
       }
       if(u.pathname===root+'/api/updater')return new Response(JSON.stringify({active:false,checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});
-      if(u.pathname===root+'/api/push')return new Response(JSON.stringify({error:'Preview only'}),{status:503,headers:{'Content-Type':'application/json'}});
+      if(u.pathname===root+'/api/push'){
+        if(!init||!init.method||init.method==='GET')return new Response(JSON.stringify({publicKey:'BL9E3EciHIdhHaW9t3RQZesBSXN3a2N9-JTgnqJnpZ_mZl_LMmBhUUO99KgZ4cCRzjtxpJ7ZeNKB2kLdQnVvgxE'}),{status:200,headers:{'Content-Type':'application/json'}});
+        return new Response(JSON.stringify({enabled:init.method!=='DELETE'}),{status:200,headers:{'Content-Type':'application/json'}});
+      }
     }catch(e){}
     return nativeFetch(input,init);
   };
