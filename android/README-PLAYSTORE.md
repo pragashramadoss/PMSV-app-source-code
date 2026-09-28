@@ -5,7 +5,7 @@
 - Website: https://pmsvgroup.com/
 - Version: 1.0.0 (versionCode 1)
 - Target SDK: 36 (Android 16)
-- Minimum SDK: 23
+- Minimum SDK: 24
 - Packaging: Trusted Web Activity using Android Browser Helper
 
 The release bundle built by CI is intentionally unsigned. Signing is performed outside GitHub so the upload key is never committed to the public repository.
