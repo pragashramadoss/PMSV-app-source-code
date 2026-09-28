@@ -70,6 +70,9 @@ jobs:
           test -f wordpress/plugin/public/audits/nc-management.html
           test -f wordpress/plugin/public/audits/hygiene-rating-nc-management.html
           test -f wordpress/plugin/public/audits/audit-forum.css
+          for logo in asq.svg qci.jpg cqi-irca.svg efqm.svg lei.svg fssc.svg brcgs.svg sqf.svg bsi.svg iso.svg ifs.svg aib.svg australia.svg eu.svg india.png uk.png us.svg; do
+            test -s "wordpress/plugin/public/logos/$logo"
+          done
           for f in general-manufacturing milk-processing meat-processing fish-processing slaughter-house catering retail transport storage-warehouse; do
             grep -q 'pmsv-audit-deep' "wordpress/plugin/public/audits/$f.html"
             ! grep -q 'pmsv-audit-nav' "wordpress/plugin/public/audits/$f.html"
