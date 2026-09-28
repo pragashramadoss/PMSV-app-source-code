@@ -40,7 +40,7 @@
     return nativeFetch(input,init);
   };
 
-  history.replaceState(null,'',root+(route==='/'?'/':route));
+  history.replaceState(null,'',indexFile+(route==='/'?'':'?route='+encodeURIComponent(route)));
 
   document.addEventListener('click',function(e){
     const a=e.target.closest&&e.target.closest('a');if(!a)return;
