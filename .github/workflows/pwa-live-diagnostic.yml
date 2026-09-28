@@ -6,74 +6,41 @@ jobs:
   diagnose:
     runs-on: ubuntu-latest
     steps:
-      - name: HTTP endpoint checks
+      - name: Live PWA endpoint checks
         shell: bash
         run: |
           set -euxo pipefail
           echo "=== ROOT ==="
           curl -L -sS -D /tmp/root.h -o /tmp/root.html https://pmsvgroup.com/
-          cat /tmp/root.h
-          grep -oiE '<link[^>]+rel=["'\'' ]*manifest[^>]*>|<script[^>]*>[^<]{0,500}' /tmp/root.html | head -30 || true
-          echo "=== MANIFEST ==="
-          curl -L -sS -D /tmp/manifest.h -o /tmp/manifest.json https://pmsvgroup.com/manifest.webmanifest
-          cat /tmp/manifest.h
+          head -40 /tmp/root.h
+          grep -oE '<link[^>]+rel="manifest"[^>]*>|navigator\.serviceWorker\.register\([^;]+' /tmp/root.html || true
+
+          echo "=== MANIFEST QUERY ENDPOINT ==="
+          curl -L -sS -D /tmp/manifest.h -o /tmp/manifest.json 'https://pmsvgroup.com/?pmsv_manifest=1&v=1.0.8'
+          head -40 /tmp/manifest.h
           cat /tmp/manifest.json
-          echo "=== SERVICE WORKER ==="
-          curl -L -sS -D /tmp/sw.h -o /tmp/sw.js https://pmsvgroup.com/sw.js
-          cat /tmp/sw.h
+
+          echo "=== SERVICE WORKER QUERY ENDPOINT ==="
+          curl -L -sS -D /tmp/sw.h -o /tmp/sw.js 'https://pmsvgroup.com/?pmsv-sw=1&v=1.0.8'
+          head -40 /tmp/sw.h
           head -80 /tmp/sw.js
-          echo "=== ICONS ==="
+
+          echo "=== VALIDATION ==="
           python - <<'PY'
-          import json, urllib.request
-          m=json.load(open('/tmp/manifest.json'))
-          for icon in m.get('icons',[]):
-              u=icon['src']
-              if u.startswith('/'): u='https://pmsvgroup.com'+u
-              try:
-                  r=urllib.request.urlopen(u, timeout=15)
-                  data=r.read()
-                  print(u, r.status, r.headers.get_content_type(), len(data))
-              except Exception as e:
-                  print(u, 'ERROR', repr(e))
+          import json,re
+          from pathlib import Path
+          mh=Path('/tmp/manifest.h').read_text()
+          sh=Path('/tmp/sw.h').read_text()
+          root=Path('/tmp/root.html').read_text()
+          manifest=json.load(open('/tmp/manifest.json'))
+          assert re.search(r'^HTTP/\S+ 200\b',mh,re.M), mh
+          assert re.search(r'^HTTP/\S+ 200\b',sh,re.M), sh
+          assert manifest.get('id')=='/', manifest
+          assert manifest.get('start_url')=='/', manifest
+          assert manifest.get('scope')=='/', manifest
+          assert manifest.get('display') in ('standalone','fullscreen','minimal-ui'), manifest
+          assert len(manifest.get('icons',[]))>=2, manifest
+          assert 'pmsv_manifest=1' in root, 'root page is not linking to query manifest'
+          assert 'pmsv-sw=1' in root, 'root page is not registering query service worker'
+          print('PWA ENDPOINT CHECK: PASS')
           PY
-      - name: Chrome installability diagnostics
-        shell: bash
-        run: |
-          set -euxo pipefail
-          google-chrome --version || chromium-browser --version || chromium --version
-          python -m pip install -q websocket-client requests
-          CHROME=$(command -v google-chrome || command -v chromium-browser || command -v chromium)
-          "$CHROME" --headless=new --no-sandbox --disable-gpu --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-pmsv about:blank >/tmp/chrome.log 2>&1 &
-          sleep 3
-          python - <<'PY'
-          import json,time,requests,websocket
-          target=requests.put('http://127.0.0.1:9222/json/new?https://pmsvgroup.com/').json()
-          ws=websocket.create_connection(target['webSocketDebuggerUrl'], timeout=20)
-          n=0
-          def call(method,params=None):
-              global n
-              n+=1
-              ws.send(json.dumps({'id':n,'method':method,'params':params or {}}))
-              while True:
-                  m=json.loads(ws.recv())
-                  if m.get('id')==n:
-                      return m
-          call('Page.enable')
-          call('Runtime.enable')
-          call('Page.navigate',{'url':'https://pmsvgroup.com/'})
-          time.sleep(12)
-          print('URL',call('Runtime.evaluate',{'expression':'location.href','returnByValue':True}))
-          print('MANIFEST',json.dumps(call('Page.getAppManifest'),indent=2)[:20000])
-          print('INSTALLABILITY',json.dumps(call('Page.getInstallabilityErrors'),indent=2)[:20000])
-          expr="""(async()=>({
-            secure:window.isSecureContext,
-            manifest:[...document.querySelectorAll('link[rel="manifest"]')].map(x=>x.href),
-            sw:await navigator.serviceWorker.getRegistrations().then(rs=>rs.map(r=>({scope:r.scope,active:r.active&&r.active.scriptURL,installing:r.installing&&r.installing.scriptURL,waiting:r.waiting&&r.waiting.scriptURL}))),
-            controller:navigator.serviceWorker.controller&&navigator.serviceWorker.controller.scriptURL,
-            standalone:matchMedia('(display-mode: standalone)').matches,
-            ua:navigator.userAgent
-          }))()"""
-          print('RUNTIME',json.dumps(call('Runtime.evaluate',{'expression':expr,'awaitPromise':True,'returnByValue':True}),indent=2)[:20000])
-          ws.close()
-          PY
-          cat /tmp/chrome.log || true
