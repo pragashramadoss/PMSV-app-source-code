@@ -75,23 +75,11 @@ export default function AppNotifications(){
 
  async function installApp(){
   setMessage('');
+  const event=install||(window as PMSVWindow).PMSV?.installPrompt||null;
+  if(!event){setMessage('Install is not ready yet.');return}
   try{
-   if('serviceWorker' in navigator)await registerPmsvServiceWorker();
-   let event=install||(window as PMSVWindow).PMSV?.installPrompt||null;
-   if(!event){
-    event=await new Promise<InstallEvent|null>(resolve=>{
-     const ready=()=>{
-      window.removeEventListener('pmsv-install-available',ready);
-      resolve((window as PMSVWindow).PMSV?.installPrompt||null);
-     };
-     window.addEventListener('pmsv-install-available',ready,{once:true});
-     window.setTimeout(()=>{
-      window.removeEventListener('pmsv-install-available',ready);
-      resolve((window as PMSVWindow).PMSV?.installPrompt||null);
-     },3500);
-    });
-   }
-   if(!event){setMessage('Install is not ready yet. Please refresh once and try again.');return}
+   // Chrome requires prompt() to run directly from the user's click.
+   // Do not await service-worker/network work before calling it.
    await event.prompt();
    const choice=await event.userChoice;
    if(choice.outcome==='accepted'){
