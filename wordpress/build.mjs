@@ -1,9 +1,9 @@
-import {cp,mkdir,readFile,writeFile,readdir} from 'node:fs/promises';
+import {cp,mkdir,readFile,writeFile,readdir,rm} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
 import path from 'node:path';
 const root=path.resolve(import.meta.dirname,'..');process.chdir(root);
 const result=spawnSync(process.execPath,['node_modules/vite/bin/vite.js','build','--config','wordpress/vite.config.mjs'],{stdio:'inherit'});if(result.status)process.exit(result.status);
-const target=path.join(root,'wordpress/plugin');await cp('public',target+'/public',{recursive:true});
+const target=path.join(root,'wordpress/plugin');await rm(target+'/public',{recursive:true,force:true});await cp('public',target+'/public',{recursive:true});
 
 
 const auditDir=path.join(target,'public/audits');
