@@ -10,7 +10,7 @@ export default function AboutPage() {
     <Link href="/">← Back to PMSV</Link>
     <header><img src="/icons/pmsv-family-64.png" alt="PMSV" width="64" height="64"/><div><h1>About me</h1><p>Pragash Ramadoss · Food Safety, Quality & Process Excellence</p></div></header>
 
-    <section className="about-hero"><div className="about-photo-wrap"><img className="about-photo" src="https://pragashramadoss-hlxqw.wpcomstaging.com/wp-content/uploads/2026/09/pragash-profile-crop.png" alt="Pragash Ramadoss"/></div><div><h2>Professional profile</h2>
+    <section className="about-hero"><div className="about-photo-wrap"><img className="about-photo" src="https://pmsvgroup.com/wp-content/uploads/2026/09/pragash-profile.jpg" alt="Pragash Ramadoss"/></div><div><h2>Professional profile</h2>
     <p>I am <strong>Pragash Ramadoss</strong>, a food safety, quality and process excellence professional with more than 13 years of experience across food manufacturing, food ingredients and multi-site quality systems.</p>
     <p>My experience includes central quality governance across multiple food categories, supplier quality and audits, QMS and FSMS, HACCP, food safety certification systems, new-unit and acquisition quality-system development, complaint reduction, process capability, continuous improvement and quality culture.</p>
     <p>I have worked in central quality at <strong>ITC Foods</strong> and previously held quality leadership roles with <strong>Naturex and Givaudan</strong>.</p></div></section>
