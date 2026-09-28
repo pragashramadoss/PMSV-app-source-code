@@ -1,5 +1,0 @@
-export const professionalTopics=[
- {id:'quality',title:'Quality updates',short:'Quality',kicker:'03 · QUALITY MANAGEMENT',description:'Quality systems, standards, culture and global association updates.',detail:'Worldwide updates from quality associations and standards bodies, selected for food-industry quality professionals.'},
- {id:'excellence',title:'Process excellence updates',short:'Excellence',kicker:'04 · CONTINUOUS IMPROVEMENT',description:'Lean, Six Sigma, productivity and organisational excellence.',detail:'Improvement methods, research, case studies and excellence frameworks from established professional bodies. Cross-industry lessons are labelled by their source.'},
- {id:'certifications',title:'Certification & standards updates',short:'Certifications',kicker:'05 · CERTIFICATIONS & SCHEMES',description:'ISO, FSSC, BRCGS, IFS, SQF, AIB and excellence frameworks.',detail:'Standards and scheme revisions, audit requirements, official interpretations and transition dates from ISO, FSSC, BRCGS, IFS, SQF, AIB and comparable scheme owners.'}
-];
