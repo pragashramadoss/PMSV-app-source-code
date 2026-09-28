@@ -47,6 +47,7 @@ function escapeAuditText(value){
   return value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function stripLegacyScoringCards(html){
+  html=html.replace(/<p\b[^>]*>\s*<b>Scoring:\s*<\/b>[\s\S]*?<\/p>/gi,'');
   return html.replace(/<section\b[^>]*class=["'][^"']*\bcard\b[^"']*["'][^>]*>([\s\S]*?)<\/section>/gi,(full,inner)=>{
     let text=cleanAuditText(inner);
     if(!/\bScoring\s*:/i.test(text))return full;
