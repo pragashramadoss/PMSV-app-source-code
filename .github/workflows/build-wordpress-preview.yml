@@ -126,7 +126,7 @@ jobs:
           grep -q '"/updates"' wordpress/plugin/routes.json
           grep -q '"/about"' wordpress/plugin/routes.json
           grep -R -q 'AC Tech, Anna University' wordpress/plugin/assets/assets/*.js
-          grep -R -q 'pragash-profile-crop.png' wordpress/plugin/assets/assets/*.js
+          grep -R -q 'pragash-profile.jpg' wordpress/plugin/assets/assets/*.js
 
       - name: Sync generated plugin files to migration branch
         if: github.event_name == 'push'
