@@ -178,3 +178,23 @@ img[src*="australia.svg"]{background:#143352;border-radius:5px;padding:6px}.nav-
  .app-dashboard .primary-nav>a{font-size:11px!important;white-space:nowrap!important;overflow-wrap:normal!important;word-break:normal!important;text-align:center!important}
  .app-dashboard .primary-nav>a>span{white-space:nowrap!important;overflow-wrap:normal!important;word-break:normal!important}
 }
+
+/* Final home launcher: use the same compact card language as the Audit landing tiles. */
+.home-launcher.home-primary-launcher{gap:10px!important;max-width:920px!important}
+.home-primary-launcher>a{
+  min-height:98px!important;padding:13px 14px!important;border:1px solid #e2e7f0!important;
+  border-radius:14px!important;background:#fff!important;box-shadow:none!important;
+  align-items:flex-start!important;justify-content:flex-start!important;gap:5px!important;
+}
+.home-primary-launcher>a:nth-child(1),.home-primary-launcher>a:nth-child(2),.home-primary-launcher>a:nth-child(3){border-top:1px solid #e2e7f0!important}
+.home-primary-launcher>a:hover{border-color:#9fb2ee!important;transform:translateY(-1px)!important;box-shadow:0 8px 22px rgba(25,52,105,.08)!important}
+.home-primary-launcher .launch-icon{width:28px!important;height:28px!important;margin:0 0 3px!important;background:transparent!important;border-radius:0!important}
+.home-primary-launcher .launch-icon svg{width:24px!important;height:24px!important}
+.home-primary-launcher strong{font-size:15px!important;line-height:1.18!important}
+@media(max-width:760px){
+ .home-launcher.home-primary-launcher{gap:7px!important}
+ .home-primary-launcher>a{min-height:78px!important;padding:10px 10px!important;border-radius:12px!important;gap:4px!important}
+ .home-primary-launcher .launch-icon{width:23px!important;height:23px!important;margin-bottom:2px!important}
+ .home-primary-launcher .launch-icon svg{width:21px!important;height:21px!important}
+ .home-primary-launcher strong{font-size:13px!important}
+}
