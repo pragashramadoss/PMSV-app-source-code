@@ -23,6 +23,20 @@ function pmsv_wp_insert($n) {
     $result=$wpdb->query($wpdb->prepare("INSERT IGNORE INTO $t (id,url_hash,title_hash,published,first_seen,payload) VALUES (%s,%s,%s,%s,%s,%s)",$n['id'],hash('sha256',$n['url']),hash('sha256',strtolower($n['title'])),$n['published'],$n['firstSeen'],wp_json_encode($n)));
     if($result===false)throw new RuntimeException('Archive insert failed');return $result;
 }
+function pmsv_wp_with_summary($n) {
+    if (!is_array($n) || trim((string)($n['summary']??''))!=='') return $n;
+    $title=trim(wp_strip_all_tags((string)($n['title']??'')));$source=trim(wp_strip_all_tags((string)($n['source']??'PMSV source')));$category=trim(wp_strip_all_tags((string)($n['category']??'update')));
+    if ($title==='') return $n;
+    if (preg_match('/^Gazette Notification of\\s+(.+)$/i',$title,$m)) $summary=$source.' published a Gazette notification concerning '.trim($m[1]).'.';
+    elseif (preg_match('/^Advisory on\\s+(.+)$/i',$title,$m)) $summary=$source.' issued an advisory on '.trim($m[1]).'.';
+    elseif (preg_match('/^Notification of\\s+(.+)$/i',$title,$m)) $summary=$source.' published a notification concerning '.trim($m[1]).'.';
+    elseif (preg_match('/^Draft\\s+(.+)$/i',$title,$m)) $summary=$source.' published a draft update concerning '.trim($m[1]).'.';
+    elseif (($n['tab']??'')==='general') $summary=$source.' reported on: '.$title.'.';
+    elseif (stripos($source,'LinkedIn')!==false) $summary=$source.' shared an update on: '.$title.'.';
+    else $summary=$source.' published an update on: '.$title.'.';
+    $n['summary']=function_exists('mb_substr')?mb_substr($summary,0,520):substr($summary,0,520);
+    return $n;
+}
 function pmsv_wp_native_blogs() {
     $posts=get_posts(['post_type'=>'post','post_status'=>'publish','numberposts'=>-1,'orderby'=>'date','order'=>'DESC','suppress_filters'=>false]);
     $items=[];
@@ -43,7 +57,7 @@ function pmsv_wp_native_blogs() {
 function pmsv_wp_archive() {
     global $wpdb;$t=pmsv_wp_table('news');$rows=$wpdb->get_col("SELECT payload FROM $t ORDER BY published DESC");
     if($wpdb->last_error)throw new RuntimeException('Archive read failed');
-    $news=array_map(fn($r)=>json_decode($r,true,512,JSON_THROW_ON_ERROR),$rows);
+    $news=array_map(fn($r)=>pmsv_wp_with_summary(json_decode($r,true,512,JSON_THROW_ON_ERROR)),$rows);
     $news=array_values(array_filter($news,fn($n)=>($n['tab']??'')!=='blogs'));
     $news=array_merge($news,pmsv_wp_native_blogs());
     usort($news,fn($a,$b)=>strcmp($b['published'],$a['published'])?:strcmp($a['title'],$b['title']));return $news;
