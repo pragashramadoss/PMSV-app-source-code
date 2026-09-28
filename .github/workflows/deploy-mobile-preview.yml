@@ -1,13 +1,6 @@
 name: Deploy PMSV mobile preview
 
-on:
-  workflow_dispatch:
-  push:
-    branches: [wordpress-independent]
-    paths:
-      - 'wordpress/plugin/**'
-      - '.github/workflows/deploy-mobile-preview.yml'
-
+on:\n  workflow_dispatch:\n
 permissions:
   contents: read
   pages: write
