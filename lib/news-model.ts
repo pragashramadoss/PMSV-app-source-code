@@ -9,7 +9,7 @@ export const regions=[
 export type View={kind:'home'|'updates'|'regulatory'|'country'|'news'|'feed'|'topic'|'blogs'|'blog-tag';region?:string;topic?:string;body?:string;tag?:string};
 export function regionName(id:string){return regions.find(r=>r.id===id)?.name||(id==='global'?'International':id)}
 export function blogTagSlug(tag:string){return tag.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/&/g,' and ').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80)||'uncategorized'}
-export function blogTags(n:News){const tags=Array.isArray(n.tags)?n.tags.filter(t=>typeof t==='string'&&t.trim()).map(t=>t.trim()):[];return tags.length?Array.from(new Set(tags)):['Uncategorized']}
+export function blogTags(n:News){const tags=Array.isArray(n.tags)?n.tags.filter(t=>typeof t==='string'&&t.trim()).map(t=>t.trim()):[];if(tags.length)return Array.from(new Set(tags));const category=(n.category||'').trim();return category&&category.toLowerCase()!=='uncategorized'?[category]:['Uncategorized']}
 export function isFssaiWebsite(n:News){try{return /(^|\.)fssai\.gov\.in$/.test(new URL(n.url).hostname)}catch{return false}}
 export function classifyNews(n:News):News{
  if((n.region||'india')!=='india'||!['general','fssai'].includes(n.tab))return n;
