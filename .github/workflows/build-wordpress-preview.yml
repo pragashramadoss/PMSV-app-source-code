@@ -87,7 +87,8 @@ jobs:
             grep -q 'pmsv-audit-deep' "wordpress/plugin/public/audits/$f.html"
             ! grep -q 'pmsv-audit-nav' "wordpress/plugin/public/audits/$f.html"
             grep -q 'score-chip' "wordpress/plugin/public/audits/$f.html"
-            grep -q 'Scoring Table' "wordpress/plugin/public/audits/$f.html"
+            ! grep -q 'Scoring Table' "wordpress/plugin/public/audits/$f.html"
+            ! grep -q '<b>Scoring:</b>' "wordpress/plugin/public/audits/$f.html"
             grep -q 'Hygiene Rating' "wordpress/plugin/public/audits/$f.html"
             grep -q 'id="save"' "wordpress/plugin/public/audits/$f.html"
             grep -q 'id="reset"' "wordpress/plugin/public/audits/$f.html"
@@ -119,6 +120,8 @@ jobs:
           ! grep -R -Ei 'chatgpt\.site|chatgpt\.com|openai\.com|modelContext' wordpress/plugin
           grep -q '"/updates"' wordpress/plugin/routes.json
           grep -q '"/about"' wordpress/plugin/routes.json
+          grep -R -q 'AC Tech, Anna University' wordpress/plugin/assets/assets/*.js
+          grep -R -q 'pragash-profile-crop.png' wordpress/plugin/assets/assets/*.js
 
       - name: Sync generated plugin files to migration branch
         if: github.event_name == 'push'
