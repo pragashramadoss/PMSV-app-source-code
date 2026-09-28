@@ -70,7 +70,7 @@ jobs:
           test -f wordpress/plugin/public/audits/nc-management.html
           test -f wordpress/plugin/public/audits/hygiene-rating-nc-management.html
           test -f wordpress/plugin/public/audits/audit-forum.css
-          for logo in qci.png sqf.svg australia.svg eu.svg india.png uk.png us.svg; do
+          for logo in qci.jpg sqf.svg australia.svg eu.svg india.png uk.png us.svg; do
             test -s "wordpress/plugin/public/logos/$logo"
           done
           for f in general-manufacturing milk-processing meat-processing fish-processing slaughter-house catering retail transport storage-warehouse; do
@@ -113,7 +113,7 @@ jobs:
           grep -q 'overflow-x:clip!important' wordpress/plugin/public/audits/audit-forum.css
           grep -q 'position:-webkit-sticky!important' wordpress/plugin/public/audits/audit-forum.css
           ! grep -R -q '/wp-content/plugins/pmsv-original-app-preview/public/' wordpress/plugin/assets/assets/*.js
-          grep -R -q 'logos/qci.png' wordpress/plugin/assets/assets/*.js
+          grep -R -q 'logos/qci.jpg' wordpress/plugin/assets/assets/*.js
           grep -R -q 'logos/sqf.svg' wordpress/plugin/assets/assets/*.js
           test "$(grep -Rho 'data:image/webp;base64,' wordpress/plugin/assets/assets/*.js | wc -l | tr -d ' ')" -ge 10
           ! grep -REq 'logos/(asq|cqi-irca|efqm|lei|fssc|brcgs|bsi|iso|ifs|aib)\.(ico|svg|png|jpg|jpeg)' wordpress/plugin/assets/assets/*.js
@@ -162,3 +162,5 @@ jobs:
 # v0.5.19 embedded-logo and summary verification
 
 # v0.5.19 clean embedded-logo rebuild
+
+# v0.5.19 final clean logo verification
