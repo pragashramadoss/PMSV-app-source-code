@@ -1,6 +1,6 @@
 /* PMSV responsive application shell: compact tiles for desktop web, mobile web, and installed app/PWA */
 :root{--pmsv-page:1180px;--pmsv-green:#3155d9;--pmsv-green2:#243e79;--pmsv-bg:#f0f3f9;--pmsv-line:#e2e7f0;--pmsv-ink:#18243e;--pmsv-muted:#728099}
-html,body{max-width:100%;overflow-x:hidden}
+html{max-width:100%;overflow-x:clip}body{max-width:100%;overflow-x:clip}
 body{background:var(--pmsv-bg)!important;color:var(--pmsv-ink)!important;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif!important}
 .wrap{width:min(var(--pmsv-page),calc(100% - 40px))!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important}
 header{background:linear-gradient(135deg,var(--pmsv-green),var(--pmsv-green2))!important}

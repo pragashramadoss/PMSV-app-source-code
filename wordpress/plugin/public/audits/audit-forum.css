@@ -4,7 +4,7 @@
   --pmsv-muted:#728099;--pmsv-line:#e2e7f0;--pmsv-red:#b42318;--pmsv-green:#136c48;
   --pmsv-amber:#985613;--pmsv-soft-blue:#eef2ff;
 }
-html,body{max-width:100%;overflow-x:hidden}
+html{max-width:100%;overflow-x:clip}body{max-width:100%;overflow-x:clip}
 body.pmsv-audit-integrated{margin:0!important;padding-left:232px!important;background:var(--pmsv-bg)!important;color:var(--pmsv-ink)!important;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif!important;min-height:100dvh}
 .pmsv-audit-nav{position:fixed;inset:0 auto 0 0;width:232px;display:flex;flex-direction:column;padding:35px 16px;gap:8px;background:var(--pmsv-navy);z-index:3000;color:#fff}
 .pmsv-audit-nav .nav-caption{color:#8f9eb8;letter-spacing:1.8px;font-size:12px;font-weight:600;padding:0 14px;margin:2px 0 18px}
@@ -269,4 +269,16 @@ body.pmsv-audit-integrated .score-chip .mobile-label{display:none}
 body.pmsv-audit-integrated .meta input,
 body.pmsv-audit-integrated .meta select{
   box-sizing:border-box!important;min-width:0!important;max-width:100%!important;
+}
+
+/* Mobile Chrome: keep the score ribbon attached to the viewport while the document scrolls.
+   overflow-x:clip avoids creating a body scroll container, unlike overflow-x:hidden. */
+html{overflow-x:clip!important;overflow-y:visible!important}
+body.pmsv-audit-integrated{overflow-x:clip!important;overflow-y:visible!important}
+body.pmsv-audit-integrated.pmsv-audit-deep .scorebar,
+body.pmsv-audit-integrated.pmsv-audit-deep .score{
+  position:-webkit-sticky!important;
+  position:sticky!important;
+  top:0!important;
+  z-index:9999!important;
 }
