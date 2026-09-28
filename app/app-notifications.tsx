@@ -63,8 +63,6 @@ export default function AppNotifications(){
    if(Notification.permission==='granted'){
     if(sub&&token&&preference==='on')setEnabled(true);
     else if(preference==='on')await enable(false);
-   }else if(Notification.permission==='default'&&!localStorage.getItem('pmsv-push-prompt-shown')){
-    localStorage.setItem('pmsv-push-prompt-shown','true');setOpen(true);
    }
   }).catch(()=>{});
 
@@ -81,7 +79,7 @@ export default function AppNotifications(){
    if(!window.isSecureContext)throw Error('Notifications require the secure HTTPS version of PMSV.');
    if(!('Notification' in window)||!('serviceWorker' in navigator)||!('PushManager' in window))throw Error('This browser does not support PMSV notifications.');
    const permission=askPermission?await Notification.requestPermission():Notification.permission;
-   if(permission!=='granted')throw Error(permission==='denied'?'Notifications are blocked for PMSV. Open Chrome site settings → Notifications and allow pmsvgroup.com.':'Notification permission was not allowed.');
+   if(permission!=='granted')throw Error(permission==='denied'?'Notifications are blocked by the browser.':'Notification permission was not allowed.');
    const reg=await serviceWorkerRegistration();
    await navigator.serviceWorker.ready;
    const response=await fetch(appUrl('/api/push'),{cache:'no-store',credentials:'same-origin',signal:AbortSignal.timeout(12000)});
@@ -123,22 +121,16 @@ export default function AppNotifications(){
  async function installApp(){
   setMessage('');
   const event=install||(window as PMSVWindow).PMSV?.installPrompt||null;
-  if(event){
-   try{
-    await event.prompt();
-    const choice=await event.userChoice;
-    if(choice.outcome==='accepted'){
-     setInstall(null);
-     if((window as PMSVWindow).PMSV)(window as PMSVWindow).PMSV!.installPrompt=null;
-    }
-    return;
-   }catch{}
-  }
-  const ua=navigator.userAgent;
-  if(/Android/i.test(ua))setMessage('In Chrome, tap ⋮ at the top-right → Add to Home screen → Install. If Install is not shown, refresh PMSV once and try again.');
-  else if(/iPhone|iPad|iPod/i.test(ua))setMessage('In Safari, tap Share → Add to Home Screen → Add.');
-  else setMessage('Use your browser menu and choose Install app or Add to Home screen.');
+  if(!event)return;
+  try{
+   await event.prompt();
+   const choice=await event.userChoice;
+   if(choice.outcome==='accepted'){
+    setInstall(null);
+    if((window as PMSVWindow).PMSV)(window as PMSVWindow).PMSV!.installPrompt=null;
+   }
+  }catch{}
  }
 
- return <><div className="app-notification-actions">{!installed&&<button onClick={()=>{setOpen(true);void installApp()}}><Download size={18}/><span>Install app</span></button>}<button onClick={()=>setOpen(true)} aria-label={enabled?'Manage app notifications':'Turn on app notifications'}>{enabled?<BellRing size={19}/>:<Bell size={19}/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></div><Dialog open={open} onOpenChange={setOpen}><DialogContent className="subscription-dialog"><DialogHeader><DialogTitle>App notifications</DialogTitle><DialogDescription>Install PMSV on your Home Screen and allow alerts for new updates.</DialogDescription></DialogHeader><p className="push-privacy">No email, phone number or sign-in is needed. PMSV stores only this browser’s push address and a random management token.</p>{!installed&&<div className="push-install"><strong>Keep PMSV on your Home Screen</strong><p>Tap below to install. If your browser cannot show the install prompt, PMSV will show the exact browser-menu steps.</p><button onClick={()=>{void installApp()}}><Download size={17}/>Install PMSV</button></div>}{supported?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{!enabled&&<button className="text-button" disabled={busy} onClick={()=>{void disable()}}>Keep notifications off</button>}</>:<p>This browser cannot provide PMSV notifications here. Use Chrome on Android, or the installed Home Screen app on supported iPhone/iPad versions.</p>}<p role="status" className="push-status">{message}</p><p className="subscription-privacy">You can change notification permission later in your browser or phone settings.</p></DialogContent></Dialog></>;
+ return <><div className="app-notification-actions">{!installed&&install&&<button onClick={()=>{void installApp()}} aria-label="Install PMSV"><Download size={18}/><span>Install app</span></button>}<button onClick={()=>setOpen(true)} aria-label={enabled?'Manage app notifications':'Turn on app notifications'}>{enabled?<BellRing size={19}/>:<Bell size={19}/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></div><Dialog open={open} onOpenChange={setOpen}><DialogContent className="subscription-dialog"><DialogHeader><DialogTitle>App notifications</DialogTitle><DialogDescription>Turn on alerts for new PMSV updates.</DialogDescription></DialogHeader><p className="push-privacy">No email, phone number or sign-in is needed.</p>{supported&&Notification.permission!=='denied'?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{!enabled&&<button className="text-button" disabled={busy} onClick={()=>{void disable()}}>Keep notifications off</button>}</>:<p className="push-status">Notifications are blocked by the browser.</p>}<p role="status" className="push-status">{message}</p></DialogContent></Dialog></>;
 }
