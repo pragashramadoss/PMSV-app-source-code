@@ -10,6 +10,9 @@ export default defineConfig({
   name:'pmsv-wordpress-original-source-adapter', enforce:'pre',
   async transform(code,id){
    if(!id.startsWith(root+'/app/')||!id.endsWith('.tsx'))return;
+   // app-notifications contains URL/path string literals used as data, not links.
+   // Rewriting "/" inside those helpers corrupts service-worker and VAPID logic.
+   if(id===root+'/app/app-notifications.tsx')return;
    const result=await transformAsync(code,{filename:id,configFile:false,babelrc:false,parserOpts:{plugins:['typescript','jsx']},plugins:[({types:t})=>({visitor:{StringLiteral(p){
     if(!p.node.value.startsWith('/')||p.node.value.startsWith('//'))return;
     const isPublicAsset=['/brand/','/logos/','/icons/'].some(prefix=>p.node.value.startsWith(prefix));
