@@ -102,7 +102,9 @@ function pmsv_wp_dispatch() {
             $r=wp_safe_remote_post($row['endpoint'],['timeout'=>10,'redirection'=>0,'headers'=>['Authorization'=>pmsv_wp_vapid($row['endpoint'],$keys),'TTL'=>'86400','Urgency'=>'normal','Content-Length'=>'0'],'body'=>'']);
             $code=is_wp_error($r)?0:wp_remote_retrieve_response_code($r);
             if(in_array($code,[404,410],true)){$wpdb->delete($t,['id'=>$row['id']]);continue;}
-            if($code<200||$code>=300)throw new RuntimeException('Provider declined');$accepted++;
+            if($code<200||$code>=300)throw new RuntimeException('Provider declined');
+            $wpdb->query($wpdb->prepare("UPDATE $t SET retry_at=0 WHERE id=%s AND seen_at=%d",$row['id'],$cutoff));
+            $accepted++;
         }catch(Throwable $e){$failed++;$wpdb->query($wpdb->prepare("UPDATE $t SET seen_at=%d WHERE id=%s AND seen_at=%d",$row['seen_at'],$row['id'],$cutoff));}
     }
     $remaining=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $t WHERE seen_at<%d AND retry_at<=%d",$cutoff,(int)floor(microtime(true)*1000)));
