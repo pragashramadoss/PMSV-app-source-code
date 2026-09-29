@@ -124,14 +124,14 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
     const now=new Date().toISOString();
     const nextAnswer:Answer={id:String(current.answers.length+1),questionId:qid,name:answerName,body:answerBody,createdAt:now};
     const next:Detail={question:{...current.question,answerCount:current.answers.length+1,lastActivityAt:now},answers:[...current.answers,nextAnswer]};
-    upsertPreviewDetail(next);setDetail(next);setQuestions(readPreviewStore().map(x=>x.question));setAnswerBody('');
+    upsertPreviewDetail(next);setDetail(next);setQuestions(readPreviewStore().map(x=>x.question));setAnswerName('');setAnswerBody('');
    }
    setSubmitting(false);return;
   }
   try{
    const r=await fetch(route('/api/discussions/'+qid+'/answers'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:answerName,body:answerBody})});
    const data=await r.json();if(!r.ok)throw new Error(data.error||'Unable to post answer.');
-   setAnswerBody('');setSubmitting(false);await load();
+   setAnswerName('');setAnswerBody('');setSubmitting(false);await load();
   }catch(e){setMessage(e instanceof Error?e.message:'Unable to post answer.');setSubmitting(false)}
  }
 
