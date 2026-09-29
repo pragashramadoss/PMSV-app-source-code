@@ -184,7 +184,7 @@ for(const e of await readdir(auditDir,{withFileTypes:true})){
 async function files(dir,base=''){let out=[];for(const e of await readdir(dir,{withFileTypes:true})){const name=base+e.name;if(e.isDirectory())out.push(...await files(dir+'/'+e.name,name+'/'));else out.push(name);}return out;}
 await writeFile(target+'/public-files.json',JSON.stringify(await files('public')));
 const bodies=JSON.parse(await readFile('data/professional-sources.json','utf8'));
-const routes=['/','/updates','/regulatory','/news','/quality','/excellence','/certifications','/blogs','/discussions','/about','/privacy','/subscriptions/manage',...['india','us','eu','uk','australia'].map(x=>'/regulatory/'+x),'/news/india','/news/global'];
+const routes=['/','/updates','/regulatory','/news','/quality','/excellence','/certifications','/blogs','/discussions','/discussions/ask','/about','/privacy','/subscriptions/manage',...['india','us','eu','uk','australia'].map(x=>'/regulatory/'+x),'/news/india','/news/global'];
 for(const b of bodies)for(const t of b.topics)routes.push('/'+t+'/'+b.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,''));
 await writeFile(target+'/routes.json',JSON.stringify(routes,null,2));
 await writeFile(target+'/SOURCE.json',JSON.stringify({repository:'pragashramadoss/PMSV-app-source-code',auditSource:'pragashramadoss/pmsv-fssai-audit',auditIntegration:'bundled-from-github-at-build',releaseStatus:'production',routes:routes.length},null,2));
