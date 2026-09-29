@@ -1,0 +1,24 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PMSV Email Report Preview</title><style>
+body{margin:0;font-family:Inter,system-ui,Arial;background:#f0f3f9;color:#18243e}.hero{background:linear-gradient(135deg,#243e79,#3155d9);color:#fff;padding:32px 18px}.wrap{max-width:760px;margin:auto}.card{background:#fff;border:1px solid #e2e7f0;border-radius:18px;padding:20px;margin:18px}.buttons{display:grid;gap:12px}.btn{display:block;border:0;border-radius:12px;padding:15px 16px;background:#3155d9;color:#fff;font-weight:800;text-decoration:none;text-align:center}.btn.secondary{background:#0b6b53}.note{font-size:13px;color:#6b7890;line-height:1.5}.tag{display:inline-block;background:#eef2ff;color:#3155d9;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800}
+</style></head><body><div class="hero"><div class="wrap"><span class="tag">Preview only</span><h1>Email Report Test</h1><p>Sample audit data is stored only in this browser for testing.</p></div></div><div class="wrap"><div class="card"><h2>Choose a report</h2><div class="buttons"><button class="btn" onclick="openSchedule()">Schedule IV Audit Report</button><button class="btn secondary" onclick="openHygiene()">Hygiene Rating Audit Report</button></div><p class="note">On the report page, test <b>Email Audit Report</b> and <b>Email NC Report</b>. On Android Chrome/PWA, the share sheet should open with the Word report attached.</p></div></div><script>
+const schedule={id:'demo-schedule-email',type:'General Manufacturing',businessType:'General Manufacturing',fbo:'PMSV Demo Foods Pvt Ltd',fboName:'PMSV Demo Foods Pvt Ltd',license:'10000000000000',date:'2026-09-29',auditor:'Demo Auditor',representative:'Demo FBO Representative',address:'Bengaluru, Karnataka',score:7,maxScore:10,percentage:70,scorePct:70,ncCount:1,criticalNC:0,grade:'B — Needs Improvement',items:[
+{no:'1',question:'Food premises are maintained in a clean and hygienic condition.',max:2,status:'C',score:2,comment:'Compliant',critical:false},
+{no:'2',question:'Adequate hand washing facilities are available and maintained.',max:2,status:'NC',score:0,comment:'Hand wash signage missing near production entry.',critical:false},
+{no:'3',question:'Pest control programme is implemented and records are maintained.',max:2,status:'C',score:2,comment:'Records verified',critical:false},
+{no:'4',question:'Food handlers follow personal hygiene requirements.',max:4,status:'PC',score:3,comment:'Refresher training required for two handlers.',critical:true}
+]};
+const hygiene={id:'demo-hygiene-email',businessType:'Food Service Establishment / Bakery',fbo:'PMSV Demo Restaurant',outlet:'Yelahanka Outlet',license:'10000000000001',date:'2026-09-29',auditor:'Demo Auditor',score:7,maxScore:10,percentage:70,rating:'Very Good',items:[
+{no:'1',question:'Food preparation area is clean and maintained.',max:2,status:'C',comment:'Compliant',critical:false},
+{no:'2',question:'Hand washing facilities are functional and supplied.',max:2,status:'NC',comment:'Paper towels not available at one station.',critical:false},
+{no:'3',question:'Raw and cooked foods are segregated.',max:4,status:'C',comment:'Verified',critical:true},
+{no:'4',question:'Temperature controls are monitored.',max:2,status:'PC',comment:'One monitoring record incomplete.',critical:false}
+]};
+function seed(){
+ localStorage.setItem('pmsvFssaiAudits',JSON.stringify([schedule]));
+ localStorage.setItem('pmsvFssaiNcManagement',JSON.stringify({'demo-schedule-email':{items:{'2':{rootCause:'Replenishment check missed',correction:'Paper signage installed',correctiveAction:'Daily pre-start hygiene checklist updated',responsibility:'QA',status:'Open'},'4':{rootCause:'Training gap',correction:'Briefed handlers',correctiveAction:'Monthly refresher training',responsibility:'QA',status:'Open'}}}}));
+ localStorage.setItem('pmsvHygieneRatingAudits',JSON.stringify([hygiene]));
+ localStorage.setItem('pmsvHygieneRatingNcManagement',JSON.stringify({'demo-hygiene-email':{items:{'2':{rootCause:'Stockout',correction:'Paper towels replenished',correctiveAction:'Minimum stock level added',responsibility:'Outlet Manager',status:'Open'}}}}));
+}
+function openSchedule(){seed();location.href='audits/audit-report.html?audit=demo-schedule-email'}
+function openHygiene(){seed();location.href='audits/hygiene-rating-report.html?audit=demo-hygiene-email'}
+</script></body></html>
