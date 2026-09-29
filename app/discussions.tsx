@@ -1,6 +1,6 @@
 'use client';
 import {useEffect,useMemo,useState} from 'react';
-import {BookOpen,Newspaper,ShieldCheck,MessagesSquare,MessageCircleQuestion,ArrowLeft,Send,Flag} from 'lucide-react';
+import {BookOpen,Newspaper,ShieldCheck,MessagesSquare,MessageCircleQuestion,ArrowLeft,Send,Flag,Search,Shield,BadgeCheck,TrendingUp} from 'lucide-react';
 import AppNotifications from './app-notifications';
 
 type Question={
@@ -55,8 +55,23 @@ export default function Discussions({questionId}:{questionId?:string}){
  const [reportReason,setReportReason]=useState<'off-topic'|'spam'|'inappropriate'|'other'>('off-topic');
  const [reporting,setReporting]=useState(false);
  const [reportNotice,setReportNotice]=useState('');
+ const [search,setSearch]=useState('');
+ const [selectedTopic,setSelectedTopic]=useState<'all'|'food-safety'|'quality'|'process-excellence'>('all');
 
  const endpoint=useMemo(()=>route('/api/discussions'+(questionId?'/'+questionId:'')),[questionId]);
+ const topicCounts=useMemo(()=>({
+  'food-safety':questions.filter(q=>q.category==='food-safety').length,
+  'quality':questions.filter(q=>q.category==='quality').length,
+  'process-excellence':questions.filter(q=>q.category==='process-excellence').length
+ }),[questions]);
+ const visibleQuestions=useMemo(()=>{
+  const term=search.trim().toLowerCase();
+  return questions.filter(q=>{
+   if(selectedTopic!=='all'&&q.category!==selectedTopic)return false;
+   if(!term)return true;
+   return (q.title+' '+q.body+' '+q.name+' '+categoryLabel(q.category)).toLowerCase().includes(term);
+  });
+ },[questions,search,selectedTopic]);
  async function load(){
   setLoading(true);setMessage('');
   if(isPreview()){
@@ -151,6 +166,15 @@ export default function Discussions({questionId}:{questionId?:string}){
  }
 
  return <Shell><div className="discussion-heading"><div><h1>Discussions</h1><p>Ask and answer practical questions about food safety, quality and process excellence.</p></div><button onClick={()=>setAskOpen(x=>!x)}><MessageCircleQuestion size={19}/>{askOpen?'Close':'Ask a question'}</button></div>
+  <div className="discussion-search"><Search size={19}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search questions, topics or keywords…" aria-label="Search discussions"/>{search&&<button type="button" onClick={()=>setSearch('')}>Clear</button>}</div>
+  <section className="discussion-topics">
+   <div className="discussion-section-heading"><div><h2>Topics</h2><p>Open a topic to browse related questions.</p></div>{selectedTopic!=='all'&&<button type="button" onClick={()=>setSelectedTopic('all')}>Show all</button>}</div>
+   <div className="topic-grid">
+    <button type="button" className={'topic-card food-safety '+(selectedTopic==='food-safety'?'active':'')} onClick={()=>setSelectedTopic('food-safety')}><span className="topic-icon"><Shield size={22}/></span><span><strong>Food Safety</strong><small>HACCP, FSSAI, hygiene, allergens, pathogens, FSMS and more</small></span><b>{topicCounts['food-safety']}</b></button>
+    <button type="button" className={'topic-card quality '+(selectedTopic==='quality'?'active':'')} onClick={()=>setSelectedTopic('quality')}><span className="topic-icon"><BadgeCheck size={22}/></span><span><strong>Quality</strong><small>QA/QC, audits, CAPA, RCA, SPC, supplier quality and QMS</small></span><b>{topicCounts['quality']}</b></button>
+    <button type="button" className={'topic-card process-excellence '+(selectedTopic==='process-excellence'?'active':'')} onClick={()=>setSelectedTopic('process-excellence')}><span className="topic-icon"><TrendingUp size={22}/></span><span><strong>Process Excellence</strong><small>Lean, Six Sigma, DMAIC, capability, FMEA and improvement</small></span><b>{topicCounts['process-excellence']}</b></button>
+   </div>
+  </section>
   <div className="discussion-scope"><strong>Scope:</strong> Food Safety · Quality · Process Excellence <span>No general advertising, unrelated subjects, links or promotions.</span></div>
   {message&&<p className="discussion-message">{message}</p>}
   {askOpen&&<section className="ask-card"><h2>Ask a question</h2><form onSubmit={ask}>
@@ -161,8 +185,8 @@ export default function Discussions({questionId}:{questionId?:string}){
    <p className="discussion-rule">Only professional questions within the three PMSV topics are accepted. Text only; no links or advertisements.</p>
    <button type="submit" disabled={submitting}><Send size={17}/>{submitting?'Posting…':'Post question'}</button>
   </form></section>}
-  <section className="question-list"><div className="discussion-list-title"><h2>Latest questions</h2><span>{questions.length} discussions</span></div>
-   {loading?<p className="discussion-loading">Loading discussions…</p>:questions.length===0?<div className="discussion-empty"><MessageCircleQuestion size={28}/><h3>No questions yet</h3><p>Start the first professional discussion.</p></div>:questions.map(q=><a className="question-card" key={q.id} href={route('/discussions/'+q.id)} onClick={e=>{if(isPreview()){e.preventDefault();const saved=readPreviewDetail();if(saved){setDetail(saved);setPreviewQuestionOpen(true);}}}}>
+  <section className="question-list"><div className="discussion-list-title"><div><h2>{selectedTopic==='all'?'Latest questions':categoryLabel(selectedTopic)+' questions'}</h2>{(search||selectedTopic!=='all')&&<p>{visibleQuestions.length} matching discussion{visibleQuestions.length===1?'':'s'}</p>}</div><span>{questions.length} total</span></div>
+   {loading?<p className="discussion-loading">Loading discussions…</p>:questions.length===0?<div className="discussion-empty"><MessageCircleQuestion size={28}/><h3>No questions yet</h3><p>Start the first professional discussion.</p></div>:visibleQuestions.length===0?<div className="discussion-empty"><Search size={28}/><h3>No matching questions</h3><p>Try another search or topic.</p></div>:visibleQuestions.map(q=><a className="question-card" key={q.id} href={route('/discussions/'+q.id)} onClick={e=>{if(isPreview()){e.preventDefault();const saved=readPreviewDetail();if(saved){setDetail(saved);setPreviewQuestionOpen(true);}}}}>
     <div className="discussion-meta"><span className={'discussion-category '+q.category}>{categoryLabel(q.category)}</span><span>{dateLabel(q.createdAt)}</span></div>
     <h3>{q.title}</h3><p>{q.body}</p><div className="question-bottom"><span>Asked by <strong>{q.name}</strong></span><span className="question-open">Open question · {q.answerCount} {q.answerCount===1?'answer':'answers'}</span></div>
    </a>)}
