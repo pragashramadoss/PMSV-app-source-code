@@ -97,13 +97,17 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
  }
  useEffect(()=>{load()},[endpoint]);
 
- async function ask(e:React.FormEvent){
+ function resetAskForm(){
+  setCategory('food-safety');setName('');setTitle('');setBody('');setMessage('');
+ }
+
+  async function ask(e:React.FormEvent){
   e.preventDefault();setSubmitting(true);setMessage('');
   if(isPreview()){
    const now=new Date().toISOString();
    const question:Question={id:String(Date.now()),title,body,category,name,createdAt:now,answerCount:0,lastActivityAt:now};
    const next:Detail={question,answers:[]};
-   upsertPreviewDetail(next);setDetail(next);setQuestions(readPreviewStore().map(x=>x.question));setPreviewReturnView('list');setPreviewView('detail');setSubmitting(false);
+   upsertPreviewDetail(next);setDetail(next);setQuestions(readPreviewStore().map(x=>x.question));setPreviewReturnView('list');resetAskForm();setPreviewView('detail');setSubmitting(false);
    return;
   }
   try{
@@ -187,7 +191,7 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
  }
 
  if(askMode||(isPreview()&&previewView==='ask')){
-  return <Shell><a className="discussion-back" href={route('/discussions')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewView('list')}}}><ArrowLeft size={17}/>All discussions</a>
+  return <Shell><a className="discussion-back" href={route('/discussions')} onClick={e=>{if(isPreview()){e.preventDefault();resetAskForm();setPreviewView('list')}}}><ArrowLeft size={17}/>All discussions</a>
    <div className="heading-row ask-page-heading"><div><h1>Ask a question</h1><p className="intro">Post a professional question for the PMSV community.</p></div></div>
    {message&&<p className="discussion-message">{message}</p>}
    <section className="ask-card ask-page-card"><form onSubmit={ask}>
@@ -201,7 +205,7 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
   </Shell>
  }
 
- return <Shell><div className="discussion-heading"><div><h1>Discussions</h1><p>Ask and answer practical questions about food safety, quality and process excellence.</p></div><a className="ask-question-link" href={route('/discussions/ask')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewView('ask')}}}><MessageCircleQuestion size={19}/>Ask a question</a></div>
+ return <Shell><div className="discussion-heading"><div><h1>Discussions</h1><p>Ask and answer practical questions about food safety, quality and process excellence.</p></div><a className="ask-question-link" href={route('/discussions/ask')} onClick={e=>{if(isPreview()){e.preventDefault();resetAskForm();setPreviewView('ask')}}}><MessageCircleQuestion size={19}/>Ask a question</a></div>
   <div className="discussion-search"><Search size={19}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search questions, topics or keywords…" aria-label="Search discussions"/>{search&&<button type="button" onClick={()=>setSearch('')}>Clear</button>}</div>
   <section className="discussion-topics">
    <div className="discussion-section-heading"><div><h2>Topics</h2><p>Open a topic to browse its questions on a separate page.</p></div></div>
