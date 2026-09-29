@@ -143,8 +143,8 @@ export default function Discussions({questionId,askMode=false}:{questionId?:stri
   </div>
  }
 
- if(questionId||previewQuestionOpen){
-  return <Shell detail={Boolean(questionId)}>{isPreview()&&previewQuestionOpen&&<button type="button" className="discussion-back preview-back" onClick={()=>{setPreviewQuestionOpen(false);setQuestions(detail?[detail.question]:[]);}}><ArrowLeft size={17}/>All discussions</button>}<div className="heading-row"><div><h1>Discussion</h1><p className="intro">Food safety, quality and process excellence Q&amp;A.</p></div></div>
+ if(questionId||(isPreview()&&previewView==='detail')){
+  return <Shell detail={Boolean(questionId)}>{isPreview()&&previewView==='detail'&&<button type="button" className="discussion-back preview-back" onClick={()=>{setPreviewView('list');setQuestions(detail?[detail.question]:[]);setAnswerName('');setAnswerBody('');}}><ArrowLeft size={17}/>All discussions</button>}<div className="heading-row"><div><h1>Discussion</h1><p className="intro">Food safety, quality and process excellence Q&amp;A.</p></div></div>
    {message&&<p className="discussion-message">{message}</p>}
    {reportNotice&&<p className="discussion-report-notice">{reportNotice}</p>}
    {loading?<p className="discussion-loading">Loading discussion…</p>:detail?<><article className="question-detail">
@@ -164,8 +164,8 @@ export default function Discussions({questionId,askMode=false}:{questionId?:stri
   </Shell>
  }
 
- if(askMode||previewAskOpen){
-  return <Shell><a className="discussion-back" href={route('/discussions')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewAskOpen(false)}}}><ArrowLeft size={17}/>All discussions</a>
+ if(askMode||(isPreview()&&previewView==='ask')){
+  return <Shell><a className="discussion-back" href={route('/discussions')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewView('list')}}}><ArrowLeft size={17}/>All discussions</a>
    <div className="heading-row ask-page-heading"><div><h1>Ask a question</h1><p className="intro">Post a professional question for the PMSV community.</p></div></div>
    {message&&<p className="discussion-message">{message}</p>}
    <section className="ask-card ask-page-card"><form onSubmit={ask}>
@@ -179,7 +179,7 @@ export default function Discussions({questionId,askMode=false}:{questionId?:stri
   </Shell>
  }
 
- return <Shell><div className="discussion-heading"><div><h1>Discussions</h1><p>Ask and answer practical questions about food safety, quality and process excellence.</p></div><a className="ask-question-link" href={route('/discussions/ask')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewAskOpen(true)}}}><MessageCircleQuestion size={19}/>Ask a question</a></div>
+ return <Shell><div className="discussion-heading"><div><h1>Discussions</h1><p>Ask and answer practical questions about food safety, quality and process excellence.</p></div><a className="ask-question-link" href={route('/discussions/ask')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewView('ask')}}}><MessageCircleQuestion size={19}/>Ask a question</a></div>
   <div className="discussion-search"><Search size={19}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search questions, topics or keywords…" aria-label="Search discussions"/>{search&&<button type="button" onClick={()=>setSearch('')}>Clear</button>}</div>
   <section className="discussion-topics">
    <div className="discussion-section-heading"><div><h2>Topics</h2><p>Open a topic to browse related questions.</p></div>{selectedTopic!=='all'&&<button type="button" onClick={()=>setSelectedTopic('all')}>Show all</button>}</div>
