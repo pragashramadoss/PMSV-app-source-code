@@ -76,7 +76,7 @@ export default function Discussions({questionId}:{questionId?:string}){
    const now=new Date().toISOString();
    const question:Question={id:'1',title,body,category,name,createdAt:now,answerCount:0,lastActivityAt:now};
    const next={question,answers:[]};
-   savePreviewDetail(next);setDetail(next);setPreviewQuestionOpen(true);setSubmitting(false);setAskOpen(false);
+   savePreviewDetail(next);setDetail(next);setQuestions([question]);setPreviewQuestionOpen(false);setSubmitting(false);setAskOpen(false);
    return;
   }
   try{
@@ -136,9 +136,9 @@ export default function Discussions({questionId}:{questionId?:string}){
    <button type="submit" disabled={submitting}><Send size={17}/>{submitting?'Posting…':'Post question'}</button>
   </form></section>}
   <section className="question-list"><div className="discussion-list-title"><h2>Latest questions</h2><span>{questions.length} discussions</span></div>
-   {loading?<p className="discussion-loading">Loading discussions…</p>:questions.length===0?<div className="discussion-empty"><MessageCircleQuestion size={28}/><h3>No questions yet</h3><p>Start the first professional discussion.</p></div>:questions.map(q=><a className="question-card" key={q.id} href={route('/discussions/'+q.id)}>
+   {loading?<p className="discussion-loading">Loading discussions…</p>:questions.length===0?<div className="discussion-empty"><MessageCircleQuestion size={28}/><h3>No questions yet</h3><p>Start the first professional discussion.</p></div>:questions.map(q=><a className="question-card" key={q.id} href={route('/discussions/'+q.id)} onClick={e=>{if(isPreview()){e.preventDefault();const saved=readPreviewDetail();if(saved){setDetail(saved);setPreviewQuestionOpen(true);}}}}>
     <div className="discussion-meta"><span className={'discussion-category '+q.category}>{categoryLabel(q.category)}</span><span>{dateLabel(q.createdAt)}</span></div>
-    <h3>{q.title}</h3><p>{q.body}</p><div className="question-bottom"><span>Asked by <strong>{q.name}</strong></span><span>{q.answerCount} {q.answerCount===1?'answer':'answers'}</span></div>
+    <h3>{q.title}</h3><p>{q.body}</p><div className="question-bottom"><span>Asked by <strong>{q.name}</strong></span><span className="question-open">Open question · {q.answerCount} {q.answerCount===1?'answer':'answers'}</span></div>
    </a>)}
   </section>
  </Shell>
