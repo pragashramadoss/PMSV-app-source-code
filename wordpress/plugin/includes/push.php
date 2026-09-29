@@ -48,6 +48,47 @@ function pmsv_wp_vapid($endpoint,$keys) {
     $raw=str_pad(ltrim($r,"\0"),32,"\0",STR_PAD_LEFT).str_pad(ltrim($s,"\0"),32,"\0",STR_PAD_LEFT);
     return 'vapid t='.$head.'.'.$body.'.'.pmsv_wp_b64($raw).', k='.$keys['publicKey'];
 }
+function pmsv_wp_test_push() {
+    if(!pmsv_wp_origin())return pmsv_wp_reply(['error'=>'Use this app to test notifications.'],403);
+    try{
+        $d=pmsv_wp_body(4096);
+        if(!pmsv_wp_endpoint($d['endpoint']??null)||!is_string($d['token']??null)||strlen($d['token'])<32||strlen($d['token'])>150)throw new RuntimeException();
+    }catch(Throwable $e){return pmsv_wp_reply(['error'=>'Invalid notification subscription'],400);}
+    global $wpdb;
+    $now=(int)floor(microtime(true)*1000);
+    $devices=pmsv_wp_table('devices');
+    $limits=pmsv_wp_table('limits');
+    $rate=hash_hmac('sha256','push-test:'.floor($now/3600000).':'.($_SERVER['REMOTE_ADDR']??'shared'),wp_salt('auth'));
+    $wpdb->query($wpdb->prepare("DELETE FROM $limits WHERE expires_at < %d",$now));
+    $wpdb->query($wpdb->prepare("INSERT INTO $limits (id,attempts,expires_at) VALUES (%s,1,%d) ON DUPLICATE KEY UPDATE attempts=attempts+1",$rate,$now+7200000));
+    if($wpdb->last_error)throw new RuntimeException('Rate limit unavailable');
+    if((int)$wpdb->get_var($wpdb->prepare("SELECT attempts FROM $limits WHERE id=%s",$rate))>5)return pmsv_wp_reply(['error'=>'Please wait before sending another test notification.'],429);
+
+    $id=pmsv_wp_digest($d['endpoint']);
+    $token=pmsv_wp_digest($d['token']);
+    $row=$wpdb->get_row($wpdb->prepare("SELECT endpoint,token_hash FROM $devices WHERE id=%s",$id),ARRAY_A);
+    if(!$row||empty($row['token_hash'])||!hash_equals($row['token_hash'],$token))return pmsv_wp_reply(['error'=>'Notification subscription needs to be refreshed.'],409);
+
+    $keys=pmsv_wp_keys();
+    $r=wp_safe_remote_post($row['endpoint'],[
+        'timeout'=>10,
+        'redirection'=>0,
+        'headers'=>[
+            'Authorization'=>pmsv_wp_vapid($row['endpoint'],$keys),
+            'TTL'=>'60',
+            'Urgency'=>'high',
+            'Content-Length'=>'0'
+        ],
+        'body'=>''
+    ]);
+    $code=is_wp_error($r)?0:wp_remote_retrieve_response_code($r);
+    if(in_array($code,[404,410],true)){
+        $wpdb->delete($devices,['id'=>$id]);
+        return pmsv_wp_reply(['error'=>'This device subscription expired. Open Notifications and turn it on again.'],410);
+    }
+    if($code<200||$code>=300)return pmsv_wp_reply(['error'=>'Push provider did not accept the test notification.'],502);
+    return pmsv_wp_reply(['accepted'=>true]);
+}
 function pmsv_wp_dispatch() {
     global $wpdb;$t=pmsv_wp_table('devices');$news=pmsv_wp_table('news');$latest=$wpdb->get_var("SELECT MAX(first_seen) FROM $news");
     $cutoff=(int)round((strtotime($latest?:'')?:0)*1000);$now=(int)floor(microtime(true)*1000);
