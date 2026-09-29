@@ -127,7 +127,7 @@ jobs:
           grep -q '"/updates"' wordpress/plugin/routes.json
           grep -q '"/about"' wordpress/plugin/routes.json
           grep -q '"/discussions"' wordpress/plugin/routes.json
-          grep -q 'Version: 1.0.12' wordpress/plugin/pmsv-app.php
+          grep -q 'Version: 1.0.13' wordpress/plugin/pmsv-app.php
           grep -q "discussions/report" wordpress/plugin/pmsv-app.php
           grep -q "PMSV Discussions" wordpress/plugin/includes/discussions-admin.php
           grep -R -q 'AC Tech, Anna University' wordpress/plugin/assets/assets/*.js
@@ -140,7 +140,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add wordpress/plugin
           if ! git diff --cached --quiet; then
-            git commit -m "Build WordPress production 1.0.12 [skip ci]"
+            git commit -m "Build WordPress production 1.0.13 [skip ci]"
             git push origin HEAD:wordpress-production
           fi
 
@@ -150,22 +150,22 @@ jobs:
           mkdir -p dist-wordpress/pmsv-original-app-preview
           cp -R wordpress/plugin/. dist-wordpress/pmsv-original-app-preview/
           cd dist-wordpress
-          zip -qr ../PMSV-Food-Safety-Quality-Forum-v1.0.12.zip pmsv-original-app-preview
+          zip -qr ../PMSV-Food-Safety-Quality-Forum-v1.0.13.zip pmsv-original-app-preview
 
       - name: Upload plugin ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: PMSV-Food-Safety-Quality-Forum-v1.0.12
-          path: PMSV-Food-Safety-Quality-Forum-v1.0.12.zip
+          name: PMSV-Food-Safety-Quality-Forum-v1.0.13
+          path: PMSV-Food-Safety-Quality-Forum-v1.0.13.zip
           if-no-files-found: error
           retention-days: 14
 
-# v1.0.12 final verification
+# v1.0.13 final verification
 
-# v1.0.12 final single-run verification
+# v1.0.13 final single-run verification
 
-# v1.0.12 embedded-logo and summary verification
+# v1.0.13 embedded-logo and summary verification
 
-# v1.0.12 clean embedded-logo rebuild
+# v1.0.13 clean embedded-logo rebuild
 
-# v1.0.12 final clean logo verification
+# v1.0.13 final clean logo verification
