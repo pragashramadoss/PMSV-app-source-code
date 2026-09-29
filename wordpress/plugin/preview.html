@@ -21,6 +21,7 @@
         return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
       }
       if(u.pathname===root+'/api/updater')return new Response(JSON.stringify({active:false,checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});
+      if(u.pathname===root+'/api/discussions')return new Response(JSON.stringify({questions:[]}),{status:200,headers:{'Content-Type':'application/json'}});
       if(u.pathname===root+'/api/push')return new Response(JSON.stringify({error:'Preview only'}),{status:503,headers:{'Content-Type':'application/json'}});
     }catch(e){}
     return nativeFetch(input,init);
@@ -54,4 +55,4 @@
   window.addEventListener('load',()=>history.replaceState(null,'',previewFile+'?route='+encodeURIComponent(route)));
 })();
 </script>
-<link rel="stylesheet" href="./assets/index-CkD0cvw0.css"></head><body class="antialiased"><div id="root"></div><script type="module" src="./assets/index-BsngNz_g.js"></script></body></html>
+<link rel="stylesheet" href="./assets/index-xcvF16K-.css"></head><body class="antialiased"><div id="root"></div><script type="module" src="./assets/index-CiD-5ZsA.js"></script></body></html>
