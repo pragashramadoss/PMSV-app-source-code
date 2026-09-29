@@ -49,8 +49,7 @@ export default function Discussions({questionId,askMode=false}:{questionId?:stri
  const [body,setBody]=useState('');
  const [answerName,setAnswerName]=useState('');
  const [answerBody,setAnswerBody]=useState('');
- const [previewQuestionOpen,setPreviewQuestionOpen]=useState(false);
- const [previewAskOpen,setPreviewAskOpen]=useState(false);
+ const [previewView,setPreviewView]=useState<'list'|'ask'|'detail'>('list');
  const [reportTarget,setReportTarget]=useState<{type:'question'|'answer';id:string}|null>(null);
  const [reportReason,setReportReason]=useState<'off-topic'|'spam'|'inappropriate'|'other'>('off-topic');
  const [reporting,setReporting]=useState(false);
@@ -95,7 +94,7 @@ export default function Discussions({questionId,askMode=false}:{questionId?:stri
    const now=new Date().toISOString();
    const question:Question={id:'1',title,body,category,name,createdAt:now,answerCount:0,lastActivityAt:now};
    const next={question,answers:[]};
-   savePreviewDetail(next);setDetail(next);setQuestions([question]);setPreviewQuestionOpen(true);setSubmitting(false);
+   savePreviewDetail(next);setDetail(next);setQuestions([question]);setPreviewView('detail');setSubmitting(false);
    return;
   }
   try{
