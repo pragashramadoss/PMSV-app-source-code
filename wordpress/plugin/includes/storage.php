@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) exit;
 function pmsv_wp_table($suffix) { global $wpdb; return $wpdb->prefix.'pmsv_app_'.$suffix; }
 function pmsv_wp_install() {
     global $wpdb; require_once ABSPATH.'wp-admin/includes/upgrade.php'; $charset=$wpdb->get_charset_collate();
-    $news=pmsv_wp_table('news');$devices=pmsv_wp_table('devices');$limits=pmsv_wp_table('limits');$questions=pmsv_wp_table('questions');$answers=pmsv_wp_table('answers');
+    $news=pmsv_wp_table('news');$devices=pmsv_wp_table('devices');$limits=pmsv_wp_table('limits');$questions=pmsv_wp_table('questions');$answers=pmsv_wp_table('answers');$reports=pmsv_wp_table('reports');
     dbDelta("CREATE TABLE $news (id varchar(100) NOT NULL, url_hash char(64) NOT NULL, title_hash char(64) NOT NULL, published varchar(10) NOT NULL, first_seen varchar(32) NOT NULL, payload longtext NOT NULL, PRIMARY KEY (id), KEY url_hash (url_hash), KEY title_hash (title_hash), KEY published (published)) $charset;");
     // Preserve separate source records even when they share a document URL.
     $indexes=$wpdb->get_results("SHOW INDEX FROM $news");
@@ -15,10 +15,11 @@ function pmsv_wp_install() {
     dbDelta("CREATE TABLE $limits (id varchar(64) NOT NULL, attempts int NOT NULL, expires_at bigint NOT NULL, PRIMARY KEY (id)) $charset;");
     dbDelta("CREATE TABLE $questions (id bigint unsigned NOT NULL AUTO_INCREMENT, author varchar(80) NOT NULL, title varchar(190) NOT NULL, body text NOT NULL, category varchar(32) NOT NULL, created_at bigint NOT NULL, last_activity bigint NOT NULL, status varchar(20) NOT NULL DEFAULT 'published', fingerprint char(64) NOT NULL, PRIMARY KEY (id), KEY status_activity (status,last_activity), KEY category (category)) $charset;");
     dbDelta("CREATE TABLE $answers (id bigint unsigned NOT NULL AUTO_INCREMENT, question_id bigint unsigned NOT NULL, author varchar(80) NOT NULL, body text NOT NULL, created_at bigint NOT NULL, status varchar(20) NOT NULL DEFAULT 'published', fingerprint char(64) NOT NULL, PRIMARY KEY (id), KEY question_status (question_id,status), KEY created_at (created_at)) $charset;");
+    dbDelta("CREATE TABLE $reports (id bigint unsigned NOT NULL AUTO_INCREMENT, target_type varchar(12) NOT NULL, target_id bigint unsigned NOT NULL, reason varchar(32) NOT NULL, created_at bigint NOT NULL, fingerprint char(64) NOT NULL, status varchar(20) NOT NULL DEFAULT 'open', PRIMARY KEY (id), UNIQUE KEY target_reporter (target_type,target_id,fingerprint), KEY target_status (target_type,target_id,status), KEY created_at (created_at)) $charset;");
     // Seed is a read-only export of real news, never sample data. Re-activation cannot overwrite newer records.
     $rows=json_decode(file_get_contents(PMSV_WP_DIR.'archive-seed.json'),true,512,JSON_THROW_ON_ERROR);
     foreach($rows as $n)pmsv_wp_insert($n);
-    update_option('pmsv_wp_schema',2,false);
+    update_option('pmsv_wp_schema',3,false);
 }
 function pmsv_wp_insert($n) {
     global $wpdb; $t=pmsv_wp_table('news');
@@ -197,4 +198,19 @@ function pmsv_wp_forum_create_answer($id) {
     if(!$ok)throw new RuntimeException('Answer insert failed');
     $wpdb->update($q,['last_activity'=>$now],['id'=>$id],['%d'],['%d']);
     return pmsv_wp_reply(['id'=>(string)$wpdb->insert_id],201);
+}
+
+function pmsv_wp_forum_create_report() {
+    if(!pmsv_wp_origin())return pmsv_wp_reply(['error'=>'Please report from the PMSV app.'],403);
+    if(!pmsv_wp_forum_rate('report',12,3600))return pmsv_wp_reply(['error'=>'Too many reports. Please try again later.'],429);
+    $d=pmsv_wp_body(3000);
+    $type=(string)($d['targetType']??'');$id=(int)($d['targetId']??0);$reason=(string)($d['reason']??'');
+    if(!in_array($type,['question','answer'],true)||$id<1||!in_array($reason,['off-topic','spam','inappropriate','other'],true))return pmsv_wp_reply(['error'=>'Invalid report.'],400);
+    global $wpdb;$table=$type==='question'?pmsv_wp_table('questions'):pmsv_wp_table('answers');
+    $exists=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table WHERE id=%d AND status='published'",$id));
+    if(!$exists)return pmsv_wp_reply(['error'=>'Item not found.'],404);
+    $reports=pmsv_wp_table('reports');$fingerprint=pmsv_wp_forum_fingerprint();
+    $wpdb->query($wpdb->prepare("INSERT IGNORE INTO $reports (target_type,target_id,reason,created_at,fingerprint,status) VALUES (%s,%d,%s,%d,%s,'open')",$type,$id,$reason,time(),$fingerprint));
+    if($wpdb->last_error)throw new RuntimeException('Report insert failed');
+    return pmsv_wp_reply(['reported'=>true],201);
 }
