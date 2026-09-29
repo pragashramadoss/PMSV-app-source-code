@@ -1,6 +1,6 @@
 'use client';
 import {useEffect,useMemo,useState} from 'react';
-import {BookOpen,Newspaper,ShieldCheck,MessagesSquare,MessageCircleQuestion,ArrowLeft,Send} from 'lucide-react';
+import {BookOpen,Newspaper,ShieldCheck,MessagesSquare,MessageCircleQuestion,ArrowLeft,Send,Flag} from 'lucide-react';
 import AppNotifications from './app-notifications';
 
 type Question={
@@ -51,6 +51,10 @@ export default function Discussions({questionId}:{questionId?:string}){
  const [answerName,setAnswerName]=useState('');
  const [answerBody,setAnswerBody]=useState('');
  const [previewQuestionOpen,setPreviewQuestionOpen]=useState(false);
+ const [reportTarget,setReportTarget]=useState<{type:'question'|'answer';id:string}|null>(null);
+ const [reportReason,setReportReason]=useState<'off-topic'|'spam'|'inappropriate'|'other'>('off-topic');
+ const [reporting,setReporting]=useState(false);
+ const [reportNotice,setReportNotice]=useState('');
 
  const endpoint=useMemo(()=>route('/api/discussions'+(questionId?'/'+questionId:'')),[questionId]);
  async function load(){
@@ -86,7 +90,7 @@ export default function Discussions({questionId}:{questionId?:string}){
   }catch(e){setMessage(e instanceof Error?e.message:'Unable to post question.');setSubmitting(false)}
  }
  async function answer(e:React.FormEvent){
-  e.preventDefault();if(!questionId)return;setSubmitting(true);setMessage('');
+  e.preventDefault();const qid=questionId||detail?.question.id;if(!qid)return;setSubmitting(true);setMessage('');
   if(isPreview()){
    const current=detail||readPreviewDetail();
    if(current){
@@ -98,22 +102,44 @@ export default function Discussions({questionId}:{questionId?:string}){
    setSubmitting(false);return;
   }
   try{
-   const r=await fetch(route('/api/discussions/'+questionId+'/answers'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:answerName,body:answerBody})});
+   const r=await fetch(route('/api/discussions/'+qid+'/answers'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:answerName,body:answerBody})});
    const data=await r.json();if(!r.ok)throw new Error(data.error||'Unable to post answer.');
    setAnswerBody('');setSubmitting(false);await load();
   }catch(e){setMessage(e instanceof Error?e.message:'Unable to post answer.');setSubmitting(false)}
  }
 
+ async function report(type:'question'|'answer',id:string){
+  setReporting(true);setReportNotice('');
+  if(isPreview()){
+   setReportNotice('Report received. In the live app it will appear in WordPress moderation.');
+   setReportTarget(null);setReporting(false);return;
+  }
+  try{
+   const r=await fetch(route('/api/discussions/report'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({targetType:type,targetId:id,reason:reportReason})});
+   const data=await r.json();if(!r.ok)throw new Error(data.error||'Unable to submit report.');
+   setReportNotice('Report submitted for review.');setReportTarget(null);
+  }catch(e){setReportNotice(e instanceof Error?e.message:'Unable to submit report.')}
+  finally{setReporting(false)}
+ }
+ function ReportControl({type,id}:{type:'question'|'answer';id:string}){
+  const open=reportTarget?.type===type&&reportTarget.id===id;
+  return <div className="report-control">
+   <button type="button" className="report-link" onClick={()=>{setReportNotice('');setReportTarget(open?null:{type,id})}}><Flag size={14}/>{open?'Cancel':'Report'}</button>
+   {open&&<div className="report-panel"><label>Reason<select value={reportReason} onChange={e=>setReportReason(e.target.value as typeof reportReason)}><option value="off-topic">Off-topic</option><option value="spam">Spam / advertisement</option><option value="inappropriate">Inappropriate</option><option value="other">Other</option></select></label><button type="button" disabled={reporting} onClick={()=>report(type,id)}>{reporting?'Sending…':'Submit report'}</button></div>}
+  </div>
+ }
+
  if(questionId||previewQuestionOpen){
   return <Shell detail={Boolean(questionId)}>{isPreview()&&previewQuestionOpen&&<button type="button" className="discussion-back preview-back" onClick={()=>{setPreviewQuestionOpen(false);setQuestions(detail?[detail.question]:[]);}}><ArrowLeft size={17}/>All discussions</button>}<div className="heading-row"><div><h1>Discussion</h1><p className="intro">Food safety, quality and process excellence Q&amp;A.</p></div></div>
    {message&&<p className="discussion-message">{message}</p>}
+   {reportNotice&&<p className="discussion-report-notice">{reportNotice}</p>}
    {loading?<p className="discussion-loading">Loading discussion…</p>:detail?<><article className="question-detail">
     <div className="discussion-meta"><span className={'discussion-category '+detail.question.category}>{categoryLabel(detail.question.category)}</span><span>{dateLabel(detail.question.createdAt)}</span></div>
-    <h2>{detail.question.title}</h2><p>{detail.question.body}</p><div className="discussion-author">Asked by <strong>{detail.question.name}</strong></div>
+    <h2>{detail.question.title}</h2><p>{detail.question.body}</p><div className="discussion-author"><span>Asked by <strong>{detail.question.name}</strong></span><ReportControl type="question" id={detail.question.id}/></div>
    </article>
    <section className="answers-section"><h2>{detail.answers.length} {detail.answers.length===1?'Answer':'Answers'}</h2>
     {detail.answers.length===0&&<p className="discussion-empty">No answers yet. Be the first to respond.</p>}
-    {detail.answers.map(a=><article className="answer-card" key={a.id}><p>{a.body}</p><div><strong>{a.name}</strong><span>{dateLabel(a.createdAt)}</span></div></article>)}
+    {detail.answers.map(a=><article className="answer-card" key={a.id}><p>{a.body}</p><div className="answer-meta"><span><strong>{a.name}</strong><span>{dateLabel(a.createdAt)}</span></span><ReportControl type="answer" id={a.id}/></div></article>)}
    </section>
    <section className="answer-form-card"><h2>Your answer</h2><form onSubmit={answer}>
     <label>Display name<input required minLength={2} maxLength={40} value={answerName} onChange={e=>setAnswerName(e.target.value)} placeholder="Your name"/></label>
