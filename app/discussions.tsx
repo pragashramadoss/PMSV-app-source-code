@@ -10,7 +10,9 @@ type Question={
 type Answer={id:string;questionId:string;name:string;body:string;createdAt:string};
 type Detail={question:Question;answers:Answer[]};
 
-const base=()=>typeof window!=='undefined'?((window as unknown as {PMSV?:{base?:string}}).PMSV?.base||''):'';
+const pmsv=()=>typeof window!=='undefined'?((window as unknown as {PMSV?:{base?:string;publicBase?:string;preview?:boolean}}).PMSV):undefined;
+const base=()=>pmsv()?.base||'';
+const isPreview=()=>Boolean(pmsv()?.preview);
 const publicAsset=(path:string)=>{const b=typeof window!=='undefined'?((window as unknown as {PMSV?:{publicBase?:string}}).PMSV?.publicBase||''):'';return b?b+path.replace(/^\/+/, ''):path};
 const route=(path:string)=>base()+path;
 const dateLabel=(iso:string)=>new Intl.DateTimeFormat('en-IN',{dateStyle:'medium',timeStyle:'short'}).format(new Date(iso));
@@ -48,6 +50,10 @@ export default function Discussions({questionId}:{questionId?:string}){
  const endpoint=useMemo(()=>route('/api/discussions'+(questionId?'/'+questionId:'')),[questionId]);
  async function load(){
   setLoading(true);setMessage('');
+  if(isPreview()){
+   if(questionId)setDetail(null);else setQuestions([]);
+   setLoading(false);return;
+  }
   try{
    const r=await fetch(endpoint,{cache:'no-store'});const data=await r.json();
    if(!r.ok)throw new Error(data.error||'Unable to load discussions.');
@@ -59,6 +65,7 @@ export default function Discussions({questionId}:{questionId?:string}){
 
  async function ask(e:React.FormEvent){
   e.preventDefault();setSubmitting(true);setMessage('');
+  if(isPreview()){setSubmitting(false);return;}
   try{
    const r=await fetch(route('/api/discussions'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,title,body,category})});
    const data=await r.json();if(!r.ok)throw new Error(data.error||'Unable to post question.');
@@ -67,6 +74,7 @@ export default function Discussions({questionId}:{questionId?:string}){
  }
  async function answer(e:React.FormEvent){
   e.preventDefault();if(!questionId)return;setSubmitting(true);setMessage('');
+  if(isPreview()){setSubmitting(false);return;}
   try{
    const r=await fetch(route('/api/discussions/'+questionId+'/answers'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:answerName,body:answerBody})});
    const data=await r.json();if(!r.ok)throw new Error(data.error||'Unable to post answer.');
