@@ -32,7 +32,7 @@ function Shell({children,detail=false}:{children:React.ReactNode;detail?:boolean
    <a href={route('/discussions')} aria-current="page"><MessagesSquare size={17}/><span>Discussions</span></a>
    <div className="nav-bottom"><img className="sidebar-family-logo" src={publicAsset('/icons/pmsv-family-192.png')} alt="PMSV family logo"/><span>PMSV<small>Food safety, quality &amp; excellence</small></span></div>
   </nav>
-  <main>{detail&&<a className="discussion-back" href={route('/discussions')}><ArrowLeft size={17}/>All discussions</a>}{children}</main>
+  <main>{detail&&<a className="discussion-back" href={route('/discussions')} onClick={e=>{if(isPreview()){e.preventDefault();history.back()}}}><ArrowLeft size={17}/>All discussions</a>}{children}</main>
   <footer><strong>PMSV Food Safety &amp; Quality Forum</strong><span>Professional text discussions only. No advertising or unrelated topics.</span></footer>
  </div>
 }
@@ -50,6 +50,7 @@ export default function Discussions({questionId}:{questionId?:string}){
  const [body,setBody]=useState('');
  const [answerName,setAnswerName]=useState('');
  const [answerBody,setAnswerBody]=useState('');
+ const [previewQuestionOpen,setPreviewQuestionOpen]=useState(false);
 
  const endpoint=useMemo(()=>route('/api/discussions'+(questionId?'/'+questionId:'')),[questionId]);
  async function load(){
@@ -74,9 +75,8 @@ export default function Discussions({questionId}:{questionId?:string}){
   if(isPreview()){
    const now=new Date().toISOString();
    const question:Question={id:'1',title,body,category,name,createdAt:now,answerCount:0,lastActivityAt:now};
-   savePreviewDetail({question,answers:[]});
-   setSubmitting(false);
-   location.href=previewUrl('/discussions/1');
+   const next={question,answers:[]};
+   savePreviewDetail(next);setDetail(next);setPreviewQuestionOpen(true);setSubmitting(false);setAskOpen(false);
    return;
   }
   try{
@@ -104,8 +104,8 @@ export default function Discussions({questionId}:{questionId?:string}){
   }catch(e){setMessage(e instanceof Error?e.message:'Unable to post answer.');setSubmitting(false)}
  }
 
- if(questionId){
-  return <Shell detail><div className="heading-row"><div><h1>Discussion</h1><p className="intro">Food safety, quality and process excellence Q&amp;A.</p></div></div>
+ if(questionId||previewQuestionOpen){
+  return <Shell detail={Boolean(questionId)}>{isPreview()&&previewQuestionOpen&&<button type="button" className="discussion-back preview-back" onClick={()=>{setPreviewQuestionOpen(false);setQuestions(detail?[detail.question]:[]);}}><ArrowLeft size={17}/>All discussions</button>}<div className="heading-row"><div><h1>Discussion</h1><p className="intro">Food safety, quality and process excellence Q&amp;A.</p></div></div>
    {message&&<p className="discussion-message">{message}</p>}
    {loading?<p className="discussion-loading">Loading discussion…</p>:detail?<><article className="question-detail">
     <div className="discussion-meta"><span className={'discussion-category '+detail.question.category}>{categoryLabel(detail.question.category)}</span><span>{dateLabel(detail.question.createdAt)}</span></div>
