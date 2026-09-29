@@ -11,11 +11,11 @@ import '../../app/globals.css';
 declare global {interface Window {PMSV:{base:string;publicBase:string}}}
 window.PMSV ??= {base:'',publicBase:''};
 const path=location.pathname.slice(window.PMSV.base.length).replace(/\/+$/,'')||'/';
-const parts=path.split('/').filter(Boolean);const discussionId=parts[0]==='discussions'&&parts.length===2&&/^[0-9]+$/.test(parts[1])?parts[1]:undefined;let view:View|null=null;
+const parts=path.split('/').filter(Boolean);const discussionId=parts[0]==='discussions'&&parts.length===2&&/^[0-9]+$/.test(parts[1])?parts[1]:undefined;const discussionAsk=parts[0]==='discussions'&&parts.length===2&&parts[1]==='ask';let view:View|null=null;
 if(!parts.length)view={kind:'home'};
 else if(parts.length===1&&['updates','regulatory','news','blogs'].includes(parts[0]))view={kind:parts[0] as 'updates'|'regulatory'|'news'|'blogs'};
 else if(parts[0]==='blogs'&&parts.length===2)view={kind:'blog-tag',tag:parts[1]};
 else if(parts[0]==='regulatory'&&parts.length===2&&regions.some(r=>r.id===parts[1]))view={kind:'country',region:parts[1]};
 else if(parts[0]==='news'&&parts.length===2&&['india','global'].includes(parts[1]))view={kind:'feed',region:parts[1]};
 else if(['quality','excellence','certifications'].includes(parts[0])&&(parts.length===1||(parts.length===2&&professionalBodies.some(b=>b.id===parts[1]&&b.topics.includes(parts[0])))))view={kind:'topic',topic:parts[0],body:parts[1]};
-createRoot(document.getElementById('root')!).render(path==='/privacy'?<Privacy/>:path==='/about'?<About/>:path==='/subscriptions/manage'?<Manage/>:path==='/discussions'||discussionId?<Discussions questionId={discussionId}/>:view?<Newsroom initialNews={[]} status={status} view={view}/>:<main><h1>Page not found</h1><a href={window.PMSV.base+'/'}>Return to PMSV</a></main>);
+createRoot(document.getElementById('root')!).render(path==='/privacy'?<Privacy/>:path==='/about'?<About/>:path==='/subscriptions/manage'?<Manage/>:path==='/discussions'||discussionId||discussionAsk?<Discussions questionId={discussionId} askMode={discussionAsk}/>:view?<Newsroom initialNews={[]} status={status} view={view}/>:<main><h1>Page not found</h1><a href={window.PMSV.base+'/'}>Return to PMSV</a></main>);
