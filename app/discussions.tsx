@@ -37,7 +37,7 @@ function Shell({children,detail=false}:{children:React.ReactNode;detail?:boolean
  </div>
 }
 
-export default function Discussions({questionId,askMode=false}:{questionId?:string;askMode?:boolean}){
+export default function Discussions({questionId,askMode=false,topic}:{questionId?:string;askMode?:boolean;topic?:Question['category']}){
  const [questions,setQuestions]=useState<Question[]>([]);
  const [detail,setDetail]=useState<Detail|null>(null);
  const [loading,setLoading]=useState(true);
@@ -49,13 +49,14 @@ export default function Discussions({questionId,askMode=false}:{questionId?:stri
  const [body,setBody]=useState('');
  const [answerName,setAnswerName]=useState('');
  const [answerBody,setAnswerBody]=useState('');
- const [previewView,setPreviewView]=useState<'list'|'ask'|'detail'>('list');
+ const [previewView,setPreviewView]=useState<'list'|'ask'|'topic'|'detail'>('list');
+ const [previewTopic,setPreviewTopic]=useState<Question['category']|null>(null);
+ const [previewReturnView,setPreviewReturnView]=useState<'list'|'topic'>('list');
  const [reportTarget,setReportTarget]=useState<{type:'question'|'answer';id:string}|null>(null);
  const [reportReason,setReportReason]=useState<'off-topic'|'spam'|'inappropriate'|'other'>('off-topic');
  const [reporting,setReporting]=useState(false);
  const [reportNotice,setReportNotice]=useState('');
  const [search,setSearch]=useState('');
- const [selectedTopic,setSelectedTopic]=useState<'all'|'food-safety'|'quality'|'process-excellence'>('all');
 
  const endpoint=useMemo(()=>route('/api/discussions'+(questionId?'/'+questionId:'')),[questionId]);
  const topicCounts=useMemo(()=>({
@@ -65,12 +66,11 @@ export default function Discussions({questionId,askMode=false}:{questionId?:stri
  }),[questions]);
  const visibleQuestions=useMemo(()=>{
   const term=search.trim().toLowerCase();
-  return questions.filter(q=>{
-   if(selectedTopic!=='all'&&q.category!==selectedTopic)return false;
-   if(!term)return true;
-   return (q.title+' '+q.body+' '+q.name+' '+categoryLabel(q.category)).toLowerCase().includes(term);
-  });
- },[questions,search,selectedTopic]);
+  if(!term)return questions;
+  return questions.filter(q=>(q.title+' '+q.body+' '+q.name+' '+categoryLabel(q.category)).toLowerCase().includes(term));
+ },[questions,search]);
+ const activeTopic=topic||(isPreview()&&previewView==='topic'?previewTopic:null);
+ const topicQuestions=useMemo(()=>activeTopic?questions.filter(q=>q.category===activeTopic):[],[questions,activeTopic]);
  async function load(){
   setLoading(true);setMessage('');
   if(isPreview()){
