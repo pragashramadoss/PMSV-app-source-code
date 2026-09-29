@@ -1,45 +1,24 @@
-<!doctype html><html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#3155d9">
-<title>PMSV Food Safety & Quality Forum — Full Test</title>
-<link rel="manifest" href="./manifest.webmanifest?v=9">
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PMSV Food Safety Updates</title>  <script type="module" crossorigin src="./assets/index-pKBVjODn.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CSVbeN6T.css">
+
 <script>
-(function(){
-  const root='/PMSV-app-source-code';
-  window.PMSV={base:root,publicBase:root+'/public/',installPrompt:null};
-
-  window.addEventListener('beforeinstallprompt',function(e){
-    e.preventDefault();window.PMSV.installPrompt=e;window.dispatchEvent(new Event('pmsv-install-available'));
-  });
-  window.addEventListener('appinstalled',function(){window.PMSV.installPrompt=null;});
-
-  const nativeFetch=window.fetch.bind(window);
-  window.fetch=async function(input,init){
-    try{
-      const raw=typeof input==='string'?input:input.url;
-      const u=new URL(raw,location.origin);
-      if(u.pathname==='/api/news'||u.pathname===root+'/api/news'){
-        const [r,b]=await Promise.all([
-          nativeFetch(root+'/archive-seed.json',{cache:'no-store'}),
-          nativeFetch(root+'/preview-blogs.json',{cache:'no-store'})
-        ]);
-        const news=(await r.json()).filter(n=>n.tab!=='blogs').concat(await b.json());
-        return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
-      }
-      if(u.pathname==='/api/updater'||u.pathname===root+'/api/updater'){
-        return new Response(JSON.stringify({active:false,checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});
-      }
-      if(u.pathname==='/api/push'||u.pathname===root+'/api/push'){
-        const method=(init&&init.method||'GET').toUpperCase();
-        if(method==='GET')return new Response(JSON.stringify({publicKey:'BIh1_YkviPWiUfhJDDA4rBUqvoJLxPAiMQsxrJBY15OFyQukIcm2fF-wi6gjKZ4PK0vLfgtOJR2ejl21bkpqxN8'}),{status:200,headers:{'Content-Type':'application/json'}});
-        return new Response(JSON.stringify({enabled:method!=='DELETE'}),{status:200,headers:{'Content-Type':'application/json'}});
-      }
-    }catch(e){}
-    return nativeFetch(input,init);
-  };
-  window.addEventListener('load',function(){
-    if('serviceWorker' in navigator)navigator.serviceWorker.register(root+'/sw.js',{scope:root+'/',updateViaCache:'none'}).catch(()=>{});
-  });
-})();
+window.PMSV={base:'/PMSV-app-source-code',publicBase:'/PMSV-app-source-code/',preview:true};
+const __pmsvFetch=window.fetch.bind(window);
+window.fetch=async function(input,init){
+  const raw=typeof input==='string'?input:(input&&input.url)||'';
+  const url=new URL(raw,location.href);
+  if(url.pathname==='/PMSV-app-source-code/api/news'){
+    const r=await __pmsvFetch('/PMSV-app-source-code/preview-news.json',{cache:'no-store'});
+    const news=await r.json();
+    return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
+  }
+  if(url.pathname==='/PMSV-app-source-code/api/updater'){
+    return new Response(JSON.stringify({active:false,checkedAt:'',scheduleEnabled:false,coverage:'Standalone preview'}),{status:200,headers:{'Content-Type':'application/json'}});
+  }
+  if(url.pathname.startsWith('/PMSV-app-source-code/api/')){
+    return new Response(JSON.stringify({error:'Unavailable in standalone preview'}),{status:404,headers:{'Content-Type':'application/json'}});
+  }
+  return __pmsvFetch(input,init);
+};
 </script>
-<link rel="stylesheet" href="/PMSV-app-source-code/assets/index-CkD0cvw0.css">
-</head><body class="antialiased"><div id="root"></div><script type="module" src="./assets/index-CbXFkunq.js"></script></body></html>
+</head><body class="antialiased"><div id="root"></div></body></html>
