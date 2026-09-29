@@ -50,6 +50,7 @@ export default function Discussions({questionId,askMode=false}:{questionId?:stri
  const [answerName,setAnswerName]=useState('');
  const [answerBody,setAnswerBody]=useState('');
  const [previewQuestionOpen,setPreviewQuestionOpen]=useState(false);
+ const [previewAskOpen,setPreviewAskOpen]=useState(false);
  const [reportTarget,setReportTarget]=useState<{type:'question'|'answer';id:string}|null>(null);
  const [reportReason,setReportReason]=useState<'off-topic'|'spam'|'inappropriate'|'other'>('off-topic');
  const [reporting,setReporting]=useState(false);
@@ -164,8 +165,8 @@ export default function Discussions({questionId,askMode=false}:{questionId?:stri
   </Shell>
  }
 
- if(askMode){
-  return <Shell><a className="discussion-back" href={route('/discussions')}><ArrowLeft size={17}/>All discussions</a>
+ if(askMode||previewAskOpen){
+  return <Shell><a className="discussion-back" href={route('/discussions')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewAskOpen(false)}}}><ArrowLeft size={17}/>All discussions</a>
    <div className="heading-row ask-page-heading"><div><h1>Ask a question</h1><p className="intro">Post a professional question for the PMSV community.</p></div></div>
    {message&&<p className="discussion-message">{message}</p>}
    <section className="ask-card ask-page-card"><form onSubmit={ask}>
@@ -179,7 +180,7 @@ export default function Discussions({questionId,askMode=false}:{questionId?:stri
   </Shell>
  }
 
- return <Shell><div className="discussion-heading"><div><h1>Discussions</h1><p>Ask and answer practical questions about food safety, quality and process excellence.</p></div><a className="ask-question-link" href={route('/discussions/ask')}><MessageCircleQuestion size={19}/>Ask a question</a></div>
+ return <Shell><div className="discussion-heading"><div><h1>Discussions</h1><p>Ask and answer practical questions about food safety, quality and process excellence.</p></div><a className="ask-question-link" href={route('/discussions/ask')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewAskOpen(true)}}}><MessageCircleQuestion size={19}/>Ask a question</a></div>
   <div className="discussion-search"><Search size={19}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search questions, topics or keywords…" aria-label="Search discussions"/>{search&&<button type="button" onClick={()=>setSearch('')}>Clear</button>}</div>
   <section className="discussion-topics">
    <div className="discussion-section-heading"><div><h2>Topics</h2><p>Open a topic to browse related questions.</p></div>{selectedTopic!=='all'&&<button type="button" onClick={()=>setSelectedTopic('all')}>Show all</button>}</div>
