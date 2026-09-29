@@ -2,7 +2,7 @@
 /**
  * Plugin Name: PMSV Food Safety & Quality Forum
  * Description: PMSV Food Safety & Quality Forum production application.
- * Version: 1.0.10
+ * Version: 1.0.11
  * Requires PHP: 8.1
  * Author: PMSV Group
  */
@@ -14,6 +14,7 @@ require_once PMSV_WP_DIR . 'includes/security.php';
 require_once PMSV_WP_DIR . 'includes/storage.php';
 require_once PMSV_WP_DIR . 'includes/push.php';
 register_activation_hook(__FILE__, 'pmsv_wp_install');
+add_action('init', function () { if ((int)get_option('pmsv_wp_schema',0) < 2) pmsv_wp_install(); }, 1);
 add_action('template_redirect', function () {
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?: '/';
     $base = pmsv_wp_base();
@@ -40,7 +41,7 @@ add_action('template_redirect', function () {
         header('Cache-Control: no-cache, must-revalidate');
         header('Service-Worker-Allowed: ' . $base . '/');
         $sw = file_get_contents(PMSV_WP_DIR . 'public/sw.js');
-        $sw = preg_replace("/pmsv-offline-v\\d+/", 'pmsv-wp-v1.0.10', $sw);
+        $sw = preg_replace("/pmsv-offline-v\\d+/", 'pmsv-wp-v1.0.11', $sw);
         echo preg_replace_callback("~(['\"])(/[^'\"]*)\\1~", fn($m) => $m[1] . $base . $m[2] . $m[1], $sw);
         exit;
     }
@@ -136,12 +137,13 @@ add_action('template_redirect', function () {
     $routes = json_decode(file_get_contents(PMSV_WP_DIR . 'routes.json'), true);
     $normalized = rtrim($route, '/') ?: '/';
     $dynamic_blog = preg_match('~^/blogs/[a-z0-9][a-z0-9-]{0,79}$~', $normalized) === 1;
-    status_header(in_array($normalized, $routes, true) || $dynamic_blog ? 200 : 404);
+    $dynamic_discussion = preg_match('~^/discussions/[0-9]+$~', $normalized) === 1;
+    status_header(in_array($normalized, $routes, true) || $dynamic_blog || $dynamic_discussion ? 200 : 404);
     nocache_headers();
     $manifest = json_decode(file_get_contents(PMSV_WP_DIR . 'assets/.vite/manifest.json'), true)['index.html'];
     $assets = trailingslashit(plugins_url('assets', __FILE__));
     $public = trailingslashit(plugins_url('public', __FILE__));
-    ?><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#3155d9"><meta name="apple-mobile-web-app-capable" content="yes"><title>PMSV Food Safety & Quality Forum</title><script>window.PMSV=<?php echo wp_json_encode(['base'=>$base,'publicBase'=>$public], JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT); ?>;window.PMSV.installPrompt=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.PMSV.installPrompt=e;window.dispatchEvent(new Event('pmsv-install-available'));});window.addEventListener('appinstalled',function(){window.PMSV.installPrompt=null;});</script><link rel="manifest" href="<?php echo esc_url($base . '/?pmsv_manifest=1&v=1.0.8'); ?>"><link rel="icon" href="/wp-content/plugins/pmsv-original-app-preview/public/icons/pmsv-family-64.png"><link rel="apple-touch-icon" href="/wp-content/plugins/pmsv-original-app-preview/public/icons/pmsv-family-192.png"><?php foreach($manifest['css'] ?? [] as $css): ?><link rel="stylesheet" href="<?php echo esc_url($assets . $css . '?v=1.0.10'); ?>"><?php endforeach; ?></head><body class="antialiased"><div id="root"></div><script>window.addEventListener('load',function(){if('serviceWorker' in navigator){navigator.serviceWorker.register((window.PMSV.base||'')+'/?pmsv-sw=1&v=1.0.8',{scope:(window.PMSV.base||'')+'/',updateViaCache:'none'}).catch(function(){});}});</script><script type="module" src="<?php echo esc_url($assets . $manifest['file'] . '?v=1.0.10'); ?>"></script></body></html><?php
+    ?><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#3155d9"><meta name="apple-mobile-web-app-capable" content="yes"><title>PMSV Food Safety & Quality Forum</title><script>window.PMSV=<?php echo wp_json_encode(['base'=>$base,'publicBase'=>$public], JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT); ?>;window.PMSV.installPrompt=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.PMSV.installPrompt=e;window.dispatchEvent(new Event('pmsv-install-available'));});window.addEventListener('appinstalled',function(){window.PMSV.installPrompt=null;});</script><link rel="manifest" href="<?php echo esc_url($base . '/?pmsv_manifest=1&v=1.0.8'); ?>"><link rel="icon" href="/wp-content/plugins/pmsv-original-app-preview/public/icons/pmsv-family-64.png"><link rel="apple-touch-icon" href="/wp-content/plugins/pmsv-original-app-preview/public/icons/pmsv-family-192.png"><?php foreach($manifest['css'] ?? [] as $css): ?><link rel="stylesheet" href="<?php echo esc_url($assets . $css . '?v=1.0.11'); ?>"><?php endforeach; ?></head><body class="antialiased"><div id="root"></div><script>window.addEventListener('load',function(){if('serviceWorker' in navigator){navigator.serviceWorker.register((window.PMSV.base||'')+'/?pmsv-sw=1&v=1.0.8',{scope:(window.PMSV.base||'')+'/',updateViaCache:'none'}).catch(function(){});}});</script><script type="module" src="<?php echo esc_url($assets . $manifest['file'] . '?v=1.0.11'); ?>"></script></body></html><?php
     exit;
 }, 0);
 function pmsv_wp_reply($body, $status=200) { status_header($status); nocache_headers(); header('Content-Type: application/json'); echo wp_json_encode($body); }
@@ -149,6 +151,13 @@ function pmsv_wp_api($route) {
     $method = $_SERVER['REQUEST_METHOD'];
     try {
         if ($route==='news' && $method==='GET') return pmsv_wp_reply(['news'=>pmsv_wp_archive()]);
+        if ($route==='discussions' && $method==='GET') return pmsv_wp_reply(['questions'=>pmsv_wp_forum_questions()]);
+        if ($route==='discussions' && $method==='POST') return pmsv_wp_forum_create_question();
+        if (preg_match('~^discussions/([0-9]+)$~',$route,$m) && $method==='GET') {
+            $detail=pmsv_wp_forum_detail((int)$m[1]);
+            return $detail?pmsv_wp_reply($detail):pmsv_wp_reply(['error'=>'Question not found.'],404);
+        }
+        if (preg_match('~^discussions/([0-9]+)/answers$~',$route,$m) && $method==='POST') return pmsv_wp_forum_create_answer((int)$m[1]);
         if ($route==='updater' && $method==='GET') return pmsv_wp_reply(get_option('pmsv_wp_updater', ['active'=>false]));
         if ($route==='push/latest' && $method==='GET') {
             $news = pmsv_wp_archive(); usort($news, fn($a,$b)=>strcmp($b['firstSeen'],$a['firstSeen']));
