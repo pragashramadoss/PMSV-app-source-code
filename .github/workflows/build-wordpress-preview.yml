@@ -2,7 +2,7 @@ name: Build WordPress production package
 
 on:
   push:
-    branches: [notification-hotfix-1.0.11]
+    branches: [notification-hotfix-1.0.12]
     paths:
       - 'app/**'
       - 'components/**'
@@ -125,9 +125,13 @@ jobs:
           ! grep -R -Ei 'chatgpt\.site|chatgpt\.com|openai\.com|modelContext' wordpress/plugin
           grep -q '"/updates"' wordpress/plugin/routes.json
           grep -q '"/about"' wordpress/plugin/routes.json
-          grep -q 'Version: 1.0.11' wordpress/plugin/pmsv-app.php
+          grep -q 'Version: 1.0.12' wordpress/plugin/pmsv-app.php
           grep -q "push/test" wordpress/plugin/pmsv-app.php
           grep -R -q 'Send test notification' wordpress/plugin/assets/assets/*.js
+          grep -q 'Email Audit Report' wordpress/plugin/public/audits/audit-report.html
+          grep -q 'Email NC Report' wordpress/plugin/public/audits/audit-report.html
+          grep -q 'Email Audit Report' wordpress/plugin/public/audits/hygiene-rating-report.html
+          grep -q 'Email NC Report' wordpress/plugin/public/audits/hygiene-rating-report.html
           grep -R -q 'AC Tech, Anna University' wordpress/plugin/assets/assets/*.js
           grep -R -q 'pragash-profile.jpg' wordpress/plugin/assets/assets/*.js
 
@@ -138,8 +142,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add wordpress/plugin
           if ! git diff --cached --quiet; then
-            git commit -m "Build WordPress production 1.0.11 [skip ci]"
-            git push origin HEAD:notification-hotfix-1.0.11
+            git commit -m "Build WordPress production 1.0.12 [skip ci]"
+            git push origin HEAD:notification-hotfix-1.0.12
           fi
 
       - name: Package plugin
@@ -148,22 +152,22 @@ jobs:
           mkdir -p dist-wordpress/pmsv-original-app-preview
           cp -R wordpress/plugin/. dist-wordpress/pmsv-original-app-preview/
           cd dist-wordpress
-          zip -qr ../PMSV-Food-Safety-Quality-Forum-v1.0.11.zip pmsv-original-app-preview
+          zip -qr ../PMSV-Food-Safety-Quality-Forum-v1.0.12.zip pmsv-original-app-preview
 
       - name: Upload plugin ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: PMSV-Food-Safety-Quality-Forum-v1.0.11
-          path: PMSV-Food-Safety-Quality-Forum-v1.0.11.zip
+          name: PMSV-Food-Safety-Quality-Forum-v1.0.12
+          path: PMSV-Food-Safety-Quality-Forum-v1.0.12.zip
           if-no-files-found: error
           retention-days: 14
 
-# v1.0.11 final verification
+# v1.0.12 final verification
 
-# v1.0.11 final single-run verification
+# v1.0.12 final single-run verification
 
-# v1.0.11 embedded-logo and summary verification
+# v1.0.12 embedded-logo and summary verification
 
-# v1.0.11 clean embedded-logo rebuild
+# v1.0.12 clean embedded-logo rebuild
 
-# v1.0.11 final clean logo verification
+# v1.0.12 final clean logo verification
