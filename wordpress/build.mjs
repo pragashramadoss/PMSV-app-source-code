@@ -115,7 +115,7 @@ const previewHtml=`<!doctype html><html lang="en"><head><meta charset="UTF-8"><m
   const root=originalPath.replace(/\\/preview\\.html$/,'');
   const route=new URLSearchParams(location.search).get('route')||'/';
   const base=document.createElement('base');base.href=location.origin+root+'/assets/';document.head.appendChild(base);
-  window.PMSV={base:root,publicBase:root+'/public/'};
+  window.PMSV={base:root,publicBase:root+'/public/',preview:true};
 
   const nativeFetch=window.fetch.bind(window);
   window.fetch=async function(input,init){
@@ -129,7 +129,7 @@ const previewHtml=`<!doctype html><html lang="en"><head><meta charset="UTF-8"><m
         news=news.filter(n=>n.tab!=='blogs').map(useful).concat(Array.isArray(blogs)?blogs:[]);
         return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
       }
-      if(u.pathname===root+'/api/updater')return new Response(JSON.stringify({active:false,checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});\n      if(u.pathname===root+'/api/discussions')return new Response(JSON.stringify({questions:[]}),{status:200,headers:{'Content-Type':'application/json'}});
+      if(u.pathname===root+'/api/updater')return new Response(JSON.stringify({active:false,checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});\n      if(u.pathname.endsWith('/api/discussions'))return new Response(JSON.stringify({questions:[]}),{status:200,headers:{'Content-Type':'application/json'}});
       if(u.pathname===root+'/api/push')return new Response(JSON.stringify({error:'Preview only'}),{status:503,headers:{'Content-Type':'application/json'}});
     }catch(e){}
     return nativeFetch(input,init);
