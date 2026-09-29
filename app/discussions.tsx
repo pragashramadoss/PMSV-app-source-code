@@ -95,7 +95,7 @@ export default function Discussions({questionId}:{questionId?:string}){
    const current=detail||readPreviewDetail();
    if(current){
     const now=new Date().toISOString();
-    const nextAnswer:Answer={id:String(current.answers.length+1),questionId,name:answerName,body:answerBody,createdAt:now};
+    const nextAnswer:Answer={id:String(current.answers.length+1),questionId:qid,name:answerName,body:answerBody,createdAt:now};
     const next:Detail={question:{...current.question,answerCount:current.answers.length+1,lastActivityAt:now},answers:[...current.answers,nextAnswer]};
     savePreviewDetail(next);setDetail(next);setAnswerBody('');
    }
