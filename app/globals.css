@@ -232,3 +232,67 @@ img[src*="australia.svg"]{background:#143352;border-radius:5px;padding:6px}.nav-
  .about-photo-wrap{width:148px;margin:0 auto}
  .about-hero h2{text-align:left}
 }
+
+
+/* PMSV text discussions */
+.launch-discussions{color:#3155d9;background:#e8edff}
+.discussion-shell main{max-width:980px}
+.discussion-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:18px}
+.discussion-heading h1{margin:0 0 6px}
+.discussion-heading p{margin:0;color:#718097;font-size:15px}
+.discussion-heading>button,.ask-card button,.answer-form-card button{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;background:#3155d9;color:#fff;font-weight:700;font-size:14px;padding:12px 16px}
+.discussion-heading>button:disabled,.ask-card button:disabled,.answer-form-card button:disabled{opacity:.55}
+.discussion-scope{background:#fff;border:1px solid #dfe5ef;border-radius:13px;padding:13px 16px;margin-bottom:18px;font-size:13px;color:#53627a}
+.discussion-scope strong{color:#253756}
+.discussion-scope span{display:block;margin-top:4px;color:#7a879b}
+.discussion-message{background:#fff4df;color:#79550f;border-radius:10px;padding:12px 14px;margin:0 0 16px;font-size:14px}
+.ask-card,.answer-form-card,.question-detail{background:#fff;border:1px solid #dfe5ef;border-radius:15px;padding:22px;margin-bottom:20px}
+.ask-card h2,.answer-form-card h2,.answers-section>h2{font-size:19px;margin:0 0 16px}
+.ask-card form,.answer-form-card form{display:grid;gap:14px}
+.ask-card label,.answer-form-card label{display:grid;gap:7px;font-size:13px;font-weight:700;color:#34445f}
+.ask-card input,.ask-card select,.ask-card textarea,.answer-form-card input,.answer-form-card textarea{width:100%;border:1px solid #d7dfeb;border-radius:9px;background:#fff;padding:11px 12px;font:inherit;color:#18243e;box-sizing:border-box}
+.ask-card textarea{min-height:130px;resize:vertical}
+.answer-form-card textarea{min-height:120px;resize:vertical}
+.ask-card input:focus,.ask-card select:focus,.ask-card textarea:focus,.answer-form-card input:focus,.answer-form-card textarea:focus{outline:2px solid #3155d9;outline-offset:1px}
+.discussion-rule{font-size:12px;color:#748198;margin:-2px 0 0}
+.question-list{margin-top:20px}
+.discussion-list-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.discussion-list-title h2{font-size:18px;margin:0}
+.discussion-list-title span{font-size:12px;color:#78859a}
+.question-card{display:block;background:#fff;border:1px solid #dfe5ef;border-radius:14px;padding:18px 20px;margin-bottom:12px;color:#18243e}
+.question-card:hover{border-color:#aebced;box-shadow:0 3px 12px #1d2e4e07}
+.question-card h3{font-size:18px;line-height:1.45;margin:10px 0 8px}
+.question-card>p{color:#6b7890;font-size:14px;line-height:1.55;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.discussion-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#8390a3;font-size:12px}
+.discussion-category{font-weight:700;padding:4px 8px;border-radius:999px}
+.discussion-category.food-safety{background:#e7f7ef;color:#176a4a}
+.discussion-category.quality{background:#eaf0ff;color:#3155d9}
+.discussion-category.process-excellence{background:#fff0dc;color:#995b17}
+.question-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #edf0f6;margin-top:14px;padding-top:12px;font-size:12px;color:#738198}
+.question-bottom strong{color:#465672}
+.discussion-loading,.discussion-empty{background:#fff;border:1px solid #dfe5ef;border-radius:14px;padding:26px;text-align:center;color:#6f7d93}
+.discussion-empty h3{margin:8px 0 4px;font-size:18px;color:#273857}
+.discussion-empty p{margin:0}
+.discussion-back{display:inline-flex;align-items:center;gap:6px;color:#3155d9;font-size:13px;font-weight:700;margin-bottom:18px}
+.question-detail h2{font-size:25px;line-height:1.4;margin:14px 0 12px}
+.question-detail>p{white-space:pre-wrap;font-size:16px;line-height:1.7;color:#4f5e75}
+.discussion-author{border-top:1px solid #edf0f6;padding-top:13px;margin-top:18px;color:#758198;font-size:13px}
+.answers-section{margin:22px 0}
+.answer-card{background:#fff;border:1px solid #dfe5ef;border-radius:13px;padding:17px 18px;margin-bottom:10px}
+.answer-card>p{white-space:pre-wrap;font-size:15px;line-height:1.7;color:#3f506b;margin:0}
+.answer-card>div{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #edf0f6;margin-top:13px;padding-top:10px;font-size:12px;color:#7b8799}
+.answer-card strong{color:#465672}
+.home-primary-launcher{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:760px){
+ .home-launcher.home-primary-launcher{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .home-primary-launcher>a{min-height:105px;padding:13px 4px}
+ .home-primary-launcher strong{font-size:12px!important}
+ .discussion-shell main{padding-left:14px;padding-right:14px}
+ .discussion-heading{display:block}
+ .discussion-heading>button{margin-top:14px;width:100%}
+ .ask-card,.answer-form-card,.question-detail{padding:17px 15px}
+ .question-card{padding:16px 14px}
+ .question-card h3{font-size:17px}
+ .question-detail h2{font-size:21px}
+ .discussion-meta{align-items:flex-start}
+}
