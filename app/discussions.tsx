@@ -16,9 +16,18 @@ const isPreview=()=>Boolean(pmsv()?.preview)||(typeof window!=='undefined'&&wind
 const publicAsset=(path:string)=>{const b=typeof window!=='undefined'?((window as unknown as {PMSV?:{publicBase?:string}}).PMSV?.publicBase||''):'';return b?b+path.replace(/^\/+/, ''):path};
 const route=(path:string)=>base()+path;
 const previewUrl=(path:string)=>base()+'/preview.html?route='+encodeURIComponent(path);
-const previewKey='pmsv-preview-discussion';
-const readPreviewDetail=():Detail|null=>{try{const raw=sessionStorage.getItem(previewKey);return raw?JSON.parse(raw) as Detail:null}catch{return null}};
-const savePreviewDetail=(value:Detail)=>{try{sessionStorage.setItem(previewKey,JSON.stringify(value))}catch{}};
+const previewKey='pmsv-preview-discussions-v2';
+const legacyPreviewKey='pmsv-preview-discussion';
+const readPreviewStore=():Detail[]=>{try{
+ const raw=sessionStorage.getItem(previewKey);
+ if(raw){const parsed=JSON.parse(raw);return Array.isArray(parsed)?parsed as Detail[]:[]}
+ const legacy=sessionStorage.getItem(legacyPreviewKey);
+ if(legacy){const one=JSON.parse(legacy) as Detail;const list=[one];sessionStorage.setItem(previewKey,JSON.stringify(list));return list}
+ return [];
+}catch{return []}};
+const savePreviewStore=(value:Detail[])=>{try{sessionStorage.setItem(previewKey,JSON.stringify(value))}catch{}};
+const readPreviewDetail=(id?:string):Detail|null=>{const all=readPreviewStore();if(id)return all.find(x=>x.question.id===id)||null;return all[0]||null};
+const upsertPreviewDetail=(value:Detail)=>{const all=readPreviewStore();const next=[value,...all.filter(x=>x.question.id!==value.question.id)].sort((a,b)=>b.question.lastActivityAt.localeCompare(a.question.lastActivityAt));savePreviewStore(next)};
 const dateLabel=(iso:string)=>new Intl.DateTimeFormat('en-IN',{dateStyle:'medium',timeStyle:'short'}).format(new Date(iso));
 const categoryLabel=(value:string)=>value==='food-safety'?'Food Safety':value==='quality'?'Quality':'Process Excellence';
 
@@ -74,9 +83,9 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
  async function load(){
   setLoading(true);setMessage('');
   if(isPreview()){
-   const saved=readPreviewDetail();
-   if(questionId)setDetail(saved);
-   else setQuestions(saved?[saved.question]:[]);
+   const store=readPreviewStore();
+   if(questionId)setDetail(readPreviewDetail(questionId));
+   else setQuestions(store.map(x=>x.question).sort((a,b)=>b.lastActivityAt.localeCompare(a.lastActivityAt)));
    setLoading(false);return;
   }
   try{
@@ -92,9 +101,9 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
   e.preventDefault();setSubmitting(true);setMessage('');
   if(isPreview()){
    const now=new Date().toISOString();
-   const question:Question={id:'1',title,body,category,name,createdAt:now,answerCount:0,lastActivityAt:now};
-   const next={question,answers:[]};
-   savePreviewDetail(next);setDetail(next);setQuestions([question]);setPreviewView('detail');setSubmitting(false);
+   const question:Question={id:String(Date.now()),title,body,category,name,createdAt:now,answerCount:0,lastActivityAt:now};
+   const next:Detail={question,answers:[]};
+   upsertPreviewDetail(next);setDetail(next);setQuestions(readPreviewStore().map(x=>x.question));setPreviewReturnView('list');setPreviewView('detail');setSubmitting(false);
    return;
   }
   try{
@@ -106,12 +115,12 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
  async function answer(e:React.FormEvent){
   e.preventDefault();const qid=questionId||detail?.question.id;if(!qid)return;setSubmitting(true);setMessage('');
   if(isPreview()){
-   const current=detail||readPreviewDetail();
+   const current=detail||readPreviewDetail(qid);
    if(current){
     const now=new Date().toISOString();
     const nextAnswer:Answer={id:String(current.answers.length+1),questionId:qid,name:answerName,body:answerBody,createdAt:now};
     const next:Detail={question:{...current.question,answerCount:current.answers.length+1,lastActivityAt:now},answers:[...current.answers,nextAnswer]};
-    savePreviewDetail(next);setDetail(next);setAnswerBody('');
+    upsertPreviewDetail(next);setDetail(next);setQuestions(readPreviewStore().map(x=>x.question));setAnswerBody('');
    }
    setSubmitting(false);return;
   }
@@ -169,7 +178,7 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
    <div className="heading-row"><div><h1>{categoryLabel(activeTopic)}</h1><p className="intro">Questions in {categoryLabel(activeTopic)}.</p></div></div>
    <section className="question-list topic-question-page">
     <div className="discussion-list-title"><h2>Questions</h2><span>{topicQuestions.length} {topicQuestions.length===1?'question':'questions'}</span></div>
-    {loading?<p className="discussion-loading">Loading questions…</p>:topicQuestions.length===0?<div className="discussion-empty"><MessageCircleQuestion size={28}/><h3>No questions yet</h3><p>There are no questions in this topic yet.</p></div>:topicQuestions.map(q=><a className="question-card" key={q.id} href={route('/discussions/'+q.id)} onClick={e=>{if(isPreview()){e.preventDefault();const saved=readPreviewDetail();if(saved&&saved.question.id===q.id){setDetail(saved);setPreviewReturnView('topic');setPreviewView('detail')}}}}>
+    {loading?<p className="discussion-loading">Loading questions…</p>:topicQuestions.length===0?<div className="discussion-empty"><MessageCircleQuestion size={28}/><h3>No questions yet</h3><p>There are no questions in this topic yet.</p></div>:topicQuestions.map(q=><a className="question-card" key={q.id} href={route('/discussions/'+q.id)} onClick={e=>{if(isPreview()){e.preventDefault();const saved=readPreviewDetail(q.id);if(saved){setDetail(saved);setPreviewReturnView('topic');setPreviewView('detail')}}}}>
       <div className="discussion-meta"><span className={'discussion-category '+q.category}>{categoryLabel(q.category)}</span><span>{dateLabel(q.createdAt)}</span></div>
       <h3>{q.title}</h3><p>{q.body}</p><div className="question-bottom"><span>Asked by <strong>{q.name}</strong></span><span>{q.answerCount} {q.answerCount===1?'answer':'answers'}</span></div>
      </a>)}
@@ -205,7 +214,7 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
   <div className="discussion-scope"><strong>Scope:</strong> Food Safety · Quality · Process Excellence <span>No general advertising, unrelated subjects, links or promotions.</span></div>
   {message&&<p className="discussion-message">{message}</p>}
   <section className="question-list"><div className="discussion-list-title"><div><h2>Latest questions</h2>{search&&<p>{visibleQuestions.length} matching discussion{visibleQuestions.length===1?'':'s'}</p>}</div><span>{questions.length} total</span></div>
-   {loading?<p className="discussion-loading">Loading discussions…</p>:questions.length===0?<div className="discussion-empty"><MessageCircleQuestion size={28}/><h3>No questions yet</h3><p>Start the first professional discussion.</p></div>:visibleQuestions.length===0?<div className="discussion-empty"><Search size={28}/><h3>No matching questions</h3><p>Try another search or topic.</p></div>:visibleQuestions.map(q=><a className="question-card" key={q.id} href={route('/discussions/'+q.id)} onClick={e=>{if(isPreview()){e.preventDefault();const saved=readPreviewDetail();if(saved&&saved.question.id===q.id){setDetail(saved);setPreviewReturnView('list');setPreviewView('detail');}}}}>
+   {loading?<p className="discussion-loading">Loading discussions…</p>:questions.length===0?<div className="discussion-empty"><MessageCircleQuestion size={28}/><h3>No questions yet</h3><p>Start the first professional discussion.</p></div>:visibleQuestions.length===0?<div className="discussion-empty"><Search size={28}/><h3>No matching questions</h3><p>Try another search or topic.</p></div>:visibleQuestions.map(q=><a className="question-card" key={q.id} href={route('/discussions/'+q.id)} onClick={e=>{if(isPreview()){e.preventDefault();const saved=readPreviewDetail(q.id);if(saved){setDetail(saved);setPreviewReturnView('list');setPreviewView('detail');}}}}>
     <div className="discussion-meta"><span className={'discussion-category '+q.category}>{categoryLabel(q.category)}</span><span>{dateLabel(q.createdAt)}</span></div>
     <h3>{q.title}</h3><p>{q.body}</p><div className="question-bottom"><span>Asked by <strong>{q.name}</strong></span><span>{q.answerCount} {q.answerCount===1?'answer':'answers'}</span></div>
    </a>)}
