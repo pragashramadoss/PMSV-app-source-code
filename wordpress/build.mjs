@@ -16,7 +16,7 @@ const auditShell=`
   <div class="nav-caption">WORKSPACE</div>
   <a class="workspace-link" href="../updates"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2.5"/><path d="M8 7h6M8 11h6"/></svg></span><span>Updates/News</span></a>
   <a class="workspace-link active" href="index.html" aria-current="page"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span>Audits</span></a>
-  <a class="workspace-link" href="../blogs"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4.5A2.5 2.5 0 0 1 4.5 2H9a3 3 0 0 1 3 3v15a3 3 0 0 0-3-3H2z"/><path d="M22 4.5A2.5 2.5 0 0 0 19.5 2H15a3 3 0 0 0-3 3v15a3 3 0 0 1 3-3h7z"/></svg></span><span>Blogs</span></a>
+  <a class="workspace-link" href="../blogs"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4.5A2.5 2.5 0 0 1 4.5 2H9a3 3 0 0 1 3 3v15a3 3 0 0 0-3-3H2z"/><path d="M22 4.5A2.5 2.5 0 0 0 19.5 2H15a3 3 0 0 0-3 3v15a3 3 0 0 1 3-3h7z"/></svg></span><span>Blogs</span></a>\n  <a class="workspace-link" href="../discussions"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/><path d="M8 8h8M8 12h5"/></svg></span><span>Discussions</span></a>
   <div class="nav-bottom"><img src="../brand/pmsv-family.png?v=0.5.23" alt="PMSV family logo"><span>PMSV<small>Food Safety &amp; Quality Forum</small></span></div>
 </aside>
 <div class="pmsv-audit-masthead">
@@ -129,7 +129,7 @@ const previewHtml=`<!doctype html><html lang="en"><head><meta charset="UTF-8"><m
         news=news.filter(n=>n.tab!=='blogs').map(useful).concat(Array.isArray(blogs)?blogs:[]);
         return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
       }
-      if(u.pathname===root+'/api/updater')return new Response(JSON.stringify({active:false,checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});
+      if(u.pathname===root+'/api/updater')return new Response(JSON.stringify({active:false,checks:[]}),{status:200,headers:{'Content-Type':'application/json'}});\n      if(u.pathname===root+'/api/discussions')return new Response(JSON.stringify({questions:[]}),{status:200,headers:{'Content-Type':'application/json'}});
       if(u.pathname===root+'/api/push')return new Response(JSON.stringify({error:'Preview only'}),{status:503,headers:{'Content-Type':'application/json'}});
     }catch(e){}
     return nativeFetch(input,init);
@@ -184,7 +184,7 @@ for(const e of await readdir(auditDir,{withFileTypes:true})){
 async function files(dir,base=''){let out=[];for(const e of await readdir(dir,{withFileTypes:true})){const name=base+e.name;if(e.isDirectory())out.push(...await files(dir+'/'+e.name,name+'/'));else out.push(name);}return out;}
 await writeFile(target+'/public-files.json',JSON.stringify(await files('public')));
 const bodies=JSON.parse(await readFile('data/professional-sources.json','utf8'));
-const routes=['/','/updates','/regulatory','/news','/quality','/excellence','/certifications','/blogs','/about','/privacy','/subscriptions/manage',...['india','us','eu','uk','australia'].map(x=>'/regulatory/'+x),'/news/india','/news/global'];
+const routes=['/','/updates','/regulatory','/news','/quality','/excellence','/certifications','/blogs','/discussions','/about','/privacy','/subscriptions/manage',...['india','us','eu','uk','australia'].map(x=>'/regulatory/'+x),'/news/india','/news/global'];
 for(const b of bodies)for(const t of b.topics)routes.push('/'+t+'/'+b.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,''));
 await writeFile(target+'/routes.json',JSON.stringify(routes,null,2));
 await writeFile(target+'/SOURCE.json',JSON.stringify({repository:'pragashramadoss/PMSV-app-source-code',auditSource:'pragashramadoss/pmsv-fssai-audit',auditIntegration:'bundled-from-github-at-build',releaseStatus:'production',routes:routes.length},null,2));
