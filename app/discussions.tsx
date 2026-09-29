@@ -12,7 +12,7 @@ type Detail={question:Question;answers:Answer[]};
 
 const pmsv=()=>typeof window!=='undefined'?((window as unknown as {PMSV?:{base?:string;publicBase?:string;preview?:boolean}}).PMSV):undefined;
 const base=()=>pmsv()?.base||'';
-const isPreview=()=>Boolean(pmsv()?.preview);
+const isPreview=()=>Boolean(pmsv()?.preview)||(typeof window!=='undefined'&&window.location.hostname==='raw.githack.com');
 const publicAsset=(path:string)=>{const b=typeof window!=='undefined'?((window as unknown as {PMSV?:{publicBase?:string}}).PMSV?.publicBase||''):'';return b?b+path.replace(/^\/+/, ''):path};
 const route=(path:string)=>base()+path;
 const dateLabel=(iso:string)=>new Intl.DateTimeFormat('en-IN',{dateStyle:'medium',timeStyle:'short'}).format(new Date(iso));
