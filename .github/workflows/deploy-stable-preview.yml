@@ -1,4 +1,4 @@
-name: Deploy PMSV stable preview
+name: Sync PMSV stable preview
 
 on:
   push:
@@ -8,42 +8,38 @@ on:
       - '.preview-trigger'
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pmsv-pages-preview
+  group: pmsv-pages-preview-sync
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  sync:
     runs-on: ubuntu-latest
     steps:
       - name: Check out latest WordPress production source
         uses: actions/checkout@v4
         with:
           ref: wordpress-production
+          fetch-depth: 0
 
       - name: Assemble standalone preview
         shell: bash
         run: |
           set -euo pipefail
-          rm -rf _site
-          mkdir -p _site
+          rm -rf /tmp/pmsv-preview
+          mkdir -p /tmp/pmsv-preview
 
-          cp -R wordpress/plugin/assets/. _site/
-          cp -R wordpress/plugin/public/. _site/
-          cp wordpress/plugin/archive-seed.json _site/preview-news.json
+          cp -R wordpress/plugin/assets/. /tmp/pmsv-preview/
+          cp -R wordpress/plugin/public/. /tmp/pmsv-preview/
+          cp wordpress/plugin/archive-seed.json /tmp/pmsv-preview/preview-news.json
 
-          find _site/assets -type f -name '*.js' -print0 | xargs -0 sed -i             's#/wp-content/plugins/pmsv-original-app-preview/public/#/PMSV-app-source-code/#g'
+          find /tmp/pmsv-preview/assets -type f -name '*.js' -print0 | xargs -0 sed -i             's#/wp-content/plugins/pmsv-original-app-preview/public/#/PMSV-app-source-code/#g'
 
           python - <<'PY'
           from pathlib import Path
-          p = Path('_site/index.html')
+          p = Path('/tmp/pmsv-preview/index.html')
           html = p.read_text()
           bootstrap = r"""
           <script>
@@ -69,21 +65,24 @@ jobs:
           """
           html = html.replace('</head>', bootstrap + '</head>')
           p.write_text(html)
-          Path('_site/404.html').write_text(html)
+          Path('/tmp/pmsv-preview/404.html').write_text(html)
+          Path('/tmp/pmsv-preview/.nojekyll').touch()
           PY
 
-          touch _site/.nojekyll
+      - name: Sync preview into gh-pages branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin gh-pages
+          git switch -C gh-pages origin/gh-pages
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' ! -name '.github' ! -name '.preview-trigger' -exec rm -rf {} +
+          cp -R /tmp/pmsv-preview/. .
 
-      - name: Upload preview site
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-
-      - name: Deploy preview
-        id: deployment
-        uses: actions/deploy-pages@v4
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Sync latest PMSV app preview [skip ci]"
+            git push origin gh-pages
+          fi
