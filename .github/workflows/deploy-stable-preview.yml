@@ -1,0 +1,89 @@
+name: Deploy PMSV stable preview
+
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - '.github/workflows/deploy-stable-preview.yml'
+      - '.preview-trigger'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pmsv-pages-preview
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out latest WordPress production source
+        uses: actions/checkout@v4
+        with:
+          ref: wordpress-production
+
+      - name: Assemble standalone preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site
+
+          cp -R wordpress/plugin/assets/. _site/
+          cp -R wordpress/plugin/public/. _site/
+          cp wordpress/plugin/archive-seed.json _site/preview-news.json
+
+          find _site/assets -type f -name '*.js' -print0 | xargs -0 sed -i             's#/wp-content/plugins/pmsv-original-app-preview/public/#/PMSV-app-source-code/#g'
+
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('_site/index.html')
+          html = p.read_text()
+          bootstrap = r"""
+          <script>
+          window.PMSV={base:'/PMSV-app-source-code',publicBase:'/PMSV-app-source-code/',preview:true};
+          const __pmsvFetch=window.fetch.bind(window);
+          window.fetch=async function(input,init){
+            const raw=typeof input==='string'?input:(input&&input.url)||'';
+            const url=new URL(raw,location.href);
+            if(url.pathname==='/PMSV-app-source-code/api/news'){
+              const r=await __pmsvFetch('/PMSV-app-source-code/preview-news.json',{cache:'no-store'});
+              const news=await r.json();
+              return new Response(JSON.stringify({news}),{status:200,headers:{'Content-Type':'application/json'}});
+            }
+            if(url.pathname==='/PMSV-app-source-code/api/updater'){
+              return new Response(JSON.stringify({active:false,checkedAt:'',scheduleEnabled:false,coverage:'Standalone preview'}),{status:200,headers:{'Content-Type':'application/json'}});
+            }
+            if(url.pathname.startsWith('/PMSV-app-source-code/api/')){
+              return new Response(JSON.stringify({error:'Unavailable in standalone preview'}),{status:404,headers:{'Content-Type':'application/json'}});
+            }
+            return __pmsvFetch(input,init);
+          };
+          </script>
+          """
+          html = html.replace('</head>', bootstrap + '</head>')
+          p.write_text(html)
+          Path('_site/404.html').write_text(html)
+          PY
+
+          touch _site/.nojekyll
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload preview site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy preview
+        id: deployment
+        uses: actions/deploy-pages@v4
