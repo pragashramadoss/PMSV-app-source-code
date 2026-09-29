@@ -157,7 +157,7 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
  }
 
  if(questionId||(isPreview()&&previewView==='detail')){
-  return <Shell detail={Boolean(questionId)}>{isPreview()&&previewView==='detail'&&<button type="button" className="discussion-back preview-back" onClick={()=>{setPreviewView(previewReturnView);setQuestions(detail?[detail.question]:[]);setAnswerName('');setAnswerBody('');}}><ArrowLeft size={17}/>All discussions</button>}<div className="heading-row"><div><h1>Discussion</h1><p className="intro">Food safety, quality and process excellence Q&amp;A.</p></div></div>
+  return <Shell detail={Boolean(questionId)}>{isPreview()&&previewView==='detail'&&<button type="button" className="discussion-back preview-back" onClick={()=>{setPreviewView(previewReturnView);setQuestions(readPreviewStore().map(x=>x.question).sort((a,b)=>b.lastActivityAt.localeCompare(a.lastActivityAt)));setAnswerName('');setAnswerBody('');}}><ArrowLeft size={17}/>All discussions</button>}<div className="heading-row"><div><h1>Discussion</h1><p className="intro">Food safety, quality and process excellence Q&amp;A.</p></div></div>
    {message&&<p className="discussion-message">{message}</p>}
    {reportNotice&&<p className="discussion-report-notice">{reportNotice}</p>}
    {loading?<p className="discussion-loading">Loading discussion…</p>:detail?<><article className="question-detail">
