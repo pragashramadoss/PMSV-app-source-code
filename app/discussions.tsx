@@ -15,6 +15,10 @@ const base=()=>pmsv()?.base||'';
 const isPreview=()=>Boolean(pmsv()?.preview)||(typeof window!=='undefined'&&window.location.hostname==='raw.githack.com');
 const publicAsset=(path:string)=>{const b=typeof window!=='undefined'?((window as unknown as {PMSV?:{publicBase?:string}}).PMSV?.publicBase||''):'';return b?b+path.replace(/^\/+/, ''):path};
 const route=(path:string)=>base()+path;
+const previewUrl=(path:string)=>base()+'/preview.html?route='+encodeURIComponent(path);
+const previewKey='pmsv-preview-discussion';
+const readPreviewDetail=():Detail|null=>{try{const raw=sessionStorage.getItem(previewKey);return raw?JSON.parse(raw) as Detail:null}catch{return null}};
+const savePreviewDetail=(value:Detail)=>{try{sessionStorage.setItem(previewKey,JSON.stringify(value))}catch{}};
 const dateLabel=(iso:string)=>new Intl.DateTimeFormat('en-IN',{dateStyle:'medium',timeStyle:'short'}).format(new Date(iso));
 const categoryLabel=(value:string)=>value==='food-safety'?'Food Safety':value==='quality'?'Quality':'Process Excellence';
 
@@ -51,7 +55,9 @@ export default function Discussions({questionId}:{questionId?:string}){
  async function load(){
   setLoading(true);setMessage('');
   if(isPreview()){
-   if(questionId)setDetail(null);else setQuestions([]);
+   const saved=readPreviewDetail();
+   if(questionId)setDetail(saved);
+   else setQuestions(saved?[saved.question]:[]);
    setLoading(false);return;
   }
   try{
@@ -65,7 +71,14 @@ export default function Discussions({questionId}:{questionId?:string}){
 
  async function ask(e:React.FormEvent){
   e.preventDefault();setSubmitting(true);setMessage('');
-  if(isPreview()){setSubmitting(false);return;}
+  if(isPreview()){
+   const now=new Date().toISOString();
+   const question:Question={id:'1',title,body,category,name,createdAt:now,answerCount:0,lastActivityAt:now};
+   savePreviewDetail({question,answers:[]});
+   setSubmitting(false);
+   location.href=previewUrl('/discussions/1');
+   return;
+  }
   try{
    const r=await fetch(route('/api/discussions'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,title,body,category})});
    const data=await r.json();if(!r.ok)throw new Error(data.error||'Unable to post question.');
@@ -74,7 +87,16 @@ export default function Discussions({questionId}:{questionId?:string}){
  }
  async function answer(e:React.FormEvent){
   e.preventDefault();if(!questionId)return;setSubmitting(true);setMessage('');
-  if(isPreview()){setSubmitting(false);return;}
+  if(isPreview()){
+   const current=detail||readPreviewDetail();
+   if(current){
+    const now=new Date().toISOString();
+    const nextAnswer:Answer={id:String(current.answers.length+1),questionId,name:answerName,body:answerBody,createdAt:now};
+    const next:Detail={question:{...current.question,answerCount:current.answers.length+1,lastActivityAt:now},answers:[...current.answers,nextAnswer]};
+    savePreviewDetail(next);setDetail(next);setAnswerBody('');
+   }
+   setSubmitting(false);return;
+  }
   try{
    const r=await fetch(route('/api/discussions/'+questionId+'/answers'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:answerName,body:answerBody})});
    const data=await r.json();if(!r.ok)throw new Error(data.error||'Unable to post answer.');
