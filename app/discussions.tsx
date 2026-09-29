@@ -37,11 +37,10 @@ function Shell({children,detail=false}:{children:React.ReactNode;detail?:boolean
  </div>
 }
 
-export default function Discussions({questionId}:{questionId?:string}){
+export default function Discussions({questionId,askMode=false}:{questionId?:string;askMode?:boolean}){
  const [questions,setQuestions]=useState<Question[]>([]);
  const [detail,setDetail]=useState<Detail|null>(null);
  const [loading,setLoading]=useState(true);
- const [askOpen,setAskOpen]=useState(false);
  const [message,setMessage]=useState('');
  const [submitting,setSubmitting]=useState(false);
  const [category,setCategory]=useState<'food-safety'|'quality'|'process-excellence'>('food-safety');
@@ -95,7 +94,7 @@ export default function Discussions({questionId}:{questionId?:string}){
    const now=new Date().toISOString();
    const question:Question={id:'1',title,body,category,name,createdAt:now,answerCount:0,lastActivityAt:now};
    const next={question,answers:[]};
-   savePreviewDetail(next);setDetail(next);setQuestions([question]);setPreviewQuestionOpen(false);setSubmitting(false);setAskOpen(false);
+   savePreviewDetail(next);setDetail(next);setQuestions([question]);setPreviewQuestionOpen(true);setSubmitting(false);
    return;
   }
   try{
@@ -165,7 +164,22 @@ export default function Discussions({questionId}:{questionId?:string}){
   </Shell>
  }
 
- return <Shell><div className="discussion-heading"><div><h1>Discussions</h1><p>Ask and answer practical questions about food safety, quality and process excellence.</p></div><button onClick={()=>setAskOpen(x=>!x)}><MessageCircleQuestion size={19}/>{askOpen?'Close':'Ask a question'}</button></div>
+ if(askMode){
+  return <Shell><a className="discussion-back" href={route('/discussions')}><ArrowLeft size={17}/>All discussions</a>
+   <div className="heading-row ask-page-heading"><div><h1>Ask a question</h1><p className="intro">Post a professional question for the PMSV community.</p></div></div>
+   {message&&<p className="discussion-message">{message}</p>}
+   <section className="ask-card ask-page-card"><form onSubmit={ask}>
+    <label>Topic<select value={category} onChange={e=>setCategory(e.target.value as typeof category)}><option value="food-safety">Food Safety</option><option value="quality">Quality</option><option value="process-excellence">Process Excellence</option></select></label>
+    <label>Display name<input required minLength={2} maxLength={40} value={name} onChange={e=>setName(e.target.value)} placeholder="Your name"/></label>
+    <label>Question title<input required minLength={12} maxLength={180} value={title} onChange={e=>setTitle(e.target.value)} placeholder="Example: How should allergen changeover validation be designed?"/></label>
+    <label>Details<textarea required minLength={20} maxLength={3000} value={body} onChange={e=>setBody(e.target.value)} placeholder="Add enough context for professionals to answer clearly…"/></label>
+    <p className="discussion-rule">Only Food Safety, Quality and Process Excellence questions are accepted. Text only; no links or advertisements.</p>
+    <button type="submit" disabled={submitting}><Send size={17}/>{submitting?'Posting…':'Post question'}</button>
+   </form></section>
+  </Shell>
+ }
+
+ return <Shell><div className="discussion-heading"><div><h1>Discussions</h1><p>Ask and answer practical questions about food safety, quality and process excellence.</p></div><a className="ask-question-link" href={route('/discussions/ask')}><MessageCircleQuestion size={19}/>Ask a question</a></div>
   <div className="discussion-search"><Search size={19}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search questions, topics or keywords…" aria-label="Search discussions"/>{search&&<button type="button" onClick={()=>setSearch('')}>Clear</button>}</div>
   <section className="discussion-topics">
    <div className="discussion-section-heading"><div><h2>Topics</h2><p>Open a topic to browse related questions.</p></div>{selectedTopic!=='all'&&<button type="button" onClick={()=>setSelectedTopic('all')}>Show all</button>}</div>
@@ -177,14 +191,6 @@ export default function Discussions({questionId}:{questionId?:string}){
   </section>
   <div className="discussion-scope"><strong>Scope:</strong> Food Safety · Quality · Process Excellence <span>No general advertising, unrelated subjects, links or promotions.</span></div>
   {message&&<p className="discussion-message">{message}</p>}
-  {askOpen&&<section className="ask-card"><h2>Ask a question</h2><form onSubmit={ask}>
-   <label>Topic<select value={category} onChange={e=>setCategory(e.target.value as typeof category)}><option value="food-safety">Food Safety</option><option value="quality">Quality</option><option value="process-excellence">Process Excellence</option></select></label>
-   <label>Display name<input required minLength={2} maxLength={40} value={name} onChange={e=>setName(e.target.value)} placeholder="Your name"/></label>
-   <label>Question title<input required minLength={12} maxLength={180} value={title} onChange={e=>setTitle(e.target.value)} placeholder="Example: How should allergen changeover validation be designed?"/></label>
-   <label>Details<textarea required minLength={20} maxLength={3000} value={body} onChange={e=>setBody(e.target.value)} placeholder="Add enough context for professionals to answer clearly…"/></label>
-   <p className="discussion-rule">Only professional questions within the three PMSV topics are accepted. Text only; no links or advertisements.</p>
-   <button type="submit" disabled={submitting}><Send size={17}/>{submitting?'Posting…':'Post question'}</button>
-  </form></section>}
   <section className="question-list"><div className="discussion-list-title"><div><h2>{selectedTopic==='all'?'Latest questions':categoryLabel(selectedTopic)+' questions'}</h2>{(search||selectedTopic!=='all')&&<p>{visibleQuestions.length} matching discussion{visibleQuestions.length===1?'':'s'}</p>}</div><span>{questions.length} total</span></div>
    {loading?<p className="discussion-loading">Loading discussions…</p>:questions.length===0?<div className="discussion-empty"><MessageCircleQuestion size={28}/><h3>No questions yet</h3><p>Start the first professional discussion.</p></div>:visibleQuestions.length===0?<div className="discussion-empty"><Search size={28}/><h3>No matching questions</h3><p>Try another search or topic.</p></div>:visibleQuestions.map(q=><a className="question-card" key={q.id} href={route('/discussions/'+q.id)} onClick={e=>{if(isPreview()){e.preventDefault();const saved=readPreviewDetail();if(saved){setDetail(saved);setPreviewQuestionOpen(true);}}}}>
     <div className="discussion-meta"><span className={'discussion-category '+q.category}>{categoryLabel(q.category)}</span><span>{dateLabel(q.createdAt)}</span></div>
