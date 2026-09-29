@@ -144,7 +144,7 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
  }
 
  if(questionId||(isPreview()&&previewView==='detail')){
-  return <Shell detail={Boolean(questionId)}>{isPreview()&&previewView==='detail'&&<button type="button" className="discussion-back preview-back" onClick={()=>{setPreviewView('list');setQuestions(detail?[detail.question]:[]);setAnswerName('');setAnswerBody('');}}><ArrowLeft size={17}/>All discussions</button>}<div className="heading-row"><div><h1>Discussion</h1><p className="intro">Food safety, quality and process excellence Q&amp;A.</p></div></div>
+  return <Shell detail={Boolean(questionId)}>{isPreview()&&previewView==='detail'&&<button type="button" className="discussion-back preview-back" onClick={()=>{setPreviewView(previewReturnView);setQuestions(detail?[detail.question]:[]);setAnswerName('');setAnswerBody('');}}><ArrowLeft size={17}/>All discussions</button>}<div className="heading-row"><div><h1>Discussion</h1><p className="intro">Food safety, quality and process excellence Q&amp;A.</p></div></div>
    {message&&<p className="discussion-message">{message}</p>}
    {reportNotice&&<p className="discussion-report-notice">{reportNotice}</p>}
    {loading?<p className="discussion-loading">Loading discussion…</p>:detail?<><article className="question-detail">
@@ -161,6 +161,19 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
     <p className="discussion-rule">Text only. No links, advertisements or unrelated subjects.</p>
     <button type="submit" disabled={submitting}><Send size={17}/>{submitting?'Posting…':'Post answer'}</button>
    </form></section></>:<p className="discussion-empty">Question not found.</p>}
+  </Shell>
+ }
+
+ if(activeTopic){
+  return <Shell><a className="discussion-back" href={route('/discussions')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewTopic(null);setPreviewView('list')}}}><ArrowLeft size={17}/>Back to Discussions</a>
+   <div className="heading-row"><div><h1>{categoryLabel(activeTopic)}</h1><p className="intro">Questions in {categoryLabel(activeTopic)}.</p></div></div>
+   <section className="question-list topic-question-page">
+    <div className="discussion-list-title"><h2>Questions</h2><span>{topicQuestions.length} {topicQuestions.length===1?'question':'questions'}</span></div>
+    {loading?<p className="discussion-loading">Loading questions…</p>:topicQuestions.length===0?<div className="discussion-empty"><MessageCircleQuestion size={28}/><h3>No questions yet</h3><p>There are no questions in this topic yet.</p></div>:topicQuestions.map(q=><a className="question-card" key={q.id} href={route('/discussions/'+q.id)} onClick={e=>{if(isPreview()){e.preventDefault();const saved=readPreviewDetail();if(saved&&saved.question.id===q.id){setDetail(saved);setPreviewReturnView('topic');setPreviewView('detail')}}}}>
+      <div className="discussion-meta"><span className={'discussion-category '+q.category}>{categoryLabel(q.category)}</span><span>{dateLabel(q.createdAt)}</span></div>
+      <h3>{q.title}</h3><p>{q.body}</p><div className="question-bottom"><span>Asked by <strong>{q.name}</strong></span><span>{q.answerCount} {q.answerCount===1?'answer':'answers'}</span></div>
+     </a>)}
+   </section>
   </Shell>
  }
 
@@ -182,17 +195,17 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
  return <Shell><div className="discussion-heading"><div><h1>Discussions</h1><p>Ask and answer practical questions about food safety, quality and process excellence.</p></div><a className="ask-question-link" href={route('/discussions/ask')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewView('ask')}}}><MessageCircleQuestion size={19}/>Ask a question</a></div>
   <div className="discussion-search"><Search size={19}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search questions, topics or keywords…" aria-label="Search discussions"/>{search&&<button type="button" onClick={()=>setSearch('')}>Clear</button>}</div>
   <section className="discussion-topics">
-   <div className="discussion-section-heading"><div><h2>Topics</h2><p>Open a topic to browse related questions.</p></div>{selectedTopic!=='all'&&<button type="button" onClick={()=>setSelectedTopic('all')}>Show all</button>}</div>
+   <div className="discussion-section-heading"><div><h2>Topics</h2><p>Open a topic to browse its questions on a separate page.</p></div></div>
    <div className="topic-grid">
-    <button type="button" className={'topic-card food-safety '+(selectedTopic==='food-safety'?'active':'')} onClick={()=>setSelectedTopic('food-safety')}><span className="topic-icon"><Shield size={22}/></span><span><strong>Food Safety</strong><small>HACCP, FSSAI, hygiene, allergens, pathogens, FSMS and more</small></span><b>{topicCounts['food-safety']}</b></button>
-    <button type="button" className={'topic-card quality '+(selectedTopic==='quality'?'active':'')} onClick={()=>setSelectedTopic('quality')}><span className="topic-icon"><BadgeCheck size={22}/></span><span><strong>Quality</strong><small>QA/QC, audits, CAPA, RCA, SPC, supplier quality and QMS</small></span><b>{topicCounts['quality']}</b></button>
-    <button type="button" className={'topic-card process-excellence '+(selectedTopic==='process-excellence'?'active':'')} onClick={()=>setSelectedTopic('process-excellence')}><span className="topic-icon"><TrendingUp size={22}/></span><span><strong>Process Excellence</strong><small>Lean, Six Sigma, DMAIC, capability, FMEA and improvement</small></span><b>{topicCounts['process-excellence']}</b></button>
+    <a className="topic-card food-safety" href={route('/discussions/topic/food-safety')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewTopic('food-safety');setPreviewView('topic')}}}><span className="topic-icon"><Shield size={22}/></span><span><strong>Food Safety</strong><small>HACCP, FSSAI, hygiene, allergens, pathogens, FSMS and more</small></span><b>{topicCounts['food-safety']}</b></a>
+    <a className="topic-card quality" href={route('/discussions/topic/quality')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewTopic('quality');setPreviewView('topic')}}}><span className="topic-icon"><BadgeCheck size={22}/></span><span><strong>Quality</strong><small>QA/QC, audits, CAPA, RCA, SPC, supplier quality and QMS</small></span><b>{topicCounts['quality']}</b></a>
+    <a className="topic-card process-excellence" href={route('/discussions/topic/process-excellence')} onClick={e=>{if(isPreview()){e.preventDefault();setPreviewTopic('process-excellence');setPreviewView('topic')}}}><span className="topic-icon"><TrendingUp size={22}/></span><span><strong>Process Excellence</strong><small>Lean, Six Sigma, DMAIC, capability, FMEA and improvement</small></span><b>{topicCounts['process-excellence']}</b></a>
    </div>
   </section>
   <div className="discussion-scope"><strong>Scope:</strong> Food Safety · Quality · Process Excellence <span>No general advertising, unrelated subjects, links or promotions.</span></div>
   {message&&<p className="discussion-message">{message}</p>}
-  <section className="question-list"><div className="discussion-list-title"><div><h2>{selectedTopic==='all'?'Latest questions':categoryLabel(selectedTopic)+' questions'}</h2>{(search||selectedTopic!=='all')&&<p>{visibleQuestions.length} matching discussion{visibleQuestions.length===1?'':'s'}</p>}</div><span>{questions.length} total</span></div>
-   {loading?<p className="discussion-loading">Loading discussions…</p>:questions.length===0?<div className="discussion-empty"><MessageCircleQuestion size={28}/><h3>No questions yet</h3><p>Start the first professional discussion.</p></div>:visibleQuestions.length===0?<div className="discussion-empty"><Search size={28}/><h3>No matching questions</h3><p>Try another search or topic.</p></div>:visibleQuestions.map(q=><a className="question-card" key={q.id} href={route('/discussions/'+q.id)} onClick={e=>{if(isPreview()){e.preventDefault();const saved=readPreviewDetail();if(saved&&saved.question.id===q.id){setDetail(saved);setPreviewView('detail');}}}}>
+  <section className="question-list"><div className="discussion-list-title"><div><h2>Latest questions</h2>{search&&<p>{visibleQuestions.length} matching discussion{visibleQuestions.length===1?'':'s'}</p>}</div><span>{questions.length} total</span></div>
+   {loading?<p className="discussion-loading">Loading discussions…</p>:questions.length===0?<div className="discussion-empty"><MessageCircleQuestion size={28}/><h3>No questions yet</h3><p>Start the first professional discussion.</p></div>:visibleQuestions.length===0?<div className="discussion-empty"><Search size={28}/><h3>No matching questions</h3><p>Try another search or topic.</p></div>:visibleQuestions.map(q=><a className="question-card" key={q.id} href={route('/discussions/'+q.id)} onClick={e=>{if(isPreview()){e.preventDefault();const saved=readPreviewDetail();if(saved&&saved.question.id===q.id){setDetail(saved);setPreviewReturnView('list');setPreviewView('detail');}}}}>
     <div className="discussion-meta"><span className={'discussion-category '+q.category}>{categoryLabel(q.category)}</span><span>{dateLabel(q.createdAt)}</span></div>
     <h3>{q.title}</h3><p>{q.body}</p><div className="question-bottom"><span>Asked by <strong>{q.name}</strong></span><span>{q.answerCount} {q.answerCount===1?'answer':'answers'}</span></div>
    </a>)}
