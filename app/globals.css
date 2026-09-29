@@ -316,3 +316,37 @@ img[src*="australia.svg"]{background:#143352;border-radius:5px;padding:6px}.nav-
  .report-panel{right:-4px;width:205px}
  .answer-meta>span:first-child{align-items:flex-start;flex-direction:column;gap:2px}
 }
+
+
+/* Discussions discovery: search + topic browsing */
+.discussion-search{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #dfe5ef;border-radius:13px;padding:0 14px;margin:0 0 18px;min-height:50px}
+.discussion-search svg{color:#71809a;flex:0 0 auto}
+.discussion-search input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:14px;color:#1d2b45;padding:13px 0}
+.discussion-search input::placeholder{color:#98a3b5}
+.discussion-search button{border:0;background:transparent;color:#3155d9;font-size:12px;font-weight:700;padding:8px 0}
+.discussion-topics{margin:0 0 18px}
+.discussion-section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:0 0 11px}
+.discussion-section-heading h2{margin:0;font-size:18px;color:#273857}
+.discussion-section-heading p{margin:3px 0 0;font-size:12px;color:#7c899e}
+.discussion-section-heading>button{border:0;background:transparent;color:#3155d9;font-size:12px;font-weight:700;padding:5px}
+.topic-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.topic-card{appearance:none;text-align:left;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:start;gap:11px;background:#fff;border:1px solid #dfe5ef;border-radius:14px;padding:14px;color:#24334d;cursor:pointer}
+.topic-card:hover{border-color:#aebced;box-shadow:0 4px 14px rgba(25,46,84,.06)}
+.topic-card.active{border-color:#3155d9;box-shadow:0 0 0 2px rgba(49,85,217,.10)}
+.topic-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:10px}
+.topic-card.food-safety .topic-icon{background:#e7f7ef;color:#176a4a}
+.topic-card.quality .topic-icon{background:#eaf0ff;color:#3155d9}
+.topic-card.process-excellence .topic-icon{background:#fff0dc;color:#995b17}
+.topic-card>span:nth-child(2){display:grid;gap:4px;min-width:0}
+.topic-card strong{font-size:14px;line-height:1.25;color:#283955}
+.topic-card small{font-size:11px;line-height:1.4;color:#7a879b;font-weight:500}
+.topic-card b{font-size:11px;line-height:1;background:#f3f6fb;color:#687790;border-radius:999px;padding:6px 7px;min-width:22px;text-align:center}
+.discussion-list-title>div{min-width:0}
+.discussion-list-title>div>p{margin:3px 0 0;font-size:11px;color:#8894a7}
+@media(max-width:760px){
+ .discussion-search{min-height:47px;margin-bottom:15px}
+ .topic-grid{grid-template-columns:1fr;gap:8px}
+ .topic-card{padding:12px}
+ .topic-card small{font-size:11px}
+ .discussion-section-heading{align-items:center}
+}
