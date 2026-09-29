@@ -2,6 +2,12 @@ name: Deploy PMSV mobile preview
 
 on:
   workflow_dispatch:
+  push:
+    branches: [wordpress-production]
+    paths:
+      - 'app/**'
+      - 'wordpress/**'
+      - '.github/workflows/deploy-mobile-preview.yml'
 
 permissions:
   contents: read
@@ -43,7 +49,7 @@ jobs:
           html = p.read_text()
           bootstrap = r"""
           <script>
-          window.PMSV={base:'/PMSV-app-source-code',publicBase:'/PMSV-app-source-code/'};
+          window.PMSV={base:'/PMSV-app-source-code',publicBase:'/PMSV-app-source-code/',preview:true};
           const __pmsvFetch=window.fetch.bind(window);
           window.fetch=async function(input,init){
             const raw=typeof input==='string'?input:(input&&input.url)||'';
