@@ -3,7 +3,7 @@
 - App: PMSV Food Safety Updates
 - Application ID: com.pmsvgroup.foodsafety
 - Website: https://pmsvgroup.com/
-- Version: 1.0.0 (versionCode 1)
+- Version: 1.0.1 (versionCode 2)
 - Target SDK: 36 (Android 16)
 - Minimum SDK: 24
 - Packaging: Trusted Web Activity using Android Browser Helper
