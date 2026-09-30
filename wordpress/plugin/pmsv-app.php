@@ -13,6 +13,7 @@ function pmsv_wp_base() { return ''; }
 require_once PMSV_WP_DIR . 'includes/security.php';
 require_once PMSV_WP_DIR . 'includes/storage.php';
 require_once PMSV_WP_DIR . 'includes/push.php';
+require_once PMSV_WP_DIR . 'includes/audit-email.php';
 require_once PMSV_WP_DIR . 'includes/discussions-admin.php';
 register_activation_hook(__FILE__, 'pmsv_wp_install');
 add_action('init', function () { if ((int)get_option('pmsv_wp_schema',0) < 3) pmsv_wp_install(); }, 1);
@@ -44,6 +45,11 @@ add_action('template_redirect', function () {
         $sw = file_get_contents(PMSV_WP_DIR . 'public/sw.js');
         $sw = preg_replace("/pmsv-offline-v\\d+/", 'pmsv-wp-v1.0.13', $sw);
         echo preg_replace_callback("~(['\"])(/[^'\"]*)\\1~", fn($m) => $m[1] . $base . $m[2] . $m[1], $sw);
+        exit;
+    }
+
+    if (isset($_GET['pmsv_report'])) {
+        pmsv_wp_serve_shared_audit((string)$_GET['pmsv_report']);
         exit;
     }
 
@@ -151,6 +157,8 @@ function pmsv_wp_reply($body, $status=200) { status_header($status); nocache_hea
 function pmsv_wp_api($route) {
     $method = $_SERVER['REQUEST_METHOD'];
     try {
+        if ($route==='audit-email' && $method==='OPTIONS') return pmsv_wp_audit_email_preflight();
+        if ($route==='audit-email' && $method==='POST') return pmsv_wp_audit_email();
         if ($route==='news' && $method==='GET') return pmsv_wp_reply(['news'=>pmsv_wp_archive()]);
         if ($route==='discussions' && $method==='GET') return pmsv_wp_reply(['questions'=>pmsv_wp_forum_questions()]);
         if ($route==='discussions' && $method==='POST') return pmsv_wp_forum_create_question();
