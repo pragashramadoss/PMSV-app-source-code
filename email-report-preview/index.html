@@ -97,11 +97,14 @@ label{display:block;font-size:13px;font-weight:800;margin:13px 0 6px}input[type=
       <div><b>To:</b> <span id="previewTo">—</span></div>
       <div style="margin-top:5px"><b>Subject:</b> <span id="previewSubject"></span></div>
       <div style="margin-top:10px"><span id="attachment" class="attach">📎 PMSV-Audit-Report.pdf</span></div>
-      <p class="note" style="margin-bottom:0">The email will also contain a PMSV report link.</p>
+      <p class="note" style="margin-bottom:0">No report link. The selected report file is the complete attachment.</p>
     </div>
 
     <div id="sent" class="sent">Preview complete — email sending is disabled in this preview.</div>
 
+    <div class="sheet-actions">
+      <button class="btn secondary" onclick="testAttachment()">Open / Download Attachment</button>
+    </div>
     <div class="sheet-actions">
       <button class="btn cancel" onclick="closeEmail()">Cancel</button>
       <button id="sendBtn" class="btn" onclick="previewSend()">Preview Send</button>
@@ -111,13 +114,13 @@ label{display:block;font-size:13px;font-weight:800;margin:13px 0 6px}input[type=
 
 <script>
 let kind='audit',format='PDF';
-const baseLink='https://pmsvgroup.com/audits/';
+
 function openEmail(k){
  kind=k;format='PDF';
  document.querySelectorAll('.format').forEach((b,i)=>b.classList.toggle('active',i===0));
  modalTitle.textContent=k==='nc'?'Email NC Report':'Email Audit Report';
  subject.value=(k==='nc'?'PMSV FSSAI NC Report - ':'PMSV FSSAI Audit Report - ')+'PMSV Demo Foods Pvt Ltd';
- message.value='Dear Sir/Madam,\n\nPlease find attached the '+(k==='nc'?'NC report':'audit report')+' for PMSV Demo Foods Pvt Ltd dated 30 Sep 2026.\n\nView PMSV report: '+baseLink+'\n\nRegards,\nPMSV Food Safety & Quality Forum';
+ message.value='Dear Sir/Madam,\n\nPlease find attached the '+(k==='nc'?'NC report':'audit report')+' for PMSV Demo Foods Pvt Ltd dated 30 Sep 2026.\n\nRegards,\nPMSV Food Safety & Quality Forum';
  recipient.value='';sent.style.display='none';
  updatePreview();
  modal.classList.add('open');
@@ -136,9 +139,68 @@ function updatePreview(){
  previewSubject.textContent=subject.value||'—';
 }
 recipient.addEventListener('input',updatePreview);subject.addEventListener('input',updatePreview);
+
+function auditRows(){
+ return [
+  ['1.1','Food premises maintained in clean and hygienic condition.','C','2/2','Compliant.'],
+  ['2.1','Adequate hand-washing facilities available and maintained.','NC','0/2','Signage missing near production entry.'],
+  ['3.2','Food handlers follow personal hygiene requirements.','C','4/4','Verified.'],
+  ['4.3','Pest control programme implemented and reviewed.','NC','1/2','Trend review record not available.']
+ ];
+}
+function ncRows(){
+ return [
+  ['2.1','Hand wash signage missing near production entry.','NC','Open'],
+  ['4.3','Pest-control trend review record not available.','NC','Open']
+ ];
+}
+function reportText(){
+ const lines=[kind==='nc'?'PMSV FSSAI NC Report':'PMSV FSSAI Audit Report','FBO: PMSV Demo Foods Pvt Ltd','Date: 30 Sep 2026','Auditor: Pragash Demo','Licence: 10000000000000'];
+ if(kind==='audit') lines.push('Score: 86%','Grade: A','');
+ const rows=kind==='nc'?ncRows():auditRows();
+ rows.forEach(r=>lines.push(r.join(' | ')));
+ return lines.join('\n');
+}
+function pdfEscape(s){return String(s).replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)')}
+function wrap(s,n=90){const a=String(s).split(/\s+/),o=[];let l='';for(const w of a){if((l+' '+w).trim().length>n){if(l)o.push(l);l=w}else l=(l+' '+w).trim()}if(l)o.push(l);return o}
+function makePdfBlob(){
+ const lines=[];reportText().split('\n').forEach(x=>wrap(x).forEach(y=>lines.push(y)));
+ const pages=[];for(let i=0;i<lines.length;i+=54)pages.push(lines.slice(i,i+54));
+ const objs=[];objs[1]='<< /Type /Catalog /Pages 2 0 R >>';objs[3]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>';const kids=[];
+ pages.forEach((pg,i)=>{const p=4+i*2,c=5+i*2;kids.push(p+' 0 R');const stream='BT /F1 9 Tf 40 750 Td 12 TL '+pg.map(x=>'('+pdfEscape(x)+') Tj T*').join(' ')+' ET';objs[p]='<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents '+c+' 0 R >>';objs[c]='<< /Length '+stream.length+' >>\nstream\n'+stream+'\nendstream'});
+ objs[2]='<< /Type /Pages /Kids ['+kids.join(' ')+'] /Count '+pages.length+' >>';let pdf='%PDF-1.4\n',offs=[0];for(let i=1;i<objs.length;i++){offs[i]=pdf.length;pdf+=i+' 0 obj\n'+objs[i]+'\nendobj\n'}const xref=pdf.length;pdf+='xref\n0 '+objs.length+'\n0000000000 65535 f \n';for(let i=1;i<objs.length;i++)pdf+=String(offs[i]).padStart(10,'0')+' 00000 n \n';pdf+='trailer\n<< /Size '+objs.length+' /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF';return new Blob([pdf],{type:'application/pdf'});
+}
+function makeWordBlob(){
+ const title=kind==='nc'?'PMSV FSSAI NC Report':'PMSV FSSAI Audit Report';
+ const rows=(kind==='nc'?ncRows():auditRows()).map(r=>'<tr>'+r.map(x=>'<td>'+String(x).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]))+'</td>').join('')+'</tr>').join('');
+ const heads=kind==='nc'?'<tr><th>No.</th><th>NC</th><th>Classification</th><th>Status</th></tr>':'<tr><th>No.</th><th>Audit Question</th><th>Status</th><th>Score</th><th>Comments</th></tr>';
+ const html='<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial}table{border-collapse:collapse;width:100%}th,td{border:1px solid #777;padding:7px}th{background:#eaf2ff}</style></head><body><h1>'+title+'</h1><p><b>FBO:</b> PMSV Demo Foods Pvt Ltd</p><p><b>Date:</b> 30 Sep 2026 &nbsp; <b>Auditor:</b> Pragash Demo</p><table>'+heads+rows+'</table></body></html>';
+ return new Blob([html],{type:'application/msword'});
+}
+function makeExcelBlob(){
+ const rows=kind==='nc'?[['No.','NC','Classification','Status'],...ncRows()]:[['No.','Audit Question','Status','Score','Comments'],...auditRows()];
+ const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+ return new Blob([csv],{type:'text/csv'});
+}
+function currentAttachment(){
+ const stem=kind==='nc'?'PMSV-NC-Report':'PMSV-Audit-Report';
+ if(format==='PDF')return {blob:makePdfBlob(),name:stem+'.pdf'};
+ if(format==='Word')return {blob:makeWordBlob(),name:stem+'.doc'};
+ return {blob:makeExcelBlob(),name:stem+'.csv'};
+}
+function testAttachment(){
+ const {blob,name}=currentAttachment();
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),30000);
+ sent.style.display='block';
+ sent.textContent='Attachment generated: '+name+'. Open the downloaded file and confirm the full report is present.';
+}
 function previewSend(){
  if(!recipient.value.trim()||!recipient.value.includes('@')){alert('Enter a valid recipient email address.');recipient.focus();return}
+ const {name}=currentAttachment();
  sent.style.display='block';
+ sent.textContent='Preview ready. Final email will send '+name+' as the attachment. No report link will be included.';
 }
 modal.addEventListener('click',e=>{if(e.target===modal)closeEmail()});
 </script>
