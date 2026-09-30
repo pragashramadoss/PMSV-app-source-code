@@ -56,7 +56,6 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
           <p class="muted">Answer one question at a time. The helper will determine the likely licence category and then build a requirement checklist for that business.</p>
           <div class="actions">
             <button class="btn" onclick="startWizard()">Start licence finder</button>
-            <button class="btn secondary" onclick="loadDemo()">Open demo checklist</button>
           </div>
         </div>
         <div class="mini">
@@ -356,12 +355,6 @@ function openSaved(i){
 }
 function deleteSaved(i){
  const all=JSON.parse(localStorage.getItem(STORE)||'[]');all.splice(i,1);localStorage.setItem(STORE,JSON.stringify(all));renderSaved();
-}
-function loadDemo(){
- currentCase={multi:false,kob:'restaurant',turnover:2,hotelStars:null,license:'State Licence',reason:'Demo: Restaurant with annual turnover above ₹1.5 crore and up to ₹50 crore.',feeText:'₹5,000 per annum in the eligibility matrix.',statuses:{id:'ready',premise:'notready',constitution:'ready'}};
- landing.classList.add('hidden');wizard.classList.add('hidden');outcome.classList.remove('hidden');
- licenseType.textContent=currentCase.license;licenseReason.textContent=currentCase.reason;fee.textContent=currentCase.feeText;caseName.value='Demo Restaurant';
- multiStateNotice.classList.add('hidden');renderRequirements();
 }
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 </script>
