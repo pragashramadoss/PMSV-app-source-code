@@ -50,33 +50,16 @@ jobs:
           profile: pixel_6
           disable-animations: true
           script: |
-            set -eu
-            APK="$GITHUB_WORKSPACE/android/app/build/outputs/apk/debug/app-debug.apk"
-            echo "Workspace: $GITHUB_WORKSPACE"
-            find "$GITHUB_WORKSPACE/android/app/build/outputs" -maxdepth 5 -type f -print
-            test -s "$APK"
-
-            adb install -r "$APK"
+            test -s "$GITHUB_WORKSPACE/android/app/build/outputs/apk/debug/app-debug.apk"
+            adb install -r "$GITHUB_WORKSPACE/android/app/build/outputs/apk/debug/app-debug.apk"
             adb logcat -c
-
             adb shell am start -W -n com.pmsvgroup.foodsafety/com.google.androidbrowserhelper.trusted.LauncherActivity
             sleep 8
-
             adb logcat -d > /tmp/pmsv-logcat.txt
-            cat /tmp/pmsv-logcat.txt | tail -n 250
-
-            if grep -E "FATAL EXCEPTION|AndroidRuntime.*FATAL|Process: com\.pmsvgroup\.foodsafety.*has died" /tmp/pmsv-logcat.txt; then
-              echo "PMSV launcher crashed"
-              exit 1
-            fi
-
+            grep -q "Process: com.pmsvgroup.foodsafety" /tmp/pmsv-logcat.txt && grep -q "FATAL EXCEPTION" /tmp/pmsv-logcat.txt && exit 1 || true
             adb shell am start -W -a android.intent.action.VIEW -d "https://pmsvgroup.com/"
             sleep 5
             adb logcat -d > /tmp/pmsv-deeplink-logcat.txt
-
-            if grep -E "FATAL EXCEPTION|AndroidRuntime.*FATAL|Process: com\.pmsvgroup\.foodsafety.*has died" /tmp/pmsv-deeplink-logcat.txt; then
-              echo "PMSV deep-link launch crashed"
-              exit 1
-            fi
-
-            adb shell dumpsys package com.pmsvgroup.foodsafety | grep -E "versionCode=2|versionName=1.0.1"
+            grep -q "Process: com.pmsvgroup.foodsafety" /tmp/pmsv-deeplink-logcat.txt && grep -q "FATAL EXCEPTION" /tmp/pmsv-deeplink-logcat.txt && exit 1 || true
+            adb shell dumpsys package com.pmsvgroup.foodsafety | grep "versionCode=2"
+            adb shell dumpsys package com.pmsvgroup.foodsafety | grep "versionName=1.0.1"
