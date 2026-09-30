@@ -1,0 +1,80 @@
+name: Test PMSV Android Launch
+
+on:
+  push:
+    branches: [android-playstore]
+    paths:
+      - 'android/**'
+      - '.github/workflows/test-android-launch.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  emulator-launch-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+
+      - name: Build debug APK
+        working-directory: android
+        run: gradle --no-daemon :app:assembleDebug
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Launch-test on Android emulator
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          script: |
+            set -euxo pipefail
+            APK="android/app/build/outputs/apk/debug/app-debug.apk"
+            test -s "$APK"
+
+            adb install -r "$APK"
+            adb logcat -c
+
+            adb shell am start -W -n com.pmsvgroup.foodsafety/com.google.androidbrowserhelper.trusted.LauncherActivity
+            sleep 8
+
+            adb logcat -d > /tmp/pmsv-logcat.txt
+            cat /tmp/pmsv-logcat.txt | tail -n 250
+
+            if grep -E "FATAL EXCEPTION|AndroidRuntime.*FATAL|Process: com\.pmsvgroup\.foodsafety.*has died" /tmp/pmsv-logcat.txt; then
+              echo "PMSV launcher crashed"
+              exit 1
+            fi
+
+            adb shell am start -W -a android.intent.action.VIEW -d "https://pmsvgroup.com/"
+            sleep 5
+            adb logcat -d > /tmp/pmsv-deeplink-logcat.txt
+
+            if grep -E "FATAL EXCEPTION|AndroidRuntime.*FATAL|Process: com\.pmsvgroup\.foodsafety.*has died" /tmp/pmsv-deeplink-logcat.txt; then
+              echo "PMSV deep-link launch crashed"
+              exit 1
+            fi
+
+            adb shell dumpsys package com.pmsvgroup.foodsafety | grep -E "versionCode=2|versionName=1.0.1"
