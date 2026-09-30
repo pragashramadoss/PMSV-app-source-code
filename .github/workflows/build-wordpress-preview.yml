@@ -62,6 +62,7 @@ jobs:
       - name: Verify WordPress package
         run: |
           test -f wordpress/plugin/pmsv-app.php
+          test -f wordpress/plugin/includes/audit-email.php
           test -f wordpress/plugin/routes.json
           test -f wordpress/plugin/assets/.vite/manifest.json
           test -f wordpress/plugin/public/audits/index.html
@@ -125,8 +126,12 @@ jobs:
           ! grep -R -Ei 'chatgpt\.site|chatgpt\.com|openai\.com|modelContext' wordpress/plugin
           grep -q '"/updates"' wordpress/plugin/routes.json
           grep -q '"/about"' wordpress/plugin/routes.json
-          grep -q 'Version: 1.0.12' wordpress/plugin/pmsv-app.php
+          grep -q 'Version: 1.0.13' wordpress/plugin/pmsv-app.php
           grep -q "push/test" wordpress/plugin/pmsv-app.php
+          grep -q "audit-email' && \\$method==='POST'" wordpress/plugin/pmsv-app.php
+          grep -q 'pmsv_wp_audit_email' wordpress/plugin/includes/audit-email.php
+          grep -q 'private report link valid for 7 days' wordpress/plugin/public/audits/audit-report.html
+          grep -q 'private report link valid for 7 days' wordpress/plugin/public/audits/hygiene-rating-report.html
           grep -R -q 'Send test notification' wordpress/plugin/assets/assets/*.js
           grep -q 'Email Audit Report' wordpress/plugin/public/audits/audit-report.html
           grep -q 'Email NC Report' wordpress/plugin/public/audits/audit-report.html
@@ -142,8 +147,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add wordpress/plugin
           if ! git diff --cached --quiet; then
-            git commit -m "Build WordPress production 1.0.12 [skip ci]"
-            git push origin HEAD:notification-hotfix-1.0.12
+            git commit -m "Build WordPress production 1.0.13 [skip ci]"
+            git push origin HEAD:notification-hotfix-1.0.11
           fi
 
       - name: Package plugin
@@ -152,22 +157,22 @@ jobs:
           mkdir -p dist-wordpress/pmsv-original-app-preview
           cp -R wordpress/plugin/. dist-wordpress/pmsv-original-app-preview/
           cd dist-wordpress
-          zip -qr ../PMSV-Food-Safety-Quality-Forum-v1.0.12.zip pmsv-original-app-preview
+          zip -qr ../PMSV-Food-Safety-Quality-Forum-v1.0.13.zip pmsv-original-app-preview
 
       - name: Upload plugin ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: PMSV-Food-Safety-Quality-Forum-v1.0.12
-          path: PMSV-Food-Safety-Quality-Forum-v1.0.12.zip
+          name: PMSV-Food-Safety-Quality-Forum-v1.0.13
+          path: PMSV-Food-Safety-Quality-Forum-v1.0.13.zip
           if-no-files-found: error
           retention-days: 14
 
-# v1.0.12 final verification
+# v1.0.13 final verification
 
-# v1.0.12 final single-run verification
+# v1.0.13 final single-run verification
 
-# v1.0.12 embedded-logo and summary verification
+# v1.0.13 embedded-logo and summary verification
 
-# v1.0.12 clean embedded-logo rebuild
+# v1.0.13 clean embedded-logo rebuild
 
-# v1.0.12 final clean logo verification
+# v1.0.13 final clean logo verification
