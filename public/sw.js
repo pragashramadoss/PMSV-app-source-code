@@ -1,4 +1,4 @@
-const CACHE='pmsv-offline-v3';
+const CACHE='pmsv-offline-v4';
 self.addEventListener('install',event=>{self.skipWaiting()});
 self.addEventListener('activate',event=>{event.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k.startsWith('pmsv-')).map(k=>caches.delete(k)));await self.clients.claim()})())});
 self.addEventListener('fetch',event=>{if(event.request.mode==='navigate')event.respondWith(fetch(event.request,{cache:'no-store'}).catch(()=>new Response('<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><title>PMSV Offline</title><body style="font-family:system-ui;padding:32px"><h1>PMSV</h1><p>You are offline. Reconnect and try again.</p></body>',{headers:{'Content-Type':'text/html; charset=UTF-8'}})))});
@@ -20,15 +20,15 @@ self.addEventListener('push',event=>{event.waitUntil((async()=>{
   renotify:true
  });
 })())});
-self.addEventListener('notificationclick',event=>{event.notification.close();event.waitUntil((async()=>{
- const target=pmsvTarget(event.notification.data?.url);
- const windows=await self.clients.matchAll({type:'window',includeUncontrolled:true});
- for(const client of windows){
+self.addEventListener('notificationclick',event=>{
+ event.notification.close();
+ const target=new URL('/',self.location.origin).href;
+ event.waitUntil((async()=>{
   try{
-   if(new URL(client.url).origin!==self.location.origin)continue;
-   try{await client.navigate(target)}catch{}
-   try{await client.focus();return}catch{}
-  }catch{}
- }
- try{await self.clients.openWindow(target)}catch{}
-})())});
+   const opened=await self.clients.openWindow(target);
+   if(opened){try{await opened.focus()}catch{}}
+  }catch{
+   try{await self.clients.openWindow(self.location.origin+'/')}catch{}
+  }
+ })());
+});
