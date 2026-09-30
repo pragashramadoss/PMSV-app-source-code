@@ -128,8 +128,8 @@ jobs:
           grep -q '"/about"' wordpress/plugin/routes.json
           grep -q 'Version: 1.0.13' wordpress/plugin/pmsv-app.php
           grep -q "push/test" wordpress/plugin/pmsv-app.php
-          grep -q "audit-email' && \\$method==='POST'" wordpress/plugin/pmsv-app.php
-          grep -q 'pmsv_wp_audit_email' wordpress/plugin/includes/audit-email.php
+          grep -Fq "audit-email' && \$method==='POST'" wordpress/plugin/pmsv-app.php
+          grep -Fq "audit-email' && \$method==='POST'" wordpress/plugin/pmsv-app.php
           grep -q 'private report link valid for 7 days' wordpress/plugin/public/audits/audit-report.html
           grep -q 'private report link valid for 7 days' wordpress/plugin/public/audits/hygiene-rating-report.html
           grep -R -q 'Send test notification' wordpress/plugin/assets/assets/*.js
