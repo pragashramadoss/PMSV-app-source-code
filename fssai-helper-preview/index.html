@@ -50,6 +50,15 @@ button,input,select{font:inherit}.top{background:linear-gradient(135deg,var(--na
 input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;border-radius:10px;padding:11px;background:#fff}.field{margin:10px 0}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:5px}
 .saved{display:flex;justify-content:space-between;gap:9px;align-items:center;border:1px solid var(--line);padding:11px;border-radius:11px;margin:8px 0}.saved b{display:block}.saved small{color:var(--muted)}
 .source{font-size:12px;line-height:1.55;color:#4f5c72}.source a{color:var(--blue);word-break:break-word}
+.applyCard{border:1px solid #b7dfcc;background:#f2fbf6;border-radius:15px;padding:16px;margin-top:14px}
+.applyCard.locked{border-color:var(--line);background:#f8fafc}
+.applyTitle{font-size:19px;font-weight:900;margin:0 0 5px}
+.applySteps{margin:12px 0 0;padding-left:20px;line-height:1.55}
+.applySteps li{margin:7px 0}
+.applyMeta{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+.applyMeta>div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px}
+.applyMeta small{display:block;color:var(--muted);margin-bottom:3px}
+@media(max-width:600px){.applyMeta{grid-template-columns:1fr}}
 .footer{padding:14px 0 30px;color:var(--muted);font-size:11px;text-align:center}
 @media(max-width:700px){.heroGrid,.choiceGrid{grid-template-columns:1fr}.wrap{width:calc(100% - 18px)}.top{padding:16px 10px 18px}.reqTop{grid-template-columns:1fr}.checkHead{align-items:flex-start;flex-direction:column}}
 </style>
@@ -57,7 +66,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
 <body>
 <header class="top">
   <div class="wrap">
-    <span class="badge">STANDALONE PREVIEW · BUILD 66 · NOT CONNECTED TO LIVE PMSV</span>
+    <span class="badge">STANDALONE PREVIEW · BUILD 67 · NOT CONNECTED TO LIVE PMSV</span>
     <h1>PMSV FSSAI Helper</h1>
     <p>Licence finder + application readiness checklist</p>
   </div>
@@ -188,6 +197,31 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
           <button type="button" class="btn" onclick="saveCase()">Save on this device</button>
           <button type="button" class="btn ghost" onclick="resetWizard()">New assessment</button>
         </div>
+
+        <div id="applyNextSteps" class="applyCard locked">
+          <div id="applyGateTitle" class="applyTitle">Complete the checklist to unlock application steps</div>
+          <div id="applyGateText" class="muted">Review every applicable requirement. Items marked <b>Not ready</b> must be resolved before proceeding.</div>
+
+          <div id="applyUnlocked" class="hidden">
+            <div class="applyMeta">
+              <div><small>Licence to apply for</small><b id="applyLicenceType">—</b></div>
+              <div><small>Government fee</small><b id="applyFeeSummary">—</b></div>
+            </div>
+            <ol class="applySteps">
+              <li>Open the official <b>FoSCoS</b> portal.</li>
+              <li>Select <b>Apply for New License/Registration</b>.</li>
+              <li>Select the applicable route: regular food business, Railways, or Airport/Seaport.</li>
+              <li>Select the <b>State/UT</b> and the same <b>Kind of Business (KoB)</b> identified in this helper.</li>
+              <li>Fill the application details and upload the supporting documents you prepared.</li>
+              <li>Select the required validity period and pay the applicable government fee.</li>
+              <li>Save the <b>Application Reference Number</b>. Track the application in FoSCoS and respond to any clarification/query raised by the authority.</li>
+            </ol>
+            <div class="actions" style="margin-top:12px">
+              <a class="btn" href="https://foscos.fssai.gov.in/" target="_blank" rel="noopener">Open official FoSCoS portal</a>
+            </div>
+            <p class="muted" style="margin:10px 0 0">Use only the official FoSCoS/FSSAI portal for filing and payment.</p>
+          </div>
+        </div>
       </section>
     </div>
   </section>
@@ -246,6 +280,12 @@ const requirements=document.getElementById('requirements');
 const completion=document.getElementById('completion');
 const caseName=document.getElementById('caseName');
 const savedList=document.getElementById('savedList');
+const applyNextSteps=document.getElementById('applyNextSteps');
+const applyGateTitle=document.getElementById('applyGateTitle');
+const applyGateText=document.getElementById('applyGateText');
+const applyUnlocked=document.getElementById('applyUnlocked');
+const applyLicenceType=document.getElementById('applyLicenceType');
+const applyFeeSummary=document.getElementById('applyFeeSummary');
 const startLicenceBtn=document.getElementById('startLicenceBtn');
 
 
@@ -445,6 +485,7 @@ function updateFeeTotal(){
  annualFee.textContent=inr(annual);
  totalFee.textContent=inr(annual*years);
  feeNote.textContent='Government fee only. FoSCoS allows a licence/certificate validity period of up to 5 years. The total shown is annual fee × selected years.';
+ if(currentCase && typeof updateCompletion==='function') updateCompletion();
 }
 
 function finish(type,reason,feeText,undetermined=false){
@@ -553,8 +594,31 @@ function renderRequirements(){
 function toggleReq(id){document.getElementById('req-'+id).classList.toggle('open')}
 function setStatus(id,s){currentCase.statuses[id]=s;renderRequirements()}
 function updateCompletion(){
- const list=requirementsFor(currentCase); const done=list.filter(x=>currentCase.statuses[x.id]).length;
+ const list=requirementsFor(currentCase);
+ const done=list.filter(x=>currentCase.statuses[x.id]).length;
+ const notReady=list.filter(x=>currentCase.statuses[x.id]==='notready').length;
  completion.textContent=done+' of '+list.length+' reviewed';
+
+ if(!applyNextSteps)return;
+ const readyToApply=(done===list.length && notReady===0);
+ applyNextSteps.classList.toggle('locked',!readyToApply);
+ applyUnlocked.classList.toggle('hidden',!readyToApply);
+
+ if(readyToApply){
+   applyGateTitle.textContent='Ready to apply on FoSCoS';
+   applyGateText.innerHTML='All '+list.length+' applicable requirements have been reviewed and none is marked <b>Not ready</b>.';
+   applyLicenceType.textContent=currentCase.license||'—';
+   const annual=licenceAnnualFee(currentCase.license);
+   const years=Number(validityYears.value||1);
+   applyFeeSummary.textContent=annual ? inr(annual*years)+' for '+years+' year'+(years>1?'s':'') : 'See FoSCoS';
+ }else if(notReady>0){
+   applyGateTitle.textContent='Resolve '+notReady+' Not ready item'+(notReady>1?'s':'')+' before applying';
+   applyGateText.textContent='The application steps will unlock when all checklist items are reviewed and no requirement remains Not ready.';
+ }else{
+   const left=list.length-done;
+   applyGateTitle.textContent='Complete the checklist to unlock application steps';
+   applyGateText.textContent=left+' requirement'+(left!==1?'s':'')+' still need to be reviewed.';
+ }
 }
 function saveCase(){
  if(!currentCase)return;
@@ -588,7 +652,7 @@ function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;',
 
 function bootHelper(){
  const status=document.getElementById('engineStatus');
- if(status) status.textContent='Helper engine loaded · Build 66';
+ if(status) status.textContent='Helper engine loaded · Build 67';
  if(!startLicenceBtn){
    if(status) status.textContent='Start button not found · Build 66';
    return;
