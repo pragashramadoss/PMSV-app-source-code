@@ -46,7 +46,7 @@ jobs:
       - name: Upload unsigned AAB
         uses: actions/upload-artifact@v4
         with:
-          name: PMSV-Android-unsigned-v1.0.0
+          name: PMSV-Android-unsigned-v1.0.1
           path: android/app/build/outputs/bundle/release/app-release.aab
           if-no-files-found: error
           retention-days: 14
