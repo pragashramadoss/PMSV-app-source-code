@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>PMSV FSSAI Helper Preview</title>
+<style>
+:root{
+  --blue:#3155d9;--navy:#17336b;--bg:#f3f6fb;--card:#fff;--ink:#172033;--muted:#68758c;
+  --line:#dbe3ef;--green:#087a55;--amber:#a15c00;--red:#b42318;--soft:#eef3ff;
+}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select{font:inherit}.top{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;padding:20px 16px 22px}
+.wrap{width:min(980px,calc(100% - 24px));margin:auto}.top h1{margin:4px 0 3px;font-size:24px}.top p{margin:0;color:#e9eeff;font-size:13px}
+.badge{display:inline-block;border:1px solid #ffffff55;background:#ffffff18;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800}
+.tabs{display:flex;gap:8px;overflow:auto;padding:12px 0}.tab{white-space:nowrap;border:1px solid var(--line);background:#fff;color:#36425a;padding:9px 12px;border-radius:999px;font-weight:750}.tab.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:17px;margin:0 0 14px;box-shadow:0 8px 28px #1c2a4a0b}
+.card h2,.card h3{margin:0 0 8px}.muted{color:var(--muted);font-size:13px}.hidden{display:none!important}
+.heroGrid{display:grid;grid-template-columns:1.25fr .75fr;gap:12px}.mini{background:#f8faff;border:1px solid var(--line);border-radius:13px;padding:13px}
+.btn{border:0;background:var(--blue);color:#fff;border-radius:11px;padding:12px 14px;font-weight:800;cursor:pointer}.btn.secondary{background:#eef2ff;color:var(--blue)}.btn.ghost{background:#fff;color:#40506c;border:1px solid var(--line)}.btn.danger{background:#fff1f0;color:var(--red);border:1px solid #f3c7c3}
+.actions{display:flex;gap:9px;flex-wrap:wrap}.choiceGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.choice{border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px;text-align:left;cursor:pointer}.choice:hover,.choice.selected{border-color:var(--blue);background:#f2f5ff}.choice b{display:block;margin-bottom:3px}.choice span{font-size:12px;color:var(--muted)}
+.progress{height:7px;background:#e8edf5;border-radius:99px;overflow:hidden;margin:8px 0 16px}.progress>i{display:block;height:100%;background:var(--blue);width:0}
+.q{font-size:20px;font-weight:850;margin:6px 0 14px}.result{border-radius:15px;padding:16px;border:1px solid #bdd3ff;background:#f3f7ff}.result .type{font-size:27px;font-weight:900;color:var(--navy)}.pill{display:inline-block;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800;background:#eef2ff;color:var(--blue)}
+.notice{padding:11px 12px;border-radius:11px;background:#fff8e8;border:1px solid #f1d79a;color:#70460b;font-size:12px;margin-top:10px}
+.feeCard{margin-top:13px;border:1px solid #bcd0ff;background:#f7f9ff;border-radius:14px;padding:14px}
+.feeTop{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.feeAmt{font-size:26px;font-weight:900;color:var(--navy)}
+.feeLabel{font-size:12px;color:var(--muted);margin-top:2px}
+.feeGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.feeBox{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px}
+.feeBox b{display:block;font-size:18px;margin-top:3px}
+.feeCard select{margin-top:5px}
+.resultSummary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:13px}
+.resultBox{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+.resultBox .k{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.resultBox .v{font-size:17px;font-weight:850;margin-top:4px;color:var(--ink)}
+.resultBox .s{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4}
+.reqPreview{margin-top:14px;border-top:1px solid var(--line);padding-top:13px}
+.reqPreview h3{font-size:15px;margin:0 0 8px}
+.reqPreviewList{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.reqChip{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:9px 10px;font-size:12px}
+.reqChip b{display:block;margin-bottom:2px}
+@media(max-width:700px){.resultSummary{grid-template-columns:1fr}.reqPreviewList{grid-template-columns:1fr}}
+@media(max-width:520px){.feeTop{flex-direction:column}.feeGrid{grid-template-columns:1fr}}
+.checkHead{display:flex;justify-content:space-between;gap:10px;align-items:center}.meter{font-size:12px;color:var(--muted)}
+.req{border:1px solid var(--line);border-radius:13px;margin:9px 0;overflow:hidden;background:#fff}.reqTop{padding:12px;display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center}.reqTitle{font-weight:800}.reqSmall{font-size:12px;color:var(--muted);margin-top:3px}.reqBtns{display:flex;gap:5px;flex-wrap:wrap}.state{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 8px;font-size:11px;font-weight:800}.state.ready{background:#eafaf3;color:var(--green);border-color:#afe4cf}.state.notready{background:#fff3f1;color:var(--red);border-color:#f2c0ba}.state.na{background:#f1f3f6;color:#5e6674}.more{border:0;background:transparent;color:var(--blue);font-weight:800;font-size:12px;padding:0;margin-top:5px;cursor:pointer}.detail{display:none;padding:0 12px 12px;color:#4e5b70;font-size:12px;line-height:1.5}.req.open .detail{display:block}
+input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;border-radius:10px;padding:11px;background:#fff}.field{margin:10px 0}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:5px}
+.saved{display:flex;justify-content:space-between;gap:9px;align-items:center;border:1px solid var(--line);padding:11px;border-radius:11px;margin:8px 0}.saved b{display:block}.saved small{color:var(--muted)}
+.source{font-size:12px;line-height:1.55;color:#4f5c72}.source a{color:var(--blue);word-break:break-word}
+.footer{padding:14px 0 30px;color:var(--muted);font-size:11px;text-align:center}
+@media(max-width:700px){.heroGrid,.choiceGrid{grid-template-columns:1fr}.wrap{width:calc(100% - 18px)}.top{padding:16px 10px 18px}.reqTop{grid-template-columns:1fr}.checkHead{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <span class="badge">STANDALONE PREVIEW · BUILD 65 · NOT CONNECTED TO LIVE PMSV</span>
+    <h1>PMSV FSSAI Helper</h1>
+    <p>Licence finder + application readiness checklist</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="jsError" class="notice hidden"></div>
+  <nav class="tabs">
+    <button type="button" class="tab active" data-view="home" onclick="showView('home',this)">Helper</button>
+    <button type="button" class="tab" data-view="saved" onclick="showView('saved',this)">Saved</button>
+    <button type="button" class="tab" data-view="sources" onclick="showView('sources',this)">Official sources</button>
+  </nav>
+
+  <section id="home" class="view">
+    <div id="landing" class="card">
+      <div class="heroGrid">
+        <div>
+          <span class="pill">Phase 1</span>
+          <h2 style="margin-top:7px">Find the right FSSAI licence</h2>
+          <p class="muted">Answer one question at a time. The helper will determine the likely licence category and then build a requirement checklist for that business.</p>
+          <div class="actions">
+            <button type="button" class="btn" id="startLicenceBtn">Start licence finder</button>
+          </div>
+        </div>
+        <div class="mini">
+          <b>What this preview already does</b>
+          <p class="muted">Trade/Retail, Food Service and Manufacturer/Processor licence paths based on the FSSAI/FoSCoS eligibility matrix updated 01 Apr 2026.</p>
+          <p class="muted" style="margin-bottom:0">Manufacturer flow now asks the exact manufacturing KoB first, then applies the relevant turnover or Central-Licence rule before showing the checklist.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="wizard" class="card hidden">
+      <div class="checkHead">
+        <div>
+          <span class="pill">Licence finder</span>
+          <div id="stepLabel" class="muted" style="margin-top:6px"></div>
+        </div>
+        <button type="button" class="btn ghost" onclick="resetWizard()">Start over</button>
+      </div>
+      <div class="progress"><i id="bar"></i></div>
+      <div id="question"></div>
+    </div>
+
+    <div id="outcome" class="hidden">
+      <section class="card">
+        <div class="result">
+          <div class="muted">Likely eligibility result</div>
+          <div id="licenseType" class="type"></div>
+          <div id="licenseReason" style="margin-top:5px"></div>
+          <div id="fee" class="muted" style="margin-top:7px"></div>
+          <div class="feeCard">
+            <div class="feeTop">
+              <div>
+                <div class="muted">Official FoSCoS fee</div>
+                <div id="annualFee" class="feeAmt">—</div>
+                <div class="feeLabel">per year</div>
+              </div>
+              <div style="min-width:150px">
+                <label class="muted" for="validityYears"><b>Validity</b></label>
+                <select id="validityYears" onchange="updateFeeTotal()">
+                  <option value="1">1 year</option>
+                  <option value="2">2 years</option>
+                  <option value="3">3 years</option>
+                  <option value="4">4 years</option>
+                  <option value="5">5 years</option>
+                </select>
+              </div>
+            </div>
+            <div class="feeGrid">
+              <div class="feeBox">
+                <span class="muted">Government fee for selected validity</span>
+                <b id="totalFee">—</b>
+              </div>
+              <div class="feeBox">
+                <span class="muted">Maximum validity selectable</span>
+                <b>5 years</b>
+              </div>
+            </div>
+            <p id="feeNote" class="muted" style="margin:10px 0 0"></p>
+          </div>
+
+          <div class="resultSummary">
+            <div class="resultBox">
+              <div class="k">Licence</div>
+              <div id="summaryLicence" class="v">—</div>
+              <div id="summaryKob" class="s">—</div>
+            </div>
+            <div class="resultBox">
+              <div class="k">Annual government fee</div>
+              <div id="summaryAnnualFee" class="v">—</div>
+              <div class="s">Final total depends on selected validity.</div>
+            </div>
+            <div class="resultBox">
+              <div class="k">Requirements</div>
+              <div id="summaryReqCount" class="v">—</div>
+              <div class="s">Applicable checklist items generated for this result.</div>
+            </div>
+          </div>
+
+          <div class="reqPreview">
+            <h3>Documents / requirements that apply</h3>
+            <div id="reqPreviewList" class="reqPreviewList"></div>
+            <div class="actions" style="margin-top:10px">
+              <button type="button" class="btn secondary" onclick="document.getElementById('requirements').scrollIntoView({behavior:'smooth',block:'start'})">Review detailed checklist</button>
+            </div>
+          </div>
+        </div>
+        <div id="multiStateNotice" class="notice hidden"></div>
+        <p class="muted">This helper is guidance based on the current FoSCoS eligibility matrix. Final eligibility should be confirmed in FoSCoS because special premises, product categories and regulatory orders can change the result.</p>
+      </section>
+
+      <section class="card">
+        <div class="checkHead">
+          <div>
+            <h2>Application readiness</h2>
+            <div class="muted">Tap <b>Full details</b> to see exactly what is required, when it applies, accepted document examples and what must match the application.</div>
+          </div>
+          <div id="completion" class="meter"></div>
+        </div>
+
+        <div class="field">
+          <label>Business / application name</label>
+          <input id="caseName" type="text" placeholder="e.g. ABC Foods - Bengaluru">
+        </div>
+        <div id="requirements"></div>
+        <div class="actions" style="margin-top:13px">
+          <button type="button" class="btn" onclick="saveCase()">Save on this device</button>
+          <button type="button" class="btn ghost" onclick="resetWizard()">New assessment</button>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section id="saved" class="view hidden">
+    <div class="card">
+      <h2>Saved assessments</h2>
+      <p class="muted">Saved only in this browser/device for the preview.</p>
+      <div id="savedList"></div>
+    </div>
+  </section>
+
+  <section id="sources" class="view hidden">
+    <div class="card">
+      <h2>Official sources used</h2><p class="muted"><b>Eligibility rules last verified: 30 Sep 2026.</b> The decision tree uses the FoSCoS matrix marked Updated on 01.04.2026.</p>
+      <div class="source">
+        <p><b>Eligibility:</b><br><a href="https://foscos.fssai.gov.in/officer/assets/docs/Revised_2ndApril2026KindofBusinessEligibility.pdf" target="_blank" rel="noopener">FoSCoS — Revised Kind of Business Eligibility, updated 01.04.2026</a></p>
+        <p><b>Registration documents:</b><br><a href="https://foscos.fssai.gov.in/assets/docs/DocumentsrequiredforRegistrationCertificate.pdf" target="_blank" rel="noopener">Documents required for Registration Certificate</a></p>
+        <p><b>Licence documents:</b><br><a href="https://foscos.fssai.gov.in/assets/docs/KoBwiseDocumentsrequiredforLicense.pdf" target="_blank" rel="noopener">Kind-of-business-wise documents required for licence</a></p>
+        <p><b>FoSCoS documents hub:</b><br><a href="https://foscos.fssai.gov.in/home-document" target="_blank" rel="noopener">General and state-wise document requirements</a></p>
+        <p><b>Official eligibility tool:</b><br><a href="https://foscos.fssai.gov.in/public/fbo/open-eligibility/N" target="_blank" rel="noopener">FoSCoS eligibility checker</a></p>
+        <p><b>Fee structure:</b><br><a href="https://foscos.fssai.gov.in/fee/CL" target="_blank" rel="noopener">FoSCoS licence / registration fee structure</a></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">Preview data stays locally in this browser. No Aadhaar/PAN/document uploads are collected.</div>
+</main>
+
+<script>
+window.addEventListener('error',e=>{const box=document.getElementById('jsError');if(box){box.textContent='Preview error: '+(e.message||'Unknown JavaScript error');box.classList.remove('hidden')}});
+const STORE='pmsv-fssai-helper-preview-v2-v1';
+const wizardState={multi:null,kob:null,turnover:null,hotelStars:null,manufacturerType:null};
+let currentCase=null;
+
+const landing=document.getElementById('landing');
+const wizard=document.getElementById('wizard');
+const outcome=document.getElementById('outcome');
+const stepLabel=document.getElementById('stepLabel');
+const bar=document.getElementById('bar');
+const question=document.getElementById('question');
+const licenseType=document.getElementById('licenseType');
+const licenseReason=document.getElementById('licenseReason');
+const fee=document.getElementById('fee');
+const validityYears=document.getElementById('validityYears');
+const annualFee=document.getElementById('annualFee');
+const totalFee=document.getElementById('totalFee');
+const feeNote=document.getElementById('feeNote');
+const multiStateNotice=document.getElementById('multiStateNotice');
+const summaryLicence=document.getElementById('summaryLicence');
+const summaryKob=document.getElementById('summaryKob');
+const summaryAnnualFee=document.getElementById('summaryAnnualFee');
+const summaryReqCount=document.getElementById('summaryReqCount');
+const reqPreviewList=document.getElementById('reqPreviewList');
+const requirements=document.getElementById('requirements');
+const completion=document.getElementById('completion');
+const caseName=document.getElementById('caseName');
+const savedList=document.getElementById('savedList');
+const startLicenceBtn=document.getElementById('startLicenceBtn');
+
+
+const kobOptions=[
+ {id:'retailer',name:'Retailer',desc:'Retail shop, meat/fish shop, sweet/snack/bakery shop'},
+ {id:'wholesaler',name:'Wholesaler',desc:'Bulk procurement and sale to resellers/retailers'},
+ {id:'distributor',name:'Distributor',desc:'Distribution from manufacturer toward final sale'},
+ {id:'storage',name:'Storage / Warehouse',desc:'Storage other than special controlled-atmosphere/cold cases'},
+ {id:'transporter',name:'Transporter',desc:'Food transportation, including specialized vehicles'},
+ {id:'restaurant',name:'Restaurant',desc:'Dine-in, takeaway or delivery restaurant'},
+ {id:'canteen',name:'Club / Canteen',desc:'Institutional dining area/cafeteria'},
+ {id:'caterer',name:'Caterer',desc:'Preparation/service/transport for functions or groups'},
+ {id:'foodvending',name:'Food vending / Dhaba / Home canteen',desc:'Fresh food vending, dhaba, boarding house, banquet, dabba'},
+ {id:'hotel',name:'Hotel',desc:'Hotel with food service'},
+ {id:'importer',name:'Importer',desc:'Import of food into India'},
+ {id:'ecommerce',name:'E-Commerce',desc:'Online food commerce platform/business'},
+ {id:'merchant_exporter',name:'Merchant Exporter',desc:'Trader / merchant exporter'},
+ {id:'manufacturer',name:'Manufacturer / Processor',desc:'Dairy, oil, meat, fish, general manufacturing, nutraceuticals and other manufacturing KoBs'}
+];
+
+const genericTurnover=new Set(['retailer','wholesaler','distributor','storage','transporter','restaurant']);
+const names=Object.fromEntries(kobOptions.map(x=>[x.id,x.name]));
+
+const manufacturerOptions=[
+ {id:'dairy',name:'Dairy Unit',desc:'Handling/processing/manufacturing of milk and milk products'},
+ {id:'oil',name:'Vegetable Oil Processing',desc:'Solvent extraction, expeller and refining including oil expeller units'},
+ {id:'slaughter',name:'Slaughtering Unit',desc:'Slaughtering / dressing / processing of live animal or poultry'},
+ {id:'meat',name:'Meat Processing',desc:'Further processing of slaughtered animal/poultry into meat and meat products'},
+ {id:'fish',name:'Fish & Fish Products',desc:'Handling/processing/manufacturing of fish and fish products'},
+ {id:'general',name:'General Manufacturing / Repacker',desc:'Standardised manufacturing categories covered under General Manufacturing'},
+ {id:'grain_mill',name:'Grain / Cereal / Pulse Milling',desc:'Milling unit — special State Licence rule in the 2026 matrix'},
+ {id:'proprietary',name:'Proprietary Food',desc:'Proprietary food under the applicable FSS regulations'},
+ {id:'nutraceutical',name:'Health Supplements / Nutraceuticals',desc:'Health supplements, nutraceuticals, FSDU, FSMP, functional/novel foods'},
+ {id:'nonspecified',name:'Non-specified Food / Ingredient',desc:'Food or ingredient requiring product approval before licensing'},
+ {id:'ayurveda',name:'Ayurveda Aahara',desc:'Food prepared as Ayurveda Aahara under the applicable regulations'},
+ {id:'radiation',name:'Radiation Processing of Food',desc:'Food irradiation / radiation processing'},
+ {id:'substances',name:'Substances Added to Food',desc:'Food additives, enzymes, flavourings, processing aids, nutrients, microorganisms, functional ingredients'},
+ {id:'eou',name:'100% Export Oriented Unit',desc:'Manufacturing for export only under the FoSCoS 100% EOU category'},
+ {id:'exporter_manufacturer',name:'Exporter - Manufacturer',desc:'Manufacturing products for export under importing-country requirements'}
+];
+const manufacturerNames=Object.fromEntries(manufacturerOptions.map(x=>[x.id,x.name]));
+const manufacturerTurnoverTypes=new Set(['dairy','oil','slaughter','meat','fish','general','substances']);
+const manufacturerCentralTypes=new Set(['proprietary','nutraceutical','nonspecified','ayurveda','radiation','eou','exporter_manufacturer']);
+
+function showView(id,btn){
+ document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+ (btn||document.querySelector('[data-view="'+id+'"]')).classList.add('active');
+ if(id==='saved') renderSaved();
+}
+
+function startWizard(){
+ Object.assign(wizardState,{multi:null,kob:null,turnover:null,hotelStars:null,manufacturerType:null});
+ currentCase=null;
+ landing.classList.add('hidden');outcome.classList.add('hidden');wizard.classList.remove('hidden');
+ renderMulti();
+}
+function resetWizard(){landing.classList.remove('hidden');wizard.classList.add('hidden');outcome.classList.add('hidden');}
+function setProgress(step,total){stepLabel.textContent='Step '+step+' of '+total;bar.style.width=(step/total*100)+'%';}
+function choice(title,desc,fn){return '<button type="button" class="choice" data-call="'+encodeURIComponent(fn)+'"><b>'+title+'</b><span>'+desc+'</span></button>'}
+
+if(startLicenceBtn){
+ startLicenceBtn.addEventListener('click',function(event){
+  event.preventDefault();
+  startWizard();
+ });
+}
+document.addEventListener('click',function(event){
+ const target=event.target instanceof Element ? event.target.closest('[data-call]') : null;
+ if(!target)return;
+ event.preventDefault();
+ const code=decodeURIComponent(target.getAttribute('data-call')||'');
+ if(code) Function(code)();
+});
+
+function renderMulti(){
+ setProgress(1,4);
+ question.innerHTML='<div class="q">Does this food business operate from premises in more than one State/UT?</div><div class="choiceGrid">'+
+ choice('No','Assess this single premise','pickMulti(false)')+
+ choice('Yes','There are premises in more than one State/UT','pickMulti(true)')+'</div>';
+}
+function pickMulti(v){wizardState.multi=v;renderKob()}
+function renderKob(){
+ setProgress(2,4);
+ question.innerHTML='<div class="q">What is the main Kind of Business (KoB) for this premise?</div><div class="choiceGrid">'+
+ kobOptions.map(x=>choice(x.name,x.desc,"pickKob('"+x.id+"')")).join('')+'</div>';
+}
+function pickKob(id){
+ wizardState.kob=id;
+ if(id==='manufacturer'){renderManufacturerType();return}
+ if(['importer','ecommerce','merchant_exporter'].includes(id)){finish('Central Licence','This KoB is listed for Central Licence irrespective of turnover in the 01 Apr 2026 eligibility matrix.','₹7,500 per annum in the eligibility matrix.');return}
+ if(id==='hotel'){renderHotelTurnover();return}
+ renderTurnover();
+}
+function renderTurnover(){
+ setProgress(3,4);
+ const k=wizardState.kob;
+ let q='What is the annual turnover for this food business?';
+ question.innerHTML='<div class="q">'+q+'</div><div class="choiceGrid">'+
+ choice('Up to ₹1.5 crore','Current Registration threshold','pickTurnover(1)')+
+ choice('More than ₹1.5 crore to ₹50 crore','Middle turnover band','pickTurnover(2)')+
+ choice('More than ₹50 crore','Highest turnover band','pickTurnover(3)')+'</div>';
+}
+function pickTurnover(band){
+ wizardState.turnover=band;
+ const k=wizardState.kob;
+ if(genericTurnover.has(k)){
+   if(band===1) finish('FSSAI Registration','Annual turnover is up to ₹1.5 crore for '+names[k]+'.','₹100 per annum in the eligibility matrix.');
+   else if(band===2) finish('State Licence','Annual turnover is above ₹1.5 crore and up to ₹50 crore for '+names[k]+'.','₹5,000 per annum in the eligibility matrix.');
+   else finish('Central Licence','Annual turnover is above ₹50 crore for '+names[k]+'.','₹7,500 per annum in the eligibility matrix.');
+   return;
+ }
+ if(k==='canteen'){
+   if(band===1) finish('FSSAI Registration','Club/Canteen with annual turnover up to ₹1.5 crore.','₹100 per annum in the eligibility matrix.');
+   else finish('State Licence','Club/Canteen with annual turnover above ₹1.5 crore.','₹5,000 per annum in the eligibility matrix.');
+   return;
+ }
+ if(k==='caterer'){
+   if(band===3) finish('Central Licence','Caterer with annual turnover above ₹50 crore.','₹7,500 per annum in the eligibility matrix.');
+   else finish('State Licence','Caterer with annual turnover up to ₹50 crore is listed under State Licence.','₹5,000 per annum in the eligibility matrix.');
+   return;
+ }
+ if(k==='foodvending'){
+   if(band===1) finish('FSSAI Registration','Food vending/dhaba/home-canteen category with annual turnover up to ₹1.5 crore.','₹100 per annum in the eligibility matrix.');
+   else finish('State Licence','Food vending/dhaba/home-canteen category with annual turnover above ₹1.5 crore.','₹5,000 per annum in the eligibility matrix.');
+ }
+}
+function renderHotelTurnover(){
+ setProgress(3,4);
+ question.innerHTML='<div class="q">What is the hotel’s annual turnover?</div><div class="choiceGrid">'+
+ choice('Up to ₹1.5 crore','Registration threshold shown in the matrix','hotelTurnover(1)')+
+ choice('More than ₹1.5 crore','Star category will determine State vs Central','hotelTurnover(2)')+'</div>';
+}
+function hotelTurnover(v){
+ wizardState.turnover=v;
+ if(v===1){finish('FSSAI Registration','Hotel annual turnover is up to ₹1.5 crore.','₹100 per annum in the eligibility matrix.');return}
+ setProgress(4,4);
+ question.innerHTML='<div class="q">What is the hotel star classification?</div><div class="choiceGrid">'+
+ choice('Up to 4 Star','Listed for State Licence','hotelStars(4)')+
+ choice('5 Star and above','Listed for Central Licence','hotelStars(5)')+'</div>';
+}
+function hotelStars(v){
+ wizardState.hotelStars=v;
+ if(v>=5) finish('Central Licence','Five Star and above hotel.','₹7,500 per annum in the eligibility matrix.');
+ else finish('State Licence','Hotel up to 4 Star with turnover above the Registration threshold.','₹5,000 per annum in the eligibility matrix.');
+}
+function renderManufacturerType(){
+ setProgress(3,5);
+ question.innerHTML='<div class="q">What type of manufacturing / processing does this premise do?</div>'+
+ '<div class="notice">Choose the actual FoSCoS manufacturing KoB. Different manufacturing activities do not all follow the same licence rule.</div>'+
+ '<div class="choiceGrid" style="margin-top:12px">'+
+ manufacturerOptions.map(x=>choice(x.name,x.desc,"pickManufacturerType('"+x.id+"')")).join('')+
+ '</div>';
+}
+function pickManufacturerType(id){
+ wizardState.manufacturerType=id;
+ wizardState.turnover=null;
+
+ if(manufacturerCentralTypes.has(id)){
+   let extra='';
+   if(id==='nonspecified') extra=' Product approval under the non-specified food/ingredient regulations is required separately before the licence application.';
+   if(id==='eou') extra=' This category is for food meant for export only and requires the applicable 100% EOU status/certificate.';
+   if(id==='exporter_manufacturer') extra=' If the same premise also manufactures for the domestic market, the relevant non-export manufacturing KoB must also be selected.';
+   finish('Central Licence',manufacturerNames[id]+' is listed for Central Licence with no turnover restriction in the FoSCoS eligibility matrix.'+extra,'₹7,500 per annum in the eligibility matrix.');
+   return;
+ }
+
+ if(id==='grain_mill'){
+   finish('State Licence','Grain, cereal and pulse milling units are listed under State Licence without a turnover threshold in the 01 Apr 2026 eligibility matrix.','₹5,000 per annum in the eligibility matrix.');
+   return;
+ }
+
+ if(manufacturerTurnoverTypes.has(id)){renderManufacturerTurnover();return}
+}
+function renderManufacturerTurnover(){
+ setProgress(4,5);
+ question.innerHTML='<div class="q">What is the annual turnover of this '+manufacturerNames[wizardState.manufacturerType]+' unit?</div>'+
+ '<div class="choiceGrid">'+
+ choice('Up to ₹1.5 crore','Registration band in the current matrix','pickManufacturerTurnover(1)')+
+ choice('More than ₹1.5 crore to ₹50 crore','State Licence band','pickManufacturerTurnover(2)')+
+ choice('More than ₹50 crore','Central Licence band','pickManufacturerTurnover(3)')+
+ '</div>';
+}
+function pickManufacturerTurnover(band){
+ wizardState.turnover=band;
+ const mt=wizardState.manufacturerType;
+ const label=manufacturerNames[mt];
+ if(band===1) finish('FSSAI Registration',label+' with annual turnover up to ₹1.5 crore.','₹100 per annum in the eligibility matrix.');
+ else if(band===2) finish('State Licence',label+' with annual turnover above ₹1.5 crore and up to ₹50 crore.','₹5,000 per annum in the eligibility matrix.');
+ else finish('Central Licence',label+' with annual turnover above ₹50 crore.','₹7,500 per annum in the eligibility matrix.');
+}
+
+function licenceAnnualFee(type){
+ if(type==='FSSAI Registration') return 100;
+ if(type==='State Licence') return 5000;
+ if(type==='Central Licence') return 7500;
+ return null;
+}
+function inr(n){return '₹'+Number(n).toLocaleString('en-IN')}
+function updateFeeTotal(){
+ if(!currentCase)return;
+ const annual=licenceAnnualFee(currentCase.license);
+ if(!annual){
+   annualFee.textContent='To be determined';
+   totalFee.textContent='—';
+   feeNote.textContent='Fee will be shown after the applicable licence category is determined.';
+   return;
+ }
+ const years=Number(validityYears.value||1);
+ annualFee.textContent=inr(annual);
+ totalFee.textContent=inr(annual*years);
+ feeNote.textContent='Government fee only. FoSCoS allows a licence/certificate validity period of up to 5 years. The total shown is annual fee × selected years.';
+}
+
+function finish(type,reason,feeText,undetermined=false){
+ wizard.classList.add('hidden');outcome.classList.remove('hidden');
+ const result={...wizardState,license:type,reason,feeText,undetermined,statuses:{},savedAt:null};
+ currentCase=result;
+ licenseType.textContent=type;licenseReason.textContent=reason;fee.textContent=feeText;
+ validityYears.value='1';updateFeeTotal();
+ if(wizardState.multi){
+   multiStateNotice.classList.remove('hidden');
+   multiStateNotice.textContent='Multiple States/UTs: FoSCoS states that one premise must be declared as Head Office and a Central Licence is required for the Head Office; each other premise requires its own Registration/State/Central licence as per that premise’s eligibility. This result is for the selected premise.';
+ }else multiStateNotice.classList.add('hidden');
+ renderRequirements();
+}
+
+function requirementsFor(c){
+ const base=[];
+ if(c.license==='FSSAI Registration'){
+   return [
+    r('photo','Applicant photograph','Required for Registration Certificate.','<b>What to keep ready:</b> A clear, recent photograph of the applicant/FBO applying for the Registration Certificate.<br><b>Check before upload:</b> Face should be clearly visible; use a current image and avoid cropped/blurred copies.'),
+    r('id','Government-issued photo ID','Aadhaar, PAN, Voter ID or other government-issued photo identity document.','<b>Required document:</b> Government-issued photo identity proof of the applicant/FBO. FoSCoS specifically gives Aadhaar, PAN and Voter ID as examples.<br><b>What must match:</b> Applicant name/details should be consistent with the Registration application.<br><b>Privacy:</b> Keep the document for FoSCoS submission; PMSV Helper does not collect or store the ID.'),
+    r('address','Proof of business activity address','Needed when the business address is different from the address in the photo ID.','<b>When required:</b> FoSCoS requires proof of the business-activity address when that address is different from the address shown on the applicant\'s photo ID.<br><b>Suitable address / possession documents:</b> FoSCoS proof-of-premises guidance accepts examples such as a <b>sale deed</b>, <b>rent agreement</b>, <b>lease deed / lease agreement</b>, or <b>electricity bill where the premise is owned</b>.<br><b>What must match:</b> The document should clearly show the same business-premise address entered in the application. Upload a clear, readable copy.'),
+    r('kob','Correct Kind of Business selected','The KoB selected in FoSCoS should match the actual food activity.','<b>What to verify:</b> Select the KoB that describes what is actually done at this premise—for example Retailer, Restaurant, Caterer, Manufacturer, Importer, Transporter, etc.<br><b>Why it matters:</b> KoB controls licence eligibility, fee, documents and product/activity declarations. If more than one KoB operates from the same premise, each applicable activity should be considered in FoSCoS.')
+   ];
+ }
+ base.push(
+  r('formb','Form B / online licence application details','Licence applications use the Form B information set in FoSCoS.','<b>What you will enter:</b> Legal/business name, complete premise address, KoB, annual turnover, product/activity details, contact details and other licence particulars requested online.<br><b>What must match:</b> Business name and premise address should be consistent with possession proof and constitution documents. Product/KoB entries should reflect actual operations.'),
+  r('id','Photo ID and address proof of proprietor/partner/director/authorised signatory','Listed in the licence document requirements.','<b>Who:</b> Proprietor, partner, director(s) or authorised signatory, as applicable to the business constitution.<br><b>Document:</b> Valid government-issued photo ID and address proof.<br><b>What must match:</b> Name and role should be consistent with the application, constitution document and authorised-signatory details.'),
+  r('premise','Proof of possession of premises','Sale deed, rent/lease agreement, electricity bill or other accepted proof, as applicable.','<b>Accepted examples in FoSCoS guidance:</b> Sale deed; rent agreement; lease deed / lease agreement; or electricity bill when the premise is owned.<br><b>For transporters:</b> The office address can be treated as the premise.<br><b>What must match:</b> The address should be the same as the premise address entered in Form B. Upload a clear, readable copy.'),
+  r('constitution','Business constitution document','Partnership deed / proprietorship declaration / memorandum & articles or applicable constitution proof.','<b>Use the document that matches the legal constitution:</b><br>• Proprietorship — self-declaration / proprietorship declaration.<br>• Partnership — partnership deed.<br>• Company — Memorandum & Articles of Association. FoSCoS guidance asks for the incorporation page, authorisation of food-business activity and list of directors with addresses.<br>• Cooperative — applicable certificate under the Cooperative / Multi-State Cooperative law.<br><b>Check:</b> Legal name should match the licence application.'),
+  r('formix','Form IX + Board Resolution, if a company','Nomination of person by a company is conditional, not applicable to every FBO.','<b>When required:</b> For a company where a person is nominated under Form IX.<br><b>Keep ready:</b> Completed Form IX together with the Board Resolution supporting the nomination.<br><b>Mark NA:</b> If the applicant is not a company / Form IX does not apply to that constitution.')
+ );
+ if(['transporter'].includes(c.kob)) base.push(r('transport','Turnover proof or self-declaration of number of vehicles','FoSCoS lists this specifically for transporters.','<b>For Transporter KoB:</b> Keep documentary proof supporting annual turnover, or the prescribed/self-declaration of the number of vehicles, as applicable to the FoSCoS application.<br><b>Check:</b> Vehicle count / turnover information should agree with the eligibility selected in the licence finder.'));
+ if(c.kob==='hotel') base.push(r('hracc','Ministry of Tourism / HRACC certificate, where applicable','FoSCoS lists the Ministry of Tourism certificate as mandatory for hotel where applicable.','<b>For Hotel KoB:</b> Upload the current Ministry of Tourism / HRACC classification certificate where applicable.<br><b>What must match:</b> Hotel name, premise and star classification should correspond with the licence eligibility chosen in this helper.'));
+ if(c.kob==='importer') base.push(r('iec','IEC issued by DGFT','FoSCoS Central Licence documents list IEC for importers.','<b>For Importer KoB:</b> Keep the valid Importer Exporter Code (IEC) issued by DGFT.<br><b>What must match:</b> IEC holder/legal entity should correspond with the entity applying for the FSSAI Central Licence.'));
+ if(c.kob==='merchant_exporter') base.push(r('exporter','Exporter declaration / additional exporter document, where applicable','FoSCoS provides additional documents for exporting FBOs.','<b>For exporting FBOs:</b> FoSCoS provides a specific additional exporter document and self-declaration format in its Documents Required section.<br><b>Prepare:</b> The applicable exporter declaration on the required business letterhead/format and ensure the applicant name and export activity match the licence application.'));
+ if(c.kob==='ecommerce') base.push(r('ecom','E-commerce-specific declaration/obligations, where applicable','FoSCoS publishes additional material for e-commerce FBOs.','<b>For E-commerce KoB:</b> Keep the applicable e-commerce declaration/undertaking required for the food categories and business model being used.<br><b>Check:</b> The platform/business name, legal entity and declared food activities should match the Central Licence application.'));
+ if(c.kob==='manufacturer'){
+   base.push(
+    r('unitphoto','Production unit photograph','Listed in the KoB-wise manufacturing document requirements.','<b>What to upload:</b> A clear current photograph of the actual production/processing unit for which the licence is being sought.<br><b>Check:</b> The image should identify the operating premise and should not be a generic/company promotional image.'),
+    r('layout','Blueprint/layout of processing unit','Mandatory for manufacturing/processing units in the licence document list.','<b>What it must show:</b> Processing-unit layout/blueprint with dimensions in metres or square metres and <b>operation-wise area allocation</b>.<br><b>Include:</b> Key processing, storage and relevant operational areas so the layout represents the actual licensed premise.'),
+    r('equipment','Equipment & machinery list','Manufacturing/processing requirement.','<b>Prepare a list containing:</b> Name of each equipment/machine, number/quantity, installed capacity and horsepower wherever applicable.<br><b>Check:</b> Equipment and stated capacity should be consistent with the products and operations declared in the application.'),
+    r('products','Food categories/products to be manufactured','Required for manufacturers.','<b>Prepare:</b> Complete list of products proposed for manufacture/process/repack with the correct FSSAI food category/product mapping.<br><b>Check:</b> Do not omit products that will actually be manufactured. Product category determines what will be endorsed on the licence.'),
+    r('responsible','Responsible person / authority letter','FoSCoS lists an authority letter identifying the responsible person and alternate responsible person for manufacturers/processors.','<b>Prepare an authority letter</b> naming the responsible person and alternate responsible person, with their addresses and the powers delegated to them.<br><b>FoSCoS specifically refers to powers such as:</b> assisting officers during inspection, collection of samples, packing and dispatch.<br><b>Check:</b> Names and roles should match the application/organisation records.'),
+    r('water','Water analysis report, where water is used as ingredient','Chemical and bacteriological potability report is listed for manufacturing/processing where applicable.','<b>When required:</b> When water is used as an ingredient in food.<br><b>Report required:</b> Chemical and bacteriological analysis confirming potable quality, from a recognised/public-health laboratory.<br><b>Ground water:</b> FoSCoS guidance also refers to CGWA NOC requirements where ground water is used; keep the applicable NOC ready if required for the premise.'),
+    r('fsms','Food Safety Management System plan / certificate','FoSCoS lists the FSMS plan or certificate, if any.','<b>Prepare:</b> The Food Safety Management System plan applicable to the actual products/processes, or the relevant FSMS certificate if available/applicable.<br><b>Check:</b> Scope, products and process flow should correspond to what is declared for the licensed premise.'),
+    r('technical','Technically qualified production supervisor identified','FoSCoS publishes qualification requirements for the person supervising production.','<b>Who qualifies:</b> The person supervising production should have an accepted degree/diploma relevant to the food business. FoSCoS lists examples including Science with Chemistry/Biochemistry/Food & Nutrition/Microbiology; Food Technology; Dairy Technology/Microbiology/Chemistry/Engineering; Oil Technology; Veterinary Science; Hotel Management & Catering Technology; or another recognised degree/diploma relevant to the specific business.<br><b>Keep ready:</b> Qualification proof and person details consistent with the application.')
+   );
+
+   if(c.manufacturerType==='dairy') base.push(
+    r('milkplan','Source of milk / milk procurement plan','Specific to milk and milk-products processing units where applicable.','<b>For Dairy units:</b> Prepare details of the source of milk and milk-procurement system, including the locations of milk collection centres / procurement arrangements where applicable.<br><b>Check:</b> Procurement volume/source should be consistent with the declared dairy activity.')
+   );
+   if(['meat','slaughter'].includes(c.manufacturerType)) base.push(
+    r('meatsource','Source of raw material for meat / meat-processing plant','FoSCoS lists raw-material source information for meat and meat-processing plants where applicable.','<b>For meat/slaughter-related units:</b> Keep documented details of the source of raw material / animals / meat, as applicable to the selected KoB.<br><b>Check:</b> Sources should be identifiable and consistent with the activity declared in the licence application.')
+   );
+   if(c.manufacturerType==='nonspecified') base.push(
+    r('productapproval','FSSAI product approval obtained','Non-specified food/food ingredients require separate product approval before applying for the manufacturing licence.','<b>Before licence application:</b> Obtain the applicable FSSAI approval for the non-specified food or food ingredient.<br><b>Keep ready:</b> Approval reference/order and product details. The product in the licence application should correspond to the approved product/ingredient.')
+   );
+   if(c.manufacturerType==='eou') base.push(
+    r('eoucert','100% EOU certificate / status document','The eligibility matrix describes this KoB for export-only manufacture with 100% EOU certification from the Ministry of Commerce.','<b>For 100% EOU KoB:</b> Keep the valid certificate/status document establishing the unit as a 100% Export Oriented Unit under the applicable Ministry of Commerce framework.<br><b>Check:</b> Legal entity/premise should match the Central Licence application and the products under this KoB should be export-only as applicable.')
+   );
+   if(c.manufacturerType==='exporter_manufacturer') base.push(
+    r('exportcompliance','Export-manufacturer product compliance details','This KoB is for products made to comply with the importing country rather than Indian product standards.','<b>For Exporter-Manufacturer:</b> Keep product/specification information showing the products are manufactured for export in accordance with the importing-country requirements.<br><b>Domestic manufacture:</b> If the same premise also manufactures products for the Indian market, the applicable domestic manufacturing KoB/products should also be selected and licensed.')
+   );
+   if(c.manufacturerType==='grain_mill') base.push(
+    r('millrule','Milling KoB confirmed in FoSCoS','All grain/cereal/pulse milling units are shown under State Licence without a turnover threshold in the 2026 eligibility matrix.','<b>Confirm the activity:</b> Use this KoB only where the premise is actually carrying out grain/cereal/pulse milling.<br><b>Do not use it merely because cereal/pulse products are handled:</b> Other processing/manufacturing activities may fall under General Manufacturing or another specific KoB.')
+   );
+ }
+ base.push(
+  r('state','State-wise additional documents checked','Some States/UTs prescribe additional documents beyond the common FoSCoS list.','<b>What this means:</b> After the common documents above, the applicant must also satisfy any additional document requirement published for the State/UT where the premise is located.<br><b>Next improvement in PMSV:</b> We will ask the State/UT and show the applicable state-specific documents directly instead of sending the user to search for them.'),
+  r('foscos','Final application details reviewed','Review the final licence category, KoB, premise, product and document details before filing.','<b>Before payment/submission:</b> Confirm that the licence category, KoB(s), business constitution, premise address, annual turnover, product/activity details and uploaded documents all agree with each other.<br><b>Why:</b> Inconsistencies between the application and supporting documents can lead to clarification queries or rejection. PMSV Helper is designed to make this review explicit before the user files in FoSCoS.')
+ );
+ return base;
+}
+function r(id,title,small,detail){return {id,title,small,detail}}
+
+function renderResultSummary(){
+ if(!currentCase)return;
+ const list=requirementsFor(currentCase);
+ summaryLicence.textContent=currentCase.license||'—';
+ const kobLabel=currentCase.kob==='manufacturer'
+   ? 'Manufacturer · '+(manufacturerNames[currentCase.manufacturerType]||currentCase.manufacturerType||'')
+   : (names[currentCase.kob]||currentCase.kob||'');
+ summaryKob.textContent=kobLabel||'';
+ const annual=licenceAnnualFee(currentCase.license);
+ summaryAnnualFee.textContent=annual?inr(annual):'To be determined';
+ summaryReqCount.textContent=list.length+' items';
+ reqPreviewList.innerHTML=list.slice(0,8).map(x=>'<div class="reqChip"><b>'+escapeHtml(x.title)+'</b><span>'+escapeHtml(x.small)+'</span></div>').join('');
+ if(list.length>8) reqPreviewList.innerHTML+='<div class="reqChip"><b>+'+(list.length-8)+' more</b><span>See the detailed checklist below.</span></div>';
+}
+
+function renderRequirements(){
+ const list=requirementsFor(currentCase);
+ renderResultSummary();
+ const box=requirements;
+ box.innerHTML=list.map(x=>{
+   const s=currentCase.statuses[x.id]||'';
+   return '<div class="req" id="req-'+x.id+'"><div class="reqTop"><div><div class="reqTitle">'+x.title+'</div><div class="reqSmall">'+x.small+'</div><button type="button" class="more" onclick="toggleReq(\''+x.id+'\')">Full details</button></div>'+
+   '<div class="reqBtns"><button type="button" class="state ready '+(s==='ready'?'active':'')+'" onclick="setStatus(\''+x.id+'\',\'ready\')">Ready</button>'+
+   '<button type="button" class="state notready" onclick="setStatus(\''+x.id+'\',\'notready\')">Not ready</button>'+
+   '<button type="button" class="state na" onclick="setStatus(\''+x.id+'\',\'na\')">NA</button></div></div>'+
+   '<div class="detail">'+x.detail+'</div></div>'
+ }).join('');
+ updateCompletion();
+}
+function toggleReq(id){document.getElementById('req-'+id).classList.toggle('open')}
+function setStatus(id,s){currentCase.statuses[id]=s;renderRequirements()}
+function updateCompletion(){
+ const list=requirementsFor(currentCase); const done=list.filter(x=>currentCase.statuses[x.id]).length;
+ completion.textContent=done+' of '+list.length+' reviewed';
+}
+function saveCase(){
+ if(!currentCase)return;
+ const name=(caseName.value||'Untitled FSSAI assessment').trim();
+ const all=JSON.parse(localStorage.getItem(STORE)||'[]');
+ const data={...currentCase,name,savedAt:new Date().toISOString()};
+ const idx=all.findIndex(x=>x.name===name);
+ if(idx>=0)all[idx]=data;else all.unshift(data);
+ localStorage.setItem(STORE,JSON.stringify(all.slice(0,30)));
+ alert('Saved on this device.');
+}
+function renderSaved(){
+ const all=JSON.parse(localStorage.getItem(STORE)||'[]');
+ if(!all.length){savedList.innerHTML='<p class="muted">No saved assessments yet.</p>';return}
+ savedList.innerHTML=all.map((x,i)=>'<div class="saved"><div><b>'+escapeHtml(x.name)+'</b><small>'+escapeHtml(x.license)+' · '+escapeHtml((x.kob==='manufacturer' && x.manufacturerType ? 'Manufacturer · '+(manufacturerNames[x.manufacturerType]||x.manufacturerType) : (names[x.kob]||x.kob||'')))+'</small></div><div class="actions"><button type="button" class="btn secondary" onclick="openSaved('+i+')">Open</button><button type="button" class="btn danger" onclick="deleteSaved('+i+')">Delete</button></div></div>').join('');
+}
+function openSaved(i){
+ const all=JSON.parse(localStorage.getItem(STORE)||'[]');currentCase=all[i];Object.assign(wizardState,currentCase);
+ showView('home');
+ landing.classList.add('hidden');wizard.classList.add('hidden');outcome.classList.remove('hidden');
+ caseName.value=currentCase.name||'';
+ licenseType.textContent=currentCase.license;licenseReason.textContent=currentCase.reason;fee.textContent=currentCase.feeText||'';
+ validityYears.value='1';updateFeeTotal();
+ if(currentCase.multi){multiStateNotice.classList.remove('hidden');multiStateNotice.textContent='Multiple States/UTs: this saved assessment applies to the selected premise. Head Office and each premise should be checked separately in FoSCoS.'} else multiStateNotice.classList.add('hidden');
+ renderRequirements();
+}
+function deleteSaved(i){
+ const all=JSON.parse(localStorage.getItem(STORE)||'[]');all.splice(i,1);localStorage.setItem(STORE,JSON.stringify(all));renderSaved();
+}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+</script>
+</body>
+</html>
