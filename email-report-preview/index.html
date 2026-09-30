@@ -1,24 +1,145 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PMSV Email Report Preview</title><style>
-body{margin:0;font-family:Inter,system-ui,Arial;background:#f0f3f9;color:#18243e}.hero{background:linear-gradient(135deg,#243e79,#3155d9);color:#fff;padding:32px 18px}.wrap{max-width:760px;margin:auto}.card{background:#fff;border:1px solid #e2e7f0;border-radius:18px;padding:20px;margin:18px}.buttons{display:grid;gap:12px}.btn{display:block;border:0;border-radius:12px;padding:15px 16px;background:#3155d9;color:#fff;font-weight:800;text-decoration:none;text-align:center}.btn.secondary{background:#0b6b53}.note{font-size:13px;color:#6b7890;line-height:1.5}.tag{display:inline-block;background:#eef2ff;color:#3155d9;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800}
-</style></head><body><div class="hero"><div class="wrap"><span class="tag">Preview only</span><h1>Email Report Test</h1><p>Sample audit data is stored only in this browser for testing.</p></div></div><div class="wrap"><div class="card"><h2>Choose a report</h2><div class="buttons"><button class="btn" onclick="openSchedule()">Schedule IV Audit Report</button><button class="btn secondary" onclick="openHygiene()">Hygiene Rating Audit Report</button></div><p class="note">The final email flow is now server-sent: enter a recipient email, choose <b>PDF</b>, <b>Word</b> or <b>Excel</b>, and PMSV sends the attachment plus a private 7-day report link. Actual sending requires PMSV plugin v1.0.13 on pmsvgroup.com.</p></div></div><script>
-const schedule={id:'demo-schedule-email',type:'General Manufacturing',businessType:'General Manufacturing',fbo:'PMSV Demo Foods Pvt Ltd',fboName:'PMSV Demo Foods Pvt Ltd',license:'10000000000000',date:'2026-09-29',auditor:'Demo Auditor',representative:'Demo FBO Representative',address:'Bengaluru, Karnataka',score:7,maxScore:10,percentage:70,scorePct:70,ncCount:1,criticalNC:0,grade:'B — Needs Improvement',items:[
-{no:'1',question:'Food premises are maintained in a clean and hygienic condition.',max:2,status:'C',score:2,comment:'Compliant',critical:false},
-{no:'2',question:'Adequate hand washing facilities are available and maintained.',max:2,status:'NC',score:0,comment:'Hand wash signage missing near production entry.',critical:false},
-{no:'3',question:'Pest control programme is implemented and records are maintained.',max:2,status:'C',score:2,comment:'Records verified',critical:false},
-{no:'4',question:'Food handlers follow personal hygiene requirements.',max:4,status:'PC',score:3,comment:'Refresher training required for two handlers.',critical:true}
-]};
-const hygiene={id:'demo-hygiene-email',businessType:'Food Service Establishment / Bakery',fbo:'PMSV Demo Restaurant',outlet:'Yelahanka Outlet',license:'10000000000001',date:'2026-09-29',auditor:'Demo Auditor',score:7,maxScore:10,percentage:70,rating:'Very Good',items:[
-{no:'1',question:'Food preparation area is clean and maintained.',max:2,status:'C',comment:'Compliant',critical:false},
-{no:'2',question:'Hand washing facilities are functional and supplied.',max:2,status:'NC',comment:'Paper towels not available at one station.',critical:false},
-{no:'3',question:'Raw and cooked foods are segregated.',max:4,status:'C',comment:'Verified',critical:true},
-{no:'4',question:'Temperature controls are monitored.',max:2,status:'PC',comment:'One monitoring record incomplete.',critical:false}
-]};
-function seed(){
- localStorage.setItem('pmsvFssaiAudits',JSON.stringify([schedule]));
- localStorage.setItem('pmsvFssaiNcManagement',JSON.stringify({'demo-schedule-email':{items:{'2':{rootCause:'Replenishment check missed',correction:'Paper signage installed',correctiveAction:'Daily pre-start hygiene checklist updated',responsibility:'QA',status:'Open'},'4':{rootCause:'Training gap',correction:'Briefed handlers',correctiveAction:'Monthly refresher training',responsibility:'QA',status:'Open'}}}}));
- localStorage.setItem('pmsvHygieneRatingAudits',JSON.stringify([hygiene]));
- localStorage.setItem('pmsvHygieneRatingNcManagement',JSON.stringify({'demo-hygiene-email':{items:{'2':{rootCause:'Stockout',correction:'Paper towels replenished',correctiveAction:'Minimum stock level added',responsibility:'Outlet Manager',status:'Open'}}}}));
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PMSV Email Report Preview</title>
+<style>
+:root{--blue:#3155d9;--navy:#243e79;--bg:#f2f5fa;--line:#dfe6ef;--ink:#18243e;--muted:#6f7d95;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.hero{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;padding:24px 16px}
+.wrap{width:min(980px,calc(100% - 28px));margin:auto}
+.hero h1{font-size:24px;margin:8px 0 4px}.hero p{margin:0;color:#e7ecff;font-size:14px}
+.badge{display:inline-block;background:#fff2;color:#fff;border:1px solid #ffffff55;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:16px 0;box-shadow:0 8px 26px #17213a0d}
+.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:12px 15px;background:var(--blue);color:#fff;font-weight:800;cursor:pointer}.btn.nc{background:var(--red)}.btn.secondary{background:#eef2ff;color:var(--blue)}.btn:disabled{opacity:.55;cursor:not-allowed}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{background:#f7f9fc;border:1px solid var(--line);border-radius:12px;padding:12px}.metric b{display:block;font-size:21px;margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid #d6dee8;padding:8px;text-align:left;vertical-align:top}th{background:#edf3ff}.tablewrap{overflow:auto}
+.note{font-size:12px;color:var(--muted)}
+.modal{position:fixed;inset:0;background:#1018289e;display:none;align-items:flex-end;justify-content:center;padding:0;z-index:50}.modal.open{display:flex}
+.sheet{width:min(560px,100%);background:#fff;border-radius:22px 22px 0 0;padding:20px;max-height:92vh;overflow:auto}
+.sheet h2{margin:0 0 4px;font-size:21px}.sheet .sub{margin:0 0 16px;color:var(--muted);font-size:13px}
+label{display:block;font-size:13px;font-weight:800;margin:13px 0 6px}input[type=email],input[type=text],textarea{width:100%;border:1px solid #cfd8e5;border-radius:10px;padding:12px;font:inherit;background:#fff}textarea{min-height:120px;resize:vertical}
+.formats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.format{border:1px solid #cdd7e7;background:#fff;color:var(--ink);border-radius:11px;padding:12px 8px;font-weight:800;cursor:pointer}.format.active{border:2px solid var(--blue);background:#eef2ff;color:var(--blue)}
+.previewbox{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:14px}.previewbox h3{margin:0 0 8px;font-size:15px}.attach{display:inline-flex;gap:6px;align-items:center;background:#eef2ff;color:var(--blue);border-radius:999px;padding:6px 9px;font-size:12px;font-weight:800}
+.sheet-actions{display:flex;gap:9px;margin-top:16px}.sheet-actions .btn{flex:1}.cancel{background:#fff!important;color:#5b687d!important;border:1px solid #cfd8e5!important}
+.sent{display:none;background:#ecfdf3;border:1px solid #abefc6;color:#067647;border-radius:12px;padding:12px;margin-top:12px;font-weight:800}
+@media(max-width:700px){.summary{grid-template-columns:1fr 1fr}.wrap{width:calc(100% - 20px)}.hero{padding-top:20px}.formats{grid-template-columns:1fr 1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="hero"><div class="wrap"><span class="badge">PREVIEW ONLY — v1.0.15 live notification build is untouched</span><h1>PMSV Audit Report</h1><p>Previewing the new Email Audit Report and Email NC Report flow.</p></div></div>
+
+<main class="wrap">
+<section class="card">
+  <div class="actions">
+    <button class="btn" onclick="openEmail('audit')">Email Audit Report</button>
+    <button class="btn nc" onclick="openEmail('nc')">Email NC Report</button>
+  </div>
+  <p class="note">No email is actually sent from this preview.</p>
+</section>
+
+<section class="card">
+  <h2>Audit Summary</h2>
+  <div class="summary">
+    <div class="metric">Score<b>86%</b></div>
+    <div class="metric">Grade<b>A</b></div>
+    <div class="metric">NC<b>2</b></div>
+    <div class="metric">Critical NC<b>0</b></div>
+  </div>
+  <p><b>FBO:</b> PMSV Demo Foods Pvt Ltd &nbsp; <b>Date:</b> 30 Sep 2026</p>
+  <p><b>Auditor:</b> Pragash Demo &nbsp; <b>Licence:</b> 10000000000000</p>
+</section>
+
+<section class="card">
+  <h2>Non-compliance Summary</h2>
+  <p><b>2.1</b> — Hand wash signage missing near production entry.</p>
+  <p><b>4.3</b> — One pest-control trend review record not available.</p>
+</section>
+
+<section class="card">
+  <h2>Full Audit Report</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>No.</th><th>Audit Question</th><th>Status</th><th>Score</th><th>Comments</th></tr></thead>
+    <tbody>
+      <tr><td>1.1</td><td>Food premises maintained in clean and hygienic condition.</td><td>C</td><td>2/2</td><td>Compliant.</td></tr>
+      <tr><td>2.1</td><td>Adequate hand-washing facilities available and maintained.</td><td>NC</td><td>0/2</td><td>Signage missing near production entry.</td></tr>
+      <tr><td>3.2</td><td>Food handlers follow personal hygiene requirements.</td><td>C</td><td>4/4</td><td>Verified.</td></tr>
+      <tr><td>4.3</td><td>Pest control programme implemented and reviewed.</td><td>NC</td><td>1/2</td><td>Trend review record not available.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+</main>
+
+<div id="modal" class="modal">
+  <div class="sheet">
+    <h2 id="modalTitle">Email Audit Report</h2>
+    <p class="sub">Enter the recipient email and select the attachment format.</p>
+
+    <label>Recipient email</label>
+    <input id="recipient" type="email" placeholder="name@company.com">
+
+    <label>Attachment format</label>
+    <div class="formats">
+      <button class="format active" data-format="PDF" onclick="chooseFormat(this)">PDF</button>
+      <button class="format" data-format="Word" onclick="chooseFormat(this)">Word</button>
+      <button class="format" data-format="Excel" onclick="chooseFormat(this)">Excel</button>
+    </div>
+
+    <label>Subject</label>
+    <input id="subject" type="text">
+
+    <label>Email message</label>
+    <textarea id="message"></textarea>
+
+    <div class="previewbox">
+      <h3>Email preview</h3>
+      <div><b>To:</b> <span id="previewTo">—</span></div>
+      <div style="margin-top:5px"><b>Subject:</b> <span id="previewSubject"></span></div>
+      <div style="margin-top:10px"><span id="attachment" class="attach">📎 PMSV-Audit-Report.pdf</span></div>
+      <p class="note" style="margin-bottom:0">The email will also contain a PMSV report link.</p>
+    </div>
+
+    <div id="sent" class="sent">Preview complete — email sending is disabled in this preview.</div>
+
+    <div class="sheet-actions">
+      <button class="btn cancel" onclick="closeEmail()">Cancel</button>
+      <button id="sendBtn" class="btn" onclick="previewSend()">Preview Send</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let kind='audit',format='PDF';
+const baseLink='https://pmsvgroup.com/audits/';
+function openEmail(k){
+ kind=k;format='PDF';
+ document.querySelectorAll('.format').forEach((b,i)=>b.classList.toggle('active',i===0));
+ modalTitle.textContent=k==='nc'?'Email NC Report':'Email Audit Report';
+ subject.value=(k==='nc'?'PMSV FSSAI NC Report - ':'PMSV FSSAI Audit Report - ')+'PMSV Demo Foods Pvt Ltd';
+ message.value='Dear Sir/Madam,\n\nPlease find attached the '+(k==='nc'?'NC report':'audit report')+' for PMSV Demo Foods Pvt Ltd dated 30 Sep 2026.\n\nView PMSV report: '+baseLink+'\n\nRegards,\nPMSV Food Safety & Quality Forum';
+ recipient.value='';sent.style.display='none';
+ updatePreview();
+ modal.classList.add('open');
+ setTimeout(()=>recipient.focus(),100);
 }
-function openSchedule(){seed();location.href='audits/audit-report.html?audit=demo-schedule-email'}
-function openHygiene(){seed();location.href='audits/hygiene-rating-report.html?audit=demo-hygiene-email'}
-</script></body></html>
+function closeEmail(){modal.classList.remove('open')}
+function chooseFormat(btn){
+ document.querySelectorAll('.format').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');format=btn.dataset.format;updatePreview();
+}
+function updatePreview(){
+ const ext=format==='PDF'?'pdf':format==='Word'?'docx':'xlsx';
+ const stem=kind==='nc'?'PMSV-NC-Report':'PMSV-Audit-Report';
+ attachment.textContent='📎 '+stem+'.'+ext;
+ previewTo.textContent=recipient.value||'—';
+ previewSubject.textContent=subject.value||'—';
+}
+recipient.addEventListener('input',updatePreview);subject.addEventListener('input',updatePreview);
+function previewSend(){
+ if(!recipient.value.trim()||!recipient.value.includes('@')){alert('Enter a valid recipient email address.');recipient.focus();return}
+ sent.style.display='block';
+}
+modal.addEventListener('click',e=>{if(e.target===modal)closeEmail()});
+</script>
+</body></html>
