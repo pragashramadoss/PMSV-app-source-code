@@ -22,6 +22,15 @@ button,input,select{font:inherit}.top{background:linear-gradient(135deg,var(--na
 .progress{height:7px;background:#e8edf5;border-radius:99px;overflow:hidden;margin:8px 0 16px}.progress>i{display:block;height:100%;background:var(--blue);width:0}
 .q{font-size:20px;font-weight:850;margin:6px 0 14px}.result{border-radius:15px;padding:16px;border:1px solid #bdd3ff;background:#f3f7ff}.result .type{font-size:27px;font-weight:900;color:var(--navy)}.pill{display:inline-block;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800;background:#eef2ff;color:var(--blue)}
 .notice{padding:11px 12px;border-radius:11px;background:#fff8e8;border:1px solid #f1d79a;color:#70460b;font-size:12px;margin-top:10px}
+.feeCard{margin-top:13px;border:1px solid #bcd0ff;background:#f7f9ff;border-radius:14px;padding:14px}
+.feeTop{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.feeAmt{font-size:26px;font-weight:900;color:var(--navy)}
+.feeLabel{font-size:12px;color:var(--muted);margin-top:2px}
+.feeGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.feeBox{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px}
+.feeBox b{display:block;font-size:18px;margin-top:3px}
+.feeCard select{margin-top:5px}
+@media(max-width:520px){.feeTop{flex-direction:column}.feeGrid{grid-template-columns:1fr}}
 .checkHead{display:flex;justify-content:space-between;gap:10px;align-items:center}.meter{font-size:12px;color:var(--muted)}
 .req{border:1px solid var(--line);border-radius:13px;margin:9px 0;overflow:hidden;background:#fff}.reqTop{padding:12px;display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center}.reqTitle{font-weight:800}.reqSmall{font-size:12px;color:var(--muted);margin-top:3px}.reqBtns{display:flex;gap:5px;flex-wrap:wrap}.state{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 8px;font-size:11px;font-weight:800}.state.ready{background:#eafaf3;color:var(--green);border-color:#afe4cf}.state.notready{background:#fff3f1;color:var(--red);border-color:#f2c0ba}.state.na{background:#f1f3f6;color:#5e6674}.more{border:0;background:transparent;color:var(--blue);font-weight:800;font-size:12px;padding:0;margin-top:5px;cursor:pointer}.detail{display:none;padding:0 12px 12px;color:#4e5b70;font-size:12px;line-height:1.5}.req.open .detail{display:block}
 input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;border-radius:10px;padding:11px;background:#fff}.field{margin:10px 0}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:5px}
@@ -85,6 +94,36 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
           <div id="licenseType" class="type"></div>
           <div id="licenseReason" style="margin-top:5px"></div>
           <div id="fee" class="muted" style="margin-top:7px"></div>
+          <div class="feeCard">
+            <div class="feeTop">
+              <div>
+                <div class="muted">Official FoSCoS fee</div>
+                <div id="annualFee" class="feeAmt">—</div>
+                <div class="feeLabel">per year</div>
+              </div>
+              <div style="min-width:150px">
+                <label class="muted" for="validityYears"><b>Validity</b></label>
+                <select id="validityYears" onchange="updateFeeTotal()">
+                  <option value="1">1 year</option>
+                  <option value="2">2 years</option>
+                  <option value="3">3 years</option>
+                  <option value="4">4 years</option>
+                  <option value="5">5 years</option>
+                </select>
+              </div>
+            </div>
+            <div class="feeGrid">
+              <div class="feeBox">
+                <span class="muted">Government fee for selected validity</span>
+                <b id="totalFee">—</b>
+              </div>
+              <div class="feeBox">
+                <span class="muted">Maximum validity selectable</span>
+                <b>5 years</b>
+              </div>
+            </div>
+            <p id="feeNote" class="muted" style="margin:10px 0 0"></p>
+          </div>
         </div>
         <div id="multiStateNotice" class="notice hidden"></div>
         <p class="muted">This helper is guidance based on the current FoSCoS eligibility matrix. Final eligibility should be confirmed in FoSCoS because special premises, product categories and regulatory orders can change the result.</p>
@@ -129,6 +168,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
         <p><b>Licence documents:</b><br><a href="https://foscos.fssai.gov.in/assets/docs/KoBwiseDocumentsrequiredforLicense.pdf" target="_blank" rel="noopener">Kind-of-business-wise documents required for licence</a></p>
         <p><b>FoSCoS documents hub:</b><br><a href="https://foscos.fssai.gov.in/home-document" target="_blank" rel="noopener">General and state-wise document requirements</a></p>
         <p><b>Official eligibility tool:</b><br><a href="https://foscos.fssai.gov.in/public/fbo/open-eligibility/N" target="_blank" rel="noopener">FoSCoS eligibility checker</a></p>
+        <p><b>Fee structure:</b><br><a href="https://foscos.fssai.gov.in/fee/CL" target="_blank" rel="noopener">FoSCoS licence / registration fee structure</a></p>
       </div>
     </div>
   </section>
@@ -317,11 +357,34 @@ function pickManufacturerTurnover(band){
  else finish('Central Licence',label+' with annual turnover above ₹50 crore.','₹7,500 per annum in the eligibility matrix.');
 }
 
+function licenceAnnualFee(type){
+ if(type==='FSSAI Registration') return 100;
+ if(type==='State Licence') return 5000;
+ if(type==='Central Licence') return 7500;
+ return null;
+}
+function inr(n){return '₹'+Number(n).toLocaleString('en-IN')}
+function updateFeeTotal(){
+ if(!currentCase)return;
+ const annual=licenceAnnualFee(currentCase.license);
+ if(!annual){
+   annualFee.textContent='To be determined';
+   totalFee.textContent='—';
+   feeNote.textContent='Fee will be shown after the applicable licence category is determined.';
+   return;
+ }
+ const years=Number(validityYears.value||1);
+ annualFee.textContent=inr(annual);
+ totalFee.textContent=inr(annual*years);
+ feeNote.textContent='Government fee only. FoSCoS allows a licence/certificate validity period of up to 5 years. The total shown is annual fee × selected years.';
+}
+
 function finish(type,reason,feeText,undetermined=false){
  wizard.classList.add('hidden');outcome.classList.remove('hidden');
  const result={...wizardState,license:type,reason,feeText,undetermined,statuses:{},savedAt:null};
  currentCase=result;
  licenseType.textContent=type;licenseReason.textContent=reason;fee.textContent=feeText;
+ validityYears.value='1';updateFeeTotal();
  if(wizardState.multi){
    multiStateNotice.classList.remove('hidden');
    multiStateNotice.textContent='Multiple States/UTs: FoSCoS states that one premise must be declared as Head Office and a Central Licence is required for the Head Office; each other premise requires its own Registration/State/Central licence as per that premise’s eligibility. This result is for the selected premise.';
@@ -430,6 +493,7 @@ function openSaved(i){
  landing.classList.add('hidden');wizard.classList.add('hidden');outcome.classList.remove('hidden');
  caseName.value=currentCase.name||'';
  licenseType.textContent=currentCase.license;licenseReason.textContent=currentCase.reason;fee.textContent=currentCase.feeText||'';
+ validityYears.value='1';updateFeeTotal();
  if(currentCase.multi){multiStateNotice.classList.remove('hidden');multiStateNotice.textContent='Multiple States/UTs: this saved assessment applies to the selected premise. Head Office and each premise should be checked separately in FoSCoS.'} else multiStateNotice.classList.add('hidden');
  renderRequirements();
 }
