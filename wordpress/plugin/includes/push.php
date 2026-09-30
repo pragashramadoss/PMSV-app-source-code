@@ -89,9 +89,37 @@ function pmsv_wp_test_push() {
     if($code<200||$code>=300)return pmsv_wp_reply(['error'=>'Push provider did not accept the test notification.'],502);
     return pmsv_wp_reply(['accepted'=>true]);
 }
+function pmsv_wp_push_latest_alert($refresh=false) {
+    $saved=get_option('pmsv_wp_last_push_alert');
+    if(!$refresh&&is_array($saved)&&!empty($saved['title'])&&!empty($saved['url']))return $saved;
+    global $wpdb;$news=pmsv_wp_table('news');
+    $row=$wpdb->get_row("SELECT payload,first_seen FROM $news ORDER BY first_seen DESC,published DESC,id DESC LIMIT 1",ARRAY_A);
+    $item=$row?json_decode($row['payload']??'',true):null;
+    $headline=is_array($item)?trim(wp_strip_all_tags((string)($item['title']??''))):'';
+    $source=is_array($item)?trim(wp_strip_all_tags((string)($item['source']??''))):'';
+    $published=is_array($item)?trim((string)($item['published']??'')):'';
+    if($headline==='')$headline='New food safety updates are available.';
+    if(function_exists('mb_substr'))$headline=mb_substr($headline,0,180);else $headline=substr($headline,0,180);
+    $body='Latest PMSV update';
+    if($source!=='')$body.=' · '.$source;
+    if($published!=='')$body.=' · '.$published;
+    $seen=(string)($row['first_seen']??gmdate('c'));
+    $stamp=strtotime($seen)?:time();
+    try{$day=wp_date('Ymd',$stamp,new DateTimeZone('Asia/Kolkata'));}catch(Throwable $e){$day=gmdate('Ymd',$stamp);}
+    $alert=[
+        'title'=>$headline,
+        'body'=>$body,
+        'url'=>pmsv_wp_base().'/updates',
+        'tag'=>'pmsv-news-'.$day,
+        'firstSeen'=>$seen
+    ];
+    update_option('pmsv_wp_last_push_alert',$alert,false);
+    return $alert;
+}
 function pmsv_wp_dispatch() {
     global $wpdb;$t=pmsv_wp_table('devices');$news=pmsv_wp_table('news');$latest=$wpdb->get_var("SELECT MAX(first_seen) FROM $news");
     $cutoff=(int)round((strtotime($latest?:'')?:0)*1000);$now=(int)floor(microtime(true)*1000);
+    $alert=$cutoff>0?pmsv_wp_push_latest_alert(true):pmsv_wp_push_latest_alert(false);
     $rows=$wpdb->get_results($wpdb->prepare("SELECT id,endpoint,seen_at FROM $t WHERE seen_at < %d AND retry_at <= %d LIMIT 20",$cutoff,$now),ARRAY_A);
     if($wpdb->last_error)throw new RuntimeException('Push read failed');
     $accepted=0;$failed=0;$keys=$rows?pmsv_wp_keys():null;
@@ -108,5 +136,5 @@ function pmsv_wp_dispatch() {
         }catch(Throwable $e){$failed++;$wpdb->query($wpdb->prepare("UPDATE $t SET seen_at=%d WHERE id=%s AND seen_at=%d",$row['seen_at'],$row['id'],$cutoff));}
     }
     $remaining=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $t WHERE seen_at<%d AND retry_at<=%d",$cutoff,(int)floor(microtime(true)*1000)));
-    return compact('accepted','failed','remaining');
+    return ['accepted'=>$accepted,'failed'=>$failed,'remaining'=>$remaining,'latestTitle'=>$alert['title']??null,'target'=>$alert['url']??null];
 }
