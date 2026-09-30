@@ -2,7 +2,7 @@
 /**
  * Plugin Name: PMSV Food Safety & Quality Forum
  * Description: PMSV Food Safety & Quality Forum production application.
- * Version: 1.0.11
+ * Version: 1.0.14
  * Requires PHP: 8.1
  * Author: PMSV Group
  */
@@ -40,7 +40,7 @@ add_action('template_redirect', function () {
         header('Cache-Control: no-cache, must-revalidate');
         header('Service-Worker-Allowed: ' . $base . '/');
         $sw = file_get_contents(PMSV_WP_DIR . 'public/sw.js');
-        $sw = preg_replace("/pmsv-offline-v\\d+/", 'pmsv-wp-v1.0.11', $sw);
+        $sw = preg_replace("/pmsv-offline-v\\d+/", 'pmsv-wp-v1.0.14', $sw);
         echo preg_replace_callback("~(['\"])(/[^'\"]*)\\1~", fn($m) => $m[1] . $base . $m[2] . $m[1], $sw);
         exit;
     }
@@ -94,7 +94,7 @@ add_action('template_redirect', function () {
         header('Content-Type: application/javascript'); header('Cache-Control: no-cache');
         header('Service-Worker-Allowed: ' . $base . '/');
         $sw = file_get_contents(PMSV_WP_DIR . 'public/sw.js');
-        $sw = preg_replace("/pmsv-offline-v\\d+/", 'pmsv-wp-v1.0.11', $sw);
+        $sw = preg_replace("/pmsv-offline-v\\d+/", 'pmsv-wp-v1.0.14', $sw);
         echo preg_replace_callback("~(['\"])(/[^'\"]*)\\1~", fn($m) => $m[1] . $base . $m[2] . $m[1], $sw); exit;
     }
     // Exact packaged public files only; never PHP, source files or arbitrary paths.
@@ -141,7 +141,7 @@ add_action('template_redirect', function () {
     $manifest = json_decode(file_get_contents(PMSV_WP_DIR . 'assets/.vite/manifest.json'), true)['index.html'];
     $assets = trailingslashit(plugins_url('assets', __FILE__));
     $public = trailingslashit(plugins_url('public', __FILE__));
-    ?><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#3155d9"><meta name="apple-mobile-web-app-capable" content="yes"><title>PMSV Food Safety & Quality Forum</title><script>window.PMSV=<?php echo wp_json_encode(['base'=>$base,'publicBase'=>$public], JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT); ?>;window.PMSV.installPrompt=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.PMSV.installPrompt=e;window.dispatchEvent(new Event('pmsv-install-available'));});window.addEventListener('appinstalled',function(){window.PMSV.installPrompt=null;});</script><link rel="manifest" href="<?php echo esc_url($base . '/?pmsv_manifest=1&v=1.0.8'); ?>"><link rel="icon" href="/wp-content/plugins/pmsv-original-app-preview/public/icons/pmsv-family-64.png"><link rel="apple-touch-icon" href="/wp-content/plugins/pmsv-original-app-preview/public/icons/pmsv-family-192.png"><?php foreach($manifest['css'] ?? [] as $css): ?><link rel="stylesheet" href="<?php echo esc_url($assets . $css . '?v=1.0.11'); ?>"><?php endforeach; ?></head><body class="antialiased"><div id="root"></div><script>window.addEventListener('load',function(){if('serviceWorker' in navigator){navigator.serviceWorker.register((window.PMSV.base||'')+'/?pmsv-sw=1&v=1.0.8',{scope:(window.PMSV.base||'')+'/',updateViaCache:'none'}).catch(function(){});}});</script><script type="module" src="<?php echo esc_url($assets . $manifest['file'] . '?v=1.0.11'); ?>"></script></body></html><?php
+    ?><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#3155d9"><meta name="apple-mobile-web-app-capable" content="yes"><title>PMSV Food Safety & Quality Forum</title><script>window.PMSV=<?php echo wp_json_encode(['base'=>$base,'publicBase'=>$public], JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT); ?>;window.PMSV.installPrompt=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.PMSV.installPrompt=e;window.dispatchEvent(new Event('pmsv-install-available'));});window.addEventListener('appinstalled',function(){window.PMSV.installPrompt=null;});</script><link rel="manifest" href="<?php echo esc_url($base . '/?pmsv_manifest=1&v=1.0.14'); ?>"><link rel="icon" href="/wp-content/plugins/pmsv-original-app-preview/public/icons/pmsv-family-64.png"><link rel="apple-touch-icon" href="/wp-content/plugins/pmsv-original-app-preview/public/icons/pmsv-family-192.png"><?php foreach($manifest['css'] ?? [] as $css): ?><link rel="stylesheet" href="<?php echo esc_url($assets . $css . '?v=1.0.14'); ?>"><?php endforeach; ?></head><body class="antialiased"><div id="root"></div><script>window.addEventListener('load',function(){if('serviceWorker' in navigator){navigator.serviceWorker.register((window.PMSV.base||'')+'/?pmsv-sw=1&v=1.0.14',{scope:(window.PMSV.base||'')+'/',updateViaCache:'none'}).catch(function(){});}});</script><script type="module" src="<?php echo esc_url($assets . $manifest['file'] . '?v=1.0.14'); ?>"></script></body></html><?php
     exit;
 }, 0);
 function pmsv_wp_reply($body, $status=200) { status_header($status); nocache_headers(); header('Content-Type: application/json'); echo wp_json_encode($body); }
@@ -150,10 +150,7 @@ function pmsv_wp_api($route) {
     try {
         if ($route==='news' && $method==='GET') return pmsv_wp_reply(['news'=>pmsv_wp_archive()]);
         if ($route==='updater' && $method==='GET') return pmsv_wp_reply(get_option('pmsv_wp_updater', ['active'=>false]));
-        if ($route==='push/latest' && $method==='GET') {
-            $news = pmsv_wp_archive(); usort($news, fn($a,$b)=>strcmp($b['firstSeen'],$a['firstSeen']));
-            return pmsv_wp_reply(['title'=>'PMSV Food Safety & Quality Forum','body'=>$news[0]['title']??'New food safety updates are available.','url'=>pmsv_wp_base().'/','tag'=>'pmsv-news']);
-        }
+        if ($route==='push/latest' && $method==='GET') return pmsv_wp_reply(pmsv_wp_push_latest_alert(false));
         if ($route==='push' && $method==='GET') return pmsv_wp_reply(['publicKey'=>pmsv_wp_keys()['publicKey']]);
         if ($route==='push' && in_array($method,['POST','DELETE'],true)) return pmsv_wp_change_push($method==='DELETE');
         if ($route==='push/test' && $method==='POST') return pmsv_wp_test_push();
