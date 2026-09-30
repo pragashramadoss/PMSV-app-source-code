@@ -93,7 +93,7 @@ function pmsv_wp_push_latest_alert($refresh=false) {
     $saved=get_option('pmsv_wp_last_push_alert');
     if(!$refresh&&is_array($saved)&&!empty($saved['title'])&&!empty($saved['url']))return $saved;
     global $wpdb;$news=pmsv_wp_table('news');
-    $row=$wpdb->get_row("SELECT payload,first_seen FROM $news ORDER BY first_seen DESC,published DESC,id DESC LIMIT 1",ARRAY_A);
+    $row=$wpdb->get_row("SELECT payload,first_seen FROM $news ORDER BY published DESC,first_seen DESC,id DESC LIMIT 1",ARRAY_A);
     $item=$row?json_decode($row['payload']??'',true):null;
     $headline=is_array($item)?trim(wp_strip_all_tags((string)($item['title']??''))):'';
     $source=is_array($item)?trim(wp_strip_all_tags((string)($item['source']??''))):'';
