@@ -30,6 +30,17 @@ button,input,select{font:inherit}.top{background:linear-gradient(135deg,var(--na
 .feeBox{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px}
 .feeBox b{display:block;font-size:18px;margin-top:3px}
 .feeCard select{margin-top:5px}
+.resultSummary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:13px}
+.resultBox{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+.resultBox .k{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.resultBox .v{font-size:17px;font-weight:850;margin-top:4px;color:var(--ink)}
+.resultBox .s{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4}
+.reqPreview{margin-top:14px;border-top:1px solid var(--line);padding-top:13px}
+.reqPreview h3{font-size:15px;margin:0 0 8px}
+.reqPreviewList{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.reqChip{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:9px 10px;font-size:12px}
+.reqChip b{display:block;margin-bottom:2px}
+@media(max-width:700px){.resultSummary{grid-template-columns:1fr}.reqPreviewList{grid-template-columns:1fr}}
 @media(max-width:520px){.feeTop{flex-direction:column}.feeGrid{grid-template-columns:1fr}}
 .checkHead{display:flex;justify-content:space-between;gap:10px;align-items:center}.meter{font-size:12px;color:var(--muted)}
 .req{border:1px solid var(--line);border-radius:13px;margin:9px 0;overflow:hidden;background:#fff}.reqTop{padding:12px;display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center}.reqTitle{font-weight:800}.reqSmall{font-size:12px;color:var(--muted);margin-top:3px}.reqBtns{display:flex;gap:5px;flex-wrap:wrap}.state{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 8px;font-size:11px;font-weight:800}.state.ready{background:#eafaf3;color:var(--green);border-color:#afe4cf}.state.notready{background:#fff3f1;color:var(--red);border-color:#f2c0ba}.state.na{background:#f1f3f6;color:#5e6674}.more{border:0;background:transparent;color:var(--blue);font-weight:800;font-size:12px;padding:0;margin-top:5px;cursor:pointer}.detail{display:none;padding:0 12px 12px;color:#4e5b70;font-size:12px;line-height:1.5}.req.open .detail{display:block}
@@ -123,6 +134,32 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
               </div>
             </div>
             <p id="feeNote" class="muted" style="margin:10px 0 0"></p>
+          </div>
+
+          <div class="resultSummary">
+            <div class="resultBox">
+              <div class="k">Licence</div>
+              <div id="summaryLicence" class="v">—</div>
+              <div id="summaryKob" class="s">—</div>
+            </div>
+            <div class="resultBox">
+              <div class="k">Annual government fee</div>
+              <div id="summaryAnnualFee" class="v">—</div>
+              <div class="s">Final total depends on selected validity.</div>
+            </div>
+            <div class="resultBox">
+              <div class="k">Requirements</div>
+              <div id="summaryReqCount" class="v">—</div>
+              <div class="s">Applicable checklist items generated for this result.</div>
+            </div>
+          </div>
+
+          <div class="reqPreview">
+            <h3>Documents / requirements that apply</h3>
+            <div id="reqPreviewList" class="reqPreviewList"></div>
+            <div class="actions" style="margin-top:10px">
+              <button class="btn secondary" onclick="document.getElementById('requirements').scrollIntoView({behavior:'smooth',block:'start'})">Review detailed checklist</button>
+            </div>
           </div>
         </div>
         <div id="multiStateNotice" class="notice hidden"></div>
@@ -453,8 +490,24 @@ function requirementsFor(c){
 }
 function r(id,title,small,detail){return {id,title,small,detail}}
 
+function renderResultSummary(){
+ if(!currentCase)return;
+ const list=requirementsFor(currentCase);
+ summaryLicence.textContent=currentCase.license||'—';
+ const kobLabel=currentCase.kob==='manufacturer'
+   ? 'Manufacturer · '+(manufacturerNames[currentCase.manufacturerType]||currentCase.manufacturerType||'')
+   : (names[currentCase.kob]||currentCase.kob||'');
+ summaryKob.textContent=kobLabel||'';
+ const annual=licenceAnnualFee(currentCase.license);
+ summaryAnnualFee.textContent=annual?inr(annual):'To be determined';
+ summaryReqCount.textContent=list.length+' items';
+ reqPreviewList.innerHTML=list.slice(0,8).map(x=>'<div class="reqChip"><b>'+escapeHtml(x.title)+'</b><span>'+escapeHtml(x.small)+'</span></div>').join('');
+ if(list.length>8) reqPreviewList.innerHTML+='<div class="reqChip"><b>+'+(list.length-8)+' more</b><span>See the detailed checklist below.</span></div>';
+}
+
 function renderRequirements(){
  const list=requirementsFor(currentCase);
+ renderResultSummary();
  const box=requirements;
  box.innerHTML=list.map(x=>{
    const s=currentCase.statuses[x.id]||'';
