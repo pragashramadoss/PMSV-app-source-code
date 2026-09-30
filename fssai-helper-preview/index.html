@@ -54,17 +54,18 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
 <body>
 <header class="top">
   <div class="wrap">
-    <span class="badge">STANDALONE PREVIEW · NOT CONNECTED TO LIVE PMSV</span>
+    <span class="badge">STANDALONE PREVIEW · BUILD 64 · NOT CONNECTED TO LIVE PMSV</span>
     <h1>PMSV FSSAI Helper</h1>
     <p>Licence finder + application readiness checklist</p>
   </div>
 </header>
 
 <main class="wrap">
+  <div id="jsError" class="notice hidden"></div>
   <nav class="tabs">
-    <button class="tab active" data-view="home" onclick="showView('home',this)">Helper</button>
-    <button class="tab" data-view="saved" onclick="showView('saved',this)">Saved</button>
-    <button class="tab" data-view="sources" onclick="showView('sources',this)">Official sources</button>
+    <button type="button" class="tab active" data-view="home" onclick="showView('home',this)">Helper</button>
+    <button type="button" class="tab" data-view="saved" onclick="showView('saved',this)">Saved</button>
+    <button type="button" class="tab" data-view="sources" onclick="showView('sources',this)">Official sources</button>
   </nav>
 
   <section id="home" class="view">
@@ -75,7 +76,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
           <h2 style="margin-top:7px">Find the right FSSAI licence</h2>
           <p class="muted">Answer one question at a time. The helper will determine the likely licence category and then build a requirement checklist for that business.</p>
           <div class="actions">
-            <button class="btn" onclick="startWizard()">Start licence finder</button>
+            <button type="button" class="btn" onclick="startWizard()">Start licence finder</button>
           </div>
         </div>
         <div class="mini">
@@ -92,7 +93,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
           <span class="pill">Licence finder</span>
           <div id="stepLabel" class="muted" style="margin-top:6px"></div>
         </div>
-        <button class="btn ghost" onclick="resetWizard()">Start over</button>
+        <button type="button" class="btn ghost" onclick="resetWizard()">Start over</button>
       </div>
       <div class="progress"><i id="bar"></i></div>
       <div id="question"></div>
@@ -158,7 +159,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
             <h3>Documents / requirements that apply</h3>
             <div id="reqPreviewList" class="reqPreviewList"></div>
             <div class="actions" style="margin-top:10px">
-              <button class="btn secondary" onclick="document.getElementById('requirements').scrollIntoView({behavior:'smooth',block:'start'})">Review detailed checklist</button>
+              <button type="button" class="btn secondary" onclick="document.getElementById('requirements').scrollIntoView({behavior:'smooth',block:'start'})">Review detailed checklist</button>
             </div>
           </div>
         </div>
@@ -181,8 +182,8 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
         </div>
         <div id="requirements"></div>
         <div class="actions" style="margin-top:13px">
-          <button class="btn" onclick="saveCase()">Save on this device</button>
-          <button class="btn ghost" onclick="resetWizard()">New assessment</button>
+          <button type="button" class="btn" onclick="saveCase()">Save on this device</button>
+          <button type="button" class="btn ghost" onclick="resetWizard()">New assessment</button>
         </div>
       </section>
     </div>
@@ -214,9 +215,35 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
 </main>
 
 <script>
+window.addEventListener('error',e=>{const box=document.getElementById('jsError');if(box){box.textContent='Preview error: '+(e.message||'Unknown JavaScript error');box.classList.remove('hidden')}});
 const STORE='pmsv-fssai-helper-preview-v1';
 const wizardState={multi:null,kob:null,turnover:null,hotelStars:null,manufacturerType:null};
 let currentCase=null;
+
+const landing=document.getElementById('landing');
+const wizard=document.getElementById('wizard');
+const outcome=document.getElementById('outcome');
+const stepLabel=document.getElementById('stepLabel');
+const bar=document.getElementById('bar');
+const question=document.getElementById('question');
+const licenseType=document.getElementById('licenseType');
+const licenseReason=document.getElementById('licenseReason');
+const fee=document.getElementById('fee');
+const validityYears=document.getElementById('validityYears');
+const annualFee=document.getElementById('annualFee');
+const totalFee=document.getElementById('totalFee');
+const feeNote=document.getElementById('feeNote');
+const multiStateNotice=document.getElementById('multiStateNotice');
+const summaryLicence=document.getElementById('summaryLicence');
+const summaryKob=document.getElementById('summaryKob');
+const summaryAnnualFee=document.getElementById('summaryAnnualFee');
+const summaryReqCount=document.getElementById('summaryReqCount');
+const reqPreviewList=document.getElementById('reqPreviewList');
+const requirements=document.getElementById('requirements');
+const completion=document.getElementById('completion');
+const caseName=document.getElementById('caseName');
+const savedList=document.getElementById('savedList');
+
 
 const kobOptions=[
  {id:'retailer',name:'Retailer',desc:'Retail shop, meat/fish shop, sweet/snack/bakery shop'},
@@ -275,7 +302,7 @@ function startWizard(){
 }
 function resetWizard(){landing.classList.remove('hidden');wizard.classList.add('hidden');outcome.classList.add('hidden');}
 function setProgress(step,total){stepLabel.textContent='Step '+step+' of '+total;bar.style.width=(step/total*100)+'%';}
-function choice(title,desc,fn){return '<button class="choice" onclick="'+fn+'"><b>'+title+'</b><span>'+desc+'</span></button>'}
+function choice(title,desc,fn){return '<button type="button" class="choice" onclick="'+fn+'"><b>'+title+'</b><span>'+desc+'</span></button>'}
 
 function renderMulti(){
  setProgress(1,4);
@@ -511,10 +538,10 @@ function renderRequirements(){
  const box=requirements;
  box.innerHTML=list.map(x=>{
    const s=currentCase.statuses[x.id]||'';
-   return '<div class="req" id="req-'+x.id+'"><div class="reqTop"><div><div class="reqTitle">'+x.title+'</div><div class="reqSmall">'+x.small+'</div><button class="more" onclick="toggleReq(\''+x.id+'\')">Full details</button></div>'+
-   '<div class="reqBtns"><button class="state ready '+(s==='ready'?'active':'')+'" onclick="setStatus(\''+x.id+'\',\'ready\')">Ready</button>'+
-   '<button class="state notready" onclick="setStatus(\''+x.id+'\',\'notready\')">Not ready</button>'+
-   '<button class="state na" onclick="setStatus(\''+x.id+'\',\'na\')">NA</button></div></div>'+
+   return '<div class="req" id="req-'+x.id+'"><div class="reqTop"><div><div class="reqTitle">'+x.title+'</div><div class="reqSmall">'+x.small+'</div><button type="button" class="more" onclick="toggleReq(\''+x.id+'\')">Full details</button></div>'+
+   '<div class="reqBtns"><button type="button" class="state ready '+(s==='ready'?'active':'')+'" onclick="setStatus(\''+x.id+'\',\'ready\')">Ready</button>'+
+   '<button type="button" class="state notready" onclick="setStatus(\''+x.id+'\',\'notready\')">Not ready</button>'+
+   '<button type="button" class="state na" onclick="setStatus(\''+x.id+'\',\'na\')">NA</button></div></div>'+
    '<div class="detail">'+x.detail+'</div></div>'
  }).join('');
  updateCompletion();
@@ -538,7 +565,7 @@ function saveCase(){
 function renderSaved(){
  const all=JSON.parse(localStorage.getItem(STORE)||'[]');
  if(!all.length){savedList.innerHTML='<p class="muted">No saved assessments yet.</p>';return}
- savedList.innerHTML=all.map((x,i)=>'<div class="saved"><div><b>'+escapeHtml(x.name)+'</b><small>'+escapeHtml(x.license)+' · '+escapeHtml((x.kob==='manufacturer' && x.manufacturerType ? 'Manufacturer · '+(manufacturerNames[x.manufacturerType]||x.manufacturerType) : (names[x.kob]||x.kob||'')))+'</small></div><div class="actions"><button class="btn secondary" onclick="openSaved('+i+')">Open</button><button class="btn danger" onclick="deleteSaved('+i+')">Delete</button></div></div>').join('');
+ savedList.innerHTML=all.map((x,i)=>'<div class="saved"><div><b>'+escapeHtml(x.name)+'</b><small>'+escapeHtml(x.license)+' · '+escapeHtml((x.kob==='manufacturer' && x.manufacturerType ? 'Manufacturer · '+(manufacturerNames[x.manufacturerType]||x.manufacturerType) : (names[x.kob]||x.kob||'')))+'</small></div><div class="actions"><button type="button" class="btn secondary" onclick="openSaved('+i+')">Open</button><button type="button" class="btn danger" onclick="deleteSaved('+i+')">Delete</button></div></div>').join('');
 }
 function openSaved(i){
  const all=JSON.parse(localStorage.getItem(STORE)||'[]');currentCase=all[i];Object.assign(wizardState,currentCase);
