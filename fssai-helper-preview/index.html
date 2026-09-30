@@ -60,8 +60,8 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
         </div>
         <div class="mini">
           <b>What this preview already does</b>
-          <p class="muted">Trade/Retail, common Food Service, Importer, E-commerce and Merchant Exporter rules based on the FSSAI/FoSCoS eligibility matrix updated 01 Apr 2026.</p>
-          <p class="muted" style="margin-bottom:0">Manufacturer/processor capacity-specific rules are intentionally kept for the next phase.</p>
+          <p class="muted">Trade/Retail, Food Service and Manufacturer/Processor licence paths based on the FSSAI/FoSCoS eligibility matrix updated 01 Apr 2026.</p>
+          <p class="muted" style="margin-bottom:0">Manufacturer flow now asks the exact manufacturing KoB first, then applies the relevant turnover or Central-Licence rule before showing the checklist.</p>
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
 
   <section id="sources" class="view hidden">
     <div class="card">
-      <h2>Official sources used</h2>
+      <h2>Official sources used</h2><p class="muted"><b>Eligibility rules last verified: 30 Sep 2026.</b> The decision tree uses the FoSCoS matrix marked Updated on 01.04.2026.</p>
       <div class="source">
         <p><b>Eligibility:</b><br><a href="https://foscos.fssai.gov.in/officer/assets/docs/Revised_2ndApril2026KindofBusinessEligibility.pdf" target="_blank" rel="noopener">FoSCoS — Revised Kind of Business Eligibility, updated 01.04.2026</a></p>
         <p><b>Registration documents:</b><br><a href="https://foscos.fssai.gov.in/assets/docs/DocumentsrequiredforRegistrationCertificate.pdf" target="_blank" rel="noopener">Documents required for Registration Certificate</a></p>
@@ -138,7 +138,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
 
 <script>
 const STORE='pmsv-fssai-helper-preview-v1';
-const wizardState={multi:null,kob:null,turnover:null,hotelStars:null};
+const wizardState={multi:null,kob:null,turnover:null,hotelStars:null,manufacturerType:null};
 let currentCase=null;
 
 const kobOptions=[
@@ -155,11 +155,32 @@ const kobOptions=[
  {id:'importer',name:'Importer',desc:'Import of food into India'},
  {id:'ecommerce',name:'E-Commerce',desc:'Online food commerce platform/business'},
  {id:'merchant_exporter',name:'Merchant Exporter',desc:'Trader / merchant exporter'},
- {id:'manufacturer',name:'Manufacturer / Processor',desc:'Capacity/product-specific rules — next phase'}
+ {id:'manufacturer',name:'Manufacturer / Processor',desc:'Dairy, oil, meat, fish, general manufacturing, nutraceuticals and other manufacturing KoBs'}
 ];
 
 const genericTurnover=new Set(['retailer','wholesaler','distributor','storage','transporter','restaurant']);
 const names=Object.fromEntries(kobOptions.map(x=>[x.id,x.name]));
+
+const manufacturerOptions=[
+ {id:'dairy',name:'Dairy Unit',desc:'Handling/processing/manufacturing of milk and milk products'},
+ {id:'oil',name:'Vegetable Oil Processing',desc:'Solvent extraction, expeller and refining including oil expeller units'},
+ {id:'slaughter',name:'Slaughtering Unit',desc:'Slaughtering / dressing / processing of live animal or poultry'},
+ {id:'meat',name:'Meat Processing',desc:'Further processing of slaughtered animal/poultry into meat and meat products'},
+ {id:'fish',name:'Fish & Fish Products',desc:'Handling/processing/manufacturing of fish and fish products'},
+ {id:'general',name:'General Manufacturing / Repacker',desc:'Standardised manufacturing categories covered under General Manufacturing'},
+ {id:'grain_mill',name:'Grain / Cereal / Pulse Milling',desc:'Milling unit — special State Licence rule in the 2026 matrix'},
+ {id:'proprietary',name:'Proprietary Food',desc:'Proprietary food under the applicable FSS regulations'},
+ {id:'nutraceutical',name:'Health Supplements / Nutraceuticals',desc:'Health supplements, nutraceuticals, FSDU, FSMP, functional/novel foods'},
+ {id:'nonspecified',name:'Non-specified Food / Ingredient',desc:'Food or ingredient requiring product approval before licensing'},
+ {id:'ayurveda',name:'Ayurveda Aahara',desc:'Food prepared as Ayurveda Aahara under the applicable regulations'},
+ {id:'radiation',name:'Radiation Processing of Food',desc:'Food irradiation / radiation processing'},
+ {id:'substances',name:'Substances Added to Food',desc:'Food additives, enzymes, flavourings, processing aids, nutrients, microorganisms, functional ingredients'},
+ {id:'eou',name:'100% Export Oriented Unit',desc:'Manufacturing for export only under the FoSCoS 100% EOU category'},
+ {id:'exporter_manufacturer',name:'Exporter - Manufacturer',desc:'Manufacturing products for export under importing-country requirements'}
+];
+const manufacturerNames=Object.fromEntries(manufacturerOptions.map(x=>[x.id,x.name]));
+const manufacturerTurnoverTypes=new Set(['dairy','oil','slaughter','meat','fish','general','substances']);
+const manufacturerCentralTypes=new Set(['proprietary','nutraceutical','nonspecified','ayurveda','radiation','eou','exporter_manufacturer']);
 
 function showView(id,btn){
  document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
@@ -170,7 +191,7 @@ function showView(id,btn){
 }
 
 function startWizard(){
- Object.assign(wizardState,{multi:null,kob:null,turnover:null,hotelStars:null});
+ Object.assign(wizardState,{multi:null,kob:null,turnover:null,hotelStars:null,manufacturerType:null});
  currentCase=null;
  landing.classList.add('hidden');outcome.classList.add('hidden');wizard.classList.remove('hidden');
  renderMulti();
@@ -193,7 +214,7 @@ function renderKob(){
 }
 function pickKob(id){
  wizardState.kob=id;
- if(id==='manufacturer'){renderManufacturerHold();return}
+ if(id==='manufacturer'){renderManufacturerType();return}
  if(['importer','ecommerce','merchant_exporter'].includes(id)){finish('Central Licence','This KoB is listed for Central Licence irrespective of turnover in the 01 Apr 2026 eligibility matrix.','₹7,500 per annum in the eligibility matrix.');return}
  if(id==='hotel'){renderHotelTurnover();return}
  renderTurnover();
@@ -250,14 +271,50 @@ function hotelStars(v){
  if(v>=5) finish('Central Licence','Five Star and above hotel.','₹7,500 per annum in the eligibility matrix.');
  else finish('State Licence','Hotel up to 4 Star with turnover above the Registration threshold.','₹5,000 per annum in the eligibility matrix.');
 }
-function renderManufacturerHold(){
- setProgress(3,4);
- question.innerHTML='<div class="q">Manufacturer / Processor needs capacity- and product-specific questions.</div>'+
- '<div class="notice">Dairy, meat, slaughter, oil, general manufacturing, nutraceuticals, proprietary/non-specified foods and other manufacturing KoBs do not all use the same turnover rule. I have deliberately not guessed these rules in Phase 1.</div>'+
- '<div class="actions" style="margin-top:14px"><button class="btn" onclick="renderKob()">Choose another KoB</button><button class="btn secondary" onclick="saveManufacturerPlaceholder()">Create manufacturer checklist shell</button></div>';
+function renderManufacturerType(){
+ setProgress(3,5);
+ question.innerHTML='<div class="q">What type of manufacturing / processing does this premise do?</div>'+
+ '<div class="notice">Choose the actual FoSCoS manufacturing KoB. Different manufacturing activities do not all follow the same licence rule.</div>'+
+ '<div class="choiceGrid" style="margin-top:12px">'+
+ manufacturerOptions.map(x=>choice(x.name,x.desc,"pickManufacturerType('"+x.id+"')")).join('')+
+ '</div>';
 }
-function saveManufacturerPlaceholder(){
- finish('Manufacturer assessment — Phase 2','Capacity/product-specific eligibility questions still need to be completed before a licence category is assigned.','No fee shown until eligibility is determined.',true);
+function pickManufacturerType(id){
+ wizardState.manufacturerType=id;
+ wizardState.turnover=null;
+
+ if(manufacturerCentralTypes.has(id)){
+   let extra='';
+   if(id==='nonspecified') extra=' Product approval under the non-specified food/ingredient regulations is required separately before the licence application.';
+   if(id==='eou') extra=' This category is for food meant for export only and requires the applicable 100% EOU status/certificate.';
+   if(id==='exporter_manufacturer') extra=' If the same premise also manufactures for the domestic market, the relevant non-export manufacturing KoB must also be selected.';
+   finish('Central Licence',manufacturerNames[id]+' is listed for Central Licence with no turnover restriction in the FoSCoS eligibility matrix.'+extra,'₹7,500 per annum in the eligibility matrix.');
+   return;
+ }
+
+ if(id==='grain_mill'){
+   finish('State Licence','Grain, cereal and pulse milling units are listed under State Licence without a turnover threshold in the 01 Apr 2026 eligibility matrix.','₹5,000 per annum in the eligibility matrix.');
+   return;
+ }
+
+ if(manufacturerTurnoverTypes.has(id)){renderManufacturerTurnover();return}
+}
+function renderManufacturerTurnover(){
+ setProgress(4,5);
+ question.innerHTML='<div class="q">What is the annual turnover of this '+manufacturerNames[wizardState.manufacturerType]+' unit?</div>'+
+ '<div class="choiceGrid">'+
+ choice('Up to ₹1.5 crore','Registration band in the current matrix','pickManufacturerTurnover(1)')+
+ choice('More than ₹1.5 crore to ₹50 crore','State Licence band','pickManufacturerTurnover(2)')+
+ choice('More than ₹50 crore','Central Licence band','pickManufacturerTurnover(3)')+
+ '</div>';
+}
+function pickManufacturerTurnover(band){
+ wizardState.turnover=band;
+ const mt=wizardState.manufacturerType;
+ const label=manufacturerNames[mt];
+ if(band===1) finish('FSSAI Registration',label+' with annual turnover up to ₹1.5 crore.','₹100 per annum in the eligibility matrix.');
+ else if(band===2) finish('State Licence',label+' with annual turnover above ₹1.5 crore and up to ₹50 crore.','₹5,000 per annum in the eligibility matrix.');
+ else finish('Central Licence',label+' with annual turnover above ₹50 crore.','₹7,500 per annum in the eligibility matrix.');
 }
 
 function finish(type,reason,feeText,undetermined=false){
@@ -296,10 +353,33 @@ function requirementsFor(c){
  if(c.kob==='ecommerce') base.push(r('ecom','E-commerce-specific declaration/obligations, where applicable','FoSCoS publishes additional material for e-commerce FBOs.','Check the current e-commerce declaration/order before filing.'));
  if(c.kob==='manufacturer'){
    base.push(
-    r('layout','Blueprint/layout of processing unit','Mandatory for manufacturing/processing units in the licence document list.','Show dimensions and operation-wise area allocation.'),
-    r('equipment','Equipment & machinery list','Manufacturing/processing requirement.','Include number, installed capacity and horsepower where applicable.'),
-    r('water','Water analysis report, where water is used as ingredient/process requirement','Chemical and bacteriological potability report is listed for manufacturing/processing in the official document list.','Use a recognized/public health laboratory as required.'),
-    r('products','Food categories/products to be manufactured','Required to determine the products endorsed on the licence.','Use the correct FSSAI food category/product mapping.')
+    r('unitphoto','Production unit photograph','Listed in the KoB-wise manufacturing document requirements.','Keep a clear current photograph of the production unit/premise ready.'),
+    r('layout','Blueprint/layout of processing unit','Mandatory for manufacturing/processing units in the licence document list.','Show dimensions in metres/square metres and operation-wise area allocation.'),
+    r('equipment','Equipment & machinery list','Manufacturing/processing requirement.','Include equipment name, number, installed capacity and horsepower where applicable.'),
+    r('products','Food categories/products to be manufactured','Required for manufacturers.','Use the correct FSSAI food category and product mapping for every product proposed on the licence.'),
+    r('responsible','Responsible person / authority letter','FoSCoS lists an authority letter identifying the responsible person and alternate responsible person for manufacturers/processors.','Keep names, addresses and delegated powers consistent with the application.'),
+    r('water','Water analysis report, where water is used as ingredient','Chemical and bacteriological potability report is listed for manufacturing/processing where applicable.','Use a recognized/public health laboratory. If ground water is used, check the applicable CGWA/NOC requirement.'),
+    r('fsms','Food Safety Management System plan / certificate','FoSCoS lists the FSMS plan or certificate, if any.','Keep the FSMS/HACCP controls aligned to the actual products and processes.'),
+    r('technical','Technically qualified production supervisor identified','FoSCoS publishes qualification requirements for the person supervising production.','Verify that the responsible technical person has an accepted food/science/technology-related degree or diploma appropriate to the business.')
+   );
+
+   if(c.manufacturerType==='dairy') base.push(
+    r('milkplan','Source of milk / milk procurement plan','Specific to milk and milk-products processing units where applicable.','Include source and location of milk collection centres/procurement arrangements.')
+   );
+   if(['meat','slaughter'].includes(c.manufacturerType)) base.push(
+    r('meatsource','Source of raw material for meat / meat-processing plant','FoSCoS lists raw-material source information for meat and meat-processing plants where applicable.','Document approved/traceable sources consistent with the selected KoB.')
+   );
+   if(c.manufacturerType==='nonspecified') base.push(
+    r('productapproval','FSSAI product approval obtained','Non-specified food/food ingredients require separate product approval before applying for the manufacturing licence.','Keep the approval reference/order ready for the licence application.')
+   );
+   if(c.manufacturerType==='eou') base.push(
+    r('eoucert','100% EOU certificate / status document','The eligibility matrix describes this KoB for export-only manufacture with 100% EOU certification from the Ministry of Commerce.','Confirm the current certificate/status and that the selected products are meant for export under this KoB.')
+   );
+   if(c.manufacturerType==='exporter_manufacturer') base.push(
+    r('exportcompliance','Export-manufacturer product compliance details','This KoB is for products made to comply with the importing country rather than Indian product standards.','If domestic products are also made at the premise, select the relevant non-export manufacturing KoB as well.')
+   );
+   if(c.manufacturerType==='grain_mill') base.push(
+    r('millrule','Milling KoB confirmed in FoSCoS','All grain/cereal/pulse milling units are shown under State Licence without a turnover threshold in the 2026 eligibility matrix.','Reconfirm that the activity is actually milling and not another general-manufacturing activity.')
    );
  }
  base.push(
@@ -342,7 +422,7 @@ function saveCase(){
 function renderSaved(){
  const all=JSON.parse(localStorage.getItem(STORE)||'[]');
  if(!all.length){savedList.innerHTML='<p class="muted">No saved assessments yet.</p>';return}
- savedList.innerHTML=all.map((x,i)=>'<div class="saved"><div><b>'+escapeHtml(x.name)+'</b><small>'+escapeHtml(x.license)+' · '+escapeHtml(names[x.kob]||x.kob||'')+'</small></div><div class="actions"><button class="btn secondary" onclick="openSaved('+i+')">Open</button><button class="btn danger" onclick="deleteSaved('+i+')">Delete</button></div></div>').join('');
+ savedList.innerHTML=all.map((x,i)=>'<div class="saved"><div><b>'+escapeHtml(x.name)+'</b><small>'+escapeHtml(x.license)+' · '+escapeHtml((x.kob==='manufacturer' && x.manufacturerType ? 'Manufacturer · '+(manufacturerNames[x.manufacturerType]||x.manufacturerType) : (names[x.kob]||x.kob||'')))+'</small></div><div class="actions"><button class="btn secondary" onclick="openSaved('+i+')">Open</button><button class="btn danger" onclick="deleteSaved('+i+')">Delete</button></div></div>').join('');
 }
 function openSaved(i){
  const all=JSON.parse(localStorage.getItem(STORE)||'[]');currentCase=all[i];Object.assign(wizardState,currentCase);
