@@ -57,7 +57,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
 <body>
 <header class="top">
   <div class="wrap">
-    <span class="badge">STANDALONE PREVIEW · BUILD 65 · NOT CONNECTED TO LIVE PMSV</span>
+    <span class="badge">STANDALONE PREVIEW · BUILD 66 · NOT CONNECTED TO LIVE PMSV</span>
     <h1>PMSV FSSAI Helper</h1>
     <p>Licence finder + application readiness checklist</p>
   </div>
@@ -214,7 +214,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
     </div>
   </section>
 
-  <div class="footer">Preview data stays locally in this browser. No Aadhaar/PAN/document uploads are collected.</div>
+  <div class="footer">Preview data stays locally in this browser. No Aadhaar/PAN/document uploads are collected.<br><span id="engineStatus">Helper engine loading…</span></div>
 </main>
 
 <script>
@@ -307,20 +307,6 @@ function startWizard(){
 function resetWizard(){landing.classList.remove('hidden');wizard.classList.add('hidden');outcome.classList.add('hidden');}
 function setProgress(step,total){stepLabel.textContent='Step '+step+' of '+total;bar.style.width=(step/total*100)+'%';}
 function choice(title,desc,fn){return '<button type="button" class="choice" data-call="'+encodeURIComponent(fn)+'"><b>'+title+'</b><span>'+desc+'</span></button>'}
-
-if(startLicenceBtn){
- startLicenceBtn.addEventListener('click',function(event){
-  event.preventDefault();
-  startWizard();
- });
-}
-document.addEventListener('click',function(event){
- const target=event.target instanceof Element ? event.target.closest('[data-call]') : null;
- if(!target)return;
- event.preventDefault();
- const code=decodeURIComponent(target.getAttribute('data-call')||'');
- if(code) Function(code)();
-});
 
 function renderMulti(){
  setProgress(1,4);
@@ -599,6 +585,44 @@ function deleteSaved(i){
  const all=JSON.parse(localStorage.getItem(STORE)||'[]');all.splice(i,1);localStorage.setItem(STORE,JSON.stringify(all));renderSaved();
 }
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+
+function bootHelper(){
+ const status=document.getElementById('engineStatus');
+ if(status) status.textContent='Helper engine loaded · Build 66';
+ if(!startLicenceBtn){
+   if(status) status.textContent='Start button not found · Build 66';
+   return;
+ }
+ startLicenceBtn.onclick=function(event){
+   if(event) event.preventDefault();
+   try{
+     startWizard();
+   }catch(err){
+     const box=document.getElementById('jsError');
+     if(box){
+       box.textContent='Licence finder error: '+(err && err.message ? err.message : String(err));
+       box.classList.remove('hidden');
+     }
+   }
+ };
+ document.addEventListener('click',function(event){
+   const target=event.target instanceof Element ? event.target.closest('[data-call]') : null;
+   if(!target)return;
+   event.preventDefault();
+   const code=decodeURIComponent(target.getAttribute('data-call')||'');
+   if(!code)return;
+   try{
+     Function(code)();
+   }catch(err){
+     const box=document.getElementById('jsError');
+     if(box){
+       box.textContent='Licence finder error: '+(err && err.message ? err.message : String(err));
+       box.classList.remove('hidden');
+     }
+   }
+ });
+}
+bootHelper();
 </script>
 </body>
 </html>
