@@ -46,7 +46,7 @@ button,input,select{font:inherit}.top{background:linear-gradient(135deg,var(--na
 @media(max-width:700px){.resultSummary{grid-template-columns:1fr}.reqPreviewList{grid-template-columns:1fr}}
 @media(max-width:520px){.feeTop{flex-direction:column}.feeGrid{grid-template-columns:1fr}}
 .checkHead{display:flex;justify-content:space-between;gap:10px;align-items:center}.meter{font-size:12px;color:var(--muted)}
-.req{border:1px solid var(--line);border-radius:13px;margin:9px 0;overflow:hidden;background:#fff}.reqTop{padding:12px;display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center}.reqTitle{font-weight:800}.reqSmall{font-size:12px;color:var(--muted);margin-top:3px}.reqBtns{display:flex;gap:5px;flex-wrap:wrap}.state{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 8px;font-size:11px;font-weight:800}.state.ready{background:#eafaf3;color:var(--green);border-color:#afe4cf}.state.notready{background:#fff3f1;color:var(--red);border-color:#f2c0ba}.state.na{background:#f1f3f6;color:#5e6674}.more{border:0;background:transparent;color:var(--blue);font-weight:800;font-size:12px;padding:0;margin-top:5px;cursor:pointer}.detail{display:none;padding:0 12px 12px;color:#4e5b70;font-size:12px;line-height:1.5}.req.open .detail{display:block}
+.req{border:1px solid var(--line);border-radius:13px;margin:9px 0;overflow:hidden;background:#fff}.reqTop{padding:12px;display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center}.reqTitle{font-weight:800}.reqSmall{font-size:12px;color:var(--muted);margin-top:3px}.reqBtns{display:flex;gap:5px;flex-wrap:wrap}.state{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 10px;font-size:11px;font-weight:800;opacity:.58;transition:.15s}.state.ready{color:var(--green);border-color:#afe4cf}.state.notready{color:var(--red);border-color:#f2c0ba}.state.na{color:#5e6674}.state.selected{opacity:1;box-shadow:0 0 0 2px currentColor inset;font-weight:900}.state.ready.selected{background:#dff7ec}.state.notready.selected{background:#ffe8e5}.state.na.selected{background:#e5e8ed}.state.selected::before{content:'✓ ';font-weight:900}.more{border:0;background:transparent;color:var(--blue);font-weight:800;font-size:12px;padding:0;margin-top:5px;cursor:pointer}.detail{display:none;padding:0 12px 12px;color:#4e5b70;font-size:12px;line-height:1.5}.req.open .detail{display:block}
 input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;border-radius:10px;padding:11px;background:#fff}.field{margin:10px 0}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:5px}
 .saved{display:flex;justify-content:space-between;gap:9px;align-items:center;border:1px solid var(--line);padding:11px;border-radius:11px;margin:8px 0}.saved b{display:block}.saved small{color:var(--muted)}
 .source{font-size:12px;line-height:1.55;color:#4f5c72}.source a{color:var(--blue);word-break:break-word}
@@ -66,7 +66,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
 <body>
 <header class="top">
   <div class="wrap">
-    <span class="badge">STANDALONE PREVIEW · BUILD 67 · NOT CONNECTED TO LIVE PMSV</span>
+    <span class="badge">STANDALONE PREVIEW · BUILD 68 · NOT CONNECTED TO LIVE PMSV</span>
     <h1>PMSV FSSAI Helper</h1>
     <p>Licence finder + application readiness checklist</p>
   </div>
@@ -584,15 +584,19 @@ function renderRequirements(){
  box.innerHTML=list.map(x=>{
    const s=currentCase.statuses[x.id]||'';
    return '<div class="req" id="req-'+x.id+'"><div class="reqTop"><div><div class="reqTitle">'+x.title+'</div><div class="reqSmall">'+x.small+'</div><button type="button" class="more" onclick="toggleReq(\''+x.id+'\')">Full details</button></div>'+
-   '<div class="reqBtns"><button type="button" class="state ready '+(s==='ready'?'active':'')+'" onclick="setStatus(\''+x.id+'\',\'ready\')">Ready</button>'+
-   '<button type="button" class="state notready" onclick="setStatus(\''+x.id+'\',\'notready\')">Not ready</button>'+
-   '<button type="button" class="state na" onclick="setStatus(\''+x.id+'\',\'na\')">NA</button></div></div>'+
+   '<div class="reqBtns"><button type="button" class="state ready '+(s==='ready'?'selected':'')+'" onclick="setStatus(\''+x.id+'\',\'ready\')">Ready</button>'+
+   '<button type="button" class="state notready '+(s==='notready'?'selected':'')+'" onclick="setStatus(\''+x.id+'\',\'notready\')">Not ready</button>'+
+   '<button type="button" class="state na '+(s==='na'?'selected':'')+'" onclick="setStatus(\''+x.id+'\',\'na\')">NA</button></div></div>'+
    '<div class="detail">'+x.detail+'</div></div>'
  }).join('');
  updateCompletion();
 }
 function toggleReq(id){document.getElementById('req-'+id).classList.toggle('open')}
-function setStatus(id,s){currentCase.statuses[id]=s;renderRequirements()}
+function setStatus(id,s){
+ if(currentCase.statuses[id]===s) delete currentCase.statuses[id];
+ else currentCase.statuses[id]=s;
+ renderRequirements();
+}
 function updateCompletion(){
  const list=requirementsFor(currentCase);
  const done=list.filter(x=>currentCase.statuses[x.id]).length;
@@ -652,7 +656,7 @@ function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;',
 
 function bootHelper(){
  const status=document.getElementById('engineStatus');
- if(status) status.textContent='Helper engine loaded · Build 67';
+ if(status) status.textContent='Helper engine loaded · Build 68';
  if(!startLicenceBtn){
    if(status) status.textContent='Start button not found · Build 66';
    return;
