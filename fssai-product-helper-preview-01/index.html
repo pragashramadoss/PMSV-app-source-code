@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 05</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 06</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="standard">Standard</button>
@@ -66,7 +66,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   <div class="item"><b>Example: 250 ml pack</b><small>Two 250 ml packs = 500 ml of the finished caffeinated beverage in one day.</small></div>
   <div class="item"><b>Example: 125 ml pack</b><small>Four 125 ml packs = 500 ml of the finished caffeinated beverage in one day.</small></div>
 </div>
-<div class="notice"><b>Why PMSV converts mg/day to mg/L:</b> FSSAI gives taurine, D-glucurono-γ-lactone, inositol and pantothenic acid as maximum amounts <b>per day</b>. To help formulation, PMSV divides the FSSAI daily maximum by <b>0.5 L of finished caffeinated beverage</b> to show the equivalent concentration. The FSSAI regulatory limit remains the original mg/day value.</div>
+<div class="notice"><b>Why The calculator converts mg/day to mg/L:</b> FSSAI gives taurine, D-glucurono-γ-lactone, inositol and pantothenic acid as maximum amounts <b>per day</b>. To help formulation, PMSV divides the FSSAI daily maximum by <b>0.5 L of finished caffeinated beverage</b> to show the equivalent concentration. The FSSAI regulatory limit remains the original mg/day value.</div>
 </div>
 
 <div class="card">
@@ -85,7 +85,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <tr><td><b>Daily consumption declaration</b></td><td>Label must declare the maximum daily quantity.</td><td><b>“Consume not more than 500 ml per day”</b></td><td><b>2.10.6(2)(III)(A)(i)</b></td></tr>
 </tbody>
 </table></div>
-<div class="notice oknote"><b>How to read this:</b> FSSAI gives the maximum amount permitted <b>per day</b>. Because the label states “consume not more than 500 ml per day”, PMSV also shows the equivalent concentration for a 500 ml daily quantity. <b>Formula: FSSAI maximum per day ÷ 0.5 L.</b> The calculated mg/L value is provided for formulation convenience; the original FSSAI limit remains the mg/day value.</div>
+<div class="notice oknote"><b>How to read this:</b> FSSAI gives the maximum amount permitted <b>per day</b>. Because the label states “consume not more than 500 ml per day”, The calculator also shows the equivalent concentration for a 500 ml daily quantity. <b>Formula: FSSAI maximum per day ÷ 0.5 L.</b> The calculated mg/L value is provided for formulation convenience; the original FSSAI limit remains the mg/day value.</div>
 </div>
 
 <div class="card" id="conversionCard">
@@ -127,7 +127,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <tr><td><b>Neotame</b></td><td><b>Max 33 ppm</b></td><td>Where used</td><td>2.10.6(2)(IV) → 2.10.6(1)</td></tr>
 <tr><td><b>Gellan gum</b></td><td><b>GMP</b></td><td>No fixed numerical maximum stated in this clause</td><td>2.10.6(2)(IV) → 2.10.6(1)</td></tr>
 </tbody></table></div>
-<div class="notice"><b>Why these appear here:</b> FSSAI 2.10.6(2)(IV) explicitly requires a caffeinated beverage to meet the applicable ingredient, flavour, sweetener, food-additive, contaminant and microbiological requirements referenced in 2.10.6(1). PMSV therefore shows the resulting requirements directly under <b>Caffeinated Beverage</b> instead of making the user navigate to another product standard.</div>
+<div class="notice"><b>Why these appear here:</b> FSSAI 2.10.6(2)(IV) explicitly requires a caffeinated beverage to meet the applicable ingredient, flavour, sweetener, food-additive, contaminant and microbiological requirements referenced in 2.10.6(1). The helper therefore shows the resulting requirements directly under <b>Caffeinated Beverage</b> instead of making the user navigate to another product standard.</div>
 <div class="notice">Prototype scope: before production release, PMSV will also merge every applicable current <b>Appendix A</b> permission/condition for the selected food category and validate any overlap against the underlying amendment notifications.</div>
 </div>
 </section>
@@ -135,7 +135,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="checker" class="view hidden">
 <div class="card">
 <div class="section-title"><h2>Check a sample formulation</h2><span>Prototype rules engine</span></div>
-<p class="muted">Enter the proposed concentration in the finished caffeinated beverage. For taurine, D-glucurono-γ-lactone, inositol and pantothenic acid, PMSV converts the FSSAI daily maximum into an equivalent concentration using 500 ml (0.5 L) of finished caffeinated beverage per day.</p>
+<p class="muted">Enter the proposed concentration in the finished caffeinated beverage. For taurine, D-glucurono-γ-lactone, inositol and pantothenic acid, The calculator converts the FSSAI daily maximum into an equivalent concentration using 500 ml (0.5 L) of finished caffeinated beverage per day.</p>
 <div class="checker-grid">
 <div class="field"><label>Total caffeine (mg/L)</label><input id="caffeine" type="number" step="0.1" placeholder="e.g. 320"><small>Required range: 145–300 mg/L.</small></div>
 <div class="field"><label>Taurine (mg/L)</label><input id="taurine" type="number" step="0.1" placeholder="e.g. 4000"><small>Calculated equivalent of FSSAI max 2,000 mg/day at 500 ml/day: 4,000 mg/L.</small></div>
@@ -242,7 +242,7 @@ document.getElementById('checkBtn').addEventListener('click',()=>{
  ];
  rules.forEach(([id,label,unit,max])=>{
    const v=num(id);if(v===null)return;
-   const pass=v<=max;const calc=['taurine','gluc','inositol','pant'].includes(id);out.appendChild(row(label,v+' '+unit,pass,pass?(calc?'Within PMSV calculated equivalent based on FSSAI 500 ml/day basis: '+max+' '+unit+'.':'Within explicit FSSAI maximum '+max+' '+unit+'.'):(calc?'Above PMSV calculated equivalent based on the FSSAI daily maximum and 500 ml/day basis: '+max+' '+unit+'.':'Exceeds explicit FSSAI maximum '+max+' '+unit+'.')));
+   const pass=v<=max;const calc=['taurine','gluc','inositol','pant'].includes(id);out.appendChild(row(label,v+' '+unit,pass,pass?(calc?'Within Calculated equivalent based on FSSAI 500 ml/day basis: '+max+' '+unit+'.':'Within explicit FSSAI maximum '+max+' '+unit+'.'):(calc?'Above Calculated equivalent based on the FSSAI daily maximum and 500 ml/day basis: '+max+' '+unit+'.':'Exceeds explicit FSSAI maximum '+max+' '+unit+'.')));
  });
  if(out.children.length===0)out.innerHTML='<div class="notice">Enter at least the caffeine value to evaluate the sample formulation.</div>';
 });
