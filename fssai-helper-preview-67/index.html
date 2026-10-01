@@ -66,7 +66,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
 <body>
 <header class="top">
   <div class="wrap">
-    <span class="badge">STANDALONE PREVIEW · BUILD 68 · NOT CONNECTED TO LIVE PMSV</span>
+    <span class="badge">STANDALONE PREVIEW · BUILD 69 · NOT CONNECTED TO LIVE PMSV</span>
     <h1>PMSV FSSAI Helper</h1>
     <p>Licence finder + application readiness checklist</p>
   </div>
@@ -183,7 +183,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
         <div class="checkHead">
           <div>
             <h2>Application readiness</h2>
-            <div class="muted">Tap <b>Full details</b> to see exactly what is required, when it applies, accepted document examples and what must match the application.</div>
+            <div class="muted">This checklist covers the supporting documents and prerequisites to prepare before filing. Form A/Form B itself is completed later online in FoSCoS.</div>
           </div>
           <div id="completion" class="meter"></div>
         </div>
@@ -212,12 +212,12 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
               <li>Select <b>Apply for New License/Registration</b>.</li>
               <li>Select the applicable route: regular food business, Railways, or Airport/Seaport.</li>
               <li>Select the <b>State/UT</b> and the same <b>Kind of Business (KoB)</b> identified in this helper.</li>
-              <li>Fill the application details and upload the supporting documents you prepared.</li>
+              <li><span id="onlineFormStep">Complete the online application form in FoSCoS and upload the supporting documents you prepared.</span></li>
               <li>Select the required validity period and pay the applicable government fee.</li>
               <li>Save the <b>Application Reference Number</b>. Track the application in FoSCoS and respond to any clarification/query raised by the authority.</li>
             </ol>
             <div class="actions" style="margin-top:12px">
-              <a class="btn" href="https://foscos.fssai.gov.in/" target="_blank" rel="noopener">Open official FoSCoS portal</a>
+              <a class="btn" href="https://foscos.fssai.gov.in/apply-for-lic-and-reg" target="_blank" rel="noopener">Apply for New Licence / Registration on FoSCoS</a>
             </div>
             <p class="muted" style="margin:10px 0 0">Use only the official FoSCoS/FSSAI portal for filing and payment.</p>
           </div>
@@ -286,6 +286,7 @@ const applyGateText=document.getElementById('applyGateText');
 const applyUnlocked=document.getElementById('applyUnlocked');
 const applyLicenceType=document.getElementById('applyLicenceType');
 const applyFeeSummary=document.getElementById('applyFeeSummary');
+const onlineFormStep=document.getElementById('onlineFormStep');
 const startLicenceBtn=document.getElementById('startLicenceBtn');
 
 
@@ -512,7 +513,6 @@ function requirementsFor(c){
    ];
  }
  base.push(
-  r('formb','Form B / online licence application details','Licence applications use the Form B information set in FoSCoS.','<b>What you will enter:</b> Legal/business name, complete premise address, KoB, annual turnover, product/activity details, contact details and other licence particulars requested online.<br><b>What must match:</b> Business name and premise address should be consistent with possession proof and constitution documents. Product/KoB entries should reflect actual operations.'),
   r('id','Photo ID and address proof of proprietor/partner/director/authorised signatory','Listed in the licence document requirements.','<b>Who:</b> Proprietor, partner, director(s) or authorised signatory, as applicable to the business constitution.<br><b>Document:</b> Valid government-issued photo ID and address proof.<br><b>What must match:</b> Name and role should be consistent with the application, constitution document and authorised-signatory details.'),
   r('premise','Proof of possession of premises','Sale deed, rent/lease agreement, electricity bill or other accepted proof, as applicable.','<b>Accepted examples in FoSCoS guidance:</b> Sale deed; rent agreement; lease deed / lease agreement; or electricity bill when the premise is owned.<br><b>For transporters:</b> The office address can be treated as the premise.<br><b>What must match:</b> The address should be the same as the premise address entered in Form B. Upload a clear, readable copy.'),
   r('constitution','Business constitution document','Partnership deed / proprietorship declaration / memorandum & articles or applicable constitution proof.','<b>Use the document that matches the legal constitution:</b><br>• Proprietorship — self-declaration / proprietorship declaration.<br>• Partnership — partnership deed.<br>• Company — Memorandum & Articles of Association. FoSCoS guidance asks for the incorporation page, authorisation of food-business activity and list of directors with addresses.<br>• Cooperative — applicable certificate under the Cooperative / Multi-State Cooperative law.<br><b>Check:</b> Legal name should match the licence application.'),
@@ -612,6 +612,11 @@ function updateCompletion(){
    applyGateTitle.textContent='Ready to apply on FoSCoS';
    applyGateText.innerHTML='All '+list.length+' applicable requirements have been reviewed and none is marked <b>Not ready</b>.';
    applyLicenceType.textContent=currentCase.license||'—';
+   if(onlineFormStep){
+     onlineFormStep.innerHTML=currentCase.license==='FSSAI Registration'
+       ? 'Complete <b>Form A</b> online in FoSCoS for Registration. This is the application form itself, not a supporting document. Then upload the supporting documents prepared in this checklist.'
+       : 'Complete <b>Form B</b> online in FoSCoS for the '+escapeHtml(currentCase.license)+'. Form B is the application form itself, not a supporting document. Then upload the supporting documents prepared in this checklist.';
+   }
    const annual=licenceAnnualFee(currentCase.license);
    const years=Number(validityYears.value||1);
    applyFeeSummary.textContent=annual ? inr(annual*years)+' for '+years+' year'+(years>1?'s':'') : 'See FoSCoS';
@@ -656,7 +661,7 @@ function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;',
 
 function bootHelper(){
  const status=document.getElementById('engineStatus');
- if(status) status.textContent='Helper engine loaded · Build 68';
+ if(status) status.textContent='Helper engine loaded · Build 69';
  if(!startLicenceBtn){
    if(status) status.textContent='Start button not found · Build 66';
    return;
