@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 04</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 05</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="standard">Standard</button>
@@ -43,7 +43,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="meta">
 <div><small>FSSAI standard</small><b>Reg. 2.10.6(2) — Caffeinated Beverage</b></div>
 <div><small>Food category system</small><b>14.1.4.1 — Carbonated water-based flavoured drinks</b></div>
-<div><small>Source version checked</small><b>Chapter 2.10 · Version 4 · 01 Aug 2025</b></div>
+<div><small>Source version checked</small><b>Chapter 2.10 · Version 3 · 07 May 2025</b></div>
 </div>
 </div>
 <div class="card">
@@ -60,16 +60,26 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <section id="ingredients" class="view hidden">
 <div class="card">
+<div class="section-title"><h2>First: what does “500 ml per day” mean?</h2><span>Important before reading the limits</span></div>
+<div class="notice oknote"><b>500 ml means the total quantity of the finished Caffeinated Beverage consumed in one day.</b> It does <b>not</b> mean 500 ml of taurine, caffeine or any other ingredient. FSSAI requires the label declaration <b>“consume not more than 500 ml per day”</b> for the caffeinated beverage.</div>
+<div class="grid2">
+  <div class="item"><b>Example: 250 ml pack</b><small>Two 250 ml packs = 500 ml of the finished caffeinated beverage in one day.</small></div>
+  <div class="item"><b>Example: 125 ml pack</b><small>Four 125 ml packs = 500 ml of the finished caffeinated beverage in one day.</small></div>
+</div>
+<div class="notice"><b>Why PMSV converts mg/day to mg/L:</b> FSSAI gives taurine, D-glucurono-γ-lactone, inositol and pantothenic acid as maximum amounts <b>per day</b>. To help formulation, PMSV divides the FSSAI daily maximum by <b>0.5 L of finished caffeinated beverage</b> to show the equivalent concentration. The FSSAI regulatory limit remains the original mg/day value.</div>
+</div>
+
+<div class="card">
 <div class="section-title"><h2>What FSSAI says for this product</h2><span>Product-specific requirements</span></div>
 <div class="tablewrap"><table>
 <thead><tr><th>Ingredient / requirement</th><th>FSSAI requirement</th><th>Limit / condition</th><th>Clause</th></tr></thead>
 <tbody>
 <tr><td><b>Water</b></td><td>Water used for preparation must conform to the prescribed packaged drinking water or mineral water standard.</td><td>No formulation maximum; water-quality standard applies.</td><td><b>2.10.6(2)(I)</b></td></tr>
 <tr><td><b>Total caffeine from all sources</b></td><td>Essential composition requirement.</td><td><b>145–300 mg/L</b></td><td><b>2.10.6(2)(II)</b></td></tr>
-<tr><td><b>Taurine</b></td><td>Optional ingredient.</td><td><b>Max 2,000 mg/day</b><br><small>Equivalent concentration at 500 ml/day: 4,000 mg/L</small></td><td><b>2.10.6(2)(III)</b></td></tr>
-<tr><td><b>D-glucurono-γ-lactone</b></td><td>Optional ingredient.</td><td><b>Max 1,200 mg/day</b><br><small>Equivalent concentration at 500 ml/day: 2,400 mg/L</small></td><td><b>2.10.6(2)(III)</b></td></tr>
-<tr><td><b>Inositol</b></td><td>Optional ingredient.</td><td><b>Max 100 mg/day</b><br><small>Equivalent concentration at 500 ml/day: 200 mg/L</small></td><td><b>2.10.6(2)(III)</b></td></tr>
-<tr><td><b>Pantothenic acid</b></td><td>Optional ingredient.</td><td><b>Max 10 mg/day</b><br><small>Equivalent concentration at 500 ml/day: 20 mg/L</small></td><td><b>2.10.6(2)(III)</b></td></tr>
+<tr><td><b>Taurine</b></td><td>Optional ingredient.</td><td><b>Max 2,000 mg/day</b><br><small>Equivalent concentration in 500 ml/day of finished beverage: 4,000 mg/L</small></td><td><b>2.10.6(2)(III)</b></td></tr>
+<tr><td><b>D-glucurono-γ-lactone</b></td><td>Optional ingredient.</td><td><b>Max 1,200 mg/day</b><br><small>Equivalent concentration in 500 ml/day of finished beverage: 2,400 mg/L</small></td><td><b>2.10.6(2)(III)</b></td></tr>
+<tr><td><b>Inositol</b></td><td>Optional ingredient.</td><td><b>Max 100 mg/day</b><br><small>Equivalent concentration in 500 ml/day of finished beverage: 200 mg/L</small></td><td><b>2.10.6(2)(III)</b></td></tr>
+<tr><td><b>Pantothenic acid</b></td><td>Optional ingredient.</td><td><b>Max 10 mg/day</b><br><small>Equivalent concentration in 500 ml/day of finished beverage: 20 mg/L</small></td><td><b>2.10.6(2)(III)</b></td></tr>
 <tr><td><b>Thiamine, riboflavin, niacin, vitamin B6, vitamin B12</b></td><td>May be added.</td><td><b>Up to 100% RDA</b></td><td><b>2.10.6(2)(III)(B)</b></td></tr>
 <tr><td><b>Any additional ingredient outside the specified list</b></td><td>Requires Food Authority approval after safety assessment and scientific substantiation.</td><td><b>Prior approval required</b></td><td><b>2.10.6(2)(III)(A)</b></td></tr>
 <tr><td><b>Daily consumption declaration</b></td><td>Label must declare the maximum daily quantity.</td><td><b>“Consume not more than 500 ml per day”</b></td><td><b>2.10.6(2)(III)(A)(i)</b></td></tr>
@@ -79,16 +89,16 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div class="card" id="conversionCard">
-<div class="section-title"><h2>Equivalent concentration at 500 ml/day</h2><span>Calculated from FSSAI daily maximum</span></div>
+<div class="section-title"><h2>Equivalent concentration in the finished beverage</h2><span>Calculated using 500 ml finished beverage/day</span></div>
 <div class="checker-grid">
   <div class="field"><label>Pack / serving size (ml)</label><input id="packSize" type="number" min="1" step="1" value="250"><small>Used only to calculate mg per pack/serve.</small></div>
   <div class="field"><label>Finished beverage density (kg/L)</label><input id="density" type="number" min="0.1" step="0.001" value="1.000"><small>Used only for ppm (mg/kg). Leave 1.000 for a water-like approximation.</small></div>
 </div>
 <div class="tablewrap" style="margin-top:12px"><table>
-<thead><tr><th>Substance</th><th>FSSAI maximum/day</th><th>Calculated mg/L at 500 ml/day</th><th>mg/100 ml</th><th>mg/ml</th><th id="packHead">mg/250 ml pack</th><th>Approx. ppm*</th></tr></thead>
+<thead><tr><th>Substance</th><th>FSSAI maximum/day</th><th>Calculated mg/L in finished beverage</th><th>mg/100 ml finished beverage</th><th>mg/ml</th><th id="packHead">mg/250 ml pack</th><th>Approx. ppm*</th></tr></thead>
 <tbody id="conversionRows"></tbody>
 </table></div>
-<div class="notice"><b>Example:</b> Taurine maximum = 2,000 mg/day. At a maximum daily consumption of 500 ml, the equivalent concentration is <b>2,000 ÷ 0.5 = 4,000 mg/L</b>. * ppm is calculated as <b>mg/kg = mg/L ÷ density (kg/L)</b>. These converted values help formulation; the regulatory limit itself remains the FSSAI mg/day value.</div>
+<div class="notice"><b>Example:</b> FSSAI maximum taurine = 2,000 mg/day. If 500 ml of the <b>finished caffeinated beverage</b> is the daily quantity, the equivalent concentration is <b>2,000 mg ÷ 0.5 L = 4,000 mg/L</b>. * ppm is calculated as <b>mg/kg = mg/L ÷ density (kg/L)</b>. These converted values help formulation; the regulatory limit itself remains the FSSAI mg/day value.</div>
 </div>
 
 <div class="card">
@@ -125,7 +135,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="checker" class="view hidden">
 <div class="card">
 <div class="section-title"><h2>Check a sample formulation</h2><span>Prototype rules engine</span></div>
-<p class="muted">Enter the proposed finished-product concentrations. For taurine, D-glucurono-γ-lactone, inositol and pantothenic acid, PMSV converts the FSSAI daily maximum into an equivalent concentration using the 500 ml/day basis before checking.</p>
+<p class="muted">Enter the proposed concentration in the finished caffeinated beverage. For taurine, D-glucurono-γ-lactone, inositol and pantothenic acid, PMSV converts the FSSAI daily maximum into an equivalent concentration using 500 ml (0.5 L) of finished caffeinated beverage per day.</p>
 <div class="checker-grid">
 <div class="field"><label>Total caffeine (mg/L)</label><input id="caffeine" type="number" step="0.1" placeholder="e.g. 320"><small>Required range: 145–300 mg/L.</small></div>
 <div class="field"><label>Taurine (mg/L)</label><input id="taurine" type="number" step="0.1" placeholder="e.g. 4000"><small>Calculated equivalent of FSSAI max 2,000 mg/day at 500 ml/day: 4,000 mg/L.</small></div>
@@ -176,7 +186,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <p><b>FoSCoS Standard Product list</b><br><a target="_blank" rel="noopener" href="https://fcstraining.fssai.gov.in/standard-product">Open FoSCoS standard-product mapping</a></p>
 <p><b>Appendix A</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%281%29.pdf">Open official Appendix A PDF</a></p>
 <div class="notice"><b>Source hierarchy:</b> FSSAI states that the chapter-wise compendium is for ready reference and that original notifications/amendments prevail if there is any error or overlap. Production PMSV data should therefore retain both the consolidated clause and its amendment trail.</div>
-<div class="notice oknote"><b>Prototype status:</b> Standards and explicit limits above were verified against the current FSSAI Chapter 2.10 source, Version 4 dated 01.08.2025. Before production release, PMSV should add a regulation-version field and revalidate the product automatically whenever the source chapter changes.</div>
+<div class="notice oknote"><b>Prototype status:</b> Standards and explicit limits above were verified against the current FSSAI Chapter 2.10 source, Version 3 dated 07.05.2025. Before production release, PMSV should add a regulation-version field and revalidate the product automatically whenever the source chapter changes.</div>
 </div>
 </section>
 
