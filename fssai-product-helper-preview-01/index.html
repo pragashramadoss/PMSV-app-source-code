@@ -18,7 +18,7 @@
 .section-title{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-bottom:11px}.section-title h2{margin:0;font-size:18px}.section-title span{font-size:11px;color:var(--muted)}
 table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}th,td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{background:#f7f9fc;color:#46536b;font-size:11px;text-transform:uppercase;letter-spacing:.03em}tr:last-child td{border-bottom:0}.status{font-weight:850}.mandatory{color:var(--blue)}.optional{color:var(--green)}.condition{color:var(--amber)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.item{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.item b{display:block;margin-bottom:4px}.item small{color:var(--muted);line-height:1.4}.process-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.process-option{position:relative;border:1px solid var(--line);border-radius:13px;background:#fff;padding:12px 12px 12px 44px;cursor:pointer;min-height:82px}.process-option input{position:absolute;left:14px;top:16px;width:18px;height:18px}.process-option b{display:block;margin-bottom:4px}.process-option small{display:block;color:var(--muted);line-height:1.35}.process-option.selected{border-color:#7f9df6;background:#f3f6ff}.process-summary{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.process-chip{display:inline-block;border-radius:999px;background:#eef3ff;color:#3155d9;padding:5px 8px;font-size:11px;font-weight:800}.empty-state{border:1px dashed #bfc9d9;border-radius:12px;padding:16px;text-align:center;color:var(--muted);background:#fafcff}
-.checker-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}.field input{width:100%;padding:10px;border:1px solid #ccd6e4;border-radius:9px}.field small{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.35}
+.checker-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}.field input,.field select{width:100%;padding:10px;border:1px solid #ccd6e4;border-radius:9px;background:#fff}.field small{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.35}
 .btn{border:0;background:var(--blue);color:#fff;border-radius:10px;padding:11px 14px;font-weight:850;cursor:pointer}.btn-secondary{border:1px solid var(--line);background:#fff;color:#44516a;border-radius:10px;padding:11px 14px;font-weight:850;cursor:pointer}.results{margin-top:12px;display:grid;gap:8px}.result{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;display:flex;justify-content:space-between;gap:10px}.result.pass{border-color:#b9e2cf;background:#f1faf6}.result.fail{border-color:#f0b9b4;background:#fff2f1}.result strong{font-size:13px}.result span{font-size:12px;font-weight:850}.result.pass span{color:var(--green)}.result.fail span{color:var(--red)}
 .source a{color:var(--blue);word-break:break-word}.source{font-size:12px;line-height:1.6}.hidden{display:none!important}.searchbox{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:10px 12px;margin-bottom:10px}.searchbox input{border:0;outline:0;flex:1;background:transparent}
 .tag{display:inline-block;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:850;background:#eef3ff;color:#3155d9}.tag.specific{background:#e9f8f0;color:#087a55}.tag.direct{background:#e9f8f0;color:#087a55}.tag.conditional{background:#fff4df;color:#8a5100}.tag.checked{background:#eef3ff;color:#3155d9}.tag.product{background:#fff4df;color:#8a5100}.countline{font-size:11px;color:var(--muted);margin:7px 0 10px}.appendix-note{font-size:11px;color:var(--muted);line-height:1.45}details.gmp{border:1px solid var(--line);border-radius:12px;background:#fff;padding:0;margin-top:12px}details.gmp>summary{cursor:pointer;padding:13px 14px;font-weight:850;list-style:none}details.gmp>summary::-webkit-details-marker{display:none}details.gmp[open]>summary{border-bottom:1px solid var(--line)}.footer{padding:10px 0 28px;text-align:center;color:var(--muted);font-size:11px}
@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 17</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 18</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="standard">Standard</button>
@@ -215,6 +215,25 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="nutrient"><b>Microbial nutrient use</b><small>Applicable only if a microbial culture process is actually used.</small></label>
 </div>
 
+<div id="enzymeSelectorCard" class="card hidden" style="margin-top:14px;background:#fafcff">
+<div class="section-title"><h2>Enzyme selector</h2><span>Appendix C · Table 11</span></div>
+<div class="notice oknote"><b>Table 11 pathway:</b> these enzymes are from <b>non-genetically modified sources</b>. Select the actual enzyme first, then select the exact FSSAI-listed source/organism used.</div>
+<div class="checker-grid">
+  <div class="field">
+    <label>Enzyme</label>
+    <select id="enzymeName"><option value="">Select enzyme…</option></select>
+    <small>Only Appendix C Table 11 enzymes are listed here.</small>
+  </div>
+  <div class="field">
+    <label>Permitted source / organism</label>
+    <select id="enzymeSource" disabled><option value="">Select source…</option></select>
+    <small>The permitted source depends on the selected enzyme.</small>
+  </div>
+</div>
+<div id="enzymeResult" class="notice hidden" style="margin-top:12px"></div>
+<div class="notice"><b>GMM enzymes:</b> Appendix C regulates genetically modified microorganism-derived enzymes separately under <b>Table 11A</b>, which also requires matching the production organism, donor/source, functional purpose and indicative food use. They are intentionally not mixed into this Table 11 selector.</div>
+</div>
+
 <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
 <button class="btn" type="button" id="saveProcesses">Apply selected processes</button>
 <button class="btn-secondary" type="button" id="clearProcesses">Clear selection</button>
@@ -237,7 +256,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </table></div>
 <div class="countline" id="processingCount"></div>
 </div>
-<div class="notice"><b>Enzymes:</b> if “Enzyme processing” is selected, the process selector alone is not enough to determine the enzyme permission. Appendix C Table 11 regulates enzymes by <b>enzyme name, production organism/source and technological use</b>. PMSV will therefore require an enzyme-specific selector before treating an enzyme as applicable.</div>
+<div class="notice"><b>Enzymes:</b> when Enzyme processing is selected, PMSV uses the saved enzyme + permitted source from the <b>Appendix C Table 11 enzyme selector</b>. GMM-derived enzymes remain a separate Table 11A pathway.</div>
 </div>
 </section>
 
@@ -408,6 +427,119 @@ function row(label,value,pass,msg){
  div.innerHTML='<strong>'+label+(value===null?'':' · '+value)+'</strong><span>'+(pass?'PASS':'CHECK')+'</span><div class="muted">'+msg+'</div>';
  return div;
 }
+const ENZYME_KEY='pmsv_fssai_product_helper_enzyme';
+
+const table11Enzymes=[
+ {id:'glucose_oxidase',name:'Glucose oxidase',ec:'1.1.3.4',sources:['Aspergillus niger','Aspergillus oryzae']},
+ {id:'catalase',name:'Catalase',ec:'1.11.1.6',sources:['Aspergillus niger']},
+ {id:'gpc_acyltransferase',name:'Glycero-phospholipid cholesterol acyltransferase',ec:'2.3.1.43',sources:['Bacillus licheniformis']},
+ {id:'transglutaminase',name:'Transglutaminase',ec:'2.3.2.13',sources:['Streptomyces mobaraensis']},
+ {id:'lipase_tri',name:'Lipase triacylglycerol',ec:'3.1.1.3',sources:['Rhizopus oryzae','Fusarium oxysporum','Thermomyces lanuginosus','Rhizopus niveus','Carica papaya','Rhizomucor miehei','Aspergillus niger','Candida rugosa (cylindracea)','Pregastric bovine (calf) tissue','Pregastric ovine (lamb) tissue','Penicillium roquefortii','Porcine pancreas','Mucor javanicus (Mucor circinelloides f. circinelloides)','Rice bran']},
+ {id:'phospholipase_a2',name:'Phospholipase A2',ec:'3.1.1.4',sources:['Streptomyces violaceoruber']},
+ {id:'lysophospholipase',name:'Lysophospholipase',ec:'3.1.1.5',sources:['Aspergillus niger']},
+ {id:'pectin_esterase',name:'Pectin esterase',ec:'3.1.1.11',sources:['Aspergillus niger']},
+ {id:'acylglycerol_lipase',name:'Acylglycerol lipase',ec:'3.1.1.23',sources:['Penicillium camembertii']},
+ {id:'phospholipase_a1',name:'Phospholipase A1',ec:'3.1.1.32',sources:['Aspergillus niger']},
+ {id:'phytase',name:'Phytase',ec:'3.1.3.8',sources:['Aspergillus niger']},
+ {id:'phosphodiesterase_1',name:'Phosphodiesterase I',ec:'3.1.4.1',sources:['Leptographium procerum']},
+ {id:'phospholipase_d',name:'Phospholipase D',ec:'3.1.4.4',sources:['Streptomyces cinnamoneus']},
+ {id:'hemicellulase',name:'Hemicellulase',ec:'3.2.1',sources:['Aspergillus niger','Trichoderma reesei / longibrachiatum']},
+ {id:'alpha_amylase',name:'Alpha amylase',ec:'3.2.1.1',sources:['Aspergillus oryzae','Aspergillus niger','Bacillus licheniformis','Bacillus amyloliquefaciens','Bacillus subtilis','Bacillus stearothermophilus','Cereal (barley) malt']},
+ {id:'beta_amylase',name:'Beta amylase',ec:'3.2.1.2',sources:['Cereal (barley) malt','Bacillus amyloliquefaciens','Hordeum vulgare (barley)']},
+ {id:'glucoamylase',name:'Glucan 1,4-alpha-glucosidase (Glucoamylase / acid maltase)',ec:'3.2.1.3',sources:['Aspergillus niger','Aspergillus oryzae','Trichoderma reesei','Rhizopus oryzae']},
+ {id:'cellulase',name:'Cellulase',ec:'3.2.1.4',sources:['Penicillium funiculosum','Aspergillus niger','Humicola insolens','Rasamsonia (Talaromyces) emersonii','Trichoderma reesei']},
+ {id:'beta_glucanase',name:'Beta-glucanase',ec:'3.2.1.6',sources:['Aspergillus niger','Bacillus amyloliquefaciens','Rasamsonia (Talaromyces) emersonii','Trichoderma reesei','Aspergillus aculeatus','Penicillium funiculosum','Bacillus subtilis','Trichoderma harzianum','Disporotrichum dimorphosporum','Humicola insolens']},
+ {id:'inulinase',name:'Inulinase',ec:'3.2.1.7',sources:['Aspergillus niger']},
+ {id:'xylanase_14',name:'Endo-1,4-beta-xylanase',ec:'3.2.1.8',sources:['Aspergillus niger','Bacillus licheniformis','Disporotrichum dimorphosporum','Rasamsonia (Talaromyces) emersonii','Trichoderma reesei (longibrachiatum)','Humicola insolens']},
+ {id:'dextranase',name:'Dextranase',ec:'3.2.1.11',sources:['Chaetomium erraticum']},
+ {id:'pectinase',name:'Polygalacturonase (Pectinase)',ec:'3.2.1.15',sources:['Aspergillus niger','Aspergillus aculeatus']},
+ {id:'lysozyme',name:'Lysozyme',ec:'3.2.1.17',sources:['Gallus gallus egg']},
+ {id:'alpha_glucosidase',name:'Alpha-glucosidase',ec:'3.2.1.20',sources:['Aspergillus niger','Trichoderma reesei']},
+ {id:'beta_glucosidase',name:'Beta-glucosidase',ec:'3.2.1.21',sources:['Aspergillus niger','Kluyveromyces lactis','Trichoderma reesei / longibrachiatum CL 847']},
+ {id:'alpha_galactosidase',name:'Alpha-galactosidase (Melibiase)',ec:'3.2.1.22',sources:['Aspergillus oryzae','Aspergillus niger','Mortierella vinacea','Saccharomyces carlsbergensis']},
+ {id:'beta_galactosidase',name:'Beta-galactosidase (Lactase)',ec:'3.2.1.23',sources:['Kluyveromyces lactis','Bacillus circulans','Saccharomyces sp.','Aspergillus niger','Aspergillus oryzae']},
+ {id:'invertase',name:'Beta-fructofuranosidase (Invertase / Saccharase)',ec:'3.2.1.26',sources:['Saccharomyces cerevisiae','Kluyveromyces fragilis','Saccharomyces carlsbergensis']},
+ {id:'trehalase',name:'Trehalase',ec:'3.2.1.28',sources:['Trichoderma reesei']},
+ {id:'xylanase_13',name:'Endo-1,3-beta-xylanase',ec:'3.2.1.32',sources:['Humicola insolens']},
+ {id:'pullulanase',name:'Pullulanase',ec:'3.2.1.41',sources:['Bacillus acidopullulyticus','Bacillus brevis','Bacillus circulans','Bacillus naganoensis','Klebsiella aerogenes']},
+ {id:'alpha_arabinofuranosidase',name:'Alpha-arabinofuranosidase',ec:'3.2.1.55',sources:['Aspergillus niger']},
+ {id:'glucan_beta_glucosidase',name:'Glucan 1,3-beta-glucosidase',ec:'3.2.1.58',sources:['Trichoderma harzianum']},
+ {id:'mannanase',name:'Mannanase (Mannan endo-1,4-beta-mannosidase)',ec:'3.2.1.78',sources:['Trichoderma reesei','Aspergillus niger']},
+ {id:'protease_bacteria',name:'Protease (Bacteria)',ec:'3.4',sources:['Bacillus amyloliquefaciens','Bacillus licheniformis','Bacillus subtilis','Geobacillus caldoproteolyticus']},
+ {id:'protease_fungi',name:'Protease (Fungi)',ec:'3.4',sources:['Aspergillus niger','Aspergillus oryzae']},
+ {id:'aminopeptidase',name:'Aminopeptidase',ec:'3.4.11.1',sources:['Aspergillus oryzae']},
+ {id:'serine_protease',name:'Serine protease (Subtilisin)',ec:'3.4.21.62',sources:['Bacillus licheniformis']},
+ {id:'oryzin',name:'Oryzin',ec:'3.4.21.63',sources:['Aspergillus melleus']},
+ {id:'lactocepin',name:'PIII-type proteinase (Lactocepin)',ec:'3.4.21.96',sources:['Lactococcus lactis subsp. cremoris (strain SK11)']},
+ {id:'papain',name:'Papain',ec:'3.4.22.2',sources:['Carica papaya']},
+ {id:'ficin',name:'Ficin',ec:'3.4.22.3',sources:['Figs']},
+ {id:'bromelain',name:'Bromelain',ec:'3.4.22.33',sources:['Ananas comosus / bracteatus']},
+ {id:'chymosin',name:'Chymosin',ec:'3.4.23.4',sources:['Kluyveromyces lactis']},
+ {id:'aspergillopepsin1',name:'Aspergillopepsin I',ec:'3.4.23.18',sources:['Aspergillus niger','Aspergillus oryzae']},
+ {id:'aspergillopepsin2',name:'Aspergillopepsin II',ec:'3.4.23.19',sources:['Aspergillus niger']},
+ {id:'endothiapeptidase',name:'Endo(thia)peptidase',ec:'3.4.23.22',sources:['Cryphonectria (Endothia) parasitica']},
+ {id:'mucorpepsin',name:'Mucorpepsin (Aspartic proteinase)',ec:'3.4.23.23',sources:['Rhizomucor miehei']},
+ {id:'thermolysin',name:'Thermolysin',ec:'3.4.24.27',sources:['Bacillus stearothermophilus','Geobacillus caldoproteolyticus']},
+ {id:'metalloproteinase',name:'Metalloproteinase (Bacillolysin / Metalloendopeptidase)',ec:'3.4.24.28',sources:['Bacillus amyloliquefaciens','Bacillus subtilis']},
+ {id:'glutaminase',name:'Glutaminase',ec:'3.5.1.2',sources:['Bacillus amyloliquefaciens']},
+ {id:'protein_glutaminase',name:'Protein glutaminase',ec:'3.5.1.44',sources:['Chryseobacterium proteolyticum']},
+ {id:'amp_deaminase',name:'AMP deaminase',ec:'3.5.4.6',sources:['Aspergillus melleus','Streptomyces murinus']},
+ {id:'pectin_lyase',name:'Pectin lyase',ec:'4.2.2.10',sources:['Aspergillus niger']},
+ {id:'glucose_isomerase',name:'Glucose isomerase (Xylose isomerase)',ec:'5.3.1.5',sources:['Streptomyces rubiginosus','Streptomyces murinus','Streptomyces olivaceus','Streptomyces olivochromogenes','Microbacterium arborescens','Actinoplanes missouriensis']}
+];
+
+let selectedEnzyme={id:'',source:''};
+try{
+ const raw=JSON.parse(localStorage.getItem(ENZYME_KEY)||'{}');
+ if(raw && typeof raw==='object')selectedEnzyme={id:raw.id||'',source:raw.source||''};
+}catch(e){}
+
+function populateEnzymeSelector(){
+ const nameSel=document.getElementById('enzymeName');
+ if(!nameSel)return;
+ nameSel.innerHTML='<option value="">Select enzyme…</option>'+table11Enzymes.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+' (EC '+esc(x.ec)+')</option>').join('');
+ if(table11Enzymes.some(x=>x.id===selectedEnzyme.id))nameSel.value=selectedEnzyme.id;
+ populateEnzymeSources();
+}
+function populateEnzymeSources(){
+ const sourceSel=document.getElementById('enzymeSource');
+ const nameSel=document.getElementById('enzymeName');
+ const result=document.getElementById('enzymeResult');
+ if(!sourceSel||!nameSel)return;
+ const enzyme=table11Enzymes.find(x=>x.id===nameSel.value);
+ sourceSel.innerHTML='<option value="">Select source…</option>';
+ sourceSel.disabled=!enzyme;
+ if(enzyme){
+   sourceSel.innerHTML+=[...enzyme.sources].map(s=>'<option value="'+esc(s)+'">'+esc(s)+'</option>').join('');
+   if(enzyme.sources.includes(selectedEnzyme.source))sourceSel.value=selectedEnzyme.source;
+ }
+ if(result)result.classList.add('hidden');
+}
+function saveEnzymeSelection(){
+ const id=document.getElementById('enzymeName')?.value||'';
+ const source=document.getElementById('enzymeSource')?.value||'';
+ const enzyme=table11Enzymes.find(x=>x.id===id);
+ selectedEnzyme={id:enzyme?enzyme.id:'',source:enzyme&&enzyme.sources.includes(source)?source:''};
+ try{localStorage.setItem(ENZYME_KEY,JSON.stringify(selectedEnzyme))}catch(e){}
+ const result=document.getElementById('enzymeResult');
+ if(result){
+   if(enzyme&&selectedEnzyme.source){
+     result.innerHTML='<b>Selected Table 11 enzyme:</b> '+esc(enzyme.name)+' (EC '+esc(enzyme.ec)+')<br><b>FSSAI-listed source:</b> '+esc(selectedEnzyme.source)+'<br><b>Residual level:</b> GMP';
+     result.classList.remove('hidden');
+   }else{
+     result.classList.add('hidden');
+   }
+ }
+ renderProcessingAids();
+}
+document.getElementById('enzymeName')?.addEventListener('change',()=>{
+ selectedEnzyme={id:document.getElementById('enzymeName').value||'',source:''};
+ populateEnzymeSources();
+ saveEnzymeSelection();
+});
+document.getElementById('enzymeSource')?.addEventListener('change',saveEnzymeSelection);
+populateEnzymeSelector();
+
 const PROCESS_KEY='pmsv_fssai_product_helper_processes';
 const processLabels={
  water:'Water treatment',
@@ -466,6 +598,8 @@ function syncProcessUI(){
    cb.checked=selectedProcesses.includes(cb.value);
    cb.closest('.process-option')?.classList.toggle('selected',cb.checked);
  });
+ const enzymeCard=document.getElementById('enzymeSelectorCard');
+ if(enzymeCard)enzymeCard.classList.toggle('hidden',!selectedProcesses.includes('enzyme'));
  const chips=selectedProcesses.map(x=>'<span class="process-chip">'+esc(processLabels[x]||x)+'</span>').join('');
  const sum=document.getElementById('processSummary');if(sum)sum.innerHTML=chips||'<span class="muted">No process selected.</span>';
  const ps=document.getElementById('processingSelectedSummary');if(ps)ps.innerHTML=chips||'<span class="muted">No process selected.</span>';
@@ -485,7 +619,14 @@ function renderProcessingAids(){
  const rules=processingAidRules.filter(x=>selectedProcesses.includes(x.process));
  const messages=[];
  if(selectedProcesses.includes('water'))messages.push('<tr><td><b>Water treatment</b></td><td>Process selected</td><td>No processing aid is automatically assigned solely from this selection. Only an aid with an applicable final Appendix C permission should be activated.</td><td>Appendix C applicability check</td></tr>');
- if(selectedProcesses.includes('enzyme'))messages.push('<tr><td><b>Enzyme processing</b></td><td>Additional input required</td><td>Select the actual enzyme and production organism/source before a Table 11 permission can be determined.</td><td>Appendix C · Table 11</td></tr>');
+ if(selectedProcesses.includes('enzyme')){
+   const enzyme=table11Enzymes.find(x=>x.id===selectedEnzyme.id);
+   if(enzyme&&selectedEnzyme.source){
+     messages.push('<tr><td><b>'+esc(enzyme.name)+'</b><br><small>EC '+esc(enzyme.ec)+'</small></td><td>Enzyme processing · non-GMM Table 11 enzyme</td><td><b>GMP</b><br><small>FSSAI-listed source: '+esc(selectedEnzyme.source)+'</small></td><td>Appendix C · Table 11</td></tr>');
+   }else{
+     messages.push('<tr><td><b>Enzyme processing</b></td><td>Additional input required</td><td>Select both the Table 11 enzyme and its FSSAI-listed source in Manufacturing process.</td><td>Appendix C · Table 11</td></tr>');
+   }
+ }
  if(selectedProcesses.includes('nutrient'))messages.push('<tr><td><b>Microbial nutrient use</b></td><td>Additional process detail required</td><td>Activate only when a microbial culture process is genuinely used; Appendix C Table 5 nutrient permissions must then be evaluated against the actual process.</td><td>Appendix C · Table 5</td></tr>');
  body.innerHTML=rules.map(x=>'<tr><td><b>'+esc(x.name)+'</b><br><small>INS '+esc(x.ins)+'</small></td><td>'+esc(x.purpose)+'</td><td><b>'+esc(x.condition)+'</b></td><td>'+esc(x.source)+'</td></tr>').join('')+messages.join('');
  const total=rules.length+messages.length;
@@ -498,6 +639,7 @@ document.querySelectorAll('#processGrid input[type="checkbox"]').forEach(cb=>cb.
 }));
 document.getElementById('saveProcesses')?.addEventListener('click',event=>{
  event.preventDefault();
+ saveEnzymeSelection();
  saveProcessSelection();
  openTab('process',{updateHash:true,save:true});
 });
@@ -506,7 +648,9 @@ document.getElementById('clearProcesses')?.addEventListener('click',event=>{
  event.stopPropagation();
  const activeTab=document.querySelector('nav.tabs .tab[data-tab].active')?.dataset.tab || 'process';
  selectedProcesses=[];
- try{localStorage.removeItem(PROCESS_KEY)}catch(e){}
+ selectedEnzyme={id:'',source:''};
+ try{localStorage.removeItem(PROCESS_KEY);localStorage.removeItem(ENZYME_KEY)}catch(e){}
+ populateEnzymeSelector();
  syncProcessUI();
  openTab(activeTab,{updateHash:true,save:true});
 });
