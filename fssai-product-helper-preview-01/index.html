@@ -21,7 +21,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 .checker-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}.field input{width:100%;padding:10px;border:1px solid #ccd6e4;border-radius:9px}.field small{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.35}
 .btn{border:0;background:var(--blue);color:#fff;border-radius:10px;padding:11px 14px;font-weight:850;cursor:pointer}.results{margin-top:12px;display:grid;gap:8px}.result{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;display:flex;justify-content:space-between;gap:10px}.result.pass{border-color:#b9e2cf;background:#f1faf6}.result.fail{border-color:#f0b9b4;background:#fff2f1}.result strong{font-size:13px}.result span{font-size:12px;font-weight:850}.result.pass span{color:var(--green)}.result.fail span{color:var(--red)}
 .source a{color:var(--blue);word-break:break-word}.source{font-size:12px;line-height:1.6}.hidden{display:none!important}.searchbox{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:10px 12px;margin-bottom:10px}.searchbox input{border:0;outline:0;flex:1;background:transparent}
-.tag{display:inline-block;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:850;background:#eef3ff;color:#3155d9}.tag.specific{background:#e9f8f0;color:#087a55}.tag.product{background:#fff4df;color:#8a5100}.countline{font-size:11px;color:var(--muted);margin:7px 0 10px}.appendix-note{font-size:11px;color:var(--muted);line-height:1.45}details.gmp{border:1px solid var(--line);border-radius:12px;background:#fff;padding:0;margin-top:12px}details.gmp>summary{cursor:pointer;padding:13px 14px;font-weight:850;list-style:none}details.gmp>summary::-webkit-details-marker{display:none}details.gmp[open]>summary{border-bottom:1px solid var(--line)}.footer{padding:10px 0 28px;text-align:center;color:var(--muted);font-size:11px}
+.tag{display:inline-block;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:850;background:#eef3ff;color:#3155d9}.tag.specific{background:#e9f8f0;color:#087a55}.tag.direct{background:#e9f8f0;color:#087a55}.tag.conditional{background:#fff4df;color:#8a5100}.tag.checked{background:#eef3ff;color:#3155d9}.tag.product{background:#fff4df;color:#8a5100}.countline{font-size:11px;color:var(--muted);margin:7px 0 10px}.appendix-note{font-size:11px;color:var(--muted);line-height:1.45}details.gmp{border:1px solid var(--line);border-radius:12px;background:#fff;padding:0;margin-top:12px}details.gmp>summary{cursor:pointer;padding:13px 14px;font-weight:850;list-style:none}details.gmp>summary::-webkit-details-marker{display:none}details.gmp[open]>summary{border-bottom:1px solid var(--line)}.footer{padding:10px 0 28px;text-align:center;color:var(--muted);font-size:11px}
 @media(max-width:700px){.meta{grid-template-columns:1fr}.grid2,.checker-grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.wrap{width:calc(100% - 18px)}.top{padding:16px 10px 19px}.product-title{font-size:23px}}
 </style>
 </head>
@@ -42,7 +42,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="standard" class="view">
 <div class="card">
 <div class="searchbox"><span>🔎</span><input value="Carbonated Caffeinated Beverage" aria-label="Product search" readonly></div>
-<div class="hero"><div><span class="pill">BEVERAGES</span><div class="product-title">Carbonated Caffeinated Beverage</div><div class="muted">Prototype product selected because it combines product-standard requirements, functional ingredients, inherited carbonated-water limits and special labelling.</div></div><span class="pill">FCS 14.1.4.1</span></div>
+<div class="hero"><div><span class="pill">BEVERAGES</span><div class="product-title">Carbonated Caffeinated Beverage</div><div class="muted">Prototype product showing the complete regulatory stack: product standard, applicable food additives, processing aids, microbiology, contaminants/residues and special labelling.</div></div><span class="pill">FCS 14.1.4.1</span></div>
 <div class="meta">
 <div><small>FSSAI standard</small><b>Reg. 2.10.6(2) — Caffeinated Beverage</b></div>
 <div><small>Food category system</small><b>14.1.4.1 — Carbonated water-based flavoured drinks</b></div>
@@ -333,12 +333,63 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <section id="quality" class="view hidden">
 <div class="card">
-<div class="section-title"><h2>Special label points</h2><span>Product-specific requirements</span></div>
+<div class="section-title"><h2>Microbiological requirements</h2><span>Applicable requirement for this product</span></div>
+<div class="notice oknote"><b>Appendix B applicability checked.</b> Appendix B Table 7 is specifically titled <b>“Microbiological Requirements for Non-Carbonated Water Based Beverages (Non Alcoholic)”</b>, so it is <b>not imported as the source for this carbonated product</b>. For Carbonated Caffeinated Beverage, Chapter 2.10 requires conformity with Carbonated Water, which itself gives the microbiological limits below.</div>
+<div class="tablewrap"><table>
+<thead><tr><th>Parameter</th><th>FSSAI limit</th><th>Source</th></tr></thead>
+<tbody>
+<tr><td><b>Total plate count</b></td><td><b>Not more than 50 CFU/ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>
+<tr><td><b>Coliform count</b></td><td><b>0 CFU in 100 ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>
+<tr><td><b>Yeast & mould count</b></td><td><b>Not more than 2 CFU/ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>
+</tbody></table></div>
+<div class="notice"><b>Why Appendix B is still checked:</b> PMSV should always test whether Appendix B has a product-specific microbiological table. In this case it does not add a separate carbonated-caffeinated-beverage table; therefore the product-standard limits above are the applicable set.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Contaminants, toxins & residues</h2><span>Separate FSSAI regulation</span></div>
+<div class="notice oknote"><b>Current source used:</b> Food Safety and Standards (Contaminants, Toxins and Residues) Regulations, 2011 — consolidated <b>Version VIII (01.04.2025)</b>. These are kept separate from Appendix A because contaminants and pesticide residues are governed by a different regulation.</div>
+
+<h3 style="margin:14px 0 8px">Direct limits for Carbonated Water</h3>
+<div class="tablewrap"><table>
+<thead><tr><th>Contaminant / residue</th><th>FSSAI maximum</th><th>Applicability</th></tr></thead>
+<tbody>
+<tr><td><b>Lead</b></td><td><b>10 mg/L</b></td><td><span class="tag direct">Carbonated water</span></td></tr>
+<tr><td><b>Copper</b></td><td><b>1.5 mg/L</b></td><td><span class="tag direct">Carbonated water</span></td></tr>
+<tr><td><b>Arsenic</b></td><td><b>0.25 mg/L</b></td><td><span class="tag direct">Carbonated water</span></td></tr>
+<tr><td><b>Chlorpyriphos</b></td><td><b>0.001 mg/kg</b></td><td><span class="tag direct">Carbonated Water MRL</span></td></tr>
+<tr><td><b>Malathion</b></td><td><b>0.01 mg/kg</b></td><td><span class="tag direct">Carbonated Water MRL</span><br><small>Expressed as combined residues of malathion and malaoxon.</small></td></tr>
+</tbody></table></div>
+
+<h3 style="margin:16px 0 8px">General limits that also apply</h3>
+<div class="tablewrap"><table>
+<thead><tr><th>Contaminant</th><th>FSSAI maximum</th><th>Why applicable</th></tr></thead>
+<tbody>
+<tr><td><b>Cadmium</b></td><td><b>1.5 mg/kg</b></td><td>“Foods not specified” limit; no separate Carbonated Water cadmium entry is listed.</td></tr>
+<tr><td><b>Mercury</b></td><td><b>1.0 mg/kg</b></td><td>“Foods not specified” limit; no separate Carbonated Water mercury entry is listed.</td></tr>
+<tr><td><b>Methyl mercury</b></td><td><b>0.25 mg/kg</b></td><td><span class="tag direct">All foods</span></td></tr>
+<tr><td><b>Saffrole</b></td><td><b>10 ppm</b></td><td><span class="tag direct">Non-alcoholic beverages</span></td></tr>
+<tr><td><b>Other pesticide residues without a specifically fixed MRL</b></td><td><b>0.01 mg/kg</b></td><td>General pesticide tolerance note in the current regulation.</td></tr>
+</tbody></table></div>
+
+<h3 style="margin:16px 0 8px">Conditional requirements — depend on pack or ingredients</h3>
+<div class="tablewrap"><table>
+<thead><tr><th>Contaminant</th><th>FSSAI maximum</th><th>When this becomes applicable</th></tr></thead>
+<tbody>
+<tr><td><b>Tin</b></td><td><b>150 mg/kg</b></td><td><span class="tag conditional">If sold as a canned beverage</span></td></tr>
+<tr><td><b>Patulin</b></td><td><b>50 µg/kg</b></td><td><span class="tag conditional">If apple juice is used as an ingredient in the beverage</span></td></tr>
+<tr><td><b>Total aflatoxins</b></td><td><b>20 µg/kg</b></td><td><span class="tag conditional">If the finished product contains a regulated ingredient such as spices/spice mix, nuts, oilseeds, pulses or other articles covered by the aflatoxin table</span></td></tr>
+<tr><td><b>Aflatoxin B1</b></td><td><b>10 µg/kg</b></td><td><span class="tag conditional">If the finished product contains an article covered by the Aflatoxin B1 table</span></td></tr>
+</tbody></table></div>
+<div class="notice"><b>Product-builder logic:</b> these conditional contaminant checks should switch on automatically when the formulation says, for example, “apple juice”, “nutmeg/mace”, “spice extract”, or when the packaging is selected as a can. This avoids showing irrelevant contaminant tests while still preventing a required limit from being missed.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Special label points</h2><span>Product-specific</span></div>
 <div class="grid2">
 <div class="item"><b>High caffeine declaration</b><small>Declare the caffeine amount as <b>“High Caffeine: X mg/serving size”</b>, where X is caffeine in the pack/serve.</small></div>
 <div class="item"><b>Caution statement</b><small>Prominently state that the product is not recommended for children, pregnant or lactating women, and persons sensitive to caffeine.</small></div>
-<div class="item"><b>Daily-consumption declaration</b><small>The label shall declare “consume not more than 500 ml per day”. The standard defines the per-day quantity through the maximum daily amounts of the listed optional substances and gives pack-size examples.</small></div>
-<div class="item"><b>Non-caloric sweeteners</b><small>Products containing aspartame, acesulfame-K or other non-caloric sweeteners must also satisfy the applicable special labelling provisions under current Labelling and Display rules.</small></div>
+<div class="item"><b>Daily-consumption declaration</b><small>The label shall declare <b>“consume not more than 500 ml per day”</b>.</small></div>
+<div class="item"><b>Non-caloric sweeteners</b><small>Products containing aspartame, acesulfame-K or other non-caloric sweeteners must also satisfy the applicable special labelling provisions under the Labelling and Display Regulations.</small></div>
 </div>
 </div>
 </section>
@@ -350,6 +401,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <p><b>FSSAI Compendium — Food Products Standards & Food Additives</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/food-law/regulations/compendium/food-products-standards">Open official compendium</a></p>
 <p><b>FoSCoS Standard Product list</b><br><a target="_blank" rel="noopener" href="https://fcstraining.fssai.gov.in/standard-product">Open FoSCoS standard-product mapping</a></p>
 <p><b>Appendix A — Version 3 (01.08.2025)</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf">Official source used to automatically bring the applicable 14.1.4.1, 14.1.4 and general GMP provisions into this product page</a></p>
+<p><b>Appendix B — Microbiological Requirements · Version 2 (04.11.2024)</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20B%281%29.pdf">Official source checked for product-specific microbiological applicability</a></p>
+<p><b>Appendix C — Processing Aids</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20C.pdf">Official processing-aid source used to bring applicable product/all-food permissions into this page</a></p>
+<p><b>Contaminants, Toxins & Residues — Version VIII (01.04.2025)</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_2_4_2025_VIII.pdf">Official contaminant, toxin and pesticide-residue source used for this product</a></p>
 <p><b>Appendix B — Version 2 (04.11.2024)</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20B%281%29.pdf">Official microbiological Appendix checked for applicability; Table 7 is specifically non-carbonated</a></p>
 <p><b>Appendix C — Version 2 (01.08.2025)</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20C%282%29.pdf">Official processing-aids Appendix used for the applicable beverage, water-treatment and all-food provisions</a></p>
 <p><b>Contaminants, Toxins and Residues Compendium — Version VIII (01.04.2025)</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_2_4_2025_VIII.pdf">Official source for the explicit Carbonated Water contaminant and pesticide-residue limits</a></p>
