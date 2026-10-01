@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>PMSV FSSAI Product Standards Prototype</title>
+<style>
+:root{--blue:#3155d9;--navy:#17336b;--bg:#f3f6fb;--card:#fff;--ink:#172033;--muted:#68758c;--line:#dbe3ef;--green:#087a55;--red:#b42318;--amber:#a15c00;--soft:#eef3ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}button,input,select{font:inherit}
+.top{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;padding:18px 14px 22px}.wrap{width:min(980px,calc(100% - 22px));margin:auto}
+.badge{display:inline-block;border:1px solid #ffffff55;background:#ffffff18;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800}.top h1{margin:8px 0 4px;font-size:25px}.top p{margin:0;color:#e9eeff;font-size:13px;line-height:1.5}
+.tabs{display:flex;gap:8px;overflow:auto;padding:12px 0}.tab{border:1px solid var(--line);background:#fff;color:#44516a;border-radius:999px;padding:9px 12px;font-weight:800;white-space:nowrap}.tab.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:0 0 14px;box-shadow:0 8px 28px #1c2a4a0b}
+.hero{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start}.product-title{font-size:27px;font-weight:900;color:var(--navy);margin:2px 0 6px}.muted{color:var(--muted);font-size:13px;line-height:1.5}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:var(--soft);color:var(--blue);font-size:11px;font-weight:850}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}.meta>div{border:1px solid var(--line);border-radius:11px;background:#fafcff;padding:10px}.meta small{display:block;color:var(--muted);font-size:11px}.meta b{display:block;margin-top:4px;font-size:14px}
+.notice{border:1px solid #efd596;background:#fff8e8;color:#70460b;border-radius:11px;padding:11px 12px;font-size:12px;line-height:1.5;margin:10px 0}.oknote{border-color:#bfe4d2;background:#f0faf5;color:#235c45}
+.section-title{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-bottom:11px}.section-title h2{margin:0;font-size:18px}.section-title span{font-size:11px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}th,td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{background:#f7f9fc;color:#46536b;font-size:11px;text-transform:uppercase;letter-spacing:.03em}tr:last-child td{border-bottom:0}.status{font-weight:850}.mandatory{color:var(--blue)}.optional{color:var(--green)}.condition{color:var(--amber)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.item{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.item b{display:block;margin-bottom:4px}.item small{color:var(--muted);line-height:1.4}
+.checker-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}.field input{width:100%;padding:10px;border:1px solid #ccd6e4;border-radius:9px}.field small{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.35}
+.btn{border:0;background:var(--blue);color:#fff;border-radius:10px;padding:11px 14px;font-weight:850;cursor:pointer}.results{margin-top:12px;display:grid;gap:8px}.result{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;display:flex;justify-content:space-between;gap:10px}.result.pass{border-color:#b9e2cf;background:#f1faf6}.result.fail{border-color:#f0b9b4;background:#fff2f1}.result strong{font-size:13px}.result span{font-size:12px;font-weight:850}.result.pass span{color:var(--green)}.result.fail span{color:var(--red)}
+.source a{color:var(--blue);word-break:break-word}.source{font-size:12px;line-height:1.6}.hidden{display:none!important}.searchbox{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:10px 12px;margin-bottom:10px}.searchbox input{border:0;outline:0;flex:1;background:transparent}
+.footer{padding:10px 0 28px;text-align:center;color:var(--muted);font-size:11px}
+@media(max-width:700px){.meta{grid-template-columns:1fr}.grid2,.checker-grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.wrap{width:calc(100% - 18px)}.top{padding:16px 10px 19px}.product-title{font-size:23px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 01</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<main class="wrap">
+<nav class="tabs">
+<button class="tab active" data-tab="standard">Standard</button>
+<button class="tab" data-tab="ingredients">Ingredients & limits</button>
+<button class="tab" data-tab="checker">Formulation checker</button>
+<button class="tab" data-tab="quality">Tests & label</button>
+<button class="tab" data-tab="sources">Official sources</button>
+</nav>
+
+<section id="standard" class="view">
+<div class="card">
+<div class="searchbox"><span>🔎</span><input value="Carbonated Caffeinated Beverage" aria-label="Product search" readonly></div>
+<div class="hero"><div><span class="pill">BEVERAGES</span><div class="product-title">Carbonated Caffeinated Beverage</div><div class="muted">Prototype product selected because it combines product-standard requirements, functional ingredients, inherited carbonated-water limits and special labelling.</div></div><span class="pill">FCS 14.1.4.1</span></div>
+<div class="meta">
+<div><small>FSSAI standard</small><b>Reg. 2.10.6(2) — Caffeinated Beverage</b></div>
+<div><small>Food category system</small><b>14.1.4.1 — Carbonated water-based flavoured drinks</b></div>
+<div><small>Source version checked</small><b>Chapter 2.10 · Version 4 · 01 Aug 2025</b></div>
+</div>
+</div>
+<div class="card">
+<div class="section-title"><h2>What defines this product?</h2><span>Core standard</span></div>
+<div class="grid2">
+<div class="item"><b>Water</b><small>Water used must conform to the packaged drinking water standard or mineral water standard referenced by FSSAI.</small></div>
+<div class="item"><b>Total caffeine</b><small><b>Minimum 145 mg/L · Maximum 300 mg/L</b>, calculated from all caffeine sources in the formulation.</small></div>
+<div class="item"><b>Carbonated version</b><small>FoSCoS maps Carbonated Caffeinated Beverage to food category <b>14.1.4.1</b>.</small></div>
+<div class="item"><b>Other ingredients / additives</b><small>For ingredients, flavours, sweeteners, food additives, contaminants and microbiology, the caffeinated beverage standard directs the product to comply with the carbonated-water requirements.</small></div>
+</div>
+<div class="notice">Important: the carbonated-water base standard itself says caffeine up to 145 ppm, but the specific caffeinated-beverage standard separately requires <b>145–300 mg/L total caffeine</b>. The specific caffeinated-beverage provision is therefore the relevant caffeine rule for this product.</div>
+</div>
+</section>
+
+<section id="ingredients" class="view hidden">
+<div class="card">
+<div class="section-title"><h2>Core ingredients and explicit limits</h2><span>Written directly in product standard</span></div>
+<div class="tablewrap"><table>
+<thead><tr><th>Ingredient / substance</th><th>Status</th><th>Limit</th><th>How to read it</th></tr></thead>
+<tbody>
+<tr><td>Water</td><td class="status mandatory">Mandatory base</td><td>Must meet PDW / mineral-water standard</td><td>Quality requirement, not a formulation maximum</td></tr>
+<tr><td>Total caffeine from all sources</td><td class="status mandatory">Essential composition</td><td><b>145–300 mg/L</b></td><td>Both minimum and maximum apply</td></tr>
+<tr><td>Taurine</td><td class="status optional">Optional</td><td><b>Max 2,000 mg/day</b></td><td>Maximum daily consumption delivered by product</td></tr>
+<tr><td>D-glucurono-γ-lactone</td><td class="status optional">Optional</td><td><b>Max 1,200 mg/day</b></td><td>Maximum daily consumption delivered by product</td></tr>
+<tr><td>Inositol</td><td class="status optional">Optional</td><td><b>Max 100 mg/day</b></td><td>Maximum daily consumption delivered by product</td></tr>
+<tr><td>Pantothenic acid</td><td class="status optional">Optional</td><td><b>Max 10 mg/day</b></td><td>Maximum daily consumption delivered by product</td></tr>
+<tr><td>Thiamine, riboflavin, niacin, vitamin B6, vitamin B12</td><td class="status optional">Optional</td><td><b>Up to 100% RDA</b></td><td>Use the applicable current RDA value</td></tr>
+</tbody>
+</table></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Ingredients inherited from Carbonated Water</h2><span>Permitted singly or in combination</span></div>
+<div class="grid2">
+<div class="item"><b>Sweetening carbohydrate ingredients</b><small>Sugar, liquid glucose, dextrose monohydrate, invert sugar, fructose, honey.</small></div>
+<div class="item"><b>Food / flavour base</b><small>Fruit and vegetable extractives; permitted flavouring and colouring matter.</small></div>
+<div class="item"><b>Acids</b><small>Citric, fumaric, tartaric, phosphoric, lactic, ascorbic and malic acid.</small></div>
+<div class="item"><b>Texture / stabilisation</b><small>Permitted preservatives, emulsifying and stabilising agents, edible gums, gelatin, albumin and related listed ingredients.</small></div>
+<div class="item"><b>Minerals / other</b><small>Salts of sodium, calcium and magnesium; vitamins; licorice and its derivatives.</small></div>
+<div class="item"><b>Gellan gum</b><small><b>GMP</b> level.</small></div>
+</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Explicit Carbonated Water numerical limits</h2><span>Inherited by this product where applicable</span></div>
+<div class="tablewrap"><table>
+<thead><tr><th>Substance</th><th>Maximum</th><th>Unit / condition</th></tr></thead>
+<tbody>
+<tr><td>Estergum (glycerol ester of wood resin)</td><td><b>100</b></td><td>ppm</td></tr>
+<tr><td>Quinine salts</td><td><b>100</b></td><td>ppm, expressed as quinine sulphate</td></tr>
+<tr><td>Saccharin sodium</td><td><b>100</b></td><td>ppm</td></tr>
+<tr><td>Acesulfame-K</td><td><b>300</b></td><td>ppm</td></tr>
+<tr><td>Aspartame</td><td><b>700</b></td><td>ppm</td></tr>
+<tr><td>Sucralose</td><td><b>300</b></td><td>ppm</td></tr>
+<tr><td>Neotame</td><td><b>33</b></td><td>ppm</td></tr>
+<tr><td>Gellan gum</td><td>GMP</td><td>No fixed number in this clause</td></tr>
+</tbody></table></div>
+<div class="notice">Prototype scope: this table shows limits written explicitly in the product / carbonated-water standard. The full PMSV version should additionally merge all applicable permissions and conditions from <b>Appendix A for food category 14.1.4.1</b>, so this prototype must not yet be treated as a complete additive database.</div>
+</div>
+</section>
+
+<section id="checker" class="view hidden">
+<div class="card">
+<div class="section-title"><h2>Check a sample formulation</h2><span>Prototype rules engine</span></div>
+<p class="muted">Enter the proposed finished-product values. Leave optional ingredients blank if not used.</p>
+<div class="checker-grid">
+<div class="field"><label>Total caffeine (mg/L)</label><input id="caffeine" type="number" step="0.1" placeholder="e.g. 320"><small>Required range: 145–300 mg/L.</small></div>
+<div class="field"><label>Taurine delivered per day (mg)</label><input id="taurine" type="number" step="0.1" placeholder="e.g. 2000"><small>Maximum: 2,000 mg/day.</small></div>
+<div class="field"><label>D-glucurono-γ-lactone per day (mg)</label><input id="gluc" type="number" step="0.1" placeholder="e.g. 1200"><small>Maximum: 1,200 mg/day.</small></div>
+<div class="field"><label>Inositol per day (mg)</label><input id="inositol" type="number" step="0.1" placeholder="e.g. 80"><small>Maximum: 100 mg/day.</small></div>
+<div class="field"><label>Pantothenic acid per day (mg)</label><input id="pant" type="number" step="0.1" placeholder="e.g. 10"><small>Maximum: 10 mg/day.</small></div>
+<div class="field"><label>Estergum (ppm)</label><input id="estergum" type="number" step="0.1" placeholder="e.g. 90"><small>Maximum: 100 ppm.</small></div>
+<div class="field"><label>Quinine salts (ppm)</label><input id="quinine" type="number" step="0.1" placeholder="e.g. 80"><small>Maximum: 100 ppm expressed as quinine sulphate.</small></div>
+<div class="field"><label>Saccharin sodium (ppm)</label><input id="saccharin" type="number" step="0.1" placeholder="e.g. 100"><small>Maximum: 100 ppm.</small></div>
+<div class="field"><label>Acesulfame-K (ppm)</label><input id="acek" type="number" step="0.1" placeholder="e.g. 250"><small>Maximum: 300 ppm.</small></div>
+<div class="field"><label>Aspartame (ppm)</label><input id="aspartame" type="number" step="0.1" placeholder="e.g. 600"><small>Maximum: 700 ppm.</small></div>
+<div class="field"><label>Sucralose (ppm)</label><input id="sucralose" type="number" step="0.1" placeholder="e.g. 250"><small>Maximum: 300 ppm.</small></div>
+<div class="field"><label>Neotame (ppm)</label><input id="neotame" type="number" step="0.1" placeholder="e.g. 25"><small>Maximum: 33 ppm.</small></div>
+</div>
+<div style="margin-top:12px"><button class="btn" type="button" id="checkBtn">Evaluate formulation</button></div>
+<div id="results" class="results"></div>
+<div class="notice">This checker evaluates only the explicit numerical limits included in this prototype. It does not yet validate every Appendix A additive, contaminant, packaging or claim requirement.</div>
+</div>
+</section>
+
+<section id="quality" class="view hidden">
+<div class="card">
+<div class="section-title"><h2>Microbiological requirements</h2><span>Inherited Carbonated Water standard</span></div>
+<div class="tablewrap"><table>
+<thead><tr><th>Parameter</th><th>Requirement</th></tr></thead>
+<tbody>
+<tr><td>Total plate count</td><td><b>≤ 50 cfu/ml</b></td></tr>
+<tr><td>Coliform count</td><td><b>0 cfu / 100 ml</b></td></tr>
+<tr><td>Yeast & mould</td><td><b>≤ 2 cfu/ml</b></td></tr>
+</tbody></table></div>
+</div>
+<div class="card">
+<div class="section-title"><h2>Special label points</h2><span>Product-specific</span></div>
+<div class="grid2">
+<div class="item"><b>High caffeine declaration</b><small>Declare the caffeine amount as <b>“High Caffeine: X mg/serving size”</b>, where X is caffeine in the pack/serve.</small></div>
+<div class="item"><b>Caution statement</b><small>Prominently state that the product is not recommended for children, pregnant or lactating women, and persons sensitive to caffeine.</small></div>
+<div class="item"><b>Daily-consumption declaration</b><small>The standard links the daily-consumption declaration to the maximum amounts of optional functional substances and provides a 500 ml/day example framework.</small></div>
+<div class="item"><b>Non-caloric sweeteners</b><small>Products containing aspartame, acesulfame-K or other non-caloric sweeteners must also satisfy the applicable special labelling provisions under current Labelling and Display rules.</small></div>
+</div>
+</div>
+</section>
+
+<section id="sources" class="view hidden">
+<div class="card source">
+<h2>Official sources used</h2>
+<p><b>FSSAI Chapter 2.10 — Beverages other than Dairy and Fruit/Vegetable based</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf">Open official Chapter 2.10 PDF</a></p>
+<p><b>FSSAI Compendium — Food Products Standards & Food Additives</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/food-law/regulations/compendium/food-products-standards">Open official compendium</a></p>
+<p><b>FoSCoS Standard Product list</b><br><a target="_blank" rel="noopener" href="https://fcstraining.fssai.gov.in/standard-product">Open FoSCoS standard-product mapping</a></p>
+<p><b>Appendix A</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%281%29.pdf">Open official Appendix A PDF</a></p>
+<div class="notice oknote"><b>Prototype status:</b> Standards and explicit limits above were verified against the current FSSAI Chapter 2.10 source surfaced as Version 4 dated 01.08.2025. Before production release, PMSV should add a regulation-version field and revalidate the product automatically whenever the source chapter changes.</div>
+</div>
+</section>
+
+<div class="footer">Standalone evaluation prototype · not connected to live PMSV · no formulation data is uploaded or stored.</div>
+</main>
+<script>
+const tabs=[...document.querySelectorAll('.tab')];
+tabs.forEach(t=>t.addEventListener('click',()=>{
+ tabs.forEach(x=>x.classList.remove('active'));t.classList.add('active');
+ document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
+ document.getElementById(t.dataset.tab).classList.remove('hidden');
+}));
+function num(id){const v=document.getElementById(id).value.trim();return v===''?null:Number(v)}
+function row(label,value,pass,msg){
+ const div=document.createElement('div');div.className='result '+(pass?'pass':'fail');
+ div.innerHTML='<strong>'+label+(value===null?'':' · '+value)+'</strong><span>'+(pass?'PASS':'CHECK')+'</span><div class="muted">'+msg+'</div>';
+ return div;
+}
+document.getElementById('checkBtn').addEventListener('click',()=>{
+ const out=document.getElementById('results');out.innerHTML='';
+ const c=num('caffeine');
+ if(c===null)out.appendChild(row('Caffeine',null,false,'Required value missing. Enter finished-product total caffeine in mg/L.'));
+ else out.appendChild(row('Caffeine',c+' mg/L',c>=145&&c<=300,c>=145&&c<=300?'Within 145–300 mg/L.':'Outside the required 145–300 mg/L range.'));
+ const rules=[
+  ['taurine','Taurine','mg/day',2000],['gluc','D-glucurono-γ-lactone','mg/day',1200],['inositol','Inositol','mg/day',100],['pant','Pantothenic acid','mg/day',10],
+  ['estergum','Estergum','ppm',100],['quinine','Quinine salts','ppm',100],['saccharin','Saccharin sodium','ppm',100],['acek','Acesulfame-K','ppm',300],
+  ['aspartame','Aspartame','ppm',700],['sucralose','Sucralose','ppm',300],['neotame','Neotame','ppm',33]
+ ];
+ rules.forEach(([id,label,unit,max])=>{
+   const v=num(id);if(v===null)return;
+   const pass=v<=max;out.appendChild(row(label,v+' '+unit,pass,pass?'Within explicit maximum '+max+' '+unit+'.':'Exceeds explicit maximum '+max+' '+unit+'.'));
+ });
+ if(out.children.length===0)out.innerHTML='<div class="notice">Enter at least the caffeine value to evaluate the sample formulation.</div>';
+});
+</script>
+</body></html>
