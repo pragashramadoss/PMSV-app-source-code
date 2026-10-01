@@ -21,17 +21,16 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 .checker-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}.field input{width:100%;padding:10px;border:1px solid #ccd6e4;border-radius:9px}.field small{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.35}
 .btn{border:0;background:var(--blue);color:#fff;border-radius:10px;padding:11px 14px;font-weight:850;cursor:pointer}.results{margin-top:12px;display:grid;gap:8px}.result{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;display:flex;justify-content:space-between;gap:10px}.result.pass{border-color:#b9e2cf;background:#f1faf6}.result.fail{border-color:#f0b9b4;background:#fff2f1}.result strong{font-size:13px}.result span{font-size:12px;font-weight:850}.result.pass span{color:var(--green)}.result.fail span{color:var(--red)}
 .source a{color:var(--blue);word-break:break-word}.source{font-size:12px;line-height:1.6}.hidden{display:none!important}.searchbox{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:10px 12px;margin-bottom:10px}.searchbox input{border:0;outline:0;flex:1;background:transparent}
-.filterbox{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:9px 11px;margin:10px 0}.filterbox input{border:0;outline:0;flex:1;min-width:0;background:transparent}.tag{display:inline-block;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:850;background:#eef3ff;color:#3155d9}.tag.specific{background:#e9f8f0;color:#087a55}.tag.product{background:#fff4df;color:#8a5100}.countline{font-size:11px;color:var(--muted);margin:7px 0 10px}.appendix-note{font-size:11px;color:var(--muted);line-height:1.45}details.gmp{border:1px solid var(--line);border-radius:12px;background:#fff;padding:0;margin-top:12px}details.gmp>summary{cursor:pointer;padding:13px 14px;font-weight:850;list-style:none}details.gmp>summary::-webkit-details-marker{display:none}details.gmp[open]>summary{border-bottom:1px solid var(--line)}.footer{padding:10px 0 28px;text-align:center;color:var(--muted);font-size:11px}
+.tag{display:inline-block;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:850;background:#eef3ff;color:#3155d9}.tag.specific{background:#e9f8f0;color:#087a55}.tag.product{background:#fff4df;color:#8a5100}.countline{font-size:11px;color:var(--muted);margin:7px 0 10px}.appendix-note{font-size:11px;color:var(--muted);line-height:1.45}details.gmp{border:1px solid var(--line);border-radius:12px;background:#fff;padding:0;margin-top:12px}details.gmp>summary{cursor:pointer;padding:13px 14px;font-weight:850;list-style:none}details.gmp>summary::-webkit-details-marker{display:none}details.gmp[open]>summary{border-bottom:1px solid var(--line)}.footer{padding:10px 0 28px;text-align:center;color:var(--muted);font-size:11px}
 @media(max-width:700px){.meta{grid-template-columns:1fr}.grid2,.checker-grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.wrap{width:calc(100% - 18px)}.top{padding:16px 10px 19px}.product-title{font-size:23px}}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 11</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 12</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="standard">Standard</button>
 <button class="tab" data-tab="ingredients">Ingredients & limits</button>
-<button class="tab" data-tab="appendixa">Appendix A</button>
 <button class="tab" data-tab="checker">Formulation checker</button>
 <button class="tab" data-tab="quality">Tests & label</button>
 <button class="tab" data-tab="sources">Official sources</button>
@@ -133,40 +132,31 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </table></div>
 <div class="notice"><b>Why Appendix A applies:</b> Appendix A defines 14.1.4.1 as carbonated water-based flavoured drinks and expressly includes carbonated “energy” drinks. It is hierarchical, so permissions in parent category 14.1.4 also apply to 14.1.4.1 unless a more specific entry or condition says otherwise.</div>
 </div>
-</section>
 
-<section id="appendixa" class="view hidden">
 <div class="card">
-<div class="section-title"><h2>Appendix A — applicable food additives</h2><span>Version 3 · 01 Aug 2025</span></div>
-<div class="notice oknote"><b>Food category used:</b> <b>14.1.4.1 — Carbonated water-based flavoured drinks.</b> Appendix A specifically says this category includes carbonated “energy” drinks. Because Appendix A is hierarchical, the parent <b>14.1.4</b> additive permissions apply unless the subcategory gives a more specific requirement.</div>
-<div class="grid2">
-<div class="item"><b>Parent category</b><small>14.1.4 — Water-based flavoured drinks, including sport, energy and electrolyte drinks.</small></div>
-<div class="item"><b>Specific category</b><small>14.1.4.1 — Carbonated water-based flavoured drinks. Specific entries take precedence for this subcategory where they provide a different limit.</small></div>
-</div>
-<div class="filterbox"><span>🔎</span><input id="appendixSearch" placeholder="Search additive, INS, limit or condition…"></div>
-<div class="countline" id="appendixCount"></div>
+<div class="section-title"><h2>All Appendix A additives applicable to this product</h2><span>Automatically assembled for Caffeinated Beverage</span></div>
+<div class="notice oknote"><b>You do not need to search Appendix A.</b> PMSV has brought in the applicable entries from <b>14.1.4.1</b> (this product category) and <b>14.1.4</b> (its parent category). A more specific 14.1.4.1 entry takes precedence where it gives a different limit.</div>
 <div class="tablewrap"><table>
-<thead><tr><th>Additive</th><th>INS</th><th>Appendix A maximum</th><th>Condition / note</th><th>Source</th></tr></thead>
+<thead><tr><th>Additive</th><th>INS</th><th>Maximum / condition</th><th>Why it applies</th></tr></thead>
 <tbody id="appendixRows"></tbody>
 </table></div>
-<div class="notice"><b>Read “GMP” correctly:</b> GMP does not mean unlimited use. It means use in accordance with Good Manufacturing Practice under the applicable FSSAI rule — only as much as technologically necessary and consistent with the regulation.</div>
+<div class="countline" id="appendixCount"></div>
 </div>
 
 <div class="card">
-<div class="section-title"><h2>GMP Table additives also applicable</h2><span>General Appendix A GMP table</span></div>
-<div class="notice oknote">Appendix A says its GMP Table may be used in <b>all food categories except those listed in the Annex to GMP</b>. The Annex excludes several beverage categories such as 14.1.1, 14.1.2, 14.1.3 and 14.1.5, but <b>14.1.4 / 14.1.4.1 is not listed</b>. Therefore the general GMP Table also applies to this carbonated caffeinated beverage.</div>
+<div class="section-title"><h2>General Appendix A GMP additives applicable to this product</h2><span>All-food provisions that also apply</span></div>
+<div class="notice">Appendix A also has a general GMP Table that applies across food categories except those specifically excluded in its Annex. The beverage exclusions listed there do not include <b>14.1.4 / 14.1.4.1</b>, so these GMP provisions are also part of the regulatory requirements for this Caffeinated Beverage.</div>
 <details class="gmp">
-<summary>Show GMP Table additives <span class="tag">GMP</span></summary>
+<summary>Show all applicable general GMP additives <span class="tag">GMP</span></summary>
 <div style="padding:0 12px 12px">
-<div class="filterbox"><span>🔎</span><input id="gmpSearch" placeholder="Search GMP additive or INS…"></div>
-<div class="countline" id="gmpCount"></div>
 <div class="tablewrap"><table>
 <thead><tr><th>Additive</th><th>INS</th><th>Maximum</th><th>Condition</th></tr></thead>
 <tbody id="gmpRows"></tbody>
 </table></div>
+<div class="countline" id="gmpCount"></div>
 </div>
 </details>
-<div class="notice"><b>Scope:</b> This completes the Appendix A food-additive layer for this product. Appendix A does <b>not</b> replace separate contaminant, packaging, labelling or other FSSAI requirements; those remain separate compliance layers.</div>
+<div class="notice"><b>Meaning of GMP:</b> GMP does not mean unlimited use. It means use only at the level technologically necessary and in accordance with the applicable FSSAI Good Manufacturing Practice provisions.</div>
 </div>
 </section>
 
@@ -222,7 +212,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <p><b>FSSAI Chapter 2.10 — Beverages other than Dairy and Fruit/Vegetable based</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf">Open official Chapter 2.10 PDF</a></p>
 <p><b>FSSAI Compendium — Food Products Standards & Food Additives</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/food-law/regulations/compendium/food-products-standards">Open official compendium</a></p>
 <p><b>FoSCoS Standard Product list</b><br><a target="_blank" rel="noopener" href="https://fcstraining.fssai.gov.in/standard-product">Open FoSCoS standard-product mapping</a></p>
-<p><b>Appendix A — Version 3 (01.08.2025)</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf">Open official Appendix A PDF</a></p>
+<p><b>Appendix A — Version 3 (01.08.2025)</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf">Official source used to automatically bring the applicable 14.1.4.1, 14.1.4 and general GMP provisions into this product page</a></p>
 <div class="notice"><b>Source hierarchy:</b> FSSAI states that the chapter-wise compendium is for ready reference and that original notifications/amendments prevail if there is any error or overlap. Production PMSV data should therefore retain both the consolidated clause and its amendment trail.</div>
 <div class="notice oknote"><b>Prototype status:</b> Standards and explicit limits above were verified against the current FSSAI Chapter 2.10 source, Version 4 dated 01.08.2025. Before production release, PMSV should add a regulation-version field and revalidate the product automatically whenever the source chapter changes.</div>
 </div>
@@ -345,21 +335,17 @@ const gmpAdditives=[
 
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function renderAppendix(){
- const q=(document.getElementById('appendixSearch')?.value||'').trim().toLowerCase();
- const rows=appendixAdditives.filter(x=>[x.name,x.ins,x.limit,x.condition,x.source].join(' ').toLowerCase().includes(q));
+ const rows=appendixAdditives;
  const body=document.getElementById('appendixRows'); if(!body)return;
- body.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x.name)+'</b>'+(x.specific?' <span class="tag specific">14.1.4.1 specific</span>':'')+'</td><td>'+esc(x.ins)+'</td><td><b>'+esc(x.limit)+'</b></td><td>'+esc(x.condition||'—')+'</td><td><span class="tag">'+esc(x.source)+'</span></td></tr>').join('');
- const count=document.getElementById('appendixCount');if(count)count.textContent=rows.length+' of '+appendixAdditives.length+' Appendix A category entries shown';
+ body.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x.name)+'</b>'+(x.specific?' <span class="tag specific">14.1.4.1 specific</span>':'')+'</td><td>'+esc(x.ins)+'</td><td><b>'+esc(x.limit)+'</b><br><small>'+esc(x.condition||'—')+'</small></td><td><span class="tag">'+esc(x.source)+'</span></td></tr>').join('');
+ const count=document.getElementById('appendixCount');if(count)count.textContent=rows.length+' applicable Appendix A category entries included automatically';
 }
 function renderGmp(){
- const q=(document.getElementById('gmpSearch')?.value||'').trim().toLowerCase();
- const rows=gmpAdditives.filter(x=>(x[0]+' '+x[1]).toLowerCase().includes(q));
+ const rows=gmpAdditives;
  const body=document.getElementById('gmpRows');if(!body)return;
  body.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x[1])+'</b></td><td>'+esc(x[0])+'</td><td><b>GMP</b></td><td>'+(x[1].includes('FS01')?'FS01: glucose oxidase source organisms specified in Appendix A.':x[1].includes('FS02')?'FS02: lipase source organisms specified in Appendix A.':'General GMP Table provision.')+'</td></tr>').join('');
- const count=document.getElementById('gmpCount');if(count)count.textContent=rows.length+' of '+gmpAdditives.length+' GMP Table entries shown';
+ const count=document.getElementById('gmpCount');if(count)count.textContent=rows.length+' applicable general GMP entries included automatically';
 }
-document.getElementById('appendixSearch')?.addEventListener('input',renderAppendix);
-document.getElementById('gmpSearch')?.addEventListener('input',renderGmp);
 renderAppendix();renderGmp();
 
 const dailyLimits=[
