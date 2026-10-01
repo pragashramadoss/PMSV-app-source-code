@@ -1,6 +1,6 @@
 'use client';
 import {useEffect,useMemo,useState} from 'react';
-import {BookOpen,Newspaper,ShieldCheck,MessagesSquare,MessageCircleQuestion,ArrowLeft,Send,Flag,Search,Shield,BadgeCheck,TrendingUp} from 'lucide-react';
+import {BookOpen,Newspaper,ShieldCheck,FileText,MessagesSquare,MessageCircleQuestion,ArrowLeft,Send,Flag,Search,Shield,BadgeCheck,TrendingUp} from 'lucide-react';
 import AppNotifications from './app-notifications';
 
 type Question={
@@ -37,6 +37,7 @@ function Shell({children,detail=false}:{children:React.ReactNode;detail?:boolean
   <nav className="primary-nav" aria-label="Main navigation"><div className="nav-caption">WORKSPACE</div>
    <a href={route('/updates')}><Newspaper size={17}/><span>Updates/News</span></a>
    <a href={route('/audits/index.html')}><ShieldCheck size={17}/><span>Audits</span></a>
+   <a href={route('/fssai-license')}><FileText size={17}/><span>FSSAI Licence</span></a>
    <a href={route('/blogs')}><BookOpen size={17}/><span>Blogs</span></a>
    <a href={route('/discussions')} aria-current="page"><MessagesSquare size={17}/><span>Discussions</span></a>
    <div className="nav-bottom"><img className="sidebar-family-logo" src={publicAsset('/icons/pmsv-family-192.png')} alt="PMSV family logo"/><span>PMSV<small>Food safety, quality &amp; excellence</small></span></div>
