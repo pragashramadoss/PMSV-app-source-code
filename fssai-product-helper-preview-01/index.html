@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 18</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 19</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="standard">Standard</button>
@@ -199,7 +199,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <section id="process" class="view hidden">
 <div class="card">
-<div class="section-title"><h2>Select the actual manufacturing processes used</h2><span>Drives Appendix C applicability</span></div>
+<div class="section-title"><h2>Select the actual manufacturing processes used</h2><span>Step 1 of 2</span></div>
 <div class="notice oknote"><b>Why this is needed:</b> Appendix C processing aids are permitted for specific technological purposes and product categories. They should not all be shown simply because the product is a beverage. Select only the processes actually used in manufacturing this finished Caffeinated Beverage.</div>
 
 <div class="process-grid" id="processGrid">
@@ -239,13 +239,23 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <button class="btn-secondary" type="button" id="clearProcesses">Clear selection</button>
 </div>
 <div class="process-summary" id="processSummary"></div>
+
+<div id="processNextStep" class="card hidden" style="margin-top:14px;border-color:#bfd1ff;background:#f7f9ff">
+  <div class="section-title"><h2>Processes saved</h2><span>Next step</span></div>
+  <p class="muted" style="margin-top:0">Based on the manufacturing processes you selected, PMSV has identified the Appendix C processing-aid permissions that may apply.</p>
+  <button class="btn" type="button" id="goToProcessingAids">View applicable Processing Aids →</button>
+</div>
+
 <div class="notice"><b>Water treatment note:</b> selecting Water treatment does not automatically create a list of chemicals. PMSV will show only a processing aid that has an applicable final Appendix C permission for this product/process. Product water-quality requirements continue to come from the Chapter 2.10 water standard cross-reference.</div>
 </div>
 </section>
 
 <section id="processing" class="view hidden">
+<div style="margin-bottom:10px">
+  <button class="btn-secondary" type="button" id="backToProcess">← Back to Manufacturing Process</button>
+</div>
 <div class="card">
-<div class="section-title"><h2>Appendix C processing aids applicable to your process</h2><span>Version 2 · 01.08.2025</span></div>
+<div class="section-title"><h2>Appendix C processing aids applicable to your process</h2><span>Step 2 of 2 · Version 2 · 01.08.2025</span></div>
 <div class="notice oknote"><b>Only selected-process results are shown.</b> These are permissions under Appendix C, not ingredients that must be used. If a processing aid is not used, it does not need to be added just because it appears here.</div>
 <div class="process-summary" id="processingSelectedSummary"></div>
 <div id="processingEmpty" class="empty-state">No manufacturing process selected yet. Open <b>Manufacturing process</b>, select the actual processes used, then return here.</div>
@@ -603,6 +613,8 @@ function syncProcessUI(){
  const chips=selectedProcesses.map(x=>'<span class="process-chip">'+esc(processLabels[x]||x)+'</span>').join('');
  const sum=document.getElementById('processSummary');if(sum)sum.innerHTML=chips||'<span class="muted">No process selected.</span>';
  const ps=document.getElementById('processingSelectedSummary');if(ps)ps.innerHTML=chips||'<span class="muted">No process selected.</span>';
+ const next=document.getElementById('processNextStep');
+ if(next)next.classList.toggle('hidden',selectedProcesses.length===0);
  renderProcessingAids();
 }
 function saveProcessSelection(){
@@ -642,6 +654,7 @@ document.getElementById('saveProcesses')?.addEventListener('click',event=>{
  saveEnzymeSelection();
  saveProcessSelection();
  openTab('process',{updateHash:true,save:true});
+ document.getElementById('processNextStep')?.scrollIntoView({behavior:'smooth',block:'center'});
 });
 document.getElementById('clearProcesses')?.addEventListener('click',event=>{
  event.preventDefault();
