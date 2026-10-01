@@ -14,6 +14,13 @@ function appUrl(path:string){
  const base=basePath();
  return base+(path.startsWith('/')?path:'/'+path);
 }
+function withTimeout<T>(promise:Promise<T>,ms:number,message:string):Promise<T>{
+ let timer:ReturnType<typeof setTimeout>|undefined;
+ return Promise.race([
+  promise,
+  new Promise<T>((_,reject)=>{timer=setTimeout(()=>reject(Error(message)),ms)})
+ ]).finally(()=>{if(timer)clearTimeout(timer)});
+}
 function pushKey(value:string){
  const clean=value.replace(/-/g,'+').replace(/_/g,'/');
  const padded=clean+'='.repeat((4-clean.length%4)%4);
@@ -21,8 +28,18 @@ function pushKey(value:string){
  return Uint8Array.from(raw,c=>c.charCodeAt(0));
 }
 async function registerPmsvServiceWorker(){
- const reg=await navigator.serviceWorker.register(appUrl('/?pmsv-sw=1&v=1.0.15'),{scope:appUrl('/'),updateViaCache:'none'});
- await navigator.serviceWorker.ready;
+ const reg=await withTimeout(
+  navigator.serviceWorker.register(appUrl('/?pmsv-sw=1&v=1.0.16'),{scope:appUrl('/'),updateViaCache:'none'}),
+  10000,
+  'Service worker registration timed out. Reload the page and try again.'
+ );
+ if(!reg.active){
+  await withTimeout(
+   navigator.serviceWorker.ready,
+   10000,
+   'Notification service worker is not ready. Reload the page and try again.'
+  );
+ }
  return reg;
 }
 
@@ -45,18 +62,26 @@ async function prepareGrantedSubscription(){
  const response=await fetch(appUrl('/api/push'),{cache:'no-store',credentials:'same-origin',signal:AbortSignal.timeout(12000)});
  const config=await response.json().catch(()=>({})) as {publicKey?:string;error?:string};
  if(!response.ok||!config.publicKey)throw Error(config.error||'Could not prepare notifications.');
- let sub=await reg.pushManager.getSubscription();
+ let sub=await withTimeout(reg.pushManager.getSubscription(),10000,'Could not read the current notification subscription.');
  let token=localStorage.getItem('pmsv-push-token');
- if(sub&&!token){await sub.unsubscribe();sub=null}
+ if(sub&&!token){await withTimeout(sub.unsubscribe(),8000,'Could not reset the old notification subscription.');sub=null}
  if(!token){token=crypto.randomUUID()+crypto.randomUUID();localStorage.setItem('pmsv-push-token',token)}
- if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:pushKey(config.publicKey)});
+ if(!sub)sub=await withTimeout(
+  reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:pushKey(config.publicKey)}),
+  12000,
+  'Notification subscription timed out. Check browser notification permission and try again.'
+ );
  try{await postSubscription(sub,token)}
  catch(e){
   if((e as Error&{status?:number}).status!==409)throw e;
-  await sub.unsubscribe().catch(()=>{});
+  await withTimeout(sub.unsubscribe(),8000,'Could not reset the notification subscription.').catch(()=>{});
   token=crypto.randomUUID()+crypto.randomUUID();
   localStorage.setItem('pmsv-push-token',token);
-  sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:pushKey(config.publicKey)});
+  sub=await withTimeout(
+   reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:pushKey(config.publicKey)}),
+   12000,
+   'Notification subscription timed out. Check browser notification permission and try again.'
+  );
   await postSubscription(sub,token);
  }
  localStorage.setItem('pmsv-push-preference','on');
@@ -102,7 +127,7 @@ export default function AppNotifications(){
     const last=Number(localStorage.getItem('pmsv-push-sync-v2')||0);
     if(!force&&Date.now()-last<6*60*60*1000){
      const reg=await registerPmsvServiceWorker();
-     const sub=await reg.pushManager.getSubscription();
+     const sub=await withTimeout(reg.pushManager.getSubscription(),10000,'Could not read notification subscription.');
      if(!cancelled)setEnabled(Boolean(sub&&localStorage.getItem('pmsv-push-token')));
      return;
     }
@@ -143,27 +168,44 @@ export default function AppNotifications(){
  }
 
  async function enable(){
-  setBusy(true);setMessage('');let created:PushSubscription|null=null;
+  setBusy(true);setMessage('');
   try{
    if(!window.isSecureContext)throw Error('Notifications require HTTPS.');
    if(!('Notification' in window)||!('serviceWorker' in navigator)||!('PushManager' in window))throw Error('Notifications are not supported by this browser.');
 
-   const permission=await Notification.requestPermission();
-   if(permission!=='granted')throw Error(permission==='denied'?'Notifications are blocked by the browser.':'Notification permission was not granted.');
+   let permission=Notification.permission;
+   if(permission==='denied'){
+    throw Error('Notifications are blocked. Allow notifications for pmsvgroup.com in your browser/site settings, then try again.');
+   }
+   if(permission!=='granted'){
+    permission=await withTimeout(
+     Notification.requestPermission(),
+     12000,
+     'The browser did not complete the notification permission request. Check site notification settings, then try again.'
+    );
+   }
+   if(permission!=='granted'){
+    throw Error(permission==='denied'
+     ? 'Notifications are blocked. Allow notifications for pmsvgroup.com in your browser/site settings, then try again.'
+     : 'Notification permission was not granted.');
+   }
 
    localStorage.removeItem('pmsv-push-preference');
-   const synced=await prepareGrantedSubscription();
+   const synced=await withTimeout(
+    prepareGrantedSubscription(),
+    25000,
+    'Notification setup timed out. Check your connection and notification permission, then try again.'
+   );
    if(!synced)throw Error('Could not prepare notifications.');
-   created=null;
    setEnabled(true);
    setMessage('Notifications are on.');
   }catch(e){
-   if(created)await created.unsubscribe().catch(()=>{});
    setEnabled(false);
    setMessage(e instanceof Error?e.message:'Could not turn on notifications.');
-  }finally{setBusy(false)}
+  }finally{
+   setBusy(false);
+  }
  }
-
  async function testNotification(){
   setBusy(true);setMessage('');
   try{
@@ -186,7 +228,7 @@ export default function AppNotifications(){
   setBusy(true);setMessage('');
   try{
    const reg=await registerPmsvServiceWorker();
-   const sub=await reg.pushManager.getSubscription();
+   const sub=await withTimeout(reg.pushManager.getSubscription(),10000,'Could not read notification subscription.');
    if(sub){
     const token=localStorage.getItem('pmsv-push-token');
     try{
@@ -198,7 +240,7 @@ export default function AppNotifications(){
       signal:AbortSignal.timeout(8000)
      });
     }catch{}
-    await sub.unsubscribe();
+    await withTimeout(sub.unsubscribe(),8000,'Could not turn off the notification subscription.');
    }
    localStorage.setItem('pmsv-push-preference','off');
    localStorage.removeItem('pmsv-push-sync-v2');
