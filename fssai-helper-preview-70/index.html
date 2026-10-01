@@ -229,6 +229,7 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #cfd8e5;b
       <div class="source">
         <p><b>Eligibility:</b><br><a href="https://foscos.fssai.gov.in/officer/assets/docs/Revised_2ndApril2026KindofBusinessEligibility.pdf" target="_blank" rel="noopener">FoSCoS — Revised Kind of Business Eligibility, updated 01.04.2026</a></p>
         <p><b>2026 licensing reforms / perpetual validity:</b><br><a href="https://fssai.gov.in/upload/advisories/2026/03/69c6a23234827order_27032026.pdf" target="_blank" rel="noopener">FSSAI — FAQs on Licensing & Registration Amendment Regulations, 27.03.2026</a></p>
+        <p><b>2026 amendment regulation:</b><br><a href="https://fssai.gov.in/upload/uploadfiles/files/1_Notification%20dt%2010_03_2026.pdf" target="_blank" rel="noopener">Gazette — Licensing & Registration Amendment Regulations, 10.03.2026</a></p>
         <p><b>Registration documents:</b><br><a href="https://foscos.fssai.gov.in/assets/docs/DocumentsrequiredforRegistrationCertificate.pdf" target="_blank" rel="noopener">Documents required for Registration Certificate</a></p>
         <p><b>Licence documents:</b><br><a href="https://foscos.fssai.gov.in/assets/docs/KoBwiseDocumentsrequiredforLicense.pdf" target="_blank" rel="noopener">Kind-of-business-wise documents required for licence</a></p>
         <p><b>FoSCoS documents hub:</b><br><a href="https://foscos.fssai.gov.in/home-document" target="_blank" rel="noopener">General and state-wise document requirements</a></p>
@@ -561,7 +562,7 @@ function updateFeeTotal(){
    return;
  }
  annualFee.textContent=inr(annual);
- feeNote.innerHTML='The licence/registration has <b>perpetual validity</b> unless suspended, cancelled or surrendered; there is no renewal application. The applicable fee remains an <b>annual fee</b>. FSSAI permits payment for any number of years at once and payment can be made at any time of the year.';
+ feeNote.innerHTML='The licence/registration has <b>perpetual validity</b> unless suspended, cancelled or surrendered; there is no renewal application. The applicable fee remains an <b>annual fee</b>. FSSAI permits payment for any number of years at once and payment can be made at any time of the year. <b>Do not miss the annual fee:</b> under the 2026 regulation, non-payment can result in deemed suspension until the dues are paid.';
  if(currentCase && typeof updateCompletion==='function') updateCompletion();
 }
 
@@ -581,7 +582,7 @@ function finish(type,reason,feeText,annualFeeOverride=null){
 
 function requirementsFor(c){
  const base=[];
- if(c.license==='FSSAI Registration'){
+ if((c.license||'').includes('Registration')){
    return [
     r('photo','Applicant photograph','Required for Registration Certificate.','<b>What to keep ready:</b> A clear, recent photograph of the applicant/FBO applying for the Registration Certificate.<br><b>Check before upload:</b> Face should be clearly visible; use a current image and avoid cropped/blurred copies.'),
     r('id','Government-issued photo ID','Aadhaar, PAN, Voter ID or other government-issued photo identity document.','<b>Required document:</b> Government-issued photo identity proof of the applicant/FBO. FoSCoS specifically gives Aadhaar, PAN and Voter ID as examples.<br><b>What must match:</b> Applicant name/details should be consistent with the Registration application.<br><b>Privacy:</b> Keep the document for FoSCoS submission; PMSV Helper does not collect or store the ID.'),
@@ -591,7 +592,7 @@ function requirementsFor(c){
  }
  base.push(
   r('id','Photo ID and address proof of proprietor/partner/director/authorised signatory','Listed in the licence document requirements.','<b>Who:</b> Proprietor, partner, director(s) or authorised signatory, as applicable to the business constitution.<br><b>Document:</b> Valid government-issued photo ID and address proof.<br><b>What must match:</b> Name and role should be consistent with the application, constitution document and authorised-signatory details.'),
-  r('premise','Proof of possession of premises','Sale deed, rent/lease agreement, electricity bill or other accepted proof, as applicable.','<b>Accepted examples in FoSCoS guidance:</b> Sale deed; rent agreement; lease deed / lease agreement; or electricity bill when the premise is owned.<br><b>For transporters:</b> The office address can be treated as the premise.<br><b>What must match:</b> The address should be the same as the premise address entered in Form B. Upload a clear, readable copy.'),
+  r('premise','Proof of possession of premises','Sale deed, rent/lease agreement, electricity bill or other accepted proof, as applicable.','<b>Accepted examples in FoSCoS guidance:</b> Sale deed; rent agreement; lease deed / lease agreement; or electricity bill when the premise is owned.<br><b>For transporters:</b> The office address can be treated as the premise.<br><b>What must match:</b> The address should be the same as the premise address entered in the FoSCoS application. Upload a clear, readable copy.'),
   r('constitution','Business constitution document','Partnership deed / proprietorship declaration / memorandum & articles or applicable constitution proof.','<b>Use the document that matches the legal constitution:</b><br>• Proprietorship — self-declaration / proprietorship declaration.<br>• Partnership — partnership deed.<br>• Company — Memorandum & Articles of Association. FoSCoS guidance asks for the incorporation page, authorisation of food-business activity and list of directors with addresses.<br>• Cooperative — applicable certificate under the Cooperative / Multi-State Cooperative law.<br><b>Check:</b> Legal name should match the licence application.'),
   r('formix','Form IX + Board Resolution, if a company','Nomination of person by a company is conditional, not applicable to every FBO.','<b>When required:</b> For a company where a person is nominated under Form IX.<br><b>Keep ready:</b> Completed Form IX together with the Board Resolution supporting the nomination.<br><b>Mark NA:</b> If the applicant is not a company / Form IX does not apply to that constitution.')
  );
