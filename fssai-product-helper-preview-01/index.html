@@ -21,16 +21,17 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 .checker-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}.field input{width:100%;padding:10px;border:1px solid #ccd6e4;border-radius:9px}.field small{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.35}
 .btn{border:0;background:var(--blue);color:#fff;border-radius:10px;padding:11px 14px;font-weight:850;cursor:pointer}.results{margin-top:12px;display:grid;gap:8px}.result{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;display:flex;justify-content:space-between;gap:10px}.result.pass{border-color:#b9e2cf;background:#f1faf6}.result.fail{border-color:#f0b9b4;background:#fff2f1}.result strong{font-size:13px}.result span{font-size:12px;font-weight:850}.result.pass span{color:var(--green)}.result.fail span{color:var(--red)}
 .source a{color:var(--blue);word-break:break-word}.source{font-size:12px;line-height:1.6}.hidden{display:none!important}.searchbox{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:10px 12px;margin-bottom:10px}.searchbox input{border:0;outline:0;flex:1;background:transparent}
-.footer{padding:10px 0 28px;text-align:center;color:var(--muted);font-size:11px}
+.filterbox{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:9px 11px;margin:10px 0}.filterbox input{border:0;outline:0;flex:1;min-width:0;background:transparent}.tag{display:inline-block;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:850;background:#eef3ff;color:#3155d9}.tag.specific{background:#e9f8f0;color:#087a55}.tag.product{background:#fff4df;color:#8a5100}.countline{font-size:11px;color:var(--muted);margin:7px 0 10px}.appendix-note{font-size:11px;color:var(--muted);line-height:1.45}details.gmp{border:1px solid var(--line);border-radius:12px;background:#fff;padding:0;margin-top:12px}details.gmp>summary{cursor:pointer;padding:13px 14px;font-weight:850;list-style:none}details.gmp>summary::-webkit-details-marker{display:none}details.gmp[open]>summary{border-bottom:1px solid var(--line)}.footer{padding:10px 0 28px;text-align:center;color:var(--muted);font-size:11px}
 @media(max-width:700px){.meta{grid-template-columns:1fr}.grid2,.checker-grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.wrap{width:calc(100% - 18px)}.top{padding:16px 10px 19px}.product-title{font-size:23px}}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 10</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 11</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="standard">Standard</button>
 <button class="tab" data-tab="ingredients">Ingredients & limits</button>
+<button class="tab" data-tab="appendixa">Appendix A</button>
 <button class="tab" data-tab="checker">Formulation checker</button>
 <button class="tab" data-tab="quality">Tests & label</button>
 <button class="tab" data-tab="sources">Official sources</button>
@@ -115,28 +116,64 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div class="card">
-<div class="section-title"><h2>Other applicable FSSAI numerical limits</h2><span>Part of this product through 2.10.6(2)(IV)</span></div>
+<div class="section-title"><h2>Where Chapter 2.10 and Appendix A overlap</h2><span>Finished product must meet both</span></div>
+<div class="notice oknote"><b>Important:</b> Chapter 2.10 requires Caffeinated Beverage to conform to the Carbonated Water standard for sweeteners and food additives. Appendix A also gives additive permissions for food category <b>14.1.4.1</b> through the hierarchy of <b>14.1.4 → 14.1.4.1</b>. Where both set a maximum for the same additive, the finished product must satisfy <b>both</b>; the lower maximum is therefore the limiting value. <b>ppm = mg/kg</b> on a mass basis.</div>
 <div class="tablewrap"><table>
-<thead><tr><th>Substance</th><th>FSSAI limit</th><th>Condition</th><th>Source</th></tr></thead>
+<thead><tr><th>Additive</th><th>Chapter 2.10</th><th>Appendix A</th><th>Limiting value for compliance</th></tr></thead>
 <tbody>
-<tr><td><b>Estergum</b> (glycerol ester of wood resin)</td><td><b>Max 100 ppm</b></td><td>Finished product</td><td>2.10.6(2)(IV) → 2.10.6(1)</td></tr>
-<tr><td><b>Quinine salts</b></td><td><b>Max 100 ppm</b></td><td>Expressed as quinine sulphate</td><td>2.10.6(2)(IV) → 2.10.6(1)</td></tr>
-<tr><td><b>Saccharin sodium</b></td><td><b>Max 100 ppm</b></td><td>Where used</td><td>2.10.6(2)(IV) → 2.10.6(1)</td></tr>
-<tr><td><b>Acesulfame-K</b></td><td><b>Max 300 ppm</b></td><td>Where used</td><td>2.10.6(2)(IV) → 2.10.6(1)</td></tr>
-<tr><td><b>Aspartame</b></td><td><b>Max 700 ppm</b></td><td>Where used; applicable special labelling also applies</td><td>2.10.6(2)(IV) → 2.10.6(1)</td></tr>
-<tr><td><b>Sucralose</b></td><td><b>Max 300 ppm</b></td><td>Where used</td><td>2.10.6(2)(IV) → 2.10.6(1)</td></tr>
-<tr><td><b>Neotame</b></td><td><b>Max 33 ppm</b></td><td>Where used</td><td>2.10.6(2)(IV) → 2.10.6(1)</td></tr>
-<tr><td><b>Gellan gum</b></td><td><b>GMP</b></td><td>No fixed numerical maximum stated in this clause</td><td>2.10.6(2)(IV) → 2.10.6(1)</td></tr>
-</tbody></table></div>
-<div class="notice"><b>Why these appear here:</b> FSSAI clause <b>2.10.6(2)(IV)</b> says that, for <b>ingredients, flavours, sweeteners, food additives, contaminants and microbiological requirements</b>, a Caffeinated Beverage must <b>conform to the standards for Carbonated Water</b>. Therefore, this helper brings those applicable Carbonated Water requirements into the Caffeinated Beverage page so the user can see the complete requirements in one place.</div>
-<div class="notice">Prototype scope: before production release, PMSV will also merge every applicable current <b>Appendix A</b> permission/condition for the selected food category and validate any overlap against the underlying amendment notifications.</div>
+<tr><td><b>Estergum / glycerol ester of wood rosin</b></td><td>100 ppm</td><td>100 mg/kg max for carbonated water</td><td><b>100 mg/kg</b></td></tr>
+<tr><td><b>Quinine salts</b></td><td>100 ppm</td><td>100 mg/kg</td><td><b>100 mg/kg</b></td></tr>
+<tr><td><b>Saccharin sodium / SACCHARINS</b></td><td>100 ppm</td><td>300 mg/kg (14.1.4.1)</td><td><b>100 mg/kg</b></td></tr>
+<tr><td><b>Acesulfame-K</b></td><td>300 ppm</td><td>600 mg/kg (14.1.4)</td><td><b>300 mg/kg</b></td></tr>
+<tr><td><b>Aspartame</b></td><td>700 ppm</td><td>600 mg/kg (14.1.4)</td><td><b>600 mg/kg</b></td></tr>
+<tr><td><b>Sucralose</b></td><td>300 ppm</td><td>300 mg/kg (14.1.4)</td><td><b>300 mg/kg</b></td></tr>
+<tr><td><b>Neotame</b></td><td>33 ppm</td><td>33 mg/kg (14.1.4)</td><td><b>33 mg/kg</b></td></tr>
+<tr><td><b>Gellan gum</b></td><td>GMP</td><td>GMP Table applies</td><td><b>GMP</b></td></tr>
+</tbody>
+</table></div>
+<div class="notice"><b>Why Appendix A applies:</b> Appendix A defines 14.1.4.1 as carbonated water-based flavoured drinks and expressly includes carbonated “energy” drinks. It is hierarchical, so permissions in parent category 14.1.4 also apply to 14.1.4.1 unless a more specific entry or condition says otherwise.</div>
+</div>
+</section>
+
+<section id="appendixa" class="view hidden">
+<div class="card">
+<div class="section-title"><h2>Appendix A — applicable food additives</h2><span>Version 3 · 01 Aug 2025</span></div>
+<div class="notice oknote"><b>Food category used:</b> <b>14.1.4.1 — Carbonated water-based flavoured drinks.</b> Appendix A specifically says this category includes carbonated “energy” drinks. Because Appendix A is hierarchical, the parent <b>14.1.4</b> additive permissions apply unless the subcategory gives a more specific requirement.</div>
+<div class="grid2">
+<div class="item"><b>Parent category</b><small>14.1.4 — Water-based flavoured drinks, including sport, energy and electrolyte drinks.</small></div>
+<div class="item"><b>Specific category</b><small>14.1.4.1 — Carbonated water-based flavoured drinks. Specific entries take precedence for this subcategory where they provide a different limit.</small></div>
+</div>
+<div class="filterbox"><span>🔎</span><input id="appendixSearch" placeholder="Search additive, INS, limit or condition…"></div>
+<div class="countline" id="appendixCount"></div>
+<div class="tablewrap"><table>
+<thead><tr><th>Additive</th><th>INS</th><th>Appendix A maximum</th><th>Condition / note</th><th>Source</th></tr></thead>
+<tbody id="appendixRows"></tbody>
+</table></div>
+<div class="notice"><b>Read “GMP” correctly:</b> GMP does not mean unlimited use. It means use in accordance with Good Manufacturing Practice under the applicable FSSAI rule — only as much as technologically necessary and consistent with the regulation.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>GMP Table additives also applicable</h2><span>General Appendix A GMP table</span></div>
+<div class="notice oknote">Appendix A says its GMP Table may be used in <b>all food categories except those listed in the Annex to GMP</b>. The Annex excludes several beverage categories such as 14.1.1, 14.1.2, 14.1.3 and 14.1.5, but <b>14.1.4 / 14.1.4.1 is not listed</b>. Therefore the general GMP Table also applies to this carbonated caffeinated beverage.</div>
+<details class="gmp">
+<summary>Show GMP Table additives <span class="tag">GMP</span></summary>
+<div style="padding:0 12px 12px">
+<div class="filterbox"><span>🔎</span><input id="gmpSearch" placeholder="Search GMP additive or INS…"></div>
+<div class="countline" id="gmpCount"></div>
+<div class="tablewrap"><table>
+<thead><tr><th>Additive</th><th>INS</th><th>Maximum</th><th>Condition</th></tr></thead>
+<tbody id="gmpRows"></tbody>
+</table></div>
+</div>
+</details>
+<div class="notice"><b>Scope:</b> This completes the Appendix A food-additive layer for this product. Appendix A does <b>not</b> replace separate contaminant, packaging, labelling or other FSSAI requirements; those remain separate compliance layers.</div>
 </div>
 </section>
 
 <section id="checker" class="view hidden">
 <div class="card">
 <div class="section-title"><h2>Check a sample formulation</h2><span>Prototype rules engine</span></div>
-<p class="muted">Enter the proposed concentration in the finished caffeinated beverage. For taurine, D-glucurono-γ-lactone, inositol and pantothenic acid, The calculator converts the FSSAI daily maximum into an equivalent concentration using 500 ml (0.5 L) of finished caffeinated beverage per day.</p>
+<p class="muted">Enter the proposed concentration in the finished caffeinated beverage. For taurine, D-glucurono-γ-lactone, inositol and pantothenic acid, the calculator converts the FSSAI daily maximum into an equivalent concentration using 500 ml (0.5 L) of finished caffeinated beverage per day.</p>
 <div class="checker-grid">
 <div class="field"><label>Total caffeine (mg/L)</label><input id="caffeine" type="number" step="0.1" placeholder="e.g. 320"><small>Required range: 145–300 mg/L.</small></div>
 <div class="field"><label>Taurine (mg/L)</label><input id="taurine" type="number" step="0.1" placeholder="e.g. 4000"><small>Calculated equivalent of FSSAI max 2,000 mg/day at 500 ml/day: 4,000 mg/L.</small></div>
@@ -145,15 +182,15 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="field"><label>Pantothenic acid (mg/L)</label><input id="pant" type="number" step="0.1" placeholder="e.g. 20"><small>Calculated equivalent of FSSAI max 10 mg/day at 500 ml/day: 20 mg/L.</small></div>
 <div class="field"><label>Estergum (ppm)</label><input id="estergum" type="number" step="0.1" placeholder="e.g. 90"><small>Maximum: 100 ppm.</small></div>
 <div class="field"><label>Quinine salts (ppm)</label><input id="quinine" type="number" step="0.1" placeholder="e.g. 80"><small>Maximum: 100 ppm expressed as quinine sulphate.</small></div>
-<div class="field"><label>Saccharin sodium (ppm)</label><input id="saccharin" type="number" step="0.1" placeholder="e.g. 100"><small>Maximum: 100 ppm.</small></div>
-<div class="field"><label>Acesulfame-K (ppm)</label><input id="acek" type="number" step="0.1" placeholder="e.g. 250"><small>Maximum: 300 ppm.</small></div>
-<div class="field"><label>Aspartame (ppm)</label><input id="aspartame" type="number" step="0.1" placeholder="e.g. 600"><small>Maximum: 700 ppm.</small></div>
+<div class="field"><label>Saccharin sodium (ppm / mg/kg)</label><input id="saccharin" type="number" step="0.1" placeholder="e.g. 100"><small>Chapter 2.10: 100 ppm; Appendix A 14.1.4.1 SACCHARINS: 300 mg/kg. To meet both: <b>max 100 mg/kg</b>.</small></div>
+<div class="field"><label>Acesulfame-K (ppm / mg/kg)</label><input id="acek" type="number" step="0.1" placeholder="e.g. 250"><small>Chapter 2.10: 300 ppm; Appendix A: 600 mg/kg. To meet both: <b>max 300 mg/kg</b>.</small></div>
+<div class="field"><label>Aspartame (ppm / mg/kg)</label><input id="aspartame" type="number" step="0.1" placeholder="e.g. 600"><small>Chapter 2.10: 700 ppm; Appendix A 14.1.4: 600 mg/kg. To meet both: <b>max 600 mg/kg</b>.</small></div>
 <div class="field"><label>Sucralose (ppm)</label><input id="sucralose" type="number" step="0.1" placeholder="e.g. 250"><small>Maximum: 300 ppm.</small></div>
 <div class="field"><label>Neotame (ppm)</label><input id="neotame" type="number" step="0.1" placeholder="e.g. 25"><small>Maximum: 33 ppm.</small></div>
 </div>
 <div style="margin-top:12px"><button class="btn" type="button" id="checkBtn">Evaluate formulation</button></div>
 <div id="results" class="results"></div>
-<div class="notice">This checker evaluates only the explicit numerical limits included in this prototype. It does not yet validate every Appendix A additive, contaminant, packaging or claim requirement.</div>
+<div class="notice">The checker currently evaluates the product-specific actives and the overlapping Chapter 2.10 / Appendix A additives shown above. Use the <b>Appendix A</b> tab for the complete category permission list. Contaminants, packaging and claim checks remain separate regulatory layers.</div>
 </div>
 </section>
 
@@ -185,7 +222,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <p><b>FSSAI Chapter 2.10 — Beverages other than Dairy and Fruit/Vegetable based</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf">Open official Chapter 2.10 PDF</a></p>
 <p><b>FSSAI Compendium — Food Products Standards & Food Additives</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/food-law/regulations/compendium/food-products-standards">Open official compendium</a></p>
 <p><b>FoSCoS Standard Product list</b><br><a target="_blank" rel="noopener" href="https://fcstraining.fssai.gov.in/standard-product">Open FoSCoS standard-product mapping</a></p>
-<p><b>Appendix A</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%281%29.pdf">Open official Appendix A PDF</a></p>
+<p><b>Appendix A — Version 3 (01.08.2025)</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf">Open official Appendix A PDF</a></p>
 <div class="notice"><b>Source hierarchy:</b> FSSAI states that the chapter-wise compendium is for ready reference and that original notifications/amendments prevail if there is any error or overlap. Production PMSV data should therefore retain both the consolidated clause and its amendment trail.</div>
 <div class="notice oknote"><b>Prototype status:</b> Standards and explicit limits above were verified against the current FSSAI Chapter 2.10 source, Version 4 dated 01.08.2025. Before production release, PMSV should add a regulation-version field and revalidate the product automatically whenever the source chapter changes.</div>
 </div>
@@ -235,6 +272,96 @@ function row(label,value,pass,msg){
  div.innerHTML='<strong>'+label+(value===null?'':' · '+value)+'</strong><span>'+(pass?'PASS':'CHECK')+'</span><div class="muted">'+msg+'</div>';
  return div;
 }
+const appendixAdditives=[
+{name:'Ascorbyl esters',ins:'Group',limit:'1,000 mg/kg',condition:'Notes 15, 10: on fat/oil basis; as ascorbyl stearate.',source:'14.1.4'},
+{name:'Acesulfame potassium',ins:'950',limit:'600 mg/kg',condition:'Note 188: combined use with aspartame-acesulfame salt must not exceed this level as acesulfame-K. Chapter 2.10 is stricter at 300 ppm for this product.',source:'14.1.4'},
+{name:'Allura Red AC',ins:'129',limit:'100 mg/kg',condition:'Note 127: on served-to-consumer basis.',source:'14.1.4'},
+{name:'Anthocyanins',ins:'163(i), 163(iii)',limit:'GMP',condition:'Good Manufacturing Practice.',source:'14.1.4'},
+{name:'Aspartame',ins:'951',limit:'600 mg/kg',condition:'Note 191: combined use with aspartame-acesulfame salt must not exceed this level as aspartame. This is stricter than Chapter 2.10 carbonated-water limit of 700 ppm.',source:'14.1.4'},
+{name:'Benzoates',ins:'Group',limit:'600 mg/kg',condition:'As benzoic acid; interim maximum. If beverage pH > 3.5, note 123 permits 1,000 mg/kg.',source:'14.1.4'},
+{name:'Beeswax',ins:'901',limit:'200 mg/kg',condition:'For use as a flavour carrier only.',source:'14.1.4'},
+{name:'Brilliant Blue FCF',ins:'133',limit:'100 mg/kg',condition:'',source:'14.1.4'},
+{name:'Carotenoids',ins:'Group',limit:'100 mg/kg',condition:'Group limit in category table.',source:'14.1.4'},
+{name:'Chlorophylls and chlorophyllins, copper complexes',ins:'Group',limit:'300 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
+{name:'Candelilla wax',ins:'902',limit:'200 mg/kg',condition:'For use as a flavour carrier only.',source:'14.1.4'},
+{name:'Caramel III — ammonia caramel',ins:'150c',limit:'5,000 mg/kg',condition:'Note 9 has a separate exception for ready-to-drink coffee products.',source:'14.1.4'},
+{name:'Caramel IV — sulfite ammonia caramel',ins:'150d',limit:'50,000 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
+{name:'Carnauba wax',ins:'903',limit:'200 mg/kg',condition:'For use as a flavour carrier only.',source:'14.1.4'},
+{name:'Beta-carotenes, vegetable',ins:'160a(ii)',limit:'2,000 mg/kg',condition:'',source:'14.1.4'},
+{name:'Cyclodextrin, beta',ins:'459',limit:'500 mg/kg',condition:'',source:'14.1.4'},
+{name:'Diacetyltartaric and fatty acid esters of glycerol (DATEM)',ins:'472e',limit:'5,000 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
+{name:'Ethylene diamine tetra acetates',ins:'Group',limit:'200 mg/kg',condition:'As anhydrous calcium disodium ethylenediaminetetraacetate.',source:'14.1.4'},
+{name:'Fast Green FCF',ins:'143',limit:'100 mg/kg',condition:'',source:'14.1.4'},
+{name:'Glycerol ester of wood rosin',ins:'445(iii)',limit:'100 mg/kg',condition:'Appendix parent row is 150 mg/kg but explicitly states 100 mg/kg maximum for carbonated water.',source:'14.1.4 → carbonated-water specific'},
+{name:'Grape skin extract',ins:'163(ii)',limit:'300 mg/kg',condition:'As anthocyanin; on served-to-consumer basis.',source:'14.1.4'},
+{name:'Hydroxybenzoates, para-',ins:'Group',limit:'500 mg/kg',condition:'As para-hydroxybenzoic acid.',source:'14.1.4'},
+{name:'Iron oxides',ins:'Group',limit:'100 mg/kg',condition:'',source:'14.1.4'},
+{name:'Indigotine (Indigo carmine)',ins:'132',limit:'100 mg/kg',condition:'',source:'14.1.4'},
+{name:'Isopropyl citrates',ins:'384',limit:'200 mg/kg',condition:'',source:'14.1.4'},
+{name:'Neotame',ins:'961',limit:'33 mg/kg',condition:'Chapter 2.10 also limits Neotame to 33 ppm.',source:'14.1.4'},
+{name:'Phosphates',ins:'Group',limit:'1,000 mg/kg',condition:'As phosphorus; on served-to-consumer basis.',source:'14.1.4'},
+{name:'Polysorbates',ins:'Group',limit:'500 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
+{name:'Polydimethylsiloxane',ins:'900a',limit:'20 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
+{name:'Polyethylene glycol',ins:'1521',limit:'1,000 mg/kg',condition:'',source:'14.1.4'},
+{name:'Ponceau 4R',ins:'124',limit:'50 mg/kg',condition:'Appendix parent row is 100 mg/kg but expressly states 50 mg/kg maximum for carbonated water.',source:'14.1.4 → carbonated-water specific'},
+{name:'Propyl gallate',ins:'310',limit:'1,000 mg/kg',condition:'On fat/oil basis.',source:'14.1.4'},
+{name:'Propylene glycol esters of fatty acids',ins:'477',limit:'500 mg/kg',condition:'',source:'14.1.4'},
+{name:'Quillaia extracts',ins:'Group',limit:'50 mg/kg',condition:'On saponin basis. Note 132 gives a separate semi-frozen beverage exception.',source:'14.1.4'},
+{name:'Sorbates',ins:'Group',limit:'500 mg/kg',condition:'As sorbic acid; on served-to-consumer basis.',source:'14.1.4'},
+{name:'Sulfites',ins:'Group',limit:'70 mg/kg',condition:'As residual SO₂; on served-to-consumer basis. Note 143 restricts this entry to fruit juice-based drinks and dry ginger ale only.',source:'14.1.4 · conditional'},
+{name:'Stannous chloride',ins:'512',limit:'20 mg/kg',condition:'As tin.',source:'14.1.4'},
+{name:'Stearyl citrate',ins:'484',limit:'500 mg/kg',condition:'',source:'14.1.4'},
+{name:'Steviol glycosides',ins:'960',limit:'200 mg/kg',condition:'As steviol equivalents.',source:'14.1.4'},
+{name:'Sucralose',ins:'955',limit:'300 mg/kg',condition:'On served-to-consumer basis. Chapter 2.10 also limits sucralose to 300 ppm.',source:'14.1.4'},
+{name:'Annatto',ins:'160b(i), 160b(ii)',limit:'100 mg/kg',condition:'',source:'14.1.4'},
+{name:'Curcumin',ins:'100',limit:'100 mg/kg',condition:'',source:'14.1.4'},
+{name:'Carmoisine',ins:'122',limit:'100 mg/kg',condition:'',source:'14.1.4'},
+{name:'Erythrosine',ins:'127',limit:'50 mg/kg',condition:'',source:'14.1.4'},
+{name:'Dimethyl dicarbonate',ins:'242',limit:'250 mg/kg',condition:'As added level; residue not detected in ready-to-eat food. Final-product methanol maximum stated as 200 mg/L.',source:'14.1.4'},
+{name:'Saffron',ins:'—',limit:'GMP',condition:'Good Manufacturing Practice.',source:'14.1.4'},
+{name:'Tartrazine',ins:'102',limit:'100 mg/kg',condition:'',source:'14.1.4'},
+{name:'Sucroglycerides',ins:'474',limit:'200 mg/kg',condition:'Note 219 gives 5,000 mg/kg only for specified aniseed-, coconut- and almond-based drinks.',source:'14.1.4'},
+{name:'Sucrose acetate isobutyrate',ins:'444',limit:'500 mg/kg',condition:'',source:'14.1.4'},
+{name:'Sunset Yellow FCF',ins:'110',limit:'100 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
+{name:'Thiodipropionates',ins:'Group',limit:'1,000 mg/kg',condition:'On fat/oil basis; as thiodipropionic acid.',source:'14.1.4'},
+{name:'Triethyl citrate',ins:'1505',limit:'200 mg/kg',condition:'',source:'14.1.4'},
+{name:'Quinine salts',ins:'—',limit:'100 mg/kg',condition:'Chapter 2.10 carbonated-water standard also gives 100 ppm expressed as quinine sulphate.',source:'14.1.4'},
+{name:'Tartrates',ins:'Group',limit:'800 mg/kg',condition:'',source:'14.1.4'},
+{name:'Canthaxanthin',ins:'161g',limit:'5 mg/kg',condition:'Specific 14.1.4.1 limit; replaces the broader parent-category value of 100 mg/kg for this subcategory.',source:'14.1.4.1',specific:true},
+{name:'Lauric arginate ethyl ester',ins:'243',limit:'50 mg/kg',condition:'Specific to carbonated water-based flavoured drinks.',source:'14.1.4.1',specific:true},
+{name:'Riboflavins',ins:'Group',limit:'50 mg/kg',condition:'Specific 14.1.4.1 additive limit; parent 14.1.4 lists 100 mg/kg. Product standard separately permits riboflavin as a vitamin up to 100% RDA.',source:'14.1.4.1',specific:true},
+{name:'Saccharins',ins:'Group',limit:'300 mg/kg',condition:'Specific 14.1.4.1 Appendix A limit. Chapter 2.10 carbonated-water standard is stricter for saccharin sodium at 100 ppm.',source:'14.1.4.1',specific:true}
+];
+
+const gmpAdditives=[
+['260','Acetic acid, glacial'],['472a','Acetic and fatty acid esters of glycerol'],['1422','Acetylated distarch adipate'],['1414','Acetylated distarch phosphate'],['1451','Acetylated oxidized starch'],['1401','Acid-treated starch'],['406','Agar'],['400','Alginic acid'],['1402','Alkaline treated starch'],['403','Ammonium alginate'],['503(i)','Ammonium carbonate'],['510','Ammonium chloride'],['503(ii)','Ammonium hydrogen carbonate'],['527','Ammonium hydroxide'],
+['1100(i)','alpha-Amylase from Aspergillus oryzae var.'],['1100(iv)','alpha-Amylase from Bacillus megaterium expressed in Bacillus subtilis'],['1100(v)','alpha-Amylase from Bacillus stearothermophilus expressed in Bacillus subtilis'],['1100(ii)','alpha-Amylase from Bacillus stearothermophilus'],['1100(iii)','alpha-Amylase from Bacillus subtilis'],['300','Ascorbic acid, L-'],['162','Beet red'],['1403','Bleached starch'],['1101(iii)','Bromelain'],
+['629',"Calcium 5'-guanylate"],['633',"Calcium 5'-inosinate"],['634',"Calcium 5'-ribonucleotides"],['263','Calcium acetate'],['404','Calcium alginate'],['302','Calcium ascorbate'],['170(i)','Calcium carbonate'],['509','Calcium chloride'],['623','Calcium di-L-glutamate'],['578','Calcium gluconate'],['526','Calcium hydroxide'],['327','Calcium lactate'],['352(ii)','Calcium malate, DL-'],['529','Calcium oxide'],['282','Calcium propionate'],['552','Calcium silicate'],['516','Calcium sulfate'],
+['150a','Caramel I — plain caramel'],['1100(vi)','Carbohydrase from Bacillus licheniformis'],['290','Carbon dioxide'],['410','Carob bean gum'],['407','Carrageenan'],['427','Cassia gum'],['140','Chlorophylls'],['330','Citric acid'],['472c','Citric and fatty acid esters of glycerol'],['468','Cross-linked sodium carboxymethyl cellulose'],['424','Curdlan'],['457','Cyclodextrin, alpha'],['458','Cyclodextrin, gamma'],['1504(i)','Cyclotetraglucose'],['1504(ii)','Cyclotetraglucose syrup'],['1400','Dextrins, roasted starch'],
+['628',"Dipotassium 5'-guanylate"],['627',"Disodium 5'-guanylate"],['631',"Disodium 5'-inosinate"],['635',"Disodium 5'-ribonucleotides"],['1412','Distarch phosphate'],['315','Erythorbic acid (Isoascorbic acid)'],['968','Erythritol'],['462','Ethyl cellulose'],['467','Ethyl hydroxyethyl cellulose'],['297','Fumaric acid'],['418','Gellan gum'],['575','Glucono delta-lactone'],['1102','Glucose oxidase (FS01)'],['620','Glutamic acid, L(+)-'],['422','Glycerol'],['626',"Guanylic acid, 5'-"],['412','Guar gum'],['414','Gum arabic (Acacia gum)'],['507','Hydrochloric acid'],['463','Hydroxypropyl cellulose'],['1442','Hydroxypropyl distarch phosphate'],['464','Hydroxypropyl methyl cellulose'],['1440','Hydroxypropyl starch'],['630',"Inosinic acid, 5'-"],['953','Isomalt (Hydrogenated isomaltulose)'],['416','Karaya gum'],['425','Konjac flour'],['270','Lactic acid, L-, D- and DL-'],['472b','Lactic and fatty acid esters of glycerol'],['966','Lactitol'],['322(i), (ii)','Lecithins'],['1104','Lipases (FS02)'],
+['160d(iii)','Lycopene, Blakeslea trispora'],['160d(i)','Lycopene, synthetic'],['160d(ii)','Lycopene, tomato'],['504(i)','Magnesium carbonate'],['511','Magnesium chloride'],['625','Magnesium di-L-glutamate'],['580','Magnesium gluconate'],['528','Magnesium hydroxide'],['504(ii)','Magnesium hydroxide carbonate'],['329','Magnesium lactate, DL-'],['530','Magnesium oxide'],['553(i)','Magnesium silicate, synthetic'],['470(iii)','Magnesium stearate'],['518','Magnesium sulfate'],['296','Malic acid, DL-'],['965(i)','Maltitol'],['965(ii)','Maltitol syrup'],['421','Mannitol'],['461','Methyl cellulose'],['465','Methyl ethyl cellulose'],['460(i)','Microcrystalline cellulose (Cellulose gel)'],['471','Mono- and di-glycerides of fatty acids'],['624','Monoammonium L-glutamate'],['622','Monopotassium L-glutamate'],['621','Monosodium L-glutamate'],['1410','Monostarch phosphate'],['941','Nitrogen'],['942','Nitrous oxide'],['1404','Oxidized starch'],['1101(ii)','Papain'],['440','Pectins'],['1413','Phosphated distarch phosphate'],['1200','Polydextroses'],['964','Polyglycitol syrup'],['1202','Polyvinylpyrrolidone, insoluble'],
+['632',"Potassium 5'-inosinate"],['261','Potassium acetates'],['402','Potassium alginate'],['303','Potassium ascorbate'],['501(i)','Potassium carbonate'],['508','Potassium chloride'],['332(i)','Potassium dihydrogen citrate'],['577','Potassium gluconate'],['501(ii)','Potassium hydrogen carbonate'],['515(ii)','Potassium hydrogen sulfate'],['525','Potassium hydroxide'],['326','Potassium lactate'],['351(ii)','Potassium malate'],['283','Potassium propionate'],['515(i)','Potassium sulfate'],['460(ii)','Powdered cellulose'],['407a','Processed eucheuma seaweed'],['944','Propane'],['280','Propionic acid'],['1101(i)','Protease'],['1204','Pullulan'],['470(i)','Salts of myristic, palmitic and stearic acids with ammonia, calcium, potassium and sodium'],['470(ii)','Salts of oleic acid with calcium, potassium and sodium'],['551','Silicon dioxide, amorphous'],['350(ii)','Sodium DL-malate'],['262(i)','Sodium acetate'],['401','Sodium alginate'],['301','Sodium ascorbate'],['500(i)','Sodium carbonate'],['466','Carboxymethyl cellulose'],['469','Sodium carboxymethyl cellulose, enzymatically hydrolysed'],['331(i)','Sodium dihydrogen citrate'],['316','Sodium erythorbate (Sodium isoascorbate)'],['365','Sodium fumarates'],['576','Sodium gluconate'],['350(i)','Sodium hydrogen DL-malate'],['500(ii)','Sodium hydrogen carbonate'],['514(ii)','Sodium hydrogen sulfate'],['524','Sodium hydroxide'],['325','Sodium lactate'],['281','Sodium propionate'],['500(iii)','Sodium sesquicarbonate'],['514(i)','Sodium sulfate'],['420(i)','Sorbitol'],['420(ii)','Sorbitol syrup'],['1420','Starch acetate'],['1450','Starch sodium octenyl succinate'],['1405','Starches, enzyme treated'],['553(iii)','Talc'],['417','Tara gum'],['957','Thaumatin'],['171','Titanium dioxide'],['413','Tragacanth gum'],['1518','Triacetin'],['380','Triammonium citrate'],['333(iii)','Tricalcium citrate'],['332(ii)','Tripotassium citrate'],['331(iii)','Trisodium citrate'],['415','Xanthan gum'],['967','Xylitol']
+];
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function renderAppendix(){
+ const q=(document.getElementById('appendixSearch')?.value||'').trim().toLowerCase();
+ const rows=appendixAdditives.filter(x=>[x.name,x.ins,x.limit,x.condition,x.source].join(' ').toLowerCase().includes(q));
+ const body=document.getElementById('appendixRows'); if(!body)return;
+ body.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x.name)+'</b>'+(x.specific?' <span class="tag specific">14.1.4.1 specific</span>':'')+'</td><td>'+esc(x.ins)+'</td><td><b>'+esc(x.limit)+'</b></td><td>'+esc(x.condition||'—')+'</td><td><span class="tag">'+esc(x.source)+'</span></td></tr>').join('');
+ const count=document.getElementById('appendixCount');if(count)count.textContent=rows.length+' of '+appendixAdditives.length+' Appendix A category entries shown';
+}
+function renderGmp(){
+ const q=(document.getElementById('gmpSearch')?.value||'').trim().toLowerCase();
+ const rows=gmpAdditives.filter(x=>(x[0]+' '+x[1]).toLowerCase().includes(q));
+ const body=document.getElementById('gmpRows');if(!body)return;
+ body.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x[1])+'</b></td><td>'+esc(x[0])+'</td><td><b>GMP</b></td><td>'+(x[1].includes('FS01')?'FS01: glucose oxidase source organisms specified in Appendix A.':x[1].includes('FS02')?'FS02: lipase source organisms specified in Appendix A.':'General GMP Table provision.')+'</td></tr>').join('');
+ const count=document.getElementById('gmpCount');if(count)count.textContent=rows.length+' of '+gmpAdditives.length+' GMP Table entries shown';
+}
+document.getElementById('appendixSearch')?.addEventListener('input',renderAppendix);
+document.getElementById('gmpSearch')?.addEventListener('input',renderGmp);
+renderAppendix();renderGmp();
+
 const dailyLimits=[
  {name:'Taurine',daily:2000},
  {name:'D-glucurono-γ-lactone',daily:1200},
@@ -267,12 +394,12 @@ document.getElementById('checkBtn').addEventListener('click',()=>{
  else out.appendChild(row('Caffeine',c+' mg/L',c>=145&&c<=300,c>=145&&c<=300?'Within 145–300 mg/L.':'Outside the required 145–300 mg/L range.'));
  const rules=[
   ['taurine','Taurine','mg/L',4000],['gluc','D-glucurono-γ-lactone','mg/L',2400],['inositol','Inositol','mg/L',200],['pant','Pantothenic acid','mg/L',20],
-  ['estergum','Estergum','ppm',100],['quinine','Quinine salts','ppm',100],['saccharin','Saccharin sodium','ppm',100],['acek','Acesulfame-K','ppm',300],
-  ['aspartame','Aspartame','ppm',700],['sucralose','Sucralose','ppm',300],['neotame','Neotame','ppm',33]
+  ['estergum','Estergum','mg/kg',100],['quinine','Quinine salts','mg/kg',100],['saccharin','Saccharin sodium','mg/kg',100],['acek','Acesulfame-K','mg/kg',300],
+  ['aspartame','Aspartame','mg/kg',600],['sucralose','Sucralose','mg/kg',300],['neotame','Neotame','mg/kg',33]
  ];
  rules.forEach(([id,label,unit,max])=>{
    const v=num(id);if(v===null)return;
-   const pass=v<=max;const calc=['taurine','gluc','inositol','pant'].includes(id);out.appendChild(row(label,v+' '+unit,pass,pass?(calc?'Within Calculated equivalent based on FSSAI 500 ml/day basis: '+max+' '+unit+'.':'Within explicit FSSAI maximum '+max+' '+unit+'.'):(calc?'Above Calculated equivalent based on the FSSAI daily maximum and 500 ml/day basis: '+max+' '+unit+'.':'Exceeds explicit FSSAI maximum '+max+' '+unit+'.')));
+   const pass=v<=max;const calc=['taurine','gluc','inositol','pant'].includes(id);out.appendChild(row(label,v+' '+unit,pass,pass?(calc?'Within the calculated equivalent based on FSSAI 500 ml/day basis: '+max+' '+unit+'.':'Within explicit FSSAI maximum '+max+' '+unit+'.'):(calc?'Above the calculated equivalent based on the FSSAI daily maximum and 500 ml/day basis: '+max+' '+unit+'.':'Exceeds explicit FSSAI maximum '+max+' '+unit+'.')));
  });
  if(out.children.length===0)out.innerHTML='<div class="notice">Enter at least the caffeine value to evaluate the sample formulation.</div>';
 });
