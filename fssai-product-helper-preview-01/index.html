@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 08</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 09</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="standard">Standard</button>
@@ -196,19 +196,39 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <script>
 const tabs=[...document.querySelectorAll('.tab')];
 const validTabs=new Set(tabs.map(t=>t.dataset.tab));
-function openTab(id,{updateHash=true}={}){
+const TAB_KEY='pmsv_fssai_product_helper_active_tab';
+
+function openTab(id,{updateHash=true,save=true}={}){
   if(!validTabs.has(id)) id='standard';
+
   tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab===id));
   document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
+
   const view=document.getElementById(id);
   if(view)view.classList.remove('hidden');
+
+  if(save){
+    try{ localStorage.setItem(TAB_KEY,id); }catch(e){}
+  }
+
   if(updateHash && location.hash!=='#'+id){
-    history.replaceState(null,'','#'+id);
+    try{ history.replaceState(null,'',location.pathname+location.search+'#'+id); }catch(e){}
   }
 }
+
 tabs.forEach(t=>t.addEventListener('click',()=>openTab(t.dataset.tab)));
-window.addEventListener('hashchange',()=>openTab(location.hash.slice(1),{updateHash:false}));
-openTab(location.hash.slice(1)||'standard',{updateHash:false});
+
+window.addEventListener('hashchange',()=>{
+  const id=location.hash.slice(1);
+  if(validTabs.has(id)) openTab(id,{updateHash:false,save:true});
+});
+
+let savedTab='';
+try{ savedTab=localStorage.getItem(TAB_KEY)||''; }catch(e){}
+
+const hashTab=location.hash.slice(1);
+const initialTab=validTabs.has(hashTab) ? hashTab : (validTabs.has(savedTab) ? savedTab : 'standard');
+openTab(initialTab,{updateHash:true,save:true});
 function num(id){const v=document.getElementById(id).value.trim();return v===''?null:Number(v)}
 function row(label,value,pass,msg){
  const div=document.createElement('div');div.className='result '+(pass?'pass':'fail');
