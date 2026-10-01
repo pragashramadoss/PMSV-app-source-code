@@ -656,6 +656,17 @@ document.getElementById('saveProcesses')?.addEventListener('click',event=>{
  openTab('process',{updateHash:true,save:true});
  document.getElementById('processNextStep')?.scrollIntoView({behavior:'smooth',block:'center'});
 });
+document.getElementById('goToProcessingAids')?.addEventListener('click',event=>{
+ event.preventDefault();
+ openTab('processing',{updateHash:true,save:true});
+ window.scrollTo({top:0,behavior:'smooth'});
+});
+document.getElementById('backToProcess')?.addEventListener('click',event=>{
+ event.preventDefault();
+ openTab('process',{updateHash:true,save:true});
+ window.scrollTo({top:0,behavior:'smooth'});
+});
+
 document.getElementById('clearProcesses')?.addEventListener('click',event=>{
  event.preventDefault();
  event.stopPropagation();
