@@ -52,8 +52,9 @@ jobs:
           script: |
             test -s "$GITHUB_WORKSPACE/android/app/build/outputs/apk/debug/app-debug.apk"
             adb install -r "$GITHUB_WORKSPACE/android/app/build/outputs/apk/debug/app-debug.apk"
+            adb shell pm grant com.pmsvgroup.foodsafety android.permission.POST_NOTIFICATIONS
             adb logcat -c
-            adb shell am start -W -n com.pmsvgroup.foodsafety/com.google.androidbrowserhelper.trusted.LauncherActivity
+            adb shell am start -W -n com.pmsvgroup.foodsafety/.PmsvLauncherActivity
             sleep 8
             adb logcat -d > /tmp/pmsv-logcat.txt
             grep -q "Process: com.pmsvgroup.foodsafety" /tmp/pmsv-logcat.txt && grep -q "FATAL EXCEPTION" /tmp/pmsv-logcat.txt && exit 1 || true
@@ -61,5 +62,7 @@ jobs:
             sleep 5
             adb logcat -d > /tmp/pmsv-deeplink-logcat.txt
             grep -q "Process: com.pmsvgroup.foodsafety" /tmp/pmsv-deeplink-logcat.txt && grep -q "FATAL EXCEPTION" /tmp/pmsv-deeplink-logcat.txt && exit 1 || true
-            adb shell dumpsys package com.pmsvgroup.foodsafety | grep "versionCode=2"
-            adb shell dumpsys package com.pmsvgroup.foodsafety | grep "versionName=1.0.1"
+            adb shell dumpsys package com.pmsvgroup.foodsafety | grep "versionCode=3"
+            adb shell dumpsys package com.pmsvgroup.foodsafety | grep "versionName=1.0.2"
+            adb shell dumpsys package com.pmsvgroup.foodsafety | grep "android.permission.POST_NOTIFICATIONS"
+            adb shell dumpsys package com.pmsvgroup.foodsafety | grep -A 12 "runtime permissions:" | grep "android.permission.POST_NOTIFICATIONS: granted=true"
