@@ -38,15 +38,20 @@ jobs:
         working-directory: android
         run: gradle --no-daemon :app:bundleRelease
 
-      - name: Verify bundle
+      - name: Verify bundle and merged manifest
         run: |
           test -s android/app/build/outputs/bundle/release/app-release.aab
           unzip -l android/app/build/outputs/bundle/release/app-release.aab | grep -q 'base/manifest/AndroidManifest.xml'
+          MERGED="$(find android/app/build/intermediates -path '*release*' -name AndroidManifest.xml | head -n 1)"
+          test -n "$MERGED"
+          grep -q 'android.permission.POST_NOTIFICATIONS' "$MERGED"
+          grep -q 'com.pmsvgroup.foodsafety.PmsvLauncherActivity' "$MERGED"
+          grep -q 'com.google.androidbrowserhelper.trusted.NotificationPermissionRequestActivity' "$MERGED"
 
       - name: Upload unsigned AAB
         uses: actions/upload-artifact@v4
         with:
-          name: PMSV-Android-unsigned-v1.0.1
+          name: PMSV-Android-unsigned-v1.0.2
           path: android/app/build/outputs/bundle/release/app-release.aab
           if-no-files-found: error
           retention-days: 14
