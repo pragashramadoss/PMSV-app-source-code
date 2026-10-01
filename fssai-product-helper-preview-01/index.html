@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 07</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 08</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="standard">Standard</button>
@@ -195,11 +195,20 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </main>
 <script>
 const tabs=[...document.querySelectorAll('.tab')];
-tabs.forEach(t=>t.addEventListener('click',()=>{
- tabs.forEach(x=>x.classList.remove('active'));t.classList.add('active');
- document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
- document.getElementById(t.dataset.tab).classList.remove('hidden');
-}));
+const validTabs=new Set(tabs.map(t=>t.dataset.tab));
+function openTab(id,{updateHash=true}={}){
+  if(!validTabs.has(id)) id='standard';
+  tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab===id));
+  document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
+  const view=document.getElementById(id);
+  if(view)view.classList.remove('hidden');
+  if(updateHash && location.hash!=='#'+id){
+    history.replaceState(null,'','#'+id);
+  }
+}
+tabs.forEach(t=>t.addEventListener('click',()=>openTab(t.dataset.tab)));
+window.addEventListener('hashchange',()=>openTab(location.hash.slice(1),{updateHash:false}));
+openTab(location.hash.slice(1)||'standard',{updateHash:false});
 function num(id){const v=document.getElementById(id).value.trim();return v===''?null:Number(v)}
 function row(label,value,pass,msg){
  const div=document.createElement('div');div.className='result '+(pass?'pass':'fail');
