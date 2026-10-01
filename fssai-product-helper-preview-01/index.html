@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 09</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 10</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="standard">Standard</button>
@@ -43,7 +43,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="meta">
 <div><small>FSSAI standard</small><b>Reg. 2.10.6(2) — Caffeinated Beverage</b></div>
 <div><small>Food category system</small><b>14.1.4.1 — Carbonated water-based flavoured drinks</b></div>
-<div><small>Source version checked</small><b>Chapter 2.10 · Version 3 · 07 May 2025</b></div>
+<div><small>Source version checked</small><b>Chapter 2.10 · Version 4 · 01 Aug 2025</b></div>
 </div>
 </div>
 <div class="card">
@@ -52,9 +52,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="item"><b>Water</b><small>Water used must conform to the packaged drinking water standard or mineral water standard referenced by FSSAI.</small></div>
 <div class="item"><b>Total caffeine</b><small><b>Minimum 145 mg/L · Maximum 300 mg/L</b>, calculated from all caffeine sources in the formulation.</small></div>
 <div class="item"><b>Carbonated version</b><small>FoSCoS maps Carbonated Caffeinated Beverage to food category <b>14.1.4.1</b>.</small></div>
-<div class="item"><b>Other permitted ingredients / limits</b><small>FSSAI clause 2.10.6(2)(IV) makes the applicable ingredient, flavour, sweetener, additive, contaminant and microbiological requirements of 2.10.6(1) part of this product standard.</small></div>
+<div class="item"><b>Other permitted ingredients / limits</b><small>FSSAI clause 2.10.6(2)(IV) requires Caffeinated Beverage to conform to the <b>Carbonated Water standards</b> for ingredients, flavours, sweeteners, food additives, contaminants and microbiological requirements.</small></div>
 </div>
-<div class="notice"><b>How PMSV applies the rule:</b> for a Caffeinated Beverage, use the product-specific caffeine requirement in <b>2.10.6(2)(II): 145–300 mg/L</b>. The cross-reference in 2.10.6(2)(IV) is used to bring in the other applicable ingredient, sweetener, additive, contaminant and microbiological requirements.</div>
+<div class="notice"><b>How to read the standard:</b> the Caffeinated Beverage-specific caffeine requirement is <b>145–300 mg/L</b> under 2.10.6(2)(II). For ingredients, flavours, sweeteners, food additives, contaminants and microbiological requirements, clause <b>2.10.6(2)(IV)</b> requires the product to conform to the <b>Carbonated Water standards</b>.</div>
 </div>
 </section>
 
@@ -128,7 +128,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <tr><td><b>Neotame</b></td><td><b>Max 33 ppm</b></td><td>Where used</td><td>2.10.6(2)(IV) → 2.10.6(1)</td></tr>
 <tr><td><b>Gellan gum</b></td><td><b>GMP</b></td><td>No fixed numerical maximum stated in this clause</td><td>2.10.6(2)(IV) → 2.10.6(1)</td></tr>
 </tbody></table></div>
-<div class="notice"><b>Why these appear here:</b> FSSAI 2.10.6(2)(IV) explicitly requires a caffeinated beverage to meet the applicable ingredient, flavour, sweetener, food-additive, contaminant and microbiological requirements referenced in 2.10.6(1). The helper therefore shows the resulting requirements directly under <b>Caffeinated Beverage</b> instead of making the user navigate to another product standard.</div>
+<div class="notice"><b>Why these appear here:</b> FSSAI clause <b>2.10.6(2)(IV)</b> says that, for <b>ingredients, flavours, sweeteners, food additives, contaminants and microbiological requirements</b>, a Caffeinated Beverage must <b>conform to the standards for Carbonated Water</b>. Therefore, this helper brings those applicable Carbonated Water requirements into the Caffeinated Beverage page so the user can see the complete requirements in one place.</div>
 <div class="notice">Prototype scope: before production release, PMSV will also merge every applicable current <b>Appendix A</b> permission/condition for the selected food category and validate any overlap against the underlying amendment notifications.</div>
 </div>
 </section>
@@ -187,7 +187,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <p><b>FoSCoS Standard Product list</b><br><a target="_blank" rel="noopener" href="https://fcstraining.fssai.gov.in/standard-product">Open FoSCoS standard-product mapping</a></p>
 <p><b>Appendix A</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%281%29.pdf">Open official Appendix A PDF</a></p>
 <div class="notice"><b>Source hierarchy:</b> FSSAI states that the chapter-wise compendium is for ready reference and that original notifications/amendments prevail if there is any error or overlap. Production PMSV data should therefore retain both the consolidated clause and its amendment trail.</div>
-<div class="notice oknote"><b>Prototype status:</b> Standards and explicit limits above were verified against the current FSSAI Chapter 2.10 source, Version 3 dated 07.05.2025. Before production release, PMSV should add a regulation-version field and revalidate the product automatically whenever the source chapter changes.</div>
+<div class="notice oknote"><b>Prototype status:</b> Standards and explicit limits above were verified against the current FSSAI Chapter 2.10 source, Version 4 dated 01.08.2025. Before production release, PMSV should add a regulation-version field and revalidate the product automatically whenever the source chapter changes.</div>
 </div>
 </section>
 
