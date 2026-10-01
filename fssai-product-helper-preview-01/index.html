@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 13</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 14</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="standard">Standard</button>
@@ -177,133 +177,138 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <section id="micro" class="view hidden">
 <div class="card">
-<div class="section-title"><h2>Microbiological requirements</h2><span>Applicable to this Caffeinated Beverage</span></div>
-<div class="notice oknote"><b>Applicable source:</b> Caffeinated Beverage clause <b>2.10.6(2)(IV)</b> requires conformity with the microbiological requirements for <b>Carbonated Water</b>. Therefore these are the limits PMSV applies to this product.</div>
+<div class="section-title"><h2>Microbiological requirements</h2><span>Automatically selected for this product</span></div>
+<div class="notice oknote"><b>Applicable source:</b> Caffeinated Beverage clause <b>2.10.6(2)(IV)</b> requires conformity with the microbiological requirements for <b>Carbonated Water</b>. Chapter 2.10 therefore supplies the microbiological limits for this Carbonated Caffeinated Beverage.</div>
 <div class="tablewrap"><table>
-<thead><tr><th>Parameter</th><th>FSSAI requirement</th><th>Source</th></tr></thead>
+<thead><tr><th>Parameter</th><th>FSSAI requirement</th><th>Regulatory source</th></tr></thead>
 <tbody>
-<tr><td><b>Total Plate Count</b></td><td><b>Not more than 50 CFU/ml</b></td><td>Carbonated Water → 2.10.6(2)(IV)</td></tr>
-<tr><td><b>Yeast & mould count</b></td><td><b>Not more than 2 CFU/ml</b></td><td>Carbonated Water → 2.10.6(2)(IV)</td></tr>
-<tr><td><b>Coliform count</b></td><td><b>Absent in 100 ml</b></td><td>Carbonated Water → 2.10.6(2)(IV)</td></tr>
+<tr><td><b>Total Plate Count</b></td><td><b>Not more than 50 CFU/ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>
+<tr><td><b>Coliform count</b></td><td><b>0 CFU in 100 ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>
+<tr><td><b>Yeast & mould count</b></td><td><b>Not more than 2 CFU/ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>
 </tbody>
 </table></div>
 </div>
 
 <div class="card">
-<div class="section-title"><h2>Appendix B applicability check</h2><span>Do not apply the wrong table</span></div>
-<div class="notice"><b>Appendix B has been checked.</b> Current Appendix B Version 2 (04.11.2024), Table 7 is titled <b>“Microbiological Requirements for Non-Carbonated Water Based Beverages (Non Alcoholic)”</b>. Because the selected product is <b>Carbonated Caffeinated Beverage</b>, Table 7 is not used as its microbiological source.</div>
-<div class="item"><b>Why this matters</b><small>Table 7 happens to show 50 CFU/ml total plate count, 2 CFU/ml yeast & mould and coliform absent in 100 ml, but it also contains a pathogen note specifically for <b>non-carbonated beverages</b>. PMSV will not transfer that note to this carbonated product without a separate applicable provision.</small></div>
+<div class="section-title"><h2>Appendix B applicability check</h2><span>Checked automatically</span></div>
+<div class="notice"><b>No separate Appendix B table is applied to this product.</b> Appendix B Version 2 (04.11.2024), Table 7 is specifically titled <b>“Microbiological Requirements for Non-Carbonated Water Based Beverages (Non Alcoholic)”</b>. The selected product is carbonated, so PMSV does not incorrectly apply that table or its non-carbonated pathogen note.</div>
+<div class="item"><b>Result</b><small>The three Chapter 2.10 Carbonated Water limits above are the product-specific microbiological requirements currently shown for this Carbonated Caffeinated Beverage. Appendix B was checked, but it does not add a separate carbonated-beverage table.</small></div>
 </div>
 </section>
 
 <section id="processing" class="view hidden">
 <div class="card">
-<div class="section-title"><h2>Appendix C — processing aids applicable to this product</h2><span>Version 2 · 01 Aug 2025</span></div>
-<div class="notice oknote"><b>Automatically assembled:</b> these are processing-aid permissions whose product scope includes <b>water-based flavoured drinks</b>, <b>non-alcoholic beverages</b>, <b>water treatment</b> relevant to such beverages, or <b>all foods</b>. They are processing aids, not ordinary formulation ingredients.</div>
+<div class="section-title"><h2>Appendix C — processing aids</h2><span>Applicable permissions assembled for this product</span></div>
+<div class="notice oknote"><b>Important distinction:</b> Appendix C lists <b>processing aids that may be used</b>; they are not mandatory ingredients and should not automatically appear in the recipe. PMSV brings in the permissions that cover this product, but the compliance file should activate only the processing aids actually used.</div>
 
-<h3 style="margin:16px 0 9px">Direct beverage / water-treatment provisions</h3>
+<h3 style="margin:16px 0 9px">Directly relevant beverage permissions</h3>
 <div class="tablewrap"><table>
-<thead><tr><th>Processing aid</th><th>Function / product scope</th><th>FSSAI limit</th><th>Appendix C source</th></tr></thead>
+<thead><tr><th>Processing aid</th><th>Technological purpose / scope</th><th>FSSAI condition</th><th>Source</th></tr></thead>
 <tbody>
-<tr><td><b>Dimethyl dicarbonate (INS 242)</b></td><td>Microbial control agent · water-based flavoured drinks</td><td><b>Maximum usage 250 mg/kg</b>; residue in finished product <b>non-detectable</b></td><td>Table 5</td></tr>
-<tr><td><b>Diatomaceous earth</b></td><td>Clarifying / filtration aid · includes non-alcoholic beverages</td><td><b>GMP</b></td><td>Table 3</td></tr>
-<tr><td><b>Calcium hydroxide (INS 524–528)</b></td><td>Flocculating aid · water treatment / non-alcoholic beverages</td><td><b>GMP</b></td><td>Table 8</td></tr>
-<tr><td><b>Ferrous sulphate</b></td><td>Flocculating aid · water treatment / non-alcoholic beverages</td><td><b>GMP</b></td><td>Table 8</td></tr>
-<tr><td><b>Activated carbon</b></td><td>Adsorbent / decolourising agent · includes non-alcoholic beverages</td><td><b>GMP</b></td><td>Table 12</td></tr>
-<tr><td><b>Calcium chloride</b></td><td>Buffering / flocculating agent · non-alcoholic beverages / water treatment</td><td><b>GMP</b></td><td>Table 12</td></tr>
-<tr><td><b>Carbon dioxide (INS 290)</b></td><td>Packaging/propelling/aerating gas · all foods; pH control for water treatment / non-alcoholic beverages</td><td><b>GMP</b></td><td>Table 12</td></tr>
-<tr><td><b>Sodium metabisulphite (INS 223)</b></td><td>pH control · water treatment / non-alcoholic beverages</td><td><b>GMP</b></td><td>Table 12</td></tr>
-<tr><td><b>Hydrochloric acid (INS 507)</b></td><td>pH control · water treatment / non-alcoholic beverages</td><td><b>GMP</b></td><td>Table 12</td></tr>
+<tr><td><b>Dimethyl dicarbonate (DMDC)</b><br><small>INS 242</small></td><td>Microbial control agent · <b>water-based flavoured drinks</b></td><td><b>Maximum usage 250 mg/kg</b><br>Residue in final product: <b>non-detectable</b></td><td>Appendix C · Table 5</td></tr>
+<tr><td><b>Diatomaceous earth</b></td><td>Clarifying / filtration aid · <b>All foods in general</b></td><td><b>GMP</b></td><td>Appendix C · Table 3 · 2025 amendment</td></tr>
+<tr><td><b>Calcium hypochlorite</b></td><td>Washing / treatment aid · scope includes <b>water</b></td><td><b>1 mg/kg max</b> as available chlorine</td><td>Appendix C · Table 7</td></tr>
 </tbody></table></div>
 </div>
 
 <div class="card">
-<div class="section-title"><h2>General Appendix C provisions that also apply</h2><span>“All foods” scope</span></div>
-<div class="notice">These provisions are not beverage-specific; Appendix C gives them an <b>All foods</b> scope, so they can also apply during manufacture of this product when used for the stated processing purpose.</div>
+<div class="section-title"><h2>General “All foods” processing-aid permissions</h2><span>Available when technologically used</span></div>
+<div class="notice">These Appendix C entries explicitly have an <b>All foods</b> scope, so they can also be used in manufacture of this beverage for the stated technological purpose, subject to the specified residue limit. They are permissions, not requirements.</div>
 <details class="gmp">
-<summary>Show applicable general processing aids <span class="tag">Appendix C</span></summary>
+<summary>Show applicable “All foods” processing aids <span class="tag">Appendix C</span></summary>
 <div style="padding:0 12px 12px">
 <div class="tablewrap"><table>
-<thead><tr><th>Processing aid</th><th>Function/table</th><th>Residual limit</th></tr></thead>
+<thead><tr><th>Processing aid</th><th>Purpose / table</th><th>Residual limit</th></tr></thead>
 <tbody>
-<tr><td>Polyethylene glycol (INS 1521)</td><td>Antifoaming · Table 1</td><td><b>GMP</b></td></tr>
-<tr><td>Propylene glycol (INS 1520)</td><td>Antifoaming · Table 1</td><td><b>GMP</b></td></tr>
-<tr><td>Sorbitan monolaurate (INS 493)</td><td>Antifoaming · Table 1</td><td><b>1 mg/kg</b></td></tr>
-<tr><td>Sorbitan monooleate (INS 494)</td><td>Antifoaming · Table 1</td><td><b>1 mg/kg</b></td></tr>
-<tr><td>Acetylated mono- and diglycerides (INS 472a)</td><td>Lubricant / release agent · Table 4</td><td><b>100 mg/kg</b></td></tr>
-<tr><td>Beeswax (INS 901)</td><td>Lubricant / release agent · Table 4</td><td><b>GMP</b></td></tr>
-<tr><td>Calcium carbonate (INS 170(i))</td><td>Lubricant / release agent · Table 4</td><td><b>GMP</b></td></tr>
-<tr><td>Glycerin / glycerol (INS 422)</td><td>Lubricant / release agent · Table 4</td><td><b>GMP</b></td></tr>
-<tr><td>Hydrogenated vegetable oil</td><td>Lubricant / release agent · Table 4</td><td><b>GMP</b></td></tr>
-<tr><td>Lecithin (INS 322(i))</td><td>Lubricant / release agent · Table 4</td><td><b>GMP</b></td></tr>
-<tr><td>Oleic acid</td><td>Lubricant / release agent · Table 4</td><td><b>GMP</b></td></tr>
-<tr><td>Thermally oxidised soybean oil (INS 479)</td><td>Lubricant / release agent · Table 4</td><td><b>320 mg/kg</b></td></tr>
-<tr><td>White mineral oil (INS 905e)</td><td>Lubricant / release agent · Table 4</td><td><b>GMP</b></td></tr>
-<tr><td>Liquid nitrogen (INS 941)</td><td>Contact freezing/cooling · Table 9</td><td><b>GMP</b></td></tr>
-<tr><td>Ammonium hydroxide (INS 527)</td><td>Acidity regulator · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Argon (INS 938)</td><td>Propellant / packaging gas · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Biotin</td><td>Microbial nutrient · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Bone phosphate (INS 542)</td><td>Emulsifier / moisture retention / sequestrant · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Citric acid (INS 330)</td><td>pH standardisation · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Nitrogen (INS 941)</td><td>Packaging gas / inert atmosphere · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Silica (INS 551)</td><td>Anticaking / free-flowing agent · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Sodium bicarbonate (INS 500(ii))</td><td>pH control · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Sodium carbonate (INS 500(i))</td><td>pH control · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Sodium hydroxide (INS 524)</td><td>pH control · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Sodium silicate (INS 550(i))</td><td>Anticaking · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Sulphuric acid (INS 513)</td><td>pH control · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Trisodium citrate / sodium citrate (INS 331(iii))</td><td>pH control · all foods · Table 12</td><td><b>GMP</b></td></tr>
-<tr><td>Corn steep liquor</td><td>Antistick agent · all foods · Table 12</td><td><b>GMP</b></td></tr>
-</tbody></table></div>
+<tr><td><b>Polyethylene glycol</b> (INS 1521)</td><td>Antifoaming · Table 1</td><td><b>GMP</b></td></tr>
+<tr><td><b>Propylene glycol</b> (INS 1520)</td><td>Antifoaming · Table 1</td><td><b>GMP</b></td></tr>
+<tr><td><b>Sorbitan monolaurate</b> (INS 493)</td><td>Antifoaming · Table 1</td><td><b>1 mg/kg</b></td></tr>
+<tr><td><b>Sorbitan monooleate</b> (INS 494)</td><td>Antifoaming · Table 1</td><td><b>1 mg/kg</b></td></tr>
+<tr><td><b>Acetylated mono- and diglycerides</b> (INS 472a)</td><td>Lubricant / release aid · Table 4</td><td><b>100 mg/kg</b></td></tr>
+<tr><td><b>Beeswax</b> (INS 901)</td><td>Lubricant / release aid · Table 4</td><td><b>GMP</b></td></tr>
+<tr><td><b>Calcium carbonate</b> (INS 170(i))</td><td>Lubricant / release aid · Table 4</td><td><b>GMP</b></td></tr>
+<tr><td><b>Glycerin / glycerol</b> (INS 422)</td><td>Lubricant / polishing aid · Tables 4 & 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Hydrogenated vegetable oil</b></td><td>Lubricant / release aid · Table 4</td><td><b>GMP</b></td></tr>
+<tr><td><b>Lecithin</b> (INS 322(i))</td><td>Release / processing aid · Table 4</td><td><b>GMP</b></td></tr>
+<tr><td><b>Oleic acid</b></td><td>Release aid · Table 4</td><td><b>GMP</b></td></tr>
+<tr><td><b>Thermally oxidised soybean oil</b> (INS 479)</td><td>Release aid · Table 4</td><td><b>320 mg/kg</b></td></tr>
+<tr><td><b>White mineral oil</b> (INS 905e)</td><td>Release aid · Table 4</td><td><b>GMP</b></td></tr>
+<tr><td><b>Ammonium hydroxide</b> (INS 527)</td><td>Acidity regulator · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Carbon dioxide</b> (INS 290)</td><td>Gassing / aerating agent · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Ethyl alcohol</b></td><td>Carrier solvent / flavouring aid · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Furcellaran</b> (INS 407)</td><td>Thickener / gelling / stabilising aid · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Hydrogenated glucose syrup</b> (INS 965(ii))</td><td>Humectant / texturizer / stabilizer · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Isopropyl alcohol</b></td><td>Glazing aid · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Liquified anhydrous ammonia</b></td><td>Bacterial nutrient · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Magnesium hydroxide</b> (INS 528)</td><td>pH control · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Nicotinamide</b></td><td>Microbial nutrient · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Nitrogen gas</b> (INS 941)</td><td>Foaming/process gas · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Oxygen</b> (INS 948)</td><td>Propellant · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Phospholipids</b> (INS 322(i))</td><td>Emulsifier / antioxidant · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Phosphoric acid</b> (INS 338)</td><td>Acidulant / sequestrant · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Polyethylene glycols</b> (INS 1521)</td><td>Carrier solvent / excipient · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Polyglycerol esters of interesterified ricinoleic acid</b> (INS 476)</td><td>Emulsifier · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Polyoxyethylene 40 stearate</b> (INS 431)</td><td>Emulsifier · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Potassium dihydrogen phosphate</b> (INS 340)</td><td>pH control · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Potassium hydroxide</b> (INS 525)</td><td>pH control · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Propylene glycol alginate</b> (INS 405)</td><td>Stabilizer / thickener / emulsifier · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Silica</b> (INS 551)</td><td>Anticaking / free-flowing aid · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Sodium bicarbonate</b> (INS 500(ii))</td><td>pH control · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Sodium calcium polyphosphate silicate</b> (INS 452(i))</td><td>Stabilizer / emulsifier / nutrient · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Sodium carbonate</b> (INS 500(i))</td><td>pH control · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Sodium dihydrogen phosphate</b> (INS 339)</td><td>pH control · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Sodium hydroxide</b> (INS 524)</td><td>pH control · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Sodium silicate</b> (INS 550(i))</td><td>Anticaking aid · Table 12</td><td><b>GMP</b></td></tr>
+<tr><td><b>Sulphuric acid</b> (INS 513)</td><td>pH control · Table 12</td><td><b>GMP</b></td></tr>
+</tbody>
+</table></div>
 </div>
 </details>
-<div class="notice"><b>Processing-aid rule:</b> Appendix C controls the processing purpose and the permitted residual level in the final food. These permissions should not be presented as normal ingredient permissions.</div>
+<div class="notice"><b>Process-dependent Appendix C provisions:</b> enzymes, extraction solvents and microbial nutrients are not automatically treated as used just because the product is a beverage. When the manufacturer selects an actual process step or aid, PMSV should pull the corresponding Appendix C enzyme/source/residue requirement into the compliance checklist.</div>
 </div>
 </section>
 
 <section id="contaminants" class="view hidden">
 <div class="card">
-<div class="section-title"><h2>Contaminants, toxins & residues applicable to this product</h2><span>Separate FSSAI regulation</span></div>
-<div class="notice oknote"><b>Why these apply:</b> clause 2.10.6(2)(IV) requires the caffeinated beverage to conform to the Carbonated Water contaminant requirements. PMSV therefore pulls the explicit <b>Carbonated Water</b> entries from the Food Safety and Standards (Contaminants, Toxins and Residues) Regulations separately from food additives.</div>
+<div class="section-title"><h2>Contaminants, toxins & residues</h2><span>Separate FSSAI regulation</span></div>
+<div class="notice oknote"><b>Current regulatory basis shown here:</b> Food Safety and Standards (Contaminants, Toxins and Residues) Regulations, 2011 — consolidated <b>Version VIII (01.04.2025)</b>. These limits are displayed separately from food additives because they come from a different regulation.</div>
 
-<h3 style="margin:16px 0 9px">Metal contaminants</h3>
+<h3 style="margin:16px 0 9px">Explicit Carbonated Water limits</h3>
 <div class="tablewrap"><table>
-<thead><tr><th>Contaminant</th><th>Article / condition</th><th>Maximum</th><th>Applicability</th></tr></thead>
+<thead><tr><th>Contaminant / residue</th><th>FSSAI maximum</th><th>Applicability</th></tr></thead>
 <tbody>
-<tr><td><b>Lead</b></td><td>Carbonated water</td><td><b>10 mg/L</b></td><td><span class="tag specific">Applies</span></td></tr>
-<tr><td><b>Copper</b></td><td>Carbonated water</td><td><b>1.5 mg/L</b></td><td><span class="tag specific">Applies</span></td></tr>
-<tr><td><b>Arsenic</b></td><td>Carbonated water</td><td><b>0.25 mg/L</b></td><td><span class="tag specific">Applies</span></td></tr>
-<tr><td><b>Tin</b></td><td>Canned beverages</td><td><b>150 mg/kg</b></td><td><span class="tag product">Conditional — only if canned</span></td></tr>
+<tr><td><b>Lead</b></td><td><b>10 mg/L</b></td><td><span class="tag direct">Carbonated water</span></td></tr>
+<tr><td><b>Copper</b></td><td><b>1.5 mg/L</b></td><td><span class="tag direct">Carbonated water</span></td></tr>
+<tr><td><b>Arsenic</b></td><td><b>0.25 mg/L</b></td><td><span class="tag direct">Carbonated water</span></td></tr>
+<tr><td><b>Chlorpyriphos</b></td><td><b>0.001 mg/kg</b></td><td><span class="tag direct">Carbonated Water pesticide MRL</span></td></tr>
+<tr><td><b>Malathion</b></td><td><b>0.01 mg/kg</b></td><td><span class="tag direct">Carbonated Water pesticide MRL</span><br><small>Determined and expressed as combined residues of malathion and malaoxon.</small></td></tr>
 </tbody></table></div>
 </div>
 
 <div class="card">
-<div class="section-title"><h2>Naturally occurring toxic substances</h2><span>Ingredient-dependent</span></div>
+<div class="section-title"><h2>General contaminant limits that also cover this beverage</h2><span>Current Version VIII</span></div>
 <div class="tablewrap"><table>
-<thead><tr><th>Substance</th><th>Maximum</th><th>When applicable</th></tr></thead>
+<thead><tr><th>Contaminant</th><th>FSSAI maximum</th><th>Basis</th></tr></thead>
 <tbody>
-<tr><td><b>Saffrole</b></td><td><b>10 ppm</b></td><td>Apply when the beverage contains <b>mace and/or nutmeg kernel as an ingredient</b>, in line with the later amendment to the contaminant regulation.</td></tr>
+<tr><td><b>Cadmium</b></td><td><b>1.5 mg/kg</b></td><td>“Foods not specified” limit where no separate Carbonated Water cadmium value is listed.</td></tr>
+<tr><td><b>Mercury</b></td><td><b>1.0 mg/kg</b></td><td>“Foods not specified” limit where no separate Carbonated Water mercury value is listed.</td></tr>
+<tr><td><b>Methyl mercury</b></td><td><b>0.25 mg/kg</b></td><td><span class="tag direct">All foods</span></td></tr>
+<tr><td><b>Saffrole</b></td><td><b>10 ppm</b></td><td><span class="tag direct">Non-alcoholic beverages</span> under the currently consolidated Version VIII.</td></tr>
+<tr><td><b>Other pesticide residues for which no MRL has been fixed</b></td><td><b>0.01 mg/kg</b></td><td>General tolerance limit stated at the end of the pesticide MRL table.</td></tr>
 </tbody></table></div>
-<div class="notice">This is shown as a <b>conditional</b> contaminant requirement. If the formulation contains no mace or nutmeg kernel, it is not treated as a routine finished-product limit for this beverage.</div>
 </div>
 
 <div class="card">
-<div class="section-title"><h2>Pesticide MRLs explicitly listed for Carbonated Water</h2><span>Residue regulation</span></div>
+<div class="section-title"><h2>Conditional contaminant requirements</h2><span>Turn on when formulation / pack makes them relevant</span></div>
 <div class="tablewrap"><table>
-<thead><tr><th>Pesticide</th><th>Article</th><th>MRL</th></tr></thead>
+<thead><tr><th>Contaminant</th><th>FSSAI maximum</th><th>Trigger</th></tr></thead>
 <tbody>
-<tr><td><b>Chlorpyriphos</b></td><td>Carbonated Water</td><td><b>0.001 mg/kg</b></td></tr>
-<tr><td><b>Malathion</b></td><td>Carbonated Water</td><td><b>0.01 mg/kg</b></td></tr>
+<tr><td><b>Tin</b></td><td><b>150 mg/kg</b></td><td><span class="tag conditional">If the finished product is a canned beverage</span></td></tr>
+<tr><td><b>Patulin</b></td><td><b>50 µg/kg</b></td><td><span class="tag conditional">If apple juice is used as an ingredient in another beverage</span></td></tr>
+<tr><td><b>Total aflatoxins</b></td><td><b>20 µg/kg</b></td><td><span class="tag conditional">If the food product contains a food article covered by the total-aflatoxin table, e.g. regulated spices/spice mix, nuts, oilseeds or pulses</span></td></tr>
+<tr><td><b>Aflatoxin B1</b></td><td><b>10 µg/kg</b></td><td><span class="tag conditional">If the finished product contains a food article covered by the Aflatoxin B1 table</span></td></tr>
 </tbody></table></div>
-<div class="notice"><b>Important:</b> ingredient-specific contaminants can also become relevant depending on the actual formulation—for example, a contaminant limit attached to an ingredient used in the beverage. PMSV should evaluate those dynamically once the formulation ingredients are entered, rather than showing unrelated ingredient limits by default.</div>
-</div>
-
-<div class="card">
-<div class="section-title"><h2>Regulatory source status</h2><span>Current source trail</span></div>
-<div class="grid2">
-<div class="item"><b>CTR Compendium</b><small>Version VIII dated 01.04.2025 contains the explicit Carbonated Water metal and pesticide entries shown above.</small></div>
-<div class="item"><b>2026 final amendment</b><small>FSSAI lists a final Contaminants, Toxins and Residues amendment dated 25.05.2026. PMSV should retain amendment-level traceability rather than relying only on the older consolidated compendium.</small></div>
-</div>
+<div class="notice"><b>How this should work when we scale the module:</b> product-level contaminants are loaded automatically. Ingredient-dependent limits are then added from the actual ingredient list, and pack-dependent limits are added from the packaging selection. This gives the user a complete but relevant compliance set instead of a generic contaminant catalogue.</div>
 </div>
 </section>
 
@@ -333,63 +338,12 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <section id="quality" class="view hidden">
 <div class="card">
-<div class="section-title"><h2>Microbiological requirements</h2><span>Applicable requirement for this product</span></div>
-<div class="notice oknote"><b>Appendix B applicability checked.</b> Appendix B Table 7 is specifically titled <b>“Microbiological Requirements for Non-Carbonated Water Based Beverages (Non Alcoholic)”</b>, so it is <b>not imported as the source for this carbonated product</b>. For Carbonated Caffeinated Beverage, Chapter 2.10 requires conformity with Carbonated Water, which itself gives the microbiological limits below.</div>
-<div class="tablewrap"><table>
-<thead><tr><th>Parameter</th><th>FSSAI limit</th><th>Source</th></tr></thead>
-<tbody>
-<tr><td><b>Total plate count</b></td><td><b>Not more than 50 CFU/ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>
-<tr><td><b>Coliform count</b></td><td><b>0 CFU in 100 ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>
-<tr><td><b>Yeast & mould count</b></td><td><b>Not more than 2 CFU/ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>
-</tbody></table></div>
-<div class="notice"><b>Why Appendix B is still checked:</b> PMSV should always test whether Appendix B has a product-specific microbiological table. In this case it does not add a separate carbonated-caffeinated-beverage table; therefore the product-standard limits above are the applicable set.</div>
-</div>
-
-<div class="card">
-<div class="section-title"><h2>Contaminants, toxins & residues</h2><span>Separate FSSAI regulation</span></div>
-<div class="notice oknote"><b>Current source used:</b> Food Safety and Standards (Contaminants, Toxins and Residues) Regulations, 2011 — consolidated <b>Version VIII (01.04.2025)</b>. These are kept separate from Appendix A because contaminants and pesticide residues are governed by a different regulation.</div>
-
-<h3 style="margin:14px 0 8px">Direct limits for Carbonated Water</h3>
-<div class="tablewrap"><table>
-<thead><tr><th>Contaminant / residue</th><th>FSSAI maximum</th><th>Applicability</th></tr></thead>
-<tbody>
-<tr><td><b>Lead</b></td><td><b>10 mg/L</b></td><td><span class="tag direct">Carbonated water</span></td></tr>
-<tr><td><b>Copper</b></td><td><b>1.5 mg/L</b></td><td><span class="tag direct">Carbonated water</span></td></tr>
-<tr><td><b>Arsenic</b></td><td><b>0.25 mg/L</b></td><td><span class="tag direct">Carbonated water</span></td></tr>
-<tr><td><b>Chlorpyriphos</b></td><td><b>0.001 mg/kg</b></td><td><span class="tag direct">Carbonated Water MRL</span></td></tr>
-<tr><td><b>Malathion</b></td><td><b>0.01 mg/kg</b></td><td><span class="tag direct">Carbonated Water MRL</span><br><small>Expressed as combined residues of malathion and malaoxon.</small></td></tr>
-</tbody></table></div>
-
-<h3 style="margin:16px 0 8px">General limits that also apply</h3>
-<div class="tablewrap"><table>
-<thead><tr><th>Contaminant</th><th>FSSAI maximum</th><th>Why applicable</th></tr></thead>
-<tbody>
-<tr><td><b>Cadmium</b></td><td><b>1.5 mg/kg</b></td><td>“Foods not specified” limit; no separate Carbonated Water cadmium entry is listed.</td></tr>
-<tr><td><b>Mercury</b></td><td><b>1.0 mg/kg</b></td><td>“Foods not specified” limit; no separate Carbonated Water mercury entry is listed.</td></tr>
-<tr><td><b>Methyl mercury</b></td><td><b>0.25 mg/kg</b></td><td><span class="tag direct">All foods</span></td></tr>
-<tr><td><b>Saffrole</b></td><td><b>10 ppm</b></td><td><span class="tag direct">Non-alcoholic beverages</span></td></tr>
-<tr><td><b>Other pesticide residues without a specifically fixed MRL</b></td><td><b>0.01 mg/kg</b></td><td>General pesticide tolerance note in the current regulation.</td></tr>
-</tbody></table></div>
-
-<h3 style="margin:16px 0 8px">Conditional requirements — depend on pack or ingredients</h3>
-<div class="tablewrap"><table>
-<thead><tr><th>Contaminant</th><th>FSSAI maximum</th><th>When this becomes applicable</th></tr></thead>
-<tbody>
-<tr><td><b>Tin</b></td><td><b>150 mg/kg</b></td><td><span class="tag conditional">If sold as a canned beverage</span></td></tr>
-<tr><td><b>Patulin</b></td><td><b>50 µg/kg</b></td><td><span class="tag conditional">If apple juice is used as an ingredient in the beverage</span></td></tr>
-<tr><td><b>Total aflatoxins</b></td><td><b>20 µg/kg</b></td><td><span class="tag conditional">If the finished product contains a regulated ingredient such as spices/spice mix, nuts, oilseeds, pulses or other articles covered by the aflatoxin table</span></td></tr>
-<tr><td><b>Aflatoxin B1</b></td><td><b>10 µg/kg</b></td><td><span class="tag conditional">If the finished product contains an article covered by the Aflatoxin B1 table</span></td></tr>
-</tbody></table></div>
-<div class="notice"><b>Product-builder logic:</b> these conditional contaminant checks should switch on automatically when the formulation says, for example, “apple juice”, “nutmeg/mace”, “spice extract”, or when the packaging is selected as a can. This avoids showing irrelevant contaminant tests while still preventing a required limit from being missed.</div>
-</div>
-
-<div class="card">
 <div class="section-title"><h2>Special label points</h2><span>Product-specific</span></div>
 <div class="grid2">
 <div class="item"><b>High caffeine declaration</b><small>Declare the caffeine amount as <b>“High Caffeine: X mg/serving size”</b>, where X is caffeine in the pack/serve.</small></div>
 <div class="item"><b>Caution statement</b><small>Prominently state that the product is not recommended for children, pregnant or lactating women, and persons sensitive to caffeine.</small></div>
 <div class="item"><b>Daily-consumption declaration</b><small>The label shall declare <b>“consume not more than 500 ml per day”</b>.</small></div>
-<div class="item"><b>Non-caloric sweeteners</b><small>Products containing aspartame, acesulfame-K or other non-caloric sweeteners must also satisfy the applicable special labelling provisions under the Labelling and Display Regulations.</small></div>
+<div class="item"><b>Non-caloric sweeteners</b><small>Products containing aspartame, acesulfame-K or other non-caloric sweeteners must also satisfy the applicable special labelling provisions under the Food Safety and Standards (Labelling and Display) Regulations, 2020, as amended.</small></div>
 </div>
 </div>
 </section>
@@ -409,7 +363,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <p><b>Contaminants, Toxins and Residues Compendium — Version VIII (01.04.2025)</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_2_4_2025_VIII.pdf">Official source for the explicit Carbonated Water contaminant and pesticide-residue limits</a></p>
 <p><b>Final CTR Amendment, 2026 — 25.05.2026</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/food-law/notifications?notification=ordinary-notification">FSSAI notification listing used to track the current amendment layer</a></p>
 <div class="notice"><b>Source hierarchy:</b> FSSAI states that the chapter-wise compendium is for ready reference and that original notifications/amendments prevail if there is any error or overlap. Production PMSV data should therefore retain both the consolidated clause and its amendment trail.</div>
-<div class="notice oknote"><b>Prototype status:</b> Standards and explicit limits above were verified against the current FSSAI Chapter 2.10 source, Version 4 dated 01.08.2025. Before production release, PMSV should add a regulation-version field and revalidate the product automatically whenever the source chapter changes.</div>
+<div class="notice oknote"><b>Prototype status:</b> the product page now assembles the product standard, Appendix A additive layer, Appendix B applicability check, Appendix C processing-aid layer, contaminants/toxins/residues and special labelling as separate regulatory layers. Every production record should retain its source document, clause/table and last-verified date.</div>
 </div>
 </section>
 
