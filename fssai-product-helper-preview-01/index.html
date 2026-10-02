@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 19</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 20</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="standard">Standard</button>
@@ -151,8 +151,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="card">
 <div class="section-title"><h2>All Appendix A additives applicable to this product</h2><span>Automatically assembled for Caffeinated Beverage</span></div>
 <div class="notice oknote"><b>You do not need to search Appendix A.</b> PMSV has brought in the applicable entries from <b>14.1.4.1</b> (this product category) and <b>14.1.4</b> (its parent category). A more specific 14.1.4.1 entry takes precedence where it gives a different limit.</div>
+<div class="notice"><b>How to read an INS group:</b> when FSSAI uses a bold group name such as <b>BENZOATES</b>, the permission covers the specific additives listed under that group in <b>Appendix A Annexure‑1</b>. PMSV therefore shows the actual member INS numbers instead of the word “Group”. Some groups are continuous ranges; others are not.</div>
 <div class="tablewrap"><table>
-<thead><tr><th>Additive</th><th>INS</th><th>Maximum / condition</th><th>Why it applies</th></tr></thead>
+<thead><tr><th>Additive / group</th><th>INS member(s)</th><th>Maximum / condition</th><th>Why it applies</th></tr></thead>
 <tbody id="appendixRows"></tbody>
 </table></div>
 <div class="countline" id="appendixCount"></div>
@@ -681,16 +682,16 @@ document.getElementById('clearProcesses')?.addEventListener('click',event=>{
 syncProcessUI();
 
 const appendixAdditives=[
-{name:'Ascorbyl esters',ins:'Group',limit:'1,000 mg/kg',condition:'Notes 15, 10: on fat/oil basis; as ascorbyl stearate.',source:'14.1.4'},
+{name:'Ascorbyl esters',ins:'304, 305',limit:'1,000 mg/kg',condition:'Notes 15, 10: on fat/oil basis; as ascorbyl stearate.',source:'14.1.4'},
 {name:'Acesulfame potassium',ins:'950',limit:'600 mg/kg',condition:'Note 188: combined use with aspartame-acesulfame salt must not exceed this level as acesulfame-K. Chapter 2.10 is stricter at 300 ppm for this product.',source:'14.1.4'},
 {name:'Allura Red AC',ins:'129',limit:'100 mg/kg',condition:'Note 127: on served-to-consumer basis.',source:'14.1.4'},
 {name:'Anthocyanins',ins:'163(i), 163(iii)',limit:'GMP',condition:'Good Manufacturing Practice.',source:'14.1.4'},
 {name:'Aspartame',ins:'951',limit:'600 mg/kg',condition:'Note 191: combined use with aspartame-acesulfame salt must not exceed this level as aspartame. This is stricter than Chapter 2.10 carbonated-water limit of 700 ppm.',source:'14.1.4'},
-{name:'Benzoates',ins:'Group',limit:'600 mg/kg',condition:'As benzoic acid; interim maximum. If beverage pH > 3.5, note 123 permits 1,000 mg/kg.',source:'14.1.4'},
+{name:'Benzoates',ins:'210–213',limit:'600 mg/kg',condition:'As benzoic acid; interim maximum. If beverage pH > 3.5, note 123 permits 1,000 mg/kg.',source:'14.1.4'},
 {name:'Beeswax',ins:'901',limit:'200 mg/kg',condition:'For use as a flavour carrier only.',source:'14.1.4'},
 {name:'Brilliant Blue FCF',ins:'133',limit:'100 mg/kg',condition:'',source:'14.1.4'},
-{name:'Carotenoids',ins:'Group',limit:'100 mg/kg',condition:'Group limit in category table.',source:'14.1.4'},
-{name:'Chlorophylls and chlorophyllins, copper complexes',ins:'Group',limit:'300 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
+{name:'Carotenoids',ins:'160a(i), 160a(iii), 160e, 160f',limit:'100 mg/kg',condition:'Group limit in category table.',source:'14.1.4'},
+{name:'Chlorophylls and chlorophyllins, copper complexes',ins:'141(i), 141(ii)',limit:'300 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
 {name:'Candelilla wax',ins:'902',limit:'200 mg/kg',condition:'For use as a flavour carrier only.',source:'14.1.4'},
 {name:'Caramel III — ammonia caramel',ins:'150c',limit:'5,000 mg/kg',condition:'Note 9 has a separate exception for ready-to-drink coffee products.',source:'14.1.4'},
 {name:'Caramel IV — sulfite ammonia caramel',ins:'150d',limit:'50,000 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
@@ -698,25 +699,25 @@ const appendixAdditives=[
 {name:'Beta-carotenes, vegetable',ins:'160a(ii)',limit:'2,000 mg/kg',condition:'',source:'14.1.4'},
 {name:'Cyclodextrin, beta',ins:'459',limit:'500 mg/kg',condition:'',source:'14.1.4'},
 {name:'Diacetyltartaric and fatty acid esters of glycerol (DATEM)',ins:'472e',limit:'5,000 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
-{name:'Ethylene diamine tetra acetates',ins:'Group',limit:'200 mg/kg',condition:'As anhydrous calcium disodium ethylenediaminetetraacetate.',source:'14.1.4'},
+{name:'Ethylene diamine tetra acetates',ins:'385, 386',limit:'200 mg/kg',condition:'As anhydrous calcium disodium ethylenediaminetetraacetate.',source:'14.1.4'},
 {name:'Fast Green FCF',ins:'143',limit:'100 mg/kg',condition:'',source:'14.1.4'},
 {name:'Glycerol ester of wood rosin',ins:'445(iii)',limit:'100 mg/kg',condition:'Appendix parent row is 150 mg/kg but explicitly states 100 mg/kg maximum for carbonated water.',source:'14.1.4 → carbonated-water specific'},
 {name:'Grape skin extract',ins:'163(ii)',limit:'300 mg/kg',condition:'As anthocyanin; on served-to-consumer basis.',source:'14.1.4'},
-{name:'Hydroxybenzoates, para-',ins:'Group',limit:'500 mg/kg',condition:'As para-hydroxybenzoic acid.',source:'14.1.4'},
-{name:'Iron oxides',ins:'Group',limit:'100 mg/kg',condition:'',source:'14.1.4'},
+{name:'Hydroxybenzoates, para-',ins:'214, 218',limit:'500 mg/kg',condition:'As para-hydroxybenzoic acid.',source:'14.1.4'},
+{name:'Iron oxides',ins:'172(i)–172(iii)',limit:'100 mg/kg',condition:'',source:'14.1.4'},
 {name:'Indigotine (Indigo carmine)',ins:'132',limit:'100 mg/kg',condition:'',source:'14.1.4'},
 {name:'Isopropyl citrates',ins:'384',limit:'200 mg/kg',condition:'',source:'14.1.4'},
 {name:'Neotame',ins:'961',limit:'33 mg/kg',condition:'Chapter 2.10 also limits Neotame to 33 ppm.',source:'14.1.4'},
-{name:'Phosphates',ins:'Group',limit:'1,000 mg/kg',condition:'As phosphorus; on served-to-consumer basis.',source:'14.1.4'},
-{name:'Polysorbates',ins:'Group',limit:'500 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
+{name:'Phosphates',ins:'338; 339(i–iii); 340(i–iii); 341(i–iii); 342(i–ii); 343(i–iii); 450(i–iii, v–vii, ix); 451(i–ii); 452(i–v)',limit:'1,000 mg/kg',condition:'As phosphorus; on served-to-consumer basis.',source:'14.1.4'},
+{name:'Polysorbates',ins:'432–436',limit:'500 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
 {name:'Polydimethylsiloxane',ins:'900a',limit:'20 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
 {name:'Polyethylene glycol',ins:'1521',limit:'1,000 mg/kg',condition:'',source:'14.1.4'},
 {name:'Ponceau 4R',ins:'124',limit:'50 mg/kg',condition:'Appendix parent row is 100 mg/kg but expressly states 50 mg/kg maximum for carbonated water.',source:'14.1.4 → carbonated-water specific'},
 {name:'Propyl gallate',ins:'310',limit:'1,000 mg/kg',condition:'On fat/oil basis.',source:'14.1.4'},
 {name:'Propylene glycol esters of fatty acids',ins:'477',limit:'500 mg/kg',condition:'',source:'14.1.4'},
-{name:'Quillaia extracts',ins:'Group',limit:'50 mg/kg',condition:'On saponin basis. Note 132 gives a separate semi-frozen beverage exception.',source:'14.1.4'},
-{name:'Sorbates',ins:'Group',limit:'500 mg/kg',condition:'As sorbic acid; on served-to-consumer basis.',source:'14.1.4'},
-{name:'Sulfites',ins:'Group',limit:'70 mg/kg',condition:'As residual SO₂; on served-to-consumer basis. Note 143 restricts this entry to fruit juice-based drinks and dry ginger ale only.',source:'14.1.4 · conditional'},
+{name:'Quillaia extracts',ins:'999(i), 999(ii)',limit:'50 mg/kg',condition:'On saponin basis. Note 132 gives a separate semi-frozen beverage exception.',source:'14.1.4'},
+{name:'Sorbates',ins:'200–203',limit:'500 mg/kg',condition:'As sorbic acid; on served-to-consumer basis.',source:'14.1.4'},
+{name:'Sulfites',ins:'220–225, 227, 228, 539',limit:'70 mg/kg',condition:'As residual SO₂; on served-to-consumer basis. Note 143 restricts this entry to fruit juice-based drinks and dry ginger ale only.',source:'14.1.4 · conditional'},
 {name:'Stannous chloride',ins:'512',limit:'20 mg/kg',condition:'As tin.',source:'14.1.4'},
 {name:'Stearyl citrate',ins:'484',limit:'500 mg/kg',condition:'',source:'14.1.4'},
 {name:'Steviol glycosides',ins:'960',limit:'200 mg/kg',condition:'As steviol equivalents.',source:'14.1.4'},
@@ -731,14 +732,14 @@ const appendixAdditives=[
 {name:'Sucroglycerides',ins:'474',limit:'200 mg/kg',condition:'Note 219 gives 5,000 mg/kg only for specified aniseed-, coconut- and almond-based drinks.',source:'14.1.4'},
 {name:'Sucrose acetate isobutyrate',ins:'444',limit:'500 mg/kg',condition:'',source:'14.1.4'},
 {name:'Sunset Yellow FCF',ins:'110',limit:'100 mg/kg',condition:'On served-to-consumer basis.',source:'14.1.4'},
-{name:'Thiodipropionates',ins:'Group',limit:'1,000 mg/kg',condition:'On fat/oil basis; as thiodipropionic acid.',source:'14.1.4'},
+{name:'Thiodipropionates',ins:'388, 389',limit:'1,000 mg/kg',condition:'On fat/oil basis; as thiodipropionic acid.',source:'14.1.4'},
 {name:'Triethyl citrate',ins:'1505',limit:'200 mg/kg',condition:'',source:'14.1.4'},
 {name:'Quinine salts',ins:'—',limit:'100 mg/kg',condition:'Chapter 2.10 carbonated-water standard also gives 100 ppm expressed as quinine sulphate.',source:'14.1.4'},
-{name:'Tartrates',ins:'Group',limit:'800 mg/kg',condition:'',source:'14.1.4'},
+{name:'Tartrates',ins:'334, 335(ii), 337',limit:'800 mg/kg',condition:'',source:'14.1.4'},
 {name:'Canthaxanthin',ins:'161g',limit:'5 mg/kg',condition:'Specific 14.1.4.1 limit; replaces the broader parent-category value of 100 mg/kg for this subcategory.',source:'14.1.4.1',specific:true},
 {name:'Lauric arginate ethyl ester',ins:'243',limit:'50 mg/kg',condition:'Specific to carbonated water-based flavoured drinks.',source:'14.1.4.1',specific:true},
-{name:'Riboflavins',ins:'Group',limit:'50 mg/kg',condition:'Specific 14.1.4.1 additive limit; parent 14.1.4 lists 100 mg/kg. Product standard separately permits riboflavin as a vitamin up to 100% RDA.',source:'14.1.4.1',specific:true},
-{name:'Saccharins',ins:'Group',limit:'300 mg/kg',condition:'Specific 14.1.4.1 Appendix A limit. Chapter 2.10 carbonated-water standard is stricter for saccharin sodium at 100 ppm.',source:'14.1.4.1',specific:true}
+{name:'Riboflavins',ins:'101(i)–101(iii)',limit:'50 mg/kg',condition:'Specific 14.1.4.1 additive limit; parent 14.1.4 lists 100 mg/kg. Product standard separately permits riboflavin as a vitamin up to 100% RDA.',source:'14.1.4.1',specific:true},
+{name:'Saccharins',ins:'954(i)–954(iv)',limit:'300 mg/kg',condition:'Specific 14.1.4.1 Appendix A limit. Chapter 2.10 carbonated-water standard is stricter for saccharin sodium at 100 ppm.',source:'14.1.4.1',specific:true}
 ];
 
 const gmpAdditives=[
