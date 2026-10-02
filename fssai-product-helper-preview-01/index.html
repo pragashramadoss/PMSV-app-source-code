@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 22</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 23</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation ingredients</button>
@@ -58,13 +58,22 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     <label>For an extra / custom ingredient, what FSSAI basis should be checked?</label>
     <select id="ingredientBasis">
       <option value="auto">Auto — identify from known FSSAI entries</option>
-      <option value="standardized">Ingredient standardized / permitted under FSSAI regulations</option>
-      <option value="ifct">Food / ingredient listed in IFCT 2017</option>
+      <option value="standardized">Standardized / specifically permitted under an FSSAI regulation</option>
       <option value="vitamin">Vitamin or mineral</option>
       <option value="additive">Food additive — check Appendix A</option>
-      <option value="unknown">Not sure / other</option>
+      <option value="botanical">Botanical / extract / other food ingredient</option>
+      <option value="unknown">Not sure / new / other</option>
     </select>
     <small>This does not self-certify an ingredient; it tells the checker which regulatory route to evaluate.</small>
+  </div>
+  <div class="field">
+    <label>Exact FSSAI regulation / clause for a custom ingredient</label>
+    <input id="ingredientClause" placeholder="e.g. Chapter 2.x / clause 2.x.x / Appendix A INS ...">
+    <small>Use only an official FSSAI regulation reference. PMSV will not treat a custom ingredient as verified merely because a clause is typed here.</small>
+  </div>
+  <div class="field">
+    <label>Source policy</label>
+    <div class="notice" style="margin:0"><b>FSSAI regulations only.</b> Regulation 2.12.1(2) refers to IFCT 2017 as one possible proprietary-food ingredient basis, but this module does not use IFCT data to verify an ingredient because it is outside the FSSAI-regulation source set.</div>
   </div>
 </div>
 
@@ -107,7 +116,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <div class="card">
 <div class="section-title"><h2>Important Proprietary Food distinction</h2><span>Regulation 2.12</span></div>
-<div class="notice"><b>Adding an extra ingredient does not automatically make the product Proprietary Food.</b> Regulation 2.12.1(1) covers food that has not been standardized, while a mere deviation in the quality parameters of a standardized food does not qualify it as proprietary. Regulation 2.12.1(2) restricts non-additive ingredients in proprietary foods to the permitted categories stated there. If the product continues to be assessed as a standardized Caffeinated Beverage, clause <b>2.10.6(2)(III)(A)</b> separately requires Food Authority approval for an additional item/ingredient outside the specified list.</div>
+<div class="notice"><b>Adding an extra ingredient does not automatically make the product Proprietary Food.</b> Regulation 2.12.1(1) covers food that has not been standardized, while a mere deviation in the quality parameters of a standardized food does not qualify it as proprietary. Regulation 2.12.1(2) restricts non-additive ingredients in proprietary foods to the permitted categories stated there. If the product continues to be assessed as a standardized Caffeinated Beverage, clause <b>2.10.6(2)(III)(A)</b> separately requires Food Authority approval for an additional item/ingredient outside the specified list. <b>PMSV verifies regulatory conclusions only from FSSAI regulations; it does not independently verify IFCT listings.</b></div>
 </div>
 </section>
 
@@ -454,6 +463,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <p><b>Final Contaminants, Toxins and Residues Amendment Regulations, 2026 · notified 25.05.2026</b><br>
 <a target="_blank" rel="noopener" href="https://fssai.gov.in/food-law/notifications?notification=ordinary-notification">Tracked as an upcoming amendment; it comes into force on 01.12.2026 and is not applied prematurely in this current-date prototype</a></p>
 
+<p><b>Chapter 2.12 — Proprietary Food</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/13_%20Chapter%202_12%20%28Proprietary%20Food%29.pdf">Official FSSAI regulation source used for Proprietary Food route assessment</a></p>
+<p><b>Approval for Non-Specified Food and Food Ingredients Regulations, 2017 · Version I (14.10.2022)</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/upload/uploadfiles/files/Compendium_FSS_NFS_FA_17_10_2022.pdf">Official FSSAI source used when no food/ingredient standard is established</a></p>
 <div class="notice"><b>Source hierarchy:</b> consolidated FSSAI compendia are convenient reference documents, but amendment notifications remain part of the regulatory trail. Production PMSV should retain the source document, clause/table, effective date and last-verified date for every displayed requirement.</div>
 <div class="notice oknote"><b>Source rule for this module:</b> PMSV uses only official FSSAI regulations, appendices and amendment notifications for regulatory conclusions. Ingredient qualification, Proprietary Food routing, additive limits, microbiology, processing aids and contaminant limits are not derived from external websites or industry articles.</div>
 </div>
@@ -646,8 +657,8 @@ const ingredientRules=[
  {key:'b6',names:['vitamin b6','pyridoxine'],label:'Vitamin B6',kind:'standard',qualification:'Vitamin expressly permitted up to one RDA level.',clause:'2.10.6(2)(III)(B)',route:'standard'},
  {key:'b12',names:['vitamin b12','cobalamin'],label:'Vitamin B12',kind:'standard',qualification:'Vitamin expressly permitted up to one RDA level.',clause:'2.10.6(2)(III)(B)',route:'standard'},
  {key:'sugar',names:['sugar','liquid glucose','dextrose monohydrate','invert sugar','fructose','honey'],label:'Carbonated Water permitted ingredient',kind:'crossref',qualification:'Listed as a permitted Carbonated Water ingredient; Caffeinated Beverage must conform to that standard for ingredients.',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'},
- {key:'applejuice',names:['apple juice'],label:'Apple juice',kind:'crossref',qualification:'Fruit/vegetable products or extractives are within the Carbonated Water ingredient framework brought into Caffeinated Beverage through the cross-reference.',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard',contaminants:[{name:'Patulin',limit:'50 µg/kg',basis:'Applies when apple juice is used as an ingredient in another beverage.',source:'Contaminants, Toxins and Residues Regulations · current compendium'}]},
- {key:'fruit',names:['fruit juice','fruit extract','vegetable extract','fruit extractive','vegetable extractive'],label:'Fruit / vegetable ingredient',kind:'crossref',qualification:'Fruit and vegetable extractives are listed in the Carbonated Water ingredient framework.',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'},
+ {key:'applejuice',names:['apple juice'],label:'Apple juice',kind:'extra',qualification:'Apple juice is not automatically treated as the Carbonated Water term “fruits and vegetables extractives”. For a standardized Caffeinated Beverage, an additional ingredient outside the specified list requires Food Authority approval.',clause:'2.10.6(2)(III)(A)',route:'proprietary',contaminants:[{name:'Patulin',limit:'50 µg/kg',basis:'Applies when apple juice is used as an ingredient in another beverage.',source:'Contaminants, Toxins and Residues Regulations · Version IX'}]},
+ {key:'fruit',names:['fruit extract','vegetable extract','fruit extractive','vegetable extractive'],label:'Fruit / vegetable extractive',kind:'crossref',qualification:'Fruit and vegetable extractives are listed in the Carbonated Water ingredient framework.',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'},
  {key:'acid',names:['citric acid','fumaric acid','tartaric acid','phosphoric acid','lactic acid','ascorbic acid','malic acid','sorbitol'],label:'Permitted Carbonated Water ingredient',kind:'crossref',qualification:'Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'},
  {key:'gelatin',names:['gelatin','albumin','licorice','licorice derivative'],label:'Permitted Carbonated Water ingredient',kind:'crossref',qualification:'Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'},
  {key:'gellan',names:['gellan gum'],label:'Gellan gum',kind:'crossref',qualification:'Specifically permitted in the Carbonated Water standard at GMP level and carried into Caffeinated Beverage by clause 2.10.6(2)(IV).',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'}
@@ -679,9 +690,9 @@ function qualifyIngredient(item){
  }
  switch(item.basis){
   case 'standardized':
-   return {name:item.name,kind:'extra',status:'review',qualification:'Potential non-additive ingredient basis for Proprietary Food because Regulation 2.12 permits ingredients that are standardized or otherwise permitted for use under FSSAI regulations. The exact underlying FSSAI ingredient standard/permission still has to be verified.',clause:'2.12.1(2)',route:'proprietary',impact:'Possible Proprietary Food route if the finished food is genuinely not standardized. If it is still marketed/assessed as Caffeinated Beverage, 2.10.6(2)(III)(A) requires Food Authority approval for this additional ingredient.'};
-  case 'ifct':
-   return {name:item.name,kind:'extra',status:'review',qualification:'Potential Proprietary Food ingredient basis where the food/ingredient is listed in IFCT 2017, subject to the exclusions in Regulation 2.12.',clause:'2.12.1(2)',route:'proprietary',impact:'Possible Proprietary Food route; IFCT listing and all other applicable FSSAI requirements must be verified.'};
+   return {name:item.name,kind:'extra',status:'review',qualification:'Potential non-additive ingredient basis for Proprietary Food because Regulation 2.12.1(2) permits ingredients that are standardized or otherwise permitted under FSSAI regulations. The exact ingredient-specific FSSAI permission must still be verified.',clause:'2.12.1(2)'+(item.clause?' · user-entered FSSAI reference: '+item.clause:''),route:'proprietary',impact:'Possible Proprietary Food route only if the finished food is genuinely not standardized. If it is still marketed/assessed as Caffeinated Beverage, 2.10.6(2)(III)(A) requires Food Authority approval for this additional ingredient.'};
+  case 'botanical':
+   return {name:item.name,kind:'extra',status:'review',qualification:'This extra botanical/extract is not assumed permitted merely from its name. A qualifying FSSAI ingredient standard/permission must be established under Regulation 2.12.1(2), and the standardized Caffeinated Beverage additional-ingredient rule must also be considered.',clause:'2.12.1(2)'+(item.clause?' · user-entered FSSAI reference: '+item.clause:''),route:'proprietary',impact:'Further route review required; do not automatically call the product Proprietary Food.'};
   case 'vitamin':
    return {name:item.name,kind:'extra',status:'review',qualification:'A Proprietary Food may contain vitamins/minerals subject to the Regulation 2.12 proviso.',clause:'2.12.1(2) proviso',route:'proprietary',impact:'Possible Proprietary Food route; quantity must not exceed one RDA of the respective micronutrient unless another specific regulation applies.'};
   case 'additive': {
@@ -690,7 +701,7 @@ function qualifyIngredient(item){
    return {name:item.name,kind:'additive',status:'unresolved',qualification:'This name is not matched to the applicable Appendix A list in the current product dataset.',clause:'2.12.1(3) + Appendix A',route:'unresolved',impact:'Do not treat it as permitted until the exact additive/INS and applicable Appendix A entry are verified.'};
   }
   default:
-   return {name:item.name,kind:'extra',status:'unresolved',qualification:'No FSSAI qualification has been established for this ingredient from the information entered.',clause:'Requires FSSAI regulatory verification',route:'unresolved',impact:'The formulation cannot be classified as Proprietary Food merely because this ingredient was added.'};
+   return {name:item.name,kind:'extra',status:'unresolved',qualification:'No FSSAI qualification has been established for this ingredient from the information entered. If no standard exists under FSSAI regulations, the Non-Specified Food and Food Ingredients Regulations, 2017 must be assessed.',clause:'Non-Specified Food Regulations 2017 · regulation 2(1)(d) and prior-approval rule 3(1)',route:'unresolved',impact:'Do not treat the ingredient as permitted or the finished product as Proprietary Food until the FSSAI regulatory basis is established.'};
  }
 }
 function saveFormula(){
@@ -700,6 +711,7 @@ function saveFormula(){
 function addIngredient(){
  const input=document.getElementById('ingredientName');
  const basis=document.getElementById('ingredientBasis')?.value||'auto';
+ const clause=String(document.getElementById('ingredientClause')?.value||'').trim();
  const msg=document.getElementById('ingredientInputMessage');
  const name=String(input?.value||'').trim();
  if(!name){
@@ -710,8 +722,9 @@ function addIngredient(){
    if(msg){msg.textContent='This ingredient is already in the formulation.';msg.classList.remove('hidden')}
    return;
  }
- formulationIngredients.push({name,basis});
+ formulationIngredients.push({name,basis,clause});
  if(input)input.value='';
+ const clauseInput=document.getElementById('ingredientClause');if(clauseInput)clauseInput.value='';
  if(msg)msg.classList.add('hidden');
  saveFormula();
 }
@@ -737,7 +750,7 @@ function renderFormula(){
      list.innerHTML=formulationIngredients.map((x,i)=>{
        const q=qualifyIngredient(x);
        const cls=q.status==='qualified'?'status-good':q.status==='review'?'status-warn':'status-bad';
-       return '<div class="ingredient-row"><div><b>'+esc(x.name)+'</b><br><small>Basis check: '+esc(x.basis==='auto'?'Auto':x.basis)+'</small></div><div class="'+cls+'">'+(q.status==='qualified'?'Qualified':q.status==='review'?'Further review':'Unresolved')+'</div><div><small>'+esc(q.qualification)+'</small><br><span class="clause">'+esc(q.clause)+'</span></div><div><button class="ingredient-remove" type="button" data-remove-ingredient="'+i+'">Remove</button></div></div>';
+       return '<div class="ingredient-row"><div><b>'+esc(x.name)+'</b><br><small>Basis check: '+esc(x.basis==='auto'?'Auto':x.basis)+(x.clause?'<br>Entered FSSAI ref: '+esc(x.clause):'')+'</small></div><div class="'+cls+'">'+(q.status==='qualified'?'Qualified':q.status==='review'?'Further review':'Unresolved')+'</div><div><small>'+esc(q.qualification)+'</small><br><span class="clause">'+esc(q.clause)+'</span></div><div><button class="ingredient-remove" type="button" data-remove-ingredient="'+i+'">Remove</button></div></div>';
      }).join('');
      list.querySelectorAll('[data-remove-ingredient]').forEach(btn=>btn.addEventListener('click',()=>{
        formulationIngredients.splice(Number(btn.dataset.removeIngredient),1);saveFormula();
@@ -762,6 +775,7 @@ function renderFormula(){
    cards.push('<div class="item"><b>Caffeinated Beverage standard</b><small>2.10.6(2) applies to the selected base product, including its Carbonated Water cross-reference.</small></div>');
    cards.push('<div class="item"><b>Appendix A</b><small>Applies to food additives for category 14.1.4 / 14.1.4.1.</small></div>');
    if(hasProp)cards.push('<div class="item"><b>Chapter 2.12 — Proprietary Food</b><small>Relevant because at least one extra non-additive ingredient has been entered under a potential 2.12 ingredient basis. Final classification still depends on whether the finished food is genuinely not standardized.</small></div>');
+   if(hasUnresolved)cards.push('<div class="item"><b>Approval for Non-Specified Food and Food Ingredients Regulations, 2017</b><small>Regulation 2(1)(d) defines non-specified food/ingredients and regulation 3(1) requires prior Food Authority approval before manufacture/import where applicable.</small></div>');
    cards.push('<div class="item"><b>Contaminants, Toxins and Residues Regulations</b><small>Product-level requirements apply, and ingredient-specific requirements are added from the formulation where a verified trigger exists.</small></div>');
    cards.push('<div class="item"><b>Appendix B / microbiology</b><small>Microbiological applicability is assessed separately for the final product category.</small></div>');
    cards.push('<div class="item"><b>Appendix C / processing aids</b><small>Applies according to the actual manufacturing processes and processing aids used.</small></div>');
@@ -793,8 +807,8 @@ document.getElementById('addIngredient')?.addEventListener('click',addIngredient
 document.getElementById('ingredientName')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addIngredient()}});
 document.getElementById('loadExampleFormula')?.addEventListener('click',()=>{
  formulationIngredients=[
-  {name:'Water',basis:'auto'},{name:'Sugar',basis:'auto'},{name:'Caffeine',basis:'auto'},
-  {name:'Taurine',basis:'auto'},{name:'D-glucurono-γ-lactone',basis:'auto'},{name:'Citric acid',basis:'auto'}
+  {name:'Water',basis:'auto',clause:''},{name:'Sugar',basis:'auto',clause:''},{name:'Caffeine',basis:'auto',clause:''},
+  {name:'Taurine',basis:'auto',clause:''},{name:'D-glucurono-γ-lactone',basis:'auto',clause:''},{name:'Citric acid',basis:'auto',clause:''}
  ];
  saveFormula();
 });
