@@ -10,7 +10,8 @@
       "caffeinated-beverage"
     ],
     "foscos_catalog_products_loaded": 44,
-    "foscos_catalog_scope": "Initial official FoSCoS/FSSAI indexed rows loaded to validate browse/search architecture; complete standardized-product ingestion continues category by category."
+    "foscos_catalog_scope": "Initial official FoSCoS/FSSAI indexed rows loaded to validate browse/search architecture; complete standardized-product ingestion continues category by category.",
+    "foscos_subcategory_framework": "Level-2 FoSCoS/FSSAI food-category framework loaded for categories 01–16; special categories without a separate level-2 browse layer are handled directly at product/category level."
   },
   "source_hierarchy": [
     {
@@ -162,6 +163,12 @@
       "name": "Hemp Seeds and Seed Products",
       "route": "standardized",
       "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "102",
+      "name": "Ayurveda Aahara",
+      "route": "special_regulation",
+      "primary_regulation": "Food Safety and Standards (Ayurveda Aahara) Regulations, 2022"
     }
   ],
   "profiles": [
@@ -205,9 +212,319 @@
   },
   "subcategories": [
     {
+      "code": "01.1",
+      "parent_category": "01",
+      "name": "Milk and dairy-based drinks"
+    },
+    {
+      "code": "01.2",
+      "parent_category": "01",
+      "name": "Fermented and renneted milk products (plain), excluding dairy-based drinks"
+    },
+    {
+      "code": "01.3",
+      "parent_category": "01",
+      "name": "Condensed milk and analogues (plain)"
+    },
+    {
+      "code": "01.4",
+      "parent_category": "01",
+      "name": "Cream (plain) and the like"
+    },
+    {
+      "code": "01.5",
+      "parent_category": "01",
+      "name": "Milk powder and cream powder and powder analogues (plain)"
+    },
+    {
+      "code": "01.6",
+      "parent_category": "01",
+      "name": "Cheese and analogues"
+    },
+    {
+      "code": "01.7",
+      "parent_category": "01",
+      "name": "Dairy based desserts"
+    },
+    {
+      "code": "01.8",
+      "parent_category": "01",
+      "name": "Whey and whey products, excluding whey cheeses"
+    },
+    {
+      "code": "2.1",
+      "parent_category": "02",
+      "name": "Fats and oils essentially free from water"
+    },
+    {
+      "code": "2.2",
+      "parent_category": "02",
+      "name": "Fat emulsions mainly of type water-in-oil"
+    },
+    {
+      "code": "2.3",
+      "parent_category": "02",
+      "name": "Fat emulsions mainly of type oil-in-water, including mixed and/or flavoured products based on fat emulsions"
+    },
+    {
+      "code": "2.4",
+      "parent_category": "02",
+      "name": "Fat-based desserts excluding dairy-based desserts of category 1.7"
+    },
+    {
+      "code": "03.0",
+      "parent_category": "03",
+      "name": "Edible ices, including sherbet and sorbet"
+    },
+    {
+      "code": "4.1",
+      "parent_category": "04",
+      "name": "Fruit"
+    },
+    {
+      "code": "4.2",
+      "parent_category": "04",
+      "name": "Vegetables, seaweeds, nuts and seeds, including mushrooms, roots, tubers, pulses, legumes and aloe vera"
+    },
+    {
+      "code": "5.1",
+      "parent_category": "05",
+      "name": "Cocoa products and chocolate products including imitations and chocolate substitutes"
+    },
+    {
+      "code": "5.2",
+      "parent_category": "05",
+      "name": "Confectionery including hard and soft candy, nougats, etc. other than categories 5.1, 5.3 and 5.4"
+    },
+    {
+      "code": "5.3",
+      "parent_category": "05",
+      "name": "Chewing gum"
+    },
+    {
+      "code": "5.4",
+      "parent_category": "05",
+      "name": "Decorations, toppings and sweet sauces"
+    },
+    {
+      "code": "6.1",
+      "parent_category": "06",
+      "name": "Whole, broken, or flaked grain, including rice"
+    },
+    {
+      "code": "6.2",
+      "parent_category": "06",
+      "name": "Flours and starches"
+    },
+    {
+      "code": "6.3",
+      "parent_category": "06",
+      "name": "Breakfast cereals, including rolled oats"
+    },
+    {
+      "code": "6.4",
+      "parent_category": "06",
+      "name": "Pastas and noodles and like products"
+    },
+    {
+      "code": "6.5",
+      "parent_category": "06",
+      "name": "Cereal and starch based desserts"
+    },
+    {
+      "code": "6.6",
+      "parent_category": "06",
+      "name": "Batters"
+    },
+    {
+      "code": "6.7",
+      "parent_category": "06",
+      "name": "Pre-cooked or processed rice products"
+    },
+    {
+      "code": "6.8",
+      "parent_category": "06",
+      "name": "Soybean products"
+    },
+    {
+      "code": "7.1",
+      "parent_category": "07",
+      "name": "Bread and ordinary bakery wares and mixes"
+    },
+    {
+      "code": "7.2",
+      "parent_category": "07",
+      "name": "Fine bakery wares and mixes"
+    },
+    {
+      "code": "8.1",
+      "parent_category": "08",
+      "name": "Fresh meat, poultry and game"
+    },
+    {
+      "code": "8.2",
+      "parent_category": "08",
+      "name": "Processed meat and poultry products in whole pieces or cuts"
+    },
+    {
+      "code": "8.3",
+      "parent_category": "08",
+      "name": "Processed comminuted meat and poultry products"
+    },
+    {
+      "code": "8.4",
+      "parent_category": "08",
+      "name": "Edible casings"
+    },
+    {
+      "code": "9.1",
+      "parent_category": "09",
+      "name": "Fresh fish and fish products, including molluscs, crustaceans and echinoderms"
+    },
+    {
+      "code": "9.2",
+      "parent_category": "09",
+      "name": "Processed fish and fish products, including molluscs, crustaceans and echinoderms"
+    },
+    {
+      "code": "9.3",
+      "parent_category": "09",
+      "name": "Semi-preserved fish and fish products, including molluscs, crustaceans and echinoderms"
+    },
+    {
+      "code": "9.4",
+      "parent_category": "09",
+      "name": "Fully preserved, including canned or fermented, fish and fish products"
+    },
+    {
+      "code": "10.1",
+      "parent_category": "10",
+      "name": "Fresh eggs"
+    },
+    {
+      "code": "10.2",
+      "parent_category": "10",
+      "name": "Egg products"
+    },
+    {
+      "code": "10.3",
+      "parent_category": "10",
+      "name": "Preserved eggs, including alkaline, salted and canned eggs"
+    },
+    {
+      "code": "10.4",
+      "parent_category": "10",
+      "name": "Egg-based desserts"
+    },
+    {
+      "code": "11.1",
+      "parent_category": "11",
+      "name": "Refined and raw sugar"
+    },
+    {
+      "code": "11.2",
+      "parent_category": "11",
+      "name": "Brown sugar"
+    },
+    {
+      "code": "11.3",
+      "parent_category": "11",
+      "name": "Sugar solutions and syrups, including molasses"
+    },
+    {
+      "code": "11.4",
+      "parent_category": "11",
+      "name": "Other sugars and syrups"
+    },
+    {
+      "code": "11.5",
+      "parent_category": "11",
+      "name": "Honey"
+    },
+    {
+      "code": "11.6",
+      "parent_category": "11",
+      "name": "Table-top sweeteners, including those containing high-intensity sweeteners"
+    },
+    {
+      "code": "12.1",
+      "parent_category": "12",
+      "name": "Salt and salt substitutes"
+    },
+    {
+      "code": "12.2",
+      "parent_category": "12",
+      "name": "Herbs, spices, seasonings and condiments"
+    },
+    {
+      "code": "12.3",
+      "parent_category": "12",
+      "name": "Vinegars"
+    },
+    {
+      "code": "12.4",
+      "parent_category": "12",
+      "name": "Mustards"
+    },
+    {
+      "code": "12.5",
+      "parent_category": "12",
+      "name": "Soups and broths"
+    },
+    {
+      "code": "12.6",
+      "parent_category": "12",
+      "name": "Sauces and like products"
+    },
+    {
+      "code": "12.7",
+      "parent_category": "12",
+      "name": "Salads and sandwich spreads"
+    },
+    {
+      "code": "12.8",
+      "parent_category": "12",
+      "name": "Yeast and like products"
+    },
+    {
+      "code": "12.9",
+      "parent_category": "12",
+      "name": "Soybean-based seasonings and condiments"
+    },
+    {
+      "code": "12.10",
+      "parent_category": "12",
+      "name": "Protein products other than from soybeans"
+    },
+    {
+      "code": "13.1",
+      "parent_category": "13",
+      "name": "Infant formulae, follow-on formulae, and formulae for special medical purposes for infants"
+    },
+    {
       "code": "13.2",
       "parent_category": "13",
       "name": "Complementary foods for infants and young children"
+    },
+    {
+      "code": "13.3",
+      "parent_category": "13",
+      "name": "Dietetic foods intended for special medical purposes, excluding category 13.1"
+    },
+    {
+      "code": "13.4",
+      "parent_category": "13",
+      "name": "Dietetic formulae for slimming purposes and weight reduction"
+    },
+    {
+      "code": "13.5",
+      "parent_category": "13",
+      "name": "Dietetic foods excluding categories 13.1–13.4 and 13.6"
+    },
+    {
+      "code": "13.6",
+      "parent_category": "13",
+      "name": "Food supplements"
     },
     {
       "code": "14.1",
@@ -218,6 +535,26 @@
       "code": "14.2",
       "parent_category": "14",
       "name": "Alcoholic beverages, including alcohol-free and low-alcoholic counterparts"
+    },
+    {
+      "code": "15.1",
+      "parent_category": "15",
+      "name": "Snacks — potato, cereal, flour or starch based"
+    },
+    {
+      "code": "15.2",
+      "parent_category": "15",
+      "name": "Processed nuts, including coated nuts and nut mixtures"
+    },
+    {
+      "code": "15.3",
+      "parent_category": "15",
+      "name": "Snacks — fish based"
+    },
+    {
+      "code": "16.0",
+      "parent_category": "16",
+      "name": "Prepared foods"
     }
   ],
   "catalog_products": [
