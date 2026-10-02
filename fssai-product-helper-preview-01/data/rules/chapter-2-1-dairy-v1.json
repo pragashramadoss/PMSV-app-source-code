@@ -1,0 +1,566 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.1",
+  "title": "Dairy Products and Analogues",
+  "source_verified_on": "2026-10-02",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Food Products Standards & Food Additives Compendium — Chapter 2.1 Dairy products and analogues",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/2_%20Chapter%202_1%20(Dairy%20products%20and%20analogues).pdf"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Current Food Products Standards & Food Additives Compendium index",
+      "url": "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+    },
+    {
+      "authority": "FSSAI / FoSCoS",
+      "title": "Clubbing in the list of Standardized Food Products having variants",
+      "url": "https://foscos.fssai.gov.in/assets/docs/Final_Track%20change_Clubbing%20in%20the%20list%20of%20Standardized%20Food%20Products%20having%20variants%20%28types%20%20subtypes%29%20DFA%2034233.pdf"
+    }
+  ],
+  "common_rules": {
+    "inherits_general_standard": "2.1.1",
+    "dairy_terms": true,
+    "labelling_general": "FSS (Labelling and Display) Regulations, 2020, as amended",
+    "additives": "Appendix A according to product/FCS unless the individual standard prohibits additives or states otherwise",
+    "contaminants": "FSS (Contaminants, Toxins and Residues) Regulations, as amended",
+    "microbiology": "Appendix B where the individual standard requires it",
+    "processing_aids": "Appendix C / individual standard as applicable",
+    "schedule4_hygiene": true
+  },
+  "standards": [
+    {
+      "key": "2.1.1",
+      "name": "General Standards for Milk and Milk Products",
+      "status": "structured_core",
+      "rules": [
+        {
+          "type": "inheritance",
+          "text": "General dairy definitions, heat-treatment concepts, use of dairy terms, dairy-term restrictions and generic labelling apply across Chapter 2.1 unless a product standard states otherwise."
+        },
+        {
+          "type": "label",
+          "text": "Dairy analogues require the prescribed constituent-replacement declarations close to the product name."
+        }
+      ]
+    },
+    {
+      "key": "2.1.2",
+      "name": "Standard for Milk",
+      "status": "structured_core",
+      "composition": [
+        {
+          "variant": "Buffalo Milk",
+          "milk_fat_min_pct": 5,
+          "snf_min_pct": 9
+        },
+        {
+          "variant": "Cow Milk",
+          "milk_fat_min_pct": 3.2,
+          "snf_min_pct": 8.3
+        },
+        {
+          "variant": "Goat Milk",
+          "milk_fat_min_pct": 3,
+          "snf_min_pct": 8
+        },
+        {
+          "variant": "Sheep Milk",
+          "milk_fat_min_pct": 3,
+          "snf_min_pct": 9
+        },
+        {
+          "variant": "Camel Milk",
+          "milk_fat_min_pct": 2,
+          "snf_min_pct": 6
+        },
+        {
+          "variant": "Mixed Milk",
+          "milk_fat_min_pct": 4.5,
+          "snf_min_pct": 8.5
+        },
+        {
+          "variant": "Standardized Milk",
+          "milk_fat_min_pct": 4.5,
+          "snf_min_pct": 8.5
+        },
+        {
+          "variant": "Toned Milk",
+          "milk_fat_min_pct": 3,
+          "snf_min_pct": 8.5
+        },
+        {
+          "variant": "Double Toned Milk",
+          "milk_fat_min_pct": 1.3,
+          "snf_min_pct": 9
+        },
+        {
+          "variant": "Skimmed Milk",
+          "milk_fat_max_pct": 0.5,
+          "snf_min_pct": 8.7
+        },
+        {
+          "variant": "Full Cream Milk",
+          "milk_fat_min_pct": 6,
+          "snf_min_pct": 9
+        }
+      ],
+      "other_limits": [
+        {
+          "parameter": "Low lactose milk",
+          "operator": "<",
+          "value": 1,
+          "unit": "% lactose"
+        },
+        {
+          "parameter": "Lactose free milk",
+          "operator": "<",
+          "value": 0.1,
+          "unit": "% lactose"
+        },
+        {
+          "parameter": "Total sodium",
+          "operator": "<=",
+          "value": 650,
+          "unit": "mg/100 g SNF"
+        },
+        {
+          "parameter": "Total urea",
+          "operator": "<=",
+          "value": 700,
+          "unit": "ppm"
+        }
+      ],
+      "additives": {
+        "rule": "No food additives in milk except permitted carry-over for specified standardized milk products and Appendix A additives in sterilised milk as provided in the standard."
+      },
+      "product_specific_label": [
+        "Declare class of milk",
+        "Declare heat treatment",
+        "Raw milk designation when sold without heat treatment",
+        "Low lactose/lactose free naming where applicable"
+      ]
+    },
+    {
+      "key": "2.1.3",
+      "name": "Standard for Flavoured Milk",
+      "status": "structured_core",
+      "permitted_ingredients": [
+        "milk and milk-derived raw materials",
+        "nutritive sweeteners",
+        "nuts",
+        "cocoa/chocolate",
+        "coffee",
+        "fruit and vegetable ingredients",
+        "cereals and cereal extracts",
+        "honey",
+        "spices/condiments",
+        "salt",
+        "natural flavouring foods/flavours",
+        "potable water"
+      ],
+      "composition_rule": "Minimum milk fat and milk solids-not-fat must meet the applicable milk class from which the flavoured milk is prepared.",
+      "product_specific_label": [
+        "Name: Flavoured Milk",
+        "Declare class of milk",
+        "Declare heat treatment"
+      ]
+    },
+    {
+      "key": "2.1.4",
+      "name": "Standard for Evaporated or Concentrated Milk",
+      "status": "chapter_indexed"
+    },
+    {
+      "key": "2.1.5",
+      "name": "Standard for Sweetened Condensed Milk",
+      "status": "chapter_indexed"
+    },
+    {
+      "key": "2.1.6",
+      "name": "Standard for Khoa",
+      "status": "chapter_indexed"
+    },
+    {
+      "key": "2.1.7",
+      "name": "Standard for Cream and Malai",
+      "status": "chapter_indexed"
+    },
+    {
+      "key": "2.1.8",
+      "name": "Standard for Milk Fat Products",
+      "status": "chapter_indexed"
+    },
+    {
+      "key": "2.1.9",
+      "name": "Standard for Butter",
+      "status": "chapter_indexed"
+    },
+    {
+      "key": "2.1.10",
+      "name": "Standard for Milk Powders and Cream Powder",
+      "status": "chapter_indexed"
+    },
+    {
+      "key": "2.1.11",
+      "name": "Standard for Dairy Whitener",
+      "status": "structured_core",
+      "composition": [
+        {
+          "variant": "Skimmed Milk Dairy Whitener",
+          "moisture_max_pct": 4,
+          "milk_fat_max_pct": 1.5,
+          "milk_protein_in_snf_min_pct": 34
+        },
+        {
+          "variant": "Low Fat Dairy Whitener",
+          "moisture_max_pct": 4,
+          "milk_fat_gt_pct": 1.5,
+          "milk_fat_lt_pct": 10,
+          "milk_protein_in_snf_min_pct": 34
+        },
+        {
+          "variant": "Medium Fat Dairy Whitener",
+          "moisture_max_pct": 4,
+          "milk_fat_min_pct": 10,
+          "milk_fat_lt_pct": 20,
+          "milk_protein_in_snf_min_pct": 34
+        },
+        {
+          "variant": "High Fat Dairy Whitener",
+          "moisture_max_pct": 4,
+          "milk_fat_min_pct": 20,
+          "milk_protein_in_snf_min_pct": 34
+        }
+      ]
+    },
+    {
+      "key": "2.1.12",
+      "name": "Standard for Whey Powder",
+      "status": "chapter_indexed"
+    },
+    {
+      "key": "2.1.13",
+      "name": "Standard for Fermented Milk Products",
+      "status": "structured_core",
+      "rules": [
+        {
+          "type": "limit",
+          "product": "Flavoured fermented milk",
+          "parameter": "Permitted non-dairy ingredients including flavourings",
+          "max_pct": 50,
+          "basis": "m/m"
+        },
+        {
+          "type": "limit",
+          "product": "Drinks based on fermented milk",
+          "parameter": "Fermented milk content",
+          "min_pct": 40,
+          "basis": "m/m"
+        },
+        {
+          "type": "process",
+          "text": "Whey removal after fermentation is not permitted except for concentrated fermented milk."
+        }
+      ],
+      "chakka": [
+        {
+          "variant": "Chakka",
+          "total_solids_min_pct": 30,
+          "milk_fat_db_min_pct": 33,
+          "milk_protein_db_min_pct": 30,
+          "titratable_acidity_max_pct": 2.5,
+          "total_ash_db_max_pct": 3.5
+        },
+        {
+          "variant": "Skimmed Milk Chakka",
+          "total_solids_min_pct": 20,
+          "milk_fat_db_max_pct": 5,
+          "milk_protein_db_min_pct": 60,
+          "titratable_acidity_max_pct": 2.5,
+          "total_ash_db_max_pct": 5
+        },
+        {
+          "variant": "Full Cream Chakka",
+          "total_solids_min_pct": 28,
+          "milk_fat_db_min_pct": 38,
+          "milk_protein_db_min_pct": 30,
+          "titratable_acidity_max_pct": 2.5,
+          "total_ash_db_max_pct": 3.5
+        }
+      ],
+      "shrikhand": [
+        {
+          "variant": "Shrikhand",
+          "total_solids_min_pct": 58,
+          "milk_fat_db_min_pct": 8.5,
+          "milk_protein_db_min_pct": 9,
+          "titratable_acidity_max_pct": 1.4,
+          "sucrose_db_max_pct": 72.5,
+          "total_ash_db_max_pct": 0.9
+        },
+        {
+          "variant": "Full Cream Shrikhand",
+          "total_solids_min_pct": 58,
+          "milk_fat_db_min_pct": 10,
+          "milk_protein_db_min_pct": 7,
+          "titratable_acidity_max_pct": 1.4,
+          "sucrose_db_max_pct": 72.5,
+          "total_ash_db_max_pct": 0.9
+        },
+        {
+          "variant": "Fruit Shrikhand",
+          "total_solids_min_pct": 58,
+          "milk_fat_db_min_pct": 7,
+          "milk_protein_db_min_pct": 6,
+          "titratable_acidity_max_pct": 1.4,
+          "sucrose_db_max_pct": 72.5,
+          "total_ash_db_max_pct": 0.9
+        }
+      ]
+    },
+    {
+      "key": "2.1.14",
+      "name": "Ice Cream, Kulfi, Chocolate Ice Cream, Softy Ice-Cream, Milk Ice, Milk Lolly and Dried Ice Cream Mix",
+      "status": "chapter_indexed"
+    },
+    {
+      "key": "2.1.15",
+      "name": "Frozen Desserts or Confections with Added Vegetable Oil/Fat or Vegetable Protein, or both",
+      "status": "structured_core",
+      "composition": [
+        {
+          "variant": "Frozen Dessert or Frozen Confection",
+          "total_solids_min_pct": 36,
+          "weight_min_g_l": 525,
+          "total_fat_min_pct": 10,
+          "protein_min_pct": 3.5
+        },
+        {
+          "variant": "Medium Fat Frozen Dessert or Frozen Confection",
+          "total_solids_min_pct": 30,
+          "weight_min_g_l": 475,
+          "total_fat_gt_pct": 2.5,
+          "total_fat_lt_pct": 10,
+          "protein_min_pct": 3.5
+        },
+        {
+          "variant": "Low Fat Frozen Dessert or Frozen Confection",
+          "total_solids_min_pct": 26,
+          "weight_min_g_l": 475,
+          "total_fat_max_pct": 2.5,
+          "protein_min_pct": 3
+        }
+      ],
+      "permitted_ingredients": [
+        "nutritive sweeteners",
+        "potable water",
+        "starch at GMP where functionally necessary",
+        "fruit products",
+        "egg products",
+        "coffee",
+        "cocoa/chocolate",
+        "confectionery",
+        "condiments/spices",
+        "ginger",
+        "nuts",
+        "bakery products"
+      ],
+      "process_rule": "Vegetable oils/fats used in the frozen-dessert standard have melting point not more than 37°C."
+    },
+    {
+      "key": "2.1.16",
+      "name": "Standard for Chhana and Paneer",
+      "status": "chapter_indexed",
+      "permitted_acidulants": [
+        "lactic acid",
+        "citric acid",
+        "malic acid",
+        "vinegar",
+        "glucono delta lactone",
+        "sour whey"
+      ],
+      "product_specific_label": [
+        "Use the appropriate Chhana/Paneer fat-class name",
+        "Medium-fat product declares milk-fat percentage"
+      ]
+    },
+    {
+      "key": "2.1.17",
+      "name": "Standard for Cheese and Cheese Products",
+      "status": "chapter_indexed",
+      "process_rule": "Cheese is made from milk subjected to heat treatment at least equivalent to pasteurization.",
+      "product_specific_label": [
+        "Natamycin surface-treatment declaration when applicable",
+        "Outer-packing-removal declaration for specified coated/wrapped cheeses"
+      ]
+    },
+    {
+      "key": "2.1.18",
+      "name": "Standard for Edible Casein Products",
+      "status": "structured_core",
+      "composition": [
+        {
+          "variant": "Edible Acid Casein",
+          "moisture_max_pct": 12,
+          "milk_fat_max_pct": 2,
+          "milk_protein_db_min_pct": 90,
+          "casein_in_protein_min_pct": 95,
+          "lactose_max_pct": 1,
+          "total_ash_p2o5_max_pct": 2.5,
+          "free_acid_max_ml_0_1N_NaOH_per_g": 0.27
+        },
+        {
+          "variant": "Edible Rennet Casein",
+          "moisture_max_pct": 12,
+          "milk_fat_max_pct": 2,
+          "milk_protein_db_min_pct": 84,
+          "casein_in_protein_min_pct": 95,
+          "lactose_max_pct": 1,
+          "total_ash_p2o5_min_pct": 7.5
+        },
+        {
+          "variant": "Edible Caseinate",
+          "moisture_max_pct": 8,
+          "milk_fat_max_pct": 2,
+          "milk_protein_db_min_pct": 88,
+          "casein_in_protein_min_pct": 95,
+          "lactose_max_pct": 1,
+          "ph_10pct_solution_max": 8
+        }
+      ]
+    },
+    {
+      "key": "2.1.19",
+      "name": "Infant-food provisions formerly in Chapter 2.1",
+      "status": "superseded",
+      "superseded_by": "Food Safety and Standards (Foods for Infant Nutrition) Regulations, 2020"
+    },
+    {
+      "key": "2.1.20",
+      "name": "Standards for Edible Lactose",
+      "status": "structured_core",
+      "composition": [
+        {
+          "variant": "Edible Lactose",
+          "moisture_max_pct": 6,
+          "lactose_db_min_pct": 99,
+          "sulphated_ash_max_pct": 0.3,
+          "ph_min": 4.5,
+          "ph_max": 7,
+          "scorched_particle_max": "Disc B"
+        }
+      ],
+      "product_specific_label": [
+        "Name: Edible Lactose"
+      ]
+    },
+    {
+      "key": "2.1.21",
+      "name": "Milk Protein Concentrate",
+      "status": "structured_core",
+      "composition": [
+        {
+          "variant": "Milk Protein Concentrate",
+          "moisture_max_pct": 6,
+          "milk_protein_min_pct": 40,
+          "insolubility_index_max_ml": 2,
+          "total_ash_db_max_pct": 10,
+          "scorched_particles_max": "Disc B (15 mg)"
+        }
+      ],
+      "product_specific_label": [
+        "Name: Milk Protein Concentrate",
+        "Protein content may be reflected in MPC designation",
+        "Declare milk protein % by mass"
+      ]
+    },
+    {
+      "key": "2.1.22",
+      "name": "Whey Protein Concentrate",
+      "status": "structured_core",
+      "composition": [
+        {
+          "variant": "Whey Protein Concentrate",
+          "moisture_max_pct": 6,
+          "milk_protein_min_pct": 35,
+          "milk_fat_max_pct": 10,
+          "scorched_particles_max": "Disc B (15 mg)"
+        }
+      ],
+      "product_specific_label": [
+        "Name: Whey Protein Concentrate",
+        "Declare milk protein % by mass"
+      ]
+    },
+    {
+      "key": "2.1.23",
+      "name": "Cow or Buffalo Colostrum and Colostrum Products",
+      "status": "structured_core",
+      "composition": [
+        {
+          "variant": "Colostrum",
+          "moisture_max_pct": 80,
+          "protein_min_pct": 7,
+          "fat_min_pct": 4,
+          "immunoglobulins_min_pct": 1.8,
+          "lactoferrin_min_pct": 0.2
+        },
+        {
+          "variant": "Colostrum Powder",
+          "moisture_max_pct": 4,
+          "protein_min_pct": 40,
+          "fat_min_pct": 17.5,
+          "total_ash_db_max_pct": 9,
+          "immunoglobulins_min_pct": 12.5,
+          "lactoferrin_min_pct": 1.2,
+          "scorched_particles_max": "Disc B (15 mg)"
+        }
+      ],
+      "additives": {
+        "colostrum": "No food additives",
+        "colostrum_powder": "Milk-powder stabilizers, emulsifiers and antioxidants from Appendix A within applicable limits"
+      }
+    },
+    {
+      "key": "2.1.24",
+      "name": "Standards for Dairy Permeate Powders",
+      "status": "structured_core",
+      "composition": [
+        {
+          "variant": "Dairy permeate powder",
+          "lactose_anhydrous_min_pct": 76,
+          "nitrogen_max_pct": 1.1,
+          "milk_fat_max_pct": 1.5,
+          "ash_max_pct": 14,
+          "moisture_max_pct": 5,
+          "scorched_particles_max": "Disc B"
+        },
+        {
+          "variant": "Whey permeate powder",
+          "lactose_anhydrous_min_pct": 76,
+          "nitrogen_max_pct": 1.1,
+          "milk_fat_max_pct": 1.5,
+          "ash_max_pct": 12,
+          "moisture_max_pct": 5,
+          "scorched_particles_max": "Disc B"
+        },
+        {
+          "variant": "Milk permeate powder",
+          "lactose_anhydrous_min_pct": 76,
+          "nitrogen_max_pct": 0.8,
+          "milk_fat_max_pct": 1.5,
+          "ash_max_pct": 12,
+          "moisture_max_pct": 5,
+          "scorched_particles_max": "Disc B"
+        }
+      ],
+      "processing_aids": "Safe and suitable processing aids at GMP; the standard specifically notes pH-adjustment aids used to improve membrane-process efficiency.",
+      "product_specific_label": [
+        "Name uses lactose-rich deproteinized dairy/milk/whey permeate powder as appropriate"
+      ]
+    }
+  ]
+}
