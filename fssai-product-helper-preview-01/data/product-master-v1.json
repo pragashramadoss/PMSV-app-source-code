@@ -39,8 +39,8 @@
       "2.3": {
         "title": "Fruit & Vegetable Products",
         "rule_file": "./data/rules/chapter-2-3-fruit-vegetable-v1.json",
-        "mapped_catalog_products": 19,
-        "structured_core_standards": 16,
+        "mapped_catalog_products": 21,
+        "structured_core_standards": 18,
         "status": "structured_core_loaded",
         "next_validation": "Remaining Chapter 2.3 product standards and named product tables, Appendix A, contaminants, microbiology, processing aids and labels"
       },
@@ -49,9 +49,9 @@
         "rule_file": "./data/rules/chapter-2-4-cereals-v1.json",
         "source_version": "Version 1 (01.09.2023)",
         "mapped_catalog_products": 66,
-        "structured_core_standards": 42,
+        "structured_core_standards": 31,
         "status": "structured_core_loaded",
-        "next_validation": "Remaining Chapter 2.4 products and tables; Appendix A, contaminants, microbiology, processing aids and labels"
+        "next_validation": "Remaining Chapter 2.4 standard products and product-specific tables; Appendix A, contaminants, microbiology, processing aids and labels"
       }
     }
   },
@@ -3708,13 +3708,13 @@
       "foscos_category": "04",
       "foscos_subcategory": "04.1",
       "fcs": "04.1.2.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.3.35",
+      "regulation_chapter": "2.3",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.3 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.3",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -3723,7 +3723,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Dehydrated Fruits is mapped to Chapter 2.3 clause 2.3.35. Linked regulatory layers remain to be validated before full formulation compliance is enabled.",
+      "rule_file": "./data/rules/chapter-2-3-fruit-vegetable-v1.json",
+      "rule_key": "2.3.35",
+      "standard_name": "Dehydrated Fruits",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "04-04-1-desiccated-coconut",
@@ -4046,13 +4050,13 @@
       "foscos_category": "04",
       "foscos_subcategory": "04.1",
       "fcs": "04.1.2.5",
-      "fssr": "2.1.17",
-      "regulation_chapter": "2.1",
+      "fssr": "2.3.33",
+      "regulation_chapter": "2.3",
       "route": "standardized",
       "status": "chapter_profile_ready",
-      "coverage_level": "FSSAI Chapter 2.1 product standard mapped; structured chapter rule data loaded",
+      "coverage_level": "FSSAI Chapter 2.3 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.1",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.3",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -4061,10 +4065,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Chapter 2.1 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until all product-specific composition, ingredients, additives, contaminants, microbiology, processing and labelling rules for this standard are machine-validated.",
-      "rule_file": "./data/rules/chapter-2-1-dairy-v1.json",
-      "rule_key": "2.1.17",
-      "standard_name": "Standard for Cheese and Cheese Products",
+      "rule_profile_note": "Fruit Cheese is mapped to Chapter 2.3 clause 2.3.33. Linked additives, contaminants, microbiology, processing aids and labelling still require full machine validation before end-to-end formulation compliance is enabled.",
+      "rule_file": "./data/rules/chapter-2-3-fruit-vegetable-v1.json",
+      "rule_key": "2.3.33",
+      "standard_name": "Fruit Cheese",
       "source_verified_on": "2026-10-02"
     },
     {
@@ -14866,10 +14870,12 @@
       "subcategory": "04.1",
       "name": "Dehydrated Fruits",
       "fcs": "04.1.2.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.3.35",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "04-04-1-dehydrated-fruits"
+      "profile_id": "04-04-1-dehydrated-fruits",
+      "rule_file": "./data/rules/chapter-2-3-fruit-vegetable-v1.json",
+      "rule_key": "2.3.35"
     },
     {
       "id": "04-04-1-desiccated-coconut",
@@ -15028,12 +15034,12 @@
       "subcategory": "04.1",
       "name": "Fruit Cheese",
       "fcs": "04.1.2.5",
-      "fssr": "2.1.17",
+      "fssr": "2.3.33",
       "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "04-04-1-fruit-cheese",
-      "rule_file": "./data/rules/chapter-2-1-dairy-v1.json",
-      "rule_key": "2.1.17"
+      "rule_file": "./data/rules/chapter-2-3-fruit-vegetable-v1.json",
+      "rule_key": "2.3.33"
     },
     {
       "id": "04-04-1-fruits-and-vegetable-chutney",
