@@ -45,7 +45,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="formulation" class="view">
 <div class="card">
 <div class="section-title"><h2>Step 1 — Enter the actual formulation ingredients</h2><span>Ingredient-led compliance</span></div>
-<div class="notice oknote"><b>Start with what is actually in the product.</b> PMSV will assess each ingredient against the Caffeinated Beverage standard, its Carbonated Water cross-reference, Appendix A or the Proprietary Food provisions, and will use the same ingredient list when reviewing contaminant requirements.</div>
+<div class="notice oknote"><b>Start with what is actually in the product.</b> Enter each ingredient and its actual quantity. PMSV sums all ingredient quantities to calculate the final formulation quantity, derives each ingredient's usage level, checks applicable numerical limits, and uses the same formulation for route and contaminant assessment.</div>
 <div id="regDbStatus" class="notice"><b>Regulatory database:</b> loading local PMSV FSSAI data…</div>
 
 <div class="field">
@@ -523,7 +523,8 @@ if(isFreshPageNavigation()){
      TAB_KEY,
      'pmsv_fssai_product_helper_enzyme',
      'pmsv_fssai_product_helper_formula',
-     'pmsv_fssai_product_helper_processes'
+     'pmsv_fssai_product_helper_processes',
+     'pmsv_fssai_formula_density'
    ].forEach(k=>sessionStorage.removeItem(k));
    sessionStorage.setItem(WORKING_STATE_RESET_FLAG,'1');
  }catch(e){}
