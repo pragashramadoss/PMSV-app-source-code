@@ -9,11 +9,11 @@
     "detailed_rule_profiles": [
       "caffeinated-beverage"
     ],
-    "foscos_catalog_products_loaded": 518,
+    "foscos_catalog_products_loaded": 519,
     "foscos_catalog_scope": "Official FoSCoS/FSSAI indexed rows loaded category by category; Chapter 2.5 synchronization added the current missing meat-product rows while rule ingestion continues.",
     "foscos_subcategory_framework": "Level-2 FoSCoS/FSSAI food-category framework loaded for categories 01–16; special categories without a separate level-2 browse layer are handled directly at product/category level.",
     "level3_status": "Expanded official FoSCoS standardized-product catalogue. Detailed compliance rule profiles remain a separate ingestion layer.",
-    "base_rule_profiles_ready": 271,
+    "base_rule_profiles_ready": 252,
     "profile_architecture_note": "Every loaded FoSCoS standardized product now has at least a base profile. Full formulation compliance is enabled only when detailed product-specific clauses have been ingested.",
     "chapter_ingestion": {
       "2.1": {
@@ -88,6 +88,18 @@
         "source_verified_on": "2026-10-02",
         "regulatory_note": "Eight Chapter 2.7 standards are structured. Sugar-boiled confectionery maps to separate FoSCoS hard- and soft-candy rows. Ice Lollies/Edible Ices maps to FoSCoS Category 03. Mouth-freshener rows in FoSCoS Category 05 are not treated as Chapter 2.7 standards.",
         "next_validation": "Appendix A additive inheritance, contaminants, microbiology, processing aids, current labelling rules and full machine validation"
+      },
+      "2.8": {
+        "title": "Sweetening Agents Including Honey",
+        "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+        "source_version": "Version 1 (01.09.2023)",
+        "mapped_catalog_products": 20,
+        "structured_core_standards": 20,
+        "added_catalog_rows": 1,
+        "status": "structured_core_loaded",
+        "source_verified_on": "2026-10-02",
+        "regulatory_note": "Twenty distinct Chapter 2.8 product-standard groups are structured. Bees Wax is added through the official FoSCoS Category 99 text-box guidance rather than the standard dropdown list. The 2024 draft HFCS standard is tracked as draft_not_active because it is not present in the current consolidated Chapter 2.8. Honey HMF remains limited to 80 mg/kg; FSSAI advisory dated 07.11.2025 clarifies exceedance is categorised as Substandard.",
+        "next_validation": "Appendix A additive inheritance, contaminants, microbiology, processing aids, current labelling declarations and full machine validation"
       }
     }
   },
@@ -9331,13 +9343,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.1",
       "fcs": "11.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.1(2)",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9346,7 +9358,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.1(2)",
+      "standard_name": "Refined Sugar",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-1-dextrose",
@@ -9354,13 +9370,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.1",
       "fcs": "11.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.5",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9369,7 +9385,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.5",
+      "standard_name": "Dextrose",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-1-icing-sugar",
@@ -9377,13 +9397,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.1",
       "fcs": "11.1.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.1(6)",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9392,7 +9412,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.1(6)",
+      "standard_name": "Icing Sugar",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-1-khandsari-sugar",
@@ -9400,13 +9424,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.1",
       "fcs": "11.1.3",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.1(3)",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9415,7 +9439,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.1(3)",
+      "standard_name": "Khandsari Sugar",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-1-bura-sugar",
@@ -9423,13 +9451,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.1",
       "fcs": "11.1.3",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.1(4)",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9438,7 +9466,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.1(4)",
+      "standard_name": "Bura Sugar",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-1-dried-glucose-syrup",
@@ -9446,13 +9478,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.1",
       "fcs": "11.1.3.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.7",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9461,7 +9493,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.7",
+      "standard_name": "Dried Glucose Syrup",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-1-edible-lactose",
@@ -9496,13 +9532,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.1",
       "fcs": "11.1.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.1(1)",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9511,7 +9547,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.1(1)",
+      "standard_name": "Plantation White Sugar",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-1-cube-sugar",
@@ -9519,13 +9559,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.1",
       "fcs": "11.1.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.1(5)",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9534,7 +9574,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.1(5)",
+      "standard_name": "Cube Sugar",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-1-misri",
@@ -9542,13 +9586,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.1",
       "fcs": "11.1.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.2",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9557,7 +9601,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.2",
+      "standard_name": "Misri",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-1-gur-or-jaggery",
@@ -9565,13 +9613,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.1",
       "fcs": "11.1.6",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.4(1)",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9580,7 +9628,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.4(1)",
+      "standard_name": "Gur or Jaggery",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-1-cane-jaggery-or-cane-gur",
@@ -9588,13 +9640,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.1",
       "fcs": "11.1.6.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.4(2)",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9603,7 +9655,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.4(2)",
+      "standard_name": "Cane Jaggery or Cane Gur",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-3-golden-syrup",
@@ -9611,13 +9667,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.3",
       "fcs": "11.3",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.6",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9626,7 +9682,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.6",
+      "standard_name": "Golden Syrup",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-5-honey",
@@ -9634,13 +9694,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.5",
       "fcs": "11.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.3(1)",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023); FSSAI HMF Advisory dated 07.11.2025",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9649,7 +9709,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.3(1)",
+      "standard_name": "Honey",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-6-sodium-saccharin-food-grade",
@@ -9657,13 +9721,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.6",
       "fcs": "11.6",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.8",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9672,7 +9736,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.8",
+      "standard_name": "Sodium Saccharin (Food Grade)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-6-aspartyl-phenyl-alanine-methyl-ester-aspartame",
@@ -9680,13 +9748,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.6",
       "fcs": "11.6",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.9",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9695,7 +9763,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.9",
+      "standard_name": "Aspartyl Phenyl Alanine Methyl Ester (Aspartame)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-6-acesulfame-potassium",
@@ -9703,13 +9775,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.6",
       "fcs": "11.6",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.10",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9718,7 +9790,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.10",
+      "standard_name": "Acesulfame Potassium",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-6-sucralose",
@@ -9726,13 +9802,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.6",
       "fcs": "11.6",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.11",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9741,7 +9817,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.11",
+      "standard_name": "Sucralose",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-6-calcium-saccharin-food-grade",
@@ -9749,13 +9829,13 @@
       "foscos_category": "11",
       "foscos_subcategory": "11.6",
       "fcs": "11.6",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.12",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9764,7 +9844,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.12",
+      "standard_name": "Calcium Saccharin (Food Grade)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-6-sorbitol",
@@ -12866,13 +12950,13 @@
       "foscos_category": "100",
       "foscos_subcategory": "100",
       "fcs": "100",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.8.3(3)",
+      "regulation_chapter": "2.8",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -12881,7 +12965,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.3(3)",
+      "standard_name": "Royal Jelly",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "100-100-pan-masala",
@@ -13189,6 +13277,33 @@
         "Appendix C processing aids, where applicable"
       ],
       "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+    },
+    {
+      "id": "99-99-1-bees-wax",
+      "display_name": "Bees Wax",
+      "foscos_category": "99",
+      "foscos_subcategory": "99.1",
+      "fcs": "99.1",
+      "fssr": "2.8.3(2)",
+      "regulation_chapter": "2.8",
+      "route": "substances",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.8 product standard mapped; structured chapter rule data loaded",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.8, Version 1 (01.09.2023); FoSCoS Guidance Document V1.1 Category 99 route",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, as applicable",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Chapter 2.8 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.3(2)",
+      "standard_name": "Bees Wax",
+      "source_verified_on": "2026-10-02"
     }
   ],
   "rule_profile_schema": {
@@ -17986,10 +18101,12 @@
       "subcategory": "11.1",
       "name": "Refined Sugar",
       "fcs": "11.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.1(2)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-1-refined-sugar"
+      "profile_id": "11-11-1-refined-sugar",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.1(2)"
     },
     {
       "id": "11-11-1-dextrose",
@@ -17997,10 +18114,12 @@
       "subcategory": "11.1",
       "name": "Dextrose",
       "fcs": "11.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.5",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-1-dextrose"
+      "profile_id": "11-11-1-dextrose",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.5"
     },
     {
       "id": "11-11-1-icing-sugar",
@@ -18008,10 +18127,12 @@
       "subcategory": "11.1",
       "name": "Icing Sugar",
       "fcs": "11.1.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.1(6)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-1-icing-sugar"
+      "profile_id": "11-11-1-icing-sugar",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.1(6)"
     },
     {
       "id": "11-11-1-khandsari-sugar",
@@ -18019,10 +18140,12 @@
       "subcategory": "11.1",
       "name": "Khandsari Sugar",
       "fcs": "11.1.3",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.1(3)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-1-khandsari-sugar"
+      "profile_id": "11-11-1-khandsari-sugar",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.1(3)"
     },
     {
       "id": "11-11-1-bura-sugar",
@@ -18030,10 +18153,12 @@
       "subcategory": "11.1",
       "name": "Bura Sugar",
       "fcs": "11.1.3",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.1(4)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-1-bura-sugar"
+      "profile_id": "11-11-1-bura-sugar",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.1(4)"
     },
     {
       "id": "11-11-1-dried-glucose-syrup",
@@ -18041,10 +18166,12 @@
       "subcategory": "11.1",
       "name": "Dried Glucose Syrup",
       "fcs": "11.1.3.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.7",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-1-dried-glucose-syrup"
+      "profile_id": "11-11-1-dried-glucose-syrup",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.7"
     },
     {
       "id": "11-11-1-edible-lactose",
@@ -18065,10 +18192,12 @@
       "subcategory": "11.1",
       "name": "Plantation White Sugar",
       "fcs": "11.1.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.1(1)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-1-plantation-white-sugar"
+      "profile_id": "11-11-1-plantation-white-sugar",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.1(1)"
     },
     {
       "id": "11-11-1-cube-sugar",
@@ -18076,10 +18205,12 @@
       "subcategory": "11.1",
       "name": "Cube Sugar",
       "fcs": "11.1.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.1(5)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-1-cube-sugar"
+      "profile_id": "11-11-1-cube-sugar",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.1(5)"
     },
     {
       "id": "11-11-1-misri",
@@ -18087,10 +18218,12 @@
       "subcategory": "11.1",
       "name": "Misri",
       "fcs": "11.1.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.2",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-1-misri"
+      "profile_id": "11-11-1-misri",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.2"
     },
     {
       "id": "11-11-1-gur-or-jaggery",
@@ -18098,10 +18231,12 @@
       "subcategory": "11.1",
       "name": "Gur or Jaggery",
       "fcs": "11.1.6",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.4(1)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-1-gur-or-jaggery"
+      "profile_id": "11-11-1-gur-or-jaggery",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.4(1)"
     },
     {
       "id": "11-11-1-cane-jaggery-or-cane-gur",
@@ -18109,10 +18244,12 @@
       "subcategory": "11.1",
       "name": "Cane jaggery or cane gur",
       "fcs": "11.1.6.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.4(2)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-1-cane-jaggery-or-cane-gur"
+      "profile_id": "11-11-1-cane-jaggery-or-cane-gur",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.4(2)"
     },
     {
       "id": "11-11-3-golden-syrup",
@@ -18120,10 +18257,12 @@
       "subcategory": "11.3",
       "name": "Golden Syrup",
       "fcs": "11.3",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.6",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-3-golden-syrup"
+      "profile_id": "11-11-3-golden-syrup",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.6"
     },
     {
       "id": "11-11-5-honey",
@@ -18131,10 +18270,12 @@
       "subcategory": "11.5",
       "name": "Honey",
       "fcs": "11.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.3(1)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-5-honey"
+      "profile_id": "11-11-5-honey",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.3(1)"
     },
     {
       "id": "11-11-6-sodium-saccharin-food-grade",
@@ -18142,10 +18283,12 @@
       "subcategory": "11.6",
       "name": "Sodium Saccharin (Food Grade)",
       "fcs": "11.6",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.8",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-6-sodium-saccharin-food-grade"
+      "profile_id": "11-11-6-sodium-saccharin-food-grade",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.8"
     },
     {
       "id": "11-11-6-aspartyl-phenyl-alanine-methyl-ester-aspartame",
@@ -18153,10 +18296,12 @@
       "subcategory": "11.6",
       "name": "Aspartyl Phenyl Alanine Methyl Ester (Aspartame)",
       "fcs": "11.6",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.9",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-6-aspartyl-phenyl-alanine-methyl-ester-aspartame"
+      "profile_id": "11-11-6-aspartyl-phenyl-alanine-methyl-ester-aspartame",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.9"
     },
     {
       "id": "11-11-6-acesulfame-potassium",
@@ -18164,10 +18309,12 @@
       "subcategory": "11.6",
       "name": "Acesulfame Potassium",
       "fcs": "11.6",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.10",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-6-acesulfame-potassium"
+      "profile_id": "11-11-6-acesulfame-potassium",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.10"
     },
     {
       "id": "11-11-6-sucralose",
@@ -18175,10 +18322,12 @@
       "subcategory": "11.6",
       "name": "Sucralose",
       "fcs": "11.6",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.11",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-6-sucralose"
+      "profile_id": "11-11-6-sucralose",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.11"
     },
     {
       "id": "11-11-6-calcium-saccharin-food-grade",
@@ -18186,10 +18335,12 @@
       "subcategory": "11.6",
       "name": "Calcium Saccharin (Food Grade)",
       "fcs": "11.6",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.12",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "11-11-6-calcium-saccharin-food-grade"
+      "profile_id": "11-11-6-calcium-saccharin-food-grade",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.12"
     },
     {
       "id": "11-11-6-sorbitol",
@@ -19677,10 +19828,12 @@
       "subcategory": "100",
       "name": "Royal Jelly",
       "fcs": "100",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.8.3(3)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "100-100-royal-jelly"
+      "profile_id": "100-100-royal-jelly",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.3(3)"
     },
     {
       "id": "100-100-pan-masala",
@@ -19828,6 +19981,19 @@
       "profile_status": "base_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "102-102-1-15-1-kulmasha-barley-savory-discs"
+    },
+    {
+      "id": "99-99-1-bees-wax",
+      "category": "99",
+      "subcategory": "99.1",
+      "name": "Bees Wax",
+      "fcs": "99.1",
+      "fssr": "2.8.3(2)",
+      "profile_status": "chapter_profile_ready",
+      "catalog_source": "FoSCoS Guidance Document V1.1 (Category 99 text-box route) + FSSAI Chapter 2.8",
+      "profile_id": "99-99-1-bees-wax",
+      "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
+      "rule_key": "2.8.3(2)"
     }
   ],
   "last_catalog_expansion": "2026-10-02"
