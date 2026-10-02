@@ -9,11 +9,11 @@
     "detailed_rule_profiles": [
       "caffeinated-beverage"
     ],
-    "foscos_catalog_products_loaded": 513,
-    "foscos_catalog_scope": "Initial official FoSCoS/FSSAI indexed rows loaded to validate browse/search architecture; complete standardized-product ingestion continues category by category.",
+    "foscos_catalog_products_loaded": 518,
+    "foscos_catalog_scope": "Official FoSCoS/FSSAI indexed rows loaded category by category; Chapter 2.5 synchronization added the current missing meat-product rows while rule ingestion continues.",
     "foscos_subcategory_framework": "Level-2 FoSCoS/FSSAI food-category framework loaded for categories 01–16; special categories without a separate level-2 browse layer are handled directly at product/category level.",
     "level3_status": "Expanded official FoSCoS standardized-product catalogue. Detailed compliance rule profiles remain a separate ingestion layer.",
-    "base_rule_profiles_ready": 512,
+    "base_rule_profiles_ready": 304,
     "profile_architecture_note": "Every loaded FoSCoS standardized product now has at least a base profile. Full formulation compliance is enabled only when detailed product-specific clauses have been ingested.",
     "chapter_ingestion": {
       "2.1": {
@@ -52,6 +52,17 @@
         "structured_core_standards": 31,
         "status": "structured_core_loaded",
         "next_validation": "Remaining Chapter 2.4 standard products and product-specific tables; Appendix A, contaminants, microbiology, processing aids and labels"
+      },
+      "2.5": {
+        "title": "Meat and Meat Products (including Egg and Egg Products)",
+        "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+        "source_version": "Version 4 (01.08.2025)",
+        "mapped_catalog_products": 37,
+        "structured_core_standards": 20,
+        "status": "structured_core_loaded",
+        "source_verified_on": "2026-10-02",
+        "regulatory_note": "Meat Sausage clause 2.5.2(2A) is included in Version 4; FSSAI direction dated 28.04.2026 extended its compliance period for six months from 01.05.2026.",
+        "next_validation": "Appendix A additive inheritance, contaminants, microbiology, processing aids, labels and full machine validation"
       }
     }
   },
@@ -7689,13 +7700,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.1",
       "fcs": "08.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(7)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7704,7 +7715,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(7)",
+      "standard_name": "Fresh or Chilled or Frozen Pork or Pig Meat",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-1-fresh-or-chilled-beef",
@@ -7712,13 +7727,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.1",
       "fcs": "08.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(8)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7727,7 +7742,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(8)",
+      "standard_name": "Fresh or Chilled or Frozen Beef",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-1-fresh-or-chilled-chevon-or-goat-meat",
@@ -7735,13 +7754,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.1",
       "fcs": "08.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(9)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7750,7 +7769,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(9)",
+      "standard_name": "Fresh or Chilled or Frozen Chevon or Goat Meat",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-1-fresh-or-chilled-mutton-or-sheep-meat",
@@ -7758,13 +7781,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.1",
       "fcs": "08.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(10)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7773,7 +7796,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(10)",
+      "standard_name": "Fresh or Chilled or Frozen Mutton or Sheep Meat",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-1-fresh-or-chilled-poultry-meat",
@@ -7781,13 +7808,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.1",
       "fcs": "08.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(11)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7796,7 +7823,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(11)",
+      "standard_name": "Fresh or Chilled or Frozen Poultry Meat",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-1-fresh-or-chilled-rabbit-meat",
@@ -7804,13 +7835,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.1",
       "fcs": "08.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(6)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7819,7 +7850,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(6)",
+      "standard_name": "Fresh or Chilled or Frozen Rabbit Meat",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-2-canned-or-retort-pouch-meat-products",
@@ -7827,13 +7862,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.2",
       "fcs": "08.2.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(1)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7842,7 +7877,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(1)",
+      "standard_name": "Canned or Retort Pouch Meat Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-2-dried-or-dehydrated-meat-products-whole-pieces-or-cuts",
@@ -7850,13 +7889,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.2",
       "fcs": "08.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(4)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7865,7 +7904,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(4)",
+      "standard_name": "Dried or Dehydrated Meat Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-2-cooked-or-semicooked-meat-products-heat-treated-processed-meat-in-whole-pieces-or-",
@@ -7873,13 +7916,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.2",
       "fcs": "08.2.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(5)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7888,7 +7931,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(5)",
+      "standard_name": "Cooked or Semi-Cooked Meat Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-2-frozen-rabbit-meat",
@@ -7896,13 +7943,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.2",
       "fcs": "08.2.3",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(6)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7911,7 +7958,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(6)",
+      "standard_name": "Fresh or Chilled or Frozen Rabbit Meat",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-2-frozen-pork-or-pig-meat",
@@ -7922,10 +7973,10 @@
       "fssr": "2.5.2(7)",
       "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7934,7 +7985,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(7)",
+      "standard_name": "Fresh or Chilled or Frozen Pork or Pig Meat",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-2-frozen-beef",
@@ -7945,10 +8000,10 @@
       "fssr": "2.5.2(8)",
       "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7957,7 +8012,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(8)",
+      "standard_name": "Fresh or Chilled or Frozen Beef",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-2-cooked-or-semicooked-meat-products-frozen-raw-flavoured-marinated-processed-meat-i",
@@ -7968,10 +8027,10 @@
       "fssr": "2.5.2(5)",
       "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -7980,7 +8039,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(5)",
+      "standard_name": "Cooked or Semi-Cooked Meat Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-2-cured-or-pickled-and-cooked-or-smoked-meat-products-or-both-whole-pieces-or-cuts",
@@ -7991,10 +8054,10 @@
       "fssr": "2.5.2(3)",
       "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8003,7 +8066,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(3)",
+      "standard_name": "Cured or Pickled and Cooked or Smoked Meat Products, or both",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-3-marinated-meat-products-comminuted",
@@ -8011,13 +8078,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.3",
       "fcs": "08.3.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(12)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8026,7 +8093,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(12)",
+      "standard_name": "Marinated Meat Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-3-fermented-meat-products-comminuted",
@@ -8034,13 +8105,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.3",
       "fcs": "08.3.1.3",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(13)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8049,7 +8120,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(13)",
+      "standard_name": "Fermented Meat Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-3-canned-or-retort-pouch-meat-products",
@@ -8057,13 +8132,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.3",
       "fcs": "08.3.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(1)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8072,7 +8147,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(1)",
+      "standard_name": "Canned or Retort Pouch Meat Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-3-comminuted-or-restructured-meat-products",
@@ -8080,13 +8159,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.3",
       "fcs": "08.3",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(2)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8095,7 +8174,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(2)",
+      "standard_name": "Comminuted or Restructured Meat Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-3-cured-or-pickled-and-cooked-or-smoked-meat-products-or-both-comminuted",
@@ -8103,13 +8186,13 @@
       "foscos_category": "08",
       "foscos_subcategory": "08.3",
       "fcs": "08.3.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.2(3)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8118,7 +8201,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(3)",
+      "standard_name": "Cured or Pickled and Cooked or Smoked Meat Products, or both",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-3-cooked-or-semicooked-meat-products-heat-treated-processed-comminuted-meat",
@@ -8129,10 +8216,10 @@
       "fssr": "2.5.2(5)",
       "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8141,7 +8228,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(5)",
+      "standard_name": "Cooked or Semi-Cooked Meat Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-3-cooked-or-semicooked-meat-products-frozen-processed-comminuted-meat",
@@ -8152,10 +8243,10 @@
       "fssr": "2.5.2(5)",
       "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8164,7 +8255,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(5)",
+      "standard_name": "Cooked or Semi-Cooked Meat Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-3-dried-or-dehydrated-meat-products-comminuted",
@@ -8175,10 +8270,10 @@
       "fssr": "2.5.2(4)",
       "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8187,7 +8282,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(4)",
+      "standard_name": "Dried or Dehydrated Meat Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-3-meat-sausages-fresh",
@@ -8198,10 +8297,10 @@
       "fssr": "2.5.2(2A)",
       "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8210,7 +8309,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(2A)",
+      "standard_name": "Meat Sausages — Fresh",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-3-meat-sausages-cooked",
@@ -8221,10 +8324,10 @@
       "fssr": "2.5.2(2A)",
       "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8233,7 +8336,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(2A)",
+      "standard_name": "Meat Sausages — Cooked",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-3-meat-sausages-smoked",
@@ -8244,10 +8351,10 @@
       "fssr": "2.5.2(2A)",
       "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8256,7 +8363,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(2A)",
+      "standard_name": "Meat Sausages — Smoked",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-3-meat-sausages-dry-or-fermented",
@@ -8267,10 +8378,10 @@
       "fssr": "2.5.2(2A)",
       "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8279,7 +8390,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(2A)",
+      "standard_name": "Meat Sausages — Dry or Fermented",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "08-08-4-animal-casings",
@@ -8290,10 +8405,10 @@
       "fssr": "2.5.2(14)",
       "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8302,7 +8417,146 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(14)",
+      "standard_name": "Animal Casings",
+      "source_verified_on": "2026-10-02"
+    },
+    {
+      "id": "08-08-2-frozen-chevon-or-goat-meat",
+      "display_name": "Frozen Chevon or Goat Meat",
+      "foscos_category": "08",
+      "foscos_subcategory": "08.2",
+      "fcs": "08.2.3",
+      "fssr": "2.5.2(9)",
+      "regulation_chapter": "2.5",
+      "route": "standardized",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, as applicable",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(9)",
+      "standard_name": "Fresh or Chilled or Frozen Chevon or Goat Meat",
+      "source_verified_on": "2026-10-02"
+    },
+    {
+      "id": "08-08-2-frozen-mutton-or-sheep-meat",
+      "display_name": "Frozen Mutton or Sheep Meat",
+      "foscos_category": "08",
+      "foscos_subcategory": "08.2",
+      "fcs": "08.2.3",
+      "fssr": "2.5.2(10)",
+      "regulation_chapter": "2.5",
+      "route": "standardized",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, as applicable",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(10)",
+      "standard_name": "Fresh or Chilled or Frozen Mutton or Sheep Meat",
+      "source_verified_on": "2026-10-02"
+    },
+    {
+      "id": "08-08-2-frozen-poultry-meat",
+      "display_name": "Frozen Poultry Meat",
+      "foscos_category": "08",
+      "foscos_subcategory": "08.2",
+      "fcs": "08.2.3",
+      "fssr": "2.5.2(11)",
+      "regulation_chapter": "2.5",
+      "route": "standardized",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, as applicable",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(11)",
+      "standard_name": "Fresh or Chilled or Frozen Poultry Meat",
+      "source_verified_on": "2026-10-02"
+    },
+    {
+      "id": "08-08-2-marinated-meat-products-whole-pieces-or-cuts",
+      "display_name": "Marinated Meat Products - Whole pieces or cuts",
+      "foscos_category": "08",
+      "foscos_subcategory": "08.2",
+      "fcs": "08.2.1",
+      "fssr": "2.5.2(12)",
+      "regulation_chapter": "2.5",
+      "route": "standardized",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, as applicable",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(12)",
+      "standard_name": "Marinated Meat Products",
+      "source_verified_on": "2026-10-02"
+    },
+    {
+      "id": "08-08-2-fermented-meat-products-whole-pieces-or-cuts",
+      "display_name": "Fermented Meat Products - Whole pieces or cuts",
+      "foscos_category": "08",
+      "foscos_subcategory": "08.2",
+      "fcs": "08.2.1.3",
+      "fssr": "2.5.2(13)",
+      "regulation_chapter": "2.5",
+      "route": "standardized",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, as applicable",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(13)",
+      "standard_name": "Fermented Meat Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-1-live-and-raw-bivalve-molluscs",
@@ -8793,13 +9047,13 @@
       "foscos_category": "10",
       "foscos_subcategory": "10.1",
       "fcs": "10.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.3",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8808,7 +9062,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.3(1)",
+      "standard_name": "Fresh Eggs",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "10-10-2-liquid-egg-products",
@@ -8816,13 +9074,13 @@
       "foscos_category": "10",
       "foscos_subcategory": "10.2",
       "fcs": "10.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.3(4)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8831,7 +9089,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.3(4)",
+      "standard_name": "Liquid Egg Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "10-10-2-frozen-egg-products",
@@ -8839,13 +9101,13 @@
       "foscos_category": "10",
       "foscos_subcategory": "10.2",
       "fcs": "10.2.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.3(2)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8854,7 +9116,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.3(2)",
+      "standard_name": "Frozen Egg Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "10-10-2-egg-powder",
@@ -8862,13 +9128,13 @@
       "foscos_category": "10",
       "foscos_subcategory": "10.2",
       "fcs": "10.2.3",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.3(3)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8877,7 +9143,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.3(3)",
+      "standard_name": "Egg Powder",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "10-10-3-pickled-eggs",
@@ -8885,13 +9155,13 @@
       "foscos_category": "10",
       "foscos_subcategory": "10.3",
       "fcs": "10.3",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.5.3(5)",
+      "regulation_chapter": "2.5",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.5 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.5, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8900,7 +9170,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.5 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.3(5)",
+      "standard_name": "Pickled Eggs",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "11-11-1-refined-sugar",
@@ -16781,10 +17055,12 @@
       "subcategory": "08.1",
       "name": "Fresh or Chilled Pork or Pig Meat",
       "fcs": "08.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(7)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-1-fresh-or-chilled-pork-or-pig-meat"
+      "profile_id": "08-08-1-fresh-or-chilled-pork-or-pig-meat",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(7)"
     },
     {
       "id": "08-08-1-fresh-or-chilled-beef",
@@ -16792,10 +17068,12 @@
       "subcategory": "08.1",
       "name": "Fresh or Chilled Beef",
       "fcs": "08.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(8)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-1-fresh-or-chilled-beef"
+      "profile_id": "08-08-1-fresh-or-chilled-beef",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(8)"
     },
     {
       "id": "08-08-1-fresh-or-chilled-chevon-or-goat-meat",
@@ -16803,10 +17081,12 @@
       "subcategory": "08.1",
       "name": "Fresh or Chilled Chevon or Goat Meat",
       "fcs": "08.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(9)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-1-fresh-or-chilled-chevon-or-goat-meat"
+      "profile_id": "08-08-1-fresh-or-chilled-chevon-or-goat-meat",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(9)"
     },
     {
       "id": "08-08-1-fresh-or-chilled-mutton-or-sheep-meat",
@@ -16814,10 +17094,12 @@
       "subcategory": "08.1",
       "name": "Fresh or Chilled Mutton or Sheep Meat",
       "fcs": "08.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(10)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-1-fresh-or-chilled-mutton-or-sheep-meat"
+      "profile_id": "08-08-1-fresh-or-chilled-mutton-or-sheep-meat",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(10)"
     },
     {
       "id": "08-08-1-fresh-or-chilled-poultry-meat",
@@ -16825,10 +17107,12 @@
       "subcategory": "08.1",
       "name": "Fresh or Chilled Poultry Meat",
       "fcs": "08.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(11)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-1-fresh-or-chilled-poultry-meat"
+      "profile_id": "08-08-1-fresh-or-chilled-poultry-meat",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(11)"
     },
     {
       "id": "08-08-1-fresh-or-chilled-rabbit-meat",
@@ -16836,10 +17120,12 @@
       "subcategory": "08.1",
       "name": "Fresh or Chilled Rabbit meat",
       "fcs": "08.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(6)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-1-fresh-or-chilled-rabbit-meat"
+      "profile_id": "08-08-1-fresh-or-chilled-rabbit-meat",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(6)"
     },
     {
       "id": "08-08-2-canned-or-retort-pouch-meat-products",
@@ -16847,10 +17133,12 @@
       "subcategory": "08.2",
       "name": "Canned or Retort Pouch Meat Products",
       "fcs": "08.2.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(1)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-2-canned-or-retort-pouch-meat-products"
+      "profile_id": "08-08-2-canned-or-retort-pouch-meat-products",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(1)"
     },
     {
       "id": "08-08-2-dried-or-dehydrated-meat-products-whole-pieces-or-cuts",
@@ -16858,10 +17146,12 @@
       "subcategory": "08.2",
       "name": "Dried or Dehydrated Meat Products - Whole pieces or cuts",
       "fcs": "08.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(4)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-2-dried-or-dehydrated-meat-products-whole-pieces-or-cuts"
+      "profile_id": "08-08-2-dried-or-dehydrated-meat-products-whole-pieces-or-cuts",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(4)"
     },
     {
       "id": "08-08-2-cooked-or-semicooked-meat-products-heat-treated-processed-meat-in-whole-pieces-or-",
@@ -16869,10 +17159,12 @@
       "subcategory": "08.2",
       "name": "Cooked or Semicooked Meat Products - Heat treated processed meat in whole pieces or cuts",
       "fcs": "08.2.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(5)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-2-cooked-or-semicooked-meat-products-heat-treated-processed-meat-in-whole-pieces-or-"
+      "profile_id": "08-08-2-cooked-or-semicooked-meat-products-heat-treated-processed-meat-in-whole-pieces-or-",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(5)"
     },
     {
       "id": "08-08-2-frozen-rabbit-meat",
@@ -16880,10 +17172,12 @@
       "subcategory": "08.2",
       "name": "Frozen Rabbit meat",
       "fcs": "08.2.3",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(6)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-2-frozen-rabbit-meat"
+      "profile_id": "08-08-2-frozen-rabbit-meat",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(6)"
     },
     {
       "id": "08-08-2-frozen-pork-or-pig-meat",
@@ -16892,9 +17186,11 @@
       "name": "Frozen Pork or Pig Meat",
       "fcs": "08.2.3",
       "fssr": "2.5.2(7)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-2-frozen-pork-or-pig-meat"
+      "profile_id": "08-08-2-frozen-pork-or-pig-meat",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(7)"
     },
     {
       "id": "08-08-2-frozen-beef",
@@ -16903,9 +17199,11 @@
       "name": "Frozen Beef",
       "fcs": "08.2.3",
       "fssr": "2.5.2(8)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-2-frozen-beef"
+      "profile_id": "08-08-2-frozen-beef",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(8)"
     },
     {
       "id": "08-08-2-cooked-or-semicooked-meat-products-frozen-raw-flavoured-marinated-processed-meat-i",
@@ -16914,9 +17212,11 @@
       "name": "Cooked or Semicooked Meat Products – Frozen raw, flavoured/marinated, processed meat in whole pieces or cuts",
       "fcs": "08.2.3",
       "fssr": "2.5.2(5)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-2-cooked-or-semicooked-meat-products-frozen-raw-flavoured-marinated-processed-meat-i"
+      "profile_id": "08-08-2-cooked-or-semicooked-meat-products-frozen-raw-flavoured-marinated-processed-meat-i",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(5)"
     },
     {
       "id": "08-08-2-cured-or-pickled-and-cooked-or-smoked-meat-products-or-both-whole-pieces-or-cuts",
@@ -16925,9 +17225,11 @@
       "name": "Cured or Pickled and Cooked or Smoked Meat Products, or both - Whole pieces or cuts",
       "fcs": "08.2.1.1",
       "fssr": "2.5.2(3)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-2-cured-or-pickled-and-cooked-or-smoked-meat-products-or-both-whole-pieces-or-cuts"
+      "profile_id": "08-08-2-cured-or-pickled-and-cooked-or-smoked-meat-products-or-both-whole-pieces-or-cuts",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(3)"
     },
     {
       "id": "08-08-3-marinated-meat-products-comminuted",
@@ -16935,10 +17237,12 @@
       "subcategory": "08.3",
       "name": "Marinated Meat Products – Comminuted",
       "fcs": "08.3.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(12)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-3-marinated-meat-products-comminuted"
+      "profile_id": "08-08-3-marinated-meat-products-comminuted",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(12)"
     },
     {
       "id": "08-08-3-fermented-meat-products-comminuted",
@@ -16946,10 +17250,12 @@
       "subcategory": "08.3",
       "name": "Fermented Meat Products - Comminuted",
       "fcs": "08.3.1.3",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(13)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-3-fermented-meat-products-comminuted"
+      "profile_id": "08-08-3-fermented-meat-products-comminuted",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(13)"
     },
     {
       "id": "08-08-3-canned-or-retort-pouch-meat-products",
@@ -16957,10 +17263,12 @@
       "subcategory": "08.3",
       "name": "Canned or Retort Pouch Meat Products",
       "fcs": "08.3.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(1)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-3-canned-or-retort-pouch-meat-products"
+      "profile_id": "08-08-3-canned-or-retort-pouch-meat-products",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(1)"
     },
     {
       "id": "08-08-3-comminuted-or-restructured-meat-products",
@@ -16968,10 +17276,12 @@
       "subcategory": "08.3",
       "name": "Comminuted or Restructured Meat Products",
       "fcs": "08.3",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(2)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-3-comminuted-or-restructured-meat-products"
+      "profile_id": "08-08-3-comminuted-or-restructured-meat-products",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(2)"
     },
     {
       "id": "08-08-3-cured-or-pickled-and-cooked-or-smoked-meat-products-or-both-comminuted",
@@ -16979,10 +17289,12 @@
       "subcategory": "08.3",
       "name": "Cured or Pickled and Cooked or Smoked Meat Products, or both - Comminuted",
       "fcs": "08.3.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.2(3)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-3-cured-or-pickled-and-cooked-or-smoked-meat-products-or-both-comminuted"
+      "profile_id": "08-08-3-cured-or-pickled-and-cooked-or-smoked-meat-products-or-both-comminuted",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(3)"
     },
     {
       "id": "08-08-3-cooked-or-semicooked-meat-products-heat-treated-processed-comminuted-meat",
@@ -16991,9 +17303,11 @@
       "name": "Cooked or Semicooked Meat Products – Heat treated processed comminuted meat",
       "fcs": "08.3.2",
       "fssr": "2.5.2(5)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-3-cooked-or-semicooked-meat-products-heat-treated-processed-comminuted-meat"
+      "profile_id": "08-08-3-cooked-or-semicooked-meat-products-heat-treated-processed-comminuted-meat",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(5)"
     },
     {
       "id": "08-08-3-cooked-or-semicooked-meat-products-frozen-processed-comminuted-meat",
@@ -17002,9 +17316,11 @@
       "name": "Cooked or Semicooked Meat Products - Frozen processed comminuted meat",
       "fcs": "08.3.3",
       "fssr": "2.5.2(5)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-3-cooked-or-semicooked-meat-products-frozen-processed-comminuted-meat"
+      "profile_id": "08-08-3-cooked-or-semicooked-meat-products-frozen-processed-comminuted-meat",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(5)"
     },
     {
       "id": "08-08-3-dried-or-dehydrated-meat-products-comminuted",
@@ -17013,9 +17329,11 @@
       "name": "Dried or dehydrated meat products - Comminuted",
       "fcs": "08.3",
       "fssr": "2.5.2(4)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-3-dried-or-dehydrated-meat-products-comminuted"
+      "profile_id": "08-08-3-dried-or-dehydrated-meat-products-comminuted",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(4)"
     },
     {
       "id": "08-08-3-meat-sausages-fresh",
@@ -17024,9 +17342,11 @@
       "name": "Meat sausages - Fresh",
       "fcs": "08.3.1",
       "fssr": "2.5.2(2A)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-3-meat-sausages-fresh"
+      "profile_id": "08-08-3-meat-sausages-fresh",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(2A)"
     },
     {
       "id": "08-08-3-meat-sausages-cooked",
@@ -17035,9 +17355,11 @@
       "name": "Meat sausages – Cooked",
       "fcs": "08.3.2",
       "fssr": "2.5.2(2A)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-3-meat-sausages-cooked"
+      "profile_id": "08-08-3-meat-sausages-cooked",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(2A)"
     },
     {
       "id": "08-08-3-meat-sausages-smoked",
@@ -17046,9 +17368,11 @@
       "name": "Meat sausages – Smoked",
       "fcs": "08.3.1.1",
       "fssr": "2.5.2(2A)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-3-meat-sausages-smoked"
+      "profile_id": "08-08-3-meat-sausages-smoked",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(2A)"
     },
     {
       "id": "08-08-3-meat-sausages-dry-or-fermented",
@@ -17057,9 +17381,11 @@
       "name": "Meat sausages – Dry or Fermented",
       "fcs": "08.3.1.3",
       "fssr": "2.5.2(2A)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-3-meat-sausages-dry-or-fermented"
+      "profile_id": "08-08-3-meat-sausages-dry-or-fermented",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(2A)"
     },
     {
       "id": "08-08-4-animal-casings",
@@ -17068,9 +17394,76 @@
       "name": "Animal Casings",
       "fcs": "08.4",
       "fssr": "2.5.2(14)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "08-08-4-animal-casings"
+      "profile_id": "08-08-4-animal-casings",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(14)"
+    },
+    {
+      "id": "08-08-2-frozen-chevon-or-goat-meat",
+      "category": "08",
+      "subcategory": "08.2",
+      "name": "Frozen Chevon or Goat Meat",
+      "fcs": "08.2.3",
+      "fssr": "2.5.2(9)",
+      "profile_status": "chapter_profile_ready",
+      "catalog_source": "FoSCoS standardized-product list",
+      "profile_id": "08-08-2-frozen-chevon-or-goat-meat",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(9)"
+    },
+    {
+      "id": "08-08-2-frozen-mutton-or-sheep-meat",
+      "category": "08",
+      "subcategory": "08.2",
+      "name": "Frozen Mutton or Sheep Meat",
+      "fcs": "08.2.3",
+      "fssr": "2.5.2(10)",
+      "profile_status": "chapter_profile_ready",
+      "catalog_source": "FoSCoS standardized-product list",
+      "profile_id": "08-08-2-frozen-mutton-or-sheep-meat",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(10)"
+    },
+    {
+      "id": "08-08-2-frozen-poultry-meat",
+      "category": "08",
+      "subcategory": "08.2",
+      "name": "Frozen Poultry Meat",
+      "fcs": "08.2.3",
+      "fssr": "2.5.2(11)",
+      "profile_status": "chapter_profile_ready",
+      "catalog_source": "FoSCoS standardized-product list",
+      "profile_id": "08-08-2-frozen-poultry-meat",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(11)"
+    },
+    {
+      "id": "08-08-2-marinated-meat-products-whole-pieces-or-cuts",
+      "category": "08",
+      "subcategory": "08.2",
+      "name": "Marinated Meat Products - Whole pieces or cuts",
+      "fcs": "08.2.1",
+      "fssr": "2.5.2(12)",
+      "profile_status": "chapter_profile_ready",
+      "catalog_source": "FoSCoS standardized-product list",
+      "profile_id": "08-08-2-marinated-meat-products-whole-pieces-or-cuts",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(12)"
+    },
+    {
+      "id": "08-08-2-fermented-meat-products-whole-pieces-or-cuts",
+      "category": "08",
+      "subcategory": "08.2",
+      "name": "Fermented Meat Products - Whole pieces or cuts",
+      "fcs": "08.2.1.3",
+      "fssr": "2.5.2(13)",
+      "profile_status": "chapter_profile_ready",
+      "catalog_source": "FoSCoS standardized-product list",
+      "profile_id": "08-08-2-fermented-meat-products-whole-pieces-or-cuts",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.2(13)"
     },
     {
       "id": "09-09-1-live-and-raw-bivalve-molluscs",
@@ -17309,10 +17702,12 @@
       "subcategory": "10.1",
       "name": "Fresh Eggs",
       "fcs": "10.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.3",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "10-10-1-fresh-eggs"
+      "profile_id": "10-10-1-fresh-eggs",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.3(1)"
     },
     {
       "id": "10-10-2-liquid-egg-products",
@@ -17320,10 +17715,12 @@
       "subcategory": "10.2",
       "name": "Liquid Egg Products",
       "fcs": "10.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.3(4)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "10-10-2-liquid-egg-products"
+      "profile_id": "10-10-2-liquid-egg-products",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.3(4)"
     },
     {
       "id": "10-10-2-frozen-egg-products",
@@ -17331,10 +17728,12 @@
       "subcategory": "10.2",
       "name": "Frozen Egg Products",
       "fcs": "10.2.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.3(2)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "10-10-2-frozen-egg-products"
+      "profile_id": "10-10-2-frozen-egg-products",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.3(2)"
     },
     {
       "id": "10-10-2-egg-powder",
@@ -17342,10 +17741,12 @@
       "subcategory": "10.2",
       "name": "Egg powder",
       "fcs": "10.2.3",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.3(3)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "10-10-2-egg-powder"
+      "profile_id": "10-10-2-egg-powder",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.3(3)"
     },
     {
       "id": "10-10-3-pickled-eggs",
@@ -17353,10 +17754,12 @@
       "subcategory": "10.3",
       "name": "Pickled Eggs",
       "fcs": "10.3",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.5.3(5)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "10-10-3-pickled-eggs"
+      "profile_id": "10-10-3-pickled-eggs",
+      "rule_file": "./data/rules/chapter-2-5-meat-eggs-v1.json",
+      "rule_key": "2.5.3(5)"
     },
     {
       "id": "11-11-1-refined-sugar",
