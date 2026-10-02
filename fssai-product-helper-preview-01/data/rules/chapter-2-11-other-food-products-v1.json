@@ -1,0 +1,416 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.11",
+  "title": "Other Food Products and Ingredients",
+  "source_version": "Current consolidated FSSAI Chapter 2.11 (official compendium; chapter PDF carries no explicit version/date label)",
+  "source_verified_on": "2026-10-02",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 2.11 — Other Food Product and Ingredients (current consolidated compendium chapter)",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/12_%20Chapter%202_11%20(Other%20food%20product%20and%20%20ingredients).pdf"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Food Products Standards & Food Additives Compendium",
+      "url": "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+    },
+    {
+      "authority": "FoSCoS",
+      "title": "View all FSSAI Standardized Food Products",
+      "url": "https://fcstraining.fssai.gov.in/standard-product"
+    },
+    {
+      "authority": "FSSAI / FoSCoS",
+      "title": "FoSCoS Guidance Document — unlisted process-standard foods including Special dietary food with low sodium content",
+      "url": "https://fcstraining.fssai.gov.in/assets/docs/FoSCoSGuidanceDocumentV1_0_Latest.pdf"
+    }
+  ],
+  "regulatory_notes": [
+    "The current standalone Chapter 2.11 PDF on the FSSAI compendium page does not print an explicit version/date label; PMSV therefore does not invent a version number and records the chapter as the current consolidated source verified on 2026-10-02.",
+    "Sub-regulation 2.11.6 is omitted.",
+    "FSSAI's current testing-fee document identifies the Chapter 2.11 products/standards as Baking Powder, Catechu, Gelatin, Silver Leaf, Pan Masala, Carob Powder, Dietary Fibre and Special dietary food with low sodium content.",
+    "FoSCoS guidance states Special dietary food with low sodium content is not itself listed as a standalone FoSCoS product; the corresponding food category is selected and the 2.11.9 process/composition standard applies additionally.",
+    "Historical labelling references inside Chapter 2.11 refer to the former Packaging and Labelling Regulations, 2011. PMSV does not use those historical references as the current labelling layer; current Labelling and Display Regulations must be evaluated separately."
+  ],
+  "common_rules": [
+    {
+      "type": "contaminants",
+      "text": "Applicable products shall comply with the current Food Safety and Standards (Contaminants, Toxins and Residues) Regulations."
+    },
+    {
+      "type": "additives",
+      "text": "Food additives are permitted only where allowed by the applicable product standard and Appendix A."
+    },
+    {
+      "type": "labelling",
+      "text": "Current Food Safety and Standards (Labelling and Display) Regulations, 2020 apply; historical Chapter 2.11 references to the former Packaging and Labelling Regulations are retained only as source history."
+    }
+  ],
+  "omitted_standards": [
+    {
+      "key": "2.11.6",
+      "status": "omitted",
+      "legacy_name": "Low and High Fat Cocoa Powder"
+    }
+  ],
+  "horizontal_rules": [
+    {
+      "key": "2.11.9",
+      "name": "Special Dietary Food with Low Sodium Content",
+      "status": "structured_overlay",
+      "foscos_mapping": "No standalone FoSCoS product row. Apply to the corresponding underlying food category in addition to that food's own standard.",
+      "eligibility": [
+        {
+          "class": "Low sodium",
+          "requirements": [
+            {
+              "parameter": "Added sodium salts",
+              "operator": "none"
+            },
+            {
+              "parameter": "Sodium relative to comparable normal product as consumed",
+              "operator": "<=",
+              "value": 50,
+              "unit": "%"
+            },
+            {
+              "parameter": "Sodium in final product as normally consumed",
+              "operator": "<=",
+              "value": 120,
+              "unit": "mg/100 g"
+            }
+          ]
+        },
+        {
+          "class": "Very low sodium",
+          "requirements": [
+            {
+              "parameter": "Added sodium salts",
+              "operator": "none"
+            },
+            {
+              "parameter": "Sodium relative to comparable normal product as consumed",
+              "operator": "<=",
+              "value": 50,
+              "unit": "%"
+            },
+            {
+              "parameter": "Sodium in final product as normally consumed",
+              "operator": "<=",
+              "value": 40,
+              "unit": "mg/100 g"
+            }
+          ]
+        }
+      ],
+      "salt_substitute_rule": "Salt substitutes conforming to 2.9.30(6) may be added at GMP.",
+      "chapter_label_requirements": [
+        "Use the description 'low sodium' or 'very low sodium' according to the applicable class.",
+        "Declare sodium per 100 g and per specified serving.",
+        "Declare average carbohydrate, protein and fat per 100 g and energy value.",
+        "Declare addition of salt substitutes.",
+        "If a potassium salt substitute is used, declare total potassium as mg cation/100 g.",
+        "Declare sodium-chloride equivalent per serving and total NaCl in the pack.",
+        "Declare special storage conditions, where applicable."
+      ],
+      "labelling_validation_note": "The chapter text contains historical references to the former 2011 labelling regulations. Numerical sodium criteria are structured; label enforcement must be reconciled against current Labelling and Display Regulations before hard-fail use."
+    }
+  ],
+  "standards": [
+    {
+      "key": "2.11.1",
+      "name": "Baking Powder",
+      "status": "structured_core",
+      "definition": "A combination capable under baking conditions of yielding carbon dioxide, consisting of sodium bicarbonate, acid-reacting material, starch or other neutral material.",
+      "required_ingredients": [
+        "Sodium bicarbonate (INS 500(ii))"
+      ],
+      "optional_neutral_materials": [
+        "Edible starches from cereals, roots and tubers",
+        "Calcium lactate",
+        "Anhydrous calcium sulphate",
+        "Sodium sulphate",
+        "Gamma-delta lactone",
+        "Acid pectin and similar neutral materials"
+      ],
+      "permitted_acidulants": [
+        "Monocalcium phosphate monohydrate / anhydrous INS 341(iii)",
+        "Sodium aluminium phosphate INS 541(i)",
+        "Ammonium dihydrogen phosphate INS 342(i)",
+        "Calcium carbonate INS 170(i)",
+        "Potassium bitartrate / potassium hydrogen tartrate (cream of tartar)",
+        "Tartaric acid INS 334",
+        "Tricalcium phosphate INS 341(iii)",
+        "Glucono delta lactone",
+        "Calcium silicate INS 552",
+        "Aluminium sodium sulphate INS 521",
+        "Sodium acid pyrophosphate INS 450(i)"
+      ],
+      "formulation_rules": [
+        {
+          "parameter": "Moisture critical condition",
+          "operator": "<",
+          "value": 5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Calcium silicate when used",
+          "operator": "<=",
+          "value": 10,
+          "unit": "%"
+        }
+      ],
+      "quality_rules": [
+        {
+          "parameter": "Appearance",
+          "operator": "qualitative",
+          "value": "White free-flowing powder, free from off odour"
+        },
+        {
+          "parameter": "Carbon dioxide yield",
+          "operator": ">=",
+          "value": 10,
+          "unit": "% of product weight"
+        }
+      ]
+    },
+    {
+      "key": "2.11.2",
+      "name": "Catechu (Edible)",
+      "status": "structured_core",
+      "definition": "Dried aqueous extract prepared from the heartwood of Acacia catechu.",
+      "prohibited_or_absent": [
+        "Infestation",
+        "Sand",
+        "Earth",
+        "Other dirt"
+      ],
+      "composition": [
+        {
+          "parameter": "Loss on drying at 100°C",
+          "operator": "<=",
+          "value": 16,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Water-insoluble residue",
+          "operator": "<=",
+          "value": 25,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Alcohol-insoluble residue in 90% alcohol",
+          "operator": "<=",
+          "value": 30,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Ash insoluble in HCl — dry basis",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Ash insoluble in dilute HCl — Bhatti Katha — dry basis",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        }
+      ],
+      "identity_test": "1% aqueous solution plus 0.1% ferric ammonium sulphate gives dark green colour, changing to purple on addition of sodium hydroxide."
+    },
+    {
+      "key": "2.11.3",
+      "name": "Gelatin",
+      "status": "structured_core",
+      "definition": "Purified product obtained by partial hydrolysis of collagen derived from animal skin, white connective tissues and bones.",
+      "quality_rules": [
+        "Colourless or pale yellowish and translucent; sheets, flakes, shreds or coarse-to-fine powder; only slight characteristic odour/taste."
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 15,
+          "unit": "%"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 3,
+          "unit": "%"
+        },
+        {
+          "parameter": "Sulphur dioxide",
+          "operator": "<=",
+          "value": 1000,
+          "unit": "ppm"
+        },
+        {
+          "parameter": "Nitrogen — dry basis",
+          "operator": ">=",
+          "value": 15,
+          "unit": "%"
+        }
+      ],
+      "distinction_note": "This is animal-derived gelatin under 2.11.3. Gelatin from fish-processing waste is separately standardised under Chapter 2.6.1(25)."
+    },
+    {
+      "key": "2.11.4",
+      "name": "Silver Leaf (Chandi-ka-warq)",
+      "status": "structured_core",
+      "definition": "Food-grade silver leaf.",
+      "quality_rules": [
+        {
+          "parameter": "Form",
+          "operator": "qualitative",
+          "value": "Sheet of uniform thickness, free from creases and folds"
+        },
+        {
+          "parameter": "Silver foil weight",
+          "operator": "<=",
+          "value": 2.8,
+          "unit": "g/m²"
+        },
+        {
+          "parameter": "Silver fineness",
+          "operator": ">=",
+          "value": 999,
+          "unit": "per 1000"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Material of animal origin at any stage of manufacture"
+      ],
+      "contaminants": "Current FSSAI Contaminants, Toxins and Residues requirements apply."
+    },
+    {
+      "key": "2.11.5",
+      "name": "Pan Masala",
+      "status": "structured_core",
+      "permitted_ingredient_groups": [
+        "Betelnut",
+        "Lime",
+        "Coconut",
+        "Catechu",
+        "Saffron",
+        "Cardamom",
+        "Dry fruits",
+        "Mulethi",
+        "Sabnermusa",
+        "Other aromatic herbs and spices",
+        "Sugar",
+        "Glycerine",
+        "Glucose",
+        "Permitted natural colours",
+        "Menthol",
+        "Non-prohibited flavours"
+      ],
+      "prohibited_or_absent": [
+        "Added coal-tar colouring matter",
+        "Any ingredient injurious to health",
+        "Tobacco as an ingredient of the FSSAI-standardised Pan Masala product"
+      ],
+      "composition": [
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Ash insoluble in dilute HCl — dry basis",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by weight"
+        }
+      ],
+      "note": "Separate state-level restrictions/prohibitions and other laws may apply to manufacture, storage, distribution or sale; this product-standard profile alone does not determine marketability in a specific state."
+    },
+    {
+      "key": "2.11.7",
+      "name": "Carob Powder",
+      "status": "structured_core",
+      "definition": "Powder obtained from roasted husk-free pods of Ceratonia siliqua.",
+      "prohibited_or_absent": [
+        "Artificial colouring",
+        "Artificial flavouring",
+        "Extraneous matter",
+        "Glazing substance",
+        "Rancid or obnoxious flavour"
+      ],
+      "quality_rules": [
+        "Sound, dry and fresh condition."
+      ],
+      "composition": [
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 1.2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble matter",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Tannin content",
+          "operator": "range",
+          "min": 0.1,
+          "max": 0.15,
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "key": "2.11.8",
+      "name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "status": "structured_core",
+      "definition": "Glucose polymer of natural origin obtained by dextrinification of acidified starch under specific dry-roasting conditions and further purification.",
+      "identity_parameters": [
+        {
+          "parameter": "Average degree of polymerisation",
+          "operator": "range",
+          "min": 12,
+          "max": 25
+        },
+        {
+          "parameter": "Linkage profile",
+          "operator": "qualitative",
+          "value": "Contains indigestible alpha- and beta-linkages in addition to digestible alpha-(1,4) and alpha-(1,6) linkages"
+        }
+      ],
+      "permitted_use_level": "GMP",
+      "permitted_foods": [
+        "Flakes and ready-to-eat dry breakfast cereals",
+        "Noodles and pasta",
+        "Salad dressings/toppings and spreads",
+        "Table-top fibre as filler or carrier and cereals",
+        "Other snack foods or savouries",
+        "Bakery products including biscuits, cookies, bread, cake mixes and pastries",
+        "Other products where dextrin is permitted under FSSAI regulations"
+      ],
+      "source_rule": "Ingredient source (wheat/maize) shall be non-genetically modified according to the Chapter 2.11 text.",
+      "chapter_claim_text": [
+        {
+          "claim": "Source of dietary fibre",
+          "threshold_text": "Not less than 3 g/100 g or 1.5 g/100 kcal"
+        },
+        {
+          "claim": "High source of dietary fibre",
+          "threshold_text": "Chapter text states not less than 3 g/100 g or 1.5 g/100 kcal and not more than 6 g/100 g or 3 g/100 kcal"
+        }
+      ],
+      "labelling_validation_note": "Claim wording/thresholds originate from historical Chapter 2.11 text referencing the former 2011 labelling regulation. PMSV will not use them as current hard-fail claim rules until reconciled against the current Labelling and Display Regulations."
+    }
+  ]
+}
