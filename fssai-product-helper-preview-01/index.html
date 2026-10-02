@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 34</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 35</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation ingredients</button>
@@ -114,6 +114,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="section-title"><h2>Ingredients entered</h2><span id="ingredientCount">0 ingredients</span></div>
 <div id="formulaTotals" class="notice hidden"></div>
 <div id="ingredientList" class="empty-state">No ingredients entered yet.</div>
+<div id="finalFormulationAssessment" class="notice hidden"></div>
 <div id="formulationNext" class="hidden">
   <div class="notice oknote"><b>Ingredient list saved.</b> The next page explains how every ingredient qualifies, which FSSAI clause applies, and whether the formulation still fits the standardized product route or needs a Proprietary Food / approval review.</div>
   <button class="btn" type="button" id="goToStandards">View applicable standards →</button>
@@ -932,6 +933,7 @@ function renderFormula(){
  const list=document.getElementById('ingredientList');
  const count=document.getElementById('ingredientCount');
  const totals=document.getElementById('formulaTotals');
+ const finalAssessment=document.getElementById('finalFormulationAssessment');
  const next=document.getElementById('formulationNext');
  const qbody=document.getElementById('ingredientQualificationRows');
  const standards=document.getElementById('applicableStandards');
@@ -992,6 +994,33 @@ function renderFormula(){
  const liveChecks=formulationIngredients.map((x,i)=>checkUsageAgainstRule(x,qs[i]));
  const hasUsageFail=liveChecks.some(chk=>chk&&chk.pass===false);
  const hasUsagePending=liveChecks.some(chk=>chk&&chk.pass===null);
+
+ if(finalAssessment){
+   if(!formulationIngredients.length){
+     finalAssessment.classList.add('hidden');
+     finalAssessment.innerHTML='';
+   }else{
+     finalAssessment.classList.remove('hidden');
+     const route=hasUnresolved
+       ? 'Unable to classify — ingredient / non-specified food approval review required'
+       : hasProp
+         ? 'Proprietary Food / additional-ingredient regulatory review'
+         : 'Standardized Caffeinated Beverage';
+     const compliance=hasUsageFail
+       ? 'NOT COMPLIANT'
+       : (hasUsagePending||hasUnresolved||hasProp)
+         ? 'INCOMPLETE ASSESSMENT'
+         : 'COMPLIANT WITH EVALUATED FORMULATION REQUIREMENTS';
+     const complianceClass=hasUsageFail?'status-bad':(hasUsagePending||hasUnresolved||hasProp)?'status-warn':'status-good';
+     let reason='';
+     if(hasUsageFail)reason='At least one entered ingredient exceeds a loaded quantitative FSSAI limit.';
+     else if(hasUsagePending)reason='At least one quantitative requirement cannot yet be calculated from the ingredients entered.';
+     else if(hasUnresolved)reason='At least one ingredient does not yet have a verified regulatory basis.';
+     else if(hasProp)reason='The ingredient list triggers a Proprietary Food / additional-ingredient route review before a final compliance conclusion.';
+     else reason='All entered ingredients are matched to the loaded product-standard/additive permissions and all loaded quantitative formulation checks currently pass.';
+     finalAssessment.innerHTML='<b>Final formulation assessment</b><br><br><b>Product route:</b> '+route+'<br><b>Formulation compliance:</b> <span class="'+complianceClass+'">'+compliance+'</span><br><small>'+reason+'</small><br><br><small>This result covers the formulation checks currently loaded in PMSV. Product-wide compliance may also depend on contaminants, microbiology, processing aids, manufacturing process, packaging and labelling requirements.</small>';
+   }
+ }
  if(summary){
    if(!qs.length)summary.innerHTML='<b>No formulation entered.</b> Enter ingredients first.';
    else if(hasUsageFail)summary.innerHTML='<b>Formulation is NOT COMPLIANT with at least one loaded quantitative FSSAI limit.</b> Compliance is recalculated automatically whenever any ingredient or quantity changes.';
