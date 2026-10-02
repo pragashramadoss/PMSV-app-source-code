@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 44</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 45</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="product">Product selection</button>
@@ -48,6 +48,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="section-title"><h2>Choose your product</h2><span>FoSCoS-style product selection</span></div>
 <div class="notice oknote"><b>Two ways to find the product:</b> search the standardized-product catalogue directly, or browse the FoSCoS hierarchy <b>Main Category → Sub-category → Standardized Product</b>. Once the detailed FSSAI rule profile for that product is available, PMSV enables the formulation compliance checker.</div>
 <div id="productMasterStatus" class="notice"><b>Product master:</b> loading official-source catalogue…</div>
+<div id="chapterIngestionStatus" class="notice hidden"></div>
 </div>
 
 <div class="card">
@@ -1790,10 +1791,10 @@ function productProfiles(){
 function profileForCatalogProduct(p){
  if(!p)return null;
  const pid=p.profile_id||p.id;
- return productProfiles().find(x=>x.id===pid&&['rule_profile_ready','base_profile_ready'].includes(x.status))||null;
+ return productProfiles().find(x=>x.id===pid&&['rule_profile_ready','chapter_profile_ready','base_profile_ready'].includes(x.status))||null;
 }
 function currentProductProfile(){
- return productProfiles().find(x=>x.id===selectedProductId&&['rule_profile_ready','base_profile_ready'].includes(x.status))||null;
+ return productProfiles().find(x=>x.id===selectedProductId&&['rule_profile_ready','chapter_profile_ready','base_profile_ready'].includes(x.status))||null;
 }
 function findCatalogProductById(id){
  return productCatalog().find(x=>x.id===id)||null;
@@ -1893,13 +1894,14 @@ function showSelectedCatalogProduct(p){
  card.classList.remove('hidden');
  const profile=profileForCatalogProduct(p);
  const detailed=profile&&profile.status==='rule_profile_ready';
+ const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
  details.innerHTML='<div class="grid2">'
   +'<div class="item"><b>'+esc(p.name)+'</b><small>FCS / FoSCoS code: '+esc(p.fcs||'—')+'<br>FSSR: '+esc(p.fssr||'Not shown in loaded catalogue row')+'</small></div>'
-  +'<div class="item"><b>PMSV profile status</b><small>'+(detailed?'<span class="status-good">Detailed rule profile complete</span>':profile?'<span class="status-warn">Base rule profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small></div>'
+  +'<div class="item"><b>PMSV profile status</b><small>'+(detailed?'<span class="status-good">Detailed rule profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base rule profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small></div>'
   +'</div>'
-  +(profile&&!detailed?'<div class="notice"><b>Base profile ready:</b> product identity, FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.</div>':'');
+  +(profile&&!detailed?'<div class="notice"><b>'+(chapterLoaded?'Chapter profile loaded':'Base profile ready')+':</b> '+(chapterLoaded?'The product has been mapped to its FSSAI Chapter 2.1 standard and structured chapter-rule data is loaded. Machine validation of every product-specific clause and linked Appendix rule is still being completed before full formulation compliance is enabled.':'Product identity, FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.')+'</div>':'');
  if(profile){
-   actions.innerHTML='<button class="btn" type="button" id="startSelectedProduct">'+(detailed?'Start formulation assessment →':'Open base product profile →')+'</button>';
+   actions.innerHTML='<button class="btn" type="button" id="startSelectedProduct">'+(detailed?'Start formulation assessment →':chapterLoaded?'Open chapter product profile →':'Open base product profile →')+'</button>';
    document.getElementById('startSelectedProduct')?.addEventListener('click',()=>{
      selectedProductId=profile.id;
      try{sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId)}catch(e){}
@@ -1928,6 +1930,7 @@ function renderProductSearch(){
  box.innerHTML=rows.map(p=>{
    const profile=profileForCatalogProduct(p);
    const detailed=profile&&profile.status==='rule_profile_ready';
+   const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
    return '<div class="item" style="margin-bottom:8px"><b>'+esc(p.name)+'</b><small>Category '+esc(p.category)+' · '+esc(p.subcategory||'—')+' · FCS '+esc(p.fcs||'—')+(p.fssr?'<br>FSSR: '+esc(p.fssr):'')+'<br>'+(detailed?'<span class="status-good">Detailed profile complete</span>':profile?'<span class="status-warn">Base profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small><div style="margin-top:8px"><button class="btn-secondary" type="button" data-show-catalog-product="'+esc(p.id)+'">Select</button></div></div>';
  }).join('');
  box.querySelectorAll('[data-show-catalog-product]').forEach(btn=>btn.addEventListener('click',()=>{
@@ -1942,13 +1945,14 @@ function applyProductGate(){
  const load=document.getElementById('loadExampleFormula');
  const profile=currentProductProfile();
  const detailed=profile&&profile.status==='rule_profile_ready';
+ const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
  if(profile){
    if(gate){
      gate.className=detailed?'notice oknote':'notice';
      gate.innerHTML='<b>Selected product:</b> '+esc(profile.display_name)+' · FCS '+esc(profile.fcs||'—')+' · FSSR '+esc(profile.fssr||'—')+'.<br>'
        +(detailed
          ?'<b>Detailed rule profile complete.</b> Formulation compliance checks are enabled for this product.'
-         :'<b>Base rule profile loaded.</b> General regulatory layers and the official product mapping are available, but product-specific composition/ingredient clauses are not complete yet. Formulation editing is locked so PMSV does not apply another product\'s rules by mistake.');
+         :chapterLoaded?'<b>FSSAI chapter profile loaded.</b> The product is mapped to '+esc(profile.fssr||profile.rule_key||'its Chapter 2.1 standard')+' and structured chapter rules are present. Full formulation editing remains locked until every linked product clause and Appendix rule is machine-validated.':'<b>Base rule profile loaded.</b> General regulatory layers and the official product mapping are available, but product-specific composition/ingredient clauses are not complete yet. Formulation editing is locked so PMSV does not apply another product\'s rules by mistake.');
      gate.classList.remove('hidden');
    }
    if(add)add.disabled=!detailed;
@@ -1974,10 +1978,21 @@ function renderProductMaster(){
  const categories=productMasterDb.categories||[];
  const catalog=productCatalog();
  const ready=productProfiles().filter(p=>p.status==='rule_profile_ready');
+ const chapter=productProfiles().filter(p=>p.status==='chapter_profile_ready');
  const base=productProfiles().filter(p=>p.status==='base_profile_ready');
  if(status){
    status.className='notice oknote';
-   status.innerHTML='<b>Product selector loaded.</b><br>'+categories.length+' main category routes · '+(productMasterDb.subcategories||[]).length+' loaded sub-categories · '+catalog.length+' standardized-product catalogue rows · <b>'+base.length+' base rule profiles</b> · <b>'+ready.length+' detailed rule profile'+(ready.length===1?'':'s')+' complete</b>. Every loaded product now has a profile; detailed clause ingestion is the remaining expansion work.';
+   status.innerHTML='<b>Product selector loaded.</b><br>'+categories.length+' main category routes · '+(productMasterDb.subcategories||[]).length+' loaded sub-categories · '+catalog.length+' standardized-product catalogue rows · <b>'+chapter.length+' FSSAI chapter profiles loaded</b> · <b>'+base.length+' base profiles</b> · <b>'+ready.length+' fully validated rule profile'+(ready.length===1?'':'s')+'</b>.';
+ }
+ const chapterStatus=document.getElementById('chapterIngestionStatus');
+ if(chapterStatus){
+   const ing=productMasterDb.coverage?.chapter_ingestion||{};
+   const d=ing['2.1'];
+   if(d){
+     chapterStatus.className='notice oknote';
+     chapterStatus.innerHTML='<b>Bulk rule ingestion started.</b><br><b>Chapter 2.1 — Dairy Products and Analogues:</b> '+Number(d.mapped_catalog_products||0)+' FoSCoS product rows mapped to '+Number(d.standards_indexed||0)+' FSSAI standards/sub-standards. Structured rule file: <code>chapter-2-1-dairy-v1.json</code>. Next chapters will use the same engine.';
+     chapterStatus.classList.remove('hidden');
+   }else chapterStatus.classList.add('hidden');
  }
  if(catBody)catBody.innerHTML=categories.map(x=>'<tr><td><b>'+esc(x.code)+'</b></td><td>'+esc(x.name)+'</td><td>'+esc(productRouteLabel(x.route))+'</td></tr>').join('');
  if(sources){
@@ -1991,7 +2006,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=44',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=45',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
