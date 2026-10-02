@@ -1,0 +1,765 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.4",
+  "title": "Cereals and Cereal Products",
+  "source_version": "Version 1 (01.09.2023)",
+  "source_verified_on": "2026-10-02",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 2.4 — Cereals and Cereal Products",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4%20%28Cereals%20and%20Cereal%20products%29%281%29.pdf"
+    }
+  ],
+  "common_rules": [
+    {
+      "type": "additives",
+      "text": "Food additives are permitted only where allowed by the relevant Chapter 2.4 standard and Appendix A."
+    },
+    {
+      "type": "microbiology",
+      "text": "Where the Chapter 2.4 standard refers to Appendix B, the applicable microbiological requirements also apply."
+    },
+    {
+      "type": "contaminants",
+      "text": "Applicable products must comply with the Food Safety and Standards (Contaminants, Toxins and Residues) Regulations."
+    },
+    {
+      "type": "labelling",
+      "text": "General Labelling and Display Regulations apply in addition to product-specific declarations."
+    }
+  ],
+  "standards": [
+    {
+      "key": "2.4.1",
+      "name": "Wheat Flour (Atta) and Resultant Wheat Flour (Resultant Atta)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 14,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.15,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Gluten",
+          "operator": ">=",
+          "value": 6,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Alcoholic acidity as H2SO4",
+          "operator": "<=",
+          "value": 0.18,
+          "unit": "% on dry basis"
+        }
+      ],
+      "quality_rules": [
+        "Free from abnormal flavours, odours, living insects and filth."
+      ]
+    },
+    {
+      "key": "2.4.1(3)",
+      "name": "Protein Rich Wheat Flour (Protein Prachur Atta)",
+      "status": "structured_core",
+      "permitted_ingredients": [
+        "wheat flour",
+        "solvent extracted groundnut flour",
+        "solvent extracted soya flour",
+        "whey protein powder",
+        "other edible standardized flour"
+      ],
+      "formulation_rules": [
+        {
+          "parameter": "Total added protein-rich flour ingredients",
+          "operator": "<=",
+          "value": 15,
+          "unit": "%"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 13,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Protein (N×6.25)",
+          "operator": ">=",
+          "value": 15,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Total dietary fibre",
+          "operator": ">=",
+          "value": 7,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Alcoholic acidity",
+          "operator": "<=",
+          "value": 0.18,
+          "unit": "%"
+        },
+        {
+          "parameter": "Gluten",
+          "operator": ">=",
+          "value": 5,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Urease activity when soy flour is used",
+          "operator": "<=",
+          "value": 0.02,
+          "unit": "pH units rise"
+        },
+        {
+          "parameter": "Uric acid",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "key": "2.4.2",
+      "name": "Maida (Refined Wheat Flour)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 14,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Gluten",
+          "operator": ">=",
+          "value": 7.5,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Alcoholic acidity as H2SO4",
+          "operator": "<=",
+          "value": 0.12,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Granularity",
+          "operator": ">=",
+          "value": 98,
+          "unit": "% passing 212 micron sieve"
+        },
+        {
+          "parameter": "Uric acid",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "key": "2.4.2(3)",
+      "name": "Protein Rich Refined Wheat Flour (Protein Prachur Maida)",
+      "status": "structured_core",
+      "permitted_ingredients": [
+        "maida",
+        "solvent extracted groundnut flour",
+        "solvent extracted soya flour",
+        "whey protein powder",
+        "other edible standardized flour"
+      ],
+      "formulation_rules": [
+        {
+          "parameter": "Added protein-rich flour ingredients",
+          "operator": "<=",
+          "value": 15,
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "key": "2.4.2(4)",
+      "name": "Durum Wheat Maida",
+      "status": "structured_core",
+      "definition": "Refined flour prepared from durum wheat (Triticum durum Desf.) by milling with bran and germ essentially removed."
+    },
+    {
+      "key": "2.4.3",
+      "name": "Semolina (Suji or Rawa)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 13,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 1.75,
+          "unit": "% on dry matter"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.15,
+          "unit": "% on dry matter"
+        },
+        {
+          "parameter": "Protein (N×6.25)",
+          "operator": ">=",
+          "value": 11,
+          "unit": "% on dry matter"
+        },
+        {
+          "parameter": "Alcoholic acidity as H2SO4",
+          "operator": "<=",
+          "value": 0.12,
+          "unit": "%"
+        },
+        {
+          "parameter": "Particle size",
+          "operator": ">=",
+          "value": 80,
+          "unit": "% passing 315 micron sieve"
+        }
+      ]
+    },
+    {
+      "key": "2.4.4",
+      "name": "Besan",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.3,
+          "unit": "%"
+        },
+        {
+          "parameter": "Alcoholic acidity as H2SO4",
+          "operator": "<=",
+          "value": 0.18,
+          "unit": "%"
+        },
+        {
+          "parameter": "Protein (N×6.25)",
+          "operator": ">=",
+          "value": 20,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Uric acid",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added colouring matter"
+      ]
+    },
+    {
+      "key": "2.4.5",
+      "name": "Pearl Barley (Jau)",
+      "status": "structured_core",
+      "quality_rules": [
+        "Made from sound and clean barley.",
+        "Other foodgrains not more than 1% by weight.",
+        "Free from insect/fungus infestation and rodent contamination."
+      ]
+    },
+    {
+      "key": "2.4.6",
+      "name": "Food Grains",
+      "status": "structured_core",
+      "applies_to": [
+        "wheat",
+        "maize",
+        "rice",
+        "pulses",
+        "millets",
+        "other food grains"
+      ],
+      "general_limits": [
+        {
+          "parameter": "Uric acid",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Total foreign matter + other edible grains + damaged grains",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        }
+      ],
+      "quality_rules": [
+        "Food grains for human consumption shall be whole or broken kernels of cereals, millets and pulses and comply with the applicable grain-specific table."
+      ]
+    },
+    {
+      "key": "2.4.6-24(a)",
+      "name": "Rice Flour for Preparation of Fortified Rice Kernel (FRK)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Particle size",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% passing 60 mesh"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 14,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.15,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Alcoholic acidity",
+          "operator": "<=",
+          "value": 0.18,
+          "unit": "%"
+        },
+        {
+          "parameter": "Uric acid",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ],
+      "regulatory_note": "The 2023 direction withdrew the Yeast & Mould Count and Aerobic Plate Count parameters previously listed for this rice flour."
+    },
+    {
+      "key": "2.4.8",
+      "name": "Corn Flakes",
+      "status": "structured_core",
+      "definition": "Product obtained from dehulled, degermed and cooked corn and processed into flakes."
+    },
+    {
+      "key": "2.4.9",
+      "name": "Custard Powder",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Total ash excluding added common salt",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% on dry basis"
+        }
+      ],
+      "permitted_ingredients": [
+        "maize or sago/tapioca",
+        "small quantities of edible starches from arrowroot, potato or jowar",
+        "common salt",
+        "milk",
+        "albuminous matter",
+        "permitted colours and flavours"
+      ]
+    },
+    {
+      "key": "2.4.10",
+      "name": "Pasta / Macaroni Products",
+      "status": "structured_core",
+      "permitted_base_ingredients": [
+        "suji",
+        "maida",
+        "rice flour",
+        "groundnut flour",
+        "tapioca flour",
+        "edible soy flour",
+        "other cereal flour standardized under 2.4"
+      ],
+      "note": "Product-specific permitted optional ingredients and quality limits are retained in the source standard and must be applied before full validation."
+    },
+    {
+      "key": "2.4.15(1)",
+      "name": "Biscuit",
+      "status": "structured_core",
+      "definition": "Baked product, leavened or non-leavened, coated or uncoated, including wafers, cookies, crackers, centre-filled, enrobed, sandwich and crème biscuits.",
+      "permitted_ingredient_groups": [
+        "cereals and cereal products including millets/pulses/legumes",
+        "fats and oils / fat emulsions",
+        "baking powder",
+        "sugars and sweeteners",
+        "salt",
+        "dairy products and analogues",
+        "fruits and vegetables",
+        "cocoa/chocolate",
+        "tea/coffee/chicory",
+        "coconut products",
+        "eggs"
+      ],
+      "source_note": "Detailed ingredient and compositional provisions remain linked to clause 2.4.15(1)."
+    },
+    {
+      "key": "2.4.15(2)",
+      "name": "Bread and Bread-Type Products",
+      "status": "structured_core",
+      "definition": "Baked product prepared from atta and/or maida with water, salt, yeast or other fermentative/leavening medium; includes breads and rusks."
+    },
+    {
+      "key": "2.4.17",
+      "name": "Bajra Flour (Pearl Millet Flour)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 13,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.15,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Protein (N×6.25)",
+          "operator": ">=",
+          "value": 8,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Fat",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Crude fibre",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Alcoholic acidity as H2SO4",
+          "operator": "<=",
+          "value": 0.25,
+          "unit": "% on dry basis"
+        }
+      ]
+    },
+    {
+      "key": "2.4.18",
+      "name": "Jowar Flour (Sorghum Flour)",
+      "status": "chapter_indexed"
+    },
+    {
+      "key": "2.4.19",
+      "name": "Whole Maize (Corn) Flour",
+      "status": "chapter_indexed"
+    },
+    {
+      "key": "2.4.23",
+      "name": "Durum Wheat Semolina and Whole Durum Wheat Semolina",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        }
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.4.24",
+      "name": "Degermed Maize (Corn) Meal and Maize (Corn) Grits",
+      "status": "structured_core",
+      "particle_size_rules": "Product-specific sieve requirements apply to meal and grits as specified in the standard."
+    },
+    {
+      "key": "2.4.25",
+      "name": "Couscous",
+      "status": "structured_core",
+      "definition": "Product obtained from durum wheat semolina whose particles are bound by adding potable water and processed as specified."
+    },
+    {
+      "key": "2.4.26",
+      "name": "Tempe",
+      "status": "structured_core",
+      "permitted_ingredients": [
+        "soybean",
+        "Rhizopus spp. mould inoculum with cooked rice powder, rice bran powder and/or wheat bran powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 65,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Protein",
+          "operator": ">=",
+          "value": 15,
+          "unit": "% on dry matter"
+        },
+        {
+          "parameter": "Fat",
+          "operator": ">=",
+          "value": 7,
+          "unit": "% on dry matter"
+        },
+        {
+          "parameter": "Crude fibre",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% on dry matter"
+        },
+        {
+          "parameter": "Urease index",
+          "operator": "range",
+          "min": 0.05,
+          "max": 0.2,
+          "unit": "pH units rise"
+        }
+      ]
+    },
+    {
+      "key": "2.4.27",
+      "name": "Textured Soy Protein (Soy Bari / Soy Chunks / Soy Granules)",
+      "status": "structured_core",
+      "definition": "Product obtained by extrusion of defatted soy flour or grits."
+    },
+    {
+      "key": "2.4.28",
+      "name": "Sago Flour",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 13,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Ash / inorganic extraneous matter",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acidity",
+          "operator": "<=",
+          "value": 220,
+          "unit": "mg KOH/100g"
+        },
+        {
+          "parameter": "Starch",
+          "operator": ">=",
+          "value": 96,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Crude fibre",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Particle size",
+          "operator": ">=",
+          "value": 95,
+          "unit": "% passing 100 mesh"
+        }
+      ]
+    },
+    {
+      "key": "2.4.29",
+      "name": "Wheat Bran",
+      "status": "structured_core",
+      "definition": "Outer layer of wheat grain consisting of combined pericarp and aleurone with possible adhering endosperm.",
+      "quality_rules": [
+        "Free from musty/stale odour, sourness, lumps, dirt, metallic pieces, fungus and insect infestation."
+      ]
+    },
+    {
+      "key": "2.4.30",
+      "name": "Non-Fermented Soybean Products",
+      "status": "structured_core",
+      "product_family": [
+        "soybean beverages",
+        "soybean curd/tofu",
+        "compressed soybean curd",
+        "dehydrated soybean curd film",
+        "related non-fermented soybean products"
+      ]
+    },
+    {
+      "key": "2.4.37",
+      "name": "Multigrain Flour (Atta)",
+      "status": "structured_core",
+      "formulation_rules": [
+        {
+          "parameter": "Whole wheat flour",
+          "operator": "range",
+          "min": 50,
+          "max": 90,
+          "unit": "%"
+        },
+        {
+          "parameter": "Other permitted flour ingredients",
+          "operator": "range",
+          "min": 10,
+          "max": 50,
+          "unit": "%"
+        }
+      ],
+      "permitted_ingredients": [
+        "processed soybean",
+        "cereals",
+        "pulses",
+        "millets",
+        "psyllium husk",
+        "gluten",
+        "wheat bran",
+        "fenugreek seeds"
+      ],
+      "label_rules": [
+        "Declare percentage of wheat flour (atta) in the product."
+      ]
+    },
+    {
+      "key": "2.4.38",
+      "name": "Mixed Millet Flour",
+      "status": "structured_core",
+      "definition": "Flour obtained by milling/grinding a blend of clean millets/pseudomillets or blending their flours.",
+      "composition": [
+        {
+          "parameter": "Total dietary fibre",
+          "operator": ">=",
+          "value": 12,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Particle size",
+          "operator": ">=",
+          "value": 98,
+          "unit": "% passing 40 mesh"
+        },
+        {
+          "parameter": "Uric acid",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "key": "2.4.39",
+      "name": "Fermented Soybean Curd",
+      "status": "structured_core",
+      "variants": [
+        {
+          "name": "Fermented Soybean Curd",
+          "acidity_max_pct": 1.5,
+          "protein_min_pct": 3,
+          "fat_max_pct": 2,
+          "pH_min": 4,
+          "pH_max": 4.5
+        },
+        {
+          "name": "Fermented Soybean Curd (S. thermophilus + L. bulgaricus)",
+          "acidity_max_pct": 1.7,
+          "protein_min_pct": 3,
+          "fat_max_pct": 2,
+          "pH_min": 4,
+          "pH_max": 5
+        }
+      ],
+      "formulation_rules": [
+        {
+          "parameter": "Milk/reconstituted milk in soybean extract",
+          "operator": "<=",
+          "value": 25,
+          "unit": "% of final product"
+        }
+      ]
+    },
+    {
+      "key": "2.4.40",
+      "name": "Papad / Papadam",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Alcoholic acidity as H2SO4",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% on dry mass basis"
+        },
+        {
+          "parameter": "Uric acid",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ],
+      "label_rules": [
+        "Product name may include vernacular/common/traditional/major-ingredient name in addition to 'Papad'."
+      ]
+    }
+  ]
+}
