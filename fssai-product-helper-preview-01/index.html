@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 45</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 46</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="product">Product selection</button>
@@ -1990,7 +1990,7 @@ function renderProductMaster(){
    const d=ing['2.1'];
    if(d){
      chapterStatus.className='notice oknote';
-     chapterStatus.innerHTML='<b>Bulk rule ingestion started.</b><br><b>Chapter 2.1 — Dairy Products and Analogues:</b> '+Number(d.mapped_catalog_products||0)+' FoSCoS product rows mapped to '+Number(d.standards_indexed||0)+' FSSAI standards/sub-standards. Structured rule file: <code>chapter-2-1-dairy-v1.json</code>. Next chapters will use the same engine.';
+     chapterStatus.innerHTML='<b>Bulk rule ingestion in progress.</b><br><b>Chapter 2.1 — Dairy Products and Analogues:</b> '+Number(d.mapped_catalog_products||0)+' FoSCoS product rows mapped. <b>'+Number(d.structured_core_standards||0)+' active standards now have structured core rules</b>'+(Number(d.superseded_standards||0)?' · '+Number(d.superseded_standards)+' superseded standard tracked':'')+'.<br><small>Core Chapter 2.1 structuring is complete. Named-variety tables and linked Appendix/contaminant/microbiology validation are the remaining dairy work before every dairy product can run the full formulation checker.</small>';
      chapterStatus.classList.remove('hidden');
    }else chapterStatus.classList.add('hidden');
  }
@@ -2006,7 +2006,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=45',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=46',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
