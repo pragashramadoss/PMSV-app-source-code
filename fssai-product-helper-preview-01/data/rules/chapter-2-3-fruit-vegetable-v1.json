@@ -1,0 +1,567 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.3",
+  "title": "Fruit & Vegetable Products",
+  "source_verified_on": "2026-10-02",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 2.3 — Fruit & Vegetable Products",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf"
+    }
+  ],
+  "common_rules": [
+    {
+      "type": "additives",
+      "text": "Food additives may be used only where permitted by the relevant Chapter 2.3 standard and Appendix A."
+    },
+    {
+      "type": "microbiology",
+      "text": "Products whose Chapter 2.3 clause refers to Appendix B must comply with the applicable microbiological requirements."
+    },
+    {
+      "type": "labelling",
+      "text": "General Food Safety and Standards (Labelling and Display) Regulations apply in addition to product-specific declarations."
+    }
+  ],
+  "standards": [
+    {
+      "key": "2.3.1",
+      "name": "Thermally Processed Fruits",
+      "status": "structured_core",
+      "permitted_ingredients": [
+        "water",
+        "fruit juice",
+        "dry or liquid nutritive sweeteners",
+        "spices and condiments",
+        "other ingredients suitable to the product"
+      ],
+      "composition": [
+        {
+          "parameter": "Drained weight — liquid pack",
+          "operator": ">=",
+          "value": 50,
+          "unit": "% of net weight"
+        },
+        {
+          "parameter": "Drained weight — solid pack",
+          "operator": ">=",
+          "value": 70,
+          "unit": "% of net weight"
+        },
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity"
+        }
+      ],
+      "label_rules": [
+        "Declare packing medium and its strength.",
+        "For cherries with stems, label accordingly."
+      ],
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.3.2",
+      "name": "Thermally Processed Fruit Salad/Cocktail/Mix",
+      "status": "structured_core",
+      "definition": "Mixture of fruits, fresh/frozen/canned, packed with water or other suitable liquid packing medium, optionally with nutritive sweeteners, and thermally processed to prevent spoilage.",
+      "packing_media": [
+        "water",
+        "water and fruit juice",
+        "fruit juice",
+        "the preceding media with permitted sugars"
+      ]
+    },
+    {
+      "key": "2.3.3",
+      "name": "Thermally Processed Vegetables",
+      "status": "structured_core",
+      "permitted_ingredients": [
+        "water",
+        "common salt",
+        "nutritive sweeteners",
+        "spices and condiments",
+        "other ingredients suitable to the product"
+      ],
+      "composition": [
+        {
+          "parameter": "Drained weight — mushroom, green beans, carrots, peas, sweet corn/baby corn and other vegetables in liquid pack",
+          "operator": ">=",
+          "value": 50,
+          "unit": "% of net weight"
+        },
+        {
+          "parameter": "Drained weight — mushroom packed in sauce",
+          "operator": ">=",
+          "value": 25,
+          "unit": "% of net weight"
+        },
+        {
+          "parameter": "Drained weight — solid pack",
+          "operator": ">=",
+          "value": 70,
+          "unit": "% of net weight"
+        },
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity"
+        }
+      ],
+      "label_rules": [
+        "Declare packing medium and its strength.",
+        "Declare names of vegetables and range of percentage of each vegetable used."
+      ],
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.3.4",
+      "name": "Thermally Processed Curried Vegetables / Ready to Eat Vegetables",
+      "status": "structured_core",
+      "permitted_ingredients": [
+        "vegetables",
+        "legumes",
+        "cereals",
+        "pulses",
+        "salt",
+        "nutritive sweeteners",
+        "spices and condiments",
+        "edible vegetable oils and fats",
+        "milk fat",
+        "other ingredients suitable to the product"
+      ],
+      "composition": [
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity"
+        }
+      ],
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.3.6",
+      "name": "Fruit Juices",
+      "status": "structured_core",
+      "definition": "Thermally processed or non-thermally processed/cold-pressed fruit juice as defined in the standard.",
+      "ingredient_rules": [
+        {
+          "name": "Nutritive sweeteners",
+          "max": 50,
+          "unit": "g/kg",
+          "condition": "General maximum"
+        },
+        {
+          "name": "Nutritive sweeteners",
+          "max": 200,
+          "unit": "g/kg",
+          "condition": "Very acidic fruits, subject to exclusions in the standard"
+        }
+      ],
+      "process_rules": [
+        "Reconstituted juice must maintain essential composition and quality factors.",
+        "Rigid containers must be filled to at least 90% of water capacity."
+      ],
+      "label_rules": [
+        "Declare 'reconstituted' against juice made from concentrate.",
+        "Label as Sweetened juice when added nutritive sweeteners exceed 15 g/kg."
+      ],
+      "microbiology": "Appendix B",
+      "additives": "Appendix A"
+    },
+    {
+      "key": "2.3.7",
+      "name": "Vegetable Juices",
+      "status": "structured_core",
+      "permitted_ingredients": [
+        "edible salt",
+        "spices and condiments and their extracts",
+        "vinegar",
+        "nutritive sweeteners",
+        "permitted nutrients"
+      ],
+      "composition": [
+        {
+          "parameter": "Fermented whey/lactoserum",
+          "operator": "<=",
+          "value": 100,
+          "unit": "ml/L"
+        },
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity"
+        }
+      ],
+      "microbiology": "Appendix B",
+      "additives": "Appendix A"
+    },
+    {
+      "key": "2.3.31",
+      "name": "Jams, Fruit Jellies and Marmalades",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Prepared fruit content — general",
+          "operator": ">=",
+          "value": 45,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Prepared fruit content — strawberry/raspberry/ginger jam",
+          "operator": ">=",
+          "value": 25,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Prepared fruit content — cashew apple",
+          "operator": ">=",
+          "value": 23,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Prepared fruit content — passion fruit",
+          "operator": ">=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total soluble solids — jams",
+          "operator": ">=",
+          "value": 65,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total soluble solids — jellies/marmalades",
+          "operator": ">=",
+          "value": 60,
+          "unit": "% by weight"
+        }
+      ],
+      "permitted_ingredients": [
+        "cane sugar",
+        "sucrose",
+        "dextrose",
+        "invert sugar",
+        "liquid glucose",
+        "honey",
+        "salt",
+        "herbs",
+        "spices",
+        "condiments",
+        "other standardized ingredients"
+      ],
+      "additive_rules": [
+        {
+          "name": "Pectin derived from fruit",
+          "basis": "GMP"
+        }
+      ]
+    },
+    {
+      "key": "2.3.36",
+      "name": "Dehydrated Vegetables",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture — all dehydrated vegetables",
+          "operator": "<=",
+          "value": 8,
+          "unit": "%"
+        },
+        {
+          "parameter": "Moisture — powders of vegetables",
+          "operator": "<=",
+          "value": 5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Peroxidase",
+          "operator": "negative",
+          "value": "Negative",
+          "unit": "test"
+        }
+      ],
+      "microbiology": "Appendix B",
+      "additives": "Appendix A"
+    },
+    {
+      "key": "2.3.37",
+      "name": "Frozen Fruits/Fruit Products",
+      "status": "structured_core",
+      "process_rules": [
+        {
+          "parameter": "Thermal-centre temperature after stabilization",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "permitted_ingredients": [
+        "salt",
+        "nutritive sweeteners",
+        "milk solids",
+        "spices and condiments",
+        "other ingredients suitable to the product"
+      ],
+      "microbiology": "Appendix B",
+      "additives": "Appendix A"
+    },
+    {
+      "key": "2.3.38",
+      "name": "Frozen Vegetables",
+      "status": "structured_core",
+      "process_rules": [
+        {
+          "parameter": "Thermal-centre temperature after stabilization",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Peroxidase",
+          "operator": "negative",
+          "value": "Negative",
+          "unit": "test"
+        }
+      ],
+      "permitted_ingredients": [
+        "salt",
+        "nutritive sweeteners",
+        "milk solids",
+        "spices and condiments",
+        "other ingredients suitable to the product"
+      ],
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.3.39",
+      "name": "Frozen Curried Vegetables/Ready-to-Eat Vegetables",
+      "status": "structured_core",
+      "process_rules": [
+        {
+          "parameter": "Thermal-centre temperature after stabilization",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "permitted_ingredients": [
+        "vegetables",
+        "legumes",
+        "cereals",
+        "pulses",
+        "salt",
+        "nutritive sweeteners",
+        "spices and condiments",
+        "edible vegetable oils and fats",
+        "milk fat",
+        "other suitable ingredients"
+      ],
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.3.40",
+      "name": "Fruit Based Beverage Mix/Powdered Fruit Based Beverage",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Fruit juice content after reconstitution",
+          "operator": ">=",
+          "value": 5,
+          "unit": "% m/m"
+        }
+      ],
+      "microbiology": "Appendix B",
+      "additives": "Appendix A"
+    },
+    {
+      "key": "2.3.41",
+      "name": "Fruits and Vegetable Chutney",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Total soluble solids — fruit chutney",
+          "operator": ">=",
+          "value": 50,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Total soluble solids — vegetable chutney",
+          "operator": ">=",
+          "value": 25,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Total soluble solids — hot and sour/spicy chutney",
+          "operator": ">=",
+          "value": 25,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Fruit and vegetable content",
+          "operator": ">=",
+          "value": 40,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "pH",
+          "operator": "<=",
+          "value": 4.6,
+          "unit": ""
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Ash insoluble in HCl",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% m/m"
+        }
+      ],
+      "microbiology": "Appendix B",
+      "additives": "Appendix A"
+    },
+    {
+      "key": "2.3.45",
+      "name": "Desiccated Coconut",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Total acidity of extracted oil as lauric acid",
+          "operator": "<=",
+          "value": 0.3,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Oil content — without oil extraction",
+          "operator": ">=",
+          "value": 60,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Oil content — partial oil extraction",
+          "operator": "range",
+          "min": 35,
+          "max": 60,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Extraneous vegetable material",
+          "operator": "<=",
+          "value": 15,
+          "unit": "fragments/100 g"
+        },
+        {
+          "parameter": "Foreign matter",
+          "operator": "absent",
+          "value": "Absent",
+          "unit": ""
+        }
+      ],
+      "label_rules": [
+        "Product with oil content 35–60% must be labelled 'Reduced Fat Desiccated Coconut'."
+      ]
+    },
+    {
+      "key": "2.3.50",
+      "name": "Vanilla",
+      "status": "structured_core",
+      "variants": [
+        "Vanilla pods",
+        "Cut vanilla",
+        "Vanilla powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture — pods/cut vanilla",
+          "operator": "<=",
+          "value": 30,
+          "unit": "%"
+        },
+        {
+          "parameter": "Moisture — vanilla powder",
+          "operator": "<=",
+          "value": 20,
+          "unit": "%"
+        },
+        {
+          "parameter": "Vanillin content — pods/cut/powder",
+          "operator": ">=",
+          "value": 2,
+          "unit": "% wet basis"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added colour",
+        "undesirable taste",
+        "extraneous matter"
+      ]
+    },
+    {
+      "key": "2.3.61",
+      "name": "Canned Chestnuts and Canned Chestnut Puree",
+      "status": "structured_core",
+      "variants": [
+        {
+          "name": "Canned chestnuts",
+          "salt_max_pct": 1
+        },
+        {
+          "name": "Canned chestnut puree",
+          "salt_max_pct": 1,
+          "sugars_max_pct": 2
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Sweetened canned chestnut puree total soluble solids",
+          "operator": ">=",
+          "value": 12,
+          "unit": "°Brix"
+        },
+        {
+          "parameter": "Unsweetened canned chestnut puree total soluble solids",
+          "operator": ">=",
+          "value": 10,
+          "unit": "°Brix"
+        }
+      ]
+    }
+  ]
+}
