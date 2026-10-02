@@ -26,10 +26,11 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 38</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 39</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
-<button class="tab active" data-tab="formulation">Formulation ingredients</button>
+<button class="tab active" data-tab="product">Product selection</button>
+<button class="tab" data-tab="formulation">Formulation ingredients</button>
 <button class="tab" data-tab="standards">Applicable standards</button>
 <button class="tab" data-tab="standard">Product standard</button>
 <button class="tab" data-tab="ingredients">Ingredients & limits</button>
@@ -42,7 +43,35 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <button class="tab" data-tab="sources">Official sources</button>
 </nav>
 
-<section id="formulation" class="view">
+<section id="product" class="view">
+<div class="card">
+<div class="section-title"><h2>Select the FSSAI / FoSCoS product</h2><span>Multi-product regulatory engine</span></div>
+<div class="notice oknote"><b>PMSV is now moving from a one-product prototype to a product-master architecture.</b> FoSCoS is used for the official licensing product/category mapping. The applicable FSSAI regulation remains the legal source for definition, composition, ingredients, limits, additives, contaminants, microbiology, processing aids and product-specific labelling.</div>
+<div id="productMasterStatus" class="notice"><b>Product master:</b> loading official-source category framework…</div>
+
+<div class="field">
+<label>Search supported product</label>
+<input id="productSearch" autocomplete="off" placeholder="Start typing a standardized product name">
+<small>Only products marked <b>Rule profile ready</b> can run the complete formulation checker. PMSV will not pretend that a FoSCoS product name alone is enough for a compliance decision.</small>
+</div>
+<div id="productSearchResults" style="margin-top:10px"></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>FoSCoS product-category framework</h2><span>Licensing classification layer</span></div>
+<div class="tablewrap"><table>
+<thead><tr><th>Category</th><th>FoSCoS / FSSAI category</th><th>Regulatory route</th></tr></thead>
+<tbody id="productCategoryRows"></tbody>
+</table></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Official sources for the product master</h2><span>No AI / no generic websites</span></div>
+<div id="productMasterSources"></div>
+</div>
+</section>
+
+<section id="formulation" class="view hidden">
 <div class="card">
 <div class="section-title"><h2>Step 1 — Enter the actual formulation ingredients</h2><span>Ingredient-led compliance</span></div>
 <div class="notice oknote"><b>Start with what is actually in the product.</b> Enter each ingredient and its actual quantity. PMSV sums all ingredient quantities to calculate the final formulation quantity, derives each ingredient's usage level, checks applicable numerical limits, and uses the same formulation for route and contaminant assessment.</div>
@@ -563,6 +592,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="sources" class="view hidden">
 <div class="card source">
 <h2>Official regulatory sources used</h2>
+<p><b>FoSCoS — View all FSSAI Standardized Food Products</b><br><a target="_blank" rel="noopener" href="https://foscos.fssai.gov.in/standard-product">Official licensing product list used as the product-name / food-category mapping layer for PMSV multi-product expansion</a></p>
+<p><b>FoSCoS — Food Product Categories used for Licensing/Registration</b><br><a target="_blank" rel="noopener" href="https://foscos.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf">Official food-category and subcategory framework used for the product master</a></p>
+
 <p><b>PMSV structured regulatory database</b><br><a target="_blank" rel="noopener" href="./data/regulatory-db-v1.json">Open the local JSON database used by this prototype</a><br><small>This is a structured PMSV representation of the official FSSAI sources below. It contains no AI-generated runtime decisions.</small></p>
 
 <p><b>Chapter 2.10 — Beverages other than Dairy and Fruit/Vegetable based · Version 4 (01.08.2025)</b><br>
@@ -623,14 +655,15 @@ if(isFreshPageNavigation()){
      'pmsv_fssai_product_helper_enzyme',
      'pmsv_fssai_product_helper_formula',
      'pmsv_fssai_product_helper_processes',
-     'pmsv_fssai_formula_density'
+     'pmsv_fssai_formula_density',
+     'pmsv_fssai_selected_product'
    ].forEach(k=>sessionStorage.removeItem(k));
    sessionStorage.setItem(WORKING_STATE_RESET_FLAG,'1');
  }catch(e){}
 }
 
 function openTab(id,{updateHash=true,save=true}={}){
-  if(typeof id!=='string' || !validTabs.has(id)) id='formulation';
+  if(typeof id!=='string' || !validTabs.has(id)) id='product';
 
   tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab===id));
   document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
@@ -639,9 +672,9 @@ function openTab(id,{updateHash=true,save=true}={}){
   if(view){
     view.classList.remove('hidden');
   }else{
-    id='formulation';
-    document.getElementById('formulation')?.classList.remove('hidden');
-    tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab==='formulation'));
+    id='product';
+    document.getElementById('product')?.classList.remove('hidden');
+    tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab==='product'));
   }
 
   if(save){
@@ -673,7 +706,7 @@ try{
 }catch(e){}
 
 const hashTab=location.hash.slice(1);
-const initialTab=validTabs.has(hashTab) ? hashTab : (validTabs.has(savedTab) ? savedTab : 'formulation');
+const initialTab=validTabs.has(hashTab) ? hashTab : (validTabs.has(savedTab) ? savedTab : 'product');
 openTab(initialTab,{updateHash:true,save:true});
 function num(id){const v=document.getElementById(id).value.trim();return v===''?null:Number(v)}
 function row(label,value,pass,msg){
@@ -1678,6 +1711,8 @@ renderAppendix();renderGmp();
 let regulatoryDb=null;
 let ingredientCatalog=[];
 let nutritionDb=null;
+let productMasterDb=null;
+let selectedProductId='caffeinated-beverage';
 
 function fallbackIngredientCatalog(){
  const rows=[];
@@ -1695,6 +1730,79 @@ function catalogFromDb(db){
    name:x.name,label:x.canonical_name||x.name,source:x.fssai_basis+(x.ins?' · INS '+x.ins:''),type:x.type,ins:x.ins||''
  })).filter(x=>{const k=normIngredient(x.name);if(seen.has(k))return false;seen.add(k);return true}).sort((a,b)=>a.name.localeCompare(b.name));
 }
+
+function productRouteLabel(route){
+ const labels={
+  standardized:'Standardized food',
+  special_regulation:'Special-purpose / nutraceutical regulation',
+  standardized_or_alcoholic:'Food standard / Alcoholic Beverages regulation',
+  proprietary_when_no_standard:'No standardized products in this FoSCoS category — proprietary route where applicable',
+  foscos_category:'FoSCoS mapped category',
+  substances:'Substances added to food',
+ };
+ return labels[route]||route||'—';
+}
+function renderProductMaster(){
+ const status=document.getElementById('productMasterStatus');
+ const catBody=document.getElementById('productCategoryRows');
+ const sources=document.getElementById('productMasterSources');
+ const results=document.getElementById('productSearchResults');
+ if(!productMasterDb){
+   if(status)status.innerHTML='<b>Product master unavailable.</b> Detailed checker remains on the Caffeinated Beverage prototype.';
+   return;
+ }
+ const categories=Array.isArray(productMasterDb.categories)?productMasterDb.categories:[];
+ const profiles=Array.isArray(productMasterDb.profiles)?productMasterDb.profiles:[];
+ const ready=profiles.filter(p=>p.status==='rule_profile_ready');
+
+ if(status){
+   status.className='notice oknote';
+   status.innerHTML='<b>Product-master framework loaded.</b><br>'+categories.length+' FoSCoS/FSSAI category routes are loaded. <b>'+ready.length+' detailed product rule profile'+(ready.length===1?' is':'s are')+' currently ready.</b> The full FoSCoS standardized-product snapshot and chapter-by-chapter rule profiles must be ingested before PMSV can claim full-product coverage.';
+ }
+ if(catBody){
+   catBody.innerHTML=categories.map(x=>'<tr><td><b>'+esc(x.code)+'</b></td><td>'+esc(x.name)+'</td><td>'+esc(productRouteLabel(x.route))+'</td></tr>').join('');
+ }
+ if(sources){
+   const ss=Array.isArray(productMasterDb.source_hierarchy)?productMasterDb.source_hierarchy:[];
+   sources.innerHTML='<div class="grid2">'+ss.map(s=>'<div class="item"><b>'+esc(s.title)+'</b><small>'+esc(s.authority)+'<br>'+esc(s.purpose)+'<br><a target="_blank" rel="noopener" href="'+esc(s.url)+'">Open official source</a></small></div>').join('')+'</div>';
+ }
+ renderProductSearch();
+}
+function renderProductSearch(){
+ const box=document.getElementById('productSearchResults');
+ if(!box||!productMasterDb)return;
+ const q=normIngredient(document.getElementById('productSearch')?.value||'');
+ const profiles=(productMasterDb.profiles||[]).filter(p=>{
+   if(!q)return true;
+   return normIngredient([p.display_name,...(p.aliases||[])].join(' ')).includes(q);
+ });
+ if(!profiles.length){
+   box.innerHTML='<div class="notice">No detailed PMSV rule profile matches this search yet. Use the official FoSCoS standardized-product source above to confirm the licensing product name; PMSV should only enable the checker after the corresponding FSSAI standard has been ingested.</div>';
+   return;
+ }
+ box.innerHTML=profiles.map(p=>{
+   const ready=p.status==='rule_profile_ready';
+   return '<div class="item" style="margin-bottom:8px"><b>'+esc(p.display_name)+'</b><small>FoSCoS/FCS: '+esc(p.fcs||p.foscos_category||'—')+' · FSSR: '+esc(p.fssr||'—')+'<br>Status: <b>'+(ready?'Rule profile ready':'Catalog only')+'</b></small>'+(ready?'<div style="margin-top:8px"><button class="btn-secondary" type="button" data-select-product="'+esc(p.id)+'">Use this product</button></div>':'')+'</div>';
+ }).join('');
+ box.querySelectorAll('[data-select-product]').forEach(btn=>btn.addEventListener('click',()=>{
+   selectedProductId=btn.dataset.selectProduct;
+   try{sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId)}catch(e){}
+   openTab('formulation',{updateHash:true,save:true});
+   window.scrollTo({top:0,behavior:'smooth'});
+ }));
+}
+async function loadProductMaster(){
+ try{
+   const res=await fetch('./data/product-master-v1.json',{cache:'no-store'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   productMasterDb=await res.json();
+   try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||'caffeinated-beverage'}catch(e){}
+ }catch(e){
+   productMasterDb=null;
+ }
+ renderProductMaster();
+}
+document.getElementById('productSearch')?.addEventListener('input',renderProductSearch);
 
 async function loadRegulatoryDb(){
  const status=document.getElementById('regDbStatus');
@@ -1825,6 +1933,7 @@ document.getElementById('ingredientBasis')?.addEventListener('change',()=>{
 document.addEventListener('click',event=>{
  if(!event.target.closest('.autocomplete-wrap'))document.getElementById('ingredientAutocomplete')?.classList.add('hidden');
 });
+loadProductMaster();
 loadRegulatoryDb();
 loadNutritionDb();
 
