@@ -1,0 +1,204 @@
+{
+  "schema_version": "1.0",
+  "generated_for": "PMSV FSSAI Product Helper",
+  "status": "multi_product_foundation",
+  "coverage": {
+    "foscos_category_framework": "loaded",
+    "foscos_full_standardized_product_snapshot": "pending_ingestion",
+    "detailed_rule_profiles_ready": 1,
+    "detailed_rule_profiles": [
+      "caffeinated-beverage"
+    ]
+  },
+  "source_hierarchy": [
+    {
+      "id": "foscos-standard-products",
+      "authority": "FSSAI / FoSCoS",
+      "title": "View all FSSAI Standardized Food Products",
+      "url": "https://foscos.fssai.gov.in/standard-product",
+      "purpose": "Official licensing product names, food category mapping and FSSR number where displayed."
+    },
+    {
+      "id": "foscos-food-product-categories",
+      "authority": "FSSAI / FoSCoS",
+      "title": "Food Product Categories used for Licensing/Registration by FSSAI",
+      "url": "https://foscos.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "purpose": "Official FoSCoS food-category and subcategory hierarchy."
+    },
+    {
+      "id": "fpsfa-compendium",
+      "authority": "FSSAI",
+      "title": "Food Products Standards & Food Additives Compendium",
+      "url": "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards",
+      "purpose": "Chapter-wise legal product standards and appendices."
+    },
+    {
+      "id": "foscos-clubbing",
+      "authority": "FSSAI / FoSCoS",
+      "title": "Clubbing in the list of Standardized Food Products having variants",
+      "url": "https://foscos.fssai.gov.in/assets/docs/Final_Track%20change_Clubbing%20in%20the%20list%20of%20Standardized%20Food%20Products%20having%20variants%20%28types%20%20subtypes%29%20DFA%2034233.pdf",
+      "purpose": "FoSCoS licensing-level grouping of types/subtypes under a standardized product description."
+    }
+  ],
+  "categories": [
+    {
+      "code": "01",
+      "name": "Dairy products and analogues, excluding products of food category 2.0",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "02",
+      "name": "Fats and oils, and fat emulsions",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "03",
+      "name": "Edible ices, including sherbet and sorbet",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "04",
+      "name": "Fruits and vegetables, including mushrooms, roots, tubers, pulses, legumes, aloe vera, seaweeds, nuts and seeds",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "05",
+      "name": "Confectionery",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "06",
+      "name": "Cereals and cereal products",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "07",
+      "name": "Bakery products",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "08",
+      "name": "Meat and meat products including poultry",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "09",
+      "name": "Fish and fish products, including molluscs, crustaceans and echinoderms",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "10",
+      "name": "Eggs and egg products",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "11",
+      "name": "Sweeteners, including honey",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "12",
+      "name": "Salts, spices, soups, sauces, salads and protein products",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    },
+    {
+      "code": "13",
+      "name": "Foodstuffs intended for particular nutritional uses",
+      "route": "special_regulation",
+      "primary_regulation": "FSS (Health Supplements, Nutraceuticals, FSDU, FSMP, Functional Food and Novel Food) Regulations, 2016"
+    },
+    {
+      "code": "14",
+      "name": "Beverages, excluding dairy products",
+      "route": "standardized_or_alcoholic",
+      "primary_regulation": "FSS Food Products Standards / Alcoholic Beverages Regulations"
+    },
+    {
+      "code": "15",
+      "name": "Ready-to-eat savouries",
+      "route": "proprietary_when_no_standard",
+      "primary_regulation": "FoSCoS licensing route"
+    },
+    {
+      "code": "16",
+      "name": "Prepared foods",
+      "route": "proprietary_when_no_standard",
+      "primary_regulation": "FoSCoS licensing route"
+    },
+    {
+      "code": "18",
+      "name": "Indian Sweets and Indian Snacks & Savouries products",
+      "route": "foscos_category",
+      "primary_regulation": "Applicable FSSAI standards / FoSCoS mapping"
+    },
+    {
+      "code": "99",
+      "name": "Substances added to food",
+      "route": "substances",
+      "primary_regulation": "FSSAI additives, enzymes, flavours, processing aids, nutrients and functional ingredient provisions"
+    },
+    {
+      "code": "100",
+      "name": "Standardised Food Product excluding those covered under category 1-14",
+      "route": "standardized",
+      "primary_regulation": "Applicable FSSAI product standard"
+    },
+    {
+      "code": "101",
+      "name": "Hemp Seeds and Seed Products",
+      "route": "standardized",
+      "primary_regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "caffeinated-beverage",
+      "display_name": "Caffeinated Beverage",
+      "aliases": [
+        "Carbonated Caffeinated Beverage",
+        "Energy Drink"
+      ],
+      "foscos_category": "14",
+      "fcs": "14.1.4.1",
+      "fssr": "2.10.6(2)",
+      "regulation_chapter": "2.10",
+      "status": "rule_profile_ready",
+      "engine_path": "embedded-current-prototype"
+    }
+  ],
+  "rule_profile_schema": {
+    "required_fields": [
+      "id",
+      "display_name",
+      "foscos_category",
+      "fcs",
+      "fssr",
+      "regulation_source",
+      "definition",
+      "essential_composition",
+      "ingredient_rules",
+      "additive_categories",
+      "contaminant_rules",
+      "microbiology_rules",
+      "processing_aids",
+      "process_rules",
+      "label_overrides",
+      "nutrition_rules",
+      "variant_clubbing",
+      "effective_date",
+      "last_verified"
+    ]
+  }
+}
