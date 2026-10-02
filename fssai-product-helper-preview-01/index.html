@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 26</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 27</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation ingredients</button>
@@ -77,7 +77,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   <small>Use only an official FSSAI regulation reference. A typed clause is not treated as verified until matched to the stored regulatory source.</small>
 </div>
 
-<div class="notice" style="margin-top:10px"><b>Database behaviour:</b> the page loads <code>data/regulatory-db-v1.json</code> and applies deterministic rules. <b>No AI call is used.</b> The current database is the Caffeinated Beverage prototype dataset and is <b>not yet the complete FSSAI master</b>; additional FSSAI chapters and amendments can be added to the same schema.</div>
+<div class="notice" style="margin-top:10px"><b>Database behaviour:</b> the page loads <code>data/regulatory-db-v1.json</code> and applies deterministic rules. <b>No AI call is used.</b> The current database is the Caffeinated Beverage prototype dataset and is <b>not yet the complete FSSAI master</b>; additional FSSAI chapters and amendments can be added to the same schema.<br><br><b>Working assessment:</b> your current ingredients, process selections and page position are kept only for this tab. Reloading this tab keeps the work; opening the helper in a new tab starts a new blank assessment.</div>
 
 <div class="flow-actions">
   <button class="btn" type="button" id="addIngredient">Add ingredient</button>
@@ -479,6 +479,31 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 const tabs=[...document.querySelectorAll('nav.tabs .tab[data-tab]')];
 const validTabs=new Set(tabs.map(t=>t.dataset.tab).filter(Boolean));
 const TAB_KEY='pmsv_fssai_product_helper_active_tab';
+const WORKING_STATE_RESET_FLAG='pmsv_fssai_product_helper_fresh_navigation';
+
+function isFreshPageNavigation(){
+ try{
+   const nav=performance.getEntriesByType('navigation')[0];
+   return !nav || nav.type==='navigate';
+ }catch(e){
+   return true;
+ }
+}
+
+// sessionStorage can be copied when a page is opened into a new tab.
+// On a fresh navigation, clear only this prototype's working-assessment keys.
+// Reloads keep the working state.
+if(isFreshPageNavigation()){
+ try{
+   [
+     TAB_KEY,
+     'pmsv_fssai_product_helper_enzyme',
+     'pmsv_fssai_product_helper_formula',
+     'pmsv_fssai_product_helper_processes'
+   ].forEach(k=>sessionStorage.removeItem(k));
+   sessionStorage.setItem(WORKING_STATE_RESET_FLAG,'1');
+ }catch(e){}
+}
 
 function openTab(id,{updateHash=true,save=true}={}){
   if(typeof id!=='string' || !validTabs.has(id)) id='formulation';
@@ -496,7 +521,7 @@ function openTab(id,{updateHash=true,save=true}={}){
   }
 
   if(save){
-    try{ localStorage.setItem(TAB_KEY,id); }catch(e){}
+    try{ sessionStorage.setItem(TAB_KEY,id); }catch(e){}
   }
 
   if(updateHash && location.hash!=='#'+id){
@@ -516,9 +541,9 @@ window.addEventListener('hashchange',()=>{
 
 let savedTab='';
 try{
-  savedTab=localStorage.getItem(TAB_KEY)||'';
+  savedTab=sessionStorage.getItem(TAB_KEY)||'';
   if(!validTabs.has(savedTab)){
-    localStorage.removeItem(TAB_KEY);
+    sessionStorage.removeItem(TAB_KEY);
     savedTab='';
   }
 }catch(e){}
@@ -595,7 +620,7 @@ const table11Enzymes=[
 
 let selectedEnzyme={id:'',source:''};
 try{
- const raw=JSON.parse(localStorage.getItem(ENZYME_KEY)||'{}');
+ const raw=JSON.parse(sessionStorage.getItem(ENZYME_KEY)||'{}');
  if(raw && typeof raw==='object')selectedEnzyme={id:raw.id||'',source:raw.source||''};
 }catch(e){}
 
@@ -625,7 +650,7 @@ function saveEnzymeSelection(){
  const source=document.getElementById('enzymeSource')?.value||'';
  const enzyme=table11Enzymes.find(x=>x.id===id);
  selectedEnzyme={id:enzyme?enzyme.id:'',source:enzyme&&enzyme.sources.includes(source)?source:''};
- try{localStorage.setItem(ENZYME_KEY,JSON.stringify(selectedEnzyme))}catch(e){}
+ try{sessionStorage.setItem(ENZYME_KEY,JSON.stringify(selectedEnzyme))}catch(e){}
  const result=document.getElementById('enzymeResult');
  if(result){
    if(enzyme&&selectedEnzyme.source){
@@ -669,7 +694,7 @@ const ingredientRules=[
 
 let formulationIngredients=[];
 try{
- const raw=JSON.parse(localStorage.getItem(FORMULA_KEY)||'[]');
+ const raw=JSON.parse(sessionStorage.getItem(FORMULA_KEY)||'[]');
  if(Array.isArray(raw))formulationIngredients=raw;
 }catch(e){formulationIngredients=[]}
 
@@ -718,7 +743,7 @@ function qualifyIngredient(item){
  }
 }
 function saveFormula(){
- try{localStorage.setItem(FORMULA_KEY,JSON.stringify(formulationIngredients))}catch(e){}
+ try{sessionStorage.setItem(FORMULA_KEY,JSON.stringify(formulationIngredients))}catch(e){}
  renderFormula();
 }
 function addIngredient(){
@@ -836,7 +861,18 @@ document.getElementById('loadExampleFormula')?.addEventListener('click',()=>{
  ];
  saveFormula();
 });
-document.getElementById('clearIngredients')?.addEventListener('click',()=>{const ingredientInput=document.getElementById('ingredientName');if(ingredientInput){ingredientInput.value='';delete ingredientInput.dataset.autocompleteConfirmed;}formulationIngredients=[];saveFormula()});
+document.getElementById('clearIngredients')?.addEventListener('click',()=>{
+ const ingredientInput=document.getElementById('ingredientName');
+ if(ingredientInput){ingredientInput.value='';delete ingredientInput.dataset.autocompleteConfirmed;}
+ const basis=document.getElementById('ingredientBasis');if(basis)basis.value='';
+ const clause=document.getElementById('ingredientClause');if(clause)clause.value='';
+ document.getElementById('ingredientBasisField')?.classList.add('hidden');
+ document.getElementById('ingredientClauseField')?.classList.add('hidden');
+ document.getElementById('ingredientRecognized')?.classList.add('hidden');
+ document.getElementById('ingredientAutocomplete')?.classList.add('hidden');
+ formulationIngredients=[];
+ saveFormula();
+});
 document.getElementById('goToStandards')?.addEventListener('click',()=>{openTab('standards',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
 document.getElementById('backToFormulation')?.addEventListener('click',()=>{openTab('formulation',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
 document.getElementById('goToContaminants')?.addEventListener('click',()=>{openTab('contaminants',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
@@ -892,7 +928,7 @@ const processingAidRules=[
 ];
 
 let selectedProcesses=[];
-try{selectedProcesses=JSON.parse(localStorage.getItem(PROCESS_KEY)||'[]')}catch(e){selectedProcesses=[]}
+try{selectedProcesses=JSON.parse(sessionStorage.getItem(PROCESS_KEY)||'[]')}catch(e){selectedProcesses=[]}
 if(!Array.isArray(selectedProcesses))selectedProcesses=[];
 
 function syncProcessUI(){
@@ -911,7 +947,7 @@ function syncProcessUI(){
 }
 function saveProcessSelection(){
  selectedProcesses=[...document.querySelectorAll('#processGrid input[type="checkbox"]:checked')].map(x=>x.value);
- try{localStorage.setItem(PROCESS_KEY,JSON.stringify(selectedProcesses))}catch(e){}
+ try{sessionStorage.setItem(PROCESS_KEY,JSON.stringify(selectedProcesses))}catch(e){}
  syncProcessUI();
 }
 function renderProcessingAids(){
@@ -965,7 +1001,7 @@ document.getElementById('clearProcesses')?.addEventListener('click',event=>{
  const activeTab=document.querySelector('nav.tabs .tab[data-tab].active')?.dataset.tab || 'process';
  selectedProcesses=[];
  selectedEnzyme={id:'',source:''};
- try{localStorage.removeItem(PROCESS_KEY);localStorage.removeItem(ENZYME_KEY)}catch(e){}
+ try{sessionStorage.removeItem(PROCESS_KEY);sessionStorage.removeItem(ENZYME_KEY)}catch(e){}
  populateEnzymeSelector();
  syncProcessUI();
  openTab(activeTab,{updateHash:true,save:true});
@@ -1087,7 +1123,7 @@ async function loadRegulatoryDb(){
    if(status){
      const cv=regulatoryDb.coverage||{};
      status.className='notice oknote';
-     status.innerHTML='<b>Local regulatory database loaded · no AI.</b><br>'+Number(cv.formulation_search_records||ingredientCatalog.length).toLocaleString('en-IN')+' formulation-search records are available in this prototype database. <b>Coverage is intentionally marked incomplete</b> until the remaining FSSAI standards are ingested.';
+     status.innerHTML='<b>Local regulatory database loaded · no AI.</b><br>'+Number(cv.formulation_search_records||ingredientCatalog.length).toLocaleString('en-IN')+' formulation-search records are available in this prototype database. <b>Coverage is intentionally marked incomplete</b> until the remaining FSSAI standards are ingested.<br><small>Working data is tab-specific: reload keeps it; a newly opened tab starts blank.</small>';
    }
  }catch(e){
    ingredientCatalog=fallbackIngredientCatalog();
