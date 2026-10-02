@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 35</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 36</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation ingredients</button>
@@ -37,7 +37,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <button class="tab" data-tab="micro">Microbiology</button>
 <button class="tab" data-tab="process">Manufacturing process</button>
 <button class="tab" data-tab="processing">Processing aids</button>
-<button class="tab" data-tab="quality">Label</button>
+<button class="tab" data-tab="quality">Label requirements</button>
 <button class="tab" data-tab="sources">Official sources</button>
 </nav>
 
@@ -429,13 +429,84 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <section id="quality" class="view hidden">
 <div class="card">
-<div class="section-title"><h2>Special label points</h2><span>Product-specific</span></div>
-<div class="grid2">
-<div class="item"><b>High caffeine declaration</b><small>Declare the caffeine amount as <b>“High Caffeine: X mg/serving size”</b>, where X is caffeine in the pack/serve.</small></div>
-<div class="item"><b>Caution statement</b><small>Prominently state that the product is not recommended for children, pregnant or lactating women, and persons sensitive to caffeine.</small></div>
-<div class="item"><b>Daily-consumption declaration</b><small>The label shall declare <b>“consume not more than 500 ml per day”</b>.</small></div>
-<div class="item"><b>Non-caloric sweeteners</b><small>Products containing aspartame, acesulfame-K or other non-caloric sweeteners must also satisfy the applicable special labelling provisions under the Food Safety and Standards (Labelling and Display) Regulations, 2020, as amended.</small></div>
+<div class="section-title"><h2>Label requirements — Caffeinated Beverage</h2><span>General + product-specific + formulation-triggered</span></div>
+<div class="notice oknote"><b>How this page works:</b> PMSV combines the mandatory pre-packaged-food requirements under the Food Safety and Standards (Labelling and Display) Regulations, 2020 with the additional declarations required specifically for Caffeinated Beverage under regulation 2.10.6(2). Ingredient-triggered declarations below update from the formulation you entered.</div>
 </div>
+
+<div class="card">
+<div class="section-title"><h2>Live label information from this formulation</h2><span>Updates automatically</span></div>
+<div class="checker-grid">
+  <div class="field">
+    <label>Declared serving / pack size (ml)</label>
+    <input id="labelServingMl" type="number" min="1" step="1" value="250">
+    <small>Used only to calculate the product-specific “High Caffeine: X mg/serving size” declaration.</small>
+  </div>
+  <div class="field">
+    <label>Current formulation quantity</label>
+    <div id="labelFormulaMass" class="recognized">Enter formulation ingredients first.</div>
+    <small>Ingredient order below follows quantity used at manufacture.</small>
+  </div>
+</div>
+<div id="labelIngredientPreview" class="notice"></div>
+<div id="labelCaffeinePreview" class="notice"></div>
+<div id="labelTriggeredRequirements"></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Mandatory label requirements — pre-packaged food</h2><span>FSSAI Labelling & Display Regulations</span></div>
+<div class="grid2">
+<div class="item"><b>1. Name of the food — Front of Pack</b><small>Use the name that indicates the true nature of the food. If this formulation is classified under the standardized product, use <b>Caffeinated Beverage</b>. A brand/fancy name may be additional, not a substitute. <span class="clause">Reg. 5(1)</span></small></div>
+
+<div class="item"><b>2. List of ingredients</b><small>Declare “Ingredients” / “List of Ingredients” and list ingredients in <b>descending order by weight or volume at manufacture</b>. Added water and compound ingredients must be handled as required. Quantitative ingredient declaration applies where an ingredient is emphasized or characterises the food. <span class="clause">Reg. 5(2)</span></small></div>
+
+<div class="item"><b>3. Nutrition information</b><small>For this beverage, declare nutrition per <b>100 ml or single-consumption pack</b> and the applicable per-serve % contribution to RDA. Include energy, protein, carbohydrate, total sugars, added sugars, total fat, saturated fat, trans fat, cholesterol where applicable, and sodium. Also declare serving size and number of servings per pack. <span class="clause">Reg. 5(3)</span></small></div>
+
+<div class="item"><b>4. Veg / Non-Veg declaration</b><small>Display the applicable prescribed symbol on the principal display panel close to the product/brand name, unless a specific exemption legally applies to the finished product. The decision must consider <b>ingredients, additives and processing aids</b>, not only the main raw materials. <span class="clause">Reg. 5(4)</span></small></div>
+
+<div class="item"><b>5. Food additives</b><small>For additives present in the finished food, declare the <b>functional class together with the specific name or recognised INS number</b> in the ingredient list. Flavouring agents require the applicable flavour declaration. <span class="clause">Reg. 5(5)</span></small></div>
+
+<div class="item"><b>6. Brand owner / manufacturer details</b><small>Declare the name and complete address with the applicable qualifier such as Manufactured by, Marketed by, Manufactured & Marketed by, or Packed & Marketed by. Imported foods require importer information as applicable. <span class="clause">Reg. 5(6)</span></small></div>
+
+<div class="item"><b>7. FSSAI logo & licence number</b><small>Display the FSSAI logo and brand-owner licence number in contrast colour. Where the manufacturer / marketer / packer / bottler differs from the brand owner, its licence number must also be displayed as required. <span class="clause">Reg. 5(7)</span></small></div>
+
+<div class="item"><b>8. Net quantity, Retail Sale Price & Consumer Care</b><small>Declare these in the manner prescribed under the Legal Metrology framework referenced by the FSSAI Labelling & Display Regulations. <span class="clause">Reg. 5(8)</span></small></div>
+
+<div class="item"><b>9. Lot / Code / Batch</b><small>A batch number, code number or lot number must be declared. <span class="clause">Reg. 5(9)</span></small></div>
+
+<div class="item"><b>10. Date marking</b><small>Declare <b>Date of manufacture or packaging</b> and <b>Expiry / Use by</b>; Best Before may additionally be given. Manufacture/packing date and Expiry/Use by must be grouped together at one place. Storage conditions must be stated where shelf life depends on them. <span class="clause">Reg. 5(10)</span></small></div>
+
+<div class="item"><b>11. Country of origin — if imported</b><small>Imported food must carry country of origin and comply with the additional requirements of the FSSAI Import Regulations. <span class="clause">Reg. 5(11)–5(12)</span></small></div>
+
+<div class="item"><b>12. Instructions for use / storage</b><small>Give directions needed for proper use or health and safety, such as storage after opening, where applicable. <span class="clause">Reg. 5(13)</span></small></div>
+
+<div class="item"><b>13. Allergen declaration</b><small>Applicable allergens must be declared separately in the prescribed <b>“Contains …”</b> format. Cross-contact allergens may be declared as “May Contains …” where applicable. <span class="clause">Reg. 5(14)</span></small></div>
+
+<div class="item"><b>14. Mandatory ingredient/additive warnings</b><small>If the formulation contains an ingredient or additive listed in Schedule II — including applicable sweeteners — the prescribed declaration/warning must also appear, generally in the specified rectangular-box format and minimum lettering size. <span class="clause">Reg. 7 + Schedule II</span></small></div>
+</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Additional declarations specific to Caffeinated Beverage</h2><span>Reg. 2.10.6(2)</span></div>
+<div class="grid2">
+<div class="item"><b>High caffeine declaration</b><small>Declare <b>“High Caffeine: X mg/serving size”</b>, where X is the caffeine present in the declared pack/serve. PMSV calculates the current value above when caffeine and serving size are available.</small></div>
+<div class="item"><b>Caution statement</b><small>Prominently display: <b>“Not recommended for children, pregnant or lactating women, persons sensitive to caffeine.”</b></small></div>
+<div class="item"><b>Maximum daily-consumption declaration</b><small>Declare: <b>“Consume not more than 500 ml per day”</b>, subject to the product-standard provisions governing the per-day quantity where optional substances are used.</small></div>
+<div class="item"><b>General labelling still applies</b><small>These declarations are <b>additional</b>. They do not replace the ingredient list, nutrition panel, allergens, additive declarations, date marking, FSSAI licence details or other general label requirements above.</small></div>
+</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Presentation / placement checks</h2><span>Do not check only the text</span></div>
+<div class="grid2">
+<div class="item"><b>Principal Display Panel</b><small>Name of food and other front-of-pack items must be placed as prescribed. Mandatory information must be clear, prominent, conspicuous, indelible and legible. <span class="clause">Regs. 4 & 6</span></small></div>
+<div class="item"><b>Language</b><small>Mandatory information must be provided in English or Hindi in accordance with the regulations; additional languages may also be used, provided they do not contradict the mandatory information. <span class="clause">Reg. 4</span></small></div>
+<div class="item"><b>Schedule-II lettering</b><small>Where Schedule-II mandatory declarations are triggered, apply the prescribed minimum lettering sizes and package-size rules. <span class="clause">Reg. 7</span></small></div>
+<div class="item"><b>Small-package exemptions</b><small>Some declarations have exemptions for small packages, but the exemption conditions and multi-unit-package requirements must be checked before omitting anything. <span class="clause">Reg. 8</span></small></div>
+</div>
+</div>
+
+<div class="card">
+<div class="notice"><b>Regulatory date note:</b> this module applies the Labelling & Display requirements currently in force. The First Amendment Regulations, 2026 were notified on 24 March 2026 but come into force on <b>1 July 2027</b>; PMSV should not apply those future-effective changes prematurely.</div>
 </div>
 </section>
 
@@ -467,6 +538,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <p><b>Chapter 2.12 — Proprietary Food</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/13_%20Chapter%202_12%20%28Proprietary%20Food%29.pdf">Official FSSAI regulation source used for Proprietary Food route assessment</a></p>
 <p><b>Approval for Non-Specified Food and Food Ingredients Regulations, 2017 · Version I (14.10.2022)</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/upload/uploadfiles/files/Compendium_FSS_NFS_FA_17_10_2022.pdf">Official FSSAI source used when no food/ingredient standard is established</a></p>
+<p><b>Food Safety and Standards (Labelling and Display) Regulations, 2020 · Compendium Version VIII (09.09.2025)</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/upload/uploadfiles/files/Comp_Labelling%20Display_Version%20VIII_09_09_2025.pdf">Official source used for the general pre-packaged-food label checklist, nutrition, ingredient order, veg/non-veg, additive declarations, FSSAI licence details, date marking, allergens and Schedule-II mandatory declarations</a></p>
+<p><b>Labelling and Display First Amendment Regulations, 2026 · notified 24.03.2026</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/upload/uploadfiles/files/Notification%20dt%2024_03_2026_NRC.pdf">Tracked as a future-effective amendment; it comes into force on 01.07.2027 and is not applied prematurely in this current-date prototype</a></p>
 <div class="notice"><b>Source hierarchy:</b> consolidated FSSAI compendia are convenient reference documents, but amendment notifications remain part of the regulatory trail. Production PMSV should retain the source document, clause/table, effective date and last-verified date for every displayed requirement.</div>
 <div class="notice oknote"><b>Source and engine rule for this module:</b> PMSV uses only official FSSAI regulations, appendices and amendment notifications for regulatory conclusions. Runtime decisions are made by stored regulatory data and deterministic applicability rules — <b>no AI call is required</b> for ingredient qualification, Proprietary Food routing, additive limits, microbiology, processing aids or contaminant limits.</div>
 </div>
@@ -794,6 +867,98 @@ function fatOilBasis(){
  const kg=items.reduce((s,x)=>s+qtyToKg(x.qty,x.unit),0);
  return {items,kg};
 }
+function labelAllergenTriggers(){
+ const found=new Set();
+ formulationIngredients.forEach(item=>{
+   const n=normIngredient(item.name);
+   if(/\b(wheat|rye|barley|oat|oats|spelt)\b/.test(n)) found.add('Gluten cereal: '+item.name);
+   if(/\b(crustacean|shrimp|prawn|crab|lobster)\b/.test(n)) found.add('Crustacean');
+   if(/\b(milk|whey|casein|caseinate|cheese|cream|butter|ghee|yoghurt|yogurt)\b/.test(n)) found.add('Milk');
+   if(/\b(egg|albumin|ovalbumin)\b/.test(n)) found.add('Egg');
+   if(/\b(fish|anchovy|tuna|salmon|cod)\b/.test(n)) found.add('Fish');
+   if(/\b(peanut|groundnut|almond|walnut|pistachio|cashew|hazelnut|pecan|tree nut)\b/.test(n)) found.add('Nut');
+   if(/\b(soy|soya|soybean)\b/.test(n)) found.add('Soy');
+   if(/\b(sulphite|sulfite|metabisulphite|metabisulfite|sulphur dioxide|sulfur dioxide)\b/.test(n)) found.add('Sulphite — verify final level is ≥10 mg/kg');
+ });
+ return [...found];
+}
+function labelSweetenerTriggers(){
+ const out=[];
+ formulationIngredients.forEach(item=>{
+   const n=normIngredient(item.name);
+   let type='';
+   if(/aspartame-acesulfame|aspartame acesulfame/.test(n))type='aspartame_acesulfame';
+   else if(/\baspartame\b/.test(n))type='aspartame';
+   else if(/acesulfame|ace[- ]?k/.test(n))type='acesulfame';
+   else if(/saccharin/.test(n))type='saccharin';
+   else if(/sucralose/.test(n))type='sucralose';
+   else if(/neotame/.test(n))type='neotame';
+   else if(/steviol|stevia/.test(n))type='steviol';
+   else if(/\b(sorbitol|mannitol|xylitol|maltitol|lactitol|isomalt|erythritol|polyol)\b/.test(n))type='polyol';
+   if(type)out.push({name:item.name,type});
+ });
+ return out;
+}
+function renderLabelRequirements(){
+ const mass=document.getElementById('labelFormulaMass');
+ const preview=document.getElementById('labelIngredientPreview');
+ const caffeinePreview=document.getElementById('labelCaffeinePreview');
+ const triggers=document.getElementById('labelTriggeredRequirements');
+ if(!mass&&!preview&&!caffeinePreview&&!triggers)return;
+
+ const total=totalFormulaKg();
+ if(mass)mass.innerHTML=total>0?'<b>'+fmt(total,6)+' kg</b>':'Enter formulation ingredients first.';
+
+ if(preview){
+   if(!formulationIngredients.length){
+     preview.innerHTML='<b>Ingredient list preview:</b> Enter formulation ingredients first.';
+   }else{
+     const ordered=[...formulationIngredients].sort((a,b)=>qtyToKg(b.qty,b.unit)-qtyToKg(a.qty,a.unit));
+     preview.innerHTML='<b>Ingredient list order:</b> '+ordered.map(x=>esc(x.name)).join(', ')+'.<br><small>This is the quantity-based order only. Compound-ingredient, additive functional-class/INS and quantitative-ingredient-declaration rules still need to be applied where relevant.</small>';
+   }
+ }
+
+ const serving=Math.max(1,Number(document.getElementById('labelServingMl')?.value||250));
+ const caffeineItem=formulationIngredients.find(x=>normIngredient(x.name)==='caffeine');
+ if(caffeinePreview){
+   if(caffeineItem&&total>0){
+     const mgL=usageForIngredient(caffeineItem).mgL;
+     const mgServe=mgL*(serving/1000);
+     caffeinePreview.innerHTML='<b>Product-specific caffeine declaration:</b> High Caffeine: <b>'+fmt(mgServe,2)+' mg/serving size ('+fmt(serving,0)+' ml)</b><br><small>Calculated from '+fmt(mgL,2)+' mg/L total caffeine in the current formulation. Confirm the declared serving/pack size before artwork approval.</small>';
+   }else{
+     caffeinePreview.innerHTML='<b>Product-specific caffeine declaration:</b> Enter caffeine in the formulation to calculate X for “High Caffeine: X mg/serving size”.';
+   }
+ }
+
+ if(triggers){
+   const allergens=labelAllergenTriggers();
+   const sweeteners=labelSweetenerTriggers();
+   const additiveItems=formulationIngredients.map((x,i)=>({x,q:qualifyIngredient(x)})).filter(z=>z.q.kind==='additive');
+   const blocks=[];
+   blocks.push('<div class="item"><b>Allergen declaration generated from entered names</b><small>'+(allergens.length?'Potential declaration: <b>Contains: '+allergens.map(esc).join(', ')+'</b>.':'No listed allergen has been identified from the ingredient names entered.')+'<br>Confirm compound ingredients, processing aids, sulphite concentration and cross-contact before final artwork.</small></div>');
+   blocks.push('<div class="item"><b>Food-additive declaration</b><small>'+(additiveItems.length?'Detected additive(s): '+additiveItems.map(z=>esc(z.x.name)+(z.q.appendix&&z.q.appendix.ins?' (INS '+esc(z.q.appendix.ins)+')':'')).join(', ')+'. Declare the applicable <b>functional class + specific name/INS</b> in the ingredient list.':'No ingredient currently classified by PMSV as an Appendix-A food additive requiring a generated additive line.')+'</small></div>');
+
+   if(sweeteners.length){
+     const names=sweeteners.map(s=>s.name);
+     let text='Schedule-II declaration triggered: <b>This contains '+names.map(esc).join(', ')+'</b>. ';
+     if(sweeteners.length>1)text+='Because more than one sweetener is present, the mixture-of-sweeteners declaration and the individual applicable warnings must also be carried. ';
+     sweeteners.forEach(s=>{
+       if(s.type==='aspartame')text+='<br>• Aspartame: prescribed warning for phenylketonurics, children with seizure disorders, and pregnant/lactating mothers.';
+       if(s.type==='acesulfame')text+='<br>• Acesulfame potassium: prescribed warning for children and pregnant/lactating mothers.';
+       if(s.type==='aspartame_acesulfame')text+='<br>• Aspartame-Acesulfame salt: prescribed warning for phenylketonurics, children and pregnant/lactating mothers.';
+       if(s.type==='saccharin')text+='<br>• Saccharin: prescribed “Not recommended for children” warning.';
+       if(s.type==='polyol')text+='<br>• Polyol: check the applicable laxative-effect warning; sorbitol/sorbitol syrup has an additional specific warning.';
+     });
+     text+='<br>Also check the prescribed <b>CONTAINS NON-CALORIC SWEETENER</b> declaration where applicable.';
+     blocks.push('<div class="item"><b>Sweetener-specific mandatory declarations</b><small>'+text+'</small></div>');
+   }else{
+     blocks.push('<div class="item"><b>Sweetener-specific declarations</b><small>No Schedule-II sweetener trigger has been detected from the current ingredient names.</small></div>');
+   }
+
+   blocks.push('<div class="item"><b>Veg / Non-Veg symbol</b><small>PMSV does not auto-approve this from ingredient names alone because additive and processing-aid origin can change the declaration. Confirm the origin of <b>all ingredients, additives and processing aids</b> and then apply the required green/brown symbol.</small></div>');
+   triggers.innerHTML='<h3 style="margin:14px 0 9px">Formulation-triggered label checks</h3><div class="grid2">'+blocks.join('')+'</div>';
+ }
+}
 function numericLimitMgKg(text){
  const s=String(text||'').replace(/,/g,'');
  const m=s.match(/([0-9]+(?:\.[0-9]+)?)\s*mg\/kg/i);
@@ -1045,6 +1210,8 @@ function renderFormula(){
  const chipHtml=formulationIngredients.map(x=>'<span class="process-chip">'+esc(x.name)+'</span>').join('');
  if(contamChips)contamChips.innerHTML=chipHtml||'<span class="muted">No ingredients entered. Return to Formulation ingredients first.</span>';
 
+ renderLabelRequirements();
+
  if(triggered){
    const rows=[];
    qs.forEach(q=>{
@@ -1063,6 +1230,7 @@ function renderFormula(){
 }
 
 document.getElementById('formulaDensity')?.addEventListener('input',()=>saveFormula());
+document.getElementById('labelServingMl')?.addEventListener('input',renderLabelRequirements);
 try{const d=sessionStorage.getItem('pmsv_fssai_formula_density');if(d&&document.getElementById('formulaDensity'))document.getElementById('formulaDensity').value=d}catch(e){}
 document.getElementById('addIngredient')?.addEventListener('click',addIngredient);
 document.getElementById('cancelIngredientEdit')?.addEventListener('click',()=>{
