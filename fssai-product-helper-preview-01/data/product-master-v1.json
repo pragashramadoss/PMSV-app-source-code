@@ -9,11 +9,11 @@
     "detailed_rule_profiles": [
       "caffeinated-beverage"
     ],
-    "foscos_catalog_products_loaded": 519,
+    "foscos_catalog_products_loaded": 522,
     "foscos_catalog_scope": "Official FoSCoS/FSSAI indexed rows loaded category by category; Chapter 2.5 synchronization added the current missing meat-product rows while rule ingestion continues.",
     "foscos_subcategory_framework": "Level-2 FoSCoS/FSSAI food-category framework loaded for categories 01–16; special categories without a separate level-2 browse layer are handled directly at product/category level.",
     "level3_status": "Expanded official FoSCoS standardized-product catalogue. Detailed compliance rule profiles remain a separate ingestion layer.",
-    "base_rule_profiles_ready": 192,
+    "base_rule_profiles_ready": 188,
     "profile_architecture_note": "Every loaded FoSCoS standardized product now has at least a base profile. Full formulation compliance is enabled only when detailed product-specific clauses have been ingested.",
     "chapter_ingestion": {
       "2.1": {
@@ -128,6 +128,21 @@
         "regulatory_note": "Four tea standards, Coffee, Chicory, Coffee-Chicory Mixture, four non-alcoholic beverage rule groups, Mineral Water, Packaged Drinking Water and Purified Vending Water are structured. The existing fully validated Carbonated Caffeinated Beverage engine is retained and linked to the Chapter 2.10 rule file rather than downgraded.",
         "effective_note": "Packaged Drinking Water TDS 75–500 mg/L, calcium 10–75 mg/L and magnesium 5–30 mg/L are current from 1 February 2026.",
         "next_validation": "Complete Appendix A additive inheritance, contaminants, Appendix B applicability, processing aids, current labels, external IS references and full machine validation"
+      },
+      "2.11": {
+        "title": "Other Food Products and Ingredients",
+        "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+        "source_version": "Current consolidated FSSAI Chapter 2.11 (no explicit version/date label printed)",
+        "mapped_catalog_products": 7,
+        "added_catalog_rows": 3,
+        "structured_product_standards": 7,
+        "structured_horizontal_rules": 1,
+        "active_numbered_provisions": 8,
+        "omitted_standards": 1,
+        "status": "structured_core_loaded",
+        "source_verified_on": "2026-10-02",
+        "regulatory_note": "Seven product/ingredient standards are mapped to FoSCoS catalogue rows. 2.11.9 Special Dietary Food with Low Sodium Content is deliberately stored as a horizontal overlay, not a standalone catalogue product, because FoSCoS guidance directs the FBO to select the corresponding underlying food category. 2.11.6 is omitted.",
+        "next_validation": "Appendix A additives, contaminants, microbiology, processing aids, current Labelling and Display reconciliation, state-level Pan Masala restrictions and full machine validation"
       }
     }
   },
@@ -4067,13 +4082,13 @@
       "foscos_category": "04",
       "foscos_subcategory": "04.1",
       "fcs": "04.1.2.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.11.2",
+      "regulation_chapter": "2.11",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.11 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI current consolidated Chapter 2.11 (official compendium; verified 2026-10-02)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -4082,7 +4097,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.11 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until additives, contaminants, microbiology, processing aids, current labelling rules and cross-referenced standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.2",
+      "standard_name": "Catechu (Edible)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "04-04-1-pickles-made-from-fruits",
@@ -6774,13 +6793,13 @@
       "foscos_category": "06",
       "foscos_subcategory": "06.2",
       "fcs": "06.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.11.7",
+      "regulation_chapter": "2.11",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.11 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI current consolidated Chapter 2.11 (official compendium; verified 2026-10-02)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -6789,7 +6808,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.11 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until additives, contaminants, microbiology, processing aids, current labelling rules and cross-referenced standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.7",
+      "standard_name": "Carob Powder",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "06-06-2-maize-starch",
@@ -13249,13 +13272,13 @@
       "foscos_category": "100",
       "foscos_subcategory": "100",
       "fcs": "100",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.11.5",
+      "regulation_chapter": "2.11",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.11 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI current consolidated Chapter 2.11 (official compendium; verified 2026-10-02)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -13264,7 +13287,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.11 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until additives, contaminants, microbiology, processing aids, current labelling rules and cross-referenced standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.5",
+      "standard_name": "Pan Masala",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "100-100-silver-leaf-chandi-ka-warq",
@@ -13272,13 +13299,13 @@
       "foscos_category": "100",
       "foscos_subcategory": "100",
       "fcs": "100",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.11.4",
+      "regulation_chapter": "2.11",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.11 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI current consolidated Chapter 2.11 (official compendium; verified 2026-10-02)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -13287,7 +13314,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.11 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until additives, contaminants, microbiology, processing aids, current labelling rules and cross-referenced standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.4",
+      "standard_name": "Silver Leaf (Chandi-ka-warq)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "100-100-solvent-extracted-crude-vegetable-oils-not-for-direct-human-consumption",
@@ -13575,6 +13606,87 @@
       "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
       "rule_key": "2.8.3(2)",
       "standard_name": "Bees Wax",
+      "source_verified_on": "2026-10-02"
+    },
+    {
+      "id": "99-99-1-baking-powder",
+      "display_name": "Baking powder",
+      "foscos_category": "99",
+      "foscos_subcategory": "99.1",
+      "fcs": "99.1",
+      "fssr": "2.11.1",
+      "regulation_chapter": "2.11",
+      "route": "substances",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.11 product standard mapped; structured chapter rule data loaded",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI current consolidated Chapter 2.11 (official compendium; verified 2026-10-02)",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, as applicable",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Chapter 2.11 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until additives, contaminants, microbiology, processing aids, current labelling rules and cross-referenced standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.1",
+      "standard_name": "Baking Powder",
+      "source_verified_on": "2026-10-02"
+    },
+    {
+      "id": "99-99-1-gelatin",
+      "display_name": "Gelatin",
+      "foscos_category": "99",
+      "foscos_subcategory": "99.1",
+      "fcs": "99.1",
+      "fssr": "2.11.3",
+      "regulation_chapter": "2.11",
+      "route": "substances",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.11 product standard mapped; structured chapter rule data loaded",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI current consolidated Chapter 2.11 (official compendium; verified 2026-10-02)",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, as applicable",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Chapter 2.11 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until additives, contaminants, microbiology, processing aids, current labelling rules and cross-referenced standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.3",
+      "standard_name": "Gelatin",
+      "source_verified_on": "2026-10-02"
+    },
+    {
+      "id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "display_name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "foscos_category": "99",
+      "foscos_subcategory": "99.7",
+      "fcs": "99.7",
+      "fssr": "2.11.8",
+      "regulation_chapter": "2.11",
+      "route": "substances",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.11 product standard mapped; structured chapter rule data loaded",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI current consolidated Chapter 2.11 (official compendium; verified 2026-10-02)",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, as applicable",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Chapter 2.11 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until additives, contaminants, microbiology, processing aids, current labelling rules and cross-referenced standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.8",
+      "standard_name": "Dietary Fibre (Dextrin-soluble fibre)",
       "source_verified_on": "2026-10-02"
     }
   ],
@@ -15825,10 +15937,12 @@
       "subcategory": "04.1",
       "name": "Catechu (Edible)",
       "fcs": "04.1.2.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.11.2",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "04-04-1-catechu-edible"
+      "profile_id": "04-04-1-catechu-edible",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.2"
     },
     {
       "id": "04-04-1-pickles-made-from-fruits",
@@ -17124,10 +17238,12 @@
       "subcategory": "06.2",
       "name": "Carob Powder",
       "fcs": "06.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.11.7",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "06-06-2-carob-powder"
+      "profile_id": "06-06-2-carob-powder",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.7"
     },
     {
       "id": "06-06-2-maize-starch",
@@ -20235,10 +20351,12 @@
       "subcategory": "100",
       "name": "Pan Masala",
       "fcs": "100",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.11.5",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "100-100-pan-masala"
+      "profile_id": "100-100-pan-masala",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.5"
     },
     {
       "id": "100-100-silver-leaf-chandi-ka-warq",
@@ -20246,10 +20364,12 @@
       "subcategory": "100",
       "name": "SILVER LEAF (Chandi-ka-warq)",
       "fcs": "100",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.11.4",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "100-100-silver-leaf-chandi-ka-warq"
+      "profile_id": "100-100-silver-leaf-chandi-ka-warq",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.4"
     },
     {
       "id": "100-100-solvent-extracted-crude-vegetable-oils-not-for-direct-human-consumption",
@@ -20388,6 +20508,45 @@
       "profile_id": "99-99-1-bees-wax",
       "rule_file": "./data/rules/chapter-2-8-sweetening-honey-v1.json",
       "rule_key": "2.8.3(2)"
+    },
+    {
+      "id": "99-99-1-baking-powder",
+      "category": "99",
+      "subcategory": "99.1",
+      "name": "Baking powder",
+      "fcs": "99.1",
+      "fssr": "2.11.1",
+      "catalog_source": "Current FoSCoS standardized-product list",
+      "profile_id": "99-99-1-baking-powder",
+      "profile_status": "chapter_profile_ready",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.1"
+    },
+    {
+      "id": "99-99-1-gelatin",
+      "category": "99",
+      "subcategory": "99.1",
+      "name": "Gelatin",
+      "fcs": "99.1",
+      "fssr": "2.11.3",
+      "catalog_source": "Current FoSCoS standardized-product list",
+      "profile_id": "99-99-1-gelatin",
+      "profile_status": "chapter_profile_ready",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.3"
+    },
+    {
+      "id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "category": "99",
+      "subcategory": "99.7",
+      "name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "fcs": "99.7",
+      "fssr": "2.11.8",
+      "catalog_source": "Current FoSCoS standardized-product list",
+      "profile_id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "profile_status": "chapter_profile_ready",
+      "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
+      "rule_key": "2.11.8"
     }
   ],
   "last_catalog_expansion": "2026-10-02"
