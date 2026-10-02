@@ -58,8 +58,31 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   <div id="ingredientRecognized" class="recognized hidden"></div>
 </div>
 
+<div class="checker-grid" style="margin-top:10px">
+  <div class="field">
+    <label>2. Quantity used</label>
+    <input id="ingredientQty" type="number" min="0" step="0.001" placeholder="e.g. 0.150">
+    <small>Enter the actual amount used in this formulation.</small>
+  </div>
+  <div class="field">
+    <label>Unit</label>
+    <select id="ingredientQtyUnit">
+      <option value="kg">kg</option>
+      <option value="g">g</option>
+      <option value="mg">mg</option>
+    </select>
+    <small>PMSV normalizes all ingredient quantities to mass before calculating the total formulation quantity.</small>
+  </div>
+</div>
+
+<div class="field" style="margin-top:10px">
+  <label>Finished beverage density (kg/L)</label>
+  <input id="formulaDensity" type="number" min="0.1" step="0.001" value="1.000">
+  <small>Used to convert the summed formulation mass into finished beverage volume for FSSAI limits expressed in mg/L.</small>
+</div>
+
 <div id="ingredientBasisField" class="field hidden" style="margin-top:10px">
-  <label>2. How should this extra / custom ingredient be checked?</label>
+  <label>3. How should this extra / custom ingredient be checked?</label>
   <select id="ingredientBasis">
     <option value="">Select FSSAI regulatory basis…</option>
     <option value="standardized">Standardized / specifically permitted under an FSSAI regulation</option>
@@ -72,7 +95,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div id="ingredientClauseField" class="field hidden" style="margin-top:10px">
-  <label>3. Exact FSSAI regulation / clause, if available</label>
+  <label>4. Exact FSSAI regulation / clause, if available</label>
   <input id="ingredientClause" placeholder="e.g. Chapter 2.x / clause 2.x.x / Appendix A INS ...">
   <small>Use only an official FSSAI regulation reference. A typed clause is not treated as verified until matched to the stored regulatory source.</small>
 </div>
@@ -89,6 +112,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <div class="card">
 <div class="section-title"><h2>Ingredients entered</h2><span id="ingredientCount">0 ingredients</span></div>
+<div id="formulaTotals" class="notice hidden"></div>
 <div id="ingredientList" class="empty-state">No ingredients entered yet.</div>
 <div id="formulationNext" class="hidden">
   <div class="notice oknote"><b>Ingredient list saved.</b> The next page explains how every ingredient qualifies, which FSSAI clause applies, and whether the formulation still fits the standardized product route or needs a Proprietary Food / approval review.</div>
@@ -103,7 +127,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="section-title"><h2>Step 2 — How each ingredient qualifies under FSSAI</h2><span>Clause-level traceability</span></div>
 <div id="classificationSummary" class="notice"></div>
 <div class="tablewrap"><table>
-<thead><tr><th>Ingredient</th><th>How it qualifies</th><th>FSSAI clause / source</th><th>Effect on product route</th></tr></thead>
+<thead><tr><th>Ingredient</th><th>Usage</th><th>How it qualifies</th><th>FSSAI clause / source</th><th>Effect on product route</th></tr></thead>
 <tbody id="ingredientQualificationRows"></tbody>
 </table></div>
 </div>
@@ -742,8 +766,60 @@ function qualifyIngredient(item){
    return {name:item.name,kind:'extra',status:'unresolved',qualification:'No FSSAI qualification has been established for this ingredient from the information entered. If no standard exists under FSSAI regulations, the Non-Specified Food and Food Ingredients Regulations, 2017 must be assessed.',clause:'Non-Specified Food Regulations 2017 · regulation 2(1)(d) and prior-approval rule 3(1)',route:'unresolved',impact:'Do not treat the ingredient as permitted or the finished product as Proprietary Food until the FSSAI regulatory basis is established.'};
  }
 }
+function qtyToKg(qty,unit){
+ const n=Number(qty);
+ if(!Number.isFinite(n)||n<0)return 0;
+ if(unit==='mg')return n/1000000;
+ if(unit==='g')return n/1000;
+ return n;
+}
+function totalFormulaKg(){
+ return formulationIngredients.reduce((s,x)=>s+qtyToKg(x.qty,x.unit),0);
+}
+function formulaDensity(){
+ const v=Number(document.getElementById('formulaDensity')?.value||sessionStorage.getItem('pmsv_fssai_formula_density')||1);
+ return Number.isFinite(v)&&v>0?v:1;
+}
+function finalVolumeL(){
+ const total=totalFormulaKg();
+ return total>0?total/formulaDensity():0;
+}
+function usageForIngredient(item){
+ const kg=qtyToKg(item.qty,item.unit);
+ const total=totalFormulaKg();
+ const vol=finalVolumeL();
+ return {
+   kg,
+   percent:total>0?(kg/total)*100:0,
+   mgkg:total>0?(kg*1000000/total):0,
+   mgL:vol>0?(kg*1000000/vol):0
+ };
+}
+function numericLimitMgKg(text){
+ const s=String(text||'').replace(/,/g,'');
+ const m=s.match(/([0-9]+(?:\.[0-9]+)?)\s*mg\/kg/i);
+ return m?Number(m[1]):null;
+}
+function checkUsageAgainstRule(item,q){
+ const u=usageForIngredient(item);
+ if(q.appendix){
+   const lim=numericLimitMgKg(q.appendix.limit);
+   if(lim!==null)return {unit:'mg/kg',value:u.mgkg,limit:lim,pass:u.mgkg<=lim};
+ }
+ const n=normIngredient(item.name);
+ if(n==='caffeine')return {unit:'mg/L',value:u.mgL,min:145,max:300,pass:u.mgL>=145&&u.mgL<=300};
+ if(n==='taurine')return {unit:'mg/L',value:u.mgL,max:4000,pass:u.mgL<=4000,calculated:true};
+ if(n==='d-glucurono-γ-lactone'||n==='d-glucurono-y-lactone'||n==='glucuronolactone')return {unit:'mg/L',value:u.mgL,max:2400,pass:u.mgL<=2400,calculated:true};
+ if(n==='inositol')return {unit:'mg/L',value:u.mgL,max:200,pass:u.mgL<=200,calculated:true};
+ if(n==='pantothenic acid'||n==='vitamin b5')return {unit:'mg/L',value:u.mgL,max:20,pass:u.mgL<=20,calculated:true};
+ return null;
+}
+
 function saveFormula(){
- try{sessionStorage.setItem(FORMULA_KEY,JSON.stringify(formulationIngredients))}catch(e){}
+ try{
+   sessionStorage.setItem(FORMULA_KEY,JSON.stringify(formulationIngredients));
+   sessionStorage.setItem('pmsv_fssai_formula_density',String(formulaDensity()));
+ }catch(e){}
  renderFormula();
 }
 function addIngredient(){
@@ -753,8 +829,14 @@ function addIngredient(){
  const clause=String(document.getElementById('ingredientClause')?.value||'').trim();
  const msg=document.getElementById('ingredientInputMessage');
  const name=String(input?.value||'').trim();
+ const qty=Number(document.getElementById('ingredientQty')?.value);
+ const unit=document.getElementById('ingredientQtyUnit')?.value||'kg';
  if(!name){
    if(msg){msg.textContent='Enter an ingredient first.';msg.classList.remove('hidden')}
+   return;
+ }
+ if(!Number.isFinite(qty) || qty<=0){
+   if(msg){msg.textContent='Enter the ingredient quantity before adding it.';msg.classList.remove('hidden')}
    return;
  }
  if(formulationIngredients.some(x=>normIngredient(x.name)===normIngredient(name))){
@@ -766,8 +848,9 @@ function addIngredient(){
    document.getElementById('ingredientBasisField')?.classList.remove('hidden');
    return;
  }
- formulationIngredients.push({name,basis:known?'auto':basis,clause});
+ formulationIngredients.push({name,basis:known?'auto':basis,clause,qty,unit});
  if(input){input.value='';delete input.dataset.autocompleteConfirmed;}
+ const qtyInput=document.getElementById('ingredientQty');if(qtyInput)qtyInput.value='';
  const clauseInput=document.getElementById('ingredientClause');if(clauseInput)clauseInput.value='';
  const basisSelect=document.getElementById('ingredientBasis');if(basisSelect)basisSelect.value='';
  document.getElementById('ingredientBasisField')?.classList.add('hidden');
@@ -780,6 +863,7 @@ function addIngredient(){
 function renderFormula(){
  const list=document.getElementById('ingredientList');
  const count=document.getElementById('ingredientCount');
+ const totals=document.getElementById('formulaTotals');
  const next=document.getElementById('formulationNext');
  const qbody=document.getElementById('ingredientQualificationRows');
  const standards=document.getElementById('applicableStandards');
@@ -789,6 +873,12 @@ function renderFormula(){
  const checkerSummary=document.getElementById('checkerIngredientSummary');
 
  if(count)count.textContent=formulationIngredients.length+' ingredient'+(formulationIngredients.length===1?'':'s');
+ const totalKg=totalFormulaKg();
+ const volL=finalVolumeL();
+ if(totals){
+   totals.classList.toggle('hidden',formulationIngredients.length===0);
+   totals.innerHTML=formulationIngredients.length?'<b>Total formulation quantity:</b> '+fmt(totalKg,6)+' kg &nbsp;·&nbsp; <b>Calculated finished volume:</b> '+fmt(volL,3)+' L at '+fmt(formulaDensity(),3)+' kg/L density':'';
+ }
  if(next)next.classList.toggle('hidden',formulationIngredients.length===0);
  if(list){
    if(!formulationIngredients.length){
@@ -799,7 +889,10 @@ function renderFormula(){
      list.innerHTML=formulationIngredients.map((x,i)=>{
        const q=qualifyIngredient(x);
        const cls=q.status==='qualified'?'status-good':q.status==='review'?'status-warn':'status-bad';
-       return '<div class="ingredient-row"><div><b>'+esc(x.name)+'</b><br><small>Basis check: '+esc(x.basis==='auto'?'Auto-recognized from stored FSSAI data':(x.basis||'Custom route review'))+(x.clause?'<br>Entered FSSAI ref: '+esc(x.clause):'')+'</small></div><div class="'+cls+'">'+(q.status==='qualified'?'Qualified':q.status==='review'?'Further review':'Unresolved')+'</div><div><small>'+esc(q.qualification)+'</small><br><span class="clause">'+esc(q.clause)+'</span></div><div><button class="ingredient-remove" type="button" data-remove-ingredient="'+i+'">Remove</button></div></div>';
+       const u=usageForIngredient(x);
+       const usageCheck=checkUsageAgainstRule(x,q);
+       const checkHtml=usageCheck?('<br><small class="'+(usageCheck.pass?'status-good':'status-bad')+'">'+(usageCheck.pass?'Usage within loaded limit':'Usage requires check')+': '+fmt(usageCheck.value,3)+' '+usageCheck.unit+'</small>'):'';
+       return '<div class="ingredient-row"><div><b>'+esc(x.name)+'</b><br><small>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+' · '+fmt(u.percent,4)+'% w/w<br>'+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small></div><div class="'+cls+'">'+(q.status==='qualified'?'Qualified':q.status==='review'?'Further review':'Unresolved')+checkHtml+'</div><div><small>'+esc(q.qualification)+'</small><br><span class="clause">'+esc(q.clause)+'</span></div><div><button class="ingredient-remove" type="button" data-remove-ingredient="'+i+'">Remove</button></div></div>';
      }).join('');
      list.querySelectorAll('[data-remove-ingredient]').forEach(btn=>btn.addEventListener('click',()=>{
        formulationIngredients.splice(Number(btn.dataset.removeIngredient),1);saveFormula();
@@ -808,7 +901,13 @@ function renderFormula(){
  }
 
  const qs=formulationIngredients.map(qualifyIngredient);
- if(qbody)qbody.innerHTML=qs.map(q=>'<tr><td><b>'+esc(q.name)+'</b></td><td>'+esc(q.qualification)+(q.appendix?'<br><small>Appendix A limit: <b>'+esc(q.appendix.limit)+'</b></small>':'')+'</td><td><span class="clause">'+esc(q.clause)+'</span></td><td>'+esc(q.impact)+'</td></tr>').join('') || '<tr><td colspan="4">Enter formulation ingredients first.</td></tr>';
+ if(qbody)qbody.innerHTML=qs.map((q,i)=>{
+   const x=formulationIngredients[i];
+   const u=usageForIngredient(x);
+   const chk=checkUsageAgainstRule(x,q);
+   const usage='<b>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+'</b><br><small>'+fmt(u.percent,4)+'% w/w · '+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small>'+(chk?'<br><small class="'+(chk.pass?'status-good':'status-bad')+'">'+(chk.pass?'Within loaded limit':'Check loaded limit')+'</small>':'');
+   return '<tr><td><b>'+esc(q.name)+'</b></td><td>'+usage+'</td><td>'+esc(q.qualification)+(q.appendix?'<br><small>Appendix A limit: <b>'+esc(q.appendix.limit)+'</b></small>':'')+'</td><td><span class="clause">'+esc(q.clause)+'</span></td><td>'+esc(q.impact)+'</td></tr>';
+ }).join('') || '<tr><td colspan="5">Enter formulation ingredients first.</td></tr>';
 
  const hasUnresolved=qs.some(q=>q.route==='unresolved');
  const hasProp=qs.some(q=>q.route==='proprietary');
@@ -852,12 +951,18 @@ function renderFormula(){
  }
 }
 
+document.getElementById('formulaDensity')?.addEventListener('input',()=>saveFormula());
+try{const d=sessionStorage.getItem('pmsv_fssai_formula_density');if(d&&document.getElementById('formulaDensity'))document.getElementById('formulaDensity').value=d}catch(e){}
 document.getElementById('addIngredient')?.addEventListener('click',addIngredient);
 document.getElementById('ingredientName')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addIngredient()}});
 document.getElementById('loadExampleFormula')?.addEventListener('click',()=>{
  formulationIngredients=[
-  {name:'Water',basis:'auto',clause:''},{name:'Sugar',basis:'auto',clause:''},{name:'Caffeine',basis:'auto',clause:''},
-  {name:'Taurine',basis:'auto',clause:''},{name:'D-glucurono-γ-lactone',basis:'auto',clause:''},{name:'Citric acid',basis:'auto',clause:''}
+  {name:'Water',basis:'auto',clause:'',qty:0.94,unit:'kg'},
+  {name:'Sugar',basis:'auto',clause:'',qty:0.055,unit:'kg'},
+  {name:'Caffeine',basis:'auto',clause:'',qty:0.0002,unit:'kg'},
+  {name:'Taurine',basis:'auto',clause:'',qty:0.002,unit:'kg'},
+  {name:'D-glucurono-γ-lactone',basis:'auto',clause:'',qty:0.0012,unit:'kg'},
+  {name:'Citric acid',basis:'auto',clause:'',qty:0.0016,unit:'kg'}
  ];
  saveFormula();
 });
