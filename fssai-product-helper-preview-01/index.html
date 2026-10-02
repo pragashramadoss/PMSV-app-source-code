@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 28</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 29</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation ingredients</button>
@@ -775,6 +775,17 @@ function qtyToKg(qty,unit){
  if(unit==='g')return n/1000;
  return n;
 }
+function kgToQty(kg,unit){
+ const n=Number(kg);
+ if(!Number.isFinite(n)||n<0)return 0;
+ if(unit==='mg')return n*1000000;
+ if(unit==='g')return n*1000;
+ return n;
+}
+function cleanQty(n){
+ const v=Number(n);
+ return Number.isFinite(v)?Math.round((v+Number.EPSILON)*1000000000)/1000000000:0;
+}
 function totalFormulaKg(){
  return formulationIngredients.reduce((s,x)=>s+qtyToKg(x.qty,x.unit),0);
 }
@@ -910,8 +921,11 @@ function addIngredient(){
    formulationIngredients[editingIngredientIndex]=updatedItem;
    if(msg){msg.textContent=name+' updated.';msg.classList.remove('hidden')}
  }else if(duplicateIndex>=0){
-   formulationIngredients[duplicateIndex]=updatedItem;
-   if(msg){msg.textContent=name+' was already in the formulation. Its quantity/details have been updated.';msg.classList.remove('hidden')}
+   const existing=formulationIngredients[duplicateIndex];
+   const mergedUnit=existing.unit||unit||'kg';
+   const mergedQty=cleanQty(kgToQty(qtyToKg(existing.qty,existing.unit)+qtyToKg(qty,unit),mergedUnit));
+   formulationIngredients[duplicateIndex]={...existing,qty:mergedQty,unit:mergedUnit};
+   if(msg){msg.textContent=(existing.name||name)+' already existed. Added '+cleanQty(qty)+' '+unit+'; total is now '+mergedQty+' '+mergedUnit+'.';msg.classList.remove('hidden')}
  }else{
    formulationIngredients.push(updatedItem);
    if(msg)msg.classList.add('hidden');
