@@ -1,0 +1,1071 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.6",
+  "title": "Fish and Fish Products",
+  "source_version": "Version 2 (04.11.2024)",
+  "source_verified_on": "2026-10-02",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 2.6 — Fish and Fish Products, Version 2 (04.11.2024)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_6_Fish%20and%20Fish%20products.pdf"
+    },
+    {
+      "authority": "FSSAI / FoSCoS",
+      "title": "View all FSSAI Standardized Food Products",
+      "url": "https://foscos.fssai.gov.in/standard-product"
+    }
+  ],
+  "common_rules": [
+    {
+      "type": "additives",
+      "text": "Food additives are permitted only where allowed by the relevant Chapter 2.6 standard and Appendix A. Frozen squid under clause 2.6.1(3) explicitly permits no food additive."
+    },
+    {
+      "type": "microbiology",
+      "text": "Fish and fish products shall comply with the applicable microbiological requirements in Appendix B where referenced by the product standard."
+    },
+    {
+      "type": "contaminants",
+      "text": "Applicable fish and fish products shall comply with the Food Safety and Standards (Contaminants, Toxins and Residues) Regulations."
+    },
+    {
+      "type": "hygiene",
+      "text": "Applicable products shall be prepared and handled in accordance with Schedule 4 licensing/registration hygiene requirements and other applicable FSSAI guidance."
+    },
+    {
+      "type": "labelling",
+      "text": "The Food Safety and Standards (Labelling and Display) Regulations, 2020 apply in addition to product-specific declarations. Older consolidated text may still contain historical references to the former Packaging and Labelling Regulations."
+    }
+  ],
+  "superseded_standards": [
+    {
+      "key": "2.6.1(12)-legacy",
+      "name": "Sardine Oil",
+      "status": "superseded",
+      "replaced_by": "2.6.1(12) Fish Oil",
+      "note": "The current consolidated Chapter 2.6 displays the older Sardine Oil provision followed by an amendment substituting the current Fish Oil standard."
+    }
+  ],
+  "omitted_standards": [
+    {
+      "key": "2.6.1(6)",
+      "status": "omitted"
+    }
+  ],
+  "cross_cutting_rules": [
+    {
+      "key": "2.6.2",
+      "name": "Limit of Naturally Occurring Formaldehyde",
+      "status": "structured_core",
+      "limits": [
+        {
+          "group": "Group I — Marine finfish, elasmobranchs, crustaceans and molluscs except Group III & IV",
+          "operator": "<=",
+          "value": 4,
+          "unit": "mg/kg"
+        },
+        {
+          "group": "Group III — Lizard fishes and other marine fishes not covered under Group I",
+          "operator": "<=",
+          "value": 8,
+          "unit": "mg/kg"
+        },
+        {
+          "group": "Group IV — Frozen stored marine fish products",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ],
+      "source_note": "The current consolidated table prints the Group II freshwater-origin row without a numeric value in the visible limit cell. PMSV therefore does not hard-code a Group II limit from inference; it remains pending source clarification before machine validation.",
+      "additional_rule": "For fish and fish products of marine origin other than those covered by the specified table groups, the chapter states a maximum naturally occurring formaldehyde limit of 100 ppm."
+    }
+  ],
+  "standards": [
+    {
+      "key": "2.6.1(1)",
+      "name": "Frozen Shrimp",
+      "status": "structured_core",
+      "definition": "Frozen raw, partially cooked or fully cooked shrimp/prawn, peeled or unpeeled, from the listed shrimp families.",
+      "process_rules": [
+        {
+          "parameter": "Thermal-centre temperature after freezing",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        },
+        "Use potable-quality water or clean seawater meeting equivalent microbiological standards for cooking/glazing.",
+        "Keep deep frozen during transportation, storage and distribution and minimise dehydration and oxidation."
+      ],
+      "label_rules": [
+        "Where applicable, frozen storage at -18°C or lower is to be displayed."
+      ],
+      "additives": "Applicable FSSAI permissions",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(2)",
+      "name": "Frozen Lobsters",
+      "status": "structured_core",
+      "definition": "Frozen raw or cooked lobster from Homarus/Nephropidae, Palinuridae, Scyllaridae and Norway lobster as specified; product shall not be a mixture of different species.",
+      "process_rules": [
+        {
+          "parameter": "Frozen storage / quick-freezing basis",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "additives": "Applicable FSSAI permissions",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(3)",
+      "name": "Frozen Squid and Parts of Squid",
+      "status": "structured_core",
+      "definition": "Frozen product prepared from sound fresh squid of the specified squid families; may be glazed with water.",
+      "prohibited_or_absent": [
+        "Food additives"
+      ],
+      "process_rules": [
+        {
+          "parameter": "Frozen storage / quick-freezing basis",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(4)",
+      "name": "Frozen Finfish",
+      "status": "structured_core",
+      "definition": "Finfish suitable for human consumption, with or without head and with viscera/organs completely or partially removed.",
+      "process_rules": [
+        {
+          "parameter": "Thermal-centre temperature after freezing",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Histamine in raw material for listed susceptible fish families",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ],
+      "label_rules": [
+        "Frozen storage at -18°C or lower to be displayed."
+      ],
+      "additives": "Applicable FSSAI permissions",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(5)",
+      "name": "Frozen Fish Fillets",
+      "status": "structured_core",
+      "definition": "Slices removed from fish carcass by cuts parallel to the backbone; sections may be cut to facilitate packing/further processing.",
+      "process_rules": [
+        {
+          "parameter": "Thermal-centre temperature after freezing",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Histamine in raw material for listed susceptible fish families",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ],
+      "label_rules": [
+        "Frozen storage at -18°C or lower to be displayed."
+      ],
+      "additives": "Applicable FSSAI permissions",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(7)",
+      "name": "Salted Fish / Dried Salted Fish",
+      "status": "structured_core",
+      "definition": "Dried or salted-and-dried fishery product prepared from fresh or wholesome fish after drying with or without addition of salt.",
+      "composition": [
+        {
+          "parameter": "Water activity at 25°C",
+          "operator": "<",
+          "value": 0.78,
+          "unit": "aw"
+        },
+        {
+          "parameter": "Salt content as sodium chloride — dry salted fishery products",
+          "operator": ">=",
+          "value": 12,
+          "unit": "%"
+        },
+        {
+          "parameter": "Histamine — applicable listed histamine-forming fish species",
+          "operator": "<=",
+          "value": 200,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Acid insoluble ash on dry basis",
+          "operator": "<=",
+          "value": 1,
+          "unit": "%"
+        }
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Applicable fishery-product requirements"
+    },
+    {
+      "key": "2.6.1(8)",
+      "name": "Canned Fishery Products",
+      "status": "structured_core",
+      "definition": "Canned finfish, crustaceans or molluscs solid-packed or packed in oil, water or another suitable medium.",
+      "product_matrix": [
+        {
+          "product": "Tuna",
+          "drained_weight_pct_water_capacity": 70,
+          "disintegrated_portion_max_pct": 5
+        },
+        {
+          "product": "Mackerel",
+          "drained_weight_pct_water_capacity": 65,
+          "disintegrated_portion_max_pct": 5
+        },
+        {
+          "product": "Sardine",
+          "drained_weight_pct_water_capacity": 70,
+          "disintegrated_portion_max_pct": 5
+        },
+        {
+          "product": "Pomfret/Seerfish",
+          "drained_weight_pct_water_capacity": 66,
+          "disintegrated_portion_max_pct": 5
+        },
+        {
+          "product": "Shrimp/Prawn",
+          "drained_weight_pct_water_capacity": 64,
+          "disintegrated_portion_max_pct": 5
+        },
+        {
+          "product": "Crab",
+          "drained_weight_pct_water_capacity": 65,
+          "disintegrated_portion_max_pct": 5
+        },
+        {
+          "product": "Mussel",
+          "drained_weight_pct_water_capacity": 65,
+          "disintegrated_portion_max_pct": 5
+        },
+        {
+          "product": "Squid",
+          "drained_weight_pct_water_capacity": 64,
+          "disintegrated_portion_max_pct": 5
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Histamine in applicable raw fish",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Sodium chloride in brine-treated sardine and mackerel",
+          "operator": "=",
+          "value": 3.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Brine acidity as anhydrous citric acid",
+          "operator": "range",
+          "min": 0.06,
+          "max": 0.2,
+          "unit": "% m/v"
+        }
+      ],
+      "packaging_rules": [
+        "Cans shall be suitable, hermetically sealed, free from rust and appropriately lacquered."
+      ],
+      "additives": "Applicable FSSAI permissions",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(9)",
+      "name": "Frozen Cephalopods",
+      "status": "structured_core",
+      "applies_to": [
+        "squid",
+        "cuttlefish",
+        "octopus"
+      ],
+      "definition": "Raw frozen cephalopods or parts of cephalopods from the specified families.",
+      "process_rules": [
+        {
+          "parameter": "Thermal-centre temperature after freezing",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "label_rules": [
+        "Frozen storage at -18°C or lower to be displayed."
+      ],
+      "additives": "Applicable FSSAI permissions",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(10)",
+      "name": "Smoked Fishery Products",
+      "status": "structured_core",
+      "variants": [
+        "smoked fish",
+        "smoke-dried fish",
+        "smoke-flavoured fish"
+      ],
+      "process_rules": [
+        "Smoking material shall not contain toxic substances from natural origin, contamination, chemicals, paint or impregnation treatment.",
+        "Smoking shall minimise formation of polycyclic aromatic hydrocarbons.",
+        {
+          "parameter": "Smoke-dried product water activity",
+          "operator": "<=",
+          "value": 0.75,
+          "unit": "aw"
+        },
+        {
+          "parameter": "Alternative smoke-dried moisture basis",
+          "operator": "<=",
+          "value": 10,
+          "unit": "%"
+        }
+      ],
+      "label_rules": [
+        "Declare product-appropriate storage and handling instructions."
+      ],
+      "additives": "Applicable FSSAI permissions",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(11)",
+      "name": "Ready-to-Eat Finfish or Shell Fish Curry in Retortable Pouches",
+      "status": "structured_core",
+      "definition": "Thermally processed instant finfish or shellfish curry hermetically sealed in retortable pouches and processed to commercial sterility.",
+      "composition": [
+        {
+          "parameter": "Disintegrated fish portion on drained-mass basis",
+          "operator": "<=",
+          "value": 5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Residual air after processing",
+          "operator": "<",
+          "value": 2,
+          "unit": "% of pouch contents volume"
+        },
+        {
+          "parameter": "Fish:curry average proportion",
+          "operator": "ratio",
+          "value": "60:40"
+        },
+        {
+          "parameter": "Salt",
+          "operator": "range",
+          "min": 1,
+          "max": 2,
+          "unit": "%"
+        }
+      ],
+      "process_rules": [
+        {
+          "parameter": "Retort F0 at slowest heating point",
+          "operator": "range",
+          "min": 8,
+          "max": 10,
+          "unit": "minutes"
+        },
+        {
+          "parameter": "Cooling-water free residual chlorine",
+          "operator": "<",
+          "value": 2,
+          "unit": "mg/L"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Artificial colouring matter",
+        "Firming agents"
+      ],
+      "microbiology": "Thermally processed fishery-product requirements in Appendix B"
+    },
+    {
+      "key": "2.6.1(12)",
+      "name": "Fish Oil",
+      "status": "structured_core",
+      "product_family": [
+        "named fish oils — Anchovy, Tuna, Krill, Menhaden and Salmon",
+        "unnamed fish oils",
+        "named fish liver oil — Cod liver oil",
+        "unnamed fish liver oils",
+        "concentrated fish oils",
+        "highly concentrated fish oils",
+        "concentrated fish oil ethyl esters",
+        "highly concentrated fish oil ethyl esters"
+      ],
+      "formulation_rules": [
+        {
+          "parameter": "EPA + DHA — concentrated fish oil",
+          "operator": "range",
+          "min": 35,
+          "max": 50,
+          "unit": "m/m % fatty acids"
+        },
+        {
+          "parameter": "EPA + DHA — highly concentrated fish oil",
+          "operator": ">",
+          "value": 50,
+          "unit": "m/m % fatty acids"
+        },
+        {
+          "parameter": "EPA + DHA — concentrated fish-oil ethyl esters",
+          "operator": "range",
+          "min": 40,
+          "max": 60,
+          "unit": "m/m %"
+        },
+        {
+          "parameter": "EPA + DHA — highly concentrated fish-oil ethyl esters",
+          "operator": ">",
+          "value": 60,
+          "unit": "m/m %"
+        },
+        {
+          "parameter": "Trans fatty acids in refined fish oils, excluding specified vaccenic/linolelaidic exclusions",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by mass"
+        }
+      ],
+      "quality_parameters": [
+        {
+          "parameter": "Acid value",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg KOH/g"
+        },
+        {
+          "parameter": "Acid value — oils with phospholipid concentration >=30%, e.g. krill oil",
+          "operator": "<=",
+          "value": 45,
+          "unit": "mg KOH/g"
+        },
+        {
+          "parameter": "Peroxide value",
+          "operator": "<=",
+          "value": 5,
+          "unit": "meq active oxygen/kg oil"
+        },
+        {
+          "parameter": "Anisidine value",
+          "operator": "<=",
+          "value": 20
+        },
+        {
+          "parameter": "Total oxidation value (ToTox)",
+          "operator": "<=",
+          "value": 26
+        }
+      ],
+      "specific_rules": [
+        {
+          "parameter": "EPA + DHA — Anchovy oil from Engraulis ringens",
+          "operator": ">=",
+          "value": 27,
+          "unit": "% of total fatty acids"
+        },
+        {
+          "parameter": "Phospholipids — Krill oil",
+          "operator": ">=",
+          "value": 30,
+          "unit": "w/w %"
+        },
+        {
+          "parameter": "Vitamin A — fish liver oils",
+          "operator": ">=",
+          "value": 40,
+          "unit": "µg retinol equivalents/ml oil"
+        },
+        {
+          "parameter": "Vitamin D — fish liver oils",
+          "operator": ">=",
+          "value": 1,
+          "unit": "µg/ml"
+        }
+      ],
+      "label_rules": [
+        "Declare species for named fish/fish-liver oils and their crude forms.",
+        "Declare whether salmon oil is from wild-caught or farm-raised salmon.",
+        "Declare Vitamin A and D content in fish liver oils.",
+        "Declare EPA and DHA content on all fish oils and fish liver oils."
+      ],
+      "effective_note": "The substituted Fish Oil amendment in the current Chapter 2.6 states that it came into force on 1 May 2025."
+    },
+    {
+      "key": "2.6.1(13)",
+      "name": "Edible Fish Powder",
+      "status": "structured_core",
+      "definition": "Fine powder prepared from non-oily white fish such as sprats, from a single species or mixture, intended for food use.",
+      "prohibited_or_absent": [
+        "Organic solvents or chemicals in preparation",
+        "Needle-like bones",
+        "Rancidity/off-flavours"
+      ],
+      "composition": [
+        {
+          "parameter": "Particle size",
+          "operator": "=",
+          "value": 100,
+          "unit": "% passing 100-mesh sieve"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Crude protein (N×6.25) on dry basis",
+          "operator": ">=",
+          "value": 65,
+          "unit": "%"
+        },
+        {
+          "parameter": "Total available lysine",
+          "operator": ">=",
+          "value": 6,
+          "unit": "g/100 g protein"
+        },
+        {
+          "parameter": "Fat on dry basis",
+          "operator": "<=",
+          "value": 6,
+          "unit": "%"
+        },
+        {
+          "parameter": "Ash on dry basis",
+          "operator": "<=",
+          "value": 18,
+          "unit": "%"
+        },
+        {
+          "parameter": "Acid insoluble ash on dry basis",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "PDCAAS",
+          "operator": ">=",
+          "value": 0.8
+        }
+      ],
+      "additives": "Applicable FSSAI permissions",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(14)",
+      "name": "Fish Pickles",
+      "status": "structured_core",
+      "permitted_ingredients": [
+        "edible fish",
+        "spices and condiments",
+        "common salt",
+        "preservation media",
+        "vinegar (4% acetic acid)",
+        "edible vegetable oils"
+      ],
+      "prohibited_or_absent": [
+        "Artificial colouring matter",
+        "Firming agents other than common salt and vinegar"
+      ],
+      "composition": [
+        {
+          "parameter": "Fluid portion",
+          "operator": "<=",
+          "value": 40,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "pH",
+          "operator": "range",
+          "min": 4,
+          "max": 4.5
+        },
+        {
+          "parameter": "Acidity as acetic acid of fluid portion",
+          "operator": "range",
+          "min": 2.5,
+          "max": 3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Sodium chloride",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        }
+      ],
+      "additives": "Applicable FSSAI permissions",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(15)",
+      "name": "Frozen Minced Fish Meat",
+      "status": "structured_core",
+      "process_rules": [
+        {
+          "parameter": "Fish temperature before transport to freezing factory",
+          "operator": "<=",
+          "value": 5,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Quick-freezing temperature",
+          "operator": "<=",
+          "value": -30,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Cold-storage temperature",
+          "operator": "<=",
+          "value": -23,
+          "unit": "°C"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Bone content",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        }
+      ],
+      "additives": "Applicable FSSAI permissions",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(16)",
+      "name": "Freeze Dried Prawns (Shrimps)",
+      "status": "structured_core",
+      "variants": [
+        "peeled, non-deveined and cooked",
+        "peeled, deveined and cooked",
+        "cooked and peeled"
+      ],
+      "process_rules": [
+        {
+          "parameter": "Available chlorine in processing water",
+          "operator": "=",
+          "value": 5,
+          "unit": "mg/kg"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 2,
+          "unit": "%"
+        },
+        {
+          "parameter": "Rehydration",
+          "operator": ">=",
+          "value": 300,
+          "unit": "%"
+        },
+        {
+          "parameter": "Discolouration",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by count"
+        },
+        {
+          "parameter": "Broken/damaged pieces",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by count"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Deteriorated/spoiled pieces",
+        "Black spots",
+        "Legs/bits of veins",
+        "Foreign matter or filth"
+      ],
+      "additives": "Applicable FSSAI permissions",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(17)",
+      "name": "Frozen Clam Meat",
+      "status": "structured_core",
+      "variants": [
+        "Raw Frozen Clam Meat (RFCM)",
+        "Cooked Frozen Clam Meat (CFCM)"
+      ],
+      "composition": [
+        {
+          "parameter": "Broken pieces",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by count"
+        }
+      ],
+      "quality_rules": [
+        "Soft and firm texture; reasonably uniform size; free from discoloration, deterioration, sand, shell pieces, filth and other foreign matter."
+      ],
+      "additives": "Applicable FSSAI permissions",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.6.1(18)",
+      "name": "Live and Raw Bivalve Molluscs",
+      "status": "structured_core",
+      "scope": [
+        "live bivalve molluscs",
+        "raw shucked/chilled/frozen bivalve molluscs",
+        "processed raw bivalves retaining sensory characteristics"
+      ],
+      "quality_rules": [
+        "Live bivalves shall be harvested from approved/classified areas and retain freshness response to percussion.",
+        "A live-bivalve sample unit is defective if dead or damaged molluscs exceed 5% by count."
+      ],
+      "exclusions": [
+        "Scallops where the final product is adductor muscle only are covered by the separate scallop standard."
+      ],
+      "label_rules": [
+        "Specify storage conditions/temperature needed to maintain safety or viability."
+      ]
+    },
+    {
+      "key": "2.6.1(19)",
+      "name": "Sturgeon Caviar",
+      "status": "structured_core",
+      "definition": "Granular caviar made from eggs of Acipenseridae-family sturgeons treated with food-grade salt.",
+      "composition": [
+        {
+          "parameter": "Salt in finished caviar",
+          "operator": "range",
+          "min": 3,
+          "max": 5,
+          "unit": "g/100 g"
+        }
+      ],
+      "storage_rules": [
+        {
+          "state": "packaging/storage/retail",
+          "operator": "range",
+          "min": 2,
+          "max": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "wholesale storage/transport",
+          "operator": "range",
+          "min": -4,
+          "max": 0,
+          "unit": "°C"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added colours",
+        "Texturising agents"
+      ],
+      "additives": "Only otherwise permitted additives"
+    },
+    {
+      "key": "2.6.1(20)",
+      "name": "Fish Sauce",
+      "status": "structured_core",
+      "definition": "Translucent, non-turbid liquid obtained by fermentation of fish and salt; does not apply to fish sauce produced by acid hydrolysis.",
+      "composition": [
+        {
+          "parameter": "Total nitrogen",
+          "operator": ">=",
+          "value": 10,
+          "unit": "g/L"
+        },
+        {
+          "parameter": "Amino acid nitrogen",
+          "operator": ">=",
+          "value": 40,
+          "unit": "% of total nitrogen"
+        },
+        {
+          "parameter": "Traditional-product pH",
+          "operator": "range",
+          "min": 5,
+          "max": 6.5
+        },
+        {
+          "parameter": "pH when fermentation-assisting ingredients are used",
+          "operator": ">=",
+          "value": 4.5
+        },
+        {
+          "parameter": "Salt as NaCl",
+          "operator": ">=",
+          "value": 200,
+          "unit": "g/L"
+        }
+      ],
+      "quality_rules": [
+        "Translucent, not turbid, free from sediment other than salt crystals, characteristic odour/taste and free from foreign matter."
+      ]
+    },
+    {
+      "key": "2.6.1(21)",
+      "name": "Quick Frozen Fish Sticks (Fish Fingers), Fish Portions and Fish Fillets — Breaded or Battered",
+      "status": "structured_core",
+      "definition": "Quick-frozen breaded or battered fish sticks/fingers, portions and fillets prepared from fish fillets, minced fish flesh or mixtures thereof.",
+      "process_rules": [
+        {
+          "parameter": "Thermal-centre temperature after quick freezing",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Histamine in listed susceptible species",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/100 g"
+        }
+      ],
+      "label_rules": [
+        "Storage at -18°C or lower to be declared."
+      ],
+      "quality_rules": [
+        "Boneless-designated packs are subject to the bone-defect criteria specified in the standard."
+      ]
+    },
+    {
+      "key": "2.6.1(22)",
+      "name": "Fresh and Quick Frozen Raw Scallop Products",
+      "status": "structured_core",
+      "variants": [
+        "Fresh or Quick Frozen Scallop Meat",
+        "Fresh or Quick Frozen Roe-on Scallop Meat",
+        "Quick Frozen Scallop/Roe-on Scallop Meat with added water and/or water/phosphate solution"
+      ],
+      "ingredient_rules": [
+        "Plain scallop meat/roe-on scallop meat contains no added water, phosphates or other ingredients.",
+        "Added water and/or water-phosphate solution and optionally salt are allowed only for the designated added-water/phosphate presentation and uptake must be measured and labelled."
+      ],
+      "storage_rules": [
+        {
+          "state": "fresh",
+          "operator": "<=",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "quality_rules": [
+        "Deep dehydration affecting greater than 10% of weight or block surface is a defined defect."
+      ]
+    },
+    {
+      "key": "2.6.1(23)",
+      "name": "Pasteurized Fish Sausage",
+      "status": "structured_core",
+      "definition": "Fish-mince or surimi-based emulsion product with seasoning/spices/additives, stuffed in suitable casing and heat processed to achieve pasteurisation.",
+      "formulation_rules": [
+        {
+          "parameter": "Fish mince",
+          "operator": ">=",
+          "value": 65,
+          "unit": "%"
+        },
+        {
+          "parameter": "Fat",
+          "operator": "<=",
+          "value": 8,
+          "unit": "%"
+        },
+        {
+          "parameter": "Binding agent — food-grade starch",
+          "operator": "<=",
+          "value": 9,
+          "unit": "%"
+        },
+        {
+          "parameter": "Seasoning and spices",
+          "operator": "<=",
+          "value": 5,
+          "unit": "%"
+        }
+      ],
+      "process_rules": [
+        {
+          "parameter": "Pasteurisation lethality reference",
+          "value": "F at 85°C = 31 min; z = 8.9°C"
+        },
+        {
+          "parameter": "Cooling water temperature",
+          "operator": "range",
+          "min": 4,
+          "max": 5,
+          "unit": "°C",
+          "duration": "10 min"
+        },
+        {
+          "parameter": "Refrigerated storage",
+          "operator": "<",
+          "value": 3,
+          "unit": "°C"
+        }
+      ],
+      "microbiology": "Convenience Fishery Products — Item 15 of Appendix B fish/fishery-product microbiological requirements",
+      "label_rules": [
+        "Pack in transparent food-grade containers and provide best-before information."
+      ]
+    },
+    {
+      "key": "2.6.1(24)",
+      "name": "Pasteurised Crab Meat",
+      "status": "structured_core",
+      "definition": "Cooked, pasteurised and chilled crab meat intended for direct consumption with or without cooking, or further processing.",
+      "process_rules": [
+        {
+          "parameter": "Chilled storage",
+          "operator": "<",
+          "value": 3,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Recommended minimum cumulative lethality",
+          "value": "F85°C = 31 min; z = 9°C"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity, minus necessary GMP headspace"
+        },
+        {
+          "parameter": "Disodium diphosphate / sodium acid pyrophosphate",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/kg"
+        }
+      ],
+      "microbiology": "Convenience Fishery Products — Item 15 / applicable Appendix B requirement",
+      "packaging_rules": [
+        "Pack in appropriate hermetically sealed containers."
+      ]
+    },
+    {
+      "key": "2.6.1(25)",
+      "name": "Gelatin from Fish Processing Waste",
+      "status": "structured_core",
+      "definition": "Gelatin derived from collagen-rich fish-processing waste such as skin, bones, swim bladder and scales.",
+      "variants": [
+        {
+          "name": "Type A — acid extracted",
+          "pH_min": 3.5,
+          "pH_max": 5.5
+        },
+        {
+          "name": "Type B — alkali extracted",
+          "pH_min": 6.5,
+          "pH_max": 7.5
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "range",
+          "min": 8,
+          "max": 13,
+          "unit": "%"
+        },
+        {
+          "parameter": "Fat",
+          "operator": "<",
+          "value": 0.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Ash",
+          "operator": "<",
+          "value": 2,
+          "unit": "%"
+        },
+        {
+          "parameter": "Acceptable viscosity",
+          "operator": "range",
+          "min": 4,
+          "max": 6,
+          "unit": "mPa·s"
+        }
+      ],
+      "quality_classification": [
+        {
+          "name": "High bloom gelatin",
+          "operator": ">",
+          "value": 300,
+          "unit": "g"
+        },
+        {
+          "name": "Medium bloom gelatin",
+          "operator": "range",
+          "min": 125,
+          "max": 200,
+          "unit": "g"
+        },
+        {
+          "name": "Low bloom gelatin",
+          "operator": "<",
+          "value": 100,
+          "unit": "g"
+        }
+      ],
+      "physical_ranges": [
+        {
+          "parameter": "Gelling temperature",
+          "operator": "range",
+          "min": 8,
+          "max": 24,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Melting temperature",
+          "operator": "range",
+          "min": 10,
+          "max": 28,
+          "unit": "°C"
+        }
+      ],
+      "microbiology": "Convenience Fishery Products — Item 15 of Appendix B fish/fishery-product microbiological requirements"
+    }
+  ]
+}
