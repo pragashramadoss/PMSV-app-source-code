@@ -13,7 +13,7 @@
     "foscos_catalog_scope": "Official FoSCoS/FSSAI indexed rows loaded category by category; Chapter 2.5 synchronization added the current missing meat-product rows while rule ingestion continues.",
     "foscos_subcategory_framework": "Level-2 FoSCoS/FSSAI food-category framework loaded for categories 01–16; special categories without a separate level-2 browse layer are handled directly at product/category level.",
     "level3_status": "Expanded official FoSCoS standardized-product catalogue. Detailed compliance rule profiles remain a separate ingestion layer.",
-    "base_rule_profiles_ready": 206,
+    "base_rule_profiles_ready": 192,
     "profile_architecture_note": "Every loaded FoSCoS standardized product now has at least a base profile. Full formulation compliance is enabled only when detailed product-specific clauses have been ingested.",
     "chapter_ingestion": {
       "2.1": {
@@ -113,6 +113,21 @@
         "source_verified_on": "2026-10-02",
         "regulatory_note": "Current consolidated Chapter 2.9 runs through 2.9.45 with 2.9.25 omitted. Clause 2.9.30 is split into product-specific rule groups for edible common salt, potassium iodate, double-fortified salt and salt substitutes. Harrisa remains base-profile because no matching operative Chapter 2.9 standard is present.",
         "next_validation": "Complete remaining variant-specific numeric tables, Appendix A additive inheritance, contaminants, Appendix B applicability, processing aids, current labelling declarations and full machine validation"
+      },
+      "2.10": {
+        "title": "Beverages (Other than Dairy and Fruits & Vegetables Based)",
+        "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+        "source_version": "Version 4 (01.08.2025)",
+        "mapped_catalog_products": 15,
+        "structured_core_standards": 14,
+        "newly_chapter_profiles": 14,
+        "fully_validated_profiles_retained": 1,
+        "omitted_standards": 1,
+        "status": "structured_core_loaded",
+        "source_verified_on": "2026-10-02",
+        "regulatory_note": "Four tea standards, Coffee, Chicory, Coffee-Chicory Mixture, four non-alcoholic beverage rule groups, Mineral Water, Packaged Drinking Water and Purified Vending Water are structured. The existing fully validated Carbonated Caffeinated Beverage engine is retained and linked to the Chapter 2.10 rule file rather than downgraded.",
+        "effective_note": "Packaged Drinking Water TDS 75–500 mg/L, calcium 10–75 mg/L and magnesium 5–30 mg/L are current from 1 February 2026.",
+        "next_validation": "Complete Appendix A additive inheritance, contaminants, Appendix B applicability, processing aids, current labels, external IS references and full machine validation"
       }
     }
   },
@@ -287,7 +302,11 @@
       "fssr": "2.10.6(2)",
       "regulation_chapter": "2.10",
       "status": "rule_profile_ready",
-      "engine_path": "embedded-current-prototype"
+      "engine_path": "embedded-current-prototype",
+      "chapter_rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "chapter_rule_key": "2.10.6(2)",
+      "chapter_source": "FSSAI Chapter 2.10, Version 4 (01.08.2025)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "mineral-water",
@@ -295,13 +314,13 @@
       "foscos_category": "14",
       "foscos_subcategory": "14.1",
       "fcs": "14.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.10.7",
+      "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -310,7 +329,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.7",
+      "standard_name": "Mineral Water",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "packaged-drinking-water",
@@ -318,13 +341,13 @@
       "foscos_category": "14",
       "foscos_subcategory": "14.1",
       "fcs": "14.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.10.8",
+      "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -333,7 +356,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.8",
+      "standard_name": "Packaged Drinking Water (other than Mineral Water)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "purified-vending-water",
@@ -341,13 +368,13 @@
       "foscos_category": "14",
       "foscos_subcategory": "14.1",
       "fcs": "14.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.10.9",
+      "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -356,7 +383,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.9",
+      "standard_name": "Drinking Water (Purified)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "fruit-juices",
@@ -605,10 +636,10 @@
       "fssr": "2.10.6(1)",
       "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -617,7 +648,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.6(1)",
+      "standard_name": "Carbonated Water",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "non-carbonated-water-based-beverages",
@@ -625,13 +660,13 @@
       "foscos_category": "14",
       "foscos_subcategory": "14.1",
       "fcs": "14.1.4.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.10.6(3)",
+      "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -640,7 +675,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.6(3)",
+      "standard_name": "Non-carbonated Water Based Beverages (Non-Alcoholic)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "non-carbonated-caffeinated-beverage",
@@ -651,10 +690,10 @@
       "fssr": "2.10.6(2)",
       "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -663,7 +702,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.6(2)",
+      "standard_name": "Caffeinated Beverage",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "fruit-drink-rts",
@@ -928,13 +971,13 @@
       "foscos_category": "14",
       "foscos_subcategory": "14.1",
       "fcs": "14.1.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.10.1(1)",
+      "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -943,7 +986,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.1(1)",
+      "standard_name": "Tea",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "kangra-tea",
@@ -951,13 +998,13 @@
       "foscos_category": "14",
       "foscos_subcategory": "14.1",
       "fcs": "14.1.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.10.1(2)",
+      "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -966,7 +1013,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.1(2)",
+      "standard_name": "Kangra Tea",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "green-tea",
@@ -974,13 +1025,13 @@
       "foscos_category": "14",
       "foscos_subcategory": "14.1",
       "fcs": "14.1.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.10.1(3)",
+      "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -989,7 +1040,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.1(3)",
+      "standard_name": "Green Tea",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "instant-tea-solid",
@@ -997,13 +1052,13 @@
       "foscos_category": "14",
       "foscos_subcategory": "14.1",
       "fcs": "14.1.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.10.1(4)",
+      "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -1012,7 +1067,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.1(4)",
+      "standard_name": "Instant Tea in Solid Form",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "coffee",
@@ -1020,13 +1079,13 @@
       "foscos_category": "14",
       "foscos_subcategory": "14.1",
       "fcs": "14.1.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.10.2",
+      "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -1035,7 +1094,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.2",
+      "standard_name": "Coffee",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "chicory",
@@ -1043,13 +1106,13 @@
       "foscos_category": "14",
       "foscos_subcategory": "14.1",
       "fcs": "14.1.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.10.3",
+      "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -1058,7 +1121,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.3",
+      "standard_name": "Chicory",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "coffee-chicory-mixture",
@@ -1066,13 +1133,13 @@
       "foscos_category": "14",
       "foscos_subcategory": "14.1",
       "fcs": "14.1.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.10.4",
+      "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -1081,7 +1148,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.4",
+      "standard_name": "Coffee-Chicory Mixture",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "coconut-neera",
@@ -1092,10 +1163,10 @@
       "fssr": "2.10.6(4)",
       "regulation_chapter": "2.10",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.10 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.10, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -1104,7 +1175,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.10 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, Appendix B, processing aids, current labelling rules and any referenced external standards are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.6(4)",
+      "standard_name": "Coconut Neera",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "fortified-wine",
@@ -13950,9 +14025,11 @@
       "subcategory": "14.1",
       "name": "Mineral water",
       "fcs": "14.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
-      "profile_id": "mineral-water"
+      "fssr": "2.10.7",
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "mineral-water",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.7"
     },
     {
       "id": "packaged-drinking-water",
@@ -13960,9 +14037,11 @@
       "subcategory": "14.1",
       "name": "Packaged Drinking Water (other than Mineral Water)",
       "fcs": "14.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
-      "profile_id": "packaged-drinking-water"
+      "fssr": "2.10.8",
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "packaged-drinking-water",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.8"
     },
     {
       "id": "purified-vending-water",
@@ -13970,9 +14049,11 @@
       "subcategory": "14.1",
       "name": "Drinking Water (Purified) sold through vending machine",
       "fcs": "14.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
-      "profile_id": "purified-vending-water"
+      "fssr": "2.10.9",
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "purified-vending-water",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.9"
     },
     {
       "id": "fruit-juices",
@@ -14085,8 +14166,10 @@
       "name": "Carbonated Water",
       "fcs": "14.1.4.1",
       "fssr": "2.10.6(1)",
-      "profile_status": "base_profile_ready",
-      "profile_id": "carbonated-water"
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "carbonated-water",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.6(1)"
     },
     {
       "id": "carbonated-caffeinated-beverage",
@@ -14096,7 +14179,9 @@
       "fcs": "14.1.4.1",
       "fssr": "2.10.6(2)",
       "profile_status": "rule_profile_ready",
-      "profile_id": "caffeinated-beverage"
+      "profile_id": "caffeinated-beverage",
+      "chapter_rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "chapter_rule_key": "2.10.6(2)"
     },
     {
       "id": "non-carbonated-water-based-beverages",
@@ -14104,9 +14189,11 @@
       "subcategory": "14.1",
       "name": "Non-carbonated Water Based Beverages (Non-Alcoholic)",
       "fcs": "14.1.4.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
-      "profile_id": "non-carbonated-water-based-beverages"
+      "fssr": "2.10.6(3)",
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "non-carbonated-water-based-beverages",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.6(3)"
     },
     {
       "id": "non-carbonated-caffeinated-beverage",
@@ -14115,8 +14202,10 @@
       "name": "Non- Carbonated Caffeinated Beverage",
       "fcs": "14.1.4.2",
       "fssr": "2.10.6(2)",
-      "profile_status": "base_profile_ready",
-      "profile_id": "non-carbonated-caffeinated-beverage"
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "non-carbonated-caffeinated-beverage",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.6(2)"
     },
     {
       "id": "fruit-drink-rts",
@@ -14236,9 +14325,11 @@
       "subcategory": "14.1",
       "name": "Tea",
       "fcs": "14.1.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
-      "profile_id": "tea"
+      "fssr": "2.10.1(1)",
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "tea",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.1(1)"
     },
     {
       "id": "kangra-tea",
@@ -14246,9 +14337,11 @@
       "subcategory": "14.1",
       "name": "Kangra Tea",
       "fcs": "14.1.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
-      "profile_id": "kangra-tea"
+      "fssr": "2.10.1(2)",
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "kangra-tea",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.1(2)"
     },
     {
       "id": "green-tea",
@@ -14256,9 +14349,11 @@
       "subcategory": "14.1",
       "name": "Green Tea",
       "fcs": "14.1.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
-      "profile_id": "green-tea"
+      "fssr": "2.10.1(3)",
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "green-tea",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.1(3)"
     },
     {
       "id": "instant-tea-solid",
@@ -14266,9 +14361,11 @@
       "subcategory": "14.1",
       "name": "Instant Tea in Solid Form",
       "fcs": "14.1.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
-      "profile_id": "instant-tea-solid"
+      "fssr": "2.10.1(4)",
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "instant-tea-solid",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.1(4)"
     },
     {
       "id": "coffee",
@@ -14276,9 +14373,11 @@
       "subcategory": "14.1",
       "name": "Coffee",
       "fcs": "14.1.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
-      "profile_id": "coffee"
+      "fssr": "2.10.2",
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "coffee",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.2"
     },
     {
       "id": "chicory",
@@ -14286,9 +14385,11 @@
       "subcategory": "14.1",
       "name": "Chicory",
       "fcs": "14.1.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
-      "profile_id": "chicory"
+      "fssr": "2.10.3",
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "chicory",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.3"
     },
     {
       "id": "coffee-chicory-mixture",
@@ -14296,9 +14397,11 @@
       "subcategory": "14.1",
       "name": "Coffee-Chicory Mixture",
       "fcs": "14.1.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
-      "profile_id": "coffee-chicory-mixture"
+      "fssr": "2.10.4",
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "coffee-chicory-mixture",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.4"
     },
     {
       "id": "coconut-neera",
@@ -14307,8 +14410,10 @@
       "name": "Coconut neera",
       "fcs": "14.1",
       "fssr": "2.10.6(4)",
-      "profile_status": "base_profile_ready",
-      "profile_id": "coconut-neera"
+      "profile_status": "chapter_profile_ready",
+      "profile_id": "coconut-neera",
+      "rule_file": "./data/rules/chapter-2-10-beverages-v1.json",
+      "rule_key": "2.10.6(4)"
     },
     {
       "id": "fortified-wine",
