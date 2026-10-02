@@ -17,30 +17,101 @@
 .notice{border:1px solid #efd596;background:#fff8e8;color:#70460b;border-radius:11px;padding:11px 12px;font-size:12px;line-height:1.5;margin:10px 0}.oknote{border-color:#bfe4d2;background:#f0faf5;color:#235c45}
 .section-title{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-bottom:11px}.section-title h2{margin:0;font-size:18px}.section-title span{font-size:11px;color:var(--muted)}
 table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}th,td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{background:#f7f9fc;color:#46536b;font-size:11px;text-transform:uppercase;letter-spacing:.03em}tr:last-child td{border-bottom:0}.status{font-weight:850}.mandatory{color:var(--blue)}.optional{color:var(--green)}.condition{color:var(--amber)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.item{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.item b{display:block;margin-bottom:4px}.item small{color:var(--muted);line-height:1.4}.process-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.process-option{position:relative;border:1px solid var(--line);border-radius:13px;background:#fff;padding:12px 12px 12px 44px;cursor:pointer;min-height:82px}.process-option input{position:absolute;left:14px;top:16px;width:18px;height:18px}.process-option b{display:block;margin-bottom:4px}.process-option small{display:block;color:var(--muted);line-height:1.35}.process-option.selected{border-color:#7f9df6;background:#f3f6ff}.process-summary{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.process-chip{display:inline-block;border-radius:999px;background:#eef3ff;color:#3155d9;padding:5px 8px;font-size:11px;font-weight:800}.empty-state{border:1px dashed #bfc9d9;border-radius:12px;padding:16px;text-align:center;color:var(--muted);background:#fafcff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.item{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.item b{display:block;margin-bottom:4px}.item small{color:var(--muted);line-height:1.4}.process-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.process-option{position:relative;border:1px solid var(--line);border-radius:13px;background:#fff;padding:12px 12px 12px 44px;cursor:pointer;min-height:82px}.process-option input{position:absolute;left:14px;top:16px;width:18px;height:18px}.process-option b{display:block;margin-bottom:4px}.process-option small{display:block;color:var(--muted);line-height:1.35}.process-option.selected{border-color:#7f9df6;background:#f3f6ff}.process-summary{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.process-chip{display:inline-block;border-radius:999px;background:#eef3ff;color:#3155d9;padding:5px 8px;font-size:11px;font-weight:800}.empty-state{border:1px dashed #bfc9d9;border-radius:12px;padding:16px;text-align:center;color:var(--muted);background:#fafcff}.ingredient-row{display:grid;grid-template-columns:1.1fr .9fr 1.4fr .8fr;gap:8px;align-items:start;border:1px solid var(--line);border-radius:12px;padding:11px;margin:8px 0;background:#fff}.ingredient-row small{color:var(--muted);line-height:1.35}.ingredient-remove{border:1px solid #f1c2bd;background:#fff5f4;color:#a72d24;border-radius:9px;padding:7px 9px;font-weight:800;cursor:pointer}.status-good{color:var(--green);font-weight:850}.status-warn{color:var(--amber);font-weight:850}.status-bad{color:var(--red);font-weight:850}.flow-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.clause{display:inline-block;border-radius:999px;padding:3px 7px;background:#eef3ff;color:#3155d9;font-size:10px;font-weight:850}
 .checker-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}.field input,.field select{width:100%;padding:10px;border:1px solid #ccd6e4;border-radius:9px;background:#fff}.field small{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.35}
 .btn{border:0;background:var(--blue);color:#fff;border-radius:10px;padding:11px 14px;font-weight:850;cursor:pointer}.btn-secondary{border:1px solid var(--line);background:#fff;color:#44516a;border-radius:10px;padding:11px 14px;font-weight:850;cursor:pointer}.results{margin-top:12px;display:grid;gap:8px}.result{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;display:flex;justify-content:space-between;gap:10px}.result.pass{border-color:#b9e2cf;background:#f1faf6}.result.fail{border-color:#f0b9b4;background:#fff2f1}.result strong{font-size:13px}.result span{font-size:12px;font-weight:850}.result.pass span{color:var(--green)}.result.fail span{color:var(--red)}
 .source a{color:var(--blue);word-break:break-word}.source{font-size:12px;line-height:1.6}.hidden{display:none!important}.searchbox{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:10px 12px;margin-bottom:10px}.searchbox input{border:0;outline:0;flex:1;background:transparent}
 .tag{display:inline-block;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:850;background:#eef3ff;color:#3155d9}.tag.specific{background:#e9f8f0;color:#087a55}.tag.direct{background:#e9f8f0;color:#087a55}.tag.conditional{background:#fff4df;color:#8a5100}.tag.checked{background:#eef3ff;color:#3155d9}.tag.product{background:#fff4df;color:#8a5100}.countline{font-size:11px;color:var(--muted);margin:7px 0 10px}.appendix-note{font-size:11px;color:var(--muted);line-height:1.45}details.gmp{border:1px solid var(--line);border-radius:12px;background:#fff;padding:0;margin-top:12px}details.gmp>summary{cursor:pointer;padding:13px 14px;font-weight:850;list-style:none}details.gmp>summary::-webkit-details-marker{display:none}details.gmp[open]>summary{border-bottom:1px solid var(--line)}.footer{padding:10px 0 28px;text-align:center;color:var(--muted);font-size:11px}
-@media(max-width:700px){.meta{grid-template-columns:1fr}.grid2,.checker-grid,.process-grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.wrap{width:calc(100% - 18px)}.top{padding:16px 10px 19px}.product-title{font-size:23px}}
+@media(max-width:700px){.meta{grid-template-columns:1fr}.grid2,.checker-grid,.process-grid,.ingredient-row{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.wrap{width:calc(100% - 18px)}.top{padding:16px 10px 19px}.product-title{font-size:23px}}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 21</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 22</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
-<button class="tab active" data-tab="standard">Standard</button>
+<button class="tab active" data-tab="formulation">Formulation ingredients</button>
+<button class="tab" data-tab="standards">Applicable standards</button>
+<button class="tab" data-tab="standard">Product standard</button>
 <button class="tab" data-tab="ingredients">Ingredients & limits</button>
+<button class="tab" data-tab="contaminants">Contaminants</button>
 <button class="tab" data-tab="micro">Microbiology</button>
 <button class="tab" data-tab="process">Manufacturing process</button>
 <button class="tab" data-tab="processing">Processing aids</button>
-<button class="tab" data-tab="contaminants">Contaminants</button>
 <button class="tab" data-tab="checker">Formulation checker</button>
 <button class="tab" data-tab="quality">Label</button>
 <button class="tab" data-tab="sources">Official sources</button>
 </nav>
 
-<section id="standard" class="view">
+<section id="formulation" class="view">
+<div class="card">
+<div class="section-title"><h2>Step 1 — Enter the actual formulation ingredients</h2><span>Ingredient-led compliance</span></div>
+<div class="notice oknote"><b>Start with what is actually in the product.</b> PMSV will assess each ingredient against the Caffeinated Beverage standard, its Carbonated Water cross-reference, Appendix A or the Proprietary Food provisions, and will use the same ingredient list when reviewing contaminant requirements.</div>
+
+<div class="checker-grid">
+  <div class="field">
+    <label>Ingredient / substance</label>
+    <input id="ingredientName" list="ingredientSuggestions" placeholder="e.g. Taurine, Apple juice, Sugar, Aspartame">
+    <datalist id="ingredientSuggestions"></datalist>
+    <small>Choose a known ingredient or type another ingredient.</small>
+  </div>
+  <div class="field">
+    <label>For an extra / custom ingredient, what FSSAI basis should be checked?</label>
+    <select id="ingredientBasis">
+      <option value="auto">Auto — identify from known FSSAI entries</option>
+      <option value="standardized">Ingredient standardized / permitted under FSSAI regulations</option>
+      <option value="ifct">Food / ingredient listed in IFCT 2017</option>
+      <option value="vitamin">Vitamin or mineral</option>
+      <option value="additive">Food additive — check Appendix A</option>
+      <option value="unknown">Not sure / other</option>
+    </select>
+    <small>This does not self-certify an ingredient; it tells the checker which regulatory route to evaluate.</small>
+  </div>
+</div>
+
+<div class="flow-actions">
+  <button class="btn" type="button" id="addIngredient">Add ingredient</button>
+  <button class="btn-secondary" type="button" id="loadExampleFormula">Load example formulation</button>
+  <button class="btn-secondary" type="button" id="clearIngredients">Clear ingredients</button>
+</div>
+<div id="ingredientInputMessage" class="notice hidden"></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Ingredients entered</h2><span id="ingredientCount">0 ingredients</span></div>
+<div id="ingredientList" class="empty-state">No ingredients entered yet.</div>
+<div id="formulationNext" class="hidden">
+  <div class="notice oknote"><b>Ingredient list saved.</b> The next page explains how every ingredient qualifies, which FSSAI clause applies, and whether the formulation still fits the standardized product route or needs a Proprietary Food / approval review.</div>
+  <button class="btn" type="button" id="goToStandards">View applicable standards →</button>
+</div>
+</div>
+</section>
+
+<section id="standards" class="view hidden">
+<div style="margin-bottom:10px"><button class="btn-secondary" type="button" id="backToFormulation">← Back to Formulation Ingredients</button></div>
+<div class="card">
+<div class="section-title"><h2>Step 2 — How each ingredient qualifies under FSSAI</h2><span>Clause-level traceability</span></div>
+<div id="classificationSummary" class="notice"></div>
+<div class="tablewrap"><table>
+<thead><tr><th>Ingredient</th><th>How it qualifies</th><th>FSSAI clause / source</th><th>Effect on product route</th></tr></thead>
+<tbody id="ingredientQualificationRows"></tbody>
+</table></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Standards applicable to this formulation</h2><span>Assembled after ingredient input</span></div>
+<div id="applicableStandards"></div>
+<div class="flow-actions">
+  <button class="btn" type="button" id="goToContaminants">Review contaminants for this formulation →</button>
+</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Important Proprietary Food distinction</h2><span>Regulation 2.12</span></div>
+<div class="notice"><b>Adding an extra ingredient does not automatically make the product Proprietary Food.</b> Regulation 2.12.1(1) covers food that has not been standardized, while a mere deviation in the quality parameters of a standardized food does not qualify it as proprietary. Regulation 2.12.1(2) restricts non-additive ingredients in proprietary foods to the permitted categories stated there. If the product continues to be assessed as a standardized Caffeinated Beverage, clause <b>2.10.6(2)(III)(A)</b> separately requires Food Authority approval for an additional item/ingredient outside the specified list.</div>
+</div>
+</section>
+
+<section id="standard" class="view hidden">
 <div class="card">
 <div class="searchbox"><span>🔎</span><input value="Carbonated Caffeinated Beverage" aria-label="Product search" readonly></div>
 <div class="hero"><div><span class="pill">BEVERAGES</span><div class="product-title">Carbonated Caffeinated Beverage</div><div class="muted">Prototype product showing the complete regulatory stack: product standard, applicable food additives, processing aids, microbiology, contaminants/residues and special labelling.</div></div><span class="pill">FCS 14.1.4.1</span></div>
@@ -272,6 +343,12 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </section>
 
 <section id="contaminants" class="view hidden">
+<div style="margin-bottom:10px"><button class="btn-secondary" type="button" id="backToStandards">← Back to Applicable Standards</button></div>
+<div class="card">
+<div class="section-title"><h2>Ingredients considered in this contaminant review</h2><span>From your formulation</span></div>
+<div id="contaminantIngredientChips" class="process-summary"></div>
+<div id="ingredientTriggeredContaminants"></div>
+</div>
 <div class="card">
 <div class="section-title"><h2>Contaminants, toxins & residues</h2><span>Separate FSSAI regulation</span></div>
 <div class="notice oknote"><b>Current regulatory basis shown here:</b> Food Safety and Standards (Contaminants, Toxins and Residues) Regulations, 2011 — consolidated <b>Version IX (03.02.2026)</b>. These limits are displayed separately from food additives because they come from a different regulation.</div>
@@ -308,17 +385,17 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <thead><tr><th>Contaminant</th><th>FSSAI maximum</th><th>Trigger</th></tr></thead>
 <tbody>
 <tr><td><b>Tin</b></td><td><b>150 mg/kg</b></td><td><span class="tag conditional">If the finished product is a canned beverage</span></td></tr>
-<tr><td><b>Patulin</b></td><td><b>50 µg/kg</b></td><td><span class="tag conditional">If apple juice is used as an ingredient in another beverage</span></td></tr>
-<tr><td><b>Total aflatoxins</b></td><td><b>20 µg/kg</b></td><td><span class="tag conditional">Applies only when the finished product contains an ingredient covered by the applicable FSSAI total-aflatoxin limit.</span></td></tr>
-<tr><td><b>Aflatoxin B1</b></td><td><b>10 µg/kg</b></td><td><span class="tag conditional">Applies only when the finished product contains an ingredient covered by the applicable FSSAI Aflatoxin B1 limit.</span></td></tr>
+
 </tbody></table></div>
-<div class="notice"><b>How to read this section:</b> the limits above are not automatically applicable to every Caffeinated Beverage. Each conditional limit applies only when its stated ingredient or packaging condition is present in the finished product.</div>
+<div class="notice"><b>How to read this section:</b> package-dependent requirements remain conditional. Ingredient-dependent contaminant requirements are generated above from the formulation ingredient list so they are not shown when the triggering ingredient is absent.</div>
 </div>
 </section>
 
 <section id="checker" class="view hidden">
 <div class="card">
-<div class="section-title"><h2>Check a sample formulation</h2><span>Prototype rules engine</span></div>
+<div class="section-title"><h2>Check a sample formulation</h2><span>Numerical checks after ingredient classification</span></div>
+<div class="notice oknote"><b>Ingredient route first:</b> the numerical checker does not decide whether an extra ingredient is legally eligible. That assessment is shown under <b>Formulation ingredients → Applicable standards</b>. This section then checks numerical limits for supported ingredients/additives.</div>
+<div id="checkerIngredientSummary" class="process-summary"></div>
 <p class="muted">Enter the proposed concentration in the finished caffeinated beverage. For taurine, D-glucurono-γ-lactone, inositol and pantothenic acid, the calculator converts the FSSAI daily maximum into an equivalent concentration using 500 ml (0.5 L) of finished caffeinated beverage per day.</p>
 <div class="checker-grid">
 <div class="field"><label>Total caffeine (mg/L)</label><input id="caffeine" type="number" step="0.1" placeholder="e.g. 320"><small>Required range: 145–300 mg/L.</small></div>
@@ -359,6 +436,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <p><b>Chapter 2.10 — Beverages other than Dairy and Fruit/Vegetable based · Version 4 (01.08.2025)</b><br>
 <a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf">Product standard used for Caffeinated Beverage, the Carbonated Water cross-reference, caffeine/optional-ingredient limits, microbiology and product-specific declarations</a></p>
 
+<p><b>Chapter 2.12 — Proprietary Food</b><br>
+<a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_26_03_2021.pdf">Official FSSAI regulation used for the proprietary-food definition, permitted ingredient routes, Appendix A additive requirement, Appendix B microbiological requirement and other applicable regulation obligations</a></p>
+
 <p><b>Appendix A — Food Additives · Version 3 (01.08.2025)</b><br>
 <a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf">Source used to bring applicable 14.1.4.1, parent 14.1.4 and general GMP additive permissions into this product</a></p>
 
@@ -375,7 +455,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <a target="_blank" rel="noopener" href="https://fssai.gov.in/food-law/notifications?notification=ordinary-notification">Tracked as an upcoming amendment; it comes into force on 01.12.2026 and is not applied prematurely in this current-date prototype</a></p>
 
 <div class="notice"><b>Source hierarchy:</b> consolidated FSSAI compendia are convenient reference documents, but amendment notifications remain part of the regulatory trail. Production PMSV should retain the source document, clause/table, effective date and last-verified date for every displayed requirement.</div>
-<div class="notice oknote"><b>Source rule for this module:</b> PMSV uses only official FSSAI regulations, appendices and amendment notifications for regulatory conclusions. No external website, industry article or secondary database is used to set an ingredient, additive, microbiological, processing-aid or contaminant limit.</div>
+<div class="notice oknote"><b>Source rule for this module:</b> PMSV uses only official FSSAI regulations, appendices and amendment notifications for regulatory conclusions. Ingredient qualification, Proprietary Food routing, additive limits, microbiology, processing aids and contaminant limits are not derived from external websites or industry articles.</div>
 </div>
 </section>
 
@@ -387,7 +467,7 @@ const validTabs=new Set(tabs.map(t=>t.dataset.tab).filter(Boolean));
 const TAB_KEY='pmsv_fssai_product_helper_active_tab';
 
 function openTab(id,{updateHash=true,save=true}={}){
-  if(typeof id!=='string' || !validTabs.has(id)) id='standard';
+  if(typeof id!=='string' || !validTabs.has(id)) id='formulation';
 
   tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab===id));
   document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
@@ -396,9 +476,9 @@ function openTab(id,{updateHash=true,save=true}={}){
   if(view){
     view.classList.remove('hidden');
   }else{
-    id='standard';
-    document.getElementById('standard')?.classList.remove('hidden');
-    tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab==='standard'));
+    id='formulation';
+    document.getElementById('formulation')?.classList.remove('hidden');
+    tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab==='formulation'));
   }
 
   if(save){
@@ -430,7 +510,7 @@ try{
 }catch(e){}
 
 const hashTab=location.hash.slice(1);
-const initialTab=validTabs.has(hashTab) ? hashTab : (validTabs.has(savedTab) ? savedTab : 'standard');
+const initialTab=validTabs.has(hashTab) ? hashTab : (validTabs.has(savedTab) ? savedTab : 'formulation');
 openTab(initialTab,{updateHash:true,save:true});
 function num(id){const v=document.getElementById(id).value.trim();return v===''?null:Number(v)}
 function row(label,value,pass,msg){
@@ -550,6 +630,179 @@ document.getElementById('enzymeName')?.addEventListener('change',()=>{
 });
 document.getElementById('enzymeSource')?.addEventListener('change',saveEnzymeSelection);
 populateEnzymeSelector();
+
+const FORMULA_KEY='pmsv_fssai_product_helper_formula';
+
+const ingredientRules=[
+ {key:'water',names:['water'],label:'Water',kind:'standard',qualification:'Required base water must conform to the prescribed packaged drinking water or mineral water standard.',clause:'2.10.6(2)(I)',route:'standard'},
+ {key:'caffeine',names:['caffeine'],label:'Caffeine',kind:'standard',qualification:'Essential composition of Caffeinated Beverage.',clause:'2.10.6(2)(II)',route:'standard'},
+ {key:'taurine',names:['taurine'],label:'Taurine',kind:'standard',qualification:'Optional ingredient expressly listed for Caffeinated Beverage.',clause:'2.10.6(2)(III)',route:'standard'},
+ {key:'glucuronolactone',names:['d-glucurono-γ-lactone','d-glucurono-y-lactone','glucuronolactone','d glucurono gamma lactone'],label:'D-glucurono-γ-lactone',kind:'standard',qualification:'Optional ingredient expressly listed for Caffeinated Beverage.',clause:'2.10.6(2)(III)',route:'standard'},
+ {key:'inositol',names:['inositol'],label:'Inositol',kind:'standard',qualification:'Optional ingredient expressly listed for Caffeinated Beverage.',clause:'2.10.6(2)(III)',route:'standard'},
+ {key:'pantothenic',names:['pantothenic acid','vitamin b5'],label:'Pantothenic acid',kind:'standard',qualification:'Optional ingredient expressly listed for Caffeinated Beverage.',clause:'2.10.6(2)(III)',route:'standard'},
+ {key:'thiamine',names:['thiamine','vitamin b1'],label:'Thiamine',kind:'standard',qualification:'Vitamin expressly permitted up to one RDA level.',clause:'2.10.6(2)(III)(B)',route:'standard'},
+ {key:'riboflavin',names:['riboflavin','vitamin b2'],label:'Riboflavin',kind:'standard',qualification:'Vitamin expressly permitted up to one RDA level.',clause:'2.10.6(2)(III)(B)',route:'standard'},
+ {key:'niacin',names:['niacin','vitamin b3'],label:'Niacin',kind:'standard',qualification:'Vitamin expressly permitted up to one RDA level.',clause:'2.10.6(2)(III)(B)',route:'standard'},
+ {key:'b6',names:['vitamin b6','pyridoxine'],label:'Vitamin B6',kind:'standard',qualification:'Vitamin expressly permitted up to one RDA level.',clause:'2.10.6(2)(III)(B)',route:'standard'},
+ {key:'b12',names:['vitamin b12','cobalamin'],label:'Vitamin B12',kind:'standard',qualification:'Vitamin expressly permitted up to one RDA level.',clause:'2.10.6(2)(III)(B)',route:'standard'},
+ {key:'sugar',names:['sugar','liquid glucose','dextrose monohydrate','invert sugar','fructose','honey'],label:'Carbonated Water permitted ingredient',kind:'crossref',qualification:'Listed as a permitted Carbonated Water ingredient; Caffeinated Beverage must conform to that standard for ingredients.',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'},
+ {key:'applejuice',names:['apple juice'],label:'Apple juice',kind:'crossref',qualification:'Fruit/vegetable products or extractives are within the Carbonated Water ingredient framework brought into Caffeinated Beverage through the cross-reference.',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard',contaminants:[{name:'Patulin',limit:'50 µg/kg',basis:'Applies when apple juice is used as an ingredient in another beverage.',source:'Contaminants, Toxins and Residues Regulations · current compendium'}]},
+ {key:'fruit',names:['fruit juice','fruit extract','vegetable extract','fruit extractive','vegetable extractive'],label:'Fruit / vegetable ingredient',kind:'crossref',qualification:'Fruit and vegetable extractives are listed in the Carbonated Water ingredient framework.',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'},
+ {key:'acid',names:['citric acid','fumaric acid','tartaric acid','phosphoric acid','lactic acid','ascorbic acid','malic acid','sorbitol'],label:'Permitted Carbonated Water ingredient',kind:'crossref',qualification:'Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'},
+ {key:'gelatin',names:['gelatin','albumin','licorice','licorice derivative'],label:'Permitted Carbonated Water ingredient',kind:'crossref',qualification:'Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'},
+ {key:'gellan',names:['gellan gum'],label:'Gellan gum',kind:'crossref',qualification:'Specifically permitted in the Carbonated Water standard at GMP level and carried into Caffeinated Beverage by clause 2.10.6(2)(IV).',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'}
+];
+
+let formulationIngredients=[];
+try{
+ const raw=JSON.parse(localStorage.getItem(FORMULA_KEY)||'[]');
+ if(Array.isArray(raw))formulationIngredients=raw;
+}catch(e){formulationIngredients=[]}
+
+function normIngredient(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,' ')}
+function findKnownIngredient(name){
+ const n=normIngredient(name);
+ return ingredientRules.find(r=>r.names.some(x=>n===normIngredient(x)))||null;
+}
+function findAppendixAdditive(name){
+ const n=normIngredient(name);
+ return appendixAdditives.find(a=>normIngredient(a.name)===n)||null;
+}
+function qualifyIngredient(item){
+ const known=findKnownIngredient(item.name);
+ if(known){
+   return {...known,name:item.name,status:'qualified',impact:'Fits standardized Caffeinated Beverage route, subject to its applicable limit/condition.'};
+ }
+ const additive=findAppendixAdditive(item.name);
+ if(additive){
+   return {name:item.name,kind:'additive',status:'qualified',qualification:'Food additive present in the applicable Appendix A category permissions for this product.',clause:'2.10.6(2)(IV) + Appendix A '+additive.source,route:'standard',impact:'Does not by itself require a Proprietary Food route if used within the applicable Appendix A permission and any stricter product-standard limit.',appendix:additive};
+ }
+ switch(item.basis){
+  case 'standardized':
+   return {name:item.name,kind:'extra',status:'review',qualification:'Potential non-additive ingredient basis for Proprietary Food because Regulation 2.12 permits ingredients that are standardized or otherwise permitted for use under FSSAI regulations. The exact underlying FSSAI ingredient standard/permission still has to be verified.',clause:'2.12.1(2)',route:'proprietary',impact:'Possible Proprietary Food route if the finished food is genuinely not standardized. If it is still marketed/assessed as Caffeinated Beverage, 2.10.6(2)(III)(A) requires Food Authority approval for this additional ingredient.'};
+  case 'ifct':
+   return {name:item.name,kind:'extra',status:'review',qualification:'Potential Proprietary Food ingredient basis where the food/ingredient is listed in IFCT 2017, subject to the exclusions in Regulation 2.12.',clause:'2.12.1(2)',route:'proprietary',impact:'Possible Proprietary Food route; IFCT listing and all other applicable FSSAI requirements must be verified.'};
+  case 'vitamin':
+   return {name:item.name,kind:'extra',status:'review',qualification:'A Proprietary Food may contain vitamins/minerals subject to the Regulation 2.12 proviso.',clause:'2.12.1(2) proviso',route:'proprietary',impact:'Possible Proprietary Food route; quantity must not exceed one RDA of the respective micronutrient unless another specific regulation applies.'};
+  case 'additive': {
+   const a=findAppendixAdditive(item.name);
+   if(a)return {name:item.name,kind:'additive',status:'qualified',qualification:'Applicable Appendix A food additive for this category.',clause:'2.12.1(3) + Appendix A '+a.source,route:'standard',impact:'Use only within the applicable Appendix A level/condition.',appendix:a};
+   return {name:item.name,kind:'additive',status:'unresolved',qualification:'This name is not matched to the applicable Appendix A list in the current product dataset.',clause:'2.12.1(3) + Appendix A',route:'unresolved',impact:'Do not treat it as permitted until the exact additive/INS and applicable Appendix A entry are verified.'};
+  }
+  default:
+   return {name:item.name,kind:'extra',status:'unresolved',qualification:'No FSSAI qualification has been established for this ingredient from the information entered.',clause:'Requires FSSAI regulatory verification',route:'unresolved',impact:'The formulation cannot be classified as Proprietary Food merely because this ingredient was added.'};
+ }
+}
+function saveFormula(){
+ try{localStorage.setItem(FORMULA_KEY,JSON.stringify(formulationIngredients))}catch(e){}
+ renderFormula();
+}
+function addIngredient(){
+ const input=document.getElementById('ingredientName');
+ const basis=document.getElementById('ingredientBasis')?.value||'auto';
+ const msg=document.getElementById('ingredientInputMessage');
+ const name=String(input?.value||'').trim();
+ if(!name){
+   if(msg){msg.textContent='Enter an ingredient first.';msg.classList.remove('hidden')}
+   return;
+ }
+ if(formulationIngredients.some(x=>normIngredient(x.name)===normIngredient(name))){
+   if(msg){msg.textContent='This ingredient is already in the formulation.';msg.classList.remove('hidden')}
+   return;
+ }
+ formulationIngredients.push({name,basis});
+ if(input)input.value='';
+ if(msg)msg.classList.add('hidden');
+ saveFormula();
+}
+function renderFormula(){
+ const list=document.getElementById('ingredientList');
+ const count=document.getElementById('ingredientCount');
+ const next=document.getElementById('formulationNext');
+ const qbody=document.getElementById('ingredientQualificationRows');
+ const standards=document.getElementById('applicableStandards');
+ const summary=document.getElementById('classificationSummary');
+ const contamChips=document.getElementById('contaminantIngredientChips');
+ const triggered=document.getElementById('ingredientTriggeredContaminants');
+ const checkerSummary=document.getElementById('checkerIngredientSummary');
+
+ if(count)count.textContent=formulationIngredients.length+' ingredient'+(formulationIngredients.length===1?'':'s');
+ if(next)next.classList.toggle('hidden',formulationIngredients.length===0);
+ if(list){
+   if(!formulationIngredients.length){
+     list.className='empty-state';
+     list.innerHTML='No ingredients entered yet.';
+   }else{
+     list.className='';
+     list.innerHTML=formulationIngredients.map((x,i)=>{
+       const q=qualifyIngredient(x);
+       const cls=q.status==='qualified'?'status-good':q.status==='review'?'status-warn':'status-bad';
+       return '<div class="ingredient-row"><div><b>'+esc(x.name)+'</b><br><small>Basis check: '+esc(x.basis==='auto'?'Auto':x.basis)+'</small></div><div class="'+cls+'">'+(q.status==='qualified'?'Qualified':q.status==='review'?'Further review':'Unresolved')+'</div><div><small>'+esc(q.qualification)+'</small><br><span class="clause">'+esc(q.clause)+'</span></div><div><button class="ingredient-remove" type="button" data-remove-ingredient="'+i+'">Remove</button></div></div>';
+     }).join('');
+     list.querySelectorAll('[data-remove-ingredient]').forEach(btn=>btn.addEventListener('click',()=>{
+       formulationIngredients.splice(Number(btn.dataset.removeIngredient),1);saveFormula();
+     }));
+   }
+ }
+
+ const qs=formulationIngredients.map(qualifyIngredient);
+ if(qbody)qbody.innerHTML=qs.map(q=>'<tr><td><b>'+esc(q.name)+'</b></td><td>'+esc(q.qualification)+(q.appendix?'<br><small>Appendix A limit: <b>'+esc(q.appendix.limit)+'</b></small>':'')+'</td><td><span class="clause">'+esc(q.clause)+'</span></td><td>'+esc(q.impact)+'</td></tr>').join('') || '<tr><td colspan="4">Enter formulation ingredients first.</td></tr>';
+
+ const hasUnresolved=qs.some(q=>q.route==='unresolved');
+ const hasProp=qs.some(q=>q.route==='proprietary');
+ if(summary){
+   if(!qs.length)summary.innerHTML='<b>No formulation entered.</b> Enter ingredients first.';
+   else if(hasUnresolved)summary.innerHTML='<b>Classification unresolved.</b> At least one ingredient has no verified FSSAI qualification. Do not claim the formulation is standardized or Proprietary Food until that ingredient is resolved.';
+   else if(hasProp)summary.innerHTML='<b>Possible Proprietary Food review required.</b> One or more extra non-additive ingredients rely on Regulation 2.12. This does not automatically make the product proprietary. If the finished product is still being treated as standardized Caffeinated Beverage, the additional-ingredient approval requirement in <b>2.10.6(2)(III)(A)</b> must also be addressed.';
+   else summary.innerHTML='<b>Standardized Caffeinated Beverage route remains available.</b> The entered ingredients are matched to the product standard, its Carbonated Water cross-reference, or applicable Appendix A permissions, subject to all listed limits and conditions.';
+ }
+
+ if(standards){
+   const cards=[];
+   cards.push('<div class="item"><b>Caffeinated Beverage standard</b><small>2.10.6(2) applies to the selected base product, including its Carbonated Water cross-reference.</small></div>');
+   cards.push('<div class="item"><b>Appendix A</b><small>Applies to food additives for category 14.1.4 / 14.1.4.1.</small></div>');
+   if(hasProp)cards.push('<div class="item"><b>Chapter 2.12 — Proprietary Food</b><small>Relevant because at least one extra non-additive ingredient has been entered under a potential 2.12 ingredient basis. Final classification still depends on whether the finished food is genuinely not standardized.</small></div>');
+   cards.push('<div class="item"><b>Contaminants, Toxins and Residues Regulations</b><small>Product-level requirements apply, and ingredient-specific requirements are added from the formulation where a verified trigger exists.</small></div>');
+   cards.push('<div class="item"><b>Appendix B / microbiology</b><small>Microbiological applicability is assessed separately for the final product category.</small></div>');
+   cards.push('<div class="item"><b>Appendix C / processing aids</b><small>Applies according to the actual manufacturing processes and processing aids used.</small></div>');
+   standards.innerHTML='<div class="grid2">'+cards.join('')+'</div>';
+ }
+
+ const chipHtml=formulationIngredients.map(x=>'<span class="process-chip">'+esc(x.name)+'</span>').join('');
+ if(contamChips)contamChips.innerHTML=chipHtml||'<span class="muted">No ingredients entered. Return to Formulation ingredients first.</span>';
+ if(checkerSummary)checkerSummary.innerHTML=chipHtml||'<span class="muted">No ingredient list entered yet.</span>';
+
+ if(triggered){
+   const rows=[];
+   qs.forEach(q=>{
+     (q.contaminants||[]).forEach(rule=>{
+       rows.push('<tr><td><b>'+esc(rule.name)+'</b></td><td><b>'+esc(rule.limit)+'</b></td><td>Triggered by ingredient: <b>'+esc(q.name)+'</b><br><small>'+esc(rule.basis)+'</small></td><td>'+esc(rule.source)+'</td></tr>');
+     });
+   });
+   const customNeedsReview=qs.filter(q=>q.kind==='extra' && !(q.contaminants||[]).length);
+   const reviewRows=customNeedsReview.map(q=>'<tr><td><b>Ingredient-specific contaminant review</b></td><td>—</td><td>Extra ingredient: <b>'+esc(q.name)+'</b></td><td>The exact ingredient must be checked against the applicable tables of the FSSAI Contaminants, Toxins and Residues Regulations before final compliance.</td></tr>');
+   if(rows.length||reviewRows.length){
+     triggered.innerHTML='<h3 style="margin:12px 0 9px">Ingredient-dependent requirements generated from your formulation</h3><div class="tablewrap"><table><thead><tr><th>Requirement</th><th>FSSAI limit</th><th>Why it appears</th><th>Source / action</th></tr></thead><tbody>'+rows.concat(reviewRows).join('')+'</tbody></table></div>';
+   }else{
+     triggered.innerHTML='<div class="notice">No additional ingredient-specific contaminant limit has been triggered by the current ingredient list in this prototype. Product-level and general contaminant requirements below still apply.</div>';
+   }
+ }
+}
+
+document.getElementById('addIngredient')?.addEventListener('click',addIngredient);
+document.getElementById('ingredientName')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addIngredient()}});
+document.getElementById('loadExampleFormula')?.addEventListener('click',()=>{
+ formulationIngredients=[
+  {name:'Water',basis:'auto'},{name:'Sugar',basis:'auto'},{name:'Caffeine',basis:'auto'},
+  {name:'Taurine',basis:'auto'},{name:'D-glucurono-γ-lactone',basis:'auto'},{name:'Citric acid',basis:'auto'}
+ ];
+ saveFormula();
+});
+document.getElementById('clearIngredients')?.addEventListener('click',()=>{formulationIngredients=[];saveFormula()});
+document.getElementById('goToStandards')?.addEventListener('click',()=>{openTab('standards',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
+document.getElementById('backToFormulation')?.addEventListener('click',()=>{openTab('formulation',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
+document.getElementById('goToContaminants')?.addEventListener('click',()=>{openTab('contaminants',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
+document.getElementById('backToStandards')?.addEventListener('click',()=>{openTab('standards',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
 
 const PROCESS_KEY='pmsv_fssai_product_helper_processes';
 const processLabels={
@@ -766,6 +1019,12 @@ function renderGmp(){
  const count=document.getElementById('gmpCount');if(count)count.textContent=rows.length+' applicable general GMP entries included automatically';
 }
 renderAppendix();renderGmp();
+const suggestionList=document.getElementById('ingredientSuggestions');
+if(suggestionList){
+ const base=[...new Set(ingredientRules.flatMap(r=>r.names).concat(appendixAdditives.map(a=>a.name)))].sort((a,b)=>a.localeCompare(b));
+ suggestionList.innerHTML=base.map(x=>'<option value="'+esc(x)+'"></option>').join('');
+}
+renderFormula();
 
 const dailyLimits=[
  {name:'Taurine',daily:2000},
