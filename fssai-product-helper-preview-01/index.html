@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 24</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 25</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation ingredients</button>
@@ -46,6 +46,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="card">
 <div class="section-title"><h2>Step 1 — Enter the actual formulation ingredients</h2><span>Ingredient-led compliance</span></div>
 <div class="notice oknote"><b>Start with what is actually in the product.</b> PMSV will assess each ingredient against the Caffeinated Beverage standard, its Carbonated Water cross-reference, Appendix A or the Proprietary Food provisions, and will use the same ingredient list when reviewing contaminant requirements.</div>
+<div id="regDbStatus" class="notice"><b>Regulatory database:</b> loading local PMSV FSSAI data…</div>
 
 <div class="field">
   <label>1. Ingredient / substance</label>
@@ -76,7 +77,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   <small>Use only an official FSSAI regulation reference. A typed clause is not treated as verified until matched to the stored regulatory source.</small>
 </div>
 
-<div class="notice" style="margin-top:10px"><b>Database behaviour:</b> this prototype runs from stored regulatory data and deterministic rules; it does not call AI to decide whether an ingredient is permitted. The current prototype database is <b>not yet the complete FSSAI ingredient master</b>. It presently contains the product-specific ingredients and the applicable additive/processing-aid datasets loaded for this Caffeinated Beverage evaluation.</div>
+<div class="notice" style="margin-top:10px"><b>Database behaviour:</b> the page loads <code>data/regulatory-db-v1.json</code> and applies deterministic rules. <b>No AI call is used.</b> The current database is the Caffeinated Beverage prototype dataset and is <b>not yet the complete FSSAI master</b>; additional FSSAI chapters and amendments can be added to the same schema.</div>
 
 <div class="flow-actions">
   <button class="btn" type="button" id="addIngredient">Add ingredient</button>
@@ -442,6 +443,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="sources" class="view hidden">
 <div class="card source">
 <h2>Official regulatory sources used</h2>
+<p><b>PMSV structured regulatory database</b><br><a target="_blank" rel="noopener" href="./data/regulatory-db-v1.json">Open the local JSON database used by this prototype</a><br><small>This is a structured PMSV representation of the official FSSAI sources below. It contains no AI-generated runtime decisions.</small></p>
 
 <p><b>Chapter 2.10 — Beverages other than Dairy and Fruit/Vegetable based · Version 4 (01.08.2025)</b><br>
 <a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf">Product standard used for Caffeinated Beverage, the Carbonated Water cross-reference, caffeine/optional-ingredient limits, microbiology and product-specific declarations</a></p>
@@ -674,13 +676,19 @@ try{
 function normIngredient(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,' ')}
 function findKnownIngredient(name){
  const n=normIngredient(name);
+ if(regulatoryDb&&Array.isArray(regulatoryDb.ingredient_rules)){
+   const hit=regulatoryDb.ingredient_rules.find(r=>Array.isArray(r.names)&&r.names.some(x=>n===normIngredient(x)));
+   if(hit)return hit;
+ }
  return ingredientRules.find(r=>r.names.some(x=>n===normIngredient(x)))||null;
 }
 function findAppendixAdditive(name){
  const n=normIngredient(name);
- const categoryHit=appendixAdditives.find(a=>normIngredient(a.name)===n || normIngredient(a.ins)===n);
+ const dbCategory=regulatoryDb?.appendix_a?.category_entries;
+ const dbGmp=regulatoryDb?.appendix_a?.general_gmp_entries;
+ const categoryHit=(Array.isArray(dbCategory)?dbCategory:appendixAdditives).find(a=>normIngredient(a.name)===n || normIngredient(a.ins)===n);
  if(categoryHit)return categoryHit;
- const gmpHit=gmpAdditives.find(a=>normIngredient(a[1])===n || normIngredient(a[0])===n);
+ const gmpHit=(Array.isArray(dbGmp)?dbGmp.map(a=>[a.ins,a.name]):gmpAdditives).find(a=>normIngredient(a[1])===n || normIngredient(a[0])===n);
  if(gmpHit)return {name:gmpHit[1],ins:gmpHit[0],limit:'GMP',condition:'General Appendix A GMP Table provision.',source:'General GMP Table'};
  return null;
 }
@@ -1049,14 +1057,48 @@ function renderGmp(){
  const count=document.getElementById('gmpCount');if(count)count.textContent=rows.length+' applicable general GMP entries included automatically';
 }
 renderAppendix();renderGmp();
-const ingredientCatalog=(()=>{
+let regulatoryDb=null;
+let ingredientCatalog=[];
+
+function fallbackIngredientCatalog(){
  const rows=[];
  ingredientRules.forEach(r=>r.names.forEach(n=>rows.push({name:n,label:r.label||n,source:r.clause||'Product standard'})));
  appendixAdditives.forEach(a=>rows.push({name:a.name,label:a.name,source:'Appendix A · '+a.source+(a.ins&&a.ins!=='—'?' · INS '+a.ins:'')}));
  gmpAdditives.forEach(a=>rows.push({name:a[1],label:a[1],source:'Appendix A · General GMP Table · INS '+a[0]}));
  const seen=new Set();
  return rows.filter(x=>{const k=normIngredient(x.name);if(seen.has(k))return false;seen.add(k);return true}).sort((a,b)=>a.name.localeCompare(b.name));
-})();
+}
+
+function catalogFromDb(db){
+ if(!db||!Array.isArray(db.ingredient_master))return fallbackIngredientCatalog();
+ const seen=new Set();
+ return db.ingredient_master.map(x=>({
+   name:x.name,label:x.canonical_name||x.name,source:x.fssai_basis+(x.ins?' · INS '+x.ins:''),type:x.type,ins:x.ins||''
+ })).filter(x=>{const k=normIngredient(x.name);if(seen.has(k))return false;seen.add(k);return true}).sort((a,b)=>a.name.localeCompare(b.name));
+}
+
+async function loadRegulatoryDb(){
+ const status=document.getElementById('regDbStatus');
+ try{
+   const res=await fetch('./data/regulatory-db-v1.json',{cache:'no-store'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   regulatoryDb=await res.json();
+   ingredientCatalog=catalogFromDb(regulatoryDb);
+   if(status){
+     const cv=regulatoryDb.coverage||{};
+     status.className='notice oknote';
+     status.innerHTML='<b>Local regulatory database loaded · no AI.</b><br>'+Number(cv.formulation_search_records||ingredientCatalog.length).toLocaleString('en-IN')+' formulation-search records are available in this prototype database. <b>Coverage is intentionally marked incomplete</b> until the remaining FSSAI standards are ingested.';
+   }
+ }catch(e){
+   ingredientCatalog=fallbackIngredientCatalog();
+   if(status){
+     status.className='notice';
+     status.innerHTML='<b>Local database file could not be loaded.</b> The prototype is using its embedded deterministic fallback dataset. No AI is being called.';
+   }
+ }
+ renderIngredientAutocomplete();
+ renderFormula();
+}
 
 function exactCatalogMatch(value){
  const n=normIngredient(value);
@@ -1122,8 +1164,7 @@ document.getElementById('ingredientBasis')?.addEventListener('change',()=>{
 document.addEventListener('click',event=>{
  if(!event.target.closest('.autocomplete-wrap'))document.getElementById('ingredientAutocomplete')?.classList.add('hidden');
 });
-renderIngredientAutocomplete();
-renderFormula();
+loadRegulatoryDb();
 
 const dailyLimits=[
  {name:'Taurine',daily:2000},
