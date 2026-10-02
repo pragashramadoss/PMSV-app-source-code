@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 40</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 41</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="product">Product selection</button>
@@ -1806,14 +1806,38 @@ function populateProductSubcategories(){
  if(!select||!prod)return;
  const rows=(productMasterDb?.subcategories||[]).filter(x=>x.parent_category===cat);
  select.innerHTML='<option value="">Select sub-category</option>'+rows.map(x=>'<option value="'+esc(x.code)+'">'+esc(x.code)+' — '+esc(x.name)+'</option>').join('');
- select.disabled=!cat||rows.length===0;
  prod.innerHTML='<option value="">Select product</option>';
- prod.disabled=true;
- if(msg){
-   if(cat&&rows.length===0){
+
+ if(!cat){
+   select.disabled=true;
+   prod.disabled=true;
+   if(msg)msg.classList.add('hidden');
+   return;
+ }
+
+ if(rows.length){
+   select.disabled=false;
+   prod.disabled=true;
+   if(msg)msg.classList.add('hidden');
+   return;
+ }
+
+ // Some FoSCoS special categories do not use the normal level-2 FCS browse layer.
+ select.disabled=true;
+ const direct=productCatalog().filter(x=>x.category===cat).sort((a,b)=>a.name.localeCompare(b.name));
+ if(direct.length){
+   prod.innerHTML='<option value="">Select product</option>'+direct.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+(x.fcs?' ['+esc(x.fcs)+']':'')+'</option>').join('');
+   prod.disabled=false;
+   if(msg){
      msg.classList.remove('hidden');
-     msg.innerHTML='<b>Sub-category catalogue not yet ingested for this category.</b> You can still use product-name search above. This is a data-coverage gap, not a regulatory conclusion.';
-   }else msg.classList.add('hidden');
+     msg.innerHTML='<b>No separate sub-category step for this loaded category.</b> Select the product directly below.';
+   }
+ }else{
+   prod.disabled=true;
+   if(msg){
+     msg.classList.remove('hidden');
+     msg.innerHTML='<b>This category is recognized, but its standardized-product catalogue is not loaded yet.</b> You can still use product-name search above while PMSV expands the official FoSCoS catalogue.';
+   }
  }
 }
 function populateProductsForSubcategory(){
