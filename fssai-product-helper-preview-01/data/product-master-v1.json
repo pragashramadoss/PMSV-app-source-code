@@ -13,7 +13,7 @@
     "foscos_catalog_scope": "Official FoSCoS/FSSAI indexed rows loaded category by category; Chapter 2.5 synchronization added the current missing meat-product rows while rule ingestion continues.",
     "foscos_subcategory_framework": "Level-2 FoSCoS/FSSAI food-category framework loaded for categories 01–16; special categories without a separate level-2 browse layer are handled directly at product/category level.",
     "level3_status": "Expanded official FoSCoS standardized-product catalogue. Detailed compliance rule profiles remain a separate ingestion layer.",
-    "base_rule_profiles_ready": 304,
+    "base_rule_profiles_ready": 280,
     "profile_architecture_note": "Every loaded FoSCoS standardized product now has at least a base profile. Full formulation compliance is enabled only when detailed product-specific clauses have been ingested.",
     "chapter_ingestion": {
       "2.1": {
@@ -63,6 +63,20 @@
         "source_verified_on": "2026-10-02",
         "regulatory_note": "Meat Sausage clause 2.5.2(2A) is included in Version 4; FSSAI direction dated 28.04.2026 extended its compliance period for six months from 01.05.2026.",
         "next_validation": "Appendix A additive inheritance, contaminants, microbiology, processing aids, labels and full machine validation"
+      },
+      "2.6": {
+        "title": "Fish and Fish Products",
+        "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+        "source_version": "Version 2 (04.11.2024)",
+        "mapped_catalog_products": 24,
+        "structured_core_standards": 24,
+        "superseded_standards": 1,
+        "omitted_standards": 1,
+        "cross_cutting_rules": 1,
+        "status": "structured_core_loaded",
+        "source_verified_on": "2026-10-02",
+        "regulatory_note": "Current Chapter 2.6 contains 24 active product standards; clause 2.6.1(6) is omitted. Legacy Sardine Oil text is superseded by the substituted Fish Oil standard. Clause 2.6.2 adds formaldehyde limits by fish group.",
+        "next_validation": "Appendix A additive inheritance, contaminants, microbiology, processing aids, formaldehyde applicability, labels and full machine validation"
       }
     }
   },
@@ -3367,10 +3381,10 @@
       "fssr": "2.6.1(12)",
       "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -3379,7 +3393,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(12)",
+      "standard_name": "Fish Oil",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "02-02-2-fat-spread",
@@ -8564,13 +8582,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.1",
       "fcs": "09.1.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(18)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8579,7 +8597,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(18)",
+      "standard_name": "Live and Raw Bivalve Molluscs",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-frozen-shrimp",
@@ -8587,13 +8609,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(1)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8602,7 +8624,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(1)",
+      "standard_name": "Frozen Shrimp",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-frozen-lobsters",
@@ -8610,13 +8636,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(2)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8625,7 +8651,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(2)",
+      "standard_name": "Frozen Lobsters",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-frozen-squid-and-parts-of-squid",
@@ -8633,13 +8663,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(3)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8648,7 +8678,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(3)",
+      "standard_name": "Frozen Squid and Parts of Squid",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-frozen-finfish",
@@ -8656,13 +8690,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(4)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8671,7 +8705,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(4)",
+      "standard_name": "Frozen Finfish",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-frozen-fish-fillets",
@@ -8679,13 +8717,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(5)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8694,7 +8732,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(5)",
+      "standard_name": "Frozen Fish Fillets",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-frozen-cephalopods",
@@ -8702,13 +8744,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(9)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8717,7 +8759,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(9)",
+      "standard_name": "Frozen Cephalopods",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-frozen-clam-meat",
@@ -8725,13 +8771,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(17)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8740,7 +8786,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(17)",
+      "standard_name": "Frozen Clam Meat",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-fresh-and-quick-frozen-raw-scallop-products",
@@ -8748,13 +8798,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(22)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8763,7 +8813,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(22)",
+      "standard_name": "Fresh and Quick Frozen Raw Scallop Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-quick-frozen-fish-sticks-fish-fingers-fish-portions-and-fish-fillets-breaded-or-ba",
@@ -8771,13 +8825,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(21)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8786,7 +8840,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(21)",
+      "standard_name": "Quick Frozen Fish Sticks (Fish Fingers), Fish Portions and Fish Fillets — Breaded or Battered",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-frozen-minced-fish-meat",
@@ -8794,13 +8852,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.3",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(15)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8809,7 +8867,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(15)",
+      "standard_name": "Frozen Minced Fish Meat",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-salted-fish-dried-salted-fish",
@@ -8817,13 +8879,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(7)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8832,7 +8894,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(7)",
+      "standard_name": "Salted Fish / Dried Salted Fish",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-edible-fish-powder",
@@ -8840,13 +8906,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(13)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8855,7 +8921,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(13)",
+      "standard_name": "Edible Fish Powder",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-freeze-dried-prawns-shrimps",
@@ -8863,13 +8933,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(16)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8878,7 +8948,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(16)",
+      "standard_name": "Freeze Dried Prawns (Shrimps)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-smoked-fishery-products",
@@ -8886,13 +8960,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.5",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(10)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8901,7 +8975,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(10)",
+      "standard_name": "Smoked Fishery Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-pasteurized-fish-sausage",
@@ -8909,13 +8987,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.4.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(23)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8924,7 +9002,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(23)",
+      "standard_name": "Pasteurized Fish Sausage",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-2-pasteurised-crab-meat",
@@ -8932,13 +9014,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.2",
       "fcs": "09.2.4.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(24)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8947,7 +9029,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(24)",
+      "standard_name": "Pasteurised Crab Meat",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-3-fish-pickles",
@@ -8955,13 +9041,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.3",
       "fcs": "09.3.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(14)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8970,7 +9056,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(14)",
+      "standard_name": "Fish Pickles",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-3-sturgeon-caviar",
@@ -8978,13 +9068,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.3",
       "fcs": "09.3.3",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(19)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -8993,7 +9083,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(19)",
+      "standard_name": "Sturgeon Caviar",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-4-canned-fishery-products",
@@ -9001,13 +9095,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.4",
       "fcs": "09.4",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(8)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9016,7 +9110,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(8)",
+      "standard_name": "Canned Fishery Products",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "09-09-4-ready-to-eat-finfish-or-shell-fish-curry-in-retortable-pouches",
@@ -9024,13 +9122,13 @@
       "foscos_category": "09",
       "foscos_subcategory": "09.4",
       "fcs": "09.4",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(11)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9039,7 +9137,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(11)",
+      "standard_name": "Ready-to-Eat Finfish or Shell Fish Curry in Retortable Pouches",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "10-10-1-fresh-eggs",
@@ -10819,13 +10921,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.6",
       "fcs": "12.6",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(20)",
+      "regulation_chapter": "2.6",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10834,7 +10936,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(20)",
+      "standard_name": "Fish Sauce",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-6-tomato-ketchup-and-tomato-sauce",
@@ -12061,13 +12167,13 @@
       "foscos_category": "99",
       "foscos_subcategory": "99.1",
       "fcs": "99.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.6.1(25)",
+      "regulation_chapter": "2.6",
       "route": "substances",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.6 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.6, Version 2 (04.11.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -12076,7 +12182,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.6 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids, formaldehyde applicability and labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(25)",
+      "standard_name": "Gelatin from Fish Processing Waste",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "99-99-1-sodium-meta-bisulphite-ins-223",
@@ -14968,9 +15078,11 @@
       "name": "Fish Oil",
       "fcs": "02.1.3",
       "fssr": "2.6.1(12)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "02-02-1-fish-oil"
+      "profile_id": "02-02-1-fish-oil",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(12)"
     },
     {
       "id": "02-02-2-fat-spread",
@@ -17471,10 +17583,12 @@
       "subcategory": "09.1",
       "name": "Live and Raw Bivalve Molluscs",
       "fcs": "09.1.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(18)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-1-live-and-raw-bivalve-molluscs"
+      "profile_id": "09-09-1-live-and-raw-bivalve-molluscs",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(18)"
     },
     {
       "id": "09-09-2-frozen-shrimp",
@@ -17482,10 +17596,12 @@
       "subcategory": "09.2",
       "name": "Frozen shrimp",
       "fcs": "09.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(1)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-frozen-shrimp"
+      "profile_id": "09-09-2-frozen-shrimp",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(1)"
     },
     {
       "id": "09-09-2-frozen-lobsters",
@@ -17493,10 +17609,12 @@
       "subcategory": "09.2",
       "name": "Frozen Lobsters",
       "fcs": "09.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(2)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-frozen-lobsters"
+      "profile_id": "09-09-2-frozen-lobsters",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(2)"
     },
     {
       "id": "09-09-2-frozen-squid-and-parts-of-squid",
@@ -17504,10 +17622,12 @@
       "subcategory": "09.2",
       "name": "Frozen squid and parts of squid",
       "fcs": "09.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(3)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-frozen-squid-and-parts-of-squid"
+      "profile_id": "09-09-2-frozen-squid-and-parts-of-squid",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(3)"
     },
     {
       "id": "09-09-2-frozen-finfish",
@@ -17515,10 +17635,12 @@
       "subcategory": "09.2",
       "name": "Frozen finfish",
       "fcs": "09.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(4)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-frozen-finfish"
+      "profile_id": "09-09-2-frozen-finfish",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(4)"
     },
     {
       "id": "09-09-2-frozen-fish-fillets",
@@ -17526,10 +17648,12 @@
       "subcategory": "09.2",
       "name": "Frozen fish fillets",
       "fcs": "09.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(5)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-frozen-fish-fillets"
+      "profile_id": "09-09-2-frozen-fish-fillets",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(5)"
     },
     {
       "id": "09-09-2-frozen-cephalopods",
@@ -17537,10 +17661,12 @@
       "subcategory": "09.2",
       "name": "Frozen Cephalopods",
       "fcs": "09.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(9)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-frozen-cephalopods"
+      "profile_id": "09-09-2-frozen-cephalopods",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(9)"
     },
     {
       "id": "09-09-2-frozen-clam-meat",
@@ -17548,10 +17674,12 @@
       "subcategory": "09.2",
       "name": "Frozen Clam meat",
       "fcs": "09.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(17)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-frozen-clam-meat"
+      "profile_id": "09-09-2-frozen-clam-meat",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(17)"
     },
     {
       "id": "09-09-2-fresh-and-quick-frozen-raw-scallop-products",
@@ -17559,10 +17687,12 @@
       "subcategory": "09.2",
       "name": "Fresh and Quick Frozen Raw Scallop Products",
       "fcs": "09.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(22)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-fresh-and-quick-frozen-raw-scallop-products"
+      "profile_id": "09-09-2-fresh-and-quick-frozen-raw-scallop-products",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(22)"
     },
     {
       "id": "09-09-2-quick-frozen-fish-sticks-fish-fingers-fish-portions-and-fish-fillets-breaded-or-ba",
@@ -17570,10 +17700,12 @@
       "subcategory": "09.2",
       "name": "Quick Frozen Fish Sticks (fish fingers), Fish Portions and Fish Fillets - Breaded or Battered",
       "fcs": "09.2.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(21)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-quick-frozen-fish-sticks-fish-fingers-fish-portions-and-fish-fillets-breaded-or-ba"
+      "profile_id": "09-09-2-quick-frozen-fish-sticks-fish-fingers-fish-portions-and-fish-fillets-breaded-or-ba",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(21)"
     },
     {
       "id": "09-09-2-frozen-minced-fish-meat",
@@ -17581,10 +17713,12 @@
       "subcategory": "09.2",
       "name": "Frozen Minced Fish Meat",
       "fcs": "09.2.3",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(15)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-frozen-minced-fish-meat"
+      "profile_id": "09-09-2-frozen-minced-fish-meat",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(15)"
     },
     {
       "id": "09-09-2-salted-fish-dried-salted-fish",
@@ -17592,10 +17726,12 @@
       "subcategory": "09.2",
       "name": "Salted Fish/ dried salted fish",
       "fcs": "09.2.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(7)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-salted-fish-dried-salted-fish"
+      "profile_id": "09-09-2-salted-fish-dried-salted-fish",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(7)"
     },
     {
       "id": "09-09-2-edible-fish-powder",
@@ -17603,10 +17739,12 @@
       "subcategory": "09.2",
       "name": "Edible Fish Powder",
       "fcs": "09.2.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(13)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-edible-fish-powder"
+      "profile_id": "09-09-2-edible-fish-powder",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(13)"
     },
     {
       "id": "09-09-2-freeze-dried-prawns-shrimps",
@@ -17614,10 +17752,12 @@
       "subcategory": "09.2",
       "name": "Freeze dried prawns (Shrimps)",
       "fcs": "09.2.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(16)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-freeze-dried-prawns-shrimps"
+      "profile_id": "09-09-2-freeze-dried-prawns-shrimps",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(16)"
     },
     {
       "id": "09-09-2-smoked-fishery-products",
@@ -17625,10 +17765,12 @@
       "subcategory": "09.2",
       "name": "Smoked Fishery Products",
       "fcs": "09.2.5",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(10)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-smoked-fishery-products"
+      "profile_id": "09-09-2-smoked-fishery-products",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(10)"
     },
     {
       "id": "09-09-2-pasteurized-fish-sausage",
@@ -17636,10 +17778,12 @@
       "subcategory": "09.2",
       "name": "Pasteurized Fish Sausage",
       "fcs": "09.2.4.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(23)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-pasteurized-fish-sausage"
+      "profile_id": "09-09-2-pasteurized-fish-sausage",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(23)"
     },
     {
       "id": "09-09-2-pasteurised-crab-meat",
@@ -17647,10 +17791,12 @@
       "subcategory": "09.2",
       "name": "Pasteurised Crab Meat",
       "fcs": "09.2.4.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(24)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-2-pasteurised-crab-meat"
+      "profile_id": "09-09-2-pasteurised-crab-meat",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(24)"
     },
     {
       "id": "09-09-3-fish-pickles",
@@ -17658,10 +17804,12 @@
       "subcategory": "09.3",
       "name": "Fish pickles",
       "fcs": "09.3.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(14)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-3-fish-pickles"
+      "profile_id": "09-09-3-fish-pickles",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(14)"
     },
     {
       "id": "09-09-3-sturgeon-caviar",
@@ -17669,10 +17817,12 @@
       "subcategory": "09.3",
       "name": "Sturgeon Caviar",
       "fcs": "09.3.3",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(19)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-3-sturgeon-caviar"
+      "profile_id": "09-09-3-sturgeon-caviar",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(19)"
     },
     {
       "id": "09-09-4-canned-fishery-products",
@@ -17680,10 +17830,12 @@
       "subcategory": "09.4",
       "name": "Canned Fishery Products",
       "fcs": "09.4",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(8)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-4-canned-fishery-products"
+      "profile_id": "09-09-4-canned-fishery-products",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(8)"
     },
     {
       "id": "09-09-4-ready-to-eat-finfish-or-shell-fish-curry-in-retortable-pouches",
@@ -17691,10 +17843,12 @@
       "subcategory": "09.4",
       "name": "Ready-to-Eat Finfish or Shell Fish Curry in Retortable Pouches",
       "fcs": "09.4",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(11)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "09-09-4-ready-to-eat-finfish-or-shell-fish-curry-in-retortable-pouches"
+      "profile_id": "09-09-4-ready-to-eat-finfish-or-shell-fish-curry-in-retortable-pouches",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(11)"
     },
     {
       "id": "10-10-1-fresh-eggs",
@@ -18550,10 +18704,12 @@
       "subcategory": "12.6",
       "name": "Fish Sauce",
       "fcs": "12.6",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(20)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-6-fish-sauce"
+      "profile_id": "12-12-6-fish-sauce",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(20)"
     },
     {
       "id": "12-12-6-tomato-ketchup-and-tomato-sauce",
@@ -19144,10 +19300,12 @@
       "subcategory": "99.1",
       "name": "Gelatin from Fish Processing Waste",
       "fcs": "99.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.6.1(25)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "99-99-1-gelatin-from-fish-processing-waste"
+      "profile_id": "99-99-1-gelatin-from-fish-processing-waste",
+      "rule_file": "./data/rules/chapter-2-6-fish-v1.json",
+      "rule_key": "2.6.1(25)"
     },
     {
       "id": "99-99-1-sodium-meta-bisulphite-ins-223",
