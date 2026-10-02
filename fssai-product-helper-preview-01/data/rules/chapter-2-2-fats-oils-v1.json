@@ -1,0 +1,490 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.2",
+  "title": "Fats, Oils and Fat Emulsions",
+  "source_version": "Version 3 (04.11.2024)",
+  "source_verified_on": "2026-10-02",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 2.2 — Fats, oils and fat emulsions",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats%20oils%20and%20fat%20emulsions.pdf"
+    }
+  ],
+  "common_rules": [
+    {
+      "type": "fatty_acid_composition",
+      "clause": "2.2.7",
+      "text": "Oils and fats covered by Chapter 2.2 must comply with the applicable fatty-acid-composition table where listed."
+    },
+    {
+      "type": "peroxide_value",
+      "clause": "2.2.8",
+      "text": "Apply the product-specific peroxide-value limits in clause 2.2.8 to oils and fats where applicable."
+    },
+    {
+      "type": "trans_fat",
+      "value_max_pct": 2,
+      "effective_from": "2022-01-01",
+      "text": "Where Chapter 2.2 prescribes a trans-fat limit for the product, the current maximum is 2% by weight."
+    },
+    {
+      "type": "additives",
+      "text": "Food additives are permitted only as provided by the applicable Chapter 2.2 clause and Appendix A."
+    }
+  ],
+  "standards": [
+    {
+      "key": "2.2.1(16)",
+      "name": "Refined Vegetable Oil",
+      "status": "structured_core",
+      "definition": "Vegetable oil obtained by expression or solvent extraction and refined by the processes permitted in clause 2.2.1(16).",
+      "composition": [
+        {
+          "parameter": "Acid value",
+          "operator": "<=",
+          "value": 0.6,
+          "unit": "mg KOH/g oil"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Trans fatty acids",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight",
+          "effective_from": "2022-01-01"
+        },
+        {
+          "parameter": "Argemone oil",
+          "operator": "negative",
+          "value": "Negative",
+          "unit": "test"
+        }
+      ],
+      "process_rules": [
+        "Must be obtained from vegetable oils standardized in the regulations.",
+        "Permitted refining steps include deacidification/physical or miscella refining, permitted degumming, bleaching and steam deodorisation as specified in the clause.",
+        "No chemical agent other than those permitted by the clause may be used."
+      ],
+      "quality_rules": [
+        "Clear and free from rancidity, adulterants, sediments, suspended/foreign matter, separated water, added colouring/flavouring substances and mineral oil."
+      ],
+      "label_rules": [
+        "Clearly specify the name of the vegetable oil from which the refined oil was manufactured."
+      ],
+      "inheritance": [
+        "The standards for the specified source edible oil also apply, except the refined-oil acid-value limit in 2.2.1(16) governs."
+      ]
+    },
+    {
+      "key": "2.2.1(7)",
+      "name": "Rapeseed or Mustard Oil — Low Erucic Acid",
+      "status": "cross_reference_structured",
+      "applies_with": [
+        "2.2.1(16) when sold as refined oil"
+      ],
+      "tests": [
+        "Argemone oil negative"
+      ],
+      "note": "Source-oil identity standard retained; refined variants inherit the refined vegetable oil requirements."
+    },
+    {
+      "key": "2.2.1(10.1)",
+      "name": "Safflower Seed Oil — High Oleic / Imported",
+      "status": "cross_reference_structured",
+      "applies_with": [
+        "2.2.1(16) when sold as refined oil"
+      ],
+      "tests": [
+        "Argemone oil negative"
+      ],
+      "note": "Source-oil identity standard retained; refined variants inherit the refined vegetable oil requirements."
+    },
+    {
+      "key": "2.2.1(28)",
+      "name": "Palm Kernel Olein",
+      "status": "structured_core",
+      "definition": "Liquid fraction obtained by fractionation of palm kernel oil from Elaeis guinensis.",
+      "composition": [
+        {
+          "parameter": "Refractive index at 40°C",
+          "operator": "range",
+          "min": 1.451,
+          "max": 1.453
+        },
+        {
+          "parameter": "Saponification value",
+          "operator": "range",
+          "min": 231,
+          "max": 244
+        },
+        {
+          "parameter": "Iodine value",
+          "operator": "range",
+          "min": 20,
+          "max": 28
+        },
+        {
+          "parameter": "Unsaponifiable matter",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Free fatty acid as lauric acid",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Slip point / slip melting point",
+          "operator": "range",
+          "min": 21,
+          "max": 26,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Argemone oil",
+          "operator": "negative",
+          "value": "Negative",
+          "unit": "test"
+        }
+      ],
+      "process_rules": [
+        "Where obtained by solvent extraction, and for imported oil as specified, human-consumption supply requires refining to 2.2.1(16).",
+        "Refined oil must meet the applicable hexane and flash-point requirements in the clause."
+      ]
+    },
+    {
+      "key": "2.2.1(31)",
+      "name": "Grapeseed Oil",
+      "status": "structured_core",
+      "definition": "Oil expressed from clean and sound grape seeds (Vitis vinifera L.).",
+      "composition": [
+        {
+          "parameter": "Refractive index at 40°C",
+          "operator": "range",
+          "min": 1.467,
+          "max": 1.477
+        },
+        {
+          "parameter": "Argemone oil",
+          "operator": "negative",
+          "value": "Negative",
+          "unit": "test"
+        }
+      ],
+      "process_rules": [
+        "If obtained by solvent extraction, it must be supplied for human consumption only after refining and conform to 2.2.1(16).",
+        "Refined solvent-extracted oil must meet the applicable hexane requirement; expelled-pressed oil must be free from hexane residues."
+      ]
+    },
+    {
+      "key": "2.2.1(32)",
+      "name": "Moringa Oil",
+      "status": "structured_core",
+      "definition": "Oil obtained by expressing clean and sound Moringa oleifera seed.",
+      "composition": [
+        {
+          "parameter": "Refractive index at 40°C",
+          "operator": "range",
+          "min": 1.452,
+          "max": 1.468
+        },
+        {
+          "parameter": "Saponification value",
+          "operator": "range",
+          "min": 167,
+          "max": 192
+        },
+        {
+          "parameter": "Iodine value",
+          "operator": "range",
+          "min": 65,
+          "max": 70
+        },
+        {
+          "parameter": "Unsaponifiable matter",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid value",
+          "operator": "<=",
+          "value": 6,
+          "unit": "mg KOH/g oil"
+        },
+        {
+          "parameter": "Argemone oil",
+          "operator": "negative",
+          "value": "Negative",
+          "unit": "test"
+        }
+      ]
+    },
+    {
+      "key": "2.2.5(1)",
+      "name": "Table Margarine",
+      "status": "structured_core",
+      "definition": "Emulsion of edible oils and fats with water.",
+      "permitted_ingredients": [
+        {
+          "name": "Common salt",
+          "max": 2.5,
+          "unit": "%"
+        },
+        {
+          "name": "Skimmed milk powder",
+          "max": 2,
+          "unit": "%"
+        },
+        {
+          "name": "Food additives",
+          "basis": "Applicable regulations and appendices"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Fat",
+          "operator": ">=",
+          "value": 80,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "range",
+          "min": 12,
+          "max": 16,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Vitamin A",
+          "operator": ">=",
+          "value": 30,
+          "unit": "IU/g at sale"
+        },
+        {
+          "parameter": "Melting point of extracted fat",
+          "operator": "range",
+          "min": 31,
+          "max": 37,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Unsaponifiable matter of extracted fat",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Free fatty acids as oleic acid",
+          "operator": "<=",
+          "value": 0.25,
+          "unit": "%"
+        },
+        {
+          "parameter": "Acid value",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "mg KOH/g"
+        },
+        {
+          "parameter": "Trans fatty acids",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight",
+          "effective_from": "2022-01-01"
+        },
+        {
+          "parameter": "Argemone oil",
+          "operator": "negative",
+          "value": "Negative",
+          "unit": "test"
+        }
+      ],
+      "special_rules": [
+        "Must contain sesame oil in the amount required for the prescribed Baudouin-test response.",
+        "Coloured/flavoured margarine must contain starch 100–150 ppm.",
+        "Coloured/flavoured margarine is to be sold only in sealed packages not exceeding 500 g."
+      ]
+    },
+    {
+      "key": "2.2.5(2)",
+      "name": "Bakery and Industrial Margarine",
+      "status": "structured_core",
+      "definition": "Emulsion of vegetable oil product with water.",
+      "permitted_ingredients": [
+        {
+          "name": "Common salt",
+          "max": 2.5,
+          "unit": "%"
+        },
+        {
+          "name": "Food additives",
+          "basis": "Applicable regulations and appendices"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added colour",
+        "Added flavour",
+        "Rancidity",
+        "Mineral oil",
+        "Animal body fats"
+      ],
+      "composition": [
+        {
+          "parameter": "Fat",
+          "operator": ">=",
+          "value": 80,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "range",
+          "min": 12,
+          "max": 16,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Vitamin A",
+          "operator": ">=",
+          "value": 30,
+          "unit": "IU/g at packaging"
+        },
+        {
+          "parameter": "Trans fatty acids",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight",
+          "effective_from": "2022-01-01"
+        },
+        {
+          "parameter": "Free fatty acids as oleic acid",
+          "operator": "<=",
+          "value": 0.25,
+          "unit": "%"
+        },
+        {
+          "parameter": "Acid value",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "mg KOH/g"
+        },
+        {
+          "parameter": "Argemone oil",
+          "operator": "negative",
+          "value": "Negative",
+          "unit": "test"
+        }
+      ],
+      "special_rules": [
+        "Unsaponifiable matter generally not more than 2.0%; where rice bran oil exceeds 30% by weight, up to 2.5% is permitted subject to the prescribed declaration."
+      ]
+    },
+    {
+      "key": "2.2.5(3)",
+      "name": "Fat Spread",
+      "status": "structured_core",
+      "definition": "Water-in-oil emulsion with an aqueous phase and a fat phase of edible oils and fats, excluding animal body fats.",
+      "types": [
+        "Milk fat spread",
+        "Mixed fat spread",
+        "Vegetable fat spread"
+      ],
+      "composition": [
+        {
+          "parameter": "Fat",
+          "operator": "range",
+          "min": 40,
+          "max": 80,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "range",
+          "min": 16,
+          "max": 56,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Vegetable fat spread melting point of extracted fat",
+          "operator": "<=",
+          "value": 37,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Unsaponifiable matter — milk/mixed fat spread",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Unsaponifiable matter — vegetable fat spread",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid value of extracted fat",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "mg KOH/g"
+        },
+        {
+          "parameter": "Vegetable fat spread Vitamin A",
+          "operator": ">=",
+          "value": 25,
+          "unit": "IU synthetic vitamin A/g at packing"
+        },
+        {
+          "parameter": "Starch",
+          "operator": "range",
+          "min": 100,
+          "max": 150,
+          "unit": "ppm"
+        },
+        {
+          "parameter": "Trans fatty acids — mixed/vegetable fat spread",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight",
+          "effective_from": "2022-01-01"
+        }
+      ],
+      "permitted_ingredients": [
+        {
+          "name": "Common salt",
+          "max": 2,
+          "unit": "% by weight in aqueous phase"
+        },
+        {
+          "name": "Milk solids-not-fat",
+          "basis": "Permitted"
+        },
+        {
+          "name": "Food additives",
+          "basis": "Applicable regulations and appendices"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Animal body fat",
+        "Mineral oil",
+        "Wax"
+      ],
+      "label_rules": [
+        "Declare total fat content.",
+        "For mixed fat spread, also declare milk fat content.",
+        "Do not associate the word 'butter' with the product."
+      ],
+      "packaging_rules": [
+        "Compulsorily sold in sealed packages not exceeding 500 g under the prescribed Agmark requirement."
+      ]
+    }
+  ]
+}
