@@ -1,0 +1,1221 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.5",
+  "title": "Meat and Meat Products (including Egg and Egg Products)",
+  "source_version": "Version 4 (01.08.2025)",
+  "source_verified_on": "2026-10-02",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 2.5 — Meat and Meat Products, Version 4 (01.08.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_5_Meat%20and%20Meat%20products%281%29.pdf"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Food Safety and Standards (Food Products Standards and Food Additives) First Amendment Regulations, 2025",
+      "url": "https://fssai.gov.in/upload/notifications/2025/07/6879d8af12522Palm%20Oil_FPSFA_Notification.pdf"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Direction dated 28.04.2026 — enforcement of new Meat Sausage standards",
+      "url": "https://www.fssai.gov.in/upload/advisories/2026/04/69f192d9de1dcDirection%20dt%2028.04.2026.pdf"
+    },
+    {
+      "authority": "FSSAI / FoSCoS",
+      "title": "View all FSSAI Standardized Food Products",
+      "url": "https://foscos.fssai.gov.in/standard-product"
+    }
+  ],
+  "common_rules": [
+    {
+      "type": "additives",
+      "text": "Food additives are permitted only as applicable under Appendix A and the relevant Chapter 2.5 standard."
+    },
+    {
+      "type": "microbiology",
+      "text": "Products shall comply with the applicable microbiological requirements in Appendix B where the Chapter 2.5 standard so requires."
+    },
+    {
+      "type": "contaminants",
+      "text": "Applicable products must comply with the Food Safety and Standards (Contaminants, Toxins and Residues) Regulations."
+    },
+    {
+      "type": "labelling",
+      "text": "Food Safety and Standards (Labelling and Display) Regulations apply in addition to any product-specific naming or declaration requirements."
+    },
+    {
+      "type": "meat_common",
+      "text": "All products listed under regulation 2.5.2 are subject to the common meat requirements in Chapter 2.5, including applicable veterinary-drug/advisory compliance, prohibition on genetically modified techniques for production of meat animals or poultry birds, feed-related provisions and segregation of porcine production/slaughter/processing from bovine, ovine and caprine facilities."
+    }
+  ],
+  "standards": [
+    {
+      "key": "2.5.2(1)",
+      "name": "Canned or Retort Pouch Meat Products",
+      "status": "structured_core",
+      "definition": "Thermally processed shelf-stable meat products packed in hermetically sealed cans, retort pouches or other suitable containers.",
+      "process_rules": [
+        "Process at a validated temperature, pressure and time combination to achieve commercial sterility.",
+        "Sealed containers shall show no changes on incubation at 35°C for 10 days or 55°C for 5 days.",
+        "The F0 value required for the product shall be standardised before production and marketing."
+      ],
+      "ingredient_rules": [
+        "Only ingredients standardised or permitted for use in other standardised foods under the regulations may be used."
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.5.2(2)",
+      "name": "Comminuted or Restructured Meat Products",
+      "status": "structured_core",
+      "definition": "Raw or cooked comminuted or restructured meat products, including mechanically deboned or separated meat products.",
+      "permitted_ingredient_groups": [
+        "trimmings, fat, skin, edible by-products, mechanically recovered meat (MRM) or mechanically deboned meat (MDM)",
+        "water, herbs, sugar, spices, preservatives, condiments, stabilizers, hydrolysed vegetable protein",
+        "milk powders, caseinate, whey powder, egg protein and vegetable protein products",
+        "meal, flour, fibres or starch from cereal/grain, potato or sweet potato",
+        "rusk, bread, biscuit or bakery products",
+        "sugars and glucose syrup",
+        "dairy products and analogues",
+        "fats, oils and fat emulsions",
+        "fruits, vegetables, juices, nectars and vegetable protein products",
+        "cereal products, egg products, honey, salt and salt substitutes, herbs, spices, seasonings, condiments, vinegar, mustard, sauces, yeast and soybean seasonings",
+        "hydrolysed protein and listed permitted hydrocolloids/gums"
+      ],
+      "formulation_rules": [
+        {
+          "parameter": "Total meat including lean meat, fat and edible offals",
+          "operator": ">=",
+          "value": 50,
+          "unit": "% of finished product"
+        },
+        {
+          "parameter": "Lean meat",
+          "operator": ">=",
+          "value": 25,
+          "unit": "% of total formulation"
+        },
+        {
+          "parameter": "MRM from non-poultry food animals",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% of meat portion",
+          "note": "No usage limit is specified here for MRM derived from poultry."
+        },
+        {
+          "parameter": "Fat — pork products",
+          "operator": "<=",
+          "value": 30,
+          "unit": "%"
+        },
+        {
+          "parameter": "Fat — other food animals",
+          "operator": "<=",
+          "value": 25,
+          "unit": "%"
+        },
+        {
+          "parameter": "Fat — birds and rabbits",
+          "operator": "<=",
+          "value": 15,
+          "unit": "%"
+        },
+        {
+          "parameter": "Combined added water and fat",
+          "operator": "<=",
+          "value": 40,
+          "unit": "%"
+        },
+        {
+          "parameter": "Low-fat claim/product fat",
+          "operator": "<=",
+          "value": 10,
+          "unit": "%"
+        },
+        {
+          "parameter": "Extra-lean product fat",
+          "operator": "<",
+          "value": 5,
+          "unit": "%"
+        }
+      ],
+      "calculated_rules": [
+        {
+          "parameter": "Maximum final moisture",
+          "formula": "4 × protein content (%) + 10",
+          "operator": "<=",
+          "unit": "%"
+        }
+      ],
+      "classification_rules": [
+        {
+          "condition": "Extenders/binders > 3.5% in finished product OR isolated soy protein > 2.0%",
+          "result": "Product must be labelled 'Imitation'."
+        }
+      ],
+      "storage_rules": [
+        {
+          "state": "chilled",
+          "operator": "<=",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.5.2(2A)",
+      "name": "Meat Sausages",
+      "status": "structured_core",
+      "definition": "Sausage obtained by stuffing minced meat and other ingredients in natural or artificial casings; may be marketed as fresh/raw, fermented, cooked, smoked or combinations thereof.",
+      "inherits_from": [
+        "2.5.2(2) Comminuted or Restructured Meat Products"
+      ],
+      "variants": [
+        {
+          "name": "Fresh",
+          "meat_min_pct": 50,
+          "moisture_max_pct": 65,
+          "total_ash_max_pct": 3
+        },
+        {
+          "name": "Cooked/Smoked",
+          "meat_min_pct": 60,
+          "moisture_max_pct": 60,
+          "total_ash_max_pct": 3
+        },
+        {
+          "name": "Dry/Fermented",
+          "meat_min_pct": 65,
+          "moisture_max_pct": 50,
+          "total_ash_max_pct": 3
+        }
+      ],
+      "process_rules": [
+        "Cooked sausages shall attain an internal temperature of 75°C.",
+        "Cooked sausages shall be cooled below 40°C before chilling or freezing.",
+        "Fresh meat sausages shall be brought to 4°C within 12 hours.",
+        "Smoked sausages shall be smoked only with hard wood or other non-resinous materials."
+      ],
+      "storage_rules": [
+        {
+          "state": "fresh chilled",
+          "operator": "<=",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "cooked chilled",
+          "operator": "<=",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B",
+      "enforcement_note": "The standard was notified with compliance from 1 February 2026. FSSAI direction dated 28 April 2026 further extended the compliance period for the Meat Sausage standards for six months from 1 May 2026. PMSV should display this status and confirm the operative enforcement position before using the sausage clause as a hard-fail compliance gate."
+    },
+    {
+      "key": "2.5.2(3)",
+      "name": "Cured or Pickled and Cooked or Smoked Meat Products, or both",
+      "status": "structured_core",
+      "definition": "Cured or pickled and cooked or smoked meat products, or both, prepared by curing/pickling, salting, cooking and/or smoking.",
+      "required_ingredients": [
+        "meat",
+        "food-grade sodium chloride or potassium chloride",
+        "nitrites",
+        "phosphates"
+      ],
+      "conditional_ingredients": [
+        {
+          "condition": "pickled meat product",
+          "required": "vinegar"
+        }
+      ],
+      "permitted_ingredient_groups": [
+        "milk powders/caseinate/whey",
+        "hydrolysed vegetable protein/soya",
+        "sugars and syrups",
+        "honey/treacle/molasses",
+        "herbs, spices, seasonings, condiments, saffron, vinegars, mustards, sauces, yeast, soybean seasonings, juniper berries and smoke/smoke essences"
+      ],
+      "storage_rules": [
+        {
+          "state": "chilled",
+          "operator": "<=",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C",
+          "note": "Frozen storage requirement excludes pickled meat products."
+        }
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.5.2(4)",
+      "name": "Dried or Dehydrated Meat Products",
+      "status": "structured_core",
+      "variants": [
+        {
+          "name": "Low-moisture meat product",
+          "water_activity_operator": "<",
+          "water_activity": 0.6,
+          "moisture_operator": "<",
+          "moisture_pct": 25
+        },
+        {
+          "name": "Intermediate-moisture meat product",
+          "water_activity_range": [
+            0.6,
+            0.85
+          ],
+          "moisture_operator": "<",
+          "moisture_pct": 50
+        }
+      ],
+      "process_rules": [
+        "Drying may be by salting, solar, mechanical, vacuum or freeze drying to achieve the required moisture and water-activity level."
+      ],
+      "storage_rules": [
+        {
+          "state": "chilled",
+          "operator": "<=",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C",
+          "note": "Storage rule excludes low-moisture meat products."
+        }
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.5.2(5)",
+      "name": "Cooked or Semi-Cooked Meat Products",
+      "status": "structured_core",
+      "definition": "Cooked, cured-and-cooked or heat-treated meat products; semi-cooked products require additional cooking before consumption.",
+      "process_rules": [
+        {
+          "parameter": "Cooked meat minimum thermal core temperature",
+          "operator": ">=",
+          "value": 75,
+          "unit": "°C"
+        }
+      ],
+      "permitted_ingredient_groups": [
+        "salt/salt substitutes including nitrites",
+        "milk powders, caseinate, whey, egg and vegetable proteins",
+        "meal/flour/fibre/starch from grain, potato or sweet potato",
+        "bread/biscuit/bakery products",
+        "sugars and glucose syrup",
+        "fats",
+        "vegetables",
+        "cereal products",
+        "herbs, spices, seasonings, condiments",
+        "water-soluble hydrolysed protein"
+      ],
+      "storage_rules": [
+        {
+          "state": "chilled",
+          "operator": "<=",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.5.2(6)",
+      "name": "Fresh or Chilled or Frozen Rabbit Meat",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "range",
+          "min": 72.5,
+          "max": 75,
+          "unit": "%"
+        },
+        {
+          "parameter": "Protein",
+          "operator": "range",
+          "min": 20,
+          "max": 23,
+          "unit": "%"
+        },
+        {
+          "parameter": "Fat",
+          "operator": "range",
+          "min": 1,
+          "max": 6,
+          "unit": "%"
+        }
+      ],
+      "storage_rules": [
+        {
+          "state": "short-term",
+          "target": 4,
+          "tolerance": 1,
+          "unit": "°C"
+        },
+        {
+          "state": "long-term",
+          "target": -18,
+          "tolerance": 1,
+          "unit": "°C"
+        },
+        {
+          "state": "chilled consumption",
+          "range": [
+            2,
+            4
+          ],
+          "unit": "days"
+        },
+        {
+          "state": "frozen consumption",
+          "operator": "<=",
+          "value": 10,
+          "unit": "months"
+        }
+      ],
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.5.2(7)",
+      "name": "Fresh or Chilled or Frozen Pork or Pig Meat",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Boneless meat moisture",
+          "operator": "range",
+          "min": 70,
+          "max": 72,
+          "unit": "%"
+        },
+        {
+          "parameter": "Boneless meat protein",
+          "operator": "range",
+          "min": 20,
+          "max": 22,
+          "unit": "%"
+        },
+        {
+          "parameter": "Boneless meat fat",
+          "operator": "range",
+          "min": 5,
+          "max": 6,
+          "unit": "%"
+        }
+      ],
+      "storage_rules": [
+        {
+          "state": "chilled/short-term",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen/long-term",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        },
+        {
+          "state": "chilled consumption",
+          "range": [
+            2,
+            4
+          ],
+          "unit": "days"
+        },
+        {
+          "state": "frozen consumption",
+          "operator": "<=",
+          "value": 10,
+          "unit": "months"
+        }
+      ]
+    },
+    {
+      "key": "2.5.2(8)",
+      "name": "Fresh or Chilled or Frozen Beef",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Boneless meat moisture",
+          "operator": "range",
+          "min": 68,
+          "max": 77,
+          "unit": "%"
+        },
+        {
+          "parameter": "Boneless meat protein",
+          "operator": "range",
+          "min": 17.5,
+          "max": 23.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Boneless beef fat",
+          "operator": "range",
+          "min": 8,
+          "max": 12,
+          "unit": "%"
+        },
+        {
+          "parameter": "Buffalo meat fat",
+          "operator": "range",
+          "min": 1,
+          "max": 3,
+          "unit": "%"
+        },
+        {
+          "parameter": "Mithun meat fat",
+          "operator": "range",
+          "min": 0.7,
+          "max": 1.5,
+          "unit": "%"
+        }
+      ],
+      "storage_rules": [
+        {
+          "state": "chilled/short-term",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen/long-term",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        },
+        {
+          "state": "chilled consumption",
+          "range": [
+            2,
+            4
+          ],
+          "unit": "days"
+        },
+        {
+          "state": "frozen consumption",
+          "operator": "<=",
+          "value": 12,
+          "unit": "months"
+        }
+      ]
+    },
+    {
+      "key": "2.5.2(9)",
+      "name": "Fresh or Chilled or Frozen Chevon or Goat Meat",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Boneless meat moisture",
+          "operator": "range",
+          "min": 74,
+          "max": 76,
+          "unit": "%"
+        },
+        {
+          "parameter": "Boneless meat protein",
+          "operator": "range",
+          "min": 20,
+          "max": 22,
+          "unit": "%"
+        },
+        {
+          "parameter": "Boneless meat fat",
+          "operator": "range",
+          "min": 2,
+          "max": 4,
+          "unit": "%"
+        }
+      ],
+      "storage_rules": [
+        {
+          "state": "chilled/short-term",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen/long-term",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        },
+        {
+          "state": "chilled consumption",
+          "range": [
+            2,
+            4
+          ],
+          "unit": "days"
+        },
+        {
+          "state": "frozen consumption",
+          "operator": "<=",
+          "value": 12,
+          "unit": "months"
+        }
+      ]
+    },
+    {
+      "key": "2.5.2(10)",
+      "name": "Fresh or Chilled or Frozen Mutton or Sheep Meat",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Boneless meat moisture",
+          "operator": "range",
+          "min": 68,
+          "max": 72,
+          "unit": "%"
+        },
+        {
+          "parameter": "Boneless meat protein",
+          "operator": "range",
+          "min": 20,
+          "max": 22,
+          "unit": "%"
+        },
+        {
+          "parameter": "Boneless meat fat",
+          "operator": "range",
+          "min": 4,
+          "max": 10,
+          "unit": "%"
+        }
+      ],
+      "storage_rules": [
+        {
+          "state": "chilled/short-term",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen/long-term",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        },
+        {
+          "state": "chilled consumption",
+          "range": [
+            2,
+            4
+          ],
+          "unit": "days"
+        },
+        {
+          "state": "frozen consumption",
+          "operator": "<=",
+          "value": 12,
+          "unit": "months"
+        }
+      ]
+    },
+    {
+      "key": "2.5.2(11)",
+      "name": "Fresh or Chilled or Frozen Poultry Meat",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Boneless meat moisture",
+          "operator": "range",
+          "min": 60,
+          "max": 74.86,
+          "unit": "%"
+        },
+        {
+          "parameter": "Boneless meat protein",
+          "operator": "range",
+          "min": 19.5,
+          "max": 23.2,
+          "unit": "%"
+        },
+        {
+          "parameter": "Boneless meat fat",
+          "operator": "range",
+          "min": 3.5,
+          "max": 18,
+          "unit": "%"
+        }
+      ],
+      "storage_rules": [
+        {
+          "state": "chilled/short-term",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen/long-term",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        },
+        {
+          "state": "chilled consumption",
+          "range": [
+            2,
+            4
+          ],
+          "unit": "days"
+        },
+        {
+          "state": "frozen consumption",
+          "operator": "<=",
+          "value": 12,
+          "unit": "months"
+        }
+      ]
+    },
+    {
+      "key": "2.5.2(12)",
+      "name": "Marinated Meat Products",
+      "status": "structured_core",
+      "definition": "Uncooked meat to which a liquid or powder marinade is applied by soaking, blending, tumbling, massaging or mechanical injection.",
+      "permitted_ingredient_groups": [
+        "potassium chloride, phosphates, nitrites",
+        "acetic/lactic/citric acid, wine, beer, fruits/fruit juice, curd, buttermilk, salsa and soy sauce",
+        "hydrocolloids, gelatin, soy and milk proteins and modified food starches",
+        "sugars and syrups, honey, treacle/molasses",
+        "herbs, spices, seasonings, condiments",
+        "ascorbates, monosodium glutamate",
+        "xanthan gum and guar gum"
+      ],
+      "storage_rules": [
+        {
+          "state": "chilled",
+          "operator": "<=",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.5.2(13)",
+      "name": "Fermented Meat Products",
+      "status": "structured_core",
+      "definition": "Meat product produced by selected fermenting microorganisms such as lactic acid bacteria or yeast, or both, in the presence of salt by fermentation, ripening and drying.",
+      "process_rules": [
+        {
+          "parameter": "pH after fermentation",
+          "operator": "range",
+          "min": 4.5,
+          "max": 5.5,
+          "unit": "pH"
+        }
+      ],
+      "permitted_ingredient_groups": [
+        "sodium chloride, nitrites and phosphates",
+        "milk powders/caseinate/whey, egg protein and vegetable protein products",
+        "meal/flour/fibres/starch from grain, potato or sweet potato",
+        "bread, biscuit or bakery products",
+        "cereal products",
+        "herbs, spices, seasonings, condiments, vinegar",
+        "water-soluble hydrolysed protein"
+      ],
+      "storage_rules": [
+        {
+          "state": "chilled",
+          "operator": "<=",
+          "value": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.5.2(14)",
+      "name": "Animal Casings",
+      "status": "structured_core",
+      "definition": "Soft cylindrical containers obtained from large or small intestines, oesophagus or urinary bladder of slaughtered food animals for preparation of meat products such as sausages.",
+      "process_rules": [
+        "Casings shall be dried or wet salted and calibrated as specified.",
+        "Adhering tissues and contents shall be removed, followed by washing, salting and/or drying and sorting."
+      ],
+      "prohibited_or_absent": [
+        "holes",
+        "blisters",
+        "lacerations",
+        "nodules",
+        "cicatrices",
+        "domestics",
+        "black nodes",
+        "slime",
+        "mucus",
+        "dung",
+        "salt burns",
+        "rust",
+        "mould/fungus infestation",
+        "putrefaction",
+        "rancidity",
+        "sour/acidic smell",
+        "parasitic infestation"
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.5.3(1)",
+      "name": "Fresh Eggs",
+      "status": "structured_core",
+      "definition": "Eggs in shell, other than broken, incubated or cooked eggs, from poultry species or birds for direct human consumption or preparation of egg products.",
+      "quality_rules": [
+        "Shells shall be clean and sound and free from cracks, leaks and faecal contamination."
+      ],
+      "variants": [
+        {
+          "name": "Chicken",
+          "water_pct": [
+            72.8,
+            75.6
+          ],
+          "protein_pct": [
+            12.8,
+            13.4
+          ],
+          "fat_pct": [
+            10.5,
+            11.8
+          ],
+          "carbohydrate_pct": [
+            0.3,
+            1
+          ],
+          "ash_pct": [
+            0.8,
+            1
+          ]
+        },
+        {
+          "name": "Turkey",
+          "water_pct": [
+            71.6,
+            75.7
+          ],
+          "protein_pct": [
+            12.6,
+            13.6
+          ],
+          "fat_pct": [
+            10.8,
+            12.6
+          ],
+          "carbohydrate_pct": [
+            0.6,
+            0.8
+          ],
+          "ash_pct": [
+            0.7,
+            0.9
+          ]
+        },
+        {
+          "name": "Guinea Fowl",
+          "water_pct": [
+            71.3,
+            74.1
+          ],
+          "protein_pct": [
+            12.8,
+            14.2
+          ],
+          "fat_pct": [
+            11.2,
+            12.8
+          ],
+          "carbohydrate_pct": [
+            0.7,
+            0.9
+          ],
+          "ash_pct": [
+            0.7,
+            1.17
+          ]
+        },
+        {
+          "name": "Quail",
+          "water_pct": [
+            73.1,
+            76.4
+          ],
+          "protein_pct": [
+            12.5,
+            13.4
+          ],
+          "fat_pct": [
+            10.6,
+            11.7
+          ],
+          "carbohydrate_pct": [
+            0.8,
+            1
+          ],
+          "ash_pct": [
+            1,
+            1.2
+          ]
+        },
+        {
+          "name": "Duck",
+          "water_pct": [
+            68.2,
+            71.4
+          ],
+          "protein_pct": [
+            13.1,
+            14.2
+          ],
+          "fat_pct": [
+            13.8,
+            15
+          ],
+          "carbohydrate_pct": [
+            1.1,
+            1.3
+          ],
+          "ash_pct": [
+            0.9,
+            1
+          ]
+        },
+        {
+          "name": "Goose",
+          "water_pct": [
+            68.9,
+            72.3
+          ],
+          "protein_pct": [
+            13.4,
+            14.3
+          ],
+          "fat_pct": [
+            12.4,
+            13.6
+          ],
+          "carbohydrate_pct": [
+            1.1,
+            1.3
+          ],
+          "ash_pct": [
+            1,
+            1.4
+          ]
+        }
+      ],
+      "storage_rules": [
+        {
+          "state": "ambient",
+          "temperature": "30 ± 5°C",
+          "consume_within": 2,
+          "unit": "weeks from laying"
+        },
+        {
+          "state": "refrigerated",
+          "temperature": "2–8°C",
+          "consume_within": 5,
+          "unit": "weeks from laying"
+        }
+      ]
+    },
+    {
+      "key": "2.5.3(2)",
+      "name": "Frozen Egg Products",
+      "status": "structured_core",
+      "process_rules": [
+        {
+          "parameter": "Pasteurisation temperature",
+          "operator": "range",
+          "min": 61,
+          "max": 63,
+          "unit": "°C",
+          "duration": "5 minutes"
+        },
+        {
+          "parameter": "Frozen maintenance temperature",
+          "operator": "range",
+          "min": -40,
+          "max": -23.3,
+          "unit": "°C"
+        }
+      ],
+      "variants": [
+        {
+          "name": "Frozen egg white",
+          "solids_min_pct": 10.5,
+          "fat_min_pct": 0.05,
+          "protein_min_pct": 10,
+          "pH_min": 8.5
+        },
+        {
+          "name": "Frozen egg yolk",
+          "solids_min_pct": 40,
+          "fat_min_pct": 25,
+          "protein_min_pct": 15,
+          "pH_min": 5.9
+        },
+        {
+          "name": "Frozen whole egg",
+          "solids_min_pct": 22,
+          "fat_min_pct": 9.8,
+          "protein_min_pct": 10.5,
+          "pH_min": 7
+        }
+      ],
+      "common_composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg",
+          "note": "No particles over 1 mm in 100 g."
+        },
+        {
+          "parameter": "Beta-hydroxybutyric acid",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lactic acid",
+          "operator": "<=",
+          "value": 1000,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Succinic acid",
+          "operator": "<=",
+          "value": 25,
+          "unit": "mg/kg"
+        }
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.5.3(3)",
+      "name": "Egg Powder",
+      "status": "structured_core",
+      "variants": [
+        {
+          "name": "Dried egg white",
+          "moisture_max_pct": 2,
+          "total_solids_min_pct": 91.5
+        },
+        {
+          "name": "Dried egg yolk",
+          "moisture_max_pct": 2,
+          "total_solids_min_pct": 95,
+          "total_lipid_min_pct": 61.6,
+          "protein_min_pct": 33.1,
+          "pH_min": 3.9
+        },
+        {
+          "name": "Dried whole egg",
+          "moisture_max_pct": 2,
+          "total_solids_min_pct": 95,
+          "total_lipid_min_pct": 41.2,
+          "protein_min_pct": 45,
+          "pH_min": 4.2
+        }
+      ],
+      "process_rules": [
+        "Liquid egg shall be homogenized, filtered, pasteurized, desugarized and re-pasteurized before suitable drying."
+      ],
+      "prohibited_or_absent": [
+        "extraneous material",
+        "off odour"
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.5.3(4)",
+      "name": "Liquid Egg Products",
+      "status": "structured_core",
+      "process_rules": [
+        "Shell eggs shall be washed, sanitized and candled before breaking and processing.",
+        "Processed liquid egg shall be maintained at 4°C or below for up to 7 days."
+      ],
+      "permitted_whipping_agents": [
+        "triethyl citrate",
+        "sodium citrate",
+        "sodium hexametaphosphate",
+        "tetrasodium pyrophosphate"
+      ],
+      "variants": [
+        {
+          "name": "Liquid egg white",
+          "solids_min_pct": 10.5,
+          "fat_min_pct": 0.05,
+          "protein_min_pct": 10,
+          "pH_min": 8.5
+        },
+        {
+          "name": "Liquid egg yolk",
+          "solids_min_pct": 40,
+          "fat_min_pct": 25,
+          "protein_min_pct": 15,
+          "pH_min": 5.9
+        },
+        {
+          "name": "Liquid whole egg",
+          "solids_min_pct": 22,
+          "fat_min_pct": 9.8,
+          "protein_min_pct": 10.5,
+          "pH_min": 7
+        }
+      ],
+      "common_composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg",
+          "note": "No particles over 1 mm in 100 g."
+        },
+        {
+          "parameter": "Beta-hydroxybutyric acid",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lactic acid",
+          "operator": "<=",
+          "value": 1000,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Succinic acid",
+          "operator": "<=",
+          "value": 25,
+          "unit": "mg/kg"
+        }
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.5.3(5)",
+      "name": "Pickled Eggs",
+      "status": "structured_core",
+      "definition": "Hard-boiled sound and wholesome hen or quail eggs prepared with pickle solution using vinegar, oil and salt as major pickling ingredients.",
+      "variants": [
+        {
+          "name": "Vinegar-based",
+          "acidity_as_acetic_acid_min_pct": 0.8,
+          "sodium_chloride_max_pct": 3,
+          "pickling_solution_pH_max": 3.2
+        },
+        {
+          "name": "Oil-based",
+          "acidity_as_acetic_acid_min_pct": 0.6,
+          "sodium_chloride_max_pct": 3,
+          "pickling_solution_pH_max": 3.6
+        }
+      ],
+      "formulation_rules": [
+        {
+          "parameter": "Vinegar:water in vinegar-based pickle solution",
+          "operator": "ratio",
+          "value": "50:50",
+          "unit": "v/v"
+        },
+        {
+          "parameter": "Common salt in vinegar-based pickle solution",
+          "operator": "=",
+          "value": 8,
+          "unit": "% w/v"
+        },
+        {
+          "parameter": "Each of spice mixture, garlic and ginger in vinegar-based solution",
+          "operator": "=",
+          "value": 2,
+          "unit": "% w/v"
+        },
+        {
+          "parameter": "Peeled eggs:pickle solution",
+          "operator": "ratio",
+          "value": "1:1.25",
+          "unit": "w/v"
+        },
+        {
+          "parameter": "Acetic acid in oil-based pickle",
+          "operator": "=",
+          "value": 2,
+          "unit": "% of peeled egg weight"
+        },
+        {
+          "parameter": "Eggs:gravy in oil-based pickle",
+          "operator": "ratio",
+          "value": "70:30",
+          "tolerance": 1,
+          "unit": "%"
+        }
+      ],
+      "process_rules": [
+        "Eggs for vinegar-based pickles are simmered in water containing 2% salt (w/v) for 10 minutes.",
+        "Vinegar-based pickling solution is boiled for 10 minutes, filtered, heated to 70 ± 2°C and poured onto peeled eggs.",
+        "Vinegar-based and oil-based pickled eggs are aged for 48 hours in pre-sterilised glass containers."
+      ],
+      "ingredient_rules": [
+        "Food-grade vinegar shall be 5–8% acetic acid (v/v)."
+      ],
+      "label_rules": [
+        "Product shall be designated with a qualifying statement describing its true nature without misleading the consumer."
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    }
+  ]
+}
