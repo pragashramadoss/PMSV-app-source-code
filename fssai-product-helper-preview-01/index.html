@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 29</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 30</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation ingredients</button>
@@ -817,7 +817,14 @@ function checkUsageAgainstRule(item,q){
  const u=usageForIngredient(item);
  if(q.appendix){
    const lim=numericLimitMgKg(q.appendix.limit);
-   if(lim!==null)return {unit:'mg/kg',value:u.mgkg,limit:lim,pass:u.mgkg<=lim};
+   if(lim!==null){
+     const specialBasis=/fat\s*\/\s*oil basis|fat or oil basis/i.test(String(q.appendix.condition||''));
+     if(specialBasis){
+       if(u.mgkg>lim)return {unit:'mg/kg final product',value:u.mgkg,limit:lim,pass:false,specialBasis:true};
+       return {unit:'mg/kg final product',value:u.mgkg,limit:lim,pass:null,specialBasis:true};
+     }
+     return {unit:'mg/kg',value:u.mgkg,limit:lim,pass:u.mgkg<=lim};
+   }
  }
  const n=normIngredient(item.name);
  if(n==='caffeine')return {unit:'mg/L',value:u.mgL,min:145,max:300,pass:u.mgL>=145&&u.mgL<=300};
@@ -962,11 +969,15 @@ function renderFormula(){
      list.className='';
      list.innerHTML=formulationIngredients.map((x,i)=>{
        const q=qualifyIngredient(x);
-       const cls=q.status==='qualified'?'status-good':q.status==='review'?'status-warn':'status-bad';
        const u=usageForIngredient(x);
        const usageCheck=checkUsageAgainstRule(x,q);
-       const checkHtml=usageCheck?('<br><small class="'+(usageCheck.pass?'status-good':'status-bad')+'">'+(usageCheck.pass?'Usage within loaded limit':'Usage requires check')+': '+fmt(usageCheck.value,3)+' '+usageCheck.unit+'</small>'):'';
-       return '<div class="ingredient-row"><div><b>'+esc(x.name)+'</b><br><small>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+' · '+fmt(u.percent,4)+'% w/w<br>'+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small></div><div class="'+cls+'">'+(q.status==='qualified'?'Qualified':q.status==='review'?'Further review':'Unresolved')+checkHtml+'</div><div><small>'+esc(q.qualification)+'</small><br><span class="clause">'+esc(q.clause)+'</span></div><div class="ingredient-actions"><button class="ingredient-edit" type="button" data-edit-ingredient="'+i+'">Edit</button><button class="ingredient-remove" type="button" data-remove-ingredient="'+i+'">Remove</button></div></div>';
+       const liveFail=usageCheck&&usageCheck.pass===false;
+       const livePass=usageCheck&&usageCheck.pass===true;
+       const livePending=usageCheck&&usageCheck.pass===null;
+       const cls=liveFail?'status-bad':livePass?'status-good':q.status==='qualified'?'status-warn':q.status==='review'?'status-warn':'status-bad';
+       const status=liveFail?'NOT COMPLIANT':livePass?'COMPLIANT':livePending?'QUANTITY CHECK REQUIRED':q.status==='qualified'?'PERMITTED — NO NUMERIC LIMIT CHECKED':q.status==='review'?'Further review':'Unresolved';
+       const checkHtml=usageCheck?('<br><small class="'+(liveFail?'status-bad':livePass?'status-good':'status-warn')+'">'+fmt(usageCheck.value,3)+' '+usageCheck.unit+(usageCheck.limit!=null?' · limit '+fmt(usageCheck.limit,3)+' mg/kg':'')+(usageCheck.specialBasis?'<br>Limit is on fat/oil basis; a pass cannot be confirmed from total product mass alone.':'')+'</small>'):'';
+       return '<div class="ingredient-row"><div><b>'+esc(x.name)+'</b><br><small>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+' · '+fmt(u.percent,4)+'% w/w<br>'+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small></div><div class="'+cls+'">'+status+checkHtml+'</div><div><small>'+esc(q.qualification)+'</small><br><span class="clause">'+esc(q.clause)+'</span></div><div class="ingredient-actions"><button class="ingredient-edit" type="button" data-edit-ingredient="'+i+'">Edit</button><button class="ingredient-remove" type="button" data-remove-ingredient="'+i+'">Remove</button></div></div>';
      }).join('');
      list.querySelectorAll('[data-edit-ingredient]').forEach(btn=>btn.addEventListener('click',()=>{
        editIngredient(Number(btn.dataset.editIngredient));
@@ -982,14 +993,17 @@ function renderFormula(){
    const x=formulationIngredients[i];
    const u=usageForIngredient(x);
    const chk=checkUsageAgainstRule(x,q);
-   const usage='<b>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+'</b><br><small>'+fmt(u.percent,4)+'% w/w · '+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small>'+(chk?'<br><small class="'+(chk.pass?'status-good':'status-bad')+'">'+(chk.pass?'Within loaded limit':'Check loaded limit')+'</small>':'');
+   const usage='<b>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+'</b><br><small>'+fmt(u.percent,4)+'% w/w · '+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small>'+(chk?'<br><small class="'+(chk.pass===false?'status-bad':chk.pass===true?'status-good':'status-warn')+'">'+(chk.pass===false?'NOT COMPLIANT':chk.pass===true?'COMPLIANT':'QUANTITY CHECK REQUIRED')+'</small>':'');
    return '<tr><td><b>'+esc(q.name)+'</b></td><td>'+usage+'</td><td>'+esc(q.qualification)+(q.appendix?'<br><small>Appendix A limit: <b>'+esc(q.appendix.limit)+'</b></small>':'')+'</td><td><span class="clause">'+esc(q.clause)+'</span></td><td>'+esc(q.impact)+'</td></tr>';
  }).join('') || '<tr><td colspan="5">Enter formulation ingredients first.</td></tr>';
 
  const hasUnresolved=qs.some(q=>q.route==='unresolved');
  const hasProp=qs.some(q=>q.route==='proprietary');
+ const liveChecks=formulationIngredients.map((x,i)=>checkUsageAgainstRule(x,qs[i]));
+ const hasUsageFail=liveChecks.some(chk=>chk&&chk.pass===false);
  if(summary){
    if(!qs.length)summary.innerHTML='<b>No formulation entered.</b> Enter ingredients first.';
+   else if(hasUsageFail)summary.innerHTML='<b>Formulation is NOT COMPLIANT with at least one loaded quantitative FSSAI limit.</b> Compliance is recalculated automatically whenever any ingredient or quantity changes.';
    else if(hasUnresolved)summary.innerHTML='<b>Classification unresolved.</b> At least one ingredient has no verified FSSAI qualification. Do not claim the formulation is standardized or Proprietary Food until that ingredient is resolved.';
    else if(hasProp)summary.innerHTML='<b>Possible Proprietary Food review required.</b> One or more extra non-additive ingredients rely on Regulation 2.12. This does not automatically make the product proprietary. If the finished product is still being treated as standardized Caffeinated Beverage, the additional-ingredient approval requirement in <b>2.10.6(2)(III)(A)</b> must also be addressed.';
    else summary.innerHTML='<b>Standardized Caffeinated Beverage route remains available.</b> The entered ingredients are matched to the product standard, its Carbonated Water cross-reference, or applicable Appendix A permissions, subject to all listed limits and conditions.';
