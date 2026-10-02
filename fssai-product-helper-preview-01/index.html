@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 32</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 33</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation ingredients</button>
@@ -813,7 +813,7 @@ function isFatOilIngredient(item){
  const n=normIngredient(item?.name);
  if(!n)return false;
  if(/\b(essential oil|flavou?r oil|mineral oil)\b/.test(n))return false;
- return /\b(ghee|butter|butter oil|milk fat|anhydrous milk fat|shortening|margarine|vanaspati|palmolein|cocoa butter)\b/.test(n) || /\b(?:sunflower|soybean|soya|mustard|groundnut|peanut|sesame|rice bran|canola|rapeseed|olive|coconut|palm|cottonseed|safflower|corn|maize) oil\b/.test(n);
+ return /\boil\b/.test(n) || /\bfat\b/.test(n) || /\b(ghee|butter|shortening|margarine|vanaspati|palmolein|cocoa butter)\b/.test(n);
 }
 function fatOilBasis(){
  const items=formulationIngredients.filter(isFatOilIngredient);
