@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 36</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 37</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation ingredients</button>
@@ -37,6 +37,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <button class="tab" data-tab="micro">Microbiology</button>
 <button class="tab" data-tab="process">Manufacturing process</button>
 <button class="tab" data-tab="processing">Processing aids</button>
+<button class="tab" data-tab="nutrition">Nutrition</button>
 <button class="tab" data-tab="quality">Label requirements</button>
 <button class="tab" data-tab="sources">Official sources</button>
 </nav>
@@ -427,6 +428,55 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 </section>
 
+<section id="nutrition" class="view hidden">
+<div class="card">
+<div class="section-title"><h2>Nutritional information</h2><span>Calculated from formulation quantities</span></div>
+<div class="notice oknote"><b>Government-source rule:</b> PMSV uses only Indian government nutrition sources for default calculations. Food composition is matched to the local ICMR–NIN / IFCT dataset loaded in this module, while nutrient declarations, adult reference values and energy conversion factors follow the FSSAI Labelling & Display Regulations. If an ingredient has no verified government nutrition profile loaded, PMSV does <b>not</b> guess its nutrients; the result is marked incomplete.</div>
+<div id="nutritionDbStatus" class="notice"><b>Nutrition database:</b> loading official-source local data…</div>
+
+<div class="checker-grid">
+  <div class="field">
+    <label>Serving size (ml)</label>
+    <input id="nutritionServingMl" type="number" min="1" step="1" value="250">
+    <small>Used for the per-serving nutrition column and %RDA calculation.</small>
+  </div>
+  <div class="field">
+    <label>Finished product density (kg/L)</label>
+    <div id="nutritionDensityDisplay" class="recognized">1.000 kg/L</div>
+    <small>Taken from the formulation density entered on the Formulation page.</small>
+  </div>
+</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Calculated nutrition panel</h2><span>FSSAI label format</span></div>
+<div id="nutritionCalculationStatus" class="notice"></div>
+<div class="tablewrap"><table>
+<thead><tr><th>Nutrient</th><th>Per 100 ml</th><th>Per serving</th><th>% RDA / serving</th></tr></thead>
+<tbody id="nutritionRows"></tbody>
+</table></div>
+<div class="notice"><b>FSSAI adult reference values used for %RDA:</b> 2,000 kcal energy, 67 g total fat, 22 g saturated fat, 2 g trans fat, 50 g added sugars and 2,000 mg sodium. Protein, carbohydrate, total sugars and cholesterol are shown without an adult %RDA in this calculator because the cited FSSAI labelling provision does not provide a corresponding reference value for those fields.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Ingredient nutrition-source coverage</h2><span>Every value must be traceable</span></div>
+<div class="tablewrap"><table>
+<thead><tr><th>Ingredient</th><th>Quantity</th><th>Nutrition match</th><th>Source / status</th></tr></thead>
+<tbody id="nutritionCoverageRows"></tbody>
+</table></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Calculation basis</h2><span>Deterministic · no AI</span></div>
+<div class="grid2">
+<div class="item"><b>Food composition</b><small><b>ICMR–National Institute of Nutrition — Indian Food Composition Tables (IFCT) 2017</b> is the primary Indian government source for foods with an exact applicable entry.</small></div>
+<div class="item"><b>Energy calculation</b><small>FSSAI conversion factors: carbohydrate 4 kcal/g; protein 4; fat 9; polyols except erythritol 2; erythritol 0; ethanol 7; organic acids 3; dietary fibre 2.</small></div>
+<div class="item"><b>Per 100 ml conversion</b><small>PMSV first totals nutrients from the actual ingredient quantities, calculates nutrient content per 100 g of formulation, then converts to per 100 ml using the entered finished-product density.</small></div>
+<div class="item"><b>Unmatched ingredients</b><small>No generic internet, crowdsourced or foreign database value is substituted. An unmatched ingredient is shown explicitly and the calculated panel remains <b>INCOMPLETE</b> until an official Indian-government value is loaded or a separately identified supplier/laboratory value is intentionally provided in a future workflow.</small></div>
+</div>
+</div>
+</section>
+
 <section id="quality" class="view hidden">
 <div class="card">
 <div class="section-title"><h2>Label requirements — Caffeinated Beverage</h2><span>General + product-specific + formulation-triggered</span></div>
@@ -538,6 +588,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <p><b>Chapter 2.12 — Proprietary Food</b><br><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/13_%20Chapter%202_12%20%28Proprietary%20Food%29.pdf">Official FSSAI regulation source used for Proprietary Food route assessment</a></p>
 <p><b>Approval for Non-Specified Food and Food Ingredients Regulations, 2017 · Version I (14.10.2022)</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/upload/uploadfiles/files/Compendium_FSS_NFS_FA_17_10_2022.pdf">Official FSSAI source used when no food/ingredient standard is established</a></p>
+<p><b>ICMR–National Institute of Nutrition — Indian Food Composition Tables (IFCT) 2017</b><br><a target="_blank" rel="noopener" href="https://www.nin.res.in/ebooks/IFCT2017.pdf">Primary Government of India food-composition source used by the PMSV nutrition calculator for foods with an exact applicable IFCT entry</a></p>
 <p><b>Food Safety and Standards (Labelling and Display) Regulations, 2020 · Compendium Version VIII (09.09.2025)</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/upload/uploadfiles/files/Comp_Labelling%20Display_Version%20VIII_09_09_2025.pdf">Official source used for the general pre-packaged-food label checklist, nutrition, ingredient order, veg/non-veg, additive declarations, FSSAI licence details, date marking, allergens and Schedule-II mandatory declarations</a></p>
 <p><b>Labelling and Display First Amendment Regulations, 2026 · notified 24.03.2026</b><br><a target="_blank" rel="noopener" href="https://fssai.gov.in/upload/uploadfiles/files/Notification%20dt%2024_03_2026_NRC.pdf">Tracked as a future-effective amendment; it comes into force on 01.07.2027 and is not applied prematurely in this current-date prototype</a></p>
 <div class="notice"><b>Source hierarchy:</b> consolidated FSSAI compendia are convenient reference documents, but amendment notifications remain part of the regulatory trail. Production PMSV should retain the source document, clause/table, effective date and last-verified date for every displayed requirement.</div>
@@ -959,6 +1010,147 @@ function renderLabelRequirements(){
    triggers.innerHTML='<h3 style="margin:14px 0 9px">Formulation-triggered label checks</h3><div class="grid2">'+blocks.join('')+'</div>';
  }
 }
+function nutritionProfileFor(name){
+ if(!nutritionDb||!Array.isArray(nutritionDb.profiles))return null;
+ const n=normIngredient(name);
+ return nutritionDb.profiles.find(p=>Array.isArray(p.names)&&p.names.some(x=>normIngredient(x)===n))||null;
+}
+function nutritionServingMl(){
+ const n=Number(document.getElementById('nutritionServingMl')?.value||document.getElementById('labelServingMl')?.value||250);
+ return Number.isFinite(n)&&n>0?n:250;
+}
+function nutritionEnergyPer100g(profile){
+ const p=profile?.per_100g||{};
+ if(Number.isFinite(Number(p.energy_kcal)))return Number(p.energy_kcal);
+ const f=nutritionDb?.energy_factors_kcal_per_g||{};
+ return (Number(p.carbohydrate_g||0)*Number(f.carbohydrate||4))
+   +(Number(p.protein_g||0)*Number(f.protein||4))
+   +(Number(p.total_fat_g||0)*Number(f.fat||9))
+   +(Number(p.polyols_g||0)*Number(f.polyols_except_erythritol||2))
+   +(Number(p.erythritol_g||0)*Number(f.erythritol||0))
+   +(Number(p.ethanol_g||0)*Number(f.alcohol_ethanol||7))
+   +(Number(p.organic_acid_g||0)*Number(f.organic_acid||3))
+   +(Number(p.dietary_fibre_g||0)*Number(f.dietary_fibre||2));
+}
+function calculateNutrition(){
+ const totalG=totalFormulaKg()*1000;
+ const keys=['protein_g','carbohydrate_g','total_sugars_g','added_sugars_g','total_fat_g','saturated_fat_g','trans_fat_g','cholesterol_mg','sodium_mg','dietary_fibre_g'];
+ const totals={energy_kcal:0};
+ keys.forEach(k=>totals[k]=0);
+ const matched=[],unmatched=[];
+ let coveredG=0;
+
+ formulationIngredients.forEach(item=>{
+   const g=qtyToKg(item.qty,item.unit)*1000;
+   if(!(g>0))return;
+   const profile=nutritionProfileFor(item.name);
+   if(!profile){
+     unmatched.push({item,g});
+     return;
+   }
+   const p=profile.per_100g||{};
+   const factor=g/100;
+   totals.energy_kcal+=nutritionEnergyPer100g(profile)*factor;
+   keys.forEach(k=>totals[k]+=Number(p[k]||0)*factor);
+   coveredG+=g;
+   matched.push({item,g,profile});
+ });
+
+ const per100g={};
+ if(totalG>0){
+   Object.keys(totals).forEach(k=>per100g[k]=totals[k]*100/totalG);
+ }else{
+   Object.keys(totals).forEach(k=>per100g[k]=0);
+ }
+ const density=formulaDensity();
+ const per100ml={};
+ Object.keys(per100g).forEach(k=>per100ml[k]=per100g[k]*density);
+ const serveFactor=nutritionServingMl()/100;
+ const perServe={};
+ Object.keys(per100ml).forEach(k=>perServe[k]=per100ml[k]*serveFactor);
+
+ return {
+   totalG,coveredG,coveragePct:totalG>0?(coveredG/totalG)*100:0,
+   matched,unmatched,per100g,per100ml,perServe,density,
+   complete:totalG>0&&unmatched.length===0
+ };
+}
+function nutritionRdaPercent(key,value){
+ const r=nutritionDb?.rda_adult||{};
+ const map={
+   energy_kcal:r.energy_kcal,
+   total_fat_g:r.total_fat_g,
+   saturated_fat_g:r.saturated_fat_g,
+   trans_fat_g:r.trans_fat_g,
+   added_sugars_g:r.added_sugars_g,
+   sodium_mg:r.sodium_mg
+ };
+ const den=Number(map[key]);
+ return Number.isFinite(den)&&den>0?(Number(value||0)/den)*100:null;
+}
+function renderNutrition(){
+ const rows=document.getElementById('nutritionRows');
+ const coverage=document.getElementById('nutritionCoverageRows');
+ const status=document.getElementById('nutritionCalculationStatus');
+ const densityEl=document.getElementById('nutritionDensityDisplay');
+ if(!rows&&!coverage&&!status&&!densityEl)return;
+
+ const calc=calculateNutrition();
+ if(densityEl)densityEl.innerHTML='<b>'+fmt(calc.density,3)+' kg/L</b>';
+
+ if(!nutritionDb){
+   if(status)status.innerHTML='<b>Nutrition calculation unavailable.</b> Official-source nutrition database is not loaded.';
+   if(rows)rows.innerHTML='<tr><td colspan="4">Official-source nutrition data is not loaded.</td></tr>';
+   if(coverage)coverage.innerHTML='<tr><td colspan="4">No nutrition-source assessment available.</td></tr>';
+   return;
+ }
+
+ if(!formulationIngredients.length){
+   if(status)status.innerHTML='<b>No formulation entered.</b> Enter ingredients and quantities first.';
+   if(rows)rows.innerHTML='<tr><td colspan="4">Enter formulation ingredients first.</td></tr>';
+   if(coverage)coverage.innerHTML='<tr><td colspan="4">Enter formulation ingredients first.</td></tr>';
+   return;
+ }
+
+ if(status){
+   if(calc.complete){
+     status.className='notice oknote';
+     status.innerHTML='<b>Nutrition calculation COMPLETE for the currently loaded government-source profiles.</b><br>100% of the formulation mass is matched to a verified local nutrition profile. Values update automatically whenever an ingredient, quantity or density changes.';
+   }else{
+     status.className='notice';
+     status.innerHTML='<b>Nutrition calculation INCOMPLETE.</b><br>'+fmt(calc.coveragePct,2)+'% of formulation mass currently has a verified nutrition profile. Unmatched ingredient(s): <b>'+calc.unmatched.map(x=>esc(x.item.name)).join(', ')+'</b>. Their nutrients are not guessed or treated as zero; therefore the calculated panel below is provisional and must not be used as the final label until coverage is complete.';
+   }
+ }
+
+ const defs=[
+   ['energy_kcal','Energy','kcal',1],
+   ['protein_g','Protein','g',2],
+   ['carbohydrate_g','Carbohydrate','g',2],
+   ['total_sugars_g','Total sugars','g',2],
+   ['added_sugars_g','Added sugars','g',2],
+   ['total_fat_g','Total fat','g',2],
+   ['saturated_fat_g','Saturated fat','g',2],
+   ['trans_fat_g','Trans fat','g',2],
+   ['cholesterol_mg','Cholesterol','mg',2],
+   ['sodium_mg','Sodium','mg',2],
+   ['dietary_fibre_g','Dietary fibre','g',2]
+ ];
+ if(rows)rows.innerHTML=defs.map(([key,label,unit,d])=>{
+   const p100=Number(calc.per100ml[key]||0);
+   const ps=Number(calc.perServe[key]||0);
+   const rda=nutritionRdaPercent(key,ps);
+   return '<tr><td><b>'+label+'</b></td><td>'+fmt(p100,d)+' '+unit+'</td><td>'+fmt(ps,d)+' '+unit+' / '+fmt(nutritionServingMl(),0)+' ml</td><td>'+(rda===null?'—':fmt(rda,1)+'%')+'</td></tr>';
+ }).join('');
+
+ if(coverage){
+   coverage.innerHTML=formulationIngredients.map(item=>{
+     const profile=nutritionProfileFor(item.name);
+     const q=fmt(Number(item.qty),6)+' '+esc(item.unit||'kg');
+     if(!profile)return '<tr><td><b>'+esc(item.name)+'</b></td><td>'+q+'</td><td><span class="status-bad">No government profile loaded</span></td><td>Excluded from nutrient totals; calculation remains incomplete.</td></tr>';
+     return '<tr><td><b>'+esc(item.name)+'</b></td><td>'+q+'</td><td><span class="status-good">'+esc(profile.display_name||item.name)+'</span></td><td>'+esc(profile.source||'Official-source local profile')+'</td></tr>';
+   }).join('');
+ }
+}
 function numericLimitMgKg(text){
  const s=String(text||'').replace(/,/g,'');
  const m=s.match(/([0-9]+(?:\.[0-9]+)?)\s*mg\/kg/i);
@@ -1211,6 +1403,7 @@ function renderFormula(){
  if(contamChips)contamChips.innerHTML=chipHtml||'<span class="muted">No ingredients entered. Return to Formulation ingredients first.</span>';
 
  renderLabelRequirements();
+ renderNutrition();
 
  if(triggered){
    const rows=[];
@@ -1230,7 +1423,14 @@ function renderFormula(){
 }
 
 document.getElementById('formulaDensity')?.addEventListener('input',()=>saveFormula());
-document.getElementById('labelServingMl')?.addEventListener('input',renderLabelRequirements);
+document.getElementById('labelServingMl')?.addEventListener('input',event=>{
+ const other=document.getElementById('nutritionServingMl');if(other)other.value=event.currentTarget.value;
+ renderLabelRequirements();renderNutrition();
+});
+document.getElementById('nutritionServingMl')?.addEventListener('input',event=>{
+ const other=document.getElementById('labelServingMl');if(other)other.value=event.currentTarget.value;
+ renderNutrition();renderLabelRequirements();
+});
 try{const d=sessionStorage.getItem('pmsv_fssai_formula_density');if(d&&document.getElementById('formulaDensity'))document.getElementById('formulaDensity').value=d}catch(e){}
 document.getElementById('addIngredient')?.addEventListener('click',addIngredient);
 document.getElementById('cancelIngredientEdit')?.addEventListener('click',()=>{
@@ -1477,6 +1677,7 @@ function renderGmp(){
 renderAppendix();renderGmp();
 let regulatoryDb=null;
 let ingredientCatalog=[];
+let nutritionDb=null;
 
 function fallbackIngredientCatalog(){
  const rows=[];
@@ -1516,6 +1717,27 @@ async function loadRegulatoryDb(){
  }
  renderIngredientAutocomplete();
  renderFormula();
+}
+
+async function loadNutritionDb(){
+ const status=document.getElementById('nutritionDbStatus');
+ try{
+   const res=await fetch('./data/nutrition-db-v1.json',{cache:'no-store'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   nutritionDb=await res.json();
+   if(status){
+     const count=Array.isArray(nutritionDb.profiles)?nutritionDb.profiles.length:0;
+     status.className='notice oknote';
+     status.innerHTML='<b>Official-source nutrition database loaded · no AI.</b><br>'+count+' verified nutrition profiles are currently loaded in this starter dataset. Primary sources: ICMR–NIN IFCT 2017 and FSSAI Labelling & Display Regulations. Unmatched formulation ingredients are never estimated.';
+   }
+ }catch(e){
+   nutritionDb=null;
+   if(status){
+     status.className='notice';
+     status.innerHTML='<b>Nutrition database could not be loaded.</b> PMSV will not calculate nutrition from unverified fallback values.';
+   }
+ }
+ renderNutrition();
 }
 
 function exactCatalogMatch(value){
@@ -1604,6 +1826,7 @@ document.addEventListener('click',event=>{
  if(!event.target.closest('.autocomplete-wrap'))document.getElementById('ingredientAutocomplete')?.classList.add('hidden');
 });
 loadRegulatoryDb();
+loadNutritionDb();
 
 const dailyLimits=[
  {name:'Taurine',daily:2000},
