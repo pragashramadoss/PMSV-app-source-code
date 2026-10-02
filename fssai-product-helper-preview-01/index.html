@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 20</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 21</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="standard">Standard</button>
@@ -303,16 +303,16 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div class="card">
-<div class="section-title"><h2>Conditional contaminant requirements</h2><span>Turn on when formulation / pack makes them relevant</span></div>
+<div class="section-title"><h2>Conditional contaminant requirements</h2><span>Apply only when the stated condition is relevant</span></div>
 <div class="tablewrap"><table>
 <thead><tr><th>Contaminant</th><th>FSSAI maximum</th><th>Trigger</th></tr></thead>
 <tbody>
 <tr><td><b>Tin</b></td><td><b>150 mg/kg</b></td><td><span class="tag conditional">If the finished product is a canned beverage</span></td></tr>
 <tr><td><b>Patulin</b></td><td><b>50 µg/kg</b></td><td><span class="tag conditional">If apple juice is used as an ingredient in another beverage</span></td></tr>
-<tr><td><b>Total aflatoxins</b></td><td><b>20 µg/kg</b></td><td><span class="tag conditional">Applies when the finished food contains any food article covered by the applicable total-aflatoxin table. PMSV should activate this from the actual ingredient list.</span></td></tr>
-<tr><td><b>Aflatoxin B1</b></td><td><b>10 µg/kg</b></td><td><span class="tag conditional">Applies when the finished food contains any food article covered by the applicable Aflatoxin B1 table. PMSV should activate this from the actual ingredient list.</span></td></tr>
+<tr><td><b>Total aflatoxins</b></td><td><b>20 µg/kg</b></td><td><span class="tag conditional">Applies only when the finished product contains an ingredient covered by the applicable FSSAI total-aflatoxin limit.</span></td></tr>
+<tr><td><b>Aflatoxin B1</b></td><td><b>10 µg/kg</b></td><td><span class="tag conditional">Applies only when the finished product contains an ingredient covered by the applicable FSSAI Aflatoxin B1 limit.</span></td></tr>
 </tbody></table></div>
-<div class="notice"><b>How this should work when we scale the module:</b> product-level contaminants are loaded automatically. Ingredient-dependent limits are then added from the actual ingredient list, and pack-dependent limits are added from the packaging selection. This gives the user a complete but relevant compliance set instead of a generic contaminant catalogue.</div>
+<div class="notice"><b>How to read this section:</b> the limits above are not automatically applicable to every Caffeinated Beverage. Each conditional limit applies only when its stated ingredient or packaging condition is present in the finished product.</div>
 </div>
 </section>
 
