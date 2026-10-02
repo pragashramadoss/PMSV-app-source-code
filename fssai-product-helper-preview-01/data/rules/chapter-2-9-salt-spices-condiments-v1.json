@@ -1,0 +1,2608 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.9",
+  "title": "Salt, Spices, Condiments and Related Products",
+  "source_version": "Version 4 (01.08.2025)",
+  "source_verified_on": "2026-10-02",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 2.9 — Salt, Spices, Condiments and Related Products, Version 4 (01.08.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt_Spices_Condiments%20and%20related%20products.pdf"
+    },
+    {
+      "authority": "FoSCoS",
+      "title": "View all FSSAI Standardized Food Products",
+      "url": "https://foscos.fssai.gov.in/standard-product"
+    }
+  ],
+  "regulatory_notes": [
+    "The current consolidated Chapter 2.9 is Version 4 dated 01.08.2025 and runs through 2.9.45.",
+    "Clause 2.9.25 is omitted.",
+    "For standards 2.9.1 to 2.9.29, the chapter expressly requires compliance with Table 3 of Appendix B microbiological requirements.",
+    "The inorganic portion of extraneous matter, where extraneous matter is prescribed, shall not exceed 2% by weight of total extraneous matter.",
+    "Current 2025 stakeholder-agenda proposals/final-draft items concerning Juniper Berries, Refined Iodised Salt, Garam Masala and Dried Peppermint are not loaded as operative standards unless incorporated into the current consolidated regulation.",
+    "Harrisa (Red Hot Pepper Paste) exists in the FoSCoS catalogue but no matching Chapter 2.9 standard is present in the current consolidated Chapter 2.9; PMSV therefore leaves it at base-profile level."
+  ],
+  "common_rules": [
+    {
+      "type": "extraneous_matter",
+      "text": "Where extraneous matter is prescribed, inorganic extraneous matter such as dust, dirt, stones and lumps of earth shall not exceed 2% by weight of total extraneous matter."
+    },
+    {
+      "type": "microbiology",
+      "applies_to": "2.9.1–2.9.29",
+      "text": "Comply with Table 3 of Appendix B."
+    },
+    {
+      "type": "additives",
+      "text": "Food additives apply only where permitted by the relevant product standard and Appendix A."
+    },
+    {
+      "type": "contaminants",
+      "text": "Applicable products shall comply with current FSSAI Contaminants, Toxins and Residues requirements."
+    },
+    {
+      "type": "labelling",
+      "text": "Current Food Safety and Standards (Labelling and Display) Regulations, 2020 apply. Historical references in older consolidated text to the former Packaging and Labelling Regulations are not treated as the current instrument."
+    }
+  ],
+  "omitted_standards": [
+    {
+      "key": "2.9.25",
+      "status": "omitted"
+    }
+  ],
+  "proposals_not_active": [
+    {
+      "name": "Juniper Berries",
+      "status": "not_in_current_consolidated_chapter"
+    },
+    {
+      "name": "Refined Iodised Salt",
+      "status": "not_in_current_consolidated_chapter"
+    },
+    {
+      "name": "Garam Masala amendment/new standard work",
+      "status": "not_in_current_consolidated_chapter"
+    },
+    {
+      "name": "Dried Peppermint",
+      "status": "not_in_current_consolidated_chapter"
+    },
+    {
+      "name": "Summer Savory",
+      "status": "draft_or_proposal_not_active"
+    },
+    {
+      "name": "Winter Savory",
+      "status": "draft_or_proposal_not_active"
+    }
+  ],
+  "active_numbered_standards": 44,
+  "structured_core_rule_groups": 47,
+  "structured_core_scope": "Core identity, major composition/quality limits, explicit prohibitions and key labelling/process rules are loaded. Variant-specific tables not explicitly represented remain locked from final machine pass/fail until layer-level validation is completed.",
+  "standards": [
+    {
+      "key": "2.9.1",
+      "name": "Caraway (Siahjira)",
+      "status": "structured_core",
+      "variants": [
+        "Siahjira whole",
+        "Caraway Black (Siahjira) whole",
+        "Caraway (Siahjira) powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter — Siahjira whole",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — Siahjira whole",
+          "operator": "<=",
+          "value": 13,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — Siahjira whole, dry basis",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — Siahjira whole, dry basis",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — Siahjira whole, dry basis",
+          "operator": ">=",
+          "value": 2.5,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Insect-damaged matter — Siahjira whole",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added colouring matter",
+        "Harmful substances"
+      ]
+    },
+    {
+      "key": "2.9.2",
+      "name": "Cardamom (Elaichi)",
+      "status": "structured_core",
+      "variants": [
+        "Chhoti Elaichi whole",
+        "Chhoti Elaichi seeds",
+        "Chhoti Elaichi powder",
+        "Badi Elaichi whole",
+        "Badi Elaichi seeds",
+        "Badi Elaichi powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture — Chhoti Elaichi whole",
+          "operator": "<=",
+          "value": 13,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — Chhoti Elaichi whole, dry basis",
+          "operator": "<=",
+          "value": 9.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — Chhoti Elaichi whole, dry basis",
+          "operator": ">=",
+          "value": 3.5,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Moisture — Badi Elaichi whole",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — Badi Elaichi whole, dry basis",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — Badi Elaichi whole, dry basis",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — Badi Elaichi whole, dry basis",
+          "operator": ">=",
+          "value": 1,
+          "unit": "% v/w"
+        }
+      ]
+    },
+    {
+      "key": "2.9.3",
+      "name": "Chillies and Capsicum (Lal Mirchi)",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter — whole",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Unripe and marked fruits — whole",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Broken fruits, seed and fragments — whole",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — whole/powder",
+          "operator": "<=",
+          "value": 11,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — whole/powder, dry basis",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — whole/powder, dry basis",
+          "operator": "<=",
+          "value": 1.3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Crude fibre — powder",
+          "operator": "<=",
+          "value": 30,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Non-volatile ether extract — powder, dry basis",
+          "operator": ">=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Added edible vegetable oil — powder",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight",
+          "label_note": "Amount and nature of oil must be declared when used."
+        }
+      ],
+      "prohibited_or_absent": [
+        "Extraneous colouring matter",
+        "Mineral-oil coating"
+      ]
+    },
+    {
+      "key": "2.9.4",
+      "name": "Cinnamon (Dalchini)",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter — whole",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — whole/powder",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — whole/powder, dry basis",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — whole/powder, dry basis",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — whole, dry basis",
+          "operator": ">=",
+          "value": 0.7,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Volatile oil — powder, dry basis",
+          "operator": ">=",
+          "value": 0.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Coumarin — dry basis",
+          "operator": "<=",
+          "value": 0.3,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.9.5",
+      "name": "Cassia (Taj)",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter — whole",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — whole, dry basis",
+          "operator": ">=",
+          "value": 2,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Volatile oil — powder, dry basis",
+          "operator": ">=",
+          "value": 1.5,
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "key": "2.9.6",
+      "name": "Cloves (Laung)",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter — whole",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Tendrils and mother cloves",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Khokar cloves",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — whole",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — whole, dry basis",
+          "operator": ">=",
+          "value": 17,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Moisture — powder",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — powder, dry basis",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — powder, dry basis",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — powder, dry basis",
+          "operator": ">=",
+          "value": 16,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Crude fibre — powder",
+          "operator": "<=",
+          "value": 13,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.9.7",
+      "name": "Coriander (Dhania)",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter — whole",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Split fruits — whole",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Damaged/discoloured fruits — whole",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — whole",
+          "operator": "<=",
+          "value": 9,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — whole, dry basis",
+          "operator": ">=",
+          "value": 0.1,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.9.8",
+      "name": "Cumin (Zeera, Kalonji)",
+      "status": "structured_core",
+      "variants": [
+        "Cumin (Safed Zeera) whole",
+        "Cumin powder",
+        "Cumin Black (Kalonji) whole",
+        "Cumin Black (Kalonji) powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture — Safed Zeera whole",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash — Safed Zeera whole, dry basis",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash — Safed Zeera whole, dry basis",
+          "operator": "<=",
+          "value": 4,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Moisture — Kalonji powder",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — Kalonji powder, dry basis",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — Kalonji powder, dry basis",
+          "operator": ">=",
+          "value": 0.9,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Non-volatile ether extract — Kalonji powder, dry basis",
+          "operator": ">=",
+          "value": 12,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.9.9",
+      "name": "Fennel (Saunf)",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter — whole",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Defective seeds — whole",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — whole, dry basis",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — whole, dry basis",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — powder, dry basis",
+          "operator": ">=",
+          "value": 1,
+          "unit": "% v/w"
+        }
+      ]
+    },
+    {
+      "key": "2.9.10",
+      "name": "Fenugreek (Methi)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Cold-water-soluble extract — dry basis",
+          "operator": ">=",
+          "value": 30,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Edible seeds other than fenugreek",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Insect-damaged matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.9.11",
+      "name": "Dried Ginger (Sonth, Dried Adrak)",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder",
+        "Bleached",
+        "Unbleached"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter — whole",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — whole/powder",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — unbleached, dry basis",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — bleached, dry basis",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Calcium as CaO — unbleached, dry basis",
+          "operator": "<=",
+          "value": 1.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Calcium as CaO — bleached, dry basis",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — whole, dry basis",
+          "operator": ">=",
+          "value": 1.5,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Volatile oil — powder, dry basis",
+          "operator": ">=",
+          "value": 1,
+          "unit": "%"
+        },
+        {
+          "parameter": "Acid-insoluble ash — powder, dry basis",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.9.12",
+      "name": "Mace (Jaipatri)",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter — whole",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — whole",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — whole, dry basis",
+          "operator": "<=",
+          "value": 4,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — whole, dry basis",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — whole, dry basis",
+          "operator": ">=",
+          "value": 7.5,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Nutmeg in mace — whole",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — powder, dry basis",
+          "operator": ">=",
+          "value": 5,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Crude fibre — powder",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Non-volatile ether extract — powder",
+          "operator": "range",
+          "min": 20,
+          "max": 30,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.9.13",
+      "name": "Mustard (Rai, Sarson)",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter — whole",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Damaged or shrivelled seeds — whole",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — whole",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — whole, dry basis",
+          "operator": "<=",
+          "value": 6.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Non-volatile ether extract — dry basis",
+          "operator": ">=",
+          "value": 28,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 0.3,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Allyl isothiocyanate — B. nigra, dry basis",
+          "operator": ">=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Allyl isothiocyanate — B. juncea, dry basis",
+          "operator": ">=",
+          "value": 0.7,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "P-hydroxybenzyl isothiocyanate — Sinapis alba, dry basis",
+          "operator": ">=",
+          "value": 2.3,
+          "unit": "% by weight"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Argemone seeds",
+        "Argemone oil"
+      ]
+    },
+    {
+      "key": "2.9.14",
+      "name": "Nutmeg (Jaiphal)",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter — whole",
+          "operator": "absent"
+        },
+        {
+          "parameter": "Mace in nutmeg — whole",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — whole",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — whole, dry basis",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Water-insoluble ash — whole, dry basis",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — whole, dry basis",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — whole, dry basis",
+          "operator": ">=",
+          "value": 6.5,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Moisture — powder",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — powder, dry basis",
+          "operator": ">=",
+          "value": 6,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Non-volatile ether extract — powder, dry basis",
+          "operator": ">=",
+          "value": 25,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.9.15",
+      "name": "Black, White & Green (BWG) Peppers",
+      "status": "structured_core",
+      "variants": [
+        "Black pepper",
+        "White pepper",
+        "Green pepper",
+        "Ground/crushed black pepper",
+        "Ground/crushed white pepper"
+      ],
+      "whole_pepper_matrix": [
+        {
+          "parameter": "Moisture max %",
+          "black": 13,
+          "white": 12,
+          "green": 12
+        },
+        {
+          "parameter": "Total ash max % dry basis",
+          "black": 7,
+          "white": 4,
+          "green": 5
+        },
+        {
+          "parameter": "Acid-insoluble ash max % dry basis",
+          "black": 1.5,
+          "white": 0.3,
+          "green": 0.3
+        },
+        {
+          "parameter": "Volatile oil min ml/100g dry basis",
+          "black": 1,
+          "white": 1,
+          "green": 1
+        },
+        {
+          "parameter": "Piperine min % dry basis",
+          "black": 2,
+          "white": 3,
+          "green": null
+        }
+      ],
+      "ground_pepper_matrix": [
+        {
+          "parameter": "Moisture max %",
+          "black": 12,
+          "white": 13
+        },
+        {
+          "parameter": "Total ash max % dry basis",
+          "black": 6,
+          "white": 3.5
+        },
+        {
+          "parameter": "Volatile oil min ml/100g dry basis",
+          "black": 1,
+          "white": 0.7
+        },
+        {
+          "parameter": "Piperine min % dry basis",
+          "black": 2,
+          "white": 3
+        },
+        {
+          "parameter": "Acid-insoluble ash max % dry basis",
+          "black": 1.2,
+          "white": 0.3
+        }
+      ]
+    },
+    {
+      "key": "2.9.16",
+      "name": "Poppy (Khas Khas)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 11,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Non-volatile ether extract — dry basis",
+          "operator": ">=",
+          "value": 40,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.9.17",
+      "name": "Saffron (Kesar)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Floral waste",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture and volatile matter",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Cold-water solubility — dry basis",
+          "operator": "<=",
+          "value": 65,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Picrocrocin absorbance criterion",
+          "operator": ">=",
+          "value": 30,
+          "unit": "% equivalent criterion"
+        },
+        {
+          "parameter": "Crude fibre — dry basis",
+          "operator": "<=",
+          "value": 6,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.9.18",
+      "name": "Turmeric (Haldi)",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter — whole",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Defective rhizomes — whole",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — whole",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — powder",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — powder, dry basis",
+          "operator": "<=",
+          "value": 9,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — powder, dry basis",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Curcuminoid content — powder, dry basis",
+          "operator": ">=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total starch — powder",
+          "operator": "<=",
+          "value": 60,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Lead chromate test",
+          "operator": "negative"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added lead chromate",
+        "Added starch in whole turmeric",
+        "Extraneous colouring matter"
+      ]
+    },
+    {
+      "key": "2.9.19",
+      "name": "Curry Powder",
+      "status": "structured_core",
+      "ingredient_rules": [
+        {
+          "parameter": "Spice proportion",
+          "operator": ">=",
+          "value": 85,
+          "unit": "% by weight"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 14,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 0.25,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Non-volatile ether extract — dry basis",
+          "operator": ">=",
+          "value": 7.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Edible common salt — dry basis",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Crude fibre — dry basis",
+          "operator": "<=",
+          "value": 15,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Lead — dry basis",
+          "operator": "<=",
+          "value": 10,
+          "unit": "ppm"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added colouring matter",
+        "Preservatives other than edible common salt"
+      ]
+    },
+    {
+      "key": "2.9.20",
+      "name": "Mixed Masala",
+      "status": "structured_core",
+      "variants": [
+        "Mixed Masala whole",
+        "Mixed Masala powder"
+      ],
+      "whole_rules": [
+        {
+          "parameter": "Total extraneous matter",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Organic extraneous matter including foreign edible seeds",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Inorganic matter",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        }
+      ],
+      "powder_classes": [
+        {
+          "class": "A",
+          "spice_content_min_pct": 85,
+          "moisture_max_pct": 12,
+          "volatile_oil_min_pct_v_m": 0.4,
+          "acid_insoluble_ash_max_pct": 2
+        },
+        {
+          "class": "B",
+          "spice_content_min_pct": 40,
+          "moisture_max_pct": 12,
+          "volatile_oil_min_pct_v_m": 0.2,
+          "acid_insoluble_ash_max_pct": 2
+        },
+        {
+          "class": "C",
+          "spice_content_min_pct": 25,
+          "moisture_max_pct": 12,
+          "volatile_oil_min_pct_v_m": 0.1,
+          "acid_insoluble_ash_max_pct": 2
+        }
+      ],
+      "label_rules": [
+        "Declare minimum percentage of spice content.",
+        "Declare salt content when above 5%.",
+        "Specific product name such as chana masala or sambar masala may be declared."
+      ]
+    },
+    {
+      "key": "2.9.21",
+      "name": "Aniseed (Saunf)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Shrivelled/immature/damaged/insect-damaged/broken fruit",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 9,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 1,
+          "unit": "% v/w"
+        },
+        {
+          "parameter": "Insect-damaged matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Foreign edible seeds",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.9.22",
+      "name": "Ajowan (Bishops seed)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 11,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Shrivelled/damaged/insect-damaged/broken fruit",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 1.5,
+          "unit": "% v/w"
+        }
+      ]
+    },
+    {
+      "key": "2.9.23",
+      "name": "Dried Mango Slices",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Edible common salt",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight on dry basis"
+        },
+        {
+          "parameter": "Extraneous substances",
+          "operator": "<=",
+          "value": 4,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Inorganic matter within extraneous substances",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Damaged slices",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Seed coatings",
+          "operator": "<=",
+          "value": 6,
+          "unit": "% by weight"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Preservatives other than edible common salt",
+        "Added colouring matter",
+        "Added flavouring matter"
+      ]
+    },
+    {
+      "key": "2.9.24",
+      "name": "Dried Mango Powder (Amchur)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Edible common salt",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight on dry basis"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — salt-free basis",
+          "operator": "<=",
+          "value": 6,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Crude fibre",
+          "operator": "<=",
+          "value": 6,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acidity as anhydrous tartaric acid",
+          "operator": "range",
+          "min": 12,
+          "max": 26,
+          "unit": "% by weight"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Preservatives other than edible common salt",
+        "Added colouring matter",
+        "Added flavouring matter"
+      ]
+    },
+    {
+      "key": "2.9.26",
+      "name": "Garlic (Lahsun)",
+      "status": "structured_core",
+      "variants": [
+        "Dried/dehydrated whole, slices, quarters, pieces, flakes, kibbled, granules",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Moisture — powder",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — other forms",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Cold-water-soluble extract — dry basis",
+          "operator": "range",
+          "min": 70,
+          "max": 90,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Volatile organic sulphur compound — dry basis",
+          "operator": ">=",
+          "value": 0.3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Peroxidase test",
+          "operator": "negative"
+        }
+      ]
+    },
+    {
+      "key": "2.9.27",
+      "name": "Celery",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        }
+      ],
+      "structured_scope_note": "Identity and explicit core limits loaded; remaining detailed parameters remain locked for full-machine validation."
+    },
+    {
+      "key": "2.9.28",
+      "name": "Dehydrated Onion (Sukha Pyaj)",
+      "status": "structured_core",
+      "variants": [
+        "Whole/slices/rings/flakes/pieces/grits",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — powder",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture — other forms",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Peroxidase test",
+          "operator": "negative"
+        }
+      ]
+    },
+    {
+      "key": "2.9.29",
+      "name": "Asafoetida (Hing or Hingra)",
+      "status": "structured_core",
+      "variants": [
+        "Hing",
+        "Hingra",
+        "Compounded asafoetida / Bandhani Hing"
+      ],
+      "composition": [
+        {
+          "parameter": "Total ash — Hing",
+          "operator": "<=",
+          "value": 15,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — Hing",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Alcoholic extract — Hing",
+          "operator": ">=",
+          "value": 12,
+          "unit": "%"
+        },
+        {
+          "parameter": "Starch — Hing",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — Hingra",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Acid-insoluble ash — Hingra",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Alcoholic extract — Hingra",
+          "operator": ">=",
+          "value": 50,
+          "unit": "%"
+        },
+        {
+          "parameter": "Starch — Hingra",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash — compounded asafoetida",
+          "operator": "<=",
+          "value": 10,
+          "unit": "%"
+        },
+        {
+          "parameter": "Acid-insoluble ash — compounded asafoetida",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Alcoholic extract — compounded asafoetida",
+          "operator": ">=",
+          "value": 5,
+          "unit": "%"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Colophony resin",
+        "Galbanum resin",
+        "Ammoniacum resin",
+        "Other foreign resin",
+        "Coal-tar dyes in compounded asafoetida",
+        "Mineral pigment in compounded asafoetida"
+      ]
+    },
+    {
+      "key": "2.9.30(1)",
+      "name": "Edible Common Salt",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 6,
+          "unit": "% of undried sample"
+        },
+        {
+          "parameter": "Sodium chloride — dry basis",
+          "operator": ">=",
+          "value": 96,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Matter soluble in water other than NaCl — dry basis",
+          "operator": "<=",
+          "value": 3,
+          "unit": "%"
+        },
+        {
+          "parameter": "Matter insoluble in water — dry basis",
+          "operator": "<=",
+          "value": 1,
+          "unit": "%"
+        },
+        {
+          "parameter": "Sodium chloride when anti-caking agent added — dry basis",
+          "operator": ">=",
+          "value": 97,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total matter insoluble in water when anti-caking agent added",
+          "operator": "<=",
+          "value": 2.2,
+          "unit": "%"
+        }
+      ],
+      "additives": "Permitted additives including Appendix A"
+    },
+    {
+      "key": "2.9.30(4)",
+      "name": "Potassium Iodate",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Potassium iodate as KIO3",
+          "operator": ">=",
+          "value": 99,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Iodine as I",
+          "operator": "<=",
+          "value": 0.002,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Sulphate as SO4",
+          "operator": "<=",
+          "value": 0.02,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Bromate+bromide+chlorate+chloride",
+          "operator": "<=",
+          "value": 0.01,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Matter insoluble in water",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Loss on drying",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Heavy metals as Pb",
+          "operator": "<=",
+          "value": 10,
+          "unit": "ppm"
+        },
+        {
+          "parameter": "Arsenic as As",
+          "operator": "<=",
+          "value": 3,
+          "unit": "ppm"
+        },
+        {
+          "parameter": "Iron as Fe",
+          "operator": "<=",
+          "value": 10,
+          "unit": "ppm"
+        }
+      ]
+    },
+    {
+      "key": "2.9.30(5)",
+      "name": "Iron Fortified Iodized Salt (Double Fortified Salt)",
+      "status": "structured_core",
+      "ingredient_rules": [
+        {
+          "parameter": "NaCl in salt when non-encapsulated nutrient source is used",
+          "operator": ">=",
+          "value": 99,
+          "unit": "% dry basis"
+        },
+        {
+          "parameter": "NaCl in salt when encapsulated nutrient source is used",
+          "operator": ">=",
+          "value": 98,
+          "unit": "% dry basis"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Water-insoluble matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% dry basis"
+        },
+        {
+          "parameter": "Chloride content as NaCl",
+          "operator": ">=",
+          "value": 97,
+          "unit": "% dry basis"
+        },
+        {
+          "parameter": "Matter insoluble in dilute HCl",
+          "operator": "<=",
+          "value": 0.3,
+          "unit": "% dry basis"
+        },
+        {
+          "parameter": "Matter soluble in water other than NaCl",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% dry basis"
+        },
+        {
+          "parameter": "Phosphorous as P2O5",
+          "operator": "<=",
+          "value": 3100,
+          "unit": "ppm"
+        },
+        {
+          "parameter": "Sulphate as SO4",
+          "operator": "<=",
+          "value": 1.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Water-soluble magnesium as Mg",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.9.30(6)",
+      "name": "Salt Substitutes",
+      "status": "structured_core",
+      "composition_rules": [
+        {
+          "parameter": "Sodium",
+          "operator": "<=",
+          "value": 120,
+          "unit": "mg/100 g mixture"
+        },
+        {
+          "parameter": "Colloidal silica and/or calcium silicate",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m individually or combined"
+        },
+        {
+          "parameter": "Phosphorus",
+          "operator": "<=",
+          "value": 4,
+          "unit": "% m/m where applicable"
+        },
+        {
+          "parameter": "Ammonium ion",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% m/m where applicable"
+        },
+        {
+          "parameter": "Choline",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% m/m where applicable"
+        }
+      ],
+      "label_rules": [
+        "Declare “low sodium salt substitute” or “low sodium dietetic salt”.",
+        "Declare cation amounts per 100 g as specified."
+      ]
+    },
+    {
+      "key": "2.9.31",
+      "name": "Seasoning",
+      "status": "structured_core",
+      "permitted_ingredient_groups": [
+        "spices, condiments and herbs and extracts",
+        "salt",
+        "fruit and vegetable products/extracts",
+        "dry fruits, nuts and raisins",
+        "edible starches",
+        "yeast and yeast extract",
+        "soya products",
+        "hydrolysed protein",
+        "meat/poultry/marine/aquatic products",
+        "edible oils/fats",
+        "cereal products",
+        "milk products",
+        "nutritive sweeteners",
+        "other suitable standardised ingredients"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight",
+          "exception": "Does not apply to paste seasonings such as tomato, ginger, garlic or chilli paste."
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 2,
+          "unit": "%"
+        }
+      ],
+      "additives": "Appendix A",
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.9.32",
+      "name": "Spice Oleoresins",
+      "status": "structured_core",
+      "definition": "Volatile and non-volatile constituents of spices/herbs obtained by extraction with permitted food-grade solvents followed by solvent separation; non-volatile portion is added back to volatile portion.",
+      "solvent_residual_limits_ppm": {
+        "acetone": 30,
+        "ethyl_acetate": 50,
+        "n_hexane": 25,
+        "isopropyl_alcohol": 30,
+        "methyl_alcohol": 50,
+        "diethyl_ether": 2,
+        "butan_1_ol": 2,
+        "butan_2_ol": 2,
+        "propan_1_ol": 1,
+        "methyl_tert_butyl_ether": 2,
+        "carbon_dioxide": "GMP",
+        "water": "GMP",
+        "ethyl_alcohol": "GMP"
+      },
+      "selected_oleoresin_min_voc_ml_per_100g": {
+        "ajowan": 1.5,
+        "allspice": 20,
+        "aniseed": 9,
+        "sweet_basil": 4,
+        "caraway": 10,
+        "small_cardamom": 10,
+        "celery": 7,
+        "cinnamon_bark": 2,
+        "clove": 12,
+        "coriander": 1,
+        "cumin": 10,
+        "dillseed": 10,
+        "fennel": 3,
+        "ginger": 10,
+        "bay_leaf": 5,
+        "mace": 10,
+        "sweet_marjoram": 8,
+        "nutmeg": 10,
+        "oregano": 20,
+        "parsley_leaf": 2,
+        "parsley_seed": 2,
+        "rosemary": 2,
+        "star_anise": 9,
+        "thyme": 5,
+        "black_white_pepper": 10
+      },
+      "special_limits": [
+        "Chilli/Capsicum oleoresin: colour value 4000–20000 Nesselerimetric units and Scoville heat units minimum 240000.",
+        "Paprika oleoresin: ASTA colour units 250–5000.",
+        "Turmeric oleoresin: curcuminoid content minimum 3.5% by mass on dry basis."
+      ],
+      "label_rules": [
+        "Declare active component and volatile oil on label."
+      ]
+    },
+    {
+      "key": "2.9.33",
+      "name": "Tejpat",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture — dry basis",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Extraneous matter — dry basis",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Shrivelled/discoloured leaves — dry basis",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Cut and broken leaves — dry basis",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Insect-bored/diseased leaves — dry basis",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Twigs and leafstalk — dry basis",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 0.5,
+          "unit": "ml/100 g"
+        },
+        {
+          "parameter": "Uric acid — dry basis",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "key": "2.9.34",
+      "name": "Star Anise",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Extraneous matter — dry basis",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Stalks — dry basis",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Broken and abnormal fruits — dry basis",
+          "operator": "<=",
+          "value": 25,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Moisture — dry basis",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 8,
+          "unit": "ml/100 g"
+        }
+      ]
+    },
+    {
+      "key": "2.9.35",
+      "name": "Dried Oregano",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "whole_composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Extraneous vegetable matter",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Foreign matter — dry basis",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 1.8,
+          "unit": "ml/100 g"
+        }
+      ],
+      "powder_composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 1.5,
+          "unit": "ml/100 g"
+        }
+      ]
+    },
+    {
+      "key": "2.9.36",
+      "name": "Pimento or Allspice",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "whole_composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Extraneous vegetable matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Broken berries — dry basis",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Foreign matter — dry basis",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 2,
+          "unit": "ml/100 g"
+        }
+      ]
+    },
+    {
+      "key": "2.9.37",
+      "name": "Dried Laurel or Dried Bay Leaf",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Extraneous vegetable matter — dry basis",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by mass"
+        }
+      ],
+      "structured_scope_note": "Core identity and explicit front-table limits loaded; remaining detailed numeric parameters remain locked for full-machine validation."
+    },
+    {
+      "key": "2.9.38",
+      "name": "Dried Mint",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 13,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Foreign matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Extraneous vegetable matter",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 0.5,
+          "unit": "ml/100 g"
+        }
+      ]
+    },
+    {
+      "key": "2.9.39",
+      "name": "Dried Rosemary",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 11,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Foreign matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Extraneous vegetable matter",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Brown leaves — dry basis",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 0.8,
+          "unit": "ml/100 g"
+        }
+      ]
+    },
+    {
+      "key": "2.9.40",
+      "name": "Dried Thyme",
+      "status": "structured_core",
+      "variants": [
+        "Whole/intact",
+        "Crushed/rubbed",
+        "Ground"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Extraneous vegetable matter",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Foreign matter",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Insect-damaged leaves/flowers",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Dead insects/insect fragments/rodent contaminant",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Animal excreta",
+          "operator": "<=",
+          "value": 1,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Stalk exceeding specified dimensions",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 3.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 1,
+          "unit": "ml/100 g"
+        },
+        {
+          "parameter": "Uric acid — dry basis",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "key": "2.9.41",
+      "name": "Dried Sage",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Cut leaves"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 1.5,
+          "unit": "ml/100 g"
+        },
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Broken stalk/stem",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Brown leaves",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% m/m"
+        }
+      ],
+      "label_rules": [
+        "Declare product style."
+      ]
+    },
+    {
+      "key": "2.9.42",
+      "name": "Dried Sweet Basil Leaves",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 16,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 0.3,
+          "unit": "ml/100 g"
+        },
+        {
+          "parameter": "Foreign matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Extraneous vegetable matter",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Yellow or brown leaves",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% m/m"
+        }
+      ]
+    },
+    {
+      "key": "2.9.43",
+      "name": "Dried Sweet Marjoram",
+      "status": "structured_core",
+      "variants": [
+        "Bouquets",
+        "Rubbed marjoram"
+      ],
+      "variant_matrix": [
+        {
+          "parameter": "Moisture max %",
+          "bouquets": 12,
+          "rubbed": 12
+        },
+        {
+          "parameter": "Total ash max % dry basis",
+          "bouquets": 16,
+          "rubbed": 16
+        },
+        {
+          "parameter": "Acid-insoluble ash max % dry basis",
+          "bouquets": 4.5,
+          "rubbed": 4.5
+        },
+        {
+          "parameter": "Volatile oil min ml/100g dry basis",
+          "bouquets": 0.3,
+          "rubbed": 0.7
+        },
+        {
+          "parameter": "Foreign matter max %",
+          "bouquets": 3,
+          "rubbed": 1
+        },
+        {
+          "parameter": "Extraneous vegetable matter max %",
+          "bouquets": null,
+          "rubbed": 1
+        }
+      ]
+    },
+    {
+      "key": "2.9.44",
+      "name": "Dried Parsley",
+      "status": "structured_core",
+      "variants": [
+        "Whole/cut",
+        "Ground"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 14.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 0.2,
+          "unit": "ml/100 g"
+        },
+        {
+          "parameter": "Crude fibre — dry basis",
+          "operator": "<=",
+          "value": 9,
+          "unit": "%"
+        },
+        {
+          "parameter": "Foreign matter",
+          "operator": "absent"
+        },
+        {
+          "parameter": "Extraneous vegetable matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m"
+        }
+      ],
+      "powder_rule": "Ground dried parsley shall pass completely through a nominal 500 μm sieve."
+    },
+    {
+      "key": "2.9.45",
+      "name": "Dehydrated Tarragon",
+      "status": "structured_core",
+      "variants": [
+        "Whole",
+        "Powder"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash — dry basis",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash — dry basis",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile oil — dry basis",
+          "operator": ">=",
+          "value": 0.6,
+          "unit": "ml/100 g"
+        },
+        {
+          "parameter": "Foreign matter",
+          "operator": "absent"
+        },
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Broken stems — whole/cut leaves",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Yellow or brown leaves",
+          "operator": "<=",
+          "value": 15,
+          "unit": "% m/m"
+        }
+      ],
+      "chromatographic_rule": "Volatile oil should show cis-β-ocimene, trans-β-ocimene, trans-anethole, methyl chavicol (estragole) and methyl eugenol; significant sabinene or elemicin should not be present."
+    }
+  ]
+}
