@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 43</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 44</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="product">Product selection</button>
@@ -1790,10 +1790,10 @@ function productProfiles(){
 function profileForCatalogProduct(p){
  if(!p)return null;
  const pid=p.profile_id||p.id;
- return productProfiles().find(x=>x.id===pid&&x.status==='rule_profile_ready')||null;
+ return productProfiles().find(x=>x.id===pid&&['rule_profile_ready','base_profile_ready'].includes(x.status))||null;
 }
-function currentReadyProfile(){
- return productProfiles().find(x=>x.id===selectedProductId&&x.status==='rule_profile_ready')||null;
+function currentProductProfile(){
+ return productProfiles().find(x=>x.id===selectedProductId&&['rule_profile_ready','base_profile_ready'].includes(x.status))||null;
 }
 function findCatalogProductById(id){
  return productCatalog().find(x=>x.id===id)||null;
@@ -1892,12 +1892,14 @@ function showSelectedCatalogProduct(p){
  }
  card.classList.remove('hidden');
  const profile=profileForCatalogProduct(p);
+ const detailed=profile&&profile.status==='rule_profile_ready';
  details.innerHTML='<div class="grid2">'
   +'<div class="item"><b>'+esc(p.name)+'</b><small>FCS / FoSCoS code: '+esc(p.fcs||'—')+'<br>FSSR: '+esc(p.fssr||'Not shown in loaded catalogue row')+'</small></div>'
-  +'<div class="item"><b>PMSV status</b><small>'+(profile?'<span class="status-good">Detailed rule profile ready</span>':'<span class="status-warn">Standardized product found; detailed rule profile not yet loaded</span>')+'</small></div>'
-  +'</div>';
+  +'<div class="item"><b>PMSV profile status</b><small>'+(detailed?'<span class="status-good">Detailed rule profile complete</span>':profile?'<span class="status-warn">Base rule profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small></div>'
+  +'</div>'
+  +(profile&&!detailed?'<div class="notice"><b>Base profile ready:</b> product identity, FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.</div>':'');
  if(profile){
-   actions.innerHTML='<button class="btn" type="button" id="startSelectedProduct">Start formulation assessment →</button>';
+   actions.innerHTML='<button class="btn" type="button" id="startSelectedProduct">'+(detailed?'Start formulation assessment →':'Open base product profile →')+'</button>';
    document.getElementById('startSelectedProduct')?.addEventListener('click',()=>{
      selectedProductId=profile.id;
      try{sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId)}catch(e){}
@@ -1906,7 +1908,7 @@ function showSelectedCatalogProduct(p){
      window.scrollTo({top:0,behavior:'smooth'});
    });
  }else{
-   actions.innerHTML='<span class="muted">The product can be selected from the FoSCoS catalogue, but PMSV will not run the Caffeinated Beverage rules against it. Its own FSSAI rule profile must be ingested first.</span>';
+   actions.innerHTML='<span class="muted">No PMSV profile is available for this catalogue row.</span>';
  }
 }
 function renderProductSearch(){
@@ -1925,7 +1927,8 @@ function renderProductSearch(){
  }
  box.innerHTML=rows.map(p=>{
    const profile=profileForCatalogProduct(p);
-   return '<div class="item" style="margin-bottom:8px"><b>'+esc(p.name)+'</b><small>Category '+esc(p.category)+' · '+esc(p.subcategory||'—')+' · FCS '+esc(p.fcs||'—')+(p.fssr?'<br>FSSR: '+esc(p.fssr):'')+'<br>'+(profile?'<span class="status-good">Rule profile ready</span>':'<span class="status-warn">Catalogue only — rule profile pending</span>')+'</small><div style="margin-top:8px"><button class="btn-secondary" type="button" data-show-catalog-product="'+esc(p.id)+'">Select</button></div></div>';
+   const detailed=profile&&profile.status==='rule_profile_ready';
+   return '<div class="item" style="margin-bottom:8px"><b>'+esc(p.name)+'</b><small>Category '+esc(p.category)+' · '+esc(p.subcategory||'—')+' · FCS '+esc(p.fcs||'—')+(p.fssr?'<br>FSSR: '+esc(p.fssr):'')+'<br>'+(detailed?'<span class="status-good">Detailed profile complete</span>':profile?'<span class="status-warn">Base profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small><div style="margin-top:8px"><button class="btn-secondary" type="button" data-show-catalog-product="'+esc(p.id)+'">Select</button></div></div>';
  }).join('');
  box.querySelectorAll('[data-show-catalog-product]').forEach(btn=>btn.addEventListener('click',()=>{
    const p=findCatalogProductById(btn.dataset.showCatalogProduct);
@@ -1937,19 +1940,23 @@ function applyProductGate(){
  const gate=document.getElementById('formulationProductGate');
  const add=document.getElementById('addIngredient');
  const load=document.getElementById('loadExampleFormula');
- const profile=currentReadyProfile();
+ const profile=currentProductProfile();
+ const detailed=profile&&profile.status==='rule_profile_ready';
  if(profile){
    if(gate){
-     gate.className='notice oknote';
-     gate.innerHTML='<b>Assessment product:</b> '+esc(profile.display_name)+' · FCS '+esc(profile.fcs||'—')+' · FSSR '+esc(profile.fssr||'—')+'. All formulation rules on this page apply to this selected product.';
+     gate.className=detailed?'notice oknote':'notice';
+     gate.innerHTML='<b>Selected product:</b> '+esc(profile.display_name)+' · FCS '+esc(profile.fcs||'—')+' · FSSR '+esc(profile.fssr||'—')+'.<br>'
+       +(detailed
+         ?'<b>Detailed rule profile complete.</b> Formulation compliance checks are enabled for this product.'
+         :'<b>Base rule profile loaded.</b> General regulatory layers and the official product mapping are available, but product-specific composition/ingredient clauses are not complete yet. Formulation editing is locked so PMSV does not apply another product\'s rules by mistake.');
      gate.classList.remove('hidden');
    }
-   if(add)add.disabled=false;
-   if(load)load.disabled=false;
+   if(add)add.disabled=!detailed;
+   if(load)load.disabled=!detailed;
  }else{
    if(gate){
      gate.className='notice';
-     gate.innerHTML='<b>Select a product with a ready rule profile first.</b> Return to Product selection. PMSV will not apply Caffeinated Beverage rules to another standardized product.';
+     gate.innerHTML='<b>Select a product first.</b> Return to Product selection.';
      gate.classList.remove('hidden');
    }
    if(add)add.disabled=true;
@@ -1967,9 +1974,10 @@ function renderProductMaster(){
  const categories=productMasterDb.categories||[];
  const catalog=productCatalog();
  const ready=productProfiles().filter(p=>p.status==='rule_profile_ready');
+ const base=productProfiles().filter(p=>p.status==='base_profile_ready');
  if(status){
    status.className='notice oknote';
-   status.innerHTML='<b>Product selector loaded.</b><br>'+categories.length+' main category routes · '+(productMasterDb.subcategories||[]).length+' loaded sub-categories · '+catalog.length+' standardized-product catalogue rows · '+ready.length+' detailed PMSV rule profile'+(ready.length===1?'':'s')+' ready. Catalogue ingestion and detailed FSSAI rule-profile ingestion are tracked separately.';
+   status.innerHTML='<b>Product selector loaded.</b><br>'+categories.length+' main category routes · '+(productMasterDb.subcategories||[]).length+' loaded sub-categories · '+catalog.length+' standardized-product catalogue rows · <b>'+base.length+' base rule profiles</b> · <b>'+ready.length+' detailed rule profile'+(ready.length===1?'':'s')+' complete</b>. Every loaded product now has a profile; detailed clause ingestion is the remaining expansion work.';
  }
  if(catBody)catBody.innerHTML=categories.map(x=>'<tr><td><b>'+esc(x.code)+'</b></td><td>'+esc(x.name)+'</td><td>'+esc(productRouteLabel(x.route))+'</td></tr>').join('');
  if(sources){
@@ -1983,7 +1991,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=43',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=44',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
