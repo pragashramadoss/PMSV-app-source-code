@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 37</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 38</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation ingredients</button>
@@ -452,10 +452,10 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="section-title"><h2>Calculated nutrition panel</h2><span>FSSAI label format</span></div>
 <div id="nutritionCalculationStatus" class="notice"></div>
 <div class="tablewrap"><table>
-<thead><tr><th>Nutrient</th><th>Per 100 ml</th><th>Per serving</th><th>% RDA / serving</th></tr></thead>
+<thead><tr><th>Nutrient</th><th>Per 100 ml</th><th>Per serving</th><th>FSSAI %RDA / serving</th></tr></thead>
 <tbody id="nutritionRows"></tbody>
 </table></div>
-<div class="notice"><b>FSSAI adult reference values used for %RDA:</b> 2,000 kcal energy, 67 g total fat, 22 g saturated fat, 2 g trans fat, 50 g added sugars and 2,000 mg sodium. Protein, carbohydrate, total sugars and cholesterol are shown without an adult %RDA in this calculator because the cited FSSAI labelling provision does not provide a corresponding reference value for those fields.</div>
+<div class="notice"><b>FSSAI adult reference values used for %RDA:</b> 2,000 kcal energy, 67 g total fat, 22 g saturated fat, 2 g trans fat, 50 g added sugars and 2,000 mg sodium. For protein, carbohydrate, total sugars, cholesterol and dietary fibre, this table shows <b>Not specified by FSSAI</b> rather than inventing an RDA value. These nutrients are still declared where applicable; only the FSSAI per-serve %RDA denominator is not provided in this mandatory labelling provision.</div>
 </div>
 
 <div class="card">
@@ -1139,7 +1139,7 @@ function renderNutrition(){
    const p100=Number(calc.per100ml[key]||0);
    const ps=Number(calc.perServe[key]||0);
    const rda=nutritionRdaPercent(key,ps);
-   return '<tr><td><b>'+label+'</b></td><td>'+fmt(p100,d)+' '+unit+'</td><td>'+fmt(ps,d)+' '+unit+' / '+fmt(nutritionServingMl(),0)+' ml</td><td>'+(rda===null?'—':fmt(rda,1)+'%')+'</td></tr>';
+   return '<tr><td><b>'+label+'</b></td><td>'+fmt(p100,d)+' '+unit+'</td><td>'+fmt(ps,d)+' '+unit+' / '+fmt(nutritionServingMl(),0)+' ml</td><td>'+(rda===null?'<small>Not specified by FSSAI</small>':fmt(rda,1)+'%')+'</td></tr>';
  }).join('');
 
  if(coverage){
