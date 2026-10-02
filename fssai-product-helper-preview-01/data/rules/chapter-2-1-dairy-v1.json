@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "chapter": "2.1",
   "title": "Dairy Products and Analogues",
   "source_verified_on": "2026-10-02",
@@ -171,37 +171,375 @@
     {
       "key": "2.1.4",
       "name": "Standard for Evaporated or Concentrated Milk",
-      "status": "chapter_indexed"
+      "status": "structured_core",
+      "definition": "Evaporated milk is obtained by partial removal of water from milk by heat or another process producing the same composition and characteristics. Fat/protein adjustment is allowed only to meet the standard without altering the whey-protein:casein ratio.",
+      "raw_materials": [
+        "milk and milk powders",
+        "cream and cream powders",
+        "milk fat products",
+        "milk retentate for protein adjustment"
+      ],
+      "permitted_ingredients": [
+        "potable water",
+        "sodium chloride"
+      ],
+      "composition": [
+        {
+          "variant": "Evaporated milk",
+          "milk_fat_min_pct": 7.5,
+          "milk_solids_min_pct": 25,
+          "milk_protein_in_msnf_min_pct": 34
+        },
+        {
+          "variant": "Evaporated partly skimmed milk",
+          "milk_fat_gt_pct": 1,
+          "milk_fat_lt_pct": 7.5,
+          "milk_solids_min_pct": 20,
+          "milk_protein_in_msnf_min_pct": 34
+        },
+        {
+          "variant": "Evaporated skimmed milk",
+          "milk_fat_max_pct": 1,
+          "milk_solids_min_pct": 20,
+          "milk_protein_in_msnf_min_pct": 34
+        },
+        {
+          "variant": "Evaporated high fat milk",
+          "milk_fat_min_pct": 15,
+          "milk_solids_min_pct": 26.5,
+          "milk_protein_in_msnf_min_pct": 34
+        }
+      ],
+      "product_specific_label": [
+        "Use the appropriate product name: Evaporated milk / Evaporated partly skimmed milk / Evaporated skimmed milk / Evaporated high fat milk.",
+        "Evaporated partly skimmed milk may be designated Evaporated semi-skimmed milk when milk fat is 4.0–4.5% and minimum milk solids is 24%."
+      ],
+      "linked_rules": {
+        "additives": "Appendix A",
+        "microbiology": "Appendix B",
+        "contaminants": "CTR Regulations"
+      },
+      "validation_state": "core product definition, raw materials, permitted ingredients, principal composition and product-name rules verified from official Chapter 2.1"
     },
     {
       "key": "2.1.5",
       "name": "Standard for Sweetened Condensed Milk",
-      "status": "chapter_indexed"
+      "status": "structured_core",
+      "definition": "Sweetened condensed milk is obtained by partial removal of water from milk with addition of sugar or a combination of sucrose with other sugars, or by another process producing the same composition and characteristics.",
+      "raw_materials": [
+        "milk and milk powders",
+        "cream and cream powders",
+        "milk fat products",
+        "lactose for seeding",
+        "milk retentate for protein adjustment"
+      ],
+      "permitted_ingredients": [
+        "potable water",
+        "sugar; sucrose or sucrose combined with other sugars consistent with GMP",
+        "sodium chloride"
+      ],
+      "composition": [
+        {
+          "variant": "Sweetened condensed milk",
+          "milk_fat_min_pct": 8,
+          "milk_solids_min_pct": 28,
+          "milk_protein_in_msnf_min_pct": 34
+        },
+        {
+          "variant": "Sweetened condensed partly skimmed milk",
+          "milk_fat_gt_pct": 1,
+          "milk_fat_lt_pct": 8,
+          "milk_solids_min_pct": 24,
+          "msnf_min_pct": 20,
+          "milk_protein_in_msnf_min_pct": 34
+        },
+        {
+          "variant": "Sweetened condensed skimmed milk",
+          "milk_fat_max_pct": 1,
+          "milk_solids_min_pct": 24,
+          "milk_protein_in_msnf_min_pct": 34
+        },
+        {
+          "variant": "Sweetened condensed high fat milk",
+          "milk_fat_min_pct": 16,
+          "msnf_min_pct": 14,
+          "milk_protein_in_msnf_min_pct": 34
+        }
+      ],
+      "product_specific_label": [
+        "Use the product name matching the compositional class.",
+        "Sweetened condensed partly skimmed milk may be designated Sweetened condensed semi-skimmed milk when milk fat is 4.0–4.5% and minimum milk solids is 28%.",
+        "Products not suitable for infant feeding shall not carry instructions for modifying them for infant feeding."
+      ],
+      "linked_rules": {
+        "additives": "Appendix A",
+        "microbiology": "Appendix B",
+        "contaminants": "CTR Regulations"
+      },
+      "validation_state": "core definition, ingredients, principal composition and product-name rules verified from official Chapter 2.1"
     },
     {
       "key": "2.1.6",
       "name": "Standard for Khoa",
-      "status": "chapter_indexed"
+      "status": "structured_core",
+      "definition": "Khoa/Mawa is obtained by partial removal of water from any variant of milk, with or without added milk solids, by heating under controlled conditions.",
+      "raw_materials": [
+        "milk",
+        "milk powders",
+        "cream",
+        "cream powder",
+        "milk fat products"
+      ],
+      "composition": [
+        {
+          "variant": "Khoa",
+          "total_solids_min_pct": 55,
+          "milk_fat_dry_matter_min_pct": 30,
+          "total_ash_max_pct": 6,
+          "titratable_acidity_as_lactic_acid_max_pct": 0.9
+        }
+      ],
+      "prohibitions": [
+        "added starch",
+        "added sugar"
+      ],
+      "cross_checks": [
+        "Extracted fat shall meet the applicable Reichert Meissl, Polenske and Butyro-refractometer requirements prescribed for ghee."
+      ],
+      "product_specific_label": [
+        "Name may be Khoa, Mawa, or another region-specific popular name."
+      ],
+      "linked_rules": {
+        "additives": "Appendix A",
+        "microbiology": "Appendix B",
+        "contaminants": "CTR Regulations"
+      },
+      "validation_state": "core composition and prohibition rules verified from official Chapter 2.1"
     },
     {
       "key": "2.1.7",
       "name": "Standard for Cream and Malai",
-      "status": "chapter_indexed"
+      "status": "structured_core",
+      "product_types": [
+        "Cream",
+        "Reconstituted cream",
+        "Recombined cream",
+        "Pre-packaged liquid cream",
+        "Whipping cream",
+        "Cream packed under pressure",
+        "Whipped cream",
+        "Fermented/cultured/sour cream",
+        "Acidified cream",
+        "Malai"
+      ],
+      "composition_rules": [
+        {
+          "parameter": "Milk fat",
+          "operator": ">=",
+          "value": 10,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Titratable acidity for products other than fermented/acidified cream",
+          "operator": "<=",
+          "value": 0.15,
+          "unit": "% as lactic acid"
+        }
+      ],
+      "cream_fat_classes": [
+        {
+          "class": "Low fat cream",
+          "milk_fat_min_pct": 10,
+          "milk_fat_lt_pct": 40
+        },
+        {
+          "class": "Medium fat cream",
+          "milk_fat_min_pct": 40,
+          "milk_fat_lt_pct": 60
+        },
+        {
+          "class": "High fat cream",
+          "milk_fat_min_pct": 60
+        }
+      ],
+      "permitted_ingredient_rules": [
+        "The product shall be free from ingredients foreign to milk except where the standard expressly permits them.",
+        "Milk/whey-derived protein ingredients used as stabilizer/thickener function must contain at least 35% milk protein and are limited to 20 g/kg where permitted.",
+        "Starter cultures are permitted for fermented cream.",
+        "Non-animal rennet or suitable coagulating enzymes and sodium chloride are permitted for fermented/acidified cream as specified."
+      ],
+      "product_specific_label": [
+        "Declare the cream type and fat content.",
+        "Use Recombined or Reconstituted qualifier where applicable.",
+        "Malai is named Malai.",
+        "Declare heat treatment.",
+        "Fermented-cream labels may refer to the starter culture."
+      ],
+      "linked_rules": {
+        "additives": "Appendix A",
+        "microbiology": "Appendix B",
+        "contaminants": "CTR Regulations"
+      },
+      "validation_state": "core product types, principal composition, permitted-ingredient conditions and labelling rules verified from official Chapter 2.1"
     },
     {
       "key": "2.1.8",
       "name": "Standard for Milk Fat Products",
-      "status": "chapter_indexed"
+      "status": "structured_core",
+      "definition": "Milk fat, ghee, butter oil, anhydrous milk fat and anhydrous butter oil are derived exclusively from milk or milk products by processes resulting in almost total removal of water and milk solids-not-fat.",
+      "raw_material_rules": [
+        "Milk and products obtained from milk.",
+        "Raw material shall be free from added flavour, colour or preservative."
+      ],
+      "composition": [
+        {
+          "variant": "Milk Fat / Butter Oil",
+          "moisture_max_pct": 0.4,
+          "milk_fat_min_pct": 99.6,
+          "butyro_refractometer_at_40c_min": 40,
+          "butyro_refractometer_at_40c_max": 44,
+          "reichert_meissl_min": 24,
+          "polenske_min": 0.5,
+          "polenske_max": 2
+        },
+        {
+          "variant": "Anhydrous Milk Fat / Anhydrous Butter Oil",
+          "moisture_max_pct": 0.1,
+          "milk_fat_min_pct": 99.8,
+          "butyro_refractometer_at_40c_min": 40,
+          "butyro_refractometer_at_40c_max": 44,
+          "reichert_meissl_min": 24,
+          "polenske_min": 0.5,
+          "polenske_max": 2
+        },
+        {
+          "variant": "Ghee",
+          "moisture_max_pct": 0.5,
+          "milk_fat_min_pct": 99.5,
+          "butyro_refractometer_at_40c_min": 40,
+          "butyro_refractometer_at_40c_max": 44,
+          "reichert_meissl_min": 24,
+          "polenske_min": 0.5,
+          "polenske_max": 2
+        }
+      ],
+      "product_specific_label": [
+        "Name the product as Milk fat or Butter Oil; Anhydrous Milk fat or Anhydrous Butter Oil; or Ghee, as applicable."
+      ],
+      "validation_state": "principal identity and composition rows verified from official Chapter 2.1; fatty-acid table and analytical sub-rules remain linked to the source for subsequent machine validation"
     },
     {
       "key": "2.1.9",
       "name": "Standard for Butter",
-      "status": "chapter_indexed"
+      "status": "structured_core",
+      "definition": "Butter is a water-in-oil fatty product derived exclusively from milk or milk products. Table butter shall be made from pasteurised cream.",
+      "product_types": [
+        "Table butter",
+        "White butter / Cooking butter"
+      ],
+      "permitted_ingredients": [
+        "sodium chloride or food-grade salt, only in table butter",
+        "starter cultures of harmless lactic-acid and flavour-producing bacteria",
+        "potable water"
+      ],
+      "composition": [
+        {
+          "variant": "Table butter",
+          "moisture_max_pct": 16,
+          "milk_fat_min_pct": 80,
+          "msnf_max_pct": 2,
+          "common_salt_max_pct": 3
+        },
+        {
+          "variant": "White butter / Cooking butter",
+          "milk_fat_min_pct": 76
+        }
+      ],
+      "cross_checks": [
+        "If sold without indication of type, table-butter standards apply.",
+        "Extracted fat shall meet applicable Reichert Meissl and Butyro-refractometer requirements prescribed for ghee."
+      ],
+      "product_specific_label": [
+        "Use Pasteurized Table Butter or White Butter/Cooking Butter as appropriate.",
+        "For white/cooking butter, prefix Pasteurised when prepared from pasteurised cream."
+      ],
+      "linked_rules": {
+        "additives": "Appendix A",
+        "microbiology": "Appendix B",
+        "contaminants": "CTR Regulations"
+      },
+      "validation_state": "core definition, ingredients, composition and labelling rules verified from official Chapter 2.1"
     },
     {
       "key": "2.1.10",
       "name": "Standard for Milk Powders and Cream Powder",
-      "status": "chapter_indexed"
+      "status": "structured_core",
+      "definition": "Milk powders and cream powder are milk products obtained by partial removal of water from milk or cream. Fat/protein adjustment is permitted only to meet the standard without altering the whey-protein:casein ratio.",
+      "raw_materials": [
+        "milk",
+        "cream",
+        "milk retentate for protein adjustment"
+      ],
+      "prohibitions": [
+        "added whey",
+        "whey preparations"
+      ],
+      "composition": [
+        {
+          "variant": "Whole Milk Powder",
+          "moisture_max_pct": 5,
+          "milk_fat_min_pct": 26,
+          "milk_fat_lt_pct": 42,
+          "milk_protein_in_msnf_min_pct": 34,
+          "titratable_acidity_max_ml_0_1N_NaOH_per_10g_snf": 18,
+          "insolubility_index_max_ml": 2,
+          "total_ash_max_pct_moisture_fat_free_basis": 9.3,
+          "scorched_particles_max": "Disc B"
+        },
+        {
+          "variant": "Partly Skimmed Milk Powder",
+          "moisture_max_pct": 5,
+          "milk_fat_gt_pct": 1.5,
+          "milk_fat_lt_pct": 26,
+          "milk_protein_in_msnf_min_pct": 34,
+          "titratable_acidity_max_ml_0_1N_NaOH_per_10g_snf": 18,
+          "insolubility_index_max_ml": 2,
+          "total_ash_max_pct_moisture_fat_free_basis": 9.3,
+          "scorched_particles_max": "Disc B"
+        },
+        {
+          "variant": "Skimmed Milk Powder",
+          "moisture_max_pct": 5,
+          "milk_fat_max_pct": 1.5,
+          "milk_protein_in_msnf_min_pct": 34,
+          "titratable_acidity_max_ml_0_1N_NaOH_per_10g_snf": 18,
+          "insolubility_index_max_ml": 2,
+          "total_ash_max_pct_moisture_fat_free_basis": 9.3,
+          "scorched_particles_max": "Disc B"
+        },
+        {
+          "variant": "Cream Powder",
+          "moisture_max_pct": 5,
+          "milk_fat_min_pct": 42,
+          "milk_protein_in_msnf_min_pct": 34,
+          "scorched_particles_max": "Disc B"
+        }
+      ],
+      "other_limits": [
+        {
+          "parameter": "Total sodium in milk powder",
+          "operator": "<=",
+          "value": 650,
+          "unit": "mg/100 g SNF",
+          "condition": "Maximum does not apply to sodium present due to permitted sodium-containing additives."
+        }
+      ],
+      "linked_rules": {
+        "additives": "Appendix A",
+        "microbiology": "Appendix B",
+        "contaminants": "CTR Regulations"
+      },
+      "validation_state": "core identity, main composition table and sodium note verified from official Chapter 2.1"
     },
     {
       "key": "2.1.11",
@@ -239,7 +577,46 @@
     {
       "key": "2.1.12",
       "name": "Standard for Whey Powder",
-      "status": "chapter_indexed"
+      "status": "structured_core",
+      "definition": "Whey powder and acid whey powder are obtained by drying whey or acid whey respectively.",
+      "raw_materials": [
+        "whey",
+        "acid whey, as appropriate"
+      ],
+      "permitted_ingredients": [
+        "seed lactose in the manufacture of pre-crystallized whey powder"
+      ],
+      "composition": [
+        {
+          "variant": "Whey Powder",
+          "moisture_max_pct": 5,
+          "milk_fat_max_pct": 2,
+          "milk_protein_min_pct": 10,
+          "anhydrous_lactose_min_pct": 61,
+          "pH_10pct_solution_gt": 5.1,
+          "total_ash_dry_basis_max_pct": 9.5
+        },
+        {
+          "variant": "Acid Whey Powder",
+          "moisture_max_pct": 4.5,
+          "milk_fat_max_pct": 2,
+          "milk_protein_min_pct": 7,
+          "anhydrous_lactose_min_pct": 61,
+          "pH_10pct_solution_max": 5.1,
+          "total_ash_dry_basis_max_pct": 15
+        }
+      ],
+      "notes": [
+        "For whey powder, pH >5.1 may alternatively be assessed by titratable acidity <0.35% as lactic acid.",
+        "For acid whey powder, pH ≤5.1 corresponds to titratable acidity ≥0.35% as lactic acid.",
+        "Composition may be modified for desired end use (e.g. neutralization/demineralization), but not beyond the specified milk-protein and water limits."
+      ],
+      "linked_rules": {
+        "additives": "Appendix A",
+        "microbiology": "Appendix B",
+        "contaminants": "CTR Regulations"
+      },
+      "validation_state": "core definition, raw material, ingredient and complete principal composition table verified from official Chapter 2.1"
     },
     {
       "key": "2.1.13",
@@ -324,7 +701,69 @@
     {
       "key": "2.1.14",
       "name": "Ice Cream, Kulfi, Chocolate Ice Cream, Softy Ice-Cream, Milk Ice, Milk Lolly and Dried Ice Cream Mix",
-      "status": "chapter_indexed"
+      "status": "structured_core",
+      "raw_materials": [
+        "milk",
+        "milk products"
+      ],
+      "permitted_ingredients": [
+        "sugar and other nutritive sweeteners including jaggery, dextrose, fructose, liquid glucose, dried liquid glucose, high maltose corn syrup and honey",
+        "potable water",
+        "starch only in amounts functionally necessary under GMP, considering permitted stabilizers/thickeners",
+        "fruit and fruit products",
+        "eggs and egg products",
+        "coffee",
+        "cocoa",
+        "chocolate",
+        "confectionery",
+        "condiments",
+        "spices",
+        "ginger",
+        "nuts",
+        "bakery products such as cake or cookies"
+      ],
+      "composition": [
+        {
+          "variant": "Ice Cream/Kulfi/Chocolate Ice Cream/Softy Ice Cream",
+          "total_solids_min_pct": 36,
+          "weight_min_g_per_l": 525,
+          "milk_fat_min_pct": 10,
+          "milk_protein_min_pct": 3.5
+        },
+        {
+          "variant": "Medium Fat Ice Cream/Kulfi/Chocolate Ice Cream/Softy Ice Cream",
+          "total_solids_min_pct": 30,
+          "weight_min_g_per_l": 475,
+          "milk_fat_gt_pct": 2.5,
+          "milk_fat_lt_pct": 10,
+          "milk_protein_min_pct": 3.5
+        },
+        {
+          "variant": "Low Fat Ice Cream/Kulfi/Chocolate Ice Cream/Softy Ice Cream",
+          "total_solids_min_pct": 26,
+          "weight_min_g_per_l": 475,
+          "milk_fat_max_pct": 2.5,
+          "milk_protein_min_pct": 3
+        },
+        {
+          "variant": "Milk Ice / Milk Lolly",
+          "total_solids_min_pct": 20,
+          "milk_fat_max_pct": 2,
+          "milk_protein_min_pct": 3.5
+        }
+      ],
+      "dried_mix_rule": "After addition of the prescribed amount of water, Dried Ice Cream Mix shall yield a product conforming to the relevant finished-product standard; Appendix A additive limits apply after reconstitution.",
+      "product_specific_label": [
+        "Use Ice Cream, Kulfi, Chocolate Ice Cream, Softy Ice Cream, Milk Ice, Milk Lolly or Dried Ice Cream Mix as applicable.",
+        "Declare the fat class/type for ice cream/kulfi/chocolate/softy variants.",
+        "Where starch is present, apply the specific starch declaration required by the standard and current labelling framework."
+      ],
+      "linked_rules": {
+        "additives": "Appendix A",
+        "microbiology": "Appendix B",
+        "contaminants": "CTR Regulations"
+      },
+      "validation_state": "core ingredients, principal composition tables and product-specific labelling rules verified from official Chapter 2.1"
     },
     {
       "key": "2.1.15",
@@ -373,7 +812,7 @@
     {
       "key": "2.1.16",
       "name": "Standard for Chhana and Paneer",
-      "status": "chapter_indexed",
+      "status": "structured_core",
       "permitted_acidulants": [
         "lactic acid",
         "citric acid",
@@ -383,19 +822,107 @@
         "sour whey"
       ],
       "product_specific_label": [
-        "Use the appropriate Chhana/Paneer fat-class name",
-        "Medium-fat product declares milk-fat percentage"
-      ]
+        "Use Chhana, Paneer, Low Fat Chhana/Paneer or Medium Fat Chhana/Paneer according to composition.",
+        "Low-fat and medium-fat variants shall be sold in sealed packages.",
+        "Medium-fat packages declare the milk-fat percentage."
+      ],
+      "definition": "Chhana or Paneer is obtained from any variant of milk, with or without added milk solids, by precipitation with permitted acidulants and heating.",
+      "raw_materials": [
+        "milk",
+        "milk solids"
+      ],
+      "other_permitted_ingredients": [
+        "spices and condiments, for flavoured paneer only",
+        "salt, for flavoured paneer only"
+      ],
+      "composition": [
+        {
+          "variant": "Chhana",
+          "moisture_max_pct": 65,
+          "milk_fat_dry_matter_min_pct": 50
+        },
+        {
+          "variant": "Paneer",
+          "moisture_max_pct": 60,
+          "milk_fat_dry_matter_min_pct": 50
+        },
+        {
+          "variant": "Medium Fat Chhana",
+          "moisture_max_pct": 65,
+          "milk_fat_dry_matter_gt_pct": 20,
+          "milk_fat_dry_matter_lt_pct": 50
+        },
+        {
+          "variant": "Medium Fat Paneer",
+          "moisture_max_pct": 60,
+          "milk_fat_dry_matter_gt_pct": 20,
+          "milk_fat_dry_matter_lt_pct": 50
+        },
+        {
+          "variant": "Low Fat Chhana",
+          "moisture_max_pct": 70,
+          "milk_fat_dry_matter_max_pct": 20
+        },
+        {
+          "variant": "Low Fat Paneer",
+          "moisture_max_pct": 70,
+          "milk_fat_dry_matter_max_pct": 20
+        }
+      ],
+      "linked_rules": {
+        "additives": "Appendix A",
+        "microbiology": "Appendix B",
+        "contaminants": "CTR Regulations"
+      },
+      "validation_state": "definition, permitted ingredients, complete principal composition classes and special labelling verified from official Chapter 2.1"
     },
     {
       "key": "2.1.17",
       "name": "Standard for Cheese and Cheese Products",
-      "status": "chapter_indexed",
+      "status": "structured_core",
       "process_rule": "Cheese is made from milk subjected to heat treatment at least equivalent to pasteurization.",
       "product_specific_label": [
-        "Natamycin surface-treatment declaration when applicable",
-        "Outer-packing-removal declaration for specified coated/wrapped cheeses"
-      ]
+        "Use the appropriate standardized cheese or cheese-product name.",
+        "Apply natamycin surface-treatment declaration when applicable.",
+        "Apply outer-packing-removal declaration where required for specified coated/wrapped cheeses."
+      ],
+      "definition": "Cheese includes ripened or unripened soft, semi-hard, hard or extra-hard products in which the whey-protein:casein ratio does not exceed that of milk and which are made by coagulation/concentration processes described in the standard.",
+      "process_rules": [
+        "All cheese shall be made from milk subjected to heat treatment at least equivalent to pasteurization.",
+        "Processed Cheese is made by grinding, mixing, melting and emulsifying one or more cheeses with heat and emulsifying agents.",
+        "Processed Cheese Spread is made by grinding, mixing, melting and emulsifying one or more cheeses with emulsifying agents and heat."
+      ],
+      "cheese_classes": [
+        "Ripened Cheese",
+        "Mould Ripened Cheese",
+        "Unripened Cheese including fresh cheese",
+        "Whey Cheese",
+        "Cheese in Brine",
+        "Processed Cheese",
+        "Processed Cheese Spread"
+      ],
+      "named_varieties": [
+        "Cheddar",
+        "Danbo",
+        "Edam",
+        "Gouda",
+        "Havarti",
+        "Tilsiter",
+        "Cottage Cheese",
+        "Creamed Cottage Cheese",
+        "Cream Cheese (Rahmfrischkase)",
+        "Coulommiers",
+        "Camembert",
+        "Brie",
+        "Saint Paulin",
+        "Samsoe",
+        "Emmental/Emmentaler",
+        "Provolone",
+        "Extra Hard Grating Cheese",
+        "Mozzarella"
+      ],
+      "processed_cheese_nondairy_limit": "Permitted non-dairy ingredients shall not exceed one sixth of total solids of the final product on dry matter basis for Processed Cheese and Processed Cheese Spread.",
+      "validation_state": "core cheese definitions, heat-treatment requirement, named-variety index and processed-cheese non-dairy limit verified; named-variety composition tables remain to be machine-structured"
     },
     {
       "key": "2.1.18",
@@ -562,5 +1089,12 @@
         "Name uses lactose-rich deproteinized dairy/milk/whey permeate powder as appropriate"
       ]
     }
-  ]
+  ],
+  "ingestion_progress": {
+    "standards_total": 24,
+    "structured_core": 23,
+    "superseded": 1,
+    "chapter_indexed": 0,
+    "note": "Chapter 2.1 core standard structure is complete. Remaining work is product-variant table normalization and cross-layer machine validation before full formulation compliance is enabled for every dairy product."
+  }
 }
