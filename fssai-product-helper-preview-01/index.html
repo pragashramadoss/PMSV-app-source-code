@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 41</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 42</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="product">Product selection</button>
@@ -1773,6 +1773,14 @@ function productRouteLabel(route){
  };
  return labels[route]||route||'—';
 }
+function normFoodCode(value){
+ const parts=String(value||'').trim().split('.').filter(Boolean).map(x=>{
+   const n=Number(x);
+   return Number.isFinite(n)?String(n):x.replace(/^0+/,'')||'0';
+ });
+ while(parts.length>1&&parts[parts.length-1]==='0')parts.pop();
+ return parts.join('.');
+}
 function productCatalog(){
  return productMasterDb&&Array.isArray(productMasterDb.catalog_products)?productMasterDb.catalog_products:[];
 }
@@ -1804,7 +1812,7 @@ function populateProductSubcategories(){
  const prod=document.getElementById('productSelect');
  const msg=document.getElementById('browseProductMessage');
  if(!select||!prod)return;
- const rows=(productMasterDb?.subcategories||[]).filter(x=>x.parent_category===cat);
+ const rows=(productMasterDb?.subcategories||[]).filter(x=>normFoodCode(x.parent_category)===normFoodCode(cat));
  select.innerHTML='<option value="">Select sub-category</option>'+rows.map(x=>'<option value="'+esc(x.code)+'">'+esc(x.code)+' — '+esc(x.name)+'</option>').join('');
  prod.innerHTML='<option value="">Select product</option>';
 
@@ -1824,7 +1832,7 @@ function populateProductSubcategories(){
 
  // Some FoSCoS special categories do not use the normal level-2 FCS browse layer.
  select.disabled=true;
- const direct=productCatalog().filter(x=>x.category===cat).sort((a,b)=>a.name.localeCompare(b.name));
+ const direct=productCatalog().filter(x=>normFoodCode(x.category)===normFoodCode(cat)).sort((a,b)=>a.name.localeCompare(b.name));
  if(direct.length){
    prod.innerHTML='<option value="">Select product</option>'+direct.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+(x.fcs?' ['+esc(x.fcs)+']':'')+'</option>').join('');
    prod.disabled=false;
@@ -1845,13 +1853,18 @@ function populateProductsForSubcategory(){
  const prod=document.getElementById('productSelect');
  const msg=document.getElementById('browseProductMessage');
  if(!prod)return;
- const rows=productCatalog().filter(x=>x.subcategory===sub).sort((a,b)=>a.name.localeCompare(b.name));
+ const rows=productCatalog().filter(x=>normFoodCode(x.subcategory)===normFoodCode(sub)).sort((a,b)=>a.name.localeCompare(b.name));
  prod.innerHTML='<option value="">Select product</option>'+rows.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+' ['+esc(x.fcs||'—')+']</option>').join('');
  prod.disabled=!sub||rows.length===0;
  if(msg){
+   msg.className='notice';
    if(sub&&rows.length===0){
      msg.classList.remove('hidden');
-     msg.innerHTML='<b>No standardized-product rows are loaded for this sub-category yet.</b> Product-catalog ingestion is still in progress.';
+     msg.innerHTML='<b>No Level-3 standardized product is loaded for this sub-category yet.</b> PMSV has the FoSCoS category structure, but this sub-category\'s product rows are still pending.';
+   }else if(sub&&rows.length){
+     msg.className='notice oknote';
+     msg.classList.remove('hidden');
+     msg.innerHTML='<b>'+rows.length+' standardized product'+(rows.length===1?'':'s')+' loaded for this sub-category.</b> Select the product below.';
    }else msg.classList.add('hidden');
  }
 }
