@@ -1,0 +1,5080 @@
+{
+  "schema_version": "1.0",
+  "database_id": "pmsv-fssai-regulatory-db",
+  "build_scope": "Caffeinated Beverage evaluation prototype",
+  "last_verified": "2026-10-02",
+  "source_policy": "official_fssai_regulations_only",
+  "runtime_ai_required": false,
+  "coverage": {
+    "complete_fssai_master": false,
+    "note": "This database currently contains the regulatory data loaded for the Caffeinated Beverage prototype. It is the foundation for expansion to the complete FSSAI corpus.",
+    "formulation_search_records": 285,
+    "product_ingredient_rules": 17,
+    "appendix_a_category_entries": 58,
+    "appendix_a_general_gmp_entries": 183,
+    "appendix_c_processing_aid_entries": 32,
+    "appendix_c_table_11_enzyme_entries": 56
+  },
+  "products": [
+    {
+      "id": "caffeinated-beverage",
+      "name": "Caffeinated Beverage",
+      "food_category": "14.1.4.1",
+      "product_standard": "2.10.6(2)",
+      "cross_reference": "2.10.6(2)(IV) → Carbonated Water 2.10.6(1)"
+    }
+  ],
+  "ingredient_rules": [
+    {
+      "key": "water",
+      "names": [
+        "water"
+      ],
+      "label": "Water",
+      "kind": "standard",
+      "qualification": "Required base water must conform to the prescribed packaged drinking water or mineral water standard.",
+      "clause": "2.10.6(2)(I)",
+      "route": "standard"
+    },
+    {
+      "key": "caffeine",
+      "names": [
+        "caffeine"
+      ],
+      "label": "Caffeine",
+      "kind": "standard",
+      "qualification": "Essential composition of Caffeinated Beverage.",
+      "clause": "2.10.6(2)(II)",
+      "route": "standard"
+    },
+    {
+      "key": "taurine",
+      "names": [
+        "taurine"
+      ],
+      "label": "Taurine",
+      "kind": "standard",
+      "qualification": "Optional ingredient expressly listed for Caffeinated Beverage.",
+      "clause": "2.10.6(2)(III)",
+      "route": "standard"
+    },
+    {
+      "key": "glucuronolactone",
+      "names": [
+        "d-glucurono-γ-lactone",
+        "d-glucurono-y-lactone",
+        "glucuronolactone",
+        "d glucurono gamma lactone"
+      ],
+      "label": "D-glucurono-γ-lactone",
+      "kind": "standard",
+      "qualification": "Optional ingredient expressly listed for Caffeinated Beverage.",
+      "clause": "2.10.6(2)(III)",
+      "route": "standard"
+    },
+    {
+      "key": "inositol",
+      "names": [
+        "inositol"
+      ],
+      "label": "Inositol",
+      "kind": "standard",
+      "qualification": "Optional ingredient expressly listed for Caffeinated Beverage.",
+      "clause": "2.10.6(2)(III)",
+      "route": "standard"
+    },
+    {
+      "key": "pantothenic",
+      "names": [
+        "pantothenic acid",
+        "vitamin b5"
+      ],
+      "label": "Pantothenic acid",
+      "kind": "standard",
+      "qualification": "Optional ingredient expressly listed for Caffeinated Beverage.",
+      "clause": "2.10.6(2)(III)",
+      "route": "standard"
+    },
+    {
+      "key": "thiamine",
+      "names": [
+        "thiamine",
+        "vitamin b1"
+      ],
+      "label": "Thiamine",
+      "kind": "standard",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "clause": "2.10.6(2)(III)(B)",
+      "route": "standard"
+    },
+    {
+      "key": "riboflavin",
+      "names": [
+        "riboflavin",
+        "vitamin b2"
+      ],
+      "label": "Riboflavin",
+      "kind": "standard",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "clause": "2.10.6(2)(III)(B)",
+      "route": "standard"
+    },
+    {
+      "key": "niacin",
+      "names": [
+        "niacin",
+        "vitamin b3"
+      ],
+      "label": "Niacin",
+      "kind": "standard",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "clause": "2.10.6(2)(III)(B)",
+      "route": "standard"
+    },
+    {
+      "key": "b6",
+      "names": [
+        "vitamin b6",
+        "pyridoxine"
+      ],
+      "label": "Vitamin B6",
+      "kind": "standard",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "clause": "2.10.6(2)(III)(B)",
+      "route": "standard"
+    },
+    {
+      "key": "b12",
+      "names": [
+        "vitamin b12",
+        "cobalamin"
+      ],
+      "label": "Vitamin B12",
+      "kind": "standard",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "clause": "2.10.6(2)(III)(B)",
+      "route": "standard"
+    },
+    {
+      "key": "sugar",
+      "names": [
+        "sugar",
+        "liquid glucose",
+        "dextrose monohydrate",
+        "invert sugar",
+        "fructose",
+        "honey"
+      ],
+      "label": "Carbonated Water permitted ingredient",
+      "kind": "crossref",
+      "qualification": "Listed as a permitted Carbonated Water ingredient; Caffeinated Beverage must conform to that standard for ingredients.",
+      "clause": "2.10.6(2)(IV) → 2.10.6(1)",
+      "route": "standard"
+    },
+    {
+      "key": "applejuice",
+      "names": [
+        "apple juice"
+      ],
+      "label": "Apple juice",
+      "kind": "extra",
+      "qualification": "Apple juice is not automatically treated as the Carbonated Water term “fruits and vegetables extractives”. For a standardized Caffeinated Beverage, an additional ingredient outside the specified list requires Food Authority approval.",
+      "clause": "2.10.6(2)(III)(A)",
+      "route": "proprietary",
+      "contaminants": [
+        {
+          "name": "Patulin",
+          "limit": "50 µg/kg",
+          "basis": "Applies when apple juice is used as an ingredient in another beverage.",
+          "source": "Contaminants, Toxins and Residues Regulations · Version IX"
+        }
+      ]
+    },
+    {
+      "key": "fruit",
+      "names": [
+        "fruit extract",
+        "vegetable extract",
+        "fruit extractive",
+        "vegetable extractive"
+      ],
+      "label": "Fruit / vegetable extractive",
+      "kind": "crossref",
+      "qualification": "Fruit and vegetable extractives are listed in the Carbonated Water ingredient framework.",
+      "clause": "2.10.6(2)(IV) → 2.10.6(1)",
+      "route": "standard"
+    },
+    {
+      "key": "acid",
+      "names": [
+        "citric acid",
+        "fumaric acid",
+        "tartaric acid",
+        "phosphoric acid",
+        "lactic acid",
+        "ascorbic acid",
+        "malic acid",
+        "sorbitol"
+      ],
+      "label": "Permitted Carbonated Water ingredient",
+      "kind": "crossref",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "clause": "2.10.6(2)(IV) → 2.10.6(1)",
+      "route": "standard"
+    },
+    {
+      "key": "gelatin",
+      "names": [
+        "gelatin",
+        "albumin",
+        "licorice",
+        "licorice derivative"
+      ],
+      "label": "Permitted Carbonated Water ingredient",
+      "kind": "crossref",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "clause": "2.10.6(2)(IV) → 2.10.6(1)",
+      "route": "standard"
+    },
+    {
+      "key": "gellan",
+      "names": [
+        "gellan gum"
+      ],
+      "label": "Gellan gum",
+      "kind": "crossref",
+      "qualification": "Specifically permitted in the Carbonated Water standard at GMP level and carried into Caffeinated Beverage by clause 2.10.6(2)(IV).",
+      "clause": "2.10.6(2)(IV) → 2.10.6(1)",
+      "route": "standard"
+    }
+  ],
+  "ingredient_master": [
+    {
+      "name": "water",
+      "canonical_name": "Water",
+      "type": "product_standard_ingredient",
+      "rule_key": "water",
+      "fssai_basis": "2.10.6(2)(I)",
+      "qualification": "Required base water must conform to the prescribed packaged drinking water or mineral water standard.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "caffeine",
+      "canonical_name": "Caffeine",
+      "type": "product_standard_ingredient",
+      "rule_key": "caffeine",
+      "fssai_basis": "2.10.6(2)(II)",
+      "qualification": "Essential composition of Caffeinated Beverage.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "taurine",
+      "canonical_name": "Taurine",
+      "type": "product_standard_ingredient",
+      "rule_key": "taurine",
+      "fssai_basis": "2.10.6(2)(III)",
+      "qualification": "Optional ingredient expressly listed for Caffeinated Beverage.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "d-glucurono-γ-lactone",
+      "canonical_name": "D-glucurono-γ-lactone",
+      "type": "product_standard_ingredient",
+      "rule_key": "glucuronolactone",
+      "fssai_basis": "2.10.6(2)(III)",
+      "qualification": "Optional ingredient expressly listed for Caffeinated Beverage.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "d-glucurono-y-lactone",
+      "canonical_name": "D-glucurono-γ-lactone",
+      "type": "product_standard_ingredient",
+      "rule_key": "glucuronolactone",
+      "fssai_basis": "2.10.6(2)(III)",
+      "qualification": "Optional ingredient expressly listed for Caffeinated Beverage.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "glucuronolactone",
+      "canonical_name": "D-glucurono-γ-lactone",
+      "type": "product_standard_ingredient",
+      "rule_key": "glucuronolactone",
+      "fssai_basis": "2.10.6(2)(III)",
+      "qualification": "Optional ingredient expressly listed for Caffeinated Beverage.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "d glucurono gamma lactone",
+      "canonical_name": "D-glucurono-γ-lactone",
+      "type": "product_standard_ingredient",
+      "rule_key": "glucuronolactone",
+      "fssai_basis": "2.10.6(2)(III)",
+      "qualification": "Optional ingredient expressly listed for Caffeinated Beverage.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "inositol",
+      "canonical_name": "Inositol",
+      "type": "product_standard_ingredient",
+      "rule_key": "inositol",
+      "fssai_basis": "2.10.6(2)(III)",
+      "qualification": "Optional ingredient expressly listed for Caffeinated Beverage.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "pantothenic acid",
+      "canonical_name": "Pantothenic acid",
+      "type": "product_standard_ingredient",
+      "rule_key": "pantothenic",
+      "fssai_basis": "2.10.6(2)(III)",
+      "qualification": "Optional ingredient expressly listed for Caffeinated Beverage.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "vitamin b5",
+      "canonical_name": "Pantothenic acid",
+      "type": "product_standard_ingredient",
+      "rule_key": "pantothenic",
+      "fssai_basis": "2.10.6(2)(III)",
+      "qualification": "Optional ingredient expressly listed for Caffeinated Beverage.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "thiamine",
+      "canonical_name": "Thiamine",
+      "type": "product_standard_ingredient",
+      "rule_key": "thiamine",
+      "fssai_basis": "2.10.6(2)(III)(B)",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "vitamin b1",
+      "canonical_name": "Thiamine",
+      "type": "product_standard_ingredient",
+      "rule_key": "thiamine",
+      "fssai_basis": "2.10.6(2)(III)(B)",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "riboflavin",
+      "canonical_name": "Riboflavin",
+      "type": "product_standard_ingredient",
+      "rule_key": "riboflavin",
+      "fssai_basis": "2.10.6(2)(III)(B)",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "vitamin b2",
+      "canonical_name": "Riboflavin",
+      "type": "product_standard_ingredient",
+      "rule_key": "riboflavin",
+      "fssai_basis": "2.10.6(2)(III)(B)",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "niacin",
+      "canonical_name": "Niacin",
+      "type": "product_standard_ingredient",
+      "rule_key": "niacin",
+      "fssai_basis": "2.10.6(2)(III)(B)",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "vitamin b3",
+      "canonical_name": "Niacin",
+      "type": "product_standard_ingredient",
+      "rule_key": "niacin",
+      "fssai_basis": "2.10.6(2)(III)(B)",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "vitamin b6",
+      "canonical_name": "Vitamin B6",
+      "type": "product_standard_ingredient",
+      "rule_key": "b6",
+      "fssai_basis": "2.10.6(2)(III)(B)",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "pyridoxine",
+      "canonical_name": "Vitamin B6",
+      "type": "product_standard_ingredient",
+      "rule_key": "b6",
+      "fssai_basis": "2.10.6(2)(III)(B)",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "vitamin b12",
+      "canonical_name": "Vitamin B12",
+      "type": "product_standard_ingredient",
+      "rule_key": "b12",
+      "fssai_basis": "2.10.6(2)(III)(B)",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "cobalamin",
+      "canonical_name": "Vitamin B12",
+      "type": "product_standard_ingredient",
+      "rule_key": "b12",
+      "fssai_basis": "2.10.6(2)(III)(B)",
+      "qualification": "Vitamin expressly permitted up to one RDA level.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "sugar",
+      "canonical_name": "Carbonated Water permitted ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "sugar",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed as a permitted Carbonated Water ingredient; Caffeinated Beverage must conform to that standard for ingredients.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "liquid glucose",
+      "canonical_name": "Carbonated Water permitted ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "sugar",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed as a permitted Carbonated Water ingredient; Caffeinated Beverage must conform to that standard for ingredients.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "dextrose monohydrate",
+      "canonical_name": "Carbonated Water permitted ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "sugar",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed as a permitted Carbonated Water ingredient; Caffeinated Beverage must conform to that standard for ingredients.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "invert sugar",
+      "canonical_name": "Carbonated Water permitted ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "sugar",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed as a permitted Carbonated Water ingredient; Caffeinated Beverage must conform to that standard for ingredients.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "fructose",
+      "canonical_name": "Carbonated Water permitted ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "sugar",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed as a permitted Carbonated Water ingredient; Caffeinated Beverage must conform to that standard for ingredients.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "honey",
+      "canonical_name": "Carbonated Water permitted ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "sugar",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed as a permitted Carbonated Water ingredient; Caffeinated Beverage must conform to that standard for ingredients.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "apple juice",
+      "canonical_name": "Apple juice",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "applejuice",
+      "fssai_basis": "2.10.6(2)(III)(A)",
+      "qualification": "Apple juice is not automatically treated as the Carbonated Water term “fruits and vegetables extractives”. For a standardized Caffeinated Beverage, an additional ingredient outside the specified list requires Food Authority approval.",
+      "route": "proprietary",
+      "contaminants": [
+        {
+          "name": "Patulin",
+          "limit": "50 µg/kg",
+          "basis": "Applies when apple juice is used as an ingredient in another beverage.",
+          "source": "Contaminants, Toxins and Residues Regulations · Version IX"
+        }
+      ]
+    },
+    {
+      "name": "fruit extract",
+      "canonical_name": "Fruit / vegetable extractive",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "fruit",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Fruit and vegetable extractives are listed in the Carbonated Water ingredient framework.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "vegetable extract",
+      "canonical_name": "Fruit / vegetable extractive",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "fruit",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Fruit and vegetable extractives are listed in the Carbonated Water ingredient framework.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "fruit extractive",
+      "canonical_name": "Fruit / vegetable extractive",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "fruit",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Fruit and vegetable extractives are listed in the Carbonated Water ingredient framework.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "vegetable extractive",
+      "canonical_name": "Fruit / vegetable extractive",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "fruit",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Fruit and vegetable extractives are listed in the Carbonated Water ingredient framework.",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "citric acid",
+      "canonical_name": "Permitted Carbonated Water ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "acid",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "fumaric acid",
+      "canonical_name": "Permitted Carbonated Water ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "acid",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "tartaric acid",
+      "canonical_name": "Permitted Carbonated Water ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "acid",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "phosphoric acid",
+      "canonical_name": "Permitted Carbonated Water ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "acid",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "lactic acid",
+      "canonical_name": "Permitted Carbonated Water ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "acid",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "ascorbic acid",
+      "canonical_name": "Permitted Carbonated Water ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "acid",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "malic acid",
+      "canonical_name": "Permitted Carbonated Water ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "acid",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "sorbitol",
+      "canonical_name": "Permitted Carbonated Water ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "acid",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "gelatin",
+      "canonical_name": "Permitted Carbonated Water ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "gelatin",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "albumin",
+      "canonical_name": "Permitted Carbonated Water ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "gelatin",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "licorice",
+      "canonical_name": "Permitted Carbonated Water ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "gelatin",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "licorice derivative",
+      "canonical_name": "Permitted Carbonated Water ingredient",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "gelatin",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "gellan gum",
+      "canonical_name": "Gellan gum",
+      "type": "cross_referenced_ingredient",
+      "rule_key": "gellan",
+      "fssai_basis": "2.10.6(2)(IV) → 2.10.6(1)",
+      "qualification": "Specifically permitted in the Carbonated Water standard at GMP level and carried into Caffeinated Beverage by clause 2.10.6(2)(IV).",
+      "route": "standard",
+      "contaminants": []
+    },
+    {
+      "name": "Ascorbyl esters",
+      "canonical_name": "Ascorbyl esters",
+      "type": "food_additive",
+      "ins": "304, 305",
+      "limit": "1,000 mg/kg",
+      "condition": "Notes 15, 10: on fat/oil basis; as ascorbyl stearate.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Acesulfame potassium",
+      "canonical_name": "Acesulfame potassium",
+      "type": "food_additive",
+      "ins": "950",
+      "limit": "600 mg/kg",
+      "condition": "Note 188: combined use with aspartame-acesulfame salt must not exceed this level as acesulfame-K. Chapter 2.10 is stricter at 300 ppm for this product.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Allura Red AC",
+      "canonical_name": "Allura Red AC",
+      "type": "food_additive",
+      "ins": "129",
+      "limit": "100 mg/kg",
+      "condition": "Note 127: on served-to-consumer basis.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Anthocyanins",
+      "canonical_name": "Anthocyanins",
+      "type": "food_additive",
+      "ins": "163(i), 163(iii)",
+      "limit": "GMP",
+      "condition": "Good Manufacturing Practice.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Aspartame",
+      "canonical_name": "Aspartame",
+      "type": "food_additive",
+      "ins": "951",
+      "limit": "600 mg/kg",
+      "condition": "Note 191: combined use with aspartame-acesulfame salt must not exceed this level as aspartame. This is stricter than Chapter 2.10 carbonated-water limit of 700 ppm.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Benzoates",
+      "canonical_name": "Benzoates",
+      "type": "food_additive",
+      "ins": "210–213",
+      "limit": "600 mg/kg",
+      "condition": "As benzoic acid; interim maximum. If beverage pH > 3.5, note 123 permits 1,000 mg/kg.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Beeswax",
+      "canonical_name": "Beeswax",
+      "type": "food_additive",
+      "ins": "901",
+      "limit": "200 mg/kg",
+      "condition": "For use as a flavour carrier only.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Brilliant Blue FCF",
+      "canonical_name": "Brilliant Blue FCF",
+      "type": "food_additive",
+      "ins": "133",
+      "limit": "100 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Carotenoids",
+      "canonical_name": "Carotenoids",
+      "type": "food_additive",
+      "ins": "160a(i), 160a(iii), 160e, 160f",
+      "limit": "100 mg/kg",
+      "condition": "Group limit in category table.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Chlorophylls and chlorophyllins, copper complexes",
+      "canonical_name": "Chlorophylls and chlorophyllins, copper complexes",
+      "type": "food_additive",
+      "ins": "141(i), 141(ii)",
+      "limit": "300 mg/kg",
+      "condition": "On served-to-consumer basis.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Candelilla wax",
+      "canonical_name": "Candelilla wax",
+      "type": "food_additive",
+      "ins": "902",
+      "limit": "200 mg/kg",
+      "condition": "For use as a flavour carrier only.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Caramel III — ammonia caramel",
+      "canonical_name": "Caramel III — ammonia caramel",
+      "type": "food_additive",
+      "ins": "150c",
+      "limit": "5,000 mg/kg",
+      "condition": "Note 9 has a separate exception for ready-to-drink coffee products.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Caramel IV — sulfite ammonia caramel",
+      "canonical_name": "Caramel IV — sulfite ammonia caramel",
+      "type": "food_additive",
+      "ins": "150d",
+      "limit": "50,000 mg/kg",
+      "condition": "On served-to-consumer basis.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Carnauba wax",
+      "canonical_name": "Carnauba wax",
+      "type": "food_additive",
+      "ins": "903",
+      "limit": "200 mg/kg",
+      "condition": "For use as a flavour carrier only.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Beta-carotenes, vegetable",
+      "canonical_name": "Beta-carotenes, vegetable",
+      "type": "food_additive",
+      "ins": "160a(ii)",
+      "limit": "2,000 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Cyclodextrin, beta",
+      "canonical_name": "Cyclodextrin, beta",
+      "type": "food_additive",
+      "ins": "459",
+      "limit": "500 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Diacetyltartaric and fatty acid esters of glycerol (DATEM)",
+      "canonical_name": "Diacetyltartaric and fatty acid esters of glycerol (DATEM)",
+      "type": "food_additive",
+      "ins": "472e",
+      "limit": "5,000 mg/kg",
+      "condition": "On served-to-consumer basis.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Ethylene diamine tetra acetates",
+      "canonical_name": "Ethylene diamine tetra acetates",
+      "type": "food_additive",
+      "ins": "385, 386",
+      "limit": "200 mg/kg",
+      "condition": "As anhydrous calcium disodium ethylenediaminetetraacetate.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Fast Green FCF",
+      "canonical_name": "Fast Green FCF",
+      "type": "food_additive",
+      "ins": "143",
+      "limit": "100 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Glycerol ester of wood rosin",
+      "canonical_name": "Glycerol ester of wood rosin",
+      "type": "food_additive",
+      "ins": "445(iii)",
+      "limit": "100 mg/kg",
+      "condition": "Appendix parent row is 150 mg/kg but explicitly states 100 mg/kg maximum for carbonated water.",
+      "fssai_basis": "Appendix A · 14.1.4 → carbonated-water specific",
+      "source_category": "14.1.4 → carbonated-water specific"
+    },
+    {
+      "name": "Grape skin extract",
+      "canonical_name": "Grape skin extract",
+      "type": "food_additive",
+      "ins": "163(ii)",
+      "limit": "300 mg/kg",
+      "condition": "As anthocyanin; on served-to-consumer basis.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Hydroxybenzoates, para-",
+      "canonical_name": "Hydroxybenzoates, para-",
+      "type": "food_additive",
+      "ins": "214, 218",
+      "limit": "500 mg/kg",
+      "condition": "As para-hydroxybenzoic acid.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Iron oxides",
+      "canonical_name": "Iron oxides",
+      "type": "food_additive",
+      "ins": "172(i)–172(iii)",
+      "limit": "100 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Indigotine (Indigo carmine)",
+      "canonical_name": "Indigotine (Indigo carmine)",
+      "type": "food_additive",
+      "ins": "132",
+      "limit": "100 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Isopropyl citrates",
+      "canonical_name": "Isopropyl citrates",
+      "type": "food_additive",
+      "ins": "384",
+      "limit": "200 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Neotame",
+      "canonical_name": "Neotame",
+      "type": "food_additive",
+      "ins": "961",
+      "limit": "33 mg/kg",
+      "condition": "Chapter 2.10 also limits Neotame to 33 ppm.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Phosphates",
+      "canonical_name": "Phosphates",
+      "type": "food_additive",
+      "ins": "338; 339(i–iii); 340(i–iii); 341(i–iii); 342(i–ii); 343(i–iii); 450(i–iii, v–vii, ix); 451(i–ii); 452(i–v)",
+      "limit": "1,000 mg/kg",
+      "condition": "As phosphorus; on served-to-consumer basis.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Polysorbates",
+      "canonical_name": "Polysorbates",
+      "type": "food_additive",
+      "ins": "432–436",
+      "limit": "500 mg/kg",
+      "condition": "On served-to-consumer basis.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Polydimethylsiloxane",
+      "canonical_name": "Polydimethylsiloxane",
+      "type": "food_additive",
+      "ins": "900a",
+      "limit": "20 mg/kg",
+      "condition": "On served-to-consumer basis.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Polyethylene glycol",
+      "canonical_name": "Polyethylene glycol",
+      "type": "food_additive",
+      "ins": "1521",
+      "limit": "1,000 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Ponceau 4R",
+      "canonical_name": "Ponceau 4R",
+      "type": "food_additive",
+      "ins": "124",
+      "limit": "50 mg/kg",
+      "condition": "Appendix parent row is 100 mg/kg but expressly states 50 mg/kg maximum for carbonated water.",
+      "fssai_basis": "Appendix A · 14.1.4 → carbonated-water specific",
+      "source_category": "14.1.4 → carbonated-water specific"
+    },
+    {
+      "name": "Propyl gallate",
+      "canonical_name": "Propyl gallate",
+      "type": "food_additive",
+      "ins": "310",
+      "limit": "1,000 mg/kg",
+      "condition": "On fat/oil basis.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Propylene glycol esters of fatty acids",
+      "canonical_name": "Propylene glycol esters of fatty acids",
+      "type": "food_additive",
+      "ins": "477",
+      "limit": "500 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Quillaia extracts",
+      "canonical_name": "Quillaia extracts",
+      "type": "food_additive",
+      "ins": "999(i), 999(ii)",
+      "limit": "50 mg/kg",
+      "condition": "On saponin basis. Note 132 gives a separate semi-frozen beverage exception.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Sorbates",
+      "canonical_name": "Sorbates",
+      "type": "food_additive",
+      "ins": "200–203",
+      "limit": "500 mg/kg",
+      "condition": "As sorbic acid; on served-to-consumer basis.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Sulfites",
+      "canonical_name": "Sulfites",
+      "type": "food_additive",
+      "ins": "220–225, 227, 228, 539",
+      "limit": "70 mg/kg",
+      "condition": "As residual SO₂; on served-to-consumer basis. Note 143 restricts this entry to fruit juice-based drinks and dry ginger ale only.",
+      "fssai_basis": "Appendix A · 14.1.4 · conditional",
+      "source_category": "14.1.4 · conditional"
+    },
+    {
+      "name": "Stannous chloride",
+      "canonical_name": "Stannous chloride",
+      "type": "food_additive",
+      "ins": "512",
+      "limit": "20 mg/kg",
+      "condition": "As tin.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Stearyl citrate",
+      "canonical_name": "Stearyl citrate",
+      "type": "food_additive",
+      "ins": "484",
+      "limit": "500 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Steviol glycosides",
+      "canonical_name": "Steviol glycosides",
+      "type": "food_additive",
+      "ins": "960",
+      "limit": "200 mg/kg",
+      "condition": "As steviol equivalents.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Sucralose",
+      "canonical_name": "Sucralose",
+      "type": "food_additive",
+      "ins": "955",
+      "limit": "300 mg/kg",
+      "condition": "On served-to-consumer basis. Chapter 2.10 also limits sucralose to 300 ppm.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Annatto",
+      "canonical_name": "Annatto",
+      "type": "food_additive",
+      "ins": "160b(i), 160b(ii)",
+      "limit": "100 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Curcumin",
+      "canonical_name": "Curcumin",
+      "type": "food_additive",
+      "ins": "100",
+      "limit": "100 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Carmoisine",
+      "canonical_name": "Carmoisine",
+      "type": "food_additive",
+      "ins": "122",
+      "limit": "100 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Erythrosine",
+      "canonical_name": "Erythrosine",
+      "type": "food_additive",
+      "ins": "127",
+      "limit": "50 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Dimethyl dicarbonate",
+      "canonical_name": "Dimethyl dicarbonate",
+      "type": "food_additive",
+      "ins": "242",
+      "limit": "250 mg/kg",
+      "condition": "As added level; residue not detected in ready-to-eat food. Final-product methanol maximum stated as 200 mg/L.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Saffron",
+      "canonical_name": "Saffron",
+      "type": "food_additive",
+      "ins": "—",
+      "limit": "GMP",
+      "condition": "Good Manufacturing Practice.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Tartrazine",
+      "canonical_name": "Tartrazine",
+      "type": "food_additive",
+      "ins": "102",
+      "limit": "100 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Sucroglycerides",
+      "canonical_name": "Sucroglycerides",
+      "type": "food_additive",
+      "ins": "474",
+      "limit": "200 mg/kg",
+      "condition": "Note 219 gives 5,000 mg/kg only for specified aniseed-, coconut- and almond-based drinks.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Sucrose acetate isobutyrate",
+      "canonical_name": "Sucrose acetate isobutyrate",
+      "type": "food_additive",
+      "ins": "444",
+      "limit": "500 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Sunset Yellow FCF",
+      "canonical_name": "Sunset Yellow FCF",
+      "type": "food_additive",
+      "ins": "110",
+      "limit": "100 mg/kg",
+      "condition": "On served-to-consumer basis.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Thiodipropionates",
+      "canonical_name": "Thiodipropionates",
+      "type": "food_additive",
+      "ins": "388, 389",
+      "limit": "1,000 mg/kg",
+      "condition": "On fat/oil basis; as thiodipropionic acid.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Triethyl citrate",
+      "canonical_name": "Triethyl citrate",
+      "type": "food_additive",
+      "ins": "1505",
+      "limit": "200 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Quinine salts",
+      "canonical_name": "Quinine salts",
+      "type": "food_additive",
+      "ins": "—",
+      "limit": "100 mg/kg",
+      "condition": "Chapter 2.10 carbonated-water standard also gives 100 ppm expressed as quinine sulphate.",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Tartrates",
+      "canonical_name": "Tartrates",
+      "type": "food_additive",
+      "ins": "334, 335(ii), 337",
+      "limit": "800 mg/kg",
+      "condition": "",
+      "fssai_basis": "Appendix A · 14.1.4",
+      "source_category": "14.1.4"
+    },
+    {
+      "name": "Canthaxanthin",
+      "canonical_name": "Canthaxanthin",
+      "type": "food_additive",
+      "ins": "161g",
+      "limit": "5 mg/kg",
+      "condition": "Specific 14.1.4.1 limit; replaces the broader parent-category value of 100 mg/kg for this subcategory.",
+      "fssai_basis": "Appendix A · 14.1.4.1",
+      "source_category": "14.1.4.1"
+    },
+    {
+      "name": "Lauric arginate ethyl ester",
+      "canonical_name": "Lauric arginate ethyl ester",
+      "type": "food_additive",
+      "ins": "243",
+      "limit": "50 mg/kg",
+      "condition": "Specific to carbonated water-based flavoured drinks.",
+      "fssai_basis": "Appendix A · 14.1.4.1",
+      "source_category": "14.1.4.1"
+    },
+    {
+      "name": "Riboflavins",
+      "canonical_name": "Riboflavins",
+      "type": "food_additive",
+      "ins": "101(i)–101(iii)",
+      "limit": "50 mg/kg",
+      "condition": "Specific 14.1.4.1 additive limit; parent 14.1.4 lists 100 mg/kg. Product standard separately permits riboflavin as a vitamin up to 100% RDA.",
+      "fssai_basis": "Appendix A · 14.1.4.1",
+      "source_category": "14.1.4.1"
+    },
+    {
+      "name": "Saccharins",
+      "canonical_name": "Saccharins",
+      "type": "food_additive",
+      "ins": "954(i)–954(iv)",
+      "limit": "300 mg/kg",
+      "condition": "Specific 14.1.4.1 Appendix A limit. Chapter 2.10 carbonated-water standard is stricter for saccharin sodium at 100 ppm.",
+      "fssai_basis": "Appendix A · 14.1.4.1",
+      "source_category": "14.1.4.1"
+    },
+    {
+      "name": "Acetic acid, glacial",
+      "canonical_name": "Acetic acid, glacial",
+      "type": "food_additive_gmp",
+      "ins": "260",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Acetic and fatty acid esters of glycerol",
+      "canonical_name": "Acetic and fatty acid esters of glycerol",
+      "type": "food_additive_gmp",
+      "ins": "472a",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Acetylated distarch adipate",
+      "canonical_name": "Acetylated distarch adipate",
+      "type": "food_additive_gmp",
+      "ins": "1422",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Acetylated distarch phosphate",
+      "canonical_name": "Acetylated distarch phosphate",
+      "type": "food_additive_gmp",
+      "ins": "1414",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Acetylated oxidized starch",
+      "canonical_name": "Acetylated oxidized starch",
+      "type": "food_additive_gmp",
+      "ins": "1451",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Acid-treated starch",
+      "canonical_name": "Acid-treated starch",
+      "type": "food_additive_gmp",
+      "ins": "1401",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Agar",
+      "canonical_name": "Agar",
+      "type": "food_additive_gmp",
+      "ins": "406",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Alginic acid",
+      "canonical_name": "Alginic acid",
+      "type": "food_additive_gmp",
+      "ins": "400",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Alkaline treated starch",
+      "canonical_name": "Alkaline treated starch",
+      "type": "food_additive_gmp",
+      "ins": "1402",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Ammonium alginate",
+      "canonical_name": "Ammonium alginate",
+      "type": "food_additive_gmp",
+      "ins": "403",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Ammonium carbonate",
+      "canonical_name": "Ammonium carbonate",
+      "type": "food_additive_gmp",
+      "ins": "503(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Ammonium chloride",
+      "canonical_name": "Ammonium chloride",
+      "type": "food_additive_gmp",
+      "ins": "510",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Ammonium hydrogen carbonate",
+      "canonical_name": "Ammonium hydrogen carbonate",
+      "type": "food_additive_gmp",
+      "ins": "503(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Ammonium hydroxide",
+      "canonical_name": "Ammonium hydroxide",
+      "type": "food_additive_gmp",
+      "ins": "527",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "alpha-Amylase from Aspergillus oryzae var.",
+      "canonical_name": "alpha-Amylase from Aspergillus oryzae var.",
+      "type": "food_additive_gmp",
+      "ins": "1100(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "alpha-Amylase from Bacillus megaterium expressed in Bacillus subtilis",
+      "canonical_name": "alpha-Amylase from Bacillus megaterium expressed in Bacillus subtilis",
+      "type": "food_additive_gmp",
+      "ins": "1100(iv)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "alpha-Amylase from Bacillus stearothermophilus expressed in Bacillus subtilis",
+      "canonical_name": "alpha-Amylase from Bacillus stearothermophilus expressed in Bacillus subtilis",
+      "type": "food_additive_gmp",
+      "ins": "1100(v)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "alpha-Amylase from Bacillus stearothermophilus",
+      "canonical_name": "alpha-Amylase from Bacillus stearothermophilus",
+      "type": "food_additive_gmp",
+      "ins": "1100(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "alpha-Amylase from Bacillus subtilis",
+      "canonical_name": "alpha-Amylase from Bacillus subtilis",
+      "type": "food_additive_gmp",
+      "ins": "1100(iii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Ascorbic acid, L-",
+      "canonical_name": "Ascorbic acid, L-",
+      "type": "food_additive_gmp",
+      "ins": "300",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Beet red",
+      "canonical_name": "Beet red",
+      "type": "food_additive_gmp",
+      "ins": "162",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Bleached starch",
+      "canonical_name": "Bleached starch",
+      "type": "food_additive_gmp",
+      "ins": "1403",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Bromelain",
+      "canonical_name": "Bromelain",
+      "type": "food_additive_gmp",
+      "ins": "1101(iii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium 5'-guanylate",
+      "canonical_name": "Calcium 5'-guanylate",
+      "type": "food_additive_gmp",
+      "ins": "629",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium 5'-inosinate",
+      "canonical_name": "Calcium 5'-inosinate",
+      "type": "food_additive_gmp",
+      "ins": "633",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium 5'-ribonucleotides",
+      "canonical_name": "Calcium 5'-ribonucleotides",
+      "type": "food_additive_gmp",
+      "ins": "634",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium acetate",
+      "canonical_name": "Calcium acetate",
+      "type": "food_additive_gmp",
+      "ins": "263",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium alginate",
+      "canonical_name": "Calcium alginate",
+      "type": "food_additive_gmp",
+      "ins": "404",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium ascorbate",
+      "canonical_name": "Calcium ascorbate",
+      "type": "food_additive_gmp",
+      "ins": "302",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium carbonate",
+      "canonical_name": "Calcium carbonate",
+      "type": "food_additive_gmp",
+      "ins": "170(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium chloride",
+      "canonical_name": "Calcium chloride",
+      "type": "food_additive_gmp",
+      "ins": "509",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium di-L-glutamate",
+      "canonical_name": "Calcium di-L-glutamate",
+      "type": "food_additive_gmp",
+      "ins": "623",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium gluconate",
+      "canonical_name": "Calcium gluconate",
+      "type": "food_additive_gmp",
+      "ins": "578",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium hydroxide",
+      "canonical_name": "Calcium hydroxide",
+      "type": "food_additive_gmp",
+      "ins": "526",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium lactate",
+      "canonical_name": "Calcium lactate",
+      "type": "food_additive_gmp",
+      "ins": "327",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium malate, DL-",
+      "canonical_name": "Calcium malate, DL-",
+      "type": "food_additive_gmp",
+      "ins": "352(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium oxide",
+      "canonical_name": "Calcium oxide",
+      "type": "food_additive_gmp",
+      "ins": "529",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium propionate",
+      "canonical_name": "Calcium propionate",
+      "type": "food_additive_gmp",
+      "ins": "282",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium silicate",
+      "canonical_name": "Calcium silicate",
+      "type": "food_additive_gmp",
+      "ins": "552",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Calcium sulfate",
+      "canonical_name": "Calcium sulfate",
+      "type": "food_additive_gmp",
+      "ins": "516",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Caramel I — plain caramel",
+      "canonical_name": "Caramel I — plain caramel",
+      "type": "food_additive_gmp",
+      "ins": "150a",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Carbohydrase from Bacillus licheniformis",
+      "canonical_name": "Carbohydrase from Bacillus licheniformis",
+      "type": "food_additive_gmp",
+      "ins": "1100(vi)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Carbon dioxide",
+      "canonical_name": "Carbon dioxide",
+      "type": "food_additive_gmp",
+      "ins": "290",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Carob bean gum",
+      "canonical_name": "Carob bean gum",
+      "type": "food_additive_gmp",
+      "ins": "410",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Carrageenan",
+      "canonical_name": "Carrageenan",
+      "type": "food_additive_gmp",
+      "ins": "407",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Cassia gum",
+      "canonical_name": "Cassia gum",
+      "type": "food_additive_gmp",
+      "ins": "427",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Chlorophylls",
+      "canonical_name": "Chlorophylls",
+      "type": "food_additive_gmp",
+      "ins": "140",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Citric acid",
+      "canonical_name": "Citric acid",
+      "type": "food_additive_gmp",
+      "ins": "330",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Citric and fatty acid esters of glycerol",
+      "canonical_name": "Citric and fatty acid esters of glycerol",
+      "type": "food_additive_gmp",
+      "ins": "472c",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Cross-linked sodium carboxymethyl cellulose",
+      "canonical_name": "Cross-linked sodium carboxymethyl cellulose",
+      "type": "food_additive_gmp",
+      "ins": "468",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Curdlan",
+      "canonical_name": "Curdlan",
+      "type": "food_additive_gmp",
+      "ins": "424",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Cyclodextrin, alpha",
+      "canonical_name": "Cyclodextrin, alpha",
+      "type": "food_additive_gmp",
+      "ins": "457",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Cyclodextrin, gamma",
+      "canonical_name": "Cyclodextrin, gamma",
+      "type": "food_additive_gmp",
+      "ins": "458",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Cyclotetraglucose",
+      "canonical_name": "Cyclotetraglucose",
+      "type": "food_additive_gmp",
+      "ins": "1504(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Cyclotetraglucose syrup",
+      "canonical_name": "Cyclotetraglucose syrup",
+      "type": "food_additive_gmp",
+      "ins": "1504(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Dextrins, roasted starch",
+      "canonical_name": "Dextrins, roasted starch",
+      "type": "food_additive_gmp",
+      "ins": "1400",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Dipotassium 5'-guanylate",
+      "canonical_name": "Dipotassium 5'-guanylate",
+      "type": "food_additive_gmp",
+      "ins": "628",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Disodium 5'-guanylate",
+      "canonical_name": "Disodium 5'-guanylate",
+      "type": "food_additive_gmp",
+      "ins": "627",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Disodium 5'-inosinate",
+      "canonical_name": "Disodium 5'-inosinate",
+      "type": "food_additive_gmp",
+      "ins": "631",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Disodium 5'-ribonucleotides",
+      "canonical_name": "Disodium 5'-ribonucleotides",
+      "type": "food_additive_gmp",
+      "ins": "635",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Distarch phosphate",
+      "canonical_name": "Distarch phosphate",
+      "type": "food_additive_gmp",
+      "ins": "1412",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Erythorbic acid (Isoascorbic acid)",
+      "canonical_name": "Erythorbic acid (Isoascorbic acid)",
+      "type": "food_additive_gmp",
+      "ins": "315",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Erythritol",
+      "canonical_name": "Erythritol",
+      "type": "food_additive_gmp",
+      "ins": "968",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Ethyl cellulose",
+      "canonical_name": "Ethyl cellulose",
+      "type": "food_additive_gmp",
+      "ins": "462",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Ethyl hydroxyethyl cellulose",
+      "canonical_name": "Ethyl hydroxyethyl cellulose",
+      "type": "food_additive_gmp",
+      "ins": "467",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Fumaric acid",
+      "canonical_name": "Fumaric acid",
+      "type": "food_additive_gmp",
+      "ins": "297",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Gellan gum",
+      "canonical_name": "Gellan gum",
+      "type": "food_additive_gmp",
+      "ins": "418",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Glucono delta-lactone",
+      "canonical_name": "Glucono delta-lactone",
+      "type": "food_additive_gmp",
+      "ins": "575",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Glucose oxidase (FS01)",
+      "canonical_name": "Glucose oxidase (FS01)",
+      "type": "food_additive_gmp",
+      "ins": "1102",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Glutamic acid, L(+)-",
+      "canonical_name": "Glutamic acid, L(+)-",
+      "type": "food_additive_gmp",
+      "ins": "620",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Glycerol",
+      "canonical_name": "Glycerol",
+      "type": "food_additive_gmp",
+      "ins": "422",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Guanylic acid, 5'-",
+      "canonical_name": "Guanylic acid, 5'-",
+      "type": "food_additive_gmp",
+      "ins": "626",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Guar gum",
+      "canonical_name": "Guar gum",
+      "type": "food_additive_gmp",
+      "ins": "412",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Gum arabic (Acacia gum)",
+      "canonical_name": "Gum arabic (Acacia gum)",
+      "type": "food_additive_gmp",
+      "ins": "414",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Hydrochloric acid",
+      "canonical_name": "Hydrochloric acid",
+      "type": "food_additive_gmp",
+      "ins": "507",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Hydroxypropyl cellulose",
+      "canonical_name": "Hydroxypropyl cellulose",
+      "type": "food_additive_gmp",
+      "ins": "463",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Hydroxypropyl distarch phosphate",
+      "canonical_name": "Hydroxypropyl distarch phosphate",
+      "type": "food_additive_gmp",
+      "ins": "1442",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Hydroxypropyl methyl cellulose",
+      "canonical_name": "Hydroxypropyl methyl cellulose",
+      "type": "food_additive_gmp",
+      "ins": "464",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Hydroxypropyl starch",
+      "canonical_name": "Hydroxypropyl starch",
+      "type": "food_additive_gmp",
+      "ins": "1440",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Inosinic acid, 5'-",
+      "canonical_name": "Inosinic acid, 5'-",
+      "type": "food_additive_gmp",
+      "ins": "630",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Isomalt (Hydrogenated isomaltulose)",
+      "canonical_name": "Isomalt (Hydrogenated isomaltulose)",
+      "type": "food_additive_gmp",
+      "ins": "953",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Karaya gum",
+      "canonical_name": "Karaya gum",
+      "type": "food_additive_gmp",
+      "ins": "416",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Konjac flour",
+      "canonical_name": "Konjac flour",
+      "type": "food_additive_gmp",
+      "ins": "425",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Lactic acid, L-, D- and DL-",
+      "canonical_name": "Lactic acid, L-, D- and DL-",
+      "type": "food_additive_gmp",
+      "ins": "270",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Lactic and fatty acid esters of glycerol",
+      "canonical_name": "Lactic and fatty acid esters of glycerol",
+      "type": "food_additive_gmp",
+      "ins": "472b",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Lactitol",
+      "canonical_name": "Lactitol",
+      "type": "food_additive_gmp",
+      "ins": "966",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Lecithins",
+      "canonical_name": "Lecithins",
+      "type": "food_additive_gmp",
+      "ins": "322(i), (ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Lipases (FS02)",
+      "canonical_name": "Lipases (FS02)",
+      "type": "food_additive_gmp",
+      "ins": "1104",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Lycopene, Blakeslea trispora",
+      "canonical_name": "Lycopene, Blakeslea trispora",
+      "type": "food_additive_gmp",
+      "ins": "160d(iii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Lycopene, synthetic",
+      "canonical_name": "Lycopene, synthetic",
+      "type": "food_additive_gmp",
+      "ins": "160d(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Lycopene, tomato",
+      "canonical_name": "Lycopene, tomato",
+      "type": "food_additive_gmp",
+      "ins": "160d(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Magnesium carbonate",
+      "canonical_name": "Magnesium carbonate",
+      "type": "food_additive_gmp",
+      "ins": "504(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Magnesium chloride",
+      "canonical_name": "Magnesium chloride",
+      "type": "food_additive_gmp",
+      "ins": "511",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Magnesium di-L-glutamate",
+      "canonical_name": "Magnesium di-L-glutamate",
+      "type": "food_additive_gmp",
+      "ins": "625",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Magnesium gluconate",
+      "canonical_name": "Magnesium gluconate",
+      "type": "food_additive_gmp",
+      "ins": "580",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Magnesium hydroxide",
+      "canonical_name": "Magnesium hydroxide",
+      "type": "food_additive_gmp",
+      "ins": "528",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Magnesium hydroxide carbonate",
+      "canonical_name": "Magnesium hydroxide carbonate",
+      "type": "food_additive_gmp",
+      "ins": "504(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Magnesium lactate, DL-",
+      "canonical_name": "Magnesium lactate, DL-",
+      "type": "food_additive_gmp",
+      "ins": "329",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Magnesium oxide",
+      "canonical_name": "Magnesium oxide",
+      "type": "food_additive_gmp",
+      "ins": "530",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Magnesium silicate, synthetic",
+      "canonical_name": "Magnesium silicate, synthetic",
+      "type": "food_additive_gmp",
+      "ins": "553(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Magnesium stearate",
+      "canonical_name": "Magnesium stearate",
+      "type": "food_additive_gmp",
+      "ins": "470(iii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Magnesium sulfate",
+      "canonical_name": "Magnesium sulfate",
+      "type": "food_additive_gmp",
+      "ins": "518",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Malic acid, DL-",
+      "canonical_name": "Malic acid, DL-",
+      "type": "food_additive_gmp",
+      "ins": "296",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Maltitol",
+      "canonical_name": "Maltitol",
+      "type": "food_additive_gmp",
+      "ins": "965(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Maltitol syrup",
+      "canonical_name": "Maltitol syrup",
+      "type": "food_additive_gmp",
+      "ins": "965(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Mannitol",
+      "canonical_name": "Mannitol",
+      "type": "food_additive_gmp",
+      "ins": "421",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Methyl cellulose",
+      "canonical_name": "Methyl cellulose",
+      "type": "food_additive_gmp",
+      "ins": "461",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Methyl ethyl cellulose",
+      "canonical_name": "Methyl ethyl cellulose",
+      "type": "food_additive_gmp",
+      "ins": "465",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Microcrystalline cellulose (Cellulose gel)",
+      "canonical_name": "Microcrystalline cellulose (Cellulose gel)",
+      "type": "food_additive_gmp",
+      "ins": "460(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Mono- and di-glycerides of fatty acids",
+      "canonical_name": "Mono- and di-glycerides of fatty acids",
+      "type": "food_additive_gmp",
+      "ins": "471",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Monoammonium L-glutamate",
+      "canonical_name": "Monoammonium L-glutamate",
+      "type": "food_additive_gmp",
+      "ins": "624",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Monopotassium L-glutamate",
+      "canonical_name": "Monopotassium L-glutamate",
+      "type": "food_additive_gmp",
+      "ins": "622",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Monosodium L-glutamate",
+      "canonical_name": "Monosodium L-glutamate",
+      "type": "food_additive_gmp",
+      "ins": "621",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Monostarch phosphate",
+      "canonical_name": "Monostarch phosphate",
+      "type": "food_additive_gmp",
+      "ins": "1410",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Nitrogen",
+      "canonical_name": "Nitrogen",
+      "type": "food_additive_gmp",
+      "ins": "941",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Nitrous oxide",
+      "canonical_name": "Nitrous oxide",
+      "type": "food_additive_gmp",
+      "ins": "942",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Oxidized starch",
+      "canonical_name": "Oxidized starch",
+      "type": "food_additive_gmp",
+      "ins": "1404",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Papain",
+      "canonical_name": "Papain",
+      "type": "food_additive_gmp",
+      "ins": "1101(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Pectins",
+      "canonical_name": "Pectins",
+      "type": "food_additive_gmp",
+      "ins": "440",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Phosphated distarch phosphate",
+      "canonical_name": "Phosphated distarch phosphate",
+      "type": "food_additive_gmp",
+      "ins": "1413",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Polydextroses",
+      "canonical_name": "Polydextroses",
+      "type": "food_additive_gmp",
+      "ins": "1200",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Polyglycitol syrup",
+      "canonical_name": "Polyglycitol syrup",
+      "type": "food_additive_gmp",
+      "ins": "964",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Polyvinylpyrrolidone, insoluble",
+      "canonical_name": "Polyvinylpyrrolidone, insoluble",
+      "type": "food_additive_gmp",
+      "ins": "1202",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium 5'-inosinate",
+      "canonical_name": "Potassium 5'-inosinate",
+      "type": "food_additive_gmp",
+      "ins": "632",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium acetates",
+      "canonical_name": "Potassium acetates",
+      "type": "food_additive_gmp",
+      "ins": "261",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium alginate",
+      "canonical_name": "Potassium alginate",
+      "type": "food_additive_gmp",
+      "ins": "402",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium ascorbate",
+      "canonical_name": "Potassium ascorbate",
+      "type": "food_additive_gmp",
+      "ins": "303",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium carbonate",
+      "canonical_name": "Potassium carbonate",
+      "type": "food_additive_gmp",
+      "ins": "501(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium chloride",
+      "canonical_name": "Potassium chloride",
+      "type": "food_additive_gmp",
+      "ins": "508",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium dihydrogen citrate",
+      "canonical_name": "Potassium dihydrogen citrate",
+      "type": "food_additive_gmp",
+      "ins": "332(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium gluconate",
+      "canonical_name": "Potassium gluconate",
+      "type": "food_additive_gmp",
+      "ins": "577",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium hydrogen carbonate",
+      "canonical_name": "Potassium hydrogen carbonate",
+      "type": "food_additive_gmp",
+      "ins": "501(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium hydrogen sulfate",
+      "canonical_name": "Potassium hydrogen sulfate",
+      "type": "food_additive_gmp",
+      "ins": "515(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium hydroxide",
+      "canonical_name": "Potassium hydroxide",
+      "type": "food_additive_gmp",
+      "ins": "525",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium lactate",
+      "canonical_name": "Potassium lactate",
+      "type": "food_additive_gmp",
+      "ins": "326",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium malate",
+      "canonical_name": "Potassium malate",
+      "type": "food_additive_gmp",
+      "ins": "351(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium propionate",
+      "canonical_name": "Potassium propionate",
+      "type": "food_additive_gmp",
+      "ins": "283",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Potassium sulfate",
+      "canonical_name": "Potassium sulfate",
+      "type": "food_additive_gmp",
+      "ins": "515(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Powdered cellulose",
+      "canonical_name": "Powdered cellulose",
+      "type": "food_additive_gmp",
+      "ins": "460(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Processed eucheuma seaweed",
+      "canonical_name": "Processed eucheuma seaweed",
+      "type": "food_additive_gmp",
+      "ins": "407a",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Propane",
+      "canonical_name": "Propane",
+      "type": "food_additive_gmp",
+      "ins": "944",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Propionic acid",
+      "canonical_name": "Propionic acid",
+      "type": "food_additive_gmp",
+      "ins": "280",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Protease",
+      "canonical_name": "Protease",
+      "type": "food_additive_gmp",
+      "ins": "1101(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Pullulan",
+      "canonical_name": "Pullulan",
+      "type": "food_additive_gmp",
+      "ins": "1204",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Salts of myristic, palmitic and stearic acids with ammonia, calcium, potassium and sodium",
+      "canonical_name": "Salts of myristic, palmitic and stearic acids with ammonia, calcium, potassium and sodium",
+      "type": "food_additive_gmp",
+      "ins": "470(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Salts of oleic acid with calcium, potassium and sodium",
+      "canonical_name": "Salts of oleic acid with calcium, potassium and sodium",
+      "type": "food_additive_gmp",
+      "ins": "470(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Silicon dioxide, amorphous",
+      "canonical_name": "Silicon dioxide, amorphous",
+      "type": "food_additive_gmp",
+      "ins": "551",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium DL-malate",
+      "canonical_name": "Sodium DL-malate",
+      "type": "food_additive_gmp",
+      "ins": "350(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium acetate",
+      "canonical_name": "Sodium acetate",
+      "type": "food_additive_gmp",
+      "ins": "262(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium alginate",
+      "canonical_name": "Sodium alginate",
+      "type": "food_additive_gmp",
+      "ins": "401",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium ascorbate",
+      "canonical_name": "Sodium ascorbate",
+      "type": "food_additive_gmp",
+      "ins": "301",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium carbonate",
+      "canonical_name": "Sodium carbonate",
+      "type": "food_additive_gmp",
+      "ins": "500(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Carboxymethyl cellulose",
+      "canonical_name": "Carboxymethyl cellulose",
+      "type": "food_additive_gmp",
+      "ins": "466",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium carboxymethyl cellulose, enzymatically hydrolysed",
+      "canonical_name": "Sodium carboxymethyl cellulose, enzymatically hydrolysed",
+      "type": "food_additive_gmp",
+      "ins": "469",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium dihydrogen citrate",
+      "canonical_name": "Sodium dihydrogen citrate",
+      "type": "food_additive_gmp",
+      "ins": "331(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium erythorbate (Sodium isoascorbate)",
+      "canonical_name": "Sodium erythorbate (Sodium isoascorbate)",
+      "type": "food_additive_gmp",
+      "ins": "316",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium fumarates",
+      "canonical_name": "Sodium fumarates",
+      "type": "food_additive_gmp",
+      "ins": "365",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium gluconate",
+      "canonical_name": "Sodium gluconate",
+      "type": "food_additive_gmp",
+      "ins": "576",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium hydrogen DL-malate",
+      "canonical_name": "Sodium hydrogen DL-malate",
+      "type": "food_additive_gmp",
+      "ins": "350(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium hydrogen carbonate",
+      "canonical_name": "Sodium hydrogen carbonate",
+      "type": "food_additive_gmp",
+      "ins": "500(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium hydrogen sulfate",
+      "canonical_name": "Sodium hydrogen sulfate",
+      "type": "food_additive_gmp",
+      "ins": "514(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium hydroxide",
+      "canonical_name": "Sodium hydroxide",
+      "type": "food_additive_gmp",
+      "ins": "524",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium lactate",
+      "canonical_name": "Sodium lactate",
+      "type": "food_additive_gmp",
+      "ins": "325",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium propionate",
+      "canonical_name": "Sodium propionate",
+      "type": "food_additive_gmp",
+      "ins": "281",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium sesquicarbonate",
+      "canonical_name": "Sodium sesquicarbonate",
+      "type": "food_additive_gmp",
+      "ins": "500(iii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sodium sulfate",
+      "canonical_name": "Sodium sulfate",
+      "type": "food_additive_gmp",
+      "ins": "514(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sorbitol",
+      "canonical_name": "Sorbitol",
+      "type": "food_additive_gmp",
+      "ins": "420(i)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Sorbitol syrup",
+      "canonical_name": "Sorbitol syrup",
+      "type": "food_additive_gmp",
+      "ins": "420(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Starch acetate",
+      "canonical_name": "Starch acetate",
+      "type": "food_additive_gmp",
+      "ins": "1420",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Starch sodium octenyl succinate",
+      "canonical_name": "Starch sodium octenyl succinate",
+      "type": "food_additive_gmp",
+      "ins": "1450",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Starches, enzyme treated",
+      "canonical_name": "Starches, enzyme treated",
+      "type": "food_additive_gmp",
+      "ins": "1405",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Talc",
+      "canonical_name": "Talc",
+      "type": "food_additive_gmp",
+      "ins": "553(iii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Tara gum",
+      "canonical_name": "Tara gum",
+      "type": "food_additive_gmp",
+      "ins": "417",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Thaumatin",
+      "canonical_name": "Thaumatin",
+      "type": "food_additive_gmp",
+      "ins": "957",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Titanium dioxide",
+      "canonical_name": "Titanium dioxide",
+      "type": "food_additive_gmp",
+      "ins": "171",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Tragacanth gum",
+      "canonical_name": "Tragacanth gum",
+      "type": "food_additive_gmp",
+      "ins": "413",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Triacetin",
+      "canonical_name": "Triacetin",
+      "type": "food_additive_gmp",
+      "ins": "1518",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Triammonium citrate",
+      "canonical_name": "Triammonium citrate",
+      "type": "food_additive_gmp",
+      "ins": "380",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Tricalcium citrate",
+      "canonical_name": "Tricalcium citrate",
+      "type": "food_additive_gmp",
+      "ins": "333(iii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Tripotassium citrate",
+      "canonical_name": "Tripotassium citrate",
+      "type": "food_additive_gmp",
+      "ins": "332(ii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Trisodium citrate",
+      "canonical_name": "Trisodium citrate",
+      "type": "food_additive_gmp",
+      "ins": "331(iii)",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Xanthan gum",
+      "canonical_name": "Xanthan gum",
+      "type": "food_additive_gmp",
+      "ins": "415",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    },
+    {
+      "name": "Xylitol",
+      "canonical_name": "Xylitol",
+      "type": "food_additive_gmp",
+      "ins": "967",
+      "limit": "GMP",
+      "condition": "General Appendix A GMP Table provision.",
+      "fssai_basis": "Appendix A · General GMP Table"
+    }
+  ],
+  "appendix_a": {
+    "category_entries": [
+      {
+        "name": "Ascorbyl esters",
+        "ins": "304, 305",
+        "limit": "1,000 mg/kg",
+        "condition": "Notes 15, 10: on fat/oil basis; as ascorbyl stearate.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Acesulfame potassium",
+        "ins": "950",
+        "limit": "600 mg/kg",
+        "condition": "Note 188: combined use with aspartame-acesulfame salt must not exceed this level as acesulfame-K. Chapter 2.10 is stricter at 300 ppm for this product.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Allura Red AC",
+        "ins": "129",
+        "limit": "100 mg/kg",
+        "condition": "Note 127: on served-to-consumer basis.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Anthocyanins",
+        "ins": "163(i), 163(iii)",
+        "limit": "GMP",
+        "condition": "Good Manufacturing Practice.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Aspartame",
+        "ins": "951",
+        "limit": "600 mg/kg",
+        "condition": "Note 191: combined use with aspartame-acesulfame salt must not exceed this level as aspartame. This is stricter than Chapter 2.10 carbonated-water limit of 700 ppm.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Benzoates",
+        "ins": "210–213",
+        "limit": "600 mg/kg",
+        "condition": "As benzoic acid; interim maximum. If beverage pH > 3.5, note 123 permits 1,000 mg/kg.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Beeswax",
+        "ins": "901",
+        "limit": "200 mg/kg",
+        "condition": "For use as a flavour carrier only.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Brilliant Blue FCF",
+        "ins": "133",
+        "limit": "100 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Carotenoids",
+        "ins": "160a(i), 160a(iii), 160e, 160f",
+        "limit": "100 mg/kg",
+        "condition": "Group limit in category table.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Chlorophylls and chlorophyllins, copper complexes",
+        "ins": "141(i), 141(ii)",
+        "limit": "300 mg/kg",
+        "condition": "On served-to-consumer basis.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Candelilla wax",
+        "ins": "902",
+        "limit": "200 mg/kg",
+        "condition": "For use as a flavour carrier only.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Caramel III — ammonia caramel",
+        "ins": "150c",
+        "limit": "5,000 mg/kg",
+        "condition": "Note 9 has a separate exception for ready-to-drink coffee products.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Caramel IV — sulfite ammonia caramel",
+        "ins": "150d",
+        "limit": "50,000 mg/kg",
+        "condition": "On served-to-consumer basis.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Carnauba wax",
+        "ins": "903",
+        "limit": "200 mg/kg",
+        "condition": "For use as a flavour carrier only.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Beta-carotenes, vegetable",
+        "ins": "160a(ii)",
+        "limit": "2,000 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Cyclodextrin, beta",
+        "ins": "459",
+        "limit": "500 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Diacetyltartaric and fatty acid esters of glycerol (DATEM)",
+        "ins": "472e",
+        "limit": "5,000 mg/kg",
+        "condition": "On served-to-consumer basis.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Ethylene diamine tetra acetates",
+        "ins": "385, 386",
+        "limit": "200 mg/kg",
+        "condition": "As anhydrous calcium disodium ethylenediaminetetraacetate.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Fast Green FCF",
+        "ins": "143",
+        "limit": "100 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Glycerol ester of wood rosin",
+        "ins": "445(iii)",
+        "limit": "100 mg/kg",
+        "condition": "Appendix parent row is 150 mg/kg but explicitly states 100 mg/kg maximum for carbonated water.",
+        "source": "14.1.4 → carbonated-water specific"
+      },
+      {
+        "name": "Grape skin extract",
+        "ins": "163(ii)",
+        "limit": "300 mg/kg",
+        "condition": "As anthocyanin; on served-to-consumer basis.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Hydroxybenzoates, para-",
+        "ins": "214, 218",
+        "limit": "500 mg/kg",
+        "condition": "As para-hydroxybenzoic acid.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Iron oxides",
+        "ins": "172(i)–172(iii)",
+        "limit": "100 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Indigotine (Indigo carmine)",
+        "ins": "132",
+        "limit": "100 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Isopropyl citrates",
+        "ins": "384",
+        "limit": "200 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Neotame",
+        "ins": "961",
+        "limit": "33 mg/kg",
+        "condition": "Chapter 2.10 also limits Neotame to 33 ppm.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Phosphates",
+        "ins": "338; 339(i–iii); 340(i–iii); 341(i–iii); 342(i–ii); 343(i–iii); 450(i–iii, v–vii, ix); 451(i–ii); 452(i–v)",
+        "limit": "1,000 mg/kg",
+        "condition": "As phosphorus; on served-to-consumer basis.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Polysorbates",
+        "ins": "432–436",
+        "limit": "500 mg/kg",
+        "condition": "On served-to-consumer basis.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Polydimethylsiloxane",
+        "ins": "900a",
+        "limit": "20 mg/kg",
+        "condition": "On served-to-consumer basis.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Polyethylene glycol",
+        "ins": "1521",
+        "limit": "1,000 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Ponceau 4R",
+        "ins": "124",
+        "limit": "50 mg/kg",
+        "condition": "Appendix parent row is 100 mg/kg but expressly states 50 mg/kg maximum for carbonated water.",
+        "source": "14.1.4 → carbonated-water specific"
+      },
+      {
+        "name": "Propyl gallate",
+        "ins": "310",
+        "limit": "1,000 mg/kg",
+        "condition": "On fat/oil basis.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Propylene glycol esters of fatty acids",
+        "ins": "477",
+        "limit": "500 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Quillaia extracts",
+        "ins": "999(i), 999(ii)",
+        "limit": "50 mg/kg",
+        "condition": "On saponin basis. Note 132 gives a separate semi-frozen beverage exception.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Sorbates",
+        "ins": "200–203",
+        "limit": "500 mg/kg",
+        "condition": "As sorbic acid; on served-to-consumer basis.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Sulfites",
+        "ins": "220–225, 227, 228, 539",
+        "limit": "70 mg/kg",
+        "condition": "As residual SO₂; on served-to-consumer basis. Note 143 restricts this entry to fruit juice-based drinks and dry ginger ale only.",
+        "source": "14.1.4 · conditional"
+      },
+      {
+        "name": "Stannous chloride",
+        "ins": "512",
+        "limit": "20 mg/kg",
+        "condition": "As tin.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Stearyl citrate",
+        "ins": "484",
+        "limit": "500 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Steviol glycosides",
+        "ins": "960",
+        "limit": "200 mg/kg",
+        "condition": "As steviol equivalents.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Sucralose",
+        "ins": "955",
+        "limit": "300 mg/kg",
+        "condition": "On served-to-consumer basis. Chapter 2.10 also limits sucralose to 300 ppm.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Annatto",
+        "ins": "160b(i), 160b(ii)",
+        "limit": "100 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Curcumin",
+        "ins": "100",
+        "limit": "100 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Carmoisine",
+        "ins": "122",
+        "limit": "100 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Erythrosine",
+        "ins": "127",
+        "limit": "50 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Dimethyl dicarbonate",
+        "ins": "242",
+        "limit": "250 mg/kg",
+        "condition": "As added level; residue not detected in ready-to-eat food. Final-product methanol maximum stated as 200 mg/L.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Saffron",
+        "ins": "—",
+        "limit": "GMP",
+        "condition": "Good Manufacturing Practice.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Tartrazine",
+        "ins": "102",
+        "limit": "100 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Sucroglycerides",
+        "ins": "474",
+        "limit": "200 mg/kg",
+        "condition": "Note 219 gives 5,000 mg/kg only for specified aniseed-, coconut- and almond-based drinks.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Sucrose acetate isobutyrate",
+        "ins": "444",
+        "limit": "500 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Sunset Yellow FCF",
+        "ins": "110",
+        "limit": "100 mg/kg",
+        "condition": "On served-to-consumer basis.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Thiodipropionates",
+        "ins": "388, 389",
+        "limit": "1,000 mg/kg",
+        "condition": "On fat/oil basis; as thiodipropionic acid.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Triethyl citrate",
+        "ins": "1505",
+        "limit": "200 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Quinine salts",
+        "ins": "—",
+        "limit": "100 mg/kg",
+        "condition": "Chapter 2.10 carbonated-water standard also gives 100 ppm expressed as quinine sulphate.",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Tartrates",
+        "ins": "334, 335(ii), 337",
+        "limit": "800 mg/kg",
+        "condition": "",
+        "source": "14.1.4"
+      },
+      {
+        "name": "Canthaxanthin",
+        "ins": "161g",
+        "limit": "5 mg/kg",
+        "condition": "Specific 14.1.4.1 limit; replaces the broader parent-category value of 100 mg/kg for this subcategory.",
+        "source": "14.1.4.1",
+        "specific": true
+      },
+      {
+        "name": "Lauric arginate ethyl ester",
+        "ins": "243",
+        "limit": "50 mg/kg",
+        "condition": "Specific to carbonated water-based flavoured drinks.",
+        "source": "14.1.4.1",
+        "specific": true
+      },
+      {
+        "name": "Riboflavins",
+        "ins": "101(i)–101(iii)",
+        "limit": "50 mg/kg",
+        "condition": "Specific 14.1.4.1 additive limit; parent 14.1.4 lists 100 mg/kg. Product standard separately permits riboflavin as a vitamin up to 100% RDA.",
+        "source": "14.1.4.1",
+        "specific": true
+      },
+      {
+        "name": "Saccharins",
+        "ins": "954(i)–954(iv)",
+        "limit": "300 mg/kg",
+        "condition": "Specific 14.1.4.1 Appendix A limit. Chapter 2.10 carbonated-water standard is stricter for saccharin sodium at 100 ppm.",
+        "source": "14.1.4.1",
+        "specific": true
+      }
+    ],
+    "general_gmp_entries": [
+      {
+        "ins": "260",
+        "name": "Acetic acid, glacial",
+        "limit": "GMP"
+      },
+      {
+        "ins": "472a",
+        "name": "Acetic and fatty acid esters of glycerol",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1422",
+        "name": "Acetylated distarch adipate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1414",
+        "name": "Acetylated distarch phosphate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1451",
+        "name": "Acetylated oxidized starch",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1401",
+        "name": "Acid-treated starch",
+        "limit": "GMP"
+      },
+      {
+        "ins": "406",
+        "name": "Agar",
+        "limit": "GMP"
+      },
+      {
+        "ins": "400",
+        "name": "Alginic acid",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1402",
+        "name": "Alkaline treated starch",
+        "limit": "GMP"
+      },
+      {
+        "ins": "403",
+        "name": "Ammonium alginate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "503(i)",
+        "name": "Ammonium carbonate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "510",
+        "name": "Ammonium chloride",
+        "limit": "GMP"
+      },
+      {
+        "ins": "503(ii)",
+        "name": "Ammonium hydrogen carbonate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "527",
+        "name": "Ammonium hydroxide",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1100(i)",
+        "name": "alpha-Amylase from Aspergillus oryzae var.",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1100(iv)",
+        "name": "alpha-Amylase from Bacillus megaterium expressed in Bacillus subtilis",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1100(v)",
+        "name": "alpha-Amylase from Bacillus stearothermophilus expressed in Bacillus subtilis",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1100(ii)",
+        "name": "alpha-Amylase from Bacillus stearothermophilus",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1100(iii)",
+        "name": "alpha-Amylase from Bacillus subtilis",
+        "limit": "GMP"
+      },
+      {
+        "ins": "300",
+        "name": "Ascorbic acid, L-",
+        "limit": "GMP"
+      },
+      {
+        "ins": "162",
+        "name": "Beet red",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1403",
+        "name": "Bleached starch",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1101(iii)",
+        "name": "Bromelain",
+        "limit": "GMP"
+      },
+      {
+        "ins": "629",
+        "name": "Calcium 5'-guanylate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "633",
+        "name": "Calcium 5'-inosinate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "634",
+        "name": "Calcium 5'-ribonucleotides",
+        "limit": "GMP"
+      },
+      {
+        "ins": "263",
+        "name": "Calcium acetate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "404",
+        "name": "Calcium alginate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "302",
+        "name": "Calcium ascorbate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "170(i)",
+        "name": "Calcium carbonate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "509",
+        "name": "Calcium chloride",
+        "limit": "GMP"
+      },
+      {
+        "ins": "623",
+        "name": "Calcium di-L-glutamate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "578",
+        "name": "Calcium gluconate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "526",
+        "name": "Calcium hydroxide",
+        "limit": "GMP"
+      },
+      {
+        "ins": "327",
+        "name": "Calcium lactate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "352(ii)",
+        "name": "Calcium malate, DL-",
+        "limit": "GMP"
+      },
+      {
+        "ins": "529",
+        "name": "Calcium oxide",
+        "limit": "GMP"
+      },
+      {
+        "ins": "282",
+        "name": "Calcium propionate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "552",
+        "name": "Calcium silicate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "516",
+        "name": "Calcium sulfate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "150a",
+        "name": "Caramel I — plain caramel",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1100(vi)",
+        "name": "Carbohydrase from Bacillus licheniformis",
+        "limit": "GMP"
+      },
+      {
+        "ins": "290",
+        "name": "Carbon dioxide",
+        "limit": "GMP"
+      },
+      {
+        "ins": "410",
+        "name": "Carob bean gum",
+        "limit": "GMP"
+      },
+      {
+        "ins": "407",
+        "name": "Carrageenan",
+        "limit": "GMP"
+      },
+      {
+        "ins": "427",
+        "name": "Cassia gum",
+        "limit": "GMP"
+      },
+      {
+        "ins": "140",
+        "name": "Chlorophylls",
+        "limit": "GMP"
+      },
+      {
+        "ins": "330",
+        "name": "Citric acid",
+        "limit": "GMP"
+      },
+      {
+        "ins": "472c",
+        "name": "Citric and fatty acid esters of glycerol",
+        "limit": "GMP"
+      },
+      {
+        "ins": "468",
+        "name": "Cross-linked sodium carboxymethyl cellulose",
+        "limit": "GMP"
+      },
+      {
+        "ins": "424",
+        "name": "Curdlan",
+        "limit": "GMP"
+      },
+      {
+        "ins": "457",
+        "name": "Cyclodextrin, alpha",
+        "limit": "GMP"
+      },
+      {
+        "ins": "458",
+        "name": "Cyclodextrin, gamma",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1504(i)",
+        "name": "Cyclotetraglucose",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1504(ii)",
+        "name": "Cyclotetraglucose syrup",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1400",
+        "name": "Dextrins, roasted starch",
+        "limit": "GMP"
+      },
+      {
+        "ins": "628",
+        "name": "Dipotassium 5'-guanylate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "627",
+        "name": "Disodium 5'-guanylate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "631",
+        "name": "Disodium 5'-inosinate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "635",
+        "name": "Disodium 5'-ribonucleotides",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1412",
+        "name": "Distarch phosphate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "315",
+        "name": "Erythorbic acid (Isoascorbic acid)",
+        "limit": "GMP"
+      },
+      {
+        "ins": "968",
+        "name": "Erythritol",
+        "limit": "GMP"
+      },
+      {
+        "ins": "462",
+        "name": "Ethyl cellulose",
+        "limit": "GMP"
+      },
+      {
+        "ins": "467",
+        "name": "Ethyl hydroxyethyl cellulose",
+        "limit": "GMP"
+      },
+      {
+        "ins": "297",
+        "name": "Fumaric acid",
+        "limit": "GMP"
+      },
+      {
+        "ins": "418",
+        "name": "Gellan gum",
+        "limit": "GMP"
+      },
+      {
+        "ins": "575",
+        "name": "Glucono delta-lactone",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1102",
+        "name": "Glucose oxidase (FS01)",
+        "limit": "GMP"
+      },
+      {
+        "ins": "620",
+        "name": "Glutamic acid, L(+)-",
+        "limit": "GMP"
+      },
+      {
+        "ins": "422",
+        "name": "Glycerol",
+        "limit": "GMP"
+      },
+      {
+        "ins": "626",
+        "name": "Guanylic acid, 5'-",
+        "limit": "GMP"
+      },
+      {
+        "ins": "412",
+        "name": "Guar gum",
+        "limit": "GMP"
+      },
+      {
+        "ins": "414",
+        "name": "Gum arabic (Acacia gum)",
+        "limit": "GMP"
+      },
+      {
+        "ins": "507",
+        "name": "Hydrochloric acid",
+        "limit": "GMP"
+      },
+      {
+        "ins": "463",
+        "name": "Hydroxypropyl cellulose",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1442",
+        "name": "Hydroxypropyl distarch phosphate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "464",
+        "name": "Hydroxypropyl methyl cellulose",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1440",
+        "name": "Hydroxypropyl starch",
+        "limit": "GMP"
+      },
+      {
+        "ins": "630",
+        "name": "Inosinic acid, 5'-",
+        "limit": "GMP"
+      },
+      {
+        "ins": "953",
+        "name": "Isomalt (Hydrogenated isomaltulose)",
+        "limit": "GMP"
+      },
+      {
+        "ins": "416",
+        "name": "Karaya gum",
+        "limit": "GMP"
+      },
+      {
+        "ins": "425",
+        "name": "Konjac flour",
+        "limit": "GMP"
+      },
+      {
+        "ins": "270",
+        "name": "Lactic acid, L-, D- and DL-",
+        "limit": "GMP"
+      },
+      {
+        "ins": "472b",
+        "name": "Lactic and fatty acid esters of glycerol",
+        "limit": "GMP"
+      },
+      {
+        "ins": "966",
+        "name": "Lactitol",
+        "limit": "GMP"
+      },
+      {
+        "ins": "322(i), (ii)",
+        "name": "Lecithins",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1104",
+        "name": "Lipases (FS02)",
+        "limit": "GMP"
+      },
+      {
+        "ins": "160d(iii)",
+        "name": "Lycopene, Blakeslea trispora",
+        "limit": "GMP"
+      },
+      {
+        "ins": "160d(i)",
+        "name": "Lycopene, synthetic",
+        "limit": "GMP"
+      },
+      {
+        "ins": "160d(ii)",
+        "name": "Lycopene, tomato",
+        "limit": "GMP"
+      },
+      {
+        "ins": "504(i)",
+        "name": "Magnesium carbonate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "511",
+        "name": "Magnesium chloride",
+        "limit": "GMP"
+      },
+      {
+        "ins": "625",
+        "name": "Magnesium di-L-glutamate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "580",
+        "name": "Magnesium gluconate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "528",
+        "name": "Magnesium hydroxide",
+        "limit": "GMP"
+      },
+      {
+        "ins": "504(ii)",
+        "name": "Magnesium hydroxide carbonate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "329",
+        "name": "Magnesium lactate, DL-",
+        "limit": "GMP"
+      },
+      {
+        "ins": "530",
+        "name": "Magnesium oxide",
+        "limit": "GMP"
+      },
+      {
+        "ins": "553(i)",
+        "name": "Magnesium silicate, synthetic",
+        "limit": "GMP"
+      },
+      {
+        "ins": "470(iii)",
+        "name": "Magnesium stearate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "518",
+        "name": "Magnesium sulfate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "296",
+        "name": "Malic acid, DL-",
+        "limit": "GMP"
+      },
+      {
+        "ins": "965(i)",
+        "name": "Maltitol",
+        "limit": "GMP"
+      },
+      {
+        "ins": "965(ii)",
+        "name": "Maltitol syrup",
+        "limit": "GMP"
+      },
+      {
+        "ins": "421",
+        "name": "Mannitol",
+        "limit": "GMP"
+      },
+      {
+        "ins": "461",
+        "name": "Methyl cellulose",
+        "limit": "GMP"
+      },
+      {
+        "ins": "465",
+        "name": "Methyl ethyl cellulose",
+        "limit": "GMP"
+      },
+      {
+        "ins": "460(i)",
+        "name": "Microcrystalline cellulose (Cellulose gel)",
+        "limit": "GMP"
+      },
+      {
+        "ins": "471",
+        "name": "Mono- and di-glycerides of fatty acids",
+        "limit": "GMP"
+      },
+      {
+        "ins": "624",
+        "name": "Monoammonium L-glutamate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "622",
+        "name": "Monopotassium L-glutamate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "621",
+        "name": "Monosodium L-glutamate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1410",
+        "name": "Monostarch phosphate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "941",
+        "name": "Nitrogen",
+        "limit": "GMP"
+      },
+      {
+        "ins": "942",
+        "name": "Nitrous oxide",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1404",
+        "name": "Oxidized starch",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1101(ii)",
+        "name": "Papain",
+        "limit": "GMP"
+      },
+      {
+        "ins": "440",
+        "name": "Pectins",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1413",
+        "name": "Phosphated distarch phosphate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1200",
+        "name": "Polydextroses",
+        "limit": "GMP"
+      },
+      {
+        "ins": "964",
+        "name": "Polyglycitol syrup",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1202",
+        "name": "Polyvinylpyrrolidone, insoluble",
+        "limit": "GMP"
+      },
+      {
+        "ins": "632",
+        "name": "Potassium 5'-inosinate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "261",
+        "name": "Potassium acetates",
+        "limit": "GMP"
+      },
+      {
+        "ins": "402",
+        "name": "Potassium alginate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "303",
+        "name": "Potassium ascorbate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "501(i)",
+        "name": "Potassium carbonate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "508",
+        "name": "Potassium chloride",
+        "limit": "GMP"
+      },
+      {
+        "ins": "332(i)",
+        "name": "Potassium dihydrogen citrate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "577",
+        "name": "Potassium gluconate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "501(ii)",
+        "name": "Potassium hydrogen carbonate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "515(ii)",
+        "name": "Potassium hydrogen sulfate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "525",
+        "name": "Potassium hydroxide",
+        "limit": "GMP"
+      },
+      {
+        "ins": "326",
+        "name": "Potassium lactate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "351(ii)",
+        "name": "Potassium malate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "283",
+        "name": "Potassium propionate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "515(i)",
+        "name": "Potassium sulfate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "460(ii)",
+        "name": "Powdered cellulose",
+        "limit": "GMP"
+      },
+      {
+        "ins": "407a",
+        "name": "Processed eucheuma seaweed",
+        "limit": "GMP"
+      },
+      {
+        "ins": "944",
+        "name": "Propane",
+        "limit": "GMP"
+      },
+      {
+        "ins": "280",
+        "name": "Propionic acid",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1101(i)",
+        "name": "Protease",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1204",
+        "name": "Pullulan",
+        "limit": "GMP"
+      },
+      {
+        "ins": "470(i)",
+        "name": "Salts of myristic, palmitic and stearic acids with ammonia, calcium, potassium and sodium",
+        "limit": "GMP"
+      },
+      {
+        "ins": "470(ii)",
+        "name": "Salts of oleic acid with calcium, potassium and sodium",
+        "limit": "GMP"
+      },
+      {
+        "ins": "551",
+        "name": "Silicon dioxide, amorphous",
+        "limit": "GMP"
+      },
+      {
+        "ins": "350(ii)",
+        "name": "Sodium DL-malate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "262(i)",
+        "name": "Sodium acetate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "401",
+        "name": "Sodium alginate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "301",
+        "name": "Sodium ascorbate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "500(i)",
+        "name": "Sodium carbonate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "466",
+        "name": "Carboxymethyl cellulose",
+        "limit": "GMP"
+      },
+      {
+        "ins": "469",
+        "name": "Sodium carboxymethyl cellulose, enzymatically hydrolysed",
+        "limit": "GMP"
+      },
+      {
+        "ins": "331(i)",
+        "name": "Sodium dihydrogen citrate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "316",
+        "name": "Sodium erythorbate (Sodium isoascorbate)",
+        "limit": "GMP"
+      },
+      {
+        "ins": "365",
+        "name": "Sodium fumarates",
+        "limit": "GMP"
+      },
+      {
+        "ins": "576",
+        "name": "Sodium gluconate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "350(i)",
+        "name": "Sodium hydrogen DL-malate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "500(ii)",
+        "name": "Sodium hydrogen carbonate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "514(ii)",
+        "name": "Sodium hydrogen sulfate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "524",
+        "name": "Sodium hydroxide",
+        "limit": "GMP"
+      },
+      {
+        "ins": "325",
+        "name": "Sodium lactate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "281",
+        "name": "Sodium propionate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "500(iii)",
+        "name": "Sodium sesquicarbonate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "514(i)",
+        "name": "Sodium sulfate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "420(i)",
+        "name": "Sorbitol",
+        "limit": "GMP"
+      },
+      {
+        "ins": "420(ii)",
+        "name": "Sorbitol syrup",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1420",
+        "name": "Starch acetate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1450",
+        "name": "Starch sodium octenyl succinate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1405",
+        "name": "Starches, enzyme treated",
+        "limit": "GMP"
+      },
+      {
+        "ins": "553(iii)",
+        "name": "Talc",
+        "limit": "GMP"
+      },
+      {
+        "ins": "417",
+        "name": "Tara gum",
+        "limit": "GMP"
+      },
+      {
+        "ins": "957",
+        "name": "Thaumatin",
+        "limit": "GMP"
+      },
+      {
+        "ins": "171",
+        "name": "Titanium dioxide",
+        "limit": "GMP"
+      },
+      {
+        "ins": "413",
+        "name": "Tragacanth gum",
+        "limit": "GMP"
+      },
+      {
+        "ins": "1518",
+        "name": "Triacetin",
+        "limit": "GMP"
+      },
+      {
+        "ins": "380",
+        "name": "Triammonium citrate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "333(iii)",
+        "name": "Tricalcium citrate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "332(ii)",
+        "name": "Tripotassium citrate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "331(iii)",
+        "name": "Trisodium citrate",
+        "limit": "GMP"
+      },
+      {
+        "ins": "415",
+        "name": "Xanthan gum",
+        "limit": "GMP"
+      },
+      {
+        "ins": "967",
+        "name": "Xylitol",
+        "limit": "GMP"
+      }
+    ]
+  },
+  "appendix_c": {
+    "processing_aids": [
+      {
+        "process": "filtration",
+        "name": "Diatomaceous earth",
+        "ins": "—",
+        "purpose": "Clarifying / filtration aid · non-alcoholic beverages",
+        "condition": "GMP",
+        "source": "Appendix C · Table 3"
+      },
+      {
+        "process": "microbial",
+        "name": "Dimethyl dicarbonate",
+        "ins": "242",
+        "purpose": "Microbial control agent · water-based flavoured drinks",
+        "condition": "Maximum usage 250 mg/kg; residue in final product: non-detectable",
+        "source": "Appendix C · Table 5"
+      },
+      {
+        "process": "antifoam",
+        "name": "Polyethylene glycol",
+        "ins": "1521",
+        "purpose": "Antifoaming agent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 1"
+      },
+      {
+        "process": "antifoam",
+        "name": "Propylene glycol",
+        "ins": "1520",
+        "purpose": "Antifoaming agent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 1"
+      },
+      {
+        "process": "antifoam",
+        "name": "Sorbitan monolaurate",
+        "ins": "493",
+        "purpose": "Antifoaming agent · All foods",
+        "condition": "Max residual level 1 mg/kg",
+        "source": "Appendix C · Table 1"
+      },
+      {
+        "process": "antifoam",
+        "name": "Sorbitan monooleate",
+        "ins": "494",
+        "purpose": "Antifoaming agent · All foods",
+        "condition": "Max residual level 1 mg/kg",
+        "source": "Appendix C · Table 1"
+      },
+      {
+        "process": "ph",
+        "name": "Phosphoric acid",
+        "ins": "338",
+        "purpose": "Acidulant / sequestrant / antioxidant synergist · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "ph",
+        "name": "Magnesium hydroxide",
+        "ins": "528",
+        "purpose": "pH control agent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "ph",
+        "name": "Potassium dihydrogen phosphate",
+        "ins": "340",
+        "purpose": "pH control agent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "ph",
+        "name": "Potassium hydroxide",
+        "ins": "525",
+        "purpose": "pH control agent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "ph",
+        "name": "Sodium bicarbonate",
+        "ins": "500(ii)",
+        "purpose": "pH control agent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "ph",
+        "name": "Sodium carbonate",
+        "ins": "500(i)",
+        "purpose": "pH control agent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "ph",
+        "name": "Sodium dihydrogen phosphate",
+        "ins": "339",
+        "purpose": "pH control agent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "ph",
+        "name": "Sodium hydroxide",
+        "ins": "524",
+        "purpose": "pH control agent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "ph",
+        "name": "Sulphuric acid",
+        "ins": "513",
+        "purpose": "pH control agent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "gas",
+        "name": "Carbon dioxide",
+        "ins": "290",
+        "purpose": "Gassing / aerating agent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "gas",
+        "name": "Argon",
+        "ins": "938",
+        "purpose": "Propellant / packaging gas · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "gas",
+        "name": "Nitrogen gas",
+        "ins": "941",
+        "purpose": "Foaming agent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "gas",
+        "name": "Oxygen",
+        "ins": "948",
+        "purpose": "Propellant · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 12"
+      },
+      {
+        "process": "solvent",
+        "name": "Acetone",
+        "ins": "—",
+        "purpose": "Extraction / processing solvent · Other foods",
+        "condition": "Max residual level 0.1 mg/kg",
+        "source": "Appendix C · Table 6"
+      },
+      {
+        "process": "solvent",
+        "name": "Ethyl alcohol",
+        "ins": "—",
+        "purpose": "Extraction / processing solvent · Other foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 6"
+      },
+      {
+        "process": "solvent",
+        "name": "Glycerol diacetate",
+        "ins": "—",
+        "purpose": "Extraction / processing solvent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 6"
+      },
+      {
+        "process": "solvent",
+        "name": "Glycerol monoacetate",
+        "ins": "—",
+        "purpose": "Extraction / processing solvent · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 6"
+      },
+      {
+        "process": "release",
+        "name": "Acetylated mono- and diglycerides",
+        "ins": "472a",
+        "purpose": "Lubricant / release / antistick · All foods",
+        "condition": "Max residual level 100 mg/kg",
+        "source": "Appendix C · Table 4"
+      },
+      {
+        "process": "release",
+        "name": "Bees wax",
+        "ins": "901",
+        "purpose": "Lubricant / release / antistick · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 4"
+      },
+      {
+        "process": "release",
+        "name": "Calcium carbonate",
+        "ins": "170(i)",
+        "purpose": "Lubricant / release / antistick · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 4"
+      },
+      {
+        "process": "release",
+        "name": "Glycerin / glycerol",
+        "ins": "422",
+        "purpose": "Lubricant / release / antistick · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 4"
+      },
+      {
+        "process": "release",
+        "name": "Hydrogenated vegetable oil",
+        "ins": "—",
+        "purpose": "Lubricant / release / antistick · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 4"
+      },
+      {
+        "process": "release",
+        "name": "Lecithin",
+        "ins": "322(i)",
+        "purpose": "Lubricant / release / antistick · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 4"
+      },
+      {
+        "process": "release",
+        "name": "Oleic acid",
+        "ins": "—",
+        "purpose": "Lubricant / release / antistick · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 4"
+      },
+      {
+        "process": "release",
+        "name": "Thermally oxidised soybean oil",
+        "ins": "479",
+        "purpose": "Lubricant / release / antistick · All foods",
+        "condition": "Max residual level 320 mg/kg",
+        "source": "Appendix C · Table 4"
+      },
+      {
+        "process": "release",
+        "name": "White mineral oil",
+        "ins": "905e",
+        "purpose": "Lubricant / release / antistick · All foods",
+        "condition": "GMP",
+        "source": "Appendix C · Table 4"
+      }
+    ],
+    "table_11_enzymes": [
+      {
+        "id": "glucose_oxidase",
+        "name": "Glucose oxidase",
+        "ec": "1.1.3.4",
+        "sources": [
+          "Aspergillus niger",
+          "Aspergillus oryzae"
+        ]
+      },
+      {
+        "id": "catalase",
+        "name": "Catalase",
+        "ec": "1.11.1.6",
+        "sources": [
+          "Aspergillus niger"
+        ]
+      },
+      {
+        "id": "gpc_acyltransferase",
+        "name": "Glycero-phospholipid cholesterol acyltransferase",
+        "ec": "2.3.1.43",
+        "sources": [
+          "Bacillus licheniformis"
+        ]
+      },
+      {
+        "id": "transglutaminase",
+        "name": "Transglutaminase",
+        "ec": "2.3.2.13",
+        "sources": [
+          "Streptomyces mobaraensis"
+        ]
+      },
+      {
+        "id": "lipase_tri",
+        "name": "Lipase triacylglycerol",
+        "ec": "3.1.1.3",
+        "sources": [
+          "Rhizopus oryzae",
+          "Fusarium oxysporum",
+          "Thermomyces lanuginosus",
+          "Rhizopus niveus",
+          "Carica papaya",
+          "Rhizomucor miehei",
+          "Aspergillus niger",
+          "Candida rugosa (cylindracea)",
+          "Pregastric bovine (calf) tissue",
+          "Pregastric ovine (lamb) tissue",
+          "Penicillium roquefortii",
+          "Porcine pancreas",
+          "Mucor javanicus (Mucor circinelloides f. circinelloides)",
+          "Rice bran"
+        ]
+      },
+      {
+        "id": "phospholipase_a2",
+        "name": "Phospholipase A2",
+        "ec": "3.1.1.4",
+        "sources": [
+          "Streptomyces violaceoruber"
+        ]
+      },
+      {
+        "id": "lysophospholipase",
+        "name": "Lysophospholipase",
+        "ec": "3.1.1.5",
+        "sources": [
+          "Aspergillus niger"
+        ]
+      },
+      {
+        "id": "pectin_esterase",
+        "name": "Pectin esterase",
+        "ec": "3.1.1.11",
+        "sources": [
+          "Aspergillus niger"
+        ]
+      },
+      {
+        "id": "acylglycerol_lipase",
+        "name": "Acylglycerol lipase",
+        "ec": "3.1.1.23",
+        "sources": [
+          "Penicillium camembertii"
+        ]
+      },
+      {
+        "id": "phospholipase_a1",
+        "name": "Phospholipase A1",
+        "ec": "3.1.1.32",
+        "sources": [
+          "Aspergillus niger"
+        ]
+      },
+      {
+        "id": "phytase",
+        "name": "Phytase",
+        "ec": "3.1.3.8",
+        "sources": [
+          "Aspergillus niger"
+        ]
+      },
+      {
+        "id": "phosphodiesterase_1",
+        "name": "Phosphodiesterase I",
+        "ec": "3.1.4.1",
+        "sources": [
+          "Leptographium procerum"
+        ]
+      },
+      {
+        "id": "phospholipase_d",
+        "name": "Phospholipase D",
+        "ec": "3.1.4.4",
+        "sources": [
+          "Streptomyces cinnamoneus"
+        ]
+      },
+      {
+        "id": "hemicellulase",
+        "name": "Hemicellulase",
+        "ec": "3.2.1",
+        "sources": [
+          "Aspergillus niger",
+          "Trichoderma reesei / longibrachiatum"
+        ]
+      },
+      {
+        "id": "alpha_amylase",
+        "name": "Alpha amylase",
+        "ec": "3.2.1.1",
+        "sources": [
+          "Aspergillus oryzae",
+          "Aspergillus niger",
+          "Bacillus licheniformis",
+          "Bacillus amyloliquefaciens",
+          "Bacillus subtilis",
+          "Bacillus stearothermophilus",
+          "Cereal (barley) malt"
+        ]
+      },
+      {
+        "id": "beta_amylase",
+        "name": "Beta amylase",
+        "ec": "3.2.1.2",
+        "sources": [
+          "Cereal (barley) malt",
+          "Bacillus amyloliquefaciens",
+          "Hordeum vulgare (barley)"
+        ]
+      },
+      {
+        "id": "glucoamylase",
+        "name": "Glucan 1,4-alpha-glucosidase (Glucoamylase / acid maltase)",
+        "ec": "3.2.1.3",
+        "sources": [
+          "Aspergillus niger",
+          "Aspergillus oryzae",
+          "Trichoderma reesei",
+          "Rhizopus oryzae"
+        ]
+      },
+      {
+        "id": "cellulase",
+        "name": "Cellulase",
+        "ec": "3.2.1.4",
+        "sources": [
+          "Penicillium funiculosum",
+          "Aspergillus niger",
+          "Humicola insolens",
+          "Rasamsonia (Talaromyces) emersonii",
+          "Trichoderma reesei"
+        ]
+      },
+      {
+        "id": "beta_glucanase",
+        "name": "Beta-glucanase",
+        "ec": "3.2.1.6",
+        "sources": [
+          "Aspergillus niger",
+          "Bacillus amyloliquefaciens",
+          "Rasamsonia (Talaromyces) emersonii",
+          "Trichoderma reesei",
+          "Aspergillus aculeatus",
+          "Penicillium funiculosum",
+          "Bacillus subtilis",
+          "Trichoderma harzianum",
+          "Disporotrichum dimorphosporum",
+          "Humicola insolens"
+        ]
+      },
+      {
+        "id": "inulinase",
+        "name": "Inulinase",
+        "ec": "3.2.1.7",
+        "sources": [
+          "Aspergillus niger"
+        ]
+      },
+      {
+        "id": "xylanase_14",
+        "name": "Endo-1,4-beta-xylanase",
+        "ec": "3.2.1.8",
+        "sources": [
+          "Aspergillus niger",
+          "Bacillus licheniformis",
+          "Disporotrichum dimorphosporum",
+          "Rasamsonia (Talaromyces) emersonii",
+          "Trichoderma reesei (longibrachiatum)",
+          "Humicola insolens"
+        ]
+      },
+      {
+        "id": "dextranase",
+        "name": "Dextranase",
+        "ec": "3.2.1.11",
+        "sources": [
+          "Chaetomium erraticum"
+        ]
+      },
+      {
+        "id": "pectinase",
+        "name": "Polygalacturonase (Pectinase)",
+        "ec": "3.2.1.15",
+        "sources": [
+          "Aspergillus niger",
+          "Aspergillus aculeatus"
+        ]
+      },
+      {
+        "id": "lysozyme",
+        "name": "Lysozyme",
+        "ec": "3.2.1.17",
+        "sources": [
+          "Gallus gallus egg"
+        ]
+      },
+      {
+        "id": "alpha_glucosidase",
+        "name": "Alpha-glucosidase",
+        "ec": "3.2.1.20",
+        "sources": [
+          "Aspergillus niger",
+          "Trichoderma reesei"
+        ]
+      },
+      {
+        "id": "beta_glucosidase",
+        "name": "Beta-glucosidase",
+        "ec": "3.2.1.21",
+        "sources": [
+          "Aspergillus niger",
+          "Kluyveromyces lactis",
+          "Trichoderma reesei / longibrachiatum CL 847"
+        ]
+      },
+      {
+        "id": "alpha_galactosidase",
+        "name": "Alpha-galactosidase (Melibiase)",
+        "ec": "3.2.1.22",
+        "sources": [
+          "Aspergillus oryzae",
+          "Aspergillus niger",
+          "Mortierella vinacea",
+          "Saccharomyces carlsbergensis"
+        ]
+      },
+      {
+        "id": "beta_galactosidase",
+        "name": "Beta-galactosidase (Lactase)",
+        "ec": "3.2.1.23",
+        "sources": [
+          "Kluyveromyces lactis",
+          "Bacillus circulans",
+          "Saccharomyces sp.",
+          "Aspergillus niger",
+          "Aspergillus oryzae"
+        ]
+      },
+      {
+        "id": "invertase",
+        "name": "Beta-fructofuranosidase (Invertase / Saccharase)",
+        "ec": "3.2.1.26",
+        "sources": [
+          "Saccharomyces cerevisiae",
+          "Kluyveromyces fragilis",
+          "Saccharomyces carlsbergensis"
+        ]
+      },
+      {
+        "id": "trehalase",
+        "name": "Trehalase",
+        "ec": "3.2.1.28",
+        "sources": [
+          "Trichoderma reesei"
+        ]
+      },
+      {
+        "id": "xylanase_13",
+        "name": "Endo-1,3-beta-xylanase",
+        "ec": "3.2.1.32",
+        "sources": [
+          "Humicola insolens"
+        ]
+      },
+      {
+        "id": "pullulanase",
+        "name": "Pullulanase",
+        "ec": "3.2.1.41",
+        "sources": [
+          "Bacillus acidopullulyticus",
+          "Bacillus brevis",
+          "Bacillus circulans",
+          "Bacillus naganoensis",
+          "Klebsiella aerogenes"
+        ]
+      },
+      {
+        "id": "alpha_arabinofuranosidase",
+        "name": "Alpha-arabinofuranosidase",
+        "ec": "3.2.1.55",
+        "sources": [
+          "Aspergillus niger"
+        ]
+      },
+      {
+        "id": "glucan_beta_glucosidase",
+        "name": "Glucan 1,3-beta-glucosidase",
+        "ec": "3.2.1.58",
+        "sources": [
+          "Trichoderma harzianum"
+        ]
+      },
+      {
+        "id": "mannanase",
+        "name": "Mannanase (Mannan endo-1,4-beta-mannosidase)",
+        "ec": "3.2.1.78",
+        "sources": [
+          "Trichoderma reesei",
+          "Aspergillus niger"
+        ]
+      },
+      {
+        "id": "protease_bacteria",
+        "name": "Protease (Bacteria)",
+        "ec": "3.4",
+        "sources": [
+          "Bacillus amyloliquefaciens",
+          "Bacillus licheniformis",
+          "Bacillus subtilis",
+          "Geobacillus caldoproteolyticus"
+        ]
+      },
+      {
+        "id": "protease_fungi",
+        "name": "Protease (Fungi)",
+        "ec": "3.4",
+        "sources": [
+          "Aspergillus niger",
+          "Aspergillus oryzae"
+        ]
+      },
+      {
+        "id": "aminopeptidase",
+        "name": "Aminopeptidase",
+        "ec": "3.4.11.1",
+        "sources": [
+          "Aspergillus oryzae"
+        ]
+      },
+      {
+        "id": "serine_protease",
+        "name": "Serine protease (Subtilisin)",
+        "ec": "3.4.21.62",
+        "sources": [
+          "Bacillus licheniformis"
+        ]
+      },
+      {
+        "id": "oryzin",
+        "name": "Oryzin",
+        "ec": "3.4.21.63",
+        "sources": [
+          "Aspergillus melleus"
+        ]
+      },
+      {
+        "id": "lactocepin",
+        "name": "PIII-type proteinase (Lactocepin)",
+        "ec": "3.4.21.96",
+        "sources": [
+          "Lactococcus lactis subsp. cremoris (strain SK11)"
+        ]
+      },
+      {
+        "id": "papain",
+        "name": "Papain",
+        "ec": "3.4.22.2",
+        "sources": [
+          "Carica papaya"
+        ]
+      },
+      {
+        "id": "ficin",
+        "name": "Ficin",
+        "ec": "3.4.22.3",
+        "sources": [
+          "Figs"
+        ]
+      },
+      {
+        "id": "bromelain",
+        "name": "Bromelain",
+        "ec": "3.4.22.33",
+        "sources": [
+          "Ananas comosus / bracteatus"
+        ]
+      },
+      {
+        "id": "chymosin",
+        "name": "Chymosin",
+        "ec": "3.4.23.4",
+        "sources": [
+          "Kluyveromyces lactis"
+        ]
+      },
+      {
+        "id": "aspergillopepsin1",
+        "name": "Aspergillopepsin I",
+        "ec": "3.4.23.18",
+        "sources": [
+          "Aspergillus niger",
+          "Aspergillus oryzae"
+        ]
+      },
+      {
+        "id": "aspergillopepsin2",
+        "name": "Aspergillopepsin II",
+        "ec": "3.4.23.19",
+        "sources": [
+          "Aspergillus niger"
+        ]
+      },
+      {
+        "id": "endothiapeptidase",
+        "name": "Endo(thia)peptidase",
+        "ec": "3.4.23.22",
+        "sources": [
+          "Cryphonectria (Endothia) parasitica"
+        ]
+      },
+      {
+        "id": "mucorpepsin",
+        "name": "Mucorpepsin (Aspartic proteinase)",
+        "ec": "3.4.23.23",
+        "sources": [
+          "Rhizomucor miehei"
+        ]
+      },
+      {
+        "id": "thermolysin",
+        "name": "Thermolysin",
+        "ec": "3.4.24.27",
+        "sources": [
+          "Bacillus stearothermophilus",
+          "Geobacillus caldoproteolyticus"
+        ]
+      },
+      {
+        "id": "metalloproteinase",
+        "name": "Metalloproteinase (Bacillolysin / Metalloendopeptidase)",
+        "ec": "3.4.24.28",
+        "sources": [
+          "Bacillus amyloliquefaciens",
+          "Bacillus subtilis"
+        ]
+      },
+      {
+        "id": "glutaminase",
+        "name": "Glutaminase",
+        "ec": "3.5.1.2",
+        "sources": [
+          "Bacillus amyloliquefaciens"
+        ]
+      },
+      {
+        "id": "protein_glutaminase",
+        "name": "Protein glutaminase",
+        "ec": "3.5.1.44",
+        "sources": [
+          "Chryseobacterium proteolyticum"
+        ]
+      },
+      {
+        "id": "amp_deaminase",
+        "name": "AMP deaminase",
+        "ec": "3.5.4.6",
+        "sources": [
+          "Aspergillus melleus",
+          "Streptomyces murinus"
+        ]
+      },
+      {
+        "id": "pectin_lyase",
+        "name": "Pectin lyase",
+        "ec": "4.2.2.10",
+        "sources": [
+          "Aspergillus niger"
+        ]
+      },
+      {
+        "id": "glucose_isomerase",
+        "name": "Glucose isomerase (Xylose isomerase)",
+        "ec": "5.3.1.5",
+        "sources": [
+          "Streptomyces rubiginosus",
+          "Streptomyces murinus",
+          "Streptomyces olivaceus",
+          "Streptomyces olivochromogenes",
+          "Microbacterium arborescens",
+          "Actinoplanes missouriensis"
+        ]
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "chapter_2_10",
+      "title": "Chapter 2.10 — Beverages other than Dairy and Fruit/Vegetable based · Version 4 (01.08.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf"
+    },
+    {
+      "id": "appendix_a",
+      "title": "Appendix A — Food Additives · Version 3 (01.08.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf"
+    },
+    {
+      "id": "appendix_b",
+      "title": "Appendix B — Microbiological Requirements · Version 2 (04.11.2024)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20B%281%29.pdf"
+    },
+    {
+      "id": "appendix_c",
+      "title": "Appendix C — Processing Aids · Version 2 (01.08.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20C%282%29.pdf"
+    },
+    {
+      "id": "contaminants_v9",
+      "title": "Contaminants, Toxins and Residues Compendium · Version IX (03.02.2026)",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf"
+    },
+    {
+      "id": "proprietary_food",
+      "title": "Chapter 2.12 — Proprietary Food",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/13_%20Chapter%202_12%20%28Proprietary%20Food%29.pdf"
+    },
+    {
+      "id": "non_specified_food",
+      "title": "Approval for Non-Specified Food and Food Ingredients Regulations, 2017",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Compendium_FSS_NFS_FA_17_10_2022.pdf"
+    }
+  ]
+}
