@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 42</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 43</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="product">Product selection</button>
@@ -1853,19 +1853,31 @@ function populateProductsForSubcategory(){
  const prod=document.getElementById('productSelect');
  const msg=document.getElementById('browseProductMessage');
  if(!prod)return;
- const rows=productCatalog().filter(x=>normFoodCode(x.subcategory)===normFoodCode(sub)).sort((a,b)=>a.name.localeCompare(b.name));
- prod.innerHTML='<option value="">Select product</option>'+rows.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+' ['+esc(x.fcs||'—')+']</option>').join('');
+
+ const rows=productCatalog()
+   .filter(x=>normFoodCode(x.subcategory)===normFoodCode(sub))
+   .sort((a,b)=>a.name.localeCompare(b.name));
+
+ prod.innerHTML='<option value="">'+(rows.length?'Select standardized product ('+rows.length+')':'No standardized product loaded')+'</option>'
+   +rows.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+' ['+esc(x.fcs||'—')+']</option>').join('');
  prod.disabled=!sub||rows.length===0;
+
  if(msg){
    msg.className='notice';
-   if(sub&&rows.length===0){
-     msg.classList.remove('hidden');
-     msg.innerHTML='<b>No Level-3 standardized product is loaded for this sub-category yet.</b> PMSV has the FoSCoS category structure, but this sub-category\'s product rows are still pending.';
-   }else if(sub&&rows.length){
+   if(!sub){
+     msg.classList.add('hidden');
+   }else if(rows.length){
      msg.className='notice oknote';
      msg.classList.remove('hidden');
-     msg.innerHTML='<b>'+rows.length+' standardized product'+(rows.length===1?'':'s')+' loaded for this sub-category.</b> Select the product below.';
-   }else msg.classList.add('hidden');
+     msg.innerHTML='<b>Level 3 loaded:</b> '+rows.length+' standardized product'+(rows.length===1?'':'s')+' available under <b>'+esc(sub)+'</b>. Open the Product dropdown below.';
+   }else{
+     const cat=document.getElementById('productCategorySelect')?.value||'';
+     const noStandardRoute=['15','16'].includes(normFoodCode(cat));
+     msg.classList.remove('hidden');
+     msg.innerHTML=noStandardRoute
+       ? '<b>No standardized product is expected in this FoSCoS category.</b> Products in this route are generally assessed under the applicable Proprietary Food framework rather than selected from the standardized-product list.'
+       : '<b>No Level-3 standardized product row is loaded for this sub-category yet.</b> PMSV will not invent a product. Search above may still find the product if it is indexed under another FoSCoS sub-category.';
+   }
  }
 }
 function showSelectedCatalogProduct(p){
@@ -1971,7 +1983,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json',{cache:'no-store'});
+   const res=await fetch('./data/product-master-v1.json?v=43',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -1996,7 +2008,7 @@ document.getElementById('productSelect')?.addEventListener('change',event=>{
 async function loadRegulatoryDb(){
  const status=document.getElementById('regDbStatus');
  try{
-   const res=await fetch('./data/regulatory-db-v1.json',{cache:'no-store'});
+   const res=await fetch('./data/regulatory-db-v1.json?v=43',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    regulatoryDb=await res.json();
    ingredientCatalog=catalogFromDb(regulatoryDb);
@@ -2019,7 +2031,7 @@ async function loadRegulatoryDb(){
 async function loadNutritionDb(){
  const status=document.getElementById('nutritionDbStatus');
  try{
-   const res=await fetch('./data/nutrition-db-v1.json',{cache:'no-store'});
+   const res=await fetch('./data/nutrition-db-v1.json?v=43',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    nutritionDb=await res.json();
    if(status){
