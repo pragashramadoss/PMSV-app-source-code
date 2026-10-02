@@ -377,6 +377,12 @@
       "regulatory_note": "The 2023 direction withdrew the Yeast & Mould Count and Aerobic Plate Count parameters previously listed for this rice flour."
     },
     {
+      "key": "2.4.7",
+      "name": "Maize Starch",
+      "status": "structured_core",
+      "definition": "Starch obtained from maize (Zea mays L.); odourless, white, free-flowing powder without added colour, flavours or other chemicals and free from dirt, insects, larvae and extraneous matter."
+    },
+    {
       "key": "2.4.8",
       "name": "Corn Flakes",
       "status": "structured_core",
@@ -989,6 +995,134 @@
         "compressed soybean curd",
         "dehydrated soybean curd film",
         "related non-fermented soybean products"
+      ]
+    },
+    {
+      "key": "2.4.33",
+      "name": "Roasted Bengal Gram Flour (Chana Sattu)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Alcoholic acidity",
+          "operator": "<=",
+          "value": 0.15,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Crude fibre",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Crude protein (N×6.25)",
+          "operator": ">=",
+          "value": 20,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Particle size",
+          "operator": "=",
+          "value": 100,
+          "unit": "% passing 35 mesh"
+        },
+        {
+          "parameter": "Uric acid",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "key": "2.4.34",
+      "name": "Ragi Flour",
+      "status": "structured_core",
+      "definition": "Flour obtained from dried mature grains of Eleusine coracana L. Gaertn. by milling.",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added colouring matter",
+        "Added flavouring substances",
+        "Moulds",
+        "Weevils",
+        "Rodent hair and excreta"
+      ]
+    },
+    {
+      "key": "2.4.35",
+      "name": "Breakfast Cereal",
+      "status": "structured_core",
+      "definition": "Ready-to-eat and quick or regular cooking cereal products including puffed, powdered, flaked, multigrain, soy/bran-based, granola, cereal bars, muesli and extruded cereal products.",
+      "formulation_rules": [
+        {
+          "parameter": "Whole grain in a product labelled wholegrain breakfast cereal",
+          "operator": ">=",
+          "value": 25,
+          "unit": "% on dry-weight basis"
+        }
+      ],
+      "ingredient_rules": [
+        "Cereals/pseudocereals/grains taken together must appear as the first ingredient in the ingredient list."
+      ]
+    },
+    {
+      "key": "2.4.36",
+      "name": "Yellow Pea Powder",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Protein",
+          "operator": ">=",
+          "value": 22,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.3,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Alcoholic acidity",
+          "operator": "<=",
+          "value": 0.18,
+          "unit": "%"
+        },
+        {
+          "parameter": "Uric acid",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added colouring matter",
+        "Foreign ingredient"
       ]
     },
     {
