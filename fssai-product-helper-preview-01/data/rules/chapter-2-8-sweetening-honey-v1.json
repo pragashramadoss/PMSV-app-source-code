@@ -1,0 +1,1121 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.8",
+  "title": "Sweetening Agents Including Honey",
+  "source_version": "Version 1 (01.09.2023)",
+  "source_verified_on": "2026-10-02",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 2.8 — Sweetening Agents Including Honey, Version 1 (01.09.2023)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20(Sweetening%20agents%20including%20Honey).pdf"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Advisory dated 07.11.2025 — HMF to be considered a quality parameter in Honey",
+      "url": "https://fssai.gov.in/upload/advisories/2025/11/690dd80e5809fHMF%20to%20be%20considered%20as%20quality%20parameter%20in%20honey.pdf"
+    },
+    {
+      "authority": "FoSCoS",
+      "title": "FoSCoS Guidance Document — Bees Wax under Category 99",
+      "url": "https://foscos.fssai.gov.in/assets/docs/FoSCoS%20Guidance%20Document%20V1.1.pdf"
+    }
+  ],
+  "regulatory_notes": [
+    "The active consolidated Chapter 2.8 is Version 1 dated 01.09.2023.",
+    "A 2024 draft proposed a new 2.8.13 standard for High Fructose Corn Syrup. It is not present in the current consolidated Chapter 2.8 and is therefore not treated as an operative Chapter 2.8 product standard in PMSV.",
+    "FSSAI advisory dated 07.11.2025 clarifies that Honey exceeding the 80 mg/kg HMF limit is to be categorised as Substandard; the 80 mg/kg numerical limit itself remains unchanged."
+  ],
+  "common_rules": [
+    {
+      "type": "additives",
+      "text": "Food additives are permitted only where allowed by the relevant Chapter 2.8 standard and Appendix A. Honey under 2.8.3(1) explicitly permits no added food ingredient or food additive."
+    },
+    {
+      "type": "contaminants",
+      "text": "Applicable products must comply with the Food Safety and Standards (Contaminants, Toxins and Residues) Regulations."
+    },
+    {
+      "type": "microbiology",
+      "text": "Appendix B microbiological requirements apply where expressly referenced by the product standard."
+    },
+    {
+      "type": "labelling",
+      "text": "Current Food Safety and Standards (Labelling and Display) Regulations, 2020 apply in addition to product-specific declarations. Historical references in the consolidated chapter to the former Packaging and Labelling Regulations, 2011 are not treated as the current labelling instrument."
+    }
+  ],
+  "draft_not_active": [
+    {
+      "key": "2.8.13",
+      "name": "High Fructose Corn Syrup",
+      "status": "draft_not_active",
+      "source": "Draft Food Safety and Standards (Food Products Standards and Food Additives) Amendment Regulations, 2024",
+      "note": "Not loaded as an operative standard because the current consolidated Chapter 2.8 does not contain 2.8.13."
+    }
+  ],
+  "standards": [
+    {
+      "key": "2.8.1(1)",
+      "name": "Plantation White Sugar",
+      "status": "structured_core",
+      "definition": "Crystallised product obtained from sugarcane or sugar beet.",
+      "prohibited_or_absent": [
+        "Dirt",
+        "Filth",
+        "Iron filings",
+        "Added colouring matter"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by weight",
+          "method_note": "105±1°C for 3 h"
+        },
+        {
+          "parameter": "Sucrose",
+          "operator": ">=",
+          "value": 98,
+          "unit": "% by weight"
+        }
+      ],
+      "additives": "Permitted additives under the regulations and appendices"
+    },
+    {
+      "key": "2.8.1(2)",
+      "name": "Refined Sugar",
+      "status": "structured_core",
+      "definition": "White crystallised sugar obtained by refining plantation white sugar.",
+      "prohibited_or_absent": [
+        "Dirt",
+        "Filth",
+        "Iron filings",
+        "Added colouring matter"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by weight",
+          "method_note": "105±1°C for 3 h"
+        },
+        {
+          "parameter": "Sucrose",
+          "operator": ">=",
+          "value": 99.5,
+          "unit": "% by weight"
+        }
+      ],
+      "additives": "Permitted additives under the regulations and appendices"
+    },
+    {
+      "key": "2.8.1(3)",
+      "name": "Khandsari Sugar",
+      "status": "structured_core",
+      "variants": [
+        {
+          "name": "Khandsari Sugar (Sulphur Sugar)",
+          "composition": [
+            {
+              "parameter": "Extraneous matter",
+              "operator": "<=",
+              "value": 0.25,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Moisture",
+              "operator": "<=",
+              "value": 1.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Ash insoluble in dilute HCl",
+              "operator": "<=",
+              "value": 0.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Sucrose",
+              "operator": ">=",
+              "value": 96.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Conductivity in 5% solution at 30°C",
+              "operator": "range",
+              "min": 100,
+              "max": 300,
+              "unit": "10^-6 mho/cm²"
+            },
+            {
+              "parameter": "Calcium oxide",
+              "operator": "<=",
+              "value": 100,
+              "unit": "mg/100 g"
+            }
+          ]
+        },
+        {
+          "name": "Khandsari Sugar (Desi)",
+          "composition": [
+            {
+              "parameter": "Extraneous matter",
+              "operator": "<=",
+              "value": 0.25,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Moisture",
+              "operator": "<=",
+              "value": 1.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Ash insoluble in dilute HCl",
+              "operator": "<=",
+              "value": 0.7,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Sucrose",
+              "operator": ">=",
+              "value": 93,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Conductivity in 5% solution at 30°C",
+              "operator": "<=",
+              "value": 100,
+              "unit": "10^-6 mho/cm²"
+            },
+            {
+              "parameter": "Calcium oxide",
+              "operator": "<=",
+              "value": 50,
+              "unit": "mg/100 g"
+            }
+          ]
+        }
+      ],
+      "permitted_processing_aids": [
+        "Food-grade sodium bicarbonate"
+      ],
+      "prohibited_or_absent": [
+        "Dirt",
+        "Filth",
+        "Iron filings",
+        "Added colouring matter"
+      ]
+    },
+    {
+      "key": "2.8.1(4)",
+      "name": "Bura Sugar",
+      "status": "structured_core",
+      "definition": "Fine grain-size product made out of any kind of sugar.",
+      "prohibited_or_absent": [
+        "Dirt",
+        "Filth",
+        "Iron filings",
+        "Added colouring matter"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Sucrose",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Ash insoluble in dilute HCl",
+          "operator": "<=",
+          "value": 0.7,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.8.1(5)",
+      "name": "Cube Sugar",
+      "status": "structured_core",
+      "definition": "Cube or cuboid blocks manufactured from refined crystallised sugar.",
+      "quality_rules": [
+        "White in colour and free from dirt and other extraneous contamination."
+      ],
+      "composition": [
+        {
+          "parameter": "Sucrose",
+          "operator": ">=",
+          "value": 99.7,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 0.25,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 0.03,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.8.1(6)",
+      "name": "Icing Sugar",
+      "status": "structured_core",
+      "definition": "Sugar manufactured by pulverising refined sugar or vacuum-pan plantation white sugar, with or without edible starch.",
+      "ingredient_rules": [
+        "Edible starch, if added, shall be uniformly distributed."
+      ],
+      "quality_rules": [
+        "White powder free from dust and other extraneous matter."
+      ],
+      "composition": [
+        {
+          "parameter": "Total starch and sucrose, moisture-free",
+          "operator": ">=",
+          "value": 99,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 0.8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Starch",
+          "operator": "<=",
+          "value": 4,
+          "unit": "% by weight on dry basis"
+        }
+      ]
+    },
+    {
+      "key": "2.8.2",
+      "name": "Misri",
+      "status": "structured_core",
+      "definition": "Candy-form product obtained from any kind of sugar or palmyrah juice.",
+      "prohibited_or_absent": [
+        "Dirt",
+        "Filth",
+        "Iron filings",
+        "Added colouring matter"
+      ],
+      "composition": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 0.4,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total sugar expressed as sucrose",
+          "operator": ">=",
+          "value": 98,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.8.3(1)",
+      "name": "Honey",
+      "status": "structured_core",
+      "definition": "Natural sweet substance produced by honey bees from nectar, secretions of living plant parts or excretions of plant-sucking insects, collected and transformed by bees and left in honeycomb to ripen and mature.",
+      "variants": [
+        "Blossom/Nectar Honey",
+        "Honeydew Honey",
+        "Blend of Honeydew and Blossom Honey",
+        "Carvia callosa Honey",
+        "Pressed Honey",
+        "Monofloral Honey",
+        "Multi Floral Honey"
+      ],
+      "prohibited_or_absent": [
+        "Any added food ingredient",
+        "Food additives",
+        "Visible mould",
+        "Insects and insect debris",
+        "Fragments of bees/brood",
+        "Beeswax pieces",
+        "Sand and other extraneous matter"
+      ],
+      "composition": [
+        {
+          "parameter": "Specific gravity at 27°C",
+          "operator": ">=",
+          "value": 1.35
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total reducing sugars — general honey",
+          "operator": ">=",
+          "value": 65,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total reducing sugars — Carvia callosa and Honeydew honey",
+          "operator": ">=",
+          "value": 60,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total reducing sugars — blend of Honeydew with blossom honey",
+          "operator": ">=",
+          "value": 45,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Sucrose — general honey",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Sucrose — Carvia callosa and Honeydew honey",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Fructose/Glucose ratio",
+          "operator": "range",
+          "min": 0.95,
+          "max": 1.5
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acidity as formic acid",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Free acidity",
+          "operator": "<=",
+          "value": 50,
+          "unit": "meq acid/1000 g"
+        },
+        {
+          "parameter": "Hydroxymethylfurfural (HMF)",
+          "operator": "<=",
+          "value": 80,
+          "unit": "mg/kg",
+          "enforcement_note": "FSSAI advisory 07.11.2025: exceedance is categorised as Substandard; HMF is treated as a quality parameter."
+        },
+        {
+          "parameter": "Diastase activity",
+          "operator": ">=",
+          "value": 3,
+          "unit": "Schade units/g"
+        },
+        {
+          "parameter": "Water-insoluble matter — general honey",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Water-insoluble matter — pressed honey",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "C4 sugar",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Pollen count and plant elements",
+          "operator": ">=",
+          "value": 5000,
+          "unit": "per g"
+        },
+        {
+          "parameter": "2-AFGP marker for rice syrup",
+          "operator": "absent",
+          "detection_note": "Minimum required performance level 1 mg/kg"
+        },
+        {
+          "parameter": "Foreign oligosaccharides",
+          "operator": "<=",
+          "value": 0.7,
+          "unit": "% peak area"
+        },
+        {
+          "parameter": "Proline",
+          "operator": ">=",
+          "value": 180,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Electrical conductivity — non-Honeydew honey",
+          "operator": "<=",
+          "value": 0.8,
+          "unit": "mS/cm"
+        },
+        {
+          "parameter": "Electrical conductivity — Honeydew honey",
+          "operator": ">=",
+          "value": 0.8,
+          "unit": "mS/cm"
+        },
+        {
+          "parameter": "Δδ13C Max",
+          "operator": "range",
+          "min": -2.1,
+          "max": 2.1,
+          "unit": "‰"
+        },
+        {
+          "parameter": "Δδ13C Fru-Glu",
+          "operator": "range",
+          "min": -1,
+          "max": 1,
+          "unit": "‰"
+        },
+        {
+          "parameter": "Δδ13C Protein-Honey",
+          "operator": ">=",
+          "value": -1,
+          "unit": "‰"
+        }
+      ],
+      "process_rules": [
+        "Honey shall not be heated or processed to an extent that changes its essential composition or impairs its quality."
+      ],
+      "label_rules": [
+        "Use Honeydew Honey, Blend of Honeydew Honey and Blossom Honey, or Carvia Callosa Honey where the applicable definition is met.",
+        "Honey obtained by pressing broodless combs shall include the applicable Pressed Honey designation.",
+        "Monofloral Honey requires pollen from the named plant species to be at least 45% of total pollen.",
+        "Multi Floral Honey applies where no plant species exceeds 45% of total pollen.",
+        "The Chapter 2.8 honey standards apply to packaged/processed honey."
+      ]
+    },
+    {
+      "key": "2.8.3(2)",
+      "name": "Bees Wax",
+      "status": "structured_core",
+      "variants": [
+        "Yellow beeswax",
+        "White beeswax"
+      ],
+      "composition": [
+        {
+          "parameter": "Melting point",
+          "operator": "range",
+          "min": 62,
+          "max": 65,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Acid value",
+          "operator": "range",
+          "min": 17,
+          "max": 24
+        },
+        {
+          "parameter": "Peroxide value",
+          "operator": "<=",
+          "value": 5
+        },
+        {
+          "parameter": "Saponification value",
+          "operator": "range",
+          "min": 87,
+          "max": 104
+        },
+        {
+          "parameter": "Carnauba wax",
+          "operator": "absent"
+        },
+        {
+          "parameter": "Ceresin, paraffins and certain other waxes",
+          "operator": "absent"
+        },
+        {
+          "parameter": "Fats, Japan wax, rosin and soap",
+          "operator": "absent"
+        },
+        {
+          "parameter": "Glycerol and other polyols",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 2,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Ash",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total volatile matter",
+          "operator": "<=",
+          "value": 0.75,
+          "unit": "% by mass"
+        }
+      ],
+      "physical_properties": [
+        "Insoluble in water",
+        "Sparingly soluble in alcohol",
+        "Very soluble in ether"
+      ],
+      "foscos_note": "FoSCoS guidance states Bees Wax manufacturers should apply in Category 99; Category 99 uses a text-box approach for many substances/additives."
+    },
+    {
+      "key": "2.8.3(3)",
+      "name": "Royal Jelly",
+      "status": "structured_core",
+      "variants": [
+        {
+          "name": "Type 1",
+          "feed_basis": "Only natural bee foods: pollen, nectar and honey"
+        },
+        {
+          "name": "Type 2",
+          "feed_basis": "Natural bee food plus other nutrients such as proteins and carbohydrates"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added substances",
+        "Foreign substances",
+        "Fermentation",
+        "Rancidity"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "range",
+          "min": 62,
+          "max": 68.5,
+          "unit": "% by mass",
+          "applies_to": "Type 1 and Type 2"
+        },
+        {
+          "parameter": "10-HDA",
+          "operator": ">=",
+          "value": 1.4,
+          "unit": "% by mass",
+          "applies_to": "Type 1 and Type 2"
+        },
+        {
+          "parameter": "Protein",
+          "operator": "range",
+          "min": 11,
+          "max": 18,
+          "unit": "% by mass",
+          "applies_to": "Type 1 and Type 2"
+        },
+        {
+          "parameter": "Total sugar",
+          "operator": "range",
+          "min": 7,
+          "max": 18,
+          "unit": "% by mass",
+          "applies_to": "Type 1 and Type 2"
+        },
+        {
+          "parameter": "Fructose",
+          "operator": "range",
+          "min": 2,
+          "max": 9,
+          "unit": "% by mass",
+          "applies_to": "Type 1 and Type 2"
+        },
+        {
+          "parameter": "Glucose",
+          "operator": "range",
+          "min": 2,
+          "max": 9,
+          "unit": "% by mass",
+          "applies_to": "Type 1 and Type 2"
+        },
+        {
+          "parameter": "Sucrose",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by mass",
+          "applies_to": "Type 1"
+        },
+        {
+          "parameter": "Erlose",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass",
+          "applies_to": "Type 1"
+        },
+        {
+          "parameter": "Maltose",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by mass",
+          "applies_to": "Type 1"
+        },
+        {
+          "parameter": "Maltotriose",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass",
+          "applies_to": "Type 1"
+        },
+        {
+          "parameter": "Total acidity",
+          "operator": "range",
+          "min": 30,
+          "max": 53,
+          "unit": "ml of 1 mol/L NaOH per 100 g",
+          "applies_to": "Type 1 and Type 2"
+        },
+        {
+          "parameter": "Total lipid",
+          "operator": "range",
+          "min": 2,
+          "max": 8,
+          "unit": "% by mass",
+          "applies_to": "Type 1 and Type 2"
+        },
+        {
+          "parameter": "C13/C12 isotopic ratio — Type 1",
+          "operator": "range",
+          "min": -29,
+          "max": -20,
+          "unit": "‰"
+        },
+        {
+          "parameter": "C13/C12 isotopic ratio — Type 2",
+          "operator": "range",
+          "min": -29,
+          "max": -14,
+          "unit": "‰"
+        }
+      ],
+      "optional_quality_parameters": [
+        "Furosine — freshness indicator"
+      ]
+    },
+    {
+      "key": "2.8.4(1)",
+      "name": "Gur or Jaggery",
+      "status": "structured_core",
+      "scope": "Jaggery obtained from palmyra palm, date palm or coconut palm; cane jaggery is separately standardised under 2.8.4(2).",
+      "composition": [
+        {
+          "parameter": "Total sugars as invert sugar, dry basis",
+          "operator": ">=",
+          "value": 90,
+          "unit": "%"
+        },
+        {
+          "parameter": "Sucrose, dry basis",
+          "operator": ">=",
+          "value": 60,
+          "unit": "%"
+        },
+        {
+          "parameter": "Extraneous matter insoluble in water",
+          "operator": "<=",
+          "value": 2,
+          "unit": "%"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 6,
+          "unit": "%"
+        },
+        {
+          "parameter": "Ash insoluble in HCl",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Moisture — other than liquid/semi-liquid variety",
+          "operator": "<=",
+          "value": 10,
+          "unit": "%"
+        }
+      ],
+      "permitted_processing_aids": [
+        "Food-grade sodium bicarbonate for clarification"
+      ]
+    },
+    {
+      "key": "2.8.4(2)",
+      "name": "Cane Jaggery or Cane Gur",
+      "status": "structured_core",
+      "definition": "Product obtained by boiling or processing juice pressed out of sugarcane (Saccharum officinarum).",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Sucrose",
+          "operator": ">=",
+          "value": 70,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total sugars",
+          "operator": ">=",
+          "value": 90,
+          "unit": "%"
+        },
+        {
+          "parameter": "Reducing sugars",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Sulphate ash",
+          "operator": "<=",
+          "value": 4,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Ash insoluble in dilute HCl",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Extraneous matter and water-insoluble matter",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Reducing sugars",
+          "operator": ">=",
+          "value": 5.5,
+          "unit": "% by mass"
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added colour"
+      ],
+      "permitted_processing_aids": [
+        "Food-grade sodium bicarbonate for clarification"
+      ],
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.8.5",
+      "name": "Dextrose",
+      "status": "structured_core",
+      "definition": "White or light-cream granular powder, odourless and sweet to taste.",
+      "composition": [
+        {
+          "parameter": "Sulphated ash",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Glucose",
+          "operator": ">=",
+          "value": 99,
+          "unit": "% on dry basis"
+        }
+      ],
+      "test_rules": [
+        "0.5 g dissolved in 50 ml freshly boiled and cooled water shall require not more than 0.20 ml N/10 sodium hydroxide for neutralisation to phenolphthalein indicator."
+      ]
+    },
+    {
+      "key": "2.8.6",
+      "name": "Golden Syrup",
+      "status": "structured_core",
+      "definition": "Golden-yellow syrup obtained by inversion of sugar, pleasant in taste and free from crystallisation.",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 25,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total sugar as invert sugar",
+          "operator": ">=",
+          "value": 72,
+          "unit": "% by weight"
+        }
+      ],
+      "permitted_processing_aids": [
+        "Food-grade sodium bicarbonate for clarification"
+      ]
+    },
+    {
+      "key": "2.8.7",
+      "name": "Dried Glucose Syrup",
+      "status": "structured_core",
+      "definition": "Coarse or fine white-to-creamish-white powder, sweet and bland, somewhat hygroscopic.",
+      "prohibited_or_absent": [
+        "Fermentation",
+        "Mould growth",
+        "Dirt or other extraneous matter",
+        "Added sweetening or flavouring agent",
+        "Added natural or coal-tar food colour"
+      ],
+      "composition": [
+        {
+          "parameter": "Total solids",
+          "operator": ">=",
+          "value": 93,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Reducing sugar content",
+          "operator": ">=",
+          "value": 20,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Sulphated ash",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        }
+      ]
+    },
+    {
+      "key": "2.8.8",
+      "name": "Sodium Saccharin (Food Grade)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Purity as C7H4NNaO3S after drying at 120°C for 4 h",
+          "operator": ">=",
+          "value": 99,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 15,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Toluene sulfonamides",
+          "operator": "<=",
+          "value": 25,
+          "unit": "ppm"
+        }
+      ],
+      "test_rules": [
+        "Acidity and alkalinity — pass",
+        "Benzoate and salicylate — pass",
+        "Readily carbonizable substances — pass"
+      ],
+      "microbiology": "Appendix B"
+    },
+    {
+      "key": "2.8.9",
+      "name": "Aspartyl Phenyl Alanine Methyl Ester (Aspartame)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Aspartame on dried basis",
+          "operator": "range",
+          "min": 98,
+          "max": 102,
+          "unit": "%"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "ppm"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 10,
+          "unit": "ppm"
+        },
+        {
+          "parameter": "Loss on drying at 105°C for 4 h",
+          "operator": "<=",
+          "value": 4.3,
+          "unit": "%"
+        },
+        {
+          "parameter": "Sulphate ash",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "%"
+        },
+        {
+          "parameter": "Diketo-piperazine",
+          "operator": "<=",
+          "value": 1,
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "key": "2.8.10",
+      "name": "Acesulfame Potassium",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Acesulfame-K on dried basis",
+          "operator": "range",
+          "min": 99,
+          "max": 101,
+          "unit": "%"
+        },
+        {
+          "parameter": "Fluoride",
+          "operator": "<=",
+          "value": 3,
+          "unit": "ppm"
+        },
+        {
+          "parameter": "Heavy metals",
+          "operator": "<=",
+          "value": 10,
+          "unit": "ppm"
+        },
+        {
+          "parameter": "Loss on drying at 105°C for 2 h",
+          "operator": "<=",
+          "value": 1,
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "key": "2.8.11",
+      "name": "Sucralose",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Sucralose on anhydrous basis",
+          "operator": "range",
+          "min": 98,
+          "max": 102,
+          "unit": "%"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "ppm"
+        },
+        {
+          "parameter": "Heavy metals as Pb",
+          "operator": "<=",
+          "value": 10,
+          "unit": "ppm"
+        },
+        {
+          "parameter": "Methanol",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "%"
+        },
+        {
+          "parameter": "Residue on ignition",
+          "operator": "<=",
+          "value": 0.7,
+          "unit": "%"
+        },
+        {
+          "parameter": "Water",
+          "operator": "<=",
+          "value": 2,
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "key": "2.8.12",
+      "name": "Calcium Saccharin (Food Grade)",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Purity as C14H8CaN2O6S2 on dry basis",
+          "operator": ">=",
+          "value": 99,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 15,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Toluene sulfonamides",
+          "operator": "<=",
+          "value": 25,
+          "unit": "ppm"
+        }
+      ],
+      "test_rules": [
+        "Benzoate and salicylate — pass",
+        "Readily carbonizable substances — pass"
+      ],
+      "microbiology": "Appendix B"
+    }
+  ]
+}
