@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 33</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 34</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation ingredients</button>
@@ -37,7 +37,6 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <button class="tab" data-tab="micro">Microbiology</button>
 <button class="tab" data-tab="process">Manufacturing process</button>
 <button class="tab" data-tab="processing">Processing aids</button>
-<button class="tab" data-tab="checker">Formulation checker</button>
 <button class="tab" data-tab="quality">Label</button>
 <button class="tab" data-tab="sources">Official sources</button>
 </nav>
@@ -424,32 +423,6 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 </tbody></table></div>
 <div class="notice"><b>How to read this section:</b> package-dependent requirements remain conditional. Ingredient-dependent contaminant requirements are generated above from the formulation ingredient list so they are not shown when the triggering ingredient is absent.</div>
-</div>
-</section>
-
-<section id="checker" class="view hidden">
-<div class="card">
-<div class="section-title"><h2>Check a sample formulation</h2><span>Numerical checks after ingredient classification</span></div>
-<div class="notice oknote"><b>Ingredient route first:</b> the numerical checker does not decide whether an extra ingredient is legally eligible. That assessment is shown under <b>Formulation ingredients → Applicable standards</b>. This section then checks numerical limits for supported ingredients/additives.</div>
-<div id="checkerIngredientSummary" class="process-summary"></div>
-<p class="muted">Enter the proposed concentration in the finished caffeinated beverage. For taurine, D-glucurono-γ-lactone, inositol and pantothenic acid, the calculator converts the FSSAI daily maximum into an equivalent concentration using 500 ml (0.5 L) of finished caffeinated beverage per day.</p>
-<div class="checker-grid">
-<div class="field"><label>Total caffeine (mg/L)</label><input id="caffeine" type="number" step="0.1" placeholder="e.g. 320"><small>Required range: 145–300 mg/L.</small></div>
-<div class="field"><label>Taurine (mg/L)</label><input id="taurine" type="number" step="0.1" placeholder="e.g. 4000"><small>Calculated equivalent of FSSAI max 2,000 mg/day at 500 ml/day: 4,000 mg/L.</small></div>
-<div class="field"><label>D-glucurono-γ-lactone (mg/L)</label><input id="gluc" type="number" step="0.1" placeholder="e.g. 2400"><small>Calculated equivalent of FSSAI max 1,200 mg/day at 500 ml/day: 2,400 mg/L.</small></div>
-<div class="field"><label>Inositol (mg/L)</label><input id="inositol" type="number" step="0.1" placeholder="e.g. 200"><small>Calculated equivalent of FSSAI max 100 mg/day at 500 ml/day: 200 mg/L.</small></div>
-<div class="field"><label>Pantothenic acid (mg/L)</label><input id="pant" type="number" step="0.1" placeholder="e.g. 20"><small>Calculated equivalent of FSSAI max 10 mg/day at 500 ml/day: 20 mg/L.</small></div>
-<div class="field"><label>Estergum (ppm)</label><input id="estergum" type="number" step="0.1" placeholder="e.g. 90"><small>Maximum: 100 ppm.</small></div>
-<div class="field"><label>Quinine salts (ppm)</label><input id="quinine" type="number" step="0.1" placeholder="e.g. 80"><small>Maximum: 100 ppm expressed as quinine sulphate.</small></div>
-<div class="field"><label>Saccharin sodium (ppm / mg/kg)</label><input id="saccharin" type="number" step="0.1" placeholder="e.g. 100"><small>Chapter 2.10: 100 ppm; Appendix A 14.1.4.1 SACCHARINS: 300 mg/kg. To meet both: <b>max 100 mg/kg</b>.</small></div>
-<div class="field"><label>Acesulfame-K (ppm / mg/kg)</label><input id="acek" type="number" step="0.1" placeholder="e.g. 250"><small>Chapter 2.10: 300 ppm; Appendix A: 600 mg/kg. To meet both: <b>max 300 mg/kg</b>.</small></div>
-<div class="field"><label>Aspartame (ppm / mg/kg)</label><input id="aspartame" type="number" step="0.1" placeholder="e.g. 600"><small>Chapter 2.10: 700 ppm; Appendix A 14.1.4: 600 mg/kg. To meet both: <b>max 600 mg/kg</b>.</small></div>
-<div class="field"><label>Sucralose (ppm)</label><input id="sucralose" type="number" step="0.1" placeholder="e.g. 250"><small>Maximum: 300 ppm.</small></div>
-<div class="field"><label>Neotame (ppm)</label><input id="neotame" type="number" step="0.1" placeholder="e.g. 25"><small>Maximum: 33 ppm.</small></div>
-</div>
-<div style="margin-top:12px"><button class="btn" type="button" id="checkBtn">Evaluate formulation</button></div>
-<div id="results" class="results"></div>
-<div class="notice">The checker currently evaluates the product-specific actives and selected numerical additive limits. The separate <b>Microbiology</b>, <b>Processing aids</b> and <b>Contaminants</b> sections show the other regulatory layers applicable to this product.</div>
 </div>
 </section>
 
@@ -965,7 +938,6 @@ function renderFormula(){
  const summary=document.getElementById('classificationSummary');
  const contamChips=document.getElementById('contaminantIngredientChips');
  const triggered=document.getElementById('ingredientTriggeredContaminants');
- const checkerSummary=document.getElementById('checkerIngredientSummary');
 
  if(count)count.textContent=formulationIngredients.length+' ingredient'+(formulationIngredients.length===1?'':'s');
  const totalKg=totalFormulaKg();
@@ -1043,7 +1015,6 @@ function renderFormula(){
 
  const chipHtml=formulationIngredients.map(x=>'<span class="process-chip">'+esc(x.name)+'</span>').join('');
  if(contamChips)contamChips.innerHTML=chipHtml||'<span class="muted">No ingredients entered. Return to Formulation ingredients first.</span>';
- if(checkerSummary)checkerSummary.innerHTML=chipHtml||'<span class="muted">No ingredient list entered yet.</span>';
 
  if(triggered){
    const rows=[];
@@ -1462,21 +1433,6 @@ document.getElementById('packSize')?.addEventListener('input',renderConversions)
 document.getElementById('density')?.addEventListener('input',renderConversions);
 renderConversions();
 
-document.getElementById('checkBtn').addEventListener('click',()=>{
- const out=document.getElementById('results');out.innerHTML='';
- const c=num('caffeine');
- if(c===null)out.appendChild(row('Caffeine',null,false,'Required value missing. Enter finished-product total caffeine in mg/L.'));
- else out.appendChild(row('Caffeine',c+' mg/L',c>=145&&c<=300,c>=145&&c<=300?'Within 145–300 mg/L.':'Outside the required 145–300 mg/L range.'));
- const rules=[
-  ['taurine','Taurine','mg/L',4000],['gluc','D-glucurono-γ-lactone','mg/L',2400],['inositol','Inositol','mg/L',200],['pant','Pantothenic acid','mg/L',20],
-  ['estergum','Estergum','mg/kg',100],['quinine','Quinine salts','mg/kg',100],['saccharin','Saccharin sodium','mg/kg',100],['acek','Acesulfame-K','mg/kg',300],
-  ['aspartame','Aspartame','mg/kg',600],['sucralose','Sucralose','mg/kg',300],['neotame','Neotame','mg/kg',33]
- ];
- rules.forEach(([id,label,unit,max])=>{
-   const v=num(id);if(v===null)return;
-   const pass=v<=max;const calc=['taurine','gluc','inositol','pant'].includes(id);out.appendChild(row(label,v+' '+unit,pass,pass?(calc?'Within the calculated equivalent based on FSSAI 500 ml/day basis: '+max+' '+unit+'.':'Within explicit FSSAI maximum '+max+' '+unit+'.'):(calc?'Above the calculated equivalent based on the FSSAI daily maximum and 500 ml/day basis: '+max+' '+unit+'.':'Exceeds explicit FSSAI maximum '+max+' '+unit+'.')));
- });
- if(out.children.length===0)out.innerHTML='<div class="notice">Enter at least the caffeine value to evaluate the sample formulation.</div>';
-});
+
 </script>
 </body></html>
