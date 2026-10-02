@@ -26,6 +26,18 @@
         "rule_file": "./data/rules/chapter-2-1-dairy-v1.json",
         "source_verified_on": "2026-10-02",
         "remaining_work": "Normalize named product-variant tables and complete cross-layer validation for additives, contaminants, microbiology, processing aids and labelling before enabling full formulation compliance for every Chapter 2.1 product."
+      },
+      "2.2": {
+        "source": "FSSAI Chapter 2.2 — Fats, oils and fat emulsions · Version 3 (04.11.2024)",
+        "source_verified_on": "2026-10-02",
+        "mapped_catalog_products": 9,
+        "structured_core_standards": 9,
+        "cross_chapter_products_not_counted": [
+          "Milk fat / Butter oil / Anhydrous milk fat / Butter / dairy analogues → Chapter 2.1",
+          "Fish Oil → Chapter 2.6"
+        ],
+        "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+        "status": "structured_core_loaded"
       }
     }
   },
@@ -3114,13 +3126,13 @@
       "foscos_category": "02",
       "foscos_subcategory": "02.1",
       "fcs": "02.1.2",
-      "fssr": "2.2.1(16)(xxxiv)",
+      "fssr": "2.2.1(16) + 2.2.1(31)",
       "regulation_chapter": "2.2",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.2 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.2",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -3129,7 +3141,15 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.2 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix, contaminant, fatty-acid-table, peroxide-value and other cross-regulatory requirements are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.1(16)",
+      "rule_keys": [
+        "2.2.1(16)",
+        "2.2.1(31)"
+      ],
+      "standard_name": "Refined Grapeseed Oil",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "02-02-1-refined-rapeseed-or-mustard-oil-low-erucic-acid",
@@ -3137,13 +3157,13 @@
       "foscos_category": "02",
       "foscos_subcategory": "02.1",
       "fcs": "02.1.2",
-      "fssr": "2.2.1(16)(xxxv)",
+      "fssr": "2.2.1(16) + 2.2.1(7)",
       "regulation_chapter": "2.2",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.2 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.2",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -3152,7 +3172,15 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.2 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix, contaminant, fatty-acid-table, peroxide-value and other cross-regulatory requirements are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.1(16)",
+      "rule_keys": [
+        "2.2.1(16)",
+        "2.2.1(7)"
+      ],
+      "standard_name": "Refined Rapeseed or Mustard Oil — Low Erucic Acid",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "02-02-1-refined-safflower-seed-oil-and-safflower-seed-oil-high-oleic-acid-imported-or-dome",
@@ -3160,13 +3188,13 @@
       "foscos_category": "02",
       "foscos_subcategory": "02.1",
       "fcs": "02.1.2",
-      "fssr": "2.2.1(16)(xxxvi)",
+      "fssr": "2.2.1(16) + 2.2.1(10.1)",
       "regulation_chapter": "2.2",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.2 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.2",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -3175,7 +3203,15 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.2 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix, contaminant, fatty-acid-table, peroxide-value and other cross-regulatory requirements are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.1(16)",
+      "rule_keys": [
+        "2.2.1(16)",
+        "2.2.1(10.1)"
+      ],
+      "standard_name": "Refined Safflower Seed Oil / High Oleic Safflower Seed Oil",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "02-02-1-moringa-oil",
@@ -3186,10 +3222,10 @@
       "fssr": "2.2.1(32)",
       "regulation_chapter": "2.2",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.2 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.2",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -3198,7 +3234,14 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.2 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix, contaminant, fatty-acid-table, peroxide-value and other cross-regulatory requirements are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.1(32)",
+      "rule_keys": [
+        "2.2.1(32)"
+      ],
+      "standard_name": "Moringa Oil",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "02-02-1-refined-palm-kernel-olein",
@@ -3206,13 +3249,13 @@
       "foscos_category": "02",
       "foscos_subcategory": "02.1",
       "fcs": "02.1.2",
-      "fssr": "2.2.1(16)(xxxvii)",
+      "fssr": "2.2.1(16) + 2.2.1(28)",
       "regulation_chapter": "2.2",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.2 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.2",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -3221,7 +3264,15 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.2 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix, contaminant, fatty-acid-table, peroxide-value and other cross-regulatory requirements are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.1(16)",
+      "rule_keys": [
+        "2.2.1(16)",
+        "2.2.1(28)"
+      ],
+      "standard_name": "Refined Palm Kernel Olein",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "02-02-1-refined-moringa-oil",
@@ -3229,13 +3280,13 @@
       "foscos_category": "02",
       "foscos_subcategory": "02.1",
       "fcs": "02.1.2",
-      "fssr": "2.2.1(16)(xxxviii)",
+      "fssr": "2.2.1(16) + 2.2.1(32)",
       "regulation_chapter": "2.2",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.2 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.2",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -3244,7 +3295,15 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.2 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix, contaminant, fatty-acid-table, peroxide-value and other cross-regulatory requirements are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.1(16)",
+      "rule_keys": [
+        "2.2.1(16)",
+        "2.2.1(32)"
+      ],
+      "standard_name": "Refined Moringa Oil",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "02-02-1-fish-oil",
@@ -3275,13 +3334,13 @@
       "foscos_category": "02",
       "foscos_subcategory": "02.2",
       "fcs": "02.2.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.2.5(3)",
+      "regulation_chapter": "2.2",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.2 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.2",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -3290,7 +3349,14 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.2 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix, contaminant, fatty-acid-table, peroxide-value and other cross-regulatory requirements are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.5(3)",
+      "rule_keys": [
+        "2.2.5(3)"
+      ],
+      "standard_name": "Fat Spread",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "02-02-2-butter",
@@ -3325,13 +3391,13 @@
       "foscos_category": "02",
       "foscos_subcategory": "02.2",
       "fcs": "02.2.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.2.5(1)",
+      "regulation_chapter": "2.2",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.2 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.2",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -3340,7 +3406,14 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.2 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix, contaminant, fatty-acid-table, peroxide-value and other cross-regulatory requirements are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.5(1)",
+      "rule_keys": [
+        "2.2.5(1)"
+      ],
+      "standard_name": "Table Margarine",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "02-02-2-bakery-and-industrial-margarine",
@@ -3348,13 +3421,13 @@
       "foscos_category": "02",
       "foscos_subcategory": "02.2",
       "fcs": "02.2.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.2.5(2)",
+      "regulation_chapter": "2.2",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.2 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.2",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -3363,7 +3436,14 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.2 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix, contaminant, fatty-acid-table, peroxide-value and other cross-regulatory requirements are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.5(2)",
+      "rule_keys": [
+        "2.2.5(2)"
+      ],
+      "standard_name": "Bakery and Industrial Margarine",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "02-02-2-analogue-in-the-dairy-context",
@@ -14113,10 +14193,16 @@
       "subcategory": "02.1",
       "name": "Refined Grapeseed Oil",
       "fcs": "02.1.2",
-      "fssr": "2.2.1(16)(xxxiv)",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.2.1(16) + 2.2.1(31)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "02-02-1-refined-grapeseed-oil"
+      "profile_id": "02-02-1-refined-grapeseed-oil",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.1(16)",
+      "rule_keys": [
+        "2.2.1(16)",
+        "2.2.1(31)"
+      ]
     },
     {
       "id": "02-02-1-refined-rapeseed-or-mustard-oil-low-erucic-acid",
@@ -14124,10 +14210,16 @@
       "subcategory": "02.1",
       "name": "Refined Rapeseed or Mustard Oil-Low Erucic Acid",
       "fcs": "02.1.2",
-      "fssr": "2.2.1(16)(xxxv)",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.2.1(16) + 2.2.1(7)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "02-02-1-refined-rapeseed-or-mustard-oil-low-erucic-acid"
+      "profile_id": "02-02-1-refined-rapeseed-or-mustard-oil-low-erucic-acid",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.1(16)",
+      "rule_keys": [
+        "2.2.1(16)",
+        "2.2.1(7)"
+      ]
     },
     {
       "id": "02-02-1-refined-safflower-seed-oil-and-safflower-seed-oil-high-oleic-acid-imported-or-dome",
@@ -14135,10 +14227,16 @@
       "subcategory": "02.1",
       "name": "Refined Safflower seed oil and safflower seed oil (High oleic Acid Imported or Domestic)",
       "fcs": "02.1.2",
-      "fssr": "2.2.1(16)(xxxvi)",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.2.1(16) + 2.2.1(10.1)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "02-02-1-refined-safflower-seed-oil-and-safflower-seed-oil-high-oleic-acid-imported-or-dome"
+      "profile_id": "02-02-1-refined-safflower-seed-oil-and-safflower-seed-oil-high-oleic-acid-imported-or-dome",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.1(16)",
+      "rule_keys": [
+        "2.2.1(16)",
+        "2.2.1(10.1)"
+      ]
     },
     {
       "id": "02-02-1-moringa-oil",
@@ -14147,9 +14245,14 @@
       "name": "Moringa oil",
       "fcs": "02.1.2",
       "fssr": "2.2.1(32)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "02-02-1-moringa-oil"
+      "profile_id": "02-02-1-moringa-oil",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.1(32)",
+      "rule_keys": [
+        "2.2.1(32)"
+      ]
     },
     {
       "id": "02-02-1-refined-palm-kernel-olein",
@@ -14157,10 +14260,16 @@
       "subcategory": "02.1",
       "name": "Refined Palm Kernel Olein",
       "fcs": "02.1.2",
-      "fssr": "2.2.1(16)(xxxvii)",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.2.1(16) + 2.2.1(28)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "02-02-1-refined-palm-kernel-olein"
+      "profile_id": "02-02-1-refined-palm-kernel-olein",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.1(16)",
+      "rule_keys": [
+        "2.2.1(16)",
+        "2.2.1(28)"
+      ]
     },
     {
       "id": "02-02-1-refined-moringa-oil",
@@ -14168,10 +14277,16 @@
       "subcategory": "02.1",
       "name": "Refined Moringa oil",
       "fcs": "02.1.2",
-      "fssr": "2.2.1(16)(xxxviii)",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.2.1(16) + 2.2.1(32)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "02-02-1-refined-moringa-oil"
+      "profile_id": "02-02-1-refined-moringa-oil",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.1(16)",
+      "rule_keys": [
+        "2.2.1(16)",
+        "2.2.1(32)"
+      ]
     },
     {
       "id": "02-02-1-fish-oil",
@@ -14190,10 +14305,15 @@
       "subcategory": "02.2",
       "name": "Fat spread",
       "fcs": "02.2.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.2.5(3)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "02-02-2-fat-spread"
+      "profile_id": "02-02-2-fat-spread",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.5(3)",
+      "rule_keys": [
+        "2.2.5(3)"
+      ]
     },
     {
       "id": "02-02-2-butter",
@@ -14214,10 +14334,15 @@
       "subcategory": "02.2",
       "name": "Table margarine",
       "fcs": "02.2.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.2.5(1)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "02-02-2-table-margarine"
+      "profile_id": "02-02-2-table-margarine",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.5(1)",
+      "rule_keys": [
+        "2.2.5(1)"
+      ]
     },
     {
       "id": "02-02-2-bakery-and-industrial-margarine",
@@ -14225,10 +14350,15 @@
       "subcategory": "02.2",
       "name": "Bakery and Industrial Margarine",
       "fcs": "02.2.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.2.5(2)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "02-02-2-bakery-and-industrial-margarine"
+      "profile_id": "02-02-2-bakery-and-industrial-margarine",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.5(2)",
+      "rule_keys": [
+        "2.2.5(2)"
+      ]
     },
     {
       "id": "02-02-2-analogue-in-the-dairy-context",
