@@ -1,0 +1,638 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.7",
+  "title": "Sweets & Confectionery",
+  "source_version": "Version 1 (01.09.2023)",
+  "source_verified_on": "2026-10-02",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 2.7 — Sweets & Confectionery, Version 1 (01.09.2023)",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf"
+    },
+    {
+      "authority": "FSSAI / FoSCoS",
+      "title": "View all FSSAI Standardized Food Products",
+      "url": "https://foscos.fssai.gov.in/standard-product"
+    }
+  ],
+  "common_rules": [
+    {
+      "type": "additives",
+      "text": "Food additives are permitted only as allowed by the applicable product standard and Appendix A. Product-specific restrictions override general permissions."
+    },
+    {
+      "type": "microbiology",
+      "text": "Where the Chapter 2.7 standard refers to Appendix B, the applicable microbiological requirements also apply."
+    },
+    {
+      "type": "contaminants",
+      "text": "Applicable products must comply with the Food Safety and Standards (Contaminants, Toxins and Residues) Regulations."
+    },
+    {
+      "type": "labelling",
+      "text": "Current Food Safety and Standards (Labelling and Display) Regulations, 2020 apply. Historical references in the consolidated Chapter 2.7 text to the former Packaging and Labelling Regulations, 2011 are not treated as the current labelling instrument."
+    }
+  ],
+  "standards": [
+    {
+      "key": "2.7.1",
+      "name": "Sugar Boiled Confectionery",
+      "status": "structured_core",
+      "applies_to": [
+        "hard boiled sugar confectionery",
+        "pan goods confectionery",
+        "toffee",
+        "milk toffee",
+        "modified toffee",
+        "lacto-bon-bon",
+        "other equivalent sugar-boiled confectionery"
+      ],
+      "permitted_ingredient_groups": [
+        "sugar, invert sugar, jaggery, lactose, gur, bura sugar, khandsari, sorbitol, honey and liquid glucose",
+        "milk and milk products",
+        "edible molasses",
+        "malt extracts",
+        "edible starches",
+        "edible oils and fats",
+        "edible common salt",
+        "fruit and fruit products",
+        "nuts and nut products",
+        "tea extract",
+        "coffee extract",
+        "chocolate and cocoa",
+        "vitamins and minerals",
+        "edible desiccated coconut",
+        "spices and condiments and their extracts",
+        "candied peels",
+        "enzymes",
+        "permitted stabilising and emulsifying agents",
+        "edible foodgrains and edible seeds",
+        "baking powder",
+        "gulkand, gulabanafsha and mulathi",
+        "puffed rice",
+        "china grass",
+        "eucalyptus oil, camphor, menthol oil crystals and peppermint oil",
+        "thymol",
+        "edible oil-seed flour and protein isolates",
+        "gum arabic and other edible gums"
+      ],
+      "formulation_rules": [
+        {
+          "parameter": "Food-grade shellac",
+          "operator": "<=",
+          "value": 0.4,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Isomaltulose",
+          "operator": "<=",
+          "value": 50,
+          "unit": "% of total sugars",
+          "condition": "When used"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Sulphated ash on salt-free basis",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Sulphated ash with spices used as centre filling",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Ash insoluble in dilute HCl",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Ash insoluble in dilute HCl with spices used as centre filling",
+          "operator": "<=",
+          "value": 0.4,
+          "unit": "% by weight"
+        }
+      ],
+      "variants": [
+        {
+          "name": "Milk Toffee",
+          "protein_min_pct_dry_basis": 3,
+          "fat_min_pct_dry_basis": 4
+        },
+        {
+          "name": "Butter Toffee",
+          "fat_min_pct_dry_basis": 4
+        }
+      ],
+      "additives": "Appendix A"
+    },
+    {
+      "key": "2.7.2",
+      "name": "Lozenges",
+      "status": "structured_core",
+      "definition": "Confections made mainly from pulverised or icing sugar with binding materials such as edible gums, edible gelatin, liquid glucose or dextrin, generally by cold mixing without primary boiling/cooking.",
+      "permitted_ingredient_groups": [
+        "dextrose, dextrose monohydrate, honey, invert sugar, sugar, jaggery, bura sugar, khandsari, sorbitol and liquid glucose",
+        "milk and milk products",
+        "nuts and nut products",
+        "malt syrup",
+        "edible starches",
+        "edible common salt",
+        "ginger, cinnamon, aniseed, caraway and cardamom powders or extracts",
+        "cocoa powder or extracts",
+        "protein isolates",
+        "coffee extracts or flavour",
+        "permitted colouring matter",
+        "permitted emulsifying and stabilising agents",
+        "vitamins and minerals"
+      ],
+      "formulation_rules": [
+        {
+          "parameter": "Isomaltulose",
+          "operator": "<=",
+          "value": 50,
+          "unit": "% of total sugars",
+          "condition": "When used"
+        }
+      ],
+      "composition": [
+        {
+          "parameter": "Sucrose",
+          "operator": ">=",
+          "value": 85,
+          "unit": "% by weight",
+          "exception": "Not applicable when only permitted artificial sweetener is used as sweetener."
+        },
+        {
+          "parameter": "Sulphated ash on salt-free basis",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Ash insoluble in dilute HCl",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by weight"
+        }
+      ],
+      "additives": "Appendix A"
+    },
+    {
+      "key": "2.7.3",
+      "name": "Chewing Gum and Bubble Gum",
+      "status": "structured_core",
+      "base_ingredients": [
+        "chewing gum base or bubble gum base (natural or synthetic, non-toxic)",
+        "cane sugar",
+        "liquid glucose/corn syrup"
+      ],
+      "permitted_gum_base_sources": [
+        "Babul/Kikar (gum arabic)",
+        "Khair",
+        "Jhingan (Jael)",
+        "Ghatti",
+        "Chiku (Sapota)",
+        "natural rubber latex",
+        "synthetic rubber latex",
+        "glycerol ester of wood rosin",
+        "glycerol ester of gum rosin",
+        "synthetic resin",
+        "glycerol ester or partially hydrogenated gum/wood rosin",
+        "natural resin",
+        "polyvinyl acetate",
+        "food-grade agar"
+      ],
+      "optional_ingredients": [
+        "malt",
+        "milk powder",
+        "chocolate",
+        "coffee",
+        "food-grade gelatin",
+        "permitted emulsifiers",
+        "potable water",
+        "vitamins, minerals and proteins"
+      ],
+      "formulation_rules": [
+        {
+          "parameter": "Isomaltulose",
+          "operator": "<=",
+          "value": 50,
+          "unit": "% of total sugars",
+          "condition": "When used"
+        }
+      ],
+      "variants": [
+        {
+          "name": "Chewing Gum",
+          "composition": [
+            {
+              "parameter": "Gum",
+              "operator": ">=",
+              "value": 12.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Moisture",
+              "operator": "<=",
+              "value": 3.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Sulphated ash",
+              "operator": "<=",
+              "value": 9.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Acid-insoluble ash",
+              "operator": "<=",
+              "value": 2,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Reducing sugars as dextrose",
+              "operator": ">=",
+              "value": 4.5,
+              "unit": "% by weight",
+              "exception": "Not applicable if only artificial sweetener is used."
+            },
+            {
+              "parameter": "Sucrose",
+              "operator": "<=",
+              "value": 70,
+              "unit": "% by weight",
+              "exception": "Not applicable if only artificial sweetener is used."
+            }
+          ]
+        },
+        {
+          "name": "Bubble Gum",
+          "composition": [
+            {
+              "parameter": "Gum",
+              "operator": ">=",
+              "value": 14,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Moisture",
+              "operator": "<=",
+              "value": 3.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Sulphated ash",
+              "operator": "<=",
+              "value": 11.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Acid-insoluble ash",
+              "operator": "<=",
+              "value": 3.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Reducing sugars as dextrose",
+              "operator": ">=",
+              "value": 5.5,
+              "unit": "% by weight",
+              "exception": "Not applicable if only artificial sweetener is used."
+            },
+            {
+              "parameter": "Sucrose",
+              "operator": "<=",
+              "value": 60,
+              "unit": "% by weight",
+              "exception": "Not applicable if only artificial sweetener is used."
+            }
+          ]
+        }
+      ],
+      "additives": "Appendix A"
+    },
+    {
+      "key": "2.7.4",
+      "name": "Chocolate",
+      "status": "structured_core",
+      "formulation_rules": [
+        {
+          "parameter": "Vegetable fats other than cocoa butter / cocoa-butter equivalents",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% of finished product after deduction of other added edible foodstuffs"
+        },
+        {
+          "parameter": "Isomaltulose",
+          "operator": "<=",
+          "value": 50,
+          "unit": "% of total sugars",
+          "condition": "When used"
+        }
+      ],
+      "chocolate_types": [
+        {
+          "name": "Milk Chocolate",
+          "total_fat_min_pct_dry": 25,
+          "milk_fat_min_pct_dry": 2,
+          "cocoa_solids_min_pct_moisture_fat_free": 2.5,
+          "milk_solids_min_pct_moisture_fat_free": 10.5,
+          "acid_insoluble_ash_max_pct": 0.2
+        },
+        {
+          "name": "Milk Covering Chocolate",
+          "total_fat_min_pct_dry": 25,
+          "milk_fat_min_pct_dry": 2,
+          "cocoa_solids_min_pct_moisture_fat_free": 2.5,
+          "milk_solids_min_pct_moisture_fat_free": 10.5,
+          "acid_insoluble_ash_max_pct": 0.2
+        },
+        {
+          "name": "Plain Chocolate",
+          "total_fat_min_pct_dry": 25,
+          "cocoa_solids_min_pct_moisture_fat_free": 12,
+          "acid_insoluble_ash_max_pct": 0.2,
+          "dark_chocolate_additional": {
+            "total_cocoa_solids_min_pct_dry": 35,
+            "cocoa_butter_min_pct_dry": 18,
+            "fat_free_cocoa_solids_min_pct_dry": 14
+          }
+        },
+        {
+          "name": "Plain Covering Chocolate",
+          "total_fat_min_pct_dry": 25,
+          "cocoa_solids_min_pct_moisture_fat_free": 12,
+          "acid_insoluble_ash_max_pct": 0.2
+        },
+        {
+          "name": "White Chocolate",
+          "total_fat_min_pct_dry": 25,
+          "milk_fat_min_pct_dry": 2,
+          "milk_solids_min_pct_moisture_fat_free": 10.5,
+          "acid_insoluble_ash_max_pct": 0.2
+        },
+        {
+          "name": "Blended Chocolate",
+          "total_fat_min_pct_dry": 25,
+          "cocoa_solids_min_pct_moisture_fat_free": 3,
+          "milk_solids_pct_moisture_fat_free_range": [
+            1,
+            9
+          ],
+          "acid_insoluble_ash_max_pct": 0.2
+        },
+        {
+          "name": "Filled Chocolate",
+          "chocolate_component_min_pct_total_mass": 25
+        },
+        {
+          "name": "Composite Chocolate",
+          "chocolate_min_pct_total_mass": 60,
+          "added_wholesome_substances_min_pct_total_mass": 10
+        },
+        {
+          "name": "Praline",
+          "chocolate_component_min_pct_total_weight": 25
+        },
+        {
+          "name": "Couverture Chocolate",
+          "total_cocoa_solids_min_pct_dry": 35,
+          "cocoa_butter_min_pct_dry": 31,
+          "fat_free_cocoa_solids_min_pct_dry": 2.5
+        }
+      ],
+      "permitted_optional_ingredients": [
+        "edible salts",
+        "spices and condiments and their extracts",
+        "vitamins and minerals",
+        "permitted emulsifying and stabilising agents",
+        "permitted sequestering and buffering agents"
+      ],
+      "cocoa_butter_equivalent_rules": [
+        "Vegetable fat shall be standardised under FSSAI regulations.",
+        "It shall be non-lauric and rich in symmetric monounsaturated triglycerides of POP, POSt and StOSt types.",
+        "It shall be miscible with cocoa butter and compatible with its physical properties.",
+        "It shall be obtained by refining and/or fractionation; enzymatic modification of triglyceride structure is excluded."
+      ],
+      "label_rules": [
+        "Where vegetable fat/cocoa-butter equivalent is used in addition to cocoa butter, the prescribed bold declaration must be displayed."
+      ],
+      "additives": "Appendix A"
+    },
+    {
+      "key": "2.7.5",
+      "name": "Ice Lollies or Edible Ices / Ice Candy",
+      "status": "structured_core",
+      "variants": [
+        {
+          "name": "Ice Lollies or Edible Ices",
+          "permitted_ingredient_groups": [
+            "sugar",
+            "syrup",
+            "fruit and fruit juices",
+            "spices and condiments",
+            "cocoa",
+            "citric acid",
+            "permitted flavours and colours"
+          ],
+          "formulation_rules": [
+            {
+              "parameter": "Stabilisers and/or emulsifiers",
+              "operator": "<=",
+              "value": 0.5,
+              "unit": "% by weight"
+            }
+          ],
+          "prohibited_or_absent": [
+            "Artificial sweetener"
+          ]
+        },
+        {
+          "name": "Ice Candy",
+          "process_rules": [
+            "Prepared from a pasteurised mix before freezing."
+          ],
+          "permitted_ingredient_groups": [
+            "water",
+            "nutritive sweeteners including sugar, dextrose, liquid glucose, dried liquid glucose and honey",
+            "fruits and fruit products",
+            "coffee",
+            "cocoa",
+            "ginger",
+            "nuts",
+            "salt",
+            "spices and condiments"
+          ],
+          "composition": [
+            {
+              "parameter": "Total sugars expressed as sucrose",
+              "operator": ">=",
+              "value": 10,
+              "unit": "%"
+            }
+          ],
+          "microbiology": "Appendix B"
+        }
+      ],
+      "formulation_rules": [
+        {
+          "parameter": "Isomaltulose",
+          "operator": "<=",
+          "value": 50,
+          "unit": "% of total sugars",
+          "condition": "When used"
+        }
+      ]
+    },
+    {
+      "key": "2.7.6",
+      "name": "Dry Mixtures of Cocoa and Sugars",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% by mass"
+        }
+      ],
+      "classification_matrix": [
+        {
+          "cocoa_powder_content_min_pct": 25,
+          "cocoa_butter_level": ">=20% m/m",
+          "designation": "Sweetened Cocoa / Sweetened Cocoa Powder / Drinking Chocolate"
+        },
+        {
+          "cocoa_powder_content_min_pct": 25,
+          "cocoa_butter_level": ">=10% and <20% m/m",
+          "designation": "Sweetened Cocoa, Fat-reduced / Sweetened Cocoa Powder, Fat-reduced / Fat-Reduced Drinking Chocolate"
+        },
+        {
+          "cocoa_powder_content_min_pct": 25,
+          "cocoa_butter_level": "<10% m/m",
+          "designation": "Sweetened Cocoa, Highly Fat-reduced / Sweetened Cocoa Powder, Highly Fat-reduced / Highly Fat-Reduced Drinking Chocolate"
+        },
+        {
+          "cocoa_powder_content_min_pct": 20,
+          "cocoa_powder_content_max_exclusive_pct": 25,
+          "cocoa_butter_level": ">=20% m/m",
+          "designation": "Sweetened Cocoa Mix / Sweetened Mixture with Cocoa"
+        },
+        {
+          "cocoa_powder_content_min_pct": 20,
+          "cocoa_powder_content_max_exclusive_pct": 25,
+          "cocoa_butter_level": ">=10% and <20% m/m",
+          "designation": "Sweetened Cocoa Mix, Fat-reduced / Sweetened Mixture with Cocoa, Fat-reduced"
+        },
+        {
+          "cocoa_powder_content_min_pct": 20,
+          "cocoa_powder_content_max_exclusive_pct": 25,
+          "cocoa_butter_level": "<10% m/m",
+          "designation": "Sweetened Cocoa Mix, Highly Fat-reduced / Sweetened Mixture with Cocoa, Highly Fat-reduced"
+        },
+        {
+          "cocoa_powder_content_max_exclusive_pct": 20,
+          "cocoa_butter_level": ">=20% m/m",
+          "designation": "Sweetened Cocoa-flavoured Mix"
+        },
+        {
+          "cocoa_powder_content_max_exclusive_pct": 20,
+          "cocoa_butter_level": ">=10% and <20% m/m",
+          "designation": "Sweetened Cocoa-flavoured Mix, Fat-reduced"
+        },
+        {
+          "cocoa_powder_content_max_exclusive_pct": 20,
+          "cocoa_butter_level": "<10% m/m",
+          "designation": "Sweetened Cocoa-flavoured Mix, Highly Fat-reduced"
+        }
+      ],
+      "chocolate_powder_rule": {
+        "cocoa_powder_min_pct_wet_basis": 32,
+        "cocoa_powder_min_pct_dry_matter_basis": 29
+      },
+      "optional_ingredients": [
+        "spices",
+        "salt/sodium chloride"
+      ]
+    },
+    {
+      "key": "2.7.7",
+      "name": "Cocoa Powder",
+      "status": "structured_core",
+      "variants": [
+        {
+          "name": "Cocoa Powder",
+          "moisture_max_pct": 7,
+          "cocoa_butter_min_pct_dry": 20,
+          "acid_insoluble_ash_max_pct_moisture_fat_free": 1,
+          "alkalinity_total_ash_as_k2o_max_pct": 12
+        },
+        {
+          "name": "Fat Reduced Cocoa Powder (Medium Fat)",
+          "moisture_max_pct": 7,
+          "cocoa_butter_pct_dry_range": [
+            10,
+            20
+          ],
+          "acid_insoluble_ash_max_pct_moisture_fat_free": 1,
+          "alkalinity_total_ash_as_k2o_max_pct": 12
+        },
+        {
+          "name": "Highly Fat Reduced Cocoa Powder (Low Fat)",
+          "moisture_max_pct": 7,
+          "cocoa_butter_max_pct_dry": 10,
+          "acid_insoluble_ash_max_pct_moisture_fat_free": 1,
+          "alkalinity_total_ash_as_k2o_max_pct": 12
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added colouring matter",
+        "Rancidity",
+        "Off-flavour",
+        "Mould growth",
+        "Insect infestation",
+        "Dirt, filth, deleterious substances and adulterants"
+      ]
+    },
+    {
+      "key": "2.7.8",
+      "name": "Cocoa Mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "status": "structured_core",
+      "variants": [
+        {
+          "name": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "moisture_max_pct": 10,
+          "cocoa_shell_and_germ_max_pct_fat_free_dry_matter": 5,
+          "cocoa_shell_max_pct_alkali_free": 1.75,
+          "cocoa_butter_pct_range": [
+            47,
+            60
+          ],
+          "alkalinity_total_ash_as_k2o_max_pct_moisture_fat_free": 12,
+          "acid_insoluble_ash_max_pct_moisture_fat_free": 1,
+          "crude_fibre_max_pct_moisture_fat_free": 7
+        },
+        {
+          "name": "Cocoa Cake",
+          "moisture_max_pct": 10,
+          "cocoa_shell_and_germ_max_pct_fat_free_dry_matter": 5,
+          "cocoa_shell_max_pct_alkali_free": 4.5,
+          "alkalinity_total_ash_as_k2o_max_pct_moisture_fat_free": 12,
+          "acid_insoluble_ash_max_pct_moisture_fat_free": 1,
+          "crude_fibre_max_pct_moisture_fat_free": 7
+        }
+      ],
+      "prohibited_or_absent": [
+        "Added colouring matter",
+        "Added flavour",
+        "Added fats other than cocoa butter"
+      ]
+    }
+  ]
+}
