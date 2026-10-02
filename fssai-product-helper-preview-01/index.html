@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 46</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 47</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="product">Product selection</button>
@@ -1899,7 +1899,7 @@ function showSelectedCatalogProduct(p){
   +'<div class="item"><b>'+esc(p.name)+'</b><small>FCS / FoSCoS code: '+esc(p.fcs||'—')+'<br>FSSR: '+esc(p.fssr||'Not shown in loaded catalogue row')+'</small></div>'
   +'<div class="item"><b>PMSV profile status</b><small>'+(detailed?'<span class="status-good">Detailed rule profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base rule profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small></div>'
   +'</div>'
-  +(profile&&!detailed?'<div class="notice"><b>'+(chapterLoaded?'Chapter profile loaded':'Base profile ready')+':</b> '+(chapterLoaded?'The product has been mapped to its FSSAI Chapter 2.1 standard and structured chapter-rule data is loaded. Machine validation of every product-specific clause and linked Appendix rule is still being completed before full formulation compliance is enabled.':'Product identity, FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.')+'</div>':'');
+  +(profile&&!detailed?'<div class="notice"><b>'+(chapterLoaded?'Chapter profile loaded':'Base profile ready')+':</b> '+(chapterLoaded?'The product has been mapped to its applicable FSSAI chapter standard and structured chapter-rule data is loaded. Machine validation of every product-specific clause and linked Appendix rule is still being completed before full formulation compliance is enabled.':'Product identity, FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.')+'</div>':'');
  if(profile){
    actions.innerHTML='<button class="btn" type="button" id="startSelectedProduct">'+(detailed?'Start formulation assessment →':chapterLoaded?'Open chapter product profile →':'Open base product profile →')+'</button>';
    document.getElementById('startSelectedProduct')?.addEventListener('click',()=>{
@@ -1987,10 +1987,18 @@ function renderProductMaster(){
  const chapterStatus=document.getElementById('chapterIngestionStatus');
  if(chapterStatus){
    const ing=productMasterDb.coverage?.chapter_ingestion||{};
-   const d=ing['2.1'];
-   if(d){
+   const rows=[];
+   const d21=ing['2.1'];
+   const d22=ing['2.2'];
+   if(d21){
+     rows.push('<b>Chapter 2.1 — Dairy Products and Analogues:</b> '+Number(d21.mapped_catalog_products||0)+' FoSCoS product rows mapped · '+Number(d21.structured_core_standards||0)+' active standards structured'+(Number(d21.superseded_standards||0)?' · '+Number(d21.superseded_standards)+' superseded standard tracked':'')+'.');
+   }
+   if(d22){
+     rows.push('<b>Chapter 2.2 — Fats, Oils and Fat Emulsions:</b> '+Number(d22.mapped_catalog_products||0)+' FoSCoS product rows newly mapped to Chapter 2.2 · '+Number(d22.structured_core_standards||0)+' structured core standards/rule groups loaded.');
+   }
+   if(rows.length){
      chapterStatus.className='notice oknote';
-     chapterStatus.innerHTML='<b>Bulk rule ingestion in progress.</b><br><b>Chapter 2.1 — Dairy Products and Analogues:</b> '+Number(d.mapped_catalog_products||0)+' FoSCoS product rows mapped. <b>'+Number(d.structured_core_standards||0)+' active standards now have structured core rules</b>'+(Number(d.superseded_standards||0)?' · '+Number(d.superseded_standards)+' superseded standard tracked':'')+'.<br><small>Core Chapter 2.1 structuring is complete. Named-variety tables and linked Appendix/contaminant/microbiology validation are the remaining dairy work before every dairy product can run the full formulation checker.</small>';
+     chapterStatus.innerHTML='<b>Bulk rule ingestion in progress.</b><br>'+rows.join('<br>')+'<br><small>Chapter data is being loaded separately from Appendix A additives, contaminants, microbiology, processing-aid and labelling validation. A product is not marked fully validated until those linked layers are also checked.</small>';
      chapterStatus.classList.remove('hidden');
    }else chapterStatus.classList.add('hidden');
  }
@@ -2006,7 +2014,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=46',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=47',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
