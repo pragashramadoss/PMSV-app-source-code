@@ -1,0 +1,212 @@
+{
+  "schema_version": "1.0",
+  "title": "PMSV India Nutrition Calculation Database",
+  "scope": "Deterministic nutrition-calculation starter dataset for the Caffeinated Beverage prototype. IFCT master ingestion is not yet complete; unmatched ingredients require supplier/laboratory nutrient data.",
+  "sources": {
+    "ifct2017": {
+      "authority": "ICMR-National Institute of Nutrition, Department of Health Research, Ministry of Health and Family Welfare, Government of India",
+      "title": "Indian Food Composition Tables 2017",
+      "url": "https://www.nin.res.in/ebooks/IFCT2017.pdf",
+      "use": "Primary Indian government food-composition source for foods with an exact applicable IFCT entry."
+    },
+    "fssai_labelling": {
+      "authority": "Food Safety and Standards Authority of India",
+      "title": "Food Safety and Standards (Labelling and Display) Regulations, 2020, Compendium Version VIII (09.09.2025)",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Labelling%20Display_Version%20VIII_09_09_2025.pdf",
+      "use": "Mandatory nutrient declarations, adult RDA reference values and energy conversion factors."
+    }
+  },
+  "rda_adult": {
+    "energy_kcal": 2000,
+    "total_fat_g": 67,
+    "saturated_fat_g": 22,
+    "trans_fat_g": 2,
+    "added_sugars_g": 50,
+    "sodium_mg": 2000
+  },
+  "energy_factors_kcal_per_g": {
+    "carbohydrate": 4,
+    "protein": 4,
+    "fat": 9,
+    "polyols_except_erythritol": 2,
+    "erythritol": 0,
+    "alcohol_ethanol": 7,
+    "organic_acid": 3,
+    "dietary_fibre": 2
+  },
+  "profiles": [
+    {
+      "names": [
+        "water"
+      ],
+      "display_name": "Water",
+      "source_type": "composition_defined",
+      "source": "Ingredient identity; zero contribution to mandatory energy/macronutrient fields.",
+      "per_100g": {
+        "protein_g": 0,
+        "carbohydrate_g": 0,
+        "total_sugars_g": 0,
+        "added_sugars_g": 0,
+        "total_fat_g": 0,
+        "saturated_fat_g": 0,
+        "trans_fat_g": 0,
+        "cholesterol_mg": 0,
+        "sodium_mg": 0,
+        "dietary_fibre_g": 0,
+        "polyols_g": 0,
+        "erythritol_g": 0,
+        "ethanol_g": 0,
+        "organic_acid_g": 0
+      }
+    },
+    {
+      "names": [
+        "sugar",
+        "sucrose",
+        "refined sugar",
+        "white sugar"
+      ],
+      "display_name": "Sugar / sucrose",
+      "source_type": "composition_defined",
+      "source": "Purified sucrose formulation basis; energy calculated using FSSAI carbohydrate factor.",
+      "per_100g": {
+        "protein_g": 0,
+        "carbohydrate_g": 100,
+        "total_sugars_g": 100,
+        "added_sugars_g": 100,
+        "total_fat_g": 0,
+        "saturated_fat_g": 0,
+        "trans_fat_g": 0,
+        "cholesterol_mg": 0,
+        "sodium_mg": 0,
+        "dietary_fibre_g": 0,
+        "polyols_g": 0,
+        "erythritol_g": 0,
+        "ethanol_g": 0,
+        "organic_acid_g": 0
+      }
+    },
+    {
+      "names": [
+        "fructose",
+        "crystalline fructose"
+      ],
+      "display_name": "Fructose",
+      "source_type": "composition_defined",
+      "source": "Purified monosaccharide formulation basis; energy calculated using FSSAI carbohydrate factor.",
+      "per_100g": {
+        "protein_g": 0,
+        "carbohydrate_g": 100,
+        "total_sugars_g": 100,
+        "added_sugars_g": 100,
+        "total_fat_g": 0,
+        "saturated_fat_g": 0,
+        "trans_fat_g": 0,
+        "cholesterol_mg": 0,
+        "sodium_mg": 0,
+        "dietary_fibre_g": 0,
+        "polyols_g": 0,
+        "erythritol_g": 0,
+        "ethanol_g": 0,
+        "organic_acid_g": 0
+      }
+    },
+    {
+      "names": [
+        "citric acid"
+      ],
+      "display_name": "Citric acid",
+      "source_type": "composition_defined",
+      "source": "Pure organic-acid formulation basis; energy calculated using FSSAI organic-acid factor of 3 kcal/g.",
+      "per_100g": {
+        "protein_g": 0,
+        "carbohydrate_g": 0,
+        "total_sugars_g": 0,
+        "added_sugars_g": 0,
+        "total_fat_g": 0,
+        "saturated_fat_g": 0,
+        "trans_fat_g": 0,
+        "cholesterol_mg": 0,
+        "sodium_mg": 0,
+        "dietary_fibre_g": 0,
+        "polyols_g": 0,
+        "erythritol_g": 0,
+        "ethanol_g": 0,
+        "organic_acid_g": 100
+      }
+    },
+    {
+      "names": [
+        "caffeine"
+      ],
+      "display_name": "Caffeine",
+      "source_type": "composition_defined",
+      "source": "Pure caffeine does not fall under the energy-yielding components listed in the FSSAI energy conversion factors; zero contribution is assigned to the mandatory macronutrient fields.",
+      "per_100g": {
+        "protein_g": 0,
+        "carbohydrate_g": 0,
+        "total_sugars_g": 0,
+        "added_sugars_g": 0,
+        "total_fat_g": 0,
+        "saturated_fat_g": 0,
+        "trans_fat_g": 0,
+        "cholesterol_mg": 0,
+        "sodium_mg": 0,
+        "dietary_fibre_g": 0,
+        "polyols_g": 0,
+        "erythritol_g": 0,
+        "ethanol_g": 0,
+        "organic_acid_g": 0
+      }
+    },
+    {
+      "names": [
+        "erythritol"
+      ],
+      "display_name": "Erythritol",
+      "source_type": "composition_defined",
+      "source": "Pure erythritol formulation basis; FSSAI energy factor is 0 kcal/g.",
+      "per_100g": {
+        "protein_g": 0,
+        "carbohydrate_g": 0,
+        "total_sugars_g": 0,
+        "added_sugars_g": 0,
+        "total_fat_g": 0,
+        "saturated_fat_g": 0,
+        "trans_fat_g": 0,
+        "cholesterol_mg": 0,
+        "sodium_mg": 0,
+        "dietary_fibre_g": 0,
+        "polyols_g": 0,
+        "erythritol_g": 100,
+        "ethanol_g": 0,
+        "organic_acid_g": 0
+      }
+    },
+    {
+      "names": [
+        "ethanol",
+        "ethyl alcohol"
+      ],
+      "display_name": "Ethanol",
+      "source_type": "composition_defined",
+      "source": "Pure ethanol formulation basis; FSSAI energy factor is 7 kcal/g.",
+      "per_100g": {
+        "protein_g": 0,
+        "carbohydrate_g": 0,
+        "total_sugars_g": 0,
+        "added_sugars_g": 0,
+        "total_fat_g": 0,
+        "saturated_fat_g": 0,
+        "trans_fat_g": 0,
+        "cholesterol_mg": 0,
+        "sodium_mg": 0,
+        "dietary_fibre_g": 0,
+        "polyols_g": 0,
+        "erythritol_g": 0,
+        "ethanol_g": 100,
+        "organic_acid_g": 0
+      }
+    }
+  ]
+}
