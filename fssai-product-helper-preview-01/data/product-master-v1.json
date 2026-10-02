@@ -13,7 +13,7 @@
     "foscos_catalog_scope": "Official FoSCoS/FSSAI indexed rows loaded category by category; Chapter 2.5 synchronization added the current missing meat-product rows while rule ingestion continues.",
     "foscos_subcategory_framework": "Level-2 FoSCoS/FSSAI food-category framework loaded for categories 01–16; special categories without a separate level-2 browse layer are handled directly at product/category level.",
     "level3_status": "Expanded official FoSCoS standardized-product catalogue. Detailed compliance rule profiles remain a separate ingestion layer.",
-    "base_rule_profiles_ready": 280,
+    "base_rule_profiles_ready": 271,
     "profile_architecture_note": "Every loaded FoSCoS standardized product now has at least a base profile. Full formulation compliance is enabled only when detailed product-specific clauses have been ingested.",
     "chapter_ingestion": {
       "2.1": {
@@ -77,6 +77,17 @@
         "source_verified_on": "2026-10-02",
         "regulatory_note": "Current Chapter 2.6 contains 24 active product standards; clause 2.6.1(6) is omitted. Legacy Sardine Oil text is superseded by the substituted Fish Oil standard. Clause 2.6.2 adds formaldehyde limits by fish group.",
         "next_validation": "Appendix A additive inheritance, contaminants, microbiology, processing aids, formaldehyde applicability, labels and full machine validation"
+      },
+      "2.7": {
+        "title": "Sweets & Confectionery",
+        "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+        "source_version": "Version 1 (01.09.2023)",
+        "mapped_catalog_products": 9,
+        "structured_core_standards": 8,
+        "status": "structured_core_loaded",
+        "source_verified_on": "2026-10-02",
+        "regulatory_note": "Eight Chapter 2.7 standards are structured. Sugar-boiled confectionery maps to separate FoSCoS hard- and soft-candy rows. Ice Lollies/Edible Ices maps to FoSCoS Category 03. Mouth-freshener rows in FoSCoS Category 05 are not treated as Chapter 2.7 standards.",
+        "next_validation": "Appendix A additive inheritance, contaminants, microbiology, processing aids, current labelling rules and full machine validation"
       }
     }
   },
@@ -3633,13 +3644,13 @@
       "foscos_category": "03",
       "foscos_subcategory": "03",
       "fcs": "03.0",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.7.5",
+      "regulation_chapter": "2.7",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.7 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.7, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -3648,7 +3659,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.7 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.5",
+      "standard_name": "Ice Lollies or Edible Ices / Ice Candy",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "04-04-1-vanilla-pods",
@@ -5430,13 +5445,13 @@
       "foscos_category": "05",
       "foscos_subcategory": "05.1",
       "fcs": "05.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.7.6",
+      "regulation_chapter": "2.7",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.7 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.7, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -5445,7 +5460,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.7 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.6",
+      "standard_name": "Dry Mixtures of Cocoa and Sugars",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "05-05-1-cocoa-powder",
@@ -5453,13 +5472,13 @@
       "foscos_category": "05",
       "foscos_subcategory": "05.1",
       "fcs": "05.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.7.7",
+      "regulation_chapter": "2.7",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.7 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.7, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -5468,7 +5487,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.7 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.7",
+      "standard_name": "Cocoa Powder",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
@@ -5476,13 +5499,13 @@
       "foscos_category": "05",
       "foscos_subcategory": "05.1",
       "fcs": "05.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.7.8",
+      "regulation_chapter": "2.7",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.7 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.7, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -5491,7 +5514,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.7 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.8",
+      "standard_name": "Cocoa Mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "05-05-1-chocolate",
@@ -5499,13 +5526,13 @@
       "foscos_category": "05",
       "foscos_subcategory": "05.1",
       "fcs": "05.1.3",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.7.4",
+      "regulation_chapter": "2.7",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.7 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.7, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -5514,7 +5541,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.7 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.4",
+      "standard_name": "Chocolate",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "05-05-2-sugar-boiled-confectionery-hard-candy",
@@ -5522,13 +5553,13 @@
       "foscos_category": "05",
       "foscos_subcategory": "05.2",
       "fcs": "05.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.7.1",
+      "regulation_chapter": "2.7",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.7 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.7, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -5537,7 +5568,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.7 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.1",
+      "standard_name": "Sugar Boiled Confectionery — Hard Candy",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "05-05-2-sugar-boiled-confectionery-soft-candy",
@@ -5545,13 +5580,13 @@
       "foscos_category": "05",
       "foscos_subcategory": "05.2",
       "fcs": "05.2.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.7.1",
+      "regulation_chapter": "2.7",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.7 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.7, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -5560,7 +5595,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.7 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.1",
+      "standard_name": "Sugar Boiled Confectionery — Soft Candy",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "05-05-2-lozenges",
@@ -5568,13 +5607,13 @@
       "foscos_category": "05",
       "foscos_subcategory": "05.2",
       "fcs": "05.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.7.2",
+      "regulation_chapter": "2.7",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.7 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.7, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -5583,7 +5622,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.7 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.2",
+      "standard_name": "Lozenges",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
@@ -5660,13 +5703,13 @@
       "foscos_category": "05",
       "foscos_subcategory": "05.3",
       "fcs": "05.3",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.7.3",
+      "regulation_chapter": "2.7",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.7 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.7, Version 1 (01.09.2023)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -5675,7 +5718,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.7 mapping and structured core rules are loaded. Full end-to-end formulation compliance remains locked until linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.3",
+      "standard_name": "Chewing Gum and Bubble Gum",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "06-06-1-bean",
@@ -15206,10 +15253,12 @@
       "subcategory": "03",
       "name": "Ice Lollies or Edible Ices",
       "fcs": "03.0",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.7.5",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "03-03-ice-lollies-or-edible-ices"
+      "profile_id": "03-03-ice-lollies-or-edible-ices",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.5"
     },
     {
       "id": "04-04-1-vanilla-pods",
@@ -16067,10 +16116,12 @@
       "subcategory": "05.1",
       "name": "Dry Mixtures of Cocoa and Sugars",
       "fcs": "05.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.7.6",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars"
+      "profile_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.6"
     },
     {
       "id": "05-05-1-cocoa-powder",
@@ -16078,10 +16129,12 @@
       "subcategory": "05.1",
       "name": "Cocoa Powder",
       "fcs": "05.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.7.7",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "05-05-1-cocoa-powder"
+      "profile_id": "05-05-1-cocoa-powder",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.7"
     },
     {
       "id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
@@ -16089,10 +16142,12 @@
       "subcategory": "05.1",
       "name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
       "fcs": "05.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.7.8",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake"
+      "profile_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.8"
     },
     {
       "id": "05-05-1-chocolate",
@@ -16100,10 +16155,12 @@
       "subcategory": "05.1",
       "name": "Chocolate",
       "fcs": "05.1.3",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.7.4",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "05-05-1-chocolate"
+      "profile_id": "05-05-1-chocolate",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.4"
     },
     {
       "id": "05-05-2-sugar-boiled-confectionery-hard-candy",
@@ -16111,10 +16168,12 @@
       "subcategory": "05.2",
       "name": "Sugar boiled confectionery (Hard Candy)",
       "fcs": "05.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.7.1",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "05-05-2-sugar-boiled-confectionery-hard-candy"
+      "profile_id": "05-05-2-sugar-boiled-confectionery-hard-candy",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.1"
     },
     {
       "id": "05-05-2-sugar-boiled-confectionery-soft-candy",
@@ -16122,10 +16181,12 @@
       "subcategory": "05.2",
       "name": "Sugar boiled confectionery (Soft Candy)",
       "fcs": "05.2.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.7.1",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "05-05-2-sugar-boiled-confectionery-soft-candy"
+      "profile_id": "05-05-2-sugar-boiled-confectionery-soft-candy",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.1"
     },
     {
       "id": "05-05-2-lozenges",
@@ -16133,10 +16194,12 @@
       "subcategory": "05.2",
       "name": "Lozenges",
       "fcs": "05.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.7.2",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "05-05-2-lozenges"
+      "profile_id": "05-05-2-lozenges",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.2"
     },
     {
       "id": "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
@@ -16177,10 +16240,12 @@
       "subcategory": "05.3",
       "name": "Chewing gum and bubble gum",
       "fcs": "05.3",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.7.3",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "05-05-3-chewing-gum-and-bubble-gum"
+      "profile_id": "05-05-3-chewing-gum-and-bubble-gum",
+      "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
+      "rule_key": "2.7.3"
     },
     {
       "id": "06-06-1-bean",
