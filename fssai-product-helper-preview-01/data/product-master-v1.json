@@ -13,7 +13,7 @@
     "foscos_catalog_scope": "Official FoSCoS/FSSAI indexed rows loaded category by category; Chapter 2.5 synchronization added the current missing meat-product rows while rule ingestion continues.",
     "foscos_subcategory_framework": "Level-2 FoSCoS/FSSAI food-category framework loaded for categories 01–16; special categories without a separate level-2 browse layer are handled directly at product/category level.",
     "level3_status": "Expanded official FoSCoS standardized-product catalogue. Detailed compliance rule profiles remain a separate ingestion layer.",
-    "base_rule_profiles_ready": 252,
+    "base_rule_profiles_ready": 206,
     "profile_architecture_note": "Every loaded FoSCoS standardized product now has at least a base profile. Full formulation compliance is enabled only when detailed product-specific clauses have been ingested.",
     "chapter_ingestion": {
       "2.1": {
@@ -100,6 +100,19 @@
         "source_verified_on": "2026-10-02",
         "regulatory_note": "Twenty distinct Chapter 2.8 product-standard groups are structured. Bees Wax is added through the official FoSCoS Category 99 text-box guidance rather than the standard dropdown list. The 2024 draft HFCS standard is tracked as draft_not_active because it is not present in the current consolidated Chapter 2.8. Honey HMF remains limited to 80 mg/kg; FSSAI advisory dated 07.11.2025 clarifies exceedance is categorised as Substandard.",
         "next_validation": "Appendix A additive inheritance, contaminants, microbiology, processing aids, current labelling declarations and full machine validation"
+      },
+      "2.9": {
+        "title": "Salt, Spices, Condiments and Related Products",
+        "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+        "source_version": "Version 4 (01.08.2025)",
+        "mapped_catalog_products": 46,
+        "active_numbered_standards": 44,
+        "structured_core_standards": 47,
+        "omitted_standards": 1,
+        "status": "structured_core_loaded",
+        "source_verified_on": "2026-10-02",
+        "regulatory_note": "Current consolidated Chapter 2.9 runs through 2.9.45 with 2.9.25 omitted. Clause 2.9.30 is split into product-specific rule groups for edible common salt, potassium iodate, double-fortified salt and salt substitutes. Harrisa remains base-profile because no matching operative Chapter 2.9 standard is present.",
+        "next_validation": "Complete remaining variant-specific numeric tables, Appendix A additive inheritance, contaminants, Appendix B applicability, processing aids, current labelling declarations and full machine validation"
       }
     }
   },
@@ -9902,13 +9915,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.1",
       "fcs": "12.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.30(1)",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9917,7 +9930,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.30(1)",
+      "standard_name": "Edible Common Salt",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-1-iron-fortified-iodized-salt-double-fortified-salt",
@@ -9925,13 +9942,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.1",
       "fcs": "12.1.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.30(5)",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9940,7 +9957,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.30(5)",
+      "standard_name": "Iron Fortified Iodized Salt (Double Fortified Salt)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-1-salt-substitutes",
@@ -9948,13 +9969,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.1",
       "fcs": "12.1.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.30(6)",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9963,7 +9984,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.30(6)",
+      "standard_name": "Salt Substitutes",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-caraway-siahjira",
@@ -9971,13 +9996,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.1",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -9986,7 +10011,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.1",
+      "standard_name": "Caraway (Siahjira)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-cardamom-elaichi",
@@ -9994,13 +10023,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.2",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10009,7 +10038,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.2",
+      "standard_name": "Cardamom (Elaichi)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-chillies-and-capsicum-lal-mirchi",
@@ -10017,13 +10050,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.3",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10032,7 +10065,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.3",
+      "standard_name": "Chillies and Capsicum (Lal Mirchi)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-cinnamon-dalchini",
@@ -10040,13 +10077,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.4",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10055,7 +10092,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.4",
+      "standard_name": "Cinnamon (Dalchini)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-cassia-taj",
@@ -10063,13 +10104,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.5",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10078,7 +10119,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.5",
+      "standard_name": "Cassia (Taj)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-cloves-laung",
@@ -10086,13 +10131,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.6",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10101,7 +10146,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.6",
+      "standard_name": "Cloves (Laung)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-coriander-dhania",
@@ -10109,13 +10158,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.7",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10124,7 +10173,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.7",
+      "standard_name": "Coriander (Dhania)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-cumin-zeera-kalonji",
@@ -10132,13 +10185,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.8",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10147,7 +10200,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.8",
+      "standard_name": "Cumin (Zeera, Kalonji)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-fennel-saunf",
@@ -10155,13 +10212,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.9",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10170,7 +10227,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.9",
+      "standard_name": "Fennel (Saunf)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-fenugreek-methi",
@@ -10178,13 +10239,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.10",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10193,7 +10254,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.10",
+      "standard_name": "Fenugreek (Methi)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dried-ginger-sonth-dried-adrak",
@@ -10201,13 +10266,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.11",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10216,7 +10281,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.11",
+      "standard_name": "Dried Ginger (Sonth, Dried Adrak)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-mace-jaipatri",
@@ -10224,13 +10293,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.12",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10239,7 +10308,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.12",
+      "standard_name": "Mace (Jaipatri)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-mustard-rai-sarson",
@@ -10247,13 +10320,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.13",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10262,7 +10335,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.13",
+      "standard_name": "Mustard (Rai, Sarson)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-nutmeg-jaiphal",
@@ -10270,13 +10347,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.14",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10285,7 +10362,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.14",
+      "standard_name": "Nutmeg (Jaiphal)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-black-white-and-green-bwg-peppers",
@@ -10293,13 +10374,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.15",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10308,7 +10389,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.15",
+      "standard_name": "Black, White & Green (BWG) Peppers",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-poppy-khas-khas",
@@ -10316,13 +10401,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.16",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10331,7 +10416,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.16",
+      "standard_name": "Poppy (Khas Khas)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-saffron-kesar",
@@ -10339,13 +10428,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.17",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10354,7 +10443,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.17",
+      "standard_name": "Saffron (Kesar)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-turmeric-haldi",
@@ -10362,13 +10455,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.18",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10377,7 +10470,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.18",
+      "standard_name": "Turmeric (Haldi)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-curry-powder",
@@ -10385,13 +10482,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.19",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10400,7 +10497,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.19",
+      "standard_name": "Curry Powder",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-mixed-masala",
@@ -10408,13 +10509,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.20",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10423,7 +10524,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.20",
+      "standard_name": "Mixed Masala",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-aniseed-saunf",
@@ -10431,13 +10536,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.21",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10446,7 +10551,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.21",
+      "standard_name": "Aniseed (Saunf)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-ajowan-bishops-seed",
@@ -10454,13 +10563,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.22",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10469,7 +10578,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.22",
+      "standard_name": "Ajowan (Bishops seed)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dried-mango-slices",
@@ -10477,13 +10590,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.23",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10492,7 +10605,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.23",
+      "standard_name": "Dried Mango Slices",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dried-mango-powder-amchur",
@@ -10500,13 +10617,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.24",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10515,7 +10632,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.24",
+      "standard_name": "Dried Mango Powder (Amchur)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-garlic-lahsun",
@@ -10523,13 +10644,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.26",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10538,7 +10659,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.26",
+      "standard_name": "Garlic (Lahsun)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-celery",
@@ -10546,13 +10671,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.27",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10561,7 +10686,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.27",
+      "standard_name": "Celery",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dehydrated-onion-sukha-pyaj",
@@ -10569,13 +10698,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.28",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10584,7 +10713,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.28",
+      "standard_name": "Dehydrated Onion (Sukha Pyaj)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-asafoetida-hing-or-hingra",
@@ -10592,13 +10725,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.29",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10607,7 +10740,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.29",
+      "standard_name": "Asafoetida (Hing or Hingra)",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-harrisa-red-hot-pepper-paste",
@@ -10638,13 +10775,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.32",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10653,7 +10790,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.32",
+      "standard_name": "Spice Oleoresins",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-tejpat",
@@ -10661,13 +10802,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.33",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10676,7 +10817,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.33",
+      "standard_name": "Tejpat",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-star-anise",
@@ -10684,13 +10829,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.34",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10699,7 +10844,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.34",
+      "standard_name": "Star Anise",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dried-oregano",
@@ -10707,13 +10856,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.35",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10722,7 +10871,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.35",
+      "standard_name": "Dried Oregano",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-pimento-or-allspice",
@@ -10730,13 +10883,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.36",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10745,7 +10898,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.36",
+      "standard_name": "Pimento or Allspice",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dried-laurel-or-dried-bay-leaf",
@@ -10753,13 +10910,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.37",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10768,7 +10925,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.37",
+      "standard_name": "Dried Laurel or Dried Bay Leaf",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dried-mint",
@@ -10776,13 +10937,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.38",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10791,7 +10952,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.38",
+      "standard_name": "Dried Mint",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dried-rosemary",
@@ -10799,13 +10964,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.39",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10814,7 +10979,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.39",
+      "standard_name": "Dried Rosemary",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dried-thyme",
@@ -10822,13 +10991,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.40",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10837,7 +11006,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.40",
+      "standard_name": "Dried Thyme",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dried-sage",
@@ -10845,13 +11018,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.41",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10860,7 +11033,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.41",
+      "standard_name": "Dried Sage",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dried-sweet-basil-leaves",
@@ -10868,13 +11045,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.42",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10883,7 +11060,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.42",
+      "standard_name": "Dried Sweet Basil Leaves",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-seasoning",
@@ -10891,13 +11072,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.2",
       "fcs": "12.2.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.9.31",
+      "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10906,7 +11087,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.31",
+      "standard_name": "Seasoning",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dried-sweet-marjoram",
@@ -10917,10 +11102,10 @@
       "fssr": "2.9.43",
       "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10929,7 +11114,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.43",
+      "standard_name": "Dried Sweet Marjoram",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dried-parsley",
@@ -10940,10 +11129,10 @@
       "fssr": "2.9.44",
       "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10952,7 +11141,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.44",
+      "standard_name": "Dried Parsley",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-2-dehydrated-tarragon",
@@ -10963,10 +11156,10 @@
       "fssr": "2.9.45",
       "regulation_chapter": "2.9",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.9 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.9, Version 4 (01.08.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -10975,7 +11168,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Chapter 2.9 mapping and structured core rules are loaded. Full end-to-end compliance remains locked until Appendix A, contaminants, microbiology, processing aids, variant-specific tables and current labelling rules are machine-validated.",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.45",
+      "standard_name": "Dehydrated Tarragon",
+      "source_verified_on": "2026-10-02"
     },
     {
       "id": "12-12-3-vinegar",
@@ -18370,10 +18567,12 @@
       "subcategory": "12.1",
       "name": "Edible Common Salt",
       "fcs": "12.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.30(1)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-1-edible-common-salt"
+      "profile_id": "12-12-1-edible-common-salt",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.30(1)"
     },
     {
       "id": "12-12-1-iron-fortified-iodized-salt-double-fortified-salt",
@@ -18381,10 +18580,12 @@
       "subcategory": "12.1",
       "name": "Iron Fortified Iodized Salt (double Fortified salt)",
       "fcs": "12.1.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.30(5)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-1-iron-fortified-iodized-salt-double-fortified-salt"
+      "profile_id": "12-12-1-iron-fortified-iodized-salt-double-fortified-salt",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.30(5)"
     },
     {
       "id": "12-12-1-salt-substitutes",
@@ -18392,10 +18593,12 @@
       "subcategory": "12.1",
       "name": "Salt Substitutes",
       "fcs": "12.1.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.30(6)",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-1-salt-substitutes"
+      "profile_id": "12-12-1-salt-substitutes",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.30(6)"
     },
     {
       "id": "12-12-2-caraway-siahjira",
@@ -18403,10 +18606,12 @@
       "subcategory": "12.2",
       "name": "Caraway (Siahjira)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.1",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-caraway-siahjira"
+      "profile_id": "12-12-2-caraway-siahjira",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.1"
     },
     {
       "id": "12-12-2-cardamom-elaichi",
@@ -18414,10 +18619,12 @@
       "subcategory": "12.2",
       "name": "Cardamom (Elaichi)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.2",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-cardamom-elaichi"
+      "profile_id": "12-12-2-cardamom-elaichi",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.2"
     },
     {
       "id": "12-12-2-chillies-and-capsicum-lal-mirchi",
@@ -18425,10 +18632,12 @@
       "subcategory": "12.2",
       "name": "Chillies and Capsicum (Lal Mirchi)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.3",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-chillies-and-capsicum-lal-mirchi"
+      "profile_id": "12-12-2-chillies-and-capsicum-lal-mirchi",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.3"
     },
     {
       "id": "12-12-2-cinnamon-dalchini",
@@ -18436,10 +18645,12 @@
       "subcategory": "12.2",
       "name": "Cinnamon (Dalchini)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.4",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-cinnamon-dalchini"
+      "profile_id": "12-12-2-cinnamon-dalchini",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.4"
     },
     {
       "id": "12-12-2-cassia-taj",
@@ -18447,10 +18658,12 @@
       "subcategory": "12.2",
       "name": "Cassia (Taj)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.5",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-cassia-taj"
+      "profile_id": "12-12-2-cassia-taj",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.5"
     },
     {
       "id": "12-12-2-cloves-laung",
@@ -18458,10 +18671,12 @@
       "subcategory": "12.2",
       "name": "Cloves (Laung)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.6",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-cloves-laung"
+      "profile_id": "12-12-2-cloves-laung",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.6"
     },
     {
       "id": "12-12-2-coriander-dhania",
@@ -18469,10 +18684,12 @@
       "subcategory": "12.2",
       "name": "Coriander (Dhania)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.7",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-coriander-dhania"
+      "profile_id": "12-12-2-coriander-dhania",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.7"
     },
     {
       "id": "12-12-2-cumin-zeera-kalonji",
@@ -18480,10 +18697,12 @@
       "subcategory": "12.2",
       "name": "Cumin (Zeera, Kalonji)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.8",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-cumin-zeera-kalonji"
+      "profile_id": "12-12-2-cumin-zeera-kalonji",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.8"
     },
     {
       "id": "12-12-2-fennel-saunf",
@@ -18491,10 +18710,12 @@
       "subcategory": "12.2",
       "name": "Fennel (Saunf)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.9",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-fennel-saunf"
+      "profile_id": "12-12-2-fennel-saunf",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.9"
     },
     {
       "id": "12-12-2-fenugreek-methi",
@@ -18502,10 +18723,12 @@
       "subcategory": "12.2",
       "name": "Fenugreek (Methi)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.10",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-fenugreek-methi"
+      "profile_id": "12-12-2-fenugreek-methi",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.10"
     },
     {
       "id": "12-12-2-dried-ginger-sonth-dried-adrak",
@@ -18513,10 +18736,12 @@
       "subcategory": "12.2",
       "name": "Dried Ginger (Sonth, Dried Adrak)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.11",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dried-ginger-sonth-dried-adrak"
+      "profile_id": "12-12-2-dried-ginger-sonth-dried-adrak",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.11"
     },
     {
       "id": "12-12-2-mace-jaipatri",
@@ -18524,10 +18749,12 @@
       "subcategory": "12.2",
       "name": "Mace (Jaipatri)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.12",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-mace-jaipatri"
+      "profile_id": "12-12-2-mace-jaipatri",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.12"
     },
     {
       "id": "12-12-2-mustard-rai-sarson",
@@ -18535,10 +18762,12 @@
       "subcategory": "12.2",
       "name": "Mustard (Rai, Sarson)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.13",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-mustard-rai-sarson"
+      "profile_id": "12-12-2-mustard-rai-sarson",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.13"
     },
     {
       "id": "12-12-2-nutmeg-jaiphal",
@@ -18546,10 +18775,12 @@
       "subcategory": "12.2",
       "name": "Nutmeg (Jaiphal)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.14",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-nutmeg-jaiphal"
+      "profile_id": "12-12-2-nutmeg-jaiphal",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.14"
     },
     {
       "id": "12-12-2-black-white-and-green-bwg-peppers",
@@ -18557,10 +18788,12 @@
       "subcategory": "12.2",
       "name": "BLACK, WHITE & GREEN (BWG) PEPPERS",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.15",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-black-white-and-green-bwg-peppers"
+      "profile_id": "12-12-2-black-white-and-green-bwg-peppers",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.15"
     },
     {
       "id": "12-12-2-poppy-khas-khas",
@@ -18568,10 +18801,12 @@
       "subcategory": "12.2",
       "name": "Poppy (Khas Khas)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.16",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-poppy-khas-khas"
+      "profile_id": "12-12-2-poppy-khas-khas",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.16"
     },
     {
       "id": "12-12-2-saffron-kesar",
@@ -18579,10 +18814,12 @@
       "subcategory": "12.2",
       "name": "Saffron (Kesar)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.17",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-saffron-kesar"
+      "profile_id": "12-12-2-saffron-kesar",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.17"
     },
     {
       "id": "12-12-2-turmeric-haldi",
@@ -18590,10 +18827,12 @@
       "subcategory": "12.2",
       "name": "Turmeric (Haldi)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.18",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-turmeric-haldi"
+      "profile_id": "12-12-2-turmeric-haldi",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.18"
     },
     {
       "id": "12-12-2-curry-powder",
@@ -18601,10 +18840,12 @@
       "subcategory": "12.2",
       "name": "Curry Powder",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.19",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-curry-powder"
+      "profile_id": "12-12-2-curry-powder",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.19"
     },
     {
       "id": "12-12-2-mixed-masala",
@@ -18612,10 +18853,12 @@
       "subcategory": "12.2",
       "name": "Mixed Masala",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.20",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-mixed-masala"
+      "profile_id": "12-12-2-mixed-masala",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.20"
     },
     {
       "id": "12-12-2-aniseed-saunf",
@@ -18623,10 +18866,12 @@
       "subcategory": "12.2",
       "name": "Aniseed (Saunf)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.21",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-aniseed-saunf"
+      "profile_id": "12-12-2-aniseed-saunf",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.21"
     },
     {
       "id": "12-12-2-ajowan-bishops-seed",
@@ -18634,10 +18879,12 @@
       "subcategory": "12.2",
       "name": "Ajowan (Bishops seed)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.22",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-ajowan-bishops-seed"
+      "profile_id": "12-12-2-ajowan-bishops-seed",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.22"
     },
     {
       "id": "12-12-2-dried-mango-slices",
@@ -18645,10 +18892,12 @@
       "subcategory": "12.2",
       "name": "Dried Mango Slices",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.23",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dried-mango-slices"
+      "profile_id": "12-12-2-dried-mango-slices",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.23"
     },
     {
       "id": "12-12-2-dried-mango-powder-amchur",
@@ -18656,10 +18905,12 @@
       "subcategory": "12.2",
       "name": "Dried Mango Powder (Amchur)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.24",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dried-mango-powder-amchur"
+      "profile_id": "12-12-2-dried-mango-powder-amchur",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.24"
     },
     {
       "id": "12-12-2-garlic-lahsun",
@@ -18667,10 +18918,12 @@
       "subcategory": "12.2",
       "name": "Garlic (Lahsun)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.26",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-garlic-lahsun"
+      "profile_id": "12-12-2-garlic-lahsun",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.26"
     },
     {
       "id": "12-12-2-celery",
@@ -18678,10 +18931,12 @@
       "subcategory": "12.2",
       "name": "Celery",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.27",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-celery"
+      "profile_id": "12-12-2-celery",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.27"
     },
     {
       "id": "12-12-2-dehydrated-onion-sukha-pyaj",
@@ -18689,10 +18944,12 @@
       "subcategory": "12.2",
       "name": "Dehydrated Onion (Sukha Pyaj)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.28",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dehydrated-onion-sukha-pyaj"
+      "profile_id": "12-12-2-dehydrated-onion-sukha-pyaj",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.28"
     },
     {
       "id": "12-12-2-asafoetida-hing-or-hingra",
@@ -18700,10 +18957,12 @@
       "subcategory": "12.2",
       "name": "Asafoetida (Hing or Hingra)",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.29",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-asafoetida-hing-or-hingra"
+      "profile_id": "12-12-2-asafoetida-hing-or-hingra",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.29"
     },
     {
       "id": "12-12-2-harrisa-red-hot-pepper-paste",
@@ -18722,10 +18981,12 @@
       "subcategory": "12.2",
       "name": "SPICE OLEORESINS",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.32",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-spice-oleoresins"
+      "profile_id": "12-12-2-spice-oleoresins",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.32"
     },
     {
       "id": "12-12-2-tejpat",
@@ -18733,10 +18994,12 @@
       "subcategory": "12.2",
       "name": "TEJPAT",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.33",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-tejpat"
+      "profile_id": "12-12-2-tejpat",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.33"
     },
     {
       "id": "12-12-2-star-anise",
@@ -18744,10 +19007,12 @@
       "subcategory": "12.2",
       "name": "STAR ANISE",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.34",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-star-anise"
+      "profile_id": "12-12-2-star-anise",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.34"
     },
     {
       "id": "12-12-2-dried-oregano",
@@ -18755,10 +19020,12 @@
       "subcategory": "12.2",
       "name": "Dried Oregano",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.35",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dried-oregano"
+      "profile_id": "12-12-2-dried-oregano",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.35"
     },
     {
       "id": "12-12-2-pimento-or-allspice",
@@ -18766,10 +19033,12 @@
       "subcategory": "12.2",
       "name": "Pimento or Allspice",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.36",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-pimento-or-allspice"
+      "profile_id": "12-12-2-pimento-or-allspice",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.36"
     },
     {
       "id": "12-12-2-dried-laurel-or-dried-bay-leaf",
@@ -18777,10 +19046,12 @@
       "subcategory": "12.2",
       "name": "Dried Laurel or Dried Bay Leaf",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.37",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dried-laurel-or-dried-bay-leaf"
+      "profile_id": "12-12-2-dried-laurel-or-dried-bay-leaf",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.37"
     },
     {
       "id": "12-12-2-dried-mint",
@@ -18788,10 +19059,12 @@
       "subcategory": "12.2",
       "name": "Dried Mint",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.38",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dried-mint"
+      "profile_id": "12-12-2-dried-mint",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.38"
     },
     {
       "id": "12-12-2-dried-rosemary",
@@ -18799,10 +19072,12 @@
       "subcategory": "12.2",
       "name": "Dried Rosemary",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.39",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dried-rosemary"
+      "profile_id": "12-12-2-dried-rosemary",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.39"
     },
     {
       "id": "12-12-2-dried-thyme",
@@ -18810,10 +19085,12 @@
       "subcategory": "12.2",
       "name": "DRIED THYME",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.40",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dried-thyme"
+      "profile_id": "12-12-2-dried-thyme",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.40"
     },
     {
       "id": "12-12-2-dried-sage",
@@ -18821,10 +19098,12 @@
       "subcategory": "12.2",
       "name": "DRIED SAGE",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.41",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dried-sage"
+      "profile_id": "12-12-2-dried-sage",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.41"
     },
     {
       "id": "12-12-2-dried-sweet-basil-leaves",
@@ -18832,10 +19111,12 @@
       "subcategory": "12.2",
       "name": "Dried Sweet Basil Leaves",
       "fcs": "12.2.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.42",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dried-sweet-basil-leaves"
+      "profile_id": "12-12-2-dried-sweet-basil-leaves",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.42"
     },
     {
       "id": "12-12-2-seasoning",
@@ -18843,10 +19124,12 @@
       "subcategory": "12.2",
       "name": "Seasoning",
       "fcs": "12.2.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.9.31",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-seasoning"
+      "profile_id": "12-12-2-seasoning",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.31"
     },
     {
       "id": "12-12-2-dried-sweet-marjoram",
@@ -18855,9 +19138,11 @@
       "name": "Dried Sweet Marjoram",
       "fcs": "12.2.1",
       "fssr": "2.9.43",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dried-sweet-marjoram"
+      "profile_id": "12-12-2-dried-sweet-marjoram",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.43"
     },
     {
       "id": "12-12-2-dried-parsley",
@@ -18866,9 +19151,11 @@
       "name": "Dried Parsley",
       "fcs": "12.2.1",
       "fssr": "2.9.44",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dried-parsley"
+      "profile_id": "12-12-2-dried-parsley",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.44"
     },
     {
       "id": "12-12-2-dehydrated-tarragon",
@@ -18877,9 +19164,11 @@
       "name": "Dehydrated Tarragon",
       "fcs": "12.2.1",
       "fssr": "2.9.45",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-2-dehydrated-tarragon"
+      "profile_id": "12-12-2-dehydrated-tarragon",
+      "rule_file": "./data/rules/chapter-2-9-salt-spices-condiments-v1.json",
+      "rule_key": "2.9.45"
     },
     {
       "id": "12-12-3-vinegar",
