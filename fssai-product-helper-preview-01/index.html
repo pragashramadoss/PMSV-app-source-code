@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 31</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 32</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation ingredients</button>
@@ -808,6 +808,18 @@ function usageForIngredient(item){
    mgL:vol>0?(kg*1000000/vol):0
  };
 }
+
+function isFatOilIngredient(item){
+ const n=normIngredient(item?.name);
+ if(!n)return false;
+ if(/\b(essential oil|flavou?r oil|mineral oil)\b/.test(n))return false;
+ return /\b(ghee|butter|butter oil|milk fat|anhydrous milk fat|shortening|margarine|vanaspati|palmolein|cocoa butter)\b/.test(n) || /\b(?:sunflower|soybean|soya|mustard|groundnut|peanut|sesame|rice bran|canola|rapeseed|olive|coconut|palm|cottonseed|safflower|corn|maize) oil\b/.test(n);
+}
+function fatOilBasis(){
+ const items=formulationIngredients.filter(isFatOilIngredient);
+ const kg=items.reduce((s,x)=>s+qtyToKg(x.qty,x.unit),0);
+ return {items,kg};
+}
 function numericLimitMgKg(text){
  const s=String(text||'').replace(/,/g,'');
  const m=s.match(/([0-9]+(?:\.[0-9]+)?)\s*mg\/kg/i);
@@ -820,8 +832,10 @@ function checkUsageAgainstRule(item,q){
    if(lim!==null){
      const specialBasis=/fat\s*\/\s*oil basis|fat or oil basis/i.test(String(q.appendix.condition||''));
      if(specialBasis){
-       if(u.mgkg>lim)return {unit:'mg/kg final product',value:u.mgkg,limit:lim,pass:false,specialBasis:true};
-       return {unit:'mg/kg final product',value:u.mgkg,limit:lim,pass:null,specialBasis:true};
+       const basis=fatOilBasis();
+       if(!(basis.kg>0))return {unit:'mg/kg fat/oil',value:null,limit:lim,pass:null,specialBasis:true,basisKg:0,basisItems:[]};
+       const basisValue=(u.kg*1000000)/basis.kg;
+       return {unit:'mg/kg fat/oil',value:basisValue,limit:lim,pass:basisValue<=lim,specialBasis:true,basisKg:basis.kg,basisItems:basis.items};
      }
      return {unit:'mg/kg',value:u.mgkg,limit:lim,pass:u.mgkg<=lim};
    }
@@ -976,10 +990,12 @@ function renderFormula(){
        const livePending=usageCheck&&usageCheck.pass===null;
        const isWater=normIngredient(x.name)==='water';
        const ingredientStatus=isWater?'Required ingredient':q.status==='qualified'?'Allowed ingredient':q.status==='review'?'Review required':'Not verified';
-       const quantityStatus=liveFail?'Above FSSAI limit':livePass?'Within FSSAI limit':livePending?(usageCheck&&usageCheck.specialBasis?'Special basis check required':'Quantity check required'):'No specific numerical maximum in loaded standard';
+       const quantityStatus=liveFail?'Above FSSAI limit':livePass?'Within FSSAI limit':livePending?(usageCheck&&usageCheck.specialBasis&&!(usageCheck.basisKg>0)?'Cannot determine yet — add fat/oil ingredient':usageCheck&&usageCheck.specialBasis?'Fat/oil basis check pending':'Quantity check required'):'No specific numerical maximum in loaded standard';
        const cls=liveFail?'status-bad':livePass?'status-good':livePending?'status-warn':q.status==='qualified'?'status-good':q.status==='review'?'status-warn':'status-bad';
-       const detail=usageCheck?('<br><small>'+fmt(usageCheck.value,3)+' '+usageCheck.unit+(usageCheck.limit!=null?' · limit '+fmt(usageCheck.limit,3)+' mg/kg':'')+(usageCheck.specialBasis?'<br>FSSAI limit uses a fat/oil basis.':'')+'</small>'):'';
-       return '<div class="ingredient-row"><div><b>'+esc(x.name)+'</b><br><small>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+' · '+fmt(u.percent,4)+'% w/w<br>'+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small></div><div class="'+cls+'"><b>Ingredient:</b> '+ingredientStatus+'<br><b>Quantity:</b> '+quantityStatus+detail+'</div><div><small>'+esc(q.qualification)+'</small><br><span class="clause">'+esc(q.clause)+'</span></div><div class="ingredient-actions"><button class="ingredient-edit" type="button" data-edit-ingredient="'+i+'">Edit</button><button class="ingredient-remove" type="button" data-remove-ingredient="'+i+'">Remove</button></div></div>';
+       const basisNames=usageCheck&&usageCheck.specialBasis&&usageCheck.basisItems?usageCheck.basisItems.map(z=>z.name).join(', '):'';
+       const detail=usageCheck?('<br><small>'+(usageCheck.value==null?'':fmt(usageCheck.value,3)+' '+usageCheck.unit+' · ')+(usageCheck.limit!=null?'FSSAI limit '+fmt(usageCheck.limit,3)+' mg/kg':'')+(usageCheck.specialBasis&&usageCheck.basisKg>0?'<br>Calculated against '+fmt(usageCheck.basisKg,6)+' kg total fat/oil: '+esc(basisNames):usageCheck.specialBasis?'<br>FSSAI limit is based on fat/oil quantity, not total product weight. No fat/oil ingredient is currently detected.':'')+'</small>'):'';
+       const fatBasisNote=isFatOilIngredient(x)?'<br><small><b>Fat/oil basis:</b> This ingredient is included in fat/oil-basis calculations. Current total fat/oil: '+fmt(fatOilBasis().kg,6)+' kg.</small>':'';
+       return '<div class="ingredient-row"><div><b>'+esc(x.name)+'</b><br><small>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+' · '+fmt(u.percent,4)+'% w/w<br>'+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small>'+fatBasisNote+'</div><div class="'+cls+'"><b>Ingredient:</b> '+ingredientStatus+'<br><b>Quantity:</b> '+quantityStatus+detail+'</div><div><small>'+esc(q.qualification)+'</small><br><span class="clause">'+esc(q.clause)+'</span></div><div class="ingredient-actions"><button class="ingredient-edit" type="button" data-edit-ingredient="'+i+'">Edit</button><button class="ingredient-remove" type="button" data-remove-ingredient="'+i+'">Remove</button></div></div>';
      }).join('');
      list.querySelectorAll('[data-edit-ingredient]').forEach(btn=>btn.addEventListener('click',()=>{
        editIngredient(Number(btn.dataset.editIngredient));
@@ -995,7 +1011,7 @@ function renderFormula(){
    const x=formulationIngredients[i];
    const u=usageForIngredient(x);
    const chk=checkUsageAgainstRule(x,q);
-   const usage='<b>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+'</b><br><small>'+fmt(u.percent,4)+'% w/w · '+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small>'+(chk?'<br><small class="'+(chk.pass===false?'status-bad':chk.pass===true?'status-good':'status-warn')+'"><b>Quantity:</b> '+(chk.pass===false?'Above FSSAI limit':chk.pass===true?'Within FSSAI limit':chk.specialBasis?'Special basis check required':'Quantity check required')+'</small>':'<br><small><b>Quantity:</b> No specific numerical maximum in loaded standard</small>');
+   const usage='<b>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+'</b><br><small>'+fmt(u.percent,4)+'% w/w · '+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small>'+(chk?'<br><small class="'+(chk.pass===false?'status-bad':chk.pass===true?'status-good':'status-warn')+'"><b>Quantity:</b> '+(chk.pass===false?'Above FSSAI limit':chk.pass===true?'Within FSSAI limit':chk.specialBasis&&!(chk.basisKg>0)?'Cannot determine — no fat/oil ingredient entered':chk.specialBasis?'Fat/oil basis check required':'Quantity check required')+(chk.specialBasis&&chk.basisKg>0?'<br>'+fmt(chk.value,3)+' mg/kg fat/oil · limit '+fmt(chk.limit,3)+' mg/kg':'')+'</small>':'<br><small><b>Quantity:</b> No specific numerical maximum in loaded standard</small>');
    return '<tr><td><b>'+esc(q.name)+'</b></td><td>'+usage+'</td><td>'+esc(q.qualification)+(q.appendix?'<br><small>Appendix A limit: <b>'+esc(q.appendix.limit)+'</b></small>':'')+'</td><td><span class="clause">'+esc(q.clause)+'</span></td><td>'+esc(q.impact)+'</td></tr>';
  }).join('') || '<tr><td colspan="5">Enter formulation ingredients first.</td></tr>';
 
@@ -1003,9 +1019,11 @@ function renderFormula(){
  const hasProp=qs.some(q=>q.route==='proprietary');
  const liveChecks=formulationIngredients.map((x,i)=>checkUsageAgainstRule(x,qs[i]));
  const hasUsageFail=liveChecks.some(chk=>chk&&chk.pass===false);
+ const hasUsagePending=liveChecks.some(chk=>chk&&chk.pass===null);
  if(summary){
    if(!qs.length)summary.innerHTML='<b>No formulation entered.</b> Enter ingredients first.';
    else if(hasUsageFail)summary.innerHTML='<b>Formulation is NOT COMPLIANT with at least one loaded quantitative FSSAI limit.</b> Compliance is recalculated automatically whenever any ingredient or quantity changes.';
+   else if(hasUsagePending)summary.innerHTML='<b>Quantity compliance is incomplete.</b> At least one limit uses a special basis such as fat/oil and the required basis ingredient has not yet been entered or identified.';
    else if(hasUnresolved)summary.innerHTML='<b>Classification unresolved.</b> At least one ingredient has no verified FSSAI qualification. Do not claim the formulation is standardized or Proprietary Food until that ingredient is resolved.';
    else if(hasProp)summary.innerHTML='<b>Possible Proprietary Food review required.</b> One or more extra non-additive ingredients rely on Regulation 2.12. This does not automatically make the product proprietary. If the finished product is still being treated as standardized Caffeinated Beverage, the additional-ingredient approval requirement in <b>2.10.6(2)(III)(A)</b> must also be addressed.';
    else summary.innerHTML='<b>Standardized Caffeinated Beverage route remains available.</b> The entered ingredients are matched to the product standard, its Carbonated Water cross-reference, or applicable Appendix A permissions, subject to all listed limits and conditions.';
