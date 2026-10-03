@@ -17,17 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_38_cassia_partial_exact_mapping",
+    "stage": "phase_39_mace_saffrole_exact_mapping",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 121,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 174 adds partial exact Cassia 2.9.5 coverage: Arsenic 5 mg/kg plus Total Aflatoxins 30 µg/kg and Aflatoxin B1 15 µg/kg.",
-      "Cassia Lead remains deliberately locked because the Lead article requires 'dried herbs and spices' and the current Cassia identity text does not explicitly state dried.",
-      "Dried Mango Slices, Dried Mango Powder, Asafoetida, Seasoning and Spice Oleoresins remain excluded from generic spice mappings unless their own current FSSAI route is proven.",
-      "Ingredient-triggered naturally occurring toxins continue to be handled separately."
+      "Build 175 adds the direct Saffrole 10 ppm rule to standardized Mace (Jaipatri) 2.9.12.",
+      "Nutmeg already carried the same current FSSAI Saffrole rule.",
+      "Curry Powder, Mixed Masala and other composite foods do not receive a fixed Saffrole rule solely from product name; their ingredient-trigger route remains formulation-dependent.",
+      "Cassia Lead remains locked; Dried Mango products, Asafoetida, Seasoning and Spice Oleoresins remain under individual review."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -76,7 +76,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Promote direct naturally occurring toxin routes for exact standardized products where the current FSSAI article is unambiguous, starting with Mace/Nutmeg Saffrole.",
+    "next_priority": "Review remaining Chapter 2.9 products for exact article-level contaminant routes; keep composite and ingredient-dependent rules conditional.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -181,7 +181,9 @@
     "spice_crop_contaminant_rules_added_build_173": 40,
     "spice_crop_contaminant_identity_map_loaded": true,
     "cassia_partial_rules_added_build_174": 3,
-    "cassia_lead_locked": true
+    "cassia_lead_locked": true,
+    "mace_saffrole_rules_added_build_175": 1,
+    "mace_nutmeg_direct_saffrole_products": 2
   },
   "all_food_rules": [
     {
@@ -3354,6 +3356,14 @@
           "article": "Spices/Spice Mix",
           "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Saffrole",
+          "limit": 10,
+          "unit": "ppm",
+          "article": "Food containing mace and nutmeg",
+          "source_basis": "Section 2.2.1 · Naturally occurring toxic substances · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_mace_identity"
         }
       ]
     },
