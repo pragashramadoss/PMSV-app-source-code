@@ -2085,7 +2085,9 @@ function appendixEntriesForFcs(code){
    });
  });
  const exactConditions=Array.isArray(exact?.regulatory_conditions)?exact.regulatory_conditions:[];
- return {status:merged.size?'loaded':'not_loaded',entries:[...merged.values()],conditions:exactConditions,message:merged.size?'Direct/inherited Appendix A entries loaded for this FCS.':'Category permission table is not loaded yet; PMSV will not infer additive permissions.'};
+ const setStatus=exact?.status||'';
+ const incomplete=/(partial|pending|hierarchy_only|operative_amendment)/i.test(setStatus);
+ return {status:merged.size?'loaded':'not_loaded',entries:[...merged.values()],conditions:exactConditions,setStatus,incomplete,completenessNote:exact?.completeness_note||'',message:merged.size?'Direct/inherited Appendix A entries loaded for this FCS.':'Category permission table is not loaded yet; PMSV will not infer additive permissions.'};
 }
 function renderProprietaryAppendixA(){
  const box=document.getElementById('proprietaryAppendixA');
@@ -2115,17 +2117,18 @@ function renderProprietaryAppendixA(){
    const noteIds=String(x.note_refs||'').split(',').map(s=>s.trim()).filter(Boolean);
    const noteText=noteIds.map(n=>appendixCoreDb?.note_texts?.[n]?'Note '+n+': '+appendixCoreDb.note_texts[n]:'Note '+n+': text not loaded').join(' ');
    const memberText=members.length?'<br><small>'+members.map(m=>esc(m.name)+' ('+esc(m.ins)+')').join('; ')+'</small>':'';
-   return '<tr><td><b>'+esc(x.name)+'</b>'+memberText+'</td><td>'+esc(insText)+'</td><td><b>'+esc(x.limit)+'</b>'+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.applied_from)+(noteText?'<br><small>'+esc(noteText)+'</small>':'')+'</td></tr>';
+   return '<tr><td><b>'+esc(x.name)+'</b>'+memberText+'</td><td>'+esc(insText)+'</td><td><b>'+esc(x.limit)+'</b>'+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.applied_from)+(noteText?'<br><small>'+esc(noteText)+'</small>':'')+(x.verification&&x.verification!=='current_2025'?'<br><small><b>Verification:</b> '+esc(x.verification.replaceAll('_',' '))+'</small>':'')+'</td></tr>';
  }).join('');
  box.innerHTML='<div class="section-title"><h2>Appendix A permissions for selected FCS</h2><span>'+resolved.entries.length+' inherited/specific entries</span></div>'
    +'<div class="notice oknote"><b>Hierarchy applied.</b> Parent-category permissions are inherited and a narrower loaded sub-category entry overrides the same additive/group.</div>'
+   +(resolved.incomplete?'<div class="notice"><b>Current table ingestion is not complete for this FCS.</b> '+esc(resolved.completenessNote||'PMSV shows only verified rows and will not issue a final additive-compliance verdict from this partial set.')+'</div>':'')
    +(resolved.conditions&&resolved.conditions.length?'<div class="notice"><b>Category-specific condition:</b><br>'+resolved.conditions.map(c=>esc(c)).join('<br>')+'</div>':'')
    +'<div class="tablewrap"><table><thead><tr><th>Additive / group</th><th>INS</th><th>Maximum</th><th>Applied from</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
-   +'<div class="appendix-note">Loaded Table 15 group names are expanded to Annexure-1 INS members and the Table 15 note conditions are shown inline. Any future table entry with an unloaded group/note remains locked rather than inferred.</div>';
+   +'<div class="appendix-note">Loaded additive groups are expanded to Annexure-1 INS members where available, and loaded note conditions are shown inline. Any unresolved note, partial category table or older-only corroboration remains locked from a final compliance verdict.</div>';
 }
 async function loadAppendixCore(){
  try{
-   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=66',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=67',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCoreDb=await res.json();
  }catch(e){appendixCoreDb=null;}
@@ -2303,7 +2306,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=66',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=67',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
