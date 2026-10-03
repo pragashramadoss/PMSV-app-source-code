@@ -17,14 +17,14 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_4_antibiotics_complete",
+    "stage": "phase_5_biotoxins_melamine_complete",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 35,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Section 2.3.2 is complete through veterinary tolerance serial 49 (Zinc Bacitracin). Continue Section 2.4 biotoxins in fish and fishery products.",
+      "Sections 2.4 fish biotoxins and 2.5.1 melamine are complete. Continue Section 2.5.2 histamine in fish and fishery products.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied.",
       "Continue remaining exact Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
       "Add packaging-triggered tin logic after packaging input is implemented."
@@ -36,7 +36,9 @@
       "2.2.1 Naturally occurring toxic substances — selected exact ingredient triggers",
       "2.2.1 PCBs/PAH in fish and fishery products — complete table",
       "2.3.1 Insecticide MRLs — complete current Version IX table, serials 1-213",
-      "2.3.2 Antibiotic and pharmacologically active substances — complete current Version IX section"
+      "2.3.2 Antibiotic and pharmacologically active substances — complete current Version IX section",
+      "2.4 Fish biotoxins — complete current Version IX table",
+      "2.5.1 Melamine — complete current Version IX table"
     ],
     "ingredient_trigger_groups": 14,
     "crop_contaminant_groups": 6,
@@ -51,7 +53,9 @@
     "honey_mrpl_rows_loaded": 12,
     "veterinary_tolerance_serials_loaded": 49,
     "veterinary_tolerance_rows_loaded": 358,
-    "antibiotic_section_complete": true
+    "antibiotic_section_complete": true,
+    "fish_biotoxin_rows_loaded": 5,
+    "melamine_rows_loaded": 3
   },
   "all_food_rules": [
     {
@@ -10910,6 +10914,65 @@
       "locked_source_alignment_rows": 2,
       "completeness": "complete",
       "auto_apply_note": "The table is fully structured, but PMSV keeps veterinary residue auto-application disabled until product/species/tissue inputs are implemented. Two earlier source-alignment rows remain locked."
+    }
+  },
+  "fish_biotoxins": {
+    "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products",
+    "source_version": "Version IX (03.02.2026)",
+    "status": "complete",
+    "rows": [
+      {
+        "serial": 1,
+        "contaminant": "Paralytic Shellfish Poison (PSP)",
+        "article_of_food": "Bivalve Molluscs",
+        "limit_text": "80 μg/100g (Saxitoxin Equivalent)"
+      },
+      {
+        "serial": 2,
+        "contaminant": "Amnesic Shellfish Poison (ASP)",
+        "article_of_food": "Bivalve Molluscs",
+        "limit_text": "20 μg/g (Domoic acid equivalent)"
+      },
+      {
+        "serial": 3,
+        "contaminant": "Diarrhetic shellfish poison (DSP)",
+        "article_of_food": "Bivalve Molluscs",
+        "limit_text": "160 μg of Okadaic acid equivalent/Kg"
+      },
+      {
+        "serial": 4,
+        "contaminant": "Azaspiracid poison (AZP)",
+        "article_of_food": "Bivalve Molluscs",
+        "limit_text": "160 μg of azaspiracid equivalent/Kg"
+      },
+      {
+        "serial": 5,
+        "contaminant": "Brevetoxin (BTX)",
+        "article_of_food": "Bivalve Molluscs",
+        "limit_text": "200 mouse units or equivalent/Kg"
+      }
+    ]
+  },
+  "other_contaminants": {
+    "melamine": {
+      "source_basis": "Section 2.5.1 · Other Contaminants — Melamine",
+      "source_version": "Version IX (03.02.2026)",
+      "status": "complete",
+      "unit": "mg/kg",
+      "rows": [
+        {
+          "food": "Powdered infant formula",
+          "maximum_level": "1.0"
+        },
+        {
+          "food": "Liquid infant formula",
+          "maximum_level": "0.15"
+        },
+        {
+          "food": "Other foods",
+          "maximum_level": "2.5"
+        }
+      ]
     }
   }
 }

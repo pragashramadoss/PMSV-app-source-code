@@ -521,9 +521,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="productContaminantResults"><div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div></div>
 </div>
 <div class="card">
-<div class="section-title"><h2>Coverage status</h2><span>Build 139 · antibiotics section complete</span></div>
-<div class="notice">The reusable contaminant master now includes 35 exact standardized-product profiles, 14 exact ingredient-trigger groups, the complete PCB/PAH fish table, and all 213 pesticide entries and 1,098 residue MRL commodity rows in Section 2.3.1, plus the Section 2.3.2 seafood antibiotic limits, prohibited veterinary-drug EMRL rules and honey antibiotic MRPL table. Section 2.3.2 is now complete through veterinary tolerance serial 49 (Zinc Bacitracin). Two earlier source-alignment rows remain locked rather than guessed; Section 2.4 biotoxins is next. No missing limit is estimated from another website.</div>
-<div class="notice"><b>2026 amendment:</b> FSSAI notified a final Contaminants, Toxins and Residues amendment on 25 May 2026 with commencement on <b>1 December 2026</b>. Build 139 continues to use the currently effective Version IX basis as of 3 October 2026.</div>
+<div class="section-title"><h2>Coverage status</h2><span>Build 140 · biotoxins + melamine complete</span></div>
+<div class="notice">The reusable contaminant master now includes 35 exact standardized-product profiles, 14 exact ingredient-trigger groups, the complete PCB/PAH fish table, and all 213 pesticide entries and 1,098 residue MRL commodity rows in Section 2.3.1, plus the Section 2.3.2 seafood antibiotic limits, prohibited veterinary-drug EMRL rules and honey antibiotic MRPL table. Section 2.3.2 is complete; Section 2.4 fish biotoxins and Section 2.5.1 melamine are now also fully loaded from current FSSAI Version IX. Section 2.5.2 histamine is next. No missing limit is estimated from another website.</div>
+<div class="notice"><b>2026 amendment:</b> FSSAI notified a final Contaminants, Toxins and Residues amendment on 25 May 2026 with commencement on <b>1 December 2026</b>. Build 140 continues to use the currently effective Version IX basis as of 3 October 2026.</div>
 </div>
 </section>
 
@@ -2344,7 +2344,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=139',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=140',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2409,7 +2409,7 @@ function renderProductContaminants(){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=139',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=140',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
@@ -2421,7 +2421,7 @@ async function loadContaminantsDb(){
 async function loadRegulatoryDb(){
  const status=document.getElementById('regDbStatus');
  try{
-   const res=await fetch('./data/regulatory-db-v1.json?v=139',{cache:'reload'});
+   const res=await fetch('./data/regulatory-db-v1.json?v=140',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    regulatoryDb=await res.json();
    ingredientCatalog=catalogFromDb(regulatoryDb);
