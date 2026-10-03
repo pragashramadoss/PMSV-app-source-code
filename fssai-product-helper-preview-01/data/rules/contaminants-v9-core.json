@@ -17,19 +17,19 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_10_verified_alias_metal_product_mapping",
+    "stage": "phase_11_packaging_conditional_tin_data_ready",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 39,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Six explicitly reviewed PMSV standardized products now inherit Section 2.1 metal rows through documented regulatory aliases; no fuzzy matching was used.",
-      "Combined or condition-dependent products remain unmapped where automatic application could overreach (for example Tomato Ketchup and Tomato Sauce vs a ketchup-only row).",
-      "Continue explicit mappings only where the current FSSAI article wording and PMSV product identity are demonstrably equivalent.",
+      "Packaging-dependent Tin rules are now structured but remain disabled until the user provides packaging/container input.",
+      "Implement formulation packaging inputs: format (canned / non-canned) and container material (tinplate / other).",
+      "After packaging input exists, activate only the matching Tin rule; never apply a tinplate limit to an unspecified package.",
+      "Continue explicit Section 2.1 product aliases only where regulatory identity is demonstrably equivalent.",
       "Keep all 'Foods not specified' rows reference-only until absence of a more specific row is proven.",
-      "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied.",
-      "Add packaging-triggered tin logic after packaging input is implemented."
+      "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -78,7 +78,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Continue reviewed explicit Section 2.1 aliases/FSSR mappings, then implement packaging-triggered Tin rules once packaging input exists.",
+    "next_priority": "Add packaging/container inputs to the formulation flow, then activate only the matching Version IX Tin conditional rule.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -118,7 +118,10 @@
     ],
     "verified_alias_products": 6,
     "verified_alias_new_profiles": 3,
-    "verified_alias_rules_added": 9
+    "verified_alias_rules_added": 9,
+    "packaging_conditional_tin_rules_loaded": 10,
+    "packaging_tin_defaults_loaded": 3,
+    "packaging_tin_auto_apply": false
   },
   "all_food_rules": [
     {
@@ -15818,6 +15821,160 @@
           "unit": "mg/kg"
         }
       ]
+    }
+  ],
+  "packaging_conditional_tin_rules_v9": [
+    {
+      "product_family": "Cooked cured chopped meat",
+      "packaging": "other_container",
+      "contaminant": "Tin",
+      "limit": 50,
+      "unit": "mg/kg",
+      "article": "Cooked cured chopped meat (for products in other containers)",
+      "requires_input": "packaging.container_material",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "product_family": "Cooked cured chopped meat",
+      "packaging": "tinplate",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Cooked cured chopped meat (for products in tinplate containers)",
+      "requires_input": "packaging.container_material",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "product_family": "Cooked cured ham",
+      "packaging": "other_container",
+      "contaminant": "Tin",
+      "limit": 50,
+      "unit": "mg/kg",
+      "article": "Cooked cured ham (for products in other containers)",
+      "requires_input": "packaging.container_material",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "product_family": "Cooked cured ham",
+      "packaging": "tinplate",
+      "contaminant": "Tin",
+      "limit": 200,
+      "unit": "mg/kg",
+      "article": "Cooked cured ham (for products in tinplate containers)",
+      "requires_input": "packaging.container_material",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "product_family": "Cooked cured pork shoulder",
+      "packaging": "other_container",
+      "contaminant": "Tin",
+      "limit": 50,
+      "unit": "mg/kg",
+      "article": "Cooked cured pork shoulder (for products in other containers)",
+      "requires_input": "packaging.container_material",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "product_family": "Cooked cured pork shoulder",
+      "packaging": "tinplate",
+      "contaminant": "Tin",
+      "limit": 200,
+      "unit": "mg/kg",
+      "article": "Cooked cured pork shoulder (for products in tinplate containers)",
+      "requires_input": "packaging.container_material",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "product_family": "Corned beef",
+      "packaging": "other_container",
+      "contaminant": "Tin",
+      "limit": 50,
+      "unit": "mg/kg",
+      "article": "Corned beef (for products in other containers)",
+      "requires_input": "packaging.container_material",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "product_family": "Corned beef",
+      "packaging": "tinplate",
+      "contaminant": "Tin",
+      "limit": 200,
+      "unit": "mg/kg",
+      "article": "Corned beef (for products in tinplate containers)",
+      "requires_input": "packaging.container_material",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "product_family": "Luncheon meat",
+      "packaging": "other_container",
+      "contaminant": "Tin",
+      "limit": 50,
+      "unit": "mg/kg",
+      "article": "Luncheon meat (for products in other containers)",
+      "requires_input": "packaging.container_material",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "product_family": "Luncheon meat",
+      "packaging": "tinplate",
+      "contaminant": "Tin",
+      "limit": 200,
+      "unit": "mg/kg",
+      "article": "Luncheon meat (for products in tinplate containers)",
+      "requires_input": "packaging.container_material",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    }
+  ],
+  "packaging_tin_defaults_v9": [
+    {
+      "trigger": "finished_product_is_canned_beverage",
+      "contaminant": "Tin",
+      "limit": 150,
+      "unit": "mg/kg",
+      "article": "Canned beverages",
+      "requires_input": "packaging.format",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)"
+    },
+    {
+      "trigger": "finished_product_is_canned_food_other_than_beverage",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Canned foods other than beverages",
+      "requires_input": "packaging.format",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)"
+    },
+    {
+      "trigger": "finished_product_is_canned_fish_product",
+      "contaminant": "Tin",
+      "limit": 200,
+      "unit": "mg/kg",
+      "article": "Canned fish products",
+      "requires_input": "packaging.format",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)"
     }
   ]
 }
