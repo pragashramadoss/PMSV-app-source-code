@@ -17,15 +17,15 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_4_veterinary_tolerance_batch_1",
+    "stage": "phase_4_veterinary_tolerance_batch_2",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 35,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Section 2.3.2 veterinary tolerance table is loaded through serial 16 (Diminazene). Continue from serial 17 (Erythromycin).",
-      "Two rows whose species headings are not preserved in the indexed official PDF are retained as locked source-alignment rows and are not auto-applied.",
+      "Section 2.3.2 veterinary tolerance table is loaded through serial 28 (Neomycin). Continue from serial 29 (Nicarbazin).",
+      "Two earlier rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied.",
       "Continue remaining exact Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
       "Add packaging-triggered tin logic after packaging input is implemented."
     ],
@@ -49,8 +49,8 @@
     "seafood_antibiotic_rows_loaded": 4,
     "prohibited_veterinary_substances_loaded": 14,
     "honey_mrpl_rows_loaded": 12,
-    "veterinary_tolerance_serials_loaded": 16,
-    "veterinary_tolerance_rows_loaded": 105
+    "veterinary_tolerance_serials_loaded": 28,
+    "veterinary_tolerance_rows_loaded": 260
   },
   "all_food_rules": [
     {
@@ -8810,7 +8810,7 @@
       ]
     },
     "veterinary_tolerance_limits": {
-      "stage": "serials_1_16_loaded",
+      "stage": "serials_1_28_loaded",
       "source_table_serial_range": "1-49",
       "rows": [
         {
@@ -9439,10 +9439,857 @@
               "unit": "mg/kg"
             }
           ]
+        },
+        {
+          "serial": 17,
+          "name": "Erythromycin",
+          "rows": [
+            {
+              "article": "Chicken — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Eggs",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Turkey — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Turkey — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Turkey — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Turkey — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 18,
+          "name": "Flumequine",
+          "rows": [
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "3.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Fat",
+              "limit": "1.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Kidney",
+              "limit": "3.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Fat",
+              "limit": "1.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Kidney",
+              "limit": "3.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Fat",
+              "limit": "1.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Kidney",
+              "limit": "3.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Fat",
+              "limit": "1.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Trout — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 19,
+          "name": "Flunixin",
+          "rows": [
+            {
+              "article": "All edible animal tissues except in fish; Fats derived from animal tissues; Milk",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 20,
+          "name": "Febantel or Fenbendazole or Oxyfendazole",
+          "rows": [
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Milk",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Milk",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 21,
+          "name": "Gentamicin",
+          "rows": [
+            {
+              "article": "Cattle — Milk",
+              "limit": "0.2",
+              "unit": "mg/l"
+            },
+            {
+              "article": "Cattle — Liver",
+              "limit": "2.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "5.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Kidney",
+              "limit": "5.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Liver",
+              "limit": "2.0",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 22,
+          "name": "Ivermectin",
+          "rows": [
+            {
+              "article": "Cattle — Milk",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Liver",
+              "limit": "0.8",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Fat",
+              "limit": "0.4",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.03",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Liver",
+              "limit": "0.015",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Fat",
+              "limit": "0.02",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Liver",
+              "limit": "0.015",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Fat",
+              "limit": "0.02",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 23,
+          "name": "Lincomycin",
+          "rows": [
+            {
+              "article": "Cattle — Milk",
+              "limit": "0.15",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Muscle",
+              "limit": "0.2",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Kidney",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Muscle",
+              "limit": "0.2",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Kidney",
+              "limit": "1.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 24,
+          "name": "Levamisole",
+          "rows": [
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Fat",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Muscle",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Kidney",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Fat",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Muscle",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Kidney",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Fat",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Poultry — Muscle",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Poultry — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Poultry — Kidney",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Poultry — Fat",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 25,
+          "name": "Monensin",
+          "rows": [
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Milk",
+              "limit": "0.002",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Muscle",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Liver",
+              "limit": "0.02",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Kidney",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Muscle",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Liver",
+              "limit": "0.02",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Kidney",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Muscle",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Liver",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Kidney",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Turkey — Muscle",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Turkey — Liver",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Turkey — Kidney",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Turkey — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Quail — Liver",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Quail — Kidney",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Quail — Muscle",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Quail — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 26,
+          "name": "Moxidectin",
+          "rows": [
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.02",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Fat",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Muscle",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Kidney",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Fat",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 27,
+          "name": "Meloxicam",
+          "rows": [
+            {
+              "article": "Bovines — Muscle",
+              "limit": "0.02",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Bovines — Kidney",
+              "limit": "0.065",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Bovines — Liver",
+              "limit": "0.065",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Bovines — Milk",
+              "limit": "0.015",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 28,
+          "name": "Neomycin",
+          "rows": [
+            {
+              "article": "Cattle — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Milk",
+              "limit": "1.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "10",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Fat",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Eggs",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Kidney",
+              "limit": "10",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Fat",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Duck — Fat",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Duck — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Duck — Kidney",
+              "limit": "10",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Duck — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Kidney",
+              "limit": "10",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Fat",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Kidney",
+              "limit": "10",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Fat",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Kidney",
+              "limit": "10",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Fat",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Turkey — Liver",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Turkey — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Turkey — Kidney",
+              "limit": "10",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Turkey — Fat",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            }
+          ]
         }
       ],
       "auto_apply": false,
-      "loaded_serial_range": "1-16",
+      "loaded_serial_range": "1-28",
       "locked_source_alignment_rows": 2
     }
   }
