@@ -17,16 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_5_histamine_complete",
+    "stage": "phase_6_metal_article_master_expansion",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 35,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Section 2.5.2 histamine is complete, including the official high-histidine species list and all 11 product-category sampling limits.",
+      "Copper, Tin, Cadmium, Mercury, Methyl Mercury, Chromium, Nickel, Selenium and Antimony article rows are now normalized from current Version IX.",
+      "Lead and Arsenic article-of-food masters still need complete row normalization.",
+      "Exact product/FSSR mappings should be promoted from the article master only when the product identity is explicit; no fuzzy auto-match.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied.",
-      "Continue remaining exact Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
       "Add packaging-triggered tin logic after packaging input is implemented."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
@@ -39,7 +40,8 @@
       "2.3.2 Antibiotic and pharmacologically active substances — complete current Version IX section",
       "2.4 Fish biotoxins — complete current Version IX table",
       "2.5.1 Melamine — complete current Version IX table",
-      "2.5.2 Histamine in fish and fishery products — complete current Version IX section"
+      "2.5.2 Histamine in fish and fishery products — complete current Version IX section",
+      "2.1 Metal Contaminants — Copper/Tin/Cadmium/Mercury/Methyl Mercury/Chromium/Nickel/Selenium/Antimony article masters"
     ],
     "ingredient_trigger_groups": 14,
     "crop_contaminant_groups": 6,
@@ -59,7 +61,21 @@
     "melamine_rows_loaded": 3,
     "histamine_species_families_loaded": 10,
     "histamine_species_rows_loaded": 119,
-    "histamine_product_limit_rows_loaded": 11
+    "histamine_product_limit_rows_loaded": 11,
+    "metal_article_master_metals_loaded": [
+      "Copper",
+      "Tin",
+      "Cadmium",
+      "Mercury",
+      "Methyl Mercury",
+      "Chromium",
+      "Nickel",
+      "Selenium",
+      "Antimony"
+    ],
+    "metal_article_master_rows_loaded": 124,
+    "metal_article_master_auto_apply": false,
+    "next_priority": "Complete Section 2.1 Lead and Arsenic article-of-food masters, then promote exact product/FSSR mappings without fuzzy matching."
   },
   "all_food_rules": [
     {
@@ -11616,5 +11632,1265 @@
         "unsatisfactory": "The mean value observed exceeds m, or more than c/n values are between m and M, or one or more observed values are > M."
       }
     }
+  },
+  "metal_article_rules_v9": {
+    "Copper": [
+      {
+        "article": "Ammonium hydrogen carbonate",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Annatto",
+        "limit": 30,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Brewed vinegar and synthetic vinegar",
+        "limit": 0.01,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Caramel",
+        "limit": 20,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Carbonated water",
+        "limit": 1.5,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Chicory-dried or roasted, coffee beans, flavourings/pectin liquid",
+        "limit": 30,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Chlorophyll",
+        "limit": 30,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cocoa powder",
+        "limit": 70,
+        "unit": "mg/kg",
+        "condition": "On fat free substance basis.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Colouring matter",
+        "limit": 30,
+        "unit": "mg/kg",
+        "condition": "On dry colouring matter basis.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Concentrates for soft drinks",
+        "limit": 20,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Edible gelatin",
+        "limit": 30,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Foods not specified",
+        "limit": 30,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "default",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Hard boiled sugar confectionery",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Infant milk substitute and Infant foods",
+        "limit": 15,
+        "unit": "mg/kg",
+        "condition": "Official table text: 'But not less than 2.8'.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Iron fortified common salt",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Juice of orange, grape, apple, tomato, pineapple and lemon",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Mineral water",
+        "limit": 1,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Olive oil, Virgin olive oil, Extra virgin olive oil, Ordinary virgin olive oil, Refined olive oil, Refined olive pomace oil and Olive pomace oil",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Packaged drinking water (other than mineral water)",
+        "limit": 0.05,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Solid Pectin",
+        "limit": 300,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Polyglycerol esters of fatty acids",
+        "limit": 25,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Polyglycerol esters of Interesterified ricinoleic acid",
+        "limit": 25,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Pulp and pulp products of any fruit",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Soft drinks excluding concentrates and Carbonated Water",
+        "limit": 7,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Tea",
+        "limit": 150,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Toddy",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Tomato ketchup",
+        "limit": 50,
+        "unit": "mg/kg",
+        "condition": "On dried total solids basis.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Tomato puree, paste, powder, and cocktails",
+        "limit": 100,
+        "unit": "mg/kg",
+        "condition": "On dried tomato solids basis.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Turmeric whole and powder",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Vegetables",
+        "limit": 30,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Yeast and yeast products",
+        "limit": 60,
+        "unit": "mg/kg",
+        "condition": "On dry matter basis.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      }
+    ],
+    "Tin": [
+      {
+        "article": "Canned citrus fruits, stone fruits, vegetables, fruit cocktail, mangoes, pineapple, raspberries, strawberries, tropical fruit salad",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned beverages",
+        "limit": 150,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned chestnuts and chestnut puree",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned fish products",
+        "limit": 200,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned foods other than beverages",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned mushrooms",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned tomatoes",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cooked cured chopped meat",
+        "limit": 50,
+        "unit": "mg/kg",
+        "condition": "For products in other containers.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cooked cured chopped meat",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "For products in tinplate containers.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cooked cured ham",
+        "limit": 50,
+        "unit": "mg/kg",
+        "condition": "For products in other containers.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cooked cured ham",
+        "limit": 200,
+        "unit": "mg/kg",
+        "condition": "For products in tinplate containers.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cooked cured pork shoulder",
+        "limit": 50,
+        "unit": "mg/kg",
+        "condition": "For products in other containers.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cooked cured pork shoulder",
+        "limit": 200,
+        "unit": "mg/kg",
+        "condition": "For products in tinplate containers.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Corned beef",
+        "limit": 50,
+        "unit": "mg/kg",
+        "condition": "For products in other containers.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Corned beef",
+        "limit": 200,
+        "unit": "mg/kg",
+        "condition": "For products in tinplate containers.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Corned beef, Luncheon meat, Cooked ham, Chopped meat, Canned chicken, Canned mutton and Goat meat",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Foods not specified",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "default",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Hard boiled sugar confectionery",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Infant milk substitute and Infant foods",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Jam, Jellies and Marmalade",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Juice of orange, apple, tomato, pineapple and lemon",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Luncheon meat",
+        "limit": 50,
+        "unit": "mg/kg",
+        "condition": "For products in other containers.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Luncheon meat",
+        "limit": 200,
+        "unit": "mg/kg",
+        "condition": "For products in tinplate containers.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Mango Chutney",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Pickled cucumber",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Processed and canned food products",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Processed tomato concentrates",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Pulp and pulp products of any fruit",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Table Olives",
+        "limit": 250,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Turmeric whole and powder",
+        "limit": 0.01,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      }
+    ],
+    "Cadmium": [
+      {
+        "article": "Bivalve Molluscs",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Brassica vegetables",
+        "limit": 0.05,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Bulb vegetables",
+        "limit": 0.05,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Carrageenan",
+        "limit": 1.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cephalopods",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cereal grains, except buckwheat, canihua and Quinoa (excluding wheat and rice; and bran and germ)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Crustaceans",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fish",
+        "limit": 0.3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Foods not specified",
+        "limit": 1.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "default",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fruiting vegetables other than cucurbits (excluding tomatoes and edible fungi)",
+        "limit": 0.05,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fruiting vegetables, cucurbits",
+        "limit": 0.05,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Infant milk substitute and Infant foods",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Leafy vegetables",
+        "limit": 0.2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Legume vegetables",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Natural mineral water",
+        "limit": 0.003,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Other vegetables",
+        "limit": 1.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Packaged drinking water (other than mineral water)",
+        "limit": 0.003,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Potato, peeled",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Pulses, excluding soybean dry",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Rice, polished",
+        "limit": 0.4,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Root and tuber vegetables, excluding potato and celeriac",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Salt, food grade",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Stalk and stem vegetables",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Turmeric whole and powder",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Wheat",
+        "limit": 0.2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      }
+    ],
+    "Mercury": [
+      {
+        "article": "Alumina used in preparation of lake colour",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Aluminium lake of Sunset yellow FCF",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Caramel",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Carrageenan",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fast green FCF",
+        "limit": 0.01,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fish",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Foods not specified",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "default",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Natural mineral water",
+        "limit": 0.001,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Non-predatory fish, crustaceans, cephalopods, molluscs",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Packaged drinking water (other than mineral water)",
+        "limit": 0.001,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Predatory fish (Tuna, Marlin, Sword Fish, Elasmobranch)",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Salt, food grade",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium hydroxide",
+        "limit": 1.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Titanium oxide",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Vegetables",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      }
+    ],
+    "Methyl Mercury": [
+      {
+        "article": "All foods",
+        "limit": 0.25,
+        "unit": "mg/kg",
+        "condition": "Calculated as the element.",
+        "row_type": "all_foods",
+        "auto_apply": true,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      }
+    ],
+    "Chromium": [
+      {
+        "article": "All fishery products",
+        "limit": 12,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Brilliant blue FCF",
+        "limit": 50,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fast green FCF",
+        "limit": 50,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Gelatin",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Mineral water",
+        "limit": 0.05,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Packaged drinking water (other than mineral water)",
+        "limit": 0.05,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Refined sugar",
+        "limit": 0.02,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Vegetables",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      }
+    ],
+    "Nickel": [
+      {
+        "article": "All hydrogenated, partially hydrogenated, interesterified vegetable oils and fats such as vanaspati, table margarine, bakery and industrial margarine, bakery shortening, fat spread and partially hydrogenated soyabean oil",
+        "limit": 1.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Mineral water",
+        "limit": 0.02,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Packaged drinking water (other than mineral water)",
+        "limit": 0.02,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sorbitol",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Vegetables",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      }
+    ],
+    "Selenium": [
+      {
+        "article": "Mineral water",
+        "limit": 0.05,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Packaged drinking water (other than mineral water)",
+        "limit": 0.01,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Potassium metabisulphite",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium metabisulphite",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sulphur dioxide",
+        "limit": 20,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      }
+    ],
+    "Antimony": [
+      {
+        "article": "Mineral water",
+        "limit": 0.005,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Packaged drinking water (other than mineral water)",
+        "limit": 0.005,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Titanium dioxide",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Vegetables",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      }
+    ]
   }
 }
