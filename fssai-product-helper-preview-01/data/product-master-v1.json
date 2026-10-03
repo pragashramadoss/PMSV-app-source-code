@@ -787,6 +787,16 @@
         "Food Safety and Standards (Foods for Infant Nutrition) Regulations — current FSSAI compendium/product standards"
       ],
       "rule": "Only current official FSSAI sources are used. External regulation sets remain locked until their product standards are structured."
+    },
+    "contaminants": {
+      "status": "phase_1_metal_contaminants_exact_profiles",
+      "regulation_version": "Version IX (03.02.2026)",
+      "rule_file": "./data/rules/contaminants-v9-core.json",
+      "exact_product_profiles": 6,
+      "universal_rules": 1,
+      "food_not_specified_defaults_auto_applied": false,
+      "source_verified_on": "2026-10-03",
+      "next_validation": "Continue exact Section 2.1 commodity normalization, then Section 2.2 crop contaminants/naturally occurring toxins, followed by Section 2.3 residues. Never infer a 'Foods not specified' fallback while a specific product row may exist."
     }
   },
   "source_hierarchy": [
@@ -27718,7 +27728,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 125,
+  "build_number": 126,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {

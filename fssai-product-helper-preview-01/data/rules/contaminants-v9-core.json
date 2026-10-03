@@ -1,0 +1,365 @@
+{
+  "schema_version": "1.0",
+  "database_id": "pmsv-fssai-contaminants-v9-core",
+  "regulation": "Food Safety and Standards (Contaminants, Toxins and Residues) Regulations, 2011",
+  "source_version": "Version IX (03.02.2026)",
+  "source_verified_on": "2026-10-03",
+  "source_policy": "Official FSSAI source only",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Contaminants, Toxins and Residues Compendium — Version IX (03.02.2026)",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf"
+    }
+  ],
+  "current_effective_basis": {
+    "as_of": "2026-10-03",
+    "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
+  },
+  "coverage": {
+    "stage": "phase_1_metal_contaminants_exact_profiles",
+    "section": "2.1 Metal Contaminants",
+    "exact_product_profiles": 6,
+    "universal_rules": 1,
+    "food_not_specified_defaults_stored": 6,
+    "auto_apply_food_not_specified_defaults": false,
+    "pending": [
+      "Normalize every remaining article-of-food row in section 2.1 before enabling generic fallback.",
+      "Load section 2.2 crop contaminants and naturally occurring toxic substances as reusable product/ingredient rules.",
+      "Load section 2.3 pesticide and other residue tables without broadening exact commodity matches.",
+      "Add packaging-triggered tin logic after packaging input is implemented."
+    ],
+    "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies."
+  },
+  "all_food_rules": [
+    {
+      "contaminant": "Methyl mercury",
+      "limit": 0.25,
+      "unit": "mg/kg",
+      "article": "All foods",
+      "source_basis": "Section 2.1 · Methyl Mercury (calculated as the element)",
+      "auto_apply": true
+    }
+  ],
+  "food_not_specified_defaults": [
+    {
+      "contaminant": "Lead",
+      "limit": 2.5,
+      "unit": "mg/kg",
+      "article": "Foods not specified",
+      "source_basis": "Section 2.1 · Lead",
+      "auto_apply": false
+    },
+    {
+      "contaminant": "Copper",
+      "limit": 30,
+      "unit": "mg/kg",
+      "article": "Foods not specified",
+      "source_basis": "Section 2.1 · Copper",
+      "auto_apply": false
+    },
+    {
+      "contaminant": "Arsenic",
+      "limit": 1.1,
+      "unit": "mg/kg",
+      "article": "Foods not specified",
+      "source_basis": "Section 2.1 · Arsenic",
+      "auto_apply": false
+    },
+    {
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Foods not specified",
+      "source_basis": "Section 2.1 · Tin",
+      "auto_apply": false
+    },
+    {
+      "contaminant": "Cadmium",
+      "limit": 1.5,
+      "unit": "mg/kg",
+      "article": "Foods not specified",
+      "source_basis": "Section 2.1 · Cadmium",
+      "auto_apply": false
+    },
+    {
+      "contaminant": "Mercury",
+      "limit": 1,
+      "unit": "mg/kg",
+      "article": "Foods not specified",
+      "source_basis": "Section 2.1 · Mercury",
+      "auto_apply": false
+    }
+  ],
+  "profiles": [
+    {
+      "id": "carbonated-water",
+      "label": "Carbonated Water",
+      "catalog_ids": [
+        "carbonated-water"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/L",
+          "article": "Carbonated water",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Copper",
+          "limit": 1.5,
+          "unit": "mg/L",
+          "article": "Carbonated water",
+          "source_basis": "Section 2.1 · Copper"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.25,
+          "unit": "mg/L",
+          "article": "Carbonated water",
+          "source_basis": "Section 2.1 · Arsenic"
+        }
+      ]
+    },
+    {
+      "id": "mineral-water",
+      "label": "Natural / Mineral Water",
+      "catalog_ids": [
+        "mineral-water"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.01,
+          "unit": "mg/L",
+          "article": "Natural mineral water",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Copper",
+          "limit": 1,
+          "unit": "mg/L",
+          "article": "Mineral water",
+          "source_basis": "Section 2.1 · Copper"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.01,
+          "unit": "mg/L",
+          "article": "Natural mineral water",
+          "source_basis": "Section 2.1 · Arsenic"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.003,
+          "unit": "mg/L",
+          "article": "Natural mineral water",
+          "source_basis": "Section 2.1 · Cadmium"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 0.001,
+          "unit": "mg/L",
+          "article": "Natural mineral water",
+          "source_basis": "Section 2.1 · Mercury"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 0.05,
+          "unit": "mg/L",
+          "article": "Mineral water",
+          "source_basis": "Section 2.1 · Chromium"
+        },
+        {
+          "contaminant": "Nickel",
+          "limit": 0.02,
+          "unit": "mg/L",
+          "article": "Mineral water",
+          "source_basis": "Section 2.1 · Nickel"
+        },
+        {
+          "contaminant": "Selenium",
+          "limit": 0.05,
+          "unit": "mg/L",
+          "article": "Mineral water",
+          "source_basis": "Section 2.1 · Selenium"
+        },
+        {
+          "contaminant": "Antimony",
+          "limit": 0.005,
+          "unit": "mg/L",
+          "article": "Mineral water",
+          "source_basis": "Section 2.1 · Antimony"
+        }
+      ]
+    },
+    {
+      "id": "packaged-drinking-water",
+      "label": "Packaged Drinking Water (other than Mineral Water)",
+      "catalog_ids": [
+        "packaged-drinking-water"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.01,
+          "unit": "mg/L",
+          "article": "Packaged drinking water (other than mineral water)",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Copper",
+          "limit": 0.05,
+          "unit": "mg/L",
+          "article": "Packaged drinking water (other than mineral water)",
+          "source_basis": "Section 2.1 · Copper"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.01,
+          "unit": "mg/L",
+          "article": "Packaged drinking water (other than mineral water)",
+          "source_basis": "Section 2.1 · Arsenic"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.003,
+          "unit": "mg/L",
+          "article": "Packaged drinking water (other than mineral water)",
+          "source_basis": "Section 2.1 · Cadmium"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 0.001,
+          "unit": "mg/L",
+          "article": "Packaged drinking water (other than mineral water)",
+          "source_basis": "Section 2.1 · Mercury"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 0.05,
+          "unit": "mg/L",
+          "article": "Packaged drinking water (other than mineral water)",
+          "source_basis": "Section 2.1 · Chromium"
+        },
+        {
+          "contaminant": "Nickel",
+          "limit": 0.02,
+          "unit": "mg/L",
+          "article": "Packaged drinking water (other than mineral water)",
+          "source_basis": "Section 2.1 · Nickel"
+        },
+        {
+          "contaminant": "Selenium",
+          "limit": 0.01,
+          "unit": "mg/L",
+          "article": "Packaged drinking water (other than mineral water)",
+          "source_basis": "Section 2.1 · Selenium"
+        },
+        {
+          "contaminant": "Antimony",
+          "limit": 0.005,
+          "unit": "mg/L",
+          "article": "Packaged drinking water (other than mineral water)",
+          "source_basis": "Section 2.1 · Antimony"
+        }
+      ]
+    },
+    {
+      "id": "sorbitol",
+      "label": "Sorbitol",
+      "catalog_ids": [
+        "11-11-6-sorbitol"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 1,
+          "unit": "mg/kg",
+          "article": "Sorbitol",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 3,
+          "unit": "mg/kg",
+          "article": "Sorbitol",
+          "source_basis": "Section 2.1 · Arsenic"
+        },
+        {
+          "contaminant": "Nickel",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Sorbitol",
+          "source_basis": "Section 2.1 · Nickel"
+        }
+      ]
+    },
+    {
+      "id": "plain-milks",
+      "label": "Milks",
+      "match_fssr": [
+        "2.1.2"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Milks",
+          "source_basis": "Section 2.1 · Lead",
+          "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks."
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Milk",
+          "source_basis": "Section 2.1 · Arsenic"
+        }
+      ]
+    },
+    {
+      "id": "edible-common-salt",
+      "label": "Salt, food grade",
+      "catalog_ids": [
+        "12-12-1-edible-common-salt"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Salt, food grade",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Salt, food grade",
+          "source_basis": "Section 2.1 · Cadmium"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Salt, food grade",
+          "source_basis": "Section 2.1 · Mercury"
+        }
+      ]
+    }
+  ],
+  "conditional_rules": [
+    {
+      "contaminant": "Tin",
+      "limit": 150,
+      "unit": "mg/kg",
+      "article": "Canned beverages",
+      "source_basis": "Section 2.1 · Tin",
+      "trigger": "finished product is a canned beverage",
+      "auto_apply": false
+    }
+  ]
+}
