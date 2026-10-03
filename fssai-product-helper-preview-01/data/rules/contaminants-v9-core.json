@@ -17,18 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_37_spice_aflatoxin_mapping",
+    "stage": "phase_38_cassia_partial_exact_mapping",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 120,
+    "exact_product_profiles": 121,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 173 maps the official Spices/Spice Mix crop-contaminant limits to 24 proven standardized spice/spice-mix identities.",
-      "Total Aflatoxins 30 µg/kg and Aflatoxin B1 15 µg/kg are now present across the proven spice set; 20 profiles received 40 new rules and four profiles already carried the same limits.",
-      "Dried herbs such as Oregano/Mint/Rosemary/Thyme/Sage/Basil/Marjoram/Parsley/Tarragon are not automatically treated as 'Spices/Spice Mix' by this build.",
-      "Dried Mango Slices, Dried Mango Powder, Garlic, Ginger, Dehydrated Onion, Asafoetida, Seasoning and Spice Oleoresins remain excluded from this spice-aflatoxin mapping unless an exact FSSAI identity route is proven.",
-      "Cassia remains locked from the generic spice metal mapping pending an exact dried-spice identity basis."
+      "Build 174 adds partial exact Cassia 2.9.5 coverage: Arsenic 5 mg/kg plus Total Aflatoxins 30 µg/kg and Aflatoxin B1 15 µg/kg.",
+      "Cassia Lead remains deliberately locked because the Lead article requires 'dried herbs and spices' and the current Cassia identity text does not explicitly state dried.",
+      "Dried Mango Slices, Dried Mango Powder, Asafoetida, Seasoning and Spice Oleoresins remain excluded from generic spice mappings unless their own current FSSAI route is proven.",
+      "Ingredient-triggered naturally occurring toxins continue to be handled separately."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -77,7 +76,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Review the remaining Chapter 2.9 identities separately: Cassia metal route, Dried Mango products, Asafoetida, Seasoning and Spice Oleoresins. Do not infer one contaminant class from another.",
+    "next_priority": "Promote direct naturally occurring toxin routes for exact standardized products where the current FSSAI article is unambiguous, starting with Mace/Nutmeg Saffrole.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -118,9 +117,9 @@
       "12-12-2-mixed-masala",
       "12-12-2-dehydrated-onion-sukha-pyaj"
     ],
-    "verified_alias_products": 86,
-    "verified_alias_new_profiles": 82,
-    "verified_alias_rules_added": 157,
+    "verified_alias_products": 87,
+    "verified_alias_new_profiles": 83,
+    "verified_alias_rules_added": 158,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
@@ -177,10 +176,12 @@
     "named_dried_spice_rules_added_build_171": 36,
     "post_2_9_29_dried_spice_products_added_build_172": 3,
     "post_2_9_29_dried_spice_rules_added_build_172": 6,
-    "spice_crop_contaminant_products_proven": 24,
+    "spice_crop_contaminant_products_proven": 25,
     "spice_crop_contaminant_profiles_enriched_build_173": 20,
     "spice_crop_contaminant_rules_added_build_173": 40,
-    "spice_crop_contaminant_identity_map_loaded": true
+    "spice_crop_contaminant_identity_map_loaded": true,
+    "cassia_partial_rules_added_build_174": 3,
+    "cassia_lead_locked": true
   },
   "all_food_rules": [
     {
@@ -3757,6 +3758,39 @@
           "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
           "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        }
+      ]
+    },
+    {
+      "id": "cassia",
+      "label": "Cassia (Taj)",
+      "catalog_ids": [
+        "12-12-2-cassia-taj"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_exact_spice_identity"
         },
         {
           "contaminant": "Total Aflatoxins",
@@ -19885,6 +19919,21 @@
           "mapping_basis": "Current FSSAI 2.9.36 explicitly defines Pimento or Allspice as a dried spice identity, matching the Arsenic article class 'spices'."
         }
       ]
+    },
+    {
+      "product_id": "12-12-2-cassia-taj",
+      "product_name": "Cassia (Taj)",
+      "fssr": "2.9.5",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI Chapter 2.9 standard identifies Cassia (Taj) as a standardized spice. This supports the Arsenic article class 'spices'. Lead is deliberately not promoted because the Lead article requires a dried-spice identity and the Cassia identity text does not explicitly state dried."
+        }
+      ]
     }
   ],
   "packaging_conditional_tin_rules_v9": [
@@ -20747,6 +20796,17 @@
       "catalog_id": "12-12-2-pimento-or-allspice",
       "profile_id": "pimento-allspice",
       "product_name": "Pimento or Allspice",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-cassia-taj",
+      "profile_id": "cassia",
+      "product_name": "Cassia (Taj)",
       "article": "Spices/Spice Mix",
       "total_aflatoxins_limit": 30,
       "aflatoxin_b1_limit": 15,
