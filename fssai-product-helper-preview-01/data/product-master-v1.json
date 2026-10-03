@@ -494,7 +494,7 @@
         "4.2.2.8"
       ],
       "source_verified_on": "2026-10-03",
-      "next_validation": "Tables 10–12 are current Version 3 complete. Continue cross-table Version 3 reconciliation with the next incomplete table, starting Table 9 unless an earlier table has a higher-priority locked set.",
+      "next_validation": "Table 9 current Version 3 limits are complete; only one 9.2.5 note-44 row association remains parser-locked. Continue with Table 8 current Version 3 reconciliation.",
       "annexure_1_groups_loaded": 18,
       "table15_note_conditions_loaded": 14,
       "note_conditions_loaded": 42,
@@ -504,7 +504,7 @@
       "table12_stage": "current_v3_complete",
       "table11_stage": "current_v3_complete",
       "table10_stage": "current_v3_complete",
-      "table9_stage": "hierarchy_plus_verified_fresh_processed_semipreserved_rows_v3_recheck_pending",
+      "table9_stage": "current_v3_complete_except_single_note_alignment_lock",
       "table8_stage": "hierarchy_current_foscos_routing_plus_verified_rows_loaded",
       "table7_stage": "hierarchy_plus_bread_fine_bakery_verified_rows_v3_recheck_pending",
       "table6_stage": "hierarchy_flour_breakfast_batter_processed_soy_rules_loaded",
@@ -512,7 +512,28 @@
       "table4_stage": "full_current_v3_hierarchy_loaded_with_specific_locked_row_ambiguities",
       "table3_stage": "current_v3_complete",
       "table2_stage": "full_current_v3_hierarchy_loaded_with_2_1_3_2_2_1_2_4_locked_ambiguities",
-      "table1_stage": "full_current_v3_fcs_coverage_with_targeted_locked_rows"
+      "table1_stage": "full_current_v3_fcs_coverage_with_targeted_locked_rows",
+      "table9_sets_loaded": [
+        "9.0",
+        "9.1",
+        "9.1.1",
+        "9.1.2",
+        "9.2",
+        "9.2.1",
+        "9.2.2",
+        "9.2.3",
+        "9.2.4",
+        "9.2.4.1",
+        "9.2.4.2",
+        "9.2.4.3",
+        "9.2.5",
+        "9.3",
+        "9.3.1",
+        "9.3.2",
+        "9.3.3",
+        "9.3.4",
+        "9.4"
+      ]
     },
     "special_nutrition": {
       "rule_file": "./data/rules/special-nutrition-routing-v1.json",
@@ -21136,7 +21157,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 105,
+  "build_number": 106,
   "build_label": "Build 58",
   "build_date": "2026-10-03"
 }
