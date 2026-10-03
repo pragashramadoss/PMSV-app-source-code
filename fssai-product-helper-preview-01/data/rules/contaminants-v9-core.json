@@ -17,14 +17,14 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_3_residue_mrl_batch_3",
+    "stage": "phase_3_residue_mrl_batch_4",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 35,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Continue Section 2.3.1 from serial 96 (Halosulfuron methyl) onward in source order.",
+      "Continue Section 2.3.1 from serial 113 (Lufenuron) onward in source order.",
       "Add exact product/ingredient residue matching only after each pesticide commodity row is normalized.",
       "Continue remaining exact Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
       "Add packaging-triggered tin logic after packaging input is implemented."
@@ -41,9 +41,9 @@
     "crop_contaminant_groups": 6,
     "profile_expansion_build": 129,
     "profile_expansion_note": "Build 129 adds exact crop-contaminant and naturally occurring toxin mappings for arecanut, pulses, pearl barley, four named nuts, mixed masala, nutmeg and sago/cassava/tapioca products; turmeric is also enriched with explicit spice aflatoxin limits.",
-    "residue_batches_loaded": 3,
-    "residue_pesticides_loaded": 95,
-    "residue_rows_loaded": 550
+    "residue_batches_loaded": 4,
+    "residue_pesticides_loaded": 112,
+    "residue_rows_loaded": 643
   },
   "all_food_rules": [
     {
@@ -1756,8 +1756,8 @@
   "residue_mrls": {
     "source_basis": "Section 2.3.1 · Restriction on the use of insecticides",
     "source_version": "Version IX (03.02.2026)",
-    "batch": "1-3",
-    "serial_range": "1-95",
+    "batch": "1-4",
+    "serial_range": "1-112",
     "auto_apply": false,
     "symbol_policy": "MRL symbols such as '*', '(F)', shell-free basis and carcass-fat basis are retained exactly as printed. PMSV does not interpret those markers until the corresponding official notes are separately normalized.",
     "pesticides": [
@@ -5199,9 +5199,576 @@
             "unit": "mg/kg"
           }
         ]
+      },
+      {
+        "serial": 96,
+        "name": "Halosulfuron methyl",
+        "rows": [
+          {
+            "food": "Sugarcane",
+            "mrl": "0.03*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Maize",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Bottle Gourd",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 97,
+        "name": "Hexaconazole",
+        "rows": [
+          {
+            "food": "Mango",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Ground nut seed",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tea",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Apple",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Blackgram",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 98,
+        "name": "Hexazinone",
+        "rows": [
+          {
+            "food": "Sugarcane",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 99,
+        "name": "Hexythiazox",
+        "rows": [
+          {
+            "food": "Tea",
+            "mrl": "15",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Apple",
+            "mrl": "0.3",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 100,
+        "name": "Hydrogen Cyanamide",
+        "rows": [
+          {
+            "food": "Grapes",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sugarcane",
+            "mrl": "0.03*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 101,
+        "name": "Iodosulfuron Methyl Sodium",
+        "rows": [
+          {
+            "food": "Wheat",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 102,
+        "name": "Imazethapyr",
+        "rows": [
+          {
+            "food": "Soyabean",
+            "mrl": "0.03",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soyabean oil",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut oil",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 103,
+        "name": "Imidacloprid",
+        "rows": [
+          {
+            "food": "Citrus (Acid Lime)",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut Seed",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mango",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sugarcane",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Okra",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sunflower Seed",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tomato",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cucumber",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Brinjal",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Meat products",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean",
+            "mrl": "3.0",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean Oil",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 104,
+        "name": "Indoxacarb",
+        "rows": [
+          {
+            "food": "Tomato",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Pigeon pea",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chick Pea",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cottonseed",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cottonseed Oil",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cabbage",
+            "mrl": "3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Meat products",
+            "mrl": "2",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 105,
+        "name": "Iprobenfos (Kitazin)",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 106,
+        "name": "Iprodione",
+        "rows": [
+          {
+            "food": "Rape seed",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mustard seed",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "10",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tomato",
+            "mrl": "5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "10",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 107,
+        "name": "Isoprothiolane",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 108,
+        "name": "Isoproturon",
+        "rows": [
+          {
+            "food": "Wheat",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 109,
+        "name": "Kasugamycin",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tomato",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 110,
+        "name": "Kresoxim Methyl",
+        "rows": [
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Meat products",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Maize",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Wheat",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.15",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "1.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soyabean",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soyabean Oil",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soyabean Cake",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 111,
+        "name": "Lambda cyhalothrin",
+        "rows": [
+          {
+            "food": "Brinjal",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tomato",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Okra",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Red Gram",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Bengal Gram",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut seed",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Onion",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soyabean",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mango",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tea",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Maize",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 112,
+        "name": "Linuron",
+        "rows": [
+          {
+            "food": "Pea",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
       }
     ],
-    "batches_loaded": 3,
-    "next_serial": 96
+    "batches_loaded": 4,
+    "next_serial": 113
   }
 }
