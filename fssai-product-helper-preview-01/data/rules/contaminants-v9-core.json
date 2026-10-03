@@ -17,18 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_28_milk_powder_subtype_lead_gate",
+    "stage": "phase_29_exact_chicory_metal_mapping",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 85,
+    "exact_product_profiles": 86,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 164 adds four FoSCoS milk-powder subtypes to the dehydrated-milk Lead concentration-factor engine.",
-      "Whole Milk Powder, Partly Skimmed Milk Powder, Skimmed Milk Powder and Semi-skimmed Milk Powder require both exact subtype selection and a concentration factor.",
-      "Cream Powder is intentionally excluded from the 'Milks' Lead article because the combined FoSCoS catalogue row is broader than the metal article.",
-      "Secondary milk products remain subject to separate product-specific review.",
+      "Build 165 maps exact Chicory 2.10.3 to Copper 30 mg/kg and Arsenic 4 mg/kg.",
+      "Coffee remains subtype-gated work because the relevant Copper article names coffee beans while the FoSCoS product contains bean, ground and soluble variants.",
       "Instant Tea in Solid Form remains locked as a distinct extracted-solid standard.",
+      "Cream Powder remains excluded from the Milks Lead concentration-factor rule.",
       "Generic Tin fallback remains disabled."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
@@ -78,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Review secondary milk products individually; do not auto-map Cream Powder or other dairy products to the generic Lead article. Keep Instant Tea distinct.",
+    "next_priority": "Review Coffee using exact FoSCoS/FSSAI subtype gates because the Copper article applies to coffee beans, not every ground/soluble coffee form. Keep Instant Tea and processed-form guesses locked.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -116,9 +115,9 @@
       "99-99-1-baking-powder",
       "99-99-1-gelatin"
     ],
-    "verified_alias_products": 52,
-    "verified_alias_new_profiles": 49,
-    "verified_alias_rules_added": 89,
+    "verified_alias_products": 53,
+    "verified_alias_new_profiles": 50,
+    "verified_alias_rules_added": 91,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
@@ -155,7 +154,9 @@
     "dehydrated_milk_lead_factor_products": 2,
     "dehydrated_milk_lead_factor_ui": true,
     "milk_powder_lead_subtype_rules": 4,
-    "milk_powder_lead_subtype_gate": true
+    "milk_powder_lead_subtype_gate": true,
+    "chicory_products_added_build_165": 1,
+    "chicory_rules_added_build_165": 2
   },
   "all_food_rules": [
     {
@@ -2486,6 +2487,31 @@
           "article": "Milks",
           "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
           "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-chicory",
+      "label": "Chicory",
+      "catalog_ids": [
+        "chicory"
+      ],
+      "rules": [
+        {
+          "contaminant": "Copper",
+          "limit": 30,
+          "unit": "mg/kg",
+          "article": "Chicory-dried or roasted, coffee beans, flavourings/pectin liquid",
+          "source_basis": "Section 2.1 · Copper",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 4,
+          "unit": "mg/kg",
+          "article": "Chicory-dried or roasted",
+          "source_basis": "Section 2.1 · Arsenic",
           "verification": "explicit_product_subclass_verified_v9"
         }
       ]
@@ -17849,6 +17875,28 @@
           "limit": 0.02,
           "unit": "mg/kg",
           "mapping_basis": "Current FSSAI 2.1.2 retains this product within the Standard for Milk; no dehydration adjustment is needed for the ordinary non-dehydrated catalogue identity."
+        }
+      ]
+    },
+    {
+      "product_id": "chicory",
+      "product_name": "Chicory",
+      "fssr": "2.10.3",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Copper",
+          "article": "Chicory-dried or roasted, coffee beans, flavourings/pectin liquid",
+          "limit": 30,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.10.3 defines Chicory as roasted chicory powder obtained by roasting and grinding cleaned and dried roots of Cichorium intybus; this directly falls within the metal article 'Chicory-dried or roasted'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Chicory-dried or roasted",
+          "limit": 4,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.10.3 identifies the standardized product as roasted chicory prepared from dried roots, exactly matching the Arsenic article wording."
         }
       ]
     }
