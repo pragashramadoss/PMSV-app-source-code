@@ -17,19 +17,27 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_1_metal_contaminants_exact_profiles",
+    "stage": "phase_2_metals_plus_crop_contaminants",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 6,
+    "exact_product_profiles": 8,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Normalize every remaining article-of-food row in section 2.1 before enabling generic fallback.",
-      "Load section 2.2 crop contaminants and naturally occurring toxic substances as reusable product/ingredient rules.",
-      "Load section 2.3 pesticide and other residue tables without broadening exact commodity matches.",
+      "Complete remaining Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
+      "Expand Section 2.2 crop-contaminant commodity mapping to the remaining exact standardized products.",
+      "Expand naturally occurring toxic-substance product/category mappings without fuzzy category inference.",
+      "Load Section 2.3 pesticide and other residue tables using exact commodity matching.",
       "Add packaging-triggered tin logic after packaging input is implemented."
     ],
-    "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies."
+    "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
+    "sections_loaded": [
+      "2.1 Metal Contaminants — exact product core",
+      "2.2.1 Crop contaminants — exact product/ingredient triggers",
+      "2.2.1 Naturally occurring toxic substances — selected exact ingredient triggers"
+    ],
+    "ingredient_trigger_groups": 13,
+    "crop_contaminant_groups": 6
   },
   "all_food_rules": [
     {
@@ -317,6 +325,13 @@
           "unit": "mg/kg",
           "article": "Milk",
           "source_basis": "Section 2.1 · Arsenic"
+        },
+        {
+          "contaminant": "Aflatoxin M1",
+          "limit": 0.5,
+          "unit": "µg/kg",
+          "article": "Milk (Liquid)",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
         }
       ]
     },
@@ -349,6 +364,94 @@
           "source_basis": "Section 2.1 · Mercury"
         }
       ]
+    },
+    {
+      "id": "wheat",
+      "label": "Wheat",
+      "catalog_ids": [
+        "06-06-1-wheat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.2,
+          "unit": "mg/kg",
+          "article": "Cereal grains, except buckwheat, canihua and quinoa",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.2,
+          "unit": "mg/kg",
+          "article": "Wheat",
+          "source_basis": "Section 2.1 · Cadmium"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Ochratoxin A",
+          "limit": 5,
+          "unit": "µg/kg",
+          "article": "Wheat",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Deoxynivalenol",
+          "limit": 1000,
+          "unit": "µg/kg",
+          "article": "Wheat",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "wheat-bran",
+      "label": "Wheat bran",
+      "catalog_ids": [
+        "06-06-2-wheat-bran"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Ochratoxin A",
+          "limit": 5,
+          "unit": "µg/kg",
+          "article": "Wheat bran",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Deoxynivalenol",
+          "limit": 1000,
+          "unit": "µg/kg",
+          "article": "Wheat bran",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
     }
   ],
   "conditional_rules": [
@@ -360,6 +463,528 @@
       "source_basis": "Section 2.1 · Tin",
       "trigger": "finished product is a canned beverage",
       "auto_apply": false
+    }
+  ],
+  "crop_contaminants": {
+    "total_aflatoxins": {
+      "unit": "µg/kg",
+      "rules": [
+        {
+          "article": "Cereal and cereal products",
+          "limit": 15
+        },
+        {
+          "article": "Dried figs",
+          "limit": 10
+        },
+        {
+          "article": "Arecanut or Betelnut",
+          "limit": 15
+        },
+        {
+          "article": "Nuts for further processing",
+          "limit": 15
+        },
+        {
+          "article": "Nuts, ready to eat",
+          "limit": 15
+        },
+        {
+          "article": "Oilseeds for further processing",
+          "limit": 15
+        },
+        {
+          "article": "Oilseeds, ready to eat",
+          "limit": 15
+        },
+        {
+          "article": "Pulses",
+          "limit": 15
+        },
+        {
+          "article": "Spices/Spice Mix",
+          "limit": 30
+        },
+        {
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 20
+        }
+      ]
+    },
+    "aflatoxin_b1": {
+      "unit": "µg/kg",
+      "rules": [
+        {
+          "article": "Arecanut or Betelnut",
+          "limit": 10
+        },
+        {
+          "article": "Cereal and cereal products",
+          "limit": 10
+        },
+        {
+          "article": "Dried figs",
+          "limit": 10
+        },
+        {
+          "article": "Nuts for further processing",
+          "limit": 10
+        },
+        {
+          "article": "Nuts, ready to eat",
+          "limit": 10
+        },
+        {
+          "article": "Oilseeds for further processing",
+          "limit": 10
+        },
+        {
+          "article": "Oilseeds, ready to eat",
+          "limit": 10
+        },
+        {
+          "article": "Pulses",
+          "limit": 10
+        },
+        {
+          "article": "Spices/Spice Mix",
+          "limit": 15
+        },
+        {
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 10
+        }
+      ]
+    },
+    "aflatoxin_m1": {
+      "unit": "µg/kg",
+      "rules": [
+        {
+          "article": "Milk (Liquid)",
+          "limit": 0.5
+        },
+        {
+          "article": "Skimmed milk powder",
+          "limit": 6
+        },
+        {
+          "article": "Whole milk powder",
+          "limit": 4
+        }
+      ]
+    },
+    "ochratoxin_a": {
+      "unit": "µg/kg",
+      "rules": [
+        {
+          "article": "Wheat, wheat bran, rye, barley",
+          "limit": 5
+        }
+      ]
+    },
+    "patulin": {
+      "unit": "µg/kg",
+      "rules": [
+        {
+          "article": "Apple juice",
+          "limit": 50
+        },
+        {
+          "article": "Apple juice used as an ingredient in other beverages",
+          "limit": 50
+        }
+      ]
+    },
+    "deoxynivalenol": {
+      "unit": "µg/kg",
+      "rules": [
+        {
+          "article": "Wheat, wheat bran, barley",
+          "limit": 1000
+        }
+      ]
+    }
+  },
+  "naturally_occurring_toxic_substances": {
+    "agaric_acid": [
+      {
+        "article": "Food containing mushrooms",
+        "limit": 100,
+        "unit": "ppm"
+      }
+    ],
+    "hydrocyanic_acid": [
+      {
+        "article": "Nougat, marzipan or substitutes/similar products",
+        "limit": 5,
+        "unit": "ppm"
+      },
+      {
+        "article": "Canned stone fruits",
+        "limit": 5,
+        "unit": "ppm"
+      },
+      {
+        "article": "Alcoholic beverages",
+        "limit": 5,
+        "unit": "ppm"
+      },
+      {
+        "article": "Confectionery",
+        "limit": 5,
+        "unit": "ppm"
+      },
+      {
+        "article": "Stone fruit juices",
+        "limit": 5,
+        "unit": "ppm"
+      },
+      {
+        "article": "Sago, Cassava flour, Tapioca flour, Manihot flour and their products",
+        "limit": 10,
+        "unit": "ppm"
+      }
+    ],
+    "hypericine": [
+      {
+        "article": "Alcoholic beverages",
+        "limit": 1,
+        "unit": "ppm"
+      }
+    ],
+    "saffrole": [
+      {
+        "article": "Meat preparations and meat products, including poultry and game",
+        "limit": 10,
+        "unit": "ppm"
+      },
+      {
+        "article": "Fish preparations and fish products",
+        "limit": 10,
+        "unit": "ppm"
+      },
+      {
+        "article": "Soups and sauces",
+        "limit": 10,
+        "unit": "ppm"
+      },
+      {
+        "article": "Non-alcoholic beverages",
+        "limit": 10,
+        "unit": "ppm"
+      },
+      {
+        "article": "Food containing mace and nutmeg",
+        "limit": 10,
+        "unit": "ppm"
+      },
+      {
+        "article": "Alcoholic beverages",
+        "limit": 10,
+        "unit": "ppm"
+      }
+    ]
+  },
+  "ingredient_triggers": [
+    {
+      "id": "apple-juice",
+      "aliases": [
+        "apple juice"
+      ],
+      "rules": [
+        {
+          "contaminant": "Patulin",
+          "limit": 50,
+          "unit": "µg/kg",
+          "article": "Apple juice used as an ingredient in other beverages",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "wheat",
+      "aliases": [
+        "wheat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Ochratoxin A",
+          "limit": 5,
+          "unit": "µg/kg",
+          "article": "Wheat",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Deoxynivalenol",
+          "limit": 1000,
+          "unit": "µg/kg",
+          "article": "Wheat",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "wheat-bran",
+      "aliases": [
+        "wheat bran"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Ochratoxin A",
+          "limit": 5,
+          "unit": "µg/kg",
+          "article": "Wheat bran",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Deoxynivalenol",
+          "limit": 1000,
+          "unit": "µg/kg",
+          "article": "Wheat bran",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "barley",
+      "aliases": [
+        "barley"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Ochratoxin A",
+          "limit": 5,
+          "unit": "µg/kg",
+          "article": "Barley",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Deoxynivalenol",
+          "limit": 1000,
+          "unit": "µg/kg",
+          "article": "Barley",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "rye",
+      "aliases": [
+        "rye"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Ochratoxin A",
+          "limit": 5,
+          "unit": "µg/kg",
+          "article": "Rye",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "liquid-milk",
+      "aliases": [
+        "milk",
+        "liquid milk"
+      ],
+      "rules": [
+        {
+          "contaminant": "Aflatoxin M1",
+          "limit": 0.5,
+          "unit": "µg/kg",
+          "article": "Milk (Liquid)",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "skimmed-milk-powder",
+      "aliases": [
+        "skimmed milk powder",
+        "skim milk powder"
+      ],
+      "rules": [
+        {
+          "contaminant": "Aflatoxin M1",
+          "limit": 6,
+          "unit": "µg/kg",
+          "article": "Skimmed milk powder",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "whole-milk-powder",
+      "aliases": [
+        "whole milk powder"
+      ],
+      "rules": [
+        {
+          "contaminant": "Aflatoxin M1",
+          "limit": 4,
+          "unit": "µg/kg",
+          "article": "Whole milk powder",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "dried-figs",
+      "aliases": [
+        "dried fig",
+        "dried figs"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Dried figs",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Dried figs",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "mushroom",
+      "aliases": [
+        "mushroom",
+        "mushrooms"
+      ],
+      "rules": [
+        {
+          "contaminant": "Agaric acid",
+          "limit": 100,
+          "unit": "ppm",
+          "article": "Food containing mushrooms",
+          "source_basis": "Section 2.2.1 · Naturally occurring toxic substances"
+        }
+      ]
+    },
+    {
+      "id": "mace-nutmeg",
+      "aliases": [
+        "mace",
+        "nutmeg"
+      ],
+      "rules": [
+        {
+          "contaminant": "Saffrole",
+          "limit": 10,
+          "unit": "ppm",
+          "article": "Food containing mace and nutmeg",
+          "source_basis": "Section 2.2.1 · Naturally occurring toxic substances"
+        }
+      ]
+    },
+    {
+      "id": "spice-mix",
+      "aliases": [
+        "spice mix",
+        "spice mixture",
+        "spices"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "pulses",
+      "aliases": [
+        "pulses"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Pulses",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Pulses",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
     }
   ]
 }

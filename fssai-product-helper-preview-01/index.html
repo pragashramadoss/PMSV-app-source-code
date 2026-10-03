@@ -521,8 +521,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="productContaminantResults"><div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div></div>
 </div>
 <div class="card">
-<div class="section-title"><h2>Coverage status</h2><span>Build 126 · metal contaminants phase 1</span></div>
-<div class="notice">The reusable contaminant master starts with exact current metal-contaminant profiles. Crop contaminants, naturally occurring toxic substances and residue tables will be expanded next from the same official FSSAI Version IX source. No missing limit is estimated from another website.</div>
+<div class="section-title"><h2>Coverage status</h2><span>Build 127 · metals + crop contaminants</span></div>
+<div class="notice">The reusable contaminant master now includes exact current metal profiles plus selected crop-contaminant and naturally occurring toxin triggers. Remaining commodity mappings and residue tables are still being expanded from the same official FSSAI Version IX source. No missing limit is estimated from another website.</div>
 <div class="notice"><b>2026 amendment:</b> FSSAI notified a final Contaminants, Toxins and Residues amendment on 25 May 2026 with commencement on <b>1 December 2026</b>. Build 126 continues to use the currently effective Version IX basis as of 3 October 2026.</div>
 </div>
 </section>
@@ -1514,17 +1514,27 @@ function renderFormula(){
 
  if(triggered){
    const rows=[];
-   qs.forEach(q=>{
-     (q.contaminants||[]).forEach(rule=>{
-       rows.push('<tr><td><b>'+esc(rule.name)+'</b></td><td><b>'+esc(rule.limit)+'</b></td><td>Triggered by ingredient: <b>'+esc(q.name)+'</b><br><small>'+esc(rule.basis)+'</small></td><td>'+esc(rule.source)+'</td></tr>');
+   const seen=new Set();
+   qs.forEach((q,i)=>{
+     const item=formulationIngredients[i]||{name:q.name};
+     const legacy=(q.contaminants||[]).map(rule=>({
+       contaminant:rule.name,limit:rule.limit,unit:'',article:rule.basis,source_basis:rule.source
+     }));
+     const current=contaminantIngredientRulesForName(item.name);
+     legacy.concat(current).forEach(rule=>{
+       const shownLimit=String(rule.limit)+(rule.unit?' '+rule.unit:'');
+       const key=normIngredient([rule.contaminant,shownLimit,rule.article].join('|'));
+       if(seen.has(key))return;
+       seen.add(key);
+       rows.push('<tr><td><b>'+esc(rule.contaminant)+'</b></td><td><b>'+esc(shownLimit)+'</b></td><td>Triggered by ingredient: <b>'+esc(item.name)+'</b><br><small>'+esc(rule.article||'Exact FSSAI ingredient/article match')+'</small></td><td>'+esc(rule.source_basis||'FSSAI Contaminants, Toxins and Residues Regulations · Version IX')+'</td></tr>');
      });
    });
-   const customNeedsReview=qs.filter(q=>q.kind==='extra' && !(q.contaminants||[]).length);
-   const reviewRows=customNeedsReview.map(q=>'<tr><td><b>Ingredient-specific contaminant review</b></td><td>—</td><td>Extra ingredient: <b>'+esc(q.name)+'</b></td><td>The exact ingredient must be checked against the applicable tables of the FSSAI Contaminants, Toxins and Residues Regulations before final compliance.</td></tr>');
+   const customNeedsReview=qs.filter((q,i)=>q.kind==='extra' && !(q.contaminants||[]).length && contaminantIngredientRulesForName(formulationIngredients[i]?.name||q.name).length===0);
+   const reviewRows=customNeedsReview.map(q=>'<tr><td><b>Ingredient-specific contaminant review</b></td><td>—</td><td>Extra ingredient: <b>'+esc(q.name)+'</b></td><td>The exact ingredient must be checked against the applicable current FSSAI contaminant tables before final compliance.</td></tr>');
    if(rows.length||reviewRows.length){
      triggered.innerHTML='<h3 style="margin:12px 0 9px">Ingredient-dependent requirements generated from your formulation</h3><div class="tablewrap"><table><thead><tr><th>Requirement</th><th>FSSAI limit</th><th>Why it appears</th><th>Source / action</th></tr></thead><tbody>'+rows.concat(reviewRows).join('')+'</tbody></table></div>';
    }else{
-     triggered.innerHTML='<div class="notice">No additional ingredient-specific contaminant limit has been triggered by the current ingredient list in this prototype. Product-level and general contaminant requirements below still apply.</div>';
+     triggered.innerHTML='<div class="notice">No exact ingredient-triggered contaminant rule is loaded for the current ingredient list. PMSV does not infer a commodity family from a similar ingredient name.</div>';
    }
  }
 }
@@ -2334,7 +2344,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=126',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=127',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2367,6 +2377,12 @@ function contaminantProfileForProduct(p){
    return false;
  })||null;
 }
+function contaminantIngredientRulesForName(name){
+ if(!contaminantsDb||!Array.isArray(contaminantsDb.ingredient_triggers))return [];
+ const n=normIngredient(name);
+ const group=contaminantsDb.ingredient_triggers.find(x=>Array.isArray(x.aliases)&&x.aliases.some(a=>normIngredient(a)===n));
+ return group&&Array.isArray(group.rules)?group.rules:[];
+}
 function renderProductContaminants(){
  const el=document.getElementById('productContaminantResults');
  if(!el)return;
@@ -2385,15 +2401,15 @@ function renderProductContaminants(){
  const rules=[...exact,...universal];
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
  const profileMsg=profile
-  ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+exact.length+' product-specific metal rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
-  : '<div class="notice"><b>No exact metal-contaminant profile is loaded yet for '+esc(p.name)+'.</b> PMSV shows only explicit “all foods” rules. It does not apply a “Foods not specified” fallback by assumption.</div>';
+  ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+exact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
+  : '<div class="notice"><b>No exact contaminant profile is loaded yet for '+esc(p.name)+'.</b> PMSV shows only explicit “all foods” rules. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
    +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant</th><th>FSSAI maximum</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="empty-state">No auto-applicable contaminant rule is loaded for this product yet.</div>')
    +'<div class="countline">'+rules.length+' auto-applicable current Version IX rule'+(rules.length===1?'':'s')+' shown · “Foods not specified” fallback is disabled.</div>';
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=126',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=127',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
@@ -2405,7 +2421,7 @@ async function loadContaminantsDb(){
 async function loadRegulatoryDb(){
  const status=document.getElementById('regDbStatus');
  try{
-   const res=await fetch('./data/regulatory-db-v1.json?v=126',{cache:'reload'});
+   const res=await fetch('./data/regulatory-db-v1.json?v=127',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    regulatoryDb=await res.json();
    ingredientCatalog=catalogFromDb(regulatoryDb);
