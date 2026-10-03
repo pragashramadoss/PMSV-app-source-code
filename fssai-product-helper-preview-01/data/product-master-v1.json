@@ -817,17 +817,17 @@
       "histamine_product_limit_rows_loaded": 11
     },
     "contaminants_v9": {
-      "stage": "phase_21_tin_specific_mapping_complete_broad_rows_locked",
+      "stage": "phase_22_exact_substance_alias_expansion",
       "metal_article_master_rows_loaded": 382,
-      "next_validation": "Resume exact Section 2.1 mapping across other metals using literal catalogue matches only, then reviewed aliases; no fuzzy matching.",
+      "next_validation": "Continue reviewed Section 2.1 aliases; hold form/subtype-dependent rows behind explicit inputs.",
       "arsenic_article_rows_loaded": 95,
       "section_2_1_article_master_complete": true,
       "lead_article_rows_loaded": 163,
       "exact_literal_product_matches": 15,
       "exact_literal_new_profiles": 1,
       "exact_literal_metal_rules_added": 2,
-      "verified_alias_products": 18,
-      "verified_alias_rules_added": 21,
+      "verified_alias_products": 22,
+      "verified_alias_rules_added": 30,
       "packaging_conditional_tin_rules_loaded": 10,
       "packaging_tin_defaults_loaded": 3,
       "packaging_input_ui": true,
@@ -835,8 +835,8 @@
       "packaging_conditional_tin_product_families": 5,
       "packaging_conditional_tin_runtime_rules_active": 10,
       "packaging_tin_generic_fallback": false,
-      "exact_product_profiles": 51,
-      "verified_alias_new_profiles": 15,
+      "exact_product_profiles": 55,
+      "verified_alias_new_profiles": 19,
       "tin_explicit_alias_products_added_build_150": 6,
       "tin_infant_products_added_build_151": 5,
       "tin_tamarind_products_added_build_152": 1,
@@ -851,7 +851,9 @@
       "tin_pickled_cucumber_gate": true,
       "tin_specific_article_mapping_complete": true,
       "tin_locked_broad_rows": 5,
-      "tin_generic_fallback_auto_apply": false
+      "tin_generic_fallback_auto_apply": false,
+      "exact_substance_alias_products_added_build_158": 4,
+      "exact_substance_alias_rules_added_build_158": 9
     }
   },
   "source_hierarchy": [
@@ -27783,7 +27785,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 157,
+  "build_number": 158,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {
