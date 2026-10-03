@@ -17,17 +17,18 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_23_functional_prefix_exact_substance_expansion",
+    "stage": "phase_24_verified_product_subclass_expansion",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 66,
+    "exact_product_profiles": 71,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 159 adds 24 Section 2.1 metal rules across 11 exact FoSCoS substance identities after stripping only administrative functional prefixes.",
-      "L(+/-) tartaric acid remains excluded from the L(+)-tartaric acid metal rows because stereochemical identity is not exact.",
-      "Infant formula (ready to use) remains locked until product form is captured.",
-      "Tomato Ketchup and Tomato Sauce remains subtype-gated work; the Tomato ketchup metal row is not applied to the combined catalogue product.",
+      "Build 160 adds bivalve molluscs, frozen cephalopods, fresh/chilled poultry meat, frozen poultry meat and durum wheat through exact FSSAI product-class identity.",
+      "Fish Oil, Fish Sauce and Fish Pickles are not mapped to the generic article 'Fish'.",
+      "Frozen/Dehydrated Vegetables are not automatically mapped to generic 'Vegetables' or 'Other vegetables'.",
+      "Salt Substitutes are not mapped to 'Salt, food grade'.",
+      "Infant formula (ready to use) remains form-gated work.",
       "Generic Tin fallback remains disabled."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
@@ -77,7 +78,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Continue exact functional-prefix substance matching for remaining FoSCoS additives, while excluding stereochemical/non-equivalent names and any product-form-dependent limits.",
+    "next_priority": "Continue reviewed subclasses such as exact milk species/standardized milk and tea standards only where the FSSAI article clearly covers the product; keep processed-form guesses locked.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -115,9 +116,9 @@
       "99-99-1-baking-powder",
       "99-99-1-gelatin"
     ],
-    "verified_alias_products": 33,
-    "verified_alias_new_profiles": 30,
-    "verified_alias_rules_added": 54,
+    "verified_alias_products": 38,
+    "verified_alias_new_profiles": 35,
+    "verified_alias_rules_added": 61,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
@@ -144,7 +145,9 @@
     "exact_substance_alias_products_added_build_158": 4,
     "exact_substance_alias_rules_added_build_158": 9,
     "functional_prefix_exact_products_added_build_159": 11,
-    "functional_prefix_exact_rules_added_build_159": 24
+    "functional_prefix_exact_rules_added_build_159": 24,
+    "verified_product_subclass_products_added_build_160": 5,
+    "verified_product_subclass_rules_added_build_160": 7
   },
   "all_food_rules": [
     {
@@ -2011,6 +2014,107 @@
           "article": "Carrageenan",
           "source_basis": "Section 2.1 · Lead",
           "verification": "functional_prefix_stripped_exact_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-09-09-1-live-and-raw-bivalve-molluscs",
+      "label": "Live and Raw Bivalve Molluscs",
+      "catalog_ids": [
+        "09-09-1-live-and-raw-bivalve-molluscs"
+      ],
+      "rules": [
+        {
+          "contaminant": "Cadmium",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.1 · Cadmium",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 1.5,
+          "unit": "mg/kg",
+          "article": "Bivalve molluscs",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-09-09-2-frozen-cephalopods",
+      "label": "Frozen Cephalopods",
+      "catalog_ids": [
+        "09-09-2-frozen-cephalopods"
+      ],
+      "rules": [
+        {
+          "contaminant": "Cadmium",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Cephalopods",
+          "source_basis": "Section 2.1 · Cadmium",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 1,
+          "unit": "mg/kg",
+          "article": "Cephalopods",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-08-08-1-fresh-or-chilled-poultry-meat",
+      "label": "Fresh or Chilled Poultry Meat",
+      "catalog_ids": [
+        "08-08-1-fresh-or-chilled-poultry-meat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Poultry meat",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-08-08-2-frozen-poultry-meat",
+      "label": "Frozen Poultry Meat",
+      "catalog_ids": [
+        "08-08-2-frozen-poultry-meat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Poultry meat",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-06-06-1-durum-wheat",
+      "label": "Durum Wheat",
+      "catalog_ids": [
+        "06-06-1-durum-wheat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.2,
+          "unit": "mg/kg",
+          "article": "Wheat",
+          "source_basis": "Section 2.1 · Cadmium",
+          "verification": "explicit_product_subclass_verified_v9"
         }
       ]
     }
@@ -16976,6 +17080,95 @@
           "limit": 5,
           "unit": "mg/kg",
           "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        }
+      ]
+    },
+    {
+      "product_id": "09-09-1-live-and-raw-bivalve-molluscs",
+      "product_name": "Live and Raw Bivalve Molluscs",
+      "fssr": "2.6.1(18)",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Cadmium",
+          "article": "Bivalve Molluscs",
+          "limit": 2,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.6.1(18) explicitly standardizes live and raw bivalve molluscs; the metal articles name the same biological product class."
+        },
+        {
+          "metal": "Lead",
+          "article": "Bivalve molluscs",
+          "limit": 1.5,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.6.1(18) explicitly standardizes live and raw bivalve molluscs; the metal articles name the same biological product class."
+        }
+      ]
+    },
+    {
+      "product_id": "09-09-2-frozen-cephalopods",
+      "product_name": "Frozen Cephalopods",
+      "fssr": "2.6.1(9)",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Cadmium",
+          "article": "Cephalopods",
+          "limit": 2,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.6.1(9) explicitly standardizes frozen cephalopods; freezing does not change the product identity named by the metal article."
+        },
+        {
+          "metal": "Lead",
+          "article": "Cephalopods",
+          "limit": 1,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.6.1(9) explicitly standardizes frozen cephalopods; freezing does not change the product identity named by the metal article."
+        }
+      ]
+    },
+    {
+      "product_id": "08-08-1-fresh-or-chilled-poultry-meat",
+      "product_name": "Fresh or Chilled Poultry Meat",
+      "fssr": "2.5.2(11)",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Poultry meat",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS/FSSAI 2.5.2(11) explicitly identifies this product as poultry meat in fresh or chilled form."
+        }
+      ]
+    },
+    {
+      "product_id": "08-08-2-frozen-poultry-meat",
+      "product_name": "Frozen Poultry Meat",
+      "fssr": "2.5.2(11)",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Poultry meat",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS/FSSAI 2.5.2(11) explicitly identifies this product as poultry meat in frozen form."
+        }
+      ]
+    },
+    {
+      "product_id": "06-06-1-durum-wheat",
+      "product_name": "Durum Wheat",
+      "fssr": "2.4.6",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Cadmium",
+          "article": "Wheat",
+          "limit": 0.2,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.4.6(19) defines Durum Wheat as mature grains of Triticum durum; it is an exact wheat species within the metal article 'Wheat'."
         }
       ]
     }
