@@ -17,17 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_11_packaging_conditional_tin_data_ready",
+    "stage": "phase_12_packaging_input_ui_ready",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 39,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Packaging-dependent Tin rules are now structured but remain disabled until the user provides packaging/container input.",
-      "Implement formulation packaging inputs: format (canned / non-canned) and container material (tinplate / other).",
-      "After packaging input exists, activate only the matching Tin rule; never apply a tinplate limit to an unspecified package.",
-      "Continue explicit Section 2.1 product aliases only where regulatory identity is demonstrably equivalent.",
+      "Packaging format and container material inputs are now present in the contaminant review.",
+      "Exact Canned Fishery Products is mapped to the current Version IX Tin limit of 200 mg/kg.",
+      "Tinplate-vs-other-container meat rows remain gated because PMSV does not yet have exact catalog identities for corned beef, luncheon meat, cooked cured ham or cooked cured pork shoulder.",
+      "Do not activate generic canned-food Tin fallback until product-specific Tin applicability is fully mapped.",
       "Keep all 'Foods not specified' rows reference-only until absence of a more specific row is proven.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied."
     ],
@@ -78,7 +78,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Add packaging/container inputs to the formulation flow, then activate only the matching Version IX Tin conditional rule.",
+    "next_priority": "Continue exact product mapping for packaging-dependent Tin rows; do not enable generic canned-food fallback.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -121,7 +121,9 @@
     "verified_alias_rules_added": 9,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
-    "packaging_tin_auto_apply": false
+    "packaging_tin_auto_apply": false,
+    "packaging_input_ui": true,
+    "packaging_tin_runtime_policy": "Packaging inputs are collected, but a packaging-conditioned Tin row is shown only when exact product identity is available. Generic canned-food fallback remains disabled."
   },
   "all_food_rules": [
     {
@@ -15834,7 +15836,8 @@
       "requires_input": "packaging.container_material",
       "auto_apply": false,
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
-      "verification": "official_fssai_v9_direct"
+      "verification": "official_fssai_v9_direct",
+      "ui_gate": "requires_exact_product_family_and_packaging"
     },
     {
       "product_family": "Cooked cured chopped meat",
@@ -15846,7 +15849,8 @@
       "requires_input": "packaging.container_material",
       "auto_apply": false,
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
-      "verification": "official_fssai_v9_direct"
+      "verification": "official_fssai_v9_direct",
+      "ui_gate": "requires_exact_product_family_and_packaging"
     },
     {
       "product_family": "Cooked cured ham",
@@ -15858,7 +15862,8 @@
       "requires_input": "packaging.container_material",
       "auto_apply": false,
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
-      "verification": "official_fssai_v9_direct"
+      "verification": "official_fssai_v9_direct",
+      "ui_gate": "requires_exact_product_family_and_packaging"
     },
     {
       "product_family": "Cooked cured ham",
@@ -15870,7 +15875,8 @@
       "requires_input": "packaging.container_material",
       "auto_apply": false,
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
-      "verification": "official_fssai_v9_direct"
+      "verification": "official_fssai_v9_direct",
+      "ui_gate": "requires_exact_product_family_and_packaging"
     },
     {
       "product_family": "Cooked cured pork shoulder",
@@ -15882,7 +15888,8 @@
       "requires_input": "packaging.container_material",
       "auto_apply": false,
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
-      "verification": "official_fssai_v9_direct"
+      "verification": "official_fssai_v9_direct",
+      "ui_gate": "requires_exact_product_family_and_packaging"
     },
     {
       "product_family": "Cooked cured pork shoulder",
@@ -15894,7 +15901,8 @@
       "requires_input": "packaging.container_material",
       "auto_apply": false,
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
-      "verification": "official_fssai_v9_direct"
+      "verification": "official_fssai_v9_direct",
+      "ui_gate": "requires_exact_product_family_and_packaging"
     },
     {
       "product_family": "Corned beef",
@@ -15906,7 +15914,8 @@
       "requires_input": "packaging.container_material",
       "auto_apply": false,
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
-      "verification": "official_fssai_v9_direct"
+      "verification": "official_fssai_v9_direct",
+      "ui_gate": "requires_exact_product_family_and_packaging"
     },
     {
       "product_family": "Corned beef",
@@ -15918,7 +15927,8 @@
       "requires_input": "packaging.container_material",
       "auto_apply": false,
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
-      "verification": "official_fssai_v9_direct"
+      "verification": "official_fssai_v9_direct",
+      "ui_gate": "requires_exact_product_family_and_packaging"
     },
     {
       "product_family": "Luncheon meat",
@@ -15930,7 +15940,8 @@
       "requires_input": "packaging.container_material",
       "auto_apply": false,
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
-      "verification": "official_fssai_v9_direct"
+      "verification": "official_fssai_v9_direct",
+      "ui_gate": "requires_exact_product_family_and_packaging"
     },
     {
       "product_family": "Luncheon meat",
@@ -15942,7 +15953,8 @@
       "requires_input": "packaging.container_material",
       "auto_apply": false,
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
-      "verification": "official_fssai_v9_direct"
+      "verification": "official_fssai_v9_direct",
+      "ui_gate": "requires_exact_product_family_and_packaging"
     }
   ],
   "packaging_tin_defaults_v9": [
@@ -15954,7 +15966,8 @@
       "article": "Canned beverages",
       "requires_input": "packaging.format",
       "auto_apply": false,
-      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)"
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "ui_gate": "requires_packaging_and_applicability_check"
     },
     {
       "trigger": "finished_product_is_canned_food_other_than_beverage",
@@ -15964,7 +15977,8 @@
       "article": "Canned foods other than beverages",
       "requires_input": "packaging.format",
       "auto_apply": false,
-      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)"
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "ui_gate": "requires_packaging_and_applicability_check"
     },
     {
       "trigger": "finished_product_is_canned_fish_product",
@@ -15974,7 +15988,8 @@
       "article": "Canned fish products",
       "requires_input": "packaging.format",
       "auto_apply": false,
-      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)"
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "ui_gate": "requires_packaging_and_applicability_check"
     }
   ]
 }

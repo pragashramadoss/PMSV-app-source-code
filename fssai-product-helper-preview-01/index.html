@@ -518,10 +518,31 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="section-title"><h2>Contaminants, toxins & residues</h2><span>FSSAI Version IX · product-driven</span></div>
 <div class="notice oknote"><b>Current regulatory basis:</b> Food Safety and Standards (Contaminants, Toxins and Residues) Regulations, 2011 — consolidated <b>Version IX (03.02.2026)</b>. Contaminant limits are separate from Appendix A food-additive permissions.</div>
 <div class="notice"><b>Fail-closed matching:</b> PMSV automatically applies only an exact loaded product/FSSR contaminant profile plus rules that FSSAI explicitly states apply to <b>all foods</b>. “Foods not specified” limits are stored as reference defaults but are <b>not automatically applied</b> until the full current table confirms that no more-specific row governs the selected product.</div>
+<div class="checker-grid">
+  <div class="field">
+    <label>Package format</label>
+    <select id="contaminantPackageFormat">
+      <option value="">Not specified</option>
+      <option value="canned">Canned</option>
+      <option value="non-canned">Non-canned</option>
+    </select>
+    <small>Required before PMSV can evaluate packaging-dependent Tin provisions.</small>
+  </div>
+  <div class="field">
+    <label>Container material</label>
+    <select id="contaminantContainerMaterial">
+      <option value="">Not specified</option>
+      <option value="tinplate">Tinplate</option>
+      <option value="other">Other container</option>
+    </select>
+    <small>Tinplate and other-container limits are not interchangeable.</small>
+  </div>
+</div>
+<div id="packagingTinStatus" class="notice">Packaging-dependent Tin rules remain inactive until both an exact product identity and the required packaging input are available.</div>
 <div id="productContaminantResults"><div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div></div>
 </div>
 <div class="card">
-<div class="section-title"><h2>Coverage status</h2><span>Build 141 · histamine section complete</span></div>
+<div class="section-title"><h2>Coverage status</h2><span>Build 148 · metal master + packaging gate</span></div>
 <div class="notice">The reusable contaminant master now includes 35 exact standardized-product profiles, 14 exact ingredient-trigger groups, the complete PCB/PAH fish table, and all 213 pesticide entries and 1,098 residue MRL commodity rows in Section 2.3.1, plus the Section 2.3.2 seafood antibiotic limits, prohibited veterinary-drug EMRL rules and honey antibiotic MRPL table. Sections 2.3.2, 2.4, 2.5.1 and 2.5.2 are now loaded from current FSSAI Version IX. Histamine includes the official high-histidine fish-family/species list and all 11 product-category n/c/m/M limits. No missing limit is estimated from another website.</div>
 <div class="notice"><b>2026 amendment:</b> FSSAI notified a final Contaminants, Toxins and Residues amendment on 25 May 2026 with commencement on <b>1 December 2026</b>. Build 141 continues to use the currently effective Version IX basis as of 3 October 2026.</div>
 </div>
@@ -2344,7 +2365,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=147',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=148',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2365,6 +2386,8 @@ document.getElementById('productSubcategorySelect')?.addEventListener('change',(
 document.getElementById('productSelect')?.addEventListener('change',event=>{
  showSelectedCatalogProduct(findCatalogProductById(event.currentTarget.value));
 });
+document.getElementById('contaminantPackageFormat')?.addEventListener('change',renderProductContaminants);
+document.getElementById('contaminantContainerMaterial')?.addEventListener('change',renderProductContaminants);
 
 function selectedCatalogProductForContaminants(){
  return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
@@ -2383,6 +2406,35 @@ function contaminantIngredientRulesForName(name){
  const group=contaminantsDb.ingredient_triggers.find(x=>Array.isArray(x.aliases)&&x.aliases.some(a=>normIngredient(a)===n));
  return group&&Array.isArray(group.rules)?group.rules:[];
 }
+function contaminantPackagingState(){
+ return {
+   format:document.getElementById('contaminantPackageFormat')?.value||'',
+   material:document.getElementById('contaminantContainerMaterial')?.value||''
+ };
+}
+function renderPackagingTinStatus(p){
+ const el=document.getElementById('packagingTinStatus');
+ if(!el)return;
+ const pkg=contaminantPackagingState();
+ if(!p){
+   el.className='notice';
+   el.innerHTML='Packaging-dependent Tin rules remain inactive until both an exact product identity and the required packaging input are available.';
+   return;
+ }
+ if(!pkg.format&&!pkg.material){
+   el.className='notice';
+   el.innerHTML='<b>Packaging not specified.</b> PMSV will not apply a packaging-dependent Tin limit.';
+   return;
+ }
+ if(p.id==='09-09-4-canned-fishery-products'){
+   el.className='notice oknote';
+   el.innerHTML='<b>Exact product mapping:</b> Canned Fishery Products carries the current Version IX Tin maximum of <b>200 mg/kg</b>. Package inputs are recorded, but this product-specific row does not require a tinplate-vs-other-container choice.';
+   return;
+ }
+ el.className='notice';
+ el.innerHTML='<b>Packaging recorded, but no exact packaging-dependent Tin product mapping is loaded for '+esc(p.name)+'.</b> PMSV will not substitute the generic canned-food limit or infer a meat-product family.';
+}
+
 function renderProductContaminants(){
  const el=document.getElementById('productContaminantResults');
  if(!el)return;
@@ -2391,6 +2443,7 @@ function renderProductContaminants(){
    return;
  }
  const p=selectedCatalogProductForContaminants();
+ renderPackagingTinStatus(p);
  if(!p){
    el.innerHTML='<div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div>';
    return;
@@ -2409,7 +2462,7 @@ function renderProductContaminants(){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=147',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=148',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
