@@ -5619,9 +5619,12 @@
     "12.10": {
       "name": "Protein products other than from soybeans",
       "table": "Table 12",
-      "status": "verified_current_container_no_direct_rows",
+      "status": "verified_current_container_no_direct_rows_no_prohibition_inferred",
       "entries": [],
-      "completeness_note": "Current Version 3 Table 12 shows the 12.10 parent row with no direct additive entries."
+      "completeness_note": "Current Version 3 Table 12 shows the 12.10 parent row with no direct additive entries. This is not treated as a 'no additives permitted' statement. For standardized Vegetable Protein Products, product standard 2.3.59 supplies identity/composition requirements but the indexed current text does not state a separate additive prohibition; apply the Appendix A hierarchy/general provisions as applicable.",
+      "regulatory_conditions": [
+        "Do not infer 'no additives permitted' merely because FCS 12.10 has no direct Table 12 entries."
+      ]
     },
     "11.0": {
       "name": "Sweeteners including honey",
@@ -22042,7 +22045,7 @@
       "4.2.2.7",
       "4.2.2.8"
     ],
-    "next_priority": "Continue current Version 3 Table 12 reconciliation with the remaining 12.1.1 salt rows, 12.6 sauces, 12.8 yeast and 12.9/12.9.1 parent rows. Keep the 12.9.2 parent BENZOATES row locked until current alignment is explicit.",
+    "next_priority": "Continue current Version 3 Table 12 reconciliation with remaining 12.1.1 salt rows, 12.6 sauces, 12.8 yeast and 12.9/12.9.1 parent rows. Keep 12.9.2 parent BENZOATES locked until current alignment is explicit.",
     "annexure_1_groups_loaded": 18,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
@@ -22119,7 +22122,7 @@
       "12.9.2.3",
       "12.10"
     ],
-    "table12_stage": "current_partial_salt_ferrocyanides_and_soy_sauce_subtypes_verified",
+    "table12_stage": "current_partial_salt_ferrocyanides_soy_sauce_subtypes_and_12_10_routing_verified",
     "table11_sets_loaded": [
       "11.0",
       "11.1",
@@ -23061,6 +23064,16 @@
         "https://fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf",
         "https://fssai.gov.in/myth-buster",
         "https://comments.fssai.gov.in/Bestviewwl.aspx?NOTIFICATION_ID=4419",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Table 12 — Build 101 correction for FCS 12.10 / FSSR 2.3.59",
+      "rule": "Corrected an overreach found during validation: the 'No additives permitted' text immediately before 2.3.59 belongs to the preceding product standard, not Vegetable Protein Products. FCS 12.10 remains a current container with no direct Table 12 rows; PMSV does not convert that absence into a prohibition.",
+      "official_sources": [
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
+        "https://fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf",
         "https://fcstraining.fssai.gov.in/standard-product"
       ]
     }
