@@ -17,17 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_42_aspartame_exact_metal_mapping",
+    "stage": "phase_43_acesulfame_direct_impurity_mapping",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 123,
+    "exact_product_profiles": 124,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 178 maps Aspartame 2.8.9 to Arsenic 3 mg/kg and Lead 10 mg/kg.",
-      "Both limits are stated directly in the FSSAI 2.8.9 product standard and repeated as Aspartame/Aspertame-specific rows in current Version IX.",
-      "No generic tabletop-sweetener or Foods-not-specified row is used.",
-      "Dextrose and Chapter 2.9 mappings/locks remain unchanged."
+      "Build 179 adds direct FSSAI 2.8.10 impurity limits for Acesulfame Potassium: Fluoride 3 ppm and Heavy metals 10 ppm.",
+      "The Heavy metals limit is preserved as a group parameter and is not rewritten as Lead.",
+      "Calcium Saccharin is not mapped to the Saccharin sodium Arsenic/Lead rows.",
+      "Remaining Chapter 2.8 sugar Lead rows are conditional on exact sugar type and/or sulphated-ash criteria and remain fail-closed until those conditions are captured."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -76,7 +76,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Continue Chapter 2.8 direct-product review: Acesulfame Potassium, Calcium Saccharin, and remaining sugar forms; keep 'heavy metals' product-standard limits distinct from a specific Lead limit unless the regulation explicitly equates them.",
+    "next_priority": "Complete Chapter 2.8 gap review with explicit locks/conditional routes for Calcium Saccharin and sugar products whose Lead rows depend on sulphated ash or raw/refined identity.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -190,7 +190,9 @@
     "dextrose_products_added_build_177": 1,
     "dextrose_rules_added_build_177": 1,
     "aspartame_products_added_build_178": 1,
-    "aspartame_rules_added_build_178": 2
+    "aspartame_rules_added_build_178": 2,
+    "direct_product_standard_contaminant_products": 1,
+    "acesulfame_rules_added_build_179": 2
   },
   "all_food_rules": [
     {
@@ -3866,6 +3868,33 @@
           "article": "Aspertame (Aspartyl phenyl alanine methyl ester)",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026); FSSAI 2.8.9 product standard",
           "verification": "official_fssai_v9_plus_direct_product_standard"
+        }
+      ]
+    },
+    {
+      "id": "acesulfame-potassium",
+      "label": "Acesulfame Potassium",
+      "catalog_ids": [
+        "11-11-6-acesulfame-potassium"
+      ],
+      "rules": [
+        {
+          "contaminant": "Fluoride",
+          "limit": 3,
+          "unit": "ppm",
+          "article": "Acesulfame Potassium",
+          "source_basis": "FSSAI 2.8.10 product standard",
+          "verification": "official_fssai_direct_product_standard",
+          "source_note": "The consolidated FSSAI text prints 'Flouride'; PMSV displays the chemical name Fluoride without changing the numerical limit."
+        },
+        {
+          "contaminant": "Heavy metals",
+          "limit": 10,
+          "unit": "ppm",
+          "article": "Acesulfame Potassium",
+          "source_basis": "FSSAI 2.8.10 product standard",
+          "verification": "official_fssai_direct_product_standard",
+          "source_note": "Stored as Heavy metals exactly as regulated; not relabelled as Lead."
         }
       ]
     }
@@ -20967,6 +20996,35 @@
       "lock_scope": "Lead only",
       "reason": "Arsenic and aflatoxin routes are mapped. Lead 10 mg/kg remains locked because the Lead article says 'dried herbs and spices' while the current Cassia identity text does not explicitly state dried.",
       "status": "partial_profile_lead_locked"
+    }
+  ],
+  "direct_product_standard_contaminant_rules_v1": [
+    {
+      "catalog_id": "11-11-6-acesulfame-potassium",
+      "product_name": "Acesulfame Potassium",
+      "fssr": "2.8.10",
+      "rules": [
+        {
+          "contaminant": "Fluoride",
+          "limit": 3,
+          "unit": "ppm",
+          "article": "Acesulfame Potassium",
+          "source_basis": "FSSAI 2.8.10 product standard",
+          "verification": "official_fssai_direct_product_standard",
+          "source_note": "The consolidated FSSAI text prints 'Flouride'; PMSV displays the chemical name Fluoride without changing the numerical limit."
+        },
+        {
+          "contaminant": "Heavy metals",
+          "limit": 10,
+          "unit": "ppm",
+          "article": "Acesulfame Potassium",
+          "source_basis": "FSSAI 2.8.10 product standard",
+          "verification": "official_fssai_direct_product_standard",
+          "source_note": "Stored as Heavy metals exactly as regulated; not relabelled as Lead."
+        }
+      ],
+      "source_basis": "FSSAI Chapter 2.8 Version 1 (01.09.2023)",
+      "policy": "Direct numeric impurity limits from the standardized-product clause; no conversion of 'Heavy metals' into a specific metal."
     }
   ]
 }
