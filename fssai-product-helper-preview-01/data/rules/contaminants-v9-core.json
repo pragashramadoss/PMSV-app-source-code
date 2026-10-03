@@ -17,17 +17,18 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_39_mace_saffrole_exact_mapping",
+    "stage": "phase_40_chapter_2_9_contaminant_identity_review_complete",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 121,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 175 adds the direct Saffrole 10 ppm rule to standardized Mace (Jaipatri) 2.9.12.",
-      "Nutmeg already carried the same current FSSAI Saffrole rule.",
-      "Curry Powder, Mixed Masala and other composite foods do not receive a fixed Saffrole rule solely from product name; their ingredient-trigger route remains formulation-dependent.",
-      "Cassia Lead remains locked; Dried Mango products, Asafoetida, Seasoning and Spice Oleoresins remain under individual review."
+      "Build 176 completes the current Chapter 2.9 contaminant identity review and stores explicit fail-closed locks for six unmatched products plus Cassia Lead.",
+      "No generic 'Foods not specified', canned-food, raw-spice, salt or flavouring fallback is permitted for these locked routes.",
+      "Seasoning remains formulation-dependent because the current FSSAI standard allows a wide multi-ingredient composition.",
+      "Spice Oleoresins remain distinct extraction products; their own solvent limits are part of the Chapter 2.9 product standard, not inferred metal limits.",
+      "Future promotions require a new/current official FSSAI or FoSCoS identity basis."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -76,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Review remaining Chapter 2.9 products for exact article-level contaminant routes; keep composite and ingredient-dependent rules conditional.",
+    "next_priority": "Move to the next unresolved standardized-product contaminant family outside Chapter 2.9, preserving the same exact-identity/fail-closed policy.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -183,7 +184,10 @@
     "cassia_partial_rules_added_build_174": 3,
     "cassia_lead_locked": true,
     "mace_saffrole_rules_added_build_175": 1,
-    "mace_nutmeg_direct_saffrole_products": 2
+    "mace_nutmeg_direct_saffrole_products": 2,
+    "chapter_2_9_contaminant_identity_review_complete": true,
+    "chapter_2_9_locked_routes": 7,
+    "chapter_2_9_review_completed_build_176": true
   },
   "all_food_rules": [
     {
@@ -20823,6 +20827,64 @@
       "unit": "µg/kg",
       "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
       "verification": "official_fssai_v9_direct_spice_identity"
+    }
+  ],
+  "chapter_2_9_locked_contaminant_routes_v9": [
+    {
+      "catalog_id": "12-12-1-salt-substitutes",
+      "product_name": "Salt Substitutes",
+      "fssr": "2.9.30(6)",
+      "lock_scope": "automatic contaminant mapping",
+      "reason": "Do not inherit the 'Salt, food grade' metal rows. The FSSAI standard is a distinct low-sodium salt-substitute composition, not ordinary food-grade salt.",
+      "status": "locked_no_exact_current_article"
+    },
+    {
+      "catalog_id": "12-12-2-dried-mango-slices",
+      "product_name": "Dried Mango Slices",
+      "fssr": "2.9.23",
+      "lock_scope": "automatic contaminant mapping",
+      "reason": "Current metal rows identify canned mangoes/mango chutney, not dried mango slices. No canned-fruit or spice fallback is permitted.",
+      "status": "locked_no_exact_current_article"
+    },
+    {
+      "catalog_id": "12-12-2-dried-mango-powder-amchur",
+      "product_name": "Dried Mango Powder (Amchur)",
+      "fssr": "2.9.24",
+      "lock_scope": "automatic contaminant mapping",
+      "reason": "Current metal rows identify canned mangoes/mango chutney, not dried mango powder. The product is not promoted to the generic Spices/Spice Mix crop row without a direct identity basis.",
+      "status": "locked_no_exact_current_article"
+    },
+    {
+      "catalog_id": "12-12-2-asafoetida-hing-or-hingra",
+      "product_name": "Asafoetida (Hing or Hingra)",
+      "fssr": "2.9.29",
+      "lock_scope": "automatic contaminant mapping",
+      "reason": "The current standard identifies Asafoetida as an oleogumresin. PMSV will not infer raw-spice, dried-herb or flavouring metal rows from use/function alone.",
+      "status": "locked_no_exact_current_article"
+    },
+    {
+      "catalog_id": "12-12-2-seasoning",
+      "product_name": "Seasoning",
+      "fssr": "2.9.31",
+      "lock_scope": "automatic product-level contaminant mapping",
+      "reason": "Seasoning is explicitly multi-ingredient and may contain spices, herbs, extracts, salt, fruits/vegetables, meat, dairy, cereals and other ingredients. Contaminant rules must be ingredient/formulation dependent.",
+      "status": "locked_requires_formulation_route"
+    },
+    {
+      "catalog_id": "12-12-2-spice-oleoresins",
+      "product_name": "Spice Oleoresins",
+      "fssr": "2.9.32",
+      "lock_scope": "automatic contaminant mapping",
+      "reason": "Spice Oleoresins are solvent-extracted volatile/non-volatile constituents of spices or herbs. They are not auto-treated as raw spices or as the metal article 'flavourings' without an explicit current FSSAI product-to-article identity.",
+      "status": "locked_no_exact_current_article"
+    },
+    {
+      "catalog_id": "12-12-2-cassia-taj",
+      "product_name": "Cassia (Taj)",
+      "fssr": "2.9.5",
+      "lock_scope": "Lead only",
+      "reason": "Arsenic and aflatoxin routes are mapped. Lead 10 mg/kg remains locked because the Lead article says 'dried herbs and spices' while the current Cassia identity text does not explicitly state dried.",
+      "status": "partial_profile_lead_locked"
     }
   ]
 }
