@@ -17,14 +17,15 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_3_residue_mrl_complete",
+    "stage": "phase_4_antibiotics_parts_1_to_3",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 35,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Section 2.3.1 pesticide MRL table is complete through serial 213. Next normalize Section 2.3.2 antibiotics and other pharmacologically active substances in source order.",
+      "Section 2.3.2 parts (1)-(3) are loaded: seafood antibiotic limits, prohibited veterinary-practice substances/EMRLs, and honey antibiotic MRPLs.",
+      "Continue Section 2.3.2 part (4) veterinary antimicrobial/pharmacological tolerance table, serials 1-49.",
       "Add exact product/ingredient residue matching only after each pesticide commodity row is normalized.",
       "Continue remaining exact Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
       "Add packaging-triggered tin logic after packaging input is implemented."
@@ -35,7 +36,8 @@
       "2.2.1 Crop contaminants — exact product/ingredient triggers",
       "2.2.1 Naturally occurring toxic substances — selected exact ingredient triggers",
       "2.2.1 PCBs/PAH in fish and fishery products — complete table",
-      "2.3.1 Insecticide MRLs — complete current Version IX table, serials 1-213"
+      "2.3.1 Insecticide MRLs — complete current Version IX table, serials 1-213",
+      "2.3.2 Antibiotic and pharmacologically active substances — parts (1)-(3) complete; veterinary tolerance table pending"
     ],
     "ingredient_trigger_groups": 14,
     "crop_contaminant_groups": 6,
@@ -43,7 +45,11 @@
     "profile_expansion_note": "Build 129 adds exact crop-contaminant and naturally occurring toxin mappings for arecanut, pulses, pearl barley, four named nuts, mixed masala, nutmeg and sago/cassava/tapioca products; turmeric is also enriched with explicit spice aflatoxin limits.",
     "residue_batches_loaded": 6,
     "residue_pesticides_loaded": 213,
-    "residue_rows_loaded": 1098
+    "residue_rows_loaded": 1098,
+    "antibiotic_sections_loaded": 3,
+    "seafood_antibiotic_rows_loaded": 4,
+    "prohibited_veterinary_substances_loaded": 14,
+    "honey_mrpl_rows_loaded": 12
   },
   "all_food_rules": [
     {
@@ -8674,5 +8680,138 @@
     "next_serial": 170,
     "completeness": "complete_current_version_ix_section_2_3_1",
     "end_note": "Current Version IX Section 2.3.1 ends at serial 213 (Sulfoxaflor). The source then states that 0.01 mg/kg applies where an MRL has not been fixed; PMSV retains this as a source note and does not auto-apply a generic fallback until exact applicability logic is completed."
+  },
+  "antibiotic_and_pharmacological_substances": {
+    "source_basis": "Section 2.3.2 · Antibiotic and other pharmacologically active substances",
+    "source_version": "Version IX (03.02.2026)",
+    "source_policy": "Official FSSAI source only",
+    "stage": "parts_1_to_3_complete_veterinary_tolerance_table_pending",
+    "seafood_antibiotic_limits": {
+      "scope": "Sea foods including shrimps, prawns and any other variety of fish and fishery products",
+      "unit": "mg/kg",
+      "rows": [
+        {
+          "serial": 1,
+          "name": "Tetracycline",
+          "limit": "0.1"
+        },
+        {
+          "serial": 2,
+          "name": "Oxytetracycline",
+          "limit": "0.1"
+        },
+        {
+          "serial": 3,
+          "name": "Trimethoprim",
+          "limit": "0.05"
+        },
+        {
+          "serial": 4,
+          "name": "Oxolinic acid",
+          "limit": "0.3"
+        }
+      ]
+    },
+    "prohibited_veterinary_practice_substances": {
+      "scope": "Not permitted to be used at any stage of production of meat and meat products, milk and milk products, poultry and eggs, aquaculture and its products.",
+      "default_emrl": {
+        "value": "0.001",
+        "unit": "mg/kg"
+      },
+      "chloramphenicol_emrl": {
+        "value": "0.0003",
+        "unit": "mg/kg",
+        "equivalent": "0.3 ug/kg"
+      },
+      "substances": [
+        "Carbadox",
+        "Chloramphenicol",
+        "Chlorpromazine",
+        "Clenbuterol",
+        "Colistin",
+        "Crystal Violet (Sum of Crystal Violet and Leucocrystal Violet)",
+        "Glycopeptides",
+        "Malachite Green (Sum of Malachite green and Leucomalachite green)",
+        "Nitrofurans and its metabolites furazolidone (AOZ), nitrofurazone (SEM), furaltadone (AMOZ) and nitrofurantoin (AHD)",
+        "Streptomycin and its metabolite dihydrostreptomycin",
+        "Nitroimidazoles including Dimetridazole (DMZ); Ronidazole (RNZ) and its metabolite 2-hydroxymethyl-1-methyl-3 nitroimidazole (HMMNI); Ipronidazole (IPZ) and its metabolite Hydroxyipronidazole; Metronidazole (MNZ) and its metabolite 3 hydroxymetronidazole",
+        "Steroids",
+        "Stilbenes",
+        "Sulphamethoxazole"
+      ]
+    },
+    "honey_antibiotic_mrpl": {
+      "rule": "Use of any antibiotic is not permitted during honey production. The listed MRPLs are used to test misuse of antibiotics.",
+      "unit": "ug/kg",
+      "rows": [
+        {
+          "serial": 1,
+          "name": "Chloramphenicol",
+          "mrpl": "0.3"
+        },
+        {
+          "serial": 2,
+          "name": "Nitrofurans and its metabolites",
+          "mrpl": "1"
+        },
+        {
+          "serial": 3,
+          "name": "Sulphonamides and its metabolites",
+          "mrpl": "10",
+          "condition": "Either individually or collectively"
+        },
+        {
+          "serial": 4,
+          "name": "Streptomycin",
+          "mrpl": "10",
+          "condition": "Either individually or collectively"
+        },
+        {
+          "serial": 5,
+          "name": "Tetracycline",
+          "mrpl": "10"
+        },
+        {
+          "serial": "6(a)",
+          "name": "Oxytetracycline",
+          "mrpl": "10"
+        },
+        {
+          "serial": "6(b)",
+          "name": "Chlortetracycline",
+          "mrpl": "10"
+        },
+        {
+          "serial": 7,
+          "name": "Ampicillin",
+          "mrpl": "10"
+        },
+        {
+          "serial": 8,
+          "name": "Enrofloxacin",
+          "mrpl": "10"
+        },
+        {
+          "serial": 9,
+          "name": "Ciprofloxacin",
+          "mrpl": "10"
+        },
+        {
+          "serial": 10,
+          "name": "Erythromycin",
+          "mrpl": "10"
+        },
+        {
+          "serial": 11,
+          "name": "Tylosin",
+          "mrpl": "10"
+        }
+      ]
+    },
+    "veterinary_tolerance_limits": {
+      "stage": "pending",
+      "source_table_serial_range": "1-49",
+      "rows": []
+    }
   }
 }
