@@ -1993,7 +1993,8 @@ function showSelectedCatalogProduct(p){
   +'<div class="item"><b>'+esc(p.name)+'</b><small>FoSCoS listing/category code: '+esc(p.fcs||p.subcategory||p.category||'—')+'<br>Appendix A FCS: '+esc(appendixFcs||'Not mapped')+(appendixStatus?'<br><span class="'+(appendixFcs?'status-good':'status-warn')+'">'+esc(appendixStatus)+'</span>':'')+'<br>FSSR: '+esc(p.fssr||'Not shown in loaded catalogue row')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FoSCoS hierarchy mapping pending official verification</span>':'')+'</small></div>'
   +'<div class="item"><b>PMSV profile status</b><small>'+(detailed?'<span class="status-good">Detailed rule profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base rule profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small></div>'
   +'</div>'
-  +(profile&&!detailed?'<div class="notice"><b>'+(chapterLoaded?'Chapter profile loaded':'Base profile ready')+':</b> '+(chapterLoaded?'The product has been mapped to its applicable FSSAI chapter standard and structured chapter-rule data is loaded. Machine validation of every product-specific clause and linked Appendix rule is still being completed before full formulation compliance is enabled.':'Product identity, FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.')+'</div>':'');
+  +(profile?.chapter_rule_route_note?'<div class="notice '+(profile.chapter_rule_route_status==='specific_variant_table_pending'?'':'oknote')+'"><b>Chapter routing:</b> '+esc(profile.chapter_rule_route_note)+(Array.isArray(profile.linked_rule_keys)&&profile.linked_rule_keys.length?'<br><small>Linked rule key(s): '+profile.linked_rule_keys.map(esc).join(' + ')+'</small>':'')+'</div>':'')
+  +(profile&&!detailed?'<div class="notice"><b>'+(chapterLoaded?'Chapter profile loaded':'Base profile ready')+':</b> '+(chapterLoaded?'The product has been mapped to its applicable FSSAI chapter standard and structured chapter-rule data is loaded. Machine validation of every product-specific clause and linked Appendix rule is still being completed before full formulation compliance is enabled.':'Product identity, Appendix FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.')+'</div>':'');
  if(profile){
    actions.innerHTML='<button class="btn" type="button" id="startSelectedProduct">'+(detailed?'Start formulation assessment →':chapterLoaded?'Open chapter product profile →':'Open base product profile →')+'</button>';
    document.getElementById('startSelectedProduct')?.addEventListener('click',()=>{
@@ -2178,7 +2179,7 @@ function renderProprietaryAppendixA(){
 }
 async function loadAppendixCore(){
  try{
-   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=121',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=122',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCoreDb=await res.json();
  }catch(e){appendixCoreDb=null;}
@@ -2288,7 +2289,7 @@ function applyProductGate(){
        +(!appendixFcs?'<span class="status-warn">'+esc(appendixFcsStatusLabel(profile)||'Appendix A FCS mapping is not available; additive inheritance must remain locked.')+'</span><br>':'')
        +(detailed
          ?'<b>Detailed rule profile complete.</b> Formulation compliance checks are enabled for this product.'
-         :chapterLoaded?'<b>FSSAI chapter profile loaded.</b> The product is mapped to '+esc(profile.fssr||profile.rule_key||'its Chapter 2.1 standard')+' and structured chapter rules are present. Full formulation editing remains locked until every linked product clause and Appendix rule is machine-validated.':'<b>Base rule profile loaded.</b> General regulatory layers and the official product mapping are available, but product-specific composition/ingredient clauses are not complete yet. Formulation editing is locked so PMSV does not apply another product\'s rules by mistake.');
+         :chapterLoaded?'<b>FSSAI chapter profile loaded.</b> The product is mapped to '+esc(profile.fssr||profile.rule_key||'its applicable standard')+' and structured chapter rules are present. '+(profile.chapter_rule_route_status==='specific_variant_table_pending'?'<b>Its product-specific variant table is still pending and remains locked.</b> ':'')+'Full formulation editing remains locked until every linked product clause and Appendix rule is machine-validated.':'<b>Base rule profile loaded.</b> General regulatory layers and the official product mapping are available, but product-specific composition/ingredient clauses are not complete yet. Formulation editing is locked so PMSV does not apply another product\'s rules by mistake.');
      gate.classList.remove('hidden');
    }
    if(add)add.disabled=!detailed;
@@ -2358,7 +2359,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=121',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=122',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}

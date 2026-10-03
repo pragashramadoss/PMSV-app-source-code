@@ -31723,7 +31723,7 @@
       "14.1",
       "14.1.2"
     ],
-    "next_priority": "Appendix FCS routing is hardened. Next: audit all 526 product/profile chapter-rule keys and rule-file links so a product cannot open another standard's rule profile.",
+    "next_priority": "Chapter rule-file/key audit is complete: 339/339 linked profiles have valid files and keys. Next: audit the 187 base profiles without rule links and load/promote exact standards only.",
     "annexure_1_groups_loaded": 23,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
@@ -32149,6 +32149,22 @@
       "source_aliases": [
         "1.3.2.2 -> 1.3.2.1 (Non-Dairy based beverage whitener)"
       ]
+    },
+    "chapter_rule_link_audit": {
+      "checked_on": "2026-10-03",
+      "profiles": 526,
+      "profiles_with_rule_file_and_key": 339,
+      "missing_rule_files": 0,
+      "missing_rule_keys": 0,
+      "composite_parent_plus_source_routes": 5,
+      "explicit_variant_routes": 4,
+      "specific_variant_tables_pending": 2,
+      "profiles_without_rule_link": 187,
+      "pending_specific_profiles": [
+        "06-06-1-pulses",
+        "06-06-1-millets"
+      ],
+      "rule": "A chapter profile is not treated as fully specific merely because its parent rule key exists. Composite refined-oil routes link the generic refined-oil rule plus the source-oil rule; explicit variants are tagged; pulses and millets remain variant-detail pending until their grain-specific tables are structured."
     }
   },
   "annexure_1_groups": {
@@ -33284,10 +33300,19 @@
     {
       "checked_on": "2026-10-03",
       "scope": "Build 121 — product-to-Appendix-FCS routing and inheritance hardening",
-      "rule": "Audited all 526 catalog products/profiles against the current Version 3 permission-set hierarchy. 462 products have a usable current Appendix route (461 direct + one official-source numbering alias), 50 FoSCoS listing/category codes are not Appendix A FCS codes and are now fail-closed, and 13 products have no stored official Appendix FCS and remain unmapped. Also fixed inheritance merging so multiple same-additive rows within one category and no-INS rows cannot collapse into one another.",
+      "rule": "Audited all 526 catalog products/profiles against the current Version 3 permission-set hierarchy. 463 products have a usable Appendix route (462 direct current-Version-3 mappings plus one official-source numbering alias), 50 FoSCoS listing/category codes are not Appendix A FCS codes and are fail-closed, and 13 products have no stored official Appendix FCS and remain unmapped. Also fixed inheritance merging so multiple same-additive rows within one category and no-INS rows cannot collapse into one another.",
       "official_sources": [
         "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Section I/description page 21 and Table 1 page 83",
         "FoSCoS standardized-product catalogue snapshot already stored in PMSV product master"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Build 122 — standardized-product chapter-rule link audit",
+      "rule": "Validated all 339 existing chapter-profile links: every referenced local rule file exists and every referenced rule key resolves. Five refined-oil products were upgraded to explicit composite routes (generic refined-oil rule plus source-oil rule), four products were tagged to explicit variants within their parent rule objects, and Pulses/Millets remain specifically flagged because the loaded Food Grains object does not yet structure their grain-specific tables.",
+      "official_sources": [
+        "FoSCoS standardized-product FSSR mappings stored in PMSV product master",
+        "PMSV chapter-rule datasets derived only from official FSSAI chapter compendia"
       ]
     }
   ],
