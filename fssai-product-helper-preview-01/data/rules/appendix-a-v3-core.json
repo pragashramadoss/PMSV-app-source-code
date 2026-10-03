@@ -16366,7 +16366,7 @@
     "5.1.1": {
       "name": "Cocoa mixes (powders) and cocoa mass/cake",
       "table": "Table 5",
-      "status": "verified_current_partial",
+      "status": "verified_current_partial_source_malformed_row",
       "entries": [
         {
           "name": "Acesulfame potassium",
@@ -16473,7 +16473,18 @@
           "verification": "current_2025_indexed_fssai"
         }
       ],
-      "completeness_note": "Current Version 3 rows are normalized except BENZOATES. The official indexed PDF text renders that maximum as '15,00 mg/kg'; PMSV quarantines that row rather than silently correcting or guessing the legal value."
+      "completeness_note": "All readable current Version 3 5.1.1 rows are active. BENZOATES remains locked because the official uploaded PDF itself prints the malformed maximum '15,00 mg/kg'.",
+      "locked_rows": [
+        {
+          "name": "BENZOATES",
+          "ins": "",
+          "raw_source_limit": "15,00 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf",
+          "lock_reason": "Official Version 3 source itself prints a malformed numeric value ('15,00 mg/kg'). PMSV does not infer or correct the legal maximum without a separate current official FSSAI clarification/correction."
+        }
+      ]
     },
     "5.1.2": {
       "name": "Cocoa mixes (syrups)",
@@ -29938,7 +29949,7 @@
       "1.8.2",
       "9.2.4.3"
     ],
-    "next_priority": "Table 6 is current Version 3 complete from the uploaded official FSSAI Appendix A PDF. Continue with Table 5 current Version 3 reconciliation.",
+    "next_priority": "Table 5 is reconciled to current Version 3 except the source-malformed 5.1.1 BENZOATES value ('15,00 mg/kg'), which remains locked. Continue with Table 4 current Version 3 reconciliation.",
     "annexure_1_groups_loaded": 18,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
@@ -30155,7 +30166,7 @@
       "5.3",
       "5.4"
     ],
-    "table5_stage": "current_v3_table5_normalized_except_5_1_1_malformed_benzoate",
+    "table5_stage": "current_v3_complete_except_source_malformed_5_1_1_benzoates",
     "table4_sets_loaded": [
       "4.0",
       "4.1",
@@ -31065,6 +31076,14 @@
       "rule": "Reconciled all Table 6 cereal, flour/starch, pasta/noodle, dessert, batter and soybean-product permissions directly against the uploaded official FSSAI Appendix A Version 3 (01.08.2025), pages 187–206. Product-specific Atta, Maida and Corn flour restrictions were preserved separately from the shared 6.2.1/6.2.2 category permissions.",
       "official_sources": [
         "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Table 5 — Build 112 direct visual verification of 5.1.1 BENZOATES source anomaly",
+      "rule": "The uploaded official FSSAI Appendix A Version 3 PDF itself displays the 5.1.1 BENZOATES maximum as '15,00 mg/kg'. PMSV keeps the row locked and does not silently interpret it as 1,500 or any other value. All other Table 5 rows remain as already normalized current-Version-3 permissions.",
+      "official_sources": [
+        "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf, page 167"
       ]
     }
   ],
