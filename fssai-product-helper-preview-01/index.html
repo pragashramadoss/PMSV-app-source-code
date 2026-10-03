@@ -97,7 +97,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div class="card">
-<div class="section-title"><h2>Official sources for the product master</h2><span>No AI / no generic websites</span></div>
+<div class="section-title"><h2>Official sources for the product master</h2><span>FSSAI / FoSCoS only</span></div>
 <div id="productMasterSources"></div>
 </div>
 </section>
@@ -691,6 +691,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="sources" class="view hidden">
 <div class="card source">
 <h2>Official regulatory sources used</h2>
+<div class="notice oknote"><b>Strict source policy:</b> regulatory evidence in this helper is restricted to official <b>FSSAI/FoSCoS</b> sources. Social media (including Instagram), Scribd, news sites, blogs, commercial sites, Wikipedia and other third-party pages are not accepted as evidence. If an official current provision cannot be verified, PMSV leaves it locked rather than substituting another website.<br><br><b>Nutrition composition:</b> only <b>ICMR-NIN / IFCT</b> composition data may feed the nutrition calculator. FSSAI nutrition rules are used only for legal declarations, RDA/reference values and prescribed calculation factors.</div>
 <p><b>FoSCoS — View all FSSAI Standardized Food Products</b><br><a target="_blank" rel="noopener" href="https://foscos.fssai.gov.in/standard-product">Official licensing product list used as the product-name / food-category mapping layer for PMSV multi-product expansion</a></p>
 <p><b>FoSCoS — Food Product Categories used for Licensing/Registration</b><br><a target="_blank" rel="noopener" href="https://foscos.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf">Official food-category and subcategory framework used for the product master</a></p>
 
@@ -1145,7 +1146,7 @@ function renderLabelRequirements(){
 function nutritionProfileFor(name){
  if(!nutritionDb||!Array.isArray(nutritionDb.profiles))return null;
  const n=normIngredient(name);
- return nutritionDb.profiles.find(p=>Array.isArray(p.names)&&p.names.some(x=>normIngredient(x)===n))||null;
+ return nutritionDb.profiles.find(p=>p.active_for_calculation===true&&p.source_authority==='ICMR-NIN'&&Array.isArray(p.names)&&p.names.some(x=>normIngredient(x)===n))||null;
 }
 function nutritionServingMl(){
  const n=Number(document.getElementById('nutritionServingMl')?.value||document.getElementById('labelServingMl')?.value||250);
@@ -1247,7 +1248,7 @@ function renderNutrition(){
  if(status){
    if(calc.complete){
      status.className='notice oknote';
-     status.innerHTML='<b>Nutrition calculation COMPLETE for the currently loaded government-source profiles.</b><br>100% of the formulation mass is matched to a verified local nutrition profile. Values update automatically whenever an ingredient, quantity or density changes.';
+     status.innerHTML='<b>Nutrition calculation COMPLETE for the currently loaded ICMR-NIN profiles.</b><br>100% of the formulation mass is matched to a verified local nutrition profile. Values update automatically whenever an ingredient, quantity or density changes.';
    }else{
      status.className='notice';
      status.innerHTML='<b>Nutrition calculation INCOMPLETE.</b><br>'+fmt(calc.coveragePct,2)+'% of formulation mass currently has a verified nutrition profile. Unmatched ingredient(s): <b>'+calc.unmatched.map(x=>esc(x.item.name)).join(', ')+'</b>. Their nutrients are not guessed or treated as zero; therefore the calculated panel below is provisional and must not be used as the final label until coverage is complete.';
@@ -2148,7 +2149,7 @@ function renderProprietaryAppendixA(){
 }
 async function loadAppendixCore(){
  try{
-   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=107',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=108',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCoreDb=await res.json();
  }catch(e){appendixCoreDb=null;}
@@ -2326,7 +2327,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=107',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=108',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2351,7 +2352,7 @@ document.getElementById('productSelect')?.addEventListener('change',event=>{
 async function loadRegulatoryDb(){
  const status=document.getElementById('regDbStatus');
  try{
-   const res=await fetch('./data/regulatory-db-v1.json?v=43',{cache:'reload'});
+   const res=await fetch('./data/regulatory-db-v1.json?v=108',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    regulatoryDb=await res.json();
    ingredientCatalog=catalogFromDb(regulatoryDb);
@@ -2374,13 +2375,15 @@ async function loadRegulatoryDb(){
 async function loadNutritionDb(){
  const status=document.getElementById('nutritionDbStatus');
  try{
-   const res=await fetch('./data/nutrition-db-v1.json?v=43',{cache:'reload'});
+   const res=await fetch('./data/nutrition-db-v1.json?v=108',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    nutritionDb=await res.json();
    if(status){
-     const count=Array.isArray(nutritionDb.profiles)?nutritionDb.profiles.length:0;
-     status.className='notice oknote';
-     status.innerHTML='<b>Official-source nutrition database loaded · no AI.</b><br>'+count+' verified nutrition profiles are currently loaded in this starter dataset. Primary sources: ICMR–NIN IFCT 2017 and FSSAI Labelling & Display Regulations. Unmatched formulation ingredients are never estimated.';
+     const profiles=Array.isArray(nutritionDb.profiles)?nutritionDb.profiles:[];
+     const active=profiles.filter(p=>p.active_for_calculation===true&&p.source_authority==='ICMR-NIN').length;
+     const locked=profiles.length-active;
+     status.className=active?'notice oknote':'notice';
+     status.innerHTML='<b>Nutrition source policy: ICMR-NIN composition only.</b><br>'+active+' active ICMR-NIN nutrition profiles are loaded; '+locked+' previous starter profile(s) are locked and cannot enter the calculation. FSSAI is used separately for labelling/RDA rules. Unmatched ingredients are never estimated.';
    }
  }catch(e){
    nutritionDb=null;

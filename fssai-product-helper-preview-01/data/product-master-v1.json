@@ -566,6 +566,13 @@
       "other_special_route": "FSSAI Health Supplements / Nutraceuticals / FSDU / FSMP framework",
       "proprietary_food_fallback": false,
       "next_validation": "Load exact composition/additive/label rules for each category-13 subroute before full formulation compliance is enabled."
+    },
+    "source_governance": {
+      "status": "strict_official_only",
+      "regulatory": "FSSAI/FoSCoS only",
+      "nutrition_composition": "ICMR-NIN only",
+      "audited_on": "2026-10-03",
+      "helper_url_audit": "All URLs stored in the FSSAI Product Helper were checked; no Instagram, Scribd, news, Wikipedia or other third-party domains are stored as helper evidence."
     }
   },
   "source_hierarchy": [
@@ -21180,7 +21187,27 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 107,
+  "build_number": 108,
   "build_label": "Build 58",
-  "build_date": "2026-10-03"
+  "build_date": "2026-10-03",
+  "source_policy": {
+    "regulatory_evidence": "FSSAI/FoSCoS official sources only",
+    "allowed_regulatory_hosts": [
+      "fssai.gov.in",
+      "www.fssai.gov.in",
+      "foscos.fssai.gov.in",
+      "fcstraining.fssai.gov.in",
+      "comments.fssai.gov.in"
+    ],
+    "prohibited_as_evidence": [
+      "social media including Instagram",
+      "Scribd",
+      "news/media websites",
+      "blogs",
+      "commercial websites",
+      "Wikipedia",
+      "search-result snippets from non-FSSAI domains"
+    ],
+    "fail_closed_rule": "If a current FSSAI/FoSCoS provision cannot be verified from an official source, PMSV keeps the rule locked/incomplete and does not substitute a third-party or older-source value."
+  }
 }

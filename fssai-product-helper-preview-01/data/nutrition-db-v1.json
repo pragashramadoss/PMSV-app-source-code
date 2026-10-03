@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title": "PMSV India Nutrition Calculation Database",
-  "scope": "Deterministic nutrition-calculation starter dataset for the Caffeinated Beverage prototype. IFCT master ingestion is not yet complete; unmatched ingredients require supplier/laboratory nutrient data.",
+  "scope": "Deterministic nutrition-calculation database. Nutrient composition is accepted only from ICMR-NIN/IFCT. FSSAI is used separately for legal nutrition-labelling rules, RDA/reference values and prescribed calculation factors. Unmapped ingredients remain unmatched; no third-party estimation is permitted.",
   "sources": {
     "ifct2017": {
       "authority": "ICMR-National Institute of Nutrition, Department of Health Research, Ministry of Health and Family Welfare, Government of India",
@@ -40,8 +40,8 @@
         "water"
       ],
       "display_name": "Water",
-      "source_type": "composition_defined",
-      "source": "Ingredient identity; zero contribution to mandatory energy/macronutrient fields.",
+      "source_type": "locked_non_icmr_starter",
+      "source": "Ingredient identity; zero contribution to mandatory energy/macronutrient fields. [LOCKED in Build 108: not ICMR-NIN composition data.]",
       "per_100g": {
         "protein_g": 0,
         "carbohydrate_g": 0,
@@ -57,7 +57,11 @@
         "erythritol_g": 0,
         "ethanol_g": 0,
         "organic_acid_g": 0
-      }
+      },
+      "active_for_calculation": false,
+      "verification_status": "locked_pending_icmr_nin_mapping",
+      "previous_source_type": "composition_defined",
+      "source_authority": "PMSV starter assumption — not accepted for nutrition calculation"
     },
     {
       "names": [
@@ -67,8 +71,8 @@
         "white sugar"
       ],
       "display_name": "Sugar / sucrose",
-      "source_type": "composition_defined",
-      "source": "Purified sucrose formulation basis; energy calculated using FSSAI carbohydrate factor.",
+      "source_type": "locked_non_icmr_starter",
+      "source": "Purified sucrose formulation basis; energy calculated using FSSAI carbohydrate factor. [LOCKED in Build 108: not ICMR-NIN composition data.]",
       "per_100g": {
         "protein_g": 0,
         "carbohydrate_g": 100,
@@ -84,7 +88,11 @@
         "erythritol_g": 0,
         "ethanol_g": 0,
         "organic_acid_g": 0
-      }
+      },
+      "active_for_calculation": false,
+      "verification_status": "locked_pending_icmr_nin_mapping",
+      "previous_source_type": "composition_defined",
+      "source_authority": "PMSV starter assumption — not accepted for nutrition calculation"
     },
     {
       "names": [
@@ -92,8 +100,8 @@
         "crystalline fructose"
       ],
       "display_name": "Fructose",
-      "source_type": "composition_defined",
-      "source": "Purified monosaccharide formulation basis; energy calculated using FSSAI carbohydrate factor.",
+      "source_type": "locked_non_icmr_starter",
+      "source": "Purified monosaccharide formulation basis; energy calculated using FSSAI carbohydrate factor. [LOCKED in Build 108: not ICMR-NIN composition data.]",
       "per_100g": {
         "protein_g": 0,
         "carbohydrate_g": 100,
@@ -109,15 +117,19 @@
         "erythritol_g": 0,
         "ethanol_g": 0,
         "organic_acid_g": 0
-      }
+      },
+      "active_for_calculation": false,
+      "verification_status": "locked_pending_icmr_nin_mapping",
+      "previous_source_type": "composition_defined",
+      "source_authority": "PMSV starter assumption — not accepted for nutrition calculation"
     },
     {
       "names": [
         "citric acid"
       ],
       "display_name": "Citric acid",
-      "source_type": "composition_defined",
-      "source": "Pure organic-acid formulation basis; energy calculated using FSSAI organic-acid factor of 3 kcal/g.",
+      "source_type": "locked_non_icmr_starter",
+      "source": "Pure organic-acid formulation basis; energy calculated using FSSAI organic-acid factor of 3 kcal/g. [LOCKED in Build 108: not ICMR-NIN composition data.]",
       "per_100g": {
         "protein_g": 0,
         "carbohydrate_g": 0,
@@ -133,15 +145,19 @@
         "erythritol_g": 0,
         "ethanol_g": 0,
         "organic_acid_g": 100
-      }
+      },
+      "active_for_calculation": false,
+      "verification_status": "locked_pending_icmr_nin_mapping",
+      "previous_source_type": "composition_defined",
+      "source_authority": "PMSV starter assumption — not accepted for nutrition calculation"
     },
     {
       "names": [
         "caffeine"
       ],
       "display_name": "Caffeine",
-      "source_type": "composition_defined",
-      "source": "Pure caffeine does not fall under the energy-yielding components listed in the FSSAI energy conversion factors; zero contribution is assigned to the mandatory macronutrient fields.",
+      "source_type": "locked_non_icmr_starter",
+      "source": "Pure caffeine does not fall under the energy-yielding components listed in the FSSAI energy conversion factors; zero contribution is assigned to the mandatory macronutrient fields. [LOCKED in Build 108: not ICMR-NIN composition data.]",
       "per_100g": {
         "protein_g": 0,
         "carbohydrate_g": 0,
@@ -157,15 +173,19 @@
         "erythritol_g": 0,
         "ethanol_g": 0,
         "organic_acid_g": 0
-      }
+      },
+      "active_for_calculation": false,
+      "verification_status": "locked_pending_icmr_nin_mapping",
+      "previous_source_type": "composition_defined",
+      "source_authority": "PMSV starter assumption — not accepted for nutrition calculation"
     },
     {
       "names": [
         "erythritol"
       ],
       "display_name": "Erythritol",
-      "source_type": "composition_defined",
-      "source": "Pure erythritol formulation basis; FSSAI energy factor is 0 kcal/g.",
+      "source_type": "locked_non_icmr_starter",
+      "source": "Pure erythritol formulation basis; FSSAI energy factor is 0 kcal/g. [LOCKED in Build 108: not ICMR-NIN composition data.]",
       "per_100g": {
         "protein_g": 0,
         "carbohydrate_g": 0,
@@ -181,7 +201,11 @@
         "erythritol_g": 100,
         "ethanol_g": 0,
         "organic_acid_g": 0
-      }
+      },
+      "active_for_calculation": false,
+      "verification_status": "locked_pending_icmr_nin_mapping",
+      "previous_source_type": "composition_defined",
+      "source_authority": "PMSV starter assumption — not accepted for nutrition calculation"
     },
     {
       "names": [
@@ -189,8 +213,8 @@
         "ethyl alcohol"
       ],
       "display_name": "Ethanol",
-      "source_type": "composition_defined",
-      "source": "Pure ethanol formulation basis; FSSAI energy factor is 7 kcal/g.",
+      "source_type": "locked_non_icmr_starter",
+      "source": "Pure ethanol formulation basis; FSSAI energy factor is 7 kcal/g. [LOCKED in Build 108: not ICMR-NIN composition data.]",
       "per_100g": {
         "protein_g": 0,
         "carbohydrate_g": 0,
@@ -206,7 +230,29 @@
         "erythritol_g": 0,
         "ethanol_g": 100,
         "organic_acid_g": 0
-      }
+      },
+      "active_for_calculation": false,
+      "verification_status": "locked_pending_icmr_nin_mapping",
+      "previous_source_type": "composition_defined",
+      "source_authority": "PMSV starter assumption — not accepted for nutrition calculation"
     }
-  ]
+  ],
+  "source_policy": {
+    "nutrient_composition": "ICMR-NIN only",
+    "allowed_composition_hosts": [
+      "nin.res.in",
+      "www.nin.res.in",
+      "icmr.gov.in",
+      "www.icmr.gov.in"
+    ],
+    "current_composition_reference": "Indian Food Composition Tables 2017 (ICMR-NIN)",
+    "legal_label_reference": "FSSAI Labelling and Display Regulations may be used only for mandatory declarations, RDA/reference values and prescribed energy-conversion rules; FSSAI is not treated as the nutrient-composition database.",
+    "fail_closed_rule": "An ingredient without an explicitly verified ICMR-NIN composition mapping is unmatched. PMSV must not estimate it from websites, supplier pages, search results, social media, generic databases or hand-entered starter assumptions."
+  },
+  "coverage": {
+    "active_icmr_nin_profiles": 0,
+    "locked_non_icmr_starter_profiles": 7,
+    "ifct_master_ingestion": "pending",
+    "source_verified_on": "2026-10-03"
+  }
 }

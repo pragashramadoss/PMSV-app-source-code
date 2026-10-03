@@ -3,7 +3,26 @@
   "database_id": "pmsv-fssai-regulatory-db",
   "build_scope": "Caffeinated Beverage evaluation prototype",
   "last_verified": "2026-10-02",
-  "source_policy": "official_fssai_regulations_only",
+  "source_policy": {
+    "regulatory_evidence": "FSSAI/FoSCoS official sources only",
+    "allowed_regulatory_hosts": [
+      "fssai.gov.in",
+      "www.fssai.gov.in",
+      "foscos.fssai.gov.in",
+      "fcstraining.fssai.gov.in",
+      "comments.fssai.gov.in"
+    ],
+    "prohibited_as_evidence": [
+      "social media including Instagram",
+      "Scribd",
+      "news/media websites",
+      "blogs",
+      "commercial websites",
+      "Wikipedia",
+      "search-result snippets from non-FSSAI domains"
+    ],
+    "fail_closed_rule": "If a current FSSAI/FoSCoS provision cannot be verified from an official source, PMSV keeps the rule locked/incomplete and does not substitute a third-party or older-source value."
+  },
   "runtime_ai_required": false,
   "coverage": {
     "complete_fssai_master": false,
