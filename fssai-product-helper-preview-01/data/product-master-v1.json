@@ -47,10 +47,11 @@
       "2.3": {
         "title": "Fruit & Vegetable Products",
         "rule_file": "./data/rules/chapter-2-3-fruit-vegetable-v1.json",
-        "mapped_catalog_products": 21,
-        "structured_core_standards": 18,
+        "mapped_catalog_products": 22,
+        "structured_core_standards": 19,
         "status": "structured_core_loaded",
-        "next_validation": "Remaining Chapter 2.3 product standards and named product tables, Appendix A, contaminants, microbiology, processing aids and labels"
+        "next_validation": "Remaining Chapter 2.3 product standards and named product tables, plus current Appendix A, contaminants, microbiology, processing aids and labels; Fermented Soybean Paste 2.3.57 is now structured and mapped to FCS 12.9.1.",
+        "source_verified_on": "2026-10-03"
       },
       "2.4": {
         "title": "Cereals and Cereal Products",
@@ -14185,6 +14186,33 @@
       "standard_name": "Hemp seed flour",
       "source_verified_on": "2026-10-03",
       "foscos_mapping_status": "pending_official_mapping"
+    },
+    {
+      "id": "06-06-8-fermented-soybean-paste",
+      "display_name": "Fermented Soybean Paste",
+      "foscos_category": "06",
+      "foscos_subcategory": "06.8",
+      "fcs": "12.9.1",
+      "fssr": "2.3.57",
+      "regulation_chapter": "2.3",
+      "route": "standardized",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.3 product standard mapped; structured chapter rule data loaded",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.3, current Version 3",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, as applicable",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Current FoSCoS maps Fermented Soybean Paste to FCS 12.9.1 and FSSR 2.3.57. Chapter composition and quality rules are loaded; final additive compliance remains governed by the current Appendix A 12.9.1 row set, which is still locked pending direct Version 3 alignment.",
+      "rule_file": "./data/rules/chapter-2-3-fruit-vegetable-v1.json",
+      "rule_key": "2.3.57",
+      "standard_name": "Fermented Soybean Paste",
+      "source_verified_on": "2026-10-03"
     }
   ],
   "rule_profile_schema": {
@@ -21086,10 +21114,23 @@
       "rule_file": "./data/rules/chapter-2-16-hemp-v1.json",
       "rule_key": "2.16(2)(iii)",
       "foscos_mapping_status": "pending_official_mapping"
+    },
+    {
+      "id": "06-06-8-fermented-soybean-paste",
+      "category": "06",
+      "subcategory": "06.8",
+      "name": "Fermented Soybean Paste",
+      "fcs": "12.9.1",
+      "fssr": "2.3.57",
+      "profile_status": "chapter_profile_ready",
+      "catalog_source": "FoSCoS standardized-product list",
+      "profile_id": "06-06-8-fermented-soybean-paste",
+      "rule_file": "./data/rules/chapter-2-3-fruit-vegetable-v1.json",
+      "rule_key": "2.3.57"
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 98,
+  "build_number": 99,
   "build_label": "Build 58",
   "build_date": "2026-10-03"
 }

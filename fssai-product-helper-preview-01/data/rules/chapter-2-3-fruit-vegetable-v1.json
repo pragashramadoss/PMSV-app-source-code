@@ -605,6 +605,81 @@
           "unit": "°Brix"
         }
       ]
+    },
+    {
+      "key": "2.3.57",
+      "name": "Fermented Soybean Paste",
+      "status": "structured_core",
+      "definition": "Fermented food whose essential ingredient is soybean with the trypsin inhibitor inactivated; the product is paste-like and may be semi-solid with partly retained soybean shape.",
+      "variants": [
+        "Fermented soybean paste manufactured with soybean only",
+        "Fermented soybean paste manufactured with soybean and grains"
+      ],
+      "basic_ingredients": [
+        "soybean",
+        "salt",
+        "water",
+        "naturally occurring or cultivated non-pathogenic, non-toxin-producing Bacillus spp. and/or Aspergillus spp."
+      ],
+      "optional_ingredients": [
+        "grains and/or flour as defined in sub-regulation 2.4",
+        "yeast and/or yeast extracts",
+        "Lactobacillus and/or Lactococcus",
+        "distilled ethyl alcohol derived from agricultural products",
+        "nutritive sugars including honey as defined in sub-regulation 2.8",
+        "starch syrup",
+        "permitted natural flavouring materials"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 60,
+          "unit": "% by weight",
+          "applies_to": "both variants"
+        },
+        {
+          "parameter": "Total nitrogen",
+          "operator": ">=",
+          "value": 1.6,
+          "unit": "% by weight",
+          "applies_to": "soybean only"
+        },
+        {
+          "parameter": "Total nitrogen",
+          "operator": ">=",
+          "value": 0.6,
+          "unit": "% by weight",
+          "applies_to": "soybean and grains"
+        },
+        {
+          "parameter": "Amino nitrogen",
+          "operator": ">=",
+          "value": 0.3,
+          "unit": "% by weight",
+          "applies_to": "soybean only"
+        },
+        {
+          "parameter": "Amino nitrogen",
+          "operator": ">=",
+          "value": 0.12,
+          "unit": "% by weight",
+          "applies_to": "soybean and grains"
+        },
+        {
+          "parameter": "Minimum fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of container water capacity"
+        }
+      ],
+      "process_rules": [
+        "Soybean trypsin inhibitor shall be inactivated.",
+        "Product shall have characteristic flavour, odour, colour and texture."
+      ],
+      "additives": "Appendix A — FCS 12.9.1",
+      "microbiology": "Appendix B",
+      "source_note": "Verified against current FSSAI Chapter 2.3 and current FoSCoS mapping to FCS 12.9.1 / FSSR 2.3.57."
     }
   ]
 }
