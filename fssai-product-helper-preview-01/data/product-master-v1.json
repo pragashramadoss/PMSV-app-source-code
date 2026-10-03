@@ -789,17 +789,20 @@
       "rule": "Only current official FSSAI sources are used. External regulation sets remain locked until their product standards are structured."
     },
     "contaminants": {
-      "status": "phase_2c_exact_crop_and_toxin_product_profiles",
+      "status": "phase_3_residue_mrl_batch_1",
       "regulation_version": "Version IX (03.02.2026)",
       "rule_file": "./data/rules/contaminants-v9-core.json",
       "exact_product_profiles": 35,
       "universal_rules": 1,
       "food_not_specified_defaults_auto_applied": false,
       "source_verified_on": "2026-10-03",
-      "next_validation": "Continue exact Section 2.1/2.2 mappings, then begin Section 2.3 residue normalization with exact commodity matching only.",
+      "next_validation": "Continue Section 2.3.1 from Chlorantraniliprole (serial 29) onward; preserve starred/basis markers exactly and do not auto-apply residue defaults.",
       "ingredient_trigger_groups": 14,
       "crop_contaminant_groups": 6,
-      "naturally_occurring_toxin_groups": 4
+      "naturally_occurring_toxin_groups": 4,
+      "residue_batches_loaded": 1,
+      "residue_pesticides_loaded": 28,
+      "residue_rows_loaded": 159
     }
   },
   "source_hierarchy": [
@@ -27731,7 +27734,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 129,
+  "build_number": 130,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {

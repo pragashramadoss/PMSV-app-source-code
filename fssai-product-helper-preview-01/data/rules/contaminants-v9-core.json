@@ -17,28 +17,33 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_2c_exact_crop_and_toxin_product_profiles",
+    "stage": "phase_3_residue_mrl_batch_1",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 35,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
+      "Continue Section 2.3.1 residue table from serial 29 (Chlorantraniliprole) onward in source order.",
+      "Add exact product/ingredient residue matching only after each pesticide commodity row is normalized.",
       "Continue remaining exact Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
-      "Expand Section 2.2 product/category mappings only where the standardized product has an explicit current FSSAI commodity match.",
-      "Load Section 2.3 pesticide and other residue tables using exact commodity matching.",
       "Add packaging-triggered tin logic after packaging input is implemented."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
       "2.1 Metal Contaminants — exact product core",
       "2.2.1 Crop contaminants — exact product/ingredient triggers",
-      "2.2.1 Naturally occurring toxic substances — selected exact ingredient triggers"
+      "2.2.1 Naturally occurring toxic substances — selected exact ingredient triggers",
+      "2.2.1 PCBs/PAH in fish and fishery products — complete table",
+      "2.3.1 Insecticide MRLs — batch 1, serials 1-28"
     ],
     "ingredient_trigger_groups": 14,
     "crop_contaminant_groups": 6,
     "profile_expansion_build": 129,
-    "profile_expansion_note": "Build 129 adds exact crop-contaminant and naturally occurring toxin mappings for arecanut, pulses, pearl barley, four named nuts, mixed masala, nutmeg and sago/cassava/tapioca products; turmeric is also enriched with explicit spice aflatoxin limits."
+    "profile_expansion_note": "Build 129 adds exact crop-contaminant and naturally occurring toxin mappings for arecanut, pulses, pearl barley, four named nuts, mixed masala, nutmeg and sago/cassava/tapioca products; turmeric is also enriched with explicit spice aflatoxin limits.",
+    "residue_batches_loaded": 1,
+    "residue_pesticides_loaded": 28,
+    "residue_rows_loaded": 159
   },
   "all_food_rules": [
     {
@@ -1724,5 +1729,1026 @@
         }
       ]
     }
-  ]
+  ],
+  "fish_pcb_pah": {
+    "source_basis": "Section 2.2.1 · Polychlorinated biphenyls (PCBs) and Polycyclic Aromatic Hydrocarbon (PAH) compounds in Fish and Fishery Products",
+    "rules": [
+      {
+        "contaminant": "Polychlorinated biphenyls (sum of PCB28, PCB52, PCB101, PCB138, PCB153 and PCB180)",
+        "article": "Inland and Migratory Fish",
+        "limit": 2,
+        "unit": "ppm"
+      },
+      {
+        "contaminant": "Polychlorinated biphenyls (sum of PCB28, PCB52, PCB101, PCB138, PCB153 and PCB180)",
+        "article": "Marine Fish, Crustaceans and molluscs",
+        "limit": 0.5,
+        "unit": "ppm"
+      },
+      {
+        "contaminant": "Benzo(a)pyrene",
+        "article": "Smoked Fishery Products",
+        "limit": 5,
+        "unit": "ppb"
+      }
+    ]
+  },
+  "residue_mrls": {
+    "source_basis": "Section 2.3.1 · Restriction on the use of insecticides",
+    "source_version": "Version IX (03.02.2026)",
+    "batch": "1",
+    "serial_range": "1-28",
+    "auto_apply": false,
+    "symbol_policy": "MRL symbols such as '*', '(F)', shell-free basis and carcass-fat basis are retained exactly as printed. PMSV does not interpret those markers until the corresponding official notes are separately normalized.",
+    "pesticides": [
+      {
+        "serial": 1,
+        "name": "2,4-Dichlorophenoxy Acetic Acid",
+        "rows": [
+          {
+            "food": "Sugarcane",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Maize",
+            "mrl": "0.05",
+            "unit": "mg/kg",
+            "condition": "Food grains row"
+          },
+          {
+            "food": "Wheat",
+            "mrl": "2",
+            "unit": "mg/kg",
+            "condition": "Food grains row"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.1",
+            "unit": "mg/kg",
+            "condition": "Food grains row"
+          },
+          {
+            "food": "Other food grains",
+            "mrl": "0.01",
+            "unit": "mg/kg",
+            "condition": "Food grains row"
+          },
+          {
+            "food": "Milled food grains",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Poultry",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Eggs",
+            "mrl": "0.05",
+            "unit": "mg/kg",
+            "condition": "Shell free basis"
+          },
+          {
+            "food": "Fruits",
+            "mrl": "2",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 2,
+        "name": "Acephate (expressed as mixture of Methamidophos and acephate)",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Safflower seed",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cottonseed",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Meat products",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 3,
+        "name": "Acetamiprid",
+        "rows": [
+          {
+            "food": "Chilli",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "20",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Okra",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cabbage",
+            "mrl": "0.7",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Meat products",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 4,
+        "name": "Alachlor",
+        "rows": [
+          {
+            "food": "Cotton seed",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Maize",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 5,
+        "name": "Alpha cypermethrin",
+        "rows": [
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Pine apple",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 6,
+        "name": "Alpha naphthyl Acetic Acid",
+        "rows": [
+          {
+            "food": "Tomato",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mango",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Pineapple",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 7,
+        "name": "Ametoctradin",
+        "rows": [
+          {
+            "food": "Grapes",
+            "mrl": "6",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cucumber",
+            "mrl": "0.4",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tomato",
+            "mrl": "0.3",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 8,
+        "name": "Anilophos",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 9,
+        "name": "Atrazine",
+        "rows": [
+          {
+            "food": "Maize",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sugarcane",
+            "mrl": "0.25",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 10,
+        "name": "Azimsulfuron",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 11,
+        "name": "Azoxystrobin",
+        "rows": [
+          {
+            "food": "Grapes",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tomato",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mango",
+            "mrl": "0.7",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "10",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cucumber",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Potato",
+            "mrl": "7",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cumin",
+            "mrl": "0.03*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Maize",
+            "mrl": "0.03*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Wheat",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.03*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Onion",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 12,
+        "name": "Benfuracarb",
+        "rows": [
+          {
+            "food": "Red Gram",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 13,
+        "name": "Sum of benomyl and carbendazim expressed as carbendazim",
+        "rows": [
+          {
+            "food": "Food grains",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milled food grains",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Vegetables",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mango",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Banana (whole)",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Other fruits",
+            "mrl": "5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cottonseed",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sugar beet",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dry fruits",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Eggs",
+            "mrl": "0.1",
+            "unit": "mg/kg",
+            "condition": "Shell free basis"
+          },
+          {
+            "food": "Meat and Poultry",
+            "mrl": "0.1",
+            "unit": "mg/kg",
+            "condition": "Carcass fat basis"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.1",
+            "unit": "mg/kg",
+            "condition": "(F)"
+          }
+        ]
+      },
+      {
+        "serial": 14,
+        "name": "Bensulfuron Methyl",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 15,
+        "name": "Beta Cyfluthrin",
+        "rows": [
+          {
+            "food": "Okra",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Brinjal",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed",
+            "mrl": "0.7",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean",
+            "mrl": "0.03",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean Oil",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 16,
+        "name": "Bifenthrin",
+        "rows": [
+          {
+            "food": "Sugarcane",
+            "mrl": "0.03",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Apple",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tea",
+            "mrl": "30",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 17,
+        "name": "Bispyribac Sodium",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 18,
+        "name": "Bitertanol",
+        "rows": [
+          {
+            "food": "Wheat",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Meat products",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tea",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Apple",
+            "mrl": "0.4",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 19,
+        "name": "Buprofezin",
+        "rows": [
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "20",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mango",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Okra",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 20,
+        "name": "Butachlor",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 21,
+        "name": "Captan",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cherries",
+            "mrl": "25",
+            "unit": "mg/kg",
+            "condition": "Fruit and Vegetables composite row"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "25",
+            "unit": "mg/kg",
+            "condition": "Fruit and Vegetables composite row"
+          },
+          {
+            "food": "Melons",
+            "mrl": "10",
+            "unit": "mg/kg",
+            "condition": "Fruit and Vegetables composite row"
+          },
+          {
+            "food": "Other fruits",
+            "mrl": "15",
+            "unit": "mg/kg",
+            "condition": "Fruit and Vegetables composite row"
+          },
+          {
+            "food": "Other vegetables",
+            "mrl": "15",
+            "unit": "mg/kg",
+            "condition": "Fruit and Vegetables composite row"
+          },
+          {
+            "food": "Black gram",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 22,
+        "name": "Carbaryl",
+        "rows": [
+          {
+            "food": "Sesamum",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Fish",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Wheat",
+            "mrl": "2.0",
+            "unit": "mg/kg",
+            "condition": "Food grains row"
+          },
+          {
+            "food": "Maize",
+            "mrl": "0.02",
+            "unit": "mg/kg",
+            "condition": "Food grains row"
+          },
+          {
+            "food": "Other food grains",
+            "mrl": "1.5",
+            "unit": "mg/kg",
+            "condition": "Food grains row"
+          },
+          {
+            "food": "Milled food grains",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Okra and leafy vegetables",
+            "mrl": "10",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Other vegetables",
+            "mrl": "5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed (whole)",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Maize cob (kernels)",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "2.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Maize",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "50",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Citrus (Orange)",
+            "mrl": "15",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 23,
+        "name": "Carbendazim",
+        "rows": [
+          {
+            "food": "Wheat",
+            "mrl": "0.05",
+            "unit": "mg/kg",
+            "condition": "Food grains row"
+          },
+          {
+            "food": "Rice",
+            "mrl": "2.0",
+            "unit": "mg/kg",
+            "condition": "Food grains row"
+          },
+          {
+            "food": "Other food grains",
+            "mrl": "0.1",
+            "unit": "mg/kg",
+            "condition": "Food grains row"
+          },
+          {
+            "food": "Milled food grains",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Vegetables",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mango",
+            "mrl": "5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Banana (whole)",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Other fruits",
+            "mrl": "5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sugar beet",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dry fruits",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Eggs",
+            "mrl": "0.1",
+            "unit": "mg/kg",
+            "condition": "Shell free basis"
+          },
+          {
+            "food": "Meat & Poultry",
+            "mrl": "0.1",
+            "unit": "mg/kg",
+            "condition": "Carcass fat basis"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.1",
+            "unit": "mg/kg",
+            "condition": "(F)"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tea",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "2*",
+            "unit": "mg/kg",
+            "condition": "Separate explicit Rice row also printed in the current source."
+          }
+        ]
+      },
+      {
+        "serial": 24,
+        "name": "Carbofuran (sum of carbofuran and 3-hydroxy carbofuran expressed as carbofuran)",
+        "rows": [
+          {
+            "food": "Food grains",
+            "mrl": "0.10",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milled food grains",
+            "mrl": "0.03",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Fruits & Vegetables",
+            "mrl": "0.10",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Oil seeds",
+            "mrl": "0.10",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sugarcane",
+            "mrl": "0.10",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat & Poultry",
+            "mrl": "0.10",
+            "unit": "mg/kg",
+            "condition": "Carcass fat basis"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.05",
+            "unit": "mg/kg",
+            "condition": "Fat basis"
+          }
+        ]
+      },
+      {
+        "serial": 25,
+        "name": "Carbosulfan",
+        "rows": [
+          {
+            "food": "Chilli",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "20",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 26,
+        "name": "Carfentrazone Ethyl",
+        "rows": [
+          {
+            "food": "Wheat",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.1*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tea",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 27,
+        "name": "Carpropamid",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "1",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 28,
+        "name": "Cartap Hydrochloride",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          }
+        ]
+      }
+    ]
+  }
 }
