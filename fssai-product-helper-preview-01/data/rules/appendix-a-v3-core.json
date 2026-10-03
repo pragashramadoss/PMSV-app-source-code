@@ -9729,27 +9729,46 @@
     "5.2.4": {
       "name": "Traditional mouth fresheners",
       "table": "Table 5",
-      "status": "current_foscos_route_appendix_rows_pending",
+      "status": "verified_current_parent_only_complete",
       "entries": [],
-      "completeness_note": "Current FoSCoS subcategories are loaded; the Appendix A additive table rows remain pending."
+      "completeness_note": "Current FoSCoS route resolved against the explicit Appendix A hierarchy rule. Additive permissions are inherited from the fully loaded 5.2 parent unless another FSSAI rule/product standard imposes a stricter condition.",
+      "regulatory_conditions": [
+        "Current Appendix A Version 3 states that the Food Category System is hierarchical: an additive recognized for a general category is recognized for all its sub-categories unless otherwise stated.",
+        "Current FoSCoS places this mouth-freshener route under FCS 5.2. No separate 5.2.4 additive row appears in the current Version 3 Table 5, so PMSV applies the verified 5.2 parent permissions and does not invent child-specific permissions."
+      ]
     },
     "5.2.4.1": {
       "name": "Dried fruit/vegetable/nut based mouth fresheners",
       "table": "Table 5",
-      "status": "current_foscos_route_appendix_rows_pending",
-      "entries": []
+      "status": "verified_current_parent_only_complete",
+      "entries": [],
+      "regulatory_conditions": [
+        "Current Appendix A Version 3 states that the Food Category System is hierarchical: an additive recognized for a general category is recognized for all its sub-categories unless otherwise stated.",
+        "Current FoSCoS places this mouth-freshener route under FCS 5.2. No separate 5.2.4 additive row appears in the current Version 3 Table 5, so PMSV applies the verified 5.2 parent permissions and does not invent child-specific permissions."
+      ],
+      "completeness_note": "No direct current Version 3 Table 5 child row is present. The verified 5.2 parent permission set is inherited under the Appendix A hierarchical rule."
     },
     "5.2.4.2": {
       "name": "Spice based mouth fresheners",
       "table": "Table 5",
-      "status": "current_foscos_route_appendix_rows_pending",
-      "entries": []
+      "status": "verified_current_parent_only_complete",
+      "entries": [],
+      "regulatory_conditions": [
+        "Current Appendix A Version 3 states that the Food Category System is hierarchical: an additive recognized for a general category is recognized for all its sub-categories unless otherwise stated.",
+        "Current FoSCoS places this mouth-freshener route under FCS 5.2. No separate 5.2.4 additive row appears in the current Version 3 Table 5, so PMSV applies the verified 5.2 parent permissions and does not invent child-specific permissions."
+      ],
+      "completeness_note": "No direct current Version 3 Table 5 child row is present. The verified 5.2 parent permission set is inherited under the Appendix A hierarchical rule."
     },
     "5.2.4.3": {
       "name": "Other traditional mouth fresheners",
       "table": "Table 5",
-      "status": "current_foscos_route_appendix_rows_pending",
-      "entries": []
+      "status": "verified_current_parent_only_complete",
+      "entries": [],
+      "regulatory_conditions": [
+        "Current Appendix A Version 3 states that the Food Category System is hierarchical: an additive recognized for a general category is recognized for all its sub-categories unless otherwise stated.",
+        "Current FoSCoS places this mouth-freshener route under FCS 5.2. No separate 5.2.4 additive row appears in the current Version 3 Table 5, so PMSV applies the verified 5.2 parent permissions and does not invent child-specific permissions."
+      ],
+      "completeness_note": "No direct current Version 3 Table 5 child row is present. The verified 5.2 parent permission set is inherited under the Appendix A hierarchical rule."
     },
     "5.3": {
       "name": "Chewing gum",
@@ -10889,7 +10908,7 @@
       "15.2",
       "15.3"
     ],
-    "next_priority": "Resolve the malformed current 5.1.1 BENZOATES maximum without inference and document how current FoSCoS 5.2.4 mouth-freshener children inherit the Version 3 Appendix 5.2 parent; then continue Table 4.",
+    "next_priority": "Keep the malformed current 5.1.1 BENZOATES maximum quarantined unless an official FSSAI correction/clarification is found; continue Appendix A Table 4 fruits, vegetables, nuts and seeds.",
     "annexure_1_groups_loaded": 18,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
@@ -11105,7 +11124,7 @@
       "5.3",
       "5.4"
     ],
-    "table5_stage": "current_v3_table5_normalized_except_5_1_1_malformed_benzoate_and_foscos_5_2_4_interpretation"
+    "table5_stage": "current_v3_table5_normalized_except_5_1_1_malformed_benzoate"
   },
   "annexure_1_groups": {
     "SULFITES": [
@@ -11636,6 +11655,16 @@
       "official_sources": [
         "https://fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf",
         "https://fcstraining.fssai.gov.in/standard-product"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Table 5 — Build 79 FoSCoS mouth-freshener inheritance",
+      "rule": "Current Appendix A Version 3 explicitly makes the FCS hierarchical, so a general-category additive permission applies to all sub-categories unless otherwise stated. Current FoSCoS places mouth-freshener products at 5.2.4.1, 5.2.4.2 and 5.2.4.3 under 5.2. Because Version 3 Table 5 has no separate 5.2.4 additive row, PMSV inherits only the fully verified 5.2 parent permissions and adds no child-specific additive permissions.",
+      "official_sources": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf",
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf"
       ]
     }
   ]
