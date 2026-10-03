@@ -47,10 +47,10 @@
       "2.3": {
         "title": "Fruit & Vegetable Products",
         "rule_file": "./data/rules/chapter-2-3-fruit-vegetable-v1.json",
-        "mapped_catalog_products": 22,
-        "structured_core_standards": 19,
+        "mapped_catalog_products": 23,
+        "structured_core_standards": 20,
         "status": "structured_core_loaded",
-        "next_validation": "Remaining Chapter 2.3 product standards and named product tables, plus current Appendix A, contaminants, microbiology, processing aids and labels; Fermented Soybean Paste 2.3.57 is now structured and mapped to FCS 12.9.1.",
+        "next_validation": "Remaining Chapter 2.3 product standards and named product tables, plus contaminants, microbiology, processing aids and labels. Fermented Soybean Paste 2.3.57 and Vegetable Protein Products 2.3.59 are now structured and mapped to Table 12 FCS routes.",
         "source_verified_on": "2026-10-03"
       },
       "2.4": {
@@ -11896,13 +11896,13 @@
       "foscos_category": "12",
       "foscos_subcategory": "12.10",
       "fcs": "12.10",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.3.59",
+      "regulation_chapter": "2.3",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.3 product standard mapped; structured chapter rule data loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.3, Version 3 (07.05.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -11911,7 +11911,11 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Current FSSAI standard 2.3.59 is loaded with identity, permitted optional ingredients and composition. The standard expressly permits no food additives, so the product-specific rule is stricter than a generic category fallback.",
+      "rule_file": "./data/rules/chapter-2-3-fruit-vegetable-v1.json",
+      "rule_key": "2.3.59",
+      "standard_name": "Vegetable Protein Products",
+      "source_verified_on": "2026-10-03"
     },
     {
       "id": "13-13-1-infant-formula",
@@ -20034,10 +20038,12 @@
       "subcategory": "12.10",
       "name": "Vegetable Protein Products",
       "fcs": "12.10",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.3.59",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
-      "profile_id": "12-12-10-vegetable-protein-products"
+      "profile_id": "12-12-10-vegetable-protein-products",
+      "rule_file": "./data/rules/chapter-2-3-fruit-vegetable-v1.json",
+      "rule_key": "2.3.59"
     },
     {
       "id": "13-13-1-infant-formula",
@@ -21130,7 +21136,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 99,
+  "build_number": 100,
   "build_label": "Build 58",
   "build_date": "2026-10-03"
 }

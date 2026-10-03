@@ -680,6 +680,58 @@
       "additives": "Appendix A — FCS 12.9.1",
       "microbiology": "Appendix B",
       "source_note": "Verified against current FSSAI Chapter 2.3 and current FoSCoS mapping to FCS 12.9.1 / FSSR 2.3.57."
+    },
+    {
+      "key": "2.3.59",
+      "name": "Vegetable Protein Products",
+      "status": "structured_core",
+      "definition": "Food products produced by reducing or removing major non-protein constituents such as water, oil, starch and other carbohydrates from vegetable materials other than single-cell protein sources, to achieve protein content of at least 40%.",
+      "raw_material_rules": [
+        "Prepared from clean, sound plant material free from foreign matter, or from vegetable protein products of lower protein content meeting this standard."
+      ],
+      "optional_ingredients": [
+        "carbohydrates including sugars",
+        "edible fats and oils permitted under FSSAI regulations",
+        "other protein products",
+        "vitamins and minerals",
+        "salt",
+        "herbs",
+        "spices"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture content",
+          "operator": "<=",
+          "value": 10,
+          "unit": "%"
+        },
+        {
+          "parameter": "Crude Protein (N × 6.25)",
+          "operator": ">=",
+          "value": 40,
+          "unit": "% on dry weight basis"
+        },
+        {
+          "parameter": "Total Ash",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% on dry weight basis"
+        },
+        {
+          "parameter": "Residual Fat",
+          "operator": "GMP",
+          "value": "Compatible with GMP",
+          "unit": ""
+        },
+        {
+          "parameter": "Crude Fibre",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% on dry weight basis"
+        }
+      ],
+      "additives": "No additives permitted under product standard 2.3.59.",
+      "source_note": "Verified against current FSSAI Chapter 2.3 Version 3 (07.05.2025). FoSCoS lists Vegetable Protein Products under FCS 12.10."
     }
   ]
 }
