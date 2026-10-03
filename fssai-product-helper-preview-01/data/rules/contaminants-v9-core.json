@@ -17,16 +17,16 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_9_exact_literal_metal_product_mapping",
+    "stage": "phase_10_verified_alias_metal_product_mapping",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 36,
+    "exact_product_profiles": 39,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Literal product-name matching against the completed Section 2.1 metal article master has been applied to 15 standardized products.",
-      "Only exact normalized product-name equality was used; no fuzzy, semantic or category inference was used.",
-      "Continue explicit alias/FSSR mappings only where FSSAI wording and PMSV product identity are demonstrably the same product.",
+      "Six explicitly reviewed PMSV standardized products now inherit Section 2.1 metal rows through documented regulatory aliases; no fuzzy matching was used.",
+      "Combined or condition-dependent products remain unmapped where automatic application could overreach (for example Tomato Ketchup and Tomato Sauce vs a ketchup-only row).",
+      "Continue explicit mappings only where the current FSSAI article wording and PMSV product identity are demonstrably equivalent.",
       "Keep all 'Foods not specified' rows reference-only until absence of a more specific row is proven.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied.",
       "Add packaging-triggered tin logic after packaging input is implemented."
@@ -78,7 +78,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Expand explicit Section 2.1 product/FSSR mappings using verified aliases and exact regulatory identity; do not use fuzzy matching.",
+    "next_priority": "Continue reviewed explicit Section 2.1 aliases/FSSR mappings, then implement packaging-triggered Tin rules once packaging input exists.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -115,7 +115,10 @@
       "11-11-6-sorbitol",
       "99-99-1-baking-powder",
       "99-99-1-gelatin"
-    ]
+    ],
+    "verified_alias_products": 6,
+    "verified_alias_new_profiles": 3,
+    "verified_alias_rules_added": 9
   },
   "all_food_rules": [
     {
@@ -1273,6 +1276,112 @@
           "article": "Sucralose",
           "source_basis": "Section 2.1 · Lead",
           "verification": "exact_literal_article_match_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-02-02-2-table-margarine",
+      "label": "Table margarine",
+      "catalog_ids": [
+        "02-02-2-table-margarine"
+      ],
+      "match_fssr": [
+        "2.2.5(1)"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Margarine",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_verified_alias_v9"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Margarine",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_verified_alias_v9"
+        },
+        {
+          "contaminant": "Nickel",
+          "limit": 1.5,
+          "unit": "mg/kg",
+          "article": "All hydrogenated, partially hydrogenated, interesterified vegetable oils and fats such as vanaspati, table margarine, bakery and industrial margarine, bakery shortening, fat spread and partially hydrogenated soyabean oil",
+          "source_basis": "Section 2.1 · Nickel",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-02-02-2-bakery-and-industrial-margarine",
+      "label": "Bakery and Industrial Margarine",
+      "catalog_ids": [
+        "02-02-2-bakery-and-industrial-margarine"
+      ],
+      "match_fssr": [
+        "2.2.5(2)"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Margarine",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_verified_alias_v9"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Margarine",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_verified_alias_v9"
+        },
+        {
+          "contaminant": "Nickel",
+          "limit": 1.5,
+          "unit": "mg/kg",
+          "article": "All hydrogenated, partially hydrogenated, interesterified vegetable oils and fats such as vanaspati, table margarine, bakery and industrial margarine, bakery shortening, fat spread and partially hydrogenated soyabean oil",
+          "source_basis": "Section 2.1 · Nickel",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-04-04-2-thermally-processed-tomato-puree-and-paste",
+      "label": "Thermally Processed Tomato Puree and Paste",
+      "catalog_ids": [
+        "04-04-2-thermally-processed-tomato-puree-and-paste"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 1.5,
+          "unit": "mg/kg",
+          "article": "Processed tomato concentrates",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_verified_alias_v9"
+        },
+        {
+          "contaminant": "Copper",
+          "limit": 100,
+          "unit": "mg/kg",
+          "article": "Tomato puree, paste, powder, and cocktails",
+          "source_basis": "Section 2.1 · Copper",
+          "condition": "On dried tomato solids basis.",
+          "verification": "explicit_verified_alias_v9"
+        },
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Processed tomato concentrates",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
         }
       ]
     }
@@ -15546,5 +15655,169 @@
         "verification": "official_fssai_v9_direct"
       }
     ]
-  }
+  },
+  "explicit_metal_alias_mappings_v9": [
+    {
+      "product_id": "12-12-1-edible-common-salt",
+      "product_name": "Edible Common Salt",
+      "fssr": "2.9.30(1)",
+      "added_rules": 0,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Salt, food grade",
+          "limit": 2,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Cadmium",
+          "article": "Salt, food grade",
+          "limit": 0.5,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Mercury",
+          "article": "Salt, food grade",
+          "limit": 0.1,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "product_id": "04-04-1-jams-fruit-jellies-and-marmalades",
+      "product_name": "Jams, Fruit Jellies and Marmalades",
+      "fssr": "2.3.31",
+      "added_rules": 0,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Jam (fruit preserves) and jellies",
+          "limit": 1,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Tin",
+          "article": "Jam, Jellies and Marmalade",
+          "limit": 250,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "product_id": "02-02-2-table-margarine",
+      "product_name": "Table margarine",
+      "fssr": "2.2.5(1)",
+      "added_rules": 3,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Margarine",
+          "limit": 0.1,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Margarine",
+          "limit": 0.1,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Nickel",
+          "article": "All hydrogenated, partially hydrogenated, interesterified vegetable oils and fats such as vanaspati, table margarine, bakery and industrial margarine, bakery shortening, fat spread and partially hydrogenated soyabean oil",
+          "limit": 1.5,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "product_id": "02-02-2-bakery-and-industrial-margarine",
+      "product_name": "Bakery and Industrial Margarine",
+      "fssr": "2.2.5(2)",
+      "added_rules": 3,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Margarine",
+          "limit": 0.1,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Margarine",
+          "limit": 0.1,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Nickel",
+          "article": "All hydrogenated, partially hydrogenated, interesterified vegetable oils and fats such as vanaspati, table margarine, bakery and industrial margarine, bakery shortening, fat spread and partially hydrogenated soyabean oil",
+          "limit": 1.5,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-turmeric-haldi",
+      "product_name": "Turmeric (Haldi)",
+      "fssr": "2.9.18",
+      "added_rules": 0,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Turmeric whole and powder",
+          "limit": 10,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Copper",
+          "article": "Turmeric whole and powder",
+          "limit": 5,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Turmeric whole and powder",
+          "limit": 0.1,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Tin",
+          "article": "Turmeric whole and powder",
+          "limit": 0.01,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Cadmium",
+          "article": "Turmeric whole and powder",
+          "limit": 0.1,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "product_id": "04-04-2-thermally-processed-tomato-puree-and-paste",
+      "product_name": "Thermally Processed Tomato Puree and Paste",
+      "fssr": "",
+      "added_rules": 3,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Processed tomato concentrates",
+          "limit": 1.5,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Copper",
+          "article": "Tomato puree, paste, powder, and cocktails",
+          "limit": 100,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Tin",
+          "article": "Processed tomato concentrates",
+          "limit": 250,
+          "unit": "mg/kg"
+        }
+      ]
+    }
+  ]
 }
