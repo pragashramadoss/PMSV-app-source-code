@@ -215,11 +215,30 @@
     "appendix_a": {
       "rule_file": "./data/rules/appendix-a-v3-core.json",
       "source_version": "Version 3 (01.08.2025)",
-      "status": "table9_partial_table10_partial_table11_partial_table12_partial_table13_routes_table14_partial_table15_loaded",
+      "status": "table8_partial_table9_partial_table10_partial_table11_partial_table12_partial_table13_routes_table14_partial_table15_loaded",
       "gmp_entries_loaded": 183,
       "gmp_annex_exclusions_loaded": 90,
-      "permission_sets_loaded": 112,
+      "permission_sets_loaded": 131,
       "loaded_fcs": [
+        "8.0",
+        "8.1",
+        "8.1.1",
+        "8.1.2",
+        "8.2",
+        "8.2.1",
+        "8.2.1.1",
+        "8.2.1.2",
+        "8.2.1.3",
+        "8.2.2",
+        "8.2.3",
+        "8.3",
+        "8.3.1",
+        "8.3.1.1",
+        "8.3.1.2",
+        "8.3.1.3",
+        "8.3.2",
+        "8.3.3",
+        "8.4",
         "9.0",
         "9.1",
         "9.1.1",
@@ -334,7 +353,7 @@
         "15.3"
       ],
       "source_verified_on": "2026-10-03",
-      "next_validation": "Complete current Appendix A Version 3 Table 9 child-category and fully-preserved rows, then continue Table 8 (meat and poultry).",
+      "next_validation": "Complete Table 8 current-row normalization for 8.2/8.3/8.4, then continue Table 7 (bakery products).",
       "annexure_1_groups_loaded": 18,
       "table15_note_conditions_loaded": 14,
       "note_conditions_loaded": 42,
@@ -344,7 +363,8 @@
       "table12_stage": "hierarchy_loaded_salt_sauce_soy_partial",
       "table11_stage": "hierarchy_and_official_prior_rows_loaded_v3_recheck_pending",
       "table10_stage": "hierarchy_and_official_processed_egg_rows_loaded_v3_recheck_pending",
-      "table9_stage": "hierarchy_plus_verified_fresh_processed_semipreserved_rows_v3_recheck_pending"
+      "table9_stage": "hierarchy_plus_verified_fresh_processed_semipreserved_rows_v3_recheck_pending",
+      "table8_stage": "hierarchy_current_foscos_routing_plus_verified_rows_loaded"
     },
     "special_nutrition": {
       "rule_file": "./data/rules/special-nutrition-routing-v1.json",
@@ -20922,7 +20942,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 72,
+  "build_number": 73,
   "build_label": "Build 58",
   "build_date": "2026-10-03"
 }
