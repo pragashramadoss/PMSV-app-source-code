@@ -17,17 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_43_acesulfame_direct_impurity_mapping",
+    "stage": "phase_44_honey_antibiotic_mrpl_product_mapping",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 124,
+    "exact_product_profiles": 125,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 179 adds direct FSSAI 2.8.10 impurity limits for Acesulfame Potassium: Fluoride 3 ppm and Heavy metals 10 ppm.",
-      "The Heavy metals limit is preserved as a group parameter and is not rewritten as Lead.",
-      "Calcium Saccharin is not mapped to the Saccharin sodium Arsenic/Lead rows.",
-      "Remaining Chapter 2.8 sugar Lead rows are conditional on exact sugar type and/or sulphated-ash criteria and remain fail-closed until those conditions are captured."
+      "Build 180 links all 12 current Version IX Honey antibiotic MRPL rows to standardized Honey 2.8.3(1).",
+      "Every displayed Honey MRPL row states that antibiotic use is prohibited during honey production and that MRPL is an analytical misuse-detection threshold, not a permitted tolerance.",
+      "No veterinary tissue/milk tolerance table is substituted for the Honey-specific MRPL table.",
+      "Remaining Chapter 2.8 sugar-metal routes stay conditional/fail-closed where identity or sulphated-ash criteria are not proven."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -76,7 +76,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Complete Chapter 2.8 gap review with explicit locks/conditional routes for Calcium Saccharin and sugar products whose Lead rows depend on sulphated ash or raw/refined identity.",
+    "next_priority": "Finish Chapter 2.8 conditional/locked sugar review, then move to the next standardized-product family with exact Version IX identities.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -192,7 +192,9 @@
     "aspartame_products_added_build_178": 1,
     "aspartame_rules_added_build_178": 2,
     "direct_product_standard_contaminant_products": 1,
-    "acesulfame_rules_added_build_179": 2
+    "acesulfame_rules_added_build_179": 2,
+    "honey_product_mrpl_mapping_active": true,
+    "honey_product_mrpl_rules_mapped_build_180": 12
   },
   "all_food_rules": [
     {
@@ -3895,6 +3897,123 @@
           "source_basis": "FSSAI 2.8.10 product standard",
           "verification": "official_fssai_direct_product_standard",
           "source_note": "Stored as Heavy metals exactly as regulated; not relabelled as Lead."
+        }
+      ]
+    },
+    {
+      "id": "honey",
+      "label": "Honey",
+      "catalog_ids": [
+        "11-11-5-honey"
+      ],
+      "rules": [
+        {
+          "contaminant": "Antibiotic MRPL — Chloramphenicol",
+          "limit": 0.3,
+          "unit": "µg/kg",
+          "article": "Honey — antibiotic misuse testing",
+          "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance.",
+          "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_honey_mrpl"
+        },
+        {
+          "contaminant": "Antibiotic MRPL — Nitrofurans and its metabolites",
+          "limit": 1,
+          "unit": "µg/kg",
+          "article": "Honey — antibiotic misuse testing",
+          "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance.",
+          "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_honey_mrpl"
+        },
+        {
+          "contaminant": "Antibiotic MRPL — Sulphonamides and its metabolites",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Honey — antibiotic misuse testing",
+          "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance. Source condition: Either individually or collectively.",
+          "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_honey_mrpl"
+        },
+        {
+          "contaminant": "Antibiotic MRPL — Streptomycin",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Honey — antibiotic misuse testing",
+          "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance. Source condition: Either individually or collectively.",
+          "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_honey_mrpl"
+        },
+        {
+          "contaminant": "Antibiotic MRPL — Tetracycline",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Honey — antibiotic misuse testing",
+          "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance.",
+          "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_honey_mrpl"
+        },
+        {
+          "contaminant": "Antibiotic MRPL — Oxytetracycline",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Honey — antibiotic misuse testing",
+          "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance.",
+          "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_honey_mrpl"
+        },
+        {
+          "contaminant": "Antibiotic MRPL — Chlortetracycline",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Honey — antibiotic misuse testing",
+          "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance.",
+          "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_honey_mrpl"
+        },
+        {
+          "contaminant": "Antibiotic MRPL — Ampicillin",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Honey — antibiotic misuse testing",
+          "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance.",
+          "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_honey_mrpl"
+        },
+        {
+          "contaminant": "Antibiotic MRPL — Enrofloxacin",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Honey — antibiotic misuse testing",
+          "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance.",
+          "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_honey_mrpl"
+        },
+        {
+          "contaminant": "Antibiotic MRPL — Ciprofloxacin",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Honey — antibiotic misuse testing",
+          "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance.",
+          "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_honey_mrpl"
+        },
+        {
+          "contaminant": "Antibiotic MRPL — Erythromycin",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Honey — antibiotic misuse testing",
+          "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance.",
+          "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_honey_mrpl"
+        },
+        {
+          "contaminant": "Antibiotic MRPL — Tylosin",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Honey — antibiotic misuse testing",
+          "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance.",
+          "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_honey_mrpl"
         }
       ]
     }
