@@ -156,6 +156,20 @@
         "regulatory_note": "Chapter 2.12 is implemented as a deterministic routing/compliance framework rather than product mappings. A standardized food that merely deviates in a quality parameter does not become proprietary. Excluded separately regulated classes are routed out before ingredient/FCS/additive/microbiology checks.",
         "proposal_watch": "Proposed clauses 2.12.1(1a)/(1b) are tracked but not active because they are not present in the current consolidated Chapter 2.12.",
         "next_validation": "Link the router to full local IFCT ingredient eligibility, Appendix A, Appendix B, contaminants, processing aids, current Labelling and Display, and Advertising and Claims databases."
+      },
+      "2.13": {
+        "title": "Radiation Processing of Food",
+        "rule_file": "./data/rules/chapter-2-13-radiation-processing-v1.json",
+        "source_version": "Version 2 (07.05.2025)",
+        "mapped_catalog_products": 0,
+        "structured_process_overlays": 1,
+        "food_classes": 8,
+        "allied_product_classes": 3,
+        "status": "structured_process_overlay_loaded",
+        "source_verified_on": "2026-10-03",
+        "regulatory_note": "Chapter 2.13 is implemented as a process overlay rather than standalone product mappings. The underlying food identity remains primary; radiation class, purpose, dose window, facility/certificate controls and radiation-specific labelling apply additionally.",
+        "foscos_note": "FoSCoS guidance states Radiation Processed Foods are not listed as standalone products; select the corresponding Food Category and comply additionally with the process standard.",
+        "next_validation": "Connect the radiation-process selector to underlying product profiles and current label rendering before enabling a final radiation-processing compliance verdict."
       }
     }
   },
@@ -20563,7 +20577,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 57,
-  "build_label": "Build 57",
+  "build_number": 58,
+  "build_label": "Build 58",
   "build_date": "2026-10-03"
 }
