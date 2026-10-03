@@ -2149,7 +2149,7 @@ function renderProprietaryAppendixA(){
 }
 async function loadAppendixCore(){
  try{
-   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=118',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=119',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCoreDb=await res.json();
  }catch(e){appendixCoreDb=null;}
@@ -2327,7 +2327,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=118',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=119',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}

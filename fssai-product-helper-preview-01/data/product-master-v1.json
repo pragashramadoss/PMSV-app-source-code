@@ -498,8 +498,8 @@
         "14.1.2"
       ],
       "source_verified_on": "2026-10-03",
-      "next_validation": "Appendix A active note references are now resolved from the uploaded official Version 3 PDF; source-missing note 122 is quarantined. Next: validate Annexure 1 additive-group membership against the official PDF, then audit the remaining rows without explicit verification metadata.",
-      "annexure_1_groups_loaded": 18,
+      "next_validation": "Annexure-1 group membership is now complete from the uploaded official Version 3 PDF. Next: audit the 397 active rows that lack an explicit verification tag, beginning with Table 14.1, and reconcile provenance metadata without changing legal values unless the PDF shows a discrepancy.",
+      "annexure_1_groups_loaded": 23,
       "table15_note_conditions_loaded": 14,
       "note_conditions_loaded": 42,
       "table14_stage": "current_v3_reconciled_except_source_anomalies_14_1_4_3_note122_and_14_2_3_pvpp_units",
@@ -650,7 +650,9 @@
         "source_format_anomalies_active_but_limit_clear": [
           "12.4 EDTA — official table prints a stray '38' in the INS column; limit 50 mg/kg is retained with INS blank."
         ]
-      }
+      },
+      "annexure_1_stored_group_keys": 24,
+      "annexure_1_stage": "current_v3_complete"
     },
     "special_nutrition": {
       "rule_file": "./data/rules/special-nutrition-routing-v1.json",
@@ -21281,7 +21283,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 118,
+  "build_number": 119,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {

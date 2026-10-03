@@ -30730,8 +30730,8 @@
     "rule": "Do not invent a direct additive permission for category 16. Resolve each component under its own FCS and apply Chapter 3.1 carry-over conditions; separately check any specific standard applicable to the prepared food."
   },
   "group_resolution_policy": {
-    "status": "table_15_groups_resolved",
-    "rule": "Capitalised group entries used in the loaded Table 15 permission sets are expanded to the exact Annexure-1 members/INS numbers stored in annexure_1_groups. Unloaded groups from other tables remain locked until ingested.",
+    "status": "current_v3_annexure_1_complete",
+    "rule": "Capital and bold additive group names in Tables 1–15 resolve only to the INS members listed in current Version 3 Annexure-1. The EDTA parenthetical key is retained only as a normalized alias of the official ETHYLENE DIAMINE TETRA ACETATES group.",
     "loaded_groups": [
       "ASCORBYL ESTERS",
       "BENZOATES",
@@ -30748,7 +30748,37 @@
       "THIODIPROPIONATES",
       "TOCOPHEROLS"
     ],
-    "remaining_scope": "Expand every remaining Annexure-1 group as Tables 1–14 are ingested."
+    "remaining_scope": "Expand every remaining Annexure-1 group as Tables 1–14 are ingested.",
+    "official_group_count": 23,
+    "stored_group_key_count": 24,
+    "official_group_names": [
+      "SULFITES",
+      "PHOSPHATES",
+      "RIBOFLAVINS",
+      "ASCORBYL ESTERS",
+      "BENZOATES",
+      "CAROTENOIDS",
+      "CHLOROPHYLLS AND CHLOROPHYLLINS, COPPER COMPLEXES",
+      "HYDROXYBENZOATES, PARA-",
+      "NITRITES",
+      "QUILLAIA EXTRACTS",
+      "SODIUM ALUMINIUM PHOSPHATES",
+      "STEAROYL LACTYLATES",
+      "THIODIPROPIONATES",
+      "TOCOPHEROLS",
+      "SACCHARINS",
+      "SORBATES",
+      "POLYSORBATES",
+      "POLYOXYETHYLENE STEARATES",
+      "IRON OXIDES",
+      "FERROCYANIDES",
+      "TARTRATES",
+      "ETHYLENE DIAMINE TETRA ACETATES",
+      "SORBITAN ESTERS OF FATTY ACIDS"
+    ],
+    "aliases": {
+      "ETHYLENE DIAMINE TETRA ACETATES (EDTA)": "ETHYLENE DIAMINE TETRA ACETATES"
+    }
   },
   "note_resolution_policy": {
     "status": "all_active_note_references_resolved_except_source_missing_note_122_quarantined",
@@ -31284,8 +31314,8 @@
       "14.1",
       "14.1.2"
     ],
-    "next_priority": "Appendix A active note references are now resolved from the uploaded official Version 3 PDF; source-missing note 122 is quarantined. Next: validate Annexure 1 additive-group membership against the official PDF, then audit the remaining rows without explicit verification metadata.",
-    "annexure_1_groups_loaded": 18,
+    "next_priority": "Annexure-1 group membership is now complete from the uploaded official Version 3 PDF. Next: audit the 397 active rows that lack an explicit verification tag, beginning with Table 14.1, and reconcile provenance metadata without changing legal values unless the PDF shows a discrepancy.",
+    "annexure_1_groups_loaded": 23,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
       "14.0",
@@ -31682,7 +31712,9 @@
       "source_format_anomalies_active_but_limit_clear": [
         "12.4 EDTA — official table prints a stray '38' in the INS column; limit 50 mg/kg is retained with INS blank."
       ]
-    }
+    },
+    "annexure_1_stored_group_keys": 24,
+    "annexure_1_stage": "current_v3_complete"
   },
   "annexure_1_groups": {
     "SULFITES": [
@@ -32063,6 +32095,78 @@
       {
         "name": "Sodium ferrocyanide",
         "ins": "535"
+      }
+    ],
+    "NITRITES": [
+      {
+        "name": "Potassium nitrite",
+        "ins": "249"
+      },
+      {
+        "name": "Sodium nitrite",
+        "ins": "250"
+      }
+    ],
+    "QUILLAIA EXTRACTS": [
+      {
+        "name": "Quillaia extract type 2",
+        "ins": "999(ii)"
+      },
+      {
+        "name": "Quillaia extract type I",
+        "ins": "999(i)"
+      }
+    ],
+    "SODIUM ALUMINIUM PHOSPHATES": [
+      {
+        "name": "Sodium aluminium phosphate, acidic",
+        "ins": "541(i)"
+      },
+      {
+        "name": "Sodium aluminium phosphate, basic",
+        "ins": "541(ii)"
+      }
+    ],
+    "STEAROYL LACTYLATES": [
+      {
+        "name": "Calcium stearoyl lactylate",
+        "ins": "482(i)"
+      },
+      {
+        "name": "Sodium stearoyl lactylate",
+        "ins": "481(i)"
+      }
+    ],
+    "POLYOXYETHYLENE STEARATES": [
+      {
+        "name": "Polyoxyethylene (40) stearate",
+        "ins": "431"
+      },
+      {
+        "name": "Polyoxyethylene (8) stearate",
+        "ins": "430"
+      }
+    ],
+    "SORBITAN ESTERS OF FATTY ACIDS": [
+      {
+        "name": "Sorbitan monolaurate",
+        "ins": "493"
+      },
+      {
+        "name": "Sorbitan monooleate",
+        "ins": "494"
+      },
+      {
+        "name": "Sorbitan monopalmitate",
+        "ins": "495"
+      },
+      {
+        "name": "Sorbitan monostearate",
+        "ins": "491"
+      },
+      {
+        "name": "Sorbitan tristearate",
+        "ins": "492"
       }
     ]
   },
@@ -32724,6 +32828,14 @@
       "rule": "Loaded the official Version 3 note definitions used by active Appendix A permissions. The only referenced note absent from the official note list is note 122; the affected 14.1.4.3 Sharbat SULFITES row was moved to locked_rows. Also corrected stale 12.0 metadata: it is a Table 12 container with no direct additive rows.",
       "official_sources": [
         "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf, Table 12 and note section"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Build 119 — Annexure-1 additive-group completion",
+      "rule": "Compared PMSV group resolution against current Version 3 Annexure-1. Added the six missing official groups: NITRITES, QUILLAIA EXTRACTS, SODIUM ALUMINIUM PHOSPHATES, STEAROYL LACTYLATES, POLYOXYETHYLENE STEARATES, and SORBITAN ESTERS OF FATTY ACIDS. PMSV now stores all 23 official group definitions; the parenthetical EDTA form remains only as an alias.",
+      "official_sources": [
+        "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf, Annexure-1 pages 330–333"
       ]
     }
   ],
