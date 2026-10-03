@@ -5542,8 +5542,9 @@
     "11.0": {
       "name": "Sweeteners including honey",
       "table": "Table 11",
-      "status": "hierarchy_loaded",
-      "entries": []
+      "status": "verified_current_container_no_direct_rows",
+      "entries": [],
+      "completeness_note": "Current Version 3 Table 11 container; direct permissions and prohibitions are specified in child FCS."
     },
     "11.1": {
       "name": "Refined and raw sugars",
@@ -5801,20 +5802,86 @@
     "11.4": {
       "name": "Other sugars and syrups",
       "table": "Table 11",
-      "status": "hierarchy_only_pending_current_rows",
-      "entries": [],
+      "status": "verified_current_partial_parser_locked",
+      "entries": [
+        {
+          "name": "ASCORBYL ESTERS",
+          "ins": "",
+          "limit": "200 mg/kg",
+          "note_refs": "10",
+          "condition": "",
+          "verification": "current_2025_indexed_fssai"
+        },
+        {
+          "name": "Acesulfame potassium",
+          "ins": "950",
+          "limit": "1,000 mg/kg",
+          "note_refs": "159,188",
+          "condition": "",
+          "verification": "current_2025_indexed_fssai"
+        },
+        {
+          "name": "Acetic and fatty acid esters of glycerol",
+          "ins": "472a",
+          "limit": "GMP",
+          "note_refs": "258",
+          "condition": "",
+          "verification": "current_2025_indexed_fssai"
+        },
+        {
+          "name": "Allura red AC",
+          "ins": "129",
+          "limit": "200 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_2025_indexed_fssai"
+        },
+        {
+          "name": "Ammonium alginate",
+          "ins": "403",
+          "limit": "GMP",
+          "note_refs": "258",
+          "condition": "",
+          "verification": "current_2025_indexed_fssai"
+        },
+        {
+          "name": "Aspartame",
+          "ins": "951",
+          "limit": "3,000 mg/kg",
+          "note_refs": "159,191",
+          "condition": "",
+          "verification": "current_2025_indexed_fssai"
+        },
+        {
+          "name": "BENZOATES",
+          "ins": "",
+          "limit": "1,000 mg/kg",
+          "note_refs": "13",
+          "condition": "",
+          "verification": "current_2025_indexed_fssai"
+        },
+        {
+          "name": "CAROTENOIDS",
+          "ins": "",
+          "limit": "50 mg/kg",
+          "note_refs": "217",
+          "condition": "",
+          "verification": "current_2025_indexed_fssai"
+        }
+      ],
       "regulatory_conditions": [
         "Alitame (INS 956) was omitted from food category 11.4 by an operative FSSAI amendment with effect from 1 February 2022.",
-        "PMSV never restores an omitted additive from an older compendium."
+        "PMSV never restores an omitted additive from an older compendium.",
+        "Current Version 3 PDF text extraction has a row-alignment break within the modified-starch block. Unaligned rows remain locked and are not reconstructed from older versions."
       ],
-      "completeness_note": "Current Version 3 additive rows are not yet normalized."
+      "completeness_note": "Current Version 3 cleanly aligned rows loaded only. Remaining 11.4 rows, including the malformed modified-starch cluster, remain locked pending unambiguous current-source alignment."
     },
     "11.5": {
       "name": "Honey",
       "table": "Table 11",
-      "status": "no_additives_permitted_pending_v3_recheck",
+      "status": "no_additives_permitted",
       "entries": [],
-      "completeness_note": "Official FSSAI Appendix A Version 2 states no additives permitted. Current Version 3 category is confirmed; direct 2025 row normalization is pending."
+      "completeness_note": "Current Version 3 expressly states: No additives permitted."
     },
     "11.6": {
       "name": "Table-top sweeteners including those containing high-intensity sweeteners",
@@ -21891,7 +21958,7 @@
       "4.2.2.7",
       "4.2.2.8"
     ],
-    "next_priority": "Continue cross-table Version 3 reconciliation with Table 11 sweeteners/honey, then Table 12.",
+    "next_priority": "Finish current Version 3 Table 11 reconciliation (11.1–11.3, remaining 11.4, and 11.6), then continue Table 12.",
     "annexure_1_groups_loaded": 18,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
@@ -21989,7 +22056,7 @@
       "11.5",
       "11.6"
     ],
-    "table11_stage": "hierarchy_and_official_prior_rows_loaded_v3_recheck_pending",
+    "table11_stage": "current_v3_partial_11_4_and_11_5_verified_ambiguous_rows_locked",
     "table10_sets_loaded": [
       "10.0",
       "10.1",
@@ -22870,6 +22937,14 @@
       "checked_on": "2026-10-03",
       "scope": "Table 10 — Build 94 current Version 3 reconciliation",
       "rule": "Replaced earlier-compendium pending status with direct current Version 3 verification and added the GMP/colour/sweetener rows absent from the earlier partial normalization.",
+      "official_sources": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Table 11 — Build 95 current Version 3 partial reconciliation",
+      "rule": "Confirmed the current Version 3 Table 11 container and Honey prohibition; loaded only cleanly aligned 11.4 rows from the current FSSAI PDF. Parser-misaligned modified-starch rows remain locked and no older-compendium value is promoted as current.",
       "official_sources": [
         "https://fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf"
       ]
