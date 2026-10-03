@@ -17,15 +17,16 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_29_exact_chicory_metal_mapping",
+    "stage": "phase_30_coffee_bean_subtype_copper_gate",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 86,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 165 maps exact Chicory 2.10.3 to Copper 30 mg/kg and Arsenic 4 mg/kg.",
-      "Coffee remains subtype-gated work because the relevant Copper article names coffee beans while the FoSCoS product contains bean, ground and soluble variants.",
+      "Build 166 adds an exact metal-subtype gate for Coffee 2.10.2.",
+      "Copper 30 mg/kg is enabled only for green/raw coffee, roasted coffee, decaffeinated coffee in bean form, and roasted decaffeinated coffee.",
+      "Ground coffee, roasted-and-ground coffee, soluble coffee, ground decaffeinated coffee and soluble decaffeinated coffee remain excluded from the coffee-beans Copper article.",
       "Instant Tea in Solid Form remains locked as a distinct extracted-solid standard.",
       "Cream Powder remains excluded from the Milks Lead concentration-factor rule.",
       "Generic Tin fallback remains disabled."
@@ -77,7 +78,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Review Coffee using exact FoSCoS/FSSAI subtype gates because the Copper article applies to coffee beans, not every ground/soluble coffee form. Keep Instant Tea and processed-form guesses locked.",
+    "next_priority": "Review other exact processed subclasses individually. Do not map ground/soluble coffee to the coffee-beans Copper article; keep Instant Tea distinct.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -156,7 +157,10 @@
     "milk_powder_lead_subtype_rules": 4,
     "milk_powder_lead_subtype_gate": true,
     "chicory_products_added_build_165": 1,
-    "chicory_rules_added_build_165": 2
+    "chicory_rules_added_build_165": 2,
+    "product_subtype_conditional_metal_rules_loaded": 4,
+    "product_subtype_conditional_metal_products": 1,
+    "coffee_bean_subtypes_added_build_166": 4
   },
   "all_food_rules": [
     {
@@ -18447,6 +18451,60 @@
       "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
       "subtype_basis": "FoSCoS Milk Powders and Cream Powder variant list updated 28.11.2025; only explicit milk-powder subtypes are enabled. Cream Powder is excluded.",
       "verification": "official_fssai_v9_plus_official_foscos_milk_powder_subtype_and_user_factor"
+    }
+  ],
+  "product_subtype_conditional_metal_rules_v9": [
+    {
+      "catalog_id": "coffee",
+      "subtype": "Coffee (green raw or unroasted)",
+      "contaminant": "Copper",
+      "limit": 30,
+      "unit": "mg/kg",
+      "article": "Chicory-dried or roasted, coffee beans, flavourings/pectin liquid",
+      "requires_input": "product.exact_subtype",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Copper · Version IX (03.02.2026)",
+      "subtype_basis": "Current FSSAI 2.10.2 Coffee definition plus official FoSCoS Coffee variant list. Only forms that remain coffee beans/seeds are enabled; ground and soluble forms are excluded.",
+      "verification": "official_fssai_v9_plus_official_foscos_exact_subtype"
+    },
+    {
+      "catalog_id": "coffee",
+      "subtype": "Roasted coffee",
+      "contaminant": "Copper",
+      "limit": 30,
+      "unit": "mg/kg",
+      "article": "Chicory-dried or roasted, coffee beans, flavourings/pectin liquid",
+      "requires_input": "product.exact_subtype",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Copper · Version IX (03.02.2026)",
+      "subtype_basis": "Current FSSAI 2.10.2 Coffee definition plus official FoSCoS Coffee variant list. Only forms that remain coffee beans/seeds are enabled; ground and soluble forms are excluded.",
+      "verification": "official_fssai_v9_plus_official_foscos_exact_subtype"
+    },
+    {
+      "catalog_id": "coffee",
+      "subtype": "Decaffeinated Coffee",
+      "contaminant": "Copper",
+      "limit": 30,
+      "unit": "mg/kg",
+      "article": "Chicory-dried or roasted, coffee beans, flavourings/pectin liquid",
+      "requires_input": "product.exact_subtype",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Copper · Version IX (03.02.2026)",
+      "subtype_basis": "Current FSSAI 2.10.2 Coffee definition plus official FoSCoS Coffee variant list. Only forms that remain coffee beans/seeds are enabled; ground and soluble forms are excluded.",
+      "verification": "official_fssai_v9_plus_official_foscos_exact_subtype"
+    },
+    {
+      "catalog_id": "coffee",
+      "subtype": "Roasted decaffeinated coffee",
+      "contaminant": "Copper",
+      "limit": 30,
+      "unit": "mg/kg",
+      "article": "Chicory-dried or roasted, coffee beans, flavourings/pectin liquid",
+      "requires_input": "product.exact_subtype",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Copper · Version IX (03.02.2026)",
+      "subtype_basis": "Current FSSAI 2.10.2 Coffee definition plus official FoSCoS Coffee variant list. Only forms that remain coffee beans/seeds are enabled; ground and soluble forms are excluded.",
+      "verification": "official_fssai_v9_plus_official_foscos_exact_subtype"
     }
   ]
 }
