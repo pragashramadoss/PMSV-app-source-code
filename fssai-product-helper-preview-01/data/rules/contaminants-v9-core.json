@@ -17,17 +17,18 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_44_honey_antibiotic_mrpl_product_mapping",
+    "stage": "phase_45_sugar_sulphated_ash_lead_gate",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 125,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 180 links all 12 current Version IX Honey antibiotic MRPL rows to standardized Honey 2.8.3(1).",
-      "Every displayed Honey MRPL row states that antibiotic use is prohibited during honey production and that MRPL is an analytical misuse-detection threshold, not a permitted tolerance.",
-      "No veterinary tissue/milk tolerance table is substituted for the Honey-specific MRPL table.",
-      "Remaining Chapter 2.8 sugar-metal routes stay conditional/fail-closed where identity or sulphated-ash criteria are not proven."
+      "Build 181 adds a deterministic sulphated-ash input gate for condition-dependent sugar Lead rows.",
+      "Refined Sugar activates Lead 0.5 mg/kg only when sulphated ash is ≤0.03%.",
+      "The Lead 5 mg/kg row activates for the seven proven sugar/invert-syrup identities only when sulphated ash is >1.0%.",
+      "Values between the regulatory conditions remain unmatched; PMSV does not substitute Foods not specified.",
+      "Dextrose keeps its direct 0.5 mg/kg Lead mapping and does not use this ash gate."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -76,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Finish Chapter 2.8 conditional/locked sugar review, then move to the next standardized-product family with exact Version IX identities.",
+    "next_priority": "Complete Chapter 2.8 review by explicitly locking remaining products with no exact current contaminant article, including Calcium Saccharin and non-proven sugar routes.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -194,7 +195,10 @@
     "direct_product_standard_contaminant_products": 1,
     "acesulfame_rules_added_build_179": 2,
     "honey_product_mrpl_mapping_active": true,
-    "honey_product_mrpl_rules_mapped_build_180": 12
+    "honey_product_mrpl_rules_mapped_build_180": 12,
+    "sulphated_ash_conditional_lead_products": 7,
+    "sulphated_ash_conditional_lead_rules": 8,
+    "sulphated_ash_input_ui": true
   },
   "all_food_rules": [
     {
@@ -21144,6 +21148,120 @@
       ],
       "source_basis": "FSSAI Chapter 2.8 Version 1 (01.09.2023)",
       "policy": "Direct numeric impurity limits from the standardized-product clause; no conversion of 'Heavy metals' into a specific metal."
+    }
+  ],
+  "sulphated_ash_conditional_lead_rules_v9": [
+    {
+      "catalog_id": "11-11-1-refined-sugar",
+      "product_name": "Refined Sugar",
+      "fssr": "2.8.1(2)",
+      "contaminant": "Lead",
+      "limit": 0.5,
+      "unit": "mg/kg",
+      "article": "Anhydrous dextrose and dextrose monohydrate, refined white sugar (sulphated ash content not exceeding 0.03 per cent)",
+      "max_inclusive": 0.03,
+      "condition_label": "Sulphated ash ≤ 0.03%",
+      "requires_input": "product.sulphated_ash_percent",
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_conditional_exact_identity"
+    },
+    {
+      "catalog_id": "11-11-1-refined-sugar",
+      "product_name": "Refined Sugar",
+      "fssr": "2.8.1(2)",
+      "contaminant": "Lead",
+      "limit": 5,
+      "unit": "mg/kg",
+      "article": "All types of sugars, sugar syrup, invert sugar and direct consumption coloured sugars with sulphated ash content exceeding 1.0 percent",
+      "min_exclusive": 1,
+      "condition_label": "Sulphated ash > 1.0%",
+      "requires_input": "product.sulphated_ash_percent",
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_conditional_sugar_identity"
+    },
+    {
+      "catalog_id": "11-11-1-plantation-white-sugar",
+      "product_name": "Plantation White Sugar",
+      "fssr": "2.8.1(1)",
+      "contaminant": "Lead",
+      "limit": 5,
+      "unit": "mg/kg",
+      "article": "All types of sugars, sugar syrup, invert sugar and direct consumption coloured sugars with sulphated ash content exceeding 1.0 percent",
+      "min_exclusive": 1,
+      "condition_label": "Sulphated ash > 1.0%",
+      "requires_input": "product.sulphated_ash_percent",
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_conditional_sugar_identity"
+    },
+    {
+      "catalog_id": "11-11-1-khandsari-sugar",
+      "product_name": "Khandsari Sugar",
+      "fssr": "2.8.1(3)",
+      "contaminant": "Lead",
+      "limit": 5,
+      "unit": "mg/kg",
+      "article": "All types of sugars, sugar syrup, invert sugar and direct consumption coloured sugars with sulphated ash content exceeding 1.0 percent",
+      "min_exclusive": 1,
+      "condition_label": "Sulphated ash > 1.0%",
+      "requires_input": "product.sulphated_ash_percent",
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_conditional_sugar_identity"
+    },
+    {
+      "catalog_id": "11-11-1-bura-sugar",
+      "product_name": "Bura Sugar",
+      "fssr": "2.8.1(4)",
+      "contaminant": "Lead",
+      "limit": 5,
+      "unit": "mg/kg",
+      "article": "All types of sugars, sugar syrup, invert sugar and direct consumption coloured sugars with sulphated ash content exceeding 1.0 percent",
+      "min_exclusive": 1,
+      "condition_label": "Sulphated ash > 1.0%",
+      "requires_input": "product.sulphated_ash_percent",
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_conditional_sugar_identity"
+    },
+    {
+      "catalog_id": "11-11-1-cube-sugar",
+      "product_name": "Cube Sugar",
+      "fssr": "2.8.1(5)",
+      "contaminant": "Lead",
+      "limit": 5,
+      "unit": "mg/kg",
+      "article": "All types of sugars, sugar syrup, invert sugar and direct consumption coloured sugars with sulphated ash content exceeding 1.0 percent",
+      "min_exclusive": 1,
+      "condition_label": "Sulphated ash > 1.0%",
+      "requires_input": "product.sulphated_ash_percent",
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_conditional_sugar_identity"
+    },
+    {
+      "catalog_id": "11-11-1-icing-sugar",
+      "product_name": "Icing Sugar",
+      "fssr": "2.8.1(6)",
+      "contaminant": "Lead",
+      "limit": 5,
+      "unit": "mg/kg",
+      "article": "All types of sugars, sugar syrup, invert sugar and direct consumption coloured sugars with sulphated ash content exceeding 1.0 percent",
+      "min_exclusive": 1,
+      "condition_label": "Sulphated ash > 1.0%",
+      "requires_input": "product.sulphated_ash_percent",
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_conditional_sugar_identity"
+    },
+    {
+      "catalog_id": "11-11-3-golden-syrup",
+      "product_name": "Golden Syrup",
+      "fssr": "2.8.6",
+      "contaminant": "Lead",
+      "limit": 5,
+      "unit": "mg/kg",
+      "article": "All types of sugars, sugar syrup, invert sugar and direct consumption coloured sugars with sulphated ash content exceeding 1.0 percent",
+      "min_exclusive": 1,
+      "condition_label": "Sulphated ash > 1.0%",
+      "requires_input": "product.sulphated_ash_percent",
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_conditional_sugar_identity"
     }
   ]
 }

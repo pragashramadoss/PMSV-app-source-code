@@ -571,6 +571,11 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     <small>Shown only where a current FSSAI metal article applies to specific FoSCoS/FSSAI subtypes rather than the whole standardized product.</small>
   </div>
   <div class="field">
+    <label>Sulphated ash (%) for conditional Lead rule</label>
+    <input id="contaminantSulphatedAsh" type="number" min="0" step="0.001" placeholder="Enter sulphated ash %">
+    <small>Enabled only for verified sugar/invert-syrup identities whose current FSSAI Lead article is conditional on sulphated ash. PMSV never assumes this value.</small>
+  </div>
+  <div class="field">
     <label>Milk concentration factor for Lead</label>
     <input id="contaminantMilkConcentrationFactor" type="number" min="0.000001" step="0.01" placeholder="Enter factor">
     <small>Used only when FSSAI requires the 0.02 mg/kg milk Lead limit to be adjusted for a partially or wholly dehydrated milk. PMSV calculates 0.02 × factor and does not guess the factor.</small>
@@ -580,11 +585,12 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="variantTinStatus" class="notice">Variant-dependent Tin rules remain inactive until the selected product has a verified FoSCoS variant mapping and all required inputs are provided.</div>
 <div id="dehydratedMilkLeadStatus" class="notice">Dehydrated-milk Lead adjustment remains inactive unless the selected product is covered and a valid concentration factor is entered.</div>
 <div id="metalSubtypeStatus" class="notice">Subtype-dependent metal rules remain inactive until an exact verified subtype is selected.</div>
+<div id="sugarAshLeadStatus" class="notice">Sulphated-ash-dependent Lead rules remain inactive until an eligible sugar product and a sulphated ash value are provided.</div>
 <div id="productContaminantResults"><div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div></div>
 </div>
 <div class="card">
-<div class="section-title"><h2>Coverage status</h2><span>Build 180 · Honey antibiotic MRPL mapping</span></div>
-<div class="notice">The reusable contaminant master now includes 35 exact standardized-product profiles, 14 exact ingredient-trigger groups, the complete PCB/PAH fish table, and all 213 pesticide entries and 1,098 residue MRL commodity rows in Section 2.3.1, plus the Section 2.3.2 seafood antibiotic limits, prohibited veterinary-drug EMRL rules and honey antibiotic MRPL table. Sections 2.3.2, 2.4, 2.5.1 and 2.5.2 are now loaded from current FSSAI Version IX. Histamine includes the official high-histidine fish-family/species list and all 11 product-category n/c/m/M limits. No missing limit is estimated from another website.</div>
+<div class="section-title"><h2>Coverage status</h2><span>Build 181 · sugar sulphated-ash Lead gate</span></div>
+<div class="notice">The reusable contaminant master now includes exact standardized-product profiles, 14 exact ingredient-trigger groups, the complete PCB/PAH fish table, and all 213 pesticide entries and 1,098 residue MRL commodity rows in Section 2.3.1, plus the Section 2.3.2 seafood antibiotic limits, prohibited veterinary-drug EMRL rules and honey antibiotic MRPL table. Sections 2.3.2, 2.4, 2.5.1 and 2.5.2 are now loaded from current FSSAI Version IX. Histamine includes the official high-histidine fish-family/species list and all 11 product-category n/c/m/M limits. No missing limit is estimated from another website.</div>
 <div class="notice"><b>2026 amendment:</b> FSSAI notified a final Contaminants, Toxins and Residues amendment on 25 May 2026 with commencement on <b>1 December 2026</b>. Build 141 continues to use the currently effective Version IX basis as of 3 October 2026.</div>
 </div>
 </section>
@@ -2406,7 +2412,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=180',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=181',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2433,6 +2439,7 @@ document.getElementById('contaminantTinProductIdentity')?.addEventListener('chan
 document.getElementById('contaminantTinVariant')?.addEventListener('change',renderProductContaminants);
 document.getElementById('contaminantMilkLeadSubtype')?.addEventListener('change',renderProductContaminants);
 document.getElementById('contaminantMetalSubtype')?.addEventListener('change',renderProductContaminants);
+document.getElementById('contaminantSulphatedAsh')?.addEventListener('input',renderProductContaminants);
 document.getElementById('contaminantMilkConcentrationFactor')?.addEventListener('input',renderProductContaminants);
 
 function selectedCatalogProductForContaminants(){
@@ -2642,6 +2649,60 @@ function renderMetalSubtypeStatus(p){
  el.className='notice';
  el.innerHTML='<b>No metal rule matched this subtype.</b>';
 }
+function sulphatedAshRulesForProduct(p){
+ if(!p||!contaminantsDb||!Array.isArray(contaminantsDb.sulphated_ash_conditional_lead_rules_v9))return [];
+ return contaminantsDb.sulphated_ash_conditional_lead_rules_v9.filter(x=>x.catalog_id===p.id);
+}
+function syncSulphatedAshInput(p){
+ const input=document.getElementById('contaminantSulphatedAsh');
+ if(!input)return;
+ const eligible=sulphatedAshRulesForProduct(p).length>0;
+ input.disabled=!eligible;
+ if(!eligible)input.value='';
+}
+function sulphatedAshValue(){
+ const raw=document.getElementById('contaminantSulphatedAsh')?.value||'';
+ if(raw==='')return null;
+ const n=Number(raw);
+ return Number.isFinite(n)&&n>=0?n:null;
+}
+function selectedSulphatedAshLeadRule(p){
+ const value=sulphatedAshValue();
+ if(value===null)return null;
+ const rules=sulphatedAshRulesForProduct(p);
+ return rules.find(r=>{
+   if(r.min_exclusive!==undefined&&!(value>Number(r.min_exclusive)))return false;
+   if(r.min_inclusive!==undefined&&!(value>=Number(r.min_inclusive)))return false;
+   if(r.max_exclusive!==undefined&&!(value<Number(r.max_exclusive)))return false;
+   if(r.max_inclusive!==undefined&&!(value<=Number(r.max_inclusive)))return false;
+   return true;
+ })||null;
+}
+function renderSugarAshLeadStatus(p){
+ const el=document.getElementById('sugarAshLeadStatus');
+ if(!el)return;
+ syncSulphatedAshInput(p);
+ const rules=sulphatedAshRulesForProduct(p);
+ if(!p||rules.length===0){
+   el.className='notice';
+   el.innerHTML='No sulphated-ash-dependent Lead rule is loaded for this selected product.';
+   return;
+ }
+ const value=sulphatedAshValue();
+ if(value===null){
+   el.className='notice';
+   el.innerHTML='<b>Sulphated ash required.</b> Enter the product sulphated ash (%) before PMSV evaluates the conditional Lead article.';
+   return;
+ }
+ const matched=selectedSulphatedAshLeadRule(p);
+ if(matched){
+   el.className='notice oknote';
+   el.innerHTML='<b>Conditional Lead row matched:</b> sulphated ash '+esc(String(value))+'% · '+esc(matched.condition_label)+' → <b>'+esc(String(matched.limit))+' '+esc(matched.unit)+'</b>.';
+   return;
+ }
+ el.className='notice';
+ el.innerHTML='<b>No current condition-specific Lead row matched at '+esc(String(value))+'% sulphated ash.</b> PMSV will not fill this gap with “Foods not specified”.';
+}
 function dehydratedMilkSubtypeConfigsForProduct(p){
  if(!p||!contaminantsDb||!Array.isArray(contaminantsDb.dehydrated_milk_subtype_lead_rules_v9))return [];
  return contaminantsDb.dehydrated_milk_subtype_lead_rules_v9.filter(x=>x.catalog_id===p.id);
@@ -2741,6 +2802,7 @@ function renderProductContaminants(){
  renderVariantTinStatus(p);
  renderDehydratedMilkLeadStatus(p);
  renderMetalSubtypeStatus(p);
+ renderSugarAshLeadStatus(p);
  if(!p){
    el.innerHTML='<div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div>';
    return;
@@ -2753,7 +2815,8 @@ function renderProductContaminants(){
  const productPackageTin=variantTin?null:selectedProductPackageTinRule(p);
  const dehydratedMilkLead=selectedDehydratedMilkLeadRule(p);
  const metalSubtypeRule=selectedMetalSubtypeRule(p);
- const rules=[...exact,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...universal];
+ const sugarAshLeadRule=selectedSulphatedAshLeadRule(p);
+ const rules=[...exact,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
  const profileMsg=profile
   ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+exact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
@@ -2764,7 +2827,7 @@ function renderProductContaminants(){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=180',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=181',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
