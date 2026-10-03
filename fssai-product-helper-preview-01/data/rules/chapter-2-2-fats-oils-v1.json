@@ -2,13 +2,18 @@
   "schema_version": "1.0",
   "chapter": "2.2",
   "title": "Fats, Oils and Fat Emulsions",
-  "source_version": "Version 3 (04.11.2024)",
-  "source_verified_on": "2026-10-02",
+  "source_version": "Version 4 (07.05.2025)",
+  "source_verified_on": "2026-10-03",
   "official_sources": [
     {
       "authority": "FSSAI",
-      "title": "Chapter 2.2 — Fats, oils and fat emulsions",
-      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats%20oils%20and%20fat%20emulsions.pdf"
+      "title": "Chapter 2.2 — Fats, Oils and Fat Emulsions, Version 4 (07.05.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats_oils_and_fat_emulsions.pdf"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Food Safety and Standards (Food Products Standards and Food Additives) Amendment Regulations, 2024 — 2.2.9 Corn (Maize) Oil substitution",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/GAZETTE%20NOTIFICATION%20DATED%2021_10_2024_ammendments.pdf"
     }
   ],
   "common_rules": [
@@ -485,6 +490,153 @@
       "packaging_rules": [
         "Compulsorily sold in sealed packages not exceeding 500 g under the prescribed Agmark requirement."
       ]
+    },
+    {
+      "key": "2.2.9",
+      "name": "Solvent Extracted Crude Vegetable Oils (not for direct human consumption)",
+      "status": "structured_core",
+      "definition": "Vegetable oils extracted using food grade hexane from sources mentioned in standards of respective edible oils under sub-regulation 2.2.1.",
+      "quality_rules": [
+        "Oil shall be clear and free from rancidity, adulterants, sediment, suspended and other foreign matter, separated water, added colouring and flavouring substances, and Argemone oil."
+      ],
+      "process_rules": [
+        "These oils as such are not for direct human consumption.",
+        "Before human consumption they shall be refined and conform to the standards for refined vegetable oils under clause 16 of regulation 2.2.1."
+      ],
+      "table_columns": [
+        "Solvent Extracted Crude Oils",
+        "Moisture and insoluble impurities (% by mass Max)",
+        "Refractive index at 40°C",
+        "Saponification Value",
+        "Iodine Value (Wij’s)",
+        "Acid Value Max.",
+        "Unsaponifiable matter (% by mass Max.)",
+        "Flash point Penskey Martens (closed cup method) °C Min."
+      ],
+      "variants": [
+        {
+          "name": "Coconut Oil",
+          "moisture_impurities_max_pct": 1,
+          "refractive_index": "1.4481-1.4491",
+          "saponification": "250 Min",
+          "iodine": "7.5-10",
+          "acid_value_max": 10,
+          "unsaponifiable_max_pct": 1,
+          "flash_point_min_c": 90
+        },
+        {
+          "name": "Cottonseed Oil",
+          "moisture_impurities_max_pct": 0.75,
+          "refractive_index": "1.4630-1.4660",
+          "saponification": "190-198",
+          "iodine": "98-123",
+          "acid_value_max": 10,
+          "unsaponifiable_max_pct": 2,
+          "flash_point_min_c": 100
+        },
+        {
+          "name": "Groundnut Oil",
+          "moisture_impurities_max_pct": 0.7,
+          "refractive_index": "1.4620-1.4640",
+          "saponification": "188-196",
+          "iodine": "85-99",
+          "acid_value_max": 12.5,
+          "unsaponifiable_max_pct": 1,
+          "flash_point_min_c": 100
+        },
+        {
+          "name": "Nigerseed Oil",
+          "moisture_impurities_max_pct": 0.75,
+          "refractive_index": "1.4665-1.4691",
+          "saponification": "188-193",
+          "iodine": "110-135",
+          "acid_value_max": 10,
+          "unsaponifiable_max_pct": 1.5,
+          "flash_point_min_c": 100
+        },
+        {
+          "name": "Safflower Oil",
+          "moisture_impurities_max_pct": 1,
+          "refractive_index": "1.4674-1.4689",
+          "saponification": "186-196",
+          "iodine": "135-148",
+          "acid_value_max": 6,
+          "unsaponifiable_max_pct": 1.5,
+          "flash_point_min_c": 100
+        },
+        {
+          "name": "Sesame Oil",
+          "moisture_impurities_max_pct": 0.5,
+          "refractive_index": "1.4646-1.4665",
+          "saponification": "188-193",
+          "iodine": "103-120",
+          "acid_value_max": 6,
+          "unsaponifiable_max_pct": 2.5,
+          "flash_point_min_c": 90
+        },
+        {
+          "name": "Soyabean Oil",
+          "moisture_impurities_max_pct": 0.5,
+          "refractive_index": "1.4649-1.4710",
+          "saponification": "189-195",
+          "iodine": "120-141",
+          "acid_value_max": 6,
+          "unsaponifiable_max_pct": 1.5,
+          "flash_point_min_c": 100
+        },
+        {
+          "name": "Sunflower Oil",
+          "moisture_impurities_max_pct": 0.5,
+          "refractive_index": "1.4640-1.4691",
+          "saponification": "188-194",
+          "iodine": "100-145",
+          "acid_value_max": 5,
+          "unsaponifiable_max_pct": 2,
+          "flash_point_min_c": 100
+        },
+        {
+          "name": "Mustard Oil",
+          "moisture_impurities_max_pct": 1,
+          "refractive_index": "1.4646-1.4662",
+          "saponification": "168-177",
+          "iodine": "96-112",
+          "acid_value_max": 12,
+          "unsaponifiable_max_pct": 2,
+          "flash_point_min_c": 100
+        },
+        {
+          "name": "Rice Bran Oil",
+          "moisture_impurities_max_pct": 1,
+          "refractive_index": "1.4600-1.4700",
+          "saponification": "180-195",
+          "iodine": "90-105",
+          "acid_value_max": 40,
+          "unsaponifiable_max_pct": 6,
+          "flash_point_min_c": 100
+        },
+        {
+          "name": "Olive Pomace Oil",
+          "moisture_impurities_max_pct": 1.5,
+          "refractive_index": "1.4680-1.4707 at 20°C",
+          "saponification": "182-193",
+          "iodine": "75-92",
+          "acid_value_max": 40,
+          "unsaponifiable_max_pct": 3,
+          "flash_point_min_c": 120
+        },
+        {
+          "name": "Corn (Maize) Oil",
+          "moisture_impurities_max_pct": 0.5,
+          "refractive_index": "1.4637-1.4675",
+          "saponification": "187-195",
+          "iodine": "103-128",
+          "acid_value_max": 20,
+          "unsaponifiable_max_pct": 2.5,
+          "flash_point_min_c": 100,
+          "source_note": "Current Version 4 incorporates the 2024 notified substitution."
+        }
+      ]
     }
-  ]
+  ],
+  "structured_core_standards": 10
 }

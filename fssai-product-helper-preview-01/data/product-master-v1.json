@@ -13,7 +13,7 @@
     "foscos_catalog_scope": "Official FoSCoS/FSSAI indexed rows loaded category by category; Chapter 2.5 synchronization added the current missing meat-product rows while rule ingestion continues.",
     "foscos_subcategory_framework": "Level-2 FoSCoS/FSSAI food-category framework loaded for categories 01–16; special categories without a separate level-2 browse layer are handled directly at product/category level.",
     "level3_status": "Expanded official FoSCoS standardized-product catalogue. Detailed compliance rule profiles remain a separate ingestion layer.",
-    "base_rule_profiles_ready": 184,
+    "base_rule_profiles_ready": 182,
     "profile_architecture_note": "Every loaded FoSCoS standardized product now has at least a base profile. Full formulation compliance is enabled only when detailed product-specific clauses have been ingested.",
     "chapter_ingestion": {
       "3": {
@@ -21,8 +21,10 @@
         "rule_file": "./data/rules/chapter-3-substances-added-v1.json",
         "status": "core_engine_rules_loaded",
         "source_verified_on": "2026-10-03",
-        "regulatory_note": "Chapter 3 general additive, GMP, carry-over, flavour and processing-aid framework is now stored as deterministic engine rules. Additive identity/purity under 3.2 is kept separate from permission-to-use in the final food.",
-        "next_validation": "Normalize remaining Chapter 3.2 identity/purity standards and Chapter 3.3 named-substance conditions."
+        "regulatory_note": "Chapter 3 Version 4 is the current source. Sorbitol 3.2.16(1) is now structured as an identity/purity standard; permission-to-use remains a separate Appendix A/product-standard decision.",
+        "next_validation": "Normalize remaining Chapter 3.2 identity/purity standards and Chapter 3.3 named-substance conditions.",
+        "source_version": "Version 4 (01.08.2025)",
+        "structured_identity_purity_standards": 1
       },
       "2.1": {
         "title": "Dairy Products and Analogues",
@@ -38,11 +40,13 @@
       "2.2": {
         "title": "Fats, Oils and Fat Emulsions",
         "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
-        "source_version": "Version 3 (04.11.2024)",
-        "mapped_catalog_products": 9,
-        "structured_core_standards": 8,
+        "source_version": "Version 4 (07.05.2025)",
+        "mapped_catalog_products": 10,
+        "structured_core_standards": 10,
         "status": "structured_core_loaded",
-        "next_validation": "Appendix A additive inheritance, contaminants, microbiology/processing-aid applicability, labels and full machine validation"
+        "next_validation": "Appendix A additive inheritance, contaminants, microbiology/processing-aid applicability, labels and full machine validation",
+        "source_verified_on": "2026-10-03",
+        "regulatory_note": "Current Chapter 2.2 Version 4 is loaded for the existing structured standards and 2.2.9 Solvent Extracted Crude Vegetable Oils. The current 2.2.9 Corn (Maize) Oil row is 0.5% moisture/insoluble impurities max and acid value 20 max."
       },
       "2.3": {
         "title": "Fruit & Vegetable Products",
@@ -498,7 +502,7 @@
         "14.1.2"
       ],
       "source_verified_on": "2026-10-03",
-      "next_validation": "Continue the remaining 184 base profiles. Prioritize products with explicit but currently unloaded official standards (Alcoholic Beverages Regulations, Infant Nutrition Regulations, Sorbitol 3.2.16(1), and crude vegetable oil 2.2.9); do not infer FSSR for blank FoSCoS rows.",
+      "next_validation": "Continue the remaining 182 base profiles. Next priority: current official Alcoholic Beverages Version V product standards and Foods for Infant Nutrition product standards; blank-FSSR products remain fail-closed unless an exact official mapping is established.",
       "annexure_1_groups_loaded": 23,
       "table15_note_conditions_loaded": 14,
       "note_conditions_loaded": 42,
@@ -700,13 +704,13 @@
     "chapter_rule_link_audit": {
       "checked_on": "2026-10-03",
       "profiles": 526,
-      "profiles_with_rule_file_and_key": 342,
+      "profiles_with_rule_file_and_key": 344,
       "missing_rule_files": 0,
       "missing_rule_keys": 0,
       "composite_parent_plus_source_routes": 5,
       "explicit_variant_routes": 4,
       "specific_variant_tables_pending": 2,
-      "profiles_without_rule_link": 184,
+      "profiles_without_rule_link": 182,
       "pending_specific_profiles": [
         "06-06-1-pulses",
         "06-06-1-millets"
@@ -716,9 +720,16 @@
         "15-15-1-papad",
         "04-04-2-yellow-pea-powder",
         "99-99-1-trehalose"
+      ],
+      "newly_promoted_current_official_profiles": [
+        "15-15-1-papad",
+        "04-04-2-yellow-pea-powder",
+        "99-99-1-trehalose",
+        "11-11-6-sorbitol",
+        "100-100-solvent-extracted-crude-vegetable-oils-not-for-direct-human-consumption"
       ]
     },
-    "chapter_profiles_ready": 341,
+    "chapter_profiles_ready": 343,
     "base_profile_promotion_audit": {
       "checked_on": "2026-10-03",
       "starting_base_profiles": 187,
@@ -728,6 +739,18 @@
       "special_regulation_exact_name_routes_confirmed": 7,
       "remaining_base_profiles": 184,
       "rule": "Only exact current official mappings were promoted. No fuzzy product-name matching was used. Category 13 exact-name matches remain special-regulation routes, not ordinary chapter profiles."
+    },
+    "explicit_unloaded_standard_audit": {
+      "checked_on": "2026-10-03",
+      "newly_loaded": [
+        "3.2.16(1) Sorbitol",
+        "2.2.9 Solvent Extracted Crude Vegetable Oils"
+      ],
+      "still_external_regulation_sets_needed": [
+        "Food Safety and Standards (Alcoholic Beverages) Regulations — current Version V (December 2025)",
+        "Food Safety and Standards (Foods for Infant Nutrition) Regulations — current FSSAI compendium/product standards"
+      ],
+      "rule": "Only current official FSSAI sources are used. External regulation sets remain locked until their product standards are structured."
     }
   },
   "source_hierarchy": [
@@ -13045,10 +13068,10 @@
       "foscos_subcategory": "11.6",
       "fcs": "11.6",
       "fssr": "3.2.16(1)",
-      "regulation_chapter": "2.16",
+      "regulation_chapter": "3.2",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Exact FoSCoS FSSR mapped to current official FSSAI structured standard",
       "detailed_rules_loaded": false,
       "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
       "general_layers": [
@@ -13059,12 +13082,23 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "rule_profile_note": "The exact current official FSSAI standard is now structured. Full formulation compliance remains locked until all applicable cross-regulation layers are machine-validated.",
       "appendix_fcs": "11.6",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/chapter-3-substances-added-v1.json",
+      "rule_key": "3.2.16(1)",
+      "standard_name": "Sorbitol",
+      "source_verified_on": "2026-10-03",
+      "chapter_rule_file_verified_on": "2026-10-03",
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "chapter_rule_route_status": "exact_foscos_fssr_key_verified",
+      "linked_rule_keys": [
+        "3.2.16(1)"
+      ],
+      "chapter_rule_route_note": "FoSCoS FSSR 3.2.16(1) resolves to the current FSSAI Chapter 3 Version 4 Sorbitol identity/purity standard."
     },
     {
       "id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
@@ -17321,8 +17355,8 @@
       "fssr": "2.2.9",
       "regulation_chapter": "2.2",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Exact FoSCoS FSSR mapped to current official FSSAI structured standard",
       "detailed_rules_loaded": false,
       "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
       "general_layers": [
@@ -17333,13 +17367,24 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "rule_profile_note": "The exact current official FSSAI standard is now structured. Full formulation compliance remains locked until all applicable cross-regulation layers are machine-validated.",
       "appendix_fcs": "",
       "appendix_fcs_status": "foscos_code_not_appendix_a_fcs",
       "appendix_fcs_note": "The stored FoSCoS listing/category code is not a loaded Appendix A Version 3 FCS. PMSV must not use it to inherit Appendix A additive permissions.",
       "appendix_fcs_verified_on": "2026-10-03",
       "foscos_listing_code": "100",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.9",
+      "standard_name": "Solvent Extracted Crude Vegetable Oils (not for direct human consumption)",
+      "source_verified_on": "2026-10-03",
+      "chapter_rule_file_verified_on": "2026-10-03",
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "chapter_rule_route_status": "exact_foscos_fssr_key_verified",
+      "linked_rule_keys": [
+        "2.2.9"
+      ],
+      "chapter_rule_route_note": "FoSCoS FSSR 2.2.9 resolves to the current FSSAI Chapter 2.2 Version 4 standard; the current table includes twelve listed crude oils including amended Corn (Maize) Oil."
     },
     {
       "id": "102-102-1-12-1-lajadi-kashaya-parched-rice-tea",
@@ -24921,14 +24966,21 @@
       "name": "Sorbitol",
       "fcs": "11.6",
       "fssr": "3.2.16(1)",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "11-11-6-sorbitol",
       "appendix_fcs": "11.6",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/chapter-3-substances-added-v1.json",
+      "rule_key": "3.2.16(1)",
+      "chapter_rule_route_status": "exact_foscos_fssr_key_verified",
+      "linked_rule_keys": [
+        "3.2.16(1)"
+      ],
+      "chapter_rule_route_note": "FoSCoS FSSR 3.2.16(1) resolves to the current FSSAI Chapter 3 Version 4 Sorbitol identity/purity standard."
     },
     {
       "id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
@@ -27294,7 +27346,7 @@
       "name": "Solvent Extracted Crude Vegetable Oils (not for direct human consumption)",
       "fcs": "100",
       "fssr": "2.2.9",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "100-100-solvent-extracted-crude-vegetable-oils-not-for-direct-human-consumption",
       "appendix_fcs": "",
@@ -27302,7 +27354,14 @@
       "appendix_fcs_note": "The stored FoSCoS listing/category code is not a loaded Appendix A Version 3 FCS. PMSV must not use it to inherit Appendix A additive permissions.",
       "appendix_fcs_verified_on": "2026-10-03",
       "foscos_listing_code": "100",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
+      "rule_key": "2.2.9",
+      "chapter_rule_route_status": "exact_foscos_fssr_key_verified",
+      "linked_rule_keys": [
+        "2.2.9"
+      ],
+      "chapter_rule_route_note": "FoSCoS FSSR 2.2.9 resolves to the current FSSAI Chapter 2.2 Version 4 standard; the current table includes twelve listed crude oils including amended Corn (Maize) Oil."
     },
     {
       "id": "102-102-1-12-1-lajadi-kashaya-parched-rice-tea",
@@ -27623,7 +27682,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 123,
+  "build_number": 124,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {

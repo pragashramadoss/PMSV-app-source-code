@@ -2,10 +2,15 @@
   "schema_version": "1.0",
   "chapter": "3",
   "title": "Substances Added to Food",
-  "source_version": "Current consolidated FSSAI Chapter 3",
+  "source_version": "Version 4 (01.08.2025)",
   "source_verified_on": "2026-10-03",
   "source_policy": "Official FSSAI/FoSCoS sources only",
   "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 3 — Substances Added to Food, Version 4 (01.08.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%203_Substances%20added%20to%20food%281%29.pdf"
+    },
     {
       "authority": "FSSAI",
       "title": "Chapter 3 — Substances Added to Food",
@@ -170,5 +175,93 @@
     "direct_addition_and_carry_over_are_separate": true,
     "vertical_standard_can_be_stricter": true,
     "current_label_rules_required_before_final_label_conclusion": true
-  }
+  },
+  "identity_purity_standards": [
+    {
+      "key": "3.2.16(1)",
+      "name": "Sorbitol",
+      "status": "identity_purity_standard",
+      "functional_class": "Sweetener or Humectant or Sequestrant",
+      "identity": {
+        "appearance": "White hygroscopic powder having a sweet taste",
+        "ins": "420",
+        "cas": "50-70-4",
+        "chemical_name": "d-sorbitol, d-glucitol, d-sorbite, d-sorbol, and 1,2,3,4,5,6-hevanehexal",
+        "empirical_formula": "C6H14O6",
+        "molecular_weight": 182.17
+      },
+      "requirements": [
+        {
+          "parameter": "Purity as d-sorbitol C6H14O6",
+          "operator": ">=",
+          "value": "91 or 99",
+          "unit": "% by mass",
+          "condition": "Depending on the method of test used for analysis."
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Melting range — metastable",
+          "operator": "range",
+          "min": 92.5,
+          "max": 93.5,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Melting range — stable",
+          "operator": "range",
+          "min": 96,
+          "max": 97.5,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Reducing sugars",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Sulphated ash",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Sulphates as SO4",
+          "operator": "<=",
+          "value": 0.01,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Chlorides as Cl",
+          "operator": "<=",
+          "value": 0.005,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 1,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Nickel",
+          "operator": "<=",
+          "value": 2,
+          "unit": "mg/kg"
+        }
+      ],
+      "engine_note": "This is the identity/purity standard for Sorbitol. Permission to use Sorbitol in a finished food remains governed separately by the applicable product standard and/or Appendix A."
+    }
+  ]
 }

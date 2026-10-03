@@ -31723,7 +31723,7 @@
       "14.1",
       "14.1.2"
     ],
-    "next_priority": "Three exact base-profile matches are promoted. Next: ingest/route the explicit unloaded standards among the remaining 184 base profiles, starting with Alcoholic Beverages, Infant Nutrition, Sorbitol 3.2.16(1), and crude vegetable oils 2.2.9.",
+    "next_priority": "Sorbitol 3.2.16(1) and crude vegetable oils 2.2.9 are now loaded. Next: current Alcoholic Beverages Version V and Foods for Infant Nutrition product-standard datasets.",
     "annexure_1_groups_loaded": 23,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
@@ -32153,13 +32153,13 @@
     "chapter_rule_link_audit": {
       "checked_on": "2026-10-03",
       "profiles": 526,
-      "profiles_with_rule_file_and_key": 342,
+      "profiles_with_rule_file_and_key": 344,
       "missing_rule_files": 0,
       "missing_rule_keys": 0,
       "composite_parent_plus_source_routes": 5,
       "explicit_variant_routes": 4,
       "specific_variant_tables_pending": 2,
-      "profiles_without_rule_link": 184,
+      "profiles_without_rule_link": 182,
       "pending_specific_profiles": [
         "06-06-1-pulses",
         "06-06-1-millets"
@@ -32169,6 +32169,13 @@
         "15-15-1-papad",
         "04-04-2-yellow-pea-powder",
         "99-99-1-trehalose"
+      ],
+      "newly_promoted_current_official_profiles": [
+        "15-15-1-papad",
+        "04-04-2-yellow-pea-powder",
+        "99-99-1-trehalose",
+        "11-11-6-sorbitol",
+        "100-100-solvent-extracted-crude-vegetable-oils-not-for-direct-human-consumption"
       ]
     },
     "base_profile_promotion_audit": {
@@ -32180,6 +32187,18 @@
       "special_regulation_exact_name_routes_confirmed": 7,
       "remaining_base_profiles": 184,
       "rule": "Only exact current official mappings were promoted. No fuzzy product-name matching was used. Category 13 exact-name matches remain special-regulation routes, not ordinary chapter profiles."
+    },
+    "explicit_unloaded_standard_audit": {
+      "checked_on": "2026-10-03",
+      "newly_loaded": [
+        "3.2.16(1) Sorbitol",
+        "2.2.9 Solvent Extracted Crude Vegetable Oils"
+      ],
+      "still_external_regulation_sets_needed": [
+        "Food Safety and Standards (Alcoholic Beverages) Regulations — current Version V (December 2025)",
+        "Food Safety and Standards (Foods for Infant Nutrition) Regulations — current FSSAI compendium/product standards"
+      ],
+      "rule": "Only current official FSSAI sources are used. External regulation sets remain locked until their product standards are structured."
     }
   },
   "annexure_1_groups": {
@@ -33337,6 +33356,17 @@
       "official_sources": [
         "FoSCoS standardized-product catalogue snapshot stored in PMSV product master",
         "PMSV Chapter 2.4 and Chapter 3 rule datasets derived only from official FSSAI sources"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Build 124 — current Sorbitol 3.2.16(1) and crude vegetable oil 2.2.9 standards",
+      "rule": "Loaded Sorbitol from current FSSAI Chapter 3 Version 4 (01.08.2025) as an identity/purity standard and loaded Solvent Extracted Crude Vegetable Oils from current Chapter 2.2 Version 4 (07.05.2025), including the notified current Corn (Maize) Oil values. Both exact FoSCoS FSSR profiles were promoted; Appendix A usage permission remains separate.",
+      "official_sources": [
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%203_Substances%20added%20to%20food%281%29.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats_oils_and_fat_emulsions.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/GAZETTE%20NOTIFICATION%20DATED%2021_10_2024_ammendments.pdf",
+        "https://fcstraining.fssai.gov.in/standard-product"
       ]
     }
   ],
