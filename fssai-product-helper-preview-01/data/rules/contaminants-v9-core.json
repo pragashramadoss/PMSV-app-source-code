@@ -17,17 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_35_named_dried_spice_lead_arsenic_mapping",
+    "stage": "phase_36_post_2_9_29_dried_spice_mapping",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 117,
+    "exact_product_profiles": 120,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 171 maps 18 named Chapter 2.9 dried-spice identities to Lead 10 mg/kg on dry matter basis and Arsenic 5 mg/kg; 17 are new contaminant profiles and Nutmeg is enriched without losing its existing aflatoxin/Saffrole rules.",
-      "The mapped set is Caraway, Cardamom, Chillies/Capsicum, Cinnamon, Cloves, Coriander, Cumin, Fennel, Fenugreek, Mace, Mustard, Nutmeg, BWG Peppers, Poppy, Saffron, Aniseed, Ajowan and Celery.",
-      "Cassia remains locked in this build because its current identity wording does not itself say dried and it is not named in the Curry Powder dried-spice example list.",
-      "Dried Mango Slices, Dried Mango Powder, Asafoetida, Seasoning and Spice Oleoresins remain locked from these generic spice metal rows.",
+      "Build 172 maps Tejpat 2.9.33, Star Anise 2.9.34 and Pimento/Allspice 2.9.36 to Lead 10 mg/kg on dry matter basis and Arsenic 5 mg/kg.",
+      "Each of these current FSSAI identities explicitly states a dried leaf, mature fruit or whole berry form.",
+      "Cassia remains locked because its current identity wording does not explicitly establish a dried form and it is not in the Curry Powder dried-spice example list.",
+      "Dried Mango Slices, Dried Mango Powder, Asafoetida, Seasoning and Spice Oleoresins remain excluded from these generic spice metal rows.",
       "Coffee subtype locks, Instant Tea lock, Cream Powder exclusion and generic Tin fail-closed behavior remain unchanged."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
@@ -77,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Review Cassia and the post-2.9.29 named spice standards (Tejpat, Star Anise, Pimento/Allspice) individually; keep composite/extract products locked.",
+    "next_priority": "Review spice crop-contaminant coverage (Total Aflatoxins/Aflatoxin B1) for the now-proven named spice identities without extending it to non-spice dried products.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -118,9 +118,9 @@
       "12-12-2-mixed-masala",
       "12-12-2-dehydrated-onion-sukha-pyaj"
     ],
-    "verified_alias_products": 83,
-    "verified_alias_new_profiles": 79,
-    "verified_alias_rules_added": 151,
+    "verified_alias_products": 86,
+    "verified_alias_new_profiles": 82,
+    "verified_alias_rules_added": 157,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
@@ -174,7 +174,9 @@
     "dried_ginger_garlic_rules_added_build_170": 4,
     "named_dried_spice_products_added_build_171": 18,
     "named_dried_spice_new_profiles_added_build_171": 17,
-    "named_dried_spice_rules_added_build_171": 36
+    "named_dried_spice_rules_added_build_171": 36,
+    "post_2_9_29_dried_spice_products_added_build_172": 3,
+    "post_2_9_29_dried_spice_rules_added_build_172": 6
   },
   "all_food_rules": [
     {
@@ -3368,6 +3370,84 @@
           "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        }
+      ]
+    },
+    {
+      "id": "tejpat",
+      "label": "TEJPAT",
+      "catalog_ids": [
+        "12-12-2-tejpat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        }
+      ]
+    },
+    {
+      "id": "star-anise",
+      "label": "STAR ANISE",
+      "catalog_ids": [
+        "12-12-2-star-anise"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        }
+      ]
+    },
+    {
+      "id": "pimento-allspice",
+      "label": "Pimento or Allspice",
+      "catalog_ids": [
+        "12-12-2-pimento-or-allspice"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
         }
       ]
@@ -19413,6 +19493,72 @@
           "limit": 5,
           "unit": "mg/kg",
           "mapping_basis": "Current FSSAI 2.9.27 standard establishes Celery as a spice/dried spice identity, matching the Arsenic article class 'spices'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-tejpat",
+      "product_name": "TEJPAT",
+      "fssr": "2.9.33",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.33 explicitly defines TEJPAT as a dried leaf/fruit/berry spice identity, matching the Lead article class 'dried herbs and spices'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.33 explicitly defines TEJPAT as a dried spice identity, matching the Arsenic article class 'spices'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-star-anise",
+      "product_name": "STAR ANISE",
+      "fssr": "2.9.34",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.34 explicitly defines STAR ANISE as a dried leaf/fruit/berry spice identity, matching the Lead article class 'dried herbs and spices'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.34 explicitly defines STAR ANISE as a dried spice identity, matching the Arsenic article class 'spices'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-pimento-or-allspice",
+      "product_name": "Pimento or Allspice",
+      "fssr": "2.9.36",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.36 explicitly defines Pimento or Allspice as a dried leaf/fruit/berry spice identity, matching the Lead article class 'dried herbs and spices'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.36 explicitly defines Pimento or Allspice as a dried spice identity, matching the Arsenic article class 'spices'."
         }
       ]
     }
