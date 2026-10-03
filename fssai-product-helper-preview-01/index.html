@@ -2048,7 +2048,7 @@ function populateProprietarySpecificFcs(){
    .filter(([code])=>base && (normFoodCode(code)===normFoodCode(base) || normFoodCode(code).startsWith(normFoodCode(base)+'.')))
    .sort((x,y)=>x[0].localeCompare(y[0],undefined,{numeric:true}));
  select.innerHTML='<option value="">'+(rows.length?'Select most specific loaded FCS':'No deeper loaded FCS')+'</option>'
-   +rows.map(([code,set])=>'<option value="'+esc(code)+'">'+esc(code)+' — '+esc(set.name||'FCS')+(set.status==='no_additives_permitted'?' · no additives permitted':set.status==='special_regulation_route'?' · special regulation':'')+'</option>').join('');
+   +rows.map(([code,set])=>'<option value="'+esc(code)+'">'+esc(code)+' — '+esc(set.name||'FCS')+(set.status==='no_additives_permitted'?' · no additives permitted':set.status==='no_additives_permitted_pending_v3_recheck'?' · no additives (current recheck pending)':set.status==='special_regulation_route'?' · special regulation':'')+'</option>').join('');
  select.disabled=!rows.length;
 }
 
@@ -2073,7 +2073,8 @@ function appendixEntriesForFcs(code){
  if(fcs==='16')return {status:'component_carry_over',entries:[],message:appendixCoreDb.category_16?.rule||'Category 16 uses component/carry-over logic.'};
  const sets=appendixCoreDb.loaded_permission_sets||{};
  const exact=sets[fcs];
- if(exact?.status==='no_additives_permitted')return {status:'no_additives',entries:[],message:'Appendix A Table 14 states: No additives permitted for '+(exact.name||fcs)+'.'};
+ if(exact?.status==='no_additives_permitted')return {status:'no_additives',entries:[],message:'Appendix A states: No additives permitted for '+(exact.name||fcs)+'.'};
+ if(exact?.status==='no_additives_permitted_pending_v3_recheck')return {status:'no_additives_pending',entries:[],incomplete:true,completenessNote:exact?.completeness_note||'',message:'Official FSSAI prior Appendix states no additives permitted for '+(exact.name||fcs)+', with current Version 3 row recheck still pending.'};
  if(exact?.status==='special_regulation_route')return {status:'special_regulation',entries:[],specialRoute:exact.special_route||'',message:'This FCS is locked to its FSSAI special-regulation route before additive permissions can be evaluated.'};
  const ancestors=appendixAncestors(fcs);
  const merged=new Map();
@@ -2108,6 +2109,10 @@ function renderProprietaryAppendixA(){
    box.innerHTML='<div class="notice"><b>Appendix A — FCS '+esc(fcs)+': no additives permitted.</b><br>'+esc(resolved.message)+'</div>';
    return;
  }
+ if(resolved.status==='no_additives_pending'){
+   box.innerHTML='<div class="notice"><b>FCS '+esc(fcs)+': official no-additives row, current-row recheck pending.</b><br>'+esc(resolved.message)+(resolved.completenessNote?'<br><small>'+esc(resolved.completenessNote)+'</small>':'')+'</div>';
+   return;
+ }
  if(resolved.status==='special_regulation'){
    const routeLabels={
      foods_for_infant_nutrition:'Foods for Infant Nutrition Regulations, 2020',
@@ -2140,7 +2145,7 @@ function renderProprietaryAppendixA(){
 }
 async function loadAppendixCore(){
  try{
-   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=69',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=70',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCoreDb=await res.json();
  }catch(e){appendixCoreDb=null;}
@@ -2318,7 +2323,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=69',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=70',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
