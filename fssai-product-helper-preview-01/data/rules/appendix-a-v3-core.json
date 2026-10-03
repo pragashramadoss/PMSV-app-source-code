@@ -11648,7 +11648,7 @@
     "9.2.5": {
       "name": "Smoked, dried, fermented and/or salted fish and fish products",
       "table": "Table 9",
-      "status": "verified_current_complete_with_one_note_alignment_locked",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "Allura red AC",
@@ -11831,16 +11831,16 @@
           "ins": "",
           "limit": "30 mg/kg",
           "note_refs": "",
-          "condition": "The current PDF text clearly gives 30 mg/kg, but note 44 is line-wrapped against the following citrate row; PMSV leaves the note association locked.",
-          "verification": "current_v3_limit_verified_note_alignment_locked"
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "Sodium dihydrogen citrate",
           "ins": "331(i)",
           "limit": "GMP",
-          "note_refs": "",
-          "condition": "The adjacent note 44 is not assigned here because the PDF extraction does not preserve row-column alignment.",
-          "verification": "current_v3_limit_verified_note_alignment_locked"
+          "note_refs": "44",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "Sodium fumarate",
@@ -12075,7 +12075,7 @@
           "verification": "current_v3_fssai"
         }
       ],
-      "completeness_note": "All current Version 3 limits are loaded. Only the isolated note-44 association around the SULFITES/Sodium dihydrogen citrate line wrap remains explicitly locked."
+      "completeness_note": "Complete current Version 3 9.2.5 row set. Direct visual inspection confirms SULFITES 30 mg/kg has a blank note cell, while Sodium dihydrogen citrate (INS 331(i)) GMP carries note 44 exactly as printed in the official PDF."
     },
     "9.3": {
       "name": "Semi-preserved fish and fish products, including molluscs, crustaceans and echinoderms",
@@ -31079,7 +31079,7 @@
       "14.1",
       "14.1.2"
     ],
-    "next_priority": "Tables 1–15 are reconciled to current Version 3 from the uploaded official FSSAI Appendix A PDF, with explicit source-level anomalies quarantined. Next: resolve the remaining Table 9 note-alignment lock and run a global consistency audit across FCS hierarchy, Appendix notes, Annexure 1 groups and product mappings.",
+    "next_priority": "Tables 1–15 are now reconciled to current Version 3 from the uploaded official FSSAI Appendix A PDF, except explicit source-level anomalies that cannot be resolved from the source itself. Next: global consistency audit across all FCS permission sets, Appendix notes, Annexure 1 groups and product mappings.",
     "annexure_1_groups_loaded": 18,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
@@ -31224,7 +31224,7 @@
       "9.3.4",
       "9.4"
     ],
-    "table9_stage": "current_v3_complete_except_single_note_alignment_lock",
+    "table9_stage": "current_v3_complete",
     "table8_sets_loaded": [
       "8.0",
       "8.1",
@@ -31446,7 +31446,8 @@
       "15.2",
       "15.3"
     ],
-    "table15_stage": "current_v3_complete"
+    "table15_stage": "current_v3_complete",
+    "table9_locked_ambiguities": []
   },
   "annexure_1_groups": {
     "SULFITES": [
@@ -32277,6 +32278,14 @@
       "rule": "Table 13 was verified as an intentional special-regulation routing table. Table 14.2 alcoholic beverage rows were normalized directly from current Version 3 pages 311–325; the 14.1.5 Steviol glycosides provision was removed from active permissions because its source-marked omission took effect on 1 February 2026. The duplicate INS 1202 800 mg/kg versus 800 mg/l entries in 14.2.3 remain quarantined. Table 15 was fully reconciled from pages 325–328.",
       "official_sources": [
         "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf, pages 290 and 310–328"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Table 9 — Build 117 visual resolution of 9.2.5 note alignment",
+      "rule": "Direct visual inspection of the uploaded official Version 3 PDF page 248 confirms SULFITES 30 mg/kg has no note in its row, while Sodium dihydrogen citrate (INS 331(i)) at GMP carries note 44. PMSV stores the printed table exactly and does not reassign note 44 based on chemical expectation.",
+      "official_sources": [
+        "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf, page 248"
       ]
     }
   ],
