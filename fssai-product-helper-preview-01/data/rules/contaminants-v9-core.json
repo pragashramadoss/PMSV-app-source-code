@@ -17,18 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_22_exact_substance_alias_expansion",
+    "stage": "phase_23_functional_prefix_exact_substance_expansion",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 55,
+    "exact_product_profiles": 66,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 158 adds exact substance-identity aliases for Sodium Saccharin, Butylated Hydroxyanisole, Dodecyl Gallate and Ammonium Hydrogen Carbonate.",
-      "No fuzzy product match was auto-promoted.",
-      "Infant formula (ready to use) remains locked until a product-form input exists.",
-      "Soft Candy is not mapped to Hard boiled sugar confectionery.",
-      "Tomato Ketchup and Tomato Sauce requires a ketchup subtype gate before the Tomato ketchup metal row can apply.",
+      "Build 159 adds 24 Section 2.1 metal rules across 11 exact FoSCoS substance identities after stripping only administrative functional prefixes.",
+      "L(+/-) tartaric acid remains excluded from the L(+)-tartaric acid metal rows because stereochemical identity is not exact.",
+      "Infant formula (ready to use) remains locked until product form is captured.",
+      "Tomato Ketchup and Tomato Sauce remains subtype-gated work; the Tomato ketchup metal row is not applied to the combined catalogue product.",
       "Generic Tin fallback remains disabled."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
@@ -78,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Continue reviewed Section 2.1 aliases. Prioritize exact standardized substance/product identities; hold form-dependent or subtype-dependent rows behind explicit inputs.",
+    "next_priority": "Continue exact functional-prefix substance matching for remaining FoSCoS additives, while excluding stereochemical/non-equivalent names and any product-form-dependent limits.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -116,9 +115,9 @@
       "99-99-1-baking-powder",
       "99-99-1-gelatin"
     ],
-    "verified_alias_products": 22,
-    "verified_alias_new_profiles": 19,
-    "verified_alias_rules_added": 30,
+    "verified_alias_products": 33,
+    "verified_alias_new_profiles": 30,
+    "verified_alias_rules_added": 54,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
@@ -143,7 +142,9 @@
     "tin_locked_broad_rows": 5,
     "tin_generic_fallback_auto_apply": false,
     "exact_substance_alias_products_added_build_158": 4,
-    "exact_substance_alias_rules_added_build_158": 9
+    "exact_substance_alias_rules_added_build_158": 9,
+    "functional_prefix_exact_products_added_build_159": 11,
+    "functional_prefix_exact_rules_added_build_159": 24
   },
   "all_food_rules": [
     {
@@ -1719,6 +1720,297 @@
           "article": "Ammonium hydrogen carbonate",
           "source_basis": "Section 2.1 · Lead",
           "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-99-99-1-acidity-regulators-trisodium-citrate",
+      "label": "Acidity Regulators Trisodium Citrate",
+      "catalog_ids": [
+        "99-99-1-acidity-regulators-trisodium-citrate"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 3,
+          "unit": "mg/kg",
+          "article": "Trisodium citrate",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Trisodium citrate",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "functional_prefix_stripped_exact_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-99-99-1-acidity-regulators-fumaric-acid",
+      "label": "Acidity Regulators Fumaric Acid",
+      "catalog_ids": [
+        "99-99-1-acidity-regulators-fumaric-acid"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 3,
+          "unit": "mg/kg",
+          "article": "Fumaric acid",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Fumaric acid",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "functional_prefix_stripped_exact_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-99-99-1-gelling-agent-or-thickener-or-stabilizer-agar",
+      "label": "Gelling Agent or Thickener or Stabilizer Agar",
+      "catalog_ids": [
+        "99-99-1-gelling-agent-or-thickener-or-stabilizer-agar"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 3,
+          "unit": "mg/kg",
+          "article": "Agar",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Agar",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "functional_prefix_stripped_exact_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-arabic-or-acacia-gum",
+      "label": "Gelling Agent or Thickener or Stabilizer Gum Arabic or Acacia Gum",
+      "catalog_ids": [
+        "99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-arabic-or-acacia-gum"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Gum Arabic or Acacia gum",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 3,
+          "unit": "mg/kg",
+          "article": "Gum Arabic or Acacia gum",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "functional_prefix_stripped_exact_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-99-99-1-gelling-agent-or-thickener-or-stabilizer-tragacanth-gum",
+      "label": "Gelling Agent or Thickener or Stabilizer Tragacanth Gum",
+      "catalog_ids": [
+        "99-99-1-gelling-agent-or-thickener-or-stabilizer-tragacanth-gum"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 3,
+          "unit": "mg/kg",
+          "article": "Tragacanth gum",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Tragacanth gum",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "functional_prefix_stripped_exact_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-ghatti",
+      "label": "Gelling Agent or Thickener or Stabilizer Gum Ghatti",
+      "catalog_ids": [
+        "99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-ghatti"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 3,
+          "unit": "mg/kg",
+          "article": "Gum Ghatti",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Gum ghatti",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "functional_prefix_stripped_exact_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-99-99-1-gelling-agent-or-thickener-or-stabilizer-calcium-alginate",
+      "label": "Gelling Agent or Thickener or Stabilizer Calcium Alginate",
+      "catalog_ids": [
+        "99-99-1-gelling-agent-or-thickener-or-stabilizer-calcium-alginate"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 3,
+          "unit": "mg/kg",
+          "article": "Calcium alginate",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Calcium alginate",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "functional_prefix_stripped_exact_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-99-99-1-gelling-agent-or-thickener-or-stabilizer-alginic-acid",
+      "label": "Gelling Agent or Thickener or Stabilizer Alginic Acid",
+      "catalog_ids": [
+        "99-99-1-gelling-agent-or-thickener-or-stabilizer-alginic-acid"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 3,
+          "unit": "mg/kg",
+          "article": "Alginic acid",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Alginic acid",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "functional_prefix_stripped_exact_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-karaya",
+      "label": "Gelling Agent or Thickener or Stabilizer Gum Karaya",
+      "catalog_ids": [
+        "99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-karaya"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 3,
+          "unit": "mg/kg",
+          "article": "Gum Karaya",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Gum karaya",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "functional_prefix_stripped_exact_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-99-99-1-gelling-agent-or-thickener-or-stabilizer-pectin",
+      "label": "Gelling Agent or Thickener or Stabilizer Pectin",
+      "catalog_ids": [
+        "99-99-1-gelling-agent-or-thickener-or-stabilizer-pectin"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Pectin",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Pectin",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "functional_prefix_stripped_exact_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-99-99-1-gelling-agent-or-thickener-or-stabilizer-carrageenan",
+      "label": "Gelling Agent or Thickener or Stabilizer Carrageenan",
+      "catalog_ids": [
+        "99-99-1-gelling-agent-or-thickener-or-stabilizer-carrageenan"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 3,
+          "unit": "mg/kg",
+          "article": "Carrageenan",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 1.5,
+          "unit": "mg/kg",
+          "article": "Carrageenan",
+          "source_basis": "Section 2.1 · Cadmium",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 1,
+          "unit": "mg/kg",
+          "article": "Carrageenan",
+          "source_basis": "Section 2.1 · Mercury",
+          "verification": "functional_prefix_stripped_exact_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Carrageenan",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "functional_prefix_stripped_exact_v9"
         }
       ]
     }
@@ -16428,6 +16720,262 @@
           "limit": 2,
           "unit": "mg/kg",
           "mapping_basis": "FSSAI Chapter 3.2.10 identifies Ammonium hydrogen carbonate (ammonium bicarbonate, INS 503(ii)); the FoSCoS product name adds only the functional prefix 'Acidity Regulators'."
+        }
+      ]
+    },
+    {
+      "product_id": "99-99-1-acidity-regulators-trisodium-citrate",
+      "product_name": "Acidity Regulators Trisodium Citrate",
+      "fssr": "",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Trisodium citrate",
+          "limit": 3,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Trisodium citrate",
+          "limit": 2,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        }
+      ]
+    },
+    {
+      "product_id": "99-99-1-acidity-regulators-fumaric-acid",
+      "product_name": "Acidity Regulators Fumaric Acid",
+      "fssr": "",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Fumaric acid",
+          "limit": 3,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Fumaric acid",
+          "limit": 2,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        }
+      ]
+    },
+    {
+      "product_id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-agar",
+      "product_name": "Gelling Agent or Thickener or Stabilizer Agar",
+      "fssr": "",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Agar",
+          "limit": 3,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Agar",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        }
+      ]
+    },
+    {
+      "product_id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-arabic-or-acacia-gum",
+      "product_name": "Gelling Agent or Thickener or Stabilizer Gum Arabic or Acacia Gum",
+      "fssr": "",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Gum Arabic or Acacia gum",
+          "limit": 2,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Gum Arabic or Acacia gum",
+          "limit": 3,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        }
+      ]
+    },
+    {
+      "product_id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-tragacanth-gum",
+      "product_name": "Gelling Agent or Thickener or Stabilizer Tragacanth Gum",
+      "fssr": "",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Tragacanth gum",
+          "limit": 3,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Tragacanth gum",
+          "limit": 2,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        }
+      ]
+    },
+    {
+      "product_id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-ghatti",
+      "product_name": "Gelling Agent or Thickener or Stabilizer Gum Ghatti",
+      "fssr": "",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Gum Ghatti",
+          "limit": 3,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Gum ghatti",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        }
+      ]
+    },
+    {
+      "product_id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-calcium-alginate",
+      "product_name": "Gelling Agent or Thickener or Stabilizer Calcium Alginate",
+      "fssr": "",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Calcium alginate",
+          "limit": 3,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Calcium alginate",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        }
+      ]
+    },
+    {
+      "product_id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-alginic-acid",
+      "product_name": "Gelling Agent or Thickener or Stabilizer Alginic Acid",
+      "fssr": "",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Alginic acid",
+          "limit": 3,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Alginic acid",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        }
+      ]
+    },
+    {
+      "product_id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-karaya",
+      "product_name": "Gelling Agent or Thickener or Stabilizer Gum Karaya",
+      "fssr": "",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Gum Karaya",
+          "limit": 3,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Gum karaya",
+          "limit": 2,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        }
+      ]
+    },
+    {
+      "product_id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-pectin",
+      "product_name": "Gelling Agent or Thickener or Stabilizer Pectin",
+      "fssr": "",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Pectin",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Pectin",
+          "limit": 2,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        }
+      ]
+    },
+    {
+      "product_id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-carrageenan",
+      "product_name": "Gelling Agent or Thickener or Stabilizer Carrageenan",
+      "fssr": "",
+      "added_rules": 4,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Carrageenan",
+          "limit": 3,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Cadmium",
+          "article": "Carrageenan",
+          "limit": 1.5,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Mercury",
+          "article": "Carrageenan",
+          "limit": 1,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Carrageenan",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS product name equals the FSSAI metal-table substance identity after removing only the administrative functional-class prefix. No chemical-name substitution or fuzzy matching was used."
         }
       ]
     }
