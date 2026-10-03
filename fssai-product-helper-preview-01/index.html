@@ -557,6 +557,13 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     <small>PMSV loads only verified FoSCoS variants relevant to the selected product. Some variants also require an exact package format before a Tin row applies.</small>
   </div>
   <div class="field">
+    <label>Exact milk-powder subtype for Lead</label>
+    <select id="contaminantMilkLeadSubtype">
+      <option value="">Not applicable / not specified</option>
+    </select>
+    <small>Enabled only for the combined FoSCoS Milk Powders and Cream Powder product. Cream Powder is deliberately not offered because this Lead rule is for milks.</small>
+  </div>
+  <div class="field">
     <label>Milk concentration factor for Lead</label>
     <input id="contaminantMilkConcentrationFactor" type="number" min="0.000001" step="0.01" placeholder="Enter factor">
     <small>Used only when FSSAI requires the 0.02 mg/kg milk Lead limit to be adjusted for a partially or wholly dehydrated milk. PMSV calculates 0.02 × factor and does not guess the factor.</small>
@@ -568,7 +575,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="productContaminantResults"><div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div></div>
 </div>
 <div class="card">
-<div class="section-title"><h2>Coverage status</h2><span>Build 163 · dehydrated milk Lead factor gate</span></div>
+<div class="section-title"><h2>Coverage status</h2><span>Build 164 · milk-powder Lead subtype gate</span></div>
 <div class="notice">The reusable contaminant master now includes 35 exact standardized-product profiles, 14 exact ingredient-trigger groups, the complete PCB/PAH fish table, and all 213 pesticide entries and 1,098 residue MRL commodity rows in Section 2.3.1, plus the Section 2.3.2 seafood antibiotic limits, prohibited veterinary-drug EMRL rules and honey antibiotic MRPL table. Sections 2.3.2, 2.4, 2.5.1 and 2.5.2 are now loaded from current FSSAI Version IX. Histamine includes the official high-histidine fish-family/species list and all 11 product-category n/c/m/M limits. No missing limit is estimated from another website.</div>
 <div class="notice"><b>2026 amendment:</b> FSSAI notified a final Contaminants, Toxins and Residues amendment on 25 May 2026 with commencement on <b>1 December 2026</b>. Build 141 continues to use the currently effective Version IX basis as of 3 October 2026.</div>
 </div>
@@ -2391,7 +2398,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=163',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=164',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2416,6 +2423,7 @@ document.getElementById('contaminantPackageFormat')?.addEventListener('change',r
 document.getElementById('contaminantContainerMaterial')?.addEventListener('change',renderProductContaminants);
 document.getElementById('contaminantTinProductIdentity')?.addEventListener('change',renderProductContaminants);
 document.getElementById('contaminantTinVariant')?.addEventListener('change',renderProductContaminants);
+document.getElementById('contaminantMilkLeadSubtype')?.addEventListener('change',renderProductContaminants);
 document.getElementById('contaminantMilkConcentrationFactor')?.addEventListener('input',renderProductContaminants);
 
 function selectedCatalogProductForContaminants(){
@@ -2579,14 +2587,43 @@ function renderPackagingTinStatus(p){
  el.innerHTML='<b>Packaging recorded, but no exact packaging-dependent Tin product mapping is loaded for '+esc(p.name)+'.</b> PMSV will not substitute the generic canned-food limit.';
 }
 
+function dehydratedMilkSubtypeConfigsForProduct(p){
+ if(!p||!contaminantsDb||!Array.isArray(contaminantsDb.dehydrated_milk_subtype_lead_rules_v9))return [];
+ return contaminantsDb.dehydrated_milk_subtype_lead_rules_v9.filter(x=>x.catalog_id===p.id);
+}
+function syncDehydratedMilkSubtypeInput(p){
+ const sel=document.getElementById('contaminantMilkLeadSubtype');
+ if(!sel)return;
+ const configs=dehydratedMilkSubtypeConfigsForProduct(p);
+ const current=sel.value;
+ const subtypes=configs.map(x=>x.subtype).filter(Boolean);
+ sel.innerHTML='<option value="">Not applicable / not specified</option>'+subtypes.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');
+ sel.disabled=subtypes.length===0;
+ if(subtypes.includes(current))sel.value=current;
+ else sel.value='';
+}
+function selectedDehydratedMilkSubtypeConfig(p){
+ const configs=dehydratedMilkSubtypeConfigsForProduct(p);
+ const subtype=document.getElementById('contaminantMilkLeadSubtype')?.value||'';
+ if(!subtype)return null;
+ return configs.find(x=>x.subtype===subtype)||null;
+}
 function dehydratedMilkLeadConfigForProduct(p){
- if(!p||!contaminantsDb||!Array.isArray(contaminantsDb.dehydrated_milk_conditional_lead_rules_v9))return null;
- return contaminantsDb.dehydrated_milk_conditional_lead_rules_v9.find(x=>x.catalog_id===p.id)||null;
+ if(!p||!contaminantsDb)return null;
+ if(Array.isArray(contaminantsDb.dehydrated_milk_conditional_lead_rules_v9)){
+   const direct=contaminantsDb.dehydrated_milk_conditional_lead_rules_v9.find(x=>x.catalog_id===p.id);
+   if(direct)return direct;
+ }
+ return selectedDehydratedMilkSubtypeConfig(p);
 }
 function syncDehydratedMilkLeadInput(p){
+ syncDehydratedMilkSubtypeInput(p);
  const input=document.getElementById('contaminantMilkConcentrationFactor');
  if(!input)return;
- const eligible=!!dehydratedMilkLeadConfigForProduct(p);
+ const direct=Array.isArray(contaminantsDb?.dehydrated_milk_conditional_lead_rules_v9)&&contaminantsDb.dehydrated_milk_conditional_lead_rules_v9.some(x=>x.catalog_id===p?.id);
+ const subtypeAvailable=dehydratedMilkSubtypeConfigsForProduct(p).length>0;
+ const subtypeSelected=!!selectedDehydratedMilkSubtypeConfig(p);
+ const eligible=direct||(subtypeAvailable&&subtypeSelected);
  input.disabled=!eligible;
  if(!eligible)input.value='';
 }
@@ -2614,10 +2651,17 @@ function renderDehydratedMilkLeadStatus(p){
  const el=document.getElementById('dehydratedMilkLeadStatus');
  if(!el)return;
  syncDehydratedMilkLeadInput(p);
+ const direct=Array.isArray(contaminantsDb?.dehydrated_milk_conditional_lead_rules_v9)&&contaminantsDb.dehydrated_milk_conditional_lead_rules_v9.some(x=>x.catalog_id===p?.id);
+ const subtypeConfigs=dehydratedMilkSubtypeConfigsForProduct(p);
  const cfg=dehydratedMilkLeadConfigForProduct(p);
- if(!cfg){
+ if(!direct&&subtypeConfigs.length===0){
    el.className='notice';
    el.innerHTML='No concentration-factor Lead rule is loaded for this selected product.';
+   return;
+ }
+ if(!direct&&subtypeConfigs.length>0&&!cfg){
+   el.className='notice';
+   el.innerHTML='<b>Exact milk-powder subtype required.</b> Select one of the verified milk-powder subtypes. Cream Powder remains excluded from this rule.';
    return;
  }
  const factor=dehydratedMilkConcentrationFactor();
@@ -2663,7 +2707,7 @@ function renderProductContaminants(){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=163',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=164',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){

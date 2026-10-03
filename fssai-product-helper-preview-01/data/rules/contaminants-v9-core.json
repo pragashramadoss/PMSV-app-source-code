@@ -17,18 +17,18 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_27_dehydrated_milk_lead_factor_gate",
+    "stage": "phase_28_milk_powder_subtype_lead_gate",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 85,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 163 adds concentration-factor gated Lead logic for Evaporated or Concentrated Milk and Sweetened Condensed Milk.",
-      "The unadjusted 0.02 mg/kg base value is never shown as the final limit for these dehydrated milk products unless concentration factor = 1 is explicitly entered.",
-      "Milk Powders and Cream Powder remains locked pending exact subtype selection because FoSCoS combines milk powders and Cream Powder in one catalogue product.",
-      "Instant Tea in Solid Form remains locked as a distinct extracted-solid standard.",
+      "Build 164 adds four FoSCoS milk-powder subtypes to the dehydrated-milk Lead concentration-factor engine.",
+      "Whole Milk Powder, Partly Skimmed Milk Powder, Skimmed Milk Powder and Semi-skimmed Milk Powder require both exact subtype selection and a concentration factor.",
+      "Cream Powder is intentionally excluded from the 'Milks' Lead article because the combined FoSCoS catalogue row is broader than the metal article.",
       "Secondary milk products remain subject to separate product-specific review.",
+      "Instant Tea in Solid Form remains locked as a distinct extracted-solid standard.",
       "Generic Tin fallback remains disabled."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
@@ -78,7 +78,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Add a milk-powder subtype gate so only Whole/Partly Skimmed/Skimmed/Semi-skimmed Milk Powder can use the dehydrated-milk Lead concentration-factor rule; Cream Powder must remain excluded.",
+    "next_priority": "Review secondary milk products individually; do not auto-map Cream Powder or other dairy products to the generic Lead article. Keep Instant Tea distinct.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -153,7 +153,9 @@
     "low_lactose_milk_products_added_build_162": 1,
     "low_lactose_milk_rules_added_build_162": 2,
     "dehydrated_milk_lead_factor_products": 2,
-    "dehydrated_milk_lead_factor_ui": true
+    "dehydrated_milk_lead_factor_ui": true,
+    "milk_powder_lead_subtype_rules": 4,
+    "milk_powder_lead_subtype_gate": true
   },
   "all_food_rules": [
     {
@@ -18335,6 +18337,68 @@
       "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
       "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
       "verification": "official_fssai_v9_exact_dehydrated_milk_with_user_factor"
+    }
+  ],
+  "dehydrated_milk_subtype_lead_rules_v9": [
+    {
+      "catalog_id": "01-01-5-milk-powders-and-cream-powder",
+      "subtype": "Whole Milk Powder",
+      "contaminant": "Lead",
+      "base_limit": 0.02,
+      "unit": "mg/kg",
+      "article": "Milks",
+      "requires_input": "product.subtype + milk.concentration_factor",
+      "calculation": "base_limit × concentration_factor",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+      "subtype_basis": "FoSCoS Milk Powders and Cream Powder variant list updated 28.11.2025; only explicit milk-powder subtypes are enabled. Cream Powder is excluded.",
+      "verification": "official_fssai_v9_plus_official_foscos_milk_powder_subtype_and_user_factor"
+    },
+    {
+      "catalog_id": "01-01-5-milk-powders-and-cream-powder",
+      "subtype": "Partly Skimmed Milk Powder",
+      "contaminant": "Lead",
+      "base_limit": 0.02,
+      "unit": "mg/kg",
+      "article": "Milks",
+      "requires_input": "product.subtype + milk.concentration_factor",
+      "calculation": "base_limit × concentration_factor",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+      "subtype_basis": "FoSCoS Milk Powders and Cream Powder variant list updated 28.11.2025; only explicit milk-powder subtypes are enabled. Cream Powder is excluded.",
+      "verification": "official_fssai_v9_plus_official_foscos_milk_powder_subtype_and_user_factor"
+    },
+    {
+      "catalog_id": "01-01-5-milk-powders-and-cream-powder",
+      "subtype": "Skimmed Milk Powder",
+      "contaminant": "Lead",
+      "base_limit": 0.02,
+      "unit": "mg/kg",
+      "article": "Milks",
+      "requires_input": "product.subtype + milk.concentration_factor",
+      "calculation": "base_limit × concentration_factor",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+      "subtype_basis": "FoSCoS Milk Powders and Cream Powder variant list updated 28.11.2025; only explicit milk-powder subtypes are enabled. Cream Powder is excluded.",
+      "verification": "official_fssai_v9_plus_official_foscos_milk_powder_subtype_and_user_factor"
+    },
+    {
+      "catalog_id": "01-01-5-milk-powders-and-cream-powder",
+      "subtype": "Semi-skimmed milk powder",
+      "contaminant": "Lead",
+      "base_limit": 0.02,
+      "unit": "mg/kg",
+      "article": "Milks",
+      "requires_input": "product.subtype + milk.concentration_factor",
+      "calculation": "base_limit × concentration_factor",
+      "auto_apply": false,
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+      "subtype_basis": "FoSCoS Milk Powders and Cream Powder variant list updated 28.11.2025; only explicit milk-powder subtypes are enabled. Cream Powder is excluded.",
+      "verification": "official_fssai_v9_plus_official_foscos_milk_powder_subtype_and_user_factor"
     }
   ]
 }

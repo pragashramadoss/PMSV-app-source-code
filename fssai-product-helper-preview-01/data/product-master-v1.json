@@ -817,9 +817,9 @@
       "histamine_product_limit_rows_loaded": 11
     },
     "contaminants_v9": {
-      "stage": "phase_27_dehydrated_milk_lead_factor_gate",
+      "stage": "phase_28_milk_powder_subtype_lead_gate",
       "metal_article_master_rows_loaded": 382,
-      "next_validation": "Add milk-powder subtype gate; exclude Cream Powder from the Milks Lead rule.",
+      "next_validation": "Review secondary milk products individually; keep Cream Powder and Instant Tea locked.",
       "arsenic_article_rows_loaded": 95,
       "section_2_1_article_master_complete": true,
       "lead_article_rows_loaded": 163,
@@ -863,7 +863,9 @@
       "low_lactose_milk_products_added_build_162": 1,
       "low_lactose_milk_rules_added_build_162": 2,
       "dehydrated_milk_lead_factor_products": 2,
-      "dehydrated_milk_lead_factor_ui": true
+      "dehydrated_milk_lead_factor_ui": true,
+      "milk_powder_lead_subtype_rules": 4,
+      "milk_powder_lead_subtype_gate": true
     }
   },
   "source_hierarchy": [
@@ -27795,7 +27797,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 163,
+  "build_number": 164,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {
