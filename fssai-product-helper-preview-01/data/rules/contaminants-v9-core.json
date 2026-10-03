@@ -17,18 +17,19 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_24_verified_product_subclass_expansion",
+    "stage": "phase_25_exact_milk_and_tea_subclasses",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 71,
+    "exact_product_profiles": 84,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 160 adds bivalve molluscs, frozen cephalopods, fresh/chilled poultry meat, frozen poultry meat and durum wheat through exact FSSAI product-class identity.",
-      "Fish Oil, Fish Sauce and Fish Pickles are not mapped to the generic article 'Fish'.",
-      "Frozen/Dehydrated Vegetables are not automatically mapped to generic 'Vegetables' or 'Other vegetables'.",
-      "Salt Substitutes are not mapped to 'Salt, food grade'.",
-      "Infant formula (ready to use) remains form-gated work.",
+      "Build 161 maps 11 exact Standard-for-Milk catalogue identities to Arsenic 0.1 mg/kg and Lead 0.02 mg/kg.",
+      "Build 161 maps Kangra Tea and Green Tea to Copper 150 mg/kg and Lead 5 mg/kg (dry matter basis) under the FSSAI article 'Tea'.",
+      "Low Lactose or Lactose free milk remains locked for a separate modified-milk review.",
+      "Evaporated/concentrated milk, sweetened condensed milk and milk powders remain locked because the Lead row requires a concentration factor for partially or wholly dehydrated milks.",
+      "Instant Tea in Solid Form remains locked because it is a distinct extracted-solid standard, not automatically treated as the metal article 'Tea'.",
+      "Secondary milk products are not inferred from the generic Lead article without product-specific review.",
       "Generic Tin fallback remains disabled."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
@@ -78,7 +79,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Continue reviewed subclasses such as exact milk species/standardized milk and tea standards only where the FSSAI article clearly covers the product; keep processed-form guesses locked.",
+    "next_priority": "Review low-lactose/lactose-free milk as a modified milk identity, then evaluate dehydrated/condensed milk only with the required concentration-factor logic. Keep Instant Tea separate from the article 'Tea' unless explicitly supported.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -116,9 +117,9 @@
       "99-99-1-baking-powder",
       "99-99-1-gelatin"
     ],
-    "verified_alias_products": 38,
-    "verified_alias_new_profiles": 35,
-    "verified_alias_rules_added": 61,
+    "verified_alias_products": 51,
+    "verified_alias_new_profiles": 48,
+    "verified_alias_rules_added": 87,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
@@ -147,7 +148,9 @@
     "functional_prefix_exact_products_added_build_159": 11,
     "functional_prefix_exact_rules_added_build_159": 24,
     "verified_product_subclass_products_added_build_160": 5,
-    "verified_product_subclass_rules_added_build_160": 7
+    "verified_product_subclass_rules_added_build_160": 7,
+    "exact_milk_tea_products_added_build_161": 13,
+    "exact_milk_tea_rules_added_build_161": 26
   },
   "all_food_rules": [
     {
@@ -2114,6 +2117,344 @@
           "unit": "mg/kg",
           "article": "Wheat",
           "source_basis": "Section 2.1 · Cadmium",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-01-01-1-buffalo-milk",
+      "label": "Buffalo Milk",
+      "catalog_ids": [
+        "01-01-1-buffalo-milk"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Milk",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Milks",
+          "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-01-01-1-cow-milk",
+      "label": "Cow Milk",
+      "catalog_ids": [
+        "01-01-1-cow-milk"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Milk",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Milks",
+          "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-01-01-1-goat-milk",
+      "label": "Goat Milk",
+      "catalog_ids": [
+        "01-01-1-goat-milk"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Milk",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Milks",
+          "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-01-01-1-camel-milk",
+      "label": "Camel Milk",
+      "catalog_ids": [
+        "01-01-1-camel-milk"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Milk",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Milks",
+          "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-01-01-1-sheep-milk",
+      "label": "Sheep Milk",
+      "catalog_ids": [
+        "01-01-1-sheep-milk"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Milk",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Milks",
+          "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-01-01-1-mixed-milk",
+      "label": "Mixed Milk",
+      "catalog_ids": [
+        "01-01-1-mixed-milk"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Milk",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Milks",
+          "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-01-01-1-standardized-milk",
+      "label": "Standardized Milk",
+      "catalog_ids": [
+        "01-01-1-standardized-milk"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Milk",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Milks",
+          "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-01-01-1-toned-milk",
+      "label": "Toned Milk",
+      "catalog_ids": [
+        "01-01-1-toned-milk"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Milk",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Milks",
+          "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-01-01-1-double-toned-milk",
+      "label": "Double Toned Milk",
+      "catalog_ids": [
+        "01-01-1-double-toned-milk"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Milk",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Milks",
+          "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-01-01-1-skimmed-milk",
+      "label": "Skimmed Milk",
+      "catalog_ids": [
+        "01-01-1-skimmed-milk"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Milk",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Milks",
+          "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-01-01-1-full-cream-milk",
+      "label": "Full Cream Milk",
+      "catalog_ids": [
+        "01-01-1-full-cream-milk"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Milk",
+          "source_basis": "Section 2.1 · Arsenic",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Milks",
+          "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-kangra-tea",
+      "label": "Kangra Tea",
+      "catalog_ids": [
+        "kangra-tea"
+      ],
+      "rules": [
+        {
+          "contaminant": "Copper",
+          "limit": 150,
+          "unit": "mg/kg",
+          "article": "Tea",
+          "source_basis": "Section 2.1 · Copper",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Tea",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead",
+          "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-green-tea",
+      "label": "Green Tea",
+      "catalog_ids": [
+        "green-tea"
+      ],
+      "rules": [
+        {
+          "contaminant": "Copper",
+          "limit": 150,
+          "unit": "mg/kg",
+          "article": "Tea",
+          "source_basis": "Section 2.1 · Copper",
+          "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Tea",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead",
           "verification": "explicit_product_subclass_verified_v9"
         }
       ]
@@ -17169,6 +17510,292 @@
           "limit": 0.2,
           "unit": "mg/kg",
           "mapping_basis": "FSSAI 2.4.6(19) defines Durum Wheat as mature grains of Triticum durum; it is an exact wheat species within the metal article 'Wheat'."
+        }
+      ]
+    },
+    {
+      "product_id": "01-01-1-buffalo-milk",
+      "product_name": "Buffalo Milk",
+      "fssr": "2.1.2",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Milk",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 Standard for Milk explicitly includes this product as species identified milk, mixed milk, or one of the standardized milk classes. No broader dairy-product inference is used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Milks",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 explicitly classifies this product as milk. The dehydration concentration-factor note is retained verbatim but does not alter these non-dehydrated catalogue identities."
+        }
+      ]
+    },
+    {
+      "product_id": "01-01-1-cow-milk",
+      "product_name": "Cow Milk",
+      "fssr": "2.1.2",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Milk",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 Standard for Milk explicitly includes this product as species identified milk, mixed milk, or one of the standardized milk classes. No broader dairy-product inference is used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Milks",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 explicitly classifies this product as milk. The dehydration concentration-factor note is retained verbatim but does not alter these non-dehydrated catalogue identities."
+        }
+      ]
+    },
+    {
+      "product_id": "01-01-1-goat-milk",
+      "product_name": "Goat Milk",
+      "fssr": "2.1.2",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Milk",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 Standard for Milk explicitly includes this product as species identified milk, mixed milk, or one of the standardized milk classes. No broader dairy-product inference is used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Milks",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 explicitly classifies this product as milk. The dehydration concentration-factor note is retained verbatim but does not alter these non-dehydrated catalogue identities."
+        }
+      ]
+    },
+    {
+      "product_id": "01-01-1-camel-milk",
+      "product_name": "Camel Milk",
+      "fssr": "2.1.2",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Milk",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 Standard for Milk explicitly includes this product as species identified milk, mixed milk, or one of the standardized milk classes. No broader dairy-product inference is used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Milks",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 explicitly classifies this product as milk. The dehydration concentration-factor note is retained verbatim but does not alter these non-dehydrated catalogue identities."
+        }
+      ]
+    },
+    {
+      "product_id": "01-01-1-sheep-milk",
+      "product_name": "Sheep Milk",
+      "fssr": "2.1.2",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Milk",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 Standard for Milk explicitly includes this product as species identified milk, mixed milk, or one of the standardized milk classes. No broader dairy-product inference is used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Milks",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 explicitly classifies this product as milk. The dehydration concentration-factor note is retained verbatim but does not alter these non-dehydrated catalogue identities."
+        }
+      ]
+    },
+    {
+      "product_id": "01-01-1-mixed-milk",
+      "product_name": "Mixed Milk",
+      "fssr": "2.1.2",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Milk",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 Standard for Milk explicitly includes this product as species identified milk, mixed milk, or one of the standardized milk classes. No broader dairy-product inference is used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Milks",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 explicitly classifies this product as milk. The dehydration concentration-factor note is retained verbatim but does not alter these non-dehydrated catalogue identities."
+        }
+      ]
+    },
+    {
+      "product_id": "01-01-1-standardized-milk",
+      "product_name": "Standardized Milk",
+      "fssr": "2.1.2",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Milk",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 Standard for Milk explicitly includes this product as species identified milk, mixed milk, or one of the standardized milk classes. No broader dairy-product inference is used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Milks",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 explicitly classifies this product as milk. The dehydration concentration-factor note is retained verbatim but does not alter these non-dehydrated catalogue identities."
+        }
+      ]
+    },
+    {
+      "product_id": "01-01-1-toned-milk",
+      "product_name": "Toned Milk",
+      "fssr": "2.1.2",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Milk",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 Standard for Milk explicitly includes this product as species identified milk, mixed milk, or one of the standardized milk classes. No broader dairy-product inference is used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Milks",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 explicitly classifies this product as milk. The dehydration concentration-factor note is retained verbatim but does not alter these non-dehydrated catalogue identities."
+        }
+      ]
+    },
+    {
+      "product_id": "01-01-1-double-toned-milk",
+      "product_name": "Double Toned Milk",
+      "fssr": "2.1.2",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Milk",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 Standard for Milk explicitly includes this product as species identified milk, mixed milk, or one of the standardized milk classes. No broader dairy-product inference is used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Milks",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 explicitly classifies this product as milk. The dehydration concentration-factor note is retained verbatim but does not alter these non-dehydrated catalogue identities."
+        }
+      ]
+    },
+    {
+      "product_id": "01-01-1-skimmed-milk",
+      "product_name": "Skimmed Milk",
+      "fssr": "2.1.2",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Milk",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 Standard for Milk explicitly includes this product as species identified milk, mixed milk, or one of the standardized milk classes. No broader dairy-product inference is used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Milks",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 explicitly classifies this product as milk. The dehydration concentration-factor note is retained verbatim but does not alter these non-dehydrated catalogue identities."
+        }
+      ]
+    },
+    {
+      "product_id": "01-01-1-full-cream-milk",
+      "product_name": "Full Cream Milk",
+      "fssr": "2.1.2",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Milk",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 Standard for Milk explicitly includes this product as species identified milk, mixed milk, or one of the standardized milk classes. No broader dairy-product inference is used."
+        },
+        {
+          "metal": "Lead",
+          "article": "Milks",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "mapping_basis": "FSSAI 2.1.2 explicitly classifies this product as milk. The dehydration concentration-factor note is retained verbatim but does not alter these non-dehydrated catalogue identities."
+        }
+      ]
+    },
+    {
+      "product_id": "kangra-tea",
+      "product_name": "Kangra Tea",
+      "fssr": "2.10.1(2)",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Copper",
+          "article": "Tea",
+          "limit": 150,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI Chapter 2.10 explicitly defines Kangra Tea as a tea product derived from Camellia sinensis; this is a direct subclass of the metal article 'Tea'."
+        },
+        {
+          "metal": "Lead",
+          "article": "Tea",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI Chapter 2.10 explicitly defines Kangra Tea as tea; the metal-table dry-matter condition is retained."
+        }
+      ]
+    },
+    {
+      "product_id": "green-tea",
+      "product_name": "Green Tea",
+      "fssr": "2.10.1(3)",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Copper",
+          "article": "Tea",
+          "limit": 150,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI Chapter 2.10 explicitly defines Green Tea as a tea product derived from Camellia sinensis; this is a direct subclass of the metal article 'Tea'."
+        },
+        {
+          "metal": "Lead",
+          "article": "Tea",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI Chapter 2.10 explicitly defines Green Tea as tea; the metal-table dry-matter condition is retained."
         }
       ]
     }
