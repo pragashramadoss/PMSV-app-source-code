@@ -11705,65 +11705,46 @@
     "8.0": {
       "name": "Meat and meat products including poultry",
       "table": "Table 8",
-      "status": "hierarchy_loaded",
-      "entries": []
+      "status": "verified_current_container_no_direct_rows",
+      "entries": [],
+      "completeness_note": "Current Version 3 Table 8 container. Permissions are specified in child categories."
     },
     "8.1": {
       "name": "Fresh meat and poultry",
       "table": "Table 8",
-      "status": "no_additives_permitted_pending_v3_recheck",
+      "status": "no_additives_permitted",
       "entries": [],
       "regulatory_conditions": [
         "Current FoSCoS separates frozen meat products into processed/frozen categories such as 8.2.3; this no-additive fresh route is not used to classify those current frozen product mappings."
       ],
-      "completeness_note": "No-additives treatment is verified in official FSSAI Appendix A. Current product routing is taken from FoSCoS."
+      "completeness_note": "Current Version 3 expressly states: No additives permitted."
     },
     "8.1.1": {
       "name": "Fresh meat and poultry whole pieces or cuts",
       "table": "Table 8",
-      "status": "no_additives_permitted_pending_v3_recheck",
+      "status": "no_additives_permitted",
       "entries": [],
-      "completeness_note": "Current FoSCoS fresh/chilled whole-piece mapping applies."
+      "completeness_note": "Current Version 3 expressly states: No additives permitted."
     },
     "8.1.2": {
       "name": "Fresh meat and poultry comminuted",
       "table": "Table 8",
-      "status": "no_additives_permitted_pending_v3_recheck",
+      "status": "no_additives_permitted",
       "entries": [],
-      "completeness_note": "Untreated fresh comminuted/mechanically deboned meat route."
+      "completeness_note": "Current Version 3 expressly states: No additives permitted."
     },
     "8.2": {
       "name": "Processed meat and poultry products in whole pieces or cuts",
       "table": "Table 8",
-      "status": "verified_current_partial",
+      "status": "verified_current_complete",
       "entries": [
-        {
-          "name": "RIBOFLAVINS",
-          "ins": "",
-          "limit": "300 mg/kg",
-          "note_refs": "XS96,XS97",
-          "condition": "",
-          "verification": "current_v3_fssai"
-        },
-        {
-          "name": "Sunset yellow FCF",
-          "ins": "110",
-          "limit": "100 mg/kg",
-          "note_refs": "XS97,XS96",
-          "condition": "",
-          "verification": "current_v3_fssai"
-        }
-      ],
-      "completeness_note": "Current Version 3 directly exposes the tail RIBOFLAVINS and Sunset yellow FCF rows immediately before 8.2.1. Intervening 8.2 parent rows remain locked until their current Version 3 alignment is clean.",
-      "locked_rows": [
         {
           "name": "Paprika oleoresin",
           "ins": "160c(i)",
           "limit": "GMP",
           "note_refs": "",
           "condition": "",
-          "verification": "official_fssai_v2_2024_pending_v3_row_recheck",
-          "lock_reason": "Prior-version row retained for traceability only; current Version 3 parent-row alignment is not yet clean enough to activate."
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "POLYSORBATES",
@@ -11771,8 +11752,7 @@
           "limit": "5,000 mg/kg",
           "note_refs": "XS97,XS96",
           "condition": "",
-          "verification": "official_fssai_v2_2024_pending_v3_row_recheck",
-          "lock_reason": "Prior-version row retained for traceability only; current Version 3 parent-row alignment is not yet clean enough to activate."
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "Propyl gallate",
@@ -11780,19 +11760,99 @@
           "limit": "200 mg/kg",
           "note_refs": "XS97,XS96,130,15",
           "condition": "",
-          "verification": "official_fssai_v2_2024_pending_v3_row_recheck",
-          "lock_reason": "Prior-version row retained for traceability only; current Version 3 parent-row alignment is not yet clean enough to activate."
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "Tertiary butylhydroquinone (TBHQ)",
           "ins": "319",
           "limit": "100 mg/kg",
-          "note_refs": "XS97,XS96,15",
+          "note_refs": "XS97,XS96,15,167,130",
           "condition": "",
-          "verification": "official_fssai_v2_2024_pending_v3_row_recheck",
-          "lock_reason": "Prior-version row retained for traceability only; current Version 3 parent-row alignment is not yet clean enough to activate."
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Brilliant Blue FCF",
+          "ins": "133",
+          "limit": "100 mg/kg",
+          "note_refs": "XS97,XS96,4,XS98,XS89",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Butylated hydroxyanisole (BHA)",
+          "ins": "320",
+          "limit": "200 mg/kg",
+          "note_refs": "15,130,XS96,XS97",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Butylated hydroxytoluene (BHT)",
+          "ins": "321",
+          "limit": "100 mg/kg",
+          "note_refs": "15,130,167,XS96,XS97",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Caramel III - ammonia caramel",
+          "ins": "150c",
+          "limit": "GMP",
+          "note_refs": "XS97,XS96,XS98,XS89,4,3",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Caramel IV - sulfite ammonia caramel",
+          "ins": "150d",
+          "limit": "GMP",
+          "note_refs": "XS97,XS96,XS98,XS89,4,3",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "beta-Carotenes, vegetable",
+          "ins": "160a(ii)",
+          "limit": "5,000 mg/kg",
+          "note_refs": "XS97,XS96",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Erythrosine",
+          "ins": "127",
+          "limit": "30 mg/kg",
+          "note_refs": "XS97,XS96,4",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Fast Green FCF",
+          "ins": "143",
+          "limit": "100 mg/kg",
+          "note_refs": "XS97,XS96,3,4",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "RIBOFLAVINS",
+          "ins": "",
+          "limit": "300 mg/kg",
+          "note_refs": "XS96,XS97",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Sunset Yellow FCF",
+          "ins": "110",
+          "limit": "100 mg/kg",
+          "note_refs": "XS97,XS96",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
         }
-      ]
+      ],
+      "completeness_note": "Complete current Version 3 8.2 row set verified directly from the uploaded official Appendix A PDF.",
+      "locked_rows": []
     },
     "8.2.1": {
       "name": "Non-heat treated processed meat and poultry products in whole pieces or cuts",
@@ -11805,7 +11865,7 @@
           "limit": "2,200 mg/kg",
           "note_refs": "33",
           "condition": "",
-          "verification": "current_v3_fssai"
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "Grape skin extract",
@@ -11813,17 +11873,17 @@
           "limit": "5,000 mg/kg",
           "note_refs": "XS96,XS97",
           "condition": "",
-          "verification": "current_v3_fssai"
+          "verification": "current_v3_fssai_uploaded_pdf"
         }
       ],
-      "completeness_note": "Complete current Version 3 8.2.1 row set directly verified."
+      "completeness_note": "Complete current Version 3 8.2.1 row set."
     },
     "8.2.1.1": {
       "name": "Cured/salted non-heat treated processed meat in whole pieces or cuts",
       "table": "Table 8",
       "status": "verified_current_complete_no_direct_rows",
       "entries": [],
-      "completeness_note": "Current Version 3 shows the 8.2.1.1 category with no direct additive rows; applicable parent permissions are inherited through the FCS hierarchy."
+      "completeness_note": "Current Version 3 shows no direct 8.2.1.1 additive rows; applicable parent permissions are inherited."
     },
     "8.2.1.2": {
       "name": "Cured/salted and dried non-heat treated processed meat in whole pieces or cuts",
@@ -11836,7 +11896,7 @@
           "limit": "1,000 mg/kg",
           "note_refs": "3,13",
           "condition": "",
-          "verification": "current_v3_fssai"
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "Isopropyl citrates",
@@ -11844,7 +11904,7 @@
           "limit": "200 mg/kg",
           "note_refs": "",
           "condition": "",
-          "verification": "current_v3_fssai"
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "Natamycin (Pimaricin)",
@@ -11852,85 +11912,432 @@
           "limit": "6 mg/kg",
           "note_refs": "",
           "condition": "",
-          "verification": "current_v3_fssai"
+          "verification": "current_v3_fssai_uploaded_pdf"
         }
       ],
-      "completeness_note": "Complete current Version 3 8.2.1.2 row set directly verified."
+      "completeness_note": "Complete current Version 3 8.2.1.2 row set."
     },
     "8.2.1.3": {
       "name": "Fermented non-heat treated processed meat in whole pieces or cuts",
       "table": "Table 8",
-      "status": "hierarchy_only_pending_current_v3_rows",
-      "entries": [],
-      "completeness_note": "Category hierarchy is current; direct current Version 3 additive-row alignment remains pending, so no prior-version numeric rows are activated here."
+      "status": "verified_current_complete",
+      "entries": [
+        {
+          "name": "Sucroglycerides",
+          "ins": "474",
+          "limit": "5,000 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "NITRITES",
+          "ins": "",
+          "limit": "80 mg/kg",
+          "note_refs": "32,288",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        }
+      ],
+      "completeness_note": "Complete current Version 3 8.2.1.3 row set."
     },
     "8.2.2": {
       "name": "Heat-treated processed meat and poultry products in whole pieces or cuts",
       "table": "Table 8",
-      "status": "hierarchy_only_pending_current_v3_rows",
-      "entries": [],
-      "completeness_note": "Category hierarchy is current; direct current Version 3 additive-row alignment remains pending, so no prior-version numeric rows are activated here."
+      "status": "verified_current_complete",
+      "entries": [
+        {
+          "name": "Nisin",
+          "ins": "234",
+          "limit": "25 mg/kg",
+          "note_refs": "330,XS97,XS96,233",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "NITRITES",
+          "ins": "",
+          "limit": "80 mg/kg",
+          "note_refs": "32,288",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "PHOSPHATES",
+          "ins": "",
+          "limit": "2,200 mg/kg",
+          "note_refs": "33",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "SACCHARINS",
+          "ins": "",
+          "limit": "500 mg/kg",
+          "note_refs": "XS97,XS96",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Sucroglycerides",
+          "ins": "474",
+          "limit": "5,000 mg/kg",
+          "note_refs": "XS97,XS96,15",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "TOCOPHEROLS",
+          "ins": "",
+          "limit": "500 mg/kg",
+          "note_refs": "XS96,XS97",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        }
+      ],
+      "completeness_note": "Complete current Version 3 8.2.2 row set, including the explicit prohibition on added colour, flavour and meat tenderizer.",
+      "regulatory_conditions": [
+        "Added colour, flavour and meat tenderizer not permitted."
+      ]
     },
     "8.2.3": {
       "name": "Frozen raw, flavoured/marinated, processed meat and poultry products in whole pieces or cuts",
       "table": "Table 8",
-      "status": "current_foscos_route_appendix_rows_pending",
-      "entries": [],
+      "status": "verified_current_complete",
+      "entries": [
+        {
+          "name": "Mineral oil, high viscosity",
+          "ins": "905d",
+          "limit": "950 mg/kg",
+          "note_refs": "3",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "PHOSPHATES",
+          "ins": "",
+          "limit": "2,200 mg/kg",
+          "note_refs": "33",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        }
+      ],
       "regulatory_conditions": [
         "FoSCoS currently maps multiple frozen meat species and frozen marinated/cooked whole-piece products to 8.2.3."
       ],
-      "completeness_note": "Current FoSCoS route is loaded. Current Version 3 additive rows remain locked until a clean direct table block is exposed."
+      "completeness_note": "Complete current Version 3 8.2.3 row set."
     },
     "8.3": {
       "name": "Processed comminuted meat and poultry products",
       "table": "Table 8",
-      "status": "hierarchy_only_pending_current_v3_rows",
-      "entries": [],
-      "completeness_note": "Category hierarchy is current; direct current Version 3 additive-row alignment remains pending, so no prior-version numeric rows are activated here."
-    },
-    "8.3.1": {
-      "name": "Non-heat treated processed comminuted meat and poultry products",
-      "table": "Table 8",
-      "status": "hierarchy_only_pending_current_v3_rows",
-      "entries": [],
-      "completeness_note": "Category hierarchy is current; direct current Version 3 additive-row alignment remains pending, so no prior-version numeric rows are activated here."
-    },
-    "8.3.1.1": {
-      "name": "Cured/salted non-heat treated processed comminuted meat and poultry products",
-      "table": "Table 8",
-      "status": "hierarchy_only_pending_current_v3_rows",
-      "entries": [],
-      "completeness_note": "Category hierarchy is current; direct current Version 3 additive-row alignment remains pending, so no prior-version numeric rows are activated here."
-    },
-    "8.3.1.2": {
-      "name": "Cured/salted and dried non-heat treated processed comminuted meat and poultry products",
-      "table": "Table 8",
-      "status": "hierarchy_only_pending_current_v3_rows",
-      "entries": [],
-      "completeness_note": "Category hierarchy is current; direct current Version 3 additive-row alignment remains pending, so no prior-version numeric rows are activated here."
-    },
-    "8.3.1.3": {
-      "name": "Fermented non-heat treated processed comminuted meat and poultry products",
-      "table": "Table 8",
-      "status": "hierarchy_only_pending_current_v3_rows",
-      "entries": [],
-      "completeness_note": "Category hierarchy is current; direct current Version 3 additive-row alignment remains pending, so no prior-version numeric rows are activated here."
-    },
-    "8.3.2": {
-      "name": "Heat-treated processed comminuted meat and poultry products",
-      "table": "Table 8",
-      "status": "verified_current_partial",
+      "status": "verified_current_complete",
       "entries": [
+        {
+          "name": "Brilliant Blue FCF",
+          "ins": "133",
+          "limit": "100 mg/kg",
+          "note_refs": "XS96,XS89,XS98,XS97,4,16",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Butylated hydroxyanisole (BHA)",
+          "ins": "320",
+          "limit": "200 mg/kg",
+          "note_refs": "XS89,XS98,130,15",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Butylated hydroxytoluene (BHT)",
+          "ins": "321",
+          "limit": "100 mg/kg",
+          "note_refs": "XS89,XS98,15,130,162",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Caramel III - ammonia caramel",
+          "ins": "150c",
+          "limit": "GMP",
+          "note_refs": "XS89,XS98,XS96,XS97,3,4,16",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Caramel IV - sulfite ammonia caramel",
+          "ins": "150d",
+          "limit": "GMP",
+          "note_refs": "XS89,XS98,XS96,XS97,3,4,16",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Erythrosine",
+          "ins": "127",
+          "limit": "30 mg/kg",
+          "note_refs": "4,290",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Grape skin extract",
+          "ins": "163(ii)",
+          "limit": "5,000 mg/kg",
+          "note_refs": "XS89,XS98,16",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "NITRITES",
+          "ins": "",
+          "limit": "80 mg/kg",
+          "note_refs": "286,32",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Paprika oleoresin",
+          "ins": "160c(i)",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "PHOSPHATES",
+          "ins": "",
+          "limit": "2,200 mg/kg",
+          "note_refs": "33,302",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "POLYSORBATES",
+          "ins": "",
+          "limit": "5,000 mg/kg",
+          "note_refs": "XS89,XS98",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "RIBOFLAVINS",
+          "ins": "",
+          "limit": "1,000 mg/kg",
+          "note_refs": "XS96,XS97,16",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Propyl gallate",
+          "ins": "310",
+          "limit": "200 mg/kg",
+          "note_refs": "XS89,XS98,15,130",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Propylene glycol alginate",
+          "ins": "405",
+          "limit": "3,000 mg/kg",
+          "note_refs": "XS89,XS98",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "SORBATES",
+          "ins": "",
+          "limit": "1,500 mg/kg",
+          "note_refs": "XS89,XS98,42",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Sodium diacetate",
+          "ins": "262(ii)",
+          "limit": "1,000 mg/kg",
+          "note_refs": "XS89,XS98",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
         {
           "name": "TOCOPHEROLS",
           "ins": "",
           "limit": "500 mg/kg",
           "note_refs": "XS89,XS98",
           "condition": "",
-          "verification": "current_v3_fssai"
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Tertiary butylhydroquinone (TBHQ)",
+          "ins": "319",
+          "limit": "100 mg/kg",
+          "note_refs": "XS89,XS98,15,130,162",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
         }
       ],
-      "completeness_note": "Current Version 3 directly exposes TOCOPHEROLS 500 mg/kg as the final 8.3.2 row immediately before 8.3.3. Other 8.3.2 rows remain locked pending clean current Version 3 extraction."
+      "completeness_note": "Complete current Version 3 8.3 parent row set."
+    },
+    "8.3.1": {
+      "name": "Non-heat treated processed comminuted meat and poultry products",
+      "table": "Table 8",
+      "status": "verified_current_complete",
+      "entries": [
+        {
+          "name": "beta-Carotenes, vegetable",
+          "ins": "160a(ii)",
+          "limit": "20 mg/kg",
+          "note_refs": "118",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        }
+      ],
+      "completeness_note": "Complete current Version 3 8.3.1 row set."
+    },
+    "8.3.1.1": {
+      "name": "Cured/salted non-heat treated processed comminuted meat and poultry products",
+      "table": "Table 8",
+      "status": "verified_current_complete",
+      "entries": [
+        {
+          "name": "Canthaxanthin",
+          "ins": "161g",
+          "limit": "100 mg/kg",
+          "note_refs": "118,4",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        }
+      ],
+      "completeness_note": "Complete current Version 3 8.3.1.1 row set."
+    },
+    "8.3.1.2": {
+      "name": "Cured/salted and dried non-heat treated processed comminuted meat and poultry products",
+      "table": "Table 8",
+      "status": "verified_current_complete",
+      "entries": [
+        {
+          "name": "Isopropyl citrate",
+          "ins": "384",
+          "limit": "200 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Natamycin (Pimaricin)",
+          "ins": "235",
+          "limit": "20 mg/kg",
+          "note_refs": "3,81",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "BENZOATES",
+          "ins": "",
+          "limit": "1,000 mg/kg",
+          "note_refs": "3,13",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Sunset Yellow FCF",
+          "ins": "110",
+          "limit": "100 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        }
+      ],
+      "completeness_note": "Complete current Version 3 8.3.1.2 row set."
+    },
+    "8.3.1.3": {
+      "name": "Fermented non-heat treated processed comminuted meat and poultry products",
+      "table": "Table 8",
+      "status": "verified_current_complete",
+      "entries": [
+        {
+          "name": "Sulphur dioxide",
+          "ins": "220",
+          "limit": "450 mg/kg",
+          "note_refs": "",
+          "condition": "Applies to sausages and sausage meat containing cereals and condiments.",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        }
+      ],
+      "completeness_note": "Complete current Version 3 8.3.1.3 row set."
+    },
+    "8.3.2": {
+      "name": "Heat-treated processed comminuted meat and poultry products",
+      "table": "Table 8",
+      "status": "verified_current_complete",
+      "entries": [
+        {
+          "name": "Sucroglycerides",
+          "ins": "474",
+          "limit": "5,000 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Brilliant Blue FCF",
+          "ins": "133",
+          "limit": "200 mg/kg",
+          "note_refs": "XS98,XS89,XS97,XS96,4",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "CAROTENOIDS",
+          "ins": "",
+          "limit": "20 mg/kg",
+          "note_refs": "XS98,XS89",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "beta-Carotenes, vegetable",
+          "ins": "160a(ii)",
+          "limit": "20 mg/kg",
+          "note_refs": "XS89,XS98",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "ETHYLENE DIAMINE TETRA ACETATES (EDTA)",
+          "ins": "",
+          "limit": "35 mg/kg",
+          "note_refs": "XS89,XS98,21",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Sucroglycerides",
+          "ins": "474",
+          "limit": "5,000 mg/kg",
+          "note_refs": "XS89,XS98,15",
+          "condition": "Duplicate source row retained from current Version 3; same INS/limit also appears earlier in 8.3.2.",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Sunset Yellow FCF",
+          "ins": "110",
+          "limit": "200 mg/kg",
+          "note_refs": "XS89,XS98",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "TOCOPHEROLS",
+          "ins": "",
+          "limit": "500 mg/kg",
+          "note_refs": "XS89,XS98",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        }
+      ],
+      "completeness_note": "Complete current Version 3 8.3.2 row set. The source contains Sucroglycerides twice at the same 5,000 mg/kg limit; PMSV retains the source duplication for traceability."
     },
     "8.3.3": {
       "name": "Frozen processed comminuted meat and poultry products",
@@ -11943,31 +12350,31 @@
           "limit": "950 mg/kg",
           "note_refs": "3",
           "condition": "",
-          "verification": "current_v3_fssai"
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "Brilliant Blue FCF",
           "ins": "133",
           "limit": "200 mg/kg",
-          "note_refs": "4",
-          "condition": "100 mg/kg in other than cooked products; additional category notes apply.",
-          "verification": "current_v3_fssai"
+          "note_refs": "XS89,XS98,XS97,XS96,4",
+          "condition": "100 mg/kg in other than cooked products.",
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "Sunset Yellow FCF",
           "ins": "110",
           "limit": "200 mg/kg",
-          "note_refs": "",
-          "condition": "100 mg/kg in other than cooked products; additional category notes apply.",
-          "verification": "current_v3_fssai"
+          "note_refs": "XS89,XS98",
+          "condition": "100 mg/kg in other than cooked products.",
+          "verification": "current_v3_fssai_uploaded_pdf"
         }
       ],
-      "completeness_note": "Complete current Version 3 8.3.3 row set. Build 107 corrects the prior TOCOPHEROLS association: that row belongs to 8.3.2."
+      "completeness_note": "Complete current Version 3 8.3.3 row set."
     },
     "8.4": {
       "name": "Edible casings",
       "table": "Table 8",
-      "status": "verified_current_partial",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "Paprika oleoresin",
@@ -11975,7 +12382,7 @@
           "limit": "GMP",
           "note_refs": "",
           "condition": "",
-          "verification": "current_v3_fssai"
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "ASCORBYL ESTERS",
@@ -11983,7 +12390,7 @@
           "limit": "5,000 mg/kg",
           "note_refs": "10",
           "condition": "",
-          "verification": "current_v3_fssai"
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "Brilliant Blue FCF",
@@ -11991,7 +12398,7 @@
           "limit": "100 mg/kg",
           "note_refs": "XS98,XS89,XS97,XS96,4",
           "condition": "",
-          "verification": "current_v3_fssai"
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "CAROTENOIDS",
@@ -11999,7 +12406,7 @@
           "limit": "100 mg/kg",
           "note_refs": "XS98,XS89",
           "condition": "",
-          "verification": "current_v3_fssai"
+          "verification": "current_v3_fssai_uploaded_pdf"
         },
         {
           "name": "Fast Green FCF",
@@ -12007,10 +12414,50 @@
           "limit": "100 mg/kg",
           "note_refs": "3",
           "condition": "",
-          "verification": "current_v3_fssai"
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Grape skin extract",
+          "ins": "163(ii)",
+          "limit": "5,000 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "HYDROXYBENZOATES, PARA-",
+          "ins": "",
+          "limit": "36 mg/kg",
+          "note_refs": "27",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "IRON OXIDES",
+          "ins": "",
+          "limit": "1,000 mg/kg",
+          "note_refs": "72",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "PHOSPHATES",
+          "ins": "",
+          "limit": "1,100 mg/kg",
+          "note_refs": "33",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "POLYSORBATES",
+          "ins": "",
+          "limit": "1,500 mg/kg",
+          "note_refs": "XS97,XS96",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
         }
       ],
-      "completeness_note": "Current Version 3 directly exposes the opening 8.4 rows already loaded. Remaining tail rows stay locked until clean current Version 3 alignment is available."
+      "completeness_note": "Complete current Version 3 8.4 row set."
     },
     "7.0": {
       "name": "Bakery wares",
@@ -26780,7 +27227,7 @@
       "1.8.2",
       "9.2.4.3"
     ],
-    "next_priority": "Continue Table 8 current Version 3 reconciliation. Build 107 directly verifies 8.2 tail, 8.2.1, 8.2.1.1, 8.2.1.2, corrects TOCOPHEROLS to 8.3.2, and completes the current 8.3.3 block; remaining misaligned Table 8 rows stay locked.",
+    "next_priority": "Table 8 is current Version 3 complete from the uploaded official FSSAI Appendix A PDF. Continue with Table 7 current Version 3 reconciliation.",
     "annexure_1_groups_loaded": 18,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
@@ -26933,7 +27380,7 @@
       "8.3.3",
       "8.4"
     ],
-    "table8_stage": "current_v3_partial_direct_rows_with_misaligned_blocks_locked",
+    "table8_stage": "current_v3_complete",
     "table7_sets_loaded": [
       "7.0",
       "7.1",
@@ -27096,16 +27543,14 @@
     ],
     "table1_stage": "full_current_v3_fcs_coverage_with_targeted_locked_rows",
     "table8_current_verified_sets": [
-      "8.2 (tail only)",
+      "8.0",
+      "8.1",
+      "8.1.1",
+      "8.1.2",
+      "8.2",
       "8.2.1",
       "8.2.1.1",
       "8.2.1.2",
-      "8.3.2 (TOCOPHEROLS tail only)",
-      "8.3.3",
-      "8.4 (opening rows only)"
-    ],
-    "table8_locked_sets": [
-      "8.2 (intervening parent rows)",
       "8.2.1.3",
       "8.2.2",
       "8.2.3",
@@ -27114,9 +27559,11 @@
       "8.3.1.1",
       "8.3.1.2",
       "8.3.1.3",
-      "8.3.2 (non-tail rows)",
-      "8.4 (tail rows)"
-    ]
+      "8.3.2",
+      "8.3.3",
+      "8.4"
+    ],
+    "table8_locked_sets": []
   },
   "annexure_1_groups": {
     "SULFITES": [
@@ -27883,6 +28330,14 @@
       "official_sources": [
         "https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf",
         "https://fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Table 8 — Build 109 complete current Version 3 reconciliation from uploaded official PDF",
+      "rule": "Reconciled every Table 8 row directly against the user-uploaded official FSSAI Appendix A Version 3 (01.08.2025), pages 222–230. Promoted all previously locked meat-category rows, corrected current note associations, retained explicit restrictions, and kept the source duplicate Sucroglycerides row in 8.3.2 for traceability.",
+      "official_sources": [
+        "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf"
       ]
     }
   ],

@@ -495,7 +495,7 @@
         "9.2.4.3"
       ],
       "source_verified_on": "2026-10-03",
-      "next_validation": "Continue Table 8 current Version 3 reconciliation. Build 107 directly verifies 8.2 tail, 8.2.1, 8.2.1.1, 8.2.1.2, corrects TOCOPHEROLS to 8.3.2, and completes the current 8.3.3 block; remaining misaligned Table 8 rows stay locked.",
+      "next_validation": "Table 8 is current Version 3 complete from the uploaded official FSSAI Appendix A PDF. Continue with Table 7 current Version 3 reconciliation.",
       "annexure_1_groups_loaded": 18,
       "table15_note_conditions_loaded": 14,
       "note_conditions_loaded": 42,
@@ -506,7 +506,7 @@
       "table11_stage": "current_v3_complete",
       "table10_stage": "current_v3_complete",
       "table9_stage": "current_v3_complete_except_single_note_alignment_lock",
-      "table8_stage": "current_v3_partial_direct_rows_with_misaligned_blocks_locked",
+      "table8_stage": "current_v3_complete",
       "table7_stage": "hierarchy_plus_bread_fine_bakery_verified_rows_v3_recheck_pending",
       "table6_stage": "hierarchy_flour_breakfast_batter_processed_soy_rules_loaded",
       "table5_stage": "current_v3_table5_normalized_except_5_1_1_malformed_benzoate",
@@ -536,16 +536,14 @@
         "9.4"
       ],
       "table8_current_verified_sets": [
-        "8.2 (tail only)",
+        "8.0",
+        "8.1",
+        "8.1.1",
+        "8.1.2",
+        "8.2",
         "8.2.1",
         "8.2.1.1",
         "8.2.1.2",
-        "8.3.2 (TOCOPHEROLS tail only)",
-        "8.3.3",
-        "8.4 (opening rows only)"
-      ],
-      "table8_locked_sets": [
-        "8.2 (intervening parent rows)",
         "8.2.1.3",
         "8.2.2",
         "8.2.3",
@@ -554,9 +552,11 @@
         "8.3.1.1",
         "8.3.1.2",
         "8.3.1.3",
-        "8.3.2 (non-tail rows)",
-        "8.4 (tail rows)"
-      ]
+        "8.3.2",
+        "8.3.3",
+        "8.4"
+      ],
+      "table8_locked_sets": []
     },
     "special_nutrition": {
       "rule_file": "./data/rules/special-nutrition-routing-v1.json",
@@ -21187,7 +21187,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 108,
+  "build_number": 109,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {
