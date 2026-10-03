@@ -17,16 +17,16 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_6_metal_article_master_expansion",
+    "stage": "phase_7_arsenic_article_master_complete",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 35,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Copper, Tin, Cadmium, Mercury, Methyl Mercury, Chromium, Nickel, Selenium and Antimony article rows are now normalized from current Version IX.",
-      "Lead and Arsenic article-of-food masters still need complete row normalization.",
-      "Exact product/FSSR mappings should be promoted from the article master only when the product identity is explicit; no fuzzy auto-match.",
+      "Arsenic article-of-food master is complete from current Version IX, including preservation of the source-literal values 76 and 86 without correction.",
+      "Lead article-of-food master still needs complete row normalization.",
+      "Exact product/FSSR mappings should be promoted from the article master only when product identity is explicit; no fuzzy auto-match.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied.",
       "Add packaging-triggered tin logic after packaging input is implemented."
     ],
@@ -71,11 +71,27 @@
       "Chromium",
       "Nickel",
       "Selenium",
-      "Antimony"
+      "Antimony",
+      "Arsenic"
     ],
-    "metal_article_master_rows_loaded": 124,
+    "metal_article_master_rows_loaded": 219,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Complete Section 2.1 Lead and Arsenic article-of-food masters, then promote exact product/FSSR mappings without fuzzy matching."
+    "next_priority": "Complete the Section 2.1 Lead article-of-food master, then promote exact product/FSSR mappings from all metal masters without fuzzy matching.",
+    "arsenic_article_rows_loaded": 95,
+    "source_literal_anomalies": [
+      {
+        "section": "2.1 Arsenic",
+        "article": "Fish and Crustaceans",
+        "source_value": "76",
+        "action": "Preserved exactly; not auto-corrected or auto-applied solely from this article master."
+      },
+      {
+        "section": "2.1 Arsenic",
+        "article": "Molluscs",
+        "source_value": "86",
+        "action": "Preserved exactly; not auto-corrected or auto-applied solely from this article master."
+      }
+    ]
   },
   "all_food_rules": [
     {
@@ -12889,6 +12905,960 @@
         "row_type": "exact",
         "auto_apply": false,
         "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      }
+    ],
+    "Arsenic": [
+      {
+        "article": "Agar",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Alginic acid",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Alumina used in preparation of lake colour",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Aluminium lake of Sunset Yellow FCF",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Ammonium hydrogen carbonate",
+        "limit": 0.6,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Annatto",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Ascorbyl palmitate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Aspertame (Aspartyl phenyl alanine methyl ester)",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Benzoic acid",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Beta-apo-8'-carotenal",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Beta-carotene",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Brewed vinegar and synthetic vinegar",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Brilliant blue FCF",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Butylated hydroxyanisole",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Calcium alginate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Caramel",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Carbonated water",
+        "limit": 0.25,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Carmoisine",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Carrageenan",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Chicory-dried or roasted",
+        "limit": 4,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Chlorophyll",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Citric acid",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Dehydrated onions, edible gelatin, liquid pectin",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Dicalcium phosphate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Dodecyl gallate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Edible fats and oils (edible fats and oils not covered by individual standards)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Erythrosine",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Ethylester of Beta-apo-8'-carotenoic acid",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fast Green FCF",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fish and Crustaceans",
+        "limit": 76,
+        "unit": "mg/kg",
+        "condition": "Official Version IX table prints the numeric value as 76; PMSV preserves the source literal and does not infer a correction.",
+        "row_type": "exact_source_literal_anomaly",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct",
+        "source_literal_warning": true
+      },
+      {
+        "article": "Food colouring other than synthetic colouring",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "On dry colouring matter basis.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Foods not specified",
+        "limit": 1.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "default",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fumaric acid",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Gaur gum",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Glycerol esters of wood rosin",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Gum Arabic or Acacia gum",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Gum Ghatti",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Gum Karaya",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Hard boiled sugar confectionery",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Ice-cream, iced lollies and similar frozen confections",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Indigo carmine",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Infant milk substitute and Infant foods",
+        "limit": 0.05,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Iron fortified common salt",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Juice of orange, grape, apple, tomato, pineapple and lemon",
+        "limit": 0.2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "L (+)- Tartaric acid",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Malic acid",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Margarine",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Milk",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Minarine (Low Fat Spread)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Mineral Oil (High viscosity)",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Mineral Oil (Low viscosity)",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Molluscs",
+        "limit": 86,
+        "unit": "mg/kg",
+        "condition": "Official Version IX table prints the numeric value as 86; PMSV preserves the source literal and does not infer a correction.",
+        "row_type": "exact_source_literal_anomaly",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct",
+        "source_literal_warning": true
+      },
+      {
+        "article": "Monosodium L-glutamate",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Named Animal fats (lard, rendered pork fat, premier jus (suet) and edible tallow)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Natural mineral water",
+        "limit": 0.01,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Octyl gallate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Olive oil, Virgin olive oil, Extra virgin olive oil, Ordinary virgin olive oil, Refined olive oil, Refined olive pomace oil and Olive pomace oil",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Packaged drinking water (other than mineral water)",
+        "limit": 0.01,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Pectin",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Phosphoric acid",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Polyglycerol esters of fatty acids",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Polyglycerol esters of interesterified ricinoleic acid",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Ponceau 4R",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Potassium iodate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Potassium nitrate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Potassium nitrite",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Preservatives, anti-oxidants, emulsifying and stabilising agents and synthetic food colours",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "On dry matter basis.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Propyl gallate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Propylene glycol",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Pulp and pulp products of any fruit",
+        "limit": 0.2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Riboflavin",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Saccharin sodium",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium alginate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium ascorbate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium benzoate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium carboxymethyl cellulose",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium propionate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Soft drink intended for consumption after dilution except carbonated water",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sorbic acid",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sorbitol",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Steviol glycoside",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sucralose",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sulphur dioxide",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sunset yellow",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sunset yellow dye used in preparation of lake colour",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Synthetic food colour-preparation and mixtures",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Tartrazine",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Titanium dioxide",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Tragacanth gum",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Trisodium citrate",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Turmeric whole and powder",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Vegetables",
+        "limit": 1.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Vegetable oils, crude (oils of arachis (Groundnut), babasu, coconut, cotton seed, grape seed, maize, mustard seed, palm kernel, palm, rapeseed, safflower seed, sesame seed, soya bean, and sunflower seed, and palm olein, stearin and superolein)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Vegetable oils, edible (oils of arachis (Groundnut), babasu, coconut, cotton seed, grape seed, maize, mustard seed, palm kernel, palm, rapeseed, safflower seed, sesame seed, soya bean, and sunflower seed, and palm olein, stearin and superolein)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
         "verification": "official_fssai_v9_direct"
       }
     ]
