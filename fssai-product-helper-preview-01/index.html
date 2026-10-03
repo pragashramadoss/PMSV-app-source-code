@@ -1853,6 +1853,19 @@ function normFoodCode(value){
  while(parts.length>1&&parts[parts.length-1]==='0')parts.pop();
  return parts.join('.');
 }
+function appendixFcsForRecord(record){
+ if(!record)return '';
+ if(Object.prototype.hasOwnProperty.call(record,'appendix_fcs'))return normFoodCode(record.appendix_fcs||'');
+ return normFoodCode(record.fcs||'');
+}
+function appendixFcsStatusLabel(record){
+ const s=record?.appendix_fcs_status||'';
+ if(s==='mapped_current_v3')return 'Mapped to current Appendix A';
+ if(s==='source_alias_resolved')return 'Mapped through official-source numbering alias';
+ if(s==='foscos_code_not_appendix_a_fcs')return 'FoSCoS code is not an Appendix A FCS';
+ if(s==='official_appendix_fcs_mapping_not_available')return 'Official Appendix A FCS mapping not available';
+ return '';
+}
 function productCatalog(){
  return productMasterDb&&Array.isArray(productMasterDb.catalog_products)?productMasterDb.catalog_products:[];
 }
@@ -1937,7 +1950,7 @@ function populateProductsForSubcategory(){
    .sort((a,b)=>a.name.localeCompare(b.name));
 
  prod.innerHTML='<option value="">'+(rows.length?'Select standardized product ('+rows.length+')':'No standardized product loaded')+'</option>'
-   +rows.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+' ['+esc(x.fcs||'—')+']</option>').join('');
+   +rows.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+' [Appendix FCS '+esc(appendixFcsForRecord(x)||'pending')+']</option>').join('');
  prod.disabled=!sub||rows.length===0;
 
  if(msg){
@@ -1974,8 +1987,10 @@ function showSelectedCatalogProduct(p){
  const profile=profileForCatalogProduct(p);
  const detailed=profile&&profile.status==='rule_profile_ready';
  const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
+ const appendixFcs=appendixFcsForRecord(p);
+ const appendixStatus=appendixFcsStatusLabel(p);
  details.innerHTML='<div class="grid2">'
-  +'<div class="item"><b>'+esc(p.name)+'</b><small>FCS / FoSCoS code: '+esc(p.fcs||'—')+'<br>FSSR: '+esc(p.fssr||'Not shown in loaded catalogue row')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FoSCoS hierarchy mapping pending official verification</span>':'')+'</small></div>'
+  +'<div class="item"><b>'+esc(p.name)+'</b><small>FoSCoS listing/category code: '+esc(p.fcs||p.subcategory||p.category||'—')+'<br>Appendix A FCS: '+esc(appendixFcs||'Not mapped')+(appendixStatus?'<br><span class="'+(appendixFcs?'status-good':'status-warn')+'">'+esc(appendixStatus)+'</span>':'')+'<br>FSSR: '+esc(p.fssr||'Not shown in loaded catalogue row')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FoSCoS hierarchy mapping pending official verification</span>':'')+'</small></div>'
   +'<div class="item"><b>PMSV profile status</b><small>'+(detailed?'<span class="status-good">Detailed rule profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base rule profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small></div>'
   +'</div>'
   +(profile&&!detailed?'<div class="notice"><b>'+(chapterLoaded?'Chapter profile loaded':'Base profile ready')+':</b> '+(chapterLoaded?'The product has been mapped to its applicable FSSAI chapter standard and structured chapter-rule data is loaded. Machine validation of every product-specific clause and linked Appendix rule is still being completed before full formulation compliance is enabled.':'Product identity, FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.')+'</div>':'');
@@ -2011,7 +2026,8 @@ function renderProductSearch(){
    const profile=profileForCatalogProduct(p);
    const detailed=profile&&profile.status==='rule_profile_ready';
    const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
-   return '<div class="item" style="margin-bottom:8px"><b>'+esc(p.name)+'</b><small>'+(p.category?'Category '+esc(p.category)+' · '+esc(p.subcategory||'—')+' · ':'')+'FCS '+esc(p.fcs||'—')+(p.fssr?'<br>FSSR: '+esc(p.fssr):'')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FSSAI standard loaded · FoSCoS hierarchy mapping pending</span>':'')+'<br>'+(detailed?'<span class="status-good">Detailed profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small><div style="margin-top:8px"><button class="btn-secondary" type="button" data-show-catalog-product="'+esc(p.id)+'">Select</button></div></div>';
+   const appendixFcs=appendixFcsForRecord(p);
+   return '<div class="item" style="margin-bottom:8px"><b>'+esc(p.name)+'</b><small>'+(p.category?'FoSCoS '+esc(p.category)+' · '+esc(p.subcategory||'—')+' · ':'')+'Appendix A FCS '+esc(appendixFcs||'not mapped')+(p.fssr?'<br>FSSR: '+esc(p.fssr):'')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FSSAI standard loaded · FoSCoS hierarchy mapping pending</span>':'')+(!appendixFcs?'<br><span class="status-warn">'+esc(appendixFcsStatusLabel(p)||'Appendix A mapping pending')+'</span>':'')+'<br>'+(detailed?'<span class="status-good">Detailed profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small><div style="margin-top:8px"><button class="btn-secondary" type="button" data-show-catalog-product="'+esc(p.id)+'">Select</button></div></div>';
  }).join('');
  box.querySelectorAll('[data-show-catalog-product]').forEach(btn=>btn.addEventListener('click',()=>{
    const p=findCatalogProductById(btn.dataset.showCatalogProduct);
@@ -2068,24 +2084,37 @@ function appendixAncestors(code){
  for(let i=1;i<=parts.length;i++)out.push(parts.slice(0,i).join('.'));
  return out;
 }
+function appendixEntryBaseKey(entry){
+ const name=normIngredient(entry?.name||'');
+ const rawIns=String(entry?.ins||'').trim();
+ const ins=normIngredient(rawIns);
+ const placeholder=!ins||/^[-—–]+$/.test(rawIns)||/^(n\\/?a|na|none)$/i.test(rawIns);
+ return placeholder?'name:'+name:'ins:'+ins+'::name:'+name;
+}
 function appendixEntriesForFcs(code){
  if(!appendixCoreDb)return {status:'not_loaded',entries:[],message:'Appendix A database is not loaded.'};
- const fcs=normFoodCode(code);
- if(fcs==='16')return {status:'component_carry_over',entries:[],message:appendixCoreDb.category_16?.rule||'Category 16 uses component/carry-over logic.'};
+ const requestedFcs=normFoodCode(code);
+ const alias=appendixCoreDb?.appendix_fcs_aliases?.[requestedFcs]||null;
+ const fcs=normFoodCode(alias?.maps_to||requestedFcs);
+ if(fcs==='16')return {status:'component_carry_over',entries:[],requestedFcs,resolvedFcs:fcs,alias,message:appendixCoreDb.category_16?.rule||'Category 16 uses component/carry-over logic.'};
  const sets=appendixCoreDb.loaded_permission_sets||{};
  const exact=sets[fcs];
- if(exact?.status==='no_additives_permitted')return {status:'no_additives',entries:[],message:'Appendix A states: No additives permitted for '+(exact.name||fcs)+'.'};
- if(exact?.status==='no_additives_permitted_pending_v3_recheck')return {status:'no_additives_pending',entries:[],incomplete:true,completenessNote:exact?.completeness_note||'',message:'Official FSSAI prior Appendix states no additives permitted for '+(exact.name||fcs)+', with current Version 3 row recheck still pending.'};
- if(exact?.status==='special_regulation_route')return {status:'special_regulation',entries:[],specialRoute:exact.special_route||'',message:'This FCS is locked to its FSSAI special-regulation route before additive permissions can be evaluated.'};
+ if(exact?.status==='no_additives_permitted')return {status:'no_additives',entries:[],requestedFcs,resolvedFcs:fcs,alias,message:'Appendix A states: No additives permitted for '+(exact.name||fcs)+'.'};
+ if(exact?.status==='no_additives_permitted_pending_v3_recheck')return {status:'no_additives_pending',entries:[],requestedFcs,resolvedFcs:fcs,alias,incomplete:true,completenessNote:exact?.completeness_note||'',message:'Official FSSAI prior Appendix states no additives permitted for '+(exact.name||fcs)+', with current Version 3 row recheck still pending.'};
+ if(exact?.status==='special_regulation_route')return {status:'special_regulation',entries:[],requestedFcs,resolvedFcs:fcs,alias,specialRoute:exact.special_route||'',message:'This FCS is locked to its FSSAI special-regulation route before additive permissions can be evaluated.'};
  const ancestors=appendixAncestors(fcs);
  const merged=new Map();
  ancestors.forEach(a=>{
    const set=sets[a];
+   const level=new Map();
    (set?.entries||[]).forEach(entry=>{
-     const baseKey=normIngredient(entry.ins||entry.name);
-     const key=entry.variant_id ? baseKey+'::'+normIngredient(entry.variant_id) : baseKey;
-     merged.set(key,{...entry,applied_from:a,category_name:set.name});
+     const baseKey=appendixEntryBaseKey(entry);
+     if(!level.has(baseKey))level.set(baseKey,[]);
+     level.get(baseKey).push({...entry,applied_from:a,category_name:set.name});
    });
+   // A narrower category replaces the parent rows for the same additive identity,
+   // while duplicate/conditional rows inside the same category are all preserved.
+   level.forEach((rows,key)=>merged.set(key,rows));
  });
  const exactConditions=Array.isArray(exact?.regulatory_conditions)?exact.regulatory_conditions:[];
  const setStatus=exact?.status||'';
@@ -2093,7 +2122,7 @@ function appendixEntriesForFcs(code){
  const incompleteAncestors=ancestors.filter(a=>incompletePattern.test(sets[a]?.status||''));
  const incomplete=incompleteAncestors.length>0;
  const inheritedLocks=incompleteAncestors.filter(a=>a!==fcs).map(a=>a+' — '+(sets[a]?.name||'FCS')+' ('+(sets[a]?.status||'pending')+')');
- return {status:merged.size?'loaded':'not_loaded',entries:[...merged.values()],conditions:exactConditions,setStatus,incomplete,incompleteAncestors,inheritedLocks,completenessNote:exact?.completeness_note||'',message:merged.size?'Direct/inherited Appendix A entries loaded for this FCS.':'Category permission table is not loaded yet; PMSV will not infer additive permissions.'};
+ return {status:merged.size?'loaded':'not_loaded',entries:[...merged.values()].flat(),conditions:exactConditions,setStatus,incomplete,incompleteAncestors,inheritedLocks,requestedFcs,resolvedFcs:fcs,alias,completenessNote:exact?.completeness_note||'',message:merged.size?'Direct/inherited Appendix A entries loaded for this FCS.':'Category permission table is not loaded yet; PMSV will not infer additive permissions.'};
 }
 function renderProprietaryAppendixA(){
  const box=document.getElementById('proprietaryAppendixA');
@@ -2149,7 +2178,7 @@ function renderProprietaryAppendixA(){
 }
 async function loadAppendixCore(){
  try{
-   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=120',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=121',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCoreDb=await res.json();
  }catch(e){appendixCoreDb=null;}
@@ -2177,7 +2206,7 @@ function evaluateProprietaryRoute(){
  const exact=matches.find(p=>normIngredient(p.name)===normIngredient(name));
  if(exact){
    out.className='notice oknote';
-   out.innerHTML='<b>Standardized product found — do not route this product to Chapter 2.12.</b><br>'+esc(exact.name)+' · FCS '+esc(exact.fcs||'—')+' · FSSR '+esc(exact.fssr||'—')+'.<br><small>Select this standardized product from Product selection and apply its product standard.</small>';
+   out.innerHTML='<b>Standardized product found — do not route this product to Chapter 2.12.</b><br>'+esc(exact.name)+' · Appendix A FCS '+esc(appendixFcsForRecord(exact)||'not mapped')+' · FSSR '+esc(exact.fssr||'—')+'.<br><small>Select this standardized product from Product selection and apply its product standard.</small>';
    return;
  }
  if(matches.length){
@@ -2254,7 +2283,9 @@ function applyProductGate(){
  if(profile){
    if(gate){
      gate.className=detailed?'notice oknote':'notice';
-     gate.innerHTML='<b>Selected product:</b> '+esc(profile.display_name)+' · FCS '+esc(profile.fcs||'—')+' · FSSR '+esc(profile.fssr||'—')+'.<br>'
+     const appendixFcs=appendixFcsForRecord(profile);
+     gate.innerHTML='<b>Selected product:</b> '+esc(profile.display_name)+' · Appendix A FCS '+esc(appendixFcs||'not mapped')+' · FSSR '+esc(profile.fssr||'—')+'.<br>'
+       +(!appendixFcs?'<span class="status-warn">'+esc(appendixFcsStatusLabel(profile)||'Appendix A FCS mapping is not available; additive inheritance must remain locked.')+'</span><br>':'')
        +(detailed
          ?'<b>Detailed rule profile complete.</b> Formulation compliance checks are enabled for this product.'
          :chapterLoaded?'<b>FSSAI chapter profile loaded.</b> The product is mapped to '+esc(profile.fssr||profile.rule_key||'its Chapter 2.1 standard')+' and structured chapter rules are present. Full formulation editing remains locked until every linked product clause and Appendix rule is machine-validated.':'<b>Base rule profile loaded.</b> General regulatory layers and the official product mapping are available, but product-specific composition/ingredient clauses are not complete yet. Formulation editing is locked so PMSV does not apply another product\'s rules by mistake.');
@@ -2327,7 +2358,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=120',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=121',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}

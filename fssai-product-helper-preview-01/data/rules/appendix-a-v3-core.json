@@ -31723,7 +31723,7 @@
       "14.1",
       "14.1.2"
     ],
-    "next_priority": "All active Appendix A rows now carry explicit current-Version-3 provenance or a deliberate source-anomaly lock. Next: audit product-to-FCS mappings and inheritance logic so product selection cannot route to the wrong additive set.",
+    "next_priority": "Appendix FCS routing is hardened. Next: audit all 526 product/profile chapter-rule keys and rule-file links so a product cannot open another standard's rule profile.",
     "annexure_1_groups_loaded": 23,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
@@ -32136,7 +32136,20 @@
     "annexure_1_stored_group_keys": 24,
     "annexure_1_stage": "current_v3_complete",
     "table14_1_provenance_stage": "current_v3_complete",
-    "table14_1_rows_provenance_tagged": 397
+    "table14_1_rows_provenance_tagged": 397,
+    "product_fcs_mapping_audit": {
+      "checked_on": "2026-10-03",
+      "products": 526,
+      "mapped_current_v3": 462,
+      "source_alias_resolved": 1,
+      "foscos_code_not_appendix_a_fcs": 50,
+      "official_appendix_fcs_mapping_not_available": 13,
+      "cross_category_routes": 1,
+      "inheritance_engine": "duplicate-safe level replacement",
+      "source_aliases": [
+        "1.3.2.2 -> 1.3.2.1 (Non-Dairy based beverage whitener)"
+      ]
+    }
   },
   "annexure_1_groups": {
     "SULFITES": [
@@ -33267,6 +33280,15 @@
       "official_sources": [
         "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf, Table 14 pages 291–310"
       ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Build 121 — product-to-Appendix-FCS routing and inheritance hardening",
+      "rule": "Audited all 526 catalog products/profiles against the current Version 3 permission-set hierarchy. 462 products have a usable current Appendix route (461 direct + one official-source numbering alias), 50 FoSCoS listing/category codes are not Appendix A FCS codes and are now fail-closed, and 13 products have no stored official Appendix FCS and remain unmapped. Also fixed inheritance merging so multiple same-additive rows within one category and no-INS rows cannot collapse into one another.",
+      "official_sources": [
+        "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Section I/description page 21 and Table 1 page 83",
+        "FoSCoS standardized-product catalogue snapshot already stored in PMSV product master"
+      ]
     }
   ],
   "source_policy_detail": {
@@ -33288,5 +33310,17 @@
       "search-result snippets from non-FSSAI domains"
     ],
     "fail_closed_rule": "If a current FSSAI/FoSCoS provision cannot be verified from an official source, PMSV keeps the rule locked/incomplete and does not substitute a third-party or older-source value."
+  },
+  "appendix_fcs_aliases": {
+    "1.3.2.2": {
+      "maps_to": "1.3.2.1",
+      "name": "Non-Dairy based beverage whitener",
+      "status": "official_v3_internal_numbering_alias",
+      "reason": "Version 3 Section I/description identifies Non-Dairy based beverage whitener as 1.3.2.2 and marks 1.3.2.1 omitted, while Table 1 additive permissions print the same named category as 1.3.2.1. PMSV resolves the product route to the Table 1 permission set and preserves the source inconsistency in metadata.",
+      "source_pages": [
+        21,
+        83
+      ]
+    }
   }
 }
