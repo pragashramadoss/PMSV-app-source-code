@@ -32199,7 +32199,45 @@
         "Food Safety and Standards (Foods for Infant Nutrition) Regulations — current FSSAI compendium/product standards"
       ],
       "rule": "Only current official FSSAI sources are used. External regulation sets remain locked until their product standards are structured."
-    }
+    },
+    "appendix_a_v3_overall_stage": "reconciled_to_source_limit_with_6_source_anomaly_sets_locked",
+    "appendix_a_v3_permission_sets_total": 275,
+    "appendix_a_v3_complete_sets": 269,
+    "appendix_a_v3_source_anomaly_sets": [
+      {
+        "fcs": "14.1.4.3",
+        "issue": "Sharbat SULFITES row cites notes 122 and 44; note 122 is absent from the current Version 3 note list.",
+        "locked_rows": 1
+      },
+      {
+        "fcs": "14.2.3",
+        "issue": "Polyvinylpolypyrrolidone (INS 1202) is listed at both 800 mg/kg and 800 mg/l without a stated applicability distinction.",
+        "locked_rows": 2
+      },
+      {
+        "fcs": "5.1.1",
+        "issue": "BENZOATES maximum is printed as malformed '15,00 mg/kg' in the official Version 3 source.",
+        "locked_rows": 1
+      },
+      {
+        "fcs": "4.1.2.9",
+        "issue": "SORBATES listed at 3,000 mg/kg and 1,000 mg/kg (note 42) without a stated distinction.",
+        "locked_rows": 2
+      },
+      {
+        "fcs": "4.1.2.11",
+        "issue": "SORBATES listed at 3,000 mg/kg and 1,000 mg/kg (note 42) without a stated distinction.",
+        "locked_rows": 2
+      },
+      {
+        "fcs": "4.2.2.4",
+        "issue": "Acesulfame potassium listed at 200 mg/kg and 350 mg/kg, both note 188, without a stated distinction.",
+        "locked_rows": 2
+      }
+    ],
+    "appendix_a_v3_locked_rows_total": 10,
+    "appendix_a_v3_audit_date": "2026-10-03",
+    "appendix_a_v3_next_step": "Appendix A reconciliation is complete to the limit of the current official source. Do not infer the 10 locked rows. Proceed to the next formulation layer (contaminants/microbiology/processing aids) unless FSSAI issues a corrigendum or clarification for these anomalies."
   },
   "annexure_1_groups": {
     "SULFITES": [
@@ -33367,6 +33405,15 @@
         "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats_oils_and_fat_emulsions.pdf",
         "https://www.fssai.gov.in/upload/uploadfiles/files/GAZETTE%20NOTIFICATION%20DATED%2021_10_2024_ammendments.pdf",
         "https://fcstraining.fssai.gov.in/standard-product"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Build 125 — Appendix A Version 3 full completeness audit",
+      "rule": "Audited all 275 loaded FCS permission sets against the current uploaded official FSSAI Appendix A Version 3. 269 sets are complete/current; 6 sets remain partial only because the official source itself contains missing, malformed or duplicate-without-condition values. Ten affected rows remain fail-closed and are not inferred.",
+      "official_sources": [
+        "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf",
+        "Relevant source-anomaly pages: 137, 146, 150, 157, 167, 305, 313–316, and note-list page 338"
       ]
     }
   ],
