@@ -17,17 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_17_tin_fruit_juice_variant_gate",
+    "stage": "phase_18_generic_tin_variant_engine",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 51,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Five named meat Tin identities require explicit exact identity plus container material.",
-      "Generic Fruits Juices now requires an exact current FoSCoS variant selection before the named 250 mg/kg Tin juice article can apply.",
-      "Only current FoSCoS variants that directly correspond to orange, apple, tomato, pineapple or lemon are enabled; other fruit-juice variants receive no Tin rule from this article.",
-      "Canned mushrooms and pickled cucumber remain locked until exact current FoSCoS product identity is established.",
+      "The Tin variant engine is now generic: it loads exact regulated variants from data instead of hard-coding a fruit-juice-only selector.",
+      "Fruits Juices has six current FoSCoS variants eligible for the named 250 mg/kg Tin juice row; all other juice variants remain unassigned.",
+      "Thermally Processed Vegetables → Mushroom gets Tin 250 mg/kg only when Package format = Canned; bottled/flexible/aseptic or unspecified format does not activate the rule.",
+      "Pickled cucumber remains locked until an exact current FoSCoS product or variant identity is established.",
       "Generic 'Canned beverages', 'Canned foods other than beverages' and 'Processed and canned food products' rows remain disabled as automatic fallbacks.",
       "Keep all 'Foods not specified' rows reference-only until absence of a more specific row is proven.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied."
@@ -79,7 +79,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Review canned mushrooms and pickled cucumber against current FoSCoS product identities; do not broaden the juice or canned-food rules.",
+    "next_priority": "Investigate Pickled cucumber against current FoSCoS pickle identities. Do not map generic vegetable pickles to the cucumber-specific Tin row without an exact product/variant identity.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -132,7 +132,10 @@
     "tin_infant_products_added_build_151": 5,
     "tin_tamarind_products_added_build_152": 1,
     "tin_fruit_juice_variant_rules_loaded": 6,
-    "tin_fruit_juice_variant_gate": true
+    "tin_fruit_juice_variant_gate": true,
+    "tin_product_variant_rules_loaded": 7,
+    "tin_variant_products": 2,
+    "tin_mushroom_canned_gate": true
   },
   "all_food_rules": [
     {
@@ -16463,6 +16466,20 @@
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
       "variant_basis": "FoSCoS Fruits Juices variant list updated 28.11.2025",
       "verification": "official_fssai_v9_plus_official_foscos_variant"
+    },
+    {
+      "catalog_id": "04-04-2-thermally-processed-vegetables",
+      "variant": "Mushroom",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Canned mushrooms",
+      "auto_apply": false,
+      "requires_input": "product.variant + packaging.format",
+      "requires_packaging_format": "canned",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "FoSCoS Thermally processed vegetables → Liquid pack (Mushroom), FCS 4.2.2.4 / FSSR 2.3.3; FSSAI 2.3.3 distinguishes canned from bottled/flexible/aseptic packaging.",
+      "verification": "official_fssai_v9_plus_official_foscos_variant_and_package_gate"
     }
   ]
 }
