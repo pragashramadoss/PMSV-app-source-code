@@ -17,17 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_15_tin_infant_identity_expansion",
+    "stage": "phase_16_tin_tamarind_mapping",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 50,
+    "exact_product_profiles": 51,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Five named FSSAI meat Tin identities are runtime-active only after explicit user identity selection plus container material; no meat-family inference is used.",
-      "Build 150 added six explicit Tin mappings: Thermally Processed Tomato Juice plus five official fruit pulp/puree catalogue products.",
-      "Build 151 adds five infant mappings: Infant formula, three explicit infant milk substitute products, and Infant Milk Food.",
-      "Follow-up formula, other infant-food variants, canned mushrooms, pickled cucumber, unnamed juice variants and tamarind pulp/concentrate remain locked for separate verification.",
+      "Five named FSSAI meat Tin identities remain runtime-active only after explicit user identity selection plus container material.",
+      "Builds 150-152 add exact/verified Tin mappings for tomato juice, fruit pulp/puree products, five infant identities, and Tamarind Pulp/Puree and Concentrate.",
+      "Generic Fruit Juices cannot inherit the 250 mg/kg juice Tin row because the FSSAI article names only orange, apple, tomato, pineapple and lemon; variant identity must be collected first.",
+      "Canned mushrooms and pickled cucumber remain locked until an exact current FoSCoS identity is established.",
       "Generic 'Canned beverages', 'Canned foods other than beverages' and 'Processed and canned food products' rows remain disabled as automatic fallbacks.",
       "Keep all 'Foods not specified' rows reference-only until absence of a more specific row is proven.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied."
@@ -79,7 +79,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Review remaining Tin candidates individually: follow-up formula and other infant foods, canned mushrooms, pickled cucumber, named fruit juices without exact catalogue rows, and tamarind pulp/concentrate. Generic canned rows remain disabled.",
+    "next_priority": "Handle the specific orange/apple/pineapple/lemon juice Tin row through exact FoSCoS variant identity, not the generic Fruit Juices catalogue row. Continue keeping generic canned-food rows disabled.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -117,9 +117,9 @@
       "99-99-1-baking-powder",
       "99-99-1-gelatin"
     ],
-    "verified_alias_products": 17,
-    "verified_alias_new_profiles": 14,
-    "verified_alias_rules_added": 20,
+    "verified_alias_products": 18,
+    "verified_alias_new_profiles": 15,
+    "verified_alias_rules_added": 21,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
@@ -129,7 +129,8 @@
     "packaging_conditional_tin_product_families": 5,
     "packaging_conditional_tin_runtime_rules_active": 10,
     "tin_explicit_alias_products_added_build_150": 6,
-    "tin_infant_products_added_build_151": 5
+    "tin_infant_products_added_build_151": 5,
+    "tin_tamarind_products_added_build_152": 1
   },
   "all_food_rules": [
     {
@@ -1578,6 +1579,23 @@
           "limit": 5,
           "unit": "mg/kg",
           "article": "Infant milk substitute and Infant foods",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-04-04-1-tamarind-pulp-puree-and-concentrate",
+      "label": "Tamarind Pulp/Puree and Concentrate",
+      "catalog_ids": [
+        "04-04-1-tamarind-pulp-puree-and-concentrate"
+      ],
+      "rules": [
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Pulp and pulp products of any fruit",
           "source_basis": "Section 2.1 · Tin",
           "verification": "explicit_verified_alias_v9"
         }
@@ -16179,6 +16197,21 @@
           "limit": 5,
           "unit": "mg/kg",
           "mapping_basis": "Official FoSCoS product identity explicitly states Infant Milk Food and is listed under the current Foods for Infant Nutrition framework."
+        }
+      ]
+    },
+    {
+      "product_id": "04-04-1-tamarind-pulp-puree-and-concentrate",
+      "product_name": "Tamarind Pulp/Puree and Concentrate",
+      "fssr": "",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Tin",
+          "article": "Pulp and pulp products of any fruit",
+          "limit": 250,
+          "unit": "mg/kg",
+          "mapping_basis": "FoSCoS places Tamarind Pulp/Puree and Concentrate in Fruits FCS 04.1.2.8, and the current FSSAI Chapter 2.3 standard defines Tamarind Concentrate as obtained from tamarind pulp/puree. This supports the exact Tin article 'Pulp and pulp products of any fruit' without using a generic canned-food fallback."
         }
       ]
     }
