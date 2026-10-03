@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="badge">PRODUCT STANDARDS PROTOTYPE · BUILD 49</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span id="buildBadge" class="badge">PRODUCT STANDARDS PROTOTYPE</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="product">Product selection</button>
@@ -1802,6 +1802,11 @@ function findCatalogProductById(id){
 function populateProductCategories(){
  const select=document.getElementById('productCategorySelect');
  if(!select||!productMasterDb)return;
+ const buildBadge=document.getElementById('buildBadge');
+ if(buildBadge){
+   const buildNo=Number(productMasterDb.build_number||0);
+   buildBadge.textContent='PRODUCT STANDARDS PROTOTYPE'+(buildNo?' · BUILD '+buildNo:'');
+ }
  const categories=productMasterDb.categories||[];
  const current=select.value;
  select.innerHTML='<option value="">Select category</option>'+categories.map(x=>'<option value="'+esc(x.code)+'">'+esc(x.code)+' — '+esc(x.name)+'</option>').join('');
