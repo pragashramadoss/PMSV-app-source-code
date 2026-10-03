@@ -521,9 +521,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="productContaminantResults"><div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div></div>
 </div>
 <div class="card">
-<div class="section-title"><h2>Coverage status</h2><span>Build 127 · metals + crop contaminants</span></div>
-<div class="notice">The reusable contaminant master now includes exact current metal profiles plus selected crop-contaminant and naturally occurring toxin triggers. Remaining commodity mappings and residue tables are still being expanded from the same official FSSAI Version IX source. No missing limit is estimated from another website.</div>
-<div class="notice"><b>2026 amendment:</b> FSSAI notified a final Contaminants, Toxins and Residues amendment on 25 May 2026 with commencement on <b>1 December 2026</b>. Build 126 continues to use the currently effective Version IX basis as of 3 October 2026.</div>
+<div class="section-title"><h2>Coverage status</h2><span>Build 128 · expanded exact product profiles</span></div>
+<div class="notice">The reusable contaminant master now includes 25 exact standardized-product profiles plus selected crop-contaminant and naturally occurring toxin triggers. Remaining commodity mappings and residue tables are still being expanded from the same official FSSAI Version IX source. No missing limit is estimated from another website.</div>
+<div class="notice"><b>2026 amendment:</b> FSSAI notified a final Contaminants, Toxins and Residues amendment on 25 May 2026 with commencement on <b>1 December 2026</b>. Build 128 continues to use the currently effective Version IX basis as of 3 October 2026.</div>
 </div>
 </section>
 
@@ -2344,7 +2344,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=127',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=128',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2409,7 +2409,7 @@ function renderProductContaminants(){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=127',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=128',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
@@ -2421,7 +2421,7 @@ async function loadContaminantsDb(){
 async function loadRegulatoryDb(){
  const status=document.getElementById('regDbStatus');
  try{
-   const res=await fetch('./data/regulatory-db-v1.json?v=127',{cache:'reload'});
+   const res=await fetch('./data/regulatory-db-v1.json?v=128',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    regulatoryDb=await res.json();
    ingredientCatalog=catalogFromDb(regulatoryDb);

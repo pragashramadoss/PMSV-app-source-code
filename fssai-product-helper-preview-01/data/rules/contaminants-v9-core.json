@@ -17,14 +17,14 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_2_metals_plus_crop_contaminants",
+    "stage": "phase_2b_expanded_exact_metal_profiles",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 8,
+    "exact_product_profiles": 25,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Complete remaining Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
+      "Continue remaining Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
       "Expand Section 2.2 crop-contaminant commodity mapping to the remaining exact standardized products.",
       "Expand naturally occurring toxic-substance product/category mappings without fuzzy category inference.",
       "Load Section 2.3 pesticide and other residue tables using exact commodity matching.",
@@ -37,7 +37,9 @@
       "2.2.1 Naturally occurring toxic substances — selected exact ingredient triggers"
     ],
     "ingredient_trigger_groups": 13,
-    "crop_contaminant_groups": 6
+    "crop_contaminant_groups": 6,
+    "profile_expansion_build": 128,
+    "profile_expansion_note": "Build 128 adds 17 exact standardized-product profiles from explicit current Version IX Section 2.1 article-of-food rows. No fuzzy commodity matching and no automatic 'Foods not specified' fallback."
   },
   "all_food_rules": [
     {
@@ -450,6 +452,439 @@
           "unit": "µg/kg",
           "article": "Wheat bran",
           "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "tea",
+      "label": "Tea",
+      "catalog_ids": [
+        "tea"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Tea",
+          "source_basis": "Section 2.1 · Lead",
+          "condition": "On dry matter basis."
+        },
+        {
+          "contaminant": "Copper",
+          "limit": 150,
+          "unit": "mg/kg",
+          "article": "Tea",
+          "source_basis": "Section 2.1 · Copper"
+        }
+      ]
+    },
+    {
+      "id": "cocoa-powder",
+      "label": "Cocoa Powder",
+      "catalog_ids": [
+        "05-05-1-cocoa-powder"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Cocoa powder",
+          "source_basis": "Section 2.1 · Lead",
+          "condition": "On dry fat-free substance basis."
+        },
+        {
+          "contaminant": "Copper",
+          "limit": 70,
+          "unit": "mg/kg",
+          "article": "Cocoa powder",
+          "source_basis": "Section 2.1 · Copper",
+          "condition": "On fat-free substance basis."
+        }
+      ]
+    },
+    {
+      "id": "baking-powder",
+      "label": "Baking powder",
+      "catalog_ids": [
+        "99-99-1-baking-powder"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Baking powder",
+          "source_basis": "Section 2.1 · Lead"
+        }
+      ]
+    },
+    {
+      "id": "jams-jellies-marmalades",
+      "label": "Jams, Fruit Jellies and Marmalades",
+      "catalog_ids": [
+        "04-04-1-jams-fruit-jellies-and-marmalades"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 1,
+          "unit": "mg/kg",
+          "article": "Jam (fruit preserves) and jellies",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Jam, Jellies and Marmalade",
+          "source_basis": "Section 2.1 · Tin"
+        }
+      ]
+    },
+    {
+      "id": "mango-chutney",
+      "label": "Mango Chutney",
+      "catalog_ids": [
+        "04-04-1-mango-chutney"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 1,
+          "unit": "mg/kg",
+          "article": "Mango chutney",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Mango Chutney",
+          "source_basis": "Section 2.1 · Tin"
+        }
+      ]
+    },
+    {
+      "id": "turmeric",
+      "label": "Turmeric (Haldi)",
+      "catalog_ids": [
+        "12-12-2-turmeric-haldi"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Turmeric whole and powder",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Copper",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Turmeric whole and powder",
+          "source_basis": "Section 2.1 · Copper"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Turmeric whole and powder",
+          "source_basis": "Section 2.1 · Arsenic"
+        },
+        {
+          "contaminant": "Tin",
+          "limit": 0.01,
+          "unit": "mg/kg",
+          "article": "Turmeric whole and powder",
+          "source_basis": "Section 2.1 · Tin"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Turmeric whole and powder",
+          "source_basis": "Section 2.1 · Cadmium"
+        }
+      ]
+    },
+    {
+      "id": "vinegar",
+      "label": "Vinegar",
+      "catalog_ids": [
+        "12-12-3-vinegar"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.01,
+          "unit": "mg/kg",
+          "article": "Brewed vinegar and synthetic vinegar",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Copper",
+          "limit": 0.01,
+          "unit": "mg/kg",
+          "article": "Brewed vinegar and synthetic vinegar",
+          "source_basis": "Section 2.1 · Copper"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Brewed vinegar and synthetic vinegar",
+          "source_basis": "Section 2.1 · Arsenic"
+        }
+      ]
+    },
+    {
+      "id": "hard-boiled-sugar-confectionery",
+      "label": "Sugar boiled confectionery (Hard Candy)",
+      "catalog_ids": [
+        "05-05-2-sugar-boiled-confectionery-hard-candy"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Hard boiled sugar confectionery",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Copper",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Hard boiled sugar confectionery",
+          "source_basis": "Section 2.1 · Copper"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 1,
+          "unit": "mg/kg",
+          "article": "Hard boiled sugar confectionery",
+          "source_basis": "Section 2.1 · Arsenic"
+        },
+        {
+          "contaminant": "Tin",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Hard boiled sugar confectionery",
+          "source_basis": "Section 2.1 · Tin"
+        }
+      ]
+    },
+    {
+      "id": "refined-sugar",
+      "label": "Refined Sugar",
+      "catalog_ids": [
+        "11-11-1-refined-sugar"
+      ],
+      "rules": [
+        {
+          "contaminant": "Chromium",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Refined sugar",
+          "source_basis": "Section 2.1 · Chromium"
+        }
+      ]
+    },
+    {
+      "id": "gelatin",
+      "label": "Gelatin",
+      "catalog_ids": [
+        "99-99-1-gelatin",
+        "99-99-1-gelatin-from-fish-processing-waste"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Edible gelatin",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Copper",
+          "limit": 30,
+          "unit": "mg/kg",
+          "article": "Edible gelatin",
+          "source_basis": "Section 2.1 · Copper"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Edible gelatin",
+          "source_basis": "Section 2.1 · Arsenic"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Gelatin",
+          "source_basis": "Section 2.1 · Chromium"
+        }
+      ]
+    },
+    {
+      "id": "canned-tomatoes",
+      "label": "Canned Tomatoes",
+      "catalog_ids": [
+        "04-04-2-canned-tomatoes"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 1,
+          "unit": "mg/kg",
+          "article": "Canned tomatoes",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Canned tomatoes",
+          "source_basis": "Section 2.1 · Tin"
+        }
+      ]
+    },
+    {
+      "id": "table-olives",
+      "label": "Table Olives",
+      "catalog_ids": [
+        "04-04-2-table-olives"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 1,
+          "unit": "mg/kg",
+          "article": "Table olives",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Table Olives",
+          "source_basis": "Section 2.1 · Tin"
+        }
+      ]
+    },
+    {
+      "id": "canned-chestnuts",
+      "label": "Canned Chestnut / Canned Chestnut Puree",
+      "catalog_ids": [
+        "04-04-2-canned-chestnut",
+        "04-04-2-canned-chestnut-puree"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 1,
+          "unit": "mg/kg",
+          "article": "Canned chestnuts and canned chestnut purée",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Canned chestnuts and chestnut puree",
+          "source_basis": "Section 2.1 · Tin"
+        }
+      ]
+    },
+    {
+      "id": "canned-fishery-products",
+      "label": "Canned Fishery Products",
+      "catalog_ids": [
+        "09-09-4-canned-fishery-products"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Canned fish",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Tin",
+          "limit": 200,
+          "unit": "mg/kg",
+          "article": "Canned fish products",
+          "source_basis": "Section 2.1 · Tin"
+        }
+      ]
+    },
+    {
+      "id": "canned-retort-meat-products",
+      "label": "Canned or Retort Pouch Meat Products",
+      "catalog_ids": [
+        "08-08-2-canned-or-retort-pouch-meat-products",
+        "08-08-3-canned-or-retort-pouch-meat-products"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Canned meats",
+          "source_basis": "Section 2.1 · Lead",
+          "condition": "Tin is not auto-applied because this PMSV product may be packed in a retort pouch or another non-tin container."
+        }
+      ]
+    },
+    {
+      "id": "iron-fortified-common-salt",
+      "label": "Iron Fortified Iodized Salt (Double Fortified Salt)",
+      "catalog_ids": [
+        "12-12-1-iron-fortified-iodized-salt-double-fortified-salt"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Iron fortified common salt",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Copper",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Iron fortified common salt",
+          "source_basis": "Section 2.1 · Copper"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 1,
+          "unit": "mg/kg",
+          "article": "Iron fortified common salt",
+          "source_basis": "Section 2.1 · Arsenic"
+        }
+      ]
+    },
+    {
+      "id": "fruit-juices-ready-to-drink",
+      "label": "Fruit Juices",
+      "catalog_ids": [
+        "fruit-juices"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.05,
+          "unit": "mg/kg",
+          "article": "Fruit Juices (including nectars; ready to drink)",
+          "source_basis": "Section 2.1 · Lead"
         }
       ]
     }
