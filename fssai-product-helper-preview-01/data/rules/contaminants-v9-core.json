@@ -17,17 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_33_explicit_dried_herb_lead_arsenic_mapping",
+    "stage": "phase_34_dried_ginger_garlic_lead_arsenic_mapping",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 98,
+    "exact_product_profiles": 100,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 169 maps ten Chapter 2.9 products whose current FSSAI identities explicitly say Dried or Dehydrated herb to Lead 10 mg/kg on dry matter basis and Arsenic 5 mg/kg.",
-      "The ten products are Dried Oregano, Dried Laurel/Bay Leaf, Dried Mint, Dried Rosemary, Dried Thyme, Dried Sage, Dried Sweet Basil Leaves, Dried Sweet Marjoram, Dried Parsley and Dehydrated Tarragon.",
-      "No generic spice rule is yet blanket-applied to the remaining Chapter 2.9 spice standards; each remaining identity stays under individual review.",
-      "Ground/soluble coffee exclusions, Instant Tea lock, Cream Powder exclusion and generic Tin fail-closed behavior remain unchanged."
+      "Build 170 maps Dried Ginger 2.9.11 and Garlic 2.9.26 (defined as Dried/Dehydrated Garlic) to Lead 10 mg/kg on dry matter basis and Arsenic 5 mg/kg.",
+      "No aflatoxin rule was newly inferred in this build; this step is limited to the two metal article classes proven by the current Chapter 2.9 product identities.",
+      "The remaining seed, bark, fruit and floral spice standards stay under individual identity review before any generic 'spices' article is applied.",
+      "Coffee subtype locks, Instant Tea lock, Cream Powder exclusion and generic Tin fail-closed behavior remain unchanged."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -76,7 +76,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Review remaining Chapter 2.9 dried spice identities individually (for example Dried Ginger, dehydrated Garlic, seed/bark spices) against the Lead 'dried herbs and spices' and Arsenic 'spices' rows.",
+    "next_priority": "Review the remaining Chapter 2.9 whole/powder spice standards whose current definitions explicitly identify dried seed, fruit, bark, aril or stigma forms before promoting the generic spice Lead/Arsenic article classes.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -117,9 +117,9 @@
       "12-12-2-mixed-masala",
       "12-12-2-dehydrated-onion-sukha-pyaj"
     ],
-    "verified_alias_products": 63,
-    "verified_alias_new_profiles": 60,
-    "verified_alias_rules_added": 111,
+    "verified_alias_products": 65,
+    "verified_alias_new_profiles": 62,
+    "verified_alias_rules_added": 115,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
@@ -168,7 +168,9 @@
     "dehydrated_onion_products_added_build_168": 1,
     "dehydrated_onion_rules_added_build_168": 2,
     "dried_herb_products_added_build_169": 10,
-    "dried_herb_rules_added_build_169": 20
+    "dried_herb_rules_added_build_169": 20,
+    "dried_ginger_garlic_products_added_build_170": 2,
+    "dried_ginger_garlic_rules_added_build_170": 4
   },
   "all_food_rules": [
     {
@@ -2852,6 +2854,58 @@
           "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
           "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        }
+      ]
+    },
+    {
+      "id": "dried-ginger",
+      "label": "Dried Ginger (Sonth, Dried Adrak)",
+      "catalog_ids": [
+        "12-12-2-dried-ginger-sonth-dried-adrak"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        }
+      ]
+    },
+    {
+      "id": "dried-dehydrated-garlic",
+      "label": "Garlic (Lahsun)",
+      "catalog_ids": [
+        "12-12-2-garlic-lahsun"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
         }
       ]
     }
@@ -18456,6 +18510,50 @@
           "limit": 5,
           "unit": "mg/kg",
           "mapping_basis": "Current FSSAI 2.9.45 standard explicitly identifies Dehydrated Tarragon as a dried/dehydrated herb product; this directly fits the Arsenic article class 'Dried herbs'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-dried-ginger-sonth-dried-adrak",
+      "product_name": "Dried Ginger (Sonth, Dried Adrak)",
+      "fssr": "2.9.11",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.11 standard explicitly defines Dried Ginger (Sonth, Dried Adrak) as dried/dehydrated; this directly fits the Lead article class 'dried herbs and spices'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.11 standard places Dried Ginger (Sonth, Dried Adrak) within the dried spice/condiment standards; this directly fits the Arsenic article class 'spices'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-garlic-lahsun",
+      "product_name": "Garlic (Lahsun)",
+      "fssr": "2.9.26",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.26 standard explicitly defines Garlic (Lahsun) as dried/dehydrated; this directly fits the Lead article class 'dried herbs and spices'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.26 standard places Garlic (Lahsun) within the dried spice/condiment standards; this directly fits the Arsenic article class 'spices'."
         }
       ]
     }
