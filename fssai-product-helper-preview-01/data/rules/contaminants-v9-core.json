@@ -17,18 +17,18 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_45_sugar_sulphated_ash_lead_gate",
+    "stage": "phase_46_chapter_2_8_contaminant_review_complete",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 125,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 181 adds a deterministic sulphated-ash input gate for condition-dependent sugar Lead rows.",
-      "Refined Sugar activates Lead 0.5 mg/kg only when sulphated ash is ≤0.03%.",
-      "The Lead 5 mg/kg row activates for the seven proven sugar/invert-syrup identities only when sulphated ash is >1.0%.",
-      "Values between the regulatory conditions remain unmatched; PMSV does not substitute Foods not specified.",
-      "Dextrose keeps its direct 0.5 mg/kg Lead mapping and does not use this ash gate."
+      "Build 182 completes the current Chapter 2.8 contaminant identity review.",
+      "Fourteen explicit lock/conditional-only records prevent sugar, saccharin and bee-product cross-mapping.",
+      "Honey remains linked to its 12 misuse-detection MRPL rows; Royal Jelly and Bees Wax do not inherit them.",
+      "Calcium Saccharin does not inherit Saccharin sodium Arsenic/Lead rows.",
+      "Sugar Lead conditions continue to require the Build 181 sulphated-ash input gate."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -77,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Complete Chapter 2.8 review by explicitly locking remaining products with no exact current contaminant article, including Calcium Saccharin and non-proven sugar routes.",
+    "next_priority": "Move to the next unresolved exact standardized-product family, starting with combined products that require subtype gates rather than whole-product mappings.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -198,7 +198,10 @@
     "honey_product_mrpl_rules_mapped_build_180": 12,
     "sulphated_ash_conditional_lead_products": 7,
     "sulphated_ash_conditional_lead_rules": 8,
-    "sulphated_ash_input_ui": true
+    "sulphated_ash_input_ui": true,
+    "chapter_2_8_contaminant_identity_review_complete": true,
+    "chapter_2_8_locked_routes": 14,
+    "chapter_2_8_review_completed_build_182": true
   },
   "all_food_rules": [
     {
@@ -21262,6 +21265,120 @@
       "requires_input": "product.sulphated_ash_percent",
       "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
       "verification": "official_fssai_v9_conditional_sugar_identity"
+    }
+  ],
+  "chapter_2_8_locked_contaminant_routes_v9": [
+    {
+      "catalog_id": "11-11-1-refined-sugar",
+      "product_name": "Refined Sugar",
+      "fssr": "2.8.1(2)",
+      "status": "partial_profile_plus_conditional_gate",
+      "lock_scope": "Lead outside explicit sulphated-ash conditions",
+      "reason": "Chromium 0.02 mg/kg is exact. Lead is applied only through the Build 181 sulphated-ash gate: ≤0.03% or >1.0%. Values between those conditions do not receive a guessed fallback."
+    },
+    {
+      "catalog_id": "11-11-1-icing-sugar",
+      "product_name": "Icing Sugar",
+      "fssr": "2.8.1(6)",
+      "status": "conditional_only_no_fallback",
+      "lock_scope": "Lead except sulphated ash >1.0%",
+      "reason": "Only the explicit all-types-of-sugars Lead row at sulphated ash >1.0% is gated. No lower-ash Lead value is inferred."
+    },
+    {
+      "catalog_id": "11-11-1-khandsari-sugar",
+      "product_name": "Khandsari Sugar",
+      "fssr": "2.8.1(3)",
+      "status": "conditional_only_no_fallback",
+      "lock_scope": "Lead except sulphated ash >1.0%",
+      "reason": "The current standard does not provide a sulphated-ash value that proves another specific Lead article."
+    },
+    {
+      "catalog_id": "11-11-1-bura-sugar",
+      "product_name": "Bura Sugar",
+      "fssr": "2.8.1(4)",
+      "status": "conditional_only_no_fallback",
+      "lock_scope": "Lead except sulphated ash >1.0%",
+      "reason": "Only the explicit >1.0% sulphated-ash sugar Lead condition is active."
+    },
+    {
+      "catalog_id": "11-11-1-plantation-white-sugar",
+      "product_name": "Plantation White Sugar",
+      "fssr": "2.8.1(1)",
+      "status": "conditional_only_no_fallback",
+      "lock_scope": "Lead except sulphated ash >1.0%",
+      "reason": "Plantation white sugar is not automatically relabelled as refined white sugar."
+    },
+    {
+      "catalog_id": "11-11-1-cube-sugar",
+      "product_name": "Cube Sugar",
+      "fssr": "2.8.1(5)",
+      "status": "conditional_only_no_fallback",
+      "lock_scope": "Lead except sulphated ash >1.0%",
+      "reason": "Manufacture from refined crystallised sugar does not by itself prove the current refined-white-sugar sulphated-ash article for the finished cube product."
+    },
+    {
+      "catalog_id": "11-11-3-golden-syrup",
+      "product_name": "Golden Syrup",
+      "fssr": "2.8.6",
+      "status": "conditional_only_no_fallback",
+      "lock_scope": "Lead except sulphated ash >1.0%",
+      "reason": "Golden Syrup is explicitly an invert sugar, so the >1.0% sulphated-ash Lead gate is available; no other Lead value is inferred."
+    },
+    {
+      "catalog_id": "11-11-1-dried-glucose-syrup",
+      "product_name": "Dried Glucose Syrup",
+      "fssr": "2.8.7",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "automatic contaminant mapping",
+      "reason": "The current product standard permits sulphated ash only up to 1.0%; PMSV does not infer the >1.0% solid-glucose/starch-conversion Lead article or a Foods-not-specified fallback."
+    },
+    {
+      "catalog_id": "11-11-1-misri",
+      "product_name": "Misri",
+      "fssr": "2.8.2",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "automatic contaminant mapping",
+      "reason": "Misri may be made from sugar or palmyrah juice. PMSV does not force it into a generic sugar or confectionery metal row."
+    },
+    {
+      "catalog_id": "11-11-1-gur-or-jaggery",
+      "product_name": "Gur or Jaggery",
+      "fssr": "2.8.4(1)",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "automatic contaminant mapping",
+      "reason": "No exact Version IX metal article is promoted from the product name; raw-sugar and generic-sugar rows are not assumed."
+    },
+    {
+      "catalog_id": "11-11-1-cane-jaggery-or-cane-gur",
+      "product_name": "Cane Jaggery or Cane Gur",
+      "fssr": "2.8.4(2)",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "automatic contaminant mapping",
+      "reason": "No exact Version IX contaminant article is proven for the standardized identity."
+    },
+    {
+      "catalog_id": "11-11-6-calcium-saccharin-food-grade",
+      "product_name": "Calcium Saccharin (Food Grade)",
+      "fssr": "2.8.12",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "Arsenic/Lead automatic mapping",
+      "reason": "The current Arsenic and Lead article master explicitly names Saccharin sodium. PMSV does not transfer those limits to Calcium Saccharin."
+    },
+    {
+      "catalog_id": "100-100-royal-jelly",
+      "product_name": "Royal Jelly",
+      "fssr": "2.8.3(3)",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "automatic contaminant mapping",
+      "reason": "Royal Jelly is a separate standardized bee product. Honey antibiotic MRPLs are not inherited."
+    },
+    {
+      "catalog_id": "99-99-1-bees-wax",
+      "product_name": "Bees Wax",
+      "fssr": "2.8.3(2)",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "automatic contaminant mapping",
+      "reason": "Bees Wax is a separate standardized bee product. Honey antibiotic MRPLs are not inherited."
     }
   ]
 }
