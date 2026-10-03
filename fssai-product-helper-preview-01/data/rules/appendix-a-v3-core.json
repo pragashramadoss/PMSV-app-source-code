@@ -18970,7 +18970,7 @@
     "4.1.1.2": {
       "name": "Surface-treated fresh fruits",
       "table": "Table 4",
-      "status": "verified_current_partial",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "Beeswax",
@@ -19029,6 +19029,14 @@
           "verification": "current_2025_indexed_fssai"
         },
         {
+          "name": "Sodium ortho-phenylphenol",
+          "ins": "232",
+          "limit": "12 mg/kg",
+          "note_refs": "49",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
           "name": "Polyethylene glycol",
           "ins": "1521",
           "limit": "GMP",
@@ -19069,12 +19077,13 @@
           "verification": "current_2025_indexed_fssai"
         }
       ],
-      "completeness_note": "The sodium ortho-phenylphenol (INS 232) row is visible in the current PDF but its maximum is not recoverable unambiguously from the indexed row alignment, so that row is quarantined pending direct verification."
+      "completeness_note": "Complete current Version 3 4.1.1.2 row set. The uploaded official PDF visually confirms ortho-Phenylphenol (231) and Sodium ortho-phenylphenol (232) share 12 mg/kg with note 49.",
+      "locked_rows": []
     },
     "4.1.1.3": {
       "name": "Peeled or cut minimally processed fruits",
       "table": "Table 4",
-      "status": "verified_current_partial",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "Calcium ascorbate",
@@ -19133,6 +19142,30 @@
           "verification": "current_2025_indexed_fssai"
         },
         {
+          "name": "Calcium lactate",
+          "ins": "327",
+          "limit": "350 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Calcium gluconate",
+          "ins": "578",
+          "limit": "350 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Calcium carbonate",
+          "ins": "170(i)",
+          "limit": "350 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
           "name": "Citric acid",
           "ins": "330",
           "limit": "GMP",
@@ -19157,7 +19190,8 @@
           "verification": "current_2025_indexed_fssai"
         }
       ],
-      "completeness_note": "Current rows are loaded where the maximum is explicit. Calcium lactate (327), calcium gluconate (578) and calcium carbonate (170(i)) are visible but their shared/individual maximum cannot be reconstructed safely from the indexed row alignment, so they remain quarantined."
+      "completeness_note": "Complete current Version 3 4.1.1.3 row set. The uploaded official PDF visually confirms calcium chloride (509), calcium lactate (327), calcium gluconate (578) and calcium carbonate (170(i)) share 350 mg/kg.",
+      "locked_rows": []
     },
     "4.1.2": {
       "name": "Processed fruits",
@@ -19714,7 +19748,7 @@
     "4.1.2.5": {
       "name": "Jams, jellies, marmalades, fruit bar/toffee and fruit cheese",
       "table": "Table 4",
-      "status": "verified_current_partial",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "Acesulfame potassium",
@@ -19979,9 +20013,26 @@
           "note_refs": "",
           "condition": "",
           "verification": "current_2025_indexed_fssai"
+        },
+        {
+          "name": "Tartrazine",
+          "ins": "102",
+          "limit": "200 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Sunset Yellow FCF",
+          "ins": "110",
+          "limit": "200 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
         }
       ],
-      "completeness_note": "All current rows with unambiguous limits are loaded. The current PDF text collapses the Tartrazine (INS 102) and Sunset Yellow FCF (INS 110) row boundary around the shared 200 mg/kg text, so those colour rows remain quarantined pending direct visual/direct-source confirmation."
+      "completeness_note": "Complete current Version 3 4.1.2.5 row set. The uploaded official PDF visually confirms Tartrazine (102) and Sunset Yellow FCF (110) share the 200 mg/kg maximum.",
+      "locked_rows": []
     },
     "4.1.2.6": {
       "name": "Fruit-based spreads (e.g. chutney) excluding products of food category 4.1.2.5",
@@ -20789,7 +20840,7 @@
     "4.1.2.9": {
       "name": "Fruit-based desserts including fruit-flavoured water-based desserts",
       "table": "Table 4",
-      "status": "verified_current_partial",
+      "status": "verified_current_partial_source_duplicate_ambiguity",
       "entries": [
         {
           "name": "L-Tartaric acid",
@@ -21048,7 +21099,25 @@
           "verification": "current_2025_indexed_fssai"
         }
       ],
-      "completeness_note": "The indexed current PDF exposes two SORBATES rows in this category (3,000 mg/kg and 1,000 mg/kg with note 42) without preserving the condition/variant boundary. Both are quarantined until the distinction can be confirmed from a clearer official rendering."
+      "completeness_note": "All unambiguous current Version 3 4.1.2.9 rows are active. The official PDF itself contains two SORBATES maxima (3,000 mg/kg and 1,000 mg/kg with note 42) without a stated applicability distinction, so both remain locked.",
+      "locked_rows": [
+        {
+          "name": "SORBATES",
+          "ins": "",
+          "raw_source_limit": "3,000 mg/kg",
+          "note_refs": "",
+          "verification": "current_v3_fssai_uploaded_pdf",
+          "lock_reason": "The official Version 3 PDF lists this SORBATES row in 4.1.2.9 but gives no condition distinguishing it from the separate 1,000 mg/kg SORBATES row."
+        },
+        {
+          "name": "SORBATES",
+          "ins": "",
+          "raw_source_limit": "1,000 mg/kg",
+          "note_refs": "42",
+          "verification": "current_v3_fssai_uploaded_pdf",
+          "lock_reason": "The official Version 3 PDF lists this second SORBATES row in 4.1.2.9 but gives no condition distinguishing it from the separate 3,000 mg/kg SORBATES row."
+        }
+      ]
     },
     "4.1.2.10": {
       "name": "Fermented fruit products",
@@ -21213,7 +21282,7 @@
     "4.1.2.11": {
       "name": "Fruit fillings for pastries",
       "table": "Table 4",
-      "status": "verified_current_partial",
+      "status": "verified_current_partial_source_duplicate_ambiguity",
       "entries": [
         {
           "name": "Acesulfame potassium",
@@ -21424,7 +21493,25 @@
           "verification": "current_2025_indexed_fssai"
         }
       ],
-      "completeness_note": "The indexed current PDF again exposes two SORBATES rows (3,000 mg/kg and 1,000 mg/kg with note 42) without preserving the condition/variant boundary. Both are quarantined pending clearer official confirmation."
+      "completeness_note": "All unambiguous current Version 3 4.1.2.11 rows are active. The official PDF itself contains two SORBATES maxima (3,000 mg/kg and 1,000 mg/kg with note 42) without a stated applicability distinction, so both remain locked.",
+      "locked_rows": [
+        {
+          "name": "SORBATES",
+          "ins": "",
+          "raw_source_limit": "3,000 mg/kg",
+          "note_refs": "",
+          "verification": "current_v3_fssai_uploaded_pdf",
+          "lock_reason": "The official Version 3 PDF lists this SORBATES row in 4.1.2.11 but gives no condition distinguishing it from the separate 1,000 mg/kg SORBATES row."
+        },
+        {
+          "name": "SORBATES",
+          "ins": "",
+          "raw_source_limit": "1,000 mg/kg",
+          "note_refs": "42",
+          "verification": "current_v3_fssai_uploaded_pdf",
+          "lock_reason": "The official Version 3 PDF lists this second SORBATES row in 4.1.2.11 but gives no condition distinguishing it from the separate 3,000 mg/kg SORBATES row."
+        }
+      ]
     },
     "4.1.2.12": {
       "name": "Cooked fruit",
@@ -21586,7 +21673,7 @@
     "4.2.1.3": {
       "name": "Peeled, cut or shredded minimally processed and packaged vegetables, seaweeds, nuts and seeds",
       "table": "Table 4",
-      "status": "verified_current_partial",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "Lauric arginate ethyl ester",
@@ -21629,6 +21716,30 @@
           "verification": "current_2025_indexed_fssai"
         },
         {
+          "name": "Calcium lactate",
+          "ins": "327",
+          "limit": "350 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Calcium gluconate",
+          "ins": "578",
+          "limit": "350 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
+          "name": "Calcium carbonate",
+          "ins": "170(i)",
+          "limit": "350 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
           "name": "Citric acid",
           "ins": "330",
           "limit": "GMP",
@@ -21661,7 +21772,8 @@
           "verification": "current_2025_indexed_fssai"
         }
       ],
-      "completeness_note": "Calcium lactate (327), calcium gluconate (578) and calcium carbonate (170(i)) are present in the current table but their shared/individual maximum is lost in the indexed row alignment. PMSV leaves those rows quarantined."
+      "completeness_note": "Complete current Version 3 4.2.1.3 row set. The uploaded official PDF visually confirms calcium chloride (509), calcium lactate (327), calcium gluconate (578) and calcium carbonate (170(i)) share 350 mg/kg.",
+      "locked_rows": []
     },
     "4.2.2": {
       "name": "Processed vegetables, seaweeds, nuts and seeds",
@@ -22154,7 +22266,7 @@
     "4.2.2.4": {
       "name": "Canned/bottled (pasteurised) or retort-pouched vegetables and seaweeds",
       "table": "Table 4",
-      "status": "verified_current_partial",
+      "status": "verified_current_partial_source_duplicate_ambiguity",
       "entries": [
         {
           "name": "Allura Red AC",
@@ -22285,7 +22397,25 @@
           "verification": "current_2025_indexed_fssai"
         }
       ],
-      "completeness_note": "The current indexed PDF shows two Acesulfame potassium rows (200 mg/kg and 350 mg/kg, both note 188) within the 4.2.2.4 boundary without retaining a condition/variant distinction. PMSV quarantines both until the official row context can be visually confirmed."
+      "completeness_note": "All unambiguous current Version 3 4.2.2.4 rows are active. The official PDF itself contains two Acesulfame potassium maxima (200 mg/kg and 350 mg/kg), both note 188, without a stated applicability distinction; both remain locked.",
+      "locked_rows": [
+        {
+          "name": "Acesulfame potassium",
+          "ins": "950",
+          "raw_source_limit": "200 mg/kg",
+          "note_refs": "188",
+          "verification": "current_v3_fssai_uploaded_pdf",
+          "lock_reason": "The official Version 3 PDF lists 200 mg/kg and 350 mg/kg Acesulfame potassium rows in 4.2.2.4, both note 188, without a stated condition distinguishing applicability."
+        },
+        {
+          "name": "Acesulfame potassium",
+          "ins": "950",
+          "raw_source_limit": "350 mg/kg",
+          "note_refs": "188",
+          "verification": "current_v3_fssai_uploaded_pdf",
+          "lock_reason": "The official Version 3 PDF lists 350 mg/kg and 200 mg/kg Acesulfame potassium rows in 4.2.2.4, both note 188, without a stated condition distinguishing applicability."
+        }
+      ]
     },
     "4.2.2.5": {
       "name": "Vegetable, seaweed, nut and seed purees and spreads (e.g. peanut butter)",
@@ -29949,7 +30079,7 @@
       "1.8.2",
       "9.2.4.3"
     ],
-    "next_priority": "Table 5 is reconciled to current Version 3 except the source-malformed 5.1.1 BENZOATES value ('15,00 mg/kg'), which remains locked. Continue with Table 4 current Version 3 reconciliation.",
+    "next_priority": "Table 4 is reconciled to current Version 3 except three source-level duplicate-limit ambiguities that remain locked. Table 3 is already current Version 3 complete; continue with the remaining Table 2 current Version 3 locks.",
     "annexure_1_groups_loaded": 18,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
@@ -30202,7 +30332,7 @@
       "4.2.2.7",
       "4.2.2.8"
     ],
-    "table4_stage": "full_current_v3_hierarchy_loaded_with_specific_locked_row_ambiguities",
+    "table4_stage": "current_v3_reconciled_except_three_source_duplicate_ambiguities",
     "table3_sets_loaded": [
       "3.0"
     ],
@@ -30285,7 +30415,12 @@
       "8.3.3",
       "8.4"
     ],
-    "table8_locked_sets": []
+    "table8_locked_sets": [],
+    "table4_locked_source_ambiguities": [
+      "4.1.2.9 — SORBATES 3,000 mg/kg vs 1,000 mg/kg (note 42), no applicability distinction in source",
+      "4.1.2.11 — SORBATES 3,000 mg/kg vs 1,000 mg/kg (note 42), no applicability distinction in source",
+      "4.2.2.4 — Acesulfame potassium 200 mg/kg vs 350 mg/kg, both note 188, no applicability distinction in source"
+    ]
   },
   "annexure_1_groups": {
     "SULFITES": [
@@ -31084,6 +31219,14 @@
       "rule": "The uploaded official FSSAI Appendix A Version 3 PDF itself displays the 5.1.1 BENZOATES maximum as '15,00 mg/kg'. PMSV keeps the row locked and does not silently interpret it as 1,500 or any other value. All other Table 5 rows remain as already normalized current-Version-3 permissions.",
       "official_sources": [
         "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf, page 167"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Table 4 — Build 113 visual reconciliation from uploaded official PDF",
+      "rule": "Direct visual inspection of the uploaded official Version 3 PDF resolved the merged-cell ambiguities for 4.1.1.2, 4.1.1.3, 4.1.2.5 and 4.2.1.3. Three remaining duplicate-limit cases are confirmed to exist in the source itself and remain locked rather than guessed: SORBATES in 4.1.2.9 and 4.1.2.11, and Acesulfame potassium in 4.2.2.4.",
+      "official_sources": [
+        "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf, pages 129–130, 137, 146, 150, 153 and 157"
       ]
     }
   ],

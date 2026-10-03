@@ -495,7 +495,7 @@
         "9.2.4.3"
       ],
       "source_verified_on": "2026-10-03",
-      "next_validation": "Table 5 is reconciled to current Version 3 except the source-malformed 5.1.1 BENZOATES value ('15,00 mg/kg'), which remains locked. Continue with Table 4 current Version 3 reconciliation.",
+      "next_validation": "Table 4 is reconciled to current Version 3 except three source-level duplicate-limit ambiguities that remain locked. Table 3 is already current Version 3 complete; continue with the remaining Table 2 current Version 3 locks.",
       "annexure_1_groups_loaded": 18,
       "table15_note_conditions_loaded": 14,
       "note_conditions_loaded": 42,
@@ -510,7 +510,7 @@
       "table7_stage": "current_v3_complete",
       "table6_stage": "current_v3_complete",
       "table5_stage": "current_v3_complete_except_source_malformed_5_1_1_benzoates",
-      "table4_stage": "full_current_v3_hierarchy_loaded_with_specific_locked_row_ambiguities",
+      "table4_stage": "current_v3_reconciled_except_three_source_duplicate_ambiguities",
       "table3_stage": "current_v3_complete",
       "table2_stage": "full_current_v3_hierarchy_loaded_with_2_1_3_2_2_1_2_4_locked_ambiguities",
       "table1_stage": "full_current_v3_fcs_coverage_with_targeted_locked_rows",
@@ -599,6 +599,11 @@
         "6.8.6",
         "6.8.7",
         "6.8.8"
+      ],
+      "table4_locked_source_ambiguities": [
+        "4.1.2.9 — SORBATES 3,000 mg/kg vs 1,000 mg/kg (note 42), no applicability distinction in source",
+        "4.1.2.11 — SORBATES 3,000 mg/kg vs 1,000 mg/kg (note 42), no applicability distinction in source",
+        "4.2.2.4 — Acesulfame potassium 200 mg/kg vs 350 mg/kg, both note 188, no applicability distinction in source"
       ]
     },
     "special_nutrition": {
@@ -21230,7 +21235,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 112,
+  "build_number": 113,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {
