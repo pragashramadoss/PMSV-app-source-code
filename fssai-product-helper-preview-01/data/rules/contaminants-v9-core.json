@@ -17,14 +17,14 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_3_residue_mrl_batch_4",
+    "stage": "phase_3_residue_mrl_batch_5",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 35,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Continue Section 2.3.1 from serial 113 (Lufenuron) onward in source order.",
+      "Continue Section 2.3.1 from serial 170 (Tebuconazole) onward in source order.",
       "Add exact product/ingredient residue matching only after each pesticide commodity row is normalized.",
       "Continue remaining exact Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
       "Add packaging-triggered tin logic after packaging input is implemented."
@@ -41,9 +41,9 @@
     "crop_contaminant_groups": 6,
     "profile_expansion_build": 129,
     "profile_expansion_note": "Build 129 adds exact crop-contaminant and naturally occurring toxin mappings for arecanut, pulses, pearl barley, four named nuts, mixed masala, nutmeg and sago/cassava/tapioca products; turmeric is also enriched with explicit spice aflatoxin limits.",
-    "residue_batches_loaded": 4,
-    "residue_pesticides_loaded": 112,
-    "residue_rows_loaded": 643
+    "residue_batches_loaded": 5,
+    "residue_pesticides_loaded": 169,
+    "residue_rows_loaded": 928
   },
   "all_food_rules": [
     {
@@ -1756,8 +1756,8 @@
   "residue_mrls": {
     "source_basis": "Section 2.3.1 · Restriction on the use of insecticides",
     "source_version": "Version IX (03.02.2026)",
-    "batch": "1-4",
-    "serial_range": "1-112",
+    "batch": "1-5",
+    "serial_range": "1-169",
     "auto_apply": false,
     "symbol_policy": "MRL symbols such as '*', '(F)', shell-free basis and carcass-fat basis are retained exactly as printed. PMSV does not interpret those markers until the corresponding official notes are separately normalized.",
     "pesticides": [
@@ -5766,9 +5766,1797 @@
             "unit": "mg/kg"
           }
         ]
+      },
+      {
+        "serial": 113,
+        "name": "Lufenuron",
+        "rows": [
+          {
+            "food": "Cauliflower",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Black Gram",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cabbage",
+            "mrl": "0.3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Pigeon pea",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 114,
+        "name": "Malathion (Malathion to be determined and expressed as combined residues of malathion and malaoxon)",
+        "rows": [
+          {
+            "food": "Wheat",
+            "mrl": "10.0",
+            "unit": "mg/kg",
+            "condition": "Food grains composite row"
+          },
+          {
+            "food": "Maize",
+            "mrl": "0.05",
+            "unit": "mg/kg",
+            "condition": "Food grains composite row"
+          },
+          {
+            "food": "Other food grains",
+            "mrl": "4",
+            "unit": "mg/kg",
+            "condition": "Food grains composite row"
+          },
+          {
+            "food": "Milled food grains",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Fruits",
+            "mrl": "4",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Vegetables",
+            "mrl": "3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried fruits",
+            "mrl": "8",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Carbonated Water",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 115,
+        "name": "Mandipropamid",
+        "rows": [
+          {
+            "food": "Grapes",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tomato",
+            "mrl": "0.3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 116,
+        "name": "Mepiquat Chloride",
+        "rows": [
+          {
+            "food": "Potato",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 117,
+        "name": "Mesosulfuron Methyl",
+        "rows": [
+          {
+            "food": "Wheat",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 118,
+        "name": "Metaflumizone",
+        "rows": [
+          {
+            "food": "Cabbage",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 119,
+        "name": "Metalaxyl",
+        "rows": [
+          {
+            "food": "Pearl Millet (Bajra)",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Maize",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sorghum",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 120,
+        "name": "Metalaxyl-M",
+        "rows": [
+          {
+            "food": "Potato",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Black pepper",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mustard Seed",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tomato",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 121,
+        "name": "Methabenzthiazuron",
+        "rows": [
+          {
+            "food": "Wheat",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 122,
+        "name": "Methomyl",
+        "rows": [
+          {
+            "food": "Tomato",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Pigeon pea seeds",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut seed",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "0.3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Meat products",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 123,
+        "name": "Methyl Chlorophenoxy Acetic Acid (MCPA)",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Wheat",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.04",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 124,
+        "name": "Methyl Parathion (combined residues of methyl parathion and its oxygen analogue to be determined and expressed as methyl parathion)",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Black Gram",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed oil",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mustard seed or Mustard oil",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 125,
+        "name": "Metolachlor",
+        "rows": [
+          {
+            "food": "Soya bean Oil",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 126,
+        "name": "Metribuzin",
+        "rows": [
+          {
+            "food": "Tomato",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sugarcane",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean Oil",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Wheat",
+            "mrl": "0.03",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 127,
+        "name": "Metsulfuron Methyl",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Wheat",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sugarcane",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 128,
+        "name": "Milbemectin",
+        "rows": [
+          {
+            "food": "Chilli",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 129,
+        "name": "Monocrotophos",
+        "rows": [
+          {
+            "food": "Food grains",
+            "mrl": "0.03",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milled food grains",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Citrus fruits",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Other fruits",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed Oil (raw)",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Poultry",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Eggs",
+            "mrl": "0.02",
+            "unit": "mg/kg",
+            "condition": "Shell free basis"
+          },
+          {
+            "food": "Coffee (Raw beans)",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cardamom",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 130,
+        "name": "Myclobutanil",
+        "rows": [
+          {
+            "food": "Apple",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut seed",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "1",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 131,
+        "name": "Novaluron",
+        "rows": [
+          {
+            "food": "Chilli",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chickpea",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tomato",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cabbage",
+            "mrl": "0.7",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 132,
+        "name": "Orthosulfamuron",
+        "rows": [
+          {
+            "food": "Paddy",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 133,
+        "name": "Oxadiargyl",
+        "rows": [
+          {
+            "food": "Mustard Seed",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Onion",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cumin",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sunflower seed",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sunflower Oil",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 134,
+        "name": "Oxadiazon",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.03",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 135,
+        "name": "Oxydemeton-Methyl",
+        "rows": [
+          {
+            "food": "Cotton seed oil",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried chilli",
+            "mrl": "20",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mustard oil",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Wheat",
+            "mrl": "0.02",
+            "unit": "mg/kg",
+            "condition": "Food grains composite row"
+          },
+          {
+            "food": "Rye",
+            "mrl": "0.02",
+            "unit": "mg/kg",
+            "condition": "Food grains composite row"
+          },
+          {
+            "food": "Other Food grains",
+            "mrl": "0.02",
+            "unit": "mg/kg",
+            "condition": "Food grains composite row"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Meat products",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 136,
+        "name": "Oxyfluorfen",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut Oil",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mentha",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tea",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Onion",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 137,
+        "name": "Paclobutrazol",
+        "rows": [
+          {
+            "food": "Mango",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 138,
+        "name": "Paraquat dichloride (Determined as Paraquatcations)",
+        "rows": [
+          {
+            "food": "Sorghum",
+            "mrl": "0.03",
+            "unit": "mg/kg",
+            "condition": "Food grains composite row"
+          },
+          {
+            "food": "Other food grains",
+            "mrl": "0.1",
+            "unit": "mg/kg",
+            "condition": "Food grains composite row"
+          },
+          {
+            "food": "Milled food grains",
+            "mrl": "0.03",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Other vegetables",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed oil (edible refined)",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products (whole)",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Fruits",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tea",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 139,
+        "name": "Penconazole",
+        "rows": [
+          {
+            "food": "Grapes",
+            "mrl": "0.4",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Black gram seed",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mango",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Apple",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Meat products",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 140,
+        "name": "Pencycuron",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 141,
+        "name": "Pendimethalin",
+        "rows": [
+          {
+            "food": "Wheat",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soyabean Oil",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Onion",
+            "mrl": "0.4",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Red gram",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 142,
+        "name": "Penoxsulum",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.1*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 143,
+        "name": "Permethrin",
+        "rows": [
+          {
+            "food": "Cucumber",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sunflower Seed",
+            "mrl": "1",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 144,
+        "name": "Phenthoate",
+        "rows": [
+          {
+            "food": "Food grains",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milled food grains",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Oilseeds",
+            "mrl": "0.03",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Edible oils",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Eggs",
+            "mrl": "0.05",
+            "unit": "mg/kg",
+            "condition": "Shell free basis"
+          },
+          {
+            "food": "Meat and Poultry",
+            "mrl": "0.05",
+            "unit": "mg/kg",
+            "condition": "Carcass fat basis"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.01",
+            "unit": "mg/kg",
+            "condition": "(F)"
+          }
+        ]
+      },
+      {
+        "serial": 145,
+        "name": "Phorate (sum of Phorate, its oxygen analogue and their sulphoxides and sulphones, expressed as phorate)",
+        "rows": [
+          {
+            "food": "Food Grains",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milled food grains",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tomato",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Fruits",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Oil seeds",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Sugarcane",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Eggs",
+            "mrl": "0.05",
+            "unit": "mg/kg",
+            "condition": "Shell free basis"
+          },
+          {
+            "food": "Meat & Poultry",
+            "mrl": "0.02*",
+            "unit": "mg/kg",
+            "condition": "Carcass fat basis"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.05",
+            "unit": "mg/kg",
+            "condition": "(F)"
+          },
+          {
+            "food": "Green gram",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 146,
+        "name": "Phosalone",
+        "rows": [
+          {
+            "food": "Pears",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Citrus fruits",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Apple",
+            "mrl": "5.0",
+            "unit": "mg/kg",
+            "condition": "Other fruits composite row"
+          },
+          {
+            "food": "Pome fruit",
+            "mrl": "2.0",
+            "unit": "mg/kg",
+            "condition": "Other fruits composite row"
+          },
+          {
+            "food": "Other fruits",
+            "mrl": "2.0",
+            "unit": "mg/kg",
+            "condition": "Other fruits composite row"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Other vegetables",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rapeseed or Mustard Oil (crude)",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 147,
+        "name": "Picoxystrobin",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean Oil",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cumin",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Wheat",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 148,
+        "name": "Pinoxaden",
+        "rows": [
+          {
+            "food": "Wheat",
+            "mrl": "0.7",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 149,
+        "name": "Pretilachlor",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 150,
+        "name": "Pirimiphos-methyl",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Food grains except Rice",
+            "mrl": "7",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milled food grains except rice",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Eggs",
+            "mrl": "0.05",
+            "unit": "mg/kg",
+            "condition": "Shell free basis"
+          },
+          {
+            "food": "Meat & Poultry",
+            "mrl": "0.05",
+            "unit": "mg/kg",
+            "condition": "Carcass fat basis"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.05",
+            "unit": "mg/kg",
+            "condition": "(F)"
+          }
+        ]
+      },
+      {
+        "serial": 151,
+        "name": "Profenofos",
+        "rows": [
+          {
+            "food": "Cotton seed oil",
+            "mrl": "3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Meat products",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 152,
+        "name": "Prohexadione calcium",
+        "rows": [
+          {
+            "food": "Apple",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 153,
+        "name": "Propaquizafop",
+        "rows": [
+          {
+            "food": "Black gram",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Onion",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 154,
+        "name": "Propargite",
+        "rows": [
+          {
+            "food": "Brinjal",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "20",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Apple",
+            "mrl": "3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tea",
+            "mrl": "10",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 155,
+        "name": "Propiconazole",
+        "rows": [
+          {
+            "food": "Tea",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut seed",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean seed",
+            "mrl": "0.07",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Wheat",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Meat products",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 156,
+        "name": "Propineb",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tomato",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Apple",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Pomegranate",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "20",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Grapes",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 157,
+        "name": "Pyraclostrobin",
+        "rows": [
+          {
+            "food": "Grapes",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Potato",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tomato",
+            "mrl": "0.3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dry chilli",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Milk and Milk products",
+            "mrl": "0.03",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Onion",
+            "mrl": "1.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut oil",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut cake",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Apple",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Corn",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cumin",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Banana",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Black gram",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cucumber",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "coffee",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Wheat",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Pomegranate",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Green gram",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.02*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 158,
+        "name": "Pyrazosulfuron ethyl",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 159,
+        "name": "Pyridalyl",
+        "rows": [
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cabbage",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Okra",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 160,
+        "name": "Pyriproxyfen",
+        "rows": [
+          {
+            "food": "Cotton seed",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.03*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Brinjal",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Okra",
+            "mrl": "0.03",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 161,
+        "name": "Pyrithiolac Sodium",
+        "rows": [
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 162,
+        "name": "Pymetrozine",
+        "rows": [
+          {
+            "food": "Rice",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 163,
+        "name": "Quinalphos",
+        "rows": [
+          {
+            "food": "Cauliflower",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Citrus",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Bengal Gram",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed Oil",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Mustard seed oil",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut oil",
+            "mrl": "0.3",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Rice",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Pigeon pea",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cardamom",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tea",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Fish",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "2",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 164,
+        "name": "Quizalofop ethyl",
+        "rows": [
+          {
+            "food": "Cotton seed",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Soya bean seed",
+            "mrl": "0.05",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Onion",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Groundnut",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Black Gram",
+            "mrl": "0.01*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 165,
+        "name": "Quizalofop-P-tefuryl",
+        "rows": [
+          {
+            "food": "Soya bean Seed",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cotton seed or Cotton seed oil",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 166,
+        "name": "Sodium Aceflourofen",
+        "rows": [
+          {
+            "food": "Soya bean",
+            "mrl": "0.05*",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 167,
+        "name": "Spinosad",
+        "rows": [
+          {
+            "food": "Cotton seed oil",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cabbage",
+            "mrl": "2",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cauliflower",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Red gram",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Meat and Meat products",
+            "mrl": "2",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 168,
+        "name": "Spiromesifen",
+        "rows": [
+          {
+            "food": "Tomato",
+            "mrl": "0.7",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Cottonseed",
+            "mrl": "0.7",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Apple",
+            "mrl": "0.01",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Brinjal",
+            "mrl": "0.5",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Chilli",
+            "mrl": "0.1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Dried Chilli",
+            "mrl": "1",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Tea",
+            "mrl": "70",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Green Tea",
+            "mrl": "70",
+            "unit": "mg/kg"
+          },
+          {
+            "food": "Okra",
+            "mrl": "0.03",
+            "unit": "mg/kg"
+          }
+        ]
+      },
+      {
+        "serial": 169,
+        "name": "Sulfosulfuron",
+        "rows": [
+          {
+            "food": "Wheat",
+            "mrl": "0.02",
+            "unit": "mg/kg"
+          }
+        ]
       }
     ],
-    "batches_loaded": 4,
-    "next_serial": 113
+    "batches_loaded": 5,
+    "next_serial": 170
   }
 }
