@@ -17,17 +17,18 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_12_packaging_input_ui_ready",
+    "stage": "phase_13_packaging_tin_named_identity_runtime_ready",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 39,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Packaging format and container material inputs are now present in the contaminant review.",
-      "Exact Canned Fishery Products is mapped to the current Version IX Tin limit of 200 mg/kg.",
-      "Tinplate-vs-other-container meat rows remain gated because PMSV does not yet have exact catalog identities for corned beef, luncheon meat, cooked cured ham or cooked cured pork shoulder.",
-      "Do not activate generic canned-food Tin fallback until product-specific Tin applicability is fully mapped.",
+      "Packaging format and container material inputs are present in the contaminant review.",
+      "Five named FSSAI meat Tin identities are now collected only through an explicit user selection; PMSV does not infer corned beef, luncheon meat, cooked cured ham, cooked cured pork shoulder or cooked cured chopped meat from broader FoSCoS meat categories.",
+      "All 10 tinplate-versus-other-container Tin rows are runtime-active only after both the exact named identity and container material are supplied.",
+      "Exact Canned Fishery Products remains mapped to the current Version IX Tin limit of 200 mg/kg.",
+      "Generic 'Canned foods other than beverages' and 'Processed and canned food products' Tin fallbacks remain disabled.",
       "Keep all 'Foods not specified' rows reference-only until absence of a more specific row is proven.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied."
     ],
@@ -78,7 +79,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Continue exact product mapping for packaging-dependent Tin rows; do not enable generic canned-food fallback.",
+    "next_priority": "Continue exact Tin mapping for remaining explicit non-conditional article rows without enabling generic canned-food fallbacks.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -123,7 +124,10 @@
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
     "packaging_input_ui": true,
-    "packaging_tin_runtime_policy": "Packaging inputs are collected, but a packaging-conditioned Tin row is shown only when exact product identity is available. Generic canned-food fallback remains disabled."
+    "packaging_tin_runtime_policy": "Named packaging-dependent meat Tin rows are applied only when the user explicitly selects the exact FSSAI article identity and the matching container material. PMSV does not infer the named meat identity from a broader FoSCoS product. Generic canned-food and 'Foods not specified' fallbacks remain disabled.",
+    "packaging_named_meat_identity_ui": true,
+    "packaging_conditional_tin_product_families": 5,
+    "packaging_conditional_tin_runtime_rules_active": 10
   },
   "all_food_rules": [
     {

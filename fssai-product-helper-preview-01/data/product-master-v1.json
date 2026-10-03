@@ -817,9 +817,9 @@
       "histamine_product_limit_rows_loaded": 11
     },
     "contaminants_v9": {
-      "stage": "phase_12_packaging_input_ui_ready",
+      "stage": "phase_13_packaging_tin_named_identity_runtime_ready",
       "metal_article_master_rows_loaded": 382,
-      "next_validation": "Continue exact product mapping for packaging-dependent Tin rows; do not enable generic canned-food fallback.",
+      "next_validation": "Continue exact Tin mapping for remaining explicit non-conditional article rows; keep generic canned-food fallback disabled.",
       "arsenic_article_rows_loaded": 95,
       "section_2_1_article_master_complete": true,
       "lead_article_rows_loaded": 163,
@@ -830,7 +830,11 @@
       "verified_alias_rules_added": 9,
       "packaging_conditional_tin_rules_loaded": 10,
       "packaging_tin_defaults_loaded": 3,
-      "packaging_input_ui": true
+      "packaging_input_ui": true,
+      "packaging_named_meat_identity_ui": true,
+      "packaging_conditional_tin_product_families": 5,
+      "packaging_conditional_tin_runtime_rules_active": 10,
+      "packaging_tin_generic_fallback": false
     }
   },
   "source_hierarchy": [
@@ -27762,7 +27766,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 148,
+  "build_number": 149,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {
