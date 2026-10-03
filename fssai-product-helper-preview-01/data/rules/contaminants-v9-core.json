@@ -17,16 +17,15 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_31_curry_powder_and_mix_masala_lead_mapping",
+    "stage": "phase_32_dehydrated_onion_exact_metal_mapping",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 87,
+    "exact_product_profiles": 88,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 167 maps Curry Powder 2.9.19 and Mixed Masala 2.9.20 to the explicit Lead article at 10 mg/kg on dry matter basis.",
-      "Curry Powder also carries the already-current Spices/Spice Mix crop-contaminant limits: Total Aflatoxins 30 µg/kg and Aflatoxin B1 15 µg/kg.",
-      "No generic 'dried herbs and spices' blanket mapping is enabled for the rest of Chapter 2.9 from this build.",
+      "Build 168 maps Dehydrated Onion (Sukha Pyaj) 2.9.28 to exact current FSSAI metal rows: Lead 10 mg/kg on dry matter basis and Arsenic 2 mg/kg.",
+      "No generic dried-herb/spice Lead or Arsenic rule is blanket-applied to the rest of Chapter 2.9.",
       "Ground coffee, roasted-and-ground coffee, soluble coffee, ground decaffeinated coffee and soluble decaffeinated coffee remain excluded from the coffee-beans Copper article.",
       "Instant Tea in Solid Form remains locked as a distinct extracted-solid standard.",
       "Cream Powder remains excluded from the Milks Lead concentration-factor rule.",
@@ -79,7 +78,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Continue exact Chapter 2.9 spice/condiment subclasses individually; do not blanket-map the generic 'dried herbs and spices' Lead article.",
+    "next_priority": "Continue Chapter 2.9 exact mappings, starting with clearly dried/dehydrated named products; keep generic 'spices' and 'dried herbs' rows fail-closed unless the standardized identity proves the class.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -97,9 +96,9 @@
     ],
     "lead_article_rows_loaded": 163,
     "section_2_1_article_master_complete": true,
-    "exact_literal_product_matches": 17,
-    "exact_literal_new_profiles": 2,
-    "exact_literal_metal_rules_added": 4,
+    "exact_literal_product_matches": 18,
+    "exact_literal_new_profiles": 3,
+    "exact_literal_metal_rules_added": 6,
     "exact_literal_mapping_products": [
       "mineral-water",
       "packaged-drinking-water",
@@ -117,7 +116,8 @@
       "99-99-1-baking-powder",
       "99-99-1-gelatin",
       "12-12-2-curry-powder",
-      "12-12-2-mixed-masala"
+      "12-12-2-mixed-masala",
+      "12-12-2-dehydrated-onion-sukha-pyaj"
     ],
     "verified_alias_products": 53,
     "verified_alias_new_profiles": 50,
@@ -166,7 +166,9 @@
     "coffee_bean_subtypes_added_build_166": 4,
     "curry_masala_products_added_build_167": 2,
     "curry_masala_new_profiles_added_build_167": 1,
-    "curry_masala_lead_rules_added_build_167": 2
+    "curry_masala_lead_rules_added_build_167": 2,
+    "dehydrated_onion_products_added_build_168": 1,
+    "dehydrated_onion_rules_added_build_168": 2
   },
   "all_food_rules": [
     {
@@ -2564,6 +2566,32 @@
           "article": "Chicory-dried or roasted",
           "source_basis": "Section 2.1 · Arsenic",
           "verification": "explicit_product_subclass_verified_v9"
+        }
+      ]
+    },
+    {
+      "id": "dehydrated-onion",
+      "label": "Dehydrated Onion (Sukha Pyaj)",
+      "catalog_ids": [
+        "12-12-2-dehydrated-onion-sukha-pyaj"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_exact_named_article"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, edible gelatin, liquid pectin",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_exact_named_article"
         }
       ]
     }
