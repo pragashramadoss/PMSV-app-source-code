@@ -9,7 +9,7 @@
     "detailed_rule_profiles": [
       "caffeinated-beverage"
     ],
-    "foscos_catalog_products_loaded": 522,
+    "foscos_catalog_products_loaded": 474,
     "foscos_catalog_scope": "Official FoSCoS/FSSAI indexed rows loaded category by category; Chapter 2.5 synchronization added the current missing meat-product rows while rule ingestion continues.",
     "foscos_subcategory_framework": "Level-2 FoSCoS/FSSAI food-category framework loaded for categories 01–16; special categories without a separate level-2 browse layer are handled directly at product/category level.",
     "level3_status": "Expanded official FoSCoS standardized-product catalogue. Detailed compliance rule profiles remain a separate ingestion layer.",
@@ -171,8 +171,39 @@
         "regulatory_note": "Chapter 2.13 is implemented as a process overlay rather than standalone product mappings. The underlying food identity remains primary; radiation class, purpose, dose window, facility/certificate controls and radiation-specific labelling apply additionally.",
         "foscos_note": "FoSCoS guidance states Radiation Processed Foods are not listed as standalone products; select the corresponding Food Category and comply additionally with the process standard.",
         "next_validation": "Connect the radiation-process selector to underlying product profiles and current label rendering before enabling a final radiation-processing compliance verdict."
+      },
+      "2.14": {
+        "title": "Gluten Free Food",
+        "rule_file": "./data/rules/chapter-2-14-gluten-free-v1.json",
+        "mapped_catalog_products": 0,
+        "structured_overlay_standards": 1,
+        "status": "structured_composition_claim_overlay_loaded",
+        "source_verified_on": "2026-10-03",
+        "regulatory_note": "FoSCoS guidance says Gluten Free Foods are not standalone product listings; select the corresponding underlying food category and apply Chapter 2.14 additionally. Gluten-free labelling requires analysed gluten below 20 mg/kg.",
+        "next_validation": "Connect the overlay to each underlying product profile, analytical-result input and current Labelling and Display / Advertising and Claims rules."
+      },
+      "2.15": {
+        "title": "Food specially processed to reduce gluten content to a level 20–100 mg/kg",
+        "rule_file": "./data/rules/chapter-2-15-reduced-gluten-omitted-v1.json",
+        "mapped_catalog_products": 0,
+        "status": "omitted_not_active",
+        "source_verified_on": "2026-10-03",
+        "regulatory_note": "Chapter 2.15 was omitted by Amendment no. 73 with effect from 1 January 2022. PMSV blocks this former 20–100 mg/kg route from current compliance logic.",
+        "next_validation": "None as an active product route; retain only for regulatory-history safeguards."
+      },
+      "2.16": {
+        "title": "Hemp seeds and seed products",
+        "rule_file": "./data/rules/chapter-2-16-hemp-v1.json",
+        "mapped_catalog_products": 0,
+        "chapter_only_standard_products": 3,
+        "structured_core_standards": 3,
+        "status": "structured_core_loaded_foscos_mapping_pending",
+        "source_verified_on": "2026-10-03",
+        "regulatory_note": "Hemp seed, hemp seed oil and hemp seed flour are structured from the current FSSAI Chapter 2.16. Cross-cutting THC/CBD and labelling restrictions are also loaded. No FoSCoS category is guessed; official current mapping remains pending verification.",
+        "next_validation": "Verify current FoSCoS hierarchy mapping, then connect Appendix A, contaminants, microbiology, processing aids and current labelling rules."
       }
-    }
+    },
+    "chapter_only_standard_products": 3
   },
   "source_hierarchy": [
     {
@@ -13716,6 +13747,90 @@
       "rule_key": "2.11.8",
       "standard_name": "Dietary Fibre (Dextrin-soluble fibre)",
       "source_verified_on": "2026-10-02"
+    },
+    {
+      "id": "fssai-2-16-hemp-seed",
+      "display_name": "Hemp seed",
+      "foscos_category": "",
+      "foscos_subcategory": "",
+      "fcs": "",
+      "fssr": "2.16",
+      "regulation_chapter": "2.16",
+      "route": "standardized",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.16 product standard loaded; FoSCoS hierarchy mapping pending official verification",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI Chapter 2.16 — Hemp seeds and seed products",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, once official FCS mapping is verified",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Chapter 2.16 identity, numeric limits and hemp-specific restrictions are loaded. Full formulation compliance remains locked until official FoSCoS/FCS mapping and all linked regulatory layers are validated.",
+      "rule_file": "./data/rules/chapter-2-16-hemp-v1.json",
+      "rule_key": "2.16(2)(i)",
+      "standard_name": "Hemp seed",
+      "source_verified_on": "2026-10-03",
+      "foscos_mapping_status": "pending_official_mapping"
+    },
+    {
+      "id": "fssai-2-16-hemp-seed-oil",
+      "display_name": "Hemp seed oil",
+      "foscos_category": "",
+      "foscos_subcategory": "",
+      "fcs": "",
+      "fssr": "2.16",
+      "regulation_chapter": "2.16",
+      "route": "standardized",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.16 product standard loaded; FoSCoS hierarchy mapping pending official verification",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI Chapter 2.16 — Hemp seeds and seed products",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, once official FCS mapping is verified",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Chapter 2.16 identity, numeric limits and hemp-specific restrictions are loaded. Full formulation compliance remains locked until official FoSCoS/FCS mapping and all linked regulatory layers are validated.",
+      "rule_file": "./data/rules/chapter-2-16-hemp-v1.json",
+      "rule_key": "2.16(2)(ii)",
+      "standard_name": "Hemp seed oil",
+      "source_verified_on": "2026-10-03",
+      "foscos_mapping_status": "pending_official_mapping"
+    },
+    {
+      "id": "fssai-2-16-hemp-seed-flour",
+      "display_name": "Hemp seed flour",
+      "foscos_category": "",
+      "foscos_subcategory": "",
+      "fcs": "",
+      "fssr": "2.16",
+      "regulation_chapter": "2.16",
+      "route": "standardized",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FSSAI Chapter 2.16 product standard loaded; FoSCoS hierarchy mapping pending official verification",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI Chapter 2.16 — Hemp seeds and seed products",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, once official FCS mapping is verified",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "Chapter 2.16 identity, numeric limits and hemp-specific restrictions are loaded. Full formulation compliance remains locked until official FoSCoS/FCS mapping and all linked regulatory layers are validated.",
+      "rule_file": "./data/rules/chapter-2-16-hemp-v1.json",
+      "rule_key": "2.16(2)(iii)",
+      "standard_name": "Hemp seed flour",
+      "source_verified_on": "2026-10-03",
+      "foscos_mapping_status": "pending_official_mapping"
     }
   ],
   "rule_profile_schema": {
@@ -20575,10 +20690,52 @@
       "profile_status": "chapter_profile_ready",
       "rule_file": "./data/rules/chapter-2-11-other-food-products-v1.json",
       "rule_key": "2.11.8"
+    },
+    {
+      "id": "fssai-2-16-hemp-seed",
+      "category": "",
+      "subcategory": "",
+      "name": "Hemp seed",
+      "fcs": "",
+      "fssr": "2.16",
+      "profile_status": "chapter_profile_ready",
+      "catalog_source": "FSSAI Chapter 2.16 — FoSCoS mapping pending official verification",
+      "profile_id": "fssai-2-16-hemp-seed",
+      "rule_file": "./data/rules/chapter-2-16-hemp-v1.json",
+      "rule_key": "2.16(2)(i)",
+      "foscos_mapping_status": "pending_official_mapping"
+    },
+    {
+      "id": "fssai-2-16-hemp-seed-oil",
+      "category": "",
+      "subcategory": "",
+      "name": "Hemp seed oil",
+      "fcs": "",
+      "fssr": "2.16",
+      "profile_status": "chapter_profile_ready",
+      "catalog_source": "FSSAI Chapter 2.16 — FoSCoS mapping pending official verification",
+      "profile_id": "fssai-2-16-hemp-seed-oil",
+      "rule_file": "./data/rules/chapter-2-16-hemp-v1.json",
+      "rule_key": "2.16(2)(ii)",
+      "foscos_mapping_status": "pending_official_mapping"
+    },
+    {
+      "id": "fssai-2-16-hemp-seed-flour",
+      "category": "",
+      "subcategory": "",
+      "name": "Hemp seed flour",
+      "fcs": "",
+      "fssr": "2.16",
+      "profile_status": "chapter_profile_ready",
+      "catalog_source": "FSSAI Chapter 2.16 — FoSCoS mapping pending official verification",
+      "profile_id": "fssai-2-16-hemp-seed-flour",
+      "rule_file": "./data/rules/chapter-2-16-hemp-v1.json",
+      "rule_key": "2.16(2)(iii)",
+      "foscos_mapping_status": "pending_official_mapping"
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 59,
+  "build_number": 60,
   "build_label": "Build 58",
   "build_date": "2026-10-03"
 }

@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.14",
+  "title": "Gluten Free Food",
+  "source_version": "Current consolidated Chapter 2.14",
+  "source_verified_on": "2026-10-03",
+  "source_policy": "Official FSSAI/FoSCoS sources only",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Food Products Standards & Food Additives Compendium — current chapter index",
+      "url": "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "FSSAI Guidance Note — Gluten Free Foods",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Guidance_Note_Ver2_Gluten_Free_31_10_2019_Revised_10_02_2020.pdf"
+    },
+    {
+      "authority": "FoSCoS",
+      "title": "FoSCoS Guidance Document V1.1 — Gluten Free Foods are not standalone product listings",
+      "url": "https://foscos.fssai.gov.in/assets/docs/FoSCoS%20Guidance%20Document%20V1.1.pdf"
+    }
+  ],
+  "overlay_model": {
+    "type": "composition_and_claim_overlay",
+    "standalone_catalog_product": false,
+    "foscos_instruction": "Select the corresponding underlying food category/product and additionally comply with the Gluten Free Food standard.",
+    "engine_sequence": [
+      "Resolve the underlying food identity and product standard",
+      "Check whether the formulation fits the Chapter 2.14 ingredient framework",
+      "Require analytical gluten result for any gluten-free labelling conclusion",
+      "Check gluten result against the below-20 mg/kg requirement",
+      "Apply the Chapter 2.14 naming/statement restrictions",
+      "Apply current FSSAI Labelling and Display and Advertising and Claims requirements in addition"
+    ]
+  },
+  "operative_rules": [
+    {
+      "key": "2.14(1)",
+      "topic": "Composition",
+      "rule": "Gluten free food consists of or is made of one or more ingredients containing rice, millets, ragi, pulses or legumes."
+    },
+    {
+      "key": "2.14(2)",
+      "topic": "Labelling cross-reference",
+      "rule": "The chapter carries a historical cross-reference to the former Packaging and Labelling Regulations. PMSV preserves the chapter text for traceability but maps live labels to the current FSSAI labelling framework before issuing a label conclusion."
+    },
+    {
+      "key": "2.14(3)",
+      "topic": "Foods naturally suitable for a gluten-free diet",
+      "rule": "A food naturally suitable for a gluten-free diet shall not be named special dietary, special dietetic or equivalent. It may state that the food is by its nature gluten free only when the essential composition requirement is met and the statement is not misleading."
+    },
+    {
+      "key": "2.14(4)",
+      "topic": "Analytical gluten limit",
+      "parameter": "Gluten",
+      "operator": "<",
+      "value": 20,
+      "unit": "mg/kg",
+      "rule": "For labelling a product as gluten free, analysed gluten shall be below 20 mg/kg using the method basis stated in the regulation."
+    }
+  ],
+  "runtime_policy": {
+    "ai_required": false,
+    "deterministic": true,
+    "underlying_product_required": true,
+    "analytical_test_required_for_claim": true,
+    "final_compliance_lock": "Do not issue a final gluten-free compliance/label conclusion without an underlying food profile, an analytical gluten result below 20 mg/kg and current label-rule validation."
+  },
+  "regulatory_notes": [
+    "FoSCoS guidance treats Gluten Free Food as an additional standard applied to the corresponding underlying food category, not as a standalone product selection.",
+    "The below-20 mg/kg gluten threshold is a strict less-than condition, not less-than-or-equal-to.",
+    "Chapter 2.15 is separate and has been omitted from the current regulations; PMSV does not use the former 20–100 mg/kg route."
+  ]
+}

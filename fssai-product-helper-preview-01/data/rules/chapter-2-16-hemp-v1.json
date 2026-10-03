@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.16",
+  "title": "Hemp seeds and seed products",
+  "source_version": "Current consolidated Chapter 2.16",
+  "source_verified_on": "2026-10-03",
+  "source_policy": "Official FSSAI/FoSCoS sources only",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 2.16 — Hemp seeds and seed products",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/17_%20Chapter%202_16%20(Hemp%20seeds%20and%20seed%20products).pdf"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Food Products Standards & Food Additives Compendium — current chapter index",
+      "url": "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+    },
+    {
+      "authority": "FoSCoS",
+      "title": "FSSAI Standardized Food Products search",
+      "url": "https://foscos.fssai.gov.in/standard-product"
+    }
+  ],
+  "regulatory_notes": [
+    "Chapter 2.16 contains three named standardized product forms: hemp seed, hemp seed oil and hemp seed flour, plus cross-cutting limits for beverages and other foods containing hemp seed/seed products.",
+    "PMSV does not invent a FoSCoS food-category mapping for these three products. They are searchable as FSSAI chapter standards with FoSCoS mapping marked pending until an official current mapping is verified.",
+    "The chapter itself cross-references the NDPS Act/rules for cultivation. PMSV stores that FSSAI cross-reference but does not substitute an unofficial secondary source for the underlying law."
+  ],
+  "standards": [
+    {
+      "key": "2.16(2)(i)",
+      "name": "Hemp seed",
+      "status": "structured_core",
+      "definition": "Hulled, non-viable seeds obtained from Cannabis sativa or other indigenous Cannabis species, subject to the Chapter 2.16 definition and cultivation cross-reference.",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Protein (N × 6.25)",
+          "operator": ">=",
+          "value": 30,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Fat",
+          "operator": ">=",
+          "value": 45,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Ash",
+          "operator": "<=",
+          "value": 6,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Total THC",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "key": "2.16(2)(ii)",
+      "name": "Hemp seed oil",
+      "status": "structured_core",
+      "composition": [
+        {
+          "parameter": "Free fatty acid, expressed as oleic acid",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Peroxide value",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mEq/kg"
+        },
+        {
+          "parameter": "Total THC",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "key": "2.16(2)(iii)",
+      "name": "Hemp seed flour",
+      "status": "structured_core",
+      "definition": "Solid product after hemp seeds are milled to powder with or without extraction of oil.",
+      "composition": [
+        {
+          "parameter": "Total THC",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/kg"
+        }
+      ],
+      "label_rule": "Flour prepared after hemp seed has been pressed to extract oil shall clearly be labelled 'Deoiled hemp seed flour'."
+    }
+  ],
+  "cross_cutting_limits": [
+    {
+      "key": "2.16(2)(iv)",
+      "scope": "Beverages made from hemp seeds",
+      "parameter": "Total THC",
+      "operator": "<=",
+      "value": 0.2,
+      "unit": "mg/kg"
+    },
+    {
+      "key": "2.16(2)(v)",
+      "scope": "Any other food consisting of hemp seed or seed products",
+      "parameter": "Total THC",
+      "operator": "<=",
+      "value": 5,
+      "unit": "mg/kg"
+    },
+    {
+      "key": "2.16(3)",
+      "scope": "Any food consisting of hemp seed or seed products",
+      "parameter": "Cannabidiol (CBD)",
+      "operator": "<=",
+      "value": 75,
+      "unit": "mg/kg"
+    }
+  ],
+  "restrictions": [
+    {
+      "key": "2.16(4)",
+      "rule": "Cannabinoids in food consisting of hemp seed or seed products shall only be present naturally in or on the seeds."
+    },
+    {
+      "key": "2.16(5)",
+      "rule": "Food consisting of hemp seed or seed products shall not be labelled or otherwise presented in a way that expressly or by implication suggests a psychoactive effect."
+    },
+    {
+      "key": "2.16(6)",
+      "rule": "The label shall not include a nutrient-content claim about cannabidiol, a health claim about cannabidiol, an image/representation of any part of the Cannabis plant other than the seed, or the words cannabis, marijuana or words of similar meaning."
+    },
+    {
+      "key": "2.16(7)",
+      "rule": "The label may include the word 'Hemp'."
+    },
+    {
+      "key": "2.16(8)",
+      "rule": "No food product containing hemp seed or seed products may be manufactured, imported or sold for administration to infants up to 24 months of age."
+    }
+  ],
+  "runtime_policy": {
+    "ai_required": false,
+    "deterministic": true,
+    "product_specific_numeric_checks": true,
+    "cross_cutting_thc_cbd_checks": true,
+    "foscos_mapping_required_before_hierarchy_browse": true,
+    "final_compliance_lock": "Do not issue full product compliance until current FoSCoS mapping, additives, contaminants, microbiology, processing aids and current label requirements are linked."
+  }
+}

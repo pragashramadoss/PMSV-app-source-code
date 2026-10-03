@@ -1967,7 +1967,7 @@ function showSelectedCatalogProduct(p){
  const detailed=profile&&profile.status==='rule_profile_ready';
  const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
  details.innerHTML='<div class="grid2">'
-  +'<div class="item"><b>'+esc(p.name)+'</b><small>FCS / FoSCoS code: '+esc(p.fcs||'—')+'<br>FSSR: '+esc(p.fssr||'Not shown in loaded catalogue row')+'</small></div>'
+  +'<div class="item"><b>'+esc(p.name)+'</b><small>FCS / FoSCoS code: '+esc(p.fcs||'—')+'<br>FSSR: '+esc(p.fssr||'Not shown in loaded catalogue row')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FoSCoS hierarchy mapping pending official verification</span>':'')+'</small></div>'
   +'<div class="item"><b>PMSV profile status</b><small>'+(detailed?'<span class="status-good">Detailed rule profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base rule profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small></div>'
   +'</div>'
   +(profile&&!detailed?'<div class="notice"><b>'+(chapterLoaded?'Chapter profile loaded':'Base profile ready')+':</b> '+(chapterLoaded?'The product has been mapped to its applicable FSSAI chapter standard and structured chapter-rule data is loaded. Machine validation of every product-specific clause and linked Appendix rule is still being completed before full formulation compliance is enabled.':'Product identity, FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.')+'</div>':'');
@@ -2003,7 +2003,7 @@ function renderProductSearch(){
    const profile=profileForCatalogProduct(p);
    const detailed=profile&&profile.status==='rule_profile_ready';
    const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
-   return '<div class="item" style="margin-bottom:8px"><b>'+esc(p.name)+'</b><small>Category '+esc(p.category)+' · '+esc(p.subcategory||'—')+' · FCS '+esc(p.fcs||'—')+(p.fssr?'<br>FSSR: '+esc(p.fssr):'')+'<br>'+(detailed?'<span class="status-good">Detailed profile complete</span>':profile?'<span class="status-warn">Base profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small><div style="margin-top:8px"><button class="btn-secondary" type="button" data-show-catalog-product="'+esc(p.id)+'">Select</button></div></div>';
+   return '<div class="item" style="margin-bottom:8px"><b>'+esc(p.name)+'</b><small>'+(p.category?'Category '+esc(p.category)+' · '+esc(p.subcategory||'—')+' · ':'')+'FCS '+esc(p.fcs||'—')+(p.fssr?'<br>FSSR: '+esc(p.fssr):'')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FSSAI standard loaded · FoSCoS hierarchy mapping pending</span>':'')+'<br>'+(detailed?'<span class="status-good">Detailed profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small><div style="margin-top:8px"><button class="btn-secondary" type="button" data-show-catalog-product="'+esc(p.id)+'">Select</button></div></div>';
  }).join('');
  box.querySelectorAll('[data-show-catalog-product]').forEach(btn=>btn.addEventListener('click',()=>{
    const p=findCatalogProductById(btn.dataset.showCatalogProduct);
@@ -2170,8 +2170,16 @@ function renderProductMaster(){
      .map(([key,d])=>{
        const mapped=Number(d.mapped_catalog_products||0);
        const structured=Number(d.structured_core_standards||0);
+       const overlays=Number(d.structured_overlay_standards||0)+Number(d.structured_process_overlays||0)+Number(d.structured_route_rules||0);
+       const chapterOnly=Number(d.chapter_only_standard_products||0);
        const superseded=Number(d.superseded_standards||0);
-       return '<b>Chapter '+esc(key)+' — '+esc(d.title||'FSSAI product standards')+':</b> '+mapped+' FoSCoS product row'+(mapped===1?'':'s')+' mapped · <b>'+structured+' structured core standard'+(structured===1?'':'s')+'</b>'+(superseded?' · '+superseded+' superseded standard tracked':'')+'.';
+       const parts=[mapped+' FoSCoS product row'+(mapped===1?'':'s')+' mapped'];
+       if(structured)parts.push('<b>'+structured+' structured core standard'+(structured===1?'':'s')+'</b>');
+       if(overlays)parts.push('<b>'+overlays+' structured overlay/route'+(overlays===1?'':'s')+'</b>');
+       if(chapterOnly)parts.push('<b>'+chapterOnly+' FSSAI chapter-only standard product'+(chapterOnly===1?'':'s')+'</b>');
+       if(d.status==='omitted_not_active')parts.push('<b>omitted / not active</b>');
+       if(superseded)parts.push(superseded+' superseded standard tracked');
+       return '<b>Chapter '+esc(key)+' — '+esc(d.title||'FSSAI product standards')+':</b> '+parts.join(' · ')+'.';
      });
    if(rows.length){
      chapterStatus.className='notice oknote';
@@ -2192,7 +2200,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=59',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=60',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
