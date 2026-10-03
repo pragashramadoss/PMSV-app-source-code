@@ -17,16 +17,16 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_7_arsenic_article_master_complete",
+    "stage": "phase_8_section_2_1_metal_article_master_complete",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 35,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Arsenic article-of-food master is complete from current Version IX, including preservation of the source-literal values 76 and 86 without correction.",
-      "Lead article-of-food master still needs complete row normalization.",
-      "Exact product/FSSR mappings should be promoted from the article master only when product identity is explicit; no fuzzy auto-match.",
+      "Section 2.1 metal article-of-food master is complete for Lead, Copper, Arsenic, Tin, Cadmium, Mercury, Methyl Mercury, Chromium, Nickel, Selenium and Antimony.",
+      "Promote exact product/FSSR mappings from the completed metal article master only where product identity is explicit; no fuzzy auto-match.",
+      "Keep all 'Foods not specified' rows reference-only until absence of a more specific row is proven.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied.",
       "Add packaging-triggered tin logic after packaging input is implemented."
     ],
@@ -72,11 +72,12 @@
       "Nickel",
       "Selenium",
       "Antimony",
-      "Arsenic"
+      "Arsenic",
+      "Lead"
     ],
-    "metal_article_master_rows_loaded": 219,
+    "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Complete the Section 2.1 Lead article-of-food master, then promote exact product/FSSR mappings from all metal masters without fuzzy matching.",
+    "next_priority": "Promote exact product/FSSR mappings from the completed Section 2.1 metal article master without fuzzy matching; keep generic defaults disabled.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -91,7 +92,9 @@
         "source_value": "86",
         "action": "Preserved exactly; not auto-corrected or auto-applied solely from this article master."
       }
-    ]
+    ],
+    "lead_article_rows_loaded": 163,
+    "section_2_1_article_master_complete": true
   },
   "all_food_rules": [
     {
@@ -13859,6 +13862,1638 @@
         "row_type": "exact",
         "auto_apply": false,
         "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      }
+    ],
+    "Lead": [
+      {
+        "article": "Agar",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Alginic acid",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "All types of sugars, sugar syrup, invert sugar and direct consumption coloured sugars with sulphated ash content exceeding 1.0 percent",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Alumina used in preparation of lake colour",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Aluminium lake of Sunset Yellow FCF",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Ammonium hydrogen carbonate",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Anhydrous dextrose and dextrose monohydrate, refined white sugar (sulphated ash content not exceeding 0.03 per cent)",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Annatto",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Ascorbic acid",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Ascorbyl palmitate",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Aspertame (Aspartyl phenyl alanine methyl ester)",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Assorted subtropical fruits, edible peel",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Assorted subtropical fruits, inedible peel",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Baking powder",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Benzoic acid",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Berries and other small fruits",
+        "limit": 0.2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Beta-apo-8'-carotenal",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Beta-carotene",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Bivalve molluscs",
+        "limit": 1.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Brassica vegetables excluding Kale",
+        "limit": 0.3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Brewed vinegar and synthetic vinegar",
+        "limit": 0.01,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Brilliant blue FCF",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Bulb vegetables",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Butylated hydroxyanisole",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Calcium alginate",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Calcium propionate",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned carrots",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned green beans and canned wax beans",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned green peas",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned mushrooms",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned palmito",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned sweetcorn",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned tomatoes",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned asparagus",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned chestnuts and canned chestnut purée",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned fish, canned meats, edible gelatin, meat extracts and hydrolysed protein, dried or dehydrated vegetables (other than onions)",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned fruit cocktail",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned grapefruit",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned mandarin oranges",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned mangoes",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned mature processed peas",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned pineapple",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned raspberries",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned strawberries",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Canned tropical fruit salad",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Caramel",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Carbonated water",
+        "limit": 10,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Carmoisine",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Carrageenan",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cattle, edible offal of",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cephalopods",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cereal grains, except buckwheat, canihua and quinoa",
+        "limit": 0.2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Chlorophyll",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Citric acid",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Citrus fruits",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Cocoa powder",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "On dry fat-free substance basis.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Concentrated soft drinks (but not including concentrates used in the manufacture of soft drinks)",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Concentrates used in the manufacture of soft drinks, lime juice and lemon juice",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Corned beef, Luncheon meat, Cooked ham, Chopped meat, Canned chicken, Canned mutton and Goat meat and other related meat products",
+        "limit": 2.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Crustaceans",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "On dry matter basis.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Dicalcium phosphate",
+        "limit": 4,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Dodecyl gallate",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Edible fats and oils (edible fats and oils not covered by individual standards)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Edible molasses, caramel liquid, solid glucose and starch conversion products with a sulphated ash content exceeding 1.0 per cent",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Edible oils and fats",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Erythrosine",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Ethylester of Beta-apo-8'-carotenoic acid",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fast green FCF",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fish",
+        "limit": 0.3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Food colours other than caramel",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "On dry colouring matter basis.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Foods not specified",
+        "limit": 2.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "default",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fruit and vegetable juice (including tomato juice, but not including lime juice and lemon juice)",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fruit Juices (including nectars; ready to drink)",
+        "limit": 0.05,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fruiting vegetables other than cucurbits (excluding mushrooms)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fruiting vegetables, cucurbits",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Fumaric acid",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Gaur gum",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Glycerol esters of Wood rosin",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Gum Arabic or Acacia gum",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Gum ghatti",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Gum karaya",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Hard boiled sugar confectionery",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Ice-cream, iced lollies and similar frozen confections",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Indigo carmine",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Infant formula (ready to use)",
+        "limit": 0.02,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Infant milk substitutes and Infant foods",
+        "limit": 0.2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Iron fortified common salt",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Jam (fruit preserves) and jellies",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "L (+) -Tartaric acid",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Lactic acid",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Leafy vegetables (including brassica leafy vegetables but excluding spinach)",
+        "limit": 0.3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Legume vegetables",
+        "limit": 0.2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Liquid pectin, chemicals not otherwise specified, used as ingredients or in the preparation or processing of food",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Malic acid",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Mango chutney",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Margarine",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Meat of cattle, sheep and pig (also applies to fat from meat)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Milks",
+        "limit": 0.02,
+        "unit": "mg/kg",
+        "condition": "Concentration factor shall be applied to partially or wholly dehydrated milks.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Minarine (Low Fat Spread)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Mineral Oil (High viscosity)",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Mineral Oil (Low viscosity)",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Monosodium L-glutamate",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Named Animal fats (lard, rendered pork fat, premier jus (suet) and edible tallow)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Natural mineral water",
+        "limit": 0.01,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Octyl gallate",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Olive oil, Virgin olive oil, Extra virgin olive oil, Ordinary virgin olive oil, Refined olive oil, Refined olive pomace oil and Olive pomace oil",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Other vegetables",
+        "limit": 2.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Packaged drinking water (other than mineral water)",
+        "limit": 0.01,
+        "unit": "mg/L",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Pectin",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Phosphoric acid",
+        "limit": 4,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Pickled cucumbers (Cucumber pickles)",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Pig, edible offal of",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Polyglycerol esters of fatty acids",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Polyglycerol esters of interesterified ricinoleic acid",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Pome fruits",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Ponceau 4R",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Potassium iodate",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Potassium metabisulphite",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Potassium nitrate",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Potassium nitrite",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Poultry fats",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Poultry meat",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Poultry, edible offal of",
+        "limit": 0.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Processed tomato concentrates",
+        "limit": 1.5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Propyl gallate",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Propylene glycol",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Pulses",
+        "limit": 0.2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Raw sugars except those sold for direct consumption or used for manufacturing purpose other than the manufacture of refined sugar",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Riboflavin",
+        "limit": 20,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Root and tuber vegetables",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Saccharin sodium",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Salt, food grade",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Secondary milk products (as consumed)",
+        "limit": 0.02,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium alginate",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium ascorbate",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium benzoate",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium carboxymethyl cellulose",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium carboxymethyl cellulose, enzyme hydrolysed",
+        "limit": 3,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium hydroxide",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium metabisulphite",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sodium propionate",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Solid pectin",
+        "limit": 50,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sorbic acid",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sorbitol",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Steviol glycoside",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Stone fruits",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sucralose",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sulphur dioxide",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sunset yellow",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Sunset yellow dye used in preparation of lake colour",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Synthetic food colour-preparation and mixtures",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Table olives",
+        "limit": 1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Tartrazine",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Tea",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "On dry matter basis.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Titanium dioxide",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Tragacanth gum",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Trisodium citrate",
+        "limit": 2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Turmeric whole and powder",
+        "limit": 10,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Vegetable Oils, crude (oils of arachis (Groundnut), babasu, coconut, cotton seed, grape seed, maize, mustard seed, palm kernel, palm, rape seed, safflower seed, sesame seed, soya bean, and sunflower seed, and palm olein, stearin and superolein and other oils but excluding cocoa butter)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Vegetable Oils, edible (oils of arachis (Groundnut), babasu, coconut, cotton seed, grape seed, maize, mustard seed, palm kernel, palm, rape seed, safflower seed, sesame seed, soya bean, and sunflower seed, and palm olein, stearin and superolein and other oils but excluding cocoa butter)",
+        "limit": 0.1,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Wine",
+        "limit": 0.2,
+        "unit": "mg/kg",
+        "condition": "",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+        "verification": "official_fssai_v9_direct"
+      },
+      {
+        "article": "Yeast and yeast products",
+        "limit": 5,
+        "unit": "mg/kg",
+        "condition": "On dry matter basis.",
+        "row_type": "exact",
+        "auto_apply": false,
+        "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
         "verification": "official_fssai_v9_direct"
       }
     ]
