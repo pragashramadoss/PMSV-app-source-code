@@ -215,11 +215,19 @@
     "appendix_a": {
       "rule_file": "./data/rules/appendix-a-v3-core.json",
       "source_version": "Version 3 (01.08.2025)",
-      "status": "table11_partial_table12_partial_table13_routes_table14_partial_table15_loaded",
+      "status": "table10_partial_table11_partial_table12_partial_table13_routes_table14_partial_table15_loaded",
       "gmp_entries_loaded": 183,
       "gmp_annex_exclusions_loaded": 90,
-      "permission_sets_loaded": 86,
+      "permission_sets_loaded": 94,
       "loaded_fcs": [
+        "10.0",
+        "10.1",
+        "10.2",
+        "10.2.1",
+        "10.2.2",
+        "10.2.3",
+        "10.3",
+        "10.4",
         "11.0",
         "11.1",
         "11.1.1",
@@ -308,7 +316,7 @@
         "15.3"
       ],
       "source_verified_on": "2026-10-03",
-      "next_validation": "Normalize current Appendix A Version 3 Table 11 rows directly, then continue Table 10 (eggs and egg products).",
+      "next_validation": "Complete current Appendix A Version 3 Table 10 normalization, then continue Table 9 (fish and fish products).",
       "annexure_1_groups_loaded": 18,
       "table15_note_conditions_loaded": 14,
       "note_conditions_loaded": 42,
@@ -316,7 +324,8 @@
       "extended_note_codes_loaded": 4,
       "table13_stage": "special_regulation_hierarchy_and_locks_loaded",
       "table12_stage": "hierarchy_loaded_salt_sauce_soy_partial",
-      "table11_stage": "hierarchy_and_official_prior_rows_loaded_v3_recheck_pending"
+      "table11_stage": "hierarchy_and_official_prior_rows_loaded_v3_recheck_pending",
+      "table10_stage": "hierarchy_and_official_processed_egg_rows_loaded_v3_recheck_pending"
     },
     "special_nutrition": {
       "rule_file": "./data/rules/special-nutrition-routing-v1.json",
@@ -20894,7 +20903,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 70,
+  "build_number": 71,
   "build_label": "Build 58",
   "build_date": "2026-10-03"
 }
