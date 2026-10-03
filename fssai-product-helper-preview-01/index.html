@@ -30,6 +30,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="product">Product selection</button>
+<button class="tab" data-tab="proprietary">Proprietary route</button>
 <button class="tab" data-tab="formulation">Formulation ingredients</button>
 <button class="tab" data-tab="standards">Applicable standards</button>
 <button class="tab" data-tab="standard">Product standard</button>
@@ -98,6 +99,67 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="card">
 <div class="section-title"><h2>Official sources for the product master</h2><span>No AI / no generic websites</span></div>
 <div id="productMasterSources"></div>
+</div>
+</section>
+
+<section id="proprietary" class="view hidden">
+<div class="card">
+<div class="section-title"><h2>Chapter 2.12 — Proprietary Food route</h2><span>Deterministic route screening</span></div>
+<div class="notice oknote"><b>Start with the standardized-product check.</b> PMSV searches the loaded FoSCoS/FSSAI standardized-product catalogue first. Chapter 2.12 is considered only when no applicable standardized identity is found and the food is not in a separately regulated excluded class.</div>
+<div class="checker-grid">
+  <div class="field">
+    <label>1. Generic product name</label>
+    <input id="proprietaryProductName" autocomplete="off" placeholder="e.g. cereal snack with seasoning">
+    <small>Use the generic food name, not a brand name.</small>
+  </div>
+  <div class="field">
+    <label>2. Excluded / separately regulated class</label>
+    <select id="proprietaryExcludedClass">
+      <option value="">None / not known to be excluded</option>
+      <option value="novel">Novel food</option>
+      <option value="fsdu">Food for special dietary use</option>
+      <option value="fsmp">Food for special medical purpose</option>
+      <option value="functional">Functional food</option>
+      <option value="nutraceutical">Nutraceutical</option>
+      <option value="health-supplement">Health supplement</option>
+      <option value="other-notified">Other food article separately notified / excluded</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>3. Nearest FCS category</label>
+    <select id="proprietaryCategorySelect"><option value="">Select category</option></select>
+  </div>
+  <div class="field">
+    <label>4. Nearest FCS sub-category</label>
+    <select id="proprietarySubcategorySelect" disabled><option value="">Select sub-category</option></select>
+  </div>
+</div>
+<div class="flow-actions">
+  <button class="btn" type="button" id="evaluateProprietaryRoute">Evaluate regulatory route</button>
+  <button class="btn-secondary" type="button" id="clearProprietaryRoute">Clear</button>
+</div>
+<div id="proprietaryRouteResult" class="notice hidden"></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>What happens after a Chapter 2.12 candidate is identified?</h2><span>Required validation gates</span></div>
+<div class="grid2">
+  <div class="item"><b>Ingredient eligibility · 2.12.1(2)</b><small>Each non-additive ingredient must have an eligible FSSAI regulatory basis; the IFCT route is not assumed unless it is separately verified from an allowed official source.</small></div>
+  <div class="item"><b>Food additives · 2.12.1(3)</b><small>Only additives and levels permitted for the selected FCS category/sub-category under Appendix A may be used.</small></div>
+  <div class="item"><b>Microbiology · 2.12.1(4)</b><small>Apply Appendix B for the selected food category. Where no specific standard exists, the pathogenic-microorganism safety fallback still applies.</small></div>
+  <div class="item"><b>Other FSSAI regulations · 2.12.1(5)</b><small>Contaminants, processing aids, labelling/display, advertising and claims and every other applicable FSSAI requirement remain part of the final assessment.</small></div>
+</div>
+<div class="notice"><b>No false pass:</b> this router can identify a potential Proprietary Food route, but it will not call the formulation compliant until all linked regulatory layers have been loaded and machine-validated.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Official sources</h2><span>FSSAI / FoSCoS only</span></div>
+<div class="grid2 source">
+  <div class="item"><b>FSSAI Chapter 2.12 — Proprietary Food</b><small><a target="_blank" rel="noopener" href="https://fssai.gov.in/upload/uploadfiles/files/13_%20Chapter%202_12%20%28Proprietary%20Food%29.pdf">Open official chapter</a></small></div>
+  <div class="item"><b>FSSAI Proprietary Food page</b><small><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/standards/proprietary-food">Open official page</a></small></div>
+  <div class="item"><b>FoSCoS standardized-product search</b><small><a target="_blank" rel="noopener" href="https://foscos.fssai.gov.in/standard-product">Open official product search</a></small></div>
+  <div class="item"><b>FoSCoS Proprietary Food application guide</b><small><a target="_blank" rel="noopener" href="https://foscos.fssai.gov.in/assets/docs/fbo/HowtoapplylicenseforProprietaryfood.pdf">Open official guide</a></small></div>
+</div>
 </div>
 </section>
 
@@ -1769,6 +1831,7 @@ function productRouteLabel(route){
   special_regulation:'Special-purpose / nutraceutical regulation',
   standardized_or_alcoholic:'Food standard / Alcoholic Beverages regulation',
   proprietary_when_no_standard:'Proprietary route where no standardized product applies',
+  standardized_or_proprietary:'Standardized if mapped; otherwise assess Proprietary Food',
   foscos_category:'FoSCoS mapped category',
   substances:'Substances added to food',
  };
@@ -1850,7 +1913,8 @@ function populateProductSubcategories(){
    prod.disabled=true;
    if(msg){
      msg.classList.remove('hidden');
-     msg.innerHTML='<b>This category is recognized, but its standardized-product catalogue is not loaded yet.</b> You can still use product-name search above while PMSV expands the official FoSCoS catalogue.';
+     msg.innerHTML='<b>This category is recognized, but no standardized-product row is loaded for the current selection.</b> Search first; if no standard applies, screen the Chapter 2.12 route.<div class="flow-actions"><button class="btn-secondary" type="button" data-start-proprietary="1">Assess Chapter 2.12 route →</button></div>';
+     bindProprietaryButtons(msg);
    }
  }
 }
@@ -1878,11 +1942,13 @@ function populateProductsForSubcategory(){
      msg.innerHTML='<b>Level 3 loaded:</b> '+rows.length+' standardized product'+(rows.length===1?'':'s')+' available under <b>'+esc(sub)+'</b>. Open the Product dropdown below.';
    }else{
      const cat=document.getElementById('productCategorySelect')?.value||'';
-     const noStandardRoute=['15','16'].includes(normFoodCode(cat));
+     const catDef=(productMasterDb?.categories||[]).find(x=>normFoodCode(x.code)===normFoodCode(cat));
+     const proprietaryFallback=['proprietary_when_no_standard','standardized_or_proprietary'].includes(catDef?.route);
      msg.classList.remove('hidden');
-     msg.innerHTML=noStandardRoute
-       ? '<b>No standardized product is expected in this FoSCoS category.</b> Products in this route are generally assessed under the applicable Proprietary Food framework rather than selected from the standardized-product list.'
-       : '<b>No Level-3 standardized product row is loaded for this sub-category yet.</b> PMSV will not invent a product. Search above may still find the product if it is indexed under another FoSCoS sub-category.';
+     msg.innerHTML=(proprietaryFallback
+       ? '<b>No standardized product is loaded for this selected sub-category.</b> PMSV first checks the standardized catalogue; if no applicable standard exists, Chapter 2.12 can be screened.<div class="flow-actions"><button class="btn-secondary" type="button" data-start-proprietary="1">Assess Chapter 2.12 route →</button></div>'
+       : '<b>No Level-3 standardized product row is loaded for this sub-category yet.</b> PMSV will not invent a product. Search above may still find the product if it is indexed under another FoSCoS sub-category.');
+     bindProprietaryButtons(msg);
    }
  }
 }
@@ -1929,7 +1995,8 @@ function renderProductSearch(){
  }
  const rows=productCatalog().filter(p=>normIngredient([p.name,p.fcs,p.fssr].join(' ')).includes(q)).slice(0,30);
  if(!rows.length){
-   box.innerHTML='<div class="notice">No matching product is loaded in the local catalogue yet. The complete FoSCoS standardized-product ingestion is still being expanded.</div>';
+   box.innerHTML='<div class="notice">No matching standardized product is loaded for this name. PMSV will not invent one.<div class="flow-actions"><button class="btn-secondary" type="button" data-start-proprietary="1">Assess Chapter 2.12 route →</button></div></div>';
+   bindProprietaryButtons(box);
    return;
  }
  box.innerHTML=rows.map(p=>{
@@ -1944,6 +2011,112 @@ function renderProductSearch(){
    document.getElementById('selectedProductCard')?.scrollIntoView({behavior:'smooth',block:'start'});
  }));
 }
+
+function populateProprietaryCategories(){
+ const select=document.getElementById('proprietaryCategorySelect');
+ if(!select||!productMasterDb)return;
+ const current=select.value;
+ select.innerHTML='<option value="">Select category</option>'+(productMasterDb.categories||[]).map(x=>'<option value="'+esc(x.code)+'">'+esc(x.code)+' — '+esc(x.name)+'</option>').join('');
+ if((productMasterDb.categories||[]).some(x=>x.code===current))select.value=current;
+ populateProprietarySubcategories();
+}
+function populateProprietarySubcategories(){
+ const cat=document.getElementById('proprietaryCategorySelect')?.value||'';
+ const select=document.getElementById('proprietarySubcategorySelect');
+ if(!select)return;
+ const rows=(productMasterDb?.subcategories||[]).filter(x=>normFoodCode(x.parent_category)===normFoodCode(cat));
+ select.innerHTML='<option value="">'+(rows.length?'Select sub-category':'No separate sub-category loaded')+'</option>'+rows.map(x=>'<option value="'+esc(x.code)+'">'+esc(x.code)+' — '+esc(x.name)+'</option>').join('');
+ select.disabled=!cat||rows.length===0;
+}
+function proprietaryStandardizedMatches(raw){
+ const q=normIngredient(raw);
+ if(!q)return [];
+ return productCatalog().filter(p=>{
+   const n=normIngredient(p.name);
+   return n===q||n.includes(q)||q.includes(n);
+ }).slice(0,10);
+}
+function evaluateProprietaryRoute(){
+ const out=document.getElementById('proprietaryRouteResult');
+ if(!out)return;
+ const raw=document.getElementById('proprietaryProductName')?.value||'';
+ const name=raw.trim();
+ const excluded=document.getElementById('proprietaryExcludedClass')?.value||'';
+ const cat=document.getElementById('proprietaryCategorySelect')?.value||'';
+ const sub=document.getElementById('proprietarySubcategorySelect')?.value||'';
+ out.classList.remove('hidden');
+ if(!name){
+   out.className='notice';
+   out.innerHTML='<b>Enter the generic product name first.</b> PMSV must run the standardized-product gate before Chapter 2.12 can be considered.';
+   return;
+ }
+ const matches=proprietaryStandardizedMatches(name);
+ const exact=matches.find(p=>normIngredient(p.name)===normIngredient(name));
+ if(exact){
+   out.className='notice oknote';
+   out.innerHTML='<b>Standardized product found — do not route this product to Chapter 2.12.</b><br>'+esc(exact.name)+' · FCS '+esc(exact.fcs||'—')+' · FSSR '+esc(exact.fssr||'—')+'.<br><small>Select this standardized product from Product selection and apply its product standard.</small>';
+   return;
+ }
+ if(matches.length){
+   out.className='notice';
+   out.innerHTML='<b>Standardized-product review required before proprietary classification.</b><br>PMSV found similar standardized product names: '+matches.map(p=>'<b>'+esc(p.name)+'</b> ('+esc(p.fssr||'FSSR not shown')+')').join(', ')+'.<br><small>Chapter 2.12 should not be selected until these possible standardized identities are ruled out.</small>';
+   return;
+ }
+ if(excluded){
+   const label=document.getElementById('proprietaryExcludedClass')?.selectedOptions?.[0]?.textContent||'Selected class';
+   out.className='notice';
+   out.innerHTML='<b>Do not use the Chapter 2.12 Proprietary Food route for this screening.</b><br>'+esc(label)+' is an excluded / separately regulated class under the Chapter 2.12 definition. Use the applicable separate FSSAI regulation or approval route.';
+   return;
+ }
+ if(!cat){
+   out.className='notice';
+   out.innerHTML='<b>No standardized match found.</b> Select the nearest Food Category System category before PMSV can complete the Chapter 2.12 route screening.';
+   return;
+ }
+ const category=(productMasterDb?.categories||[]).find(x=>normFoodCode(x.code)===normFoodCode(cat));
+ const subcat=(productMasterDb?.subcategories||[]).find(x=>normFoodCode(x.code)===normFoodCode(sub));
+ out.className='notice oknote';
+ out.innerHTML='<b>Potential Chapter 2.12 Proprietary Food route.</b><br>'
+   +'No matching standardized product was found in the loaded catalogue and no excluded class was selected.<br>'
+   +'<b>Nearest FCS:</b> '+esc(cat)+(category?' — '+esc(category.name):'')+(subcat?'<br><b>Sub-category:</b> '+esc(subcat.code)+' — '+esc(subcat.name):'')
+   +'<br><br><b>Not a compliance pass.</b> PMSV must next validate every non-additive ingredient under 2.12.1(2), Appendix A additives for this FCS, Appendix B microbiology, contaminants, processing aids, labelling/display and claims before issuing a final conclusion.';
+}
+function openProprietaryRoute(){
+ const srcName=document.getElementById('productSearch')?.value||'';
+ const srcCat=document.getElementById('productCategorySelect')?.value||'';
+ const srcSub=document.getElementById('productSubcategorySelect')?.value||'';
+ const name=document.getElementById('proprietaryProductName');
+ const cat=document.getElementById('proprietaryCategorySelect');
+ if(name&&srcName.trim())name.value=srcName.trim();
+ populateProprietaryCategories();
+ if(cat&&srcCat){
+   cat.value=srcCat;
+   populateProprietarySubcategories();
+   const sub=document.getElementById('proprietarySubcategorySelect');
+   if(sub&&srcSub&&!sub.disabled)sub.value=srcSub;
+ }
+ const out=document.getElementById('proprietaryRouteResult');
+ if(out){out.classList.add('hidden');out.innerHTML='';}
+ openTab('proprietary',{updateHash:true,save:true});
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function bindProprietaryButtons(root){
+ (root||document).querySelectorAll('[data-start-proprietary]').forEach(btn=>{
+   if(btn.dataset.boundProprietary==='1')return;
+   btn.dataset.boundProprietary='1';
+   btn.addEventListener('click',openProprietaryRoute);
+ });
+}
+document.getElementById('proprietaryCategorySelect')?.addEventListener('change',populateProprietarySubcategories);
+document.getElementById('evaluateProprietaryRoute')?.addEventListener('click',evaluateProprietaryRoute);
+document.getElementById('clearProprietaryRoute')?.addEventListener('click',()=>{
+ const n=document.getElementById('proprietaryProductName');if(n)n.value='';
+ const e=document.getElementById('proprietaryExcludedClass');if(e)e.value='';
+ const c=document.getElementById('proprietaryCategorySelect');if(c)c.value='';
+ populateProprietarySubcategories();
+ const o=document.getElementById('proprietaryRouteResult');if(o){o.classList.add('hidden');o.innerHTML='';}
+});
+
 function applyProductGate(){
  const gate=document.getElementById('formulationProductGate');
  const add=document.getElementById('addIngredient');
@@ -2013,12 +2186,13 @@ function renderProductMaster(){
  }
  populateProductCategories();
  populateProductSubcategories();
+ populateProprietaryCategories();
  renderProductSearch();
  applyProductGate();
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=58',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=59',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}

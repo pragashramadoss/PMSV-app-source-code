@@ -151,11 +151,12 @@
         "mapped_catalog_products": 0,
         "structured_route_rules": 1,
         "operative_clauses": 6,
-        "status": "structured_route_loaded",
+        "status": "structured_route_ui_loaded",
         "source_verified_on": "2026-10-03",
-        "regulatory_note": "Chapter 2.12 is implemented as a deterministic routing/compliance framework rather than product mappings. A standardized food that merely deviates in a quality parameter does not become proprietary. Excluded separately regulated classes are routed out before ingredient/FCS/additive/microbiology checks.",
+        "regulatory_note": "Chapter 2.12 is implemented as a deterministic routing/compliance framework rather than product mappings. PMSV now checks the loaded standardized-product catalogue first, then excluded classes, then routes eligible non-standardized foods to the proprietary-food screening flow. Category 15/16 are not hard-coded as proprietary because current standardized mappings may exist.",
         "proposal_watch": "Proposed clauses 2.12.1(1a)/(1b) are tracked but not active because they are not present in the current consolidated Chapter 2.12.",
-        "next_validation": "Link the router to full local IFCT ingredient eligibility, Appendix A, Appendix B, contaminants, processing aids, current Labelling and Display, and Advertising and Claims databases."
+        "next_validation": "Connect the active router to a full local ingredient-eligibility index permitted by the PMSV source policy, complete Appendix A by selected FCS, Appendix B, contaminants, processing aids, current Labelling and Display, and Advertising and Claims databases.",
+        "router_ui": "active"
       },
       "2.13": {
         "title": "Radiation Processing of Food",
@@ -291,13 +292,13 @@
     {
       "code": "15",
       "name": "Ready-to-eat savouries",
-      "route": "proprietary_when_no_standard",
+      "route": "standardized_or_proprietary",
       "primary_regulation": "FoSCoS licensing route"
     },
     {
       "code": "16",
       "name": "Prepared foods",
-      "route": "proprietary_when_no_standard",
+      "route": "standardized_or_proprietary",
       "primary_regulation": "FoSCoS licensing route"
     },
     {
@@ -20577,7 +20578,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 58,
+  "build_number": 59,
   "build_label": "Build 58",
   "build_date": "2026-10-03"
 }

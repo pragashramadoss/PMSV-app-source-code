@@ -14,6 +14,21 @@
       "authority": "FSSAI",
       "title": "Food Products Standards & Food Additives Compendium — current chapter index",
       "url": "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "FSSAI Standards — Proprietary Food",
+      "url": "https://www.fssai.gov.in/standards/proprietary-food"
+    },
+    {
+      "authority": "FoSCoS / FSSAI",
+      "title": "How to apply for licence for Proprietary Food",
+      "url": "https://foscos.fssai.gov.in/assets/docs/fbo/HowtoapplylicenseforProprietaryfood.pdf"
+    },
+    {
+      "authority": "FoSCoS / FSSAI",
+      "title": "FSSAI Standardized Food Products search",
+      "url": "https://foscos.fssai.gov.in/standard-product"
     }
   ],
   "regulatory_notes": [
@@ -153,6 +168,20 @@
       "Appendix B microbiology database by FCS",
       "Current contaminants, processing aids, labelling and claims layers"
     ],
-    "final_compliance_lock": "Do not issue a final proprietary-food compliant conclusion until all linked regulatory layers required by the selected FCS are machine-validated."
+    "final_compliance_lock": "Do not issue a final proprietary-food compliant conclusion until the standardized-product gate, excluded-class gate, ingredient eligibility, nearest FCS, Appendix A, Appendix B and all other applicable FSSAI regulatory layers are machine-validated.",
+    "route_ui": "enabled_in_build_59"
+  },
+  "foscos_route_implementation": {
+    "status": "active_router_spec",
+    "standardized_product_gate": "Search the current FoSCoS/FSSAI standardized-product catalogue first. If a matching standard applies, use the standardized route rather than Chapter 2.12.",
+    "proprietary_entry": "Where no standardized product applies and the food is not in an excluded separately regulated class, assess Chapter 2.12 eligibility.",
+    "application_fields": [
+      "Generic name of proprietary food",
+      "Nearest Food Category System category and sub-category",
+      "Ingredient statement with FSSR standard/permission basis",
+      "Additive statement with INS number and applicable maximum/GMP level"
+    ],
+    "category_rule": "Do not hard-code Food Category 15 or 16 as always proprietary. The current standardized-product catalogue is checked first because standardized mappings can change over time.",
+    "final_gate": "A Chapter 2.12 candidate is not a compliance pass. Ingredient eligibility, Appendix A, Appendix B and every other applicable FSSAI regulation must still be validated."
   }
 }
