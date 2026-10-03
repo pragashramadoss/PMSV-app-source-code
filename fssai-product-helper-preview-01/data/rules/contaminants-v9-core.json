@@ -17,17 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_41_dextrose_exact_lead_mapping",
+    "stage": "phase_42_aspartame_exact_metal_mapping",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 122,
+    "exact_product_profiles": 123,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 177 maps standardized Dextrose 2.8.5 to the current Lead article for anhydrous dextrose and dextrose monohydrate at 0.5 mg/kg.",
-      "The mapping is supported by FSSAI 2.8.5 plus official FoSCoS FCS 11.1.1, which explicitly lists dextrose anhydrous and dextrose monohydrate.",
-      "No generic sugar, syrup or 'Foods not specified' metal row is inherited by Dextrose from this build.",
-      "Chapter 2.9 fail-closed locks remain unchanged."
+      "Build 178 maps Aspartame 2.8.9 to Arsenic 3 mg/kg and Lead 10 mg/kg.",
+      "Both limits are stated directly in the FSSAI 2.8.9 product standard and repeated as Aspartame/Aspertame-specific rows in current Version IX.",
+      "No generic tabletop-sweetener or Foods-not-specified row is used.",
+      "Dextrose and Chapter 2.9 mappings/locks remain unchanged."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -76,7 +76,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Continue Chapter 2.8 exact contaminant review, separating sugar forms by their current FSSAI/FoSCoS identity and sulphated-ash conditions before mapping Lead rows.",
+    "next_priority": "Continue Chapter 2.8 direct-product review: Acesulfame Potassium, Calcium Saccharin, and remaining sugar forms; keep 'heavy metals' product-standard limits distinct from a specific Lead limit unless the regulation explicitly equates them.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -117,9 +117,9 @@
       "12-12-2-mixed-masala",
       "12-12-2-dehydrated-onion-sukha-pyaj"
     ],
-    "verified_alias_products": 88,
-    "verified_alias_new_profiles": 84,
-    "verified_alias_rules_added": 159,
+    "verified_alias_products": 89,
+    "verified_alias_new_profiles": 85,
+    "verified_alias_rules_added": 161,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
@@ -188,7 +188,9 @@
     "chapter_2_9_locked_routes": 7,
     "chapter_2_9_review_completed_build_176": true,
     "dextrose_products_added_build_177": 1,
-    "dextrose_rules_added_build_177": 1
+    "dextrose_rules_added_build_177": 1,
+    "aspartame_products_added_build_178": 1,
+    "aspartame_rules_added_build_178": 2
   },
   "all_food_rules": [
     {
@@ -3839,6 +3841,31 @@
           "article": "Anhydrous dextrose and dextrose monohydrate, refined white sugar (sulphated ash content not exceeding 0.03 per cent)",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_fssai_2_8_5_and_foscos_fcs_11_1_1"
+        }
+      ]
+    },
+    {
+      "id": "aspartame",
+      "label": "Aspartyl Phenyl Alanine Methyl Ester (Aspartame)",
+      "catalog_ids": [
+        "11-11-6-aspartyl-phenyl-alanine-methyl-ester-aspartame"
+      ],
+      "rules": [
+        {
+          "contaminant": "Arsenic",
+          "limit": 3,
+          "unit": "mg/kg",
+          "article": "Aspertame (Aspartyl phenyl alanine methyl ester)",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026); FSSAI 2.8.9 product standard",
+          "verification": "official_fssai_v9_plus_direct_product_standard"
+        },
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Aspertame (Aspartyl phenyl alanine methyl ester)",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026); FSSAI 2.8.9 product standard",
+          "verification": "official_fssai_v9_plus_direct_product_standard"
         }
       ]
     }
@@ -19979,6 +20006,28 @@
           "limit": 0.5,
           "unit": "mg/kg",
           "mapping_basis": "FSSAI 2.8.5 standardizes Dextrose. Official FoSCoS FCS 11.1.1 explicitly covers dextrose anhydrous and dextrose monohydrate, matching the two dextrose forms named in the current Lead article."
+        }
+      ]
+    },
+    {
+      "product_id": "11-11-6-aspartyl-phenyl-alanine-methyl-ester-aspartame",
+      "product_name": "Aspartyl Phenyl Alanine Methyl Ester (Aspartame)",
+      "fssr": "2.8.9",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Arsenic",
+          "article": "Aspertame (Aspartyl phenyl alanine methyl ester)",
+          "limit": 3,
+          "unit": "mg/kg",
+          "mapping_basis": "The current FSSAI 2.8.9 standardized-product identity and Version IX metal article are the same chemical/product despite the article spelling 'Aspertame'; both specify Arsenic 3 ppm."
+        },
+        {
+          "metal": "Lead",
+          "article": "Aspertame (Aspartyl phenyl alanine methyl ester)",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "The current FSSAI 2.8.9 standardized-product identity and Version IX metal article are the same chemical/product despite the article spelling 'Aspertame'; both specify Lead 10 ppm."
         }
       ]
     }
