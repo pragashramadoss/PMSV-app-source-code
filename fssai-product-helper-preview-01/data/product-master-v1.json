@@ -817,17 +817,17 @@
       "histamine_product_limit_rows_loaded": 11
     },
     "contaminants_v9": {
-      "stage": "phase_25_exact_milk_and_tea_subclasses",
+      "stage": "phase_26_low_lactose_milk_exact",
       "metal_article_master_rows_loaded": 382,
-      "next_validation": "Review modified/dehydrated milk forms separately; keep Instant Tea distinct unless the metal article explicitly covers it.",
+      "next_validation": "Add concentration-factor gated Lead logic for dehydrated/concentrated milks; keep unadjusted base limit hidden.",
       "arsenic_article_rows_loaded": 95,
       "section_2_1_article_master_complete": true,
       "lead_article_rows_loaded": 163,
       "exact_literal_product_matches": 15,
       "exact_literal_new_profiles": 1,
       "exact_literal_metal_rules_added": 2,
-      "verified_alias_products": 51,
-      "verified_alias_rules_added": 87,
+      "verified_alias_products": 52,
+      "verified_alias_rules_added": 89,
       "packaging_conditional_tin_rules_loaded": 10,
       "packaging_tin_defaults_loaded": 3,
       "packaging_input_ui": true,
@@ -835,8 +835,8 @@
       "packaging_conditional_tin_product_families": 5,
       "packaging_conditional_tin_runtime_rules_active": 10,
       "packaging_tin_generic_fallback": false,
-      "exact_product_profiles": 84,
-      "verified_alias_new_profiles": 48,
+      "exact_product_profiles": 85,
+      "verified_alias_new_profiles": 49,
       "tin_explicit_alias_products_added_build_150": 6,
       "tin_infant_products_added_build_151": 5,
       "tin_tamarind_products_added_build_152": 1,
@@ -859,7 +859,9 @@
       "verified_product_subclass_products_added_build_160": 5,
       "verified_product_subclass_rules_added_build_160": 7,
       "exact_milk_tea_products_added_build_161": 13,
-      "exact_milk_tea_rules_added_build_161": 26
+      "exact_milk_tea_rules_added_build_161": 26,
+      "low_lactose_milk_products_added_build_162": 1,
+      "low_lactose_milk_rules_added_build_162": 2
     }
   },
   "source_hierarchy": [
@@ -27791,7 +27793,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 161,
+  "build_number": 162,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {
