@@ -17,18 +17,18 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_36_post_2_9_29_dried_spice_mapping",
+    "stage": "phase_37_spice_aflatoxin_mapping",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 120,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 172 maps Tejpat 2.9.33, Star Anise 2.9.34 and Pimento/Allspice 2.9.36 to Lead 10 mg/kg on dry matter basis and Arsenic 5 mg/kg.",
-      "Each of these current FSSAI identities explicitly states a dried leaf, mature fruit or whole berry form.",
-      "Cassia remains locked because its current identity wording does not explicitly establish a dried form and it is not in the Curry Powder dried-spice example list.",
-      "Dried Mango Slices, Dried Mango Powder, Asafoetida, Seasoning and Spice Oleoresins remain excluded from these generic spice metal rows.",
-      "Coffee subtype locks, Instant Tea lock, Cream Powder exclusion and generic Tin fail-closed behavior remain unchanged."
+      "Build 173 maps the official Spices/Spice Mix crop-contaminant limits to 24 proven standardized spice/spice-mix identities.",
+      "Total Aflatoxins 30 µg/kg and Aflatoxin B1 15 µg/kg are now present across the proven spice set; 20 profiles received 40 new rules and four profiles already carried the same limits.",
+      "Dried herbs such as Oregano/Mint/Rosemary/Thyme/Sage/Basil/Marjoram/Parsley/Tarragon are not automatically treated as 'Spices/Spice Mix' by this build.",
+      "Dried Mango Slices, Dried Mango Powder, Garlic, Ginger, Dehydrated Onion, Asafoetida, Seasoning and Spice Oleoresins remain excluded from this spice-aflatoxin mapping unless an exact FSSAI identity route is proven.",
+      "Cassia remains locked from the generic spice metal mapping pending an exact dried-spice identity basis."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -77,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Review spice crop-contaminant coverage (Total Aflatoxins/Aflatoxin B1) for the now-proven named spice identities without extending it to non-spice dried products.",
+    "next_priority": "Review the remaining Chapter 2.9 identities separately: Cassia metal route, Dried Mango products, Asafoetida, Seasoning and Spice Oleoresins. Do not infer one contaminant class from another.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -176,7 +176,11 @@
     "named_dried_spice_new_profiles_added_build_171": 17,
     "named_dried_spice_rules_added_build_171": 36,
     "post_2_9_29_dried_spice_products_added_build_172": 3,
-    "post_2_9_29_dried_spice_rules_added_build_172": 6
+    "post_2_9_29_dried_spice_rules_added_build_172": 6,
+    "spice_crop_contaminant_products_proven": 24,
+    "spice_crop_contaminant_profiles_enriched_build_173": 20,
+    "spice_crop_contaminant_rules_added_build_173": 40,
+    "spice_crop_contaminant_identity_map_loaded": true
   },
   "all_food_rules": [
     {
@@ -2955,6 +2959,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -2981,6 +3001,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_curry_powder_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3007,6 +3043,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_curry_powder_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3033,6 +3085,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_curry_powder_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3059,6 +3127,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_curry_powder_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3085,6 +3169,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_curry_powder_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3111,6 +3211,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_curry_powder_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3137,6 +3253,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3163,6 +3295,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_curry_powder_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3189,6 +3337,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3215,6 +3379,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_curry_powder_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3241,6 +3421,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_curry_powder_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3267,6 +3463,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_curry_powder_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3293,6 +3505,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_curry_powder_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3319,6 +3547,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_curry_powder_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3345,6 +3589,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3371,6 +3631,22 @@
           "condition": "On dry matter basis.",
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3397,6 +3673,22 @@
           "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
           "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3423,6 +3715,22 @@
           "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
           "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     },
@@ -3449,6 +3757,22 @@
           "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
           "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_spice_identity"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_spice_identity"
         }
       ]
     }
@@ -20163,6 +20487,272 @@
       "source_basis": "Section 2.1 · Copper · Version IX (03.02.2026)",
       "subtype_basis": "Current FSSAI 2.10.2 Coffee definition plus official FoSCoS Coffee variant list. Only forms that remain coffee beans/seeds are enabled; ground and soluble forms are excluded.",
       "verification": "official_fssai_v9_plus_official_foscos_exact_subtype"
+    }
+  ],
+  "spice_crop_contaminant_identity_mappings_v9": [
+    {
+      "catalog_id": "12-12-2-caraway-siahjira",
+      "profile_id": "caraway",
+      "product_name": "Caraway (Siahjira)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-cardamom-elaichi",
+      "profile_id": "cardamom",
+      "product_name": "Cardamom (Elaichi)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-chillies-and-capsicum-lal-mirchi",
+      "profile_id": "chillies-capsicum",
+      "product_name": "Chillies and Capsicum (Lal Mirchi)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-cinnamon-dalchini",
+      "profile_id": "cinnamon",
+      "product_name": "Cinnamon (Dalchini)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-cloves-laung",
+      "profile_id": "cloves",
+      "product_name": "Cloves (Laung)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-coriander-dhania",
+      "profile_id": "coriander",
+      "product_name": "Coriander (Dhania)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-cumin-zeera-kalonji",
+      "profile_id": "cumin",
+      "product_name": "Cumin (Zeera, Kalonji)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-fennel-saunf",
+      "profile_id": "fennel",
+      "product_name": "Fennel (Saunf)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-fenugreek-methi",
+      "profile_id": "fenugreek",
+      "product_name": "Fenugreek (Methi)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-mace-jaipatri",
+      "profile_id": "mace",
+      "product_name": "Mace (Jaipatri)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-mustard-rai-sarson",
+      "profile_id": "mustard",
+      "product_name": "Mustard (Rai, Sarson)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-nutmeg-jaiphal",
+      "profile_id": "nutmeg",
+      "product_name": "Nutmeg (Jaiphal)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-black-white-and-green-bwg-peppers",
+      "profile_id": "bwg-peppers",
+      "product_name": "BLACK, WHITE & GREEN (BWG) PEPPERS",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-poppy-khas-khas",
+      "profile_id": "poppy",
+      "product_name": "Poppy (Khas Khas)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-saffron-kesar",
+      "profile_id": "saffron",
+      "product_name": "Saffron (Kesar)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-turmeric-haldi",
+      "profile_id": "turmeric",
+      "product_name": "Turmeric (Haldi)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-curry-powder",
+      "profile_id": "curry-powder",
+      "product_name": "Curry Powder",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-mixed-masala",
+      "profile_id": "mixed-masala",
+      "product_name": "Mixed Masala",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-aniseed-saunf",
+      "profile_id": "aniseed",
+      "product_name": "Aniseed (Saunf)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-ajowan-bishops-seed",
+      "profile_id": "ajowan",
+      "product_name": "Ajowan (Bishops seed)",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-celery",
+      "profile_id": "celery",
+      "product_name": "Celery",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-tejpat",
+      "profile_id": "tejpat",
+      "product_name": "TEJPAT",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-star-anise",
+      "profile_id": "star-anise",
+      "product_name": "STAR ANISE",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
+    },
+    {
+      "catalog_id": "12-12-2-pimento-or-allspice",
+      "profile_id": "pimento-allspice",
+      "product_name": "Pimento or Allspice",
+      "article": "Spices/Spice Mix",
+      "total_aflatoxins_limit": 30,
+      "aflatoxin_b1_limit": 15,
+      "unit": "µg/kg",
+      "source_basis": "Section 2.2.1 · Crop contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct_spice_identity"
     }
   ]
 }
