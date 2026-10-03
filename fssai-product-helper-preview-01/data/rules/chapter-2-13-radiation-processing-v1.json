@@ -1,0 +1,300 @@
+{
+  "schema_version": "1.0",
+  "chapter": "2.13",
+  "title": "Radiation Processing of Food",
+  "source_version": "Version 2 (07.05.2025)",
+  "source_verified_on": "2026-10-03",
+  "source_policy": "Official FSSAI/FoSCoS sources only",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 2.13 — Radiation Processing of Food, Version 2 (07.05.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_13_Radiation_processing_of_food.pdf"
+    },
+    {
+      "authority": "FoSCoS",
+      "title": "FoSCoS Guidance Document V1.1 — Radiation Processed Foods are process standards, not standalone product listings",
+      "url": "https://foscos.fssai.gov.in/assets/docs/FoSCoS%20Guidance%20Document%20V1.1.pdf"
+    }
+  ],
+  "overlay_model": {
+    "type": "process_overlay",
+    "standalone_catalog_product": false,
+    "foscos_instruction": "Select the corresponding underlying Food Category/product and apply Chapter 2.13 additionally.",
+    "engine_sequence": [
+      "Resolve underlying food identity and its product standard first",
+      "Determine radiation class or allied-product class",
+      "Select permitted technological purpose",
+      "Check minimum and maximum dose window",
+      "Verify approved/licensed irradiation facility and irradiation certificate",
+      "Verify re-irradiation restriction",
+      "Verify radiation-processing records",
+      "Re-check underlying food standard after processing",
+      "Apply pre-packaged sale and radiation-specific labelling requirements"
+    ]
+  },
+  "regulatory_notes": [
+    "No food may be radiation processed except as permitted by the dose tables in 2.13.1.",
+    "Class 1 covers bulbs, stem/root tubers, rhizomes and fresh spices including ginger, garlic and turmeric.",
+    "Radiation processed food must continue to comply with the underlying food standard and all other applicable FSSAI provisions.",
+    "FoSCoS does not list Radiation Processed Food as a standalone standardized product; the corresponding underlying food category is selected and the process standard applies additionally."
+  ],
+  "food_classes": [
+    {
+      "class": "Class 1",
+      "foods": "Bulbs, stem and root tubers, rhizomes and fresh spices including ginger, garlic and turmeric",
+      "purposes": [
+        {
+          "purpose": "Inhibit sprouting",
+          "min_kGy": 0.02,
+          "max_kGy": 0.2
+        },
+        {
+          "purpose": "Reduction of microbial load",
+          "min_kGy": 2,
+          "max_kGy": 5
+        }
+      ]
+    },
+    {
+      "class": "Class 2",
+      "foods": "Fresh fruits and vegetables other than Class 1",
+      "purposes": [
+        {
+          "purpose": "Delay ripening",
+          "min_kGy": 0.2,
+          "max_kGy": 1
+        },
+        {
+          "purpose": "Insect disinfestation",
+          "min_kGy": 0.2,
+          "max_kGy": 1
+        },
+        {
+          "purpose": "Shelf-life extension",
+          "min_kGy": 1,
+          "max_kGy": 2.5
+        },
+        {
+          "purpose": "Quarantine application",
+          "min_kGy": 0.1,
+          "max_kGy": 1
+        }
+      ]
+    },
+    {
+      "class": "Class 3",
+      "foods": "Cereals and their milled products, pulses and their milled products, nuts, oil seeds, dried fruits and their products",
+      "purposes": [
+        {
+          "purpose": "Insect disinfestation",
+          "min_kGy": 0.25,
+          "max_kGy": 1
+        },
+        {
+          "purpose": "Reduction of microbial load",
+          "min_kGy": 1.5,
+          "max_kGy": 5
+        }
+      ]
+    },
+    {
+      "class": "Class 4",
+      "foods": "Fish, aquaculture, seafood and their products (fresh or frozen) and crustaceans",
+      "purposes": [
+        {
+          "purpose": "Elimination of pathogenic microorganisms",
+          "min_kGy": 1,
+          "max_kGy": 7
+        },
+        {
+          "purpose": "Shelf-life extension",
+          "min_kGy": 1,
+          "max_kGy": 3
+        },
+        {
+          "purpose": "Control of human parasites",
+          "min_kGy": 0.3,
+          "max_kGy": 2
+        }
+      ]
+    },
+    {
+      "class": "Class 5",
+      "foods": "Meat and meat products including poultry (fresh and frozen) and eggs",
+      "purposes": [
+        {
+          "purpose": "Elimination of pathogenic microorganisms",
+          "min_kGy": 1,
+          "max_kGy": 7
+        },
+        {
+          "purpose": "Shelf-life extension",
+          "min_kGy": 1,
+          "max_kGy": 3
+        },
+        {
+          "purpose": "Control of human parasites",
+          "min_kGy": 0.3,
+          "max_kGy": 2
+        }
+      ]
+    },
+    {
+      "class": "Class 6",
+      "foods": "Dry vegetables, seasonings, spices, condiments, dry herbs and their products, tea, coffee, cocoa and plant products",
+      "purposes": [
+        {
+          "purpose": "Microbial decontamination",
+          "min_kGy": 6,
+          "max_kGy": 14
+        },
+        {
+          "purpose": "Insect disinfestation",
+          "min_kGy": 0.3,
+          "max_kGy": 1
+        }
+      ]
+    },
+    {
+      "class": "Class 7",
+      "foods": "Dried foods of animal origin and their products",
+      "purposes": [
+        {
+          "purpose": "Insect disinfestation",
+          "min_kGy": 0.3,
+          "max_kGy": 1
+        },
+        {
+          "purpose": "Control of moulds",
+          "min_kGy": 1,
+          "max_kGy": 3
+        },
+        {
+          "purpose": "Elimination of pathogenic microorganisms",
+          "min_kGy": 2,
+          "max_kGy": 7
+        }
+      ]
+    },
+    {
+      "class": "Class 8",
+      "foods": "Ethnic foods, military rations, space foods, ready-to-eat, ready-to-cook and minimally processed foods",
+      "purposes": [
+        {
+          "purpose": "Quarantine application",
+          "min_kGy": 0.25,
+          "max_kGy": 1
+        },
+        {
+          "purpose": "Reduction of microbial load",
+          "min_kGy": 2,
+          "max_kGy": 10
+        },
+        {
+          "purpose": "Sterilization",
+          "min_kGy": 5,
+          "max_kGy": 25
+        }
+      ]
+    }
+  ],
+  "allied_products": [
+    {
+      "product": "Packaging materials for food or allied products",
+      "purposes": [
+        {
+          "purpose": "Microbial decontamination",
+          "min_kGy": 5,
+          "max_kGy": 10
+        },
+        {
+          "purpose": "Sterilization",
+          "min_kGy": 10,
+          "max_kGy": 25
+        }
+      ]
+    },
+    {
+      "product": "Food additives",
+      "purposes": [
+        {
+          "purpose": "Insect disinfestation",
+          "min_kGy": 0.25,
+          "max_kGy": 1
+        },
+        {
+          "purpose": "Microbial decontamination",
+          "min_kGy": 5,
+          "max_kGy": 10
+        },
+        {
+          "purpose": "Sterilization",
+          "min_kGy": 10,
+          "max_kGy": 25
+        }
+      ]
+    },
+    {
+      "product": "Health foods, dietary supplements and nutraceuticals",
+      "purposes": [
+        {
+          "purpose": "Insect disinfestation",
+          "min_kGy": 0.25,
+          "max_kGy": 1
+        },
+        {
+          "purpose": "Microbial decontamination",
+          "min_kGy": 5,
+          "max_kGy": 10
+        },
+        {
+          "purpose": "Sterilization",
+          "min_kGy": 10,
+          "max_kGy": 25
+        }
+      ]
+    }
+  ],
+  "dosimetry": {
+    "required": true,
+    "rule": "Routine quantitative dosimetry shall be carried out during operation and records maintained as required by the Atomic Energy (Radiation Processing of Food and Allied Products) Rules, 2012."
+  },
+  "facility_requirements": [
+    "Irradiation facility must be approved and licensed under the Atomic Energy (Radiation Processing of Food and Allied Products) Rules, 2012.",
+    "Facility must comply with the conditions for approval, operation, licence and process control under those Rules.",
+    "Irradiation must be carried out in accordance with those Rules.",
+    "No food or irradiated food shall leave the facility without an irradiation certificate indicating dose and purpose."
+  ],
+  "restrictions": [
+    "Radiation processing shall conform to the dose limit, radiation source and conditions specified for the food category.",
+    "Radiation processed food shall be identified to prevent unintended re-irradiation.",
+    "Processing shall be carried out by personnel with the prescribed qualifications and training.",
+    "Food once irradiated shall not be re-irradiated unless specifically permitted."
+  ],
+  "records": {
+    "required": true,
+    "rule": "Every radiation treatment shall be recorded by the facility as required under the Atomic Energy (Radiation Processing of Food and Allied Products) Rules, 2012."
+  },
+  "underlying_food_compliance": {
+    "required": true,
+    "rule": "Radiation processed food shall comply with all Food Safety and Standards Act/regulation provisions specifying the standard of the underlying food."
+  },
+  "sale_and_packaging": {
+    "prepackaged_sale_only": true
+  },
+  "labelling": {
+    "treatment_statement_required": true,
+    "treatment_statement_location": "In close proximity to the name of the food",
+    "radura_logo_required": true,
+    "radura_logo_colour": "green",
+    "declaration_heading": "PROCESSED BY RADIATION",
+    "mandatory_fields": [
+      "Name of the Product",
+      "Purpose of Radiation Processing",
+      "Operating License No.",
+      "Batch Identification No. (BIN) as provided by facility",
+      "Date of Processing"
+    ]
+  }
+}
