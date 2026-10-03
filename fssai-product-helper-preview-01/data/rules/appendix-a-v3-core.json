@@ -5138,17 +5138,17 @@
     "12.1": {
       "name": "Salt and salt substitutes",
       "table": "Table 12",
-      "status": "prior_no_additives_row_locked_current_foscos_routing_verified",
+      "status": "no_additives_permitted_with_explicit_child_overrides",
       "entries": [],
       "regulatory_conditions": [
-        "The parent 12.1 row states no additives permitted; a more specific child FCS such as 12.1.1 may contain its own explicit permissions and therefore overrides the parent for that product."
+        "Current Version 3 states no additives permitted at parent 12.1. Explicit permissions listed in child categories 12.1.1 and 12.1.2 override the parent for those child foods."
       ],
-      "completeness_note": "Current FoSCoS confirms the salt/salt-substitute routing. The no-additives parent rule is retained from prior official Appendix A material but remains locked pending direct current Version 3 row alignment."
+      "completeness_note": "Current Version 3 parent row verified."
     },
     "12.1.1": {
       "name": "Salt (including edible common salt, iron fortified salt, iodized salt)",
       "table": "Table 12",
-      "status": "current_partial_ferrocyanides_verified_other_rows_locked",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "Calcium carbonate",
@@ -5156,7 +5156,7 @@
           "limit": "20 g/kg",
           "note_refs": "",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
         },
         {
           "name": "Calcium silicate",
@@ -5164,15 +5164,15 @@
           "limit": "20 g/kg",
           "note_refs": "",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
         },
         {
           "name": "FERROCYANIDES",
           "ins": "",
           "limit": "10 mg/kg",
           "note_refs": "24,107",
-          "condition": "Current FSSAI clarification confirms ferrocyanides are permitted in common/edible, iron-fortified and iodized salt at 10 mg/kg.",
-          "verification": "current_fssai_regulation_plus_live_clarification"
+          "condition": "",
+          "verification": "current_v3_fssai"
         },
         {
           "name": "Magnesium carbonate",
@@ -5180,7 +5180,7 @@
           "limit": "20 g/kg",
           "note_refs": "",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
         },
         {
           "name": "Magnesium oxide",
@@ -5188,7 +5188,7 @@
           "limit": "GMP",
           "note_refs": "",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
         },
         {
           "name": "Magnesium silicate, synthetic",
@@ -5196,7 +5196,7 @@
           "limit": "20 g/kg",
           "note_refs": "",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
         },
         {
           "name": "PHOSPHATES",
@@ -5204,7 +5204,7 @@
           "limit": "8,800 mg/kg",
           "note_refs": "33",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
         },
         {
           "name": "POLYSORBATES",
@@ -5212,7 +5212,7 @@
           "limit": "10 mg/kg",
           "note_refs": "",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
         },
         {
           "name": "Salts of myristic, palmitic and stearic acids with ammonia, calcium, potassium and sodium",
@@ -5220,7 +5220,7 @@
           "limit": "20 g/kg",
           "note_refs": "71",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
         },
         {
           "name": "Silicon dioxide, amorphous",
@@ -5228,16 +5228,197 @@
           "limit": "GMP",
           "note_refs": "",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Sodium aluminosilicate",
+          "ins": "554",
+          "limit": "1,000 mg/kg",
+          "note_refs": "6,254",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "ETHYLENE DIAMINE TETRA ACETATES (EDTA)",
+          "ins": "",
+          "limit": "50 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Adipic acid",
+          "ins": "355",
+          "limit": "250 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Hydroxy propyl methyl cellulose",
+          "ins": "464",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "Only permitted in double fortified salt under the current Table 12 footnote.",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Titanium dioxide",
+          "ins": "171",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "Only permitted in double fortified salt under the current Table 12 footnote.",
+          "verification": "current_v3_fssai"
         }
       ],
-      "completeness_note": "Current FSSAI independently confirms the FERROCYANIDES permission at 10 mg/kg for common/edible, iron-fortified and iodized salt. Other retained salt additive rows remain locked until directly aligned to Appendix A Version 3."
+      "regulatory_conditions": [
+        "The asterisked current Table 12 note identifies Hydroxy propyl methyl cellulose and Titanium dioxide as permissions specific to double fortified salt."
+      ],
+      "completeness_note": "Complete current Version 3 row set loaded from Table 12 pages 272–273."
     },
     "12.1.2": {
       "name": "Salt substitutes",
       "table": "Table 12",
-      "status": "current_foscos_routing_verified_additive_rows_pending_v3",
-      "entries": []
+      "status": "verified_current_complete",
+      "entries": [
+        {
+          "name": "Diacetyl tartaric and fatty acid esters of glycerol",
+          "ins": "472e",
+          "limit": "16,000 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "FERROCYANIDES",
+          "ins": "",
+          "limit": "20 mg/kg",
+          "note_refs": "24",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "PHOSPHATES",
+          "ins": "",
+          "limit": "4,400 mg/kg",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Calcium lactate",
+          "ins": "327",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Citric acid",
+          "ins": "330",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Fumaric acid",
+          "ins": "297",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Lactic acid, L-, D- and DL-",
+          "ins": "270",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Magnesium hydroxide",
+          "ins": "528",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Magnesium hydroxide carbonate",
+          "ins": "504(ii)",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Malic acid, dl-",
+          "ins": "296",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Potassium dihydrogen citrate",
+          "ins": "332(i)",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Sodium acetate",
+          "ins": "262(i)",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Sodium carbonate",
+          "ins": "500(i)",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Sodium dihydrogen citrate",
+          "ins": "331(i)",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Sodium fumarates",
+          "ins": "365",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Tripotassium citrate",
+          "ins": "332(i)",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "INS reproduced exactly as shown in the current FSSAI Table 12 text.",
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Trisodium citrate",
+          "ins": "331(iii)",
+          "limit": "GMP",
+          "note_refs": "",
+          "condition": "",
+          "verification": "current_v3_fssai"
+        }
+      ],
+      "completeness_note": "Complete current Version 3 row set loaded from Table 12 pages 273–274."
     },
     "12.2": {
       "name": "Herbs, spices, seasonings and condiments",
@@ -5435,7 +5616,7 @@
     "12.8": {
       "name": "Yeast and like products",
       "table": "Table 12",
-      "status": "prior_official_rows_locked_current_foscos_routing_where_available",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "Butylated hydroxyanisole (BHA)",
@@ -5443,15 +5624,23 @@
           "limit": "200 mg/kg",
           "note_refs": "15",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
+        },
+        {
+          "name": "Sorbitan monostearate",
+          "ins": "491",
+          "limit": "10,000 mg/kg",
+          "note_refs": "",
+          "condition": "Current Version 3 bracketed amendment entry.",
+          "verification": "current_v3_fssai"
         }
       ],
-      "completeness_note": "Prior official FSSAI additive rows are retained for traceability only. They are locked until matched unambiguously to current Appendix A Version 3; PMSV must not issue a final additive-compliance verdict from these rows."
+      "completeness_note": "Complete current Version 3 row set verified on Table 12 page 287."
     },
     "12.9": {
       "name": "Soybean-based seasonings and condiments",
       "table": "Table 12",
-      "status": "prior_official_rows_locked_current_foscos_routing_where_available",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "PHOSPHATES",
@@ -5459,15 +5648,15 @@
           "limit": "1,200 mg/kg",
           "note_refs": "",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
         }
       ],
-      "completeness_note": "Prior official FSSAI additive rows are retained for traceability only. They are locked until matched unambiguously to current Appendix A Version 3; PMSV must not issue a final additive-compliance verdict from these rows."
+      "completeness_note": "Complete current Version 3 parent row verified."
     },
     "12.9.1": {
       "name": "Fermented soybean paste",
       "table": "Table 12",
-      "status": "prior_official_rows_locked_current_foscos_routing_where_available",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "RIBOFLAVINS",
@@ -5475,7 +5664,7 @@
           "limit": "30 mg/kg",
           "note_refs": "",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
         },
         {
           "name": "SACCHARINS",
@@ -5483,7 +5672,7 @@
           "limit": "200 mg/kg",
           "note_refs": "",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
         },
         {
           "name": "SORBATES",
@@ -5491,26 +5680,26 @@
           "limit": "1,000 mg/kg",
           "note_refs": "",
           "condition": "",
-          "verification": "prior_official_only_locked_pending_current_v3_alignment"
+          "verification": "current_v3_fssai"
         }
       ],
-      "completeness_note": "Prior official FSSAI additive rows are retained for traceability only. They are locked until matched unambiguously to current Appendix A Version 3; PMSV must not issue a final additive-compliance verdict from these rows."
+      "completeness_note": "Complete current Version 3 row set verified."
     },
     "12.9.2": {
       "name": "Soybean sauce",
       "table": "Table 12",
-      "status": "current_foscos_routing_verified_operative_row_locked_pending_v3_recheck",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "BENZOATES",
           "ins": "",
           "limit": "750 mg/kg",
           "note_refs": "",
-          "condition": "Inserted by operative FSSAI amendment with effect from 1 September 2023.",
-          "verification": "operative_gazette_retained_locked_pending_current_v3_table_recheck"
+          "condition": "Current Version 3 includes the operative bracketed amendment entry.",
+          "verification": "current_v3_fssai"
         }
       ],
-      "completeness_note": "Current FoSCoS confirms soybean-sauce routing. The operative amendment row is retained for traceability but remains locked until reconciled against current Appendix A Version 3."
+      "completeness_note": "Current Version 3 parent soybean-sauce row verified; subtype-specific permissions remain in 12.9.2.1–12.9.2.3."
     },
     "12.9.2.1": {
       "name": "Fermented soybean sauce",
@@ -22045,7 +22234,7 @@
       "4.2.2.7",
       "4.2.2.8"
     ],
-    "next_priority": "Continue current Version 3 Table 12 reconciliation with remaining 12.1.1 salt rows, 12.6 sauces, 12.8 yeast and 12.9/12.9.1 parent rows. Keep 12.9.2 parent BENZOATES locked until current alignment is explicit.",
+    "next_priority": "Continue current Version 3 Table 12 reconciliation with 12.2–12.7, prioritising complete sauce sets 12.6–12.6.4 and soups 12.5–12.5.2.",
     "annexure_1_groups_loaded": 18,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
@@ -22122,7 +22311,7 @@
       "12.9.2.3",
       "12.10"
     ],
-    "table12_stage": "current_partial_salt_ferrocyanides_soy_sauce_subtypes_and_12_10_routing_verified",
+    "table12_stage": "current_v3_salt_yeast_and_soybean_sets_complete_sauces_next",
     "table11_sets_loaded": [
       "11.0",
       "11.1",
@@ -23075,6 +23264,14 @@
         "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
         "https://fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf",
         "https://fcstraining.fssai.gov.in/standard-product"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Table 12 — Build 102 current Version 3 salt/yeast/soybean reconciliation",
+      "rule": "Replaced prior-version locks with direct current Version 3 rows for 12.1, 12.1.1, 12.1.2, 12.8, 12.9, 12.9.1 and 12.9.2. Existing current-complete 12.9.2.1–12.9.2.3 remain unchanged.",
+      "official_sources": [
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%283%29.pdf"
       ]
     }
   ]
