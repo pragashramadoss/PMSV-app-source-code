@@ -27758,7 +27758,7 @@
     "1.6.1": {
       "name": "Unripened cheese",
       "table": "Table 1",
-      "status": "verified_current_partial",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "Aspartame",
@@ -27873,6 +27873,14 @@
           "verification": "current_2025_indexed_fssai"
         },
         {
+          "name": "Nisin",
+          "ins": "234",
+          "limit": "12.5 mg/kg",
+          "note_refs": "233",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
           "name": "Glucono delta-lactone",
           "ins": "575",
           "limit": "GMP",
@@ -27953,7 +27961,11 @@
           "verification": "current_2025_indexed_fssai"
         }
       ],
-      "completeness_note": "Current rows with clear status/limits are loaded. Rows carrying unclear amendment/omission markup are left pending rather than interpreted."
+      "completeness_note": "Complete current Version 3 1.6.1 active row set. Nisin 234 at 12.5 mg/kg (note 233) is active; the propionic-acid/propionate row is explicitly Omitted and is excluded from active permissions.",
+      "source_omissions": [
+        "Propionic acid / sodium propionate / calcium propionate (INS 280, 281, 282, 283), 3,000 mg/kg — explicitly marked Omitted in current Version 3."
+      ],
+      "locked_rows": []
     },
     "1.6.2": {
       "name": "Ripened cheese",
@@ -28065,6 +28077,14 @@
           "verification": "current_2025_indexed_fssai"
         },
         {
+          "name": "Propionic acid, sodium propionate, calcium propionate",
+          "ins": "280, 281, 282, 283",
+          "limit": "3,000 mg/kg",
+          "note_refs": "",
+          "condition": "Singly or in combination, expressed as propionic acid.",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
           "name": "Paprika extract",
           "ins": "160c",
           "limit": "GMP",
@@ -28073,12 +28093,13 @@
           "verification": "current_2025_indexed_fssai"
         }
       ],
-      "completeness_note": "Current Version 3 rows loaded; one row with unclear amendment markup remains excluded pending direct confirmation."
+      "completeness_note": "Complete current Version 3 1.6.2 row set. Propionic acid / propionate salts (INS 280, 281, 282, 283) are active at 3,000 mg/kg singly or in combination, expressed as propionic acid; the following **** marker is amendment markup, not an additive row.",
+      "locked_rows": []
     },
     "1.6.2.1": {
       "name": "Ripened cheese, includes rind",
       "table": "Table 1",
-      "status": "verified_current_partial",
+      "status": "verified_current_complete",
       "entries": [
         {
           "name": "ASCORBYL ESTERS",
@@ -28137,6 +28158,14 @@
           "verification": "current_2025_indexed_fssai"
         },
         {
+          "name": "Hexamethylene tetramine",
+          "ins": "239",
+          "limit": "25 mg/kg",
+          "note_refs": "66,298",
+          "condition": "",
+          "verification": "current_v3_fssai_uploaded_pdf"
+        },
+        {
           "name": "Lauric arginate ethyl ester",
           "ins": "243",
           "limit": "200 mg/kg",
@@ -28185,7 +28214,8 @@
           "verification": "current_2025_indexed_fssai"
         }
       ],
-      "completeness_note": "All clear current rows are loaded. One additional current row is held pending separate verification."
+      "completeness_note": "Complete current Version 3 1.6.2.1 row set. Hexamethylene tetramine (INS 239) is active at 25 mg/kg with notes 66 and 298.",
+      "locked_rows": []
     },
     "1.6.2.2": {
       "name": "Rind of ripened cheese",
@@ -30130,7 +30160,7 @@
       "1.8.2",
       "9.2.4.3"
     ],
-    "next_priority": "Table 2 is current Version 3 complete from the uploaded official FSSAI Appendix A PDF. Continue with the remaining Table 1 current Version 3 locks.",
+    "next_priority": "Tables 1–12 are now reconciled to current Version 3 from the uploaded official FSSAI Appendix A PDF, except explicitly quarantined source-level anomalies. Continue global Appendix A validation and remaining Table 13–15 special-route/locked coverage.",
     "annexure_1_groups_loaded": 18,
     "table15_note_conditions_loaded": 14,
     "table14_permission_sets_loaded": [
@@ -30444,7 +30474,7 @@
       "1.8.1",
       "1.8.2"
     ],
-    "table1_stage": "full_current_v3_fcs_coverage_with_targeted_locked_rows",
+    "table1_stage": "current_v3_complete",
     "table8_current_verified_sets": [
       "8.0",
       "8.1",
@@ -30472,7 +30502,8 @@
       "4.1.2.11 — SORBATES 3,000 mg/kg vs 1,000 mg/kg (note 42), no applicability distinction in source",
       "4.2.2.4 — Acesulfame potassium 200 mg/kg vs 350 mg/kg, both note 188, no applicability distinction in source"
     ],
-    "table2_locked_ambiguities": []
+    "table2_locked_ambiguities": [],
+    "table1_locked_rows": []
   },
   "annexure_1_groups": {
     "SULFITES": [
@@ -31287,6 +31318,14 @@
       "rule": "Visual inspection of the uploaded Version 3 PDF resolved all remaining Table 2 parser/page-boundary ambiguities: Silicon dioxide 551 shares 10 mg/kg with INS 900a in 2.1.3; Calcium hydroxide 526 shares GMP with INS 524 in 2.2.1; 160e/160f share 100 mg/kg in 2.4; and the two Acesulfame values were separated correctly across the 2.4/2.4.1 category boundary.",
       "official_sources": [
         "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf, pages 113–115 and 121–123"
+      ]
+    },
+    {
+      "checked_on": "2026-10-03",
+      "scope": "Table 1 — Build 115 visual completion from uploaded official PDF",
+      "rule": "Visual inspection of pages 93–97 resolved the remaining cheese-table markup: Nisin 234 at 12.5 mg/kg is active in 1.6.1 while the propionate row there is explicitly Omitted; propionates 280/281/282/283 at 3,000 mg/kg are active in 1.6.2; and Hexamethylene tetramine 239 at 25 mg/kg is active in 1.6.2.1.",
+      "official_sources": [
+        "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf, pages 93–97"
       ]
     }
   ],
