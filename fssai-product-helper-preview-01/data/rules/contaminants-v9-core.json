@@ -17,15 +17,15 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_4_veterinary_tolerance_batch_2",
+    "stage": "phase_4_antibiotics_complete",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 35,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Section 2.3.2 veterinary tolerance table is loaded through serial 28 (Neomycin). Continue from serial 29 (Nicarbazin).",
-      "Two earlier rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied.",
+      "Section 2.3.2 is complete through veterinary tolerance serial 49 (Zinc Bacitracin). Continue Section 2.4 biotoxins in fish and fishery products.",
+      "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied.",
       "Continue remaining exact Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
       "Add packaging-triggered tin logic after packaging input is implemented."
     ],
@@ -36,7 +36,7 @@
       "2.2.1 Naturally occurring toxic substances — selected exact ingredient triggers",
       "2.2.1 PCBs/PAH in fish and fishery products — complete table",
       "2.3.1 Insecticide MRLs — complete current Version IX table, serials 1-213",
-      "2.3.2 Antibiotic and pharmacologically active substances — parts (1)-(3) complete; veterinary tolerance table pending"
+      "2.3.2 Antibiotic and pharmacologically active substances — complete current Version IX section"
     ],
     "ingredient_trigger_groups": 14,
     "crop_contaminant_groups": 6,
@@ -49,8 +49,9 @@
     "seafood_antibiotic_rows_loaded": 4,
     "prohibited_veterinary_substances_loaded": 14,
     "honey_mrpl_rows_loaded": 12,
-    "veterinary_tolerance_serials_loaded": 28,
-    "veterinary_tolerance_rows_loaded": 260
+    "veterinary_tolerance_serials_loaded": 49,
+    "veterinary_tolerance_rows_loaded": 358,
+    "antibiotic_section_complete": true
   },
   "all_food_rules": [
     {
@@ -8810,7 +8811,7 @@
       ]
     },
     "veterinary_tolerance_limits": {
-      "stage": "serials_1_28_loaded",
+      "stage": "complete_current_version_ix",
       "source_table_serial_range": "1-49",
       "rows": [
         {
@@ -10286,11 +10287,629 @@
               "unit": "mg/kg"
             }
           ]
+        },
+        {
+          "serial": 29,
+          "name": "Nicarbazin",
+          "rows": [
+            {
+              "article": "Chicken — Kidney",
+              "limit": "0.2",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Fat or skin",
+              "limit": "0.2",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Liver",
+              "limit": "0.2",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Muscle",
+              "limit": "0.2",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 30,
+          "name": "Oxybendazole",
+          "rows": [
+            {
+              "article": "All edible animal tissues except in fish; Fats derived from animal tissues",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 31,
+          "name": "Oxyclozanide",
+          "rows": [
+            {
+              "article": "All edible animal tissues except in fish; Fats derived from animal tissues; Milk",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 32,
+          "name": "Parbendazole",
+          "rows": [
+            {
+              "article": "All edible animal tissues except in fish; Fats derived from animal tissues; Milk",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 33,
+          "name": "Praziquantel",
+          "rows": [
+            {
+              "article": "All edible tissues of pig",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — All edible tissues (Muscle, Liver, Kidney, Fat)",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 34,
+          "name": "Pencillin G/Benzylpenicillin",
+          "rows": [
+            {
+              "article": "Pig — Liver",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Muscle",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Kidney",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Kidney",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Liver",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Muscle",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Milk",
+              "limit": "0.004",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Liver",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 35,
+          "name": "Spectinomycin",
+          "rows": [
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Liver",
+              "limit": "2.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "5.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Fat",
+              "limit": "2.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Milk",
+              "limit": "0.2",
+              "unit": "mg/l"
+            },
+            {
+              "article": "Chicken — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Liver",
+              "limit": "2.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Kidney",
+              "limit": "5.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Fat",
+              "limit": "2.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Eggs",
+              "limit": "2.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Liver",
+              "limit": "2.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Kidney",
+              "limit": "5.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Fat",
+              "limit": "2.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Muscle",
+              "limit": "0.5",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Liver",
+              "limit": "2.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Kidney",
+              "limit": "5.0",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Fat",
+              "limit": "2.0",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 36,
+          "name": "Sulfadiazine",
+          "rows": [
+            {
+              "article": "All edible animal tissues; Fats derived from animal tissues; Milk",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 37,
+          "name": "Sulfanilamide",
+          "rows": [
+            {
+              "article": "All edible animal tissues; Fats derived from animal tissues; Milk",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 38,
+          "name": "Sulfaquinoxaline",
+          "rows": [
+            {
+              "article": "All edible animal tissues except in fish; Fats derived from animal tissues; Milk",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 39,
+          "name": "Sulfadimidine",
+          "rows": [
+            {
+              "article": "Cattle — Milk",
+              "limit": "0.025",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "No Specified — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "No Specified — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "No Specified — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "No Specified — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 40,
+          "name": "SulfaChloropyrazine",
+          "rows": [
+            {
+              "article": "All edible animal tissues except in fish; Fats derived from animal tissues; Milk",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 41,
+          "name": "Sulfamethazine",
+          "rows": [
+            {
+              "article": "All edible animal tissues except in fish; Fats derived from animal tissues",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 42,
+          "name": "Sulfadimethoxine",
+          "rows": [
+            {
+              "article": "All edible animal tissues except in fish; Fats derived from animal tissues; Milk",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 43,
+          "name": "Thiabendazole",
+          "rows": [
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Milk",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Goat — Milk",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 44,
+          "name": "Triclabendazole",
+          "rows": [
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.25",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Liver",
+              "limit": "0.85",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "0.4",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Fat or skin",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Muscle",
+              "limit": "0.2",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Liver",
+              "limit": "0.3",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Kidney",
+              "limit": "0.2",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Fat or skin",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Milk (All ruminants)",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 45,
+          "name": "Trimethoprim",
+          "rows": [
+            {
+              "article": "All edible animal tissues except in fish; Fats derived from animal tissues",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Milk",
+              "limit": "0.05",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 46,
+          "name": "Tylosin",
+          "rows": [
+            {
+              "article": "Cattle — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Cattle — Milk",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Pig — Fat",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Sheep — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Muscle",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Liver",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Kidney",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Fat or skin",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Chicken — Eggs",
+              "limit": "0.3",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 47,
+          "name": "Virginiamycin",
+          "rows": [
+            {
+              "article": "Poultry and egg",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 48,
+          "name": "Xylazine",
+          "rows": [
+            {
+              "article": "All edible animal tissues except in fish; Fats derived from animal tissues",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            }
+          ]
+        },
+        {
+          "serial": 49,
+          "name": "Zinc Bacitracin (minimum 60IU/mg dried substance)",
+          "rows": [
+            {
+              "article": "All edible animal tissues except in fish; Fats derived from animal tissues",
+              "limit": "0.01",
+              "unit": "mg/kg"
+            },
+            {
+              "article": "Milk",
+              "limit": "0.1",
+              "unit": "mg/kg"
+            }
+          ]
         }
       ],
       "auto_apply": false,
-      "loaded_serial_range": "1-28",
-      "locked_source_alignment_rows": 2
+      "loaded_serial_range": "1-49",
+      "locked_source_alignment_rows": 2,
+      "completeness": "complete",
+      "auto_apply_note": "The table is fully structured, but PMSV keeps veterinary residue auto-application disabled until product/species/tissue inputs are implemented. Two earlier source-alignment rows remain locked."
     }
   }
 }
