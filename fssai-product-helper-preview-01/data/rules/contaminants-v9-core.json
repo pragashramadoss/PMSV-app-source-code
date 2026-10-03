@@ -17,16 +17,15 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_2b_expanded_exact_metal_profiles",
+    "stage": "phase_2c_exact_crop_and_toxin_product_profiles",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 25,
+    "exact_product_profiles": 35,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Continue remaining Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
-      "Expand Section 2.2 crop-contaminant commodity mapping to the remaining exact standardized products.",
-      "Expand naturally occurring toxic-substance product/category mappings without fuzzy category inference.",
+      "Continue remaining exact Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
+      "Expand Section 2.2 product/category mappings only where the standardized product has an explicit current FSSAI commodity match.",
       "Load Section 2.3 pesticide and other residue tables using exact commodity matching.",
       "Add packaging-triggered tin logic after packaging input is implemented."
     ],
@@ -36,10 +35,10 @@
       "2.2.1 Crop contaminants — exact product/ingredient triggers",
       "2.2.1 Naturally occurring toxic substances — selected exact ingredient triggers"
     ],
-    "ingredient_trigger_groups": 13,
+    "ingredient_trigger_groups": 14,
     "crop_contaminant_groups": 6,
-    "profile_expansion_build": 128,
-    "profile_expansion_note": "Build 128 adds 17 exact standardized-product profiles from explicit current Version IX Section 2.1 article-of-food rows. No fuzzy commodity matching and no automatic 'Foods not specified' fallback."
+    "profile_expansion_build": 129,
+    "profile_expansion_note": "Build 129 adds exact crop-contaminant and naturally occurring toxin mappings for arecanut, pulses, pearl barley, four named nuts, mixed masala, nutmeg and sago/cassava/tapioca products; turmeric is also enriched with explicit spice aflatoxin limits."
   },
   "all_food_rules": [
     {
@@ -607,6 +606,20 @@
           "unit": "mg/kg",
           "article": "Turmeric whole and powder",
           "source_basis": "Section 2.1 · Cadmium"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
         }
       ]
     },
@@ -885,6 +898,276 @@
           "unit": "mg/kg",
           "article": "Fruit Juices (including nectars; ready to drink)",
           "source_basis": "Section 2.1 · Lead"
+        }
+      ]
+    },
+    {
+      "id": "arecanut-betelnut",
+      "label": "Arecanuts / Betelnuts / Supari",
+      "catalog_ids": [
+        "04-04-1-arecanuts-or-betalnuts-or-supari"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Arecanut or Betelnut",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Arecanut or Betelnut",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "pulses",
+      "label": "Pulses",
+      "catalog_ids": [
+        "06-06-1-pulses",
+        "06-06-1-unprocessed-whole-raw-pulses-not-for-direct-human-consumption"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.2,
+          "unit": "mg/kg",
+          "article": "Pulses",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Pulses",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Pulses",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "pearl-barley",
+      "label": "Pearl Barley (Jau)",
+      "catalog_ids": [
+        "06-06-1-pearl-barley-jau"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.2,
+          "unit": "mg/kg",
+          "article": "Cereal grains, except buckwheat, canihua and quinoa",
+          "source_basis": "Section 2.1 · Lead"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Cereal grains, except buckwheat, canihua and quinoa (excluding wheat and rice; and bran and germ)",
+          "source_basis": "Section 2.1 · Cadmium"
+        },
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Cereal and cereal products",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Ochratoxin A",
+          "limit": 5,
+          "unit": "µg/kg",
+          "article": "Barley",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Deoxynivalenol",
+          "limit": 1000,
+          "unit": "µg/kg",
+          "article": "Barley",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "almond-kernels",
+      "label": "Almond kernels",
+      "catalog_ids": [
+        "04-04-1-almond-kernels"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Nuts",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Nuts",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "cashew-kernels",
+      "label": "Cashew kernels",
+      "catalog_ids": [
+        "04-04-1-cashew-kernels"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Nuts",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Nuts",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "walnut-kernels",
+      "label": "Walnut kernels",
+      "catalog_ids": [
+        "04-04-1-walnut-kernels"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Nuts",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Nuts",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "pistachio-nuts",
+      "label": "Pistachio nuts",
+      "catalog_ids": [
+        "04-04-1-pistachio-nuts"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Nuts",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 10,
+          "unit": "µg/kg",
+          "article": "Nuts",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "mixed-masala",
+      "label": "Mixed Masala",
+      "catalog_ids": [
+        "12-12-2-mixed-masala"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "nutmeg",
+      "label": "Nutmeg (Jaiphal)",
+      "catalog_ids": [
+        "12-12-2-nutmeg-jaiphal"
+      ],
+      "rules": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "limit": 15,
+          "unit": "µg/kg",
+          "article": "Spices/Spice Mix",
+          "source_basis": "Section 2.2.1 · Crop contaminants"
+        },
+        {
+          "contaminant": "Saffrole",
+          "limit": 10,
+          "unit": "ppm",
+          "article": "Food containing mace and nutmeg",
+          "source_basis": "Section 2.2.1 · Naturally occurring toxic substances"
+        }
+      ]
+    },
+    {
+      "id": "sago-cassava-tapioca",
+      "label": "Sago / Cassava / Tapioca products",
+      "catalog_ids": [
+        "06-06-2-sago-flour",
+        "06-06-2-tapioca-sago",
+        "06-06-2-palm-sago-starch",
+        "06-06-2-cassava-or-tapioca-product-gari",
+        "06-06-2-edible-cassava-or-tapioca-flour"
+      ],
+      "rules": [
+        {
+          "contaminant": "Hydrocyanic acid",
+          "limit": 10,
+          "unit": "ppm",
+          "article": "Sago, Cassava flour, Tapioca flour, Manihot flour and their products",
+          "source_basis": "Section 2.2.1 · Naturally occurring toxic substances"
         }
       ]
     }
@@ -1418,6 +1701,26 @@
           "unit": "µg/kg",
           "article": "Pulses",
           "source_basis": "Section 2.2.1 · Crop contaminants"
+        }
+      ]
+    },
+    {
+      "id": "sago-cassava-tapioca",
+      "aliases": [
+        "sago",
+        "sago flour",
+        "cassava flour",
+        "tapioca flour",
+        "manihot flour",
+        "tapioca sago"
+      ],
+      "rules": [
+        {
+          "contaminant": "Hydrocyanic acid",
+          "limit": 10,
+          "unit": "ppm",
+          "article": "Sago, Cassava flour, Tapioca flour, Manihot flour and their products",
+          "source_basis": "Section 2.2.1 · Naturally occurring toxic substances"
         }
       ]
     }
