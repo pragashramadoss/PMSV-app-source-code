@@ -17,19 +17,18 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_20_tin_pickled_cucumber_gate",
+    "stage": "phase_21_tin_specific_mapping_complete_broad_rows_locked",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 51,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Exact Pickled cucumber is now mapped only through Vegetable Pickles + explicit Cucumber subtype.",
-      "The named canned-fruit/vegetable Tin article is runtime-complete through exact product/variant/package gates.",
-      "Five Tin rows remain intentionally non-auto-applied: Canned beverages; Canned foods other than beverages; the combined meat 250 mg/kg row; Foods not specified; Processed and canned food products.",
-      "Do not enable the broad canned rows until overlap/precedence against more-specific product rows is proven from FSSAI.",
-      "Keep 'Foods not specified' reference-only.",
-      "The combined meat 250 mg/kg row remains locked while more-specific container-conditioned meat rows are active."
+      "All Tin rows that can be deterministically tied to exact product, exact subtype/variant or required packaging input are now runtime-mapped.",
+      "Five broad/default/overlap Tin rows are explicitly locked reference-only: Canned beverages; Canned foods other than beverages; combined meat 250 mg/kg; Foods not specified; Processed and canned food products.",
+      "Generic Tin fallback remains disabled.",
+      "Next mapping phase returns to other Section 2.1 metals using exact literal matches before reviewed aliases.",
+      "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -78,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Review the five remaining Tin rows only as broad/default/overlap provisions. Do not auto-apply them until precedence against more-specific Tin articles is proven.",
+    "next_priority": "Resume exact Section 2.1 mapping across other metals using literal catalogue matches first, then individually reviewed aliases. No fuzzy matching.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -138,7 +137,10 @@
     "tin_product_package_rules_loaded": 1,
     "tin_canned_fruit_group_runtime_complete": true,
     "tin_canned_fruit_named_variants_added_build_155": 8,
-    "tin_pickled_cucumber_gate": true
+    "tin_pickled_cucumber_gate": true,
+    "tin_specific_article_mapping_complete": true,
+    "tin_locked_broad_rows": 5,
+    "tin_generic_fallback_auto_apply": false
   },
   "all_food_rules": [
     {
@@ -16623,6 +16625,63 @@
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
       "product_basis": "FSSAI 2.3.3 Thermally Processed Vegetables covers canned/bottled/flexible/aseptic product formats; the current Tin article explicitly includes canned vegetables. Exact product identity plus Canned format is therefore required.",
       "verification": "official_fssai_v9_plus_exact_product_and_package_gate"
+    }
+  ],
+  "tin_locked_broad_rows_v9": [
+    {
+      "article": "Canned beverages",
+      "limit": 150,
+      "unit": "mg/kg",
+      "row_type": "exact",
+      "auto_apply": false,
+      "runtime_status": "reference_only_locked",
+      "reason": "Broad packaging article. It can overlap with more-specific named beverage/product Tin rows; PMSV will not choose it automatically without an explicit FSSAI precedence rule.",
+      "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "article": "Canned foods other than beverages",
+      "limit": 250,
+      "unit": "mg/kg",
+      "row_type": "exact",
+      "auto_apply": false,
+      "runtime_status": "reference_only_locked",
+      "reason": "Generic canned-food category. It is retained as a reference fallback only; specific product Tin rows must be resolved first and this generic fallback remains disabled by policy.",
+      "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "article": "Corned beef, Luncheon meat, Cooked ham, Chopped meat, Canned chicken, Canned mutton and Goat meat",
+      "limit": 250,
+      "unit": "mg/kg",
+      "row_type": "exact",
+      "auto_apply": false,
+      "runtime_status": "reference_only_locked",
+      "reason": "This 250 mg/kg combined row overlaps container-specific Tin rows for several named meat products. The consolidated table does not provide a deterministic precedence statement, so PMSV keeps the combined row non-auto-applicable.",
+      "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "article": "Foods not specified",
+      "limit": 250,
+      "unit": "mg/kg",
+      "row_type": "default",
+      "auto_apply": false,
+      "runtime_status": "reference_only_locked",
+      "reason": "Explicit default/fallback row. PMSV never auto-applies 'Foods not specified' while product-specific coverage is being resolved.",
+      "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
+    },
+    {
+      "article": "Processed and canned food products",
+      "limit": 250,
+      "unit": "mg/kg",
+      "row_type": "exact",
+      "auto_apply": false,
+      "runtime_status": "reference_only_locked",
+      "reason": "Broad processed/canned category that overlaps multiple specific Tin rows. It remains reference-only and is not used as an automatic fallback.",
+      "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+      "verification": "official_fssai_v9_direct"
     }
   ]
 }
