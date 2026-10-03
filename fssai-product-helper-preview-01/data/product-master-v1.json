@@ -143,6 +143,19 @@
         "source_verified_on": "2026-10-02",
         "regulatory_note": "Seven product identities are mapped. 2.11.9 Special dietary food with low sodium content is stored as an overlay because FoSCoS guidance explicitly says it is not listed as a standalone product and must be applied in addition to the underlying food category.",
         "next_validation": "Current additives, contaminants, microbiology, processing aids, Advertising and Claims / current labelling rules, and full machine validation"
+      },
+      "2.12": {
+        "title": "Proprietary Food",
+        "rule_file": "./data/rules/chapter-2-12-proprietary-food-v1.json",
+        "source_version": "Current consolidated Chapter 2.12",
+        "mapped_catalog_products": 0,
+        "structured_route_rules": 1,
+        "operative_clauses": 6,
+        "status": "structured_route_loaded",
+        "source_verified_on": "2026-10-03",
+        "regulatory_note": "Chapter 2.12 is implemented as a deterministic routing/compliance framework rather than product mappings. A standardized food that merely deviates in a quality parameter does not become proprietary. Excluded separately regulated classes are routed out before ingredient/FCS/additive/microbiology checks.",
+        "proposal_watch": "Proposed clauses 2.12.1(1a)/(1b) are tracked but not active because they are not present in the current consolidated Chapter 2.12.",
+        "next_validation": "Link the router to full local IFCT ingredient eligibility, Appendix A, Appendix B, contaminants, processing aids, current Labelling and Display, and Advertising and Claims databases."
       }
     }
   },
@@ -20549,5 +20562,5 @@
       "rule_key": "2.11.8"
     }
   ],
-  "last_catalog_expansion": "2026-10-02"
+  "last_catalog_expansion": "2026-10-03"
 }
