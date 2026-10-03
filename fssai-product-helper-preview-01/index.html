@@ -2079,11 +2079,13 @@ function appendixEntriesForFcs(code){
  ancestors.forEach(a=>{
    const set=sets[a];
    (set?.entries||[]).forEach(entry=>{
-     const key=normIngredient(entry.ins||entry.name);
+     const baseKey=normIngredient(entry.ins||entry.name);
+     const key=entry.variant_id ? baseKey+'::'+normIngredient(entry.variant_id) : baseKey;
      merged.set(key,{...entry,applied_from:a,category_name:set.name});
    });
  });
- return {status:merged.size?'loaded':'not_loaded',entries:[...merged.values()],message:merged.size?'Direct/inherited Appendix A entries loaded for this FCS.':'Category permission table is not loaded yet; PMSV will not infer additive permissions.'};
+ const exactConditions=Array.isArray(exact?.regulatory_conditions)?exact.regulatory_conditions:[];
+ return {status:merged.size?'loaded':'not_loaded',entries:[...merged.values()],conditions:exactConditions,message:merged.size?'Direct/inherited Appendix A entries loaded for this FCS.':'Category permission table is not loaded yet; PMSV will not infer additive permissions.'};
 }
 function renderProprietaryAppendixA(){
  const box=document.getElementById('proprietaryAppendixA');
@@ -2117,12 +2119,13 @@ function renderProprietaryAppendixA(){
  }).join('');
  box.innerHTML='<div class="section-title"><h2>Appendix A permissions for selected FCS</h2><span>'+resolved.entries.length+' inherited/specific entries</span></div>'
    +'<div class="notice oknote"><b>Hierarchy applied.</b> Parent-category permissions are inherited and a narrower loaded sub-category entry overrides the same additive/group.</div>'
+   +(resolved.conditions&&resolved.conditions.length?'<div class="notice"><b>Category-specific condition:</b><br>'+resolved.conditions.map(c=>esc(c)).join('<br>')+'</div>':'')
    +'<div class="tablewrap"><table><thead><tr><th>Additive / group</th><th>INS</th><th>Maximum</th><th>Applied from</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
    +'<div class="appendix-note">Loaded Table 15 group names are expanded to Annexure-1 INS members and the Table 15 note conditions are shown inline. Any future table entry with an unloaded group/note remains locked rather than inferred.</div>';
 }
 async function loadAppendixCore(){
  try{
-   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=64',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=65',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCoreDb=await res.json();
  }catch(e){appendixCoreDb=null;}
@@ -2300,7 +2303,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=64',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=65',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
