@@ -216,10 +216,10 @@
     "appendix_a": {
       "rule_file": "./data/rules/appendix-a-v3-core.json",
       "source_version": "Version 3 (01.08.2025)",
-      "status": "table1_partial_table2_partial_table3_loaded_table4_partial_table5_partial_table6_partial_table7_partial_table8_partial_table9_partial_table10_partial_table11_partial_table12_partial_table13_routes_table14_partial_table15_loaded",
+      "status": "current_v3_reconciled_with_explicit_source_anomalies",
       "gmp_entries_loaded": 183,
       "gmp_annex_exclusions_loaded": 90,
-      "permission_sets_loaded": 272,
+      "permission_sets_loaded": 275,
       "loaded_fcs": [
         "14.1.4",
         "14.1.4.1",
@@ -492,16 +492,19 @@
         "1.8",
         "1.8.1",
         "1.8.2",
-        "9.2.4.3"
+        "9.2.4.3",
+        "14.0",
+        "14.1",
+        "14.1.2"
       ],
       "source_verified_on": "2026-10-03",
-      "next_validation": "Tables 1–12 are now reconciled to current Version 3 from the uploaded official FSSAI Appendix A PDF, except explicitly quarantined source-level anomalies. Continue global Appendix A validation and remaining Table 13–15 special-route/locked coverage.",
+      "next_validation": "Tables 1–15 are reconciled to current Version 3 from the uploaded official FSSAI Appendix A PDF, with explicit source-level anomalies quarantined. Next: resolve the remaining Table 9 note-alignment lock and run a global consistency audit across FCS hierarchy, Appendix notes, Annexure 1 groups and product mappings.",
       "annexure_1_groups_loaded": 18,
       "table15_note_conditions_loaded": 14,
       "note_conditions_loaded": 42,
-      "table14_stage": "14_1_complete_14_2_verified_rows_loaded",
+      "table14_stage": "current_v3_reconciled_except_14_2_3_pvpp_duplicate_unit_ambiguity",
       "extended_note_codes_loaded": 4,
-      "table13_stage": "special_regulation_hierarchy_and_locks_loaded",
+      "table13_stage": "current_v3_special_regulation_route_complete",
       "table12_stage": "current_v3_complete",
       "table11_stage": "current_v3_complete",
       "table10_stage": "current_v3_complete",
@@ -606,7 +609,17 @@
         "4.2.2.4 — Acesulfame potassium 200 mg/kg vs 350 mg/kg, both note 188, no applicability distinction in source"
       ],
       "table2_locked_ambiguities": [],
-      "table1_locked_rows": []
+      "table1_locked_rows": [],
+      "table14_locked_source_ambiguities": [
+        "14.2.3 — Polyvinylpolypyrrolidone (INS 1202) appears as both 800 mg/kg and 800 mg/l without a distinguishing applicability condition."
+      ],
+      "table15_stage": "current_v3_complete",
+      "table15_sets_loaded": [
+        "15.0",
+        "15.1",
+        "15.2",
+        "15.3"
+      ]
     },
     "special_nutrition": {
       "rule_file": "./data/rules/special-nutrition-routing-v1.json",
@@ -21237,7 +21250,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 115,
+  "build_number": 116,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {
