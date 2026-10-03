@@ -139,6 +139,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   <button class="btn-secondary" type="button" id="clearProprietaryRoute">Clear</button>
 </div>
 <div id="proprietaryRouteResult" class="notice hidden"></div>
+<div id="proprietaryAppendixA" class="hidden" style="margin-top:12px"></div>
 </div>
 
 <div class="card">
@@ -1806,6 +1807,7 @@ let regulatoryDb=null;
 let ingredientCatalog=[];
 let nutritionDb=null;
 let productMasterDb=null;
+let appendixCoreDb=null;
 let selectedProductId='';
 
 function fallbackIngredientCatalog(){
@@ -2036,6 +2038,61 @@ function proprietaryStandardizedMatches(raw){
    return n===q||n.includes(q)||q.includes(n);
  }).slice(0,10);
 }
+
+function appendixAncestors(code){
+ const parts=String(code||'').split('.').filter(Boolean);
+ const out=[];
+ for(let i=1;i<=parts.length;i++)out.push(parts.slice(0,i).join('.'));
+ return out;
+}
+function appendixEntriesForFcs(code){
+ if(!appendixCoreDb)return {status:'not_loaded',entries:[],message:'Appendix A database is not loaded.'};
+ const fcs=normFoodCode(code);
+ if(fcs==='16')return {status:'component_carry_over',entries:[],message:appendixCoreDb.category_16?.rule||'Category 16 uses component/carry-over logic.'};
+ const sets=appendixCoreDb.loaded_permission_sets||{};
+ const ancestors=appendixAncestors(fcs);
+ const merged=new Map();
+ ancestors.forEach(a=>{
+   const set=sets[a];
+   (set?.entries||[]).forEach(entry=>{
+     const key=normIngredient(entry.ins||entry.name);
+     merged.set(key,{...entry,applied_from:a,category_name:set.name});
+   });
+ });
+ return {status:merged.size?'loaded':'not_loaded',entries:[...merged.values()],message:merged.size?'Direct/inherited Appendix A entries loaded for this FCS.':'Category permission table is not loaded yet; PMSV will not infer additive permissions.'};
+}
+function renderProprietaryAppendixA(){
+ const box=document.getElementById('proprietaryAppendixA');
+ if(!box)return;
+ const cat=document.getElementById('proprietaryCategorySelect')?.value||'';
+ const sub=document.getElementById('proprietarySubcategorySelect')?.value||'';
+ const fcs=sub||cat;
+ if(!fcs){box.classList.add('hidden');box.innerHTML='';return;}
+ const resolved=appendixEntriesForFcs(fcs);
+ box.classList.remove('hidden');
+ if(resolved.status==='component_carry_over'){
+   box.innerHTML='<div class="notice"><b>Appendix A — FCS '+esc(fcs)+': component/carry-over route.</b><br>'+esc(resolved.message)+'<br><small>No direct Table 16 permission is invented.</small></div>';
+   return;
+ }
+ if(resolved.status!=='loaded'){
+   box.innerHTML='<div class="notice"><b>Appendix A permission set not yet loaded for FCS '+esc(fcs)+'.</b><br>'+esc(resolved.message)+'</div>';
+   return;
+ }
+ const rows=resolved.entries.map(x=>'<tr><td><b>'+esc(x.name)+'</b></td><td>'+esc(x.ins||'Group — Annexure-1 mapping')+'</td><td><b>'+esc(x.limit)+'</b></td><td>'+esc(x.applied_from)+(x.note_refs?' · notes '+esc(x.note_refs):'')+'</td></tr>').join('');
+ box.innerHTML='<div class="section-title"><h2>Appendix A permissions for selected FCS</h2><span>'+resolved.entries.length+' inherited/specific entries</span></div>'
+   +'<div class="notice oknote"><b>Hierarchy applied.</b> Parent-category permissions are inherited and a narrower loaded sub-category entry overrides the same additive/group.</div>'
+   +'<div class="tablewrap"><table><thead><tr><th>Additive / group</th><th>INS</th><th>Maximum</th><th>Applied from</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+   +'<div class="appendix-note">Group names still require Annexure-1 expansion, and note-dependent permissions remain locked until their note text is normalized.</div>';
+}
+async function loadAppendixCore(){
+ try{
+   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=61',{cache:'reload'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   appendixCoreDb=await res.json();
+ }catch(e){appendixCoreDb=null;}
+ renderProprietaryAppendixA();
+}
+
 function evaluateProprietaryRoute(){
  const out=document.getElementById('proprietaryRouteResult');
  if(!out)return;
@@ -2045,6 +2102,7 @@ function evaluateProprietaryRoute(){
  const cat=document.getElementById('proprietaryCategorySelect')?.value||'';
  const sub=document.getElementById('proprietarySubcategorySelect')?.value||'';
  out.classList.remove('hidden');
+ renderProprietaryAppendixA();
  if(!name){
    out.className='notice';
    out.innerHTML='<b>Enter the generic product name first.</b> PMSV must run the standardized-product gate before Chapter 2.12 can be considered.';
@@ -2107,7 +2165,8 @@ function bindProprietaryButtons(root){
    btn.addEventListener('click',openProprietaryRoute);
  });
 }
-document.getElementById('proprietaryCategorySelect')?.addEventListener('change',populateProprietarySubcategories);
+document.getElementById('proprietaryCategorySelect')?.addEventListener('change',()=>{populateProprietarySubcategories();renderProprietaryAppendixA();});
+document.getElementById('proprietarySubcategorySelect')?.addEventListener('change',renderProprietaryAppendixA);
 document.getElementById('evaluateProprietaryRoute')?.addEventListener('click',evaluateProprietaryRoute);
 document.getElementById('clearProprietaryRoute')?.addEventListener('click',()=>{
  const n=document.getElementById('proprietaryProductName');if(n)n.value='';
@@ -2200,7 +2259,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=60',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=61',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2352,6 +2411,7 @@ document.addEventListener('click',event=>{
  if(!event.target.closest('.autocomplete-wrap'))document.getElementById('ingredientAutocomplete')?.classList.add('hidden');
 });
 loadProductMaster();
+loadAppendixCore();
 loadRegulatoryDb();
 loadNutritionDb();
 

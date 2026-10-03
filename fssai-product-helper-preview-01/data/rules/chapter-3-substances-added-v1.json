@@ -1,0 +1,174 @@
+{
+  "schema_version": "1.0",
+  "chapter": "3",
+  "title": "Substances Added to Food",
+  "source_version": "Current consolidated FSSAI Chapter 3",
+  "source_verified_on": "2026-10-03",
+  "source_policy": "Official FSSAI/FoSCoS sources only",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 3 — Substances Added to Food",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/18_%20Chapter%203%20%28Substances%20added%20to%20food%29_compressed.pdf"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Appendix A — Food Additives, Version 3 (01.08.2025)",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Food Products Standards & Food Additives Compendium — current chapter index",
+      "url": "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+    }
+  ],
+  "sections": [
+    {
+      "key": "3.1",
+      "name": "Food Additives",
+      "status": "structured_engine_rules",
+      "rules": [
+        "Use of an additive must be technologically justified and must not present an appreciable health risk or mislead the consumer.",
+        "Under GMP, use the lowest level necessary to achieve the technological effect.",
+        "Food additives shall be of appropriate food-grade quality and comply with applicable identity/purity specifications.",
+        "Unless otherwise specified, maximum-use levels in tables are set on the final product as consumed.",
+        "Carry-over is permitted only when the additive is permitted in the raw material/ingredient, the ingredient itself does not exceed its applicable maximum, and the level carried into the final food is no greater than expected under proper technological conditions/GMP.",
+        "Carry-over is not acceptable for the listed infant/young-child food categories unless an additive provision is expressly specified."
+      ]
+    },
+    {
+      "key": "3.2",
+      "name": "Standards of Additives",
+      "status": "identity_purity_layer",
+      "engine_rule": "Chapter 3.2 identity/purity standards qualify the additive itself. Permission to use that additive in a finished food still comes from the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.3",
+      "name": "Other substances for use in food products",
+      "status": "structured_core",
+      "engine_rule": "Apply only to the named substances, foods and conditions explicitly specified in Chapter 3.3."
+    },
+    {
+      "key": "3.4",
+      "name": "Processing Aids",
+      "status": "processing_aid_framework",
+      "engine_rule": "Processing aids are only permitted where expressly allowed. Product/process permissions and residual levels are resolved through the applicable processing-aid provisions and Appendix C."
+    }
+  ],
+  "additive_engine": {
+    "sequence": [
+      "Resolve finished-food standardized identity and FCS",
+      "Check the vertical product standard for explicit additive permissions, prohibitions or stricter limits",
+      "Resolve Appendix A parent-category and sub-category permissions using the hierarchy",
+      "Apply the most specific applicable category entry where the same additive appears at multiple hierarchy levels",
+      "Apply GMP Table only when the selected FCS is not listed in the Annex to GMP",
+      "Check carry-over separately from direct addition",
+      "Apply additive identity/purity requirements from Chapter 3.2",
+      "Apply applicable labelling declarations and other current FSSAI regulations"
+    ],
+    "precedence": [
+      "Explicit product-standard prohibition or narrower limit",
+      "Most specific Appendix A sub-category permission/limit",
+      "Inherited Appendix A parent-category permission/limit",
+      "GMP Table permission where Annex to GMP does not exclude the FCS",
+      "Carry-over only when all Chapter 3.1 carry-over conditions are satisfied"
+    ],
+    "hard_fail_conditions": [
+      "Additive is not permitted by any applicable direct-addition route",
+      "Entered level exceeds the strictest applicable maximum",
+      "GMP Table is relied upon for an FCS listed in the Annex to GMP",
+      "Carry-over conditions are not satisfied",
+      "An additive is used to disguise faulty raw material or undesirable/unhygienic practices"
+    ]
+  },
+  "sweetener_classification": {
+    "key": "3.2.2",
+    "caloric_definition": "Greater than 2 percent of the caloric value of sucrose per equivalent unit of sweetening capacity.",
+    "caloric_examples": [
+      "Sorbitol",
+      "Sorbitol syrup",
+      "Mannitol",
+      "Isomalt",
+      "Polyglycitol syrup",
+      "Maltitol",
+      "Maltitol syrup",
+      "Lactitol",
+      "Xylitol"
+    ],
+    "non_caloric_definition": "Less than 2 percent of the caloric value of sucrose per equivalent unit of sweetening capacity.",
+    "non_caloric_examples": [
+      "Erythritol",
+      "Steviol glycoside",
+      "Thaumatin",
+      "Aspartame",
+      "Sucralose",
+      "Neotame",
+      "Acesulfame potassium",
+      "Aspartame-Acesulfame potassium salt",
+      "Saccharins"
+    ]
+  },
+  "flavours": {
+    "key": "3.3.1",
+    "allowed_types": [
+      "Natural flavours and natural flavouring substances",
+      "Nature-identical flavouring substances",
+      "Artificial flavouring substances"
+    ],
+    "powder_flavour_silicon_dioxide": {
+      "ins": "551",
+      "max_percent": 2
+    },
+    "prohibited": [
+      "Coumarin and dihydrocoumarin",
+      "Tonkabean",
+      "beta-asarone",
+      "Cinnamyl anthranilate",
+      "Estragole",
+      "Ethyl methyl ketone",
+      "Ethyl-3-phenylglycidate",
+      "Eugenyl methyl ether",
+      "Methyl beta-naphthyl ketone",
+      "p-Propylanisole",
+      "Safrole and isosafrole",
+      "Thujone and isothujone (alpha and beta thujone)",
+      "4,5-epoxydec-2(trans)-enal"
+    ],
+    "prohibited_solvent": "Diethylene glycol and monoethyl ether shall not be used as solvent in flavours."
+  },
+  "other_substances": [
+    {
+      "key": "3.3.2",
+      "name": "Lactulose syrup",
+      "status": "conditional_product_specific"
+    },
+    {
+      "key": "3.3.3",
+      "name": "Oligofructose",
+      "status": "conditional_product_specific"
+    },
+    {
+      "key": "3.3.4",
+      "name": "Trehalose",
+      "status": "GMP_except_infant_food_subject_to_standard"
+    },
+    {
+      "key": "3.3.5",
+      "name": "Phyto or Plant Stanol",
+      "status": "conditional_product_specific"
+    },
+    {
+      "key": "3.3.6",
+      "name": "Phyto or Plant Sterol",
+      "status": "conditional_product_specific"
+    }
+  ],
+  "runtime_policy": {
+    "ai_required": false,
+    "deterministic": true,
+    "use_appendix_a_database": true,
+    "direct_addition_and_carry_over_are_separate": true,
+    "vertical_standard_can_be_stricter": true,
+    "current_label_rules_required_before_final_label_conclusion": true
+  }
+}

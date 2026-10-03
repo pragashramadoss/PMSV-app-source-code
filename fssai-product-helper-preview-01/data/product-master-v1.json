@@ -16,6 +16,14 @@
     "base_rule_profiles_ready": 188,
     "profile_architecture_note": "Every loaded FoSCoS standardized product now has at least a base profile. Full formulation compliance is enabled only when detailed product-specific clauses have been ingested.",
     "chapter_ingestion": {
+      "3": {
+        "title": "Substances Added to Food",
+        "rule_file": "./data/rules/chapter-3-substances-added-v1.json",
+        "status": "core_engine_rules_loaded",
+        "source_verified_on": "2026-10-03",
+        "regulatory_note": "Chapter 3 general additive, GMP, carry-over, flavour and processing-aid framework is now stored as deterministic engine rules. Additive identity/purity under 3.2 is kept separate from permission-to-use in the final food.",
+        "next_validation": "Normalize remaining Chapter 3.2 identity/purity standards and Chapter 3.3 named-substance conditions."
+      },
       "2.1": {
         "title": "Dairy Products and Analogues",
         "status": "core_standard_structuring_complete",
@@ -203,7 +211,25 @@
         "next_validation": "Verify current FoSCoS hierarchy mapping, then connect Appendix A, contaminants, microbiology, processing aids and current labelling rules."
       }
     },
-    "chapter_only_standard_products": 3
+    "chapter_only_standard_products": 3,
+    "appendix_a": {
+      "rule_file": "./data/rules/appendix-a-v3-core.json",
+      "source_version": "Version 3 (01.08.2025)",
+      "status": "hierarchy_gmp_and_table15_loaded",
+      "gmp_entries_loaded": 183,
+      "gmp_annex_exclusions_loaded": 90,
+      "permission_sets_loaded": 6,
+      "loaded_fcs": [
+        "14.1.4",
+        "14.1.4.1",
+        "15.0",
+        "15.1",
+        "15.2",
+        "15.3"
+      ],
+      "source_verified_on": "2026-10-03",
+      "next_validation": "Expand Annexure-1 additive groups and ingest Tables 1–14 category permissions with all note conditions."
+    }
   },
   "source_hierarchy": [
     {
@@ -20735,7 +20761,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 60,
+  "build_number": 61,
   "build_label": "Build 58",
   "build_date": "2026-10-03"
 }
