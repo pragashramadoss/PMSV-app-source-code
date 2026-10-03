@@ -17,19 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_32_dehydrated_onion_exact_metal_mapping",
+    "stage": "phase_33_explicit_dried_herb_lead_arsenic_mapping",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 88,
+    "exact_product_profiles": 98,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Build 168 maps Dehydrated Onion (Sukha Pyaj) 2.9.28 to exact current FSSAI metal rows: Lead 10 mg/kg on dry matter basis and Arsenic 2 mg/kg.",
-      "No generic dried-herb/spice Lead or Arsenic rule is blanket-applied to the rest of Chapter 2.9.",
-      "Ground coffee, roasted-and-ground coffee, soluble coffee, ground decaffeinated coffee and soluble decaffeinated coffee remain excluded from the coffee-beans Copper article.",
-      "Instant Tea in Solid Form remains locked as a distinct extracted-solid standard.",
-      "Cream Powder remains excluded from the Milks Lead concentration-factor rule.",
-      "Generic Tin fallback remains disabled."
+      "Build 169 maps ten Chapter 2.9 products whose current FSSAI identities explicitly say Dried or Dehydrated herb to Lead 10 mg/kg on dry matter basis and Arsenic 5 mg/kg.",
+      "The ten products are Dried Oregano, Dried Laurel/Bay Leaf, Dried Mint, Dried Rosemary, Dried Thyme, Dried Sage, Dried Sweet Basil Leaves, Dried Sweet Marjoram, Dried Parsley and Dehydrated Tarragon.",
+      "No generic spice rule is yet blanket-applied to the remaining Chapter 2.9 spice standards; each remaining identity stays under individual review.",
+      "Ground/soluble coffee exclusions, Instant Tea lock, Cream Powder exclusion and generic Tin fail-closed behavior remain unchanged."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -78,7 +76,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Continue Chapter 2.9 exact mappings, starting with clearly dried/dehydrated named products; keep generic 'spices' and 'dried herbs' rows fail-closed unless the standardized identity proves the class.",
+    "next_priority": "Review remaining Chapter 2.9 dried spice identities individually (for example Dried Ginger, dehydrated Garlic, seed/bark spices) against the Lead 'dried herbs and spices' and Arsenic 'spices' rows.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -119,9 +117,9 @@
       "12-12-2-mixed-masala",
       "12-12-2-dehydrated-onion-sukha-pyaj"
     ],
-    "verified_alias_products": 53,
-    "verified_alias_new_profiles": 50,
-    "verified_alias_rules_added": 91,
+    "verified_alias_products": 63,
+    "verified_alias_new_profiles": 60,
+    "verified_alias_rules_added": 111,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
@@ -168,7 +166,9 @@
     "curry_masala_new_profiles_added_build_167": 1,
     "curry_masala_lead_rules_added_build_167": 2,
     "dehydrated_onion_products_added_build_168": 1,
-    "dehydrated_onion_rules_added_build_168": 2
+    "dehydrated_onion_rules_added_build_168": 2,
+    "dried_herb_products_added_build_169": 10,
+    "dried_herb_rules_added_build_169": 20
   },
   "all_food_rules": [
     {
@@ -2592,6 +2592,266 @@
           "article": "Dehydrated onions, edible gelatin, liquid pectin",
           "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_exact_named_article"
+        }
+      ]
+    },
+    {
+      "id": "dried-oregano",
+      "label": "Dried Oregano",
+      "catalog_ids": [
+        "12-12-2-dried-oregano"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        }
+      ]
+    },
+    {
+      "id": "dried-laurel-bay-leaf",
+      "label": "Dried Laurel or Dried Bay Leaf",
+      "catalog_ids": [
+        "12-12-2-dried-laurel-or-dried-bay-leaf"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        }
+      ]
+    },
+    {
+      "id": "dried-mint",
+      "label": "Dried Mint",
+      "catalog_ids": [
+        "12-12-2-dried-mint"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        }
+      ]
+    },
+    {
+      "id": "dried-rosemary",
+      "label": "Dried Rosemary",
+      "catalog_ids": [
+        "12-12-2-dried-rosemary"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        }
+      ]
+    },
+    {
+      "id": "dried-thyme",
+      "label": "Dried Thyme",
+      "catalog_ids": [
+        "12-12-2-dried-thyme"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        }
+      ]
+    },
+    {
+      "id": "dried-sage",
+      "label": "Dried Sage",
+      "catalog_ids": [
+        "12-12-2-dried-sage"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        }
+      ]
+    },
+    {
+      "id": "dried-sweet-basil",
+      "label": "Dried Sweet Basil Leaves",
+      "catalog_ids": [
+        "12-12-2-dried-sweet-basil-leaves"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        }
+      ]
+    },
+    {
+      "id": "dried-sweet-marjoram",
+      "label": "Dried Sweet Marjoram",
+      "catalog_ids": [
+        "12-12-2-dried-sweet-marjoram"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        }
+      ]
+    },
+    {
+      "id": "dried-parsley",
+      "label": "Dried Parsley",
+      "catalog_ids": [
+        "12-12-2-dried-parsley"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        }
+      ]
+    },
+    {
+      "id": "dehydrated-tarragon",
+      "label": "Dehydrated Tarragon",
+      "catalog_ids": [
+        "12-12-2-dehydrated-tarragon"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 10,
+          "unit": "mg/kg",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "condition": "On dry matter basis.",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_9_explicit_dried_herb_identity"
         }
       ]
     }
@@ -17976,6 +18236,226 @@
           "limit": 4,
           "unit": "mg/kg",
           "mapping_basis": "Current FSSAI 2.10.3 identifies the standardized product as roasted chicory prepared from dried roots, exactly matching the Arsenic article wording."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-dried-oregano",
+      "product_name": "Dried Oregano",
+      "fssr": "2.9.35",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.35 standard explicitly identifies Dried Oregano as a dried/dehydrated herb product; this directly fits the Lead article class 'dried herbs'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.35 standard explicitly identifies Dried Oregano as a dried/dehydrated herb product; this directly fits the Arsenic article class 'Dried herbs'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-dried-laurel-or-dried-bay-leaf",
+      "product_name": "Dried Laurel or Dried Bay Leaf",
+      "fssr": "2.9.37",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.37 standard explicitly identifies Dried Laurel or Dried Bay Leaf as a dried/dehydrated herb product; this directly fits the Lead article class 'dried herbs'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.37 standard explicitly identifies Dried Laurel or Dried Bay Leaf as a dried/dehydrated herb product; this directly fits the Arsenic article class 'Dried herbs'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-dried-mint",
+      "product_name": "Dried Mint",
+      "fssr": "2.9.38",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.38 standard explicitly identifies Dried Mint as a dried/dehydrated herb product; this directly fits the Lead article class 'dried herbs'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.38 standard explicitly identifies Dried Mint as a dried/dehydrated herb product; this directly fits the Arsenic article class 'Dried herbs'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-dried-rosemary",
+      "product_name": "Dried Rosemary",
+      "fssr": "2.9.39",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.39 standard explicitly identifies Dried Rosemary as a dried/dehydrated herb product; this directly fits the Lead article class 'dried herbs'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.39 standard explicitly identifies Dried Rosemary as a dried/dehydrated herb product; this directly fits the Arsenic article class 'Dried herbs'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-dried-thyme",
+      "product_name": "Dried Thyme",
+      "fssr": "2.9.40",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.40 standard explicitly identifies Dried Thyme as a dried/dehydrated herb product; this directly fits the Lead article class 'dried herbs'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.40 standard explicitly identifies Dried Thyme as a dried/dehydrated herb product; this directly fits the Arsenic article class 'Dried herbs'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-dried-sage",
+      "product_name": "Dried Sage",
+      "fssr": "2.9.41",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.41 standard explicitly identifies Dried Sage as a dried/dehydrated herb product; this directly fits the Lead article class 'dried herbs'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.41 standard explicitly identifies Dried Sage as a dried/dehydrated herb product; this directly fits the Arsenic article class 'Dried herbs'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-dried-sweet-basil-leaves",
+      "product_name": "Dried Sweet Basil Leaves",
+      "fssr": "2.9.42",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.42 standard explicitly identifies Dried Sweet Basil Leaves as a dried/dehydrated herb product; this directly fits the Lead article class 'dried herbs'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.42 standard explicitly identifies Dried Sweet Basil Leaves as a dried/dehydrated herb product; this directly fits the Arsenic article class 'Dried herbs'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-dried-sweet-marjoram",
+      "product_name": "Dried Sweet Marjoram",
+      "fssr": "2.9.43",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.43 standard explicitly identifies Dried Sweet Marjoram as a dried/dehydrated herb product; this directly fits the Lead article class 'dried herbs'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.43 standard explicitly identifies Dried Sweet Marjoram as a dried/dehydrated herb product; this directly fits the Arsenic article class 'Dried herbs'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-dried-parsley",
+      "product_name": "Dried Parsley",
+      "fssr": "2.9.44",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.44 standard explicitly identifies Dried Parsley as a dried/dehydrated herb product; this directly fits the Lead article class 'dried herbs'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.44 standard explicitly identifies Dried Parsley as a dried/dehydrated herb product; this directly fits the Arsenic article class 'Dried herbs'."
+        }
+      ]
+    },
+    {
+      "product_id": "12-12-2-dehydrated-tarragon",
+      "product_name": "Dehydrated Tarragon",
+      "fssr": "2.9.45",
+      "added_rules": 2,
+      "verified_alias_basis": [
+        {
+          "metal": "Lead",
+          "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.45 standard explicitly identifies Dehydrated Tarragon as a dried/dehydrated herb product; this directly fits the Lead article class 'dried herbs'."
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI 2.9.45 standard explicitly identifies Dehydrated Tarragon as a dried/dehydrated herb product; this directly fits the Arsenic article class 'Dried herbs'."
         }
       ]
     }
