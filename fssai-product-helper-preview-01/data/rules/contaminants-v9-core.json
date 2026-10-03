@@ -17,17 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_14_tin_explicit_alias_expansion",
+    "stage": "phase_15_tin_infant_identity_expansion",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 45,
+    "exact_product_profiles": 50,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
       "Five named FSSAI meat Tin identities are runtime-active only after explicit user identity selection plus container material; no meat-family inference is used.",
-      "Exact Canned Fishery Products remains mapped to Tin 200 mg/kg.",
-      "Build 150 adds six explicit Tin mappings: Thermally Processed Tomato Juice plus five official fruit pulp/puree catalogue products.",
-      "Infant milk substitute/infant foods, canned mushrooms, pickled cucumber, named fruit juices without exact catalogue identities, and tamarind pulp/concentrate remain locked for separate verification.",
+      "Build 150 added six explicit Tin mappings: Thermally Processed Tomato Juice plus five official fruit pulp/puree catalogue products.",
+      "Build 151 adds five infant mappings: Infant formula, three explicit infant milk substitute products, and Infant Milk Food.",
+      "Follow-up formula, other infant-food variants, canned mushrooms, pickled cucumber, unnamed juice variants and tamarind pulp/concentrate remain locked for separate verification.",
       "Generic 'Canned beverages', 'Canned foods other than beverages' and 'Processed and canned food products' rows remain disabled as automatic fallbacks.",
       "Keep all 'Foods not specified' rows reference-only until absence of a more specific row is proven.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied."
@@ -79,7 +79,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Review remaining Tin candidates individually: infant milk substitute/infant foods, canned mushrooms, pickled cucumber, named fruit juices and tamarind pulp/concentrate. Keep generic canned-food rows disabled.",
+    "next_priority": "Review remaining Tin candidates individually: follow-up formula and other infant foods, canned mushrooms, pickled cucumber, named fruit juices without exact catalogue rows, and tamarind pulp/concentrate. Generic canned rows remain disabled.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -117,9 +117,9 @@
       "99-99-1-baking-powder",
       "99-99-1-gelatin"
     ],
-    "verified_alias_products": 12,
-    "verified_alias_new_profiles": 9,
-    "verified_alias_rules_added": 15,
+    "verified_alias_products": 17,
+    "verified_alias_new_profiles": 14,
+    "verified_alias_rules_added": 20,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
@@ -128,7 +128,8 @@
     "packaging_named_meat_identity_ui": true,
     "packaging_conditional_tin_product_families": 5,
     "packaging_conditional_tin_runtime_rules_active": 10,
-    "tin_explicit_alias_products_added_build_150": 6
+    "tin_explicit_alias_products_added_build_150": 6,
+    "tin_infant_products_added_build_151": 5
   },
   "all_food_rules": [
     {
@@ -1492,6 +1493,91 @@
           "limit": 250,
           "unit": "mg/kg",
           "article": "Pulp and pulp products of any fruit",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-13-13-1-infant-formula",
+      "label": "Infant formula",
+      "catalog_ids": [
+        "13-13-1-infant-formula"
+      ],
+      "rules": [
+        {
+          "contaminant": "Tin",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Infant milk substitute and Infant foods",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-13-13-1-preterm-infant-milk-substitute",
+      "label": "Preterm infant milk substitute",
+      "catalog_ids": [
+        "13-13-1-preterm-infant-milk-substitute"
+      ],
+      "rules": [
+        {
+          "contaminant": "Tin",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Infant milk substitute and Infant foods",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-13-13-1-lactose-free-infant-milk-substitutes",
+      "label": "Lactose free infant milk substitutes",
+      "catalog_ids": [
+        "13-13-1-lactose-free-infant-milk-substitutes"
+      ],
+      "rules": [
+        {
+          "contaminant": "Tin",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Infant milk substitute and Infant foods",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-13-13-1-hypoallergenic-infant-milk-substitutes",
+      "label": "Hypoallergenic infant milk substitutes",
+      "catalog_ids": [
+        "13-13-1-hypoallergenic-infant-milk-substitutes"
+      ],
+      "rules": [
+        {
+          "contaminant": "Tin",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Infant milk substitute and Infant foods",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-13-13-1-infant-milk-food",
+      "label": "Infant Milk Food",
+      "catalog_ids": [
+        "13-13-1-infant-milk-food"
+      ],
+      "rules": [
+        {
+          "contaminant": "Tin",
+          "limit": 5,
+          "unit": "mg/kg",
+          "article": "Infant milk substitute and Infant foods",
           "source_basis": "Section 2.1 · Tin",
           "verification": "explicit_verified_alias_v9"
         }
@@ -16018,6 +16104,81 @@
           "limit": 250,
           "unit": "mg/kg",
           "mapping_basis": "Official FoSCoS product identity is explicitly a concentrated fruit pulp/puree product."
+        }
+      ]
+    },
+    {
+      "product_id": "13-13-1-infant-formula",
+      "product_name": "Infant formula",
+      "fssr": "",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Tin",
+          "article": "Infant milk substitute and Infant foods",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Current FSSAI Foods for Infant Nutrition Regulations define infant formula as a breast milk substitute product; this places the exact FoSCoS product within the Tin article 'Infant milk substitute and Infant foods'."
+        }
+      ]
+    },
+    {
+      "product_id": "13-13-1-preterm-infant-milk-substitute",
+      "product_name": "Preterm infant milk substitute",
+      "fssr": "",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Tin",
+          "article": "Infant milk substitute and Infant foods",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Official FoSCoS product identity explicitly states infant milk substitute."
+        }
+      ]
+    },
+    {
+      "product_id": "13-13-1-lactose-free-infant-milk-substitutes",
+      "product_name": "Lactose free infant milk substitutes",
+      "fssr": "",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Tin",
+          "article": "Infant milk substitute and Infant foods",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Official FoSCoS product identity explicitly states infant milk substitutes."
+        }
+      ]
+    },
+    {
+      "product_id": "13-13-1-hypoallergenic-infant-milk-substitutes",
+      "product_name": "Hypoallergenic infant milk substitutes",
+      "fssr": "",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Tin",
+          "article": "Infant milk substitute and Infant foods",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Official FoSCoS product identity explicitly states infant milk substitutes."
+        }
+      ]
+    },
+    {
+      "product_id": "13-13-1-infant-milk-food",
+      "product_name": "Infant Milk Food",
+      "fssr": "Chapter 4(12) of Infant Nutrition Regulations, 2020",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Tin",
+          "article": "Infant milk substitute and Infant foods",
+          "limit": 5,
+          "unit": "mg/kg",
+          "mapping_basis": "Official FoSCoS product identity explicitly states Infant Milk Food and is listed under the current Foods for Infant Nutrition framework."
         }
       ]
     }
