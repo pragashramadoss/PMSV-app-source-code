@@ -1855,13 +1855,44 @@
     "rule": "Do not invent a direct additive permission for category 16. Resolve each component under its own FCS and apply Chapter 3.1 carry-over conditions; separately check any specific standard applicable to the prepared food."
   },
   "group_resolution_policy": {
-    "status": "annex_1_reference_required",
-    "rule": "Capitalised group entries in Tables 1–15 refer to Annexure-1 group members/INS numbers. PMSV displays the group as permitted only after the Annexure-1 group mapping is loaded; it shall not guess the group membership.",
-    "annex_1_expansion": "next_ingestion_layer"
+    "status": "table_15_groups_resolved",
+    "rule": "Capitalised group entries used in the loaded Table 15 permission sets are expanded to the exact Annexure-1 members/INS numbers stored in annexure_1_groups. Unloaded groups from other tables remain locked until ingested.",
+    "loaded_groups": [
+      "ASCORBYL ESTERS",
+      "BENZOATES",
+      "CAROTENOIDS",
+      "CHLOROPHYLLS AND CHLOROPHYLLINS, COPPER COMPLEXES",
+      "HYDROXYBENZOATES, PARA-",
+      "IRON OXIDES",
+      "PHOSPHATES",
+      "RIBOFLAVINS",
+      "SACCHARINS",
+      "SORBATES",
+      "SULFITES",
+      "THIODIPROPIONATES",
+      "TOCOPHEROLS"
+    ],
+    "remaining_scope": "Expand every remaining Annexure-1 group as Tables 1–14 are ingested."
   },
   "note_resolution_policy": {
-    "status": "note_numbers_preserved",
-    "rule": "Table note numbers are stored with each entry. A final pass/fail using a note-dependent entry remains locked until the relevant Appendix A note text is normalized in the local database."
+    "status": "table_15_note_conditions_loaded",
+    "rule": "The note numbers used by the loaded Table 15 permission sets are normalized in note_texts. Entries with any note outside this loaded set remain conditional until that note is added.",
+    "loaded_notes": [
+      3,
+      10,
+      13,
+      15,
+      26,
+      27,
+      33,
+      42,
+      44,
+      46,
+      130,
+      181,
+      188,
+      191
+    ]
   },
   "coverage": {
     "full_fcs_hierarchy_loaded": true,
@@ -1875,6 +1906,336 @@
       "15.2",
       "15.3"
     ],
-    "next_priority": "Annexure-1 group expansion and Appendix A Tables 1–14 category-permission ingestion."
+    "next_priority": "Appendix A Tables 1–14 category-permission ingestion; add any additional Annexure-1 groups and note conditions encountered during each table.",
+    "annexure_1_groups_loaded": 13,
+    "table15_note_conditions_loaded": 14
+  },
+  "annexure_1_groups": {
+    "SULFITES": [
+      {
+        "name": "Sulfur dioxide",
+        "ins": "220"
+      },
+      {
+        "name": "Sodium sulfite",
+        "ins": "221"
+      },
+      {
+        "name": "Sodium hydrogen sulfite",
+        "ins": "222"
+      },
+      {
+        "name": "Sodium disulfite",
+        "ins": "223"
+      },
+      {
+        "name": "Potassium metabisulfite",
+        "ins": "224"
+      },
+      {
+        "name": "Potassium sulfite",
+        "ins": "225"
+      },
+      {
+        "name": "Calcium hydrogen sulfite",
+        "ins": "227"
+      },
+      {
+        "name": "Potassium hydrogen sulfite",
+        "ins": "228"
+      },
+      {
+        "name": "Sodium thiosulfate",
+        "ins": "539"
+      }
+    ],
+    "PHOSPHATES": [
+      {
+        "name": "Phosphoric acid",
+        "ins": "338"
+      },
+      {
+        "name": "Sodium dihydrogen phosphate",
+        "ins": "339(i)"
+      },
+      {
+        "name": "Disodium hydrogen phosphate",
+        "ins": "339(ii)"
+      },
+      {
+        "name": "Trisodium phosphate",
+        "ins": "339(iii)"
+      },
+      {
+        "name": "Potassium dihydrogen phosphate",
+        "ins": "340(i)"
+      },
+      {
+        "name": "Dipotassium hydrogen phosphate",
+        "ins": "340(ii)"
+      },
+      {
+        "name": "Tripotassium phosphate",
+        "ins": "340(iii)"
+      },
+      {
+        "name": "Calcium dihydrogen phosphate",
+        "ins": "341(i)"
+      },
+      {
+        "name": "Calcium hydrogen phosphate",
+        "ins": "341(ii)"
+      },
+      {
+        "name": "Tricalcium phosphate",
+        "ins": "341(iii)"
+      },
+      {
+        "name": "Ammonium dihydrogen phosphate",
+        "ins": "342(i)"
+      },
+      {
+        "name": "Diammonium hydrogen phosphate",
+        "ins": "342(ii)"
+      },
+      {
+        "name": "Magnesium dihydrogen phosphate",
+        "ins": "343(i)"
+      },
+      {
+        "name": "Dimagnesium hydrogen phosphate",
+        "ins": "343(ii)"
+      },
+      {
+        "name": "Trimagnesium phosphate",
+        "ins": "343(iii)"
+      },
+      {
+        "name": "Disodium diphosphate",
+        "ins": "450(i)"
+      },
+      {
+        "name": "Trisodium diphosphate",
+        "ins": "450(ii)"
+      },
+      {
+        "name": "Tetrasodium diphosphate",
+        "ins": "450(iii)"
+      },
+      {
+        "name": "Tetrapotassium diphosphate",
+        "ins": "450(v)"
+      },
+      {
+        "name": "Dicalcium diphosphate",
+        "ins": "450(vi)"
+      },
+      {
+        "name": "Calcium dihydrogen diphosphate",
+        "ins": "450(vii)"
+      },
+      {
+        "name": "Magnesium dihydrogen diphosphate",
+        "ins": "450(ix)"
+      },
+      {
+        "name": "Pentasodium triphosphate",
+        "ins": "451(i)"
+      },
+      {
+        "name": "Pentapotassium triphosphate",
+        "ins": "451(ii)"
+      },
+      {
+        "name": "Sodium polyphosphate",
+        "ins": "452(i)"
+      },
+      {
+        "name": "Potassium polyphosphate",
+        "ins": "452(ii)"
+      },
+      {
+        "name": "Sodium calcium polyphosphate",
+        "ins": "452(iii)"
+      },
+      {
+        "name": "Calcium polyphosphate",
+        "ins": "452(iv)"
+      },
+      {
+        "name": "Ammonium polyphosphate",
+        "ins": "452(v)"
+      }
+    ],
+    "RIBOFLAVINS": [
+      {
+        "name": "Riboflavin, synthetic",
+        "ins": "101(i)"
+      },
+      {
+        "name": "Riboflavin 5'-phosphate sodium",
+        "ins": "101(ii)"
+      },
+      {
+        "name": "Riboflavin (Bacillus subtilis)",
+        "ins": "101(iii)"
+      }
+    ],
+    "ASCORBYL ESTERS": [
+      {
+        "name": "Ascorbyl palmitate",
+        "ins": "304"
+      },
+      {
+        "name": "Ascorbyl stearate",
+        "ins": "305"
+      }
+    ],
+    "BENZOATES": [
+      {
+        "name": "Benzoic acid",
+        "ins": "210"
+      },
+      {
+        "name": "Sodium benzoate",
+        "ins": "211"
+      },
+      {
+        "name": "Potassium benzoate",
+        "ins": "212"
+      },
+      {
+        "name": "Calcium benzoate",
+        "ins": "213"
+      }
+    ],
+    "CAROTENOIDS": [
+      {
+        "name": "beta-Carotenes (synthetic)",
+        "ins": "160a(i)"
+      },
+      {
+        "name": "beta-Carotenes (Blakeslea trispora)",
+        "ins": "160a(iii)"
+      },
+      {
+        "name": "beta-apo-8'-Carotenal",
+        "ins": "160e"
+      },
+      {
+        "name": "beta-apo-8'-Carotenoic acid, ethyl ester",
+        "ins": "160f"
+      }
+    ],
+    "CHLOROPHYLLS AND CHLOROPHYLLINS, COPPER COMPLEXES": [
+      {
+        "name": "Chlorophylls, copper complexes",
+        "ins": "141(i)"
+      },
+      {
+        "name": "Chlorophyllin copper complexes, sodium and potassium salts",
+        "ins": "141(ii)"
+      }
+    ],
+    "HYDROXYBENZOATES, PARA-": [
+      {
+        "name": "Ethyl para-hydroxybenzoate",
+        "ins": "214"
+      },
+      {
+        "name": "Methyl para-hydroxybenzoate",
+        "ins": "218"
+      }
+    ],
+    "THIODIPROPIONATES": [
+      {
+        "name": "Thiodipropionic acid",
+        "ins": "388"
+      },
+      {
+        "name": "Dilauryl thiodipropionate",
+        "ins": "389"
+      }
+    ],
+    "TOCOPHEROLS": [
+      {
+        "name": "d-alpha-Tocopherol",
+        "ins": "307a"
+      },
+      {
+        "name": "Tocopherol concentrate, mixed",
+        "ins": "307b"
+      },
+      {
+        "name": "dl-alpha-Tocopherol",
+        "ins": "307c"
+      }
+    ],
+    "SACCHARINS": [
+      {
+        "name": "Saccharin",
+        "ins": "954(i)"
+      },
+      {
+        "name": "Calcium saccharin",
+        "ins": "954(ii)"
+      },
+      {
+        "name": "Potassium saccharin",
+        "ins": "954(iii)"
+      },
+      {
+        "name": "Sodium saccharin",
+        "ins": "954(iv)"
+      }
+    ],
+    "SORBATES": [
+      {
+        "name": "Sorbic acid",
+        "ins": "200"
+      },
+      {
+        "name": "Sodium sorbate",
+        "ins": "201"
+      },
+      {
+        "name": "Potassium sorbate",
+        "ins": "202"
+      },
+      {
+        "name": "Calcium sorbate",
+        "ins": "203"
+      }
+    ],
+    "IRON OXIDES": [
+      {
+        "name": "Iron oxide, black",
+        "ins": "172(i)"
+      },
+      {
+        "name": "Iron oxide, red",
+        "ins": "172(ii)"
+      },
+      {
+        "name": "Iron oxide, yellow",
+        "ins": "172(iii)"
+      }
+    ]
+  },
+  "note_texts": {
+    "3": "For use in surface treatment only.",
+    "10": "As ascorbyl stearate.",
+    "13": "As benzoic acid.",
+    "15": "On the fat or oil basis.",
+    "26": "As steviol equivalents.",
+    "27": "As para-hydroxybenzoic acid.",
+    "33": "As phosphorus.",
+    "42": "As sorbic acid.",
+    "44": "As residual SO2.",
+    "46": "As thiodipropionic acid.",
+    "130": "Singly or in combination: BHA (INS 320), BHT (INS 321), TBHQ (INS 319), and propyl gallate (INS 310).",
+    "181": "As anthocyanin.",
+    "188": "If used with aspartame-acesulfame salt (INS 962), the combined maximum expressed as acesulfame potassium must not exceed the listed level.",
+    "191": "If used with aspartame-acesulfame salt (INS 962), the combined maximum expressed as aspartame must not exceed the listed level."
   }
 }
