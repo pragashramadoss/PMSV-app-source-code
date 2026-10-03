@@ -549,12 +549,26 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     </select>
     <small>Select this only when the finished product is exactly the named FSSAI Tin article. PMSV never infers it from a broader meat category.</small>
   </div>
+  <div class="field">
+    <label>Exact Fruit Juice variant for Tin</label>
+    <select id="contaminantTinJuiceVariant">
+      <option value="">Not specified / another fruit juice</option>
+      <option value="Apple">Apple</option>
+      <option value="Pineapple">Pineapple</option>
+      <option value="Lemon">Lemon</option>
+      <option value="Mandarine/Tangerine/Orange">Mandarine/Tangerine/Orange</option>
+      <option value="Sweet Orange">Sweet Orange</option>
+      <option value="Tomato">Tomato</option>
+    </select>
+    <small>Enabled only for the FoSCoS Fruits Juices product. Other juice variants do not inherit the named Tin row.</small>
+  </div>
 </div>
 <div id="packagingTinStatus" class="notice">Packaging-dependent Tin rules remain inactive until both an exact product identity and the required packaging input are available.</div>
+<div id="juiceTinStatus" class="notice">The named fruit-juice Tin row remains inactive unless the selected FoSCoS product is Fruits Juices and an eligible exact variant is selected.</div>
 <div id="productContaminantResults"><div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div></div>
 </div>
 <div class="card">
-<div class="section-title"><h2>Coverage status</h2><span>Build 152 · tamarind Tin mapping</span></div>
+<div class="section-title"><h2>Coverage status</h2><span>Build 153 · exact fruit-juice Tin variant gate</span></div>
 <div class="notice">The reusable contaminant master now includes 35 exact standardized-product profiles, 14 exact ingredient-trigger groups, the complete PCB/PAH fish table, and all 213 pesticide entries and 1,098 residue MRL commodity rows in Section 2.3.1, plus the Section 2.3.2 seafood antibiotic limits, prohibited veterinary-drug EMRL rules and honey antibiotic MRPL table. Sections 2.3.2, 2.4, 2.5.1 and 2.5.2 are now loaded from current FSSAI Version IX. Histamine includes the official high-histidine fish-family/species list and all 11 product-category n/c/m/M limits. No missing limit is estimated from another website.</div>
 <div class="notice"><b>2026 amendment:</b> FSSAI notified a final Contaminants, Toxins and Residues amendment on 25 May 2026 with commencement on <b>1 December 2026</b>. Build 141 continues to use the currently effective Version IX basis as of 3 October 2026.</div>
 </div>
@@ -2377,7 +2391,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=152',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=153',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2401,6 +2415,7 @@ document.getElementById('productSelect')?.addEventListener('change',event=>{
 document.getElementById('contaminantPackageFormat')?.addEventListener('change',renderProductContaminants);
 document.getElementById('contaminantContainerMaterial')?.addEventListener('change',renderProductContaminants);
 document.getElementById('contaminantTinProductIdentity')?.addEventListener('change',renderProductContaminants);
+document.getElementById('contaminantTinJuiceVariant')?.addEventListener('change',renderProductContaminants);
 
 function selectedCatalogProductForContaminants(){
  return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
@@ -2423,7 +2438,8 @@ function contaminantPackagingState(){
  return {
    format:document.getElementById('contaminantPackageFormat')?.value||'',
    material:document.getElementById('contaminantContainerMaterial')?.value||'',
-   identity:document.getElementById('contaminantTinProductIdentity')?.value||''
+   identity:document.getElementById('contaminantTinProductIdentity')?.value||'',
+   juiceVariant:document.getElementById('contaminantTinJuiceVariant')?.value||''
  };
 }
 function tinNamedIdentityEligible(p){
@@ -2444,6 +2460,43 @@ function selectedPackagingTinRule(p){
  if(!pkg.identity||!pkg.material)return null;
  const packaging=pkg.material==='other'?'other_container':pkg.material;
  return contaminantsDb.packaging_conditional_tin_rules_v9.find(x=>x.product_family===pkg.identity&&x.packaging===packaging)||null;
+}
+function syncTinJuiceVariantInput(p){
+ const sel=document.getElementById('contaminantTinJuiceVariant');
+ if(!sel)return;
+ const eligible=!!p&&p.id==='fruit-juices';
+ sel.disabled=!eligible;
+ if(!eligible)sel.value='';
+}
+function selectedJuiceVariantTinRule(p){
+ if(!p||p.id!=='fruit-juices'||!contaminantsDb||!Array.isArray(contaminantsDb.product_variant_conditional_tin_rules_v9))return null;
+ const variant=contaminantPackagingState().juiceVariant;
+ if(!variant)return null;
+ return contaminantsDb.product_variant_conditional_tin_rules_v9.find(x=>x.catalog_id===p.id&&x.variant===variant)||null;
+}
+function renderJuiceTinStatus(p){
+ const el=document.getElementById('juiceTinStatus');
+ if(!el)return;
+ syncTinJuiceVariantInput(p);
+ if(!p||p.id!=='fruit-juices'){
+   el.className='notice';
+   el.innerHTML='The named fruit-juice Tin row is available only for the FoSCoS <b>Fruits Juices</b> product with an exact eligible variant.';
+   return;
+ }
+ const variant=contaminantPackagingState().juiceVariant;
+ if(!variant){
+   el.className='notice';
+   el.innerHTML='<b>No exact juice variant selected.</b> PMSV will not apply the 250 mg/kg Tin row to generic Fruits Juices.';
+   return;
+ }
+ const matched=selectedJuiceVariantTinRule(p);
+ if(matched){
+   el.className='notice oknote';
+   el.innerHTML='<b>Exact FoSCoS juice variant matched:</b> '+esc(variant)+' → Tin <b>'+esc(String(matched.limit))+' '+esc(matched.unit)+'</b> under the FSSAI article '+esc(matched.article)+'.';
+   return;
+ }
+ el.className='notice';
+ el.innerHTML='<b>This juice variant is not enabled for the named Tin article.</b> PMSV applies no Tin limit from that row.';
 }
 function renderPackagingTinStatus(p){
  const el=document.getElementById('packagingTinStatus');
@@ -2494,6 +2547,7 @@ function renderProductContaminants(){
  }
  const p=selectedCatalogProductForContaminants();
  renderPackagingTinStatus(p);
+ renderJuiceTinStatus(p);
  if(!p){
    el.innerHTML='<div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div>';
    return;
@@ -2502,7 +2556,8 @@ function renderProductContaminants(){
  const universal=Array.isArray(contaminantsDb.all_food_rules)?contaminantsDb.all_food_rules.filter(x=>x.auto_apply===true):[];
  const exact=profile&&Array.isArray(profile.rules)?profile.rules:[];
  const packagingTin=selectedPackagingTinRule(p);
- const rules=[...exact,...(packagingTin?[packagingTin]:[]),...universal];
+ const juiceVariantTin=selectedJuiceVariantTinRule(p);
+ const rules=[...exact,...(packagingTin?[packagingTin]:[]),...(juiceVariantTin?[juiceVariantTin]:[]),...universal];
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
  const profileMsg=profile
   ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+exact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
@@ -2513,7 +2568,7 @@ function renderProductContaminants(){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=152',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=153',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){

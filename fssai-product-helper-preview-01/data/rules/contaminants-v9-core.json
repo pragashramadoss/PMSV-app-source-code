@@ -17,17 +17,17 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_16_tin_tamarind_mapping",
+    "stage": "phase_17_tin_fruit_juice_variant_gate",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 51,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Five named FSSAI meat Tin identities remain runtime-active only after explicit user identity selection plus container material.",
-      "Builds 150-152 add exact/verified Tin mappings for tomato juice, fruit pulp/puree products, five infant identities, and Tamarind Pulp/Puree and Concentrate.",
-      "Generic Fruit Juices cannot inherit the 250 mg/kg juice Tin row because the FSSAI article names only orange, apple, tomato, pineapple and lemon; variant identity must be collected first.",
-      "Canned mushrooms and pickled cucumber remain locked until an exact current FoSCoS identity is established.",
+      "Five named meat Tin identities require explicit exact identity plus container material.",
+      "Generic Fruits Juices now requires an exact current FoSCoS variant selection before the named 250 mg/kg Tin juice article can apply.",
+      "Only current FoSCoS variants that directly correspond to orange, apple, tomato, pineapple or lemon are enabled; other fruit-juice variants receive no Tin rule from this article.",
+      "Canned mushrooms and pickled cucumber remain locked until exact current FoSCoS product identity is established.",
       "Generic 'Canned beverages', 'Canned foods other than beverages' and 'Processed and canned food products' rows remain disabled as automatic fallbacks.",
       "Keep all 'Foods not specified' rows reference-only until absence of a more specific row is proven.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied."
@@ -79,7 +79,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Handle the specific orange/apple/pineapple/lemon juice Tin row through exact FoSCoS variant identity, not the generic Fruit Juices catalogue row. Continue keeping generic canned-food rows disabled.",
+    "next_priority": "Review canned mushrooms and pickled cucumber against current FoSCoS product identities; do not broaden the juice or canned-food rules.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -130,7 +130,9 @@
     "packaging_conditional_tin_runtime_rules_active": 10,
     "tin_explicit_alias_products_added_build_150": 6,
     "tin_infant_products_added_build_151": 5,
-    "tin_tamarind_products_added_build_152": 1
+    "tin_tamarind_products_added_build_152": 1,
+    "tin_fruit_juice_variant_rules_loaded": 6,
+    "tin_fruit_juice_variant_gate": true
   },
   "all_food_rules": [
     {
@@ -16381,6 +16383,86 @@
       "auto_apply": false,
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
       "ui_gate": "requires_packaging_and_applicability_check"
+    }
+  ],
+  "product_variant_conditional_tin_rules_v9": [
+    {
+      "catalog_id": "fruit-juices",
+      "variant": "Apple",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Juice of orange, apple, tomato, pineapple and lemon",
+      "auto_apply": false,
+      "requires_input": "product.variant",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "FoSCoS Fruits Juices variant list updated 28.11.2025",
+      "verification": "official_fssai_v9_plus_official_foscos_variant"
+    },
+    {
+      "catalog_id": "fruit-juices",
+      "variant": "Pineapple",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Juice of orange, apple, tomato, pineapple and lemon",
+      "auto_apply": false,
+      "requires_input": "product.variant",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "FoSCoS Fruits Juices variant list updated 28.11.2025",
+      "verification": "official_fssai_v9_plus_official_foscos_variant"
+    },
+    {
+      "catalog_id": "fruit-juices",
+      "variant": "Lemon",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Juice of orange, apple, tomato, pineapple and lemon",
+      "auto_apply": false,
+      "requires_input": "product.variant",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "FoSCoS Fruits Juices variant list updated 28.11.2025",
+      "verification": "official_fssai_v9_plus_official_foscos_variant"
+    },
+    {
+      "catalog_id": "fruit-juices",
+      "variant": "Mandarine/Tangerine/Orange",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Juice of orange, apple, tomato, pineapple and lemon",
+      "auto_apply": false,
+      "requires_input": "product.variant",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "FoSCoS Fruits Juices variant list updated 28.11.2025",
+      "verification": "official_fssai_v9_plus_official_foscos_variant"
+    },
+    {
+      "catalog_id": "fruit-juices",
+      "variant": "Sweet Orange",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Juice of orange, apple, tomato, pineapple and lemon",
+      "auto_apply": false,
+      "requires_input": "product.variant",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "FoSCoS Fruits Juices variant list updated 28.11.2025",
+      "verification": "official_fssai_v9_plus_official_foscos_variant"
+    },
+    {
+      "catalog_id": "fruit-juices",
+      "variant": "Tomato",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Juice of orange, apple, tomato, pineapple and lemon",
+      "auto_apply": false,
+      "requires_input": "product.variant",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "FoSCoS Fruits Juices variant list updated 28.11.2025",
+      "verification": "official_fssai_v9_plus_official_foscos_variant"
     }
   ]
 }
