@@ -817,9 +817,9 @@
       "histamine_product_limit_rows_loaded": 11
     },
     "contaminants_v9": {
-      "stage": "phase_26_low_lactose_milk_exact",
+      "stage": "phase_27_dehydrated_milk_lead_factor_gate",
       "metal_article_master_rows_loaded": 382,
-      "next_validation": "Add concentration-factor gated Lead logic for dehydrated/concentrated milks; keep unadjusted base limit hidden.",
+      "next_validation": "Add milk-powder subtype gate; exclude Cream Powder from the Milks Lead rule.",
       "arsenic_article_rows_loaded": 95,
       "section_2_1_article_master_complete": true,
       "lead_article_rows_loaded": 163,
@@ -861,7 +861,9 @@
       "exact_milk_tea_products_added_build_161": 13,
       "exact_milk_tea_rules_added_build_161": 26,
       "low_lactose_milk_products_added_build_162": 1,
-      "low_lactose_milk_rules_added_build_162": 2
+      "low_lactose_milk_rules_added_build_162": 2,
+      "dehydrated_milk_lead_factor_products": 2,
+      "dehydrated_milk_lead_factor_ui": true
     }
   },
   "source_hierarchy": [
@@ -27793,7 +27795,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 162,
+  "build_number": 163,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {

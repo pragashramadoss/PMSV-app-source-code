@@ -556,13 +556,19 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     </select>
     <small>PMSV loads only verified FoSCoS variants relevant to the selected product. Some variants also require an exact package format before a Tin row applies.</small>
   </div>
+  <div class="field">
+    <label>Milk concentration factor for Lead</label>
+    <input id="contaminantMilkConcentrationFactor" type="number" min="0.000001" step="0.01" placeholder="Enter factor">
+    <small>Used only when FSSAI requires the 0.02 mg/kg milk Lead limit to be adjusted for a partially or wholly dehydrated milk. PMSV calculates 0.02 × factor and does not guess the factor.</small>
+  </div>
 </div>
 <div id="packagingTinStatus" class="notice">Packaging-dependent Tin rules remain inactive until both an exact product identity and the required packaging input are available.</div>
 <div id="variantTinStatus" class="notice">Variant-dependent Tin rules remain inactive until the selected product has a verified FoSCoS variant mapping and all required inputs are provided.</div>
+<div id="dehydratedMilkLeadStatus" class="notice">Dehydrated-milk Lead adjustment remains inactive unless the selected product is covered and a valid concentration factor is entered.</div>
 <div id="productContaminantResults"><div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div></div>
 </div>
 <div class="card">
-<div class="section-title"><h2>Coverage status</h2><span>Build 162 · low-lactose milk exact mapping</span></div>
+<div class="section-title"><h2>Coverage status</h2><span>Build 163 · dehydrated milk Lead factor gate</span></div>
 <div class="notice">The reusable contaminant master now includes 35 exact standardized-product profiles, 14 exact ingredient-trigger groups, the complete PCB/PAH fish table, and all 213 pesticide entries and 1,098 residue MRL commodity rows in Section 2.3.1, plus the Section 2.3.2 seafood antibiotic limits, prohibited veterinary-drug EMRL rules and honey antibiotic MRPL table. Sections 2.3.2, 2.4, 2.5.1 and 2.5.2 are now loaded from current FSSAI Version IX. Histamine includes the official high-histidine fish-family/species list and all 11 product-category n/c/m/M limits. No missing limit is estimated from another website.</div>
 <div class="notice"><b>2026 amendment:</b> FSSAI notified a final Contaminants, Toxins and Residues amendment on 25 May 2026 with commencement on <b>1 December 2026</b>. Build 141 continues to use the currently effective Version IX basis as of 3 October 2026.</div>
 </div>
@@ -2385,7 +2391,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=162',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=163',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2410,6 +2416,7 @@ document.getElementById('contaminantPackageFormat')?.addEventListener('change',r
 document.getElementById('contaminantContainerMaterial')?.addEventListener('change',renderProductContaminants);
 document.getElementById('contaminantTinProductIdentity')?.addEventListener('change',renderProductContaminants);
 document.getElementById('contaminantTinVariant')?.addEventListener('change',renderProductContaminants);
+document.getElementById('contaminantMilkConcentrationFactor')?.addEventListener('input',renderProductContaminants);
 
 function selectedCatalogProductForContaminants(){
  return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
@@ -2572,6 +2579,57 @@ function renderPackagingTinStatus(p){
  el.innerHTML='<b>Packaging recorded, but no exact packaging-dependent Tin product mapping is loaded for '+esc(p.name)+'.</b> PMSV will not substitute the generic canned-food limit.';
 }
 
+function dehydratedMilkLeadConfigForProduct(p){
+ if(!p||!contaminantsDb||!Array.isArray(contaminantsDb.dehydrated_milk_conditional_lead_rules_v9))return null;
+ return contaminantsDb.dehydrated_milk_conditional_lead_rules_v9.find(x=>x.catalog_id===p.id)||null;
+}
+function syncDehydratedMilkLeadInput(p){
+ const input=document.getElementById('contaminantMilkConcentrationFactor');
+ if(!input)return;
+ const eligible=!!dehydratedMilkLeadConfigForProduct(p);
+ input.disabled=!eligible;
+ if(!eligible)input.value='';
+}
+function dehydratedMilkConcentrationFactor(){
+ const raw=document.getElementById('contaminantMilkConcentrationFactor')?.value||'';
+ const n=Number(raw);
+ return Number.isFinite(n)&&n>0?n:null;
+}
+function selectedDehydratedMilkLeadRule(p){
+ const cfg=dehydratedMilkLeadConfigForProduct(p);
+ const factor=dehydratedMilkConcentrationFactor();
+ if(!cfg||factor===null)return null;
+ const adjusted=Number((Number(cfg.base_limit)*factor).toFixed(6));
+ return {
+   contaminant:cfg.contaminant,
+   limit:adjusted,
+   unit:cfg.unit,
+   article:cfg.article,
+   condition:'FSSAI base '+cfg.base_limit+' '+cfg.unit+' × concentration factor '+factor+' = '+adjusted+' '+cfg.unit+'. '+cfg.condition,
+   source_basis:cfg.source_basis,
+   verification:cfg.verification
+ };
+}
+function renderDehydratedMilkLeadStatus(p){
+ const el=document.getElementById('dehydratedMilkLeadStatus');
+ if(!el)return;
+ syncDehydratedMilkLeadInput(p);
+ const cfg=dehydratedMilkLeadConfigForProduct(p);
+ if(!cfg){
+   el.className='notice';
+   el.innerHTML='No concentration-factor Lead rule is loaded for this selected product.';
+   return;
+ }
+ const factor=dehydratedMilkConcentrationFactor();
+ if(factor===null){
+   el.className='notice';
+   el.innerHTML='<b>Concentration factor required.</b> FSSAI requires the milk Lead limit to be adjusted for this dehydrated/concentrated product. PMSV will not show an unadjusted final limit.';
+   return;
+ }
+ const rule=selectedDehydratedMilkLeadRule(p);
+ el.className='notice oknote';
+ el.innerHTML='<b>Adjusted Lead maximum:</b> 0.02 mg/kg × '+esc(String(factor))+' = <b>'+esc(String(rule.limit))+' mg/kg</b>.';
+}
 function renderProductContaminants(){
  const el=document.getElementById('productContaminantResults');
  if(!el)return;
@@ -2582,6 +2640,7 @@ function renderProductContaminants(){
  const p=selectedCatalogProductForContaminants();
  renderPackagingTinStatus(p);
  renderVariantTinStatus(p);
+ renderDehydratedMilkLeadStatus(p);
  if(!p){
    el.innerHTML='<div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div>';
    return;
@@ -2592,7 +2651,8 @@ function renderProductContaminants(){
  const packagingTin=selectedPackagingTinRule(p);
  const variantTin=selectedVariantTinRule(p);
  const productPackageTin=variantTin?null:selectedProductPackageTinRule(p);
- const rules=[...exact,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...universal];
+ const dehydratedMilkLead=selectedDehydratedMilkLeadRule(p);
+ const rules=[...exact,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...universal];
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
  const profileMsg=profile
   ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+exact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
@@ -2603,7 +2663,7 @@ function renderProductContaminants(){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=162',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=163',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
