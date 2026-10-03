@@ -17,14 +17,14 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_5_biotoxins_melamine_complete",
+    "stage": "phase_5_histamine_complete",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 35,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Sections 2.4 fish biotoxins and 2.5.1 melamine are complete. Continue Section 2.5.2 histamine in fish and fishery products.",
+      "Section 2.5.2 histamine is complete, including the official high-histidine species list and all 11 product-category sampling limits.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied.",
       "Continue remaining exact Section 2.1 article-of-food normalization before enabling generic 'Foods not specified' fallback.",
       "Add packaging-triggered tin logic after packaging input is implemented."
@@ -38,7 +38,8 @@
       "2.3.1 Insecticide MRLs — complete current Version IX table, serials 1-213",
       "2.3.2 Antibiotic and pharmacologically active substances — complete current Version IX section",
       "2.4 Fish biotoxins — complete current Version IX table",
-      "2.5.1 Melamine — complete current Version IX table"
+      "2.5.1 Melamine — complete current Version IX table",
+      "2.5.2 Histamine in fish and fishery products — complete current Version IX section"
     ],
     "ingredient_trigger_groups": 14,
     "crop_contaminant_groups": 6,
@@ -55,7 +56,10 @@
     "veterinary_tolerance_rows_loaded": 358,
     "antibiotic_section_complete": true,
     "fish_biotoxin_rows_loaded": 5,
-    "melamine_rows_loaded": 3
+    "melamine_rows_loaded": 3,
+    "histamine_species_families_loaded": 10,
+    "histamine_species_rows_loaded": 119,
+    "histamine_product_limit_rows_loaded": 11
   },
   "all_food_rules": [
     {
@@ -10973,6 +10977,644 @@
           "maximum_level": "2.5"
         }
       ]
+    },
+    "histamine": {
+      "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products",
+      "source_version": "Version IX (03.02.2026)",
+      "status": "complete",
+      "potential_histamine_species_families": [
+        {
+          "family": "Carangidae",
+          "species": [
+            {
+              "scientific_name": "Alectis indica",
+              "common_name": "Indian Threadfish"
+            },
+            {
+              "scientific_name": "Alepes spp.",
+              "common_name": "Scad"
+            },
+            {
+              "scientific_name": "Atropus atropos",
+              "common_name": "Cleftbelly trevally"
+            },
+            {
+              "scientific_name": "Carangoides bartholomaei",
+              "common_name": "Yellow Jack"
+            },
+            {
+              "scientific_name": "Carangoides spp.",
+              "common_name": "Trevally"
+            },
+            {
+              "scientific_name": "Caranx crysos",
+              "common_name": "Blue runner"
+            },
+            {
+              "scientific_name": "Caranx spp.",
+              "common_name": "Jack/Trevally"
+            },
+            {
+              "scientific_name": "Decapterus koheru",
+              "common_name": "Koheru"
+            },
+            {
+              "scientific_name": "Decapterus russelli",
+              "common_name": "Indian scad"
+            },
+            {
+              "scientific_name": "Decapterus spp.",
+              "common_name": "Scad"
+            },
+            {
+              "scientific_name": "Elagatis bipinnulata",
+              "common_name": "Rainbow Runner"
+            },
+            {
+              "scientific_name": "Megalaspis cordyla",
+              "common_name": "Horse Mackerel/Torpedo Scad"
+            },
+            {
+              "scientific_name": "Nematistius pectoralis",
+              "common_name": "Roosterfish"
+            },
+            {
+              "scientific_name": "Oligoplites saurus",
+              "common_name": "Leather Jacket"
+            },
+            {
+              "scientific_name": "Pseudocaranx dentex",
+              "common_name": "White trevally"
+            },
+            {
+              "scientific_name": "Scomberoides commersonnianus",
+              "common_name": "Talang queenfish"
+            },
+            {
+              "scientific_name": "Scomberoides spp.",
+              "common_name": "Leather Jacket/Queen Fish"
+            },
+            {
+              "scientific_name": "Selene spp.",
+              "common_name": "Moonfish"
+            },
+            {
+              "scientific_name": "Seriola dumerili",
+              "common_name": "Greater/Japanese Amberjack or Rudder Fish"
+            },
+            {
+              "scientific_name": "Seriola lalandi",
+              "common_name": "Yellowtail Amberjack"
+            },
+            {
+              "scientific_name": "Seriola quinqueradiata",
+              "common_name": "Japanese Amberjack"
+            },
+            {
+              "scientific_name": "Seriola rivoliana",
+              "common_name": "Longfin Yellowtail"
+            },
+            {
+              "scientific_name": "Seriola spp.",
+              "common_name": "Amberjack or Yellowtail"
+            },
+            {
+              "scientific_name": "Trachurus capensis",
+              "common_name": "Cape Horse Mackerel"
+            },
+            {
+              "scientific_name": "Trachurus japonicas",
+              "common_name": "Japanese Jack Mackerel"
+            },
+            {
+              "scientific_name": "Trachurus murphyi",
+              "common_name": "Chilean Jack Mackerel"
+            },
+            {
+              "scientific_name": "Trachurus novaezelandiae",
+              "common_name": "Yellowtail Horse Mackerel"
+            },
+            {
+              "scientific_name": "Trachurus spp.",
+              "common_name": "Jack Mackerel/Horse Mackerel"
+            },
+            {
+              "scientific_name": "Trachurus trachurus",
+              "common_name": "Atlantic Horse Mackerel"
+            },
+            {
+              "scientific_name": "Uraspis secunda",
+              "common_name": "Cottonmouth jack"
+            }
+          ]
+        },
+        {
+          "family": "Chanidae",
+          "species": [
+            {
+              "scientific_name": "Chanos chanos",
+              "common_name": "Milkfish"
+            }
+          ]
+        },
+        {
+          "family": "Clupeidae",
+          "species": [
+            {
+              "scientific_name": "Alosa pseudoharengus",
+              "common_name": "Alewife"
+            },
+            {
+              "scientific_name": "Alosa spp.",
+              "common_name": "Herring"
+            },
+            {
+              "scientific_name": "Amblygaster sirm",
+              "common_name": "Spotted Sardinella"
+            },
+            {
+              "scientific_name": "Anodontostoma chacunda",
+              "common_name": "Chacunda gizzard shad"
+            },
+            {
+              "scientific_name": "Brevoortia patronus",
+              "common_name": "Gulf Menhaden"
+            },
+            {
+              "scientific_name": "Brevoortia spp.",
+              "common_name": "Menhaden"
+            },
+            {
+              "scientific_name": "Brevoortia tyrannus",
+              "common_name": "Atlantic Menhaden"
+            },
+            {
+              "scientific_name": "Clupea bentincki",
+              "common_name": "Araucanian herring"
+            },
+            {
+              "scientific_name": "Clupea harengus",
+              "common_name": "Atlantic herring"
+            },
+            {
+              "scientific_name": "Clupea pallasii pallasii",
+              "common_name": "Pacific herring"
+            },
+            {
+              "scientific_name": "Clupea spp.",
+              "common_name": "Pichard/Shad/Herring"
+            },
+            {
+              "scientific_name": "Dorosoma spp.",
+              "common_name": "Gizaard Shad"
+            },
+            {
+              "scientific_name": "Ethmalosa fimbriata",
+              "common_name": "Bonga Shad"
+            },
+            {
+              "scientific_name": "Ethmidium maculatum",
+              "common_name": "Pacific Menhaden"
+            },
+            {
+              "scientific_name": "Etrumeus sadina",
+              "common_name": "Red-eye round herring"
+            },
+            {
+              "scientific_name": "Harengula spp.",
+              "common_name": "Sprat/Herring"
+            },
+            {
+              "scientific_name": "Harengula thrissina",
+              "common_name": "Pacific flatiron herring"
+            },
+            {
+              "scientific_name": "Hilsa spp.",
+              "common_name": "Shad"
+            },
+            {
+              "scientific_name": "Nematolosa spp.",
+              "common_name": "Gizzard Shad"
+            },
+            {
+              "scientific_name": "Opisthonema libertate",
+              "common_name": "Pacific thread herring"
+            },
+            {
+              "scientific_name": "Opisthonema spp",
+              "common_name": "Thread Herring"
+            },
+            {
+              "scientific_name": "Opisthopterus tardoore",
+              "common_name": "Tardoore"
+            },
+            {
+              "scientific_name": "Sardina pilchardus",
+              "common_name": "European Pilchard"
+            },
+            {
+              "scientific_name": "Sardinella aurita",
+              "common_name": "Round Sardinella"
+            },
+            {
+              "scientific_name": "Sardinella gibbosa",
+              "common_name": "Gold stripe Sardinella"
+            },
+            {
+              "scientific_name": "Sardinella longiceps",
+              "common_name": "Indian Oil Sardine"
+            },
+            {
+              "scientific_name": "Sardinella maderensis",
+              "common_name": "Madeiran Sardinella"
+            },
+            {
+              "scientific_name": "Sardinella spp.",
+              "common_name": "Sardine"
+            },
+            {
+              "scientific_name": "Sardinops sagax",
+              "common_name": "South American Pilchard"
+            },
+            {
+              "scientific_name": "Sardinops spp.",
+              "common_name": "South American Pilchard"
+            },
+            {
+              "scientific_name": "Spratelloides gracilis",
+              "common_name": "Silver-stripe round herring"
+            },
+            {
+              "scientific_name": "Tenualosa ilisha",
+              "common_name": "Hilsa shad"
+            },
+            {
+              "scientific_name": "Tenualosa spp.",
+              "common_name": "Shad"
+            }
+          ]
+        },
+        {
+          "family": "Coryphaenidae",
+          "species": [
+            {
+              "scientific_name": "Coryphaena hippurus",
+              "common_name": "Mahi-Mahi /Dolphin fish"
+            }
+          ]
+        },
+        {
+          "family": "Engraulidae",
+          "species": [
+            {
+              "scientific_name": "Anchoa spp.",
+              "common_name": "Anchovy"
+            },
+            {
+              "scientific_name": "Anchoviella spp.",
+              "common_name": "Anchovy"
+            },
+            {
+              "scientific_name": "Cetengraulis mysticetus",
+              "common_name": "Pacific anchoveta"
+            },
+            {
+              "scientific_name": "Engraulis capensis",
+              "common_name": "Southern African anchovy"
+            },
+            {
+              "scientific_name": "Engraulis encrasicolus",
+              "common_name": "European anchovy"
+            },
+            {
+              "scientific_name": "Engraulis japonicus",
+              "common_name": "Japanese anchovy"
+            },
+            {
+              "scientific_name": "Engraulis ringens",
+              "common_name": "Peruvian anchovy"
+            },
+            {
+              "scientific_name": "Engraulis spp.",
+              "common_name": "Anchovy"
+            },
+            {
+              "scientific_name": "Stolephorus spp.",
+              "common_name": "Anchovy"
+            }
+          ]
+        },
+        {
+          "family": "Istiophoridae",
+          "species": [
+            {
+              "scientific_name": "Istiompax indica",
+              "common_name": "Black Marlin"
+            },
+            {
+              "scientific_name": "Istiophorus albicans",
+              "common_name": "Atlantic sailfish"
+            },
+            {
+              "scientific_name": "Istiophorus platypterus",
+              "common_name": "Indo-Pacific sailfish"
+            },
+            {
+              "scientific_name": "Kajikia albida",
+              "common_name": "Atlantic white marlin"
+            },
+            {
+              "scientific_name": "Kajikia audax",
+              "common_name": "Striped Marlin"
+            },
+            {
+              "scientific_name": "Makaira mazara",
+              "common_name": "Indo-Pacific blue marlin"
+            },
+            {
+              "scientific_name": "Makaira spp.",
+              "common_name": "Marlin/Sailfish"
+            },
+            {
+              "scientific_name": "Tetrapturus spp.",
+              "common_name": "Marlin/Spearfish"
+            },
+            {
+              "scientific_name": "Tetrapturus spp.",
+              "common_name": "Spearfish"
+            }
+          ]
+        },
+        {
+          "family": "Mugilidae",
+          "species": [
+            {
+              "scientific_name": "Mugil cephalus",
+              "common_name": "Flathead Grey Mullet"
+            }
+          ]
+        },
+        {
+          "family": "Pristigasteridae",
+          "species": [
+            {
+              "scientific_name": "Ilisha spp.",
+              "common_name": "Ilisha/Pellona"
+            },
+            {
+              "scientific_name": "Pellona ditchella",
+              "common_name": "Indian pellona"
+            }
+          ]
+        },
+        {
+          "family": "Scombridae",
+          "species": [
+            {
+              "scientific_name": "Acanthocybium solandri",
+              "common_name": "Wahoo"
+            },
+            {
+              "scientific_name": "Auxis spp.",
+              "common_name": "Bullet Tuna/Frigate Tuna"
+            },
+            {
+              "scientific_name": "Cybiosarda elegans",
+              "common_name": "Leaping Bonito"
+            },
+            {
+              "scientific_name": "Euthynnus affinis",
+              "common_name": "Little tuna or Kawakawa"
+            },
+            {
+              "scientific_name": "Euthynnus spp.",
+              "common_name": "Bonito"
+            },
+            {
+              "scientific_name": "Gasterochisma melampus",
+              "common_name": "Butterfly kingfish"
+            },
+            {
+              "scientific_name": "Grammatorcynus spp.",
+              "common_name": "Short Mackerel"
+            },
+            {
+              "scientific_name": "Gymnosarda unicolor",
+              "common_name": "Dogtooth tuna"
+            },
+            {
+              "scientific_name": "Katsuwonus pelamis",
+              "common_name": "Skipjack Tuna"
+            },
+            {
+              "scientific_name": "Orcynopsis unicolor",
+              "common_name": "Plain Bonito"
+            },
+            {
+              "scientific_name": "Rastrelliger brachysoma",
+              "common_name": "Short Mackerel"
+            },
+            {
+              "scientific_name": "Rastrelliger kanagurta",
+              "common_name": "Indian Mackerel"
+            },
+            {
+              "scientific_name": "Sarda spp",
+              "common_name": "Bonito"
+            },
+            {
+              "scientific_name": "Scomber australasicus",
+              "common_name": "Blue mackerel"
+            },
+            {
+              "scientific_name": "Scomber japonicas",
+              "common_name": "Chub mackerel"
+            },
+            {
+              "scientific_name": "Scomber scombrus",
+              "common_name": "Atlantic mackerel"
+            },
+            {
+              "scientific_name": "Scomber spp.",
+              "common_name": "Mackerel"
+            },
+            {
+              "scientific_name": "Scomberomorus cavalla",
+              "common_name": "King Mackerel"
+            },
+            {
+              "scientific_name": "Scomberomorus commerson",
+              "common_name": "Narrow-barred Spanish mackerel"
+            },
+            {
+              "scientific_name": "Scomberomorus guttatus",
+              "common_name": "Indo-Pacific king mackerel/Spotted Spanish Mackerel"
+            },
+            {
+              "scientific_name": "Scomberomorus niphonius",
+              "common_name": "Japanese Spanish mackerel"
+            },
+            {
+              "scientific_name": "Scomberomorus spp.",
+              "common_name": "Spanish Mackerel"
+            },
+            {
+              "scientific_name": "Scomeromorus lineolatus",
+              "common_name": "Streaked seerfish"
+            },
+            {
+              "scientific_name": "Thunnus alalunga",
+              "common_name": "Albacore Tuna"
+            },
+            {
+              "scientific_name": "Thunnus albacares",
+              "common_name": "Yellowfin Tuna"
+            },
+            {
+              "scientific_name": "Thunnus atlanticus",
+              "common_name": "Blackfin Tuna"
+            },
+            {
+              "scientific_name": "Thunnus maccoyi",
+              "common_name": "Southern bluefin tuna"
+            },
+            {
+              "scientific_name": "Thunnus obesus",
+              "common_name": "Bigeye Tuna"
+            },
+            {
+              "scientific_name": "Thunnus orientalis",
+              "common_name": "Pacific bluefin tuna"
+            },
+            {
+              "scientific_name": "Thunnus spp.",
+              "common_name": "Tuna"
+            },
+            {
+              "scientific_name": "Thunnus thynnus",
+              "common_name": "Atlantic bluefin tuna"
+            },
+            {
+              "scientific_name": "Thunnus tonggol",
+              "common_name": "Longtail Tuna"
+            }
+          ]
+        },
+        {
+          "family": "Xiphiidae",
+          "species": [
+            {
+              "scientific_name": "Xiphias gladius",
+              "common_name": "Swordfish"
+            }
+          ]
+        }
+      ],
+      "product_limits": [
+        {
+          "serial": 1,
+          "product_category": "Raw/Chilled/Frozen Finfish",
+          "applicable_to": "Species with high amount of free histidine (listed fish species with potential to cause histamine fish poisoning)",
+          "n": 9,
+          "c": 2,
+          "m_mg_per_kg": 100,
+          "M_mg_per_kg": 200
+        },
+        {
+          "serial": 2,
+          "product_category": "Thermally Processed Fishery Products",
+          "n": 9,
+          "c": 2,
+          "m_mg_per_kg": 100,
+          "M_mg_per_kg": 200
+        },
+        {
+          "serial": 3,
+          "product_category": "Smoked fishery products",
+          "n": 9,
+          "c": 2,
+          "m_mg_per_kg": 100,
+          "M_mg_per_kg": 200
+        },
+        {
+          "serial": 4,
+          "product_category": "Fish Mince/Surimi and analogues",
+          "n": 9,
+          "c": 2,
+          "m_mg_per_kg": 100,
+          "M_mg_per_kg": 200
+        },
+        {
+          "serial": 5,
+          "product_category": "Battered and breaded fishery products",
+          "n": 9,
+          "c": 2,
+          "m_mg_per_kg": 100,
+          "M_mg_per_kg": 200
+        },
+        {
+          "serial": 6,
+          "product_category": "Other Ready to Eat fishery products",
+          "n": 9,
+          "c": 2,
+          "m_mg_per_kg": 100,
+          "M_mg_per_kg": 200
+        },
+        {
+          "serial": 7,
+          "product_category": "Other value added fishery products",
+          "n": 9,
+          "c": 2,
+          "m_mg_per_kg": 100,
+          "M_mg_per_kg": 200
+        },
+        {
+          "serial": 8,
+          "product_category": "Other fish based products",
+          "n": 9,
+          "c": 2,
+          "m_mg_per_kg": 100,
+          "M_mg_per_kg": 200
+        },
+        {
+          "serial": 9,
+          "product_category": "Dried/ Salted and Dried fishery products",
+          "n": 9,
+          "c": 2,
+          "m_mg_per_kg": 200,
+          "M_mg_per_kg": 400
+        },
+        {
+          "serial": 10,
+          "product_category": "Fermented Fishery products",
+          "n": 9,
+          "c": 2,
+          "m_mg_per_kg": 200,
+          "M_mg_per_kg": 400
+        },
+        {
+          "serial": 11,
+          "product_category": "Fish Pickle",
+          "n": 9,
+          "c": 2,
+          "m_mg_per_kg": 200,
+          "M_mg_per_kg": 400
+        }
+      ],
+      "sampling_definitions": {
+        "n": "Number of units comprising the sample",
+        "c": "Maximum allowable number of defective sample units",
+        "m": "Acceptable level in a sample",
+        "M": "Specified level when exceeded in one or more samples would cause the lot to be rejected"
+      },
+      "interpretation": {
+        "satisfactory": [
+          "The mean value observed is ≤ m.",
+          "A maximum of c/n values observed are between m and M.",
+          "No values observed exceed M."
+        ],
+        "unsatisfactory": "The mean value observed exceeds m, or more than c/n values are between m and M, or one or more observed values are > M."
+      }
     }
   }
 }
