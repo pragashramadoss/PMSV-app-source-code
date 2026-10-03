@@ -17,21 +17,19 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_19_tin_canned_fruit_group_runtime_complete",
+    "stage": "phase_20_tin_pickled_cucumber_gate",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 51,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "The named canned-fruit/vegetable Tin article is now runtime-mapped only through exact product/variant/package gates.",
-      "Thermally Processed Fruits requires one of six named fruit identities plus Package format = Canned.",
-      "Thermally Processed Fruit Salad/Cocktail/Mix requires Fruit cocktail or Tropical fruit salad plus Package format = Canned.",
-      "Thermally Processed Vegetables plus Package format = Canned maps to the article's canned-vegetables limb; Mushroom still uses its more-specific Canned mushrooms row.",
-      "Pickled cucumber remains the next exact Tin identity to map.",
-      "Generic 'Canned beverages', 'Canned foods other than beverages' and 'Processed and canned food products' rows remain disabled as automatic fallbacks.",
-      "Keep all 'Foods not specified' rows reference-only until absence of a more specific row is proven.",
-      "The combined meat 250 mg/kg row remains locked while the more-specific container-conditioned meat rows are active."
+      "Exact Pickled cucumber is now mapped only through Vegetable Pickles + explicit Cucumber subtype.",
+      "The named canned-fruit/vegetable Tin article is runtime-complete through exact product/variant/package gates.",
+      "Five Tin rows remain intentionally non-auto-applied: Canned beverages; Canned foods other than beverages; the combined meat 250 mg/kg row; Foods not specified; Processed and canned food products.",
+      "Do not enable the broad canned rows until overlap/precedence against more-specific product rows is proven from FSSAI.",
+      "Keep 'Foods not specified' reference-only.",
+      "The combined meat 250 mg/kg row remains locked while more-specific container-conditioned meat rows are active."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -80,7 +78,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Map Pickled cucumber only through an exact cucumber identity within the current FSSAI/FoSCoS vegetable-pickle route. Keep canned beverages, canned foods other than beverages, processed/canned foods and Foods not specified disabled.",
+    "next_priority": "Review the five remaining Tin rows only as broad/default/overlap provisions. Do not auto-apply them until precedence against more-specific Tin articles is proven.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -134,12 +132,13 @@
     "tin_tamarind_products_added_build_152": 1,
     "tin_fruit_juice_variant_rules_loaded": 6,
     "tin_fruit_juice_variant_gate": true,
-    "tin_product_variant_rules_loaded": 15,
+    "tin_product_variant_rules_loaded": 16,
     "tin_variant_products": 2,
     "tin_mushroom_canned_gate": true,
     "tin_product_package_rules_loaded": 1,
     "tin_canned_fruit_group_runtime_complete": true,
-    "tin_canned_fruit_named_variants_added_build_155": 8
+    "tin_canned_fruit_named_variants_added_build_155": 8,
+    "tin_pickled_cucumber_gate": true
   },
   "all_food_rules": [
     {
@@ -16596,6 +16595,19 @@
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
       "variant_basis": "Exact finished-product identity supplied within FSSAI 2.3.2 Thermally Processed Fruit Salad/Cocktail/Mix; the Tin article names Fruit cocktail or Tropical fruit salad and applies only when canned.",
       "verification": "official_fssai_v9_plus_fssai_product_identity_and_package_gate"
+    },
+    {
+      "catalog_id": "04-04-2-pickles-made-from-vegetables-or-other-edible-plant-material-including-mushrooms",
+      "variant": "Cucumber",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Pickled cucumber",
+      "auto_apply": false,
+      "requires_input": "product.variant",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "FSSAI 2.3.43 defines Pickles as preparations made from vegetables singly or in combination; FoSCoS routes vegetable pickles through FCS 4.2.2.3. PMSV requires the professional to explicitly identify Cucumber before using the Tin article 'Pickled cucumber'.",
+      "verification": "official_fssai_v9_plus_fssai_pickle_identity_gate"
     }
   ],
   "product_package_conditional_tin_rules_v9": [

@@ -562,7 +562,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="productContaminantResults"><div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div></div>
 </div>
 <div class="card">
-<div class="section-title"><h2>Coverage status</h2><span>Build 155 · canned fruit/vegetable Tin gates</span></div>
+<div class="section-title"><h2>Coverage status</h2><span>Build 156 · pickled cucumber Tin gate</span></div>
 <div class="notice">The reusable contaminant master now includes 35 exact standardized-product profiles, 14 exact ingredient-trigger groups, the complete PCB/PAH fish table, and all 213 pesticide entries and 1,098 residue MRL commodity rows in Section 2.3.1, plus the Section 2.3.2 seafood antibiotic limits, prohibited veterinary-drug EMRL rules and honey antibiotic MRPL table. Sections 2.3.2, 2.4, 2.5.1 and 2.5.2 are now loaded from current FSSAI Version IX. Histamine includes the official high-histidine fish-family/species list and all 11 product-category n/c/m/M limits. No missing limit is estimated from another website.</div>
 <div class="notice"><b>2026 amendment:</b> FSSAI notified a final Contaminants, Toxins and Residues amendment on 25 May 2026 with commencement on <b>1 December 2026</b>. Build 141 continues to use the currently effective Version IX basis as of 3 October 2026.</div>
 </div>
@@ -2385,7 +2385,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=155',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=156',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2603,7 +2603,7 @@ function renderProductContaminants(){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=155',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=156',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
