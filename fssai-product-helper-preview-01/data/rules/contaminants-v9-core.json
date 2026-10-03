@@ -17,20 +17,21 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_18_generic_tin_variant_engine",
+    "stage": "phase_19_tin_canned_fruit_group_runtime_complete",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 51,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "The Tin variant engine is now generic: it loads exact regulated variants from data instead of hard-coding a fruit-juice-only selector.",
-      "Fruits Juices has six current FoSCoS variants eligible for the named 250 mg/kg Tin juice row; all other juice variants remain unassigned.",
-      "Thermally Processed Vegetables → Mushroom gets Tin 250 mg/kg only when Package format = Canned; bottled/flexible/aseptic or unspecified format does not activate the rule.",
-      "Pickled cucumber remains locked until an exact current FoSCoS product or variant identity is established.",
+      "The named canned-fruit/vegetable Tin article is now runtime-mapped only through exact product/variant/package gates.",
+      "Thermally Processed Fruits requires one of six named fruit identities plus Package format = Canned.",
+      "Thermally Processed Fruit Salad/Cocktail/Mix requires Fruit cocktail or Tropical fruit salad plus Package format = Canned.",
+      "Thermally Processed Vegetables plus Package format = Canned maps to the article's canned-vegetables limb; Mushroom still uses its more-specific Canned mushrooms row.",
+      "Pickled cucumber remains the next exact Tin identity to map.",
       "Generic 'Canned beverages', 'Canned foods other than beverages' and 'Processed and canned food products' rows remain disabled as automatic fallbacks.",
       "Keep all 'Foods not specified' rows reference-only until absence of a more specific row is proven.",
-      "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied."
+      "The combined meat 250 mg/kg row remains locked while the more-specific container-conditioned meat rows are active."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -79,7 +80,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Investigate Pickled cucumber against current FoSCoS pickle identities. Do not map generic vegetable pickles to the cucumber-specific Tin row without an exact product/variant identity.",
+    "next_priority": "Map Pickled cucumber only through an exact cucumber identity within the current FSSAI/FoSCoS vegetable-pickle route. Keep canned beverages, canned foods other than beverages, processed/canned foods and Foods not specified disabled.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -133,9 +134,12 @@
     "tin_tamarind_products_added_build_152": 1,
     "tin_fruit_juice_variant_rules_loaded": 6,
     "tin_fruit_juice_variant_gate": true,
-    "tin_product_variant_rules_loaded": 7,
+    "tin_product_variant_rules_loaded": 15,
     "tin_variant_products": 2,
-    "tin_mushroom_canned_gate": true
+    "tin_mushroom_canned_gate": true,
+    "tin_product_package_rules_loaded": 1,
+    "tin_canned_fruit_group_runtime_complete": true,
+    "tin_canned_fruit_named_variants_added_build_155": 8
   },
   "all_food_rules": [
     {
@@ -16480,6 +16484,133 @@
       "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
       "variant_basis": "FoSCoS Thermally processed vegetables → Liquid pack (Mushroom), FCS 4.2.2.4 / FSSR 2.3.3; FSSAI 2.3.3 distinguishes canned from bottled/flexible/aseptic packaging.",
       "verification": "official_fssai_v9_plus_official_foscos_variant_and_package_gate"
+    },
+    {
+      "catalog_id": "04-04-1-thermally-processed-fruits",
+      "variant": "Citrus fruits",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Canned citrus fruits, stone fruits, vegetables, fruit cocktail, mangoes, pineapple, raspberries, strawberries, tropical fruit salad",
+      "auto_apply": false,
+      "requires_input": "product.variant + packaging.format",
+      "requires_packaging_format": "canned",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "Exact finished-fruit identity supplied within FSSAI 2.3.1 Thermally Processed Fruits; the Tin article names this fruit group and applies only when the package is canned.",
+      "verification": "official_fssai_v9_plus_fssai_product_identity_and_package_gate"
+    },
+    {
+      "catalog_id": "04-04-1-thermally-processed-fruits",
+      "variant": "Stone fruits",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Canned citrus fruits, stone fruits, vegetables, fruit cocktail, mangoes, pineapple, raspberries, strawberries, tropical fruit salad",
+      "auto_apply": false,
+      "requires_input": "product.variant + packaging.format",
+      "requires_packaging_format": "canned",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "Exact finished-fruit identity supplied within FSSAI 2.3.1 Thermally Processed Fruits; the Tin article names this fruit group and applies only when the package is canned.",
+      "verification": "official_fssai_v9_plus_fssai_product_identity_and_package_gate"
+    },
+    {
+      "catalog_id": "04-04-1-thermally-processed-fruits",
+      "variant": "Mangoes",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Canned citrus fruits, stone fruits, vegetables, fruit cocktail, mangoes, pineapple, raspberries, strawberries, tropical fruit salad",
+      "auto_apply": false,
+      "requires_input": "product.variant + packaging.format",
+      "requires_packaging_format": "canned",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "Exact finished-fruit identity supplied within FSSAI 2.3.1 Thermally Processed Fruits; the Tin article names this fruit group and applies only when the package is canned.",
+      "verification": "official_fssai_v9_plus_fssai_product_identity_and_package_gate"
+    },
+    {
+      "catalog_id": "04-04-1-thermally-processed-fruits",
+      "variant": "Pineapple",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Canned citrus fruits, stone fruits, vegetables, fruit cocktail, mangoes, pineapple, raspberries, strawberries, tropical fruit salad",
+      "auto_apply": false,
+      "requires_input": "product.variant + packaging.format",
+      "requires_packaging_format": "canned",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "Exact finished-fruit identity supplied within FSSAI 2.3.1 Thermally Processed Fruits; the Tin article names this fruit group and applies only when the package is canned.",
+      "verification": "official_fssai_v9_plus_fssai_product_identity_and_package_gate"
+    },
+    {
+      "catalog_id": "04-04-1-thermally-processed-fruits",
+      "variant": "Raspberries",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Canned citrus fruits, stone fruits, vegetables, fruit cocktail, mangoes, pineapple, raspberries, strawberries, tropical fruit salad",
+      "auto_apply": false,
+      "requires_input": "product.variant + packaging.format",
+      "requires_packaging_format": "canned",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "Exact finished-fruit identity supplied within FSSAI 2.3.1 Thermally Processed Fruits; the Tin article names this fruit group and applies only when the package is canned.",
+      "verification": "official_fssai_v9_plus_fssai_product_identity_and_package_gate"
+    },
+    {
+      "catalog_id": "04-04-1-thermally-processed-fruits",
+      "variant": "Strawberries",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Canned citrus fruits, stone fruits, vegetables, fruit cocktail, mangoes, pineapple, raspberries, strawberries, tropical fruit salad",
+      "auto_apply": false,
+      "requires_input": "product.variant + packaging.format",
+      "requires_packaging_format": "canned",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "Exact finished-fruit identity supplied within FSSAI 2.3.1 Thermally Processed Fruits; the Tin article names this fruit group and applies only when the package is canned.",
+      "verification": "official_fssai_v9_plus_fssai_product_identity_and_package_gate"
+    },
+    {
+      "catalog_id": "04-04-1-thermally-processed-fruit-salad-cocktail-mix",
+      "variant": "Fruit cocktail",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Canned citrus fruits, stone fruits, vegetables, fruit cocktail, mangoes, pineapple, raspberries, strawberries, tropical fruit salad",
+      "auto_apply": false,
+      "requires_input": "product.variant + packaging.format",
+      "requires_packaging_format": "canned",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "Exact finished-product identity supplied within FSSAI 2.3.2 Thermally Processed Fruit Salad/Cocktail/Mix; the Tin article names Fruit cocktail or Tropical fruit salad and applies only when canned.",
+      "verification": "official_fssai_v9_plus_fssai_product_identity_and_package_gate"
+    },
+    {
+      "catalog_id": "04-04-1-thermally-processed-fruit-salad-cocktail-mix",
+      "variant": "Tropical fruit salad",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Canned citrus fruits, stone fruits, vegetables, fruit cocktail, mangoes, pineapple, raspberries, strawberries, tropical fruit salad",
+      "auto_apply": false,
+      "requires_input": "product.variant + packaging.format",
+      "requires_packaging_format": "canned",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "variant_basis": "Exact finished-product identity supplied within FSSAI 2.3.2 Thermally Processed Fruit Salad/Cocktail/Mix; the Tin article names Fruit cocktail or Tropical fruit salad and applies only when canned.",
+      "verification": "official_fssai_v9_plus_fssai_product_identity_and_package_gate"
+    }
+  ],
+  "product_package_conditional_tin_rules_v9": [
+    {
+      "catalog_id": "04-04-2-thermally-processed-vegetables",
+      "contaminant": "Tin",
+      "limit": 250,
+      "unit": "mg/kg",
+      "article": "Canned citrus fruits, stone fruits, vegetables, fruit cocktail, mangoes, pineapple, raspberries, strawberries, tropical fruit salad",
+      "auto_apply": false,
+      "requires_input": "packaging.format",
+      "requires_packaging_format": "canned",
+      "source_basis": "Section 2.1 · Tin · Version IX (03.02.2026)",
+      "product_basis": "FSSAI 2.3.3 Thermally Processed Vegetables covers canned/bottled/flexible/aseptic product formats; the current Tin article explicitly includes canned vegetables. Exact product identity plus Canned format is therefore required.",
+      "verification": "official_fssai_v9_plus_exact_product_and_package_gate"
     }
   ]
 }
