@@ -17,18 +17,18 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_13_packaging_tin_named_identity_runtime_ready",
+    "stage": "phase_14_tin_explicit_alias_expansion",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 39,
+    "exact_product_profiles": 45,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
     "pending": [
-      "Packaging format and container material inputs are present in the contaminant review.",
-      "Five named FSSAI meat Tin identities are now collected only through an explicit user selection; PMSV does not infer corned beef, luncheon meat, cooked cured ham, cooked cured pork shoulder or cooked cured chopped meat from broader FoSCoS meat categories.",
-      "All 10 tinplate-versus-other-container Tin rows are runtime-active only after both the exact named identity and container material are supplied.",
-      "Exact Canned Fishery Products remains mapped to the current Version IX Tin limit of 200 mg/kg.",
-      "Generic 'Canned foods other than beverages' and 'Processed and canned food products' Tin fallbacks remain disabled.",
+      "Five named FSSAI meat Tin identities are runtime-active only after explicit user identity selection plus container material; no meat-family inference is used.",
+      "Exact Canned Fishery Products remains mapped to Tin 200 mg/kg.",
+      "Build 150 adds six explicit Tin mappings: Thermally Processed Tomato Juice plus five official fruit pulp/puree catalogue products.",
+      "Infant milk substitute/infant foods, canned mushrooms, pickled cucumber, named fruit juices without exact catalogue identities, and tamarind pulp/concentrate remain locked for separate verification.",
+      "Generic 'Canned beverages', 'Canned foods other than beverages' and 'Processed and canned food products' rows remain disabled as automatic fallbacks.",
       "Keep all 'Foods not specified' rows reference-only until absence of a more specific row is proven.",
       "Two veterinary rows whose species headings are not preserved in the indexed official PDF remain locked and are not auto-applied."
     ],
@@ -79,7 +79,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Continue exact Tin mapping for remaining explicit non-conditional article rows without enabling generic canned-food fallbacks.",
+    "next_priority": "Review remaining Tin candidates individually: infant milk substitute/infant foods, canned mushrooms, pickled cucumber, named fruit juices and tamarind pulp/concentrate. Keep generic canned-food rows disabled.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -117,9 +117,9 @@
       "99-99-1-baking-powder",
       "99-99-1-gelatin"
     ],
-    "verified_alias_products": 6,
-    "verified_alias_new_profiles": 3,
-    "verified_alias_rules_added": 9,
+    "verified_alias_products": 12,
+    "verified_alias_new_profiles": 9,
+    "verified_alias_rules_added": 15,
     "packaging_conditional_tin_rules_loaded": 10,
     "packaging_tin_defaults_loaded": 3,
     "packaging_tin_auto_apply": false,
@@ -127,7 +127,8 @@
     "packaging_tin_runtime_policy": "Named packaging-dependent meat Tin rows are applied only when the user explicitly selects the exact FSSAI article identity and the matching container material. PMSV does not infer the named meat identity from a broader FoSCoS product. Generic canned-food and 'Foods not specified' fallbacks remain disabled.",
     "packaging_named_meat_identity_ui": true,
     "packaging_conditional_tin_product_families": 5,
-    "packaging_conditional_tin_runtime_rules_active": 10
+    "packaging_conditional_tin_runtime_rules_active": 10,
+    "tin_explicit_alias_products_added_build_150": 6
   },
   "all_food_rules": [
     {
@@ -1389,6 +1390,108 @@
           "limit": 250,
           "unit": "mg/kg",
           "article": "Processed tomato concentrates",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-tomato-juice",
+      "label": "Thermally Processed Tomato Juice",
+      "catalog_ids": [
+        "tomato-juice"
+      ],
+      "rules": [
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Juice of orange, apple, tomato, pineapple and lemon",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-04-04-1-thermally-processed-mango-pulp-puree-and-sweetened-mango-pulp-puree",
+      "label": "Thermally processed Mango Pulp/ Puree and Sweetened mango Pulp/ Puree",
+      "catalog_ids": [
+        "04-04-1-thermally-processed-mango-pulp-puree-and-sweetened-mango-pulp-puree"
+      ],
+      "rules": [
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Pulp and pulp products of any fruit",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-04-04-1-thermally-processed-fruit-pulp-puree-and-sweetened-fruit-pulp-puree-other-than-man",
+      "label": "Thermally Processed Fruit Pulp/ Puree and Sweetened Fruit Pulp/Puree other than Mango",
+      "catalog_ids": [
+        "04-04-1-thermally-processed-fruit-pulp-puree-and-sweetened-fruit-pulp-puree-other-than-man"
+      ],
+      "rules": [
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Pulp and pulp products of any fruit",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-04-04-1-fruit-pulp-puree-with-preservatives-for-industrial-use-only",
+      "label": "Fruit Pulp/Puree with Preservatives for Industrial Use only",
+      "catalog_ids": [
+        "04-04-1-fruit-pulp-puree-with-preservatives-for-industrial-use-only"
+      ],
+      "rules": [
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Pulp and pulp products of any fruit",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-04-04-1-concentrated-fruit-pulp-puree-with-preservatives-for-industrial-use-only",
+      "label": "Concentrated Fruit Pulp/Puree with Preservatives for industrial use only",
+      "catalog_ids": [
+        "04-04-1-concentrated-fruit-pulp-puree-with-preservatives-for-industrial-use-only"
+      ],
+      "rules": [
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Pulp and pulp products of any fruit",
+          "source_basis": "Section 2.1 · Tin",
+          "verification": "explicit_verified_alias_v9"
+        }
+      ]
+    },
+    {
+      "id": "alias-metal-concentrated-fruit-pulp-puree",
+      "label": "Thermally Processed Concentrated Fruit Juice Pulp/ Puree",
+      "catalog_ids": [
+        "concentrated-fruit-pulp-puree"
+      ],
+      "rules": [
+        {
+          "contaminant": "Tin",
+          "limit": 250,
+          "unit": "mg/kg",
+          "article": "Pulp and pulp products of any fruit",
           "source_basis": "Section 2.1 · Tin",
           "verification": "explicit_verified_alias_v9"
         }
@@ -15825,6 +15928,96 @@
           "article": "Processed tomato concentrates",
           "limit": 250,
           "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "product_id": "tomato-juice",
+      "product_name": "Thermally Processed Tomato Juice",
+      "fssr": "",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Tin",
+          "article": "Juice of orange, apple, tomato, pineapple and lemon",
+          "limit": 250,
+          "unit": "mg/kg",
+          "mapping_basis": "Official FoSCoS product name is Thermally Processed Tomato Juice; the current FSSAI Tin article explicitly includes tomato juice."
+        }
+      ]
+    },
+    {
+      "product_id": "04-04-1-thermally-processed-mango-pulp-puree-and-sweetened-mango-pulp-puree",
+      "product_name": "Thermally processed Mango Pulp/ Puree and Sweetened mango Pulp/ Puree",
+      "fssr": "",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Tin",
+          "article": "Pulp and pulp products of any fruit",
+          "limit": 250,
+          "unit": "mg/kg",
+          "mapping_basis": "Official FoSCoS product identity is explicitly a mango fruit pulp/puree product."
+        }
+      ]
+    },
+    {
+      "product_id": "04-04-1-thermally-processed-fruit-pulp-puree-and-sweetened-fruit-pulp-puree-other-than-man",
+      "product_name": "Thermally Processed Fruit Pulp/ Puree and Sweetened Fruit Pulp/Puree other than Mango",
+      "fssr": "",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Tin",
+          "article": "Pulp and pulp products of any fruit",
+          "limit": 250,
+          "unit": "mg/kg",
+          "mapping_basis": "Official FoSCoS product identity is explicitly a fruit pulp/puree product."
+        }
+      ]
+    },
+    {
+      "product_id": "04-04-1-fruit-pulp-puree-with-preservatives-for-industrial-use-only",
+      "product_name": "Fruit Pulp/Puree with Preservatives for Industrial Use only",
+      "fssr": "",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Tin",
+          "article": "Pulp and pulp products of any fruit",
+          "limit": 250,
+          "unit": "mg/kg",
+          "mapping_basis": "Official FoSCoS product identity is explicitly a fruit pulp/puree product."
+        }
+      ]
+    },
+    {
+      "product_id": "04-04-1-concentrated-fruit-pulp-puree-with-preservatives-for-industrial-use-only",
+      "product_name": "Concentrated Fruit Pulp/Puree with Preservatives for industrial use only",
+      "fssr": "",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Tin",
+          "article": "Pulp and pulp products of any fruit",
+          "limit": 250,
+          "unit": "mg/kg",
+          "mapping_basis": "Official FoSCoS product identity is explicitly a concentrated fruit pulp/puree product."
+        }
+      ]
+    },
+    {
+      "product_id": "concentrated-fruit-pulp-puree",
+      "product_name": "Thermally Processed Concentrated Fruit Juice Pulp/ Puree",
+      "fssr": "",
+      "added_rules": 1,
+      "verified_alias_basis": [
+        {
+          "metal": "Tin",
+          "article": "Pulp and pulp products of any fruit",
+          "limit": 250,
+          "unit": "mg/kg",
+          "mapping_basis": "Official FoSCoS product identity is explicitly a concentrated fruit pulp/puree product."
         }
       ]
     }
