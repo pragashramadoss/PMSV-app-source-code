@@ -13,7 +13,7 @@
     "foscos_catalog_scope": "Official FoSCoS/FSSAI indexed rows loaded category by category; Chapter 2.5 synchronization added the current missing meat-product rows while rule ingestion continues.",
     "foscos_subcategory_framework": "Level-2 FoSCoS/FSSAI food-category framework loaded for categories 01–16; special categories without a separate level-2 browse layer are handled directly at product/category level.",
     "level3_status": "Expanded official FoSCoS standardized-product catalogue. Detailed compliance rule profiles remain a separate ingestion layer.",
-    "base_rule_profiles_ready": 188,
+    "base_rule_profiles_ready": 184,
     "profile_architecture_note": "Every loaded FoSCoS standardized product now has at least a base profile. Full formulation compliance is enabled only when detailed product-specific clauses have been ingested.",
     "chapter_ingestion": {
       "3": {
@@ -498,7 +498,7 @@
         "14.1.2"
       ],
       "source_verified_on": "2026-10-03",
-      "next_validation": "Audit the 187 base profiles without a chapter-rule link; promote only products whose exact current FSSAI standard can be tied to a loaded rule object, and identify standards that still need ingestion.",
+      "next_validation": "Continue the remaining 184 base profiles. Prioritize products with explicit but currently unloaded official standards (Alcoholic Beverages Regulations, Infant Nutrition Regulations, Sorbitol 3.2.16(1), and crude vegetable oil 2.2.9); do not infer FSSR for blank FoSCoS rows.",
       "annexure_1_groups_loaded": 23,
       "table15_note_conditions_loaded": 14,
       "note_conditions_loaded": 42,
@@ -700,18 +700,34 @@
     "chapter_rule_link_audit": {
       "checked_on": "2026-10-03",
       "profiles": 526,
-      "profiles_with_rule_file_and_key": 339,
+      "profiles_with_rule_file_and_key": 342,
       "missing_rule_files": 0,
       "missing_rule_keys": 0,
       "composite_parent_plus_source_routes": 5,
       "explicit_variant_routes": 4,
       "specific_variant_tables_pending": 2,
-      "profiles_without_rule_link": 187,
+      "profiles_without_rule_link": 184,
       "pending_specific_profiles": [
         "06-06-1-pulses",
         "06-06-1-millets"
       ],
-      "rule": "A chapter profile is not treated as fully specific merely because its parent rule key exists. Composite refined-oil routes link the generic refined-oil rule plus the source-oil rule; explicit variants are tagged; pulses and millets remain variant-detail pending until their grain-specific tables are structured."
+      "rule": "A chapter profile is not treated as fully specific merely because its parent rule key exists. Composite refined-oil routes link the generic refined-oil rule plus the source-oil rule; explicit variants are tagged; pulses and millets remain variant-detail pending until their grain-specific tables are structured.",
+      "newly_promoted_exact_base_profiles": [
+        "15-15-1-papad",
+        "04-04-2-yellow-pea-powder",
+        "99-99-1-trehalose"
+      ]
+    },
+    "chapter_profiles_ready": 341,
+    "base_profile_promotion_audit": {
+      "checked_on": "2026-10-03",
+      "starting_base_profiles": 187,
+      "promoted_to_chapter_profile": 3,
+      "promoted_by_exact_foscos_fssr": 1,
+      "promoted_by_exact_official_fssai_product_name": 2,
+      "special_regulation_exact_name_routes_confirmed": 7,
+      "remaining_base_profiles": 184,
+      "rule": "Only exact current official mappings were promoted. No fuzzy product-name matching was used. Category 13 exact-name matches remain special-regulation routes, not ordinary chapter profiles."
     }
   },
   "source_hierarchy": [
@@ -7329,11 +7345,11 @@
       "foscos_category": "04",
       "foscos_subcategory": "04.2",
       "fcs": "04.2.2.2",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "2.4.36",
+      "regulation_chapter": "2.4",
       "route": "standardized",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Exact product-name match to the loaded official FSSAI Yellow Pea Powder standard 2.4.36; FoSCoS snapshot FSSR field was blank",
       "detailed_rules_loaded": false,
       "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
       "general_layers": [
@@ -7344,12 +7360,25 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "rule_profile_note": "The exact FSSAI product-standard rule object is loaded. Full formulation compliance remains locked until all linked additives, contaminants, microbiology, processing aids and labelling layers are validated for this product.",
       "appendix_fcs": "4.2.2.2",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "foscos_fssr_original": "",
+      "fssr_mapping_basis": "exact_official_fssai_product_name_verified",
+      "rule_file": "./data/rules/chapter-2-4-cereals-v1.json",
+      "rule_key": "2.4.36",
+      "standard_name": "Yellow Pea Powder",
+      "source_verified_on": "2026-10-03",
+      "chapter_rule_file_verified_on": "2026-10-03",
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "chapter_rule_route_status": "exact_official_fssai_product_name_verified",
+      "linked_rule_keys": [
+        "2.4.36"
+      ],
+      "chapter_rule_route_note": "FoSCoS snapshot did not print an FSSR for this row. PMSV linked it only because the stored official FSSAI rule object has an exact normalized product-name match: Yellow Pea Powder (2.4.36)."
     },
     {
       "id": "04-04-2-canned-chestnut",
@@ -15006,7 +15035,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_verified_on": "2026-10-03",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "13-13-1-follow-up-formula",
@@ -15037,7 +15069,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_verified_on": "2026-10-03",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "13-13-1-preterm-infant-milk-substitute",
@@ -15099,7 +15134,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_verified_on": "2026-10-03",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "13-13-1-lactose-free-infant-milk-substitutes",
@@ -15192,7 +15230,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_verified_on": "2026-10-03",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "13-13-1-infant-milk-food",
@@ -15223,7 +15264,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_verified_on": "2026-10-03",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "13-13-2-milk-cereal-based-complementary-food",
@@ -15254,7 +15298,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_verified_on": "2026-10-03",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "13-13-2-processed-cereal-based-complementary-food",
@@ -15285,7 +15332,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_verified_on": "2026-10-03",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "14-14-2-beer",
@@ -15884,8 +15934,8 @@
       "fssr": "2.4.40",
       "regulation_chapter": "2.4",
       "route": "proprietary_when_no_standard",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "FoSCoS FSSR 2.4.40 mapped exactly to the loaded official FSSAI Papad / Papadam standard",
       "detailed_rules_loaded": false,
       "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
       "general_layers": [
@@ -15896,12 +15946,23 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "rule_profile_note": "The exact FSSAI product-standard rule object is loaded. Full formulation compliance remains locked until all linked additives, contaminants, microbiology, processing aids and labelling layers are validated for this product.",
       "appendix_fcs": "15.1",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/chapter-2-4-cereals-v1.json",
+      "rule_key": "2.4.40",
+      "standard_name": "Papad / Papadam",
+      "source_verified_on": "2026-10-03",
+      "chapter_rule_file_verified_on": "2026-10-03",
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "chapter_rule_route_status": "exact_foscos_fssr_key_verified",
+      "linked_rule_keys": [
+        "2.4.40"
+      ],
+      "chapter_rule_route_note": "FoSCoS FSSR 2.4.40 resolves exactly to the stored official FSSAI rule object Papad / Papadam."
     },
     {
       "id": "18-18-1-khoa-based-sweets",
@@ -16408,11 +16469,11 @@
       "foscos_category": "99",
       "foscos_subcategory": "99.1",
       "fcs": "99.1",
-      "fssr": "",
-      "regulation_chapter": "",
+      "fssr": "3.3.4",
+      "regulation_chapter": "3",
       "route": "substances",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Exact product-name match to the loaded official FSSAI Chapter 3 Trehalose rule 3.3.4; FoSCoS snapshot FSSR field was blank",
       "detailed_rules_loaded": false,
       "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
       "general_layers": [
@@ -16423,13 +16484,26 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "rule_profile_note": "The exact FSSAI product-standard rule object is loaded. Full formulation compliance remains locked until all linked additives, contaminants, microbiology, processing aids and labelling layers are validated for this product.",
       "appendix_fcs": "",
       "appendix_fcs_status": "foscos_code_not_appendix_a_fcs",
       "appendix_fcs_note": "The stored FoSCoS listing/category code is not a loaded Appendix A Version 3 FCS. PMSV must not use it to inherit Appendix A additive permissions.",
       "appendix_fcs_verified_on": "2026-10-03",
       "foscos_listing_code": "99.1",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "foscos_fssr_original": "",
+      "fssr_mapping_basis": "exact_official_fssai_product_name_verified",
+      "rule_file": "./data/rules/chapter-3-substances-added-v1.json",
+      "rule_key": "3.3.4",
+      "standard_name": "Trehalose",
+      "source_verified_on": "2026-10-03",
+      "chapter_rule_file_verified_on": "2026-10-03",
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "chapter_rule_route_status": "exact_official_fssai_product_name_verified",
+      "linked_rule_keys": [
+        "3.3.4"
+      ],
+      "chapter_rule_route_note": "FoSCoS snapshot did not print an FSSR for this row. PMSV linked it only because the stored official FSSAI rule object has an exact normalized product-name match: Trehalose (3.3.4)."
     },
     {
       "id": "99-99-1-sajji-khar",
@@ -21795,15 +21869,24 @@
       "subcategory": "04.2",
       "name": "YELLOW PEA POWDER",
       "fcs": "04.2.2.2",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "2.4.36",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "04-04-2-yellow-pea-powder",
       "appendix_fcs": "4.2.2.2",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "foscos_fssr_original": "",
+      "fssr_mapping_basis": "exact_official_fssai_product_name_verified",
+      "rule_file": "./data/rules/chapter-2-4-cereals-v1.json",
+      "rule_key": "2.4.36",
+      "chapter_rule_route_status": "exact_official_fssai_product_name_verified",
+      "linked_rule_keys": [
+        "2.4.36"
+      ],
+      "chapter_rule_route_note": "FoSCoS snapshot did not print an FSSR for this row. PMSV linked it only because the stored official FSSAI rule object has an exact normalized product-name match: Yellow Pea Powder (2.4.36)."
     },
     {
       "id": "04-04-2-canned-chestnut",
@@ -25901,7 +25984,9 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "13-13-1-follow-up-formula",
@@ -25917,7 +26002,9 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "13-13-1-preterm-infant-milk-substitute",
@@ -25949,7 +26036,9 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "13-13-1-lactose-free-infant-milk-substitutes",
@@ -25997,7 +26086,9 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "13-13-1-infant-milk-food",
@@ -26013,7 +26104,9 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "13-13-2-milk-cereal-based-complementary-food",
@@ -26029,7 +26122,9 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "13-13-2-processed-cereal-based-complementary-food",
@@ -26045,7 +26140,9 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "special_route_identity_status": "exact_foscos_example_verified",
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
     },
     {
       "id": "14-14-2-beer",
@@ -26390,14 +26487,21 @@
       "name": "Papad",
       "fcs": "15.1",
       "fssr": "2.4.40",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "15-15-1-papad",
       "appendix_fcs": "15.1",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/chapter-2-4-cereals-v1.json",
+      "rule_key": "2.4.40",
+      "chapter_rule_route_status": "exact_foscos_fssr_key_verified",
+      "linked_rule_keys": [
+        "2.4.40"
+      ],
+      "chapter_rule_route_note": "FoSCoS FSSR 2.4.40 resolves exactly to the stored official FSSAI rule object Papad / Papadam."
     },
     {
       "id": "18-18-1-khoa-based-sweets",
@@ -26696,8 +26800,8 @@
       "subcategory": "99.1",
       "name": "Trehalose",
       "fcs": "99.1",
-      "fssr": "",
-      "profile_status": "base_profile_ready",
+      "fssr": "3.3.4",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "99-99-1-trehalose",
       "appendix_fcs": "",
@@ -26705,7 +26809,16 @@
       "appendix_fcs_note": "The stored FoSCoS listing/category code is not a loaded Appendix A Version 3 FCS. PMSV must not use it to inherit Appendix A additive permissions.",
       "appendix_fcs_verified_on": "2026-10-03",
       "foscos_listing_code": "99.1",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "foscos_fssr_original": "",
+      "fssr_mapping_basis": "exact_official_fssai_product_name_verified",
+      "rule_file": "./data/rules/chapter-3-substances-added-v1.json",
+      "rule_key": "3.3.4",
+      "chapter_rule_route_status": "exact_official_fssai_product_name_verified",
+      "linked_rule_keys": [
+        "3.3.4"
+      ],
+      "chapter_rule_route_note": "FoSCoS snapshot did not print an FSSR for this row. PMSV linked it only because the stored official FSSAI rule object has an exact normalized product-name match: Trehalose (3.3.4)."
     },
     {
       "id": "99-99-1-sajji-khar",
@@ -27510,7 +27623,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 122,
+  "build_number": 123,
   "build_label": "Build 58",
   "build_date": "2026-10-03",
   "source_policy": {
