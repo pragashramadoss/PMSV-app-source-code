@@ -215,11 +215,21 @@
     "appendix_a": {
       "rule_file": "./data/rules/appendix-a-v3-core.json",
       "source_version": "Version 3 (01.08.2025)",
-      "status": "table14_non_alcoholic_complete_alcoholic_verified_partial_plus_table15",
+      "status": "table13_special_routes_table14_partial_table15_loaded",
       "gmp_entries_loaded": 183,
       "gmp_annex_exclusions_loaded": 90,
-      "permission_sets_loaded": 32,
+      "permission_sets_loaded": 42,
       "loaded_fcs": [
+        "13.0",
+        "13.1",
+        "13.1.1",
+        "13.1.2",
+        "13.1.3",
+        "13.2",
+        "13.3",
+        "13.4",
+        "13.5",
+        "13.6",
         "14.1.1",
         "14.1.1.1",
         "14.1.1.2",
@@ -254,12 +264,22 @@
         "15.3"
       ],
       "source_verified_on": "2026-10-03",
-      "next_validation": "Finish current-row normalization for 14.2.2–14.2.7, then proceed to Appendix A Table 13.",
+      "next_validation": "Normalize exact Table 13 additive permissions against the corresponding Infant Nutrition / special-nutrition regulation routes, then continue Appendix A Table 12.",
       "annexure_1_groups_loaded": 17,
       "table15_note_conditions_loaded": 14,
       "note_conditions_loaded": 42,
       "table14_stage": "14_1_complete_14_2_verified_rows_loaded",
-      "extended_note_codes_loaded": 4
+      "extended_note_codes_loaded": 4,
+      "table13_stage": "special_regulation_hierarchy_and_locks_loaded"
+    },
+    "special_nutrition": {
+      "rule_file": "./data/rules/special-nutrition-routing-v1.json",
+      "status": "deterministic_route_loaded",
+      "source_verified_on": "2026-10-03",
+      "infant_route": "Foods for Infant Nutrition Regulations, 2020",
+      "other_special_route": "FSSAI Health Supplements / Nutraceuticals / FSDU / FSMP framework",
+      "proprietary_food_fallback": false,
+      "next_validation": "Load exact composition/additive/label rules for each category-13 subroute before full formulation compliance is enabled."
     }
   },
   "source_hierarchy": [
@@ -369,7 +389,7 @@
       "code": "13",
       "name": "Foodstuffs intended for particular nutritional uses",
       "route": "special_regulation",
-      "primary_regulation": "FSS (Health Supplements, Nutraceuticals, FSDU, FSMP, Functional Food and Novel Food) Regulations, 2016"
+      "primary_regulation": "Special regulation route — Infant Nutrition Regulations for 13.1/13.2; FSSAI special-nutrition regulations for 13.3–13.6"
     },
     {
       "code": "14",
@@ -1471,7 +1491,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "special_route_file": "./data/rules/special-nutrition-routing-v1.json",
+      "special_regulation_required": true,
+      "full_compliance_lock": "Special-regulation rules must be loaded before formulation compliance is enabled."
     },
     {
       "id": "traditional-infant-food",
@@ -1494,7 +1517,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "special_route_file": "./data/rules/special-nutrition-routing-v1.json",
+      "special_regulation_required": true,
+      "full_compliance_lock": "Special-regulation rules must be loaded before formulation compliance is enabled."
     },
     {
       "id": "01-01-1-buffalo-milk",
@@ -11666,7 +11692,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "special_route_file": "./data/rules/special-nutrition-routing-v1.json",
+      "special_regulation_required": true,
+      "full_compliance_lock": "Special-regulation rules must be loaded before formulation compliance is enabled."
     },
     {
       "id": "13-13-1-follow-up-formula",
@@ -11689,7 +11718,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "special_route_file": "./data/rules/special-nutrition-routing-v1.json",
+      "special_regulation_required": true,
+      "full_compliance_lock": "Special-regulation rules must be loaded before formulation compliance is enabled."
     },
     {
       "id": "13-13-1-preterm-infant-milk-substitute",
@@ -11712,7 +11744,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "special_route_file": "./data/rules/special-nutrition-routing-v1.json",
+      "special_regulation_required": true,
+      "full_compliance_lock": "Special-regulation rules must be loaded before formulation compliance is enabled."
     },
     {
       "id": "13-13-1-food-for-special-medical-purpose-intended-for-infants",
@@ -11735,7 +11770,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "special_route_file": "./data/rules/special-nutrition-routing-v1.json",
+      "special_regulation_required": true,
+      "full_compliance_lock": "Special-regulation rules must be loaded before formulation compliance is enabled."
     },
     {
       "id": "13-13-1-lactose-free-infant-milk-substitutes",
@@ -11758,7 +11796,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "special_route_file": "./data/rules/special-nutrition-routing-v1.json",
+      "special_regulation_required": true,
+      "full_compliance_lock": "Special-regulation rules must be loaded before formulation compliance is enabled."
     },
     {
       "id": "13-13-1-hypoallergenic-infant-milk-substitutes",
@@ -11781,7 +11822,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "special_route_file": "./data/rules/special-nutrition-routing-v1.json",
+      "special_regulation_required": true,
+      "full_compliance_lock": "Special-regulation rules must be loaded before formulation compliance is enabled."
     },
     {
       "id": "13-13-1-foods-for-infants-with-inborn-errors-of-metabolism-iem",
@@ -11804,7 +11848,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "special_route_file": "./data/rules/special-nutrition-routing-v1.json",
+      "special_regulation_required": true,
+      "full_compliance_lock": "Special-regulation rules must be loaded before formulation compliance is enabled."
     },
     {
       "id": "13-13-1-infant-milk-food",
@@ -11827,7 +11874,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "special_route_file": "./data/rules/special-nutrition-routing-v1.json",
+      "special_regulation_required": true,
+      "full_compliance_lock": "Special-regulation rules must be loaded before formulation compliance is enabled."
     },
     {
       "id": "13-13-2-milk-cereal-based-complementary-food",
@@ -11850,7 +11900,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "special_route_file": "./data/rules/special-nutrition-routing-v1.json",
+      "special_regulation_required": true,
+      "full_compliance_lock": "Special-regulation rules must be loaded before formulation compliance is enabled."
     },
     {
       "id": "13-13-2-processed-cereal-based-complementary-food",
@@ -11873,7 +11926,10 @@
         "Appendix B microbiological requirements, where applicable",
         "Appendix C processing aids, where applicable"
       ],
-      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued."
+      "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
+      "special_route_file": "./data/rules/special-nutrition-routing-v1.json",
+      "special_regulation_required": true,
+      "full_compliance_lock": "Special-regulation rules must be loaded before formulation compliance is enabled."
     },
     {
       "id": "14-14-2-beer",
@@ -20792,7 +20848,7 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 67,
+  "build_number": 68,
   "build_label": "Build 58",
   "build_date": "2026-10-03"
 }

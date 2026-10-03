@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "database_id": "fssai-special-nutrition-routing-v1",
+  "source_verified_on": "2026-10-03",
+  "source_policy": "Official FSSAI/FoSCoS sources only",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Food Safety and Standards (Foods for Infant Nutrition) Regulations, 2020 — Compendium Version II (04.01.2024)",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_IFR_VERSION-II_04_01_2024.pdf"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Foods for Infant Nutrition — amendments page",
+      "url": "https://fssai.gov.in/food-law/regulations/amendments/infant-nutrition"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Health Supplements standards page",
+      "url": "https://fssai.gov.in/standards/health-supplements"
+    },
+    {
+      "authority": "FoSCoS / FSSAI",
+      "title": "FSSAI Standardized Food Products search",
+      "url": "https://fcstraining.fssai.gov.in/standard-product"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Appendix A — Food Additives, Version 3 (01.08.2025)",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf"
+    }
+  ],
+  "routing_rules": [
+    {
+      "fcs": [
+        "13.1",
+        "13.1.1",
+        "13.1.2",
+        "13.1.3",
+        "13.2"
+      ],
+      "route": "foods_for_infant_nutrition",
+      "primary_regulation": "Food Safety and Standards (Foods for Infant Nutrition) Regulations, 2020",
+      "engine_rule": "Resolve the exact infant-food identity and its infant-nutrition composition/additive rules before any Appendix A conclusion. Do not apply ordinary-food additive permissions or a Proprietary Food fallback.",
+      "proprietary_food_allowed": false
+    },
+    {
+      "fcs": [
+        "13.3"
+      ],
+      "route": "food_for_special_medical_purpose",
+      "primary_regulation": "Food Safety and Standards (Health Supplements, Nutraceuticals, Food for Special Dietary Use, Food for Special Medical Purpose, Functional Food and Novel Food) Regulations, 2016, as currently applicable",
+      "engine_rule": "Use the FSMP route and its category-specific additive provisions. Chapter 2.12 Proprietary Food is excluded.",
+      "proprietary_food_allowed": false
+    },
+    {
+      "fcs": [
+        "13.4",
+        "13.5"
+      ],
+      "route": "food_for_special_dietary_use",
+      "primary_regulation": "Food Safety and Standards (Health Supplements, Nutraceuticals, Food for Special Dietary Use, Food for Special Medical Purpose, Functional Food and Novel Food) Regulations, 2016, as currently applicable",
+      "engine_rule": "Use the FSDU/special-diet route and its category-specific provisions. Do not infer compliance from ordinary-food Appendix A permissions.",
+      "proprietary_food_allowed": false
+    },
+    {
+      "fcs": [
+        "13.6"
+      ],
+      "route": "health_supplement_or_applicable_special_category",
+      "primary_regulation": "Food Safety and Standards (Health Supplements, Nutraceuticals, Food for Special Dietary Use, Food for Special Medical Purpose, Functional Food and Novel Food) Regulations, 2016, as currently applicable",
+      "engine_rule": "Use the applicable health-supplement/nutraceutical/special-category regulation and its additive permissions. Chapter 2.12 Proprietary Food is excluded where the product falls in an excluded class.",
+      "proprietary_food_allowed": false
+    }
+  ],
+  "foscos_examples": [
+    {
+      "name": "Infant formula",
+      "fcs": "13.1.1"
+    },
+    {
+      "name": "Follow-up Formula",
+      "fcs": "13.1.2"
+    },
+    {
+      "name": "Infant Milk Food",
+      "fcs": "13.1.1",
+      "fssr": "Chapter 4(12) of Infant Nutrition Regulations, 2020"
+    },
+    {
+      "name": "Food for special medical purpose intended for infants",
+      "fcs": "13.1.3"
+    },
+    {
+      "name": "Foods for Infants with Inborn Errors of Metabolism (IEM)",
+      "fcs": "13.1.3"
+    },
+    {
+      "name": "Milk-cereal based complementary food",
+      "fcs": "13.2"
+    },
+    {
+      "name": "Processed cereal based complementary food",
+      "fcs": "13.2"
+    }
+  ],
+  "runtime_policy": {
+    "ai_required": false,
+    "deterministic": true,
+    "special_regulation_precedes_appendix_a": true,
+    "proprietary_fallback_blocked": true,
+    "ordinary_gmp_fallback_blocked_until_special_rule_resolution": true,
+    "final_compliance_lock": "No category-13 product receives a final additive/formulation pass until its special regulation and exact Appendix A category permissions are loaded and machine-validated."
+  }
+}
