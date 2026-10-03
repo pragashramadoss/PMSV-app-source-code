@@ -2141,14 +2141,14 @@ function renderProprietaryAppendixA(){
  }).join('');
  box.innerHTML='<div class="section-title"><h2>Appendix A permissions for selected FCS</h2><span>'+resolved.entries.length+' inherited/specific entries</span></div>'
    +'<div class="notice oknote"><b>Hierarchy applied.</b> Parent-category permissions are inherited and a narrower loaded sub-category entry overrides the same additive/group.</div>'
-   +(resolved.incomplete?'<div class="notice"><b>Current table ingestion is not complete for this FCS.</b> '+esc(resolved.completenessNote||'PMSV shows only verified rows and will not issue a final additive-compliance verdict from this partial set.')+'</div>':'')
+   +(resolved.incomplete?'<div class="notice"><b>Current Appendix A ingestion is not complete across this FCS hierarchy.</b> '+esc(resolved.completenessNote||'PMSV shows only verified rows and will not issue a final additive-compliance verdict from this partial set.')+(resolved.inheritedLocks?.length?'<br><small><b>Inherited lock:</b> '+resolved.inheritedLocks.map(esc).join('; ')+'</small>':'')+'</div>':'')
    +(resolved.conditions&&resolved.conditions.length?'<div class="notice"><b>Category-specific condition:</b><br>'+resolved.conditions.map(c=>esc(c)).join('<br>')+'</div>':'')
    +'<div class="tablewrap"><table><thead><tr><th>Additive / group</th><th>INS</th><th>Maximum</th><th>Applied from</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
    +'<div class="appendix-note">Loaded additive groups are expanded to Annexure-1 INS members where available, and loaded note conditions are shown inline. Any unresolved note, partial category table or older-only corroboration remains locked from a final compliance verdict.</div>';
 }
 async function loadAppendixCore(){
  try{
-   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=77',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=78',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCoreDb=await res.json();
  }catch(e){appendixCoreDb=null;}
@@ -2326,7 +2326,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=77',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=78',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
