@@ -33,7 +33,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 12 - Generally permitted processing aids",
+    "next_priority": "Table 12 - verify and load remaining current rows 2-11, 14, 17-31, 33-54, 56-62",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -58,7 +58,10 @@
     "table_11a_gmm_status": "complete_current_version_2",
     "table_11a_gmm_entries_loaded": 51,
     "table_11a_gmm_variant_rows_loaded": 109,
-    "table_11a_gmm_enzyme_preparation_criteria_loaded": true
+    "table_11a_gmm_enzyme_preparation_criteria_loaded": true,
+    "table_12_status": "partial_verified_current_rows",
+    "table_12_entries_loaded": 32,
+    "table_12_permission_rows": 40
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -4125,6 +4128,484 @@
         "antibiotic_activity": "Absent in preparations from microbial sources"
       },
       "source_note": "Current FSSAI Appendix C Version 2 (01.08.2025); amendments effective 1 February 2026 incorporated for Table 11A rows 46-51 and enzyme-preparation criteria."
+    },
+    "table_12": {
+      "number": 12,
+      "title": "GENERALLY PERMITTED PROCESSING AIDS",
+      "process_key": "general_processing_aid",
+      "source_scope": "Current FSSAI active list / Appendix C current text. Rows are loaded only where the current official row text has been positively verified; older superseded wording is not used.",
+      "ingestion_status": "partial_verified_current_rows",
+      "entries": [
+        {
+          "s_no": 1,
+          "name": "Activated carbon",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Adsorbent, decolourizing agent",
+              "product_category": "Sugars, oils and fats, juices, Alcoholic Beverages, Non-alcoholic beverages, Sugar syrup treatment",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 12,
+          "name": "Calcium chloride",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Buffering agent, Flocculating agent",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts, Non-Alcoholic Beverages, Water Treatment, Instant Tea processing",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            },
+            {
+              "purpose": "Stabilizer",
+              "product_category": "Extruded foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 13,
+          "name": "Calcium sulfate",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Buffering agent",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 15,
+          "name": "Carbon dioxide",
+          "ins": "290",
+          "permissions": [
+            {
+              "purpose": "Packaging and propelling Gas / aerating agent",
+              "product_category": "All Foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            },
+            {
+              "purpose": "pH Control agent",
+              "product_category": "Water Treatment, Non-Alcoholic Beverages",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 16,
+          "name": "Citric acid",
+          "ins": "330",
+          "permissions": [
+            {
+              "purpose": "Sequestrant",
+              "product_category": "Oils & fats, Instant Tea processing",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            },
+            {
+              "purpose": "pH standardization",
+              "product_category": "All Foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            },
+            {
+              "purpose": "Catalyst in inversion of sugar",
+              "product_category": "Sugar Syrups",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 32,
+          "name": "Lactic acid",
+          "ins": "270",
+          "permissions": [
+            {
+              "purpose": "Acidity regulator",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts, seasonings",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 55,
+          "name": "Salt (NaCl) / Sodium Chloride",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Ion exchange",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            },
+            {
+              "purpose": "Texturising agents",
+              "product_category": "Unripened Cheese-Paneer; Water treatment",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 63,
+          "name": "Sodium Hypochlorite",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Disinfectant",
+              "product_category": "Water treatment, All foods",
+              "residual_level_mgkg": 1,
+              "residual_basis": "as available chlorine",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 64,
+          "name": "Sodium metabisulphite",
+          "ins": "223",
+          "permissions": [
+            {
+              "purpose": "Dough conditioner",
+              "product_category": "Flour products",
+              "residual_level_mgkg": 60,
+              "runtime_auto_apply": false
+            },
+            {
+              "purpose": "Softening agent",
+              "product_category": "Corn kernel",
+              "residual_level_mgkg": 60,
+              "runtime_auto_apply": false
+            },
+            {
+              "purpose": "Reducing agent",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            },
+            {
+              "purpose": "pH control agent",
+              "product_category": "Water Treatment, Non-Alcoholic Beverages",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 65,
+          "name": "Sodium silicate",
+          "ins": "550(i)",
+          "permissions": [
+            {
+              "purpose": "Anticaking agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 66,
+          "name": "Sodium sulphite",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Dough conditioner",
+              "product_category": "Flour products",
+              "residual_level_mgkg": 60,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 67,
+          "name": "Sulphuric Acid",
+          "ins": "513",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 68,
+          "name": "Sulphurous acid",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Softening agent",
+              "product_category": "Corn kernel",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 69,
+          "name": "Sulphur dioxide",
+          "ins": "220",
+          "permissions": [
+            {
+              "purpose": "Control of nitrosodimethylamine in malting",
+              "product_category": "Malting",
+              "residual_level_mgkg": 750,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 70,
+          "name": "Tannic Acid",
+          "ins": "181",
+          "permissions": [
+            {
+              "purpose": "Clarifying agent, flavouring agent, flavour adjunct",
+              "product_category": "Juices",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 71,
+          "name": "Vitamin B12",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Microbial nutrient",
+              "product_category": "All foods",
+              "residual_level": "",
+              "runtime_auto_apply": false,
+              "source_note": "Current active-list row does not display a residue value in the extracted text; PMSV does not infer GMP."
+            }
+          ]
+        },
+        {
+          "s_no": 72,
+          "name": "Vitamin C",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Microbial nutrient",
+              "product_category": "All foods",
+              "residual_level": "",
+              "runtime_auto_apply": false,
+              "source_note": "Current active-list row does not display a residue value in the extracted text; PMSV does not infer GMP."
+            }
+          ]
+        },
+        {
+          "s_no": 73,
+          "name": "Yeast",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Fermenting Agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 74,
+          "name": "Zinc sulphate",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Mineral Salt",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 75,
+          "name": "Calcium hypochlorite",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Disinfectant",
+              "product_category": "Water treatment",
+              "residual_level_mgkg": 1,
+              "residual_basis": "as available chlorine",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 76,
+          "name": "Nitrogen",
+          "ins": "941",
+          "permissions": [
+            {
+              "purpose": "Packaging gas, Creating inert atmosphere",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 77,
+          "name": "Hydrochloric acid",
+          "ins": "507",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "Water Treatment, Non-alcoholic beverages",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 78,
+          "name": "Ammonium bicarbonate",
+          "ins": "503(ii)",
+          "permissions": [
+            {
+              "purpose": "Raising agent",
+              "product_category": "Flour Mix and its products",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 79,
+          "name": "Disodium ortho phosphate",
+          "ins": "339(ii)",
+          "permissions": [
+            {
+              "purpose": "Raising agent",
+              "product_category": "Flour Mix and its products; Malt based beverages",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 80,
+          "name": "Trisodium Citrate; Sodium Citrate",
+          "ins": "331(iii)",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "Flavourings, All Foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 81,
+          "name": "Ammonium Chloride",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "Flavourings",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 82,
+          "name": "Polyoxyethylene (20) monooleate",
+          "ins": "433",
+          "permissions": [
+            {
+              "purpose": "Emulsifier",
+              "product_category": "Flavourings",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 83,
+          "name": "Triacetin",
+          "ins": "1518",
+          "permissions": [
+            {
+              "purpose": "Binding agent",
+              "product_category": "Flavourings",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 84,
+          "name": "Corn Steep Liquor",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Antistick agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 85,
+          "name": "Calcium Magnesium Carbonate",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "To remove hardness",
+              "product_category": "Water treatment",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 86,
+          "name": "Cellulose",
+          "ins": "460",
+          "permissions": [
+            {
+              "purpose": "Extraction manufacturing process",
+              "product_category": "Removal of insoluble waxes from liquid product during filtration",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false,
+              "source_note": "Stored exactly as the active-list columns are printed; product-category wording is unusual and therefore not auto-applied."
+            }
+          ]
+        },
+        {
+          "s_no": 87,
+          "name": "Vegetable fatty acid esters",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "",
+              "product_category": "Sugar treatment",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        }
+      ]
     }
   }
 }
