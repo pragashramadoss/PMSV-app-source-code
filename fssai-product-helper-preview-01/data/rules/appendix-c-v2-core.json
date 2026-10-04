@@ -33,7 +33,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 11A - continue from enzyme 19 (Glucoamylase)",
+    "next_priority": "Table 11A - continue from enzyme 22 (Xylanase)",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -55,9 +55,9 @@
     "table_11_non_gmm_entries": 56,
     "table_11_non_gmm_source_rows": 139,
     "table_11_amendment_corrected_entries": 6,
-    "table_11a_gmm_status": "partial_structured_ingestion_1_18",
-    "table_11a_gmm_entries_loaded": 18,
-    "table_11a_gmm_variant_rows_loaded": 43
+    "table_11a_gmm_status": "partial_structured_ingestion_1_21",
+    "table_11a_gmm_entries_loaded": 21,
+    "table_11a_gmm_variant_rows_loaded": 55
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -2984,7 +2984,7 @@
         23
       ],
       "source_scope": "Table 11A only. Production organism, donor/source, technological purpose, indicative food use and residual level are stored as linked variants. Runtime remains fail-closed until the full table is ingested and the selected product/use is matched.",
-      "ingestion_status": "partial_1_to_18",
+      "ingestion_status": "partial_1_to_21",
       "entries": [
         {
           "sequence": 1,
@@ -3410,6 +3410,111 @@
               "donor_or_source": "Bacillus flexus",
               "purpose": "Starch processing into maltose",
               "indicative_food_uses": "Starch processing for maltose-based syrups",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 19,
+          "name": "Glucoamylase (Glucan 1,4-alpha-glucosidase or Acid maltase or Amyloglucosidase)",
+          "ec": "3.2.1.3",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Trichoderma reesei",
+              "purpose": "Processing of polysaccharides and oligosaccharides for improved fermentation and liquefaction",
+              "indicative_food_uses": "Brewing, fermentation and starch liquefaction and saccharification",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Gloeophyllum trabeum",
+              "purpose": "Processing of polysaccharides and oligosaccharides for improved brewing fermentation, clarification and starch liquefaction and saccharification",
+              "indicative_food_uses": "Brewing, fermentation and starch liquefaction and saccharification",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Aspergillus niger",
+              "purpose": "Processing of polysaccharides and oligosaccharides for improved brewing fermentation, clarification and starch liquefaction",
+              "indicative_food_uses": "Brewing, fermentation and starch liquefaction and saccharification",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Talaromyces emersonii",
+              "purpose": "Processing of polysaccharides and oligosaccharides for improved brewing fermentation, clarification and starch liquefaction",
+              "indicative_food_uses": "Brewing, fermentation and starch liquefaction and saccharification processes",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Trametes cingulata",
+              "purpose": "Processing of polysaccharides and oligosaccharides for improved brewing fermentation, clarification and starch liquefaction and saccharification",
+              "indicative_food_uses": "Brewing, fermentation and starch liquefaction and saccharification processes",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Penicillium oxalicum",
+              "purpose": "Processing of polysaccharides and oligosaccharides for improved brewing fermentation, clarification and starch liquefaction and saccharification",
+              "indicative_food_uses": "Brewing, fermentation and starch liquefaction and saccharification",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Aspergillus fumigatus",
+              "purpose": "Processing of polysaccharides and oligosaccharides for improved fermentation and liquefaction",
+              "indicative_food_uses": "For carbohydrate or grain processing, brewing and potable alcohol production",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Fusarium verticillioides",
+              "purpose": "Processing of polysaccharides and oligosaccharides for improved fermentation and liquefaction",
+              "indicative_food_uses": "For carbohydrate or grain processing, brewing and potable alcohol production",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 20,
+          "name": "Cellulase",
+          "ec": "3.2.1.4",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Aspergillus fumigatus",
+              "purpose": "Hydrolysis of amorphous cellulose",
+              "indicative_food_uses": "Brewing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Penicillium emersonii",
+              "purpose": "Hydrolysis of amorphous cellulose. Saccharification",
+              "indicative_food_uses": "Brewing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Trichoderma reesei",
+              "purpose": "As processing aid in food manufacturing or breakdown of cellulose",
+              "indicative_food_uses": "For carbohydrate processing, potable alcohol production, maceration in fruit and vegetable processing, brewing and wine production and in food processing of other wide range of products like coffee",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 21,
+          "name": "Beta-glucanase (endo-beta glucanase or endo-1,3-beta glucanase)",
+          "ec": "3.2.1.6",
+          "variants": [
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Bacillus subtilis",
+              "purpose": "Hydrolysis of beta-glucans, to improve the brewing properties of beer",
+              "indicative_food_uses": "Brewing processes",
               "residual_level": "GMP"
             }
           ]
