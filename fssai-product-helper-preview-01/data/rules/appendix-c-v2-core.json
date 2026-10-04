@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Resolve only official-source/catalogue gaps among the remaining 18 fail-closed rows; do not infer Hardened oil, Yeast, Tripe, Corn kernel, Colours, Other foods, incomplete-residue rows, or negative-scope milk exclusions.",
+    "next_priority": "Resolve only the remaining 11 official-source gaps: Hardened oil, Colours, Other foods, Bone phosphate negative-scope exclusion, Calcium sulfate missing category, and incomplete-residue rows for Vitamin B12, Vitamin C and Zinc sulphate.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -84,13 +84,13 @@
       "table_7_hydrogen_peroxide_effective_residual": "5 mg/kg as hydrogen peroxide"
     },
     "appendix_c_product_gate_audit_status": "exact_gate_pass_5_process_routes",
-    "appendix_c_product_gated_permissions": 105,
+    "appendix_c_product_gated_permissions": 112,
     "appendix_c_product_gate_id_links": 268,
     "appendix_c_product_gate_rule_key_links": 29,
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
-    "appendix_c_product_gate_reachable_permissions": 52,
+    "appendix_c_product_gate_reachable_permissions": 59,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "passed_after_edible_casings_gate_2026-10-04",
+    "appendix_c_product_gate_regression_status": "passed_after_exact_substrate_qualifiers_2026-10-04",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -123,23 +123,23 @@
         "12": 42
       }
     },
-    "appendix_c_product_gate_remaining_fail_closed": 18,
-    "appendix_c_product_gated_or_auto_permissions": 247,
+    "appendix_c_product_gate_remaining_fail_closed": 11,
+    "appendix_c_product_gated_or_auto_permissions": 254,
     "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
     "table_2_hardened_oil_status": "fail_closed_identity_unresolved",
     "table_6_decaffeination_status": "tea_and_coffee_exact_process_gates_loaded",
     "table_9_liquid_nitrogen_status": "combined_foscos_row_requires_ice_cream_form_confirmation",
     "table_6_mek_decaffeination_route": "loaded_same_source_row",
-    "appendix_c_intentional_fail_closed_permissions": 18,
-    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_248",
+    "appendix_c_intentional_fail_closed_permissions": 11,
+    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_249",
     "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model.",
     "appendix_c_final_runtime_regression_status": "passed_2026-10-04",
     "appendix_c_final_runtime_regression": {
       "source_permission_rows": 265,
       "runtime_route_projections": 1,
       "auto_apply_permission_rows": 95,
-      "exact_gated_permission_rows": 152,
-      "intentional_fail_closed_permission_rows": 18,
+      "exact_gated_permission_rows": 159,
+      "intentional_fail_closed_permission_rows": 11,
       "unclassified_permission_rows": 0,
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -155,7 +155,12 @@
       "qualifier_checks": {
         "liquid_nitrogen_requires_exact_ice_cream_form": true,
         "dried_ice_cream_mix_rejected": true,
-        "other_combined_frozen_forms_rejected": true
+        "other_combined_frozen_forms_rejected": true,
+        "yeast_washing_requires_exact_substrate": true,
+        "tripe_washing_requires_exact_substrate": true,
+        "yeast_cell_disruption_requires_exact_substrate": true,
+        "corn_kernel_softening_requires_exact_substrate": true,
+        "extrusion_requires_explicit_process": true
       },
       "route_checks": {
         "vanaspati_catalysts": 4,
@@ -223,27 +228,6 @@
         "process": "solvent"
       },
       {
-        "table": 7,
-        "s_no": 1,
-        "name": "Ammonium persulphate",
-        "category": "Yeast",
-        "process": "washing"
-      },
-      {
-        "table": 7,
-        "s_no": 4,
-        "name": "Carbonic acid",
-        "category": "Tripe",
-        "process": "washing"
-      },
-      {
-        "table": 7,
-        "s_no": 12,
-        "name": "Sodium gluconate",
-        "category": "Tripe",
-        "process": "washing"
-      },
-      {
         "table": 12,
         "s_no": 10,
         "name": "Bone phosphate",
@@ -256,34 +240,6 @@
         "name": "Calcium sulfate",
         "category": "",
         "process": ""
-      },
-      {
-        "table": 12,
-        "s_no": 18,
-        "name": "Ethyl acetate",
-        "category": "Yeast",
-        "process": "microbial"
-      },
-      {
-        "table": 12,
-        "s_no": 37,
-        "name": "Mono and diglycerides of fatty acids",
-        "category": "Extruded foods",
-        "process": ""
-      },
-      {
-        "table": 12,
-        "s_no": 64,
-        "name": "Sodium metabisulphite",
-        "category": "Corn kernel",
-        "process": "softening"
-      },
-      {
-        "table": 12,
-        "s_no": 68,
-        "name": "Sulphurous acid",
-        "category": "Corn kernel",
-        "process": "softening"
       },
       {
         "table": 12,
@@ -314,7 +270,12 @@
       "partially_hydrogenated_soybean_oil_catalyst": "pass",
       "tea_decaffeination": "pass",
       "coffee_decaffeination": "pass",
-      "starch_hydrolysis": "pass"
+      "starch_hydrolysis": "pass",
+      "yeast_washing_qualifier": "pass",
+      "tripe_washing_qualifier": "pass",
+      "yeast_cell_disruption_qualifier": "pass",
+      "extrusion_process_gate": "pass",
+      "corn_kernel_softening_qualifier": "pass"
     }
   },
   "processing_aid_categories": {
@@ -3853,10 +3814,12 @@
           "permissions": [
             {
               "product_category": "Yeast",
-              "runtime_auto_apply": false,
+              "runtime_auto_apply": true,
               "residual_level": "GMP",
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "No exact standardized Yeast finished-product identity is available in the current PMSV/FoSCoS product master."
+              "qualifier_key": "washing_substrate",
+              "qualifier_value": "yeast",
+              "product_gate_note": "Appendix C category is Yeast. PMSV activates only when the user explicitly confirms the washing/bleaching/peeling substrate is yeast; no FoSCoS finished-product synonym is inferred.",
+              "product_gate_status": "verified_exact_runtime_qualifier"
             }
           ]
         },
@@ -4088,10 +4051,12 @@
           "permissions": [
             {
               "product_category": "Tripe",
-              "runtime_auto_apply": false,
+              "runtime_auto_apply": true,
               "residual_level": "GMP",
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "No exact standardized Tripe finished-product identity is available in the current PMSV/FoSCoS product master."
+              "qualifier_key": "washing_substrate",
+              "qualifier_value": "tripe",
+              "product_gate_note": "Appendix C category is Tripe. PMSV activates only when the user explicitly confirms the washing/bleaching/peeling substrate is tripe.",
+              "product_gate_status": "verified_exact_runtime_qualifier"
             }
           ]
         },
@@ -4738,10 +4703,12 @@
           "permissions": [
             {
               "product_category": "Tripe",
-              "runtime_auto_apply": false,
+              "runtime_auto_apply": true,
               "residual_level": "GMP",
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "No exact standardized Tripe finished-product identity is available in the current PMSV/FoSCoS product master."
+              "qualifier_key": "washing_substrate",
+              "qualifier_value": "tripe",
+              "product_gate_note": "Appendix C category is Tripe. PMSV activates only when the user explicitly confirms the washing/bleaching/peeling substrate is tripe.",
+              "product_gate_status": "verified_exact_runtime_qualifier"
             }
           ]
         },
@@ -7405,9 +7372,11 @@
               "purpose": "Cell disruption of yeast",
               "product_category": "Yeast",
               "residual_level": "GMP",
-              "runtime_auto_apply": false,
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "No exact standardized Yeast finished-product identity is available in the current PMSV/FoSCoS product master."
+              "runtime_auto_apply": true,
+              "qualifier_key": "microbial_substrate",
+              "qualifier_value": "yeast",
+              "product_gate_note": "Appendix C purpose is cell disruption of yeast. PMSV activates only when the user explicitly confirms the microbial-processing substrate is yeast.",
+              "product_gate_status": "verified_exact_runtime_qualifier"
             }
           ],
           "process_key": "microbial"
@@ -7950,9 +7919,10 @@
               "purpose": "Emulsifier in extrusion",
               "product_category": "Extruded foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": false,
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "No exact standardized FoSCoS product identity or unambiguous FCS family named 'Extruded foods' is available for this permission."
+              "runtime_auto_apply": true,
+              "process_key": "extrusion",
+              "product_gate_note": "Appendix C category is Extruded foods and purpose is emulsifier in extrusion. PMSV activates only when the explicit Extrusion process is selected.",
+              "product_gate_status": "verified_exact_runtime_qualifier"
             }
           ]
         },
@@ -8654,10 +8624,12 @@
               "purpose": "Softening agent",
               "product_category": "Corn kernel",
               "residual_level_mgkg": 60,
-              "runtime_auto_apply": false,
+              "runtime_auto_apply": true,
               "process_key": "softening",
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "No exact Corn kernel finished-product identity is available in the current PMSV/FoSCoS product master; corn flour, grits and flakes are not treated as equivalent."
+              "qualifier_key": "softening_substrate",
+              "qualifier_value": "corn_kernel",
+              "product_gate_note": "Appendix C category is Corn kernel. PMSV activates only when the user explicitly confirms the softening substrate is corn kernel; corn flour, grits and flakes are not treated as equivalent.",
+              "product_gate_status": "verified_exact_runtime_qualifier"
             },
             {
               "purpose": "Reducing agent",
@@ -8779,10 +8751,12 @@
               "purpose": "Softening agent",
               "product_category": "Corn kernel",
               "residual_level": "GMP",
-              "runtime_auto_apply": false,
+              "runtime_auto_apply": true,
               "process_key": "softening",
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "No exact Corn kernel finished-product identity is available in the current PMSV/FoSCoS product master; corn flour, grits and flakes are not treated as equivalent."
+              "qualifier_key": "softening_substrate",
+              "qualifier_value": "corn_kernel",
+              "product_gate_note": "Appendix C category is Corn kernel. PMSV activates only when the user explicitly confirms the softening substrate is corn kernel; corn flour, grits and flakes are not treated as equivalent.",
+              "product_gate_status": "verified_exact_runtime_qualifier"
             }
           ]
         },
