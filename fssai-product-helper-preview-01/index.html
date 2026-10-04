@@ -3767,7 +3767,7 @@ async function loadContaminantsDb(){
 async function loadRegulatoryDb(){
  const status=document.getElementById('regDbStatus');
  try{
-   const res=await fetch('./data/regulatory-db-v1.json?v=205',{cache:'reload'});
+   const res=await fetch('./data/regulatory-db-v1.json?v=245',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    regulatoryDb=await res.json();
    ingredientCatalog=catalogFromDb(regulatoryDb);
