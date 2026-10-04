@@ -13,7 +13,7 @@
   },
   "coverage": {
     "main_table_groups_total": 11,
-    "main_table_groups_loaded": 10,
+    "main_table_groups_loaded": 11,
     "loaded_groups": [
       "Table 1 - Fish and Fishery Products",
       "Table 2 - Milk and Milk Products",
@@ -24,13 +24,14 @@
       "Table 7 - Non-Carbonated Water Based Beverages (Non Alcoholic)",
       "Table 8 - Eggs and Egg Products",
       "Table 9 - Food Grain Products",
-      "Table 10 - Health Supplements/Nutraceuticals/FSDU/FSMP/Functional Food/Novel Food"
+      "Table 10 - Health Supplements/Nutraceuticals/FSDU/FSMP/Functional Food/Novel Food",
+      "Table 11 - Neera"
     ],
     "fish_product_categories_loaded": 16,
     "fish_exact_product_mappings": 18,
     "fish_conditional_product_mappings": 4,
     "fish_no_direct_table_mapping": 2,
-    "next_priority": "Table 11A/11B - Neera",
+    "next_priority": "Appendix B complete - validate all table groups and product routes",
     "milk_profiles_loaded": 16,
     "milk_exact_product_mappings": 58,
     "milk_conditional_product_mappings": 17,
@@ -64,7 +65,12 @@
     "food_grain_no_direct_table_mapping": 0,
     "special_nutrition_profiles_loaded": 3,
     "special_nutrition_exact_product_mappings": 0,
-    "special_nutrition_catalog_gaps": 1
+    "special_nutrition_catalog_gaps": 1,
+    "neera_profiles_loaded": 1,
+    "neera_exact_product_mappings": 0,
+    "neera_conditional_product_mappings": 1,
+    "neera_no_direct_table_mapping": 0,
+    "appendix_b_complete": true
   },
   "organism_labels": {
     "aerobic_plate_count": "Aerobic Plate Count",
@@ -4025,6 +4031,108 @@
         "salmonella": "IS 5887 Part 3 / ISO 6579",
         "listeria_monocytogenes": "IS 14988 Part 1 / ISO 11290-1"
       }
+    },
+    "neera": {
+      "table_11a_title": "Microbiological Standards for Neera – Process Hygiene Criteria",
+      "table_11b_title": "Microbiological Standards for Neera – Food Safety Criteria",
+      "source_pages": {
+        "table_11a": [
+          69
+        ],
+        "table_11b": [
+          69
+        ],
+        "stage_and_sampling": [
+          70,
+          71
+        ],
+        "reference_methods": [
+          72
+        ]
+      },
+      "effective_note": "The Appendix B amendment containing Table 11 states that it shall come into force on 1 May 2025.",
+      "categories": [
+        {
+          "id": "neera-11-01",
+          "sl_no": "1",
+          "name": "Neera (Pasteurized)",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 10000,
+              "unit": "cfu/ml"
+            },
+            "escherichia_coli": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25 ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25 ml",
+              "M": null,
+              "unit": "qualitative"
+            }
+          }
+        }
+      ],
+      "stage_rules": {
+        "process_hygiene": "Table 11A indicates acceptable functioning of the production process; it is not a market-release requirement and applies at the end of manufacturing.",
+        "food_safety": "Table 11B defines acceptability of a batch/lot and applies at the end of manufacturing and to products in the market during shelf life."
+      },
+      "action_on_unsatisfactory_process_hygiene": [
+        "Check and improve process hygiene by implementation of Schedule 4 requirements.",
+        "Ensure all Table 11B Food Safety Criteria are complied with."
+      ],
+      "sampling_plan_note": "For regulatory sampling, a set (n) of five samples is tested from three different accredited laboratories. The final decision is based on the three results. There is no provision for retesting or resampling for microbiological testing.",
+      "sampling_plan_definitions": {
+        "n": "Number of units comprising a sample.",
+        "c": "Maximum allowable number of units having counts above m for a 2-class plan and between m and M for a 3-class plan.",
+        "m": "Limit separating unsatisfactory from satisfactory in a 2-class plan, or acceptable from satisfactory in a 3-class plan.",
+        "M": "Limit separating unsatisfactory from satisfactory in a 3-class plan."
+      },
+      "interpretation": {
+        "two_class": [
+          "Satisfactory if all observed values are ≤ m.",
+          "Unsatisfactory if one or more values are > m or more than c values are > m."
+        ],
+        "three_class": [
+          "Satisfactory if all observed values are ≤ m.",
+          "Acceptable if at most c values are between m and M and the rest are ≤ m.",
+          "Unsatisfactory if one or more values are > M or more than c values are > m."
+        ]
+      },
+      "reference_methods": {
+        "aerobic_plate_count": "IS 5402 / ISO 4833",
+        "escherichia_coli": "IS 5887 Part 1 or ISO 16649-3",
+        "staphylococcus_aureus": "IS 5887 Part 2 and IS 5887 Part 8 (Sec 1)/(Sec 2) / ISO 6888-3",
+        "salmonella": "IS 5887 Part 3 / ISO 6579",
+        "listeria_monocytogenes": "IS 14988 Part 1 / ISO 11290-1"
+      },
+      "source_notes": [
+        "Definition of Processed Neera is the same as provided in the regulations."
+      ]
     }
   },
   "product_mappings": {
@@ -6689,6 +6797,28 @@
           "reason": "These are ingredient/licensing records, not finished-product identities for Table 10."
         }
       ]
+    },
+    "neera": {
+      "exact": [],
+      "conditional": [
+        {
+          "catalog_id": "coconut-neera",
+          "status": "variant_required",
+          "reason": "FSSAI Chapter 2.10.6(4) covers both Fresh coconut neera and Processed coconut neera. The same chapter states that Processed coconut neera is pasteurised coconut sap. Appendix B Table 11 applies specifically to Neera (Pasteurized).",
+          "options": [
+            {
+              "condition": "Processed coconut neera (pasteurised)",
+              "profile_key": "neera-11-01"
+            },
+            {
+              "condition": "Fresh coconut neera",
+              "profile_key": "",
+              "message": "Appendix B Table 11 is for Neera (Pasteurized). PMSV will not apply it to fresh coconut neera."
+            }
+          ]
+        }
+      ],
+      "no_direct_table_mapping": []
     }
   }
 }
