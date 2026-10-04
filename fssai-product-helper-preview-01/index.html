@@ -1441,6 +1441,11 @@ const table11Enzymes=[
  }
 ];
 
+function table11RuntimeEnzymes(){
+ const rows=appendixCDb?.tables?.table_11?.entries;
+ return Array.isArray(rows)&&rows.length?rows:table11Enzymes;
+}
+
 let selectedEnzyme={id:'',source:''};
 try{
  const raw=JSON.parse(sessionStorage.getItem(ENZYME_KEY)||'{}');
@@ -1450,8 +1455,8 @@ try{
 function populateEnzymeSelector(){
  const nameSel=document.getElementById('enzymeName');
  if(!nameSel)return;
- nameSel.innerHTML='<option value="">Select enzyme…</option>'+table11Enzymes.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+' (EC '+esc(x.ec)+')</option>').join('');
- if(table11Enzymes.some(x=>x.id===selectedEnzyme.id))nameSel.value=selectedEnzyme.id;
+ nameSel.innerHTML='<option value="">Select enzyme…</option>'+table11RuntimeEnzymes().map(x=>'<option value="'+esc(x.id)+'">'+(x.official_s_no?'S.No. '+esc(x.official_s_no)+' · ':'')+esc(x.name)+' (EC '+esc(x.ec)+')</option>').join('');
+ if(table11RuntimeEnzymes().some(x=>x.id===selectedEnzyme.id))nameSel.value=selectedEnzyme.id;
  populateEnzymeSources();
 }
 function populateEnzymeSources(){
@@ -1459,7 +1464,7 @@ function populateEnzymeSources(){
  const nameSel=document.getElementById('enzymeName');
  const result=document.getElementById('enzymeResult');
  if(!sourceSel||!nameSel)return;
- const enzyme=table11Enzymes.find(x=>x.id===nameSel.value);
+ const enzyme=table11RuntimeEnzymes().find(x=>x.id===nameSel.value);
  sourceSel.innerHTML='<option value="">Select source…</option>';
  sourceSel.disabled=!enzyme;
  if(enzyme){
@@ -1471,14 +1476,14 @@ function populateEnzymeSources(){
 function saveEnzymeSelection(){
  const id=document.getElementById('enzymeName')?.value||'';
  const source=document.getElementById('enzymeSource')?.value||'';
- const enzyme=table11Enzymes.find(x=>x.id===id);
+ const enzyme=table11RuntimeEnzymes().find(x=>x.id===id);
  selectedEnzyme={id:enzyme?enzyme.id:'',source:enzyme&&enzyme.sources.includes(source)?source:''};
  if(enzyme&&selectedEnzyme.source){selectedGmmEnzyme={sequence:null,variantIndex:null};try{sessionStorage.removeItem(GMM_ENZYME_KEY)}catch(e){};populateGmmEnzymeSelector();}
  try{sessionStorage.setItem(ENZYME_KEY,JSON.stringify(selectedEnzyme))}catch(e){}
  const result=document.getElementById('enzymeResult');
  if(result){
    if(enzyme&&selectedEnzyme.source){
-     result.innerHTML='<b>Selected Table 11 enzyme:</b> '+esc(enzyme.name)+' (EC '+esc(enzyme.ec)+')<br><b>FSSAI-listed source:</b> '+esc(selectedEnzyme.source)+'<br><b>Residual level:</b> GMP';
+     result.innerHTML='<b>Selected Table 11 enzyme:</b> '+esc(enzyme.name)+' (EC '+esc(enzyme.ec)+')'+(enzyme.official_s_no?'<br><b>Official Table 11 S.No.:</b> '+esc(enzyme.official_s_no):'')+'<br><b>FSSAI-listed source:</b> '+esc(selectedEnzyme.source)+'<br><b>Residual level:</b> GMP';
      result.classList.remove('hidden');
    }else{
      result.classList.add('hidden');
@@ -2367,9 +2372,10 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=256',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=257',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
+   populateEnzymeSelector();
    populateGmmEnzymeSelector();
    const structured=appendixCStructuredRuntimeRules(appendixCDb);
    const loadedTables=new Set(Object.values(appendixCDb?.tables||{}).map(t=>'Appendix C · Table '+String(t.number||'')));
@@ -2637,7 +2643,7 @@ function renderProcessingAids(){
  if(selectedProcesses.includes('enzyme')){
    const gmmEntry=table11aEntries().find(x=>x.sequence===selectedGmmEnzyme.sequence);
    const gmmVariant=gmmEntry&&Number.isInteger(selectedGmmEnzyme.variantIndex)?gmmEntry.variants?.[selectedGmmEnzyme.variantIndex]:null;
-   const enzyme=table11Enzymes.find(x=>x.id===selectedEnzyme.id);
+   const enzyme=table11RuntimeEnzymes().find(x=>x.id===selectedEnzyme.id);
    if(gmmEntry&&gmmVariant){
      messages.push('<tr><td><b>'+esc(gmmEntry.name)+'</b><br><small>EC '+esc(gmmEntry.ec||'—')+'</small></td><td>Enzyme processing · GMM Table 11A<br><small>Production: '+esc(gmmVariant.production_organism)+'<br>Donor/source: '+esc(gmmVariant.donor_or_source)+'</small></td><td><b>'+esc(gmmVariant.residual_level||'—')+'</b><br><small>'+esc(gmmVariant.indicative_food_uses)+'</small></td><td>Appendix C · Table 11A</td></tr>');
    }else if(enzyme&&selectedEnzyme.source){
