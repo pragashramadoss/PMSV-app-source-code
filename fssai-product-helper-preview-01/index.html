@@ -458,12 +458,14 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="ion_exchange"><b>Ion exchange</b><small>Ion-exchange processing aids for the exact permitted product categories.</small></label>
 <label class="process-option"><input type="checkbox" value="softening"><b>Softening</b><small>Softening-agent route; exact substrate details are required where Appendix C specifies them.</small></label>
 <label class="process-option"><input type="checkbox" value="extrusion"><b>Extrusion</b><small>Appendix C processing aids explicitly permitted for extruded foods.</small></label>
+<label class="process-option"><input type="checkbox" value="raising"><b>Raising / leavening</b><small>Raising-agent permissions; exact Appendix C product-category confirmation is required where specified.</small></label>
+<label class="process-option"><input type="checkbox" value="emulsification"><b>Emulsification</b><small>Processing-aid emulsifier route, including the active-list Flavourings permission.</small></label>
+<label class="process-option"><input type="checkbox" value="binding"><b>Binding</b><small>Binding-agent processing route; exact product-category confirmation applies.</small></label>
+<label class="process-option"><input type="checkbox" value="sugar_treatment"><b>Sugar treatment</b><small>Processing aids whose official applicability is the sugar-treatment process itself.</small></label>
 <label class="process-option"><input type="checkbox" value="reducing"><b>Reducing-agent treatment</b><small>Reducing agents used during processing for specified products.</small></label>
 <label class="process-option"><input type="checkbox" value="fermentation"><b>Fermentation aid</b><small>Fermenting agents used in the specified fermentation process.</small></label>
 <label class="process-option"><input type="checkbox" value="starch_hydrolysis"><b>Starch hydrolysis</b><small>Processing aids whose Appendix C applicability is specifically starch hydrolysis.</small></label>
 <label class="process-option"><input type="checkbox" value="decaffeination"><b>Decaffeination</b><small>Solvent processing for exact Tea/Coffee product identities where Appendix C specifies decaffeinated tea or coffee.</small></label>
-<label class="process-option"><input type="checkbox" value="starch_hydrolysis"><b>Starch hydrolysis</b><small>Process-specific Appendix C permissions where the category itself is starch hydrolysis.</small></label>
-<label class="process-option"><input type="checkbox" value="decaffeination"><b>Decaffeination</b><small>Extraction/solvent processing specifically used to produce decaffeinated tea or coffee.</small></label>
 <label class="process-option"><input type="checkbox" value="enzyme"><b>Enzyme processing</b><small>Any enzyme used as a processing aid during ingredient or beverage manufacture.</small></label>
 <label class="process-option"><input type="checkbox" value="nutrient"><b>Microbial nutrient use</b><small>Applicable only if a microbial culture process is actually used.</small></label>
 <label class="process-option"><input type="checkbox" value="mineral_salt"><b>Mineral salt processing aid</b><small>Product-specific mineral-salt permissions such as Zinc sulphate for alcoholic beverages.</small></label>
@@ -2254,6 +2256,10 @@ const processLabels={
  ion_exchange:'Ion exchange',
  softening:'Softening',
  extrusion:'Extrusion',
+ raising:'Raising / leavening',
+ emulsification:'Emulsification',
+ binding:'Binding',
+ sugar_treatment:'Sugar treatment',
  reducing:'Reducing-agent treatment',
  fermentation:'Fermentation aid',
  starch_hydrolysis:'Starch hydrolysis',
@@ -2342,7 +2348,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=251',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=252',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
@@ -2412,6 +2418,57 @@ function renderProcessingQualifierUI(){
      +'<option value="other"'+(current==='other'?' selected':'')+'>Other / not Hardened oil</option>'
      +'</select><small>Select Hardened oil only when that is the actual Appendix C product category. PMSV does not infer Hardened oil from Vanaspati, Bakery shortening or another hydrogenated oil identity.</small></div>');
    bindings.push(['catalystProductCategory','catalyst_product_category']);
+ }
+
+ if(selectedProcesses.includes('filtration')){
+   const current=String(processingQualifiers.filtration_purpose||'');
+   blocks.push('<div class="field"><label>Specific filtration purpose, where applicable</label><select id="filtrationPurpose">'
+     +'<option value="">General filtration / no special qualifier</option>'
+     +'<option value="remove_insoluble_waxes"'+(current==='remove_insoluble_waxes'?' selected':'')+'>Removal of insoluble waxes from liquid product</option>'
+     +'<option value="other"'+(current==='other'?' selected':'')+'>Other filtration purpose</option>'
+     +'</select><small>The insoluble-wax option activates only the Cellulose (INS 460) active-list permission.</small></div>');
+   bindings.push(['filtrationPurpose','filtration_purpose']);
+ }
+
+ if(selectedProcesses.includes('ph')){
+   const current=String(processingQualifiers.ph_product_category||'');
+   blocks.push('<div class="field"><label>Specific product category for pH-control aids, where applicable</label><select id="phProductCategory">'
+     +'<option value="">Use selected PMSV product / no special category</option>'
+     +'<option value="flavourings"'+(current==='flavourings'?' selected':'')+'>Flavourings</option>'
+     +'<option value="other"'+(current==='other'?' selected':'')+'>Other</option>'
+     +'</select><small>Flavourings unlocks only active-list rows that expressly use that category; all-food pH aids remain unaffected.</small></div>');
+   bindings.push(['phProductCategory','ph_product_category']);
+ }
+
+ if(selectedProcesses.includes('raising')){
+   const current=String(processingQualifiers.raising_product_category||'');
+   blocks.push('<div class="field"><label>Product category for raising-agent use</label><select id="raisingProductCategory">'
+     +'<option value="">Select exact Appendix C category…</option>'
+     +'<option value="flour_mix_and_products"'+(current==='flour_mix_and_products'?' selected':'')+'>Flour Mix and its products</option>'
+     +'<option value="malt_based_beverage"'+(current==='malt_based_beverage'?' selected':'')+'>Malt based beverage</option>'
+     +'<option value="other"'+(current==='other'?' selected':'')+'>Other</option>'
+     +'</select><small>PMSV does not treat malt-based foods as automatically equivalent to Malt based beverages.</small></div>');
+   bindings.push(['raisingProductCategory','raising_product_category']);
+ }
+
+ if(selectedProcesses.includes('emulsification')){
+   const current=String(processingQualifiers.emulsification_product_category||'');
+   blocks.push('<div class="field"><label>Product category for emulsification</label><select id="emulsificationProductCategory">'
+     +'<option value="">Select exact category…</option>'
+     +'<option value="flavourings"'+(current==='flavourings'?' selected':'')+'>Flavourings</option>'
+     +'<option value="other"'+(current==='other'?' selected':'')+'>Other</option>'
+     +'</select><small>The Flavourings option is the exact active-list gate for Polyoxyethylene (20) monooleate (INS 433).</small></div>');
+   bindings.push(['emulsificationProductCategory','emulsification_product_category']);
+ }
+
+ if(selectedProcesses.includes('binding')){
+   const current=String(processingQualifiers.binding_product_category||'');
+   blocks.push('<div class="field"><label>Product category for binding-agent use</label><select id="bindingProductCategory">'
+     +'<option value="">Select exact category…</option>'
+     +'<option value="flavourings"'+(current==='flavourings'?' selected':'')+'>Flavourings</option>'
+     +'<option value="other"'+(current==='other'?' selected':'')+'>Other</option>'
+     +'</select><small>The Flavourings option is the exact active-list gate for Triacetin (INS 1518).</small></div>');
+   bindings.push(['bindingProductCategory','binding_product_category']);
  }
 
  if(selectedProcesses.includes('washing')){
