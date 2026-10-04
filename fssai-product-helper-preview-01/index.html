@@ -2407,7 +2407,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=190',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=199',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2613,7 +2613,7 @@ function renderProductMicrobiology(){
 }
 async function loadMicrobiologyDb(){
  try{
-   const res=await fetch('./data/rules/appendix-b-v2-core.json?v=198',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-b-v2-core.json?v=199',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    microbiologyDb=await res.json();
  }catch(e){
