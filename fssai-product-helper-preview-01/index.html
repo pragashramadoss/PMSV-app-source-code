@@ -441,6 +441,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="solvent"><b>Extraction / solvent processing</b><small>Use of a solvent during extraction or processing of ingredients.</small></label>
 <label class="process-option"><input type="checkbox" value="release"><b>Lubrication / release / anti-stick</b><small>Processing aids used on food-contact or processing surfaces.</small></label>
 <label class="process-option"><input type="checkbox" value="washing"><b>Washing / bleaching / peeling</b><small>Appendix C Table 7 processing aids used for washing, bleaching, denuding or peeling.</small></label>
+<label class="process-option"><input type="checkbox" value="flocculation"><b>Flocculation / curd setting</b><small>Appendix C Table 8 flocculating agents. Current official permissions are for unripened cheese — Paneer and Chhana.</small></label>
+<label class="process-option"><input type="checkbox" value="contact_freezing"><b>Contact freezing / cooling</b><small>Appendix C Table 9. The current permission is Liquid Nitrogen for dairy-based desserts — Ice cream.</small></label>
+<label class="process-option"><input type="checkbox" value="desiccating"><b>Desiccating / anti-caking</b><small>Appendix C Table 10. The current permission is Corn starch for Icing Sugar.</small></label>
 <label class="process-option"><input type="checkbox" value="enzyme"><b>Enzyme processing</b><small>Any enzyme used as a processing aid during ingredient or beverage manufacture.</small></label>
 <label class="process-option"><input type="checkbox" value="nutrient"><b>Microbial nutrient use</b><small>Applicable only if a microbial culture process is actually used.</small></label>
 </div>
@@ -1650,6 +1653,9 @@ const processLabels={
  solvent:'Extraction / solvent processing',
  release:'Lubrication / release / anti-stick',
  washing:'Washing / bleaching / peeling',
+ flocculation:'Flocculation / curd setting',
+ contact_freezing:'Contact freezing / cooling',
+ desiccating:'Desiccating / anti-caking',
  enzyme:'Enzyme processing',
  nutrient:'Microbial nutrient use'
 };
@@ -1726,7 +1732,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=205',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=208',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    const structured=appendixCStructuredRuntimeRules(appendixCDb);
@@ -1795,6 +1801,7 @@ function renderProcessingAids(){
  }
  if(selectedProcesses.includes('nutrient'))messages.push('<tr><td><b>Microbial nutrient use</b></td><td>Table 5 nutrient/adjunct permissions activated</td><td>Shown because a microbial-culture nutrient process was selected. These are GMP permissions for sustaining microbial growth, not ingredients that must be used.</td><td>Appendix C · Table 5</td></tr>');
  if(selectedProcesses.includes('catalyst'))messages.push('<tr><td><b>Catalyst route</b></td><td>Appendix C Table 2 loaded</td><td>All catalyst permissions are product-specific. PMSV will not activate a catalyst until the finished product is exactly mapped to Polyols, Hardened oil, Hydrogenated vegetable oil or Interesterified vegetable oil as stated by FSSAI.</td><td>Appendix C · Table 2</td></tr>');
+ if(selectedProcesses.includes('contact_freezing'))messages.push('<tr><td><b>Contact-freezing route</b></td><td>Appendix C Table 9 loaded</td><td>Liquid Nitrogen is permitted at GMP for dairy-based desserts — Ice cream. The current FoSCoS catalogue row also includes dried ice-cream mix, so PMSV keeps this permission locked until the finished form is confirmed as ice cream.</td><td>Appendix C · Table 9</td></tr>');
  if(lockedProductSpecific.length)messages.push('<tr><td><b>Product-specific permissions withheld</b></td><td>'+lockedProductSpecific.length+' selected-process row'+(lockedProductSpecific.length===1?'':'s')+' require an exact product-category gate</td><td>PMSV is failing closed instead of showing these permissions for every selected product.</td><td>Appendix C applicability control</td></tr>');
  body.innerHTML=rules.map(x=>'<tr><td><b>'+esc(x.name)+'</b><br><small>INS '+esc(x.ins)+'</small></td><td>'+esc(x.purpose)+'</td><td><b>'+esc(x.condition)+'</b></td><td>'+esc(x.source)+'</td></tr>').join('')+messages.join('');
  const total=rules.length+messages.length;
