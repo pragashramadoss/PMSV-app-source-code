@@ -1867,13 +1867,19 @@
           "catalog_id": "01-01-5-milk-powders-and-cream-powder",
           "profile_key": "milk-07",
           "status": "mapped_exact_appendix_b_v2",
-          "note": "Appendix B Table 2 expressly lists Milk Powder/SMP/Partly SMP/Cream Powder."
+          "note": "Appendix B Table 2 expressly lists Milk Powder/SMP/Partly SMP/Cream Powder. Appendix B footnote 3 limits the 50/g Yeast and Mold criterion to casein powder, so PMSV excludes that criterion for this product.",
+          "exclude_criteria": [
+            "yeast_and_mold_count"
+          ]
         },
         {
           "catalog_id": "01-01-5-dairy-whitener",
           "profile_key": "milk-07",
           "status": "mapped_exact_appendix_b_v2",
-          "note": "Appendix B Table 2 expressly lists Dairy Whitener."
+          "note": "Appendix B Table 2 expressly lists Dairy Whitener. Appendix B footnote 3 limits the 50/g Yeast and Mold criterion to casein powder, so PMSV excludes that criterion for this product.",
+          "exclude_criteria": [
+            "yeast_and_mold_count"
+          ]
         },
         {
           "catalog_id": "01-01-5-edible-casein-products",
@@ -1886,13 +1892,19 @@
           "catalog_id": "01-01-8-whey-powder",
           "profile_key": "milk-07",
           "status": "mapped_exact_appendix_b_v2",
-          "note": "Appendix B Table 2 expressly lists Whey based Powder."
+          "note": "Appendix B Table 2 expressly lists Whey based Powder. Appendix B footnote 3 limits the 50/g Yeast and Mold criterion to casein powder, so PMSV excludes that criterion for this product.",
+          "exclude_criteria": [
+            "yeast_and_mold_count"
+          ]
         },
         {
           "catalog_id": "11-11-1-edible-lactose",
           "profile_key": "milk-07",
           "status": "mapped_exact_appendix_b_v2",
-          "note": "Appendix B Table 2 expressly lists Lactose."
+          "note": "Appendix B Table 2 expressly lists Lactose. Appendix B footnote 3 limits the 50/g Yeast and Mold criterion to casein powder, so PMSV excludes that criterion for this product.",
+          "exclude_criteria": [
+            "yeast_and_mold_count"
+          ]
         },
         {
           "catalog_id": "01-01-1-buttermilk-plain",
@@ -2535,7 +2547,11 @@
             },
             {
               "condition": "Dried Ice Cream Mix / Ice Cream Mix Powder",
-              "profile_key": "milk-07"
+              "profile_key": "milk-07",
+              "exclude_criteria": [
+                "yeast_and_mold_count"
+              ],
+              "message": "Appendix B footnote 3 limits the dried-group Yeast and Mold 50/g criterion to casein powder; it is excluded here."
             }
           ]
         }
