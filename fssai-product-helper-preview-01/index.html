@@ -2609,7 +2609,7 @@ function renderProductMicrobiology(){
    el.innerHTML='<div class="notice"><b>No exact Appendix B Table 9 route is stored for this grain/bakery product.</b><br>Table 9 applies to its defined product/process classes; PMSV does not infer a microbiological route from Food Category 06/07 alone.</div>';
    return;
  }
- el.innerHTML='<div class="notice"><b>Appendix B table for this product is not loaded yet.</b><br>Build 196 contains Tables 1–9. The next ingestion block is Table 10A/10B for Health Supplements, Nutraceuticals, Food for Special Dietary Use, Food for Special Medical Purpose, Functional Food and Novel Food.</div>';
+ el.innerHTML='<div class="notice"><b>No exact Appendix B route is stored for this product.</b><br>Build 198 contains all 11 current Appendix B table groups. PMSV does not infer a microbiological category where the official product/process route is not established.</div>';
 }
 async function loadMicrobiologyDb(){
  try{
