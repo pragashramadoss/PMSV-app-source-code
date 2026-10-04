@@ -15,22 +15,27 @@
   "applicability_rule": "Processing aids listed in Tables 1 to 12 may be used only in manufacture of the food specified in the corresponding table and the final food shall not exceed the stated residue level. Product-specific rows remain fail-closed until PMSV has an exact product-category route. 'All foods' rows may auto-apply once the relevant process is selected.",
   "coverage": {
     "tables_total": 12,
-    "tables_loaded": 4,
+    "tables_loaded": 5,
     "loaded_tables": [
       "Table 1 - Antifoaming Agents",
       "Table 2 - Catalyst",
       "Table 3 - Clarifying Agents and Filtration Aids",
-      "Table 4 - Lubricants, Release and Antistick Agents"
+      "Table 4 - Lubricants, Release and Antistick Agents",
+      "Table 5 - Microbial Control Agents, Microbial Nutrients and Microbial Nutrient Adjuncts"
     ],
     "table_1_entries": 9,
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 5 - Microbial Control Agents, Microbial Nutrients and Microbial Nutrient Adjuncts",
+    "next_priority": "Table 6 - Solvent for Extraction and Processing",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
-    "table_4_permission_rows": 26
+    "table_4_permission_rows": 26,
+    "table_5_entries": 49,
+    "table_5_micro_control_entries": 6,
+    "table_5_nutrient_entries": 43,
+    "table_5_permission_rows": 51
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -818,6 +823,682 @@
         }
       ],
       "source_note": "Serial number 25 is not present in the Version 2 Table 4 text; PMSV preserves the official numbering and does not create a row 25."
+    },
+    "table_5": {
+      "number": 5,
+      "title": "MICROBIAL CONTROL AGENTS, MICROBIAL NUTRIENTS AND MICROBIAL NUTRIENT ADJUNCTS",
+      "source_pages": [
+        6,
+        7,
+        8
+      ],
+      "subgroups": {
+        "microbial_control_agents": {
+          "serial_range": "1-6",
+          "process_key": "microbial"
+        },
+        "microbial_nutrients_and_adjuncts": {
+          "serial_range": "7-49",
+          "process_key": "nutrient",
+          "purpose": "for sustaining microbial growth"
+        }
+      },
+      "entries": [
+        {
+          "s_no": 1,
+          "name": "Dimethyl dicarbonate",
+          "ins": "242",
+          "process_key": "microbial",
+          "permissions": [
+            {
+              "product_category": "Wine",
+              "residual_level": "Non-detectable",
+              "max_usage_mgkg": 200,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Fruits and vegetable juices and their products",
+              "residual_level": "Non-detectable",
+              "max_usage_mgkg": 250,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Water based flavoured drinks",
+              "residual_level": "Non-detectable",
+              "max_usage_mgkg": 250,
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "carbonated-caffeinated-beverage"
+              ]
+            }
+          ],
+          "source_note": "Maximum usage levels are taken from the Table 5 footnote; residue remains non-detectable."
+        },
+        {
+          "s_no": 2,
+          "name": "Lysozyme",
+          "ins": "1105",
+          "process_key": "microbial",
+          "permissions": [
+            {
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol-free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 3,
+          "name": "Octanoic acid",
+          "ins": "",
+          "process_key": "microbial",
+          "permissions": [
+            {
+              "product_category": "Meat, fruit and vegetables",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 4,
+          "name": "Sodium metasilicate",
+          "ins": "550(ii)",
+          "process_key": "microbial",
+          "permissions": [
+            {
+              "product_category": "Meat and poultry carcasses and cuts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 5,
+          "name": "Sodium chlorite",
+          "ins": "",
+          "process_key": "microbial",
+          "permissions": [
+            {
+              "product_category": "Meat, fish, fruit and vegetables",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 6,
+          "name": "Salmonella phage preparation (S16 and FO1a)",
+          "ins": "",
+          "process_key": "microbial",
+          "permissions": [
+            {
+              "product_category": "Raw meat and poultry",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 7,
+          "name": "Adenine",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 8,
+          "name": "Adonitol",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 9,
+          "name": "Arginine",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 10,
+          "name": "Asparagine",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 11,
+          "name": "Aspartic acid",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 12,
+          "name": "Ammonium sulphate",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 13,
+          "name": "Ammonium sulphite",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 14,
+          "name": "Benzoic acid",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 15,
+          "name": "Biotin",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 16,
+          "name": "Calcium pantothenate",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 17,
+          "name": "Calcium propionate",
+          "ins": "282",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 18,
+          "name": "Copper sulphate",
+          "ins": "519",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 19,
+          "name": "Cysteine",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 20,
+          "name": "Cysteine monohydrochloride",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 21,
+          "name": "Dextran",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 22,
+          "name": "Ferrous sulphate",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 23,
+          "name": "Glutamic acid",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 24,
+          "name": "Glycine",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 25,
+          "name": "Guanine",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 26,
+          "name": "Histidine",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 27,
+          "name": "Hydroxyethyl starch",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 28,
+          "name": "Inosine",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 29,
+          "name": "Inositol",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 30,
+          "name": "Manganese chloride",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 31,
+          "name": "Manganese sulphate",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 32,
+          "name": "Niacin",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 33,
+          "name": "Nitric acid",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 34,
+          "name": "Pantothenic acid",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 35,
+          "name": "Peptone",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 36,
+          "name": "Phytates",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 37,
+          "name": "Polyvinylpyrrolidone",
+          "ins": "1201",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 38,
+          "name": "Pyridoxine hydrochloride",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 39,
+          "name": "Riboflavin",
+          "ins": "101(i)",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 40,
+          "name": "Sodium formate",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 41,
+          "name": "Sodium molybdate",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 42,
+          "name": "Sodium tetraborate",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 43,
+          "name": "Thiamine",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 44,
+          "name": "Threonine",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 45,
+          "name": "Trisodium orthophosphate",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 46,
+          "name": "Uracil",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 47,
+          "name": "Xanthine",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 48,
+          "name": "Zinc chloride",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 49,
+          "name": "Zinc sulphate",
+          "ins": "",
+          "process_key": "nutrient",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        }
+      ]
     }
   }
 }
