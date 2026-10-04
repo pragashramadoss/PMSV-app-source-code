@@ -15,19 +15,22 @@
   "applicability_rule": "Processing aids listed in Tables 1 to 12 may be used only in manufacture of the food specified in the corresponding table and the final food shall not exceed the stated residue level. Product-specific rows remain fail-closed until PMSV has an exact product-category route. 'All foods' rows may auto-apply once the relevant process is selected.",
   "coverage": {
     "tables_total": 12,
-    "tables_loaded": 3,
+    "tables_loaded": 4,
     "loaded_tables": [
       "Table 1 - Antifoaming Agents",
       "Table 2 - Catalyst",
-      "Table 3 - Clarifying Agents and Filtration Aids"
+      "Table 3 - Clarifying Agents and Filtration Aids",
+      "Table 4 - Lubricants, Release and Antistick Agents"
     ],
     "table_1_entries": 9,
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 4 - Lubricants, Release and Antistick Agents",
+    "next_priority": "Table 5 - Microbial Control Agents, Microbial Nutrients and Microbial Nutrient Adjuncts",
     "table_3_entries": 15,
-    "table_3_permission_rows": 15
+    "table_3_permission_rows": 15,
+    "table_4_entries": 26,
+    "table_4_permission_rows": 26
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -490,6 +493,331 @@
           ]
         }
       ]
+    },
+    "table_4": {
+      "number": 4,
+      "title": "LUBRICANTS, RELEASE AND ANTISTICK AGENTS",
+      "process_key": "release",
+      "source_pages": [
+        5,
+        6
+      ],
+      "entries": [
+        {
+          "s_no": 1,
+          "name": "Acetylated mono- and diglycerides",
+          "ins": "472a",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level_mgkg": 100,
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 2,
+          "name": "Bees wax",
+          "ins": "901",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 3,
+          "name": "Calcium carbonate",
+          "ins": "170(i)",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 4,
+          "name": "Calcium and sodium salts of stearic acid",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Confectionery",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 5,
+          "name": "Carnauba wax",
+          "ins": "903",
+          "permissions": [
+            {
+              "product_category": "Confectionery",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 6,
+          "name": "Coconut Oil",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Confectionery, bakery wares, salts, spices, soups, cereal products",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 7,
+          "name": "Glycerin/Glycerol",
+          "ins": "422",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 8,
+          "name": "Hydrogenated palm kernel oil (HPKO)",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Confectionery and bakery wares",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 9,
+          "name": "Hydrogenated vegetable oil (HVO)",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 10,
+          "name": "Icing sugar",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Confectionery",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 11,
+          "name": "Lecithin",
+          "ins": "322(i)",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 12,
+          "name": "Liquid paraffin",
+          "ins": "905e",
+          "permissions": [
+            {
+              "product_category": "Confectionery",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 13,
+          "name": "Magnesium stearate",
+          "ins": "470(iii)",
+          "permissions": [
+            {
+              "product_category": "Confectionery",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 14,
+          "name": "Medium chain Triglyceride (MCT) (C6-C12)",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Confectionery, bakery wares and fruit Jelly",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 15,
+          "name": "Oleic acid",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 16,
+          "name": "Palm oil/Palmolein",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Confectionery, bakery wares, Salts, spices, soups and cereal products",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 17,
+          "name": "Rice starch",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Confectionery",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 18,
+          "name": "Sunflower oil",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Confectionery, bakery wares, Salts, spices, soups, salts, spices, sauces, salads, protein products, seasonings, fruits & vegetable products, nuts & nut products, cereal and cereal products",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ],
+          "source_note": "Product-category text stored from the amended wording printed in Version 2."
+        },
+        {
+          "s_no": 19,
+          "name": "Soybean oil",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Confectionery and bakery wares",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 20,
+          "name": "Thermally oxidised soya-bean oil",
+          "ins": "479",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level_mgkg": 320,
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 21,
+          "name": "White mineral oil",
+          "ins": "905e",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 22,
+          "name": "Cocoa powder",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Chocolates",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 23,
+          "name": "Cottonseed oil",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fruits and vegetables, seasonings, bakery products, fruits & vegetable products, salt, spices and soups, cereal and cereal products, nut and nut products",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 24,
+          "name": "Magnesium hydrogen carbonate",
+          "ins": "504(ii)",
+          "permissions": [
+            {
+              "product_category": "Snacks",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 26,
+          "name": "Talc",
+          "ins": "553(iii)",
+          "permissions": [
+            {
+              "product_category": "Confectionary",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 27,
+          "name": "Tricalcium phosphate",
+          "ins": "341(iii)",
+          "permissions": [
+            {
+              "product_category": "Snacks",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        }
+      ],
+      "source_note": "Serial number 25 is not present in the Version 2 Table 4 text; PMSV preserves the official numbering and does not create a row 25."
     }
   }
 }
