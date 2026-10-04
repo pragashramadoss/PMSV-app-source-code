@@ -2372,7 +2372,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=257',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=258',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateEnzymeSelector();
@@ -2539,6 +2539,14 @@ function renderProcessingQualifierUI(){
      +'<option value="other"'+(current==='other'?' selected':'')+'>Other food colour</option>'
      +'</select><small>These are exact gates for the final 2025 Table 6 solvent permissions. Selecting “Other” does not unlock a colour-specific solvent limit.</small></div>');
    bindings.push(['solventFoodColourVariant','solvent_food_colour_variant']);
+   const solventCategory=String(processingQualifiers.solvent_product_category||'');
+   blocks.push('<div class="field"><label>Table 6 residual product category, where applicable</label><select id="solventProductCategory">'
+     +'<option value="">Do not apply a residual category automatically</option>'
+     +'<option value="other_foods"'+(solventCategory==='other_foods'?' selected':'')+'>Confirmed: Appendix C category is “Other foods”</option>'
+     +'<option value="not_other_foods"'+(solventCategory==='not_other_foods'?' selected':'')+'>Not “Other foods”</option>'
+     +'<option value="uncertain"'+(solventCategory==='uncertain'?' selected':'')+'>Uncertain / not legally classified</option>'
+     +'</select><small>Use “Other foods” only when that is the confirmed regulatory category for this Table 6 solvent permission. PMSV never treats an unmatched product as “Other foods” by default.</small></div>');
+   bindings.push(['solventProductCategory','solvent_product_category']);
  }
 
  if(selectedProcesses.includes('washing')){
