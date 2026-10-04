@@ -2348,7 +2348,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=252',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=253',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
@@ -2428,6 +2428,13 @@ function renderProcessingQualifierUI(){
      +'<option value="other"'+(current==='other'?' selected':'')+'>Other filtration purpose</option>'
      +'</select><small>The insoluble-wax option activates only the Cellulose (INS 460) active-list permission.</small></div>');
    bindings.push(['filtrationPurpose','filtration_purpose']);
+   const sugarVariant=String(processingQualifiers.sugar_variant||'');
+   blocks.push('<div class="field"><label>Sugar variant, where specifically required</label><select id="sugarVariant">'
+     +'<option value="">No special sugar variant</option>'
+     +'<option value="khandsari_sulphur"'+(sugarVariant==='khandsari_sulphur'?' selected':'')+'>Khandsari (Sulphur)</option>'
+     +'<option value="other"'+(sugarVariant==='other'?' selected':'')+'>Other</option>'
+     +'</select><small>This qualifier is used only for the Sulphur Dioxide 150 mg/kg active-list route; ordinary Khandsari is not assumed to be the Sulphur variant.</small></div>');
+   bindings.push(['sugarVariant','sugar_variant']);
  }
 
  if(selectedProcesses.includes('ph')){
@@ -2471,6 +2478,16 @@ function renderProcessingQualifierUI(){
    bindings.push(['bindingProductCategory','binding_product_category']);
  }
 
+ if(selectedProcesses.includes('release')){
+   const current=String(processingQualifiers.release_product_category||'');
+   blocks.push('<div class="field"><label>Product category for release / antistick aid, where specifically required</label><select id="releaseProductCategory">'
+     +'<option value="">Use selected PMSV product / no special category</option>'
+     +'<option value="confectionery_or_bakery"'+(current==='confectionery_or_bakery'?' selected':'')+'>Confectionery (including chewing/bubble gum) or Bakery</option>'
+     +'<option value="other"'+(current==='other'?' selected':'')+'>Other</option>'
+     +'</select><small>This exact confirmation gates the active-list Rapeseed Oil permission.</small></div>');
+   bindings.push(['releaseProductCategory','release_product_category']);
+ }
+
  if(selectedProcesses.includes('washing')){
    const current=String(processingQualifiers.washing_substrate||'');
    blocks.push('<div class="field"><label>Substrate for washing / bleaching / peeling</label><select id="washingSubstrate">'
@@ -2500,6 +2517,16 @@ function renderProcessingQualifierUI(){
      +'<option value="other"'+(current==='other'?' selected':'')+'>Other substrate</option>'
      +'</select><small>Corn kernel is treated literally. Corn flour, corn grits, corn meal and corn flakes are not treated as equivalent.</small></div>');
    bindings.push(['softeningSubstrate','softening_substrate']);
+ }
+
+ if(selectedProcesses.includes('nutrient')){
+   const current=String(processingQualifiers.nutrient_product_category||'');
+   blocks.push('<div class="field"><label>Specific beverage category for microbial nutrient, where applicable</label><select id="nutrientProductCategory">'
+     +'<option value="">General microbial nutrient use</option>'
+     +'<option value="distilled_or_aromatized_alcoholic_beverages"'+(current==='distilled_or_aromatized_alcoholic_beverages'?' selected':'')+'>Distilled Spirituous or Aromatized Alcoholic Beverages</option>'
+     +'<option value="other"'+(current==='other'?' selected':'')+'>Other</option>'
+     +'</select><small>The specific alcoholic-beverage option activates the active-list Urea and DAP routes; general microbial nutrients remain available normally.</small></div>');
+   bindings.push(['nutrientProductCategory','nutrient_product_category']);
  }
 
  if(!blocks.length){
