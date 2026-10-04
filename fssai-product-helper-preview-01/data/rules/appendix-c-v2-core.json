@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Add new process selectors to UI and run product-gate activation regression.",
+    "next_priority": "Map remaining fail-closed Appendix C categories using exact PMSV catalogue/FSSAI category relationships; do not infer broad matches.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -89,7 +89,40 @@
     "appendix_c_product_gate_rule_key_links": 29,
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
     "appendix_c_product_gate_reachable_permissions": 51,
-    "appendix_c_product_gate_unreachable_permissions": 0
+    "appendix_c_product_gate_unreachable_permissions": 0,
+    "appendix_c_product_gate_regression_status": "passed_2026-10-04",
+    "appendix_c_product_gate_regression": {
+      "invalid_product_ids": 0,
+      "invalid_rule_keys": 0,
+      "unreachable_exact_gates": 0,
+      "verified_scenarios": [
+        "Chhana and Paneer + flocculation -> 6 Table 8 rows",
+        "Icing Sugar + desiccating -> Corn starch",
+        "Butter + encapsulation -> Beta-cyclodextrin",
+        "Cheese + coating -> Paraffin",
+        "Frozen Vegetables + anti-browning -> SAPP",
+        "Cocoa mix + pH -> Ammonium carbonate plus All-food pH aids",
+        "Polyols + catalyst -> Nickel",
+        "Dried Ginger + washing -> Calcium oxide",
+        "Caffeinated Beverage + microbial control -> Dimethyl dicarbonate"
+      ]
+    },
+    "appendix_c_permission_gate_counts": {
+      "auto_apply_permissions": 93,
+      "exact_gated_permissions": 50,
+      "remaining_fail_closed_permissions": 122,
+      "remaining_fail_closed_by_table": {
+        "1": 2,
+        "2": 10,
+        "3": 7,
+        "4": 15,
+        "5": 3,
+        "6": 27,
+        "7": 15,
+        "9": 1,
+        "12": 42
+      }
+    }
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
