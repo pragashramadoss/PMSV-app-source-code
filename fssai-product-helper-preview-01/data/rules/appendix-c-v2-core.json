@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Continue exact product gates for Tables 4-12",
+    "next_priority": "Wire exact rule-key gates into runtime and validate product-specific activation.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -83,7 +83,11 @@
       "table_9_liquid_nitrogen_scope": "Dairy-based desserts - Ice cream",
       "table_7_hydrogen_peroxide_effective_residual": "5 mg/kg as hydrogen peroxide"
     },
-    "appendix_c_product_gate_audit_status": "in_progress_exact_gates"
+    "appendix_c_product_gate_audit_status": "exact_gate_pass_1_loaded",
+    "appendix_c_product_gated_permissions": 51,
+    "appendix_c_product_gate_id_links": 267,
+    "appendix_c_product_gate_rule_key_links": 29,
+    "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed."
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -1064,7 +1068,12 @@
             {
               "product_category": "Chocolates",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "05-05-1-chocolate"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact Chocolate standard identity."
             }
           ]
         },
@@ -1088,7 +1097,13 @@
             {
               "product_category": "Snacks",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "18-18-2-cereal-or-pulses-flour-starch-based-snacks-and-savouries",
+                "18-18-2-fruit-and-vegetable-based-snacks-and-savouries"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV snack/savoury catalogue identities under FCS 18.2."
             }
           ]
         },
@@ -1152,13 +1167,43 @@
               "product_category": "Wine",
               "residual_level": "Non-detectable",
               "max_usage_mgkg": 200,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV wine identities."
             },
             {
               "product_category": "Fruits and vegetable juices and their products",
               "residual_level": "Non-detectable",
               "max_usage_mgkg": 250,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fruit-juices",
+                "fruit-juice-preserved-industrial",
+                "vegetable-juices",
+                "tomato-juice",
+                "vegetable-juice-preserved-industrial",
+                "concentrated-fruit-pulp-puree",
+                "concentrated-fruit-juice-industrial",
+                "concentrated-vegetable-juice-industrial",
+                "concentrated-vegetable-pulp-puree"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV fruit/vegetable juice identities."
             },
             {
               "product_category": "Water based flavoured drinks",
@@ -1166,8 +1211,13 @@
               "max_usage_mgkg": 250,
               "runtime_auto_apply": false,
               "product_ids": [
-                "carbonated-caffeinated-beverage"
-              ]
+                "carbonated-caffeinated-beverage",
+                "carbonated-water",
+                "non-carbonated-water-based-beverages",
+                "non-carbonated-caffeinated-beverage"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV water-based flavoured/caffeinated beverage identities."
             }
           ],
           "source_note": "Maximum usage levels are taken from the Table 5 footnote; residue remains non-detectable."
@@ -1207,7 +1257,17 @@
             {
               "product_category": "Meat and poultry carcasses and cuts",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "08-08-1-fresh-or-chilled-pork-or-pig-meat",
+                "08-08-1-fresh-or-chilled-beef",
+                "08-08-1-fresh-or-chilled-chevon-or-goat-meat",
+                "08-08-1-fresh-or-chilled-mutton-or-sheep-meat",
+                "08-08-1-fresh-or-chilled-poultry-meat",
+                "08-08-1-fresh-or-chilled-rabbit-meat"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Verified exact fresh/chilled meat and poultry catalogue identities under FCS 08.1."
             }
           ]
         },
@@ -1233,7 +1293,17 @@
             {
               "product_category": "Raw meat and poultry",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "08-08-1-fresh-or-chilled-pork-or-pig-meat",
+                "08-08-1-fresh-or-chilled-beef",
+                "08-08-1-fresh-or-chilled-chevon-or-goat-meat",
+                "08-08-1-fresh-or-chilled-mutton-or-sheep-meat",
+                "08-08-1-fresh-or-chilled-poultry-meat",
+                "08-08-1-fresh-or-chilled-rabbit-meat"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact fresh/chilled raw meat and poultry catalogue identities under FCS 08.1."
             }
           ]
         },
@@ -1824,7 +1894,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level_mgkg": 30,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             },
             {
               "product_category": "Colours",
@@ -1868,7 +1943,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level_mgkg": 2,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             }
           ]
         },
@@ -1880,7 +1960,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level_mgkg": 2,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             }
           ]
         },
@@ -1897,7 +1982,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             }
           ]
         },
@@ -1938,7 +2028,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level_mgkg": 2,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             }
           ]
         },
@@ -1967,7 +2062,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level_mgkg": 50,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             }
           ]
         },
@@ -1979,7 +2079,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             },
             {
               "product_category": "Other Foods",
@@ -1996,7 +2101,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level_mgkg": 30,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             }
           ]
         },
@@ -2055,12 +2165,22 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level_mgkg": 25,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             },
             {
               "product_category": "Chocolate and chocolate products",
               "residual_level_mgkg": 1,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "05-05-1-chocolate"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact Chocolate standard identity."
             }
           ]
         },
@@ -2089,7 +2209,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level_mgkg": 50,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             },
             {
               "product_category": "Other foods",
@@ -2106,7 +2231,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level_mgkg": 50,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             }
           ]
         },
@@ -2133,7 +2263,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level_mgkg": 30,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             },
             {
               "product_category": "Vegetable oils",
@@ -2162,7 +2297,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level_mgkg": 2,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             }
           ]
         },
@@ -2191,7 +2331,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level_mgkg": 1,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             }
           ]
         },
@@ -2215,7 +2360,12 @@
             {
               "product_category": "Spice oleoresins",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.9.32"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             }
           ]
         }
@@ -2430,7 +2580,12 @@
               "product_category": "Dried Ginger; whole and powder (unbleached or bleached)",
               "runtime_auto_apply": false,
               "residual_level_mgkg": 20000,
-              "residual_basis": "on dry basis"
+              "residual_basis": "on dry basis",
+              "rule_keys": [
+                "2.9.11"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Dried Ginger standard 2.9.11."
             }
           ]
         }
@@ -2459,7 +2614,12 @@
               "product_ids": [
                 "01-01-6-chhana-and-paneer"
               ],
-              "residual_level": "GMP"
+              "residual_level": "GMP",
+              "rule_keys": [
+                "2.1.16"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Chhana and Paneer standard 2.1.16."
             }
           ]
         },
@@ -2474,7 +2634,12 @@
               "product_ids": [
                 "01-01-6-chhana-and-paneer"
               ],
-              "residual_level": "GMP"
+              "residual_level": "GMP",
+              "rule_keys": [
+                "2.1.16"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Chhana and Paneer standard 2.1.16."
             }
           ]
         },
@@ -2489,7 +2654,12 @@
               "product_ids": [
                 "01-01-6-chhana-and-paneer"
               ],
-              "residual_level": "GMP"
+              "residual_level": "GMP",
+              "rule_keys": [
+                "2.1.16"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Chhana and Paneer standard 2.1.16."
             }
           ]
         },
@@ -2504,7 +2674,12 @@
               "product_ids": [
                 "01-01-6-chhana-and-paneer"
               ],
-              "residual_level": "GMP"
+              "residual_level": "GMP",
+              "rule_keys": [
+                "2.1.16"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Chhana and Paneer standard 2.1.16."
             }
           ]
         },
@@ -2519,7 +2694,12 @@
               "product_ids": [
                 "01-01-6-chhana-and-paneer"
               ],
-              "residual_level": "GMP"
+              "residual_level": "GMP",
+              "rule_keys": [
+                "2.1.16"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Chhana and Paneer standard 2.1.16."
             }
           ]
         },
@@ -2534,7 +2714,12 @@
               "product_ids": [
                 "01-01-6-chhana-and-paneer"
               ],
-              "residual_level": "GMP"
+              "residual_level": "GMP",
+              "rule_keys": [
+                "2.1.16"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Chhana and Paneer standard 2.1.16."
             }
           ]
         }
@@ -2589,7 +2774,12 @@
               "product_ids": [
                 "11-11-1-icing-sugar"
               ],
-              "residual_level": "GMP"
+              "residual_level": "GMP",
+              "rule_keys": [
+                "2.8.1(6)"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Icing Sugar standard 2.8.1(6)."
             }
           ]
         }
@@ -4456,7 +4646,13 @@
               "purpose": "pH control agent",
               "product_category": "Cocoa mixes (powders) and cocoa mass/cake",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.7.6",
+                "2.7.8"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Dry Mixtures of Cocoa and Sugars plus Cocoa Mass/Cake standards."
             }
           ]
         },
@@ -4496,7 +4692,38 @@
               "purpose": "Microbial nutrient",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage catalogue identities under FCS 14.2."
             }
           ],
           "process_key": "nutrient"
@@ -4537,7 +4764,12 @@
               "purpose": "Encapsulating and thickening agent",
               "product_category": "Butter",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.1.9"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Butter standard 2.1.9."
             }
           ]
         },
@@ -4775,7 +5007,14 @@
               "purpose": "Protein hydrolysing agent",
               "product_category": "Protein products",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "06-06-2-wheat-protein-products-including-wheat-gluten",
+                "06-06-8-soy-protein-products",
+                "12-12-10-vegetable-protein-products"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact standardized wheat, soy and vegetable protein-product identities."
             }
           ],
           "process_key": "ph"
@@ -5011,7 +5250,12 @@
               "purpose": "Coating agent",
               "product_category": "Cheese and cheese products",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.1.17"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact cheese/cheese-products standard family 2.1.17."
             }
           ]
         },
@@ -5237,7 +5481,12 @@
               "purpose": "Prevention of darkening of frozen uncooked French fries",
               "product_category": "Frozen vegetables",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.3.38"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Frozen Vegetables standard 2.3.38."
             }
           ]
         },
@@ -5497,7 +5746,9 @@
               "product_category": "Water treatment",
               "residual_level_mgkg": 1,
               "residual_basis": "as available chlorine",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": true,
+              "product_gate_status": "process_exact",
+              "product_gate_note": "The Appendix C applicability category is Water treatment itself; the manufacturing-process selection is the exact gate."
             }
           ],
           "process_key": "water"
