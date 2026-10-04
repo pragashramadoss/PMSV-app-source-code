@@ -45,7 +45,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Appendix C runtime reconciliation is complete for currently determinable permissions. Vitamin B12 and Vitamin C remain visibly fail-closed until FSSAI publishes a residue level or clarification; do not infer GMP.",
+    "next_priority": "Appendix C is operationally complete. Continue the product-helper cross-regulation regression across product master, Appendix A, Appendix B, contaminants and Appendix C, while keeping Vitamin B12/Vitamin C visibly fail-closed until FSSAI clarifies their residue limits.",
     "table_3_entries": 16,
     "table_3_permission_rows": 18,
     "table_4_entries": 27,
@@ -101,7 +101,7 @@
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, exact process gates, or explicit user-confirmed exact Appendix C legal-category qualifiers can activate product-specific permissions. Unmatched products never inherit residual categories such as “Other foods”.",
     "appendix_c_product_gate_reachable_permissions": 204,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "passed_build_259_official_blank_residue_status_2026-10-04",
+    "appendix_c_product_gate_regression_status": "passed_build_260_final_appendix_c_runtime_regression_2026-10-04",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -201,7 +201,7 @@
       "table_11a_operational_entries": 51,
       "table_11a_draft_rows_excluded": true
     },
-    "appendix_c_runtime_status": "production_fail_closed_final_2025_plus_section_16_5_build_259",
+    "appendix_c_runtime_status": "production_fail_closed_final_2025_plus_section_16_5_build_260",
     "appendix_c_product_master_count": 533,
     "appendix_c_product_profile_count": 533,
     "appendix_c_product_gate_invalid_ids": 0,
@@ -291,7 +291,25 @@
         "runtime_status": "fail_closed"
       }
     ],
-    "appendix_c_reconciliation_status": "runtime_complete_except_two_official_blank_residue_rows"
+    "appendix_c_reconciliation_status": "operationally_complete_except_two_official_blank_residue_rows",
+    "appendix_c_completion_checkpoint": {
+      "build": 260,
+      "verified_on": "2026-10-04",
+      "source_permission_rows": 313,
+      "runtime_route_projections": 37,
+      "invalid_product_ids": 0,
+      "invalid_rule_keys": 0,
+      "unreachable_nonlocked_permissions": 0,
+      "missing_process_selectors": 0,
+      "missing_qualifier_ui": 0,
+      "duplicate_process_selectors": 0,
+      "intentional_fail_closed_permissions": 2,
+      "unresolved_rows": [
+        "Table 12 S.No.71 Vitamin B12 — official residue field blank",
+        "Table 12 S.No.72 Vitamin C — official residue field blank"
+      ],
+      "policy": "No residue value is inferred where the official FSSAI source is blank."
+    }
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
