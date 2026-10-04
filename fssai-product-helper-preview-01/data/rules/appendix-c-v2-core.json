@@ -15,7 +15,7 @@
   "applicability_rule": "Processing aids listed in Tables 1 to 12 may be used only in manufacture of the food specified in the corresponding table and the final food shall not exceed the stated residue level. Product-specific rows remain fail-closed until PMSV has an exact product-category route. 'All foods' rows may auto-apply once the relevant process is selected.",
   "coverage": {
     "tables_total": 12,
-    "tables_loaded": 11,
+    "tables_loaded": 12,
     "loaded_tables": [
       "Table 1 - Antifoaming Agents",
       "Table 2 - Catalyst",
@@ -27,13 +27,14 @@
       "Table 8 - Flocculating Agents",
       "Table 9 - Contact Freezing and Cooling Agents",
       "Table 10 - Desiccating Agents",
-      "Table 11 - Enzymes (non-GMM)"
+      "Table 11 - Enzymes (non-GMM)",
+      "Table 12 - Generally permitted processing aids"
     ],
     "table_1_entries": 9,
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 12 - verify and load remaining current rows 2-11, 14, 17-31, 33-54, 56-62",
+    "next_priority": "Appendix C runtime reconciliation and current-amendment audit",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -59,9 +60,9 @@
     "table_11a_gmm_entries_loaded": 51,
     "table_11a_gmm_variant_rows_loaded": 109,
     "table_11a_gmm_enzyme_preparation_criteria_loaded": true,
-    "table_12_status": "partial_verified_current_rows",
-    "table_12_entries_loaded": 32,
-    "table_12_permission_rows": 40
+    "table_12_status": "complete_current_consolidated",
+    "table_12_entries_loaded": 87,
+    "table_12_permission_rows": 101
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -4134,7 +4135,7 @@
       "title": "GENERALLY PERMITTED PROCESSING AIDS",
       "process_key": "general_processing_aid",
       "source_scope": "Current FSSAI active list / Appendix C current text. Rows are loaded only where the current official row text has been positively verified; older superseded wording is not used.",
-      "ingestion_status": "partial_verified_current_rows",
+      "ingestion_status": "complete_1_to_87_current_consolidated",
       "entries": [
         {
           "s_no": 1,
@@ -4146,6 +4147,142 @@
               "product_category": "Sugars, oils and fats, juices, Alcoholic Beverages, Non-alcoholic beverages, Sugar syrup treatment",
               "residual_level": "GMP",
               "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 2,
+          "name": "Ammonium carbonate",
+          "ins": "503(i)",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "Cocoa mixes (powders) and cocoa mass/cake",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 3,
+          "name": "Ammonium hydroxide",
+          "ins": "527",
+          "permissions": [
+            {
+              "purpose": "Acidity regulator",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 4,
+          "name": "Ammonium sulphate",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Decalcification agent",
+              "product_category": "Edible casings",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 5,
+          "name": "Amino acids",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Microbial nutrient",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 6,
+          "name": "Alum (Aluminium sulphate or Potassium aluminium sulphate)",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Coagulant",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 7,
+          "name": "Argon",
+          "ins": "938",
+          "permissions": [
+            {
+              "purpose": "Propellent and packaging gas",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 8,
+          "name": "Beta-cyclodextrin",
+          "ins": "459",
+          "permissions": [
+            {
+              "purpose": "Encapsulating and thickening agent",
+              "product_category": "Butter",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 9,
+          "name": "Biotin",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Microbial nutrient",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 10,
+          "name": "Bone phosphate",
+          "ins": "542",
+          "permissions": [
+            {
+              "purpose": "Emulsifier, moisture retention agent",
+              "product_category": "All foods except milk and milk products",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            },
+            {
+              "purpose": "Sequestrant",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 11,
+          "name": "Calcium carbonate",
+          "ins": "170(i)",
+          "permissions": [
+            {
+              "purpose": "Polishing agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
             }
           ]
         },
@@ -4176,6 +4313,19 @@
             {
               "purpose": "Buffering agent",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 14,
+          "name": "Calcium and sodium salts of stearic acid",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Polishing agent",
+              "product_category": "Confectionery",
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
@@ -4226,6 +4376,202 @@
           ]
         },
         {
+          "s_no": 17,
+          "name": "Chlorine dioxide",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Water treatment",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level_mgkg": 1,
+              "residual_basis": "as available chlorine",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 18,
+          "name": "Ethyl acetate",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Cell disruption of yeast",
+              "product_category": "Yeast",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 19,
+          "name": "Ethyl Alcohol",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Carrier solvent, flavouring agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 20,
+          "name": "Ethylene diamine tetra acetic acid",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Metal sequestrant",
+              "product_category": "Edible fats and oils and related products",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 21,
+          "name": "Furcellaran",
+          "ins": "407",
+          "permissions": [
+            {
+              "purpose": "Thickener, gelling agent, stabilizer, emulsifier",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 22,
+          "name": "Gibberellic acid",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Malting, grain processing steps for fermentation (alcoholic beverages)",
+              "product_category": "Cereals",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 23,
+          "name": "Glucono delta lactone (GDL)",
+          "ins": "575",
+          "permissions": [
+            {
+              "purpose": "Raising agent, sequestrant",
+              "product_category": "Unripened cheese – Paneer and Chhana",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 24,
+          "name": "Glycerin / Glycerol",
+          "ins": "422",
+          "permissions": [
+            {
+              "purpose": "Polishing agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 25,
+          "name": "Hydrochloric acid",
+          "ins": "507",
+          "permissions": [
+            {
+              "purpose": "Protein hydrolysing agent",
+              "product_category": "Protein products",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 26,
+          "name": "Hydrogenated glucose syrups",
+          "ins": "965(ii)",
+          "permissions": [
+            {
+              "purpose": "Sweetener, humectant, texturizer, stabilizer, bulking agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 27,
+          "name": "HVO (Hydrogenated vegetable oil)",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Lubricant for conveyor belts for countline products",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 28,
+          "name": "Icing sugar",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Polishing agent",
+              "product_category": "Confectionery",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 29,
+          "name": "Indole acetic acid",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Malting",
+              "product_category": "Cereals",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 30,
+          "name": "Isopropyl alcohol",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Glazing agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 31,
+          "name": "L-Cysteine (or HCl salt)",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Dough conditioner",
+              "product_category": "Flour products",
+              "residual_level_mgkg": 75,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
           "s_no": 32,
           "name": "Lactic acid",
           "ins": "270",
@@ -4233,6 +4579,311 @@
             {
               "purpose": "Acidity regulator",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts, seasonings",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 33,
+          "name": "Liquified anhydrous ammonia",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Bacterial nutrient",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 34,
+          "name": "Liquid paraffin",
+          "ins": "905e",
+          "permissions": [
+            {
+              "purpose": "Polishing agent",
+              "product_category": "Confectionery",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 35,
+          "name": "Magnesium hydroxide",
+          "ins": "528",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 36,
+          "name": "Magnesium stearate",
+          "ins": "470(iii)",
+          "permissions": [
+            {
+              "purpose": "Polishing agent",
+              "product_category": "Confectionery",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 37,
+          "name": "Mono and diglycerides of fatty acids",
+          "ins": "471",
+          "permissions": [
+            {
+              "purpose": "Emulsifier in extrusion",
+              "product_category": "Extruded foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 38,
+          "name": "Nicotinamide",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Microbial nutrient",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 39,
+          "name": "Nitrogen gas",
+          "ins": "941",
+          "permissions": [
+            {
+              "purpose": "Foaming agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 40,
+          "name": "Oak dust/chips",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Ageing agent",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 41,
+          "name": "Oxygen",
+          "ins": "948",
+          "permissions": [
+            {
+              "purpose": "Propellant",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            },
+            {
+              "purpose": "Aerating agent",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 42,
+          "name": "Paraffin",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Coating agent",
+              "product_category": "Cheese and cheese products",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 43,
+          "name": "Phospholipids",
+          "ins": "322(i)",
+          "permissions": [
+            {
+              "purpose": "Emulsifier, antioxidant",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 44,
+          "name": "Phosphoric acid",
+          "ins": "338",
+          "permissions": [
+            {
+              "purpose": "Acidulant, sequestrant, synergist for antioxidants",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            },
+            {
+              "purpose": "Buffering agent",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 45,
+          "name": "Polyethylene glycols",
+          "ins": "1521",
+          "permissions": [
+            {
+              "purpose": "Carrier solvent, excipient",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 46,
+          "name": "Polyglycerol esters of interesterified ricinoleic acid",
+          "ins": "476",
+          "permissions": [
+            {
+              "purpose": "Emulsifier",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 47,
+          "name": "Polyoxyethylene stearate",
+          "ins": "431",
+          "permissions": [
+            {
+              "purpose": "Emulsifier",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 48,
+          "name": "Polyvinyl acetate",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Preparation of waxes",
+              "product_category": "Cheese and cheese products",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 49,
+          "name": "Potassium carbonate",
+          "ins": "501(i)",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "Cocoa mixes (powders) and cocoa mass/cake",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 50,
+          "name": "Potassium dihydrogen phosphate",
+          "ins": "340",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 51,
+          "name": "Potassium hydroxide",
+          "ins": "525",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 52,
+          "name": "Potassium metabisulphite",
+          "ins": "224",
+          "permissions": [
+            {
+              "purpose": "Antioxidant",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level_mgkg": 50,
+              "residual_basis": "maximum usage level",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 53,
+          "name": "Propylene glycol alginate",
+          "ins": "405",
+          "permissions": [
+            {
+              "purpose": "Stabilizer, thickener, emulsifier",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            },
+            {
+              "purpose": "Foam stabilizer",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 54,
+          "name": "Rice starch",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Polishing agent",
+              "product_category": "Confectionery",
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
@@ -4254,6 +4905,109 @@
               "product_category": "Unripened Cheese-Paneer; Water treatment",
               "residual_level": "GMP",
               "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 56,
+          "name": "Silica",
+          "ins": "551",
+          "permissions": [
+            {
+              "purpose": "Anticaking agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            },
+            {
+              "purpose": "Soap absorbing agent",
+              "product_category": "Edible vegetable oils",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            },
+            {
+              "purpose": "Free flowing agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 57,
+          "name": "Sodium acid pyrophosphate (SAPP)",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Prevention of darkening of frozen uncooked French fries",
+              "product_category": "Frozen vegetables",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 58,
+          "name": "Sodium bicarbonate",
+          "ins": "500(ii)",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 59,
+          "name": "Sodium calcium polyphosphate silicate",
+          "ins": "452(i)",
+          "permissions": [
+            {
+              "purpose": "Stabilizer, leavening agent, emulsifier, nutrient",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 60,
+          "name": "Sodium carbonate",
+          "ins": "500(i)",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 61,
+          "name": "Sodium dihydrogen phosphate",
+          "ins": "339",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 62,
+          "name": "Sodium Hydroxide",
+          "ins": "524",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
             }
           ]
         },
@@ -4605,7 +5359,8 @@
             }
           ]
         }
-      ]
+      ],
+      "source_note": "Current FSSAI Appendix C Version 2 / active processing-aids list. Substituted and inserted rows use the current wording; unchanged base rows were cross-checked against official FSSAI compendium text."
     }
   }
 }
