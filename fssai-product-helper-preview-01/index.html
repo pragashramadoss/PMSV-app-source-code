@@ -1301,7 +1301,8 @@ const table11Enzymes=[
   "ec": "3.4.23.4",
   "sources": [
    "Kluyveromyces lactis",
-   "Aspergillus niger (variety-Awamori)"
+   "Aspergillus niger (variety-Awamori)",
+   "Fourth stomach of domesticated ruminants (cattle, buffalos, goats and sheeps)"
   ]
  },
  {
@@ -2288,7 +2289,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=221',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=223',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
