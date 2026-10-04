@@ -722,13 +722,15 @@
       "locked_rows_total": 10
     },
     "special_nutrition": {
-      "rule_file": "./data/rules/special-nutrition-routing-v1.json",
-      "status": "deterministic_route_loaded",
-      "source_verified_on": "2026-10-03",
-      "infant_route": "Foods for Infant Nutrition Regulations, 2020",
-      "other_special_route": "FSSAI Health Supplements / Nutraceuticals / FSDU / FSMP framework",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "routing_file": "./data/rules/special-nutrition-routing-v1.json",
+      "status": "structured_core_loaded",
+      "source_verified_on": "2026-10-04",
+      "infant_regulation_profiles": 11,
+      "formulated_supplement_chapter_2_4_profiles": 1,
+      "product_routing_note": "Eleven infant-nutrition products use the Foods for Infant Nutrition Regulations. Formulated supplements for children is an exact Chapter 2.4.11(4) exception despite FoSCoS FCS 13.2.",
       "proprietary_food_fallback": false,
-      "next_validation": "Load exact composition/additive/label rules for each category-13 subroute before full formulation compliance is enabled."
+      "next_validation": "Normalize every nutrient table and direct additive table for regulations 7–16, source-compound schedules, microbiology and label declarations before final formulation compliance."
     },
     "source_governance": {
       "status": "strict_official_only",
@@ -765,7 +767,7 @@
         "100-100-solvent-extracted-crude-vegetable-oils-not-for-direct-human-consumption"
       ]
     },
-    "chapter_profiles_ready": 370,
+    "chapter_profiles_ready": 382,
     "base_profile_promotion_audit": {
       "checked_on": "2026-10-03",
       "starting_base_profiles": 187,
@@ -781,11 +783,11 @@
       "newly_loaded": [
         "3.2.16(1) Sorbitol",
         "2.2.9 Solvent Extracted Crude Vegetable Oils",
-        "Food Safety and Standards (Alcoholic Beverages) Regulations — Version V (04.12.2025)"
+        "Food Safety and Standards (Alcoholic Beverages) Regulations — Version V (04.12.2025)",
+        "Food Safety and Standards (Foods for Infant Nutrition) Regulations — Compendium Version II (04.01.2024)",
+        "2.4.11(4) Formulated supplements for children"
       ],
-      "still_external_regulation_sets_needed": [
-        "Food Safety and Standards (Foods for Infant Nutrition) Regulations — current FSSAI compendium/product standards"
-      ],
+      "still_external_regulation_sets_needed": [],
       "rule": "Only current official FSSAI sources are used. External regulation sets remain locked until their product standards are structured."
     },
     "contaminants": {
@@ -922,7 +924,7 @@
       "current_regulatory_note": "Current Version V is loaded from FSSAI. Product definitions, current RTD/beer/wine routes and Table-4 requirements are structured. Dense Table-1/2/3 matrices remain under exact per-column normalization before final formulation verdicts.",
       "next_validation": "Normalize Table 1 distilled-spirit matrix, complete Table 2 wine matrix and Table 3 beer matrix column-by-column; then connect contaminants, microbiology, processing aids and current label rendering."
     },
-    "base_profiles_ready": 155
+    "base_profiles_ready": 143
   },
   "source_hierarchy": [
     {
@@ -2409,10 +2411,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "special_regulation",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Chapter 2.4.11(4) standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Products Standards and Food Additives Regulations — Chapter 2.4",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -2429,7 +2431,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/chapter-2-4-cereals-v1.json",
+      "rule_key": "2.4.11(4)",
+      "standard_name": "Formulated supplements for children",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "FoSCoS licensing FCS is 13.2, but the actual standardized product rule is FPSFA Chapter 2.4.11(4), for children above 24 to 36 months."
     },
     {
       "id": "traditional-infant-food",
@@ -2440,10 +2449,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "special_regulation",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Foods for Infant Nutrition product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Foods for Infant Nutrition Regulations, 2020 — Compendium Version II (04.01.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -2460,7 +2469,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "11",
+      "standard_name": "Food for Infants based on traditional food ingredients",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
     },
     {
       "id": "01-01-1-buffalo-milk",
@@ -15262,10 +15278,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "special_regulation",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Foods for Infant Nutrition product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Foods for Infant Nutrition Regulations, 2020 — Compendium Version II (04.01.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15282,10 +15298,17 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
       "special_route_identity_verified_on": "2026-10-03",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "7",
+      "standard_name": "Infant formula",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
     },
     {
       "id": "13-13-1-follow-up-formula",
@@ -15296,10 +15319,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "special_regulation",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Foods for Infant Nutrition product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Foods for Infant Nutrition Regulations, 2020 — Compendium Version II (04.01.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15316,10 +15339,17 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
       "special_route_identity_verified_on": "2026-10-03",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "10",
+      "standard_name": "Follow-up Formula",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
     },
     {
       "id": "13-13-1-preterm-infant-milk-substitute",
@@ -15330,10 +15360,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "special_regulation",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Foods for Infant Nutrition product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Foods for Infant Nutrition Regulations, 2020 — Compendium Version II (04.01.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15350,7 +15380,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "13",
+      "standard_name": "Preterm infant milk substitute",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
     },
     {
       "id": "13-13-1-food-for-special-medical-purpose-intended-for-infants",
@@ -15361,10 +15398,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "special_regulation",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Foods for Infant Nutrition product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Foods for Infant Nutrition Regulations, 2020 — Compendium Version II (04.01.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15381,10 +15418,17 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
       "special_route_identity_verified_on": "2026-10-03",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "12",
+      "standard_name": "Food for special medical purpose intended for infants",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
     },
     {
       "id": "13-13-1-lactose-free-infant-milk-substitutes",
@@ -15395,10 +15439,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "special_regulation",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Foods for Infant Nutrition product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Foods for Infant Nutrition Regulations, 2020 — Compendium Version II (04.01.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15415,7 +15459,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "14",
+      "standard_name": "Lactose free infant milk substitutes",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
     },
     {
       "id": "13-13-1-hypoallergenic-infant-milk-substitutes",
@@ -15426,10 +15477,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "special_regulation",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Foods for Infant Nutrition product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Foods for Infant Nutrition Regulations, 2020 — Compendium Version II (04.01.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15446,7 +15497,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "15",
+      "standard_name": "Hypoallergenic infant milk substitutes",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
     },
     {
       "id": "13-13-1-foods-for-infants-with-inborn-errors-of-metabolism-iem",
@@ -15457,10 +15515,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "special_regulation",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Foods for Infant Nutrition product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Foods for Infant Nutrition Regulations, 2020 — Compendium Version II (04.01.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15477,10 +15535,17 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
       "special_route_identity_verified_on": "2026-10-03",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "16",
+      "standard_name": "Foods for Infants with Inborn Errors of Metabolism (IEM)",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
     },
     {
       "id": "13-13-1-infant-milk-food",
@@ -15491,10 +15556,10 @@
       "fssr": "Chapter 4(12) of Infant Nutrition Regulations, 2020",
       "regulation_chapter": "",
       "route": "special_regulation",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Foods for Infant Nutrition product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Foods for Infant Nutrition Regulations, 2020 — Compendium Version II (04.01.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15511,10 +15576,17 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
       "special_route_identity_verified_on": "2026-10-03",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "7(3)",
+      "standard_name": "Infant Milk Food",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
     },
     {
       "id": "13-13-2-milk-cereal-based-complementary-food",
@@ -15525,10 +15597,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "special_regulation",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Foods for Infant Nutrition product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Foods for Infant Nutrition Regulations, 2020 — Compendium Version II (04.01.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15545,10 +15617,17 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
       "special_route_identity_verified_on": "2026-10-03",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "8",
+      "standard_name": "Milk-cereal based complementary food",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
     },
     {
       "id": "13-13-2-processed-cereal-based-complementary-food",
@@ -15559,10 +15638,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "special_regulation",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Foods for Infant Nutrition product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Foods for Infant Nutrition Regulations, 2020 — Compendium Version II (04.01.2024)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15579,10 +15658,17 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
       "special_route_identity_verified_on": "2026-10-03",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "9",
+      "standard_name": "Processed cereal based complementary food",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
     },
     {
       "id": "14-14-2-beer",
@@ -19456,13 +19542,17 @@
       "name": "Formulated supplements for children",
       "fcs": "13.2",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "profile_id": "formulated-supplements-children",
       "appendix_fcs": "13.2",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/chapter-2-4-cereals-v1.json",
+      "rule_key": "2.4.11(4)",
+      "standard_name": "Formulated supplements for children",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "traditional-infant-food",
@@ -19471,13 +19561,17 @@
       "name": "Food for Infants based on traditional food ingredients",
       "fcs": "13.2",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "profile_id": "traditional-infant-food",
       "appendix_fcs": "13.2",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "11",
+      "standard_name": "Food for Infants based on traditional food ingredients",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "01-01-1-buffalo-milk",
@@ -26413,16 +26507,20 @@
       "name": "Infant formula",
       "fcs": "13.1.1",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "13-13-1-infant-formula",
       "appendix_fcs": "13.1.1",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "7",
+      "standard_name": "Infant formula",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "13-13-1-follow-up-formula",
@@ -26431,16 +26529,20 @@
       "name": "Follow-up Formula",
       "fcs": "13.1.2",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "13-13-1-follow-up-formula",
       "appendix_fcs": "13.1.2",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "10",
+      "standard_name": "Follow-up Formula",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "13-13-1-preterm-infant-milk-substitute",
@@ -26449,14 +26551,18 @@
       "name": "Preterm infant milk substitute",
       "fcs": "13.1.3",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "13-13-1-preterm-infant-milk-substitute",
       "appendix_fcs": "13.1.3",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "13",
+      "standard_name": "Preterm infant milk substitute",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "13-13-1-food-for-special-medical-purpose-intended-for-infants",
@@ -26465,16 +26571,20 @@
       "name": "Food for special medical purpose intended for infants",
       "fcs": "13.1.3",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "13-13-1-food-for-special-medical-purpose-intended-for-infants",
       "appendix_fcs": "13.1.3",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "12",
+      "standard_name": "Food for special medical purpose intended for infants",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "13-13-1-lactose-free-infant-milk-substitutes",
@@ -26483,14 +26593,18 @@
       "name": "Lactose free infant milk substitutes",
       "fcs": "13.1.3",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "13-13-1-lactose-free-infant-milk-substitutes",
       "appendix_fcs": "13.1.3",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "14",
+      "standard_name": "Lactose free infant milk substitutes",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "13-13-1-hypoallergenic-infant-milk-substitutes",
@@ -26499,14 +26613,18 @@
       "name": "Hypoallergenic infant milk substitutes",
       "fcs": "13.1.3",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "13-13-1-hypoallergenic-infant-milk-substitutes",
       "appendix_fcs": "13.1.3",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "15",
+      "standard_name": "Hypoallergenic infant milk substitutes",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "13-13-1-foods-for-infants-with-inborn-errors-of-metabolism-iem",
@@ -26515,16 +26633,20 @@
       "name": "Foods for Infants with Inborn Errors of Metabolism (IEM)",
       "fcs": "13.1.3",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "13-13-1-foods-for-infants-with-inborn-errors-of-metabolism-iem",
       "appendix_fcs": "13.1.3",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "16",
+      "standard_name": "Foods for Infants with Inborn Errors of Metabolism (IEM)",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "13-13-1-infant-milk-food",
@@ -26533,16 +26655,20 @@
       "name": "Infant Milk Food",
       "fcs": "13.1.1",
       "fssr": "Chapter 4(12) of Infant Nutrition Regulations, 2020",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "13-13-1-infant-milk-food",
       "appendix_fcs": "13.1.1",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "7(3)",
+      "standard_name": "Infant Milk Food",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "13-13-2-milk-cereal-based-complementary-food",
@@ -26551,16 +26677,20 @@
       "name": "Milk-cereal based complementary food",
       "fcs": "13.2",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "13-13-2-milk-cereal-based-complementary-food",
       "appendix_fcs": "13.2",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "8",
+      "standard_name": "Milk-cereal based complementary food",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "13-13-2-processed-cereal-based-complementary-food",
@@ -26569,16 +26699,20 @@
       "name": "Processed cereal based complementary food",
       "fcs": "13.2",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "13-13-2-processed-cereal-based-complementary-food",
       "appendix_fcs": "13.2",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked",
+      "chapter_rule_link_status": "file_and_key_verified",
       "special_route_identity_status": "exact_foscos_example_verified",
-      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard."
+      "special_route_identity_note": "Exact product-name match exists in the stored official FoSCoS/FSSAI special-nutrition routing examples. This confirms routing only; it does not substitute for the applicable special-regulation product standard.",
+      "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
+      "rule_key": "9",
+      "standard_name": "Processed cereal based complementary food",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-beer",
@@ -28150,8 +28284,8 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 183,
-  "build_label": "Build 183 — Alcoholic Beverages Version V core standards",
+  "build_number": 184,
+  "build_label": "Build 184 — Infant Nutrition core product standards",
   "build_date": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",

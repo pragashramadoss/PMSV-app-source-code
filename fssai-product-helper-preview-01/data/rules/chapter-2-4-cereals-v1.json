@@ -3,7 +3,7 @@
   "chapter": "2.4",
   "title": "Cereals and Cereal Products",
   "source_version": "Version 1 (01.09.2023)",
-  "source_verified_on": "2026-10-02",
+  "source_verified_on": "2026-10-04",
   "official_sources": [
     {
       "authority": "FSSAI",
@@ -1237,6 +1237,51 @@
       "label_rules": [
         "Product name may include vernacular/common/traditional/major-ingredient name in addition to 'Papad'."
       ]
+    },
+    {
+      "key": "2.4.11(4)",
+      "name": "Formulated supplements for children",
+      "status": "structured_core",
+      "scope": "Children above 24 months up to 36 months.",
+      "description": "Nutritionally appropriate supplementary food intended to complement family foods by providing energy and nutrients that may be lacking or insufficient.",
+      "permitted_ingredient_groups": [
+        "Cereals",
+        "Legumes and pulses",
+        "Oil seed flours and oil seed protein products",
+        "Animal-source foods",
+        "Fats and oils",
+        "Fruits and vegetables",
+        "Milk and milk products",
+        "Digestible carbohydrates",
+        "Protein isolates, concentrates and hydrolysates",
+        "Permitted probiotic/prebiotic ingredients subject to applicable FSSAI provisions"
+      ],
+      "formulation_rules": [
+        {
+          "parameter": "Partially hydrogenated fats",
+          "operator": "prohibited"
+        },
+        {
+          "parameter": "Field beans and faba beans",
+          "operator": "prohibited",
+          "reason": "Favism risk under the standard"
+        },
+        {
+          "parameter": "Soya processing",
+          "operator": "condition",
+          "value": "Use appropriately processed soya with reduced anti-nutritional factors and low phytoestrogens"
+        }
+      ],
+      "label_rules": [
+        "The product name shall indicate that it is a formulated supplement for children.",
+        "Do not present the product as 'Energy food' or 'Health food'.",
+        "The label shall not refer to malnourished children.",
+        "Declare major protein sources and that the product is recommended for children above 24 months up to 36 months.",
+        "Declare allergens.",
+        "Provide preparation/use instructions and the prescribed feeding/discard guidance."
+      ],
+      "source_verified_on": "2026-10-04"
     }
-  ]
+  ],
+  "structured_core_standards": 44
 }

@@ -1,0 +1,373 @@
+{
+  "schema_version": "1.0",
+  "database_id": "fssai-foods-for-infant-nutrition-v2",
+  "regulation": "Food Safety and Standards (Foods for Infant Nutrition) Regulations, 2020",
+  "source_version": "Compendium Version II (04.01.2024)",
+  "source_verified_on": "2026-10-04",
+  "source_policy": "Official FSSAI/FoSCoS sources only",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Food Safety and Standards (Foods for Infant Nutrition) Regulations, 2020 — Compendium Version II (04.01.2024)",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_IFR_VERSION-II_04_01_2024.pdf"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Foods for Infant Nutrition — official amendments register",
+      "url": "https://fssai.gov.in/food-law/regulations/amendments/infant-nutrition"
+    },
+    {
+      "authority": "FoSCoS / FSSAI",
+      "title": "FSSAI Standardized Food Products search",
+      "url": "https://fcstraining.fssai.gov.in/standard-product"
+    }
+  ],
+  "general_requirements": {
+    "approval_rule": "Infant milk substitutes, infant foods or infant FSMP products without a specified standard require Food Authority approval for the article and its label.",
+    "packaging": "Use hermetically sealed sound containers/flexible packs compliant with the Packaging Regulations; products are packed under inert atmosphere and packaging for these products shall be BPA-free.",
+    "nutrient_tolerance": "Minus 10% variation from declared nutrient/nutritional-ingredient values is allowed, while nutrient levels shall not exceed specified maxima.",
+    "source_compounds": "Use permitted source compounds for minerals, vitamins and other nutrients from the applicable schedules.",
+    "dha_ara": "DHA/ARA source and level rules apply as specified in the current regulation; DHA claim triggers the stated minimum.",
+    "carbohydrate_rule": "Lactose and glucose polymers are preferred carbohydrates; sucrose/fructose are restricted as specified.",
+    "hydrogenated_fat_rule": "Hydrogenated/partially hydrogenated fats are prohibited where the individual standard specifies.",
+    "microbiology": "Appendix B of the Food Products Standards and Food Additives Regulations applies as specified.",
+    "contaminants": "Current Contaminants, Toxins and Residues Regulations apply.",
+    "promotion": "Products are subject to the IMS Act, 1992 as amended, including advertising/marketing restrictions."
+  },
+  "standards": {
+    "7": {
+      "name": "Infant formula",
+      "fcs": "13.1.1",
+      "age_scope": "Birth to first six months",
+      "forms": [
+        "Liquid",
+        "Powder"
+      ],
+      "core_composition": [
+        {
+          "parameter": "Energy in ready-to-use formula",
+          "range": "60–70",
+          "unit": "kcal/100 ml"
+        },
+        {
+          "parameter": "Precooked/gelatinised starches naturally gluten-free",
+          "operator": "<=",
+          "value": 30,
+          "unit": "% of total carbohydrate",
+          "additional_limit": "2 g/100 ml"
+        },
+        {
+          "parameter": "FOS and/or GOS",
+          "operator": "<=",
+          "value": 0.8,
+          "unit": "g/100 ml",
+          "condition": "If combined, GOS:FOS ratio 90:10"
+        }
+      ],
+      "prohibited_or_restricted": [
+        "Hydrogenated vegetable oils and fats shall not be used.",
+        "L(+) lactic acid producing bacteria require prior Food Authority approval."
+      ],
+      "additive_table_status": "direct additive table present in the Infant Nutrition regulation; full row-level normalization pending",
+      "current_additive_examples": [
+        {
+          "name": "Guar gum",
+          "ins": "412",
+          "limit": "0.1 g/100 ml",
+          "condition": "Liquid formulas containing hydrolysed protein"
+        },
+        {
+          "name": "Carob bean gum",
+          "ins": "410",
+          "limit": "0.1 g/100 ml",
+          "condition": "All infant formula types"
+        },
+        {
+          "name": "Lecithin",
+          "ins": "322",
+          "limit": "0.5 g/100 ml",
+          "condition": "All infant formula types"
+        },
+        {
+          "name": "Mono- and diglycerides",
+          "ins": "471",
+          "limit": "0.4 g/100 ml",
+          "condition": "All infant formula types"
+        },
+        {
+          "name": "Mixed tocopherol concentrate",
+          "ins": "307b",
+          "limit": "1 mg/100 ml",
+          "condition": "Singly or in combination as specified"
+        },
+        {
+          "name": "Ascorbyl palmitate",
+          "ins": "304i",
+          "limit": "1 mg/100 ml",
+          "condition": "Singly or in combination as specified"
+        },
+        {
+          "name": "Carbon dioxide",
+          "ins": "290",
+          "limit": "GMP",
+          "condition": "Packaging gas"
+        },
+        {
+          "name": "Nitrogen",
+          "ins": "941",
+          "limit": "GMP",
+          "condition": "Packaging gas"
+        }
+      ]
+    },
+    "8": {
+      "name": "Milk-cereal based complementary food",
+      "fcs": "13.2",
+      "age_scope": "After 6 months up to 24 months",
+      "forms": [
+        "Powder",
+        "Small granules",
+        "Flakes"
+      ],
+      "core_rules": [
+        "Based on milk plus cereals and/or legumes/pulses, millets, nuts and permitted protein ingredients.",
+        "May contain specified edible vegetable oil, defatted oil-seed extracts, protein concentrates/isolates/hydrolysates, milk solids, carbohydrates, phosphates and citrates.",
+        "Hydrogenated vegetable fats and oils shall not be used."
+      ],
+      "nutrient_table_status": "current composition table identified; full row-level machine normalization pending",
+      "additive_table_status": "direct additive table identified; full row-level machine normalization pending"
+    },
+    "9": {
+      "name": "Processed cereal based complementary food",
+      "fcs": "13.2",
+      "age_scope": "After 6 months up to 24 months",
+      "forms": [
+        "Powder",
+        "Small granules",
+        "Flakes"
+      ],
+      "core_composition": [
+        {
+          "parameter": "Milled cereals and legumes combined",
+          "operator": ">=",
+          "value": 75,
+          "unit": "%"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total protein",
+          "operator": ">=",
+          "value": 15,
+          "unit": "% by weight",
+          "condition": "For product intended to be mixed with water or milk"
+        },
+        {
+          "parameter": "Total fat",
+          "operator": "<=",
+          "value": 7.5,
+          "unit": "% by weight"
+        }
+      ],
+      "special_condition": "Mono-grain products for specific medical/feeding conditions have the separate 6–9% minimum-protein route and prescribed medical-guidance labelling.",
+      "additive_table_status": "direct additive table identified; full row-level machine normalization pending"
+    },
+    "10": {
+      "name": "Follow-up Formula",
+      "fcs": "13.1.2",
+      "age_scope": "After 6 months up to 24 months",
+      "forms": [
+        "Liquid",
+        "Powder"
+      ],
+      "core_composition": [
+        {
+          "parameter": "Protein",
+          "operator": ">=",
+          "value": 3,
+          "unit": "g/100 kcal"
+        },
+        {
+          "parameter": "Milk-derived share of total protein",
+          "operator": ">=",
+          "value": 90,
+          "unit": "%"
+        },
+        {
+          "parameter": "Protein quality",
+          "operator": ">=",
+          "value": 85,
+          "unit": "% of casein quality"
+        },
+        {
+          "parameter": "Fat",
+          "range": "3–6",
+          "unit": "g/100 kcal"
+        },
+        {
+          "parameter": "Linoleic acid",
+          "operator": ">=",
+          "value": 300,
+          "unit": "mg/100 kcal"
+        },
+        {
+          "parameter": "Energy, ready-to-use",
+          "range": "60–85",
+          "unit": "kcal/100 ml"
+        }
+      ],
+      "fatty_acid_rules": [
+        "Partially hydrogenated oils and fats shall not be used.",
+        "Lauric plus myristic acids shall not exceed 20% of total fatty acids.",
+        "Trans fatty acids shall not exceed 3% of total fatty acids.",
+        "Erucic acid shall not exceed 1% of total fatty acids."
+      ],
+      "additive_table_status": "direct additive table identified; full row-level machine normalization pending"
+    },
+    "11": {
+      "name": "Food for Infants based on traditional food ingredients",
+      "fcs": "13.2",
+      "age_scope": "After 6 months up to 24 months",
+      "permitted_ingredient_examples": [
+        "Rice/rice flour",
+        "Wheat flour",
+        "Semolina",
+        "Pulses and other cereals",
+        "Spices",
+        "Fruits/dry fruits/vegetables",
+        "Milk",
+        "Ghee",
+        "Egg and egg products"
+      ],
+      "form_rules": [
+        "Ready to Use",
+        "May be reconstituted with milk, water, curd or another appropriate medium"
+      ],
+      "additives": "If required, additives specified for milk-cereal based complementary food may be used.",
+      "label_rules": [
+        "Prominently display 'Traditional Food for Infants' on the front of pack."
+      ]
+    },
+    "12": {
+      "name": "Food for special medical purpose intended for infants",
+      "fcs": "13.1.3",
+      "age_scope": "Birth to 24 months",
+      "composition_rule": "Based on sound medical and nutritional principles; except for preterm formula, energy/nutrient composition is based on infant/follow-up formula according to age, modified only as needed for the relevant disease/disorder/medical condition.",
+      "evidence_rule": "Nutritional safety, adequacy and benefit for the intended dietary management shall be scientifically demonstrated.",
+      "advertising_rule": "No food business operator shall advertise infant formula for special medical purpose intended for infants.",
+      "additives": "Use infant-formula/follow-up-formula additive provisions as applicable plus Schedule I(d) special nutrient formulation additives."
+    },
+    "13": {
+      "name": "Preterm infant milk substitute",
+      "fcs": "13.1.3",
+      "age_scope": "Babies born before 37 weeks, until 40 weeks gestational age or as prescribed by physician",
+      "core_composition": [
+        {
+          "parameter": "Fluids",
+          "range": "135–200",
+          "unit": "ml/kg/day"
+        },
+        {
+          "parameter": "Energy",
+          "range": "110–130",
+          "unit": "kcal/kg/day"
+        },
+        {
+          "parameter": "Protein",
+          "range": "3.20–4.10",
+          "unit": "g/100 kcal"
+        },
+        {
+          "parameter": "Fat",
+          "range": "4.40–6.00",
+          "unit": "g/100 kcal"
+        },
+        {
+          "parameter": "DHA",
+          "range": "11–27",
+          "unit": "mg/100 kcal"
+        },
+        {
+          "parameter": "EPA",
+          "operator": "<=",
+          "value": 18,
+          "unit": "mg/100 kcal"
+        },
+        {
+          "parameter": "ARA",
+          "range": "16–39",
+          "unit": "mg/100 kcal"
+        }
+      ],
+      "label_rules": [
+        "Display 'FOR THE PRETERM BABY (BORN BEFORE 37 WEEKS)' in capital/bold with the product name.",
+        "Display the prescribed medical-advice statement in capital and bold."
+      ]
+    },
+    "14": {
+      "name": "Lactose free infant milk substitutes",
+      "fcs": "13.1.3",
+      "parent_rules": [
+        "Infant formula",
+        "Follow-up formula"
+      ],
+      "core_composition": [
+        {
+          "parameter": "Lactose",
+          "operator": "<=",
+          "value": 0.05,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Fat derived from vegetable oils",
+          "operator": ">=",
+          "value": 18,
+          "unit": "% by weight"
+        }
+      ],
+      "label_rules": [
+        "Display 'LACTOSE-FREE' conspicuously in capital and bold letters.",
+        "Display 'RECOMMENDED TO BE USED UNDER MEDICAL ADVICE ONLY' in capital and bold letters.",
+        "Apply the current lactose-intolerance use/withdrawal statements."
+      ]
+    },
+    "15": {
+      "name": "Hypoallergenic infant milk substitutes",
+      "fcs": "13.1.3",
+      "parent_rules": [
+        "Infant formula",
+        "Follow-up formula"
+      ],
+      "protein_rule": "Protein shall be extensively hydrolysed whey protein or casein, or the product shall contain only free amino acids.",
+      "label_rules": [
+        "If no milk or milk derivatives are present, conspicuously state 'CONTAINS NO MILK OR MILK PRODUCTS'.",
+        "Display 'HYPOALLERGENIC FORMULA' and the prescribed medical-advice statement for products intended for milk-protein-allergic infants."
+      ]
+    },
+    "16": {
+      "name": "Foods for Infants with Inborn Errors of Metabolism (IEM)",
+      "fcs": "13.1.3",
+      "use_rule": "Specific dietary management under medical supervision for an FSSAI-specified IEM condition.",
+      "composition_rule": "Specific modification of proteins, fats or carbohydrates to meet the metabolic condition; nutritional safety and adequacy must be scientifically demonstrated.",
+      "approval_rule": "Products may be manufactured/sold/marketed/imported only for IEM conditions specified by the Food Authority; prior approval applies where the regulation requires.",
+      "label_rules": [
+        "Print 'FOOD FOR SPECIAL MEDICAL PURPOSE' in capital and bold near the product/brand name.",
+        "State the specific IEM nutritional-management indication and other prescribed medical-supervision information."
+      ]
+    },
+    "7(3)": {
+      "name": "Infant Milk Food",
+      "fcs": "13.1.1",
+      "parent": "7",
+      "definition_rule": "An infant formula in powder format manufactured without the specific vegetable oil/linoleate/vitamin E/starch/specified additive/optional-ingredient uses described in regulation 7(3) may be named 'Infant Milk Food'.",
+      "foscos_note": "FoSCoS currently displays 'Chapter 4(12) of Infant Nutrition Regulations, 2020' for this product; PMSV preserves that catalogue text but links the actual product-name condition in the current compendium to regulation 7(3)."
+    }
+  },
+  "direct_additive_rule": "For infant-nutrition products, use the product-specific additive tables in these Regulations first. Do not substitute ordinary-food Appendix A permissions merely because an FCS code exists.",
+  "source_compound_rule": "Vitamins/minerals/nutrients must use permitted sources under the applicable schedules.",
+  "final_compliance_lock": "Do not issue final formulation compliance until the complete nutrient table, direct additive table, source-compound schedules, microbiology, contaminants and product-specific label declarations for the selected infant product are machine-normalized."
+}

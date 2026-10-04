@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "database_id": "fssai-special-nutrition-routing-v1",
-  "source_verified_on": "2026-10-03",
+  "source_verified_on": "2026-10-04",
   "source_policy": "Official FSSAI/FoSCoS sources only",
   "official_sources": [
     {
@@ -110,6 +110,18 @@
     "special_regulation_precedes_appendix_a": true,
     "proprietary_fallback_blocked": true,
     "ordinary_gmp_fallback_blocked_until_special_rule_resolution": true,
-    "final_compliance_lock": "No category-13 product receives a final additive/formulation pass until its special regulation and exact Appendix A category permissions are loaded and machine-validated."
-  }
+    "final_compliance_lock": "No category-13 product receives a final additive/formulation pass until its special regulation and exact Appendix A category permissions are loaded and machine-validated.",
+    "exact_product_exception_precedes_fcs_route": true
+  },
+  "product_route_exceptions": [
+    {
+      "product_id": "formulated-supplements-children",
+      "product_name": "Formulated supplements for children",
+      "foscos_fcs": "13.2",
+      "route": "fpsfa_chapter_2_4",
+      "rule_file": "./data/rules/chapter-2-4-cereals-v1.json",
+      "rule_key": "2.4.11(4)",
+      "reason": "Official FSSAI standard is Chapter 2.4.11(4) for children above 24–36 months; licensing FCS 13.2 does not make it an Infant Nutrition Regulations product."
+    }
+  ]
 }
