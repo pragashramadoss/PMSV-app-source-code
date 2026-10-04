@@ -1915,6 +1915,7 @@ function appendixFcsStatusLabel(record){
  if(s==='mapped_current_v3')return 'Mapped to current Appendix A';
  if(s==='source_alias_resolved')return 'Mapped through official-source numbering alias';
  if(s==='foscos_code_not_appendix_a_fcs')return 'FoSCoS code is not an Appendix A FCS';
+ if(s==='foscos_special_category_outside_appendix_a_fcs')return 'FoSCoS special category outside Appendix A FCS 1–16';
  if(s==='official_appendix_fcs_mapping_not_available')return 'Official Appendix A FCS mapping not available';
  return '';
 }
@@ -2002,7 +2003,7 @@ function populateProductsForSubcategory(){
    .sort((a,b)=>a.name.localeCompare(b.name));
 
  prod.innerHTML='<option value="">'+(rows.length?'Select standardized product ('+rows.length+')':'No standardized product loaded')+'</option>'
-   +rows.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+' [Appendix FCS '+esc(appendixFcsForRecord(x)||'pending')+']</option>').join('');
+   +rows.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+(x.appendix_fcs_status==='foscos_special_category_outside_appendix_a_fcs'?' [Appendix A: special category outside FCS 1–16]':' [Appendix FCS '+esc(appendixFcsForRecord(x)||'pending')+']')+'</option>').join('');
  prod.disabled=!sub||rows.length===0;
 
  if(msg){
@@ -2045,6 +2046,7 @@ function showSelectedCatalogProduct(p){
   +'<div class="item"><b>'+esc(p.name)+'</b><small>FoSCoS listing/category code: '+esc(p.fcs||p.subcategory||p.category||'—')+'<br>Appendix A FCS: '+esc(appendixFcs||'Not mapped')+(appendixStatus?'<br><span class="'+(appendixFcs?'status-good':'status-warn')+'">'+esc(appendixStatus)+'</span>':'')+'<br>FSSR: '+esc(p.fssr||'Not shown in loaded catalogue row')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FoSCoS hierarchy mapping pending official verification</span>':'')+'</small></div>'
   +'<div class="item"><b>PMSV profile status</b><small>'+(detailed?'<span class="status-good">Detailed rule profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base rule profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small></div>'
   +'</div>'
+  +(p.appendix_fcs_status==='foscos_special_category_outside_appendix_a_fcs'?'<div class="notice"><b>Appendix A route:</b> '+esc(p.appendix_fcs_note||'This FoSCoS special category is outside Appendix A FCS 1–16; PMSV does not infer an additive FCS.')+'</div>':'')
   +(profile?.chapter_rule_route_note?'<div class="notice '+(profile.chapter_rule_route_status==='specific_variant_table_pending'?'':'oknote')+'"><b>Chapter routing:</b> '+esc(profile.chapter_rule_route_note)+(Array.isArray(profile.linked_rule_keys)&&profile.linked_rule_keys.length?'<br><small>Linked rule key(s): '+profile.linked_rule_keys.map(esc).join(' + ')+'</small>':'')+'</div>':'')
   +(profile&&!detailed?'<div class="notice"><b>'+(chapterLoaded?'Chapter profile loaded':'Base profile ready')+':</b> '+(chapterLoaded?'The product has been mapped to its applicable FSSAI chapter standard and structured chapter-rule data is loaded. Machine validation of every product-specific clause and linked Appendix rule is still being completed before full formulation compliance is enabled.':'Product identity, Appendix FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.')+'</div>':'');
  if(profile){
@@ -2232,7 +2234,7 @@ function renderProprietaryAppendixA(){
 }
 async function loadAppendixCore(){
  try{
-   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=125',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-a-v3-core.json?v=187',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCoreDb=await res.json();
  }catch(e){appendixCoreDb=null;}
@@ -2412,7 +2414,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=186',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=187',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
