@@ -13,17 +13,18 @@
   },
   "coverage": {
     "main_table_groups_total": 11,
-    "main_table_groups_loaded": 3,
+    "main_table_groups_loaded": 4,
     "loaded_groups": [
       "Table 1 - Fish and Fishery Products",
       "Table 2 - Milk and Milk Products",
-      "Table 3 - Spices and Herbs"
+      "Table 3 - Spices and Herbs",
+      "Table 4 - Fruits and Vegetables and their Products"
     ],
     "fish_product_categories_loaded": 16,
     "fish_exact_product_mappings": 18,
     "fish_conditional_product_mappings": 4,
     "fish_no_direct_table_mapping": 2,
-    "next_priority": "Table 4A/4B - Fruits and Vegetables and their Products",
+    "next_priority": "Table 5A/5B - Meat and Meat Products",
     "milk_profiles_loaded": 16,
     "milk_exact_product_mappings": 58,
     "milk_conditional_product_mappings": 17,
@@ -31,7 +32,12 @@
     "spice_profiles_loaded": 5,
     "spice_exact_product_mappings": 10,
     "spice_conditional_product_mappings": 33,
-    "spice_no_direct_table_mapping": 3
+    "spice_no_direct_table_mapping": 3,
+    "fruit_source_categories_loaded": 9,
+    "fruit_runtime_profiles_loaded": 12,
+    "fruit_exact_product_mappings": 7,
+    "fruit_conditional_product_mappings": 19,
+    "fruit_no_direct_table_mapping": 4
   },
   "organism_labels": {
     "aerobic_plate_count": "Aerobic Plate Count",
@@ -43,12 +49,14 @@
     "listeria_monocytogenes": "Listeria monocytogenes",
     "clostridium_botulinum": "Clostridium botulinum",
     "coliform_count": "Coliform Count",
-    "staphylococcus_aureus": "Staphylococcus aureus (Coagulase positive)",
+    "staphylococcus_aureus": "Staphylococcus aureus (Coagulase +ve)",
     "enterobacteriaceae": "Enterobacteriaceae",
     "cronobacter_sp": "Enterobacter sakazakii (Cronobacter sp.)",
     "bacillus_cereus": "Bacillus cereus",
     "sulphite_reducing_clostridia": "Sulphite Reducing Clostridia (SRC)",
-    "aerobic_colony_count": "Aerobic Colony Count"
+    "aerobic_colony_count": "Aerobic Colony Count",
+    "e_coli_o157_or_stec": "E. coli O157 / Vero or Shiga toxin producing E. coli",
+    "vibrio_cholerae": "Vibrio cholerae"
   },
   "tables": {
     "fish": {
@@ -1984,6 +1992,823 @@
         "There is no provision for retesting or resampling for microbiological testing.",
         "FBOs determine necessary sampling/testing frequency subject to the minimum prescribed under FSSR Licensing and Registration requirements."
       ]
+    },
+    "fruits": {
+      "table_4a_title": "Microbiological Standards for Fruits and Vegetables and their Products - Process Hygiene Criteria",
+      "table_4b_title": "Microbiological Standards for Fruits and Vegetables and their Products - Food Safety Criteria",
+      "source_pages": {
+        "table_4a": [
+          30,
+          31
+        ],
+        "table_4b": [
+          32,
+          33,
+          34
+        ],
+        "definitions_and_notes": [
+          34,
+          35,
+          36
+        ],
+        "sampling_and_methods": [
+          36,
+          37,
+          38,
+          39
+        ]
+      },
+      "source_categories_count": 9,
+      "runtime_profiles_count": 12,
+      "categories": [
+        {
+          "id": "fruit-01",
+          "sl_no": "1",
+          "name": "Fresh",
+          "process_hygiene_not_applicable": true,
+          "food_safety_not_applicable": true,
+          "hygiene": {},
+          "safety": {},
+          "notes": [
+            "Fresh whole fruits and vegetables are regulated through Good Manufacturing Practices and Good Hygiene Practices under Schedule 4; Table 4A/4B numeric criteria are NA."
+          ]
+        },
+        {
+          "id": "fruit-02",
+          "sl_no": "2",
+          "name": "Cut or minimally processed and packed, including juices (Non-thermally processed)",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 1000000,
+              "M": 10000000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 10000,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 10000,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "e_coli_o157_or_stec": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          }
+        },
+        {
+          "id": "fruit-02-liquid",
+          "sl_no": "2",
+          "name": "Cut or minimally processed and packed, including juices (Non-thermally processed) — liquid form",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 1000000,
+              "M": 10000000,
+              "unit": "cfu/ml"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 10000,
+              "unit": "cfu/ml"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 10000,
+              "unit": "cfu/ml"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/ml"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "e_coli_o157_or_stec": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "derived_liquid_profile": true,
+          "notes": [
+            "Appendix B Table 4 note: 'ml' applies in place of 'g' for liquid products."
+          ]
+        },
+        {
+          "id": "fruit-03",
+          "sl_no": "3",
+          "name": "Fermented or pickled or acidified or with preservatives",
+          "hygiene": {
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 1,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "e_coli_o157_or_stec": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "notes": [
+            "Where the fermentation process involves yeast/mould, the respective Yeast and Mold Count criterion does not apply."
+          ]
+        },
+        {
+          "id": "fruit-04a",
+          "sl_no": "4",
+          "name": "Pasteurized Juices",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 10000,
+              "unit": "cfu/ml"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/ml"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 0,
+              "m": "Not detectable as per prescribed method",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "e_coli_o157_or_stec": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "notes": [
+            "Pasteurized fruit beverages/juices can be excluded from Listeria testing where pH is below 4.4."
+          ]
+        },
+        {
+          "id": "fruit-04b",
+          "sl_no": "4",
+          "name": "Carbonated Fruit Beverages",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 1,
+              "m": 50,
+              "M": 500,
+              "unit": "cfu/ml"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 0,
+              "m": "<10/ml",
+              "M": null,
+              "unit": "cfu/ml"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 0,
+              "m": "Not detectable as per prescribed method",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "e_coli_o157_or_stec": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "notes": [
+            "Carbonated fruit beverages can be excluded from Listeria testing where pH is below 4.4."
+          ]
+        },
+        {
+          "id": "fruit-05",
+          "sl_no": "5",
+          "name": "Frozen",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 40000,
+              "M": 500000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 300,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 1,
+              "m": 20,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "e_coli_o157_or_stec": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          }
+        },
+        {
+          "id": "fruit-06",
+          "sl_no": "6",
+          "name": "Dehydrated or dried",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 1,
+              "m": 40000,
+              "M": 100000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 10000,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 1,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "e_coli_o157_or_stec": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          }
+        },
+        {
+          "id": "fruit-07",
+          "sl_no": "7",
+          "name": "Thermally processed (other than pasteurization at less than 100°C)",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 1,
+              "m": 50,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 0,
+              "m": "Not detectable as per prescribed method",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "e_coli_o157_or_stec": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          }
+        },
+        {
+          "id": "fruit-07-liquid",
+          "sl_no": "7",
+          "name": "Thermally processed (other than pasteurization at less than 100°C) — liquid form",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/ml"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 1,
+              "m": 50,
+              "M": 100,
+              "unit": "cfu/ml"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 0,
+              "m": "Not detectable as per prescribed method",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "e_coli_o157_or_stec": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "derived_liquid_profile": true,
+          "notes": [
+            "Appendix B Table 4 note: 'ml' applies in place of 'g' for liquid products."
+          ]
+        },
+        {
+          "id": "fruit-08",
+          "sl_no": "8",
+          "name": "Retort processed",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 0,
+              "m": 50,
+              "M": null,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 0,
+              "m": "Not detectable as per prescribed method",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "sulphite_reducing_clostridia": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "e_coli_o157_or_stec": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "notes": [
+            "Retort processed foods shall be tested after incubation at 37°C for 10 days and at 55°C for 7 days."
+          ]
+        },
+        {
+          "id": "fruit-08-liquid",
+          "sl_no": "8",
+          "name": "Retort processed — liquid form",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 0,
+              "m": 50,
+              "M": null,
+              "unit": "cfu/ml"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 0,
+              "m": "Not detectable as per prescribed method",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "sulphite_reducing_clostridia": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "e_coli_o157_or_stec": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "notes": [
+            "Retort processed foods shall be tested after incubation at 37°C for 10 days and at 55°C for 7 days.",
+            "Appendix B Table 4 note: 'ml' applies in place of 'g' for liquid products."
+          ],
+          "derived_liquid_profile": true
+        }
+      ],
+      "stage_rules": {
+        "process_hygiene": "Table 4A indicates acceptable functioning of the production process; it is not a market-release requirement and applies at the end of manufacturing.",
+        "food_safety": "Table 4B defines batch/lot acceptability and applies at the end of manufacturing and to products in the market during shelf life."
+      },
+      "action_on_unsatisfactory_process_hygiene": [
+        "Check and improve process hygiene by implementing Schedule 4 requirements.",
+        "Ensure all applicable Table 4B Food Safety Criteria are complied with."
+      ],
+      "sampling_plan_definitions": {
+        "n": "Number of units comprising a sample.",
+        "c": "Maximum allowable number of units having counts above m for a 2-class plan and between m and M for a 3-class plan.",
+        "m": "Limit separating unsatisfactory from satisfactory in a 2-class plan, or acceptable from satisfactory in a 3-class plan.",
+        "M": "Limit separating unsatisfactory from satisfactory in a 3-class plan."
+      },
+      "interpretation": {
+        "two_class": [
+          "Satisfactory if all observed values are <= m.",
+          "Unsatisfactory if one or more values are > m or more than c values are > m."
+        ],
+        "three_class": [
+          "Satisfactory if all observed values are <= m.",
+          "Acceptable if at most c values are between m and M and the remainder are <= m.",
+          "Unsatisfactory if one or more values are > M or more than c values are > m."
+        ]
+      },
+      "reference_methods": {
+        "aerobic_plate_count": "IS 5402 / ISO 4833",
+        "yeast_and_mold_count": "IS 5403 / ISO 21527 Part 1 and Part 2",
+        "enterobacteriaceae": "IS/ISO 7402 / ISO 21528 Part 2",
+        "staphylococcus_aureus": "IS 5887 Part 2 and IS 5887 Part 8 (Sec 1) / ISO 6888-1 or IS 5887 Part 8 (Sec 2) / ISO 6888-2",
+        "e_coli_o157_or_stec": "IS 14397",
+        "salmonella": "IS 5887 Part 3 / ISO 6579",
+        "listeria_monocytogenes": "IS 14988 Part 1 / ISO 11290-1",
+        "sulphite_reducing_clostridia": "ISO 15213",
+        "vibrio_cholerae": "IS 5887 Part V / ISO/TS 21872-1"
+      },
+      "source_notes": [
+        "For liquid products, 'ml' applies in place of 'g'.",
+        "For fermentation involving yeast/mould, the respective Yeast and Mold Count criterion does not apply.",
+        "Carbonated fruit beverages and pasteurized fruit juices can be excluded from Listeria testing where pH is below 4.4.",
+        "Retort processed foods shall be tested after incubation at 37°C for 10 days and 55°C for 7 days."
+      ]
     }
   },
   "product_mappings": {
@@ -3622,6 +4447,504 @@
           "catalog_id": "12-12-1-salt-substitutes",
           "status": "no_direct_table_mapping",
           "reason": "Appendix B Table 3 applies to Spices and Herbs. PMSV does not assign the spice/herb microbiology table to salt products."
+        }
+      ]
+    },
+    "fruits": {
+      "exact": [
+        {
+          "catalog_id": "fruit-beverage-mix",
+          "profile_key": "fruit-06",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity is a powdered fruit-based beverage/mix; Appendix B Table 4 'Dehydrated or dried' applies."
+        },
+        {
+          "catalog_id": "04-04-1-frozen-fruits-fruit-products",
+          "profile_key": "fruit-05",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact frozen fruit/product identity."
+        },
+        {
+          "catalog_id": "04-04-1-dehydrated-fruits",
+          "profile_key": "fruit-06",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact dehydrated fruit identity."
+        },
+        {
+          "catalog_id": "04-04-1-desiccated-coconut",
+          "profile_key": "fruit-06",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Desiccated Coconut is a dried/dehydrated fruit product."
+        },
+        {
+          "catalog_id": "04-04-2-frozen-vegetables",
+          "profile_key": "fruit-05",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact frozen vegetable identity."
+        },
+        {
+          "catalog_id": "04-04-2-dehydrated-vegetables",
+          "profile_key": "fruit-06",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact dehydrated vegetable identity."
+        },
+        {
+          "catalog_id": "04-04-2-frozen-curried-vegetables-ready-to-eat-vegetables",
+          "profile_key": "fruit-05",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact frozen processed-vegetable identity."
+        }
+      ],
+      "conditional": [
+        {
+          "catalog_id": "fruit-juices",
+          "status": "variant_required",
+          "reason": "Appendix B uses different rows according to the actual juice process.",
+          "options": [
+            {
+              "condition": "Non-thermally processed and packaged juice",
+              "profile_key": "fruit-02-liquid"
+            },
+            {
+              "condition": "Pasteurized juice · pH 4.4 or above / pH not established",
+              "profile_key": "fruit-04a"
+            },
+            {
+              "condition": "Pasteurized juice · pH below 4.4",
+              "profile_key": "fruit-04a",
+              "exclude_criteria": [
+                "listeria_monocytogenes"
+              ],
+              "message": "Appendix B footnote 4 allows Listeria testing to be excluded where pH is below 4.4."
+            },
+            {
+              "condition": "Thermally processed (non-retort)",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08-liquid"
+            }
+          ]
+        },
+        {
+          "catalog_id": "vegetable-juices",
+          "status": "variant_required",
+          "reason": "Appendix B uses different rows according to the actual juice process.",
+          "options": [
+            {
+              "condition": "Non-thermally processed and packaged juice",
+              "profile_key": "fruit-02-liquid"
+            },
+            {
+              "condition": "Pasteurized juice · pH 4.4 or above / pH not established",
+              "profile_key": "fruit-04a"
+            },
+            {
+              "condition": "Pasteurized juice · pH below 4.4",
+              "profile_key": "fruit-04a",
+              "exclude_criteria": [
+                "listeria_monocytogenes"
+              ],
+              "message": "Appendix B footnote 4 allows Listeria testing to be excluded where pH is below 4.4."
+            },
+            {
+              "condition": "Thermally processed (non-retort)",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08-liquid"
+            }
+          ]
+        },
+        {
+          "catalog_id": "carbonated-fruit-beverages",
+          "status": "variant_required",
+          "reason": "Carbonated Fruit Beverages have a direct Table 4 row, but Listeria applicability depends on pH 4.4.",
+          "options": [
+            {
+              "condition": "pH 4.4 or above / pH not established",
+              "profile_key": "fruit-04b"
+            },
+            {
+              "condition": "pH below 4.4",
+              "profile_key": "fruit-04b",
+              "exclude_criteria": [
+                "listeria_monocytogenes"
+              ],
+              "message": "Appendix B footnote 4 allows Listeria testing to be excluded where pH is below 4.4."
+            }
+          ]
+        },
+        {
+          "catalog_id": "04-04-1-thermally-processed-fruits",
+          "status": "variant_required",
+          "reason": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+          "options": [
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Actual process does not match either route / not established",
+              "profile_key": "",
+              "message": "PMSV will not choose a Table 4 process category without the actual process."
+            }
+          ]
+        },
+        {
+          "catalog_id": "04-04-1-thermally-processed-fruit-salad-cocktail-mix",
+          "status": "variant_required",
+          "reason": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+          "options": [
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Actual process does not match either route / not established",
+              "profile_key": "",
+              "message": "PMSV will not choose a Table 4 process category without the actual process."
+            }
+          ]
+        },
+        {
+          "catalog_id": "04-04-2-thermally-processed-vegetables",
+          "status": "variant_required",
+          "reason": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+          "options": [
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Actual process does not match either route / not established",
+              "profile_key": "",
+              "message": "PMSV will not choose a Table 4 process category without the actual process."
+            }
+          ]
+        },
+        {
+          "catalog_id": "04-04-2-thermally-processed-curried-vegetables-ready-to-eat-vegetables",
+          "status": "variant_required",
+          "reason": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+          "options": [
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Actual process does not match either route / not established",
+              "profile_key": "",
+              "message": "PMSV will not choose a Table 4 process category without the actual process."
+            }
+          ]
+        },
+        {
+          "catalog_id": "04-04-2-canned-chestnut",
+          "status": "variant_required",
+          "reason": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+          "options": [
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Actual process does not match either route / not established",
+              "profile_key": "",
+              "message": "PMSV will not choose a Table 4 process category without the actual process."
+            }
+          ]
+        },
+        {
+          "catalog_id": "04-04-2-canned-chestnut-puree",
+          "status": "variant_required",
+          "reason": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+          "options": [
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Actual process does not match either route / not established",
+              "profile_key": "",
+              "message": "PMSV will not choose a Table 4 process category without the actual process."
+            }
+          ]
+        },
+        {
+          "catalog_id": "fruit-nectars",
+          "status": "variant_required",
+          "reason": "The product is thermally processed, but Appendix B separates non-retort thermal processing from retort processing.",
+          "options": [
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08-liquid"
+            },
+            {
+              "condition": "Actual process does not match either route / not established",
+              "profile_key": "",
+              "message": "PMSV will not choose a Table 4 process category without the actual process."
+            }
+          ]
+        },
+        {
+          "catalog_id": "fruit-drink-rts",
+          "status": "variant_required",
+          "reason": "The product is thermally processed, but Appendix B separates non-retort thermal processing from retort processing.",
+          "options": [
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08-liquid"
+            },
+            {
+              "condition": "Actual process does not match either route / not established",
+              "profile_key": "",
+              "message": "PMSV will not choose a Table 4 process category without the actual process."
+            }
+          ]
+        },
+        {
+          "catalog_id": "04-04-1-jams-fruit-jellies-and-marmalades",
+          "status": "variant_required",
+          "reason": "Appendix B Table 4 is process-driven; this product name alone does not determine whether the applicable route is preserved/acidified, thermally processed or retort processed.",
+          "options": [
+            {
+              "condition": "Fermented / pickled / acidified / preserved",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Other / processing route not established",
+              "profile_key": "",
+              "message": "No Appendix B Table 4 process category is inferred."
+            }
+          ]
+        },
+        {
+          "catalog_id": "04-04-1-fruit-cheese",
+          "status": "variant_required",
+          "reason": "Appendix B Table 4 is process-driven; this product name alone does not determine whether the applicable route is preserved/acidified, thermally processed or retort processed.",
+          "options": [
+            {
+              "condition": "Fermented / pickled / acidified / preserved",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Other / processing route not established",
+              "profile_key": "",
+              "message": "No Appendix B Table 4 process category is inferred."
+            }
+          ]
+        },
+        {
+          "catalog_id": "04-04-1-fruits-and-vegetable-chutney",
+          "status": "variant_required",
+          "reason": "Appendix B Table 4 is process-driven; this product name alone does not determine whether the applicable route is preserved/acidified, thermally processed or retort processed.",
+          "options": [
+            {
+              "condition": "Fermented / pickled / acidified / preserved",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Other / processing route not established",
+              "profile_key": "",
+              "message": "No Appendix B Table 4 process category is inferred."
+            }
+          ]
+        },
+        {
+          "catalog_id": "squash",
+          "status": "variant_required",
+          "reason": "Appendix B Table 4 is process-driven; the actual preservation/thermal process must be selected.",
+          "options": [
+            {
+              "condition": "Fermented / acidified / preserved",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08-liquid"
+            },
+            {
+              "condition": "Other / processing route not established",
+              "profile_key": "",
+              "message": "No Appendix B Table 4 process category is inferred."
+            }
+          ]
+        },
+        {
+          "catalog_id": "crush",
+          "status": "variant_required",
+          "reason": "Appendix B Table 4 is process-driven; the actual preservation/thermal process must be selected.",
+          "options": [
+            {
+              "condition": "Fermented / acidified / preserved",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08-liquid"
+            },
+            {
+              "condition": "Other / processing route not established",
+              "profile_key": "",
+              "message": "No Appendix B Table 4 process category is inferred."
+            }
+          ]
+        },
+        {
+          "catalog_id": "fruit-syrup-sharbat",
+          "status": "variant_required",
+          "reason": "Appendix B Table 4 is process-driven; the actual preservation/thermal process must be selected.",
+          "options": [
+            {
+              "condition": "Fermented / acidified / preserved",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08-liquid"
+            },
+            {
+              "condition": "Other / processing route not established",
+              "profile_key": "",
+              "message": "No Appendix B Table 4 process category is inferred."
+            }
+          ]
+        },
+        {
+          "catalog_id": "cordial",
+          "status": "variant_required",
+          "reason": "Appendix B Table 4 is process-driven; the actual preservation/thermal process must be selected.",
+          "options": [
+            {
+              "condition": "Fermented / acidified / preserved",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Thermally processed, non-retort",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed",
+              "profile_key": "fruit-08-liquid"
+            },
+            {
+              "condition": "Other / processing route not established",
+              "profile_key": "",
+              "message": "No Appendix B Table 4 process category is inferred."
+            }
+          ]
+        },
+        {
+          "catalog_id": "06-06-8-fermented-soybean-paste",
+          "status": "variant_required",
+          "reason": "The product is fermented; Appendix B footnote 3 changes Yeast and Mold Count applicability when the fermentation itself uses yeast/mould.",
+          "options": [
+            {
+              "condition": "Fermentation involves yeast/mould",
+              "profile_key": "fruit-03",
+              "exclude_criteria": [
+                "yeast_and_mold_count"
+              ],
+              "message": "Appendix B footnote 3: the respective Yeast and Mold Count criterion does not apply when fermentation involves yeast/mould."
+            },
+            {
+              "condition": "Fermented without yeast/mould involvement established",
+              "profile_key": "fruit-03"
+            }
+          ]
+        }
+      ],
+      "no_direct_table_mapping": [
+        {
+          "catalog_id": "04-04-1-vanilla-pods",
+          "status": "no_direct_table_mapping",
+          "reason": "Vanilla is a spice/herb identity and Appendix B Table 4 is not assigned solely because the standard sits in Chapter 2.3; PMSV preserves the more specific microbiology-route question."
+        },
+        {
+          "catalog_id": "04-04-1-cut-vanilla",
+          "status": "no_direct_table_mapping",
+          "reason": "Vanilla is a spice/herb identity and Appendix B Table 4 is not assigned solely because the standard sits in Chapter 2.3."
+        },
+        {
+          "catalog_id": "04-04-1-vanilla-powder",
+          "status": "no_direct_table_mapping",
+          "reason": "Vanilla powder is not automatically treated as a generic dried fruit/vegetable product because it is a spice/herb identity."
+        },
+        {
+          "catalog_id": "12-12-10-vegetable-protein-products",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 4 does not expressly identify Vegetable Protein Products as one of its fruit/vegetable process categories."
         }
       ]
     }
