@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Wire exact rule-key gates into runtime and validate product-specific activation.",
+    "next_priority": "Add new process selectors to UI and run product-gate activation regression.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -63,7 +63,7 @@
     "table_12_status": "complete_current_version_2_reconciled",
     "table_12_entries_loaded": 75,
     "table_12_permission_rows": 83,
-    "table_12_runtime_mapped_entries": 38,
+    "table_12_runtime_mapped_entries": 42,
     "table_12_runtime_policy": "Official current Version 2 only; draft ePC rows excluded; product-specific/ambiguous rows fail closed.",
     "appendix_c_audit_status": "tables_1_to_12_and_11a_verified_current_version_2",
     "appendix_c_audit_note": "Draft notification 4353 is not treated as operative law. Current Version 2 remains controlling for runtime.",
@@ -87,7 +87,9 @@
     "appendix_c_product_gated_permissions": 51,
     "appendix_c_product_gate_id_links": 267,
     "appendix_c_product_gate_rule_key_links": 29,
-    "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed."
+    "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
+    "appendix_c_product_gate_reachable_permissions": 51,
+    "appendix_c_product_gate_unreachable_permissions": 0
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -4654,7 +4656,8 @@
               "product_gate_status": "verified_exact_rule_key",
               "product_gate_note": "Exact Dry Mixtures of Cocoa and Sugars plus Cocoa Mass/Cake standards."
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 3,
@@ -4771,7 +4774,8 @@
               "product_gate_status": "verified_exact_rule_key",
               "product_gate_note": "Exact Butter standard 2.1.9."
             }
-          ]
+          ],
+          "process_key": "encapsulation"
         },
         {
           "s_no": 9,
@@ -5257,7 +5261,8 @@
               "product_gate_status": "verified_exact_rule_key",
               "product_gate_note": "Exact cheese/cheese-products standard family 2.1.17."
             }
-          ]
+          ],
+          "process_key": "coating"
         },
         {
           "s_no": 43,
@@ -5488,7 +5493,8 @@
               "product_gate_status": "verified_exact_rule_key",
               "product_gate_note": "Exact Frozen Vegetables standard 2.3.38."
             }
-          ]
+          ],
+          "process_key": "anti_browning"
         },
         {
           "s_no": 58,
@@ -5755,7 +5761,7 @@
         }
       ],
       "source_note": "Reconciled against official FSSAI Appendix C Version 2 on 2026-10-04. Draft notification additions 76-87 and draft substitutions were removed.",
-      "runtime_mapping_note": "Only current Version 2 rows are eligible. Product-specific and category-ambiguous permissions remain fail-closed.",
+      "runtime_mapping_note": "Only entries whose technological purpose maps unambiguously to a PMSV manufacturing-process selector receive a runtime process_key. Build 228 adds exact selectors for encapsulation/thickening, coating and anti-browning.",
       "audit_status": "verified_current_version_2",
       "audit_verified_on": "2026-10-04",
       "audit_note": "Current Version 2 ends at S.No.75 Calcium hypochlorite. Draft rows 76-87 and draft substitutions are excluded."
