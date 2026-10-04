@@ -13,7 +13,7 @@
   },
   "coverage": {
     "main_table_groups_total": 11,
-    "main_table_groups_loaded": 9,
+    "main_table_groups_loaded": 10,
     "loaded_groups": [
       "Table 1 - Fish and Fishery Products",
       "Table 2 - Milk and Milk Products",
@@ -23,13 +23,14 @@
       "Table 6 - Baker's Yeast",
       "Table 7 - Non-Carbonated Water Based Beverages (Non Alcoholic)",
       "Table 8 - Eggs and Egg Products",
-      "Table 9 - Food Grain Products"
+      "Table 9 - Food Grain Products",
+      "Table 10 - Health Supplements/Nutraceuticals/FSDU/FSMP/Functional Food/Novel Food"
     ],
     "fish_product_categories_loaded": 16,
     "fish_exact_product_mappings": 18,
     "fish_conditional_product_mappings": 4,
     "fish_no_direct_table_mapping": 2,
-    "next_priority": "Table 10A/10B - Health Supplements, Nutraceuticals, FSDU, FSMP, Functional Food and Novel Food",
+    "next_priority": "Table 11A/11B - Neera",
     "milk_profiles_loaded": 16,
     "milk_exact_product_mappings": 58,
     "milk_conditional_product_mappings": 17,
@@ -60,7 +61,10 @@
     "food_grain_profiles_loaded": 3,
     "food_grain_exact_product_mappings": 4,
     "food_grain_conditional_product_mappings": 2,
-    "food_grain_no_direct_table_mapping": 0
+    "food_grain_no_direct_table_mapping": 0,
+    "special_nutrition_profiles_loaded": 3,
+    "special_nutrition_exact_product_mappings": 0,
+    "special_nutrition_catalog_gaps": 1
   },
   "organism_labels": {
     "aerobic_plate_count": "Aerobic Plate Count",
@@ -3861,6 +3865,166 @@
         "salmonella": "IS 5887 Part 3 / ISO 6579",
         "listeria_monocytogenes": "IS 14988 Part 1 / ISO 11290-1"
       }
+    },
+    "special_nutrition_2016": {
+      "table_10a_title": "Microbiological Standards for Health Supplements, Nutraceuticals, Food for Special Dietary Use, Food for Special Medical Purpose, Functional Food and Novel Food – Process Hygiene Criteria",
+      "table_10b_title": "Microbiological Standards for Health Supplements, Nutraceuticals, Food for Special Dietary Use, Food for Special Medical Purpose, Functional Food and Novel Food – Food Safety Criteria",
+      "source_pages": {
+        "table_10a": [
+          63
+        ],
+        "table_10b": [
+          64
+        ],
+        "stage_and_sampling": [
+          65,
+          66,
+          67
+        ],
+        "reference_methods": [
+          67,
+          68
+        ]
+      },
+      "categories": [
+        {
+          "id": "special-10-01",
+          "sl_no": "1",
+          "name": "Health Supplements, Nutraceuticals, Food for Special Dietary Use, Food for Special Medical Purpose and Novel Food for consumption after processing",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 3,
+              "m": 1000000,
+              "M": 10000000,
+              "unit": "cfu/g or ml"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 3,
+              "m": 10000,
+              "M": 100000,
+              "unit": "cfu/g or ml"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 3,
+              "m": 1000,
+              "M": 10000,
+              "unit": "cfu/g or ml"
+            }
+          },
+          "food_safety_not_applicable": true,
+          "safety": {},
+          "notes": [
+            "Table 10B prints NA for Salmonella and Listeria monocytogenes for products not for direct consumption."
+          ]
+        },
+        {
+          "id": "special-10-02",
+          "sl_no": "2",
+          "name": "Health Supplements, Nutraceuticals, Food for Special Dietary Use, Food for Special Medical Purpose, Functional Food and Novel Food for direct consumption",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 10000,
+              "M": 100000,
+              "unit": "cfu/g or ml"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g or ml"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g or ml"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          }
+        },
+        {
+          "id": "special-10-03",
+          "sl_no": "3",
+          "name": "Probiotics and products containing specified live microorganisms",
+          "process_hygiene_not_applicable": true,
+          "hygiene": {},
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "notes": [
+            "The product should contain only the specified microorganism(s) at the level claimed on the label.",
+            "Counts are to be determined using methodology appropriate for the organisms; the Appendix gives examples including ISO 15214/IS 16068 for lactic acid bacteria and ISO 29981 for Bifidobacteria."
+          ]
+        }
+      ],
+      "stage_rules": {
+        "process_hygiene": "Table 10A indicates acceptable functioning of the production process; it is not a market-release requirement and applies at the end of manufacturing.",
+        "food_safety": "Table 10B defines batch/lot acceptability and applies at the end of manufacturing and to products in the market during shelf life."
+      },
+      "action_on_unsatisfactory_process_hygiene": [
+        "Check and improve process hygiene by implementing Schedule 4 requirements.",
+        "Ensure all applicable Table 10B Food Safety Criteria are complied with."
+      ],
+      "sampling_plan_note": "For high-value low-volume packs below 100 g and large retail packs above 1 kg, the sample plan may be modified case-by-case only with prior FSSAI approval.",
+      "sampling_plan_definitions": {
+        "n": "Number of units comprising a sample.",
+        "c": "Maximum allowable number of units having counts above m for a 2-class plan and between m and M for a 3-class plan.",
+        "m": "Limit separating unsatisfactory from satisfactory in a 2-class plan, or acceptable from satisfactory in a 3-class plan.",
+        "M": "Limit separating unsatisfactory from satisfactory in a 3-class plan."
+      },
+      "interpretation": {
+        "two_class": [
+          "Satisfactory if all observed values are <= m.",
+          "Unsatisfactory if one or more observed values are > m."
+        ],
+        "three_class": [
+          "Satisfactory if all observed values are <= m.",
+          "Acceptable if at most c values are between m and M.",
+          "Unsatisfactory if one or more values are > M or more than prescribed c values are > m."
+        ]
+      },
+      "reference_methods": {
+        "aerobic_plate_count": "IS 5402 / ISO 4833",
+        "yeast_and_mold_count": "IS 5403 / ISO 21527 Part 1 and Part 2",
+        "enterobacteriaceae": "ISO 21528 Part 2",
+        "salmonella": "IS 5887 Part 3 / ISO 6579",
+        "listeria_monocytogenes": "IS 14988 Part 1 / ISO 11290-1"
+      }
     }
   },
   "product_mappings": {
@@ -6502,6 +6666,28 @@
         "Generic cereal/grain products not explicitly identified as a Table 9 process class",
         "Quick or regular cooking breakfast cereal/cereal flakes unless another exact Table 9 class is established",
         "Malt Based Foods / Malt Food, which is not the same named identity as Malted Milk Food"
+      ]
+    },
+    "special_nutrition_2016": {
+      "exact": [],
+      "conditional": [],
+      "no_direct_table_mapping": [],
+      "catalog_gap": [
+        {
+          "source_scope": "Finished products governed by the 2016 Health Supplements/Nutraceuticals/FSDU/FSMP/Functional Food/Novel Food regulation",
+          "status": "no_current_finished_product_identity",
+          "reason": "The current PMSV standardized-product master does not contain a safe finished-product identity for FCS 13.3–13.6. Table 10 is stored for deterministic use once the applicable special-regulation product identity and consumption state are established."
+        }
+      ],
+      "exclusions": [
+        {
+          "scope": "Foods for special medical purpose intended for infants",
+          "reason": "Infant FSMP products follow the Foods for Infant Nutrition route and Appendix B Table 2, not Table 10."
+        },
+        {
+          "scope": "Category 99 nutraceutical-regulation ingredients/additives/enzymes",
+          "reason": "These are ingredient/licensing records, not finished-product identities for Table 10."
+        }
       ]
     }
   }
