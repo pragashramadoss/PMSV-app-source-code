@@ -1691,15 +1691,19 @@ let processingAidRules=[
 function appendixCStructuredRuntimeRules(db){
  const out=[];
  for(const table of Object.values(db?.tables||{})){
-   const process=table?.process_key||'';
-   if(!process)continue;
+   const tableProcess=table?.process_key||'';
    for(const entry of table?.entries||[]){
+     const process=entry?.process_key||tableProcess;
+     if(!process)continue;
      for(const permission of entry?.permissions||[]){
-       const condition=permission.residual_level==='GMP'
+       let condition=permission.residual_level==='GMP'
          ? 'GMP'
          : (permission.residual_level_mgkg!==undefined&&permission.residual_level_mgkg!==null
             ? 'Max residual level '+permission.residual_level_mgkg+' mg/kg'
             : String(permission.residual_level||''));
+       if(permission.max_usage_mgkg!==undefined&&permission.max_usage_mgkg!==null){
+         condition='Maximum usage '+permission.max_usage_mgkg+' mg/kg; residue in final product: '+String(permission.residual_level||condition||'');
+       }
        out.push({
          process,
          name:entry.name||'',
@@ -1718,7 +1722,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=202',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=203',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    const structured=appendixCStructuredRuntimeRules(appendixCDb);
@@ -1785,7 +1789,7 @@ function renderProcessingAids(){
      messages.push('<tr><td><b>Enzyme processing</b></td><td>Additional input required</td><td>Select both the Table 11 enzyme and its FSSAI-listed source in Manufacturing process.</td><td>Appendix C · Table 11</td></tr>');
    }
  }
- if(selectedProcesses.includes('nutrient'))messages.push('<tr><td><b>Microbial nutrient use</b></td><td>Additional process detail required</td><td>Activate only when a microbial culture process is genuinely used; Appendix C Table 5 nutrient permissions must then be evaluated against the actual process.</td><td>Appendix C · Table 5</td></tr>');
+ if(selectedProcesses.includes('nutrient'))messages.push('<tr><td><b>Microbial nutrient use</b></td><td>Table 5 nutrient/adjunct permissions activated</td><td>Shown because a microbial-culture nutrient process was selected. These are GMP permissions for sustaining microbial growth, not ingredients that must be used.</td><td>Appendix C · Table 5</td></tr>');
  if(selectedProcesses.includes('catalyst'))messages.push('<tr><td><b>Catalyst route</b></td><td>Appendix C Table 2 loaded</td><td>All catalyst permissions are product-specific. PMSV will not activate a catalyst until the finished product is exactly mapped to Polyols, Hardened oil, Hydrogenated vegetable oil or Interesterified vegetable oil as stated by FSSAI.</td><td>Appendix C · Table 2</td></tr>');
  if(lockedProductSpecific.length)messages.push('<tr><td><b>Product-specific permissions withheld</b></td><td>'+lockedProductSpecific.length+' selected-process row'+(lockedProductSpecific.length===1?'':'s')+' require an exact product-category gate</td><td>PMSV is failing closed instead of showing these permissions for every selected product.</td><td>Appendix C applicability control</td></tr>');
  body.innerHTML=rules.map(x=>'<tr><td><b>'+esc(x.name)+'</b><br><small>INS '+esc(x.ins)+'</small></td><td>'+esc(x.purpose)+'</td><td><b>'+esc(x.condition)+'</b></td><td>'+esc(x.source)+'</td></tr>').join('')+messages.join('');
@@ -2470,7 +2474,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=202',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=203',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -3082,7 +3086,7 @@ async function loadContaminantsDb(){
 async function loadRegulatoryDb(){
  const status=document.getElementById('regDbStatus');
  try{
-   const res=await fetch('./data/regulatory-db-v1.json?v=202',{cache:'reload'});
+   const res=await fetch('./data/regulatory-db-v1.json?v=203',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    regulatoryDb=await res.json();
    ingredientCatalog=catalogFromDb(regulatoryDb);
