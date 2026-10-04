@@ -14297,31 +14297,36 @@
       "ifct_code": "N001",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N001 Chicken, poultry, leg, skinless · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N001 Chicken, poultry, leg, skinless · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile_source_anomaly_flagged",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
         "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation.",
         "energy_kcal": "IFCT Table 1 prints ENERC = 1605 kJ/100 g for N001. PMSV stores the printed official value exactly and flags it for source review rather than silently correcting it."
       },
       "per_100g": {
         "energy_kcal": 383.604,
         "protein_g": 19.44,
-        "total_fat_g": 12.64
+        "total_fat_g": 12.64,
+        "sodium_mg": 65.07,
+        "saturated_fat_g": 1.157,
+        "cholesterol_mg": 84.25
       }
     },
     {
@@ -14333,30 +14338,35 @@
       "ifct_code": "N002",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N002 Chicken, poultry, thigh, skinless · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N002 Chicken, poultry, thigh, skinless · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 199.809,
         "protein_g": 18.18,
-        "total_fat_g": 14.23
+        "total_fat_g": 14.23,
+        "sodium_mg": 64.59,
+        "saturated_fat_g": 1.071,
+        "cholesterol_mg": 91.93
       }
     },
     {
@@ -14368,30 +14378,35 @@
       "ifct_code": "N003",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N003 Chicken, poultry, breast, skinless · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N003 Chicken, poultry, breast, skinless · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 168.26,
         "protein_g": 21.81,
-        "total_fat_g": 9
+        "total_fat_g": 9,
+        "sodium_mg": 36.7,
+        "saturated_fat_g": 0.816,
+        "cholesterol_mg": 61.55
       }
     },
     {
@@ -14403,30 +14418,35 @@
       "ifct_code": "N004",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N004 Chicken, poultry, wing, skinless · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N004 Chicken, poultry, wing, skinless · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 192.878,
         "protein_g": 17.42,
-        "total_fat_g": 13.81
+        "total_fat_g": 13.81,
+        "sodium_mg": 72.78,
+        "saturated_fat_g": 1.241,
+        "cholesterol_mg": 54.52
       }
     },
     {
@@ -14438,30 +14458,35 @@
       "ifct_code": "N005",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N005 Poultry, chicken, liver · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N005 Poultry, chicken, liver · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 123.805,
         "protein_g": 21.57,
-        "total_fat_g": 4.08
+        "total_fat_g": 4.08,
+        "sodium_mg": 61.58,
+        "saturated_fat_g": 1.328,
+        "cholesterol_mg": 268
       }
     },
     {
@@ -14473,30 +14498,35 @@
       "ifct_code": "N006",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N006 Poultry, chicken, gizzard · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N006 Poultry, chicken, gizzard · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 92.256,
         "protein_g": 18.22,
-        "total_fat_g": 2.07
+        "total_fat_g": 2.07,
+        "sodium_mg": 50.6,
+        "saturated_fat_g": 0.772,
+        "cholesterol_mg": 57.24
       }
     },
     {
@@ -14508,30 +14538,35 @@
       "ifct_code": "N007",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N007 Country hen, leg, with skin · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N007 Country hen, leg, with skin · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 172.801,
         "protein_g": 17.01,
-        "total_fat_g": 11.73
+        "total_fat_g": 11.73,
+        "sodium_mg": 50.46,
+        "saturated_fat_g": 0.534,
+        "cholesterol_mg": 87.95
       }
     },
     {
@@ -14543,30 +14578,35 @@
       "ifct_code": "N008",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N008 Country hen, thigh, with skin · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N008 Country hen, thigh, with skin · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 187.62,
         "protein_g": 18.29,
-        "total_fat_g": 12.82
+        "total_fat_g": 12.82,
+        "sodium_mg": 51.14,
+        "saturated_fat_g": 0.61,
+        "cholesterol_mg": 91.81
       }
     },
     {
@@ -14578,30 +14618,35 @@
       "ifct_code": "N009",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N009 Country hen, breast, with skin · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N009 Country hen, breast, with skin · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 179.971,
         "protein_g": 22.08,
-        "total_fat_g": 10.2
+        "total_fat_g": 10.2,
+        "sodium_mg": 23.13,
+        "saturated_fat_g": 0.419,
+        "cholesterol_mg": 66.03
       }
     },
     {
@@ -14613,30 +14658,35 @@
       "ifct_code": "N010",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N010 Country hen, wing, with skin · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N010 Country hen, wing, with skin · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 182.6,
         "protein_g": 18.65,
-        "total_fat_g": 12.09
+        "total_fat_g": 12.09,
+        "sodium_mg": 54.15,
+        "saturated_fat_g": 0.688,
+        "cholesterol_mg": 55.42
       }
     },
     {
@@ -14648,30 +14698,35 @@
       "ifct_code": "N011",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N011 Duck, meat, with skin · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N011 Duck, meat, with skin · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 130.736,
         "protein_g": 19.07,
-        "total_fat_g": 6.03
+        "total_fat_g": 6.03,
+        "sodium_mg": 82.25,
+        "saturated_fat_g": 0.345,
+        "cholesterol_mg": 81.76
       }
     },
     {
@@ -14683,30 +14738,35 @@
       "ifct_code": "N012",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N012 Emu, meat, skinless · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N012 Emu, meat, skinless · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 132.887,
         "protein_g": 22.65,
-        "total_fat_g": 4.62
+        "total_fat_g": 4.62,
+        "sodium_mg": 48.48,
+        "saturated_fat_g": 0.2,
+        "cholesterol_mg": 72.69
       }
     },
     {
@@ -14718,30 +14778,35 @@
       "ifct_code": "N013",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N013 Guinea fowl, meat, with skin · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N013 Guinea fowl, meat, with skin · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 112.094,
         "protein_g": 20.52,
-        "total_fat_g": 3.24
+        "total_fat_g": 3.24,
+        "sodium_mg": 57.64,
+        "saturated_fat_g": 1.138,
+        "cholesterol_mg": 87.48
       }
     },
     {
@@ -14753,30 +14818,35 @@
       "ifct_code": "N014",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N014 Pigeon, meat, with skin · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N014 Pigeon, meat, with skin · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 126.195,
         "protein_g": 17.94,
-        "total_fat_g": 6.03
+        "total_fat_g": 6.03,
+        "sodium_mg": 56.1,
+        "saturated_fat_g": 1.828,
+        "cholesterol_mg": 107
       }
     },
     {
@@ -14788,30 +14858,35 @@
       "ifct_code": "N015",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N015 Quail, meat, skinless · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N015 Quail, meat, skinless · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 137.667,
         "protein_g": 20.92,
-        "total_fat_g": 5.95
+        "total_fat_g": 5.95,
+        "sodium_mg": 56.21,
+        "saturated_fat_g": 2.024,
+        "cholesterol_mg": 77.87
       }
     },
     {
@@ -14823,30 +14898,35 @@
       "ifct_code": "N016",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N016 Turkey, leg, with skin · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N016 Turkey, leg, with skin · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 154.637,
         "protein_g": 20.3,
-        "total_fat_g": 8.15
+        "total_fat_g": 8.15,
+        "sodium_mg": 66.47,
+        "saturated_fat_g": 0.98,
+        "cholesterol_mg": 83.44
       }
     },
     {
@@ -14858,30 +14938,35 @@
       "ifct_code": "N017",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N017 Turkey, thigh, with skin · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N017 Turkey, thigh, with skin · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 138.862,
         "protein_g": 20.46,
-        "total_fat_g": 6.31
+        "total_fat_g": 6.31,
+        "sodium_mg": 50.01,
+        "saturated_fat_g": 1.015,
+        "cholesterol_mg": 85.35
       }
     },
     {
@@ -14893,30 +14978,35 @@
       "ifct_code": "N018",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N018 Turkey, breast, with skin · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N018 Turkey, breast, with skin · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 160.373,
         "protein_g": 21.96,
-        "total_fat_g": 8.04
+        "total_fat_g": 8.04,
+        "sodium_mg": 40.45,
+        "saturated_fat_g": 0.934,
+        "cholesterol_mg": 81.28
       }
     },
     {
@@ -14928,30 +15018,35 @@
       "ifct_code": "N019",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · N019 Turkey, wing, with skin · Table 1 (protein, total fat, energy)",
+      "source": "ICMR-NIN IFCT 2017 · N019 Turkey, wing, with skin · Table 1 (protein, total fat, energy), Table 5 (sodium), Table 7 (total saturated fatty acids, cholesterol)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
         "energy_kcal",
         "protein_g",
-        "total_fat_g"
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
       ],
       "field_derivations": {
-        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       },
       "field_notes": {
         "carbohydrate_g": "IFCT Table 1 poultry section does not provide carbohydrate; field remains unverified and is not treated as zero.",
         "dietary_fibre_g": "IFCT Table 1 poultry section does not provide dietary fibre; field remains unverified and is not treated as zero.",
         "total_sugars_g": "No verified FSSAI-equivalent Total Sugars value loaded; field remains unverified.",
         "added_sugars_g": "No ingredient-level added-sugar value is inferred from IFCT.",
-        "saturated_fat_g": "Awaiting direct row-level IFCT Table 7 TSFA reconciliation.",
-        "trans_fat_g": "No row-level IFCT trans-fat total verified.",
-        "sodium_mg": "Awaiting direct row-level IFCT Table 5 sodium reconciliation."
+        "trans_fat_g": "No row-level IFCT trans-fat total verified."
       },
       "per_100g": {
         "energy_kcal": 184.273,
         "protein_g": 21.91,
-        "total_fat_g": 10.77
+        "total_fat_g": 10.77,
+        "sodium_mg": 57,
+        "saturated_fat_g": 0.897,
+        "cholesterol_mg": 80.01
       }
     }
   ],
@@ -15057,10 +15152,13 @@
     ],
     "ifct_poultry_entries_loaded": 19,
     "ifct_poultry_entries_total": 19,
-    "ifct_poultry_stage": "N001_to_N019_table_1_complete_other_nutrients_fail_closed_pending_direct_reconciliation",
+    "ifct_poultry_stage": "N001_to_N019_complete_for_verified_tables_1_5_7_carbohydrate_sugars_fibre_fail_closed",
     "ifct_poultry_source_anomalies": [
       "N001 ENERC printed as 1605 kJ/100 g in IFCT Table 1; preserved exactly pending source review."
-    ]
+    ],
+    "ifct_poultry_sodium_profiles_loaded": 19,
+    "ifct_poultry_saturated_fat_profiles_loaded": 19,
+    "ifct_poultry_cholesterol_profiles_loaded": 19
   },
   "last_verified": "2026-10-04",
   "required_label_fields": [
