@@ -207,16 +207,16 @@
       "2.16": {
         "title": "Hemp seeds and seed products",
         "rule_file": "./data/rules/chapter-2-16-hemp-v1.json",
-        "mapped_catalog_products": 0,
-        "chapter_only_standard_products": 3,
+        "mapped_catalog_products": 3,
+        "chapter_only_standard_products": 0,
         "structured_core_standards": 3,
-        "status": "structured_core_loaded_foscos_mapping_pending",
+        "status": "structured_core_loaded_foscos_mapping_verified",
         "source_verified_on": "2026-10-03",
-        "regulatory_note": "Hemp seed, hemp seed oil and hemp seed flour are structured from the current FSSAI Chapter 2.16. Cross-cutting THC/CBD and labelling restrictions are also loaded. No FoSCoS category is guessed; official current mapping remains pending verification.",
-        "next_validation": "Verify current FoSCoS hierarchy mapping, then connect Appendix A, contaminants, microbiology, processing aids and current labelling rules."
+        "regulatory_note": "Hemp seed, oil extracted from hemp seeds and hemp seed flour are structured from current FSSAI Chapter 2.16 and are now mapped to current FoSCoS categories 101.1, 101.2 and 101.3 respectively. Category 101 is a special FoSCoS category outside Appendix A FCS 1–16, so no Appendix A FCS is inferred.",
+        "next_validation": "Apply product-standard, contaminant, microbiology, processing-aid and labelling rules. Do not inherit ordinary Appendix A FCS permissions unless FSSAI publishes an explicit crosswalk."
       }
     },
-    "chapter_only_standard_products": 3,
+    "chapter_only_standard_products": 0,
     "appendix_a": {
       "rule_file": "./data/rules/appendix-a-v3-core.json",
       "source_version": "Version 3 (01.08.2025)",
@@ -719,7 +719,10 @@
           "locked_rows": 2
         }
       ],
-      "locked_rows_total": 10
+      "locked_rows_total": 10,
+      "product_mapping_stage": "current_v3_complete_for_fcs_1_16_special_foscos_101_102_fail_closed",
+      "special_foscos_categories_outside_appendix_fcs": 13,
+      "unresolved_official_appendix_fcs_mappings": 0
     },
     "special_nutrition": {
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
@@ -17860,10 +17863,15 @@
       ],
       "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-13-1-krishara-khichdi",
@@ -17888,10 +17896,15 @@
       ],
       "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-1-golaka-dugdha-condensed-milk-without-sugar",
@@ -17916,10 +17929,15 @@
       ],
       "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-2-ksheerasara-sweetened-condensed-milk",
@@ -17948,12 +17966,17 @@
       "standard_name": "Standard for Sweetened Condensed Milk",
       "source_verified_on": "2026-10-02",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
@@ -17978,10 +18001,15 @@
       ],
       "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-4-yava-ksheera-barley-milk",
@@ -18006,10 +18034,15 @@
       ],
       "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-5-dugdha-kupika-stuffed-fried-cottage-cheese-dumplings",
@@ -18038,12 +18071,17 @@
       "standard_name": "Standard for Cheese and Cheese Products",
       "source_verified_on": "2026-10-02",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
@@ -18068,10 +18106,15 @@
       ],
       "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
@@ -18096,10 +18139,15 @@
       ],
       "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-15-1-kulmasha-barley-savory-discs",
@@ -18124,10 +18172,15 @@
       ],
       "rule_profile_note": "Base regulatory profile generated from the official FoSCoS/FSSAI product mapping. Product-specific definition, composition, ingredient permissions and numerical limits must be populated from the cited FSSAI standard before a full formulation compliance conclusion is issued.",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "99-99-1-bees-wax",
@@ -18274,7 +18327,7 @@
       "display_name": "Hemp seed",
       "foscos_category": "",
       "foscos_subcategory": "",
-      "fcs": "",
+      "fcs": "101.1",
       "fssr": "2.16",
       "regulation_chapter": "2.16",
       "route": "standardized",
@@ -18295,21 +18348,29 @@
       "rule_key": "2.16(2)(i)",
       "standard_name": "Hemp seed",
       "source_verified_on": "2026-10-03",
-      "foscos_mapping_status": "pending_official_mapping",
+      "foscos_mapping_status": "verified_current_foscos",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this hemp product under special category 101.1. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS; category 101 is separate. PMSV therefore stores the FoSCoS route but does not infer an Appendix A FCS.",
+      "appendix_fcs_verified_on": "2026-10-04",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "category": "101",
+      "subcategory": "101.1",
+      "catalog_source": "Current FoSCoS standardized-product list + FSSAI Chapter 2.16",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://fssai.gov.in/upload/uploadfiles/files/17_%20Chapter%202_16%20%28Hemp%20seeds%20and%20seed%20products%29.pdf"
+      ]
     },
     {
       "id": "fssai-2-16-hemp-seed-oil",
       "display_name": "Hemp seed oil",
       "foscos_category": "",
       "foscos_subcategory": "",
-      "fcs": "",
+      "fcs": "101.2",
       "fssr": "2.16",
       "regulation_chapter": "2.16",
       "route": "standardized",
@@ -18330,21 +18391,29 @@
       "rule_key": "2.16(2)(ii)",
       "standard_name": "Hemp seed oil",
       "source_verified_on": "2026-10-03",
-      "foscos_mapping_status": "pending_official_mapping",
+      "foscos_mapping_status": "verified_current_foscos",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this hemp product under special category 101.2. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS; category 101 is separate. PMSV therefore stores the FoSCoS route but does not infer an Appendix A FCS.",
+      "appendix_fcs_verified_on": "2026-10-04",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "category": "101",
+      "subcategory": "101.2",
+      "catalog_source": "Current FoSCoS standardized-product list + FSSAI Chapter 2.16",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://fssai.gov.in/upload/uploadfiles/files/17_%20Chapter%202_16%20%28Hemp%20seeds%20and%20seed%20products%29.pdf"
+      ]
     },
     {
       "id": "fssai-2-16-hemp-seed-flour",
       "display_name": "Hemp seed flour",
       "foscos_category": "",
       "foscos_subcategory": "",
-      "fcs": "",
+      "fcs": "101.3",
       "fssr": "2.16",
       "regulation_chapter": "2.16",
       "route": "standardized",
@@ -18365,14 +18434,22 @@
       "rule_key": "2.16(2)(iii)",
       "standard_name": "Hemp seed flour",
       "source_verified_on": "2026-10-03",
-      "foscos_mapping_status": "pending_official_mapping",
+      "foscos_mapping_status": "verified_current_foscos",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this hemp product under special category 101.3. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS; category 101 is separate. PMSV therefore stores the FoSCoS route but does not infer an Appendix A FCS.",
+      "appendix_fcs_verified_on": "2026-10-04",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "category": "101",
+      "subcategory": "101.3",
+      "catalog_source": "Current FoSCoS standardized-product list + FSSAI Chapter 2.16",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://fssai.gov.in/upload/uploadfiles/files/17_%20Chapter%202_16%20%28Hemp%20seeds%20and%20seed%20products%29.pdf"
+      ]
     },
     {
       "id": "06-06-8-fermented-soybean-paste",
@@ -27981,10 +28058,15 @@
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "102-102-1-12-1-lajadi-kashaya-parched-rice-tea",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-13-1-krishara-khichdi",
@@ -27997,10 +28079,15 @@
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "102-102-1-13-1-krishara-khichdi",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-1-golaka-dugdha-condensed-milk-without-sugar",
@@ -28013,10 +28100,15 @@
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "102-102-1-14-1-golaka-dugdha-condensed-milk-without-sugar",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-2-ksheerasara-sweetened-condensed-milk",
@@ -28031,10 +28123,15 @@
       "rule_file": "./data/rules/chapter-2-1-dairy-v1.json",
       "rule_key": "2.1.5",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "file_and_key_verified",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
@@ -28047,10 +28144,15 @@
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-4-yava-ksheera-barley-milk",
@@ -28063,10 +28165,15 @@
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "102-102-1-14-4-yava-ksheera-barley-milk",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-5-dugdha-kupika-stuffed-fried-cottage-cheese-dumplings",
@@ -28081,10 +28188,15 @@
       "rule_file": "./data/rules/chapter-2-1-dairy-v1.json",
       "rule_key": "2.1.17",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "file_and_key_verified",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
@@ -28097,10 +28209,15 @@
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
@@ -28113,10 +28230,15 @@
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "102-102-1-15-1-kulmasha-barley-savory-discs",
@@ -28129,10 +28251,15 @@
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "102-102-1-15-1-kulmasha-barley-savory-discs",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this product under Ayurveda Aahara special category 102/102.1 and does not provide an Appendix A FCS code in the standardized-product row. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS. PMSV therefore does not infer an Appendix A FCS from the recipe name or ingredients.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "not_linked",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+      ]
     },
     {
       "id": "99-99-1-bees-wax",
@@ -28212,60 +28339,75 @@
     },
     {
       "id": "fssai-2-16-hemp-seed",
-      "category": "",
-      "subcategory": "",
+      "category": "101",
+      "subcategory": "101.1",
       "name": "Hemp seed",
-      "fcs": "",
+      "fcs": "101.1",
       "fssr": "2.16",
       "profile_status": "chapter_profile_ready",
-      "catalog_source": "FSSAI Chapter 2.16 — FoSCoS mapping pending official verification",
+      "catalog_source": "Current FoSCoS standardized-product list + FSSAI Chapter 2.16",
       "profile_id": "fssai-2-16-hemp-seed",
       "rule_file": "./data/rules/chapter-2-16-hemp-v1.json",
       "rule_key": "2.16(2)(i)",
-      "foscos_mapping_status": "pending_official_mapping",
+      "foscos_mapping_status": "verified_current_foscos",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this hemp product under special category 101.1. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS; category 101 is separate. PMSV therefore stores the FoSCoS route but does not infer an Appendix A FCS.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "file_and_key_verified",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://fssai.gov.in/upload/uploadfiles/files/17_%20Chapter%202_16%20%28Hemp%20seeds%20and%20seed%20products%29.pdf"
+      ]
     },
     {
       "id": "fssai-2-16-hemp-seed-oil",
-      "category": "",
-      "subcategory": "",
+      "category": "101",
+      "subcategory": "101.2",
       "name": "Hemp seed oil",
-      "fcs": "",
+      "fcs": "101.2",
       "fssr": "2.16",
       "profile_status": "chapter_profile_ready",
-      "catalog_source": "FSSAI Chapter 2.16 — FoSCoS mapping pending official verification",
+      "catalog_source": "Current FoSCoS standardized-product list + FSSAI Chapter 2.16",
       "profile_id": "fssai-2-16-hemp-seed-oil",
       "rule_file": "./data/rules/chapter-2-16-hemp-v1.json",
       "rule_key": "2.16(2)(ii)",
-      "foscos_mapping_status": "pending_official_mapping",
+      "foscos_mapping_status": "verified_current_foscos",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this hemp product under special category 101.2. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS; category 101 is separate. PMSV therefore stores the FoSCoS route but does not infer an Appendix A FCS.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "file_and_key_verified",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://fssai.gov.in/upload/uploadfiles/files/17_%20Chapter%202_16%20%28Hemp%20seeds%20and%20seed%20products%29.pdf"
+      ]
     },
     {
       "id": "fssai-2-16-hemp-seed-flour",
-      "category": "",
-      "subcategory": "",
+      "category": "101",
+      "subcategory": "101.3",
       "name": "Hemp seed flour",
-      "fcs": "",
+      "fcs": "101.3",
       "fssr": "2.16",
       "profile_status": "chapter_profile_ready",
-      "catalog_source": "FSSAI Chapter 2.16 — FoSCoS mapping pending official verification",
+      "catalog_source": "Current FoSCoS standardized-product list + FSSAI Chapter 2.16",
       "profile_id": "fssai-2-16-hemp-seed-flour",
       "rule_file": "./data/rules/chapter-2-16-hemp-v1.json",
       "rule_key": "2.16(2)(iii)",
-      "foscos_mapping_status": "pending_official_mapping",
+      "foscos_mapping_status": "verified_current_foscos",
       "appendix_fcs": "",
-      "appendix_fcs_status": "official_appendix_fcs_mapping_not_available",
-      "appendix_fcs_note": "No Appendix A FCS is stored for this product; PMSV must not infer one from the FoSCoS licensing category or product name.",
-      "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "appendix_fcs_status": "foscos_special_category_outside_appendix_a_fcs",
+      "appendix_fcs_note": "Current FoSCoS classifies this hemp product under special category 101.3. FSSAI's compiled FoSCoS category document directs only categories 1–16 to Appendix A FCS; category 101 is separate. PMSV therefore stores the FoSCoS route but does not infer an Appendix A FCS.",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "file_and_key_verified",
+      "appendix_fcs_official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://fssai.gov.in/upload/uploadfiles/files/17_%20Chapter%202_16%20%28Hemp%20seeds%20and%20seed%20products%29.pdf"
+      ]
     },
     {
       "id": "06-06-8-fermented-soybean-paste",
@@ -28289,8 +28431,8 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 186,
-  "build_label": "Build 186 — Infant Formula nutrient tables",
+  "build_number": 187,
+  "build_label": "Build 187 — close Appendix A special-category routing gap",
   "build_date": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",
