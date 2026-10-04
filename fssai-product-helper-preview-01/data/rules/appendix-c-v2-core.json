@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Resolve only official-source/catalogue gaps among the remaining fail-closed rows; do not infer Hardened oil, Yeast, Tripe, Edible casings, Corn kernel, Colours, Other foods, or incomplete-residue rows.",
+    "next_priority": "Resolve only official-source/catalogue gaps among the remaining 18 fail-closed rows; do not infer Hardened oil, Yeast, Tripe, Corn kernel, Colours, Other foods, incomplete-residue rows, or negative-scope milk exclusions.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -84,13 +84,13 @@
       "table_7_hydrogen_peroxide_effective_residual": "5 mg/kg as hydrogen peroxide"
     },
     "appendix_c_product_gate_audit_status": "exact_gate_pass_5_process_routes",
-    "appendix_c_product_gated_permissions": 104,
-    "appendix_c_product_gate_id_links": 267,
+    "appendix_c_product_gated_permissions": 105,
+    "appendix_c_product_gate_id_links": 268,
     "appendix_c_product_gate_rule_key_links": 29,
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
-    "appendix_c_product_gate_reachable_permissions": 51,
+    "appendix_c_product_gate_reachable_permissions": 52,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "passed_after_catalogue_expansion_2026-10-04",
+    "appendix_c_product_gate_regression_status": "passed_after_edible_casings_gate_2026-10-04",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -123,29 +123,29 @@
         "12": 42
       }
     },
-    "appendix_c_product_gate_remaining_fail_closed": 19,
-    "appendix_c_product_gated_or_auto_permissions": 246,
+    "appendix_c_product_gate_remaining_fail_closed": 18,
+    "appendix_c_product_gated_or_auto_permissions": 247,
     "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
     "table_2_hardened_oil_status": "fail_closed_identity_unresolved",
     "table_6_decaffeination_status": "tea_and_coffee_exact_process_gates_loaded",
     "table_9_liquid_nitrogen_status": "combined_foscos_row_requires_ice_cream_form_confirmation",
     "table_6_mek_decaffeination_route": "loaded_same_source_row",
-    "appendix_c_intentional_fail_closed_permissions": 19,
-    "appendix_c_fail_closed_audit_status": "classified_2026-10-04",
+    "appendix_c_intentional_fail_closed_permissions": 18,
+    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_248",
     "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model.",
     "appendix_c_final_runtime_regression_status": "passed_2026-10-04",
     "appendix_c_final_runtime_regression": {
       "source_permission_rows": 265,
       "runtime_route_projections": 1,
       "auto_apply_permission_rows": 95,
-      "exact_gated_permission_rows": 151,
-      "intentional_fail_closed_permission_rows": 19,
+      "exact_gated_permission_rows": 152,
+      "intentional_fail_closed_permission_rows": 18,
       "unclassified_permission_rows": 0,
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
       "missing_process_selectors": 0,
-      "product_master_products": 531,
-      "product_master_profiles": 531,
+      "product_master_products": 533,
+      "product_master_profiles": 533,
       "table_11_non_gmm_entries": 56,
       "table_11_non_gmm_source_rows": 140,
       "table_11a_gmm_entries": 51,
@@ -242,13 +242,6 @@
         "name": "Sodium gluconate",
         "category": "Tripe",
         "process": "washing"
-      },
-      {
-        "table": 12,
-        "s_no": 4,
-        "name": "Ammonium sulphate",
-        "category": "Edible casings",
-        "process": ""
       },
       {
         "table": 12,
@@ -7046,8 +7039,11 @@
               "product_category": "Edible casings",
               "residual_level": "GMP",
               "runtime_auto_apply": false,
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "No exact standardized Edible casings finished-product identity is available in the current PMSV/FoSCoS product master."
+              "product_ids": [
+                "08-08-4-animal-casings"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "FoSCoS standardized product Animal Casings is listed under FCS 08.4 Edible casings; exact PMSV catalogue identity gate."
             }
           ]
         },
