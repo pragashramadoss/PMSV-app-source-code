@@ -33,7 +33,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 11A - continue from enzyme 13 (3-phytase)",
+    "next_priority": "Table 11A - continue from enzyme 19 (Glucoamylase)",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -55,9 +55,9 @@
     "table_11_non_gmm_entries": 56,
     "table_11_non_gmm_source_rows": 139,
     "table_11_amendment_corrected_entries": 6,
-    "table_11a_gmm_status": "partial_structured_ingestion_1_12",
-    "table_11a_gmm_entries_loaded": 12,
-    "table_11a_gmm_variant_rows_loaded": 26
+    "table_11a_gmm_status": "partial_structured_ingestion_1_18",
+    "table_11a_gmm_entries_loaded": 18,
+    "table_11a_gmm_variant_rows_loaded": 43
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -2984,7 +2984,7 @@
         23
       ],
       "source_scope": "Table 11A only. Production organism, donor/source, technological purpose, indicative food use and residual level are stored as linked variants. Runtime remains fail-closed until the full table is ingested and the selected product/use is matched.",
-      "ingestion_status": "partial_1_to_12",
+      "ingestion_status": "partial_1_to_18",
       "entries": [
         {
           "sequence": 1,
@@ -3249,6 +3249,167 @@
               "donor_or_source": "Talaromyces leycettanus",
               "purpose": "De-gumming of oils and fats",
               "indicative_food_uses": "Oils and Fats processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 13,
+          "name": "3-phytase",
+          "ec": "3.1.3.8",
+          "variants": [
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Aspergillus niger (A. niger also include A. tubingensis)",
+              "purpose": "Phytate reduction in cereals and legumes",
+              "indicative_food_uses": "Bakery products and other cereal and legume based products (e.g. pasta, noodles, snacks), soy sauce",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 14,
+          "name": "Phytase",
+          "ec": "3.1.3.26",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Buttiauxella sp.",
+              "purpose": "Hydrolysis of phytic acid",
+              "indicative_food_uses": "In potable alcohol production and in animal feed",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 15,
+          "name": "Phospholipase C",
+          "ec": "3.1.4.3",
+          "variants": [
+            {
+              "production_organism": "Pichia pastoris (now renamed as Komagataella phaffii)",
+              "donor_or_source": "Soil",
+              "purpose": "De-gumming of oils and fats",
+              "indicative_food_uses": "Oils and fats processing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Bacillus thuringiensis",
+              "purpose": "De-gumming of oils and fats",
+              "indicative_food_uses": "Oils and fats processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 16,
+          "name": "Phosphoinositide phospholipase C",
+          "ec": "3.1.4.11",
+          "variants": [
+            {
+              "production_organism": "Pseudomonas fluorescens",
+              "donor_or_source": "Soil",
+              "purpose": "De-gumming of oils and fats",
+              "indicative_food_uses": "Oils and fats processing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Pseudomonas sp-62186",
+              "purpose": "De-gumming of oils and fats",
+              "indicative_food_uses": "Oils and Fats processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 17,
+          "name": "Alpha-amylase",
+          "ec": "3.2.1.1",
+          "variants": [
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Alicyclobacillus pohliae",
+              "purpose": "Antistaling agent in combination with lipase",
+              "indicative_food_uses": "Bakery products",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Bacillus licheniformis",
+              "purpose": "Liquefaction and thinning of starch, fermentation, starch processing into dextrins and oligosaccharides. High DE-maltodextrin production",
+              "indicative_food_uses": "Brewing, potable alcohol production, grain or carbohydrate, non-alcoholic beverages, and bakery products, processing of starch for other purposes",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Geobacillus stearothermophilus",
+              "purpose": "Liquefaction and thinning of starch, fermentation, starch processing into dextrins and oligosaccharides and high DE-maltodextrin",
+              "indicative_food_uses": "Processing of starch for baking, brewing and fermentation",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Cytophaga sp.",
+              "purpose": "Liquefaction and thinning of starch, fermentation",
+              "indicative_food_uses": "Processing of starch for baking and brewing processes",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Pseudomonas fluorescens",
+              "donor_or_source": "Thermococcales",
+              "purpose": "Starch processing into dextrins and oligosaccharides and high DE-maltodextrin",
+              "indicative_food_uses": "Processing of starch for baking, brewing and fermentation",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Rhizomucor pusillus",
+              "purpose": "Starch processing into dextrins and oligosaccharides and high DE-maltodextrin",
+              "indicative_food_uses": "Processing of starch for baking, brewing and fermentation and other processes",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Aspergillus clavatus",
+              "purpose": "Starch processing into dextrins and oligosaccharides. High DE-maltodextrin production",
+              "indicative_food_uses": "In carbohydrate or starch processing, brewing and potable alcohol production",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Aspergillus kawachii",
+              "purpose": "Starch processing into dextrins and oligosaccharides. High DE-maltodextrin production",
+              "indicative_food_uses": "In carbohydrate or starch processing, brewing and potable alcohol production",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus amyloliquefaciens",
+              "donor_or_source": "Bacillus amyloliquefaciens",
+              "purpose": "As processing aid in food manufacturing to hydrolyze polysaccharides",
+              "indicative_food_uses": "Carbohydrate or grain processing, potable alcohol production, brewing, cereal processes, non-alcoholic beverages",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Aspergillus terreus",
+              "purpose": "Starch processing into dextrins and oligosaccharides. High DE-maltodextrin production",
+              "indicative_food_uses": "Brewing, potable alcohol production, grain or carbohydrate, non-alcoholic beverages, cereal processes",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 18,
+          "name": "Beta-amylase",
+          "ec": "3.2.1.2",
+          "variants": [
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Bacillus flexus",
+              "purpose": "Starch processing into maltose",
+              "indicative_food_uses": "Starch processing for maltose-based syrups",
               "residual_level": "GMP"
             }
           ]
