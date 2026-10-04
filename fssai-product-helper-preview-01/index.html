@@ -2299,8 +2299,6 @@ function appendixCStructuredRuntimeRules(db){
    const tableProcess=table?.process_key||'';
    for(const entry of table?.entries||[]){
      for(const permission of entry?.permissions||[]){
-       const process=permission?.process_key||entry?.process_key||tableProcess;
-       if(!process)continue;
        let condition=permission.residual_level==='GMP'
          ? 'GMP'
          : (permission.residual_level_mgkg!==undefined&&permission.residual_level_mgkg!==null
@@ -2311,20 +2309,26 @@ function appendixCStructuredRuntimeRules(db){
          condition='Maximum usage '+permission.max_usage_mgkg+' mg/kg; residue in final product: '+String(permission.residual_level||condition||'')+(permission.residual_basis?' ('+String(permission.residual_basis)+')':'');
        }
        if(permission.effective_from)condition+=' · effective '+String(permission.effective_from);
-       out.push({
-         process,
-         name:entry.name||'',
-         ins:entry.ins||'—',
-         purpose:(table.title||'Processing aid')+' · '+String(permission.product_category||''),
-         condition,
-         source:'Appendix C · Table '+String(table.number||''),
-         runtime_auto_apply:permission.runtime_auto_apply===true,
-         product_category:String(permission.product_category||''),
-         product_ids:Array.isArray(permission.product_ids)?permission.product_ids:[],
-         rule_keys:Array.isArray(permission.rule_keys)?permission.rule_keys:[],
-         qualifier_key:String(permission.qualifier_key||''),
-         qualifier_value:String(permission.qualifier_value||'')
-       });
+       const emit=(route={})=>{
+         const process=route?.process_key||permission?.process_key||entry?.process_key||tableProcess;
+         if(!process)return;
+         out.push({
+           process,
+           name:entry.name||'',
+           ins:entry.ins||'—',
+           purpose:(table.title||'Processing aid')+' · '+String(route?.route_label||permission.product_category||''),
+           condition,
+           source:'Appendix C · Table '+String(table.number||''),
+           runtime_auto_apply:route?.runtime_auto_apply===true||permission.runtime_auto_apply===true,
+           product_category:String(permission.product_category||''),
+           product_ids:Array.isArray(route?.product_ids)?route.product_ids:(Array.isArray(permission.product_ids)?permission.product_ids:[]),
+           rule_keys:Array.isArray(route?.rule_keys)?route.rule_keys:(Array.isArray(permission.rule_keys)?permission.rule_keys:[]),
+           qualifier_key:String(route?.qualifier_key||permission.qualifier_key||''),
+           qualifier_value:String(route?.qualifier_value||permission.qualifier_value||'')
+         });
+       };
+       emit();
+       for(const route of permission.runtime_routes||[])emit(route);
      }
    }
  }
@@ -2332,7 +2336,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=239',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=241',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
