@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Reconcile the remaining 9 rows against current-effective official FSSAI text, prioritising the 2025 amendment block affecting Table 6/Table 9/Table 12 before unlocking Colours or Zinc sulphate.",
+    "next_priority": "Reconcile the remaining 8 rows: Table 6 Colours/Other foods, Bone phosphate negative-scope exclusion, and Vitamin B12/Vitamin C blank-residue rows. Keep the latter two fail-closed because the official active list also shows no residue value.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -85,7 +85,7 @@
     },
     "appendix_c_product_gate_audit_status": "exact_gate_pass_5_process_routes",
     "appendix_c_product_gated_permissions": 114,
-    "appendix_c_product_gate_id_links": 295,
+    "appendix_c_product_gate_id_links": 2777,
     "appendix_c_product_gate_rule_key_links": 29,
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
     "appendix_c_product_gate_reachable_permissions": 61,
@@ -123,23 +123,23 @@
         "12": 42
       }
     },
-    "appendix_c_product_gate_remaining_fail_closed": 9,
-    "appendix_c_product_gated_or_auto_permissions": 256,
+    "appendix_c_product_gate_remaining_fail_closed": 8,
+    "appendix_c_product_gated_or_auto_permissions": 257,
     "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
     "table_2_hardened_oil_status": "fail_closed_identity_unresolved",
     "table_6_decaffeination_status": "tea_and_coffee_exact_process_gates_loaded",
-    "table_9_liquid_nitrogen_status": "combined_foscos_row_requires_ice_cream_form_confirmation",
+    "table_9_liquid_nitrogen_status": "official_section_16_5_active_list_all_foods_gmp",
     "table_6_mek_decaffeination_route": "loaded_same_source_row",
-    "appendix_c_intentional_fail_closed_permissions": 9,
-    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_250",
+    "appendix_c_intentional_fail_closed_permissions": 8,
+    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_251",
     "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model.",
     "appendix_c_final_runtime_regression_status": "passed_2026-10-04",
     "appendix_c_final_runtime_regression": {
       "source_permission_rows": 265,
       "runtime_route_projections": 1,
-      "auto_apply_permission_rows": 95,
+      "auto_apply_permission_rows": 96,
       "exact_gated_permission_rows": 161,
-      "intentional_fail_closed_permission_rows": 9,
+      "intentional_fail_closed_permission_rows": 8,
       "unclassified_permission_rows": 0,
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -153,7 +153,7 @@
       "table_12_entries": 75,
       "table_12_permission_rows": 83,
       "qualifier_checks": {
-        "liquid_nitrogen_requires_exact_ice_cream_form": true,
+        "liquid_nitrogen_requires_exact_ice_cream_form": false,
         "dried_ice_cream_mix_rejected": true,
         "other_combined_frozen_forms_rejected": true,
         "yeast_washing_requires_exact_substrate": true,
@@ -161,7 +161,8 @@
         "yeast_cell_disruption_requires_exact_substrate": true,
         "corn_kernel_softening_requires_exact_substrate": true,
         "extrusion_requires_explicit_process": true,
-        "hardened_oil_requires_exact_catalyst_category": true
+        "hardened_oil_requires_exact_catalyst_category": true,
+        "liquid_nitrogen_all_foods_active_list": true
       },
       "route_checks": {
         "vanaspati_catalysts": 4,
@@ -176,7 +177,9 @@
           "Methylene chloride (Dichloromethane)",
           "Methyl ethyl ketone (butanone)"
         ],
-        "starch_hydrolysis_perlite": true
+        "starch_hydrolysis_perlite": true,
+        "zinc_sulphate_alcoholic_beverages_gmp": true,
+        "liquid_nitrogen_all_foods_gmp": true
       }
     },
     "appendix_c_runtime_status": "production_fail_closed_current_version_2",
@@ -241,13 +244,6 @@
         "name": "Vitamin C",
         "category": "All foods",
         "process": "nutrient"
-      },
-      {
-        "table": 12,
-        "s_no": 74,
-        "name": "Zinc sulphate",
-        "category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
-        "process": ""
       }
     ],
     "appendix_c_targeted_regression": {
@@ -264,8 +260,11 @@
       "extrusion_process_gate": "pass",
       "corn_kernel_softening_qualifier": "pass",
       "hardened_oil_nickel_qualifier": "pass",
-      "calcium_sulfate_alcoholic_beverage_gate": "pass"
-    }
+      "calcium_sulfate_alcoholic_beverage_gate": "pass",
+      "zinc_sulphate_gmp_gate": "pass",
+      "liquid_nitrogen_all_foods": "pass"
+    },
+    "table_9_liquid_nitrogen_scope": "All Foods"
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -4996,17 +4995,12 @@
           "ins": "941",
           "permissions": [
             {
-              "product_category": "Dairy-based desserts - Ice cream",
-              "runtime_auto_apply": false,
-              "product_ids": [
-                "01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-"
-              ],
+              "product_category": "All Foods",
+              "runtime_auto_apply": true,
               "residual_level": "GMP",
-              "source_note": "The current PMSV FoSCoS product row combines finished ice cream with dried ice-cream mix, so this permission is stored but not auto-applied until the finished form is confirmed as ice cream.",
-              "product_gate_status": "verified_catalogue_requires_variant",
-              "qualifier_key": "contact_freezing_product_form",
-              "qualifier_value": "ice_cream",
-              "product_gate_note": "The FoSCoS row combines Ice Cream and Dried Ice Cream Mix; PMSV requires explicit finished-form confirmation of Ice Cream before Liquid Nitrogen can activate."
+              "source_note": "Updated from official FSSAI Section 16(5) active processing-aids list.",
+              "product_gate_status": "active_list_all_foods",
+              "product_gate_note": "FSSAI Section 16(5) Active list of processing aids allowed for use by FBOs lists Liquid Nitrogen (INS 941) under Table 9 with All Foods at GMP. Product-form qualifier is therefore not required."
             }
           ]
         }
@@ -8903,11 +8897,41 @@
             {
               "purpose": "Mineral Salt",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
-              "residual_level": "",
+              "residual_level": "GMP",
               "runtime_auto_apply": false,
-              "source_note": "Current Version 2 shows no residual-level value in the Table 12 row; PMSV does not infer GMP.",
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "The operative Appendix C Version 2 row does not display a residual level for Zinc sulphate. PMSV does not infer GMP from the later draft."
+              "source_note": "Residue and category confirmed from official FSSAI Section 16(5) active processing-aids list.",
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "process_key": "mineral_salt",
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Official FSSAI Section 16(5) active processing-aids list confirms Zinc sulphate as Mineral Salt for alcoholic beverages including low alcoholic and alcohol-free counterparts at GMP."
             }
           ]
         },
