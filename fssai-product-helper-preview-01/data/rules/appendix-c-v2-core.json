@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Add Starch hydrolysis UI selector; then implement exact decaffeination and ice-cream form qualifiers.",
+    "next_priority": "Wire processing qualifiers in UI and validate decaffeination/contact-freezing scenarios.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -123,10 +123,12 @@
         "12": 42
       }
     },
-    "appendix_c_product_gate_remaining_fail_closed": 22,
+    "appendix_c_product_gate_remaining_fail_closed": 19,
     "appendix_c_product_gated_or_auto_permissions": 233,
     "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
-    "table_2_hardened_oil_status": "fail_closed_identity_unresolved"
+    "table_2_hardened_oil_status": "fail_closed_identity_unresolved",
+    "table_6_decaffeination_status": "tea_and_coffee_exact_process_gates_loaded",
+    "table_9_liquid_nitrogen_status": "combined_foscos_row_requires_ice_cream_form_confirmation"
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -3433,12 +3435,24 @@
             {
               "product_category": "Decaffeinated tea",
               "residual_level_mgkg": 2,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "process_key": "decaffeination",
+              "product_ids": [
+                "tea"
+              ],
+              "product_gate_status": "verified_exact_catalogue_plus_process",
+              "product_gate_note": "Exact Tea product identity plus Decaffeination process selection."
             },
             {
               "product_category": "Decaffeinated coffee",
               "residual_level_mgkg": 10,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "process_key": "decaffeination",
+              "product_ids": [
+                "coffee"
+              ],
+              "product_gate_status": "verified_exact_catalogue_plus_process",
+              "product_gate_note": "Exact Coffee product identity plus Decaffeination process selection."
             },
             {
               "product_category": "Flavouring substances",
@@ -4798,9 +4812,15 @@
             {
               "product_category": "Dairy-based desserts - Ice cream",
               "runtime_auto_apply": false,
-              "product_ids": [],
+              "product_ids": [
+                "01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-"
+              ],
               "residual_level": "GMP",
-              "source_note": "The current PMSV FoSCoS product row combines finished ice cream with dried ice-cream mix, so this permission is stored but not auto-applied until the finished form is confirmed as ice cream."
+              "source_note": "The current PMSV FoSCoS product row combines finished ice cream with dried ice-cream mix, so this permission is stored but not auto-applied until the finished form is confirmed as ice cream.",
+              "product_gate_status": "verified_catalogue_requires_variant",
+              "qualifier_key": "contact_freezing_product_form",
+              "qualifier_value": "ice_cream",
+              "product_gate_note": "The FoSCoS row combines Ice Cream and Dried Ice Cream Mix; PMSV requires explicit finished-form confirmation of Ice Cream before Liquid Nitrogen can activate."
             }
           ]
         }
