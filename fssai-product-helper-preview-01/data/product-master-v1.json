@@ -937,7 +937,20 @@
       "current_regulatory_note": "Current Version V is loaded from FSSAI. Product definitions, current RTD/beer/wine routes and Table-4 requirements are structured. Dense Table-1/2/3 matrices remain under exact per-column normalization before final formulation verdicts.",
       "next_validation": "Normalize Table 1 distilled-spirit matrix, complete Table 2 wine matrix and Table 3 beer matrix column-by-column; then connect contaminants, microbiology, processing aids and current label rendering."
     },
-    "base_profiles_ready": 143
+    "base_profiles_ready": 143,
+    "appendix_b": {
+      "rule_file": "./data/rules/appendix-b-v2-core.json",
+      "source_version": "Version 2 (04.11.2024)",
+      "status": "table_1_fish_complete",
+      "main_table_groups_total": 11,
+      "main_table_groups_loaded": 1,
+      "fish_product_categories_loaded": 16,
+      "fish_exact_product_mappings": 18,
+      "fish_conditional_product_mappings": 4,
+      "fish_no_direct_table_mapping": 2,
+      "source_verified_on": "2026-10-04",
+      "next_validation": "Table 2A/2B - Milk and Milk Products"
+    }
   },
   "source_hierarchy": [
     {
@@ -5216,7 +5229,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_fish_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 1 does not provide a Fish Oil product category. PMSV does not infer one."
     },
     {
       "id": "02-02-2-fat-spread",
@@ -11805,7 +11823,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Live bivalve molluscs, alive immediately prior to consumption",
+          "profile_key": "fish-04"
+        },
+        {
+          "condition": "Raw chilled/frozen or shucked bivalves",
+          "profile_key": "fish-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The standardized product covers both live bivalves and raw chilled/frozen/shucked bivalves, which have different Appendix B criteria."
     },
     {
       "id": "09-09-2-frozen-shrimp",
@@ -11839,7 +11872,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Raw / uncooked frozen shrimp",
+          "profile_key": "fish-02"
+        },
+        {
+          "condition": "Cooked frozen shrimp",
+          "profile_key": "fish-06"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard includes raw, partially cooked and fully cooked frozen shrimp. Appendix B separates chilled/frozen crustaceans from frozen cooked crustaceans."
     },
     {
       "id": "09-09-2-frozen-lobsters",
@@ -11873,7 +11921,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Raw / uncooked frozen lobster",
+          "profile_key": "fish-02"
+        },
+        {
+          "condition": "Cooked frozen lobster",
+          "profile_key": "fish-06"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard allows raw or cooked frozen lobster. Appendix B separates chilled/frozen crustaceans from frozen cooked crustaceans."
     },
     {
       "id": "09-09-2-frozen-squid-and-parts-of-squid",
@@ -11907,7 +11970,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-frozen-finfish",
@@ -11941,7 +12009,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-01",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-frozen-fish-fillets",
@@ -11975,7 +12048,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-01",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-frozen-cephalopods",
@@ -12009,7 +12087,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-frozen-clam-meat",
@@ -12043,7 +12126,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Raw frozen clam meat",
+          "profile_key": "fish-05"
+        },
+        {
+          "condition": "Cooked / heat-shucked frozen clam meat",
+          "profile_key": "fish-06"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains raw frozen and cooked frozen clam-meat variants. Appendix B separates chilled/frozen bivalves from frozen heat-shucked/cooked molluscs."
     },
     {
       "id": "09-09-2-fresh-and-quick-frozen-raw-scallop-products",
@@ -12077,7 +12175,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-05",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-quick-frozen-fish-sticks-fish-fingers-fish-portions-and-fish-fillets-breaded-or-ba",
@@ -12111,7 +12214,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-14",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-frozen-minced-fish-meat",
@@ -12145,7 +12253,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-salted-fish-dried-salted-fish",
@@ -12179,7 +12292,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-edible-fish-powder",
@@ -12213,7 +12331,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-16",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-freeze-dried-prawns-shrimps",
@@ -12247,7 +12370,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-smoked-fishery-products",
@@ -12281,7 +12409,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-10",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-pasteurized-fish-sausage",
@@ -12315,7 +12448,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-15",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-pasteurised-crab-meat",
@@ -12349,7 +12487,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-15",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-3-fish-pickles",
@@ -12383,7 +12526,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-13",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-3-sturgeon-caviar",
@@ -12417,7 +12565,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_fish_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 1 does not provide an explicit Sturgeon Caviar product category. PMSV does not infer a category from ready-to-eat status or salt treatment."
     },
     {
       "id": "09-09-4-canned-fishery-products",
@@ -12451,7 +12604,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-08",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-4-ready-to-eat-finfish-or-shell-fish-curry-in-retortable-pouches",
@@ -12485,7 +12643,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-08",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "10-10-1-fresh-eggs",
@@ -15078,7 +15241,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-09",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "12-12-6-tomato-ketchup-and-tomato-sauce",
@@ -16896,7 +17064,12 @@
       "foscos_listing_code": "99.1",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-15",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "99-99-1-sodium-meta-bisulphite-ins-223",
@@ -21137,7 +21310,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_fish_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 1 does not provide a Fish Oil product category. PMSV does not infer one."
     },
     {
       "id": "02-02-2-fat-spread",
@@ -24730,7 +24908,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Live bivalve molluscs, alive immediately prior to consumption",
+          "profile_key": "fish-04"
+        },
+        {
+          "condition": "Raw chilled/frozen or shucked bivalves",
+          "profile_key": "fish-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The standardized product covers both live bivalves and raw chilled/frozen/shucked bivalves, which have different Appendix B criteria."
     },
     {
       "id": "09-09-2-frozen-shrimp",
@@ -24748,7 +24941,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Raw / uncooked frozen shrimp",
+          "profile_key": "fish-02"
+        },
+        {
+          "condition": "Cooked frozen shrimp",
+          "profile_key": "fish-06"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard includes raw, partially cooked and fully cooked frozen shrimp. Appendix B separates chilled/frozen crustaceans from frozen cooked crustaceans."
     },
     {
       "id": "09-09-2-frozen-lobsters",
@@ -24766,7 +24974,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Raw / uncooked frozen lobster",
+          "profile_key": "fish-02"
+        },
+        {
+          "condition": "Cooked frozen lobster",
+          "profile_key": "fish-06"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard allows raw or cooked frozen lobster. Appendix B separates chilled/frozen crustaceans from frozen cooked crustaceans."
     },
     {
       "id": "09-09-2-frozen-squid-and-parts-of-squid",
@@ -24784,7 +25007,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-frozen-finfish",
@@ -24802,7 +25030,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-01",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-frozen-fish-fillets",
@@ -24820,7 +25053,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-01",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-frozen-cephalopods",
@@ -24838,7 +25076,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-frozen-clam-meat",
@@ -24856,7 +25099,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Raw frozen clam meat",
+          "profile_key": "fish-05"
+        },
+        {
+          "condition": "Cooked / heat-shucked frozen clam meat",
+          "profile_key": "fish-06"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains raw frozen and cooked frozen clam-meat variants. Appendix B separates chilled/frozen bivalves from frozen heat-shucked/cooked molluscs."
     },
     {
       "id": "09-09-2-fresh-and-quick-frozen-raw-scallop-products",
@@ -24874,7 +25132,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-05",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-quick-frozen-fish-sticks-fish-fingers-fish-portions-and-fish-fillets-breaded-or-ba",
@@ -24892,7 +25155,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-14",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-frozen-minced-fish-meat",
@@ -24910,7 +25178,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-salted-fish-dried-salted-fish",
@@ -24928,7 +25201,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-edible-fish-powder",
@@ -24946,7 +25224,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-16",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-freeze-dried-prawns-shrimps",
@@ -24964,7 +25247,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-smoked-fishery-products",
@@ -24982,7 +25270,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-10",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-pasteurized-fish-sausage",
@@ -25000,7 +25293,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-15",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-2-pasteurised-crab-meat",
@@ -25018,7 +25316,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-15",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-3-fish-pickles",
@@ -25036,7 +25339,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-13",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-3-sturgeon-caviar",
@@ -25054,7 +25362,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_fish_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 1 does not provide an explicit Sturgeon Caviar product category. PMSV does not infer a category from ready-to-eat status or salt treatment."
     },
     {
       "id": "09-09-4-canned-fishery-products",
@@ -25072,7 +25385,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-08",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "09-09-4-ready-to-eat-finfish-or-shell-fish-curry-in-retortable-pouches",
@@ -25090,7 +25408,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-08",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "10-10-1-fresh-eggs",
@@ -26471,7 +26794,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-09",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "12-12-6-tomato-ketchup-and-tomato-sauce",
@@ -27499,7 +27827,12 @@
       "appendix_fcs_note": "The stored FoSCoS listing/category code is not a loaded Appendix A Version 3 FCS. PMSV must not use it to inherit Appendix A additive permissions.",
       "appendix_fcs_verified_on": "2026-10-03",
       "foscos_listing_code": "99.1",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "fish-15",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
     },
     {
       "id": "99-99-1-sodium-meta-bisulphite-ins-223",
@@ -28436,8 +28769,8 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 187,
-  "build_label": "Build 187 — close Appendix A special-category routing gap",
+  "build_number": 188,
+  "build_label": "Build 188 — Appendix B fish microbiology",
   "build_date": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",
