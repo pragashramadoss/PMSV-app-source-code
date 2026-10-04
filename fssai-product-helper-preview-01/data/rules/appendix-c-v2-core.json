@@ -45,7 +45,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Apply the remaining final 2025 amendment additions to Tables 7, 8 and Table 12 existing rows, then re-audit the remaining fail-closed Other foods/Bone phosphate/Vitamin B12/Vitamin C permissions.",
+    "next_priority": "Re-audit remaining fail-closed Other foods, Bone phosphate, Vitamin B12 and Vitamin C; do not infer blank residue values or an undefined Other foods scope.",
     "table_3_entries": 16,
     "table_3_permission_rows": 18,
     "table_4_entries": 27,
@@ -56,10 +56,10 @@
     "table_5_permission_rows": 58,
     "table_6_entries": 27,
     "table_6_permission_rows": 59,
-    "table_7_entries": 16,
-    "table_7_permission_rows": 16,
-    "table_8_entries": 6,
-    "table_8_permission_rows": 6,
+    "table_7_entries": 17,
+    "table_7_permission_rows": 19,
+    "table_8_entries": 8,
+    "table_8_permission_rows": 8,
     "table_9_entries": 1,
     "table_9_permission_rows": 1,
     "table_10_entries": 1,
@@ -73,7 +73,7 @@
     "table_11a_gmm_enzyme_preparation_criteria_loaded": true,
     "table_12_status": "complete_version_2_plus_official_section_16_5_active_list",
     "table_12_entries_loaded": 87,
-    "table_12_permission_rows": 95,
+    "table_12_permission_rows": 101,
     "table_12_runtime_mapped_entries": 54,
     "table_12_runtime_policy": "Official Appendix C Version 2 plus the operative FSSAI Section 16(5) active processing-aids list; draft ePC rows remain excluded.",
     "appendix_c_audit_status": "tables_1_to_12_and_11a_verified_plus_section_16_5_active_list",
@@ -96,12 +96,12 @@
     },
     "appendix_c_product_gate_audit_status": "exact_gate_pass_5_process_routes",
     "appendix_c_product_gated_permissions": 129,
-    "appendix_c_product_gate_id_links": 312,
+    "appendix_c_product_gate_id_links": 313,
     "appendix_c_product_gate_rule_key_links": 29,
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
     "appendix_c_product_gate_reachable_permissions": 76,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "passed_after_final_2025_table_6_reconciliation_2026-10-04",
+    "appendix_c_product_gate_regression_status": "passed_after_final_2025_tables_7_8_12_reconciliation_2026-10-04",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -128,19 +128,19 @@
       }
     },
     "appendix_c_product_gate_remaining_fail_closed": 7,
-    "appendix_c_product_gated_or_auto_permissions": 295,
+    "appendix_c_product_gated_or_auto_permissions": 306,
     "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
     "table_2_hardened_oil_status": "fail_closed_identity_unresolved",
     "table_6_decaffeination_status": "tea_and_coffee_exact_process_gates_loaded",
     "table_9_liquid_nitrogen_status": "official_section_16_5_active_list_all_foods_gmp",
     "table_6_mek_decaffeination_route": "loaded_same_source_row",
     "appendix_c_intentional_fail_closed_permissions": 7,
-    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_254",
+    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_255",
     "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model.",
     "appendix_c_final_runtime_regression_status": "passed_2026-10-04",
     "appendix_c_final_runtime_regression": {
-      "source_permission_rows": 302,
-      "runtime_route_projections": 9,
+      "source_permission_rows": 313,
+      "runtime_route_projections": 22,
       "auto_apply_permission_rows": 104,
       "exact_gated_permission_rows": 176,
       "intentional_fail_closed_permission_rows": 7,
@@ -155,7 +155,7 @@
       "table_11a_gmm_entries": 51,
       "table_11a_gmm_variant_rows": 109,
       "table_12_entries": 87,
-      "table_12_permission_rows": 95,
+      "table_12_permission_rows": 101,
       "qualifier_checks": {
         "liquid_nitrogen_requires_exact_ice_cream_form": false,
         "dried_ice_cream_mix_rejected": true,
@@ -276,7 +276,11 @@
       "table_5_active_list_additions_6a_50_55": "pass",
       "table_6_final_2025_substitutions": "pass",
       "table_6_isobutyl_acetate_27": "pass",
-      "acetone_obsolete_generic_colours_removed": "pass"
+      "acetone_obsolete_generic_colours_removed": "pass",
+      "instant_tea_hydrogen_peroxide": "pass",
+      "table_7_sulphur_dioxide_sugar_limits": "pass",
+      "table_8_water_non_alcoholic_flocculants": "pass",
+      "table_12_final_2025_substitutions": "pass"
     },
     "table_9_liquid_nitrogen_scope": "All Foods"
   },
@@ -4789,7 +4793,7 @@
           "ins": "",
           "permissions": [
             {
-              "product_category": "Fruits and vegetables, flours and starches",
+              "product_category": "Fruits and vegetables, flours and starches, Instant Tea processing",
               "runtime_auto_apply": false,
               "residual_level_mgkg": 5,
               "residual_basis": "as hydrogen peroxide",
@@ -4907,10 +4911,20 @@
                 "06-06-2-durum-wheat-maida"
               ],
               "product_gate_status": "verified_exact_catalogue_subset",
-              "product_gate_note": "Exact PMSV FCS 04 plus flour/starch FCS 06.2 families."
+              "product_gate_note": "Exact PMSV FCS 04 plus flour/starch FCS 06.2 families.",
+              "runtime_routes": [
+                {
+                  "process_key": "instant_tea_processing",
+                  "route_label": "Instant Tea processing",
+                  "runtime_auto_apply": false,
+                  "product_ids": [
+                    "instant-tea-solid"
+                  ]
+                }
+              ]
             }
           ],
-          "source_note": "Version 2 contains an amendment substituting the highlighted provision with 5 mg/kg as hydrogen peroxide, effective 1 February 2026."
+          "source_note": "Final 2025 amendment adds Instant Tea processing; residual limit remains 5 mg/kg as hydrogen peroxide, effective 1 February 2026."
         },
         {
           "s_no": 9,
@@ -5303,6 +5317,59 @@
               "product_gate_note": "Exact Dried Ginger standard 2.9.11."
             }
           ]
+        },
+        {
+          "s_no": 17,
+          "name": "Sulphur Dioxide",
+          "ins": "220",
+          "permissions": [
+            {
+              "product_category": "Plantation White Sugar, Cube Sugar, Dextrose, Gur, Jaggery, Misri",
+              "residual_level_mgkg": 70,
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "11-11-1-plantation-white-sugar",
+                "11-11-1-cube-sugar",
+                "11-11-1-dextrose",
+                "11-11-1-gur-or-jaggery",
+                "11-11-1-cane-jaggery-or-cane-gur",
+                "11-11-1-misri"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset"
+            },
+            {
+              "product_category": "Khandsari (Sulphur) and Bura",
+              "residual_level_mgkg": 150,
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "11-11-1-bura-sugar"
+              ],
+              "runtime_routes": [
+                {
+                  "process_key": "washing",
+                  "route_label": "Khandsari (Sulphur)",
+                  "runtime_auto_apply": false,
+                  "product_ids": [
+                    "11-11-1-khandsari-sugar"
+                  ],
+                  "qualifier_key": "sugar_variant",
+                  "qualifier_value": "khandsari_sulphur"
+                }
+              ],
+              "product_gate_status": "verified_exact_catalogue_plus_qualifier",
+              "product_gate_note": "Bura is exact; Khandsari requires explicit confirmation of the Sulphur variant."
+            },
+            {
+              "product_category": "Refined Sugar",
+              "residual_level_mgkg": 40,
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "11-11-1-refined-sugar"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset"
+            }
+          ],
+          "source_note": "Inserted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         }
       ],
       "audit_status": "verified_current_version_2",
@@ -5437,6 +5504,126 @@
               "product_gate_note": "Exact Chhana and Paneer standard 2.1.16."
             }
           ]
+        },
+        {
+          "s_no": 7,
+          "name": "Calcium Hydroxide",
+          "ins": "524-528",
+          "permissions": [
+            {
+              "product_category": "Water Treatment, Non-Alcoholic Beverages",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "mineral-water",
+                "packaged-drinking-water",
+                "purified-vending-water",
+                "fruit-juices",
+                "fruit-juice-preserved-industrial",
+                "vegetable-juices",
+                "tomato-juice",
+                "vegetable-juice-preserved-industrial",
+                "concentrated-fruit-pulp-puree",
+                "concentrated-fruit-juice-industrial",
+                "concentrated-vegetable-juice-industrial",
+                "concentrated-vegetable-pulp-puree",
+                "fruit-nectars",
+                "carbonated-water",
+                "carbonated-caffeinated-beverage",
+                "non-carbonated-water-based-beverages",
+                "non-carbonated-caffeinated-beverage",
+                "fruit-drink-rts",
+                "ginger-cocktail",
+                "squash",
+                "crush",
+                "fruit-syrup-sharbat",
+                "cordial",
+                "barley-water",
+                "synthetic-syrup-dispenser",
+                "synthetic-syrup-sharbat",
+                "fruit-beverage-mix",
+                "carbonated-fruit-beverages",
+                "tea",
+                "kangra-tea",
+                "green-tea",
+                "instant-tea-solid",
+                "coffee",
+                "chicory",
+                "coffee-chicory-mixture",
+                "coconut-neera"
+              ],
+              "runtime_routes": [
+                {
+                  "process_key": "water",
+                  "route_label": "Water Treatment",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "product_gate_status": "verified_exact_catalogue_plus_process_route",
+              "product_gate_note": "Non-alcoholic beverages are gated by PMSV FCS 14.1 identities under Flocculation; Water Treatment is process-exact."
+            }
+          ],
+          "source_note": "Inserted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
+        },
+        {
+          "s_no": 8,
+          "name": "Ferrous Sulphate",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Water Treatment, Non-Alcoholic Beverages",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "mineral-water",
+                "packaged-drinking-water",
+                "purified-vending-water",
+                "fruit-juices",
+                "fruit-juice-preserved-industrial",
+                "vegetable-juices",
+                "tomato-juice",
+                "vegetable-juice-preserved-industrial",
+                "concentrated-fruit-pulp-puree",
+                "concentrated-fruit-juice-industrial",
+                "concentrated-vegetable-juice-industrial",
+                "concentrated-vegetable-pulp-puree",
+                "fruit-nectars",
+                "carbonated-water",
+                "carbonated-caffeinated-beverage",
+                "non-carbonated-water-based-beverages",
+                "non-carbonated-caffeinated-beverage",
+                "fruit-drink-rts",
+                "ginger-cocktail",
+                "squash",
+                "crush",
+                "fruit-syrup-sharbat",
+                "cordial",
+                "barley-water",
+                "synthetic-syrup-dispenser",
+                "synthetic-syrup-sharbat",
+                "fruit-beverage-mix",
+                "carbonated-fruit-beverages",
+                "tea",
+                "kangra-tea",
+                "green-tea",
+                "instant-tea-solid",
+                "coffee",
+                "chicory",
+                "coffee-chicory-mixture",
+                "coconut-neera"
+              ],
+              "runtime_routes": [
+                {
+                  "process_key": "water",
+                  "route_label": "Water Treatment",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "product_gate_status": "verified_exact_catalogue_plus_process_route",
+              "product_gate_note": "Non-alcoholic beverages are gated by PMSV FCS 14.1 identities under Flocculation; Water Treatment is process-exact."
+            }
+          ],
+          "source_note": "Inserted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         }
       ],
       "audit_status": "verified_current_version_2",
@@ -7346,7 +7533,7 @@
           "permissions": [
             {
               "purpose": "Adsorbent, decolourizing agent",
-              "product_category": "Sugars, oils and fats, juices, alcoholic beverages",
+              "product_category": "Sugars, oils and fats, juices, Alcoholic Beverages, Non-alcoholic beverages, Sugar syrup treatment",
               "residual_level": "GMP",
               "runtime_auto_apply": false,
               "product_ids": [
@@ -7399,10 +7586,52 @@
                 "14-14-2-carbonated-wine-from-grapes",
                 "14-14-2-carbonated-wine-fruits-other-than-grapes",
                 "14-14-2-wine-based-beverages",
-                "14-14-2-honey-wine-or-mead"
+                "14-14-2-honey-wine-or-mead",
+                "mineral-water",
+                "packaged-drinking-water",
+                "purified-vending-water",
+                "fruit-juice-preserved-industrial",
+                "tomato-juice",
+                "vegetable-juice-preserved-industrial",
+                "concentrated-fruit-pulp-puree",
+                "concentrated-fruit-juice-industrial",
+                "concentrated-vegetable-juice-industrial",
+                "concentrated-vegetable-pulp-puree",
+                "fruit-nectars",
+                "carbonated-water",
+                "carbonated-caffeinated-beverage",
+                "non-carbonated-water-based-beverages",
+                "non-carbonated-caffeinated-beverage",
+                "fruit-drink-rts",
+                "ginger-cocktail",
+                "squash",
+                "crush",
+                "fruit-syrup-sharbat",
+                "cordial",
+                "barley-water",
+                "synthetic-syrup-dispenser",
+                "synthetic-syrup-sharbat",
+                "fruit-beverage-mix",
+                "carbonated-fruit-beverages",
+                "tea",
+                "kangra-tea",
+                "green-tea",
+                "instant-tea-solid",
+                "coffee",
+                "chicory",
+                "coffee-chicory-mixture",
+                "coconut-neera"
               ],
               "product_gate_status": "verified_exact_catalogue_subset",
-              "product_gate_note": "Verified PMSV sugar, oils/fats, standardized juice and alcoholic-beverage identities."
+              "product_gate_note": "Verified PMSV sugar, oils/fats, standardized juice and alcoholic-beverage identities.",
+              "runtime_routes": [
+                {
+                  "process_key": "sugar_treatment",
+                  "route_label": "Sugar syrup treatment",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "source_note": "Final 2025 amendment adds Non-alcoholic beverages and Sugar syrup treatment."
             }
           ],
           "process_key": "filtration"
@@ -7636,8 +7865,8 @@
           "ins": "",
           "permissions": [
             {
-              "purpose": "Buffering agent",
-              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "purpose": "Buffering agent, Flocculating agent",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts, Non-Alcoholic Beverages, Water Treatment, Instant Tea processing",
               "residual_level": "GMP",
               "runtime_auto_apply": false,
               "product_ids": [
@@ -7667,13 +7896,144 @@
                 "14-14-2-carbonated-wine-from-grapes",
                 "14-14-2-carbonated-wine-fruits-other-than-grapes",
                 "14-14-2-wine-based-beverages",
-                "14-14-2-honey-wine-or-mead"
+                "14-14-2-honey-wine-or-mead",
+                "mineral-water",
+                "packaged-drinking-water",
+                "purified-vending-water",
+                "fruit-juices",
+                "fruit-juice-preserved-industrial",
+                "vegetable-juices",
+                "tomato-juice",
+                "vegetable-juice-preserved-industrial",
+                "concentrated-fruit-pulp-puree",
+                "concentrated-fruit-juice-industrial",
+                "concentrated-vegetable-juice-industrial",
+                "concentrated-vegetable-pulp-puree",
+                "fruit-nectars",
+                "carbonated-water",
+                "carbonated-caffeinated-beverage",
+                "non-carbonated-water-based-beverages",
+                "non-carbonated-caffeinated-beverage",
+                "fruit-drink-rts",
+                "ginger-cocktail",
+                "squash",
+                "crush",
+                "fruit-syrup-sharbat",
+                "cordial",
+                "barley-water",
+                "synthetic-syrup-dispenser",
+                "synthetic-syrup-sharbat",
+                "fruit-beverage-mix",
+                "carbonated-fruit-beverages",
+                "tea",
+                "kangra-tea",
+                "green-tea",
+                "instant-tea-solid",
+                "coffee",
+                "chicory",
+                "coffee-chicory-mixture",
+                "coconut-neera"
               ],
-              "product_gate_status": "verified_exact_catalogue_subset",
-              "product_gate_note": "All PMSV alcoholic-beverage identities.",
+              "runtime_routes": [
+                {
+                  "process_key": "flocculation",
+                  "route_label": "Alcoholic and Non-Alcoholic Beverages",
+                  "runtime_auto_apply": false,
+                  "product_ids": [
+                    "fortified-wine",
+                    "bamboo-wine",
+                    "brandy",
+                    "country-liquor-indian-liquors",
+                    "fenny-feni",
+                    "gin",
+                    "14-14-2-beer",
+                    "14-14-2-draught-beer",
+                    "14-14-2-cider",
+                    "14-14-2-perry",
+                    "14-14-2-table-wine",
+                    "14-14-2-red-wine",
+                    "14-14-2-white-wine",
+                    "14-14-2-semi-sparkling-or-crackling-wine",
+                    "14-14-2-sparkling-wine",
+                    "14-14-2-fruit-wine-other-than-grape-wine",
+                    "14-14-2-palm-wine-toddy",
+                    "14-14-2-rum",
+                    "14-14-2-vodka",
+                    "14-14-2-liqueur-or-cordial-or-apertifs",
+                    "14-14-2-whisky-or-whiskey",
+                    "14-14-2-pot-still-or-column-distilled-spirit",
+                    "14-14-2-alcoholic-ready-to-drink-beverages",
+                    "14-14-2-carbonated-wine-from-grapes",
+                    "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                    "14-14-2-wine-based-beverages",
+                    "14-14-2-honey-wine-or-mead",
+                    "mineral-water",
+                    "packaged-drinking-water",
+                    "purified-vending-water",
+                    "fruit-juices",
+                    "fruit-juice-preserved-industrial",
+                    "vegetable-juices",
+                    "tomato-juice",
+                    "vegetable-juice-preserved-industrial",
+                    "concentrated-fruit-pulp-puree",
+                    "concentrated-fruit-juice-industrial",
+                    "concentrated-vegetable-juice-industrial",
+                    "concentrated-vegetable-pulp-puree",
+                    "fruit-nectars",
+                    "carbonated-water",
+                    "carbonated-caffeinated-beverage",
+                    "non-carbonated-water-based-beverages",
+                    "non-carbonated-caffeinated-beverage",
+                    "fruit-drink-rts",
+                    "ginger-cocktail",
+                    "squash",
+                    "crush",
+                    "fruit-syrup-sharbat",
+                    "cordial",
+                    "barley-water",
+                    "synthetic-syrup-dispenser",
+                    "synthetic-syrup-sharbat",
+                    "fruit-beverage-mix",
+                    "carbonated-fruit-beverages",
+                    "tea",
+                    "kangra-tea",
+                    "green-tea",
+                    "instant-tea-solid",
+                    "coffee",
+                    "chicory",
+                    "coffee-chicory-mixture",
+                    "coconut-neera"
+                  ]
+                },
+                {
+                  "process_key": "water",
+                  "route_label": "Water Treatment",
+                  "runtime_auto_apply": true
+                },
+                {
+                  "process_key": "instant_tea_processing",
+                  "route_label": "Instant Tea processing",
+                  "runtime_auto_apply": false,
+                  "product_ids": [
+                    "instant-tea-solid"
+                  ]
+                }
+              ],
+              "product_gate_status": "verified_final_2025_multi_route",
+              "product_gate_note": "Final amendment product categories represented as explicit beverage, water-treatment and instant-tea routes.",
               "process_key": "ph"
+            },
+            {
+              "purpose": "Stabilizer",
+              "product_category": "Extruded foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "extrusion",
+              "product_gate_status": "process_exact",
+              "product_gate_note": "Extrusion process is the exact runtime gate for the amended Extruded foods stabilizer permission."
             }
-          ]
+          ],
+          "source_note": "Substituted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         },
         {
           "s_no": 13,
@@ -7751,13 +8111,69 @@
           "ins": "290",
           "permissions": [
             {
-              "purpose": "Gassing/aerating agent",
-              "product_category": "All foods",
+              "purpose": "Packaging and propelling Gas / aerating agent",
+              "product_category": "All Foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": true
+              "runtime_auto_apply": true,
+              "process_key": "gas",
+              "product_gate_status": "official_all_foods"
+            },
+            {
+              "purpose": "pH Control agent",
+              "product_category": "Water Treatment, Non-Alcoholic Beverages",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "mineral-water",
+                "packaged-drinking-water",
+                "purified-vending-water",
+                "fruit-juices",
+                "fruit-juice-preserved-industrial",
+                "vegetable-juices",
+                "tomato-juice",
+                "vegetable-juice-preserved-industrial",
+                "concentrated-fruit-pulp-puree",
+                "concentrated-fruit-juice-industrial",
+                "concentrated-vegetable-juice-industrial",
+                "concentrated-vegetable-pulp-puree",
+                "fruit-nectars",
+                "carbonated-water",
+                "carbonated-caffeinated-beverage",
+                "non-carbonated-water-based-beverages",
+                "non-carbonated-caffeinated-beverage",
+                "fruit-drink-rts",
+                "ginger-cocktail",
+                "squash",
+                "crush",
+                "fruit-syrup-sharbat",
+                "cordial",
+                "barley-water",
+                "synthetic-syrup-dispenser",
+                "synthetic-syrup-sharbat",
+                "fruit-beverage-mix",
+                "carbonated-fruit-beverages",
+                "tea",
+                "kangra-tea",
+                "green-tea",
+                "instant-tea-solid",
+                "coffee",
+                "chicory",
+                "coffee-chicory-mixture",
+                "coconut-neera"
+              ],
+              "runtime_routes": [
+                {
+                  "process_key": "water",
+                  "route_label": "Water Treatment",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "process_key": "ph",
+              "product_gate_status": "verified_exact_catalogue_plus_process_route"
             }
           ],
-          "process_key": "gas"
+          "process_key": "gas",
+          "source_note": "Substituted by final FSSAI First Amendment Regulations, 2025."
         },
         {
           "s_no": 16,
@@ -7766,7 +8182,7 @@
           "permissions": [
             {
               "purpose": "Sequestrant",
-              "product_category": "Oils & fats",
+              "product_category": "Oils & fats, Instant Tea processing",
               "residual_level": "GMP",
               "runtime_auto_apply": false,
               "product_ids": [
@@ -7786,11 +8202,39 @@
                 "02-02-2-bakery-and-industrial-margarine",
                 "02-02-2-analogue-in-the-dairy-context"
               ],
-              "product_gate_status": "verified_exact_catalogue_subset",
-              "product_gate_note": "Verified PMSV oils/fats identities under FCS 02.1 and 02.2."
+              "runtime_routes": [
+                {
+                  "process_key": "instant_tea_processing",
+                  "route_label": "Instant Tea processing",
+                  "runtime_auto_apply": false,
+                  "product_ids": [
+                    "instant-tea-solid"
+                  ]
+                }
+              ],
+              "product_gate_status": "verified_final_2025_multi_route",
+              "process_key": "sequestration"
+            },
+            {
+              "purpose": "pH standardization",
+              "product_category": "All Foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "ph",
+              "product_gate_status": "official_all_foods"
+            },
+            {
+              "purpose": "Catalyst in inversion of sugar",
+              "product_category": "Sugar Syrups",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "sugar_inversion",
+              "product_gate_status": "process_exact",
+              "product_gate_note": "Explicit Sugar syrup inversion process is the runtime gate."
             }
           ],
-          "process_key": "ph"
+          "process_key": "ph",
+          "source_note": "Substituted by final FSSAI First Amendment Regulations, 2025."
         },
         {
           "s_no": 17,
@@ -8271,7 +8715,7 @@
           "permissions": [
             {
               "purpose": "Acidity regulator",
-              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts, seasonings",
               "residual_level": "GMP",
               "runtime_auto_apply": false,
               "product_ids": [
@@ -8301,10 +8745,13 @@
                 "14-14-2-carbonated-wine-from-grapes",
                 "14-14-2-carbonated-wine-fruits-other-than-grapes",
                 "14-14-2-wine-based-beverages",
-                "14-14-2-honey-wine-or-mead"
+                "14-14-2-honey-wine-or-mead",
+                "12-12-2-seasoning"
               ],
               "product_gate_status": "verified_exact_catalogue_subset",
-              "product_gate_note": "All PMSV alcoholic-beverage identities."
+              "product_gate_note": "All PMSV alcoholic-beverage identities.",
+              "process_key": "ph",
+              "source_note": "Final 2025 amendment adds seasonings."
             }
           ],
           "process_key": "ph"
@@ -8879,8 +9326,28 @@
               "product_gate_status": "verified_exact_catalogue_subset",
               "product_gate_note": "All PMSV alcoholic-beverage identities.",
               "process_key": "ion_exchange"
+            },
+            {
+              "purpose": "Texturising agents",
+              "product_category": "Unripened Cheese-Paneer; Water treatment",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "01-01-6-chhana-and-paneer"
+              ],
+              "runtime_routes": [
+                {
+                  "process_key": "water",
+                  "route_label": "Water treatment",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "process_key": "texturising",
+              "product_gate_status": "verified_exact_catalogue_plus_process_route",
+              "product_gate_note": "Paneer route is exact PMSV 2.1.16 identity; Water Treatment is process-exact."
             }
-          ]
+          ],
+          "source_note": "Final 2025 amendment adds Texturising agents for Unripened Cheese-Paneer and Water treatment."
         },
         {
           "s_no": 56,
@@ -9013,45 +9480,25 @@
           "ins": "",
           "permissions": [
             {
-              "purpose": "Water treatment",
-              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "purpose": "Disinfectant",
+              "product_category": "Water treatment, All foods",
               "residual_level_mgkg": 1,
               "residual_basis": "as available chlorine",
-              "runtime_auto_apply": false,
-              "product_ids": [
-                "fortified-wine",
-                "bamboo-wine",
-                "brandy",
-                "country-liquor-indian-liquors",
-                "fenny-feni",
-                "gin",
-                "14-14-2-beer",
-                "14-14-2-draught-beer",
-                "14-14-2-cider",
-                "14-14-2-perry",
-                "14-14-2-table-wine",
-                "14-14-2-red-wine",
-                "14-14-2-white-wine",
-                "14-14-2-semi-sparkling-or-crackling-wine",
-                "14-14-2-sparkling-wine",
-                "14-14-2-fruit-wine-other-than-grape-wine",
-                "14-14-2-palm-wine-toddy",
-                "14-14-2-rum",
-                "14-14-2-vodka",
-                "14-14-2-liqueur-or-cordial-or-apertifs",
-                "14-14-2-whisky-or-whiskey",
-                "14-14-2-pot-still-or-column-distilled-spirit",
-                "14-14-2-alcoholic-ready-to-drink-beverages",
-                "14-14-2-carbonated-wine-from-grapes",
-                "14-14-2-carbonated-wine-fruits-other-than-grapes",
-                "14-14-2-wine-based-beverages",
-                "14-14-2-honey-wine-or-mead"
+              "runtime_auto_apply": true,
+              "process_key": "microbial",
+              "runtime_routes": [
+                {
+                  "process_key": "water",
+                  "route_label": "Water treatment",
+                  "runtime_auto_apply": true
+                }
               ],
-              "product_gate_status": "verified_exact_catalogue_subset",
-              "product_gate_note": "All PMSV alcoholic-beverage identities."
+              "product_gate_status": "official_all_foods_plus_water_route",
+              "product_gate_note": "Final amendment expressly lists All foods plus Water treatment at 1 mg/kg as available chlorine."
             }
           ],
-          "process_key": "water"
+          "process_key": "microbial",
+          "source_note": "Substituted by final FSSAI First Amendment Regulations, 2025."
         },
         {
           "s_no": 64,
@@ -9143,8 +9590,62 @@
               "product_gate_status": "verified_exact_catalogue_subset",
               "product_gate_note": "All PMSV alcoholic-beverage identities.",
               "process_key": "reducing"
+            },
+            {
+              "purpose": "pH control agent",
+              "product_category": "Water Treatment, Non-Alcoholic Beverages",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "mineral-water",
+                "packaged-drinking-water",
+                "purified-vending-water",
+                "fruit-juices",
+                "fruit-juice-preserved-industrial",
+                "vegetable-juices",
+                "tomato-juice",
+                "vegetable-juice-preserved-industrial",
+                "concentrated-fruit-pulp-puree",
+                "concentrated-fruit-juice-industrial",
+                "concentrated-vegetable-juice-industrial",
+                "concentrated-vegetable-pulp-puree",
+                "fruit-nectars",
+                "carbonated-water",
+                "carbonated-caffeinated-beverage",
+                "non-carbonated-water-based-beverages",
+                "non-carbonated-caffeinated-beverage",
+                "fruit-drink-rts",
+                "ginger-cocktail",
+                "squash",
+                "crush",
+                "fruit-syrup-sharbat",
+                "cordial",
+                "barley-water",
+                "synthetic-syrup-dispenser",
+                "synthetic-syrup-sharbat",
+                "fruit-beverage-mix",
+                "carbonated-fruit-beverages",
+                "tea",
+                "kangra-tea",
+                "green-tea",
+                "instant-tea-solid",
+                "coffee",
+                "chicory",
+                "coffee-chicory-mixture",
+                "coconut-neera"
+              ],
+              "runtime_routes": [
+                {
+                  "process_key": "water",
+                  "route_label": "Water Treatment",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "process_key": "ph",
+              "product_gate_status": "verified_exact_catalogue_plus_process_route"
             }
-          ]
+          ],
+          "source_note": "Final 2025 amendment adds pH control agent route for Water Treatment and Non-Alcoholic Beverages."
         },
         {
           "s_no": 65,
