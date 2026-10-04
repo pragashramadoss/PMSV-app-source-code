@@ -765,7 +765,7 @@
         "100-100-solvent-extracted-crude-vegetable-oils-not-for-direct-human-consumption"
       ]
     },
-    "chapter_profiles_ready": 343,
+    "chapter_profiles_ready": 370,
     "base_profile_promotion_audit": {
       "checked_on": "2026-10-03",
       "starting_base_profiles": 187,
@@ -780,10 +780,10 @@
       "checked_on": "2026-10-03",
       "newly_loaded": [
         "3.2.16(1) Sorbitol",
-        "2.2.9 Solvent Extracted Crude Vegetable Oils"
+        "2.2.9 Solvent Extracted Crude Vegetable Oils",
+        "Food Safety and Standards (Alcoholic Beverages) Regulations — Version V (04.12.2025)"
       ],
       "still_external_regulation_sets_needed": [
-        "Food Safety and Standards (Alcoholic Beverages) Regulations — current Version V (December 2025)",
         "Food Safety and Standards (Foods for Infant Nutrition) Regulations — current FSSAI compendium/product standards"
       ],
       "rule": "Only current official FSSAI sources are used. External regulation sets remain locked until their product standards are structured."
@@ -910,7 +910,19 @@
       "chapter_2_8_contaminant_identity_review_complete": true,
       "chapter_2_8_locked_routes": 14,
       "chapter_2_8_review_completed_build_182": true
-    }
+    },
+    "alcoholic_beverages": {
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "regulation": "Food Safety and Standards (Alcoholic Beverages) Regulations, 2018",
+      "source_version": "Version V (04.12.2025)",
+      "mapped_catalog_products": 27,
+      "mapped_profiles": 27,
+      "status": "structured_core_loaded",
+      "source_verified_on": "2026-10-04",
+      "current_regulatory_note": "Current Version V is loaded from FSSAI. Product definitions, current RTD/beer/wine routes and Table-4 requirements are structured. Dense Table-1/2/3 matrices remain under exact per-column normalization before final formulation verdicts.",
+      "next_validation": "Normalize Table 1 distilled-spirit matrix, complete Table 2 wine matrix and Table 3 beer matrix column-by-column; then connect contaminants, microbiology, processing aids and current label rendering."
+    },
+    "base_profiles_ready": 155
   },
   "source_hierarchy": [
     {
@@ -2187,10 +2199,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -2204,7 +2216,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.3",
+      "standard_name": "Fortified wine",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "bamboo-wine",
@@ -2215,10 +2234,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -2232,7 +2251,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.5.2",
+      "standard_name": "Bamboo wine",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "brandy",
@@ -2243,10 +2269,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -2260,7 +2286,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.1",
+      "standard_name": "Brandy",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "country-liquor-indian-liquors",
@@ -2271,10 +2304,10 @@
       "fssr": "2.2 of FSS (Alcoholic Beverages) Regulations, 2018",
       "regulation_chapter": "2.2",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -2288,7 +2321,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.2",
+      "standard_name": "Country liquors or Indian Liquors",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "fenny-feni",
@@ -2299,10 +2339,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -2316,7 +2356,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.3",
+      "standard_name": "Fenny or Feni",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "gin",
@@ -2327,10 +2374,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -2344,7 +2391,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.4",
+      "standard_name": "Gin",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "formulated-supplements-children",
@@ -15539,10 +15593,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15556,7 +15610,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "4.1",
+      "standard_name": "Beer",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-draught-beer",
@@ -15567,10 +15628,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15584,7 +15645,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "4.2",
+      "standard_name": "Draught Beer",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-cider",
@@ -15595,10 +15663,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15612,7 +15680,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.4.1",
+      "standard_name": "Cider",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-perry",
@@ -15623,10 +15698,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15640,7 +15715,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.4.2",
+      "standard_name": "Perry",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-table-wine",
@@ -15651,10 +15733,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15668,7 +15750,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.1",
+      "standard_name": "Table wine",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-red-wine",
@@ -15679,10 +15768,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15696,7 +15785,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.1.1",
+      "standard_name": "Red wine",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-white-wine",
@@ -15707,10 +15803,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15724,7 +15820,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.1.2",
+      "standard_name": "White wine",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-semi-sparkling-or-crackling-wine",
@@ -15735,10 +15838,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15752,7 +15855,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.2.1",
+      "standard_name": "Semi sparkling or Crackling wine",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-sparkling-wine",
@@ -15763,10 +15873,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15780,7 +15890,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.2.2",
+      "standard_name": "Sparkling wine",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-fruit-wine-other-than-grape-wine",
@@ -15791,10 +15908,10 @@
       "fssr": "3.1.4 of FSS(Alcoholic Beverages) Regulations, 2018",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15808,7 +15925,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.4",
+      "standard_name": "Wine from fruits other than grapes",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-palm-wine-toddy",
@@ -15819,10 +15943,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15836,7 +15960,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.5.1",
+      "standard_name": "Palm wine/Toddy",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-rum",
@@ -15847,10 +15978,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15864,7 +15995,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.5",
+      "standard_name": "Rum",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-vodka",
@@ -15875,10 +16013,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15892,7 +16030,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.6",
+      "standard_name": "Vodka",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-liqueur-or-cordial-or-apertifs",
@@ -15903,10 +16048,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15920,7 +16065,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.7",
+      "standard_name": "Liqueur or Cordial or Aperitif",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-whisky-or-whiskey",
@@ -15931,10 +16083,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15948,7 +16100,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.8",
+      "standard_name": "Whisky or Whiskey",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-pot-still-or-column-distilled-spirit",
@@ -15959,10 +16118,10 @@
       "fssr": "",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -15976,7 +16135,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.9",
+      "standard_name": "Pot-still distilled spirit",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-alcoholic-ready-to-drink-beverages",
@@ -15987,10 +16153,10 @@
       "fssr": "1.3.9 of FSS(Alcoholic Beverages) Regulations, 2018",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -16004,7 +16170,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "1.2.4a/1.3.9",
+      "standard_name": "Alcoholic Ready-to-Drink Beverages",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-carbonated-wine-from-grapes",
@@ -16015,10 +16188,10 @@
       "fssr": "3.1.2.3 of Alcoholic Beverages Regulations",
       "regulation_chapter": "2.3",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -16032,7 +16205,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.2.3",
+      "standard_name": "Carbonated wine",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-carbonated-wine-fruits-other-than-grapes",
@@ -16043,10 +16223,10 @@
       "fssr": "3.1.2.3 of Alcoholic Beverages Regulations",
       "regulation_chapter": "2.3",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -16060,7 +16240,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.2.3",
+      "standard_name": "Carbonated wine",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-wine-based-beverages",
@@ -16071,10 +16258,10 @@
       "fssr": "3.1.6 of FSS(Alcoholic Beverages) Regulations",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -16088,7 +16275,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.6",
+      "standard_name": "Wine Based Beverages",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "14-14-2-honey-wine-or-mead",
@@ -16099,10 +16293,10 @@
       "fssr": "3.1.4.4 of FSS(Alcoholic Beverages) Regulations, 2018",
       "regulation_chapter": "",
       "route": "standardized_or_alcoholic",
-      "status": "base_profile_ready",
-      "coverage_level": "FoSCoS product identity + FCS/FSSR mapping + general regulatory layers",
+      "status": "chapter_profile_ready",
+      "coverage_level": "Current FSSAI Alcoholic Beverages Version V product standard mapped; structured core rules loaded",
       "detailed_rules_loaded": false,
-      "regulation_source": "FoSCoS standardized-product catalogue and applicable FSSAI regulation referenced by FSSR/FCS",
+      "regulation_source": "FSSAI Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Version V (04.12.2025)",
       "general_layers": [
         "Food Safety and Standards (Labelling and Display) Regulations, 2020",
         "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
@@ -16116,7 +16310,14 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.4.4",
+      "standard_name": "Honey wine or Mead",
+      "source_verified_on": "2026-10-04",
+      "chapter_rule_file_verified_on": "2026-10-04",
+      "chapter_rule_key_verified_on": "2026-10-04",
+      "chapter_rule_route_note": "Alcoholic-beverage special regulation mapped from current FSSAI Version V. Appendix A additive permissions remain a separate inherited layer from the uploaded Version 3 Appendix A dataset."
     },
     {
       "id": "15-15-1-papad",
@@ -19141,13 +19342,17 @@
       "name": "Fortified wine",
       "fcs": "14.2.3.3",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "profile_id": "fortified-wine",
       "appendix_fcs": "14.2.3.3",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.3",
+      "standard_name": "Fortified wine",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "bamboo-wine",
@@ -19156,13 +19361,17 @@
       "name": "Bamboo wine",
       "fcs": "14.2.4",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "profile_id": "bamboo-wine",
       "appendix_fcs": "14.2.4",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.5.2",
+      "standard_name": "Bamboo wine",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "brandy",
@@ -19171,13 +19380,17 @@
       "name": "Brandy",
       "fcs": "14.2.6",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "profile_id": "brandy",
       "appendix_fcs": "14.2.6",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.1",
+      "standard_name": "Brandy",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "country-liquor-indian-liquors",
@@ -19186,13 +19399,17 @@
       "name": "Country liquors or Indian Liquors",
       "fcs": "14.2.6",
       "fssr": "2.2 of FSS (Alcoholic Beverages) Regulations, 2018",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "profile_id": "country-liquor-indian-liquors",
       "appendix_fcs": "14.2.6",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.2",
+      "standard_name": "Country liquors or Indian Liquors",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "fenny-feni",
@@ -19201,13 +19418,17 @@
       "name": "Fenny or Feni",
       "fcs": "14.2.6",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "profile_id": "fenny-feni",
       "appendix_fcs": "14.2.6",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.3",
+      "standard_name": "Fenny or Feni",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "gin",
@@ -19216,13 +19437,17 @@
       "name": "Gin",
       "fcs": "14.2.6",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "profile_id": "gin",
       "appendix_fcs": "14.2.6",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.4",
+      "standard_name": "Gin",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "formulated-supplements-children",
@@ -26362,14 +26587,18 @@
       "name": "Beer",
       "fcs": "14.2.1",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-beer",
       "appendix_fcs": "14.2.1",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "4.1",
+      "standard_name": "Beer",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-draught-beer",
@@ -26378,14 +26607,18 @@
       "name": "Draught Beer",
       "fcs": "14.2.1",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-draught-beer",
       "appendix_fcs": "14.2.1",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "4.2",
+      "standard_name": "Draught Beer",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-cider",
@@ -26394,14 +26627,18 @@
       "name": "Cider",
       "fcs": "14.2.2",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-cider",
       "appendix_fcs": "14.2.2",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.4.1",
+      "standard_name": "Cider",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-perry",
@@ -26410,14 +26647,18 @@
       "name": "Perry",
       "fcs": "14.2.2",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-perry",
       "appendix_fcs": "14.2.2",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.4.2",
+      "standard_name": "Perry",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-table-wine",
@@ -26426,14 +26667,18 @@
       "name": "Table wine",
       "fcs": "14.2.3",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-table-wine",
       "appendix_fcs": "14.2.3",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.1",
+      "standard_name": "Table wine",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-red-wine",
@@ -26442,14 +26687,18 @@
       "name": "Red wine",
       "fcs": "14.2.3",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-red-wine",
       "appendix_fcs": "14.2.3",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.1.1",
+      "standard_name": "Red wine",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-white-wine",
@@ -26458,14 +26707,18 @@
       "name": "White wine",
       "fcs": "14.2.3",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-white-wine",
       "appendix_fcs": "14.2.3",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.1.2",
+      "standard_name": "White wine",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-semi-sparkling-or-crackling-wine",
@@ -26474,14 +26727,18 @@
       "name": "Semi sparkling or Crackling wine",
       "fcs": "14.2.3.2",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-semi-sparkling-or-crackling-wine",
       "appendix_fcs": "14.2.3.2",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.2.1",
+      "standard_name": "Semi sparkling or Crackling wine",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-sparkling-wine",
@@ -26490,14 +26747,18 @@
       "name": "Sparkling wine",
       "fcs": "14.2.3.2",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-sparkling-wine",
       "appendix_fcs": "14.2.3.2",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.2.2",
+      "standard_name": "Sparkling wine",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-fruit-wine-other-than-grape-wine",
@@ -26506,14 +26767,18 @@
       "name": "Fruit Wine(other than grape wine)",
       "fcs": "14.2.4",
       "fssr": "3.1.4 of FSS(Alcoholic Beverages) Regulations, 2018",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-fruit-wine-other-than-grape-wine",
       "appendix_fcs": "14.2.4",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.4",
+      "standard_name": "Wine from fruits other than grapes",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-palm-wine-toddy",
@@ -26522,14 +26787,18 @@
       "name": "Palm wine/Toddy",
       "fcs": "14.2.4",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-palm-wine-toddy",
       "appendix_fcs": "14.2.4",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.5.1",
+      "standard_name": "Palm wine/Toddy",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-rum",
@@ -26538,14 +26807,18 @@
       "name": "Rum",
       "fcs": "14.2.6",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-rum",
       "appendix_fcs": "14.2.6",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.5",
+      "standard_name": "Rum",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-vodka",
@@ -26554,14 +26827,18 @@
       "name": "Vodka",
       "fcs": "14.2.6",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-vodka",
       "appendix_fcs": "14.2.6",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.6",
+      "standard_name": "Vodka",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-liqueur-or-cordial-or-apertifs",
@@ -26570,14 +26847,18 @@
       "name": "Liqueur or cordial or apertifs",
       "fcs": "14.2.6",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-liqueur-or-cordial-or-apertifs",
       "appendix_fcs": "14.2.6",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.7",
+      "standard_name": "Liqueur or Cordial or Aperitif",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-whisky-or-whiskey",
@@ -26586,14 +26867,18 @@
       "name": "Whisky or Whiskey",
       "fcs": "14.2.6",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-whisky-or-whiskey",
       "appendix_fcs": "14.2.6",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.8",
+      "standard_name": "Whisky or Whiskey",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-pot-still-or-column-distilled-spirit",
@@ -26602,14 +26887,18 @@
       "name": "Pot-still or column distilled spirit",
       "fcs": "14.2.6",
       "fssr": "",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-pot-still-or-column-distilled-spirit",
       "appendix_fcs": "14.2.6",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "2.9",
+      "standard_name": "Pot-still distilled spirit",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-alcoholic-ready-to-drink-beverages",
@@ -26618,14 +26907,18 @@
       "name": "Alcoholic ready to-drink beverages",
       "fcs": "14.2.7",
       "fssr": "1.3.9 of FSS(Alcoholic Beverages) Regulations, 2018",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-alcoholic-ready-to-drink-beverages",
       "appendix_fcs": "14.2.7",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "1.2.4a/1.3.9",
+      "standard_name": "Alcoholic Ready-to-Drink Beverages",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-carbonated-wine-from-grapes",
@@ -26634,14 +26927,18 @@
       "name": "Carbonated Wine (From Grapes)",
       "fcs": "14.2.3.2",
       "fssr": "3.1.2.3 of Alcoholic Beverages Regulations",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-carbonated-wine-from-grapes",
       "appendix_fcs": "14.2.3.2",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.2.3",
+      "standard_name": "Carbonated wine",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-carbonated-wine-fruits-other-than-grapes",
@@ -26650,14 +26947,18 @@
       "name": "Carbonated Wine (fruits other than grapes)",
       "fcs": "14.2.4",
       "fssr": "3.1.2.3 of Alcoholic Beverages Regulations",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-carbonated-wine-fruits-other-than-grapes",
       "appendix_fcs": "14.2.4",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.2.3",
+      "standard_name": "Carbonated wine",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-wine-based-beverages",
@@ -26666,14 +26967,18 @@
       "name": "Wine Based Beverages",
       "fcs": "14.2.7",
       "fssr": "3.1.6 of FSS(Alcoholic Beverages) Regulations",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-wine-based-beverages",
       "appendix_fcs": "14.2.7",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.6",
+      "standard_name": "Wine Based Beverages",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "14-14-2-honey-wine-or-mead",
@@ -26682,14 +26987,18 @@
       "name": "Honey wine or Mead",
       "fcs": "14.2.5",
       "fssr": "3.1.4.4 of FSS(Alcoholic Beverages) Regulations, 2018",
-      "profile_status": "base_profile_ready",
+      "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "14-14-2-honey-wine-or-mead",
       "appendix_fcs": "14.2.5",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "rule_file": "./data/rules/alcoholic-beverages-v5.json",
+      "rule_key": "3.1.4.4",
+      "standard_name": "Honey wine or Mead",
+      "source_verified_on": "2026-10-04"
     },
     {
       "id": "15-15-1-papad",
@@ -27841,9 +28150,9 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 182,
-  "build_label": "Build 58",
-  "build_date": "2026-10-03",
+  "build_number": 183,
+  "build_label": "Build 183 — Alcoholic Beverages Version V core standards",
+  "build_date": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",
     "allowed_regulatory_hosts": [

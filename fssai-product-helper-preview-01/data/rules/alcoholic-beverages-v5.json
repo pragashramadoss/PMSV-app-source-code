@@ -1,0 +1,373 @@
+{
+  "schema_version": "1.0",
+  "database_id": "fssai-alcoholic-beverages-v5",
+  "regulation": "Food Safety and Standards (Alcoholic Beverages) Regulations, 2018",
+  "source_version": "Version V (04.12.2025)",
+  "source_verified_on": "2026-10-04",
+  "source_policy": "Official FSSAI/FoSCoS sources only",
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Food Safety and Standards (Alcoholic Beverages) Regulations, 2018 — Compendium Version V (04.12.2025)",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Alcoholic_Beverages_V_04_12_2025.pdf"
+    },
+    {
+      "authority": "FoSCoS / FSSAI",
+      "title": "FSSAI Standardized Food Products search",
+      "url": "https://fcstraining.fssai.gov.in/standard-product"
+    }
+  ],
+  "current_effective_notes": [
+    "Current Version V includes the 2025 amendment provisions effective from 1 January 2026 and FSSAI direction-linked compliance dates where printed in the compendium.",
+    "Alcoholic ready-to-drink beverages are currently defined as beverages with more than 0.5% and below 15.0% alcohol by volume, subject to the current Table-4 requirements.",
+    "Alcohol-free beer is defined at 0.0% abv and otherwise follows the regular-beer parameters.",
+    "Craft beer and flavoured beer provisions are included; current craft-beer Table-3 notes cover CO2/N2 mixtures and microbiological treatment."
+  ],
+  "general_requirements": {
+    "scope": "Distilled and un-distilled alcoholic beverages regulated under the Alcoholic Beverages Regulations.",
+    "product_rule": "Ethanol used in alcoholic beverages shall be of agricultural origin.",
+    "additives_rule": "Food additives and flavours are allowed only where permitted under applicable FSSAI regulations and the mapped Appendix A FCS. The PMSV uploaded Appendix A Version 3 dataset remains the additive-permission layer.",
+    "test_methods": "Use the current FSSAI Manual of Methods of Analysis of Foods — Alcoholic Beverages, as amended from time to time.",
+    "bulk_container_label": "Bulk containers shall carry the declaration 'For Manufacturer of Alcoholic Beverages only'.",
+    "microbiology_general": "Where the product standard specifies absence/limits, apply those product-specific requirements."
+  },
+  "standards": {
+    "2.1": {
+      "name": "Brandy",
+      "table_basis": "Table 1",
+      "variants": [
+        "Grape brandy",
+        "Blended brandy",
+        "Indian Brandy"
+      ],
+      "definition_summary": "Alcoholic beverage made by distillation of wine; current regulation provides grape, blended and Indian-brandy routes.",
+      "current_label_notes": [
+        "For fruit brandy other than grape, prefix the fruit name to 'Brandy'.",
+        "Indian Brandy carries the prescribed source-spirit statement and name-format requirements."
+      ]
+    },
+    "2.2": {
+      "name": "Country liquors or Indian Liquors",
+      "table_basis": "Table 1",
+      "variants": [
+        "Plain country liquor / Plain Indian liquor",
+        "Blended country liquor / Blended Indian liquor"
+      ],
+      "definition_summary": "Distilled alcoholic beverages from fermentable carbohydrates of agricultural origin; Annexure-1 lists product names and raw materials non-exhaustively."
+    },
+    "2.3": {
+      "name": "Fenny or Feni",
+      "table_basis": "Table 1",
+      "definition_summary": "Distilled liquor made from fermented cashew-apple juice or coconut toddy."
+    },
+    "2.4": {
+      "name": "Gin",
+      "table_basis": "Table 1",
+      "definition_summary": "Distilled alcoholic beverage made from neutral spirit of agricultural origin and flavoured with juniper berries and/or other botanical flavouring agents."
+    },
+    "2.5": {
+      "name": "Rum",
+      "table_basis": "Table 1",
+      "definition_summary": "Alcoholic distillate from fermented sugarcane juice, molasses or other sugarcane product; colouring other than caramel is not permitted. White rum is uncoloured."
+    },
+    "2.6": {
+      "name": "Vodka",
+      "table_basis": "Table 1",
+      "definition_summary": "Distilled alcoholic beverage made from neutral spirit obtained from fermented agricultural carbohydrate sources."
+    },
+    "2.7": {
+      "name": "Liqueur or Cordial or Aperitif",
+      "table_basis": "Table 1",
+      "definition_summary": "Distilled-spirit beverage flavoured with fruit, cream, herbs, spices, essential oils or botanical products; may contain more than 2.5% sugars/sweeteners as specified."
+    },
+    "2.8": {
+      "name": "Whisky or Whiskey",
+      "table_basis": "Table 1",
+      "variants": [
+        "Malt or grain whisky",
+        "Single malt whisky",
+        "Single grain whisky",
+        "Blended malt whisky",
+        "Blended grain whisky"
+      ],
+      "definition_summary": "Alcoholic beverage made by distilling fermented cereal-grain extract and/or using permitted grain/neutral/rectified agricultural spirits under the current definitions."
+    },
+    "2.9": {
+      "name": "Pot-still distilled spirit",
+      "table_basis": "Table 1",
+      "definition_summary": "Alcoholic beverage obtained by pot-still distillation from permitted fermented agricultural carbohydrate sources; colouring is restricted to caramel/natural ageing-derived colour under the standard."
+    },
+    "3.1.1": {
+      "name": "Table wine",
+      "table_basis": "Table 2",
+      "composition_core": [
+        {
+          "parameter": "Ethyl alcohol",
+          "range": "7.0–15.5",
+          "unit": "% v/v at 20°C"
+        }
+      ]
+    },
+    "3.1.1.1": {
+      "name": "Red wine",
+      "parent": "3.1.1",
+      "definition_summary": "Wine from red grapes or a mixture of red and white grapes fermented with skin contact; rosé follows the red-wine requirements."
+    },
+    "3.1.1.2": {
+      "name": "White wine",
+      "parent": "3.1.1",
+      "definition_summary": "Wine prepared from white grapes or juice extracted after removal of red-grape skins."
+    },
+    "3.1.2.1": {
+      "name": "Semi sparkling or Crackling wine",
+      "parent": "3.1",
+      "definition_summary": "Wine with carbon dioxide 3.0–5.0 g/L or 1.5–2.5 bar at 20°C resulting from primary or secondary fermentation."
+    },
+    "3.1.2.2": {
+      "name": "Sparkling wine",
+      "parent": "3.1",
+      "definition_summary": "Wine with carbon dioxide minimum 7.0 g/L or 3.5 bar at 20°C from primary or secondary fermentation.",
+      "sugar_classes": [
+        {
+          "name": "Brut",
+          "rule": "below 1.2% sugar"
+        },
+        {
+          "name": "Extra-Dry",
+          "rule": "more than 1.2% up to 1.7% sugar, tolerance 0.3%"
+        },
+        {
+          "name": "Dry",
+          "rule": "more than 1.7% up to 3.2% sugar, tolerance 0.3%"
+        },
+        {
+          "name": "Semi-Dry",
+          "rule": "more than 3.2% up to 5.0% sugar"
+        },
+        {
+          "name": "Sweet",
+          "rule": "more than 5.0% sugar"
+        }
+      ]
+    },
+    "3.1.2.3": {
+      "name": "Carbonated wine",
+      "parent": "3.1",
+      "definition_summary": "Wine made effervescent with carbon dioxide other than that resulting solely from secondary fermentation."
+    },
+    "3.1.3": {
+      "name": "Fortified wine",
+      "table_basis": "Table 2",
+      "composition_core": [
+        {
+          "parameter": "Ethyl alcohol",
+          "range": "15.0–24.0",
+          "unit": "% v/v at 20°C"
+        }
+      ]
+    },
+    "3.1.4": {
+      "name": "Wine from fruits other than grapes",
+      "table_basis": "Table 2",
+      "definition_summary": "Wine produced by normal alcoholic fermentation of fruit other than grapes; fruit name is prefixed to wine."
+    },
+    "3.1.4.1": {
+      "name": "Cider",
+      "parent": "3.1.4",
+      "composition_core": [
+        {
+          "variant": "Soft cider",
+          "parameter": "Ethyl alcohol",
+          "range": ">0.5–5.0",
+          "unit": "% v/v"
+        },
+        {
+          "variant": "Hard cider",
+          "parameter": "Ethyl alcohol",
+          "range": ">5.0–9.0",
+          "unit": "% v/v"
+        }
+      ]
+    },
+    "3.1.4.2": {
+      "name": "Perry",
+      "parent": "3.1.4",
+      "definition_summary": "Wine prepared from pear juice."
+    },
+    "3.1.4.4": {
+      "name": "Honey wine or Mead",
+      "parent": "3.1.4",
+      "table_basis": "Table 2",
+      "definition_summary": "Wine from fermentation of an aqueous solution of honey by yeasts without another carbohydrate source; herbs, spices or natural flavourings may be used.",
+      "composition_core": [
+        {
+          "parameter": "Ethyl alcohol",
+          "range": "4.0–15.5",
+          "unit": "% v/v"
+        }
+      ],
+      "current_effective_note": "Current compendium carries the direction-linked compliance date of 1 July 2026 for this inserted provision."
+    },
+    "3.1.5.1": {
+      "name": "Palm wine/Toddy",
+      "parent": "3.1.5",
+      "definition_summary": "Wine prepared from sap of palm trees and coconut palms."
+    },
+    "3.1.5.2": {
+      "name": "Bamboo wine",
+      "parent": "3.1.5",
+      "definition_summary": "Wine prepared from bamboo sap."
+    },
+    "3.1.6": {
+      "name": "Wine Based Beverages",
+      "table_basis": "Table 2 table-wine standards according to ethyl alcohol content",
+      "definition_summary": "Beverage obtained from at least 50% by volume of wine and permitted treatments/additions under the current regulation.",
+      "current_note": "May or may not be carbonated under the current Version V amendment."
+    },
+    "4.1": {
+      "name": "Beer",
+      "table_basis": "Table 3",
+      "variants": [
+        "Lager",
+        "Ale",
+        "Wheat beer",
+        "Stout and porter",
+        "Alcohol-free beer"
+      ],
+      "composition_core": [
+        {
+          "variant": "Regular/Mild",
+          "parameter": "Ethyl alcohol",
+          "range": ">0.5–5.0",
+          "unit": "% v/v at 20°C"
+        },
+        {
+          "variant": "Strong",
+          "parameter": "Ethyl alcohol",
+          "range": ">5.0–8.0",
+          "unit": "% v/v at 20°C"
+        },
+        {
+          "variant": "Alcohol-free",
+          "parameter": "Ethyl alcohol",
+          "value": 0,
+          "unit": "% v/v"
+        }
+      ],
+      "quality_rules": [
+        "Clear except wheat beer, with characteristic colour/taste/bouquet.",
+        "Bottled/canned beer is pasteurized or filter sterilized; draught beer may or may not be.",
+        "Free from coliforms and other pathogenic microorganisms."
+      ]
+    },
+    "4.2": {
+      "name": "Draught Beer",
+      "table_basis": "Table 3",
+      "variants": [
+        "Draught lager",
+        "Draught ale",
+        "Draught stout/porter",
+        "Draught wheat beer",
+        "Craft beer",
+        "Nitro Craft Beer",
+        "Flavoured Beer"
+      ],
+      "current_rules": [
+        "Craft beer may be aromatized with suitable food ingredients and may or may not be filtered/pasteurized.",
+        "Flavoured beer uses flavours permitted under the Food Products Standards and Food Additives Regulations and must meet the other beer requirements.",
+        "Nitro Craft Beer uses a mixture of CO2 and N2 gas under the current provision."
+      ]
+    },
+    "1.2.4a/1.3.9": {
+      "name": "Alcoholic Ready-to-Drink Beverages",
+      "table_basis": "Table 4",
+      "definition_summary": "Flavoured beverage made from spirit/mixture of spirit or other alcoholic beverage base with permitted flavours/additives and optional fruit/vegetable juice, herbs, spices, sugar/caloric sweeteners, salt and carbonation.",
+      "composition": [
+        {
+          "parameter": "Ethyl alcohol at 20°C",
+          "range": ">0.5–<15.0",
+          "unit": "% v/v"
+        },
+        {
+          "parameter": "Residue on evaporation",
+          "operator": "<=",
+          "value": 25,
+          "unit": "% m/v"
+        },
+        {
+          "parameter": "Total acids as tartaric acid",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/v"
+        },
+        {
+          "parameter": "Methyl alcohol",
+          "operator": "<=",
+          "value": 25,
+          "unit": "g/100 L absolute alcohol"
+        },
+        {
+          "parameter": "Sugar",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% w/v"
+        },
+        {
+          "parameter": "pH",
+          "range": "2.0–5.0"
+        },
+        {
+          "parameter": "Copper",
+          "operator": "<=",
+          "value": 1,
+          "unit": "mg/L"
+        },
+        {
+          "parameter": "Iron as Fe",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/L"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "mg/L"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 0.25,
+          "unit": "mg/L"
+        },
+        {
+          "parameter": "Cadmium",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "mg/L"
+        }
+      ],
+      "carbonation_rule": "Carbonated RTD beverages use carbon dioxide with minimum one volume and must conform to Table 4."
+    }
+  },
+  "shared_wine_rules": [
+    "Wine shall be clear with characteristic colour, taste, bouquet and form of its type.",
+    "Wine shall be preserved by pasteurization or permitted preservatives and be free from coliforms and pathogenic microorganisms.",
+    "Water added in preparation of wine shall not exceed 70 ml per kg of grape or fruit for the purposes permitted in the current regulation; dilution of high-sugar must shall not reduce it below 13.5°Brix.",
+    "Wine may be ameliorated using dry sugar or jaggery, separately or in combination, not more than 20%, as specified."
+  ],
+  "table_matrix_status": {
+    "table_1": "current_v5_matrix_identified; exact per-product row/column normalization pending",
+    "table_2": "core category limits and common safety rows identified; exact full column matrix normalization pending",
+    "table_3": "core beer matrix and microbiology identified; exact full current matrix normalization pending",
+    "table_4": "current RTD requirements structured"
+  },
+  "alcohol_specific_labelling": [
+    "Declare alcohol content as % abv or proof.",
+    "Pot-distilled alcohol shall carry the prescribed pot-still / pot-distilled wording.",
+    "A standard drink is defined as the amount containing 12.7 ml alcohol by volume; approximate number of standard drinks may be stated.",
+    "Apply the current statutory warning required by the Alcoholic Beverages Regulations; size requirements depend on pack size.",
+    "Additional product-specific naming and declarations apply where stated in the individual standard."
+  ],
+  "final_compliance_lock": "Do not issue a full alcoholic-product formulation verdict until the exact applicable Table 1/2/3 matrix row and all linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated."
+}
