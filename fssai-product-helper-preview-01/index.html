@@ -2280,7 +2280,8 @@ function appendixCStructuredRuntimeRules(db){
          source:'Appendix C · Table '+String(table.number||''),
          runtime_auto_apply:permission.runtime_auto_apply===true,
          product_category:String(permission.product_category||''),
-         product_ids:Array.isArray(permission.product_ids)?permission.product_ids:[]
+         product_ids:Array.isArray(permission.product_ids)?permission.product_ids:[],
+         rule_keys:Array.isArray(permission.rule_keys)?permission.rule_keys:[]
        });
      }
    }
@@ -2289,7 +2290,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=223',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=226',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
@@ -2311,6 +2312,9 @@ function processingAidRuleAutoApplicable(rule){
  if(rule?.runtime_auto_apply===true)return true;
  const p=selectedCatalogProductForProcessing();
  if(Array.isArray(rule?.product_ids)&&p&&rule.product_ids.includes(p.id))return true;
+ const profile=p?profileForCatalogProduct(p):null;
+ const selectedRuleKey=String(p?.rule_key||profile?.rule_key||profile?.fssr||'').trim();
+ if(Array.isArray(rule?.rule_keys)&&selectedRuleKey&&rule.rule_keys.includes(selectedRuleKey))return true;
  if(rule?.runtime_auto_apply===false)return false;
  return /·\s*All foods\s*$/i.test(String(rule?.purpose||''));
 }
