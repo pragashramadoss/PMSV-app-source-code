@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Map remaining Table 7 root/tuber/canned identities and Table 12 process-specific rows.",
+    "next_priority": "Add new permission-level process selectors to UI and run regression.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -83,7 +83,7 @@
       "table_9_liquid_nitrogen_scope": "Dairy-based desserts - Ice cream",
       "table_7_hydrogen_peroxide_effective_residual": "5 mg/kg as hydrogen peroxide"
     },
-    "appendix_c_product_gate_audit_status": "exact_gate_pass_2_loaded",
+    "appendix_c_product_gate_audit_status": "exact_gate_pass_3_loaded",
     "appendix_c_product_gated_permissions": 104,
     "appendix_c_product_gate_id_links": 267,
     "appendix_c_product_gate_rule_key_links": 29,
@@ -123,7 +123,8 @@
         "12": 42
       }
     },
-    "appendix_c_product_gate_remaining_fail_closed": 69
+    "appendix_c_product_gate_remaining_fail_closed": 32,
+    "appendix_c_product_gated_or_auto_permissions": 233
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -560,7 +561,17 @@
             {
               "product_category": "Sugar",
               "residual_level_mgkg": 1,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "11-11-1-refined-sugar",
+                "11-11-1-icing-sugar",
+                "11-11-1-khandsari-sugar",
+                "11-11-1-bura-sugar",
+                "11-11-1-plantation-white-sugar",
+                "11-11-1-cube-sugar"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact standardized Chapter 2.8 sugar identities."
             }
           ]
         },
@@ -4042,7 +4053,14 @@
             {
               "product_category": "Canned fruits and vegetables",
               "runtime_auto_apply": false,
-              "residual_level": "GMP"
+              "residual_level": "GMP",
+              "product_ids": [
+                "04-04-2-canned-tomatoes",
+                "04-04-2-canned-chestnut",
+                "04-04-2-canned-chestnut-puree"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV canned fruit/vegetable identities only."
             }
           ]
         },
@@ -4273,7 +4291,12 @@
             {
               "product_category": "Root and tuber vegetables (not meant for those intended to be served or sold raw/fresh to consumers)",
               "runtime_auto_apply": false,
-              "residual_level": "GMP"
+              "residual_level": "GMP",
+              "product_ids": [
+                "04-04-2-quick-frozen-fried-potatoes"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Verified subset: Quick Frozen Fried Potatoes as an exact root/tuber vegetable product."
             }
           ]
         },
@@ -4514,7 +4537,12 @@
             {
               "product_category": "Root and tuber vegetables (not meant for those intended to be served or sold raw/fresh to consumers)",
               "runtime_auto_apply": false,
-              "residual_level_mgkg": 25
+              "residual_level_mgkg": 25,
+              "product_ids": [
+                "04-04-2-quick-frozen-fried-potatoes"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Verified subset: Quick Frozen Fried Potatoes as an exact root/tuber vegetable product."
             }
           ]
         },
@@ -4526,7 +4554,12 @@
             {
               "product_category": "Root and tuber vegetables",
               "runtime_auto_apply": false,
-              "residual_level_mgkg": 5
+              "residual_level_mgkg": 5,
+              "product_ids": [
+                "04-04-2-quick-frozen-fried-potatoes"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Verified subset: Quick Frozen Fried Potatoes as an exact root/tuber vegetable product."
             }
           ]
         },
@@ -6591,7 +6624,61 @@
               "purpose": "Adsorbent, decolourizing agent",
               "product_category": "Sugars, oils and fats, juices, alcoholic beverages",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "11-11-1-refined-sugar",
+                "11-11-1-icing-sugar",
+                "11-11-1-khandsari-sugar",
+                "11-11-1-bura-sugar",
+                "11-11-1-plantation-white-sugar",
+                "11-11-1-cube-sugar",
+                "02-02-1-milk-fat",
+                "02-02-1-butter-oil",
+                "02-02-1-anhydrous-milk-fat",
+                "02-02-1-refined-grapeseed-oil",
+                "02-02-1-refined-rapeseed-or-mustard-oil-low-erucic-acid",
+                "02-02-1-refined-safflower-seed-oil-and-safflower-seed-oil-high-oleic-acid-imported-or-dome",
+                "02-02-1-moringa-oil",
+                "02-02-1-refined-palm-kernel-olein",
+                "02-02-1-refined-moringa-oil",
+                "02-02-1-fish-oil",
+                "02-02-2-fat-spread",
+                "02-02-2-butter",
+                "02-02-2-table-margarine",
+                "02-02-2-bakery-and-industrial-margarine",
+                "02-02-2-analogue-in-the-dairy-context",
+                "fruit-juices",
+                "vegetable-juices",
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Verified PMSV sugar, oils/fats, standardized juice and alcoholic-beverage identities."
             }
           ],
           "process_key": "filtration"
@@ -6697,7 +6784,39 @@
               "purpose": "Coagulant",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities.",
+              "process_key": "coagulation"
             }
           ]
         },
@@ -6789,7 +6908,39 @@
               "purpose": "Buffering agent",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities.",
+              "process_key": "ph"
             }
           ]
         },
@@ -6816,7 +6967,18 @@
               "purpose": "Polishing agent",
               "product_category": "Confectionery",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "05-05-2-sugar-boiled-confectionery-hard-candy",
+                "05-05-2-sugar-boiled-confectionery-soft-candy",
+                "05-05-2-lozenges",
+                "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
+                "05-05-2-spice-based-mouth-fresheners",
+                "05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV FCS 05.2 confectionery identities.",
+              "process_key": "polishing"
             }
           ]
         },
@@ -6843,7 +7005,26 @@
               "purpose": "Sequestrant",
               "product_category": "Oils & fats",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "02-02-1-milk-fat",
+                "02-02-1-butter-oil",
+                "02-02-1-anhydrous-milk-fat",
+                "02-02-1-refined-grapeseed-oil",
+                "02-02-1-refined-rapeseed-or-mustard-oil-low-erucic-acid",
+                "02-02-1-refined-safflower-seed-oil-and-safflower-seed-oil-high-oleic-acid-imported-or-dome",
+                "02-02-1-moringa-oil",
+                "02-02-1-refined-palm-kernel-olein",
+                "02-02-1-refined-moringa-oil",
+                "02-02-1-fish-oil",
+                "02-02-2-fat-spread",
+                "02-02-2-butter",
+                "02-02-2-table-margarine",
+                "02-02-2-bakery-and-industrial-margarine",
+                "02-02-2-analogue-in-the-dairy-context"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Verified PMSV oils/fats identities under FCS 02.1 and 02.2."
             }
           ],
           "process_key": "ph"
@@ -6858,7 +7039,38 @@
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level_mgkg": 1,
               "residual_basis": "as available chlorine",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities."
             }
           ],
           "process_key": "water"
@@ -6900,7 +7112,26 @@
               "purpose": "Metal sequestrant",
               "product_category": "Edible fats and oils and related products",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "02-02-1-milk-fat",
+                "02-02-1-butter-oil",
+                "02-02-1-anhydrous-milk-fat",
+                "02-02-1-refined-grapeseed-oil",
+                "02-02-1-refined-rapeseed-or-mustard-oil-low-erucic-acid",
+                "02-02-1-refined-safflower-seed-oil-and-safflower-seed-oil-high-oleic-acid-imported-or-dome",
+                "02-02-1-moringa-oil",
+                "02-02-1-refined-palm-kernel-olein",
+                "02-02-1-refined-moringa-oil",
+                "02-02-1-fish-oil",
+                "02-02-2-fat-spread",
+                "02-02-2-butter",
+                "02-02-2-table-margarine",
+                "02-02-2-bakery-and-industrial-margarine",
+                "02-02-2-analogue-in-the-dairy-context"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Verified PMSV edible fats/oils identities under FCS 02.1 and 02.2."
             }
           ],
           "process_key": "filtration"
@@ -6927,7 +7158,86 @@
               "purpose": "Malting, grain processing steps for fermentation (alcoholic beverages)",
               "product_category": "Cereals",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "06-06-1-bean",
+                "06-06-1-soybean",
+                "06-06-1-pearl-barley-jau",
+                "06-06-1-wheat",
+                "06-06-1-maize",
+                "06-06-1-rice",
+                "06-06-1-any-other-foodgrains",
+                "06-06-1-unprocessed-whole-raw-pulses-not-for-direct-human-consumption",
+                "06-06-1-oats",
+                "06-06-1-quinoa",
+                "06-06-1-durum-wheat",
+                "06-06-1-pulses",
+                "06-06-1-chia-seeds",
+                "06-06-1-basmati-rice",
+                "06-06-1-blended-rice",
+                "06-06-1-millets",
+                "06-06-1-triticale",
+                "06-06-2-wholemeal-barley-powder-or-barley-flour-or-choker-yukt-jau-ka-churan",
+                "06-06-2-solvent-extract-soya-flour",
+                "06-06-2-solvent-extracted-groundnut-flour",
+                "06-06-2-solvent-extracted-sesame-flour",
+                "06-06-2-solvent-extracted-coconut-flour",
+                "06-06-2-solvent-extracted-cotton-seed-flour",
+                "06-06-2-wheat-flour-atta-and-resultant-wheat-flour-resultant-atta",
+                "06-06-2-wheat-protein-products-including-wheat-gluten",
+                "06-06-2-maida-refined-wheat-flour",
+                "06-06-2-semolina-suji-or-rawa",
+                "06-06-2-besan",
+                "06-06-2-expeller-pressed-edible-groundnut-flour",
+                "06-06-2-bajra-flour-pearl-millet-flour",
+                "06-06-2-jowar-flour-sorghum-flour",
+                "06-06-2-whole-maize-corn-flour",
+                "06-06-2-durum-wheat-semolina-and-whole-durum-wheat-semolina",
+                "06-06-2-degermed-maize-corn-meal-and-maize-corn-grits",
+                "06-06-2-sago-flour",
+                "06-06-2-custard-powder",
+                "06-06-2-carob-powder",
+                "06-06-2-maize-starch",
+                "06-06-2-arrowroot",
+                "06-06-2-tapioca-sago",
+                "06-06-2-palm-sago-starch",
+                "06-06-2-cassava-or-tapioca-product-gari",
+                "06-06-2-edible-cassava-or-tapioca-flour",
+                "06-06-2-roasted-bengal-gram-flour-chana-sattu",
+                "06-06-2-wheat-bran",
+                "06-06-2-ragi-flour",
+                "06-06-2-water-chestnut-flour-singhare-ka-atta",
+                "06-06-2-multigrain-flour-atta",
+                "06-06-2-mixed-millet-flour",
+                "06-06-2-rice-flour-for-preparation-of-fortified-rice-kernel-frk",
+                "06-06-2-protein-rich-wheat-flour-protein-prachur-atta",
+                "06-06-2-protein-rich-refined-wheat-flour-protein-prachur-maida",
+                "06-06-2-durum-wheat-maida",
+                "06-06-3-corn-flakes",
+                "06-06-3-oat-products",
+                "06-06-3-fruit-vegetable-cereal-flakes",
+                "06-06-3-breakfast-cereal",
+                "06-06-4-macaroni-products-pasta-products",
+                "06-06-4-macaroni-products-instant-noodle",
+                "06-06-7-malted-milk-food",
+                "06-06-7-malt-based-foods-malt-food",
+                "06-06-7-malt-extract",
+                "06-06-7-couscous",
+                "06-06-7-papad",
+                "06-06-8-soy-protein-products",
+                "06-06-8-textured-soy-protein-soy-bari-or-soy-chunks-or-soy-granules",
+                "06-06-8-tempe",
+                "06-06-8-soybean-beverages-and-related-products",
+                "06-06-8-soybean-curd-and-related-products",
+                "06-06-8-compressed-soybean-curd",
+                "06-06-8-dehydrated-soybean-curd-film",
+                "06-06-8-tofu",
+                "06-06-8-fermented-soybean-curd",
+                "06-06-8-fermented-soybean-curd-made-with-s-thermophillus-l-bulgaricus"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV cereal/cereal-product family under FCS 06.",
+              "process_key": "malting"
             }
           ],
           "process_key": "nutrient"
@@ -6941,7 +7251,13 @@
               "purpose": "Raising agent, sequestrant",
               "product_category": "Unripened cheese – Paneer and Chhana",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.1.16"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact Chhana and Paneer standard 2.1.16.",
+              "process_key": "sequestration"
             }
           ]
         },
@@ -7016,7 +7332,18 @@
               "purpose": "Polishing agent",
               "product_category": "Confectionery",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "05-05-2-sugar-boiled-confectionery-hard-candy",
+                "05-05-2-sugar-boiled-confectionery-soft-candy",
+                "05-05-2-lozenges",
+                "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
+                "05-05-2-spice-based-mouth-fresheners",
+                "05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV FCS 05.2 confectionery identities.",
+              "process_key": "polishing"
             }
           ]
         },
@@ -7029,7 +7356,86 @@
               "purpose": "Malting",
               "product_category": "Cereals",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "06-06-1-bean",
+                "06-06-1-soybean",
+                "06-06-1-pearl-barley-jau",
+                "06-06-1-wheat",
+                "06-06-1-maize",
+                "06-06-1-rice",
+                "06-06-1-any-other-foodgrains",
+                "06-06-1-unprocessed-whole-raw-pulses-not-for-direct-human-consumption",
+                "06-06-1-oats",
+                "06-06-1-quinoa",
+                "06-06-1-durum-wheat",
+                "06-06-1-pulses",
+                "06-06-1-chia-seeds",
+                "06-06-1-basmati-rice",
+                "06-06-1-blended-rice",
+                "06-06-1-millets",
+                "06-06-1-triticale",
+                "06-06-2-wholemeal-barley-powder-or-barley-flour-or-choker-yukt-jau-ka-churan",
+                "06-06-2-solvent-extract-soya-flour",
+                "06-06-2-solvent-extracted-groundnut-flour",
+                "06-06-2-solvent-extracted-sesame-flour",
+                "06-06-2-solvent-extracted-coconut-flour",
+                "06-06-2-solvent-extracted-cotton-seed-flour",
+                "06-06-2-wheat-flour-atta-and-resultant-wheat-flour-resultant-atta",
+                "06-06-2-wheat-protein-products-including-wheat-gluten",
+                "06-06-2-maida-refined-wheat-flour",
+                "06-06-2-semolina-suji-or-rawa",
+                "06-06-2-besan",
+                "06-06-2-expeller-pressed-edible-groundnut-flour",
+                "06-06-2-bajra-flour-pearl-millet-flour",
+                "06-06-2-jowar-flour-sorghum-flour",
+                "06-06-2-whole-maize-corn-flour",
+                "06-06-2-durum-wheat-semolina-and-whole-durum-wheat-semolina",
+                "06-06-2-degermed-maize-corn-meal-and-maize-corn-grits",
+                "06-06-2-sago-flour",
+                "06-06-2-custard-powder",
+                "06-06-2-carob-powder",
+                "06-06-2-maize-starch",
+                "06-06-2-arrowroot",
+                "06-06-2-tapioca-sago",
+                "06-06-2-palm-sago-starch",
+                "06-06-2-cassava-or-tapioca-product-gari",
+                "06-06-2-edible-cassava-or-tapioca-flour",
+                "06-06-2-roasted-bengal-gram-flour-chana-sattu",
+                "06-06-2-wheat-bran",
+                "06-06-2-ragi-flour",
+                "06-06-2-water-chestnut-flour-singhare-ka-atta",
+                "06-06-2-multigrain-flour-atta",
+                "06-06-2-mixed-millet-flour",
+                "06-06-2-rice-flour-for-preparation-of-fortified-rice-kernel-frk",
+                "06-06-2-protein-rich-wheat-flour-protein-prachur-atta",
+                "06-06-2-protein-rich-refined-wheat-flour-protein-prachur-maida",
+                "06-06-2-durum-wheat-maida",
+                "06-06-3-corn-flakes",
+                "06-06-3-oat-products",
+                "06-06-3-fruit-vegetable-cereal-flakes",
+                "06-06-3-breakfast-cereal",
+                "06-06-4-macaroni-products-pasta-products",
+                "06-06-4-macaroni-products-instant-noodle",
+                "06-06-7-malted-milk-food",
+                "06-06-7-malt-based-foods-malt-food",
+                "06-06-7-malt-extract",
+                "06-06-7-couscous",
+                "06-06-7-papad",
+                "06-06-8-soy-protein-products",
+                "06-06-8-textured-soy-protein-soy-bari-or-soy-chunks-or-soy-granules",
+                "06-06-8-tempe",
+                "06-06-8-soybean-beverages-and-related-products",
+                "06-06-8-soybean-curd-and-related-products",
+                "06-06-8-compressed-soybean-curd",
+                "06-06-8-dehydrated-soybean-curd-film",
+                "06-06-8-tofu",
+                "06-06-8-fermented-soybean-curd",
+                "06-06-8-fermented-soybean-curd-made-with-s-thermophillus-l-bulgaricus"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV cereal/cereal-product family under FCS 06.",
+              "process_key": "malting"
             }
           ]
         },
@@ -7056,7 +7462,38 @@
               "purpose": "Dough conditioner",
               "product_category": "Flour products",
               "residual_level_mgkg": 75,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "06-06-2-wholemeal-barley-powder-or-barley-flour-or-choker-yukt-jau-ka-churan",
+                "06-06-2-solvent-extract-soya-flour",
+                "06-06-2-solvent-extracted-groundnut-flour",
+                "06-06-2-solvent-extracted-sesame-flour",
+                "06-06-2-solvent-extracted-coconut-flour",
+                "06-06-2-solvent-extracted-cotton-seed-flour",
+                "06-06-2-wheat-flour-atta-and-resultant-wheat-flour-resultant-atta",
+                "06-06-2-maida-refined-wheat-flour",
+                "06-06-2-semolina-suji-or-rawa",
+                "06-06-2-besan",
+                "06-06-2-expeller-pressed-edible-groundnut-flour",
+                "06-06-2-bajra-flour-pearl-millet-flour",
+                "06-06-2-jowar-flour-sorghum-flour",
+                "06-06-2-whole-maize-corn-flour",
+                "06-06-2-durum-wheat-semolina-and-whole-durum-wheat-semolina",
+                "06-06-2-sago-flour",
+                "06-06-2-edible-cassava-or-tapioca-flour",
+                "06-06-2-roasted-bengal-gram-flour-chana-sattu",
+                "06-06-2-ragi-flour",
+                "06-06-2-water-chestnut-flour-singhare-ka-atta",
+                "06-06-2-multigrain-flour-atta",
+                "06-06-2-mixed-millet-flour",
+                "06-06-2-rice-flour-for-preparation-of-fortified-rice-kernel-frk",
+                "06-06-2-protein-rich-wheat-flour-protein-prachur-atta",
+                "06-06-2-protein-rich-refined-wheat-flour-protein-prachur-maida",
+                "06-06-2-durum-wheat-maida"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Verified PMSV flour/atta/maida/semolina/besan/sattu identities only.",
+              "process_key": "dough_conditioning"
             }
           ]
         },
@@ -7069,7 +7506,38 @@
               "purpose": "Acidity regulator",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities."
             }
           ],
           "process_key": "ph"
@@ -7097,7 +7565,18 @@
               "purpose": "Polishing agent",
               "product_category": "Confectionery",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "05-05-2-sugar-boiled-confectionery-hard-candy",
+                "05-05-2-sugar-boiled-confectionery-soft-candy",
+                "05-05-2-lozenges",
+                "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
+                "05-05-2-spice-based-mouth-fresheners",
+                "05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV FCS 05.2 confectionery identities.",
+              "process_key": "polishing"
             }
           ]
         },
@@ -7124,7 +7603,18 @@
               "purpose": "Polishing agent",
               "product_category": "Confectionery",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "05-05-2-sugar-boiled-confectionery-hard-candy",
+                "05-05-2-sugar-boiled-confectionery-soft-candy",
+                "05-05-2-lozenges",
+                "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
+                "05-05-2-spice-based-mouth-fresheners",
+                "05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV FCS 05.2 confectionery identities.",
+              "process_key": "polishing"
             }
           ]
         },
@@ -7178,7 +7668,39 @@
               "purpose": "Ageing agent",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities.",
+              "process_key": "ageing"
             }
           ]
         },
@@ -7197,7 +7719,38 @@
               "purpose": "Aerating agent",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities."
             }
           ],
           "process_key": "gas"
@@ -7250,7 +7803,38 @@
               "purpose": "Buffering agent",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities."
             }
           ],
           "process_key": "ph"
@@ -7304,7 +7888,13 @@
               "purpose": "Preparation of waxes",
               "product_category": "Cheese and cheese products",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.1.17"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact cheese standard family 2.1.17.",
+              "process_key": "coating"
             }
           ]
         },
@@ -7317,7 +7907,14 @@
               "purpose": "pH control agent",
               "product_category": "Cocoa mixes (powders) and cocoa mass/cake",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "rule_keys": [
+                "2.7.6",
+                "2.7.8"
+              ],
+              "product_gate_status": "verified_exact_rule_key",
+              "product_gate_note": "Exact cocoa-mix and cocoa-mass/cake standards.",
+              "process_key": "ph"
             }
           ]
         },
@@ -7359,7 +7956,39 @@
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level_mgkg": 50,
               "residual_basis": "maximum usage level",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities.",
+              "process_key": "antioxidant"
             }
           ]
         },
@@ -7378,7 +8007,39 @@
               "purpose": "Foam stabilizer",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities.",
+              "process_key": "foam_stabilization"
             }
           ]
         },
@@ -7391,7 +8052,18 @@
               "purpose": "Polishing agent",
               "product_category": "Confectionery",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "05-05-2-sugar-boiled-confectionery-hard-candy",
+                "05-05-2-sugar-boiled-confectionery-soft-candy",
+                "05-05-2-lozenges",
+                "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
+                "05-05-2-spice-based-mouth-fresheners",
+                "05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV FCS 05.2 confectionery identities.",
+              "process_key": "polishing"
             }
           ]
         },
@@ -7404,7 +8076,39 @@
               "purpose": "Ion exchange",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities.",
+              "process_key": "ion_exchange"
             }
           ]
         },
@@ -7423,7 +8127,18 @@
               "purpose": "Soap absorbing agent",
               "product_category": "Edible vegetable oils",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "02-02-1-refined-grapeseed-oil",
+                "02-02-1-refined-rapeseed-or-mustard-oil-low-erucic-acid",
+                "02-02-1-refined-safflower-seed-oil-and-safflower-seed-oil-high-oleic-acid-imported-or-dome",
+                "02-02-1-moringa-oil",
+                "02-02-1-refined-palm-kernel-olein",
+                "02-02-1-refined-moringa-oil"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV edible vegetable-oil identities under FCS 02.1.2.",
+              "process_key": "filtration"
             },
             {
               "purpose": "Free flowing agent",
@@ -7532,7 +8247,38 @@
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level_mgkg": 1,
               "residual_basis": "as available chlorine",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities."
             }
           ],
           "process_key": "water"
@@ -7546,19 +8292,83 @@
               "purpose": "Dough conditioner",
               "product_category": "Flour products",
               "residual_level_mgkg": 60,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "06-06-2-wholemeal-barley-powder-or-barley-flour-or-choker-yukt-jau-ka-churan",
+                "06-06-2-solvent-extract-soya-flour",
+                "06-06-2-solvent-extracted-groundnut-flour",
+                "06-06-2-solvent-extracted-sesame-flour",
+                "06-06-2-solvent-extracted-coconut-flour",
+                "06-06-2-solvent-extracted-cotton-seed-flour",
+                "06-06-2-wheat-flour-atta-and-resultant-wheat-flour-resultant-atta",
+                "06-06-2-maida-refined-wheat-flour",
+                "06-06-2-semolina-suji-or-rawa",
+                "06-06-2-besan",
+                "06-06-2-expeller-pressed-edible-groundnut-flour",
+                "06-06-2-bajra-flour-pearl-millet-flour",
+                "06-06-2-jowar-flour-sorghum-flour",
+                "06-06-2-whole-maize-corn-flour",
+                "06-06-2-durum-wheat-semolina-and-whole-durum-wheat-semolina",
+                "06-06-2-sago-flour",
+                "06-06-2-edible-cassava-or-tapioca-flour",
+                "06-06-2-roasted-bengal-gram-flour-chana-sattu",
+                "06-06-2-ragi-flour",
+                "06-06-2-water-chestnut-flour-singhare-ka-atta",
+                "06-06-2-multigrain-flour-atta",
+                "06-06-2-mixed-millet-flour",
+                "06-06-2-rice-flour-for-preparation-of-fortified-rice-kernel-frk",
+                "06-06-2-protein-rich-wheat-flour-protein-prachur-atta",
+                "06-06-2-protein-rich-refined-wheat-flour-protein-prachur-maida",
+                "06-06-2-durum-wheat-maida"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Verified PMSV flour/atta/maida/semolina/besan/sattu identities only.",
+              "process_key": "dough_conditioning"
             },
             {
               "purpose": "Softening agent",
               "product_category": "Corn kernel",
               "residual_level_mgkg": 60,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "process_key": "softening"
             },
             {
               "purpose": "Reducing agent",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities.",
+              "process_key": "reducing"
             }
           ]
         },
@@ -7584,7 +8394,38 @@
               "purpose": "Dough conditioner",
               "product_category": "Flour products",
               "residual_level_mgkg": 60,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "06-06-2-wholemeal-barley-powder-or-barley-flour-or-choker-yukt-jau-ka-churan",
+                "06-06-2-solvent-extract-soya-flour",
+                "06-06-2-solvent-extracted-groundnut-flour",
+                "06-06-2-solvent-extracted-sesame-flour",
+                "06-06-2-solvent-extracted-coconut-flour",
+                "06-06-2-solvent-extracted-cotton-seed-flour",
+                "06-06-2-wheat-flour-atta-and-resultant-wheat-flour-resultant-atta",
+                "06-06-2-maida-refined-wheat-flour",
+                "06-06-2-semolina-suji-or-rawa",
+                "06-06-2-besan",
+                "06-06-2-expeller-pressed-edible-groundnut-flour",
+                "06-06-2-bajra-flour-pearl-millet-flour",
+                "06-06-2-jowar-flour-sorghum-flour",
+                "06-06-2-whole-maize-corn-flour",
+                "06-06-2-durum-wheat-semolina-and-whole-durum-wheat-semolina",
+                "06-06-2-sago-flour",
+                "06-06-2-edible-cassava-or-tapioca-flour",
+                "06-06-2-roasted-bengal-gram-flour-chana-sattu",
+                "06-06-2-ragi-flour",
+                "06-06-2-water-chestnut-flour-singhare-ka-atta",
+                "06-06-2-multigrain-flour-atta",
+                "06-06-2-mixed-millet-flour",
+                "06-06-2-rice-flour-for-preparation-of-fortified-rice-kernel-frk",
+                "06-06-2-protein-rich-wheat-flour-protein-prachur-atta",
+                "06-06-2-protein-rich-refined-wheat-flour-protein-prachur-maida",
+                "06-06-2-durum-wheat-maida"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Verified PMSV flour/atta/maida/semolina/besan/sattu identities only.",
+              "process_key": "dough_conditioning"
             }
           ]
         },
@@ -7611,7 +8452,8 @@
               "purpose": "Softening agent",
               "product_category": "Corn kernel",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "process_key": "softening"
             }
           ]
         },
@@ -7624,7 +8466,10 @@
               "purpose": "Control of nitrosodimethylamine in malting",
               "product_category": "Malting",
               "residual_level_mgkg": 750,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": true,
+              "process_key": "malting",
+              "product_gate_status": "process_exact",
+              "product_gate_note": "Appendix C category itself is Malting; the malting process selection is the exact gate."
             }
           ]
         },
@@ -7637,7 +8482,14 @@
               "purpose": "Clarifying agent, flavouring agent, flavour adjunct",
               "product_category": "Juices",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fruit-juices",
+                "vegetable-juices"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact standardized fruit and vegetable juice identities.",
+              "process_key": "filtration"
             }
           ]
         },
@@ -7680,7 +8532,39 @@
               "purpose": "Fermenting Agent",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "All PMSV alcoholic-beverage identities.",
+              "process_key": "fermentation"
             }
           ],
           "process_key": "nutrient"
