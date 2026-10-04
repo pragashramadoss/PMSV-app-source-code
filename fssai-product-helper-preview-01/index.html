@@ -1708,7 +1708,8 @@ function appendixCStructuredRuntimeRules(db){
          condition,
          source:'Appendix C · Table '+String(table.number||''),
          runtime_auto_apply:permission.runtime_auto_apply===true,
-         product_category:String(permission.product_category||'')
+         product_category:String(permission.product_category||''),
+         product_ids:Array.isArray(permission.product_ids)?permission.product_ids:[]
        });
      }
    }
@@ -1717,7 +1718,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=200',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=201',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    const structured=appendixCStructuredRuntimeRules(appendixCDb);
@@ -2469,7 +2470,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=200',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=201',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -3081,7 +3082,7 @@ async function loadContaminantsDb(){
 async function loadRegulatoryDb(){
  const status=document.getElementById('regDbStatus');
  try{
-   const res=await fetch('./data/regulatory-db-v1.json?v=200',{cache:'reload'});
+   const res=await fetch('./data/regulatory-db-v1.json?v=201',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    regulatoryDb=await res.json();
    ingredientCatalog=catalogFromDb(regulatoryDb);
