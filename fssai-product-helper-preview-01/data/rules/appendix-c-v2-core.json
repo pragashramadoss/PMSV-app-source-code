@@ -62,7 +62,9 @@
     "table_11a_gmm_enzyme_preparation_criteria_loaded": true,
     "table_12_status": "complete_current_consolidated",
     "table_12_entries_loaded": 87,
-    "table_12_permission_rows": 101
+    "table_12_permission_rows": 101,
+    "table_12_runtime_mapped_entries": 46,
+    "table_12_runtime_policy": "purpose-matched selectors only; unmapped permissions fail closed"
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -4133,7 +4135,7 @@
     "table_12": {
       "number": 12,
       "title": "GENERALLY PERMITTED PROCESSING AIDS",
-      "process_key": "general_processing_aid",
+      "process_key": "",
       "source_scope": "Current FSSAI active list / Appendix C current text. Rows are loaded only where the current official row text has been positively verified; older superseded wording is not used.",
       "ingestion_status": "complete_1_to_87_current_consolidated",
       "entries": [
@@ -4148,7 +4150,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "filtration"
         },
         {
           "s_no": 2,
@@ -4174,7 +4177,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 4,
@@ -4200,7 +4204,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "nutrient"
         },
         {
           "s_no": 6,
@@ -4226,7 +4231,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "gas"
         },
         {
           "s_no": 8,
@@ -4252,7 +4258,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "nutrient"
         },
         {
           "s_no": 10,
@@ -4348,7 +4355,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "gas"
         },
         {
           "s_no": 16,
@@ -4373,7 +4381,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 17,
@@ -4387,7 +4396,8 @@
               "residual_basis": "as available chlorine",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "water"
         },
         {
           "s_no": 18,
@@ -4400,7 +4410,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "microbial"
         },
         {
           "s_no": 19,
@@ -4413,7 +4424,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "solvent"
         },
         {
           "s_no": 20,
@@ -4426,7 +4438,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "filtration"
         },
         {
           "s_no": 21,
@@ -4452,7 +4465,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "nutrient"
         },
         {
           "s_no": 23,
@@ -4478,7 +4492,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "release"
         },
         {
           "s_no": 25,
@@ -4491,7 +4506,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 26,
@@ -4517,7 +4533,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "release"
         },
         {
           "s_no": 28,
@@ -4556,7 +4573,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "release"
         },
         {
           "s_no": 31,
@@ -4582,7 +4600,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 33,
@@ -4595,7 +4614,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "nutrient"
         },
         {
           "s_no": 34,
@@ -4621,7 +4641,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 36,
@@ -4660,7 +4681,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "nutrient"
         },
         {
           "s_no": 39,
@@ -4673,7 +4695,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "gas"
         },
         {
           "s_no": 40,
@@ -4705,7 +4728,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "gas"
         },
         {
           "s_no": 42,
@@ -4731,7 +4755,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "release"
         },
         {
           "s_no": 44,
@@ -4750,7 +4775,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 45,
@@ -4763,7 +4789,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "solvent"
         },
         {
           "s_no": 46,
@@ -4828,7 +4855,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 51,
@@ -4841,7 +4869,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 52,
@@ -4906,7 +4935,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "water"
         },
         {
           "s_no": 56,
@@ -4931,7 +4961,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "release"
         },
         {
           "s_no": 57,
@@ -4957,7 +4988,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 59,
@@ -4983,7 +5015,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 61,
@@ -4996,7 +5029,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 62,
@@ -5009,7 +5043,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 63,
@@ -5023,7 +5058,8 @@
               "residual_basis": "as available chlorine",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "water"
         },
         {
           "s_no": 64,
@@ -5054,7 +5090,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 65,
@@ -5093,7 +5130,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 68,
@@ -5146,7 +5184,8 @@
               "runtime_auto_apply": false,
               "source_note": "Current active-list row does not display a residue value in the extracted text; PMSV does not infer GMP."
             }
-          ]
+          ],
+          "process_key": "nutrient"
         },
         {
           "s_no": 72,
@@ -5160,7 +5199,8 @@
               "runtime_auto_apply": false,
               "source_note": "Current active-list row does not display a residue value in the extracted text; PMSV does not infer GMP."
             }
-          ]
+          ],
+          "process_key": "nutrient"
         },
         {
           "s_no": 73,
@@ -5173,7 +5213,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "nutrient"
         },
         {
           "s_no": 74,
@@ -5200,7 +5241,8 @@
               "residual_basis": "as available chlorine",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "water"
         },
         {
           "s_no": 76,
@@ -5213,7 +5255,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "gas"
         },
         {
           "s_no": 77,
@@ -5226,7 +5269,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 78,
@@ -5265,7 +5309,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "ph"
         },
         {
           "s_no": 81,
@@ -5317,7 +5362,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": true
             }
-          ]
+          ],
+          "process_key": "release"
         },
         {
           "s_no": 85,
@@ -5330,7 +5376,8 @@
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
-          ]
+          ],
+          "process_key": "water"
         },
         {
           "s_no": 86,
@@ -5344,7 +5391,8 @@
               "runtime_auto_apply": false,
               "source_note": "Stored exactly as the active-list columns are printed; product-category wording is unusual and therefore not auto-applied."
             }
-          ]
+          ],
+          "process_key": "filtration"
         },
         {
           "s_no": 87,
@@ -5360,7 +5408,8 @@
           ]
         }
       ],
-      "source_note": "Current FSSAI Appendix C Version 2 / active processing-aids list. Substituted and inserted rows use the current wording; unchanged base rows were cross-checked against official FSSAI compendium text."
+      "source_note": "Current FSSAI Appendix C Version 2 / active processing-aids list. Substituted and inserted rows use the current wording; unchanged base rows were cross-checked against official FSSAI compendium text.",
+      "runtime_mapping_note": "Only entries whose technological purpose maps unambiguously to an existing PMSV manufacturing-process selector receive a runtime process_key. Other Table 12 permissions remain stored but fail closed until an exact process/product route is added."
     }
   }
 }
