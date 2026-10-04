@@ -32138,16 +32138,24 @@
     "table14_1_provenance_stage": "current_v3_complete",
     "table14_1_rows_provenance_tagged": 397,
     "product_fcs_mapping_audit": {
-      "checked_on": "2026-10-03",
+      "checked_on": "2026-10-04",
       "products": 526,
       "mapped_current_v3": 462,
       "source_alias_resolved": 1,
       "foscos_code_not_appendix_a_fcs": 50,
-      "official_appendix_fcs_mapping_not_available": 13,
+      "official_appendix_fcs_mapping_not_available": 0,
       "cross_category_routes": 1,
       "inheritance_engine": "duplicate-safe level replacement",
       "source_aliases": [
         "1.3.2.2 -> 1.3.2.1 (Non-Dairy based beverage whitener)"
+      ],
+      "foscos_special_category_outside_appendix_a_fcs": 13,
+      "rule": "Appendix A FCS inheritance is limited to current official FCS 1–16. FoSCoS special categories 101 (Hemp Seeds and Seed Products) and 102 (Ayurveda Aahara) are stored as verified licensing/product routes but are not converted into Appendix A FCS codes without an explicit FSSAI crosswalk.",
+      "special_category_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://fssai.gov.in/upload/uploadfiles/files/17_%20Chapter%202_16%20%28Hemp%20seeds%20and%20seed%20products%29.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
       ]
     },
     "chapter_rule_link_audit": {
@@ -32237,7 +32245,10 @@
     ],
     "appendix_a_v3_locked_rows_total": 10,
     "appendix_a_v3_audit_date": "2026-10-03",
-    "appendix_a_v3_next_step": "Appendix A reconciliation is complete to the limit of the current official source. Do not infer the 10 locked rows. Proceed to the next formulation layer (contaminants/microbiology/processing aids) unless FSSAI issues a corrigendum or clarification for these anomalies."
+    "appendix_a_v3_next_step": "Appendix A reconciliation is complete to the limit of the current official source. Do not infer the 10 locked rows. Proceed to the next formulation layer (contaminants/microbiology/processing aids) unless FSSAI issues a corrigendum or clarification for these anomalies.",
+    "appendix_a_product_routing_stage": "complete_for_current_fcs_1_16_special_foscos_101_102_fail_closed",
+    "appendix_a_special_category_rows": 13,
+    "appendix_a_unresolved_product_fcs_rows": 0
   },
   "annexure_1_groups": {
     "SULFITES": [
@@ -33414,6 +33425,17 @@
       "official_sources": [
         "User-uploaded official FSSAI Appendix A Version 3 (01.08.2025) — Appendix A(4).pdf",
         "Relevant source-anomaly pages: 137, 146, 150, 157, 167, 305, 313–316, and note-list page 338"
+      ]
+    },
+    {
+      "checked_on": "2026-10-04",
+      "scope": "Build 187 — FoSCoS special-category Appendix A routing closure",
+      "rule": "Verified current FoSCoS categories 101 and 102 against official FSSAI/FoSCoS sources. Category 101 maps Hemp Seed, Oil Extracted from Hemp Seeds and Hemp Seed Flour to 101.1/101.2/101.3. Category 102 contains Ayurveda Aahara products under 102.1. FSSAI's compiled category document directs categories 1–16 to Appendix A and treats 101 separately; therefore PMSV keeps Appendix A FCS blank for all 13 special-category rows and fails closed rather than deriving an FCS from product names or ingredients.",
+      "official_sources": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://fssai.gov.in/upload/uploadfiles/files/17_%20Chapter%202_16%20%28Hemp%20seeds%20and%20seed%20products%29.pdf",
+        "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
       ]
     }
   ],
