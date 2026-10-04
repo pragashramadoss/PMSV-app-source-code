@@ -45,7 +45,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Only Vitamin B12 and Vitamin C remain intentionally fail-closed. Official FSSAI Table 12 and the Section 16(5) active list both show Microbial nutrient / All foods with a blank residue value; PMSV must not infer GMP.",
+    "next_priority": "Appendix C runtime reconciliation is complete for currently determinable permissions. Vitamin B12 and Vitamin C remain visibly fail-closed until FSSAI publishes a residue level or clarification; do not infer GMP.",
     "table_3_entries": 16,
     "table_3_permission_rows": 18,
     "table_4_entries": 27,
@@ -101,7 +101,7 @@
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, exact process gates, or explicit user-confirmed exact Appendix C legal-category qualifiers can activate product-specific permissions. Unmatched products never inherit residual categories such as “Other foods”.",
     "appendix_c_product_gate_reachable_permissions": 204,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "passed_build_258_other_foods_explicit_qualifier_2026-10-04",
+    "appendix_c_product_gate_regression_status": "passed_build_259_official_blank_residue_status_2026-10-04",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -134,7 +134,7 @@
     "table_9_liquid_nitrogen_status": "official_section_16_5_active_list_all_foods_gmp",
     "table_6_mek_decaffeination_route": "loaded_same_source_row",
     "appendix_c_intentional_fail_closed_permissions": 2,
-    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_258",
+    "appendix_c_fail_closed_audit_status": "source_incomplete_rows_confirmed_2026-10-04_build_259",
     "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model.",
     "appendix_c_final_runtime_regression_status": "passed_2026-10-04",
     "appendix_c_final_runtime_regression": {
@@ -201,7 +201,7 @@
       "table_11a_operational_entries": 51,
       "table_11a_draft_rows_excluded": true
     },
-    "appendix_c_runtime_status": "production_fail_closed_final_2025_plus_section_16_5_build_258",
+    "appendix_c_runtime_status": "production_fail_closed_final_2025_plus_section_16_5_build_259",
     "appendix_c_product_master_count": 533,
     "appendix_c_product_profile_count": 533,
     "appendix_c_product_gate_invalid_ids": 0,
@@ -266,9 +266,32 @@
       "table_11_effective_2026_sources": "pass",
       "table_11a_operational_46_51": "pass",
       "table_11a_draft_4353_excluded": "pass",
-      "table_6_other_foods_explicit_legal_category": "pass"
+      "table_6_other_foods_explicit_legal_category": "pass",
+      "vitamin_b12_official_blank_residue_visible_fail_closed": "pass",
+      "vitamin_c_official_blank_residue_visible_fail_closed": "pass"
     },
-    "table_9_liquid_nitrogen_scope": "All Foods"
+    "table_9_liquid_nitrogen_scope": "All Foods",
+    "appendix_c_unresolved_official_source_rows": [
+      {
+        "table": 12,
+        "s_no": 71,
+        "name": "Vitamin B12",
+        "purpose": "Microbial nutrient",
+        "product_category": "All foods",
+        "residue_status": "blank_in_official_fssai_sources",
+        "runtime_status": "fail_closed"
+      },
+      {
+        "table": 12,
+        "s_no": 72,
+        "name": "Vitamin C",
+        "purpose": "Microbial nutrient",
+        "product_category": "All foods",
+        "residue_status": "blank_in_official_fssai_sources",
+        "runtime_status": "fail_closed"
+      }
+    ],
+    "appendix_c_reconciliation_status": "runtime_complete_except_two_official_blank_residue_rows"
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -9949,9 +9972,10 @@
               "product_category": "All foods",
               "residual_level": "",
               "runtime_auto_apply": false,
-              "source_note": "Current active-list row does not display a residue value in the extracted text; PMSV does not infer GMP.",
+              "source_note": "Cross-checked against official FSSAI Appendix C and Section 16(5) active list on 2026-10-04; residue field remains blank in both sources.",
               "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "The operative Appendix C Version 2 row does not display a residual level for Vitamin B12. PMSV does not infer GMP from the later draft."
+              "runtime_lock_reason": "Official FSSAI Appendix C and the Section 16(5) active processing-aids list both show this row as Microbial nutrient / All foods but leave the residue-level field blank. PMSV cannot infer GMP or another numeric limit.",
+              "product_gate_status": "official_row_present_residue_blank_fail_closed"
             }
           ],
           "process_key": "nutrient"
@@ -9966,9 +9990,10 @@
               "product_category": "All foods",
               "residual_level": "",
               "runtime_auto_apply": false,
-              "source_note": "Current active-list row does not display a residue value in the extracted text; PMSV does not infer GMP.",
+              "source_note": "Cross-checked against official FSSAI Appendix C and Section 16(5) active list on 2026-10-04; residue field remains blank in both sources.",
               "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "The operative Appendix C Version 2 row does not display a residual level for Vitamin C. PMSV does not infer GMP from the later draft."
+              "runtime_lock_reason": "Official FSSAI Appendix C and the Section 16(5) active processing-aids list both show this row as Microbial nutrient / All foods but leave the residue-level field blank. PMSV cannot infer GMP or another numeric limit.",
+              "product_gate_status": "official_row_present_residue_blank_fail_closed"
             }
           ],
           "process_key": "nutrient"
