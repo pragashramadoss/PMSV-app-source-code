@@ -464,7 +464,24 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   </div>
 </div>
 <div id="enzymeResult" class="notice hidden" style="margin-top:12px"></div>
-<div class="notice"><b>GMM enzymes:</b> Appendix C regulates genetically modified microorganism-derived enzymes separately under <b>Table 11A</b>, which also requires matching the production organism, donor/source, functional purpose and indicative food use. They are intentionally not mixed into this Table 11 selector.</div>
+<div class="card" style="margin-top:14px;background:#fff">
+<div class="section-title"><h3 style="margin:0">GMM enzyme selector</h3><span>Appendix C · Table 11A</span></div>
+<div class="notice oknote"><b>Table 11A pathway:</b> choose the GMM enzyme, then choose the exact FSSAI production-organism + donor/source variant. PMSV shows the linked technological purpose and indicative food use; it does not merge variants.</div>
+<div class="checker-grid">
+  <div class="field">
+    <label>GMM enzyme</label>
+    <select id="gmmEnzymeName"><option value="">Select GMM enzyme…</option></select>
+    <small>51 current Table 11A enzyme entries are loaded.</small>
+  </div>
+  <div class="field">
+    <label>Production organism + donor/source</label>
+    <select id="gmmEnzymeVariant" disabled><option value="">Select exact variant…</option></select>
+    <small>109 current organism/source variants are stored separately.</small>
+  </div>
+</div>
+<div id="gmmEnzymeResult" class="notice hidden" style="margin-top:12px"></div>
+<div class="notice"><b>Enzyme preparation criteria:</b> Lead ≤ 5 mg/kg; Salmonella absent in 25 g; total coliforms ≤ 30/g; E. coli absent in 25 g; DNA absent in microbial-source preparations; antibiotic activity absent in microbial-source preparations.</div>
+</div>
 </div>
 
 <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
@@ -499,7 +516,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </table></div>
 <div class="countline" id="processingCount"></div>
 </div>
-<div class="notice"><b>Enzymes:</b> when Enzyme processing is selected, PMSV uses the saved enzyme + permitted source from the <b>Appendix C Table 11 enzyme selector</b>. GMM-derived enzymes remain a separate Table 11A pathway.</div>
+<div class="notice"><b>Enzymes:</b> PMSV now supports both <b>Table 11 non-GMM</b> enzyme/source selection and the complete <b>Table 11A GMM</b> production-organism/donor-source pathway. GMM variants remain linked to their exact technological purpose and indicative food use.</div>
 </div>
 </section>
 
@@ -850,6 +867,7 @@ function row(label,value,pass,msg){
  return div;
 }
 const ENZYME_KEY='pmsv_fssai_product_helper_enzyme';
+const GMM_ENZYME_KEY='pmsv_fssai_product_helper_gmm_enzyme';
 
 const table11Enzymes=[
  {
@@ -1417,6 +1435,7 @@ function saveEnzymeSelection(){
  const source=document.getElementById('enzymeSource')?.value||'';
  const enzyme=table11Enzymes.find(x=>x.id===id);
  selectedEnzyme={id:enzyme?enzyme.id:'',source:enzyme&&enzyme.sources.includes(source)?source:''};
+ if(enzyme&&selectedEnzyme.source){selectedGmmEnzyme={sequence:null,variantIndex:null};try{sessionStorage.removeItem(GMM_ENZYME_KEY)}catch(e){};populateGmmEnzymeSelector();}
  try{sessionStorage.setItem(ENZYME_KEY,JSON.stringify(selectedEnzyme))}catch(e){}
  const result=document.getElementById('enzymeResult');
  if(result){
@@ -1436,6 +1455,68 @@ document.getElementById('enzymeName')?.addEventListener('change',()=>{
 });
 document.getElementById('enzymeSource')?.addEventListener('change',saveEnzymeSelection);
 populateEnzymeSelector();
+
+
+let selectedGmmEnzyme={sequence:null,variantIndex:null};
+try{
+ const raw=JSON.parse(sessionStorage.getItem(GMM_ENZYME_KEY)||'{}');
+ if(raw&&typeof raw==='object')selectedGmmEnzyme={sequence:Number(raw.sequence)||null,variantIndex:Number.isInteger(raw.variantIndex)?raw.variantIndex:null};
+}catch(e){}
+
+function table11aEntries(){
+ return appendixCDb?.tables?.table_11a?.entries||[];
+}
+function populateGmmEnzymeSelector(){
+ const nameSel=document.getElementById('gmmEnzymeName');
+ if(!nameSel)return;
+ const rows=table11aEntries();
+ nameSel.innerHTML='<option value="">Select GMM enzyme…</option>'+rows.map(x=>'<option value="'+esc(x.sequence)+'">'+esc(x.sequence)+'. '+esc(x.name)+' (EC '+esc(x.ec||'—')+')</option>').join('');
+ if(rows.some(x=>x.sequence===selectedGmmEnzyme.sequence))nameSel.value=String(selectedGmmEnzyme.sequence);
+ populateGmmVariants();
+}
+function populateGmmVariants(){
+ const nameSel=document.getElementById('gmmEnzymeName');
+ const variantSel=document.getElementById('gmmEnzymeVariant');
+ const result=document.getElementById('gmmEnzymeResult');
+ if(!nameSel||!variantSel)return;
+ const seq=Number(nameSel.value)||null;
+ const entry=table11aEntries().find(x=>x.sequence===seq);
+ variantSel.innerHTML='<option value="">Select exact variant…</option>';
+ variantSel.disabled=!entry;
+ if(entry){
+   variantSel.innerHTML+=(entry.variants||[]).map((v,i)=>'<option value="'+i+'">'+esc(v.production_organism)+' → '+esc(v.donor_or_source)+'</option>').join('');
+   if(Number.isInteger(selectedGmmEnzyme.variantIndex)&&entry.variants?.[selectedGmmEnzyme.variantIndex])variantSel.value=String(selectedGmmEnzyme.variantIndex);
+ }
+ if(result)result.classList.add('hidden');
+}
+function saveGmmEnzymeSelection(){
+ const seq=Number(document.getElementById('gmmEnzymeName')?.value)||null;
+ const rawIndex=document.getElementById('gmmEnzymeVariant')?.value;
+ const idx=rawIndex===''?null:Number(rawIndex);
+ const entry=table11aEntries().find(x=>x.sequence===seq);
+ const variant=entry&&Number.isInteger(idx)?entry.variants?.[idx]:null;
+ selectedGmmEnzyme={sequence:entry?entry.sequence:null,variantIndex:variant?idx:null};
+ if(entry&&variant){
+   selectedEnzyme={id:'',source:''};
+   try{sessionStorage.removeItem(ENZYME_KEY)}catch(e){}
+   populateEnzymeSelector();
+ }
+ try{sessionStorage.setItem(GMM_ENZYME_KEY,JSON.stringify(selectedGmmEnzyme))}catch(e){}
+ const result=document.getElementById('gmmEnzymeResult');
+ if(result){
+   if(entry&&variant){
+     result.innerHTML='<b>Selected Table 11A enzyme:</b> '+esc(entry.name)+' (EC '+esc(entry.ec||'—')+')<br><b>Production organism:</b> '+esc(variant.production_organism)+'<br><b>Donor/source:</b> '+esc(variant.donor_or_source)+'<br><b>Technological purpose:</b> '+esc(variant.purpose)+'<br><b>Indicative food use:</b> '+esc(variant.indicative_food_uses)+'<br><b>Residual level:</b> '+esc(variant.residual_level||'—');
+     result.classList.remove('hidden');
+   }else result.classList.add('hidden');
+ }
+ renderProcessingAids();
+}
+document.getElementById('gmmEnzymeName')?.addEventListener('change',()=>{
+ selectedGmmEnzyme={sequence:Number(document.getElementById('gmmEnzymeName').value)||null,variantIndex:null};
+ populateGmmVariants();
+ saveGmmEnzymeSelection();
+});
+document.getElementById('gmmEnzymeVariant')?.addEventListener('change',saveGmmEnzymeSelection);
 
 const FORMULA_KEY='pmsv_fssai_product_helper_formula';
 
@@ -2207,9 +2288,10 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=209',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=216',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
+   populateGmmEnzymeSelector();
    const structured=appendixCStructuredRuntimeRules(appendixCDb);
    const loadedTables=new Set(Object.values(appendixCDb?.tables||{}).map(t=>'Appendix C · Table '+String(t.number||'')));
    processingAidRules=[
@@ -2267,11 +2349,15 @@ function renderProcessingAids(){
  const messages=[];
  if(selectedProcesses.includes('water'))messages.push('<tr><td><b>Water treatment</b></td><td>Process selected</td><td>No processing aid is automatically assigned solely from this selection. Only an aid with an applicable final Appendix C permission should be activated.</td><td>Appendix C applicability check</td></tr>');
  if(selectedProcesses.includes('enzyme')){
+   const gmmEntry=table11aEntries().find(x=>x.sequence===selectedGmmEnzyme.sequence);
+   const gmmVariant=gmmEntry&&Number.isInteger(selectedGmmEnzyme.variantIndex)?gmmEntry.variants?.[selectedGmmEnzyme.variantIndex]:null;
    const enzyme=table11Enzymes.find(x=>x.id===selectedEnzyme.id);
-   if(enzyme&&selectedEnzyme.source){
+   if(gmmEntry&&gmmVariant){
+     messages.push('<tr><td><b>'+esc(gmmEntry.name)+'</b><br><small>EC '+esc(gmmEntry.ec||'—')+'</small></td><td>Enzyme processing · GMM Table 11A<br><small>Production: '+esc(gmmVariant.production_organism)+'<br>Donor/source: '+esc(gmmVariant.donor_or_source)+'</small></td><td><b>'+esc(gmmVariant.residual_level||'—')+'</b><br><small>'+esc(gmmVariant.indicative_food_uses)+'</small></td><td>Appendix C · Table 11A</td></tr>');
+   }else if(enzyme&&selectedEnzyme.source){
      messages.push('<tr><td><b>'+esc(enzyme.name)+'</b><br><small>EC '+esc(enzyme.ec)+'</small></td><td>Enzyme processing · non-GMM Table 11 enzyme</td><td><b>GMP</b><br><small>FSSAI-listed source: '+esc(selectedEnzyme.source)+'</small></td><td>Appendix C · Table 11</td></tr>');
    }else{
-     messages.push('<tr><td><b>Enzyme processing</b></td><td>Additional input required</td><td>Select both the Table 11 enzyme and its FSSAI-listed source in Manufacturing process.</td><td>Appendix C · Table 11</td></tr>');
+     messages.push('<tr><td><b>Enzyme processing</b></td><td>Additional input required</td><td>Select either a complete non-GMM Table 11 enzyme/source pair or a complete GMM Table 11A enzyme/organism-source variant.</td><td>Appendix C · Tables 11 / 11A</td></tr>');
    }
  }
  if(selectedProcesses.includes('nutrient'))messages.push('<tr><td><b>Microbial nutrient use</b></td><td>Table 5 nutrient/adjunct permissions activated</td><td>Shown because a microbial-culture nutrient process was selected. These are GMP permissions for sustaining microbial growth, not ingredients that must be used.</td><td>Appendix C · Table 5</td></tr>');
@@ -2311,8 +2397,10 @@ document.getElementById('clearProcesses')?.addEventListener('click',event=>{
  const activeTab=document.querySelector('nav.tabs .tab[data-tab].active')?.dataset.tab || 'process';
  selectedProcesses=[];
  selectedEnzyme={id:'',source:''};
- try{sessionStorage.removeItem(PROCESS_KEY);sessionStorage.removeItem(ENZYME_KEY)}catch(e){}
+ selectedGmmEnzyme={sequence:null,variantIndex:null};
+ try{sessionStorage.removeItem(PROCESS_KEY);sessionStorage.removeItem(ENZYME_KEY);sessionStorage.removeItem(GMM_ENZYME_KEY)}catch(e){}
  populateEnzymeSelector();
+ populateGmmEnzymeSelector();
  syncProcessUI();
  openTab(activeTab,{updateHash:true,save:true});
 });
