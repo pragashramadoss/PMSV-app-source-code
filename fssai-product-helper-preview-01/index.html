@@ -2144,7 +2144,7 @@ function appendixEntryBaseKey(entry){
  const name=normIngredient(entry?.name||'');
  const rawIns=String(entry?.ins||'').trim();
  const ins=normIngredient(rawIns);
- const placeholder=!ins||/^[-—–]+$/.test(rawIns)||/^(n\\/?a|na|none)$/i.test(rawIns);
+ const placeholder=!ins||/^[-—–]+$/.test(rawIns)||/^(n\/?a|na|none)$/i.test(rawIns);
  return placeholder?'name:'+name:'ins:'+ins+'::name:'+name;
 }
 function appendixEntriesForFcs(code){
