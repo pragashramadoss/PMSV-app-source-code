@@ -13,20 +13,21 @@
   },
   "coverage": {
     "main_table_groups_total": 11,
-    "main_table_groups_loaded": 6,
+    "main_table_groups_loaded": 7,
     "loaded_groups": [
       "Table 1 - Fish and Fishery Products",
       "Table 2 - Milk and Milk Products",
       "Table 3 - Spices and Herbs",
       "Table 4 - Fruits and Vegetables and their Products",
       "Table 5 - Meat and Meat Products",
-      "Table 6 - Baker's Yeast"
+      "Table 6 - Baker's Yeast",
+      "Table 7 - Non-Carbonated Water Based Beverages (Non Alcoholic)"
     ],
     "fish_product_categories_loaded": 16,
     "fish_exact_product_mappings": 18,
     "fish_conditional_product_mappings": 4,
     "fish_no_direct_table_mapping": 2,
-    "next_priority": "Table 7 - Non-Carbonated Water Based Beverages (Non Alcoholic)",
+    "next_priority": "Table 8A/8B - Eggs and Egg Products",
     "milk_profiles_loaded": 16,
     "milk_exact_product_mappings": 58,
     "milk_conditional_product_mappings": 17,
@@ -46,7 +47,9 @@
     "meat_no_direct_table_mapping": 1,
     "bakers_yeast_profiles_loaded": 1,
     "bakers_yeast_exact_product_mappings": 0,
-    "bakers_yeast_catalog_gaps": 1
+    "bakers_yeast_catalog_gaps": 1,
+    "noncarbonated_beverage_profiles_loaded": 1,
+    "noncarbonated_beverage_exact_product_mappings": 2
   },
   "organism_labels": {
     "aerobic_plate_count": "Aerobic Plate Count",
@@ -3480,6 +3483,52 @@
           "rope_spore_count_max": "100 CFU/g"
         }
       }
+    },
+    "noncarbonated_beverages": {
+      "table_7_title": "Microbiological Requirements for Non-Carbonated Water Based Beverages (Non Alcoholic)",
+      "source_pages": {
+        "table_7": [
+          53
+        ]
+      },
+      "categories": [
+        {
+          "id": "beverage-01",
+          "sl_no": "1",
+          "name": "Non-Carbonated Water Based Beverages (Non Alcoholic)",
+          "direct_requirements": [
+            {
+              "parameter": "Total Plate Count",
+              "operator": "<=",
+              "value": 50,
+              "unit": "CFU/ml",
+              "display": "Not more than 50 CFU/ml"
+            },
+            {
+              "parameter": "Yeast and mould count",
+              "operator": "<=",
+              "value": 2,
+              "unit": "CFU/ml",
+              "display": "Not more than 2 CFU/ml"
+            },
+            {
+              "parameter": "Coliform count",
+              "operator": "absent",
+              "value": "Absent in 100 ml",
+              "unit": "qualitative",
+              "display": "Absent in 100 ml"
+            }
+          ],
+          "safety_note": "Non-carbonated beverages shall be free from pathogens.",
+          "notes": [
+            "Table 7 provides direct microbiological limits rather than an n/c/m/M sampling-plan table."
+          ]
+        }
+      ],
+      "source_notes": [
+        "Non-carbonated beverages shall be free from pathogens."
+      ],
+      "applicability_rule": "Apply only where the selected standardized product is explicitly a non-carbonated water-based non-alcoholic beverage. Do not apply Table 7 merely from a shared FCS where a more specific Appendix B table governs the product."
     }
   },
   "product_mappings": {
@@ -5950,6 +5999,38 @@
           "source_product": "Baker's Yeast (Compressed and Dried)",
           "status": "no_current_product_master_identity",
           "reason": "Appendix B Table 6A/6B provides the microbiological standard, but the current PMSV standardized-product master has no Baker's Yeast catalogue row. PMSV stores the rule without inventing a product identity."
+        }
+      ]
+    },
+    "noncarbonated_beverages": {
+      "exact": [
+        {
+          "catalog_id": "non-carbonated-water-based-beverages",
+          "profile_key": "beverage-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact Appendix B Table 7 product identity."
+        },
+        {
+          "catalog_id": "non-carbonated-caffeinated-beverage",
+          "profile_key": "beverage-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "The standardized product is explicitly non-carbonated and water-based/non-alcoholic; Appendix B Table 7 applies."
+        }
+      ],
+      "conditional": [],
+      "no_direct_table_mapping": [],
+      "exclusions": [
+        {
+          "catalog_id": "carbonated-water",
+          "reason": "Table 7 is explicitly non-carbonated."
+        },
+        {
+          "catalog_id": "carbonated-caffeinated-beverage",
+          "reason": "Table 7 is explicitly non-carbonated; this product follows its Carbonated Water microbiological route."
+        },
+        {
+          "catalog_id": "carbonated-fruit-beverages",
+          "reason": "Table 7 is explicitly non-carbonated and fruit beverages have their specific Table 4 route."
         }
       ]
     }
