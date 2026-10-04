@@ -45,7 +45,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Validate Build 256 runtime reachability, then retain only the four undefined Table 6 Other foods rows and blank-residue Vitamin B12/Vitamin C rows fail-closed unless an exact current FSSAI rule resolves them.",
+    "next_priority": "Six permissions remain intentionally fail-closed: four undefined Table 6 'Other foods' solvent scopes plus Vitamin B12 and Vitamin C rows whose official active list shows no residual value. Do not infer scope or residue.",
     "table_3_entries": 16,
     "table_3_permission_rows": 18,
     "table_4_entries": 27,
@@ -101,7 +101,7 @@
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
     "appendix_c_product_gate_reachable_permissions": 200,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "pending_ui_reachability_validation_build_256",
+    "appendix_c_product_gate_regression_status": "passed_build_256_full_runtime_reachability_2026-10-04",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -166,7 +166,8 @@
         "corn_kernel_softening_requires_exact_substrate": true,
         "extrusion_requires_explicit_process": true,
         "hardened_oil_requires_exact_catalyst_category": true,
-        "liquid_nitrogen_all_foods_active_list": true
+        "liquid_nitrogen_all_foods_active_list": true,
+        "bone_phosphate_requires_not_milk_confirmation": true
       },
       "route_checks": {
         "vanaspati_catalysts": 4,
@@ -183,12 +184,19 @@
         ],
         "starch_hydrolysis_perlite": true,
         "zinc_sulphate_alcoholic_beverages_gmp": true,
-        "liquid_nitrogen_all_foods_gmp": true
+        "liquid_nitrogen_all_foods_gmp": true,
+        "edible_casing_decalcification": true,
+        "bone_phosphate_sequestration": true,
+        "all_food_multi_purpose_rows_reachable": true,
+        "talc_chewing_gum_scope": true
       },
       "table_6_entries": 27,
-      "table_6_permission_rows": 59
+      "table_6_permission_rows": 59,
+      "unreachable_nonlocked_permissions": 0,
+      "missing_qualifier_ui": 0,
+      "duplicate_process_selectors": 0
     },
-    "appendix_c_runtime_status": "production_fail_closed_current_version_2_plus_official_section_16_5_active_list",
+    "appendix_c_runtime_status": "production_fail_closed_final_2025_plus_section_16_5_build_256",
     "appendix_c_product_master_count": 533,
     "appendix_c_product_profile_count": 533,
     "appendix_c_product_gate_invalid_ids": 0,
@@ -274,8 +282,8 @@
       "table_7_sulphur_dioxide_sugar_limits": "pass",
       "table_8_water_non_alcoholic_flocculants": "pass",
       "table_12_final_2025_substitutions": "pass",
-      "table_12_missing_process_reachability": "pending_ui",
-      "bone_phosphate_negative_scope_qualifier": "pending_ui",
+      "table_12_missing_process_reachability": "pass",
+      "bone_phosphate_negative_scope_qualifier": "pass",
       "talc_confectionery_and_gums": "pass"
     },
     "table_9_liquid_nitrogen_scope": "All Foods"
