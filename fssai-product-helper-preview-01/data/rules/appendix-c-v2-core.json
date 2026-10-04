@@ -45,7 +45,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Re-audit remaining fail-closed Other foods, Bone phosphate, Vitamin B12 and Vitamin C; do not infer blank residue values or an undefined Other foods scope.",
+    "next_priority": "Validate Build 256 runtime reachability, then retain only the four undefined Table 6 Other foods rows and blank-residue Vitamin B12/Vitamin C rows fail-closed unless an exact current FSSAI rule resolves them.",
     "table_3_entries": 16,
     "table_3_permission_rows": 18,
     "table_4_entries": 27,
@@ -95,13 +95,13 @@
       "table_7_hydrogen_peroxide_effective_residual": "5 mg/kg as hydrogen peroxide"
     },
     "appendix_c_product_gate_audit_status": "exact_gate_pass_5_process_routes",
-    "appendix_c_product_gated_permissions": 129,
-    "appendix_c_product_gate_id_links": 313,
+    "appendix_c_product_gated_permissions": 200,
+    "appendix_c_product_gate_id_links": 314,
     "appendix_c_product_gate_rule_key_links": 29,
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
-    "appendix_c_product_gate_reachable_permissions": 76,
+    "appendix_c_product_gate_reachable_permissions": 200,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "passed_after_final_2025_tables_7_8_12_reconciliation_2026-10-04",
+    "appendix_c_product_gate_regression_status": "pending_ui_reachability_validation_build_256",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -119,31 +119,31 @@
       ]
     },
     "appendix_c_permission_gate_counts": {
-      "auto_apply_permissions": 104,
-      "exact_gated_permissions": 176,
-      "remaining_fail_closed_permissions": 8,
+      "auto_apply_permissions": 107,
+      "exact_gated_permissions": 200,
+      "remaining_fail_closed_permissions": 6,
       "remaining_fail_closed_by_table": {
-        "6": 5,
-        "12": 3
+        "6": 4,
+        "12": 2
       }
     },
-    "appendix_c_product_gate_remaining_fail_closed": 7,
-    "appendix_c_product_gated_or_auto_permissions": 306,
+    "appendix_c_product_gate_remaining_fail_closed": 6,
+    "appendix_c_product_gated_or_auto_permissions": 307,
     "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
     "table_2_hardened_oil_status": "fail_closed_identity_unresolved",
     "table_6_decaffeination_status": "tea_and_coffee_exact_process_gates_loaded",
     "table_9_liquid_nitrogen_status": "official_section_16_5_active_list_all_foods_gmp",
     "table_6_mek_decaffeination_route": "loaded_same_source_row",
-    "appendix_c_intentional_fail_closed_permissions": 7,
-    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_255",
+    "appendix_c_intentional_fail_closed_permissions": 6,
+    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_256",
     "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model.",
     "appendix_c_final_runtime_regression_status": "passed_2026-10-04",
     "appendix_c_final_runtime_regression": {
       "source_permission_rows": 313,
-      "runtime_route_projections": 22,
-      "auto_apply_permission_rows": 104,
-      "exact_gated_permission_rows": 176,
-      "intentional_fail_closed_permission_rows": 7,
+      "runtime_route_projections": 37,
+      "auto_apply_permission_rows": 107,
+      "exact_gated_permission_rows": 200,
+      "intentional_fail_closed_permission_rows": 6,
       "unclassified_permission_rows": 0,
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -225,13 +225,6 @@
       },
       {
         "table": 12,
-        "s_no": 10,
-        "name": "Bone phosphate",
-        "category": "All foods except milk and milk products",
-        "process": ""
-      },
-      {
-        "table": 12,
         "s_no": 71,
         "name": "Vitamin B12",
         "category": "All foods",
@@ -280,7 +273,10 @@
       "instant_tea_hydrogen_peroxide": "pass",
       "table_7_sulphur_dioxide_sugar_limits": "pass",
       "table_8_water_non_alcoholic_flocculants": "pass",
-      "table_12_final_2025_substitutions": "pass"
+      "table_12_final_2025_substitutions": "pass",
+      "table_12_missing_process_reachability": "pending_ui",
+      "bone_phosphate_negative_scope_qualifier": "pending_ui",
+      "talc_confectionery_and_gums": "pass"
     },
     "table_9_liquid_nitrogen_scope": "All Foods"
   },
@@ -2168,7 +2164,7 @@
           "ins": "553(iii)",
           "permissions": [
             {
-              "product_category": "Confectionary",
+              "product_category": "Confectionary and Gums",
               "residual_level": "GMP",
               "runtime_auto_apply": false,
               "product_ids": [
@@ -2177,12 +2173,14 @@
                 "05-05-2-lozenges",
                 "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
                 "05-05-2-spice-based-mouth-fresheners",
-                "05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2"
+                "05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2",
+                "05-05-3-chewing-gum-and-bubble-gum"
               ],
               "product_gate_status": "verified_exact_catalogue_subset",
-              "product_gate_note": "Mapped to PMSV FCS 05.2 confectionery identities."
+              "product_gate_note": "Final 2025 amendment scope: Confectionary and Gums. PMSV maps the verified FCS 05.2 confectionery identities plus exact FoSCoS Chewing gum and bubble gum (FCS 05.3)."
             }
-          ]
+          ],
+          "source_note": "Updated by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         },
         {
           "s_no": 27,
@@ -7684,7 +7682,8 @@
                 "08-08-4-animal-casings"
               ],
               "product_gate_status": "verified_exact_catalogue_subset",
-              "product_gate_note": "FoSCoS standardized product Animal Casings is listed under FCS 08.4 Edible casings; exact PMSV catalogue identity gate."
+              "product_gate_note": "FoSCoS standardized product Animal Casings is listed under FCS 08.4 Edible casings; exact PMSV catalogue identity gate. Runtime process: decalcification.",
+              "process_key": "decalcification"
             }
           ]
         },
@@ -7835,14 +7834,31 @@
               "product_category": "All foods except milk and milk products",
               "residual_level": "GMP",
               "runtime_auto_apply": false,
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "This is a negative-scope category. Milk and milk products occur beyond FCS 01 (for example milk-fat/butter routes), so PMSV will not approximate the exclusion with a simple category-prefix rule."
+              "qualifier_key": "milk_product_scope",
+              "qualifier_value": "not_milk_or_milk_product",
+              "runtime_routes": [
+                {
+                  "process_key": "emulsification",
+                  "route_label": "Emulsifier",
+                  "runtime_auto_apply": true
+                },
+                {
+                  "process_key": "moisture_retention",
+                  "route_label": "Moisture retention agent",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "product_gate_status": "verified_exact_negative_scope_qualifier",
+              "product_gate_note": "Appendix C expressly permits all foods except milk and milk products. PMSV activates only after the user confirms the selected food is NOT milk or a milk product; no category-prefix approximation is used."
             },
             {
               "purpose": "Sequestrant",
               "product_category": "All foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": true
+              "runtime_auto_apply": true,
+              "process_key": "sequestration",
+              "product_gate_status": "official_all_foods",
+              "product_gate_note": "All Foods at GMP; Sequestration process is the technological-purpose gate."
             }
           ]
         },
@@ -7855,7 +7871,10 @@
               "purpose": "Polishing agent",
               "product_category": "All foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": true
+              "runtime_auto_apply": true,
+              "process_key": "polishing",
+              "product_gate_status": "official_all_foods",
+              "product_gate_note": "All Foods at GMP; Polishing process is the technological-purpose gate."
             }
           ]
         },
@@ -8356,7 +8375,26 @@
               "purpose": "Thickener, gelling agent, stabilizer, emulsifier",
               "product_category": "All foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": true
+              "runtime_auto_apply": true,
+              "runtime_routes": [
+                {
+                  "process_key": "thickening_gelling",
+                  "route_label": "Thickener / gelling agent",
+                  "runtime_auto_apply": true
+                },
+                {
+                  "process_key": "stabilization",
+                  "route_label": "Stabilizer",
+                  "runtime_auto_apply": true
+                },
+                {
+                  "process_key": "emulsification",
+                  "route_label": "Emulsifier",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "product_gate_status": "official_all_foods_multi_purpose",
+              "product_gate_note": "All Foods at GMP; exposed only through the technological purposes printed in Appendix C."
             }
           ]
         },
@@ -8516,7 +8554,26 @@
               "purpose": "Sweetener, humectant, texturizer, stabilizer, bulking agent",
               "product_category": "All foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": true
+              "runtime_auto_apply": true,
+              "runtime_routes": [
+                {
+                  "process_key": "sweetening_humectant_bulking",
+                  "route_label": "Sweetener / humectant / bulking agent",
+                  "runtime_auto_apply": true
+                },
+                {
+                  "process_key": "texturising",
+                  "route_label": "Texturizer",
+                  "runtime_auto_apply": true
+                },
+                {
+                  "process_key": "stabilization",
+                  "route_label": "Stabilizer",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "product_gate_status": "official_all_foods_multi_purpose",
+              "product_gate_note": "All Foods at GMP; exposed only through the listed sweetener/humectant/bulking, texturizing or stabilizing purposes."
             }
           ]
         },
@@ -9079,7 +9136,10 @@
               "purpose": "Emulsifier",
               "product_category": "All foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": true
+              "runtime_auto_apply": true,
+              "process_key": "emulsification",
+              "product_gate_status": "official_all_foods",
+              "product_gate_note": "All Foods at GMP; Emulsification process is the technological-purpose gate."
             }
           ]
         },
@@ -9092,7 +9152,10 @@
               "purpose": "Emulsifier",
               "product_category": "All foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": true
+              "runtime_auto_apply": true,
+              "process_key": "emulsification",
+              "product_gate_status": "official_all_foods",
+              "product_gate_note": "All Foods at GMP; Emulsification process is the technological-purpose gate."
             }
           ]
         },
@@ -9218,7 +9281,26 @@
               "purpose": "Stabilizer, thickener, emulsifier",
               "product_category": "All foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": true
+              "runtime_auto_apply": true,
+              "runtime_routes": [
+                {
+                  "process_key": "stabilization",
+                  "route_label": "Stabilizer",
+                  "runtime_auto_apply": true
+                },
+                {
+                  "process_key": "thickening_gelling",
+                  "route_label": "Thickener",
+                  "runtime_auto_apply": true
+                },
+                {
+                  "process_key": "emulsification",
+                  "route_label": "Emulsifier",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "product_gate_status": "official_all_foods_multi_purpose",
+              "product_gate_note": "All Foods at GMP; exposed only through the listed stabilizing, thickening or emulsifying purposes."
             },
             {
               "purpose": "Foam stabilizer",
@@ -9428,7 +9510,31 @@
               "purpose": "Stabilizer, leavening agent, emulsifier, nutrient",
               "product_category": "All foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": true
+              "runtime_auto_apply": true,
+              "runtime_routes": [
+                {
+                  "process_key": "stabilization",
+                  "route_label": "Stabilizer",
+                  "runtime_auto_apply": true
+                },
+                {
+                  "process_key": "raising",
+                  "route_label": "Leavening agent",
+                  "runtime_auto_apply": true
+                },
+                {
+                  "process_key": "emulsification",
+                  "route_label": "Emulsifier",
+                  "runtime_auto_apply": true
+                },
+                {
+                  "process_key": "nutrient_processing",
+                  "route_label": "Nutrient",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "product_gate_status": "official_all_foods_multi_purpose",
+              "product_gate_note": "All Foods at GMP; exposed only through the listed stabilizer, leavening, emulsifier or nutrient purposes."
             }
           ]
         },
@@ -9656,7 +9762,10 @@
               "purpose": "Anticaking agent",
               "product_category": "All foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": true
+              "runtime_auto_apply": true,
+              "process_key": "desiccating",
+              "product_gate_status": "official_all_foods",
+              "product_gate_note": "All Foods at GMP; the existing Desiccating / anti-caking process is the technological-purpose gate."
             }
           ]
         },
