@@ -1,0 +1,298 @@
+{
+  "schema_version": "1.0",
+  "database_id": "fssai-appendix-c-v2-core",
+  "source_version": "Version 2 (01.08.2025)",
+  "source_verified_on": "2026-10-04",
+  "source_policy": "Official FSSAI sources only",
+  "runtime_ai_required": false,
+  "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Appendix C — Processing Aids, Version 2 (01.08.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20C%282%29.pdf"
+    }
+  ],
+  "applicability_rule": "Processing aids listed in Tables 1 to 12 may be used only in manufacture of the food specified in the corresponding table and the final food shall not exceed the stated residue level. Product-specific rows remain fail-closed until PMSV has an exact product-category route. 'All foods' rows may auto-apply once the relevant process is selected.",
+  "coverage": {
+    "tables_total": 12,
+    "tables_loaded": 2,
+    "loaded_tables": [
+      "Table 1 - Antifoaming Agents",
+      "Table 2 - Catalyst"
+    ],
+    "table_1_entries": 9,
+    "table_1_permission_rows": 10,
+    "table_2_entries": 9,
+    "table_2_permission_rows": 11,
+    "next_priority": "Table 3 - Clarifying Agents and Filtration Aids"
+  },
+  "processing_aid_categories": {
+    "1": "Antifoaming Agents",
+    "2": "Catalyst",
+    "3": "Clarifying Agents and Filtration Agents",
+    "4": "Lubricants, Release and Antistick Agents",
+    "5": "Microbial Control Agents, Microbial Nutrients and Microbial Nutrient Adjuncts",
+    "6": "Solvent for Extraction and Processing",
+    "7": "Bleaching, Washing, Peeling and Denuding Agents",
+    "8": "Flocculating Agents",
+    "9": "Contact Freezing and Cooling Agents",
+    "10": "Desiccating Agent",
+    "11": "Enzymes",
+    "12": "Generally permitted processing aids"
+  },
+  "tables": {
+    "table_1": {
+      "number": 1,
+      "title": "ANTIFOAMING AGENTS",
+      "process_key": "antifoam",
+      "source_pages": [
+        2,
+        3
+      ],
+      "entries": [
+        {
+          "s_no": 1,
+          "name": "Coconut oil",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Juices",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 2,
+          "name": "Hydrogenated coconut oil",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Confectionary",
+              "residual_level_mgkg": 15,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Vegetable protein",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 3,
+          "name": "Polydimethylsiloxane",
+          "ins": "900a",
+          "permissions": [
+            {
+              "product_category": "Beer, fats & oils, vegetable protein, juices, potato processing, alcoholic beverages",
+              "residual_level_mgkg": 10,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 4,
+          "name": "Polyethylene glycol",
+          "ins": "1521",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 5,
+          "name": "Propylene glycol",
+          "ins": "1520",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 6,
+          "name": "Sorbitan monolaurate",
+          "ins": "493",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 7,
+          "name": "Sorbitan monooleate",
+          "ins": "494",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 8,
+          "name": "Vegetable fatty acid esters",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Juices",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 9,
+          "name": "Polysorbate Sorbitan Monolaurate",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Sugar",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ],
+          "source_note": "Name stored exactly as printed in Appendix C Version 2."
+        }
+      ]
+    },
+    "table_2": {
+      "number": 2,
+      "title": "CATALYST",
+      "process_key": "catalyst",
+      "source_pages": [
+        3
+      ],
+      "entries": [
+        {
+          "s_no": 1,
+          "name": "Chromium (excluding chromium VI)",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Hydrogenated vegetable oil",
+              "residual_level_mgkg": 0.1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 2,
+          "name": "Copper",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Hydrogenated vegetable oil",
+              "residual_level_mgkg": 0.1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 3,
+          "name": "Molybdenum",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Hydrogenated vegetable oil",
+              "residual_level_mgkg": 0.1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 4,
+          "name": "Nickel",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Polyols",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Hardened oil",
+              "residual_level_mgkg": 0.8,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Hydrogenated vegetable oil",
+              "residual_level_mgkg": 1.5,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 5,
+          "name": "Potassium",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Interesterified vegetable oil",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 6,
+          "name": "Potassium ethoxide",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Interesterified vegetable oil",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 7,
+          "name": "Sodium",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Interesterified vegetable oil",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 8,
+          "name": "Sodium ethoxide",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Interesterified vegetable oil",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 9,
+          "name": "Sodium methoxide",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Interesterified vegetable oil",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
