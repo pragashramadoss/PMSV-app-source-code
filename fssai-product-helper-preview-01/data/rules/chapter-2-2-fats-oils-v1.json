@@ -3,7 +3,7 @@
   "chapter": "2.2",
   "title": "Fats, Oils and Fat Emulsions",
   "source_version": "Version 4 (07.05.2025)",
-  "source_verified_on": "2026-10-03",
+  "source_verified_on": "2026-10-04",
   "official_sources": [
     {
       "authority": "FSSAI",
@@ -636,6 +636,48 @@
           "source_note": "Current Version 4 incorporates the 2024 notified substitution."
         }
       ]
+    },
+    {
+      "key": "2.2.2",
+      "name": "Interesterified Vegetable Fat/Oil",
+      "status": "structured_core",
+      "definition": "Edible fatty material treated to rearrange fatty-acid positions within glycerides by interesterification of essentially neutral edible oil or fat, singly or in mixtures, using permitted enzymatic or alkaline-catalyst processes followed by the specified post-process steps.",
+      "process_rules": [
+        "Interesterification may use an enzymatic process or alkaline catalysts such as sodium or potassium metals or their ethoxides/hydroxides as provided in the standard.",
+        "Post-process steps include washing, bleaching and deodorisation, subject to the standard."
+      ],
+      "quality_rules": [
+        "Product shall be clear and free from soap, flavouring substances, rancidity, suspended/foreign matter, separated water and mineral oil."
+      ],
+      "linked_rules": {
+        "processing_aids": "Appendix C Table 2 catalyst permissions apply only to the specified product category and residue limit."
+      },
+      "validation_state": "identity and process definition mapped from official FSSAI Chapter 2.2; detailed composition remains source-linked"
+    },
+    {
+      "key": "2.2.6",
+      "name": "Hydrogenated Vegetable Oils",
+      "status": "structured_core",
+      "product_types": [
+        "Vanaspati",
+        "Bakery shortening"
+      ],
+      "definition": "Hydrogenated vegetable oils include Vanaspati prepared from permitted edible vegetable oils by hydrogenation and the bakery-shortening variant specified in this clause.",
+      "product_variants": [
+        {
+          "variant": "Vanaspati",
+          "rule_key": "2.2.6(1)"
+        },
+        {
+          "variant": "Bakery shortening",
+          "rule_key": "2.2.6(2)",
+          "note": "Bakery shortening is Vanaspati intended for shortening/leavening use in bakery manufacture and follows the Vanaspati standard with the clause-specific exceptions."
+        }
+      ],
+      "linked_rules": {
+        "processing_aids": "Appendix C Table 2 catalyst permissions for Hydrogenated vegetable oil require the corresponding exact product identity."
+      },
+      "validation_state": "product identities and current standard route mapped from official FSSAI Chapter 2.2; detailed composition remains source-linked"
     }
   ],
   "structured_core_standards": 10
