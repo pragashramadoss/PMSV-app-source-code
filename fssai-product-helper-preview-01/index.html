@@ -420,9 +420,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="microbiologyResults"><div class="empty-state">Select and open a standardized product to load its microbiological requirements.</div></div>
 </div>
 <div class="card">
-<div class="section-title"><h2>Appendix B coverage</h2><span>Build 188</span></div>
-<div class="item"><b>Loaded now</b><small>Table 1A and Table 1B - Fish and Fishery Products: 16 product categories, hygiene indicators, safety indicators, sampling plans, stages, corrective actions, test methods and source notes.</small></div>
-<div class="item"><b>Next</b><small>Table 2A and Table 2B - Milk and Milk Products. Other Appendix B groups remain locked until loaded from the official source.</small></div>
+<div class="section-title"><h2>Appendix B coverage</h2><span>Build 189</span></div>
+<div class="item"><b>Loaded now</b><small>Table 1A/1B - Fish and Fishery Products, plus Table 2A/2B - Milk and Milk Products, including process-hygiene and food-safety criteria, sampling plans, footnotes and reference test methods.</small></div>
+<div class="item"><b>Next</b><small>Table 3A and Table 3B - Spices and Herbs. Other Appendix B groups remain locked until loaded from the official source.</small></div>
 </div>
 </section>
 <section id="process" class="view hidden">
@@ -2407,7 +2407,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=188',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=189',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2443,19 +2443,25 @@ function selectedCatalogProductForMicrobiology(){
  return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
 }
 function microbiologyProfileByKey(key){
- const cats=microbiologyDb?.tables?.fish?.categories||[];
- return cats.find(x=>x.id===key)||null;
+ const tables=microbiologyDb?.tables||{};
+ for(const [tableKey,table] of Object.entries(tables)){
+   const profile=(table?.categories||[]).find(x=>x.id===key);
+   if(profile)return {profile,table,tableKey};
+ }
+ return null;
 }
 function microbiologyValue(v,unit){
  if(v===null||v===undefined||v==='')return '—';
  if(typeof v==='number')return Number(v).toLocaleString('en-IN')+(unit&&unit!=='qualitative'?' '+unit:'');
  return esc(String(v));
 }
-function microbiologyCriterionRows(profile,kind){
+function microbiologyCriterionRows(profile,kind,excludeCriteria=[]){
  const src=profile?.[kind]||{};
  const labels=microbiologyDb?.organism_labels||{};
+ const excluded=new Set(excludeCriteria||[]);
  const rows=[];
  Object.entries(src).forEach(([key,c])=>{
+   if(excluded.has(key))return;
    const label=labels[key]||key.replaceAll('_',' ');
    if(c&&c.requirement){
      rows.push('<tr><td><b>'+(kind==='hygiene'?'Process hygiene':'Food safety')+'</b></td><td><b>'+esc(label)+'</b></td><td colspan="4">'+esc(c.requirement)+'</td></tr>');
@@ -2465,22 +2471,63 @@ function microbiologyCriterionRows(profile,kind){
  });
  return rows;
 }
-function microbiologyProfileHtml(profile){
- if(!profile)return '<div class="notice">The selected Appendix B microbiology profile could not be resolved. PMSV will not substitute another category.</div>';
- const rows=[...microbiologyCriterionRows(profile,'hygiene'),...microbiologyCriterionRows(profile,'safety')];
- if(profile.hygiene_special_requirement){
-   rows.unshift('<tr><td><b>Process hygiene</b></td><td><b>Commercial sterility</b></td><td colspan="4">'+esc(profile.hygiene_special_requirement)+'</td></tr>');
+function microbiologyMethodRows(resolved,profile,includeEnterobacteriaceae=false){
+ const table=resolved?.table||{};
+ const keys=new Set([
+   ...Object.keys(profile?.hygiene||{}),
+   ...Object.keys(profile?.safety||{})
+ ]);
+ if(includeEnterobacteriaceae)keys.add('enterobacteriaceae');
+ if(profile?.safety_special_requirement){
+   if(profile.id==='milk-03')keys.add('sterilized_milk');
+   if(profile.id==='milk-04')keys.add('sterilized_cream');
  }
- const methods=microbiologyDb?.tables?.fish?.test_methods||{};
- const methodRows=[...Object.entries(methods.hygiene||{}),...Object.entries(methods.safety||{})]
-  .map(([k,v])=>'<tr><td><b>'+esc(microbiologyDb?.organism_labels?.[k]||k.replaceAll('_',' '))+'</b></td><td>'+esc(v)+'</td></tr>').join('');
- const sourceNotes=[...(profile.notes||[])];
- return '<div class="notice oknote"><b>Appendix B category:</b> '+esc(profile.sl_no+'. '+profile.name)+'<br><small>'+esc(profile.definition||'')+'</small></div>'
-   +(profile.stage?'<div class="notice"><b>Stage where process-hygiene criterion applies:</b> '+esc(profile.stage)+(profile.action?'<br><b>Action in case of unsatisfactory result:</b> '+esc(profile.action):'')+'</div>':'')
+ const raw=table.reference_methods||table.test_methods||{};
+ const pairs=[];
+ if(raw.hygiene||raw.safety){
+   [...Object.entries(raw.hygiene||{}),...Object.entries(raw.safety||{})].forEach(([k,v])=>{if(keys.has(k))pairs.push([k,v]);});
+ }else{
+   Object.entries(raw).forEach(([k,v])=>{if(keys.has(k))pairs.push([k,v]);});
+ }
+ return pairs.map(([k,v])=>'<tr><td><b>'+esc(microbiologyDb?.organism_labels?.[k]||k.replaceAll('_',' '))+'</b></td><td>'+esc(v)+'</td></tr>').join('');
+}
+function microbiologyProfileHtml(resolved,product=null,variantOption=null){
+ if(!resolved?.profile)return '<div class="notice">The selected Appendix B microbiology profile could not be resolved. PMSV will not substitute another category.</div>';
+ const profile=resolved.profile, table=resolved.table||{};
+ const exclude=[...(product?.microbiology_exclude_criteria||[]),...(variantOption?.exclude_criteria||[])];
+ const includeEnterobacteriaceae=product?.microbiology_apply_enterobacteriaceae_footnote===true||variantOption?.apply_enterobacteriaceae_footnote===true;
+ const rows=[...microbiologyCriterionRows(profile,'hygiene',exclude),...microbiologyCriterionRows(profile,'safety',exclude)];
+ if(profile.hygiene_special_requirement){
+   rows.unshift('<tr><td><b>Process hygiene</b></td><td><b>Special requirement</b></td><td colspan="4">'+esc(profile.hygiene_special_requirement)+'</td></tr>');
+ }
+ if(profile.safety_special_requirement){
+   rows.push('<tr><td><b>Food safety</b></td><td><b>Commercial sterility</b></td><td colspan="4">'+esc(profile.safety_special_requirement)+'</td></tr>');
+ }
+ if(includeEnterobacteriaceae&&profile?.supplemental_process_criteria?.enterobacteriaceae){
+   const c=profile.supplemental_process_criteria.enterobacteriaceae;
+   rows.push('<tr><td><b>Process hygiene · footnote</b></td><td><b>Enterobacteriaceae</b><br><small>'+esc(c.applicability||'')+'</small></td><td>'+esc(String(c.n??'—'))+'</td><td>'+esc(String(c.c??'—'))+'</td><td>'+esc(String(c.m??'—'))+'</td><td>'+esc(String(c.M??'—'))+'</td></tr>');
+ }
+ const methodRows=microbiologyMethodRows(resolved,profile,includeEnterobacteriaceae);
+ const notes=[...(profile.notes||[])];
+ if(variantOption?.message)notes.push(variantOption.message);
+ const title=(resolved.tableKey==='milk'?'Table 2':'Table 1');
+ const stageHtml=profile.stage
+   ? '<div class="notice"><b>Stage where process-hygiene criterion applies:</b> '+esc(profile.stage)+(profile.action?'<br><b>Action in case of unsatisfactory result:</b> '+esc(profile.action):'')+'</div>'
+   : (table.stage_rules
+      ? '<div class="notice"><b>Process Hygiene Criteria:</b> '+esc(table.stage_rules.process_hygiene||'')+'<br><b>Food Safety Criteria:</b> '+esc(table.stage_rules.food_safety||'')+'</div>'
+      : '');
+ const actionHtml=Array.isArray(table.action_on_unsatisfactory_process_hygiene)&&table.action_on_unsatisfactory_process_hygiene.length
+   ? '<div class="notice"><b>Action for unsatisfactory process-hygiene result:</b><br>'+table.action_on_unsatisfactory_process_hygiene.map(esc).join('<br>')+'</div>'
+   : '';
+ const naHtml=profile.process_hygiene_not_applicable
+   ? '<div class="notice"><b>Process Hygiene Criteria:</b> Not applicable for this Table 2 product row; use the Food Safety / commercial-sterility requirement below.</div>'
+   : '';
+ return '<div class="notice oknote"><b>Appendix B category:</b> '+esc(profile.sl_no+'. '+profile.name)+(profile.definition?'<br><small>'+esc(profile.definition)+'</small>':'')+'</div>'
+   +naHtml+stageHtml+actionHtml
    +'<div class="tablewrap"><table><thead><tr><th>Criterion</th><th>Organism / requirement</th><th>n</th><th>c</th><th>m</th><th>M</th></tr></thead><tbody>'+rows.join('')+'</tbody></table></div>'
-   +'<div class="countline">Values are stored exactly from Appendix B Version 2. “—” means no value is prescribed in that table cell.</div>'
-   +(methodRows?'<div class="section-title" style="margin-top:16px"><h2>Reference test methods</h2><span>Table 1</span></div><div class="tablewrap"><table><thead><tr><th>Parameter</th><th>Method</th></tr></thead><tbody>'+methodRows+'</tbody></table></div>':'')
-   +(sourceNotes.length?'<div class="notice"><b>Source notes:</b><br>'+[...new Set(sourceNotes)].map(esc).join('<br>')+'</div>':'');
+   +'<div class="countline">Values are stored from Appendix B Version 2. “—” means no value is prescribed / applicable in that table cell.</div>'
+   +(methodRows?'<div class="section-title" style="margin-top:16px"><h2>Reference test methods</h2><span>'+esc(title)+'</span></div><div class="tablewrap"><table><thead><tr><th>Parameter</th><th>Method</th></tr></thead><tbody>'+methodRows+'</tbody></table></div>':'')
+   +(notes.length?'<div class="notice"><b>Product-specific source notes:</b><br>'+[...new Set(notes)].map(esc).join('<br>')+'</div>':'');
 }
 function renderProductMicrobiology(){
  const el=document.getElementById('microbiologyResults');
@@ -2505,35 +2552,45 @@ function renderProductMicrobiology(){
    return;
  }
  if(p.microbiology_status==='mapped_appendix_b_v2'){
-   el.innerHTML=microbiologyProfileHtml(microbiologyProfileByKey(p.microbiology_profile_key));
+   el.innerHTML=microbiologyProfileHtml(microbiologyProfileByKey(p.microbiology_profile_key),p);
    return;
  }
  if(p.microbiology_status==='conditional_appendix_b_variant_required'){
    const opts=Array.isArray(p.microbiology_candidates)?p.microbiology_candidates:[];
    el.innerHTML='<div class="notice"><b>Actual product form/process required before Appendix B can be applied.</b><br>'+esc(p.microbiology_note||'More than one Appendix B category may apply.')+'</div>'
-    +'<div class="field"><label>Select the actual regulated form</label><select id="microbiologyVariantChoice"><option value="">Select actual form/process…</option>'+opts.map(x=>'<option value="'+esc(x.profile_key)+'">'+esc(x.condition)+'</option>').join('')+'</select><small>PMSV will not choose between these categories automatically.</small></div>'
+    +'<div class="field"><label>Select the actual regulated form / process</label><select id="microbiologyVariantChoice"><option value="">Select actual form/process…</option>'+opts.map((x,i)=>'<option value="'+i+'">'+esc(x.condition)+'</option>').join('')+'</select><small>PMSV will not choose between these categories automatically.</small></div>'
     +'<div id="microbiologyResolvedVariant" style="margin-top:12px"></div>';
    const sel=document.getElementById('microbiologyVariantChoice');
    const target=document.getElementById('microbiologyResolvedVariant');
    sel?.addEventListener('change',()=>{
-     const key=sel.value;
-     target.innerHTML=key?microbiologyProfileHtml(microbiologyProfileByKey(key)):'';
+     if(sel.value===''){target.innerHTML='';return;}
+     const opt=opts[Number(sel.value)];
+     if(!opt){target.innerHTML='';return;}
+     if(!opt.profile_key){
+       target.innerHTML='<div class="notice"><b>No direct Appendix B row applied.</b><br>'+esc(opt.message||'PMSV will not infer a microbiological category for this form.')+'</div>';
+       return;
+     }
+     target.innerHTML=microbiologyProfileHtml(microbiologyProfileByKey(opt.profile_key),p,opt);
    });
    return;
  }
- if(p.microbiology_status==='appendix_b_no_direct_fish_table_mapping'){
-   el.innerHTML='<div class="notice"><b>No direct Appendix B Table 1 category is assigned.</b><br>'+esc(p.microbiology_note||'PMSV does not infer a microbiological category by analogy.')+'</div>';
+ if(p.microbiology_status==='appendix_b_no_direct_fish_table_mapping'||p.microbiology_status==='appendix_b_no_direct_table_mapping'){
+   el.innerHTML='<div class="notice"><b>No direct Appendix B category is assigned.</b><br>'+esc(p.microbiology_note||'PMSV does not infer a microbiological category by analogy.')+'</div>';
    return;
  }
  if(String(p.fssr||'').startsWith('2.6')){
    el.innerHTML='<div class="notice">This fish product has no stored Appendix B route. PMSV will not infer one.</div>';
    return;
  }
- el.innerHTML='<div class="notice"><b>Appendix B table for this product is not loaded yet.</b><br>Build 188 currently contains the complete Fish and Fishery Products Table 1A/1B only. The next ingestion block is Milk and Milk Products Table 2A/2B.</div>';
+ if(/^2\.1(?:\.|$)/.test(String(p.fssr||''))||String(p.category||'')==='13'){
+   el.innerHTML='<div class="notice">This dairy/infant product has no stored Appendix B route. PMSV will not infer one from its name.</div>';
+   return;
+ }
+ el.innerHTML='<div class="notice"><b>Appendix B table for this product is not loaded yet.</b><br>Build 189 contains Fish and Fishery Products (Table 1) and Milk and Milk Products (Table 2). The next ingestion block is Spices and Herbs (Table 3A/3B).</div>';
 }
 async function loadMicrobiologyDb(){
  try{
-   const res=await fetch('./data/rules/appendix-b-v2-core.json?v=188',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-b-v2-core.json?v=189',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    microbiologyDb=await res.json();
  }catch(e){
@@ -2939,7 +2996,7 @@ async function loadContaminantsDb(){
 async function loadRegulatoryDb(){
  const status=document.getElementById('regDbStatus');
  try{
-   const res=await fetch('./data/regulatory-db-v1.json?v=188',{cache:'reload'});
+   const res=await fetch('./data/regulatory-db-v1.json?v=189',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    regulatoryDb=await res.json();
    ingredientCatalog=catalogFromDb(regulatoryDb);
