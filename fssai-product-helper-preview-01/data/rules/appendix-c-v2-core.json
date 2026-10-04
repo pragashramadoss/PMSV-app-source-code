@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Resolve only the remaining 11 official-source gaps: Hardened oil, Colours, Other foods, Bone phosphate negative-scope exclusion, Calcium sulfate missing category, and incomplete-residue rows for Vitamin B12, Vitamin C and Zinc sulphate.",
+    "next_priority": "Reconcile the remaining 9 rows against current-effective official FSSAI text, prioritising the 2025 amendment block affecting Table 6/Table 9/Table 12 before unlocking Colours or Zinc sulphate.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -84,13 +84,13 @@
       "table_7_hydrogen_peroxide_effective_residual": "5 mg/kg as hydrogen peroxide"
     },
     "appendix_c_product_gate_audit_status": "exact_gate_pass_5_process_routes",
-    "appendix_c_product_gated_permissions": 112,
-    "appendix_c_product_gate_id_links": 268,
+    "appendix_c_product_gated_permissions": 114,
+    "appendix_c_product_gate_id_links": 295,
     "appendix_c_product_gate_rule_key_links": 29,
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
-    "appendix_c_product_gate_reachable_permissions": 59,
+    "appendix_c_product_gate_reachable_permissions": 61,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "passed_after_exact_substrate_qualifiers_2026-10-04",
+    "appendix_c_product_gate_regression_status": "passed_after_hardened_oil_and_calcium_sulfate_2026-10-04",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -123,23 +123,23 @@
         "12": 42
       }
     },
-    "appendix_c_product_gate_remaining_fail_closed": 11,
-    "appendix_c_product_gated_or_auto_permissions": 254,
+    "appendix_c_product_gate_remaining_fail_closed": 9,
+    "appendix_c_product_gated_or_auto_permissions": 256,
     "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
     "table_2_hardened_oil_status": "fail_closed_identity_unresolved",
     "table_6_decaffeination_status": "tea_and_coffee_exact_process_gates_loaded",
     "table_9_liquid_nitrogen_status": "combined_foscos_row_requires_ice_cream_form_confirmation",
     "table_6_mek_decaffeination_route": "loaded_same_source_row",
-    "appendix_c_intentional_fail_closed_permissions": 11,
-    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_249",
+    "appendix_c_intentional_fail_closed_permissions": 9,
+    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_250",
     "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model.",
     "appendix_c_final_runtime_regression_status": "passed_2026-10-04",
     "appendix_c_final_runtime_regression": {
       "source_permission_rows": 265,
       "runtime_route_projections": 1,
       "auto_apply_permission_rows": 95,
-      "exact_gated_permission_rows": 159,
-      "intentional_fail_closed_permission_rows": 11,
+      "exact_gated_permission_rows": 161,
+      "intentional_fail_closed_permission_rows": 9,
       "unclassified_permission_rows": 0,
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -160,7 +160,8 @@
         "tripe_washing_requires_exact_substrate": true,
         "yeast_cell_disruption_requires_exact_substrate": true,
         "corn_kernel_softening_requires_exact_substrate": true,
-        "extrusion_requires_explicit_process": true
+        "extrusion_requires_explicit_process": true,
+        "hardened_oil_requires_exact_catalyst_category": true
       },
       "route_checks": {
         "vanaspati_catalysts": 4,
@@ -185,13 +186,6 @@
     "appendix_c_product_gate_invalid_rule_keys": 0,
     "appendix_c_product_gate_unreachable": 0,
     "appendix_c_product_gate_remaining_rows": [
-      {
-        "table": 2,
-        "s_no": 4,
-        "name": "Nickel",
-        "category": "Hardened oil",
-        "process": "catalyst"
-      },
       {
         "table": 6,
         "s_no": 1,
@@ -236,13 +230,6 @@
       },
       {
         "table": 12,
-        "s_no": 13,
-        "name": "Calcium sulfate",
-        "category": "",
-        "process": ""
-      },
-      {
-        "table": 12,
         "s_no": 71,
         "name": "Vitamin B12",
         "category": "All foods",
@@ -275,7 +262,9 @@
       "tripe_washing_qualifier": "pass",
       "yeast_cell_disruption_qualifier": "pass",
       "extrusion_process_gate": "pass",
-      "corn_kernel_softening_qualifier": "pass"
+      "corn_kernel_softening_qualifier": "pass",
+      "hardened_oil_nickel_qualifier": "pass",
+      "calcium_sulfate_alcoholic_beverage_gate": "pass"
     }
   },
   "processing_aid_categories": {
@@ -584,11 +573,11 @@
             {
               "product_category": "Hardened oil",
               "residual_level_mgkg": 0.8,
-              "runtime_auto_apply": false,
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "Current PMSV/FoSCoS product master does not expose a distinct Hardened oil identity. Do not equate it automatically with Vanaspati, Bakery shortening or other hydrogenated-oil products.",
-              "product_gate_status": "fail_closed_no_exact_catalogue_identity",
-              "product_gate_note": "No exact FoSCoS/PMSV standardized product named Hardened oil is loaded; PMSV does not equate it automatically with Vanaspati or other hydrogenated products."
+              "runtime_auto_apply": true,
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Appendix C expressly lists Nickel for Hardened oil at 0.8 mg/kg. PMSV activates this permission only when the user explicitly confirms the catalyst product category is Hardened oil; it is not inferred from Vanaspati, Bakery shortening or other hydrogenated oils.",
+              "qualifier_key": "catalyst_product_category",
+              "qualifier_value": "hardened_oil"
             },
             {
               "product_category": "Hydrogenated vegetable oil",
@@ -7237,12 +7226,42 @@
           "permissions": [
             {
               "purpose": "Buffering agent",
-              "product_category": "",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
               "runtime_auto_apply": false,
-              "source_note": "The current Version 2 extracted table does not expose a product-category value for this row. PMSV therefore stores no inferred category and keeps it fail-closed.",
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "The operative Appendix C Version 2 row has no product-category value. PMSV does not infer one from a later draft."
+              "source_note": "Current Version 2 extraction lost the merged product-category cell; official FSSAI Appendix C compendium confirms the category and GMP residue.",
+              "product_ids": [
+                "fortified-wine",
+                "bamboo-wine",
+                "brandy",
+                "country-liquor-indian-liquors",
+                "fenny-feni",
+                "gin",
+                "14-14-2-beer",
+                "14-14-2-draught-beer",
+                "14-14-2-cider",
+                "14-14-2-perry",
+                "14-14-2-table-wine",
+                "14-14-2-red-wine",
+                "14-14-2-white-wine",
+                "14-14-2-semi-sparkling-or-crackling-wine",
+                "14-14-2-sparkling-wine",
+                "14-14-2-fruit-wine-other-than-grape-wine",
+                "14-14-2-palm-wine-toddy",
+                "14-14-2-rum",
+                "14-14-2-vodka",
+                "14-14-2-liqueur-or-cordial-or-apertifs",
+                "14-14-2-whisky-or-whiskey",
+                "14-14-2-pot-still-or-column-distilled-spirit",
+                "14-14-2-alcoholic-ready-to-drink-beverages",
+                "14-14-2-carbonated-wine-from-grapes",
+                "14-14-2-carbonated-wine-fruits-other-than-grapes",
+                "14-14-2-wine-based-beverages",
+                "14-14-2-honey-wine-or-mead"
+              ],
+              "process_key": "ph",
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Official FSSAI Appendix C compendium cross-check confirms Calcium sulfate as a buffering agent for alcoholic beverages including low alcoholic and alcohol-free counterparts at GMP. Mapped to the same verified PMSV alcoholic-beverage catalogue set used for Calcium chloride."
             }
           ]
         },
