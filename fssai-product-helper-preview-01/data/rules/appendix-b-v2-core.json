@@ -1,0 +1,948 @@
+{
+  "schema_version": "1.0",
+  "database_id": "fssai-appendix-b-v2-core",
+  "source_version": "Version 2 (04.11.2024)",
+  "source_verified_on": "2026-10-04",
+  "source_policy": "Official FSSAI/FoSCoS sources only",
+  "runtime_ai_required": false,
+  "official_source": {
+    "authority": "FSSAI",
+    "title": "Appendix B - Microbiological Requirements, Version 2 (04.11.2024)",
+    "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20B%281%29.pdf",
+    "verification_basis": "User-uploaded official Appendix B(1).pdf visually checked for Table 1A/1B"
+  },
+  "coverage": {
+    "main_table_groups_total": 11,
+    "main_table_groups_loaded": 1,
+    "loaded_groups": [
+      "Table 1 - Fish and Fishery Products"
+    ],
+    "fish_product_categories_loaded": 16,
+    "fish_exact_product_mappings": 18,
+    "fish_conditional_product_mappings": 4,
+    "fish_no_direct_table_mapping": 2,
+    "next_priority": "Table 2A/2B - Milk and Milk Products"
+  },
+  "organism_labels": {
+    "aerobic_plate_count": "Aerobic Plate Count",
+    "coagulase_positive_staphylococci": "Coagulase positive Staphylococci",
+    "yeast_and_mold_count": "Yeast & mold count",
+    "escherichia_coli": "Escherichia coli",
+    "salmonella": "Salmonella",
+    "vibrio_cholerae_o1_o139": "Vibrio cholerae (O1 and O139)",
+    "listeria_monocytogenes": "Listeria monocytogenes",
+    "clostridium_botulinum": "Clostridium botulinum"
+  },
+  "tables": {
+    "fish": {
+      "table_1a_title": "Microbiological Requirements for Fish and Fishery products - Hygiene Indicator Organisms",
+      "table_1b_title": "Microbiological Requirements for Fish and Fishery products - Safety Indicator Organisms",
+      "source_pages": {
+        "table_1a": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "table_1b": [
+          5,
+          6,
+          7
+        ],
+        "definitions": [
+          8,
+          9,
+          10
+        ]
+      },
+      "categories": [
+        {
+          "id": "fish-01",
+          "sl_no": 1,
+          "name": "Chilled/Frozen Finfish",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 3,
+              "m": 500000,
+              "M": 10000000,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "After Chilling/Freezing",
+          "action": "Improvement in hygiene; Time-Temperature Control along value chain",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 3,
+              "m": 11,
+              "M": 500,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae_o1_o139": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Clean and wholesome finfish in raw, chilled or frozen condition; freezing must bring the thermal centre to -18°C or lower after thermal stabilisation."
+        },
+        {
+          "id": "fish-02",
+          "sl_no": 2,
+          "name": "Chilled/Frozen Crustaceans",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 3,
+              "m": 1000000,
+              "M": 10000000,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "After Chilling/Freezing",
+          "action": "Improvement in hygiene; Time-Temperature Control along value chain",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 3,
+              "m": 11,
+              "M": 500,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae_o1_o139": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Clean whole or peeled crustaceans (shrimp/prawn, crabs and lobster) in raw, chilled or frozen condition."
+        },
+        {
+          "id": "fish-03",
+          "sl_no": 3,
+          "name": "Chilled/Frozen Cephalopods",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100000,
+              "M": 1000000,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "After Chilling/Freezing",
+          "action": "Improvement in hygiene; Time-Temperature Control along value chain",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 0,
+              "m": 20,
+              "M": null,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae_o1_o139": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Cleaned whole or de-skinned cephalopods (squid, cuttlefish and octopus) in raw, chilled or frozen condition."
+        },
+        {
+          "id": "fish-04",
+          "sl_no": 4,
+          "name": "Live Bivalve Molluscs",
+          "hygiene": {},
+          "stage": null,
+          "action": null,
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 1,
+              "m": "230/100g",
+              "M": "700/100g",
+              "unit": "MPN/100g"
+            }
+          },
+          "notes": [
+            "No hygienic indicators are currently prescribed for Live Bivalve Molluscs."
+          ],
+          "definition": "Oyster, clam, mussel, scallop or abalone alive immediately prior to consumption, with controls over approved/classified harvest areas and purification where applicable."
+        },
+        {
+          "id": "fish-05",
+          "sl_no": 5,
+          "name": "Chilled/Frozen Bivalves",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100000,
+              "M": 1000000,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "After Chilling/Freezing",
+          "action": "Improvement in hygiene; Time-Temperature Control along value chain",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 0,
+              "m": 46,
+              "M": null,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 10,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae_o1_o139": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Clean whole or shucked bivalves in chilled or frozen condition, including oysters, mussels, clams, cockles and scallops."
+        },
+        {
+          "id": "fish-06",
+          "sl_no": 6,
+          "name": "Frozen Cooked Crustaceans/Frozen Heat Shucked Mollusc",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100000,
+              "M": 1000000,
+              "unit": "cfu/g"
+            },
+            "coagulase_positive_staphylococci": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "End of Manufacturing process",
+          "action": "Improvement in hygiene; Selection of raw material; Time-Temperature Control along value chain; process control",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 2,
+              "m": 1,
+              "M": 10,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae_o1_o139": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Frozen cooked crustaceans or frozen heat-shucked mollusca; cooked crustaceans use a defined time/temperature process, while heat-shucked bivalves are mildly heated before shucking and subsequently frozen."
+        },
+        {
+          "id": "fish-07",
+          "sl_no": 7,
+          "name": "Dried/Salted and Dried Fishery Products",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 0,
+              "m": 100000,
+              "M": null,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 500,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "End of Manufacturing process",
+          "action": "Improvement in hygiene; Selection of raw material; Adequate drying (water activity <= 0.78)",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 0,
+              "m": 20,
+              "M": null,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Fishery products prepared from fresh/wholesome finfish or shellfish after drying with or without salt."
+        },
+        {
+          "id": "fish-08",
+          "sl_no": 8,
+          "name": "Thermally Processed Fishery Products",
+          "hygiene_special_requirement": "Commercially Sterile",
+          "stage": "End of Manufacturing process",
+          "action": "Revalidation of thermal process",
+          "hygiene": {},
+          "safety": {
+            "clostridium_botulinum": {
+              "requirement": "Absence of viable spores or vegetative cells of Clostridium botulinum and absence of botulinum toxin."
+            }
+          },
+          "notes": [
+            "Commercial sterility should be established as per APHA (2015), Canned Foods - Tests for Commercial Sterility, Compendium of Methods for the Microbiological Examination of Food."
+          ],
+          "definition": "Fishery products heat processed for sufficient time to achieve commercial sterility in hermetically sealed containers."
+        },
+        {
+          "id": "fish-09",
+          "sl_no": 9,
+          "name": "Fermented Fishery Products",
+          "hygiene": {
+            "coagulase_positive_staphylococci": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 0,
+              "m": 100,
+              "M": null,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "End of Manufacturing process",
+          "action": "Improvement in hygiene; Selection of raw material",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 2,
+              "m": 4,
+              "M": 40,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 10,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "clostridium_botulinum": {
+              "requirement": "Absence of viable spores or vegetative cells of Clostridium botulinum and absence of botulinum toxin."
+            }
+          },
+          "definition": "Fish products undergoing degradative changes through enzymatic or microbiological activity, with or without salt; includes accelerated fermentation, acid ensilage and chemical hydrolysis products."
+        },
+        {
+          "id": "fish-10",
+          "sl_no": 10,
+          "name": "Smoked Fishery Products",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 0,
+              "m": 100000,
+              "M": null,
+              "unit": "cfu/g"
+            },
+            "coagulase_positive_staphylococci": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "End of Manufacturing process",
+          "action": "Improvement in hygiene; Time-Temperature Control along value chain",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 3,
+              "m": 11,
+              "M": 500,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae_o1_o139": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Fish/fishery products treated with smoke; the category refers to hot-smoked fish with complete coagulation of flesh proteins."
+        },
+        {
+          "id": "fish-11",
+          "sl_no": 11,
+          "name": "Accelerated Freeze Dried Fishery Products",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 0,
+              "m": 10000,
+              "M": null,
+              "unit": "cfu/g"
+            },
+            "coagulase_positive_staphylococci": {
+              "n": 5,
+              "c": 0,
+              "m": 100,
+              "M": null,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "End of Manufacturing process",
+          "action": "Selection of raw material; Improvement in hygiene; along value chain",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 0,
+              "m": 20,
+              "M": null,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae_o1_o139": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Fish, shrimp or fishery products rapidly frozen and dried under high vacuum by sublimation to final moisture below two percent."
+        },
+        {
+          "id": "fish-12",
+          "sl_no": 12,
+          "name": "Fish Mince/Surimi and Analogues",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100000,
+              "M": 1000000,
+              "unit": "cfu/g"
+            },
+            "coagulase_positive_staphylococci": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "End of Manufacturing process",
+          "action": "Selection of raw material; Improvement in hygiene",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 0,
+              "m": 20,
+              "M": null,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae_o1_o139": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Comminuted mechanically removed fish meat essentially free from bones, viscera and skin; includes surimi and surimi analogues."
+        },
+        {
+          "id": "fish-13",
+          "sl_no": 13,
+          "name": "Fish Pickle",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 0,
+              "m": 1000,
+              "M": null,
+              "unit": "cfu/g"
+            },
+            "coagulase_positive_staphylococci": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 0,
+              "m": 100,
+              "M": null,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "End of manufacturing process (before packing)",
+          "action": "Improvement in hygiene; Control of pH/acidity; selection of ingredients",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 0,
+              "m": 20,
+              "M": null,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Oily semi-solid fish pickle with spices and acidic taste, prepared by frying edible fish portions and maturation with vinegar/organic acids."
+        },
+        {
+          "id": "fish-14",
+          "sl_no": 14,
+          "name": "Battered and Breaded Fishery Products",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100000,
+              "M": 10000000,
+              "unit": "cfu/g"
+            },
+            "coagulase_positive_staphylococci": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 0,
+              "m": 100,
+              "M": null,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "End of Manufacturing process",
+          "action": "Improvement in hygiene; Time-Temperature Control",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 2,
+              "m": 11,
+              "M": 500,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae_o1_o139": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 5,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative",
+              "notes": "Stored exactly as printed in Appendix B Version 2."
+            }
+          },
+          "definition": "Fish portions, fillets or mince coated with batter and/or breading."
+        },
+        {
+          "id": "fish-15",
+          "sl_no": 15,
+          "name": "Convenience Fishery Products",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 1000,
+              "M": 10000,
+              "unit": "cfu/g"
+            },
+            "coagulase_positive_staphylococci": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "End of Manufacturing process",
+          "action": "Improvement in hygiene; Time-Temperature control of batter mix",
+          "safety": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 2,
+              "m": 1,
+              "M": 10,
+              "unit": "MPN/g"
+            },
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae_o1_o139": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Ready-to-eat tertiary fish products and fish snacks for direct human consumption with minimal handling; includes sous-vide cooked products, cooked in-pack surimi products, pasteurised crab meat and pasteurised molluscs."
+        },
+        {
+          "id": "fish-16",
+          "sl_no": 16,
+          "name": "Powdered Fish Based Products",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 10000,
+              "M": 100000,
+              "unit": "cfu/g"
+            },
+            "coagulase_positive_staphylococci": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 0,
+              "m": 100,
+              "M": null,
+              "unit": "cfu/g"
+            }
+          },
+          "stage": "End of Manufacturing process",
+          "action": "Improvement in hygiene; Selection of raw material",
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Powdered products prepared from finfish/shellfish or parts thereof, with or without other edible ingredients, for direct use, supplementation or rehydration."
+        }
+      ],
+      "test_methods": {
+        "hygiene": {
+          "aerobic_plate_count": "IS 5402 / ISO 4833",
+          "coagulase_positive_staphylococci": "IS 5887 Part 2 or IS 5887 Part 8 (Sec 1) / ISO 6888-1 or IS 5887 Part 8 (Sec 2) / ISO 6888-2",
+          "yeast_and_mold_count": "IS 5403 / ISO 21527"
+        },
+        "safety": {
+          "escherichia_coli": "IS 5887 Part 1 or ISO 16649-2",
+          "salmonella": "IS 5887 Part 3 / ISO 6579",
+          "vibrio_cholerae_o1_o139": "Vibrio, Bacteriological Analytical Manual, Chapter 9, USFDA BAM Online, May 2004",
+          "listeria_monocytogenes": "IS 14988 Part 1 & 2 / ISO 11290-1 & 2",
+          "clostridium_botulinum": "IS 5887 Part 4 or ISO 17919"
+        }
+      },
+      "source_notes": [
+        "Commercial sterility should be established as per APHA (2015), Canned Foods - Tests for Commercial Sterility, Compendium of Methods for the Microbiological Examination of Food.",
+        "No hygienic indicators are currently prescribed for Live Bivalve Molluscs.",
+        "For Battered and Breaded Fishery Products, the Listeria monocytogenes sampling plan is stored as n=5, c=5, Absent/25g exactly as printed in Version 2; PMSV does not silently alter it."
+      ]
+    }
+  },
+  "product_mappings": {
+    "exact": [
+      {
+        "catalog_id": "09-09-2-frozen-squid-and-parts-of-squid",
+        "profile_key": "fish-03",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-2-frozen-finfish",
+        "profile_key": "fish-01",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-2-frozen-fish-fillets",
+        "profile_key": "fish-01",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-2-frozen-cephalopods",
+        "profile_key": "fish-03",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-2-fresh-and-quick-frozen-raw-scallop-products",
+        "profile_key": "fish-05",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-2-quick-frozen-fish-sticks-fish-fingers-fish-portions-and-fish-fillets-breaded-or-ba",
+        "profile_key": "fish-14",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-2-frozen-minced-fish-meat",
+        "profile_key": "fish-12",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-2-salted-fish-dried-salted-fish",
+        "profile_key": "fish-07",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-2-edible-fish-powder",
+        "profile_key": "fish-16",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-2-freeze-dried-prawns-shrimps",
+        "profile_key": "fish-11",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-2-smoked-fishery-products",
+        "profile_key": "fish-10",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-2-pasteurized-fish-sausage",
+        "profile_key": "fish-15",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-2-pasteurised-crab-meat",
+        "profile_key": "fish-15",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-3-fish-pickles",
+        "profile_key": "fish-13",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-4-canned-fishery-products",
+        "profile_key": "fish-08",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "09-09-4-ready-to-eat-finfish-or-shell-fish-curry-in-retortable-pouches",
+        "profile_key": "fish-08",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "12-12-6-fish-sauce",
+        "profile_key": "fish-09",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      },
+      {
+        "catalog_id": "99-99-1-gelatin-from-fish-processing-waste",
+        "profile_key": "fish-15",
+        "status": "mapped_exact_from_official_product_identity_or_chapter_microbiology_route"
+      }
+    ],
+    "conditional": [
+      {
+        "catalog_id": "09-09-2-frozen-shrimp",
+        "status": "variant_required",
+        "reason": "The FSSAI product standard includes raw, partially cooked and fully cooked frozen shrimp. Appendix B separates chilled/frozen crustaceans from frozen cooked crustaceans.",
+        "options": [
+          {
+            "condition": "Raw / uncooked frozen shrimp",
+            "profile_key": "fish-02"
+          },
+          {
+            "condition": "Cooked frozen shrimp",
+            "profile_key": "fish-06"
+          }
+        ]
+      },
+      {
+        "catalog_id": "09-09-2-frozen-lobsters",
+        "status": "variant_required",
+        "reason": "The FSSAI product standard allows raw or cooked frozen lobster. Appendix B separates chilled/frozen crustaceans from frozen cooked crustaceans.",
+        "options": [
+          {
+            "condition": "Raw / uncooked frozen lobster",
+            "profile_key": "fish-02"
+          },
+          {
+            "condition": "Cooked frozen lobster",
+            "profile_key": "fish-06"
+          }
+        ]
+      },
+      {
+        "catalog_id": "09-09-2-frozen-clam-meat",
+        "status": "variant_required",
+        "reason": "The FSSAI product standard contains raw frozen and cooked frozen clam-meat variants. Appendix B separates chilled/frozen bivalves from frozen heat-shucked/cooked molluscs.",
+        "options": [
+          {
+            "condition": "Raw frozen clam meat",
+            "profile_key": "fish-05"
+          },
+          {
+            "condition": "Cooked / heat-shucked frozen clam meat",
+            "profile_key": "fish-06"
+          }
+        ]
+      },
+      {
+        "catalog_id": "09-09-1-live-and-raw-bivalve-molluscs",
+        "status": "variant_required",
+        "reason": "The standardized product covers both live bivalves and raw chilled/frozen/shucked bivalves, which have different Appendix B criteria.",
+        "options": [
+          {
+            "condition": "Live bivalve molluscs, alive immediately prior to consumption",
+            "profile_key": "fish-04"
+          },
+          {
+            "condition": "Raw chilled/frozen or shucked bivalves",
+            "profile_key": "fish-05"
+          }
+        ]
+      }
+    ],
+    "no_direct_table_mapping": [
+      {
+        "catalog_id": "02-02-1-fish-oil",
+        "reason": "Appendix B Table 1 does not provide a Fish Oil product category. PMSV does not infer one."
+      },
+      {
+        "catalog_id": "09-09-3-sturgeon-caviar",
+        "reason": "Appendix B Table 1 does not provide an explicit Sturgeon Caviar product category. PMSV does not infer a category from ready-to-eat status or salt treatment."
+      }
+    ]
+  }
+}
