@@ -13,18 +13,19 @@
   },
   "coverage": {
     "main_table_groups_total": 11,
-    "main_table_groups_loaded": 4,
+    "main_table_groups_loaded": 5,
     "loaded_groups": [
       "Table 1 - Fish and Fishery Products",
       "Table 2 - Milk and Milk Products",
       "Table 3 - Spices and Herbs",
-      "Table 4 - Fruits and Vegetables and their Products"
+      "Table 4 - Fruits and Vegetables and their Products",
+      "Table 5 - Meat and Meat Products"
     ],
     "fish_product_categories_loaded": 16,
     "fish_exact_product_mappings": 18,
     "fish_conditional_product_mappings": 4,
     "fish_no_direct_table_mapping": 2,
-    "next_priority": "Table 5A/5B - Meat and Meat Products",
+    "next_priority": "Table 6A/6B - Baker's Yeast",
     "milk_profiles_loaded": 16,
     "milk_exact_product_mappings": 58,
     "milk_conditional_product_mappings": 17,
@@ -37,7 +38,11 @@
     "fruit_runtime_profiles_loaded": 12,
     "fruit_exact_product_mappings": 7,
     "fruit_conditional_product_mappings": 19,
-    "fruit_no_direct_table_mapping": 4
+    "fruit_no_direct_table_mapping": 4,
+    "meat_profiles_loaded": 9,
+    "meat_exact_product_mappings": 23,
+    "meat_conditional_product_mappings": 8,
+    "meat_no_direct_table_mapping": 1
   },
   "organism_labels": {
     "aerobic_plate_count": "Aerobic Plate Count",
@@ -56,7 +61,8 @@
     "sulphite_reducing_clostridia": "Sulphite Reducing Clostridia (SRC)",
     "aerobic_colony_count": "Aerobic Colony Count",
     "e_coli_o157_or_stec": "E. coli O157 / Vero or Shiga toxin producing E. coli",
-    "vibrio_cholerae": "Vibrio cholerae"
+    "vibrio_cholerae": "Vibrio cholerae",
+    "campylobacter_spp": "Campylobacter spp."
   },
   "tables": {
     "fish": {
@@ -2809,6 +2815,564 @@
         "Carbonated fruit beverages and pasteurized fruit juices can be excluded from Listeria testing where pH is below 4.4.",
         "Retort processed foods shall be tested after incubation at 37°C for 10 days and 55°C for 7 days."
       ]
+    },
+    "meat": {
+      "table_5a_title": "Microbiological Standards for Meat and Meat Products - Process Hygiene Criteria",
+      "table_5b_title": "Microbiological Standards for Meat & Meat Products - Food Safety Criteria",
+      "source_pages": {
+        "table_5a": [
+          40,
+          41
+        ],
+        "table_5b": [
+          41,
+          42
+        ],
+        "definitions_and_stage": [
+          42,
+          43,
+          44
+        ],
+        "sampling_and_methods": [
+          44,
+          45,
+          46,
+          47
+        ]
+      },
+      "categories": [
+        {
+          "id": "meat-01",
+          "sl_no": "1",
+          "name": "Fresh meat / Chilled meat",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 3,
+              "m": 1000000,
+              "M": 5000000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 2,
+              "m": 10000,
+              "M": 50000,
+              "unit": "cfu/g"
+            },
+            "escherichia_coli": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Fresh meat has not been treated to ensure preservation. Chilled meat is fresh meat washed with potable water and kept between 0–7°C.",
+          "notes": [
+            "Products in categories 1–5 are to be cooked to make safe before consumption."
+          ]
+        },
+        {
+          "id": "meat-02",
+          "sl_no": "2",
+          "name": "Frozen meat",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100000,
+              "M": 5000000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 2,
+              "m": 1000,
+              "M": 10000,
+              "unit": "cfu/g"
+            },
+            "escherichia_coli": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Fresh meat washed with potable water, chilled and frozen so the product reaches -18°C or colder at the thermal centre after thermal stabilization.",
+          "notes": [
+            "Products in categories 1–5 are to be cooked to make safe before consumption."
+          ]
+        },
+        {
+          "id": "meat-03",
+          "sl_no": "3",
+          "name": "Raw marinated/minced/comminuted meat",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 500000,
+              "M": 5000000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 2,
+              "m": 10000,
+              "M": 50000,
+              "unit": "cfu/g"
+            },
+            "escherichia_coli": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Meat with or without bones reduced to fragments by cutting, grinding, dicing, chopping or milling and/or marinated, with or without additives.",
+          "notes": [
+            "The Yeast and Mold Count values 1×10^4 and 5×10^4 cfu/g are stored from the amended values printed in Appendix B Version 2.",
+            "Products in categories 1–5 are to be cooked to make safe before consumption."
+          ]
+        },
+        {
+          "id": "meat-04",
+          "sl_no": "4",
+          "name": "Semi-cooked / Smoked Meat / meat food Product",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 10000,
+              "M": 100000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "escherichia_coli": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "campylobacter_spp": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Partially heat-treated and/or smoked meat or meat product requiring additional heat treatment before consumption.",
+          "notes": [
+            "Products in categories 1–5 are to be cooked to make safe before consumption."
+          ]
+        },
+        {
+          "id": "meat-05",
+          "sl_no": "5",
+          "name": "Cured/Pickled meat",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 500,
+              "M": 5000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "escherichia_coli": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "sulphite_reducing_clostridia": {
+              "n": 5,
+              "c": 2,
+              "m": 500,
+              "M": 5000,
+              "unit": "cfu/g"
+            }
+          },
+          "definition": "Meat product prepared after curing/pickling in solution containing salt, nitrate/nitrite and adjuncts for preservation and desired colour, flavour and shelf life.",
+          "notes": [
+            "Products in categories 1–5 are to be cooked to make safe before consumption."
+          ]
+        },
+        {
+          "id": "meat-06",
+          "sl_no": "6",
+          "name": "Fermented meat products",
+          "hygiene": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "sulphite_reducing_clostridia": {
+              "n": 5,
+              "c": 2,
+              "m": 500,
+              "M": 5000,
+              "unit": "cfu/g"
+            }
+          },
+          "definition": "Chopped or ground meat products aged through desirable microorganisms to develop low pH and characteristic flavour, taste, texture and long shelf life."
+        },
+        {
+          "id": "meat-07",
+          "sl_no": "7",
+          "name": "Dried/dehydrated meat products",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 1000,
+              "M": 10000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "escherichia_coli": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 1,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "sulphite_reducing_clostridia": {
+              "n": 5,
+              "c": 2,
+              "m": 500,
+              "M": 5000,
+              "unit": "cfu/g"
+            }
+          },
+          "definition": "Meat or meat products in which part of the free water has been removed by evaporation or sublimation."
+        },
+        {
+          "id": "meat-08",
+          "sl_no": "8",
+          "name": "Cooked Meat Products",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 1000,
+              "M": 10000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 1,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "escherichia_coli": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 1,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "sulphite_reducing_clostridia": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "campylobacter_spp": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Meat or meat product subjected to heat treatment achieving a minimum thermal core temperature of 75°C."
+        },
+        {
+          "id": "meat-09",
+          "sl_no": "9",
+          "name": "Canned/Retort pouch Meat Products",
+          "hygiene": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "sulphite_reducing_clostridia": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "clostridium_botulinum": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "campylobacter_spp": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "definition": "Meat product packed in hermetically sealed containers and heat treated after sealing sufficiently to make the product shelf stable."
+        }
+      ],
+      "stage_rules": {
+        "process_hygiene": "Table 5A indicates acceptable functioning of the production process; it is not a market-release requirement and applies at the end of manufacturing.",
+        "food_safety": "Table 5B defines batch/lot acceptability and applies at the end of manufacturing and to products in the market during shelf life."
+      },
+      "action_on_unsatisfactory_process_hygiene": [
+        "Check and improve process hygiene by implementing Schedule 4 Part IV requirements.",
+        "Ensure all applicable Table 5B Food Safety Criteria are complied with."
+      ],
+      "sampling_plan_definitions": {
+        "n": "Number of units comprising a sample.",
+        "c": "Maximum allowable number of units having counts above m for a 2-class plan and between m and M for a 3-class plan.",
+        "m": "Limit separating unsatisfactory from satisfactory in a 2-class plan, or acceptable from satisfactory in a 3-class plan.",
+        "M": "Limit separating unsatisfactory from satisfactory in a 3-class plan."
+      },
+      "interpretation": {
+        "two_class": [
+          "Satisfactory if all observed values are <= m.",
+          "Unsatisfactory if one or more values are > m or more than c values are > m."
+        ],
+        "three_class": [
+          "Satisfactory if all observed values are <= m.",
+          "Acceptable if at most c values are between m and M and the remainder are <= m.",
+          "Unsatisfactory if one or more values are > M or more than c values are > m."
+        ]
+      },
+      "reference_methods": {
+        "aerobic_plate_count": "IS 5402 / ISO 4833",
+        "yeast_and_mold_count": "IS 5403 / ISO 21527-1 and ISO 21527-2",
+        "staphylococcus_aureus": "IS 5887 Part 2 or IS 5887 Part 8 (Sec 1) / ISO 6888-1 or IS 5887 Part 8 (Sec 2) / ISO 6888-2",
+        "escherichia_coli": "IS 5887 Part 1 / ISO 16649-2",
+        "salmonella": "IS 5887 Part 3 / ISO 6579",
+        "listeria_monocytogenes": "IS 14988 Part 1 & 2 / ISO 11290-1 & 2",
+        "campylobacter_spp": "ISO 10272-1 & 2",
+        "sulphite_reducing_clostridia": "ISO 15213",
+        "clostridium_botulinum": "IS 5887 Part 4 / ISO-TS 17919"
+      },
+      "poultry_salmonella_note": "For poultry meat, the Salmonella requirement applies to Salmonella enterica serovars Typhi, Typhimurium and Enteritidis.",
+      "source_notes": [
+        "Products under categories 1–5 are to be cooked to make safe before consumption."
+      ]
     }
   },
   "product_mappings": {
@@ -4945,6 +5509,328 @@
           "catalog_id": "12-12-10-vegetable-protein-products",
           "status": "no_direct_table_mapping",
           "reason": "Appendix B Table 4 does not expressly identify Vegetable Protein Products as one of its fruit/vegetable process categories."
+        }
+      ]
+    },
+    "meat": {
+      "exact": [
+        {
+          "catalog_id": "08-08-1-fresh-or-chilled-pork-or-pig-meat",
+          "profile_key": "meat-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact fresh/chilled meat identity."
+        },
+        {
+          "catalog_id": "08-08-1-fresh-or-chilled-beef",
+          "profile_key": "meat-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact fresh/chilled meat identity."
+        },
+        {
+          "catalog_id": "08-08-1-fresh-or-chilled-chevon-or-goat-meat",
+          "profile_key": "meat-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact fresh/chilled meat identity."
+        },
+        {
+          "catalog_id": "08-08-1-fresh-or-chilled-mutton-or-sheep-meat",
+          "profile_key": "meat-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact fresh/chilled meat identity."
+        },
+        {
+          "catalog_id": "08-08-1-fresh-or-chilled-poultry-meat",
+          "profile_key": "meat-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact fresh/chilled meat identity."
+        },
+        {
+          "catalog_id": "08-08-1-fresh-or-chilled-rabbit-meat",
+          "profile_key": "meat-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact fresh/chilled meat identity."
+        },
+        {
+          "catalog_id": "08-08-2-frozen-rabbit-meat",
+          "profile_key": "meat-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact frozen meat identity."
+        },
+        {
+          "catalog_id": "08-08-2-frozen-pork-or-pig-meat",
+          "profile_key": "meat-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact frozen meat identity."
+        },
+        {
+          "catalog_id": "08-08-2-frozen-beef",
+          "profile_key": "meat-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact frozen meat identity."
+        },
+        {
+          "catalog_id": "08-08-2-frozen-chevon-or-goat-meat",
+          "profile_key": "meat-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact frozen meat identity."
+        },
+        {
+          "catalog_id": "08-08-2-frozen-mutton-or-sheep-meat",
+          "profile_key": "meat-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact frozen meat identity."
+        },
+        {
+          "catalog_id": "08-08-2-frozen-poultry-meat",
+          "profile_key": "meat-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact frozen meat identity."
+        },
+        {
+          "catalog_id": "08-08-2-marinated-meat-products-whole-pieces-or-cuts",
+          "profile_key": "meat-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact raw marinated meat-product identity."
+        },
+        {
+          "catalog_id": "08-08-3-marinated-meat-products-comminuted",
+          "profile_key": "meat-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact raw marinated meat-product identity."
+        },
+        {
+          "catalog_id": "08-08-2-fermented-meat-products-whole-pieces-or-cuts",
+          "profile_key": "meat-06",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact fermented meat-product identity."
+        },
+        {
+          "catalog_id": "08-08-3-fermented-meat-products-comminuted",
+          "profile_key": "meat-06",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact fermented meat-product identity."
+        },
+        {
+          "catalog_id": "08-08-2-dried-or-dehydrated-meat-products-whole-pieces-or-cuts",
+          "profile_key": "meat-07",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact dried/dehydrated meat-product identity."
+        },
+        {
+          "catalog_id": "08-08-3-dried-or-dehydrated-meat-products-comminuted",
+          "profile_key": "meat-07",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact dried/dehydrated meat-product identity."
+        },
+        {
+          "catalog_id": "08-08-2-canned-or-retort-pouch-meat-products",
+          "profile_key": "meat-09",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact canned/retort-pouch meat-product identity."
+        },
+        {
+          "catalog_id": "08-08-3-canned-or-retort-pouch-meat-products",
+          "profile_key": "meat-09",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact canned/retort-pouch meat-product identity."
+        },
+        {
+          "catalog_id": "08-08-3-meat-sausages-fresh",
+          "profile_key": "meat-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Fresh meat sausage is mapped to the raw marinated/minced/comminuted meat category."
+        },
+        {
+          "catalog_id": "08-08-3-meat-sausages-cooked",
+          "profile_key": "meat-08",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact cooked meat-sausage identity."
+        },
+        {
+          "catalog_id": "08-08-3-meat-sausages-smoked",
+          "profile_key": "meat-04",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact smoked meat-sausage identity requiring the semi-cooked/smoked meat route."
+        }
+      ],
+      "conditional": [
+        {
+          "catalog_id": "08-08-2-cooked-or-semicooked-meat-products-heat-treated-processed-meat-in-whole-pieces-or-",
+          "status": "variant_required",
+          "reason": "FoSCoS combines cooked and semicooked meat in one standardized identity; Appendix B separates them.",
+          "options": [
+            {
+              "condition": "Semi-cooked / partially heat-treated and requiring further heat treatment",
+              "profile_key": "meat-04"
+            },
+            {
+              "condition": "Fully cooked · minimum core temperature 75°C achieved",
+              "profile_key": "meat-08"
+            },
+            {
+              "condition": "Actual final heat-treatment state not established",
+              "profile_key": "",
+              "message": "PMSV will not choose between semi-cooked and cooked Table 5 categories without the actual final heat treatment."
+            }
+          ]
+        },
+        {
+          "catalog_id": "08-08-3-cooked-or-semicooked-meat-products-heat-treated-processed-comminuted-meat",
+          "status": "variant_required",
+          "reason": "FoSCoS combines cooked and semicooked comminuted meat; Appendix B separates them.",
+          "options": [
+            {
+              "condition": "Semi-cooked / partially heat-treated and requiring further heat treatment",
+              "profile_key": "meat-04"
+            },
+            {
+              "condition": "Fully cooked · minimum core temperature 75°C achieved",
+              "profile_key": "meat-08"
+            },
+            {
+              "condition": "Actual final heat-treatment state not established",
+              "profile_key": "",
+              "message": "PMSV will not choose between semi-cooked and cooked Table 5 categories without the actual final heat treatment."
+            }
+          ]
+        },
+        {
+          "catalog_id": "08-08-3-cooked-or-semicooked-meat-products-frozen-processed-comminuted-meat",
+          "status": "variant_required",
+          "reason": "Freezing does not by itself resolve whether this processed product is semi-cooked or fully cooked; choose the final heat-treatment state.",
+          "options": [
+            {
+              "condition": "Semi-cooked / partially heat-treated and requiring further heat treatment",
+              "profile_key": "meat-04"
+            },
+            {
+              "condition": "Fully cooked · minimum core temperature 75°C achieved",
+              "profile_key": "meat-08"
+            },
+            {
+              "condition": "Actual final heat-treatment state not established",
+              "profile_key": "",
+              "message": "PMSV will not choose between semi-cooked and cooked Table 5 categories without the actual final heat treatment."
+            }
+          ]
+        },
+        {
+          "catalog_id": "08-08-2-cooked-or-semicooked-meat-products-frozen-raw-flavoured-marinated-processed-meat-i",
+          "status": "variant_required",
+          "reason": "This combined FoSCoS identity spans frozen raw, flavoured/marinated and cooked/semi-cooked states. Appendix B requires the actual final processing state.",
+          "options": [
+            {
+              "condition": "Frozen raw meat",
+              "profile_key": "meat-02"
+            },
+            {
+              "condition": "Raw flavoured/marinated meat",
+              "profile_key": "meat-03"
+            },
+            {
+              "condition": "Semi-cooked / partially heat-treated and requiring further heat treatment",
+              "profile_key": "meat-04"
+            },
+            {
+              "condition": "Fully cooked · minimum core temperature 75°C achieved",
+              "profile_key": "meat-08"
+            }
+          ]
+        },
+        {
+          "catalog_id": "08-08-2-cured-or-pickled-and-cooked-or-smoked-meat-products-or-both-whole-pieces-or-cuts",
+          "status": "variant_required",
+          "reason": "The combined product name spans cured/pickled, smoked/semi-cooked and cooked routes.",
+          "options": [
+            {
+              "condition": "Cured/pickled product · not subsequently established as fully cooked",
+              "profile_key": "meat-05"
+            },
+            {
+              "condition": "Semi-cooked or smoked product requiring further heat treatment",
+              "profile_key": "meat-04"
+            },
+            {
+              "condition": "Fully cooked product · minimum core temperature 75°C achieved",
+              "profile_key": "meat-08"
+            }
+          ]
+        },
+        {
+          "catalog_id": "08-08-3-cured-or-pickled-and-cooked-or-smoked-meat-products-or-both-comminuted",
+          "status": "variant_required",
+          "reason": "The combined product name spans cured/pickled, smoked/semi-cooked and cooked routes.",
+          "options": [
+            {
+              "condition": "Cured/pickled product · not subsequently established as fully cooked",
+              "profile_key": "meat-05"
+            },
+            {
+              "condition": "Semi-cooked or smoked product requiring further heat treatment",
+              "profile_key": "meat-04"
+            },
+            {
+              "condition": "Fully cooked product · minimum core temperature 75°C achieved",
+              "profile_key": "meat-08"
+            }
+          ]
+        },
+        {
+          "catalog_id": "08-08-3-comminuted-or-restructured-meat-products",
+          "status": "variant_required",
+          "reason": "The generic comminuted/restructured identity does not establish the preservation or heat-treatment state required by Appendix B.",
+          "options": [
+            {
+              "condition": "Raw marinated/minced/comminuted",
+              "profile_key": "meat-03"
+            },
+            {
+              "condition": "Semi-cooked / smoked requiring further heat treatment",
+              "profile_key": "meat-04"
+            },
+            {
+              "condition": "Cured/pickled",
+              "profile_key": "meat-05"
+            },
+            {
+              "condition": "Fermented",
+              "profile_key": "meat-06"
+            },
+            {
+              "condition": "Dried/dehydrated",
+              "profile_key": "meat-07"
+            },
+            {
+              "condition": "Fully cooked · minimum core 75°C achieved",
+              "profile_key": "meat-08"
+            },
+            {
+              "condition": "Canned/retort pouch and shelf stable",
+              "profile_key": "meat-09"
+            }
+          ]
+        },
+        {
+          "catalog_id": "08-08-3-meat-sausages-dry-or-fermented",
+          "status": "variant_required",
+          "reason": "Appendix B separates fermented meat from dried/dehydrated meat.",
+          "options": [
+            {
+              "condition": "Fermented sausage",
+              "profile_key": "meat-06"
+            },
+            {
+              "condition": "Dry/dehydrated sausage",
+              "profile_key": "meat-07"
+            }
+          ]
+        }
+      ],
+      "no_direct_table_mapping": [
+        {
+          "catalog_id": "08-08-4-animal-casings",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 5 does not provide a direct Animal Casings microbiological category; PMSV will not infer one."
         }
       ]
     }
