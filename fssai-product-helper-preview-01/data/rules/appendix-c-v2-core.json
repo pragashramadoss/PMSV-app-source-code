@@ -39,7 +39,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Reconcile the remaining 8 rows: Table 6 Colours/Other foods, Bone phosphate negative-scope exclusion, and Vitamin B12/Vitamin C blank-residue rows. Keep the latter two fail-closed because the official active list also shows no residue value.",
+    "next_priority": "Audit Section 16(5) additions to existing Table 12 rows, then reconcile the remaining 8 fail-closed permissions: Table 6 Colours/Other foods, Bone phosphate negative scope, Vitamin B12 and Vitamin C blank-residue rows.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -65,12 +65,12 @@
     "table_11a_gmm_entries_loaded": 51,
     "table_11a_gmm_variant_rows_loaded": 109,
     "table_11a_gmm_enzyme_preparation_criteria_loaded": true,
-    "table_12_status": "complete_current_version_2_reconciled",
-    "table_12_entries_loaded": 75,
-    "table_12_permission_rows": 83,
-    "table_12_runtime_mapped_entries": 42,
-    "table_12_runtime_policy": "Official current Version 2 only; draft ePC rows excluded; product-specific/ambiguous rows fail closed.",
-    "appendix_c_audit_status": "tables_1_to_12_and_11a_verified_current_version_2",
+    "table_12_status": "complete_version_2_plus_official_section_16_5_active_list",
+    "table_12_entries_loaded": 87,
+    "table_12_permission_rows": 95,
+    "table_12_runtime_mapped_entries": 54,
+    "table_12_runtime_policy": "Official Appendix C Version 2 plus the operative FSSAI Section 16(5) active processing-aids list; draft ePC rows remain excluded.",
+    "appendix_c_audit_status": "tables_1_to_12_and_11a_verified_plus_section_16_5_active_list",
     "appendix_c_audit_note": "Draft notification 4353 is not treated as operative law. Runtime may also use the separate official FSSAI Section 16(5) active processing-aids direction where it expressly permits an active row.",
     "appendix_c_draft_notifications_excluded": true,
     "table_11_audit_status": "verified_against_effective_2026_amendment",
@@ -89,13 +89,13 @@
       "table_7_hydrogen_peroxide_effective_residual": "5 mg/kg as hydrogen peroxide"
     },
     "appendix_c_product_gate_audit_status": "exact_gate_pass_5_process_routes",
-    "appendix_c_product_gated_permissions": 114,
-    "appendix_c_product_gate_id_links": 295,
+    "appendix_c_product_gated_permissions": 122,
+    "appendix_c_product_gate_id_links": 308,
     "appendix_c_product_gate_rule_key_links": 29,
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
-    "appendix_c_product_gate_reachable_permissions": 61,
+    "appendix_c_product_gate_reachable_permissions": 69,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "passed_after_hardened_oil_and_calcium_sulfate_2026-10-04",
+    "appendix_c_product_gate_regression_status": "passed_after_section_16_5_table_12_expansion_2026-10-04",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -113,37 +113,30 @@
       ]
     },
     "appendix_c_permission_gate_counts": {
-      "auto_apply_permissions": 93,
-      "exact_gated_permissions": 50,
-      "remaining_fail_closed_permissions": 122,
+      "auto_apply_permissions": 100,
+      "exact_gated_permissions": 169,
+      "remaining_fail_closed_permissions": 8,
       "remaining_fail_closed_by_table": {
-        "1": 2,
-        "2": 10,
-        "3": 7,
-        "4": 15,
-        "5": 3,
-        "6": 27,
-        "7": 15,
-        "9": 1,
-        "12": 42
+        "6": 5,
+        "12": 3
       }
     },
     "appendix_c_product_gate_remaining_fail_closed": 8,
-    "appendix_c_product_gated_or_auto_permissions": 257,
+    "appendix_c_product_gated_or_auto_permissions": 269,
     "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
     "table_2_hardened_oil_status": "fail_closed_identity_unresolved",
     "table_6_decaffeination_status": "tea_and_coffee_exact_process_gates_loaded",
     "table_9_liquid_nitrogen_status": "official_section_16_5_active_list_all_foods_gmp",
     "table_6_mek_decaffeination_route": "loaded_same_source_row",
     "appendix_c_intentional_fail_closed_permissions": 8,
-    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_251",
+    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_252",
     "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model.",
     "appendix_c_final_runtime_regression_status": "passed_2026-10-04",
     "appendix_c_final_runtime_regression": {
-      "source_permission_rows": 265,
-      "runtime_route_projections": 1,
-      "auto_apply_permission_rows": 96,
-      "exact_gated_permission_rows": 161,
+      "source_permission_rows": 277,
+      "runtime_route_projections": 5,
+      "auto_apply_permission_rows": 100,
+      "exact_gated_permission_rows": 169,
       "intentional_fail_closed_permission_rows": 8,
       "unclassified_permission_rows": 0,
       "invalid_product_ids": 0,
@@ -155,8 +148,8 @@
       "table_11_non_gmm_source_rows": 140,
       "table_11a_gmm_entries": 51,
       "table_11a_gmm_variant_rows": 109,
-      "table_12_entries": 75,
-      "table_12_permission_rows": 83,
+      "table_12_entries": 87,
+      "table_12_permission_rows": 95,
       "qualifier_checks": {
         "liquid_nitrogen_requires_exact_ice_cream_form": false,
         "dried_ice_cream_mix_rejected": true,
@@ -267,7 +260,14 @@
       "hardened_oil_nickel_qualifier": "pass",
       "calcium_sulfate_alcoholic_beverage_gate": "pass",
       "zinc_sulphate_gmp_gate": "pass",
-      "liquid_nitrogen_all_foods": "pass"
+      "liquid_nitrogen_all_foods": "pass",
+      "table_12_active_list_rows_76_87": "pass",
+      "yeast_all_foods_fermentation": "pass",
+      "hydrochloric_acid_active_routes": "pass",
+      "raising_agent_qualifiers": "pass",
+      "flavouring_qualifiers": "pass",
+      "cellulose_wax_filtration_qualifier": "pass",
+      "sugar_treatment_route": "pass"
     },
     "table_9_liquid_nitrogen_scope": "All Foods"
   },
@@ -8855,44 +8855,16 @@
           "permissions": [
             {
               "purpose": "Fermenting Agent",
-              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "product_category": "All foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": false,
-              "product_ids": [
-                "fortified-wine",
-                "bamboo-wine",
-                "brandy",
-                "country-liquor-indian-liquors",
-                "fenny-feni",
-                "gin",
-                "14-14-2-beer",
-                "14-14-2-draught-beer",
-                "14-14-2-cider",
-                "14-14-2-perry",
-                "14-14-2-table-wine",
-                "14-14-2-red-wine",
-                "14-14-2-white-wine",
-                "14-14-2-semi-sparkling-or-crackling-wine",
-                "14-14-2-sparkling-wine",
-                "14-14-2-fruit-wine-other-than-grape-wine",
-                "14-14-2-palm-wine-toddy",
-                "14-14-2-rum",
-                "14-14-2-vodka",
-                "14-14-2-liqueur-or-cordial-or-apertifs",
-                "14-14-2-whisky-or-whiskey",
-                "14-14-2-pot-still-or-column-distilled-spirit",
-                "14-14-2-alcoholic-ready-to-drink-beverages",
-                "14-14-2-carbonated-wine-from-grapes",
-                "14-14-2-carbonated-wine-fruits-other-than-grapes",
-                "14-14-2-wine-based-beverages",
-                "14-14-2-honey-wine-or-mead"
-              ],
-              "product_gate_status": "verified_exact_catalogue_subset",
-              "product_gate_note": "All PMSV alcoholic-beverage identities.",
-              "process_key": "fermentation"
+              "runtime_auto_apply": true,
+              "process_key": "fermentation",
+              "product_gate_status": "official_active_list_all_foods",
+              "product_gate_note": "FSSAI Section 16(5) active list gives Yeast as a Fermenting Agent for All foods at GMP.",
+              "source_note": "Corrected from the official FSSAI Section 16(5) active processing-aids list."
             }
           ],
-          "process_key": "nutrient"
+          "process_key": "fermentation"
         },
         {
           "s_no": 74,
@@ -8956,6 +8928,281 @@
             }
           ],
           "process_key": "water"
+        },
+        {
+          "s_no": 76,
+          "name": "Nitrogen",
+          "ins": "941",
+          "permissions": [
+            {
+              "purpose": "Packaging gas, Creating inert atmosphere",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "gas",
+              "product_gate_status": "official_active_list_all_foods",
+              "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+            }
+          ]
+        },
+        {
+          "s_no": 77,
+          "name": "Hydrochloric acid",
+          "ins": "507",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "Water Treatment, Non-alcoholic beverages",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false,
+              "runtime_routes": [
+                {
+                  "process_key": "water",
+                  "route_label": "Water Treatment",
+                  "runtime_auto_apply": true
+                },
+                {
+                  "process_key": "ph",
+                  "route_label": "Non-alcoholic beverages",
+                  "runtime_auto_apply": false,
+                  "product_ids": [
+                    "mineral-water",
+                    "packaged-drinking-water",
+                    "purified-vending-water",
+                    "fruit-juices",
+                    "fruit-juice-preserved-industrial",
+                    "vegetable-juices",
+                    "tomato-juice",
+                    "vegetable-juice-preserved-industrial",
+                    "concentrated-fruit-pulp-puree",
+                    "concentrated-fruit-juice-industrial",
+                    "concentrated-vegetable-juice-industrial",
+                    "concentrated-vegetable-pulp-puree",
+                    "fruit-nectars",
+                    "carbonated-water",
+                    "carbonated-caffeinated-beverage",
+                    "non-carbonated-water-based-beverages",
+                    "non-carbonated-caffeinated-beverage",
+                    "fruit-drink-rts",
+                    "ginger-cocktail",
+                    "squash",
+                    "crush",
+                    "fruit-syrup-sharbat",
+                    "cordial",
+                    "barley-water",
+                    "synthetic-syrup-dispenser",
+                    "synthetic-syrup-sharbat",
+                    "fruit-beverage-mix",
+                    "carbonated-fruit-beverages",
+                    "tea",
+                    "kangra-tea",
+                    "green-tea",
+                    "instant-tea-solid",
+                    "coffee",
+                    "chicory",
+                    "coffee-chicory-mixture",
+                    "coconut-neera"
+                  ]
+                }
+              ],
+              "product_gate_status": "verified_active_list_runtime_routes",
+              "product_gate_note": "Water Treatment is process-exact. The non-alcoholic beverage route is limited to PMSV FCS 14.1 catalogue identities.",
+              "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+            }
+          ]
+        },
+        {
+          "s_no": 78,
+          "name": "Ammonium bicarbonate",
+          "ins": "503(ii)",
+          "permissions": [
+            {
+              "purpose": "Raising agent",
+              "product_category": "Flour Mix and its products",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "raising",
+              "qualifier_key": "raising_product_category",
+              "qualifier_value": "flour_mix_and_products",
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Activated only when the user explicitly confirms the Appendix C category Flour Mix and its products.",
+              "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+            }
+          ]
+        },
+        {
+          "s_no": 79,
+          "name": "Disodium ortho phosphate",
+          "ins": "339(ii)",
+          "permissions": [
+            {
+              "purpose": "Raising agent",
+              "product_category": "Flour Mix and its products; Malt based beverages",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false,
+              "runtime_routes": [
+                {
+                  "process_key": "raising",
+                  "route_label": "Flour Mix and its products",
+                  "runtime_auto_apply": true,
+                  "qualifier_key": "raising_product_category",
+                  "qualifier_value": "flour_mix_and_products"
+                },
+                {
+                  "process_key": "raising",
+                  "route_label": "Malt based beverages",
+                  "runtime_auto_apply": true,
+                  "qualifier_key": "raising_product_category",
+                  "qualifier_value": "malt_based_beverage"
+                }
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "No malt-food identity is substituted for Malt based beverages; the user must confirm the exact Appendix C category.",
+              "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+            }
+          ]
+        },
+        {
+          "s_no": 80,
+          "name": "Trisodium Citrate; Sodium Citrate",
+          "ins": "331(iii)",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "Flavourings, All Foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "ph",
+              "product_gate_status": "official_active_list_all_foods",
+              "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+            }
+          ]
+        },
+        {
+          "s_no": 81,
+          "name": "Ammonium Chloride",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "pH control agent",
+              "product_category": "Flavourings",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "ph",
+              "qualifier_key": "ph_product_category",
+              "qualifier_value": "flavourings",
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Activated only when the user explicitly confirms the Appendix C product category Flavourings.",
+              "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+            }
+          ]
+        },
+        {
+          "s_no": 82,
+          "name": "Polyoxyethylene (20) monooleate",
+          "ins": "433",
+          "permissions": [
+            {
+              "purpose": "Emulsifier",
+              "product_category": "Flavourings",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "emulsification",
+              "qualifier_key": "emulsification_product_category",
+              "qualifier_value": "flavourings",
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Activated only when the user explicitly confirms the Appendix C product category Flavourings.",
+              "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+            }
+          ]
+        },
+        {
+          "s_no": 83,
+          "name": "Triacetin",
+          "ins": "1518",
+          "permissions": [
+            {
+              "purpose": "Binding agent",
+              "product_category": "Flavourings",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "binding",
+              "qualifier_key": "binding_product_category",
+              "qualifier_value": "flavourings",
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Activated only when the user explicitly confirms the Appendix C product category Flavourings.",
+              "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+            }
+          ]
+        },
+        {
+          "s_no": 84,
+          "name": "Corn Steep Liquor",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Antistick agent",
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "release",
+              "product_gate_status": "official_active_list_all_foods",
+              "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+            }
+          ]
+        },
+        {
+          "s_no": 85,
+          "name": "Calcium Magnesium Carbonate",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "To remove hardness",
+              "product_category": "Water treatment",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "water",
+              "product_gate_status": "process_exact",
+              "product_gate_note": "The FSSAI applicability category is Water treatment itself; the selected process is the exact gate.",
+              "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+            }
+          ]
+        },
+        {
+          "s_no": 86,
+          "name": "Cellulose",
+          "ins": "460",
+          "permissions": [
+            {
+              "purpose": "Extraction manufacturing process",
+              "product_category": "Removal of insoluble waxes from liquid product during filtration",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "filtration",
+              "qualifier_key": "filtration_purpose",
+              "qualifier_value": "remove_insoluble_waxes",
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Activated only for filtration specifically used to remove insoluble waxes from a liquid product.",
+              "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+            }
+          ]
+        },
+        {
+          "s_no": 87,
+          "name": "Vegetable fatty acid esters",
+          "ins": "",
+          "permissions": [
+            {
+              "purpose": "Sugar treatment",
+              "product_category": "Sugar treatment",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "sugar_treatment",
+              "product_gate_status": "process_exact",
+              "product_gate_note": "The official applicability is the Sugar treatment process itself.",
+              "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+            }
+          ]
         }
       ],
       "source_note": "Reconciled against official FSSAI Appendix C Version 2 on 2026-10-04. Draft notification additions 76-87 and draft substitutions were removed.",
