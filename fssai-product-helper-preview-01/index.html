@@ -852,62 +852,537 @@ function row(label,value,pass,msg){
 const ENZYME_KEY='pmsv_fssai_product_helper_enzyme';
 
 const table11Enzymes=[
- {id:'glucose_oxidase',name:'Glucose oxidase',ec:'1.1.3.4',sources:['Aspergillus niger','Aspergillus oryzae']},
- {id:'catalase',name:'Catalase',ec:'1.11.1.6',sources:['Aspergillus niger']},
- {id:'gpc_acyltransferase',name:'Glycero-phospholipid cholesterol acyltransferase',ec:'2.3.1.43',sources:['Bacillus licheniformis']},
- {id:'transglutaminase',name:'Transglutaminase',ec:'2.3.2.13',sources:['Streptomyces mobaraensis']},
- {id:'lipase_tri',name:'Lipase triacylglycerol',ec:'3.1.1.3',sources:['Rhizopus oryzae','Fusarium oxysporum','Thermomyces lanuginosus','Rhizopus niveus','Carica papaya','Rhizomucor miehei','Aspergillus niger','Candida rugosa (cylindracea)','Pregastric bovine (calf) tissue','Pregastric ovine (lamb) tissue','Penicillium roquefortii','Porcine pancreas','Mucor javanicus (Mucor circinelloides f. circinelloides)','Rice bran']},
- {id:'phospholipase_a2',name:'Phospholipase A2',ec:'3.1.1.4',sources:['Streptomyces violaceoruber']},
- {id:'lysophospholipase',name:'Lysophospholipase',ec:'3.1.1.5',sources:['Aspergillus niger']},
- {id:'pectin_esterase',name:'Pectin esterase',ec:'3.1.1.11',sources:['Aspergillus niger']},
- {id:'acylglycerol_lipase',name:'Acylglycerol lipase',ec:'3.1.1.23',sources:['Penicillium camembertii']},
- {id:'phospholipase_a1',name:'Phospholipase A1',ec:'3.1.1.32',sources:['Aspergillus niger']},
- {id:'phytase',name:'Phytase',ec:'3.1.3.8',sources:['Aspergillus niger']},
- {id:'phosphodiesterase_1',name:'Phosphodiesterase I',ec:'3.1.4.1',sources:['Leptographium procerum']},
- {id:'phospholipase_d',name:'Phospholipase D',ec:'3.1.4.4',sources:['Streptomyces cinnamoneus']},
- {id:'hemicellulase',name:'Hemicellulase',ec:'3.2.1',sources:['Aspergillus niger','Trichoderma reesei / longibrachiatum']},
- {id:'alpha_amylase',name:'Alpha amylase',ec:'3.2.1.1',sources:['Aspergillus oryzae','Aspergillus niger','Bacillus licheniformis','Bacillus amyloliquefaciens','Bacillus subtilis','Bacillus stearothermophilus','Cereal (barley) malt']},
- {id:'beta_amylase',name:'Beta amylase',ec:'3.2.1.2',sources:['Cereal (barley) malt','Bacillus amyloliquefaciens','Hordeum vulgare (barley)']},
- {id:'glucoamylase',name:'Glucan 1,4-alpha-glucosidase (Glucoamylase / acid maltase)',ec:'3.2.1.3',sources:['Aspergillus niger','Aspergillus oryzae','Trichoderma reesei','Rhizopus oryzae']},
- {id:'cellulase',name:'Cellulase',ec:'3.2.1.4',sources:['Penicillium funiculosum','Aspergillus niger','Humicola insolens','Rasamsonia (Talaromyces) emersonii','Trichoderma reesei']},
- {id:'beta_glucanase',name:'Beta-glucanase',ec:'3.2.1.6',sources:['Aspergillus niger','Bacillus amyloliquefaciens','Rasamsonia (Talaromyces) emersonii','Trichoderma reesei','Aspergillus aculeatus','Penicillium funiculosum','Bacillus subtilis','Trichoderma harzianum','Disporotrichum dimorphosporum','Humicola insolens']},
- {id:'inulinase',name:'Inulinase',ec:'3.2.1.7',sources:['Aspergillus niger']},
- {id:'xylanase_14',name:'Endo-1,4-beta-xylanase',ec:'3.2.1.8',sources:['Aspergillus niger','Bacillus licheniformis','Disporotrichum dimorphosporum','Rasamsonia (Talaromyces) emersonii','Trichoderma reesei (longibrachiatum)','Humicola insolens']},
- {id:'dextranase',name:'Dextranase',ec:'3.2.1.11',sources:['Chaetomium erraticum']},
- {id:'pectinase',name:'Polygalacturonase (Pectinase)',ec:'3.2.1.15',sources:['Aspergillus niger','Aspergillus aculeatus']},
- {id:'lysozyme',name:'Lysozyme',ec:'3.2.1.17',sources:['Gallus gallus egg']},
- {id:'alpha_glucosidase',name:'Alpha-glucosidase',ec:'3.2.1.20',sources:['Aspergillus niger','Trichoderma reesei']},
- {id:'beta_glucosidase',name:'Beta-glucosidase',ec:'3.2.1.21',sources:['Aspergillus niger','Kluyveromyces lactis','Trichoderma reesei / longibrachiatum CL 847']},
- {id:'alpha_galactosidase',name:'Alpha-galactosidase (Melibiase)',ec:'3.2.1.22',sources:['Aspergillus oryzae','Aspergillus niger','Mortierella vinacea','Saccharomyces carlsbergensis']},
- {id:'beta_galactosidase',name:'Beta-galactosidase (Lactase)',ec:'3.2.1.23',sources:['Kluyveromyces lactis','Bacillus circulans','Saccharomyces sp.','Aspergillus niger','Aspergillus oryzae']},
- {id:'invertase',name:'Beta-fructofuranosidase (Invertase / Saccharase)',ec:'3.2.1.26',sources:['Saccharomyces cerevisiae','Kluyveromyces fragilis','Saccharomyces carlsbergensis']},
- {id:'trehalase',name:'Trehalase',ec:'3.2.1.28',sources:['Trichoderma reesei']},
- {id:'xylanase_13',name:'Endo-1,3-beta-xylanase',ec:'3.2.1.32',sources:['Humicola insolens']},
- {id:'pullulanase',name:'Pullulanase',ec:'3.2.1.41',sources:['Bacillus acidopullulyticus','Bacillus brevis','Bacillus circulans','Bacillus naganoensis','Klebsiella aerogenes']},
- {id:'alpha_arabinofuranosidase',name:'Alpha-arabinofuranosidase',ec:'3.2.1.55',sources:['Aspergillus niger']},
- {id:'glucan_beta_glucosidase',name:'Glucan 1,3-beta-glucosidase',ec:'3.2.1.58',sources:['Trichoderma harzianum']},
- {id:'mannanase',name:'Mannanase (Mannan endo-1,4-beta-mannosidase)',ec:'3.2.1.78',sources:['Trichoderma reesei','Aspergillus niger']},
- {id:'protease_bacteria',name:'Protease (Bacteria)',ec:'3.4',sources:['Bacillus amyloliquefaciens','Bacillus licheniformis','Bacillus subtilis','Geobacillus caldoproteolyticus']},
- {id:'protease_fungi',name:'Protease (Fungi)',ec:'3.4',sources:['Aspergillus niger','Aspergillus oryzae']},
- {id:'aminopeptidase',name:'Aminopeptidase',ec:'3.4.11.1',sources:['Aspergillus oryzae']},
- {id:'serine_protease',name:'Serine protease (Subtilisin)',ec:'3.4.21.62',sources:['Bacillus licheniformis']},
- {id:'oryzin',name:'Oryzin',ec:'3.4.21.63',sources:['Aspergillus melleus']},
- {id:'lactocepin',name:'PIII-type proteinase (Lactocepin)',ec:'3.4.21.96',sources:['Lactococcus lactis subsp. cremoris (strain SK11)']},
- {id:'papain',name:'Papain',ec:'3.4.22.2',sources:['Carica papaya']},
- {id:'ficin',name:'Ficin',ec:'3.4.22.3',sources:['Figs']},
- {id:'bromelain',name:'Bromelain',ec:'3.4.22.33',sources:['Ananas comosus / bracteatus']},
- {id:'chymosin',name:'Chymosin',ec:'3.4.23.4',sources:['Kluyveromyces lactis']},
- {id:'aspergillopepsin1',name:'Aspergillopepsin I',ec:'3.4.23.18',sources:['Aspergillus niger','Aspergillus oryzae']},
- {id:'aspergillopepsin2',name:'Aspergillopepsin II',ec:'3.4.23.19',sources:['Aspergillus niger']},
- {id:'endothiapeptidase',name:'Endo(thia)peptidase',ec:'3.4.23.22',sources:['Cryphonectria (Endothia) parasitica']},
- {id:'mucorpepsin',name:'Mucorpepsin (Aspartic proteinase)',ec:'3.4.23.23',sources:['Rhizomucor miehei']},
- {id:'thermolysin',name:'Thermolysin',ec:'3.4.24.27',sources:['Bacillus stearothermophilus','Geobacillus caldoproteolyticus']},
- {id:'metalloproteinase',name:'Metalloproteinase (Bacillolysin / Metalloendopeptidase)',ec:'3.4.24.28',sources:['Bacillus amyloliquefaciens','Bacillus subtilis']},
- {id:'glutaminase',name:'Glutaminase',ec:'3.5.1.2',sources:['Bacillus amyloliquefaciens']},
- {id:'protein_glutaminase',name:'Protein glutaminase',ec:'3.5.1.44',sources:['Chryseobacterium proteolyticum']},
- {id:'amp_deaminase',name:'AMP deaminase',ec:'3.5.4.6',sources:['Aspergillus melleus','Streptomyces murinus']},
- {id:'pectin_lyase',name:'Pectin lyase',ec:'4.2.2.10',sources:['Aspergillus niger']},
- {id:'glucose_isomerase',name:'Glucose isomerase (Xylose isomerase)',ec:'5.3.1.5',sources:['Streptomyces rubiginosus','Streptomyces murinus','Streptomyces olivaceus','Streptomyces olivochromogenes','Microbacterium arborescens','Actinoplanes missouriensis']}
+ {
+  "id": "glucose_oxidase",
+  "name": "Glucose oxidase",
+  "ec": "1.1.3.4",
+  "sources": [
+   "Aspergillus niger",
+   "Aspergillus oryzae"
+  ]
+ },
+ {
+  "id": "catalase",
+  "name": "Catalase",
+  "ec": "1.11.1.6",
+  "sources": [
+   "Aspergillus niger"
+  ]
+ },
+ {
+  "id": "gpc_acyltransferase",
+  "name": "Glycero-phospholipid cholesterol acyltransferase",
+  "ec": "2.3.1.43",
+  "sources": [
+   "Bacillus licheniformis"
+  ]
+ },
+ {
+  "id": "transglutaminase",
+  "name": "Transglutaminase",
+  "ec": "2.3.2.13",
+  "sources": [
+   "Streptomyces mobaraensis"
+  ]
+ },
+ {
+  "id": "lipase_tri",
+  "name": "Lipase triacylglycerol",
+  "ec": "3.1.1.3",
+  "sources": [
+   "Rhizopus oryzae",
+   "Fusarium oxysporum",
+   "Thermomyces lanuginosus",
+   "Rhizopus niveus",
+   "Carica papaya",
+   "Rhizomucor miehei",
+   "Aspergillus niger",
+   "Candida rugosa (cylindracea)",
+   "Pregastric bovine (calf) tissue",
+   "Pregastric ovine (lamb) tissue",
+   "Penicillium roquefortii",
+   "Porcine pancreas",
+   "Mucor javanicus (Mucor circinelloides f. circinelloides)",
+   "Rice bran",
+   "Aspergillus oryzae"
+  ]
+ },
+ {
+  "id": "phospholipase_a2",
+  "name": "Phospholipase A2",
+  "ec": "3.1.1.4",
+  "sources": [
+   "Streptomyces violaceoruber",
+   "Aspergillus niger",
+   "Aspergillus oryzae"
+  ]
+ },
+ {
+  "id": "lysophospholipase",
+  "name": "Lysophospholipase",
+  "ec": "3.1.1.5",
+  "sources": [
+   "Aspergillus niger"
+  ]
+ },
+ {
+  "id": "pectin_esterase",
+  "name": "Pectin esterase",
+  "ec": "3.1.1.11",
+  "sources": [
+   "Aspergillus niger"
+  ]
+ },
+ {
+  "id": "acylglycerol_lipase",
+  "name": "Acylglycerol lipase",
+  "ec": "3.1.1.23",
+  "sources": [
+   "Penicillium camembertii"
+  ]
+ },
+ {
+  "id": "phospholipase_a1",
+  "name": "Phospholipase A1",
+  "ec": "3.1.1.32",
+  "sources": [
+   "Aspergillus niger"
+  ]
+ },
+ {
+  "id": "phytase",
+  "name": "Phytase",
+  "ec": "3.1.3.8",
+  "sources": [
+   "Aspergillus niger"
+  ]
+ },
+ {
+  "id": "phosphodiesterase_1",
+  "name": "Phosphodiesterase I",
+  "ec": "3.1.4.1",
+  "sources": [
+   "Leptographium procerum"
+  ]
+ },
+ {
+  "id": "phospholipase_d",
+  "name": "Phospholipase D",
+  "ec": "3.1.4.4",
+  "sources": [
+   "Streptomyces cinnamoneus"
+  ]
+ },
+ {
+  "id": "hemicellulase",
+  "name": "Hemicellulase",
+  "ec": "3.2.1",
+  "sources": [
+   "Aspergillus niger",
+   "Trichoderma reesei / longibrachiatum"
+  ]
+ },
+ {
+  "id": "alpha_amylase",
+  "name": "Alpha amylase",
+  "ec": "3.2.1.1",
+  "sources": [
+   "Aspergillus oryzae",
+   "Aspergillus niger",
+   "Bacillus licheniformis",
+   "Bacillus amyloliquefaciens",
+   "Bacillus subtilis",
+   "Bacillus stearothermophilus",
+   "Cereal (barley) malt"
+  ]
+ },
+ {
+  "id": "beta_amylase",
+  "name": "Beta amylase",
+  "ec": "3.2.1.2",
+  "sources": [
+   "Cereal (barley) malt",
+   "Bacillus amyloliquefaciens",
+   "Hordeum vulgare (barley)",
+   "Soybean"
+  ]
+ },
+ {
+  "id": "glucoamylase",
+  "name": "Glucan 1,4-alpha-glucosidase (Glucoamylase / acid maltase)",
+  "ec": "3.2.1.3",
+  "sources": [
+   "Aspergillus niger",
+   "Aspergillus oryzae",
+   "Trichoderma reesei",
+   "Rhizopus oryzae"
+  ]
+ },
+ {
+  "id": "cellulase",
+  "name": "Cellulase",
+  "ec": "3.2.1.4",
+  "sources": [
+   "Penicillium funiculosum",
+   "Aspergillus niger",
+   "Humicola insolens",
+   "Rasamsonia (Talaromyces) emersonii",
+   "Trichoderma reesei"
+  ]
+ },
+ {
+  "id": "beta_glucanase",
+  "name": "Beta-glucanase",
+  "ec": "3.2.1.6",
+  "sources": [
+   "Aspergillus niger",
+   "Bacillus amyloliquefaciens",
+   "Rasamsonia (Talaromyces) emersonii",
+   "Trichoderma reesei",
+   "Aspergillus aculeatus",
+   "Penicillium funiculosum",
+   "Bacillus subtilis",
+   "Trichoderma harzianum",
+   "Disporotrichum dimorphosporum",
+   "Humicola insolens"
+  ]
+ },
+ {
+  "id": "inulinase",
+  "name": "Inulinase",
+  "ec": "3.2.1.7",
+  "sources": [
+   "Aspergillus niger"
+  ]
+ },
+ {
+  "id": "xylanase_14",
+  "name": "Endo-1,4-beta-xylanase",
+  "ec": "3.2.1.8",
+  "sources": [
+   "Aspergillus niger",
+   "Bacillus licheniformis",
+   "Disporotrichum dimorphosporum",
+   "Rasamsonia (Talaromyces) emersonii",
+   "Trichoderma reesei (longibrachiatum)",
+   "Humicola insolens"
+  ]
+ },
+ {
+  "id": "dextranase",
+  "name": "Dextranase",
+  "ec": "3.2.1.11",
+  "sources": [
+   "Chaetomium erraticum"
+  ]
+ },
+ {
+  "id": "pectinase",
+  "name": "Polygalacturonase (Pectinase)",
+  "ec": "3.2.1.15",
+  "sources": [
+   "Aspergillus niger",
+   "Aspergillus aculeatus"
+  ]
+ },
+ {
+  "id": "lysozyme",
+  "name": "Lysozyme",
+  "ec": "3.2.1.17",
+  "sources": [
+   "Gallus gallus egg"
+  ]
+ },
+ {
+  "id": "alpha_glucosidase",
+  "name": "Alpha-glucosidase",
+  "ec": "3.2.1.20",
+  "sources": [
+   "Aspergillus niger",
+   "Trichoderma reesei"
+  ]
+ },
+ {
+  "id": "beta_glucosidase",
+  "name": "Beta-glucosidase",
+  "ec": "3.2.1.21",
+  "sources": [
+   "Aspergillus niger",
+   "Kluyveromyces lactis",
+   "Trichoderma reesei / longibrachiatum CL 847"
+  ]
+ },
+ {
+  "id": "alpha_galactosidase",
+  "name": "Alpha-galactosidase (Melibiase)",
+  "ec": "3.2.1.22",
+  "sources": [
+   "Aspergillus oryzae",
+   "Aspergillus niger",
+   "Mortierella vinacea",
+   "Saccharomyces carlsbergensis"
+  ]
+ },
+ {
+  "id": "beta_galactosidase",
+  "name": "Beta-galactosidase (Lactase)",
+  "ec": "3.2.1.23",
+  "sources": [
+   "Kluyveromyces lactis",
+   "Bacillus circulans",
+   "Saccharomyces sp.",
+   "Aspergillus niger",
+   "Aspergillus oryzae",
+   "Bacillus licheniformis"
+  ]
+ },
+ {
+  "id": "invertase",
+  "name": "Beta-fructofuranosidase (Invertase / Saccharase)",
+  "ec": "3.2.1.26",
+  "sources": [
+   "Saccharomyces cerevisiae",
+   "Kluyveromyces fragilis",
+   "Saccharomyces carlsbergensis"
+  ]
+ },
+ {
+  "id": "trehalase",
+  "name": "Trehalase",
+  "ec": "3.2.1.28",
+  "sources": [
+   "Trichoderma reesei"
+  ]
+ },
+ {
+  "id": "xylanase_13",
+  "name": "Endo-1,3-beta-xylanase",
+  "ec": "3.2.1.32",
+  "sources": [
+   "Humicola insolens"
+  ]
+ },
+ {
+  "id": "pullulanase",
+  "name": "Pullulanase",
+  "ec": "3.2.1.41",
+  "sources": [
+   "Bacillus acidopullulyticus",
+   "Bacillus brevis",
+   "Bacillus circulans",
+   "Bacillus naganoensis",
+   "Klebsiella aerogenes"
+  ]
+ },
+ {
+  "id": "alpha_arabinofuranosidase",
+  "name": "Alpha-arabinofuranosidase",
+  "ec": "3.2.1.55",
+  "sources": [
+   "Aspergillus niger"
+  ]
+ },
+ {
+  "id": "glucan_beta_glucosidase",
+  "name": "Glucan 1,3-beta-glucosidase",
+  "ec": "3.2.1.58",
+  "sources": [
+   "Trichoderma harzianum"
+  ]
+ },
+ {
+  "id": "mannanase",
+  "name": "Mannanase (Mannan endo-1,4-beta-mannosidase)",
+  "ec": "3.2.1.78",
+  "sources": [
+   "Trichoderma reesei",
+   "Aspergillus niger"
+  ]
+ },
+ {
+  "id": "protease_bacteria",
+  "name": "Protease (Bacteria)",
+  "ec": "3.4",
+  "sources": [
+   "Bacillus amyloliquefaciens",
+   "Bacillus licheniformis",
+   "Bacillus subtilis",
+   "Geobacillus caldoproteolyticus"
+  ]
+ },
+ {
+  "id": "protease_fungi",
+  "name": "Protease (Fungi)",
+  "ec": "3.4",
+  "sources": [
+   "Aspergillus niger",
+   "Aspergillus oryzae",
+   "Rhizomucor miehei",
+   "Cryphonectria parasitica"
+  ]
+ },
+ {
+  "id": "aminopeptidase",
+  "name": "Aminopeptidase",
+  "ec": "3.4.11.1",
+  "sources": [
+   "Aspergillus oryzae"
+  ]
+ },
+ {
+  "id": "serine_protease",
+  "name": "Serine protease (Subtilisin)",
+  "ec": "3.4.21.62",
+  "sources": [
+   "Bacillus licheniformis"
+  ]
+ },
+ {
+  "id": "oryzin",
+  "name": "Oryzin",
+  "ec": "3.4.21.63",
+  "sources": [
+   "Aspergillus melleus"
+  ]
+ },
+ {
+  "id": "lactocepin",
+  "name": "PIII-type proteinase (Lactocepin)",
+  "ec": "3.4.21.96",
+  "sources": [
+   "Lactococcus lactis subsp. cremoris (strain SK11)"
+  ]
+ },
+ {
+  "id": "papain",
+  "name": "Papain",
+  "ec": "3.4.22.2",
+  "sources": [
+   "Carica papaya"
+  ]
+ },
+ {
+  "id": "ficin",
+  "name": "Ficin",
+  "ec": "3.4.22.3",
+  "sources": [
+   "Figs"
+  ]
+ },
+ {
+  "id": "bromelain",
+  "name": "Bromelain",
+  "ec": "3.4.22.33",
+  "sources": [
+   "Ananas comosus / bracteatus"
+  ]
+ },
+ {
+  "id": "chymosin",
+  "name": "Chymosin",
+  "ec": "3.4.23.4",
+  "sources": [
+   "Kluyveromyces lactis",
+   "Aspergillus niger (variety-Awamori)"
+  ]
+ },
+ {
+  "id": "aspergillopepsin1",
+  "name": "Aspergillopepsin I",
+  "ec": "3.4.23.18",
+  "sources": [
+   "Aspergillus niger",
+   "Aspergillus oryzae"
+  ]
+ },
+ {
+  "id": "aspergillopepsin2",
+  "name": "Aspergillopepsin II",
+  "ec": "3.4.23.19",
+  "sources": [
+   "Aspergillus niger"
+  ]
+ },
+ {
+  "id": "endothiapeptidase",
+  "name": "Endo(thia)peptidase",
+  "ec": "3.4.23.22",
+  "sources": [
+   "Cryphonectria (Endothia) parasitica"
+  ]
+ },
+ {
+  "id": "mucorpepsin",
+  "name": "Mucorpepsin (Aspartic proteinase)",
+  "ec": "3.4.23.23",
+  "sources": [
+   "Rhizomucor miehei"
+  ]
+ },
+ {
+  "id": "thermolysin",
+  "name": "Thermolysin",
+  "ec": "3.4.24.27",
+  "sources": [
+   "Bacillus stearothermophilus",
+   "Geobacillus caldoproteolyticus"
+  ]
+ },
+ {
+  "id": "metalloproteinase",
+  "name": "Metalloproteinase (Bacillolysin / Metalloendopeptidase)",
+  "ec": "3.4.24.28",
+  "sources": [
+   "Bacillus amyloliquefaciens",
+   "Bacillus subtilis"
+  ]
+ },
+ {
+  "id": "glutaminase",
+  "name": "Glutaminase",
+  "ec": "3.5.1.2",
+  "sources": [
+   "Bacillus amyloliquefaciens"
+  ]
+ },
+ {
+  "id": "protein_glutaminase",
+  "name": "Protein glutaminase",
+  "ec": "3.5.1.44",
+  "sources": [
+   "Chryseobacterium proteolyticum"
+  ]
+ },
+ {
+  "id": "amp_deaminase",
+  "name": "AMP deaminase",
+  "ec": "3.5.4.6",
+  "sources": [
+   "Aspergillus melleus",
+   "Streptomyces murinus"
+  ]
+ },
+ {
+  "id": "pectin_lyase",
+  "name": "Pectin lyase",
+  "ec": "4.2.2.10",
+  "sources": [
+   "Aspergillus niger"
+  ]
+ },
+ {
+  "id": "glucose_isomerase",
+  "name": "Glucose isomerase (Xylose isomerase)",
+  "ec": "5.3.1.5",
+  "sources": [
+   "Streptomyces rubiginosus",
+   "Streptomyces murinus",
+   "Streptomyces olivaceus",
+   "Streptomyces olivochromogenes",
+   "Microbacterium arborescens",
+   "Actinoplanes missouriensis"
+  ]
+ }
 ];
 
 let selectedEnzyme={id:'',source:''};
@@ -1732,7 +2207,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=208',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=209',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    const structured=appendixCStructuredRuntimeRules(appendixCDb);
