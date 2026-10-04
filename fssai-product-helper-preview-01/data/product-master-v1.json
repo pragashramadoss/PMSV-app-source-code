@@ -727,7 +727,31 @@
       "locked_rows_total": 10,
       "product_mapping_stage": "current_v3_complete_for_fcs_1_16_special_foscos_101_102_fail_closed",
       "special_foscos_categories_outside_appendix_fcs": 13,
-      "unresolved_official_appendix_fcs_mappings": 0
+      "unresolved_official_appendix_fcs_mappings": 0,
+      "product_fcs_mapping_audit": {
+        "checked_on": "2026-10-04",
+        "build": 261,
+        "products": 533,
+        "mapped_current_v3": 469,
+        "source_alias_resolved": 1,
+        "foscos_code_not_appendix_a_fcs": 50,
+        "foscos_special_category_outside_appendix_a_fcs": 13,
+        "official_appendix_fcs_mapping_not_available": 0,
+        "broken_current_fcs_routes": 0,
+        "canonical_fcs_normalizations": 1,
+        "canonical_fcs_normalized_products": [
+          "03-03-ice-lollies-or-edible-ices: 3 -> 3.0"
+        ]
+      },
+      "chapter_rule_link_audit": {
+        "checked_on": "2026-10-04",
+        "build": 261,
+        "profiles": 533,
+        "profiles_with_rule_file_and_key": 386,
+        "missing_rule_files": 0,
+        "missing_rule_keys": 0,
+        "profiles_without_rule_link": 147
+      }
     },
     "special_nutrition": {
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
@@ -1008,6 +1032,45 @@
       "source_version": "Version 2 (01.08.2025)",
       "rule_file": "./data/rules/appendix-c-v2-core.json",
       "next_priority": "Table 8 - Flocculating Agents"
+    },
+    "cross_regulation_regression": {
+      "checked_on": "2026-10-04",
+      "build": 261,
+      "catalogue_products": 533,
+      "catalogue_profiles": 533,
+      "appendix_a": {
+        "mapped_current_v3": 469,
+        "source_alias_resolved": 1,
+        "special_or_non_appendix_fcs": 63,
+        "broken_current_fcs_routes": 0
+      },
+      "chapter_rules": {
+        "linked_products": 386,
+        "referenced_rule_files": 15,
+        "broken_rule_files": 0,
+        "broken_rule_keys": 0
+      },
+      "appendix_b": {
+        "microbiology_profile_references_checked": 360,
+        "broken_profile_references": 0
+      },
+      "contaminants": {
+        "spice_identity_mappings_checked": 25,
+        "broken_internal_profile_references": 0,
+        "broken_product_references": 0
+      },
+      "appendix_c": {
+        "source_permission_rows": 313,
+        "runtime_route_projections": 37,
+        "invalid_product_ids": 0,
+        "missing_process_selectors": 0,
+        "intentional_fail_closed_permissions": 2,
+        "unresolved_official_rows": [
+          "Vitamin B12",
+          "Vitamin C"
+        ]
+      },
+      "status": "passed"
     }
   },
   "source_hierarchy": [
@@ -24922,10 +24985,10 @@
       "profile_id": "03-03-ice-lollies-or-edible-ices",
       "rule_file": "./data/rules/chapter-2-7-sweets-confectionery-v1.json",
       "rule_key": "2.7.5",
-      "appendix_fcs": "3",
+      "appendix_fcs": "3.0",
       "appendix_fcs_status": "mapped_current_v3",
-      "appendix_fcs_note": "",
-      "appendix_fcs_verified_on": "2026-10-03",
+      "appendix_fcs_note": "Canonical Appendix A key normalized from 3 to 3.0; regulatory category unchanged.",
+      "appendix_fcs_verified_on": "2026-10-04",
       "chapter_rule_link_status": "file_and_key_verified"
     },
     {
@@ -33692,8 +33755,8 @@
     }
   ],
   "last_catalog_expansion": "2026-10-04",
-  "build_number": 236,
-  "build_label": "Build 236 — add missing FoSCoS fats/oils catalyst products",
+  "build_number": 261,
+  "build_label": "Build 261 - cross-regulation regression and canonical FCS normalization",
   "build_date": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",
