@@ -15,20 +15,21 @@
   "applicability_rule": "Processing aids listed in Tables 1 to 12 may be used only in manufacture of the food specified in the corresponding table and the final food shall not exceed the stated residue level. Product-specific rows remain fail-closed until PMSV has an exact product-category route. 'All foods' rows may auto-apply once the relevant process is selected.",
   "coverage": {
     "tables_total": 12,
-    "tables_loaded": 6,
+    "tables_loaded": 7,
     "loaded_tables": [
       "Table 1 - Antifoaming Agents",
       "Table 2 - Catalyst",
       "Table 3 - Clarifying Agents and Filtration Aids",
       "Table 4 - Lubricants, Release and Antistick Agents",
       "Table 5 - Microbial Control Agents, Microbial Nutrients and Microbial Nutrient Adjuncts",
-      "Table 6 - Solvent for Extraction and Processing"
+      "Table 6 - Solvent for Extraction and Processing",
+      "Table 7 - Bleaching, Washing, Denuding and Peeling Agents"
     ],
     "table_1_entries": 9,
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 7 - Bleaching, Washing, Denuding and Peeling Agents",
+    "next_priority": "Table 8 - Flocculating Agents",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -38,7 +39,9 @@
     "table_5_nutrient_entries": 43,
     "table_5_permission_rows": 51,
     "table_6_entries": 26,
-    "table_6_permission_rows": 45
+    "table_6_permission_rows": 45,
+    "table_7_entries": 16,
+    "table_7_permission_rows": 16
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -1918,6 +1921,218 @@
               "product_category": "Spice oleoresins",
               "residual_level": "GMP",
               "runtime_auto_apply": false
+            }
+          ]
+        }
+      ]
+    },
+    "table_7": {
+      "number": 7,
+      "title": "BLEACHING, WASHING, DENUDING AND PEELING AGENTS",
+      "process_key": "washing",
+      "source_pages": [
+        10,
+        11
+      ],
+      "entries": [
+        {
+          "s_no": 1,
+          "name": "Ammonium persulphate",
+          "ins": "923",
+          "permissions": [
+            {
+              "product_category": "Yeast",
+              "runtime_auto_apply": false,
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "s_no": 2,
+          "name": "Benzoyl peroxide",
+          "ins": "928",
+          "permissions": [
+            {
+              "product_category": "Fruits and vegetables",
+              "runtime_auto_apply": false,
+              "residual_level_mgkg": 40,
+              "residual_basis": "as benzoic acid"
+            }
+          ]
+        },
+        {
+          "s_no": 3,
+          "name": "Calcium hypochlorite",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fruits and vegetables, flours and starches, water",
+              "runtime_auto_apply": false,
+              "residual_level_mgkg": 1,
+              "residual_basis": "as available chlorine"
+            }
+          ]
+        },
+        {
+          "s_no": 4,
+          "name": "Carbonic acid",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Tripe",
+              "runtime_auto_apply": false,
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "s_no": 5,
+          "name": "Chlorine",
+          "ins": "925",
+          "permissions": [
+            {
+              "product_category": "Fruits and vegetables, flours and starches",
+              "runtime_auto_apply": false,
+              "residual_level_mgkg": 1,
+              "residual_basis": "as available chlorine"
+            }
+          ]
+        },
+        {
+          "s_no": 6,
+          "name": "Chlorine dioxide",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fruits and vegetables, flours and starches",
+              "runtime_auto_apply": false,
+              "residual_level_mgkg": 1,
+              "residual_basis": "as available chlorine"
+            }
+          ]
+        },
+        {
+          "s_no": 7,
+          "name": "Diammonium hydrogen orthophosphate",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Canned fruits and vegetables",
+              "runtime_auto_apply": false,
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "s_no": 8,
+          "name": "Hydrogen peroxide",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fruits and vegetables, flours and starches",
+              "runtime_auto_apply": false,
+              "residual_level_mgkg": 5,
+              "residual_basis": "as hydrogen peroxide",
+              "effective_from": "2026-02-01"
+            }
+          ],
+          "source_note": "Version 2 contains an amendment substituting the highlighted provision with 5 mg/kg as hydrogen peroxide, effective 1 February 2026."
+        },
+        {
+          "s_no": 9,
+          "name": "Peracetic acid",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fruits and vegetables",
+              "runtime_auto_apply": false,
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "s_no": 10,
+          "name": "Sodium bisulphite",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Root and tuber vegetables (not meant for those intended to be served or sold raw/fresh to consumers)",
+              "runtime_auto_apply": false,
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "s_no": 11,
+          "name": "Sodium hypochlorite",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fruits and vegetables, flours and starches",
+              "runtime_auto_apply": false,
+              "residual_level_mgkg": 1,
+              "residual_basis": "as available chlorine"
+            }
+          ]
+        },
+        {
+          "s_no": 12,
+          "name": "Sodium gluconate",
+          "ins": "576",
+          "permissions": [
+            {
+              "product_category": "Tripe",
+              "runtime_auto_apply": false,
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "s_no": 13,
+          "name": "Sodium laurate",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fruits and vegetables",
+              "runtime_auto_apply": false,
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "s_no": 14,
+          "name": "Sodium/Potassium metabisulphite",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Root and tuber vegetables (not meant for those intended to be served or sold raw/fresh to consumers)",
+              "runtime_auto_apply": false,
+              "residual_level_mgkg": 25
+            }
+          ]
+        },
+        {
+          "s_no": 15,
+          "name": "Sodium peroxide",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Root and tuber vegetables",
+              "runtime_auto_apply": false,
+              "residual_level_mgkg": 5
+            }
+          ]
+        },
+        {
+          "s_no": 16,
+          "name": "Calcium oxide",
+          "ins": "529",
+          "permissions": [
+            {
+              "product_category": "Dried Ginger; whole and powder (unbleached or bleached)",
+              "runtime_auto_apply": false,
+              "residual_level_mgkg": 20000,
+              "residual_basis": "on dry basis"
             }
           ]
         }
