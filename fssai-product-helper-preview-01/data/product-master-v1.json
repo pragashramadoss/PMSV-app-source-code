@@ -941,19 +941,23 @@
     "appendix_b": {
       "rule_file": "./data/rules/appendix-b-v2-core.json",
       "source_version": "Version 2 (04.11.2024)",
-      "status": "tables_1_and_2_complete",
+      "status": "tables_1_to_3_complete",
       "main_table_groups_total": 11,
-      "main_table_groups_loaded": 2,
+      "main_table_groups_loaded": 3,
       "fish_product_categories_loaded": 16,
       "fish_exact_product_mappings": 18,
       "fish_conditional_product_mappings": 4,
       "fish_no_direct_table_mapping": 2,
       "source_verified_on": "2026-10-04",
-      "next_validation": "Table 3A/3B - Spices and Herbs",
+      "next_validation": "Table 4A/4B - Fruits and Vegetables and their Products",
       "milk_microbiology_profiles_loaded": 16,
       "milk_exact_product_mappings": 56,
       "milk_conditional_product_mappings": 17,
-      "milk_no_direct_table_mapping": 18
+      "milk_no_direct_table_mapping": 18,
+      "spice_microbiology_profiles_loaded": 5,
+      "spice_exact_product_mappings": 10,
+      "spice_conditional_product_mappings": 33,
+      "spice_no_direct_table_mapping": 3
     }
   },
   "source_hierarchy": [
@@ -14232,7 +14236,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 applies to Spices and Herbs. PMSV does not assign the spice/herb microbiology table to salt products."
     },
     {
       "id": "12-12-1-iron-fortified-iodized-salt-double-fortified-salt",
@@ -14266,7 +14275,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 applies to Spices and Herbs. PMSV does not assign the spice/herb microbiology table to salt products."
     },
     {
       "id": "12-12-1-salt-substitutes",
@@ -14300,7 +14314,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 applies to Spices and Herbs. PMSV does not assign the spice/herb microbiology table to salt products."
     },
     {
       "id": "12-12-2-caraway-siahjira",
@@ -14334,7 +14353,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-cardamom-elaichi",
@@ -14368,7 +14402,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-chillies-and-capsicum-lal-mirchi",
@@ -14402,7 +14451,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-cinnamon-dalchini",
@@ -14436,7 +14500,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-cassia-taj",
@@ -14470,7 +14549,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-cloves-laung",
@@ -14504,7 +14598,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-coriander-dhania",
@@ -14538,7 +14647,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-cumin-zeera-kalonji",
@@ -14572,7 +14696,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-fennel-saunf",
@@ -14606,7 +14745,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-fenugreek-methi",
@@ -14640,7 +14794,30 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-dried-ginger-sonth-dried-adrak",
@@ -14674,7 +14851,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-mace-jaipatri",
@@ -14708,7 +14900,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-mustard-rai-sarson",
@@ -14742,7 +14949,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-nutmeg-jaiphal",
@@ -14776,7 +14998,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-black-white-and-green-bwg-peppers",
@@ -14810,7 +15047,30 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI standard includes whole Black/White/Green peppers and ground/crushed Black/White pepper. Appendix B classification depends on the actual physical form."
     },
     {
       "id": "12-12-2-poppy-khas-khas",
@@ -14844,7 +15104,30 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-saffron-kesar",
@@ -14878,7 +15161,30 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-turmeric-haldi",
@@ -14912,7 +15218,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-curry-powder",
@@ -14946,7 +15267,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes the ground/powdered form."
     },
     {
       "id": "12-12-2-mixed-masala",
@@ -14980,7 +15306,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-aniseed-saunf",
@@ -15014,7 +15355,30 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-ajowan-bishops-seed",
@@ -15048,7 +15412,30 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-dried-mango-slices",
@@ -15082,7 +15469,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes the dried non-ground form."
     },
     {
       "id": "12-12-2-dried-mango-powder-amchur",
@@ -15116,7 +15508,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes the dried powder form."
     },
     {
       "id": "12-12-2-garlic-lahsun",
@@ -15150,7 +15547,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-celery",
@@ -15184,7 +15596,30 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-dehydrated-onion-sukha-pyaj",
@@ -15218,7 +15653,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-asafoetida-hing-or-hingra",
@@ -15252,7 +15702,30 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-harrisa-red-hot-pepper-paste",
@@ -15314,7 +15787,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-04",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B defines Extracted products to include oleoresins."
     },
     {
       "id": "12-12-2-tejpat",
@@ -15348,7 +15826,30 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-star-anise",
@@ -15382,7 +15883,30 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-dried-oregano",
@@ -15416,7 +15940,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-pimento-or-allspice",
@@ -15450,7 +15989,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-dried-laurel-or-dried-bay-leaf",
@@ -15484,7 +16038,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes a dried/dehydrated non-ground herb form."
     },
     {
       "id": "12-12-2-dried-mint",
@@ -15518,7 +16077,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes a dried/dehydrated non-ground herb form."
     },
     {
       "id": "12-12-2-dried-rosemary",
@@ -15552,7 +16116,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes a dried/dehydrated non-ground herb form."
     },
     {
       "id": "12-12-2-dried-thyme",
@@ -15586,7 +16155,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-dried-sage",
@@ -15620,7 +16204,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes a dried/dehydrated non-ground herb form."
     },
     {
       "id": "12-12-2-dried-sweet-basil-leaves",
@@ -15654,7 +16243,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes a dried/dehydrated non-ground herb form."
     },
     {
       "id": "12-12-2-seasoning",
@@ -15688,7 +16282,26 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated non-ground seasoning",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground/powdered dry seasoning",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground / paste / preserved seasoning",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Seasoning can be supplied in dry or paste form; Appendix B microbiology therefore requires the actual physical form."
     },
     {
       "id": "12-12-2-dried-sweet-marjoram",
@@ -15722,7 +16335,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes a dried/dehydrated non-ground herb form."
     },
     {
       "id": "12-12-2-dried-parsley",
@@ -15756,7 +16374,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-dehydrated-tarragon",
@@ -15790,7 +16423,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-3-vinegar",
@@ -27304,7 +27952,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 applies to Spices and Herbs. PMSV does not assign the spice/herb microbiology table to salt products."
     },
     {
       "id": "12-12-1-iron-fortified-iodized-salt-double-fortified-salt",
@@ -27322,7 +27975,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 applies to Spices and Herbs. PMSV does not assign the spice/herb microbiology table to salt products."
     },
     {
       "id": "12-12-1-salt-substitutes",
@@ -27340,7 +27998,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 applies to Spices and Herbs. PMSV does not assign the spice/herb microbiology table to salt products."
     },
     {
       "id": "12-12-2-caraway-siahjira",
@@ -27358,7 +28021,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-cardamom-elaichi",
@@ -27376,7 +28054,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-chillies-and-capsicum-lal-mirchi",
@@ -27394,7 +28087,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-cinnamon-dalchini",
@@ -27412,7 +28120,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-cassia-taj",
@@ -27430,7 +28153,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-cloves-laung",
@@ -27448,7 +28186,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-coriander-dhania",
@@ -27466,7 +28219,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-cumin-zeera-kalonji",
@@ -27484,7 +28252,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-fennel-saunf",
@@ -27502,7 +28285,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-fenugreek-methi",
@@ -27520,7 +28318,30 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-dried-ginger-sonth-dried-adrak",
@@ -27538,7 +28359,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-mace-jaipatri",
@@ -27556,7 +28392,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-mustard-rai-sarson",
@@ -27574,7 +28425,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-nutmeg-jaiphal",
@@ -27592,7 +28458,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-black-white-and-green-bwg-peppers",
@@ -27610,7 +28491,30 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI standard includes whole Black/White/Green peppers and ground/crushed Black/White pepper. Appendix B classification depends on the actual physical form."
     },
     {
       "id": "12-12-2-poppy-khas-khas",
@@ -27628,7 +28532,30 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-saffron-kesar",
@@ -27646,7 +28573,30 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-turmeric-haldi",
@@ -27664,7 +28614,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-curry-powder",
@@ -27682,7 +28647,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes the ground/powdered form."
     },
     {
       "id": "12-12-2-mixed-masala",
@@ -27700,7 +28670,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-aniseed-saunf",
@@ -27718,7 +28703,30 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-ajowan-bishops-seed",
@@ -27736,7 +28744,30 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-dried-mango-slices",
@@ -27754,7 +28785,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes the dried non-ground form."
     },
     {
       "id": "12-12-2-dried-mango-powder-amchur",
@@ -27772,7 +28808,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes the dried powder form."
     },
     {
       "id": "12-12-2-garlic-lahsun",
@@ -27790,7 +28831,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-celery",
@@ -27808,7 +28864,30 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-dehydrated-onion-sukha-pyaj",
@@ -27826,7 +28905,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-asafoetida-hing-or-hingra",
@@ -27844,7 +28938,30 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-harrisa-red-hot-pepper-paste",
@@ -27878,7 +28995,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-04",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B defines Extracted products to include oleoresins."
     },
     {
       "id": "12-12-2-tejpat",
@@ -27896,7 +29018,30 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-star-anise",
@@ -27914,7 +29059,30 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Fresh",
+          "profile_key": "spice-01"
+        },
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground or powdered",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground paste / preserved / pickled",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name."
     },
     {
       "id": "12-12-2-dried-oregano",
@@ -27932,7 +29100,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-pimento-or-allspice",
@@ -27950,7 +29133,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-dried-laurel-or-dried-bay-leaf",
@@ -27968,7 +29166,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes a dried/dehydrated non-ground herb form."
     },
     {
       "id": "12-12-2-dried-mint",
@@ -27986,7 +29189,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes a dried/dehydrated non-ground herb form."
     },
     {
       "id": "12-12-2-dried-rosemary",
@@ -28004,7 +29212,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes a dried/dehydrated non-ground herb form."
     },
     {
       "id": "12-12-2-dried-thyme",
@@ -28022,7 +29235,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-dried-sage",
@@ -28040,7 +29268,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes a dried/dehydrated non-ground herb form."
     },
     {
       "id": "12-12-2-dried-sweet-basil-leaves",
@@ -28058,7 +29291,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes a dried/dehydrated non-ground herb form."
     },
     {
       "id": "12-12-2-seasoning",
@@ -28076,7 +29314,26 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated non-ground seasoning",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground/powdered dry seasoning",
+          "profile_key": "spice-03"
+        },
+        {
+          "condition": "Wet-ground / paste / preserved seasoning",
+          "profile_key": "spice-05"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Seasoning can be supplied in dry or paste form; Appendix B microbiology therefore requires the actual physical form."
     },
     {
       "id": "12-12-2-dried-sweet-marjoram",
@@ -28094,7 +29351,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "spice-02",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Product identity fixes a dried/dehydrated non-ground herb form."
     },
     {
       "id": "12-12-2-dried-parsley",
@@ -28112,7 +29374,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-2-dehydrated-tarragon",
@@ -28130,7 +29407,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+          "profile_key": "spice-02"
+        },
+        {
+          "condition": "Ground, crushed or powdered form",
+          "profile_key": "spice-03"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form."
     },
     {
       "id": "12-12-3-vinegar",
@@ -30243,8 +31535,8 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 189,
-  "build_label": "Build 189 — Appendix B milk microbiology",
+  "build_number": 190,
+  "build_label": "Build 190 — Appendix B spices and herbs",
   "build_date": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",
