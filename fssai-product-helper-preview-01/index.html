@@ -465,6 +465,11 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="nutrient"><b>Microbial nutrient use</b><small>Applicable only if a microbial culture process is actually used.</small></label>
 </div>
 
+<div id="processingQualifierCard" class="card hidden" style="margin-top:14px;background:#fff">
+  <div class="section-title"><h3 style="margin:0">Processing detail required</h3><span>Exact Appendix C gate</span></div>
+  <div id="processingQualifierFields"></div>
+</div>
+
 <div id="enzymeSelectorCard" class="card hidden" style="margin-top:14px;background:#fafcff">
 <div class="section-title"><h2>Enzyme selector</h2><span>Appendix C · Table 11</span></div>
 <div class="notice oknote"><b>Table 11 pathway:</b> these enzymes are from <b>non-genetically modified sources</b>. Select the actual enzyme first, then select the exact FSSAI-listed source/organism used.</div>
@@ -2216,6 +2221,7 @@ document.getElementById('goToContaminants')?.addEventListener('click',()=>{openT
 document.getElementById('backToStandards')?.addEventListener('click',()=>{openTab('standards',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
 
 const PROCESS_KEY='pmsv_fssai_product_helper_processes';
+const PROCESS_QUALIFIER_KEY='pmsv_fssai_product_helper_process_qualifiers';
 const processLabels={
  water:'Water treatment',
  filtration:'Filtration / clarification',
@@ -2315,7 +2321,9 @@ function appendixCStructuredRuntimeRules(db){
          runtime_auto_apply:permission.runtime_auto_apply===true,
          product_category:String(permission.product_category||''),
          product_ids:Array.isArray(permission.product_ids)?permission.product_ids:[],
-         rule_keys:Array.isArray(permission.rule_keys)?permission.rule_keys:[]
+         rule_keys:Array.isArray(permission.rule_keys)?permission.rule_keys:[],
+         qualifier_key:String(permission.qualifier_key||''),
+         qualifier_value:String(permission.qualifier_value||'')
        });
      }
    }
@@ -2324,7 +2332,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=237',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=239',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
@@ -2343,19 +2351,58 @@ function selectedCatalogProductForProcessing(){
  return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
 }
 function processingAidRuleAutoApplicable(rule){
- if(rule?.runtime_auto_apply===true)return true;
  const p=selectedCatalogProductForProcessing();
- if(Array.isArray(rule?.product_ids)&&p&&rule.product_ids.includes(p.id))return true;
  const profile=p?profileForCatalogProduct(p):null;
  const selectedRuleKey=String(p?.rule_key||profile?.rule_key||profile?.fssr||'').trim();
- if(Array.isArray(rule?.rule_keys)&&selectedRuleKey&&rule.rule_keys.includes(selectedRuleKey))return true;
- if(rule?.runtime_auto_apply===false)return false;
- return /·\s*All foods\s*$/i.test(String(rule?.purpose||''));
+ let baseApplicable=false;
+ if(rule?.runtime_auto_apply===true)baseApplicable=true;
+ else if(Array.isArray(rule?.product_ids)&&p&&rule.product_ids.includes(p.id))baseApplicable=true;
+ else if(Array.isArray(rule?.rule_keys)&&selectedRuleKey&&rule.rule_keys.includes(selectedRuleKey))baseApplicable=true;
+ else if(rule?.runtime_auto_apply!==false&&/·\s*All foods\s*$/i.test(String(rule?.purpose||'')))baseApplicable=true;
+ if(!baseApplicable)return false;
+ if(rule?.qualifier_key){
+   const actual=String(processingQualifiers?.[rule.qualifier_key]||'');
+   if(actual!==String(rule.qualifier_value||''))return false;
+ }
+ return true;
 }
 
 let selectedProcesses=[];
 try{selectedProcesses=JSON.parse(sessionStorage.getItem(PROCESS_KEY)||'[]')}catch(e){selectedProcesses=[]}
 if(!Array.isArray(selectedProcesses))selectedProcesses=[];
+
+let processingQualifiers={};
+try{processingQualifiers=JSON.parse(sessionStorage.getItem(PROCESS_QUALIFIER_KEY)||'{}')}catch(e){processingQualifiers={}}
+if(!processingQualifiers||typeof processingQualifiers!=='object'||Array.isArray(processingQualifiers))processingQualifiers={};
+
+function saveProcessingQualifiers(){
+ try{sessionStorage.setItem(PROCESS_QUALIFIER_KEY,JSON.stringify(processingQualifiers))}catch(e){}
+}
+function renderProcessingQualifierUI(){
+ const card=document.getElementById('processingQualifierCard');
+ const fields=document.getElementById('processingQualifierFields');
+ if(!card||!fields)return;
+ const p=selectedCatalogProductForProcessing();
+ const needsIceForm=selectedProcesses.includes('contact_freezing')&&p?.id==='01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-';
+ if(!needsIceForm){
+   card.classList.add('hidden');
+   fields.innerHTML='';
+   return;
+ }
+ const current=String(processingQualifiers.contact_freezing_product_form||'');
+ card.classList.remove('hidden');
+ fields.innerHTML='<div class="field"><label>Finished product form for contact freezing</label><select id="contactFreezingProductForm">'
+   +'<option value="">Select exact finished form…</option>'
+   +'<option value="ice_cream"'+(current==='ice_cream'?' selected':'')+'>Ice Cream</option>'
+   +'<option value="other_frozen_form"'+(current==='other_frozen_form'?' selected':'')+'>Kulfi / Chocolate Ice Cream / Softy / Milk Ice / Milk Lolly</option>'
+   +'<option value="dried_mix"'+(current==='dried_mix'?' selected':'')+'>Dried Ice Cream Mix</option>'
+   +'</select><small>Appendix C Table 9 currently says “Dairy-based desserts — Ice cream”. PMSV therefore does not extend the permission to the other products combined in the FoSCoS row.</small></div>';
+ document.getElementById('contactFreezingProductForm')?.addEventListener('change',event=>{
+   processingQualifiers.contact_freezing_product_form=event.currentTarget.value||'';
+   saveProcessingQualifiers();
+   renderProcessingAids();
+ });
+}
 
 function syncProcessUI(){
  document.querySelectorAll('#processGrid input[type="checkbox"]').forEach(cb=>{
@@ -2369,6 +2416,7 @@ function syncProcessUI(){
  const ps=document.getElementById('processingSelectedSummary');if(ps)ps.innerHTML=chips||'<span class="muted">No process selected.</span>';
  const next=document.getElementById('processNextStep');
  if(next)next.classList.toggle('hidden',selectedProcesses.length===0);
+ renderProcessingQualifierUI();
  renderProcessingAids();
 }
 function saveProcessSelection(){
@@ -2401,7 +2449,13 @@ function renderProcessingAids(){
  }
  if(selectedProcesses.includes('nutrient'))messages.push('<tr><td><b>Microbial nutrient use</b></td><td>Table 5 nutrient/adjunct permissions activated</td><td>Shown because a microbial-culture nutrient process was selected. These are GMP permissions for sustaining microbial growth, not ingredients that must be used.</td><td>Appendix C · Table 5</td></tr>');
  if(selectedProcesses.includes('catalyst'))messages.push('<tr><td><b>Catalyst route</b></td><td>Appendix C Table 2 loaded</td><td>All catalyst permissions are product-specific. PMSV will not activate a catalyst until the finished product is exactly mapped to Polyols, Hardened oil, Hydrogenated vegetable oil or Interesterified vegetable oil as stated by FSSAI.</td><td>Appendix C · Table 2</td></tr>');
- if(selectedProcesses.includes('contact_freezing'))messages.push('<tr><td><b>Contact-freezing route</b></td><td>Appendix C Table 9 loaded</td><td>Liquid Nitrogen is permitted at GMP for dairy-based desserts — Ice cream. The current FoSCoS catalogue row also includes dried ice-cream mix, so PMSV keeps this permission locked until the finished form is confirmed as ice cream.</td><td>Appendix C · Table 9</td></tr>');
+ if(selectedProcesses.includes('contact_freezing')){
+   const p=selectedCatalogProductForProcessing();
+   if(p?.id==='01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-'){
+     const form=String(processingQualifiers.contact_freezing_product_form||'');
+     if(form!=='ice_cream')messages.push('<tr><td><b>Contact-freezing route</b></td><td>Finished form confirmation required</td><td>Liquid Nitrogen is permitted at GMP for dairy-based desserts — Ice cream. Choose <b>Ice Cream</b> in Processing detail required; other products in the combined FoSCoS row remain locked.</td><td>Appendix C · Table 9</td></tr>');
+   }
+ }
  if(lockedProductSpecific.length)messages.push('<tr><td><b>Product-specific permissions withheld</b></td><td>'+lockedProductSpecific.length+' selected-process row'+(lockedProductSpecific.length===1?'':'s')+' require an exact product-category gate</td><td>PMSV is failing closed instead of showing these permissions for every selected product.</td><td>Appendix C applicability control</td></tr>');
  body.innerHTML=rules.map(x=>'<tr><td><b>'+esc(x.name)+'</b><br><small>INS '+esc(x.ins)+'</small></td><td>'+esc(x.purpose)+'</td><td><b>'+esc(x.condition)+'</b></td><td>'+esc(x.source)+'</td></tr>').join('')+messages.join('');
  const total=rules.length+messages.length;
@@ -2437,7 +2491,8 @@ document.getElementById('clearProcesses')?.addEventListener('click',event=>{
  selectedProcesses=[];
  selectedEnzyme={id:'',source:''};
  selectedGmmEnzyme={sequence:null,variantIndex:null};
- try{sessionStorage.removeItem(PROCESS_KEY);sessionStorage.removeItem(ENZYME_KEY);sessionStorage.removeItem(GMM_ENZYME_KEY)}catch(e){}
+ processingQualifiers={};
+ try{sessionStorage.removeItem(PROCESS_KEY);sessionStorage.removeItem(ENZYME_KEY);sessionStorage.removeItem(GMM_ENZYME_KEY);sessionStorage.removeItem(PROCESS_QUALIFIER_KEY)}catch(e){}
  populateEnzymeSelector();
  populateGmmEnzymeSelector();
  syncProcessUI();
@@ -2727,6 +2782,7 @@ function showSelectedCatalogProduct(p){
      selectedProductId=profile.id;
      try{sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId)}catch(e){}
      applyProductGate();
+     renderProcessingQualifierUI();
      renderProductContaminants();
      renderProductMicrobiology();
      openTab('formulation',{updateHash:true,save:true});
