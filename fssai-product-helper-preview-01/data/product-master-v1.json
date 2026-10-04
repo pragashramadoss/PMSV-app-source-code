@@ -959,8 +959,8 @@
       "spice_conditional_product_mappings": 33,
       "spice_no_direct_table_mapping": 3,
       "fruit_source_categories_loaded": 9,
-      "fruit_runtime_profiles_loaded": 12,
-      "fruit_exact_product_mappings": 7,
+      "fruit_runtime_profiles_loaded": 13,
+      "fruit_exact_product_mappings": 33,
       "fruit_conditional_product_mappings": 19,
       "fruit_no_direct_table_mapping": 4,
       "next_priority": "Full Appendix B cross-table validation and product-route audit",
@@ -968,7 +968,7 @@
       "meat_exact_product_mappings": 23,
       "meat_conditional_product_mappings": 8,
       "meat_no_direct_table_mapping": 1,
-      "stage": "tables_1_to_10_complete",
+      "stage": "complete_current_version_2_route_audited",
       "bakers_yeast_profiles_loaded": 1,
       "bakers_yeast_exact_product_mappings": 0,
       "bakers_yeast_catalog_gaps": 1,
@@ -989,7 +989,17 @@
       "neera_profiles_loaded": 1,
       "neera_exact_product_mappings": 0,
       "neera_conditional_product_mappings": 1,
-      "neera_no_direct_table_mapping": 0
+      "neera_no_direct_table_mapping": 0,
+      "route_audit": {
+        "checked_on": "2026-10-04",
+        "build": 199,
+        "broken_product_ids": 0,
+        "broken_profile_references": 0,
+        "mapping_conflicts": 0,
+        "rule_master_mismatches": 0,
+        "explicit_table4_product_routes_added": 26,
+        "note": "Added only FoSCoS identities whose product name itself establishes an Appendix B Table 4 Fresh, minimally processed, frozen, dried/dehydrated, pickled, or with-preservatives route. Ambiguous processing remains fail-closed."
+      }
     }
   },
   "source_hierarchy": [
@@ -1367,7 +1377,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03-liquid",
+      "microbiology_note": "Product identity explicitly states fruit juice with preservatives; Table 4 row 3 applies with ml substituted for g."
     },
     {
       "id": "vegetable-juices",
@@ -1486,7 +1499,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03-liquid",
+      "microbiology_note": "Product identity explicitly states vegetable juice with preservatives; Table 4 row 3 applies with ml substituted for g."
     },
     {
       "id": "concentrated-fruit-pulp-puree",
@@ -1542,7 +1558,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03-liquid",
+      "microbiology_note": "Product identity explicitly states concentrated fruit juice with preservatives; Table 4 row 3 applies with ml substituted for g."
     },
     {
       "id": "concentrated-vegetable-juice-industrial",
@@ -1570,7 +1589,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03-liquid",
+      "microbiology_note": "Product identity explicitly states concentrated vegetable juice with preservatives; Table 4 row 3 applies with ml substituted for g."
     },
     {
       "id": "concentrated-vegetable-pulp-puree",
@@ -6829,7 +6851,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "FoSCoS identity explicitly states dried fruit."
     },
     {
       "id": "04-04-1-arecanuts-or-betalnuts-or-supari",
@@ -6919,7 +6944,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "FoSCoS identity explicitly states fruit pickle; Appendix B row 3 includes pickled products."
     },
     {
       "id": "04-04-1-thermally-processed-fruits",
@@ -7359,7 +7387,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "Product identity explicitly states fruit pulp/puree with preservatives."
     },
     {
       "id": "04-04-1-concentrated-fruit-pulp-puree-with-preservatives-for-industrial-use-only",
@@ -7387,7 +7418,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "Product identity explicitly states concentrated fruit pulp/puree with preservatives."
     },
     {
       "id": "04-04-1-tamarind-pulp-puree-and-concentrate",
@@ -7611,7 +7645,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "FoSCoS identity is a powdered fruit-derived product; Appendix B dried/dehydrated route applies."
     },
     {
       "id": "04-04-1-cashew-kernels",
@@ -7667,7 +7704,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-01",
+      "microbiology_note": "FoSCoS identity is whole untreated fresh fruit; Appendix B Table 4 Fresh applies."
     },
     {
       "id": "04-04-1-surface-treated-fresh-fruit",
@@ -7695,7 +7735,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-01",
+      "microbiology_note": "FoSCoS identity remains whole fresh fruit; Appendix B Table 4 Fresh applies."
     },
     {
       "id": "04-04-1-peeled-or-cut-minimally-processed-fruit",
@@ -7723,7 +7766,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-02",
+      "microbiology_note": "FoSCoS identity directly matches cut/minimally processed fruit."
     },
     {
       "id": "04-04-1-walnut-kernels",
@@ -7822,7 +7868,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "FoSCoS identity explicitly states dried fruit-derived product."
     },
     {
       "id": "04-04-2-frozen-vegetables",
@@ -7887,7 +7936,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-05",
+      "microbiology_note": "FoSCoS identity explicitly states quick-frozen fungi."
     },
     {
       "id": "04-04-2-dehydrated-vegetables",
@@ -7952,7 +8004,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "FoSCoS identity explicitly states dried fungi."
     },
     {
       "id": "04-04-2-fungi-grits-and-fungi-powder",
@@ -8036,7 +8091,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "FoSCoS identity explicitly states dried fungi concentrate."
     },
     {
       "id": "04-04-2-pickles-made-from-vegetables-or-other-edible-plant-material-including-mushrooms",
@@ -8064,7 +8122,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "FoSCoS identity explicitly states vegetable/plant pickle; Appendix B row 3 includes pickled products."
     },
     {
       "id": "04-04-2-pickles-made-from-combination-of-fruits-or-vegetables-or-other-edible-plant-materi",
@@ -8092,7 +8153,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "FoSCoS identity explicitly states mixed fruit/vegetable/plant pickle; Appendix B row 3 includes pickled products."
     },
     {
       "id": "04-04-2-table-olives",
@@ -8420,7 +8484,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "Product identity explicitly states vegetable pulp/puree with preservatives."
     },
     {
       "id": "04-04-2-concentrated-vegetable-pulp-puree-with-preservatives-for-industrial-use-only",
@@ -8448,7 +8515,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "Product identity explicitly states concentrated vegetable pulp/puree with preservatives."
     },
     {
       "id": "04-04-2-ginger-paste",
@@ -8532,7 +8602,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "FoSCoS identity explicitly states pickled fungi; Appendix B row 3 includes pickled products."
     },
     {
       "id": "04-04-2-fermented-fungi",
@@ -8625,7 +8698,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-05",
+      "microbiology_note": "FoSCoS identity explicitly states quick-frozen potato product."
     },
     {
       "id": "04-04-2-untreated-fresh-vegetables",
@@ -8653,7 +8729,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-01",
+      "microbiology_note": "FoSCoS identity is whole untreated fresh vegetables; Appendix B Table 4 Fresh applies."
     },
     {
       "id": "04-04-2-surface-treated-fresh-vegetables",
@@ -8681,7 +8760,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-01",
+      "microbiology_note": "FoSCoS identity remains whole fresh vegetables; Appendix B Table 4 Fresh applies."
     },
     {
       "id": "04-04-2-peeled-cut-or-shredded-minimally-processed-vegetables",
@@ -8709,7 +8791,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-02",
+      "microbiology_note": "FoSCoS identity directly matches cut/minimally processed vegetables."
     },
     {
       "id": "04-04-2-yellow-pea-powder",
@@ -8894,7 +8979,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "FoSCoS identity explicitly states dried vegetable-derived product."
     },
     {
       "id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
@@ -21436,7 +21524,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03-liquid",
+      "microbiology_note": "Product identity explicitly states fruit juice with preservatives; Table 4 row 3 applies with ml substituted for g."
     },
     {
       "id": "vegetable-juices",
@@ -21512,7 +21603,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03-liquid",
+      "microbiology_note": "Product identity explicitly states vegetable juice with preservatives; Table 4 row 3 applies with ml substituted for g."
     },
     {
       "id": "concentrated-fruit-pulp-puree",
@@ -21542,7 +21636,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03-liquid",
+      "microbiology_note": "Product identity explicitly states concentrated fruit juice with preservatives; Table 4 row 3 applies with ml substituted for g."
     },
     {
       "id": "concentrated-vegetable-juice-industrial",
@@ -21557,7 +21654,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03-liquid",
+      "microbiology_note": "Product identity explicitly states concentrated vegetable juice with preservatives; Table 4 row 3 applies with ml substituted for g."
     },
     {
       "id": "concentrated-vegetable-pulp-puree",
@@ -24799,7 +24899,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "FoSCoS identity explicitly states dried fruit."
     },
     {
       "id": "04-04-1-arecanuts-or-betalnuts-or-supari",
@@ -24849,7 +24952,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "FoSCoS identity explicitly states fruit pickle; Appendix B row 3 includes pickled products."
     },
     {
       "id": "04-04-1-thermally-processed-fruits",
@@ -25137,7 +25243,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "Product identity explicitly states fruit pulp/puree with preservatives."
     },
     {
       "id": "04-04-1-concentrated-fruit-pulp-puree-with-preservatives-for-industrial-use-only",
@@ -25153,7 +25262,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "Product identity explicitly states concentrated fruit pulp/puree with preservatives."
     },
     {
       "id": "04-04-1-tamarind-pulp-puree-and-concentrate",
@@ -25281,7 +25393,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "FoSCoS identity is a powdered fruit-derived product; Appendix B dried/dehydrated route applies."
     },
     {
       "id": "04-04-1-cashew-kernels",
@@ -25313,7 +25428,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-01",
+      "microbiology_note": "FoSCoS identity is whole untreated fresh fruit; Appendix B Table 4 Fresh applies."
     },
     {
       "id": "04-04-1-surface-treated-fresh-fruit",
@@ -25329,7 +25447,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-01",
+      "microbiology_note": "FoSCoS identity remains whole fresh fruit; Appendix B Table 4 Fresh applies."
     },
     {
       "id": "04-04-1-peeled-or-cut-minimally-processed-fruit",
@@ -25345,7 +25466,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-02",
+      "microbiology_note": "FoSCoS identity directly matches cut/minimally processed fruit."
     },
     {
       "id": "04-04-1-walnut-kernels",
@@ -25404,7 +25528,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "FoSCoS identity explicitly states dried fruit-derived product."
     },
     {
       "id": "04-04-2-frozen-vegetables",
@@ -25441,7 +25568,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-05",
+      "microbiology_note": "FoSCoS identity explicitly states quick-frozen fungi."
     },
     {
       "id": "04-04-2-dehydrated-vegetables",
@@ -25478,7 +25608,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "FoSCoS identity explicitly states dried fungi."
     },
     {
       "id": "04-04-2-fungi-grits-and-fungi-powder",
@@ -25526,7 +25659,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "FoSCoS identity explicitly states dried fungi concentrate."
     },
     {
       "id": "04-04-2-pickles-made-from-vegetables-or-other-edible-plant-material-including-mushrooms",
@@ -25542,7 +25678,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "FoSCoS identity explicitly states vegetable/plant pickle; Appendix B row 3 includes pickled products."
     },
     {
       "id": "04-04-2-pickles-made-from-combination-of-fruits-or-vegetables-or-other-edible-plant-materi",
@@ -25558,7 +25697,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "FoSCoS identity explicitly states mixed fruit/vegetable/plant pickle; Appendix B row 3 includes pickled products."
     },
     {
       "id": "04-04-2-table-olives",
@@ -25758,7 +25900,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "Product identity explicitly states vegetable pulp/puree with preservatives."
     },
     {
       "id": "04-04-2-concentrated-vegetable-pulp-puree-with-preservatives-for-industrial-use-only",
@@ -25774,7 +25919,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "Product identity explicitly states concentrated vegetable pulp/puree with preservatives."
     },
     {
       "id": "04-04-2-ginger-paste",
@@ -25822,7 +25970,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-03",
+      "microbiology_note": "FoSCoS identity explicitly states pickled fungi; Appendix B row 3 includes pickled products."
     },
     {
       "id": "04-04-2-fermented-fungi",
@@ -25875,7 +26026,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-05",
+      "microbiology_note": "FoSCoS identity explicitly states quick-frozen potato product."
     },
     {
       "id": "04-04-2-untreated-fresh-vegetables",
@@ -25891,7 +26045,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-01",
+      "microbiology_note": "FoSCoS identity is whole untreated fresh vegetables; Appendix B Table 4 Fresh applies."
     },
     {
       "id": "04-04-2-surface-treated-fresh-vegetables",
@@ -25907,7 +26064,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-01",
+      "microbiology_note": "FoSCoS identity remains whole fresh vegetables; Appendix B Table 4 Fresh applies."
     },
     {
       "id": "04-04-2-peeled-cut-or-shredded-minimally-processed-vegetables",
@@ -25923,7 +26083,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-02",
+      "microbiology_note": "FoSCoS identity directly matches cut/minimally processed vegetables."
     },
     {
       "id": "04-04-2-yellow-pea-powder",
@@ -26048,7 +26211,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "FoSCoS identity explicitly states dried vegetable-derived product."
     },
     {
       "id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
@@ -33175,8 +33341,8 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 198,
-  "build_label": "Build 198 — Appendix B complete with Neera",
+  "build_number": 199,
+  "build_label": "Build 199 — Appendix B route integrity audit",
   "build_date": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",
