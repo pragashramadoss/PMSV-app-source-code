@@ -13,20 +13,25 @@
   },
   "coverage": {
     "main_table_groups_total": 11,
-    "main_table_groups_loaded": 2,
+    "main_table_groups_loaded": 3,
     "loaded_groups": [
       "Table 1 - Fish and Fishery Products",
-      "Table 2 - Milk and Milk Products"
+      "Table 2 - Milk and Milk Products",
+      "Table 3 - Spices and Herbs"
     ],
     "fish_product_categories_loaded": 16,
     "fish_exact_product_mappings": 18,
     "fish_conditional_product_mappings": 4,
     "fish_no_direct_table_mapping": 2,
-    "next_priority": "Table 3A/3B - Spices and Herbs",
+    "next_priority": "Table 4A/4B - Fruits and Vegetables and their Products",
     "milk_profiles_loaded": 16,
     "milk_exact_product_mappings": 56,
     "milk_conditional_product_mappings": 17,
-    "milk_no_direct_table_mapping": 18
+    "milk_no_direct_table_mapping": 18,
+    "spice_profiles_loaded": 5,
+    "spice_exact_product_mappings": 10,
+    "spice_conditional_product_mappings": 33,
+    "spice_no_direct_table_mapping": 3
   },
   "organism_labels": {
     "aerobic_plate_count": "Aerobic Plate Count",
@@ -42,7 +47,8 @@
     "enterobacteriaceae": "Enterobacteriaceae",
     "cronobacter_sp": "Enterobacter sakazakii (Cronobacter sp.)",
     "bacillus_cereus": "Bacillus cereus",
-    "sulphite_reducing_clostridia": "Sulphite Reducing Clostridia (SRC)"
+    "sulphite_reducing_clostridia": "Sulphite Reducing Clostridia (SRC)",
+    "aerobic_colony_count": "Aerobic Colony Count"
   },
   "tables": {
     "fish": {
@@ -1682,6 +1688,302 @@
         "FSSAI Manual of Methods of Analysis of Foods (Microbiological Testing) may also be referred to along with the specified IS/ISO methods.",
         "Regulatory sampling follows the Appendix B sampling instructions, including the no-retesting/no-resampling provision stated in Version 2."
       ]
+    },
+    "spices": {
+      "table_3a_title": "Microbiological Requirements for Spices and Herbs - Process Hygiene Criteria",
+      "table_3b_title": "Microbiological Requirements for Spices and Herbs - Food Safety Criteria",
+      "source_pages": {
+        "table_3a": [
+          24
+        ],
+        "table_3b": [
+          25
+        ],
+        "definitions_and_stage": [
+          25,
+          26
+        ],
+        "sampling": [
+          27,
+          28
+        ],
+        "reference_methods": [
+          28,
+          29
+        ]
+      },
+      "categories": [
+        {
+          "id": "spice-01",
+          "sl_no": "1",
+          "name": "Fresh",
+          "hygiene": {},
+          "safety": {},
+          "hygiene_special_requirement": "No numerical Table 3 criteria are prescribed for Fresh. The Fresh category is regulated in accordance with Good Manufacturing Practices and Code of Good Hygiene Practices under Schedule 4.",
+          "definition": "Spices and herbs that are consumed fresh.",
+          "notes": [
+            "The category 'Fresh' shall be regulated in accordance with GMP and Code of Good Hygiene Practices notified under Schedule 4."
+          ]
+        },
+        {
+          "id": "spice-02",
+          "sl_no": "2",
+          "name": "Dried or Dehydrated",
+          "hygiene": {
+            "aerobic_colony_count": {
+              "n": 5,
+              "c": 2,
+              "m": 1000000,
+              "M": 10000000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 2,
+              "m": 10000,
+              "M": 100000,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25 g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "sulphite_reducing_clostridia": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "bacillus_cereus": {
+              "n": 5,
+              "c": 2,
+              "m": 1000,
+              "M": 10000,
+              "unit": "cfu/g"
+            }
+          },
+          "definition": "Product obtained by drying/removal of most moisture by a suitable method which ensures characteristics of fresh spices on rehydration or pre-cooking."
+        },
+        {
+          "id": "spice-03",
+          "sl_no": "3",
+          "name": "Ground or Powdered",
+          "hygiene": {
+            "aerobic_colony_count": {
+              "n": 5,
+              "c": 2,
+              "m": 1000000,
+              "M": 10000000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 2,
+              "m": 10000,
+              "M": 100000,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25 g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "sulphite_reducing_clostridia": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "bacillus_cereus": {
+              "n": 5,
+              "c": 2,
+              "m": 1000,
+              "M": 10000,
+              "unit": "cfu/g"
+            }
+          },
+          "definition": "Ground or powdered product obtained by grinding or crushing clean dried/dehydrated fruits, capsules, buds, seeds, rhizomes, aril, kernel, berries, stigmas and similar spice/herb material."
+        },
+        {
+          "id": "spice-04",
+          "sl_no": "4",
+          "name": "Extracted",
+          "hygiene": {
+            "aerobic_colony_count": {
+              "n": 5,
+              "c": 2,
+              "m": 1000,
+              "M": 10000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 1,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 1,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25 g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "sulphite_reducing_clostridia": {
+              "n": 5,
+              "c": 1,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "bacillus_cereus": {
+              "n": 5,
+              "c": 1,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "definition": "Products of spices and herbs produced by extracting in concentrated form, including oleoresins."
+        },
+        {
+          "id": "spice-05",
+          "sl_no": "5",
+          "name": "Wet ground (Paste)/preserved or pickled",
+          "hygiene": {
+            "aerobic_colony_count": {
+              "n": 5,
+              "c": 2,
+              "m": 1000,
+              "M": 10000,
+              "unit": "cfu/g"
+            },
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 2,
+              "m": 1000,
+              "M": 10000,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25 g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "sulphite_reducing_clostridia": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            },
+            "bacillus_cereus": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "definition": "Semi-solid preserved product using brine, vinegar and other permitted preservatives or physical methods."
+        }
+      ],
+      "stage_rules": {
+        "process_hygiene": "Process Hygiene Criteria indicate acceptable functioning of production, apply at the end of manufacturing, and are not market-release requirements.",
+        "food_safety": "Food Safety Criteria define batch/lot acceptability and apply at the end of manufacturing and to products in the market during shelf-life."
+      },
+      "action_on_unsatisfactory_process_hygiene": [
+        "Check and improve process hygiene by implementation of Schedule 4 guidelines.",
+        "Ensure that all food safety criteria in Table 3B are complied with."
+      ],
+      "reference_methods": {
+        "aerobic_colony_count": "IS 5402 / ISO 4833",
+        "yeast_and_mold_count": "IS 5403 / ISO 21527 Part 1 and Part 2",
+        "enterobacteriaceae": "IS/ISO 7402 / ISO 21528 Part 2",
+        "staphylococcus_aureus": "IS 5887 Part 2; IS 5887 Part 8 (Sec 1) / ISO 6888-1; or IS 5887 Part 8 (Sec 2) / ISO 6888-2",
+        "salmonella": "IS 5887 Part 3 / ISO 6579",
+        "sulphite_reducing_clostridia": "ISO 15213",
+        "bacillus_cereus": "IS 5887 Part 6 / ISO 7932"
+      },
+      "sampling_notes": [
+        "For regulatory sampling, three sets each containing n samples are drawn and tested in three different accredited laboratories; the final decision is based on the three laboratory results.",
+        "There is no provision for retesting or resampling for microbiological testing.",
+        "FBOs determine necessary sampling/testing frequency subject to the minimum prescribed under FSSR Licensing and Registration requirements."
+      ]
     }
   },
   "product_mappings": {
@@ -2646,6 +2948,668 @@
           "catalog_id": "02-02-4-analogue-in-the-dairy-context",
           "status": "no_direct_table_mapping",
           "reason": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
+        }
+      ]
+    },
+    "spices": {
+      "exact": [
+        {
+          "catalog_id": "12-12-2-curry-powder",
+          "profile_key": "spice-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity fixes the ground/powdered form."
+        },
+        {
+          "catalog_id": "12-12-2-dried-mango-slices",
+          "profile_key": "spice-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity fixes the dried non-ground form."
+        },
+        {
+          "catalog_id": "12-12-2-dried-mango-powder-amchur",
+          "profile_key": "spice-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity fixes the dried powder form."
+        },
+        {
+          "catalog_id": "12-12-2-spice-oleoresins",
+          "profile_key": "spice-04",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B defines Extracted products to include oleoresins."
+        },
+        {
+          "catalog_id": "12-12-2-dried-laurel-or-dried-bay-leaf",
+          "profile_key": "spice-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity fixes a dried/dehydrated non-ground herb form."
+        },
+        {
+          "catalog_id": "12-12-2-dried-mint",
+          "profile_key": "spice-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity fixes a dried/dehydrated non-ground herb form."
+        },
+        {
+          "catalog_id": "12-12-2-dried-rosemary",
+          "profile_key": "spice-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity fixes a dried/dehydrated non-ground herb form."
+        },
+        {
+          "catalog_id": "12-12-2-dried-sage",
+          "profile_key": "spice-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity fixes a dried/dehydrated non-ground herb form."
+        },
+        {
+          "catalog_id": "12-12-2-dried-sweet-basil-leaves",
+          "profile_key": "spice-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity fixes a dried/dehydrated non-ground herb form."
+        },
+        {
+          "catalog_id": "12-12-2-dried-sweet-marjoram",
+          "profile_key": "spice-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity fixes a dried/dehydrated non-ground herb form."
+        }
+      ],
+      "conditional": [
+        {
+          "catalog_id": "12-12-2-caraway-siahjira",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-cardamom-elaichi",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-chillies-and-capsicum-lal-mirchi",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-cinnamon-dalchini",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-cassia-taj",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-cloves-laung",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-coriander-dhania",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-cumin-zeera-kalonji",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-fennel-saunf",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-dried-ginger-sonth-dried-adrak",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-mace-jaipatri",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-mustard-rai-sarson",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-nutmeg-jaiphal",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-turmeric-haldi",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-mixed-masala",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-garlic-lahsun",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-dehydrated-onion-sukha-pyaj",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-dried-oregano",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-pimento-or-allspice",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-dried-thyme",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-dried-parsley",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-dehydrated-tarragon",
+          "status": "variant_required",
+          "reason": "The FSSAI product standard contains both non-ground and ground/powdered variants; Appendix B assigns different categories by actual form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, crushed or powdered form",
+              "profile_key": "spice-03"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-black-white-and-green-bwg-peppers",
+          "status": "variant_required",
+          "reason": "The FSSAI standard includes whole Black/White/Green peppers and ground/crushed Black/White pepper. Appendix B classification depends on the actual physical form.",
+          "options": [
+            {
+              "condition": "Fresh",
+              "profile_key": "spice-01"
+            },
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground or powdered",
+              "profile_key": "spice-03"
+            },
+            {
+              "condition": "Wet-ground paste / preserved / pickled",
+              "profile_key": "spice-05"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-fenugreek-methi",
+          "status": "variant_required",
+          "reason": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name.",
+          "options": [
+            {
+              "condition": "Fresh",
+              "profile_key": "spice-01"
+            },
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground or powdered",
+              "profile_key": "spice-03"
+            },
+            {
+              "condition": "Wet-ground paste / preserved / pickled",
+              "profile_key": "spice-05"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-poppy-khas-khas",
+          "status": "variant_required",
+          "reason": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name.",
+          "options": [
+            {
+              "condition": "Fresh",
+              "profile_key": "spice-01"
+            },
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground or powdered",
+              "profile_key": "spice-03"
+            },
+            {
+              "condition": "Wet-ground paste / preserved / pickled",
+              "profile_key": "spice-05"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-saffron-kesar",
+          "status": "variant_required",
+          "reason": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name.",
+          "options": [
+            {
+              "condition": "Fresh",
+              "profile_key": "spice-01"
+            },
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground or powdered",
+              "profile_key": "spice-03"
+            },
+            {
+              "condition": "Wet-ground paste / preserved / pickled",
+              "profile_key": "spice-05"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-aniseed-saunf",
+          "status": "variant_required",
+          "reason": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name.",
+          "options": [
+            {
+              "condition": "Fresh",
+              "profile_key": "spice-01"
+            },
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground or powdered",
+              "profile_key": "spice-03"
+            },
+            {
+              "condition": "Wet-ground paste / preserved / pickled",
+              "profile_key": "spice-05"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-ajowan-bishops-seed",
+          "status": "variant_required",
+          "reason": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name.",
+          "options": [
+            {
+              "condition": "Fresh",
+              "profile_key": "spice-01"
+            },
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground or powdered",
+              "profile_key": "spice-03"
+            },
+            {
+              "condition": "Wet-ground paste / preserved / pickled",
+              "profile_key": "spice-05"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-celery",
+          "status": "variant_required",
+          "reason": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name.",
+          "options": [
+            {
+              "condition": "Fresh",
+              "profile_key": "spice-01"
+            },
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground or powdered",
+              "profile_key": "spice-03"
+            },
+            {
+              "condition": "Wet-ground paste / preserved / pickled",
+              "profile_key": "spice-05"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-asafoetida-hing-or-hingra",
+          "status": "variant_required",
+          "reason": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name.",
+          "options": [
+            {
+              "condition": "Fresh",
+              "profile_key": "spice-01"
+            },
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground or powdered",
+              "profile_key": "spice-03"
+            },
+            {
+              "condition": "Wet-ground paste / preserved / pickled",
+              "profile_key": "spice-05"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-tejpat",
+          "status": "variant_required",
+          "reason": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name.",
+          "options": [
+            {
+              "condition": "Fresh",
+              "profile_key": "spice-01"
+            },
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground or powdered",
+              "profile_key": "spice-03"
+            },
+            {
+              "condition": "Wet-ground paste / preserved / pickled",
+              "profile_key": "spice-05"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-star-anise",
+          "status": "variant_required",
+          "reason": "Appendix B Table 3 classifies spices/herbs by actual physical form, which is not fixed by this standardized-product name.",
+          "options": [
+            {
+              "condition": "Fresh",
+              "profile_key": "spice-01"
+            },
+            {
+              "condition": "Dried/dehydrated whole, cut, seed, leaf or similar non-ground form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground or powdered",
+              "profile_key": "spice-03"
+            },
+            {
+              "condition": "Wet-ground paste / preserved / pickled",
+              "profile_key": "spice-05"
+            }
+          ]
+        },
+        {
+          "catalog_id": "12-12-2-seasoning",
+          "status": "variant_required",
+          "reason": "FSSAI Seasoning can be supplied in dry or paste form; Appendix B microbiology therefore requires the actual physical form.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated non-ground seasoning",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground/powdered dry seasoning",
+              "profile_key": "spice-03"
+            },
+            {
+              "condition": "Wet-ground / paste / preserved seasoning",
+              "profile_key": "spice-05"
+            }
+          ]
+        }
+      ],
+      "no_direct_table_mapping": [
+        {
+          "catalog_id": "12-12-1-edible-common-salt",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 3 applies to Spices and Herbs. PMSV does not assign the spice/herb microbiology table to salt products."
+        },
+        {
+          "catalog_id": "12-12-1-iron-fortified-iodized-salt-double-fortified-salt",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 3 applies to Spices and Herbs. PMSV does not assign the spice/herb microbiology table to salt products."
+        },
+        {
+          "catalog_id": "12-12-1-salt-substitutes",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 3 applies to Spices and Herbs. PMSV does not assign the spice/herb microbiology table to salt products."
         }
       ]
     }
