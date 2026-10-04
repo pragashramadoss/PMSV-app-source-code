@@ -1,13 +1,14 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "title": "PMSV India Nutrition Calculation Database",
   "scope": "Deterministic nutrition-calculation database. Nutrient composition is accepted only from ICMR-NIN/IFCT. FSSAI is used separately for legal nutrition-labelling rules, RDA/reference values and prescribed calculation factors. Unmapped ingredients remain unmatched; no third-party estimation is permitted.",
   "sources": {
     "ifct2017": {
       "authority": "ICMR-National Institute of Nutrition, Department of Health Research, Ministry of Health and Family Welfare, Government of India",
       "title": "Indian Food Composition Tables 2017",
-      "url": "https://www.nin.res.in/ebooks/IFCT2017.pdf",
-      "use": "Primary Indian government food-composition source for foods with an exact applicable IFCT entry."
+      "url": "https://www.nin.res.in/ebooks/IFCT2017_16122024.pdf",
+      "use": "Primary Indian government food-composition source for foods with an exact applicable IFCT entry.",
+      "note": "IFCT values are per 100 g edible portion. PMSV stores national mean values only when the exact IFCT food identity and nutrient table row are verified."
     },
     "fssai_labelling": {
       "authority": "Food Safety and Standards Authority of India",
@@ -235,6 +236,200 @@
       "verification_status": "locked_pending_icmr_nin_mapping",
       "previous_source_type": "composition_defined",
       "source_authority": "PMSV starter assumption — not accepted for nutrition calculation"
+    },
+    {
+      "names": [
+        "jaggery",
+        "cane jaggery",
+        "jaggery, cane"
+      ],
+      "display_name": "Jaggery, cane",
+      "ifct_code": "I001",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · I001 Jaggery, cane · Tables 1, 5 and 6",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "protein_g",
+        "carbohydrate_g",
+        "total_sugars_g",
+        "total_fat_g",
+        "sodium_mg"
+      ],
+      "per_100g": {
+        "protein_g": 1.85,
+        "carbohydrate_g": 84.87,
+        "total_sugars_g": 84.32,
+        "total_fat_g": 0.16,
+        "sodium_mg": 25.38
+      }
+    },
+    {
+      "names": [
+        "sugarcane juice",
+        "sugar cane juice",
+        "sugarcane, juice"
+      ],
+      "display_name": "Sugarcane, juice",
+      "ifct_code": "I002",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · I002 Sugarcane, juice · Tables 1, 5 and 6",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "protein_g",
+        "carbohydrate_g",
+        "total_sugars_g",
+        "total_fat_g",
+        "sodium_mg",
+        "dietary_fibre_g"
+      ],
+      "per_100g": {
+        "protein_g": 0.16,
+        "carbohydrate_g": 13.11,
+        "total_sugars_g": 12.85,
+        "total_fat_g": 0.4,
+        "sodium_mg": 1.16,
+        "dietary_fibre_g": 0.56
+      }
+    },
+    {
+      "names": [
+        "coconut water",
+        "coconut water, fresh"
+      ],
+      "display_name": "Coconut Water",
+      "ifct_code": "K002",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · K002 Coconut Water · Tables 1, 5 and 6",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "protein_g",
+        "carbohydrate_g",
+        "total_sugars_g",
+        "total_fat_g",
+        "sodium_mg"
+      ],
+      "per_100g": {
+        "protein_g": 0.26,
+        "carbohydrate_g": 3.16,
+        "total_sugars_g": 3.06,
+        "total_fat_g": 0.16,
+        "sodium_mg": 28.09
+      }
+    },
+    {
+      "names": [
+        "buffalo milk",
+        "milk, whole, buffalo",
+        "whole buffalo milk"
+      ],
+      "display_name": "Milk, whole, Buffalo",
+      "ifct_code": "L001",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · L001 Milk, whole, Buffalo · Tables 1, 5 and 6",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "protein_g",
+        "carbohydrate_g",
+        "total_sugars_g",
+        "total_fat_g",
+        "sodium_mg"
+      ],
+      "per_100g": {
+        "protein_g": 3.68,
+        "carbohydrate_g": 8.39,
+        "total_sugars_g": 5.34,
+        "total_fat_g": 6.58,
+        "sodium_mg": 30.1
+      }
+    },
+    {
+      "names": [
+        "cow milk",
+        "milk, whole, cow",
+        "whole cow milk"
+      ],
+      "display_name": "Milk, whole, Cow",
+      "ifct_code": "L002",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · L002 Milk, whole, Cow · Tables 1, 5 and 6",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "protein_g",
+        "carbohydrate_g",
+        "total_sugars_g",
+        "total_fat_g",
+        "sodium_mg"
+      ],
+      "per_100g": {
+        "protein_g": 3.26,
+        "carbohydrate_g": 4.94,
+        "total_sugars_g": 4.89,
+        "total_fat_g": 4.48,
+        "sodium_mg": 25.46
+      }
+    },
+    {
+      "names": [
+        "paneer"
+      ],
+      "display_name": "Paneer",
+      "ifct_code": "L003",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · L003 Paneer · Tables 1, 5 and 6",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "protein_g",
+        "carbohydrate_g",
+        "total_sugars_g",
+        "total_fat_g",
+        "sodium_mg"
+      ],
+      "per_100g": {
+        "protein_g": 18.86,
+        "carbohydrate_g": 2.41,
+        "total_sugars_g": 11.57,
+        "total_fat_g": 24.78,
+        "sodium_mg": 18.04
+      }
+    },
+    {
+      "names": [
+        "khoa",
+        "khoya"
+      ],
+      "display_name": "Khoa",
+      "ifct_code": "L004",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · L004 Khoa · Tables 1, 5 and 6",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "protein_g",
+        "carbohydrate_g",
+        "total_sugars_g",
+        "total_fat_g",
+        "sodium_mg"
+      ],
+      "per_100g": {
+        "protein_g": 16.34,
+        "carbohydrate_g": 16.53,
+        "total_sugars_g": 16.14,
+        "total_fat_g": 20.62,
+        "sodium_mg": 48.1
+      }
     }
   ],
   "source_policy": {
@@ -253,6 +448,25 @@
     "active_icmr_nin_profiles": 0,
     "locked_non_icmr_starter_profiles": 7,
     "ifct_master_ingestion": "pending",
-    "source_verified_on": "2026-10-03"
-  }
+    "source_verified_on": "2026-10-03",
+    "ifct_exact_profiles_loaded": 7,
+    "ifct_partial_profiles_loaded": 7,
+    "field_level_fail_closed": true,
+    "refined_sucrose_not_in_ifct_food_list": true
+  },
+  "last_verified": "2026-10-04",
+  "required_label_fields": [
+    "energy_kcal",
+    "protein_g",
+    "carbohydrate_g",
+    "total_sugars_g",
+    "added_sugars_g",
+    "total_fat_g",
+    "saturated_fat_g",
+    "trans_fat_g",
+    "cholesterol_mg",
+    "sodium_mg",
+    "dietary_fibre_g"
+  ],
+  "field_safety_policy": "A nutrient is calculated only when that nutrient field is explicitly verified for 100% of formulation mass. Missing IFCT fields are unknown, not zero."
 }
