@@ -46,8 +46,8 @@
     "contaminants_v9_residue_rows_loaded": 928,
     "appendix_b_rule_file": "./data/rules/appendix-b-v2-core.json",
     "appendix_b_source_version": "Version 2 (04.11.2024)",
-    "appendix_b_stage": "tables_1_and_2_complete",
-    "appendix_b_main_table_groups_loaded": 2,
+    "appendix_b_stage": "tables_1_to_3_complete",
+    "appendix_b_main_table_groups_loaded": 3,
     "appendix_b_main_table_groups_total": 11,
     "appendix_b_fish_categories_loaded": 16,
     "appendix_b_fish_exact_product_mappings": 18,
@@ -56,7 +56,11 @@
     "appendix_b_milk_profiles_loaded": 16,
     "appendix_b_milk_exact_product_mappings": 56,
     "appendix_b_milk_conditional_product_mappings": 17,
-    "appendix_b_milk_no_direct_table_mapping": 18
+    "appendix_b_milk_no_direct_table_mapping": 18,
+    "appendix_b_spice_profiles_loaded": 5,
+    "appendix_b_spice_exact_product_mappings": 10,
+    "appendix_b_spice_conditional_product_mappings": 33,
+    "appendix_b_spice_no_direct_table_mapping": 3
   },
   "products": [
     {
@@ -5124,12 +5128,13 @@
     "rule_file": "./data/rules/appendix-b-v2-core.json",
     "source_version": "Version 2 (04.11.2024)",
     "source_verified_on": "2026-10-04",
-    "status": "tables_1_and_2_complete",
+    "status": "tables_1_to_3_complete",
     "loaded_groups": [
       "Table 1A/1B - Fish and Fishery Products",
-      "Table 2A/2B - Milk and Milk Products"
+      "Table 2A/2B - Milk and Milk Products",
+      "Table 3A/3B - Spices and Herbs"
     ],
-    "next_priority": "Table 3A/3B - Spices and Herbs",
-    "fail_closed_rule": "Only exact official product-class mappings or explicit user-resolved form/process routes are applied. Products without a direct Appendix B table identity remain unmapped; proprietary dairy analogy is not self-determined by PMSV."
+    "next_priority": "Table 4A/4B - Fruits and Vegetables and their Products",
+    "fail_closed_rule": "Only exact official product-class mappings or explicit user-resolved form/process routes are applied. Spice/herb Table 3 is selected by actual physical form; salt is not treated as a spice/herb microbiology category."
   }
 }
