@@ -33,7 +33,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 11A - continue from enzyme 25 (Lactase / Beta-galactosidase)",
+    "next_priority": "Table 11A - continue from enzyme 35",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -55,9 +55,9 @@
     "table_11_non_gmm_entries": 56,
     "table_11_non_gmm_source_rows": 139,
     "table_11_amendment_corrected_entries": 6,
-    "table_11a_gmm_status": "partial_structured_ingestion_1_24",
-    "table_11a_gmm_entries_loaded": 24,
-    "table_11a_gmm_variant_rows_loaded": 66
+    "table_11a_gmm_status": "partial_structured_ingestion_1_34",
+    "table_11a_gmm_entries_loaded": 34,
+    "table_11a_gmm_variant_rows_loaded": 80
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -2984,7 +2984,7 @@
         23
       ],
       "source_scope": "Table 11A only. Production organism, donor/source, technological purpose, indicative food use and residual level are stored as linked variants. Runtime remains fail-closed until the full table is ingested and the selected product/use is matched.",
-      "ingestion_status": "partial_1_to_24",
+      "ingestion_status": "partial_1_to_34",
       "entries": [
         {
           "sequence": 1,
@@ -3613,6 +3613,209 @@
               "donor_or_source": "Aspergillus niger",
               "purpose": "Aids in fermentation, hydrolysis of terminal, non-reducing (1~4)-linked alpha-D-glucose residues with release of alpha-D-glucose",
               "indicative_food_uses": "Brewing and starch processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 25,
+          "name": "Lactase (Beta-galactosidase)",
+          "ec": "3.2.1.23",
+          "variants": [
+            {
+              "production_organism": "Kluyveromyces lactis",
+              "donor_or_source": "Kluyveromyces lactis",
+              "purpose": "Hydrolysis of lactose content of whey or milk",
+              "indicative_food_uses": "Dairy products and processing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Bifidobacterium bifidum",
+              "purpose": "Hydrolysis of lactose content of whey or milk",
+              "indicative_food_uses": "Dairy products and production of GOS (galacto-oligosaccharide)",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Aspergillus oryzae",
+              "purpose": "Hydrolysis of lactose content of whey or milk",
+              "indicative_food_uses": "Dairy products and processing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Bifidobacterium bifidum",
+              "purpose": "Hydrolysis of lactose content of whey or milk",
+              "indicative_food_uses": "Dairy products and processing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Lactobacillus delbrueckii subsp. bulgaricus",
+              "purpose": "Hydrolysis of lactose content of whey or milk",
+              "indicative_food_uses": "In dairy processing, GOS production and production of low lactose products",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus oryzae",
+              "donor_or_source": "Aspergillus oryzae",
+              "purpose": "Hydrolysis of lactose content of whey or milk",
+              "indicative_food_uses": "In dairy processing, GOS production and production of low lactose products",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 26,
+          "name": "Trehalase",
+          "ec": "3.2.1.28",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Trichoderma reesei",
+              "purpose": "Starch processing for fermentation",
+              "indicative_food_uses": "Brewing process",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Myceliophthora sepedonium",
+              "purpose": "Starch processing for fermentation",
+              "indicative_food_uses": "Brewing process",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 27,
+          "name": "Pullulanase",
+          "ec": "3.2.1.41",
+          "variants": [
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Bacillus deramificans",
+              "purpose": "Hydrolysis of pullulan in starch processing, as processing aid in efficient starch hydrolysis and saccharification",
+              "indicative_food_uses": "Brewing processes and production of sweeteners, manufacture of starch or carbohydrate processing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Bacillus acidopullulyticus",
+              "purpose": "Hydrolysis of pullulan in starch processing",
+              "indicative_food_uses": "Brewing processes and manufacture of sweeteners",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Bacillus deramificans",
+              "purpose": "Hydrolysis of pullulan in grain processing",
+              "indicative_food_uses": "Brewing and starch processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 28,
+          "name": "Alpha arabinofuranosidase",
+          "ec": "3.2.1.55",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Talaromyces pinophilus",
+              "purpose": "Separation of soluble and starch or gluten fractions",
+              "indicative_food_uses": "Potable alcohol production",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 29,
+          "name": "Maltotetraohydrolase or glucan 1,4-alpha-maltotetraohydrolase",
+          "ec": "3.2.1.60",
+          "variants": [
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Pseudomonas stutzeri (saccharophila)",
+              "purpose": "Dough stabilizer, anti-staling agent in baking, antiretrogradation agent to enhance quality attributes of bakery products",
+              "indicative_food_uses": "Baking, carbohydrate or grain processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 30,
+          "name": "Mannan endo-1,4-beta-mannosidase (beta-mannanase)",
+          "ec": "3.2.1.78",
+          "variants": [
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Talaromyces leycettanus",
+              "purpose": "Hydrolysis of mannan to inhibit gel formation during freeze-drying of instant coffee",
+              "indicative_food_uses": "Coffee processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 31,
+          "name": "Glucan 1,4-alpha-maltohydrolase (Maltogenic alpha-amylase)",
+          "ec": "3.2.1.133",
+          "variants": [
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Geobacillus stearothermophilus",
+              "purpose": "Anti-staling agent to prevent retrodegradation of starch in baking; production of tailor-made sweetener syrups with low viscosity and high maltose contents",
+              "indicative_food_uses": "Bakery products and sweetener syrups",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Geobacillus stearothermophilus",
+              "purpose": "Anti-staling agent to prevent retrodegradation of starch in baking; production of tailor-made sweetener syrups with low viscosity and high maltose contents",
+              "indicative_food_uses": "As processing aid in bakery, starch processing, brewing and potable alcohol",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 32,
+          "name": "Carboxypeptidase",
+          "ec": "3.4.16.5",
+          "variants": [
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Aspergillus niger",
+              "purpose": "Accelerate flavour development and de-bittering during cheese ripening; debittering agent in cheese manufacture",
+              "indicative_food_uses": "Cheese, enzyme modified cheese, cheese powders and fermented meat",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 33,
+          "name": "Chymotrypsin",
+          "ec": "3.4.21.1",
+          "variants": [
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Nocardiopsis prasina",
+              "purpose": "Increase digestibility of protein and reduce allergenicity",
+              "indicative_food_uses": "Protein hydrolysis, yeast processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 34,
+          "name": "Serine protease with trypsin specificity (Trypsin)",
+          "ec": "3.4.21.4",
+          "variants": [
+            {
+              "production_organism": "Fusarium venenatum",
+              "donor_or_source": "Fusarium oxysporum",
+              "purpose": "Increase digestibility of protein and reduce allergenicity",
+              "indicative_food_uses": "Dairy processing, protein hydrolysis",
               "residual_level": "GMP"
             }
           ]
