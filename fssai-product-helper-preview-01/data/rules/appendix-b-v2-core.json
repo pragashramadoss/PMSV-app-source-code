@@ -59,7 +59,7 @@
     "egg_no_direct_table_mapping": 0,
     "food_grain_profiles_loaded": 3,
     "food_grain_exact_product_mappings": 4,
-    "food_grain_conditional_product_mappings": 0,
+    "food_grain_conditional_product_mappings": 2,
     "food_grain_no_direct_table_mapping": 0
   },
   "organism_labels": {
@@ -6463,11 +6463,44 @@
           "note": "Appendix B Table 9 row 3 expressly includes malted milk food. Product-standard microbiological provisions remain a separate Chapter 2.4 layer."
         }
       ],
-      "conditional": [],
+      "conditional": [
+        {
+          "catalog_id": "06-06-3-breakfast-cereal",
+          "status": "variant_required",
+          "reason": "FSSAI Chapter 2.4.35 defines Breakfast Cereal as including ready-to-eat and quick or regular cooking cereal products. Appendix B Table 9 row 3 covers other ready-to-eat grain products, so the actual consumption/preparation form must be established.",
+          "options": [
+            {
+              "condition": "Ready-to-eat breakfast cereal",
+              "profile_key": "grain-03"
+            },
+            {
+              "condition": "Quick or regular cooking breakfast cereal",
+              "profile_key": "",
+              "message": "Appendix B Table 9 does not provide a direct class for this cooking-form breakfast cereal solely from the product identity; PMSV will not apply row 3."
+            }
+          ]
+        },
+        {
+          "catalog_id": "06-06-3-fruit-vegetable-cereal-flakes",
+          "status": "variant_required",
+          "reason": "This product is under FSSAI Chapter 2.4.35, which covers both ready-to-eat and quick or regular cooking cereal products. Appendix B Table 9 row 3 covers other ready-to-eat grain products only.",
+          "options": [
+            {
+              "condition": "Ready-to-eat cereal flakes",
+              "profile_key": "grain-03"
+            },
+            {
+              "condition": "Quick or regular cooking cereal flakes",
+              "profile_key": "",
+              "message": "PMSV will not treat a cooking-form cereal as an Appendix B row 3 ready-to-eat grain product without a direct FSSAI route."
+            }
+          ]
+        }
+      ],
       "no_direct_table_mapping": [],
       "not_auto_mapped": [
         "Generic cereal/grain products not explicitly identified as a Table 9 process class",
-        "Breakfast cereals and other possible ready-to-eat grain products without an exact current Table 9 crosswalk",
+        "Quick or regular cooking breakfast cereal/cereal flakes unless another exact Table 9 class is established",
         "Malt Based Foods / Malt Food, which is not the same named identity as Malted Milk Food"
       ]
     }
