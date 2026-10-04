@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Appendix C runtime reconciliation and current-amendment audit",
+    "next_priority": "Audit Tables 1-11 against current Version 2 and future-effective amendments embedded in the compendium.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -60,11 +60,13 @@
     "table_11a_gmm_entries_loaded": 51,
     "table_11a_gmm_variant_rows_loaded": 109,
     "table_11a_gmm_enzyme_preparation_criteria_loaded": true,
-    "table_12_status": "complete_current_consolidated",
-    "table_12_entries_loaded": 87,
-    "table_12_permission_rows": 101,
-    "table_12_runtime_mapped_entries": 46,
-    "table_12_runtime_policy": "purpose-matched selectors only; unmapped permissions fail closed"
+    "table_12_status": "complete_current_version_2_reconciled",
+    "table_12_entries_loaded": 75,
+    "table_12_permission_rows": 83,
+    "table_12_runtime_mapped_entries": 38,
+    "table_12_runtime_policy": "Official current Version 2 only; draft ePC rows excluded; product-specific/ambiguous rows fail closed.",
+    "appendix_c_audit_status": "in_progress_current_version_2",
+    "appendix_c_audit_note": "Draft notification 4353 is not treated as operative law. Current Version 2 remains controlling for runtime."
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -4136,8 +4138,8 @@
       "number": 12,
       "title": "GENERALLY PERMITTED PROCESSING AIDS",
       "process_key": "",
-      "source_scope": "Current FSSAI active list / Appendix C current text. Rows are loaded only where the current official row text has been positively verified; older superseded wording is not used.",
-      "ingestion_status": "complete_1_to_87_current_consolidated",
+      "source_scope": "Official FSSAI Appendix C Version 2 (01.08.2025) only. Draft ePC amendments are excluded until incorporated into the operative compendium.",
+      "ingestion_status": "complete_1_to_75_current_version_2",
       "entries": [
         {
           "s_no": 1,
@@ -4146,7 +4148,7 @@
           "permissions": [
             {
               "purpose": "Adsorbent, decolourizing agent",
-              "product_category": "Sugars, oils and fats, juices, Alcoholic Beverages, Non-alcoholic beverages, Sugar syrup treatment",
+              "product_category": "Sugars, oils and fats, juices, alcoholic beverages",
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
@@ -4299,14 +4301,8 @@
           "ins": "",
           "permissions": [
             {
-              "purpose": "Buffering agent, Flocculating agent",
-              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts, Non-Alcoholic Beverages, Water Treatment, Instant Tea processing",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
-            },
-            {
-              "purpose": "Stabilizer",
-              "product_category": "Extruded foods",
+              "purpose": "Buffering agent",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
@@ -4319,9 +4315,10 @@
           "permissions": [
             {
               "purpose": "Buffering agent",
-              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "product_category": "",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "source_note": "The current Version 2 extracted table does not expose a product-category value for this row. PMSV therefore stores no inferred category and keeps it fail-closed."
             }
           ]
         },
@@ -4344,16 +4341,10 @@
           "ins": "290",
           "permissions": [
             {
-              "purpose": "Packaging and propelling Gas / aerating agent",
-              "product_category": "All Foods",
+              "purpose": "Gassing/aerating agent",
+              "product_category": "All foods",
               "residual_level": "GMP",
               "runtime_auto_apply": true
-            },
-            {
-              "purpose": "pH Control agent",
-              "product_category": "Water Treatment, Non-Alcoholic Beverages",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
             }
           ],
           "process_key": "gas"
@@ -4365,19 +4356,7 @@
           "permissions": [
             {
               "purpose": "Sequestrant",
-              "product_category": "Oils & fats, Instant Tea processing",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
-            },
-            {
-              "purpose": "pH standardization",
-              "product_category": "All Foods",
-              "residual_level": "GMP",
-              "runtime_auto_apply": true
-            },
-            {
-              "purpose": "Catalyst in inversion of sugar",
-              "product_category": "Sugar Syrups",
+              "product_category": "Oils & fats",
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
@@ -4596,7 +4575,7 @@
           "permissions": [
             {
               "purpose": "Acidity regulator",
-              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts, seasonings",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
               "runtime_auto_apply": false
             }
@@ -4920,7 +4899,7 @@
         },
         {
           "s_no": 55,
-          "name": "Salt (NaCl) / Sodium Chloride",
+          "name": "Salt (NaCl)",
           "ins": "",
           "permissions": [
             {
@@ -4928,15 +4907,8 @@
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
               "runtime_auto_apply": false
-            },
-            {
-              "purpose": "Texturising agents",
-              "product_category": "Unripened Cheese-Paneer; Water treatment",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
             }
-          ],
-          "process_key": "water"
+          ]
         },
         {
           "s_no": 56,
@@ -5052,8 +5024,8 @@
           "ins": "",
           "permissions": [
             {
-              "purpose": "Disinfectant",
-              "product_category": "Water treatment, All foods",
+              "purpose": "Water treatment",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level_mgkg": 1,
               "residual_basis": "as available chlorine",
               "runtime_auto_apply": false
@@ -5083,15 +5055,8 @@
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
               "runtime_auto_apply": false
-            },
-            {
-              "purpose": "pH control agent",
-              "product_category": "Water Treatment, Non-Alcoholic Beverages",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
             }
-          ],
-          "process_key": "ph"
+          ]
         },
         {
           "s_no": 65,
@@ -5209,9 +5174,9 @@
           "permissions": [
             {
               "purpose": "Fermenting Agent",
-              "product_category": "All foods",
+              "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
               "residual_level": "GMP",
-              "runtime_auto_apply": true
+              "runtime_auto_apply": false
             }
           ],
           "process_key": "nutrient"
@@ -5224,8 +5189,9 @@
             {
               "purpose": "Mineral Salt",
               "product_category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "residual_level": "",
+              "runtime_auto_apply": false,
+              "source_note": "Current Version 2 shows no residual-level value in the Table 12 row; PMSV does not infer GMP."
             }
           ]
         },
@@ -5243,173 +5209,10 @@
             }
           ],
           "process_key": "water"
-        },
-        {
-          "s_no": 76,
-          "name": "Nitrogen",
-          "ins": "941",
-          "permissions": [
-            {
-              "purpose": "Packaging gas, Creating inert atmosphere",
-              "product_category": "All foods",
-              "residual_level": "GMP",
-              "runtime_auto_apply": true
-            }
-          ],
-          "process_key": "gas"
-        },
-        {
-          "s_no": 77,
-          "name": "Hydrochloric acid",
-          "ins": "507",
-          "permissions": [
-            {
-              "purpose": "pH control agent",
-              "product_category": "Water Treatment, Non-alcoholic beverages",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
-            }
-          ],
-          "process_key": "ph"
-        },
-        {
-          "s_no": 78,
-          "name": "Ammonium bicarbonate",
-          "ins": "503(ii)",
-          "permissions": [
-            {
-              "purpose": "Raising agent",
-              "product_category": "Flour Mix and its products",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
-            }
-          ]
-        },
-        {
-          "s_no": 79,
-          "name": "Disodium ortho phosphate",
-          "ins": "339(ii)",
-          "permissions": [
-            {
-              "purpose": "Raising agent",
-              "product_category": "Flour Mix and its products; Malt based beverages",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
-            }
-          ]
-        },
-        {
-          "s_no": 80,
-          "name": "Trisodium Citrate; Sodium Citrate",
-          "ins": "331(iii)",
-          "permissions": [
-            {
-              "purpose": "pH control agent",
-              "product_category": "Flavourings, All Foods",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
-            }
-          ],
-          "process_key": "ph"
-        },
-        {
-          "s_no": 81,
-          "name": "Ammonium Chloride",
-          "ins": "",
-          "permissions": [
-            {
-              "purpose": "pH control agent",
-              "product_category": "Flavourings",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
-            }
-          ]
-        },
-        {
-          "s_no": 82,
-          "name": "Polyoxyethylene (20) monooleate",
-          "ins": "433",
-          "permissions": [
-            {
-              "purpose": "Emulsifier",
-              "product_category": "Flavourings",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
-            }
-          ]
-        },
-        {
-          "s_no": 83,
-          "name": "Triacetin",
-          "ins": "1518",
-          "permissions": [
-            {
-              "purpose": "Binding agent",
-              "product_category": "Flavourings",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
-            }
-          ]
-        },
-        {
-          "s_no": 84,
-          "name": "Corn Steep Liquor",
-          "ins": "",
-          "permissions": [
-            {
-              "purpose": "Antistick agent",
-              "product_category": "All foods",
-              "residual_level": "GMP",
-              "runtime_auto_apply": true
-            }
-          ],
-          "process_key": "release"
-        },
-        {
-          "s_no": 85,
-          "name": "Calcium Magnesium Carbonate",
-          "ins": "",
-          "permissions": [
-            {
-              "purpose": "To remove hardness",
-              "product_category": "Water treatment",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
-            }
-          ],
-          "process_key": "water"
-        },
-        {
-          "s_no": 86,
-          "name": "Cellulose",
-          "ins": "460",
-          "permissions": [
-            {
-              "purpose": "Extraction manufacturing process",
-              "product_category": "Removal of insoluble waxes from liquid product during filtration",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false,
-              "source_note": "Stored exactly as the active-list columns are printed; product-category wording is unusual and therefore not auto-applied."
-            }
-          ],
-          "process_key": "filtration"
-        },
-        {
-          "s_no": 87,
-          "name": "Vegetable fatty acid esters",
-          "ins": "",
-          "permissions": [
-            {
-              "purpose": "",
-              "product_category": "Sugar treatment",
-              "residual_level": "GMP",
-              "runtime_auto_apply": false
-            }
-          ]
         }
       ],
-      "source_note": "Current FSSAI Appendix C Version 2 / active processing-aids list. Substituted and inserted rows use the current wording; unchanged base rows were cross-checked against official FSSAI compendium text.",
-      "runtime_mapping_note": "Only entries whose technological purpose maps unambiguously to an existing PMSV manufacturing-process selector receive a runtime process_key. Other Table 12 permissions remain stored but fail closed until an exact process/product route is added."
+      "source_note": "Reconciled against official FSSAI Appendix C Version 2 on 2026-10-04. Draft notification additions 76-87 and draft substitutions were removed.",
+      "runtime_mapping_note": "Only current Version 2 rows are eligible. Product-specific and category-ambiguous permissions remain fail-closed."
     }
   }
 }
