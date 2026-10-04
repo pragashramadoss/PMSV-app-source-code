@@ -943,7 +943,7 @@
       "source_version": "Version 2 (04.11.2024)",
       "status": "tables_1_to_3_complete",
       "main_table_groups_total": 11,
-      "main_table_groups_loaded": 7,
+      "main_table_groups_loaded": 8,
       "fish_product_categories_loaded": 16,
       "fish_exact_product_mappings": 18,
       "fish_conditional_product_mappings": 4,
@@ -963,18 +963,22 @@
       "fruit_exact_product_mappings": 7,
       "fruit_conditional_product_mappings": 19,
       "fruit_no_direct_table_mapping": 4,
-      "next_priority": "Table 8A/8B - Eggs and Egg Products",
+      "next_priority": "Table 9A/9B - Food Grain Products",
       "meat_profiles_loaded": 9,
       "meat_exact_product_mappings": 23,
       "meat_conditional_product_mappings": 8,
       "meat_no_direct_table_mapping": 1,
-      "stage": "tables_1_to_7_complete",
+      "stage": "tables_1_to_8_complete",
       "bakers_yeast_profiles_loaded": 1,
       "bakers_yeast_exact_product_mappings": 0,
       "bakers_yeast_catalog_gaps": 1,
       "non_carbonated_beverage_profiles_loaded": 1,
       "non_carbonated_beverage_exact_product_mappings": 1,
-      "non_carbonated_beverage_chapter_specific_routes": 7
+      "non_carbonated_beverage_chapter_specific_routes": 7,
+      "egg_profiles_loaded": 4,
+      "egg_exact_product_mappings": 4,
+      "egg_conditional_product_mappings": 1,
+      "egg_no_direct_table_mapping": 0
     }
   },
   "source_hierarchy": [
@@ -14040,7 +14044,11 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "egg-01",
+      "microbiology_table_group": "eggs",
+      "microbiology_note": "Exact Table Egg identity; Table 8 numerical criteria are NA and Schedule 4 GMP/GHP applies."
     },
     {
       "id": "10-10-2-liquid-egg-products",
@@ -14074,7 +14082,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_table_group": "eggs",
+      "microbiology_note": "Appendix B Table 8 row 2 is specifically Pasteurized Liquid egg products. The Chapter 2.5 Liquid Egg Products identity does not by itself establish pasteurisation.",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized liquid whole egg / yolk / albumin",
+          "profile_key": "egg-02"
+        },
+        {
+          "condition": "Pasteurisation not confirmed",
+          "profile_key": "",
+          "message": "PMSV will not apply the pasteurized-liquid-egg criteria until pasteurisation is established."
+        }
+      ]
     },
     {
       "id": "10-10-2-frozen-egg-products",
@@ -14108,7 +14131,11 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "egg-03",
+      "microbiology_table_group": "eggs",
+      "microbiology_note": "Exact Frozen Egg Products identity."
     },
     {
       "id": "10-10-2-egg-powder",
@@ -14142,7 +14169,11 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "egg-03",
+      "microbiology_table_group": "eggs",
+      "microbiology_note": "Egg Powder is the dried egg-product route in Table 8."
     },
     {
       "id": "10-10-3-pickled-eggs",
@@ -14176,7 +14207,11 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "egg-04",
+      "microbiology_table_group": "eggs",
+      "microbiology_note": "The Chapter 2.5 standard defines Pickled Eggs as hard-boiled eggs prepared in pickle solution; this is a cooked ready-to-eat egg product."
     },
     {
       "id": "11-11-1-refined-sugar",
@@ -28876,7 +28911,11 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "egg-01",
+      "microbiology_table_group": "eggs",
+      "microbiology_note": "Exact Table Egg identity; Table 8 numerical criteria are NA and Schedule 4 GMP/GHP applies."
     },
     {
       "id": "10-10-2-liquid-egg-products",
@@ -28894,7 +28933,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_table_group": "eggs",
+      "microbiology_note": "Appendix B Table 8 row 2 is specifically Pasteurized Liquid egg products. The Chapter 2.5 Liquid Egg Products identity does not by itself establish pasteurisation.",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized liquid whole egg / yolk / albumin",
+          "profile_key": "egg-02"
+        },
+        {
+          "condition": "Pasteurisation not confirmed",
+          "profile_key": "",
+          "message": "PMSV will not apply the pasteurized-liquid-egg criteria until pasteurisation is established."
+        }
+      ]
     },
     {
       "id": "10-10-2-frozen-egg-products",
@@ -28912,7 +28966,11 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "egg-03",
+      "microbiology_table_group": "eggs",
+      "microbiology_note": "Exact Frozen Egg Products identity."
     },
     {
       "id": "10-10-2-egg-powder",
@@ -28930,7 +28988,11 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "egg-03",
+      "microbiology_table_group": "eggs",
+      "microbiology_note": "Egg Powder is the dried egg-product route in Table 8."
     },
     {
       "id": "10-10-3-pickled-eggs",
@@ -28948,7 +29010,11 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "egg-04",
+      "microbiology_table_group": "eggs",
+      "microbiology_note": "The Chapter 2.5 standard defines Pickled Eggs as hard-boiled eggs prepared in pickle solution; this is a cooked ready-to-eat egg product."
     },
     {
       "id": "11-11-1-refined-sugar",
@@ -32964,8 +33030,8 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 194,
-  "build_label": "Build 194 — Appendix B non-carbonated beverage microbiology",
+  "build_number": 195,
+  "build_label": "Build 195 — Appendix B eggs and egg products microbiology",
   "build_date": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",
