@@ -2415,6 +2415,7 @@ async function loadProductMaster(){
    productMasterDb=null;
  }
  renderProductMaster();
+ renderProductMicrobiology();
 }
 document.getElementById('productSearch')?.addEventListener('input',renderProductSearch);
 document.getElementById('productCategorySelect')?.addEventListener('change',()=>{
@@ -2473,7 +2474,7 @@ function microbiologyProfileHtml(profile){
  const methods=microbiologyDb?.tables?.fish?.test_methods||{};
  const methodRows=[...Object.entries(methods.hygiene||{}),...Object.entries(methods.safety||{})]
   .map(([k,v])=>'<tr><td><b>'+esc(microbiologyDb?.organism_labels?.[k]||k.replaceAll('_',' '))+'</b></td><td>'+esc(v)+'</td></tr>').join('');
- const sourceNotes=[...(profile.notes||[]),...(microbiologyDb?.tables?.fish?.source_notes||[])];
+ const sourceNotes=[...(profile.notes||[])];
  return '<div class="notice oknote"><b>Appendix B category:</b> '+esc(profile.sl_no+'. '+profile.name)+'<br><small>'+esc(profile.definition||'')+'</small></div>'
    +(profile.stage?'<div class="notice"><b>Stage where process-hygiene criterion applies:</b> '+esc(profile.stage)+(profile.action?'<br><b>Action in case of unsatisfactory result:</b> '+esc(profile.action):'')+'</div>':'')
    +'<div class="tablewrap"><table><thead><tr><th>Criterion</th><th>Organism / requirement</th><th>n</th><th>c</th><th>m</th><th>M</th></tr></thead><tbody>'+rows.join('')+'</tbody></table></div>'
