@@ -2357,11 +2357,19 @@ function selectedCatalogProductForProcessing(){
 function processingAidRuleAutoApplicable(rule){
  const p=selectedCatalogProductForProcessing();
  const profile=p?profileForCatalogProduct(p):null;
- const selectedRuleKey=String(p?.rule_key||profile?.rule_key||profile?.fssr||'').trim();
+ const selectedRuleKeys=new Set([
+   p?.rule_key,
+   ...(Array.isArray(p?.rule_keys)?p.rule_keys:[]),
+   p?.fssr,
+   profile?.rule_key,
+   ...(Array.isArray(profile?.rule_keys)?profile.rule_keys:[]),
+   ...(Array.isArray(profile?.linked_rule_keys)?profile.linked_rule_keys:[]),
+   profile?.fssr
+ ].map(x=>String(x||'').trim()).filter(Boolean));
  let baseApplicable=false;
  if(rule?.runtime_auto_apply===true)baseApplicable=true;
  else if(Array.isArray(rule?.product_ids)&&p&&rule.product_ids.includes(p.id))baseApplicable=true;
- else if(Array.isArray(rule?.rule_keys)&&selectedRuleKey&&rule.rule_keys.includes(selectedRuleKey))baseApplicable=true;
+ else if(Array.isArray(rule?.rule_keys)&&rule.rule_keys.some(k=>selectedRuleKeys.has(String(k||'').trim())))baseApplicable=true;
  else if(rule?.runtime_auto_apply!==false&&/·\s*All foods\s*$/i.test(String(rule?.purpose||'')))baseApplicable=true;
  if(!baseApplicable)return false;
  if(rule?.qualifier_key){
