@@ -459,6 +459,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="softening"><b>Softening</b><small>Softening-agent route; product identity must match the Appendix C row.</small></label>
 <label class="process-option"><input type="checkbox" value="reducing"><b>Reducing-agent treatment</b><small>Reducing agents used during processing for specified products.</small></label>
 <label class="process-option"><input type="checkbox" value="fermentation"><b>Fermentation aid</b><small>Fermenting agents used in the specified fermentation process.</small></label>
+<label class="process-option"><input type="checkbox" value="starch_hydrolysis"><b>Starch hydrolysis</b><small>Process-specific Appendix C permissions where the category itself is starch hydrolysis.</small></label>
+<label class="process-option"><input type="checkbox" value="decaffeination"><b>Decaffeination</b><small>Extraction/solvent processing specifically used to produce decaffeinated tea or coffee.</small></label>
 <label class="process-option"><input type="checkbox" value="enzyme"><b>Enzyme processing</b><small>Any enzyme used as a processing aid during ingredient or beverage manufacture.</small></label>
 <label class="process-option"><input type="checkbox" value="nutrient"><b>Microbial nutrient use</b><small>Applicable only if a microbial culture process is actually used.</small></label>
 </div>
@@ -2243,6 +2245,8 @@ const processLabels={
  softening:'Softening',
  reducing:'Reducing-agent treatment',
  fermentation:'Fermentation aid',
+ starch_hydrolysis:'Starch hydrolysis',
+ decaffeination:'Decaffeination',
  enzyme:'Enzyme processing',
  nutrient:'Microbial nutrient use'
 };
@@ -2320,7 +2324,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=233',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=237',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
@@ -3083,7 +3087,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=205',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=236',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
