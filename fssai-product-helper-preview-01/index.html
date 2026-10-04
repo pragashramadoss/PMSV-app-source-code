@@ -2264,9 +2264,9 @@ function appendixCStructuredRuntimeRules(db){
  for(const table of Object.values(db?.tables||{})){
    const tableProcess=table?.process_key||'';
    for(const entry of table?.entries||[]){
-     const process=entry?.process_key||tableProcess;
-     if(!process)continue;
      for(const permission of entry?.permissions||[]){
+       const process=permission?.process_key||entry?.process_key||tableProcess;
+       if(!process)continue;
        let condition=permission.residual_level==='GMP'
          ? 'GMP'
          : (permission.residual_level_mgkg!==undefined&&permission.residual_level_mgkg!==null
