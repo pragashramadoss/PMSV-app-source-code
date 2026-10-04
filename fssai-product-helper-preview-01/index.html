@@ -2509,6 +2509,7 @@ function microbiologyProfileHtml(resolved,product=null,variantOption=null){
  }
  const methodRows=microbiologyMethodRows(resolved,profile,includeEnterobacteriaceae);
  const notes=[...(profile.notes||[])];
+ if(resolved.tableKey==='meat'&&product?.microbiology_poultry_salmonella_footnote===true&&table.poultry_salmonella_note)notes.push(table.poultry_salmonella_note);
  if(variantOption?.message)notes.push(variantOption.message);
  if(product?.microbiology_poultry_salmonella_note===true&&resolved.tableKey==='meat'&&resolved.table?.poultry_salmonella_note)notes.push(resolved.table.poultry_salmonella_note);
  const tableLabels={fish:'Table 1',milk:'Table 2',spices:'Table 3',fruits:'Table 4',meat:'Table 5'};
