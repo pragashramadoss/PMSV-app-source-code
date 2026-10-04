@@ -941,9 +941,9 @@
     "appendix_b": {
       "rule_file": "./data/rules/appendix-b-v2-core.json",
       "source_version": "Version 2 (04.11.2024)",
-      "status": "tables_1_to_8_complete",
+      "status": "complete_current_version_2",
       "main_table_groups_total": 11,
-      "main_table_groups_loaded": 10,
+      "main_table_groups_loaded": 11,
       "fish_product_categories_loaded": 16,
       "fish_exact_product_mappings": 18,
       "fish_conditional_product_mappings": 4,
@@ -963,7 +963,7 @@
       "fruit_exact_product_mappings": 7,
       "fruit_conditional_product_mappings": 19,
       "fruit_no_direct_table_mapping": 4,
-      "next_priority": "Table 11A/11B - Neera",
+      "next_priority": "Full Appendix B cross-table validation and product-route audit",
       "meat_profiles_loaded": 9,
       "meat_exact_product_mappings": 23,
       "meat_conditional_product_mappings": 8,
@@ -985,7 +985,11 @@
       "food_grain_no_direct_table_mapping": 0,
       "special_nutrition_profiles_loaded": 3,
       "special_nutrition_exact_product_mappings": 0,
-      "special_nutrition_catalog_gaps": 1
+      "special_nutrition_catalog_gaps": 1,
+      "neera_profiles_loaded": 1,
+      "neera_exact_product_mappings": 0,
+      "neera_conditional_product_mappings": 1,
+      "neera_no_direct_table_mapping": 0
     }
   },
   "source_hierarchy": [
@@ -2466,7 +2470,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_candidates": [
+        {
+          "condition": "Processed coconut neera (pasteurised)",
+          "profile_key": "neera-11-01"
+        },
+        {
+          "condition": "Fresh coconut neera",
+          "profile_key": "",
+          "message": "Appendix B Table 11 is for Neera (Pasteurized). PMSV will not apply it to fresh coconut neera."
+        }
+      ],
+      "microbiology_note": "FSSAI Chapter 2.10.6(4) covers both Fresh and Processed coconut neera; Processed coconut neera is pasteurised. Appendix B Table 11 applies only to the processed/pasteurised form.",
+      "microbiology_table_group": "neera"
     },
     {
       "id": "fortified-wine",
@@ -22099,7 +22118,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_candidates": [
+        {
+          "condition": "Processed coconut neera (pasteurised)",
+          "profile_key": "neera-11-01"
+        },
+        {
+          "condition": "Fresh coconut neera",
+          "profile_key": "",
+          "message": "Appendix B Table 11 is for Neera (Pasteurized). PMSV will not apply it to fresh coconut neera."
+        }
+      ],
+      "microbiology_note": "FSSAI Chapter 2.10.6(4) covers both Fresh and Processed coconut neera; Processed coconut neera is pasteurised. Appendix B Table 11 applies only to the processed/pasteurised form.",
+      "microbiology_table_group": "neera"
     },
     {
       "id": "fortified-wine",
@@ -33141,8 +33175,8 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 197,
-  "build_label": "Build 197 — Appendix B special-nutrition microbiology",
+  "build_number": 198,
+  "build_label": "Build 198 — Appendix B complete with Neera",
   "build_date": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",
