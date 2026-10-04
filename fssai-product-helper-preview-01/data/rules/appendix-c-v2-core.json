@@ -33,7 +33,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 11A - continue from enzyme 44",
+    "next_priority": "Table 12 - Generally permitted processing aids",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -55,9 +55,10 @@
     "table_11_non_gmm_entries": 56,
     "table_11_non_gmm_source_rows": 139,
     "table_11_amendment_corrected_entries": 6,
-    "table_11a_gmm_status": "partial_structured_ingestion_1_43",
-    "table_11a_gmm_entries_loaded": 43,
-    "table_11a_gmm_variant_rows_loaded": 96
+    "table_11a_gmm_status": "complete_current_version_2",
+    "table_11a_gmm_entries_loaded": 51,
+    "table_11a_gmm_variant_rows_loaded": 109,
+    "table_11a_gmm_enzyme_preparation_criteria_loaded": true
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -2984,7 +2985,7 @@
         23
       ],
       "source_scope": "Table 11A only. Production organism, donor/source, technological purpose, indicative food use and residual level are stored as linked variants. Runtime remains fail-closed until the full table is ingested and the selected product/use is matched.",
-      "ingestion_status": "partial_1_to_43",
+      "ingestion_status": "complete_1_to_51_current_version_2",
       "entries": [
         {
           "sequence": 1,
@@ -3985,10 +3986,145 @@
               "purpose": "Reduces formation of diacetyl during fermentation and enhances maturation in brewing and beverage-alcohol processes",
               "indicative_food_uses": "Brewing beverage processes and beverage alcohol (distilling) processes",
               "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Brevibacillus brevis",
+              "purpose": "Butanoate metabolism and C-5 branched dibasic acid metabolism",
+              "indicative_food_uses": "In brewing and potable alcohol production",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 44,
+          "name": "Pectin lyase",
+          "ec": "4.2.2.10",
+          "variants": [
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Aspergillus niger",
+              "purpose": "Enhances juice extraction from vegetables and fruits and for juice clarification",
+              "indicative_food_uses": "Fruit and vegetable processing, production of wine, flavouring production and coffee processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 45,
+          "name": "Glucose isomerase",
+          "ec": "5.3.1.5",
+          "variants": [
+            {
+              "production_organism": "Streptomyces rubiginosus",
+              "donor_or_source": "Streptomyces rubiginosus",
+              "purpose": "Reversible isomerization of glucose to fructose",
+              "indicative_food_uses": "Production of high fructose corn syrup",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 46,
+          "name": "Phospholipase A2",
+          "ec": "3.1.1.4",
+          "amendment_marker": "#",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Aspergillus nishimurae (ex fumigatus)",
+              "purpose": "For use in degumming of oils and fats, Egg yolk processing",
+              "indicative_food_uses": "Oils and fats processing, Egg products",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 47,
+          "name": "Lysophospholipase",
+          "ec": "3.1.1.5",
+          "amendment_marker": "#",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei RF4847",
+              "donor_or_source": "Aspergillus nishimurae (ex fumigatus)",
+              "purpose": "For use in starch processing, degumming of oils and fats",
+              "indicative_food_uses": "Oils and fats processing, Syrups for use in soft drinks or bakery",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 48,
+          "name": "Lipase triacylglycerol",
+          "ec": "3.1.1.3",
+          "amendment_marker": "#",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Fusarium oxysporum",
+              "purpose": "Facilitate the handling of the dough for baking - improve dough stability and strength structure and behaviour during the baking steps and regulate batter viscosity; degumming of oils and fats",
+              "indicative_food_uses": "Bakery products, Oils and fats processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 49,
+          "name": "Glucose Oxidase",
+          "ec": "1.1.3.4",
+          "amendment_marker": "#",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Penicillium amagasakiense",
+              "purpose": "Facilitate the handling of dough (reduce dough stickiness, strengthen dough structure, improve cooking tolerance) of pasta or noodle; egg processing",
+              "indicative_food_uses": "Egg Products and Bakery and Pasta Products",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 50,
+          "name": "Serine endopeptidase (protease)",
+          "ec": "3.4.21.65",
+          "amendment_marker": "#",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Malbranchea cinnamomea",
+              "purpose": "Used as a processing aid for partial or extensive hydrolysis of proteins from both animal and vegetable sources",
+              "indicative_food_uses": "Fish and meat processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 51,
+          "name": "Chymosin",
+          "ec": "3.4.23.4",
+          "amendment_marker": "#",
+          "variants": [
+            {
+              "production_organism": "Aspergillus niger var. Awamori",
+              "donor_or_source": "Bos taurus",
+              "purpose": "Milk coagulating enzyme",
+              "indicative_food_uses": "Manufacture of paneer and cheese",
+              "residual_level": "GMP"
             }
           ]
         }
-      ]
+      ],
+      "runtime_policy": "Fail closed unless enzyme + production organism + donor/source + indicative food use match the current FSSAI Table 11A row.",
+      "enzyme_preparation_criteria": {
+        "lead_mgkg_max": 5,
+        "salmonella": "Absent in 25 g sample",
+        "total_coliforms_per_g_max": 30,
+        "escherichia_coli": "Absent in 25 g sample",
+        "dna": "Absent in preparations from microbial sources",
+        "antibiotic_activity": "Absent in preparations from microbial sources"
+      },
+      "source_note": "Current FSSAI Appendix C Version 2 (01.08.2025); amendments effective 1 February 2026 incorporated for Table 11A rows 46-51 and enzyme-preparation criteria."
     }
   }
 }
