@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Keep unresolved catalogue/source gaps fail-closed; add UI selectors for starch hydrolysis and decaffeination, then run regression.",
+    "next_priority": "Resolve only official-source/catalogue gaps among the remaining fail-closed rows; do not infer Hardened oil, Yeast, Tripe, Edible casings, Corn kernel, Colours, Other foods, or incomplete-residue rows.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -90,7 +90,7 @@
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
     "appendix_c_product_gate_reachable_permissions": 51,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "passed_2026-10-04",
+    "appendix_c_product_gate_regression_status": "passed_after_catalogue_expansion_2026-10-04",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -173,7 +173,156 @@
         "starch_hydrolysis_perlite": true
       }
     },
-    "appendix_c_runtime_status": "production_fail_closed_current_version_2"
+    "appendix_c_runtime_status": "production_fail_closed_current_version_2",
+    "appendix_c_product_master_count": 533,
+    "appendix_c_product_profile_count": 533,
+    "appendix_c_product_gate_invalid_ids": 0,
+    "appendix_c_product_gate_invalid_rule_keys": 0,
+    "appendix_c_product_gate_unreachable": 0,
+    "appendix_c_product_gate_remaining_rows": [
+      {
+        "table": 2,
+        "s_no": 4,
+        "name": "Nickel",
+        "category": "Hardened oil",
+        "process": "catalyst"
+      },
+      {
+        "table": 6,
+        "s_no": 1,
+        "name": "Acetone",
+        "category": "Colours",
+        "process": "solvent"
+      },
+      {
+        "table": 6,
+        "s_no": 1,
+        "name": "Acetone",
+        "category": "Other foods",
+        "process": "solvent"
+      },
+      {
+        "table": 6,
+        "s_no": 11,
+        "name": "Ethyl alcohol",
+        "category": "Other Foods",
+        "process": "solvent"
+      },
+      {
+        "table": 6,
+        "s_no": 17,
+        "name": "Isobutane",
+        "category": "Other foods",
+        "process": "solvent"
+      },
+      {
+        "table": 6,
+        "s_no": 18,
+        "name": "Isopropyl alcohol",
+        "category": "Other foods",
+        "process": "solvent"
+      },
+      {
+        "table": 7,
+        "s_no": 1,
+        "name": "Ammonium persulphate",
+        "category": "Yeast",
+        "process": "washing"
+      },
+      {
+        "table": 7,
+        "s_no": 4,
+        "name": "Carbonic acid",
+        "category": "Tripe",
+        "process": "washing"
+      },
+      {
+        "table": 7,
+        "s_no": 12,
+        "name": "Sodium gluconate",
+        "category": "Tripe",
+        "process": "washing"
+      },
+      {
+        "table": 12,
+        "s_no": 4,
+        "name": "Ammonium sulphate",
+        "category": "Edible casings",
+        "process": ""
+      },
+      {
+        "table": 12,
+        "s_no": 10,
+        "name": "Bone phosphate",
+        "category": "All foods except milk and milk products",
+        "process": ""
+      },
+      {
+        "table": 12,
+        "s_no": 13,
+        "name": "Calcium sulfate",
+        "category": "",
+        "process": ""
+      },
+      {
+        "table": 12,
+        "s_no": 18,
+        "name": "Ethyl acetate",
+        "category": "Yeast",
+        "process": "microbial"
+      },
+      {
+        "table": 12,
+        "s_no": 37,
+        "name": "Mono and diglycerides of fatty acids",
+        "category": "Extruded foods",
+        "process": ""
+      },
+      {
+        "table": 12,
+        "s_no": 64,
+        "name": "Sodium metabisulphite",
+        "category": "Corn kernel",
+        "process": "softening"
+      },
+      {
+        "table": 12,
+        "s_no": 68,
+        "name": "Sulphurous acid",
+        "category": "Corn kernel",
+        "process": "softening"
+      },
+      {
+        "table": 12,
+        "s_no": 71,
+        "name": "Vitamin B12",
+        "category": "All foods",
+        "process": "nutrient"
+      },
+      {
+        "table": 12,
+        "s_no": 72,
+        "name": "Vitamin C",
+        "category": "All foods",
+        "process": "nutrient"
+      },
+      {
+        "table": 12,
+        "s_no": 74,
+        "name": "Zinc sulphate",
+        "category": "Alcoholic beverages including low alcoholic and alcohol free counterparts",
+        "process": ""
+      }
+    ],
+    "appendix_c_targeted_regression": {
+      "interesterified_catalyst": "pass",
+      "vanaspati_catalyst": "pass",
+      "bakery_shortening_catalyst": "pass",
+      "partially_hydrogenated_soybean_oil_catalyst": "pass",
+      "tea_decaffeination": "pass",
+      "coffee_decaffeination": "pass",
+      "starch_hydrolysis": "pass"
+    }
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
