@@ -13676,6 +13676,615 @@
         "sodium_mg": 1.64,
         "ifct_total_free_sugars_g": 5.73
       }
+    },
+    {
+      "names": [
+        "egg, poultry, whole, raw",
+        "poultry egg whole raw",
+        "raw whole poultry egg"
+      ],
+      "display_name": "Egg, poultry, whole, raw",
+      "ifct_code": "M001",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M001 Egg, poultry, whole, raw · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 134.799,
+        "protein_g": 13.28,
+        "total_fat_g": 9.15,
+        "sodium_mg": 123,
+        "saturated_fat_g": 2.958,
+        "cholesterol_mg": 366
+      }
+    },
+    {
+      "names": [
+        "egg, poultry, white, raw",
+        "poultry egg white raw",
+        "raw poultry egg white"
+      ],
+      "display_name": "Egg, poultry, white, raw",
+      "ifct_code": "M002",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M002 Egg, poultry, white, raw · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass.",
+        "saturated_fat_g": "IFCT Table 7 leaves this field blank for this egg-white profile; blank is not converted to zero.",
+        "cholesterol_mg": "IFCT Table 7 leaves cholesterol blank for this egg-white profile; blank is not converted to zero."
+      },
+      "per_100g": {
+        "energy_kcal": 44.694,
+        "protein_g": 10.84,
+        "total_fat_g": 0.06,
+        "sodium_mg": 166
+      }
+    },
+    {
+      "names": [
+        "egg, poultry, yolk, raw",
+        "poultry egg yolk raw",
+        "raw poultry egg yolk"
+      ],
+      "display_name": "Egg, poultry, yolk, raw",
+      "ifct_code": "M003",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M003 Egg, poultry, yolk, raw · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 296.845,
+        "protein_g": 15.74,
+        "total_fat_g": 26.34,
+        "sodium_mg": 46.33,
+        "saturated_fat_g": 8.58,
+        "cholesterol_mg": 1076
+      }
+    },
+    {
+      "names": [
+        "egg, poultry, whole, boiled",
+        "poultry egg whole boiled",
+        "boiled whole poultry egg"
+      ],
+      "display_name": "Egg, poultry, whole, boiled",
+      "ifct_code": "M004",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M004 Egg, poultry, whole, boiled · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 147.706,
+        "protein_g": 13.43,
+        "total_fat_g": 10.54,
+        "sodium_mg": 121,
+        "saturated_fat_g": 3.464,
+        "cholesterol_mg": 365
+      }
+    },
+    {
+      "names": [
+        "egg, poultry, white, boiled",
+        "poultry egg white boiled",
+        "boiled poultry egg white"
+      ],
+      "display_name": "Egg, poultry, white, boiled",
+      "ifct_code": "M005",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M005 Egg, poultry, white, boiled · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass.",
+        "saturated_fat_g": "IFCT Table 7 leaves this field blank for this egg-white profile; blank is not converted to zero.",
+        "cholesterol_mg": "IFCT Table 7 leaves cholesterol blank for this egg-white profile; blank is not converted to zero."
+      },
+      "per_100g": {
+        "energy_kcal": 52.581,
+        "protein_g": 12.37,
+        "total_fat_g": 0.26,
+        "sodium_mg": 144
+      }
+    },
+    {
+      "names": [
+        "egg, poultry, yolk, boiled",
+        "poultry egg yolk boiled",
+        "boiled poultry egg yolk"
+      ],
+      "display_name": "Egg, poultry, yolk, boiled",
+      "ifct_code": "M006",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M006 Egg, poultry, yolk, boiled · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 308.317,
+        "protein_g": 16.13,
+        "total_fat_g": 27.46,
+        "sodium_mg": 44.83,
+        "saturated_fat_g": 8.819,
+        "cholesterol_mg": 1085
+      }
+    },
+    {
+      "names": [
+        "egg, poultry, omlet",
+        "poultry egg omelet",
+        "poultry egg omlet"
+      ],
+      "display_name": "Egg, poultry, omlet",
+      "ifct_code": "M007",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M007 Egg, poultry, omlet · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 169.694,
+        "protein_g": 16.53,
+        "total_fat_g": 11.6,
+        "sodium_mg": 169,
+        "saturated_fat_g": 3.179,
+        "cholesterol_mg": 316
+      }
+    },
+    {
+      "names": [
+        "egg, country hen, whole, raw",
+        "country hen egg whole raw",
+        "raw country hen egg"
+      ],
+      "display_name": "Egg, country hen, whole, raw",
+      "ifct_code": "M008",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M008 Egg, country hen, whole, raw · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 168.26,
+        "protein_g": 13.14,
+        "total_fat_g": 13,
+        "sodium_mg": 157,
+        "saturated_fat_g": 3.792,
+        "cholesterol_mg": 355
+      }
+    },
+    {
+      "names": [
+        "egg, country hen, whole, boiled",
+        "country hen egg whole boiled",
+        "boiled country hen egg"
+      ],
+      "display_name": "Egg, country hen, whole, boiled",
+      "ifct_code": "M009",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M009 Egg, country hen, whole, boiled · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 183.317,
+        "protein_g": 14.43,
+        "total_fat_g": 14.1,
+        "sodium_mg": 149,
+        "saturated_fat_g": 4.074,
+        "cholesterol_mg": 369
+      }
+    },
+    {
+      "names": [
+        "egg, country hen, omlet",
+        "country hen egg omelet",
+        "country hen egg omlet"
+      ],
+      "display_name": "Egg, country hen, omlet",
+      "ifct_code": "M010",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M010 Egg, country hen, omlet · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 204.35,
+        "protein_g": 14.8,
+        "total_fat_g": 16.3,
+        "sodium_mg": 157,
+        "saturated_fat_g": 4.886,
+        "cholesterol_mg": 318
+      }
+    },
+    {
+      "names": [
+        "egg, duck, whole, boiled",
+        "duck egg whole boiled",
+        "boiled duck egg"
+      ],
+      "display_name": "Egg, duck, whole, boiled",
+      "ifct_code": "M011",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M011 Egg, duck, whole, boiled · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 176.386,
+        "protein_g": 13.8,
+        "total_fat_g": 13.61,
+        "sodium_mg": 110,
+        "saturated_fat_g": 3.598,
+        "cholesterol_mg": 856
+      }
+    },
+    {
+      "names": [
+        "egg, duck, whole, raw",
+        "duck egg whole raw",
+        "raw duck egg"
+      ],
+      "display_name": "Egg, duck, whole, raw",
+      "ifct_code": "M012",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M012 Egg, duck, whole, raw · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 181.644,
+        "protein_g": 14.6,
+        "total_fat_g": 13.83,
+        "sodium_mg": 113,
+        "saturated_fat_g": 3.373,
+        "cholesterol_mg": 839
+      }
+    },
+    {
+      "names": [
+        "egg, duck, whole, omlet",
+        "duck egg whole omelet",
+        "duck egg omlet"
+      ],
+      "display_name": "Egg, duck, whole, omlet",
+      "ifct_code": "M013",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M013 Egg, duck, whole, omlet · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 192.161,
+        "protein_g": 15.1,
+        "total_fat_g": 14.8,
+        "sodium_mg": 175,
+        "saturated_fat_g": 3.871,
+        "cholesterol_mg": 815
+      }
+    },
+    {
+      "names": [
+        "egg, quial, whole, raw",
+        "quail egg whole raw",
+        "raw quail egg"
+      ],
+      "display_name": "Egg, quial, whole, raw",
+      "ifct_code": "M014",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M014 Egg, quial, whole, raw · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 151.769,
+        "protein_g": 12.39,
+        "total_fat_g": 11.46,
+        "sodium_mg": 132,
+        "saturated_fat_g": 2.788,
+        "cholesterol_mg": 833
+      }
+    },
+    {
+      "names": [
+        "egg, quial, whole, boiled",
+        "quail egg whole boiled",
+        "boiled quail egg"
+      ],
+      "display_name": "Egg, quial, whole, boiled",
+      "ifct_code": "M015",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · M015 Egg, quial, whole, boiled · Table 1 (protein/fat/energy), Table 5 (sodium), Table 7 (saturated fatty acids/cholesterol where reported)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "total_fat_g",
+        "sodium_mg",
+        "saturated_fat_g",
+        "cholesterol_mg"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 TSFA (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "carbohydrate_g": "IFCT Table 1 for Egg and Egg Products does not provide a carbohydrate field in this section; not treated as zero.",
+        "dietary_fibre_g": "IFCT Table 1 for Egg and Egg Products does not provide dietary fibre; not treated as zero.",
+        "total_sugars_g": "No FSSAI Total Sugars value is inferred.",
+        "added_sugars_g": "No added-sugars value is inferred from composition.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 154.637,
+        "protein_g": 13.03,
+        "total_fat_g": 11.5,
+        "sodium_mg": 130,
+        "saturated_fat_g": 2.726,
+        "cholesterol_mg": 855
+      }
     }
   ],
   "source_policy": {
@@ -13691,12 +14300,12 @@
     "fail_closed_rule": "An ingredient without an explicitly verified ICMR-NIN composition mapping is unmatched. PMSV must not estimate it from websites, supplier pages, search results, social media, generic databases or hand-entered starter assumptions."
   },
   "coverage": {
-    "active_icmr_nin_profiles": 314,
+    "active_icmr_nin_profiles": 329,
     "locked_non_icmr_starter_profiles": 7,
     "ifct_master_ingestion": "in_progress",
     "source_verified_on": "2026-10-03",
-    "ifct_exact_profiles_loaded": 314,
-    "ifct_partial_profiles_loaded": 314,
+    "ifct_exact_profiles_loaded": 329,
+    "ifct_partial_profiles_loaded": 329,
     "field_level_fail_closed": true,
     "refined_sucrose_not_in_ifct_food_list": true,
     "ifct_groups_started": [
@@ -13769,7 +14378,15 @@
     "ifct_cardamom_generic_route": "unresolved_green_black_IFCT_identities",
     "ifct_arecanut_generic_route": "unresolved_fresh_and_dried_IFCT_identities",
     "ifct_gingelly_generic_route": "unresolved_black_brown_white_IFCT_identities",
-    "ifct_nuts_oilseeds_metadata_reconciliation": "Build 309 reconciled pre-existing H012-H021 rows after Build 308 replaced only H001-H011."
+    "ifct_nuts_oilseeds_metadata_reconciliation": "Build 309 reconciled pre-existing H012-H021 rows after Build 308 replaced only H001-H011.",
+    "ifct_egg_products_entries_loaded": 15,
+    "ifct_egg_products_entries_total": 15,
+    "ifct_egg_products_stage": "M001_to_M015_complete_for_verified_tables_1_5_7",
+    "ifct_egg_cholesterol_profiles_loaded": 13,
+    "ifct_egg_white_blank_lipid_fields_fail_closed": [
+      "M002",
+      "M005"
+    ]
   },
   "last_verified": "2026-10-04",
   "required_label_fields": [
