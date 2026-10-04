@@ -23,7 +23,10 @@
     "fish_conditional_product_mappings": 4,
     "fish_no_direct_table_mapping": 2,
     "next_priority": "Table 3A/3B - Spices and Herbs",
-    "milk_profiles_loaded": 16
+    "milk_profiles_loaded": 16,
+    "milk_exact_product_mappings": 56,
+    "milk_conditional_product_mappings": 17,
+    "milk_no_direct_table_mapping": 18
   },
   "organism_labels": {
     "aerobic_plate_count": "Aerobic Plate Count",
@@ -1845,6 +1848,790 @@
         "catalog_id": "09-09-3-sturgeon-caviar",
         "reason": "Appendix B Table 1 does not provide an explicit Sturgeon Caviar product category. PMSV does not infer a category from ready-to-eat status or salt treatment."
       }
-    ]
+    ],
+    "milk": {
+      "exact": [
+        {
+          "catalog_id": "01-01-3-evaporated-or-concentrated-milk",
+          "profile_key": "milk-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 2 expressly includes Evaporated Milk with Sterilized/UHT Milk."
+        },
+        {
+          "catalog_id": "01-01-3-sweetened-condensed-milk",
+          "profile_key": "milk-05",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact Appendix B product identity."
+        },
+        {
+          "catalog_id": "01-01-5-milk-powders-and-cream-powder",
+          "profile_key": "milk-07",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 2 expressly lists Milk Powder/SMP/Partly SMP/Cream Powder."
+        },
+        {
+          "catalog_id": "01-01-5-dairy-whitener",
+          "profile_key": "milk-07",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 2 expressly lists Dairy Whitener."
+        },
+        {
+          "catalog_id": "01-01-5-edible-casein-products",
+          "profile_key": "milk-07",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 2 expressly lists Casein Powder; current FSSAI Edible Casein Products are powder-form casein/caseinate products.",
+          "source_route": "FSSAI Chapter 2.1.18 + Appendix B Table 2 row 7"
+        },
+        {
+          "catalog_id": "01-01-8-whey-powder",
+          "profile_key": "milk-07",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 2 expressly lists Whey based Powder."
+        },
+        {
+          "catalog_id": "11-11-1-edible-lactose",
+          "profile_key": "milk-07",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 2 expressly lists Lactose."
+        },
+        {
+          "catalog_id": "01-01-1-buttermilk-plain",
+          "profile_key": "milk-12",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
+        },
+        {
+          "catalog_id": "01-01-1-flavoured-fermented-milk",
+          "profile_key": "milk-12",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
+        },
+        {
+          "catalog_id": "01-01-1-drinks-based-on-fermented-milk",
+          "profile_key": "milk-12",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
+        },
+        {
+          "catalog_id": "01-01-2-fermented-milk",
+          "profile_key": "milk-12",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
+        },
+        {
+          "catalog_id": "01-01-2-chakka",
+          "profile_key": "milk-12",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
+        },
+        {
+          "catalog_id": "01-01-7-shrikhand",
+          "profile_key": "milk-12",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
+        },
+        {
+          "catalog_id": "01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi",
+          "profile_key": "milk-12",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
+        },
+        {
+          "catalog_id": "01-01-7-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o",
+          "profile_key": "milk-09",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 9 expressly includes Frozen Dessert."
+        },
+        {
+          "catalog_id": "02-02-4-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o",
+          "profile_key": "milk-09",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 9 expressly includes Frozen Dessert."
+        },
+        {
+          "catalog_id": "01-01-6-chhana-and-paneer",
+          "profile_key": "milk-13",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact Appendix B product class: Paneer/Chhana."
+        },
+        {
+          "catalog_id": "01-01-3-khoa",
+          "profile_key": "milk-14",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact Appendix B product class: Khoa."
+        },
+        {
+          "catalog_id": "01-01-6-cottage-cheese-and-creamed-cottage-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-cream-cheese-rahmfrischkase",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-coulommiers-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-provolone-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-cheddar-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-danbo-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-edam-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-gouda-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-havarti-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-tilsiter-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-camembert-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-brie-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-saint-paulin-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-samsoe-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-emmental-or-emmentaler-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-extra-hard-grating-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-mould-ripened-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 applies; footnote 5 excludes Yeast and Mold Count for mould-ripened cheeses.",
+          "exclude_criteria": [
+            "yeast_and_mold_count"
+          ]
+        },
+        {
+          "catalog_id": "01-01-6-processed-cheese",
+          "profile_key": "milk-10",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact Appendix B product class: Processed Cheese/Cheese Spread."
+        },
+        {
+          "catalog_id": "01-01-6-processed-cheese-spread",
+          "profile_key": "milk-10",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact Appendix B product class: Processed Cheese/Cheese Spread."
+        },
+        {
+          "catalog_id": "01-01-6-mozzarella-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-creamed-whey-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-whey-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-skimmed-whey-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-soft-cheese-in-brine",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-semi-hard-cheese-in-brine",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-ripened-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "01-01-6-unripened-cheese-including-fresh-cheese",
+          "profile_key": "milk-11",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
+        },
+        {
+          "catalog_id": "13-13-1-infant-formula",
+          "profile_key": "milk-08a",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+          "apply_enterobacteriaceae_footnote": true
+        },
+        {
+          "catalog_id": "13-13-1-preterm-infant-milk-substitute",
+          "profile_key": "milk-08a",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+          "apply_enterobacteriaceae_footnote": true
+        },
+        {
+          "catalog_id": "13-13-1-lactose-free-infant-milk-substitutes",
+          "profile_key": "milk-08a",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+          "apply_enterobacteriaceae_footnote": true
+        },
+        {
+          "catalog_id": "13-13-1-hypoallergenic-infant-milk-substitutes",
+          "profile_key": "milk-08a",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+          "apply_enterobacteriaceae_footnote": true
+        },
+        {
+          "catalog_id": "13-13-1-infant-milk-food",
+          "profile_key": "milk-08a",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+          "apply_enterobacteriaceae_footnote": true
+        },
+        {
+          "catalog_id": "13-13-1-food-for-special-medical-purpose-intended-for-infants",
+          "profile_key": "milk-08a",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 8 expressly includes Food for special medical purpose intended for infants.",
+          "apply_enterobacteriaceae_footnote": false
+        },
+        {
+          "catalog_id": "13-13-1-foods-for-infants-with-inborn-errors-of-metabolism-iem",
+          "profile_key": "milk-08a",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "The FSSAI Infant Nutrition Regulations classify the IEM product as Food for Special Medical Purpose intended for infants; Appendix B row 8 applies.",
+          "apply_enterobacteriaceae_footnote": false
+        },
+        {
+          "catalog_id": "13-13-1-follow-up-formula",
+          "profile_key": "milk-08b",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact Appendix B Follow Up Formula row."
+        },
+        {
+          "catalog_id": "traditional-infant-food",
+          "profile_key": "milk-08c",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 8 cereal-based complementary/traditional infant-food route."
+        },
+        {
+          "catalog_id": "13-13-2-milk-cereal-based-complementary-food",
+          "profile_key": "milk-08c",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 8 cereal-based complementary/traditional infant-food route."
+        },
+        {
+          "catalog_id": "13-13-2-processed-cereal-based-complementary-food",
+          "profile_key": "milk-08c",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B row 8 cereal-based complementary/traditional infant-food route."
+        }
+      ],
+      "conditional": [
+        {
+          "catalog_id": "01-01-1-buffalo-milk",
+          "status": "variant_required",
+          "reason": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Raw / no qualifying heat treatment confirmed",
+              "profile_key": "",
+              "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-1-cow-milk",
+          "status": "variant_required",
+          "reason": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Raw / no qualifying heat treatment confirmed",
+              "profile_key": "",
+              "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-1-goat-milk",
+          "status": "variant_required",
+          "reason": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Raw / no qualifying heat treatment confirmed",
+              "profile_key": "",
+              "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-1-camel-milk",
+          "status": "variant_required",
+          "reason": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Raw / no qualifying heat treatment confirmed",
+              "profile_key": "",
+              "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-1-mixed-milk",
+          "status": "variant_required",
+          "reason": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Raw / no qualifying heat treatment confirmed",
+              "profile_key": "",
+              "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-1-standardized-milk",
+          "status": "variant_required",
+          "reason": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Raw / no qualifying heat treatment confirmed",
+              "profile_key": "",
+              "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-1-toned-milk",
+          "status": "variant_required",
+          "reason": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Raw / no qualifying heat treatment confirmed",
+              "profile_key": "",
+              "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-1-double-toned-milk",
+          "status": "variant_required",
+          "reason": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Raw / no qualifying heat treatment confirmed",
+              "profile_key": "",
+              "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-1-skimmed-milk",
+          "status": "variant_required",
+          "reason": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Raw / no qualifying heat treatment confirmed",
+              "profile_key": "",
+              "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-1-full-cream-milk",
+          "status": "variant_required",
+          "reason": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Raw / no qualifying heat treatment confirmed",
+              "profile_key": "",
+              "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-1-low-lactose-or-lactose-free-milk",
+          "status": "variant_required",
+          "reason": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Raw / no qualifying heat treatment confirmed",
+              "profile_key": "",
+              "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-1-sheep-milk",
+          "status": "variant_required",
+          "reason": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Raw / no qualifying heat treatment confirmed",
+              "profile_key": "",
+              "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-1-flavoured-milk",
+          "status": "variant_required",
+          "reason": "Flavoured Milk requires the heat treatment to be declared. Appendix B uses different rows for pasteurized/boiled and sterilized/UHT milk.",
+          "options": [
+            {
+              "condition": "Pasteurized or boiled flavoured milk",
+              "profile_key": "milk-01"
+            },
+            {
+              "condition": "Sterilized or UHT flavoured milk",
+              "profile_key": "milk-03"
+            },
+            {
+              "condition": "Other / heat treatment not established",
+              "profile_key": "",
+              "message": "The applicable Appendix B milk row cannot be selected until the actual heat treatment is established."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-4-malai",
+          "status": "variant_required",
+          "reason": "Appendix B separately lists Pasteurized Cream and Sterilized/UHT Cream. The selected product name does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized cream",
+              "profile_key": "milk-02"
+            },
+            {
+              "condition": "Sterilized or UHT cream",
+              "profile_key": "milk-04"
+            },
+            {
+              "condition": "Other cream type / heat treatment not established",
+              "profile_key": "",
+              "message": "No Table 2 row is assigned until the actual regulated cream form and heat treatment are established."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-4-cream",
+          "status": "variant_required",
+          "reason": "Appendix B separately lists Pasteurized Cream and Sterilized/UHT Cream. The selected product name does not establish the actual heat treatment.",
+          "options": [
+            {
+              "condition": "Pasteurized cream",
+              "profile_key": "milk-02"
+            },
+            {
+              "condition": "Sterilized or UHT cream",
+              "profile_key": "milk-04"
+            },
+            {
+              "condition": "Other cream type / heat treatment not established",
+              "profile_key": "",
+              "message": "No Table 2 row is assigned until the actual regulated cream form and heat treatment are established."
+            }
+          ]
+        },
+        {
+          "catalog_id": "02-02-2-butter",
+          "status": "variant_required",
+          "reason": "Appendix B row 6 is Pasteurized Butter. FSSAI's butter standard also contains White/Cooking Butter and a ripened-butter footnote, so PMSV requires the actual butter type.",
+          "options": [
+            {
+              "condition": "Pasteurized Table Butter",
+              "profile_key": "milk-06"
+            },
+            {
+              "condition": "Ripened Butter",
+              "profile_key": "milk-06",
+              "exclude_criteria": [
+                "aerobic_plate_count"
+              ],
+              "message": "For ripened butter, Appendix B footnote 2 applies the Pasteurized Butter specifications except Aerobic Plate Count."
+            },
+            {
+              "condition": "White/Cooking Butter without confirmed pasteurized route",
+              "profile_key": "",
+              "message": "PMSV will not apply the Pasteurized Butter row unless the product's applicable heat-treatment route is established."
+            }
+          ]
+        },
+        {
+          "catalog_id": "01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-",
+          "status": "variant_required",
+          "reason": "The FoSCoS row combines finished ice-cream/milk-ice/milk-lolly products with Dried Ice Cream Mix, but Appendix B places the finished products in row 9 and Ice Cream Mix Powder in the dried-powder row 7.",
+          "options": [
+            {
+              "condition": "Finished Ice Cream / Kulfi / Chocolate Ice Cream / Softy / Milk Ice / Milk Lolly",
+              "profile_key": "milk-09"
+            },
+            {
+              "condition": "Dried Ice Cream Mix / Ice Cream Mix Powder",
+              "profile_key": "milk-07"
+            }
+          ]
+        }
+      ],
+      "no_direct_table_mapping": [
+        {
+          "catalog_id": "01-01-4-fermented-cultured-sour-cream",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 2 does not expressly identify fermented/cultured/sour cream as a separate product row. PMSV does not automatically equate it with the broader Fermented Milk Products row."
+        },
+        {
+          "catalog_id": "01-01-3-milk-protein-concentrate",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 2 row 7 does not expressly list Milk Protein Concentrate."
+        },
+        {
+          "catalog_id": "01-01-8-whey-protein-concentrate",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 2 lists 'Whey based Powder' but does not expressly identify Whey Protein Concentrate. PMSV does not treat the wording as equivalent without a direct FSSAI crosswalk."
+        },
+        {
+          "catalog_id": "01-01-5-dairy-permeate-powders",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 2 does not expressly list Dairy/Milk/Whey Permeate Powders."
+        },
+        {
+          "catalog_id": "02-02-1-milk-fat",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 2 does not provide a direct Milk Fat product row."
+        },
+        {
+          "catalog_id": "02-02-1-butter-oil",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 2 does not provide a direct Butter Oil product row."
+        },
+        {
+          "catalog_id": "02-02-1-anhydrous-milk-fat",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 2 does not provide a direct Anhydrous Milk Fat product row."
+        },
+        {
+          "catalog_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B Table 2 does not expressly provide a Cow/Buffalo Colostrum product row."
+        },
+        {
+          "catalog_id": "102-102-1-14-2-ksheerasara-sweetened-condensed-milk",
+          "status": "no_direct_table_mapping",
+          "reason": "This Ayurveda Aahara special-category product is not automatically treated as the ordinary Sweetened Condensed Milk Table 2 row solely from the parent FSSR reference."
+        },
+        {
+          "catalog_id": "102-102-1-14-5-dugdha-kupika-stuffed-fried-cottage-cheese-dumplings",
+          "status": "no_direct_table_mapping",
+          "reason": "This Ayurveda Aahara special-category composite product is not automatically treated as an ordinary cheese Table 2 row solely from the parent FSSR reference."
+        },
+        {
+          "catalog_id": "01-01-3-analogue-in-the-dairy-context",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
+        },
+        {
+          "catalog_id": "01-01-4-analogue-in-the-dairy-context",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
+        },
+        {
+          "catalog_id": "01-01-5-analogue-in-the-dairy-context",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
+        },
+        {
+          "catalog_id": "01-01-6-analogue-in-the-dairy-context",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
+        },
+        {
+          "catalog_id": "01-01-7-analogue-in-the-dairy-context",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
+        },
+        {
+          "catalog_id": "02-02-2-analogue-in-the-dairy-context",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
+        },
+        {
+          "catalog_id": "02-02-3-analogue-in-the-dairy-context",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
+        },
+        {
+          "catalog_id": "02-02-4-analogue-in-the-dairy-context",
+          "status": "no_direct_table_mapping",
+          "reason": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
+        }
+      ]
+    }
   }
 }
