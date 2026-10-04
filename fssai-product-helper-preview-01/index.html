@@ -442,7 +442,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="release"><b>Lubrication / release / anti-stick</b><small>Processing aids used on food-contact or processing surfaces.</small></label>
 <label class="process-option"><input type="checkbox" value="washing"><b>Washing / bleaching / peeling</b><small>Appendix C Table 7 processing aids used for washing, bleaching, denuding or peeling.</small></label>
 <label class="process-option"><input type="checkbox" value="flocculation"><b>Flocculation / curd setting</b><small>Appendix C Table 8 flocculating agents. Current official permissions are for unripened cheese — Paneer and Chhana.</small></label>
-<label class="process-option"><input type="checkbox" value="contact_freezing"><b>Contact freezing / cooling</b><small>Appendix C Table 9. The current permission is Liquid Nitrogen for dairy-based desserts — Ice cream.</small></label>
+<label class="process-option"><input type="checkbox" value="contact_freezing"><b>Contact freezing / cooling</b><small>Appendix C Table 9. The official FSSAI Section 16(5) active list permits Liquid Nitrogen (INS 941) for All Foods at GMP.</small></label>
 <label class="process-option"><input type="checkbox" value="desiccating"><b>Desiccating / anti-caking</b><small>Appendix C Table 10. The current permission is Corn starch for Icing Sugar.</small></label>
 <label class="process-option"><input type="checkbox" value="encapsulation"><b>Encapsulation / thickening</b><small>Appendix C Table 12. Product-specific permissions appear only for an exact product gate.</small></label>
 <label class="process-option"><input type="checkbox" value="coating"><b>Coating</b><small>Appendix C Table 12 coating-agent route. Product-specific permissions remain fail-closed unless the selected product exactly matches.</small></label>
@@ -466,6 +466,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="decaffeination"><b>Decaffeination</b><small>Extraction/solvent processing specifically used to produce decaffeinated tea or coffee.</small></label>
 <label class="process-option"><input type="checkbox" value="enzyme"><b>Enzyme processing</b><small>Any enzyme used as a processing aid during ingredient or beverage manufacture.</small></label>
 <label class="process-option"><input type="checkbox" value="nutrient"><b>Microbial nutrient use</b><small>Applicable only if a microbial culture process is actually used.</small></label>
+<label class="process-option"><input type="checkbox" value="mineral_salt"><b>Mineral salt processing aid</b><small>Product-specific mineral-salt permissions such as Zinc sulphate for alcoholic beverages.</small></label>
 </div>
 
 <div id="processingQualifierCard" class="card hidden" style="margin-top:14px;background:#fff">
@@ -2258,7 +2259,8 @@ const processLabels={
  starch_hydrolysis:'Starch hydrolysis',
  decaffeination:'Decaffeination',
  enzyme:'Enzyme processing',
- nutrient:'Microbial nutrient use'
+ nutrient:'Microbial nutrient use',
+ mineral_salt:'Mineral salt processing aid'
 };
 
 let processingAidRules=[
@@ -2340,7 +2342,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=250',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=251',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
@@ -2401,18 +2403,6 @@ function renderProcessingQualifierUI(){
  const p=selectedCatalogProductForProcessing();
  const blocks=[];
  const bindings=[];
-
- const needsIceForm=selectedProcesses.includes('contact_freezing')&&p?.id==='01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-';
- if(needsIceForm){
-   const current=String(processingQualifiers.contact_freezing_product_form||'');
-   blocks.push('<div class="field"><label>Finished product form for contact freezing</label><select id="contactFreezingProductForm">'
-     +'<option value="">Select exact finished form…</option>'
-     +'<option value="ice_cream"'+(current==='ice_cream'?' selected':'')+'>Ice Cream</option>'
-     +'<option value="other_frozen_form"'+(current==='other_frozen_form'?' selected':'')+'>Kulfi / Chocolate Ice Cream / Softy / Milk Ice / Milk Lolly</option>'
-     +'<option value="dried_mix"'+(current==='dried_mix'?' selected':'')+'>Dried Ice Cream Mix</option>'
-     +'</select><small>Appendix C Table 9 currently says “Dairy-based desserts — Ice cream”. PMSV therefore does not extend the permission to the other products combined in the FoSCoS row.</small></div>');
-   bindings.push(['contactFreezingProductForm','contact_freezing_product_form']);
- }
 
  if(selectedProcesses.includes('catalyst')){
    const current=String(processingQualifiers.catalyst_product_category||'');
