@@ -15,16 +15,19 @@
   "applicability_rule": "Processing aids listed in Tables 1 to 12 may be used only in manufacture of the food specified in the corresponding table and the final food shall not exceed the stated residue level. Product-specific rows remain fail-closed until PMSV has an exact product-category route. 'All foods' rows may auto-apply once the relevant process is selected.",
   "coverage": {
     "tables_total": 12,
-    "tables_loaded": 2,
+    "tables_loaded": 3,
     "loaded_tables": [
       "Table 1 - Antifoaming Agents",
-      "Table 2 - Catalyst"
+      "Table 2 - Catalyst",
+      "Table 3 - Clarifying Agents and Filtration Aids"
     ],
     "table_1_entries": 9,
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 3 - Clarifying Agents and Filtration Aids"
+    "next_priority": "Table 4 - Lubricants, Release and Antistick Agents",
+    "table_3_entries": 15,
+    "table_3_permission_rows": 15
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -288,6 +291,200 @@
             {
               "product_category": "Interesterified vegetable oil",
               "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ]
+        }
+      ]
+    },
+    "table_3": {
+      "number": 3,
+      "title": "CLARIFYING AGENTS AND FILTRATION AIDS",
+      "process_key": "filtration",
+      "source_pages": [
+        3,
+        4
+      ],
+      "entries": [
+        {
+          "s_no": 1,
+          "name": "Acid clays of montmorillonite",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fruit or vegetable juices, fruit nectars, syrups, oils and wine",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 2,
+          "name": "Chitosan sourced from Aspergillus niger",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Wine, beer, cider, spirits and food grade ethanol",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 3,
+          "name": "Chloro methylated aminated styrene-divinyl benzene resin",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Sugar",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 4,
+          "name": "Co-extruded polystyrene and polyvinyl polypyrrolidone",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fruit or vegetable juices, fruit nectars, syrups and Alcoholic beverages including low alcoholic and alcohol free counterparts",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 5,
+          "name": "Copper sulphate",
+          "ins": "519",
+          "permissions": [
+            {
+              "product_category": "Fruit or vegetable juices, fruit nectars, syrups and wine",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 6,
+          "name": "Diatomaceous earth",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fruit or vegetable juices, Alcoholic beverages including low alcoholic and alcohol-free counterparts (as filter powder), non-alcoholic beverages, sharbat, sugar syrups, synthetic syrups, fruit syrups and honey",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "carbonated-caffeinated-beverage"
+              ]
+            }
+          ]
+        },
+        {
+          "s_no": 7,
+          "name": "Fish collagen, including isinglass",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fruit or vegetable juices, fruit nectars, syrups and Alcoholic beverages including low alcoholic and alcohol-free counterparts",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 8,
+          "name": "Kaolin",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fruit or vegetable juices, fruit nectars, syrups and wine",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 9,
+          "name": "Magnesium oxide",
+          "ins": "530",
+          "permissions": [
+            {
+              "product_category": "Fruit or vegetable juices, fruit nectars, syrups and wine",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 10,
+          "name": "Perlite",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Starch hydrolysis",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 11,
+          "name": "Polyvinyl polypyrrolidone",
+          "ins": "1201",
+          "permissions": [
+            {
+              "product_category": "Fruit or vegetable juices, fruit nectars, syrups and wine",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 12,
+          "name": "Shellac, bleached",
+          "ins": "904",
+          "permissions": [
+            {
+              "product_category": "Fruit or vegetable juices, fruit nectars, syrups and wine",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 13,
+          "name": "Synthetic magnesium silicate",
+          "ins": "553(i)",
+          "permissions": [
+            {
+              "product_category": "Edible oils",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 14,
+          "name": "Calcium oxide",
+          "ins": "529",
+          "permissions": [
+            {
+              "product_category": "Preparation of Corn Flour",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 15,
+          "name": "Phosphoric acid",
+          "ins": "338",
+          "permissions": [
+            {
+              "product_category": "Sugar",
+              "residual_level": "GMP",
               "runtime_auto_apply": false
             }
           ]
