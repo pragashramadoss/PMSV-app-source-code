@@ -2513,7 +2513,7 @@ function microbiologyProfileHtml(resolved,product=null,variantOption=null){
  if(resolved.tableKey==='meat'&&product?.microbiology_poultry_salmonella_footnote===true&&table.poultry_salmonella_note)notes.push(table.poultry_salmonella_note);
  if(variantOption?.message)notes.push(variantOption.message);
  if(product?.microbiology_poultry_salmonella_note===true&&resolved.tableKey==='meat'&&resolved.table?.poultry_salmonella_note)notes.push(resolved.table.poultry_salmonella_note);
- const tableLabels={fish:'Table 1',milk:'Table 2',spices:'Table 3',fruits:'Table 4',meat:'Table 5',bakers_yeast:'Table 6',non_carbonated_beverages:'Table 7',eggs:'Table 8'};
+ const tableLabels={fish:'Table 1',milk:'Table 2',spices:'Table 3',fruits:'Table 4',meat:'Table 5',bakers_yeast:'Table 6',non_carbonated_beverages:'Table 7',eggs:'Table 8',food_grains:'Table 9'};
  const title=tableLabels[resolved.tableKey]||'Appendix B';
  const stageHtml=profile.stage
    ? '<div class="notice"><b>Stage where process-hygiene criterion applies:</b> '+esc(profile.stage)+(profile.action?'<br><b>Action in case of unsatisfactory result:</b> '+esc(profile.action):'')+'</div>'
@@ -2609,7 +2609,7 @@ function renderProductMicrobiology(){
 }
 async function loadMicrobiologyDb(){
  try{
-   const res=await fetch('./data/rules/appendix-b-v2-core.json?v=195',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-b-v2-core.json?v=196',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    microbiologyDb=await res.json();
  }catch(e){
