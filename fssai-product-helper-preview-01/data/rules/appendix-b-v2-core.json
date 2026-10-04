@@ -49,7 +49,10 @@
     "bakers_yeast_exact_product_mappings": 0,
     "bakers_yeast_catalog_gaps": 1,
     "noncarbonated_beverage_profiles_loaded": 1,
-    "noncarbonated_beverage_exact_product_mappings": 2
+    "noncarbonated_beverage_exact_product_mappings": 2,
+    "non_carbonated_beverage_profiles_loaded": 1,
+    "non_carbonated_beverage_exact_product_mappings": 1,
+    "non_carbonated_beverage_chapter_specific_routes": 7
   },
   "organism_labels": {
     "aerobic_plate_count": "Aerobic Plate Count",
@@ -69,7 +72,9 @@
     "aerobic_colony_count": "Aerobic Colony Count",
     "e_coli_o157_or_stec": "E. coli O157 / Vero or Shiga toxin producing E. coli",
     "vibrio_cholerae": "Vibrio cholerae",
-    "campylobacter_spp": "Campylobacter spp."
+    "campylobacter_spp": "Campylobacter spp.",
+    "total_plate_count": "Total Plate Count",
+    "pathogens": "Pathogens"
   },
   "tables": {
     "fish": {
@@ -3529,6 +3534,42 @@
         "Non-carbonated beverages shall be free from pathogens."
       ],
       "applicability_rule": "Apply only where the selected standardized product is explicitly a non-carbonated water-based non-alcoholic beverage. Do not apply Table 7 merely from a shared FCS where a more specific Appendix B table governs the product."
+    },
+    "non_carbonated_beverages": {
+      "table_7_title": "Microbiological Requirements for Non-Carbonated Water Based Beverages (Non Alcoholic)",
+      "source_pages": [
+        53
+      ],
+      "categories": [
+        {
+          "id": "beverage-07",
+          "sl_no": "1",
+          "name": "Non-Carbonated Water Based Beverages (Non Alcoholic)",
+          "hygiene_label": "Microbiological requirement",
+          "hygiene": {
+            "total_plate_count": {
+              "requirement": "Not more than 50 CFU/ml"
+            },
+            "yeast_and_mold_count": {
+              "requirement": "Not more than 2 CFU/ml"
+            },
+            "coliform_count": {
+              "requirement": "Absent in 100 ml"
+            },
+            "pathogens": {
+              "requirement": "Non-carbonated beverages shall be free from pathogens."
+            }
+          },
+          "safety": {},
+          "notes": [
+            "Table 7 provides direct microbiological limits and a pathogen-free requirement; it does not print n/c sampling-plan fields for these rows."
+          ]
+        }
+      ],
+      "source_notes": [
+        "Table 7 applies specifically to Non-Carbonated Water Based Beverages (Non Alcoholic).",
+        "The table states that non-carbonated beverages shall be free from pathogens."
+      ]
     }
   },
   "product_mappings": {
@@ -6031,6 +6072,55 @@
         {
           "catalog_id": "carbonated-fruit-beverages",
           "reason": "Table 7 is explicitly non-carbonated and fruit beverages have their specific Table 4 route."
+        }
+      ]
+    },
+    "non_carbonated_beverages": {
+      "exact": [
+        {
+          "catalog_id": "non-carbonated-water-based-beverages",
+          "profile_key": "beverage-07",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact FSSR 2.10.6(3) product identity: Non-carbonated Water Based Beverages (Non-Alcoholic)."
+        }
+      ],
+      "conditional": [],
+      "no_direct_table_mapping": [],
+      "chapter_specific_routes": [
+        {
+          "catalog_id": "carbonated-water",
+          "route": "Chapter 2.10.6(1) direct microbiology",
+          "reason": "Carbonated Water has direct microbiological criteria in Chapter 2.10; Table 7 is non-carbonated only."
+        },
+        {
+          "catalog_id": "carbonated-caffeinated-beverage",
+          "route": "Chapter 2.10.6(2) -> 2.10.6(1)",
+          "reason": "Caffeinated Beverage inherits Carbonated Water microbiological requirements under the current Chapter 2.10."
+        },
+        {
+          "catalog_id": "non-carbonated-caffeinated-beverage",
+          "route": "Chapter 2.10.6(2) -> 2.10.6(1)",
+          "reason": "Despite being non-carbonated, the current Caffeinated Beverage clause explicitly inherits Carbonated Water microbiological requirements."
+        },
+        {
+          "catalog_id": "mineral-water",
+          "route": "Chapter 2.10.7 direct microbiology",
+          "reason": "Mineral Water has its own microbiological requirements in Chapter 2.10."
+        },
+        {
+          "catalog_id": "packaged-drinking-water",
+          "route": "Chapter 2.10.8 direct microbiology",
+          "reason": "Packaged Drinking Water has its own microbiological requirements in Chapter 2.10."
+        },
+        {
+          "catalog_id": "purified-vending-water",
+          "route": "Chapter 2.10.9 / IS 10500 route",
+          "reason": "Purified vending water follows its own Chapter 2.10 standard; Table 7 is not inferred."
+        },
+        {
+          "catalog_id": "coconut-neera",
+          "route": "Deferred to Appendix B Neera table",
+          "reason": "Coconut Neera has a separate Appendix B Neera microbiological table later in the document."
         }
       ]
     }
