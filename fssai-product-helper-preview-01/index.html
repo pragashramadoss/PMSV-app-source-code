@@ -1801,11 +1801,13 @@ function nutritionEnergyPer100g(profile){
 }
 function calculateNutrition(){
  const totalG=totalFormulaKg()*1000;
- const keys=['protein_g','carbohydrate_g','total_sugars_g','added_sugars_g','total_fat_g','saturated_fat_g','trans_fat_g','cholesterol_mg','sodium_mg','dietary_fibre_g'];
- const totals={energy_kcal:0};
- keys.forEach(k=>totals[k]=0);
+ const keys=['energy_kcal','protein_g','carbohydrate_g','total_sugars_g','added_sugars_g','total_fat_g','saturated_fat_g','trans_fat_g','cholesterol_mg','sodium_mg','dietary_fibre_g'];
+ const required=Array.isArray(nutritionDb?.required_label_fields)&&nutritionDb.required_label_fields.length?nutritionDb.required_label_fields:keys;
+ const totals={};
+ const verifiedMass={};
+ keys.forEach(k=>{totals[k]=0;verifiedMass[k]=0;});
  const matched=[],unmatched=[];
- let coveredG=0;
+ let profileCoveredG=0;
 
  formulationIngredients.forEach(item=>{
    const g=qtyToKg(item.qty,item.unit)*1000;
@@ -1816,30 +1818,37 @@ function calculateNutrition(){
      return;
    }
    const p=profile.per_100g||{};
+   const verified=new Set(Array.isArray(profile.verified_fields)?profile.verified_fields:[]);
    const factor=g/100;
-   totals.energy_kcal+=nutritionEnergyPer100g(profile)*factor;
-   keys.forEach(k=>totals[k]+=Number(p[k]||0)*factor);
-   coveredG+=g;
+   keys.forEach(k=>{
+     if(!verified.has(k))return;
+     const value=k==='energy_kcal'?nutritionEnergyPer100g(profile):Number(p[k]);
+     if(!Number.isFinite(value))return;
+     totals[k]+=value*factor;
+     verifiedMass[k]+=g;
+   });
+   profileCoveredG+=g;
    matched.push({item,g,profile});
  });
 
- const per100g={};
- if(totalG>0){
-   Object.keys(totals).forEach(k=>per100g[k]=totals[k]*100/totalG);
- }else{
-   Object.keys(totals).forEach(k=>per100g[k]=0);
- }
+ const per100g={},coverageByField={};
+ keys.forEach(k=>{
+   coverageByField[k]=totalG>0?(verifiedMass[k]/totalG)*100:0;
+   per100g[k]=totalG>0&&verifiedMass[k]>=totalG-0.000001?(totals[k]*100/totalG):null;
+ });
  const density=formulaDensity();
- const per100ml={};
- Object.keys(per100g).forEach(k=>per100ml[k]=per100g[k]*density);
+ const per100ml={},perServe={};
  const serveFactor=nutritionServingMl()/100;
- const perServe={};
- Object.keys(per100ml).forEach(k=>perServe[k]=per100ml[k]*serveFactor);
+ keys.forEach(k=>{
+   per100ml[k]=per100g[k]===null?null:per100g[k]*density;
+   perServe[k]=per100ml[k]===null?null:per100ml[k]*serveFactor;
+ });
+ const incompleteFields=required.filter(k=>coverageByField[k]<99.999999);
 
  return {
-   totalG,coveredG,coveragePct:totalG>0?(coveredG/totalG)*100:0,
-   matched,unmatched,per100g,per100ml,perServe,density,
-   complete:totalG>0&&unmatched.length===0
+   totalG,coveredG:profileCoveredG,coveragePct:totalG>0?(profileCoveredG/totalG)*100:0,
+   matched,unmatched,per100g,per100ml,perServe,density,coverageByField,incompleteFields,
+   complete:totalG>0&&unmatched.length===0&&incompleteFields.length===0
  };
 }
 function nutritionRdaPercent(key,value){
@@ -1885,7 +1894,9 @@ function renderNutrition(){
      status.innerHTML='<b>Nutrition calculation COMPLETE for the currently loaded ICMR-NIN profiles.</b><br>100% of the formulation mass is matched to a verified local nutrition profile. Values update automatically whenever an ingredient, quantity or density changes.';
    }else{
      status.className='notice';
-     status.innerHTML='<b>Nutrition calculation INCOMPLETE.</b><br>'+fmt(calc.coveragePct,2)+'% of formulation mass currently has a verified nutrition profile. Unmatched ingredient(s): <b>'+calc.unmatched.map(x=>esc(x.item.name)).join(', ')+'</b>. Their nutrients are not guessed or treated as zero; therefore the calculated panel below is provisional and must not be used as the final label until coverage is complete.';
+     const unmatchedText=calc.unmatched.length?'<br>Unmatched ingredient(s): <b>'+calc.unmatched.map(x=>esc(x.item.name)).join(', ')+'</b>.':'';
+     const fieldText=calc.incompleteFields.length?'<br>Not fully verified across the formulation: <b>'+calc.incompleteFields.map(k=>esc(k.replaceAll('_',' '))).join(', ')+'</b>.':'';
+     status.innerHTML='<b>Nutrition calculation INCOMPLETE.</b><br>'+fmt(calc.coveragePct,2)+'% of formulation mass has an ICMR-NIN profile match.'+unmatchedText+fieldText+'<br>Missing nutrient fields are <b>not treated as zero</b>; affected label cells stay unavailable until that field is verified for 100% of formulation mass.';
    }
  }
 
@@ -1903,8 +1914,12 @@ function renderNutrition(){
    ['dietary_fibre_g','Dietary fibre','g',2]
  ];
  if(rows)rows.innerHTML=defs.map(([key,label,unit,d])=>{
-   const p100=Number(calc.per100ml[key]||0);
-   const ps=Number(calc.perServe[key]||0);
+   const p100=calc.per100ml[key];
+   const ps=calc.perServe[key];
+   if(p100===null||ps===null){
+     const cov=Number(calc.coverageByField?.[key]||0);
+     return '<tr><td><b>'+label+'</b></td><td><span class="status-bad">Not verified</span></td><td><span class="status-bad">Not verified</span></td><td><small>'+fmt(cov,1)+'% mass coverage</small></td></tr>';
+   }
    const rda=nutritionRdaPercent(key,ps);
    return '<tr><td><b>'+label+'</b></td><td>'+fmt(p100,d)+' '+unit+'</td><td>'+fmt(ps,d)+' '+unit+' / '+fmt(nutritionServingMl(),0)+' ml</td><td>'+(rda===null?'<small>Not specified by FSSAI</small>':fmt(rda,1)+'%')+'</td></tr>';
  }).join('');
@@ -1914,7 +1929,9 @@ function renderNutrition(){
      const profile=nutritionProfileFor(item.name);
      const q=fmt(Number(item.qty),6)+' '+esc(item.unit||'kg');
      if(!profile)return '<tr><td><b>'+esc(item.name)+'</b></td><td>'+q+'</td><td><span class="status-bad">No government profile loaded</span></td><td>Excluded from nutrient totals; calculation remains incomplete.</td></tr>';
-     return '<tr><td><b>'+esc(item.name)+'</b></td><td>'+q+'</td><td><span class="status-good">'+esc(profile.display_name||item.name)+'</span></td><td>'+esc(profile.source||'Official-source local profile')+'</td></tr>';
+     const vf=Array.isArray(profile.verified_fields)?profile.verified_fields:[];
+     const missing=(nutritionDb.required_label_fields||[]).filter(k=>!vf.includes(k));
+     return '<tr><td><b>'+esc(item.name)+'</b></td><td>'+q+'</td><td><span class="status-good">'+esc(profile.display_name||item.name)+'</span></td><td>'+esc(profile.source||'Official-source local profile')+(missing.length?'<br><small><b>Partial profile:</b> '+esc(missing.map(k=>k.replaceAll('_',' ')).join(', '))+' not verified.</small>':'')+'</td></tr>';
    }).join('');
  }
 }
