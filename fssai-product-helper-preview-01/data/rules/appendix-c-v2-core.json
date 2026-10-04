@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Validate Table 11 non-GMM selector identities/source counts against official numbering and then run runtime regression checks.",
+    "next_priority": "Synchronize Table 11 UI selector and run Appendix C runtime regression.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -54,7 +54,7 @@
     "table_10_entries": 1,
     "table_10_permission_rows": 1,
     "table_11_non_gmm_entries": 56,
-    "table_11_non_gmm_source_rows": 139,
+    "table_11_non_gmm_source_rows": 140,
     "table_11_amendment_corrected_entries": 6,
     "table_11a_gmm_status": "complete_current_version_2",
     "table_11a_gmm_entries_loaded": 51,
@@ -67,7 +67,9 @@
     "table_12_runtime_policy": "Official current Version 2 only; draft ePC rows excluded; product-specific/ambiguous rows fail closed.",
     "appendix_c_audit_status": "tables_1_to_12_and_11a_verified_current_version_2",
     "appendix_c_audit_note": "Draft notification 4353 is not treated as operative law. Current Version 2 remains controlling for runtime.",
-    "appendix_c_draft_notifications_excluded": true
+    "appendix_c_draft_notifications_excluded": true,
+    "table_11_audit_status": "verified_against_effective_2026_amendment",
+    "table_11a_audit_status": "verified_against_effective_2026_amendment"
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -2885,10 +2887,11 @@
           "ec": "3.4.23.4",
           "sources": [
             "Kluyveromyces lactis",
-            "Aspergillus niger (variety-Awamori)"
+            "Aspergillus niger (variety-Awamori)",
+            "Fourth stomach of domesticated ruminants (cattle, buffalos, goats and sheeps)"
           ],
           "residual_level": "GMP",
-          "source_note": "Aspergillus niger (variety-Awamori) inserted by amendment effective 2026-02-01."
+          "source_note": "Aspergillus niger (variety-Awamori) and fourth stomach of domesticated ruminants (cattle, buffalos, goats and sheeps) are effective amendment additions from 2026-02-01."
         },
         {
           "sequence": 46,
@@ -4074,7 +4077,7 @@
           "variants": [
             {
               "production_organism": "Trichoderma reesei",
-              "donor_or_source": "Aspergillus nishimurae (ex fumigatus)",
+              "donor_or_source": "Aspergillus nishimurae (ex fumigatus) RF8793",
               "purpose": "For use in degumming of oils and fats, Egg yolk processing",
               "indicative_food_uses": "Oils and fats processing, Egg products",
               "residual_level": "GMP"
@@ -4089,7 +4092,7 @@
           "variants": [
             {
               "production_organism": "Trichoderma reesei RF4847",
-              "donor_or_source": "Aspergillus nishimurae (ex fumigatus)",
+              "donor_or_source": "Aspergillus nishimurae (ex fumigatus) RH3949",
               "purpose": "For use in starch processing, degumming of oils and fats",
               "indicative_food_uses": "Oils and fats processing, Syrups for use in soft drinks or bakery",
               "residual_level": "GMP"
@@ -4134,7 +4137,7 @@
           "variants": [
             {
               "production_organism": "Trichoderma reesei",
-              "donor_or_source": "Malbranchea cinnamomea",
+              "donor_or_source": "Malbranchea cinnamomea ALKO4122",
               "purpose": "Used as a processing aid for partial or extensive hydrolysis of proteins from both animal and vegetable sources",
               "indicative_food_uses": "Fish and meat processing",
               "residual_level": "GMP"
