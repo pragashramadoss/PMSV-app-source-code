@@ -13,7 +13,7 @@
   },
   "coverage": {
     "main_table_groups_total": 11,
-    "main_table_groups_loaded": 7,
+    "main_table_groups_loaded": 8,
     "loaded_groups": [
       "Table 1 - Fish and Fishery Products",
       "Table 2 - Milk and Milk Products",
@@ -21,13 +21,14 @@
       "Table 4 - Fruits and Vegetables and their Products",
       "Table 5 - Meat and Meat Products",
       "Table 6 - Baker's Yeast",
-      "Table 7 - Non-Carbonated Water Based Beverages (Non Alcoholic)"
+      "Table 7 - Non-Carbonated Water Based Beverages (Non Alcoholic)",
+      "Table 8 - Eggs and Egg Products"
     ],
     "fish_product_categories_loaded": 16,
     "fish_exact_product_mappings": 18,
     "fish_conditional_product_mappings": 4,
     "fish_no_direct_table_mapping": 2,
-    "next_priority": "Table 8A/8B - Eggs and Egg Products",
+    "next_priority": "Table 9A/9B - Food Grain Products",
     "milk_profiles_loaded": 16,
     "milk_exact_product_mappings": 58,
     "milk_conditional_product_mappings": 17,
@@ -50,7 +51,11 @@
     "bakers_yeast_catalog_gaps": 1,
     "non_carbonated_beverage_profiles_loaded": 1,
     "non_carbonated_beverage_exact_product_mappings": 1,
-    "non_carbonated_beverage_chapter_specific_routes": 7
+    "non_carbonated_beverage_chapter_specific_routes": 7,
+    "egg_profiles_loaded": 4,
+    "egg_exact_product_mappings": 4,
+    "egg_conditional_product_mappings": 1,
+    "egg_no_direct_table_mapping": 0
   },
   "organism_labels": {
     "aerobic_plate_count": "Aerobic Plate Count",
@@ -3522,6 +3527,187 @@
         "Table 7 applies specifically to Non-Carbonated Water Based Beverages (Non Alcoholic).",
         "The table states that non-carbonated beverages shall be free from pathogens."
       ]
+    },
+    "eggs": {
+      "table_8a_title": "Microbiological Standards of Eggs and Egg Products – Process Hygiene Criteria",
+      "table_8b_title": "Microbiological Standards of Eggs and Egg Products – Food Safety Criteria",
+      "source_pages": {
+        "table_8a": [
+          53
+        ],
+        "table_8b": [
+          54
+        ],
+        "stage_and_sampling": [
+          54,
+          55,
+          56
+        ],
+        "reference_methods": [
+          56,
+          57
+        ]
+      },
+      "categories": [
+        {
+          "id": "egg-01",
+          "sl_no": "1",
+          "name": "Table Egg",
+          "process_hygiene_not_applicable": true,
+          "safety_not_applicable": true,
+          "hygiene": {},
+          "safety": {},
+          "notes": [
+            "Table Egg has NA entries in both Table 8A and 8B. FSSAI states that Table Egg shall be regulated in accordance with Good Manufacturing Practices and the code of Good Hygiene Practices under Schedule 4 of the Licensing and Registration Regulations."
+          ]
+        },
+        {
+          "id": "egg-02",
+          "sl_no": "2",
+          "name": "Pasteurized Liquid egg products (whole, yolk or albumin liquid)",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 10000,
+              "M": 100000,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          }
+        },
+        {
+          "id": "egg-03",
+          "sl_no": "3",
+          "name": "Frozen / dried / egg products",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 10000,
+              "M": 100000,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": 100,
+              "M": null,
+              "unit": "cfu/g"
+            }
+          }
+        },
+        {
+          "id": "egg-04",
+          "sl_no": "4",
+          "name": "Cooked/ready-to-eat egg products including mayonnaises",
+          "hygiene": {
+            "aerobic_plate_count": {
+              "n": 5,
+              "c": 2,
+              "m": 10000,
+              "M": 100000,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          }
+        }
+      ],
+      "stage_rules": {
+        "process_hygiene": "Table 8A indicates acceptable functioning of the production process; it is not a market-release requirement and applies at the end of manufacturing.",
+        "food_safety": "Table 8B defines batch/lot acceptability and applies at the end of manufacturing and to products in the market during shelf life."
+      },
+      "action_on_unsatisfactory_process_hygiene": [
+        "Check and improve process hygiene by implementing Schedule 4 requirements.",
+        "Ensure all applicable Table 8B Food Safety Criteria are complied with."
+      ],
+      "sampling_plan_definitions": {
+        "n": "Number of units comprising a sample.",
+        "c": "Maximum allowable number of units having counts above m for a 2-class plan and between m and M for a 3-class plan.",
+        "m": "Limit separating unsatisfactory from satisfactory in a 2-class plan, or acceptable from satisfactory in a 3-class plan.",
+        "M": "Limit separating unsatisfactory from satisfactory in a 3-class plan."
+      },
+      "interpretation": {
+        "two_class": [
+          "Satisfactory if all observed values are <= m.",
+          "Unsatisfactory if one or more observed values are > m."
+        ],
+        "three_class": [
+          "Satisfactory if all observed values are <= m.",
+          "Acceptable if at most c values are between m and M and the rest are <= m.",
+          "Unsatisfactory if one or more values are > M or more than prescribed c values are > m."
+        ]
+      },
+      "reference_methods": {
+        "aerobic_plate_count": "IS 5402 / ISO 4833",
+        "enterobacteriaceae": "IS/ISO 7402 / ISO 21528 Part 2",
+        "salmonella": "IS 5887 Part 3 / ISO 6579",
+        "listeria_monocytogenes": "IS 14988 Part 1 & Part 2 / ISO 11290-1 & 2"
+      },
+      "source_notes": [
+        "Definitions related to egg and egg products are the same as provided in the Food Product Standards and Food Additives Regulations.",
+        "Table Egg is governed by Schedule 4 GMP/GHP rather than numerical Table 8 criteria."
+      ]
     }
   },
   "product_mappings": {
@@ -6043,6 +6229,53 @@
           "reason": "Coconut Neera has a separate Appendix B Neera microbiological table later in the document."
         }
       ]
+    },
+    "eggs": {
+      "exact": [
+        {
+          "catalog_id": "10-10-1-fresh-eggs",
+          "profile_key": "egg-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact Table Egg identity; Table 8 numerical criteria are NA and Schedule 4 GMP/GHP applies."
+        },
+        {
+          "catalog_id": "10-10-2-frozen-egg-products",
+          "profile_key": "egg-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Exact Frozen Egg Products identity."
+        },
+        {
+          "catalog_id": "10-10-2-egg-powder",
+          "profile_key": "egg-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Egg Powder is the dried egg-product route in Table 8."
+        },
+        {
+          "catalog_id": "10-10-3-pickled-eggs",
+          "profile_key": "egg-04",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "The Chapter 2.5 standard defines Pickled Eggs as hard-boiled eggs prepared in pickle solution; this is a cooked ready-to-eat egg product."
+        }
+      ],
+      "conditional": [
+        {
+          "catalog_id": "10-10-2-liquid-egg-products",
+          "status": "variant_required",
+          "reason": "Appendix B Table 8 row 2 is specifically Pasteurized Liquid egg products. The Chapter 2.5 Liquid Egg Products identity does not by itself establish pasteurisation.",
+          "options": [
+            {
+              "condition": "Pasteurized liquid whole egg / yolk / albumin",
+              "profile_key": "egg-02"
+            },
+            {
+              "condition": "Pasteurisation not confirmed",
+              "profile_key": "",
+              "message": "PMSV will not apply the pasteurized-liquid-egg criteria until pasteurisation is established."
+            }
+          ]
+        }
+      ],
+      "no_direct_table_mapping": []
     }
   }
 }
