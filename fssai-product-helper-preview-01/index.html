@@ -4015,7 +4015,7 @@ async function loadRegulatoryDb(){
 async function loadNutritionDb(){
  const status=document.getElementById('nutritionDbStatus');
  try{
-   const res=await fetch('./data/nutrition-db-v1.json?v=290',{cache:'reload'});
+   const res=await fetch('./data/nutrition-db-v1.json?v=293',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    nutritionDb=await res.json();
    if(status){
