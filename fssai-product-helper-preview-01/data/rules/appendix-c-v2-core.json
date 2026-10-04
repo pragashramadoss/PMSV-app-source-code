@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Resolve process-only Starch hydrolysis and remaining exact catalogue gaps; keep Hardened oil fail-closed.",
+    "next_priority": "Keep unresolved catalogue/source gaps fail-closed; add UI selectors for starch hydrolysis and decaffeination, then run regression.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -83,7 +83,7 @@
       "table_9_liquid_nitrogen_scope": "Dairy-based desserts - Ice cream",
       "table_7_hydrogen_peroxide_effective_residual": "5 mg/kg as hydrogen peroxide"
     },
-    "appendix_c_product_gate_audit_status": "exact_gate_pass_4_table2",
+    "appendix_c_product_gate_audit_status": "exact_gate_pass_5_process_routes",
     "appendix_c_product_gated_permissions": 104,
     "appendix_c_product_gate_id_links": 267,
     "appendix_c_product_gate_rule_key_links": 29,
@@ -938,7 +938,7 @@
               "runtime_auto_apply": true,
               "process_key": "starch_hydrolysis",
               "product_gate_status": "process_exact",
-              "product_gate_note": "The Appendix C category itself is Starch hydrolysis; selecting the Starch hydrolysis process is the exact gate."
+              "product_gate_note": "Appendix C applicability is Starch hydrolysis itself; selecting that manufacturing process is the exact gate."
             }
           ]
         },
@@ -3505,10 +3505,13 @@
               "runtime_auto_apply": false,
               "process_key": "decaffeination",
               "product_ids": [
-                "tea"
+                "tea",
+                "kangra-tea",
+                "green-tea",
+                "instant-tea-solid"
               ],
-              "product_gate_status": "verified_exact_catalogue_plus_process",
-              "product_gate_note": "Exact Tea product identity plus Decaffeination process selection."
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV tea identities combined with the Decaffeination process."
             },
             {
               "product_category": "Decaffeinated coffee",
@@ -3516,10 +3519,11 @@
               "runtime_auto_apply": false,
               "process_key": "decaffeination",
               "product_ids": [
-                "coffee"
+                "coffee",
+                "coffee-chicory-mixture"
               ],
-              "product_gate_status": "verified_exact_catalogue_plus_process",
-              "product_gate_note": "Exact Coffee product identity plus Decaffeination process selection."
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV coffee identities combined with the Decaffeination process."
             },
             {
               "product_category": "Flavouring substances",
