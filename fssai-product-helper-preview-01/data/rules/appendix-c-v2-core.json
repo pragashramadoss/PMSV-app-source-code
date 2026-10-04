@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "database_id": "fssai-appendix-c-v2-core",
-  "source_version": "Version 2 (01.08.2025)",
+  "source_version": "Appendix C Version 2 (01.08.2025) + FSSAI First Amendment Regulations, 2025 (effective 01.02.2026) + Section 16(5) active list",
   "source_verified_on": "2026-10-04",
   "source_policy": "Official FSSAI sources only",
   "runtime_ai_required": false,
@@ -15,6 +15,12 @@
       "authority": "FSSAI",
       "title": "Direction under Section 16(5) regarding compliance w.r.t. Processing Aids — Active list of processing aids allowed for use by Food Business Operators",
       "url": "https://www.fssai.gov.in/upload/advisories/2024/03/65f2d680c053cApproved%20direction%20under%20Section%2016_5%20regarding%20compliance%20w.r.t.%20Processing%20Aids%20under%20FSS_FPS%26FA_Regulations_2011.pdf"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Food Safety and Standards (Food Products Standards and Food Additives) First Amendment Regulations, 2025",
+      "effective_from": "2026-02-01",
+      "url": "https://fssai.gov.in/upload/notifications/2025/07/6879d8af12522Palm%20Oil_FPSFA_Notification.pdf"
     }
   ],
   "applicability_rule": "Processing aids listed in Tables 1 to 12 may be used only in manufacture of the food specified in the corresponding table and the final food shall not exceed the stated residue level. Product-specific rows remain fail-closed until PMSV has an exact product-category route. 'All foods' rows may auto-apply once the relevant process is selected.",
@@ -39,7 +45,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Reconcile Table 6 Food Colour/Isobutyl acetate changes against the final 2025 amendment effective 1 February 2026, then finish Bone phosphate and blank-residue Vitamin B12/Vitamin C handling.",
+    "next_priority": "Apply the remaining final 2025 amendment additions to Tables 7, 8 and Table 12 existing rows, then re-audit the remaining fail-closed Other foods/Bone phosphate/Vitamin B12/Vitamin C permissions.",
     "table_3_entries": 16,
     "table_3_permission_rows": 18,
     "table_4_entries": 27,
@@ -48,8 +54,8 @@
     "table_5_micro_control_entries": 7,
     "table_5_nutrient_entries": 49,
     "table_5_permission_rows": 58,
-    "table_6_entries": 26,
-    "table_6_permission_rows": 45,
+    "table_6_entries": 27,
+    "table_6_permission_rows": 59,
     "table_7_entries": 16,
     "table_7_permission_rows": 16,
     "table_8_entries": 6,
@@ -95,7 +101,7 @@
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
     "appendix_c_product_gate_reachable_permissions": 76,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "passed_after_section_16_5_tables_1_3_4_5_expansion_2026-10-04",
+    "appendix_c_product_gate_regression_status": "passed_after_final_2025_table_6_reconciliation_2026-10-04",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -121,23 +127,23 @@
         "12": 3
       }
     },
-    "appendix_c_product_gate_remaining_fail_closed": 8,
-    "appendix_c_product_gated_or_auto_permissions": 280,
+    "appendix_c_product_gate_remaining_fail_closed": 7,
+    "appendix_c_product_gated_or_auto_permissions": 295,
     "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
     "table_2_hardened_oil_status": "fail_closed_identity_unresolved",
     "table_6_decaffeination_status": "tea_and_coffee_exact_process_gates_loaded",
     "table_9_liquid_nitrogen_status": "official_section_16_5_active_list_all_foods_gmp",
     "table_6_mek_decaffeination_route": "loaded_same_source_row",
-    "appendix_c_intentional_fail_closed_permissions": 8,
-    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_253",
+    "appendix_c_intentional_fail_closed_permissions": 7,
+    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_254",
     "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model.",
     "appendix_c_final_runtime_regression_status": "passed_2026-10-04",
     "appendix_c_final_runtime_regression": {
-      "source_permission_rows": 288,
+      "source_permission_rows": 302,
       "runtime_route_projections": 9,
       "auto_apply_permission_rows": 104,
       "exact_gated_permission_rows": 176,
-      "intentional_fail_closed_permission_rows": 8,
+      "intentional_fail_closed_permission_rows": 7,
       "unclassified_permission_rows": 0,
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -178,7 +184,9 @@
         "starch_hydrolysis_perlite": true,
         "zinc_sulphate_alcoholic_beverages_gmp": true,
         "liquid_nitrogen_all_foods_gmp": true
-      }
+      },
+      "table_6_entries": 27,
+      "table_6_permission_rows": 59
     },
     "appendix_c_runtime_status": "production_fail_closed_current_version_2_plus_official_section_16_5_active_list",
     "appendix_c_product_master_count": 533,
@@ -187,13 +195,6 @@
     "appendix_c_product_gate_invalid_rule_keys": 0,
     "appendix_c_product_gate_unreachable": 0,
     "appendix_c_product_gate_remaining_rows": [
-      {
-        "table": 6,
-        "s_no": 1,
-        "name": "Acetone",
-        "category": "Colours",
-        "process": "solvent"
-      },
       {
         "table": 6,
         "s_no": 1,
@@ -272,7 +273,10 @@
       "table_3_sugar_treatment_routes": "pass",
       "sulphur_dioxide_sugar_limits": "pass",
       "rapeseed_oil_release_gate": "pass",
-      "table_5_active_list_additions_6a_50_55": "pass"
+      "table_5_active_list_additions_6a_50_55": "pass",
+      "table_6_final_2025_substitutions": "pass",
+      "table_6_isobutyl_acetate_27": "pass",
+      "acetone_obsolete_generic_colours_removed": "pass"
     },
     "table_9_liquid_nitrogen_scope": "All Foods"
   },
@@ -3383,11 +3387,34 @@
               "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             },
             {
-              "product_category": "Colours",
-              "residual_level_mgkg": 2,
-              "runtime_auto_apply": false,
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "FoSCoS 'Colouring foods' is not treated as an exact synonym for the Appendix C manufacturing category 'Colours'; no exact product gate is established."
+              "product_category": "Food Colours [chlorophylls (INS 140(i)); copper complexes of chlorophylls (INS 141(i)); copper complexes of chlorophyllins (INS 141(ii)); vegetable carotenes (INS 160a(ii)); carotene from Blakeslea trispora INS 160a(iii); carotenes from algae INS 160a(iv); paprika extract, capsanthin, capsorubin (INS 160c); lutein esters (INS 161b(ii))]",
+              "residual_level_mgkg": 50,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "chlorophylls_ins_140i",
+                "copper_chlorophylls_ins_141i",
+                "copper_chlorophyllins_ins_141ii",
+                "vegetable_carotenes_ins_160aii",
+                "beta_carotene_blakeslea_ins_160aiii",
+                "carotenes_algae_ins_160aiv",
+                "paprika_capsanthin_capsorubin_ins_160c",
+                "lutein_esters_ins_161bii"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
+            },
+            {
+              "product_category": "Food Colours [curcumin (INS 100); annatto, bixin, norbixin (INS 160b(i),(ii))]",
+              "residual_level_mgkg": 30,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "curcumin_ins_100",
+                "annatto_bixin_norbixin_ins_160b"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
             },
             {
               "product_category": "Vegetable oils",
@@ -3411,7 +3438,8 @@
               "runtime_lock_status": "intentional_fail_closed",
               "runtime_lock_reason": "'Other foods' is an open-ended residual category. PMSV will not auto-apply a solvent limit by treating every unmatched standardized food as this category."
             }
-          ]
+          ],
+          "source_note": "Substituted by final FSSAI Food Products Standards and Food Additives First Amendment Regulations, 2025; effective 1 February 2026."
         },
         {
           "s_no": 2,
@@ -3436,7 +3464,7 @@
           "ins": "",
           "permissions": [
             {
-              "product_category": "Fatty acids, flavouring substances, colours",
+              "product_category": "Fatty acids, Flavouring substances",
               "residual_level_mgkg": 10,
               "runtime_auto_apply": false,
               "product_ids": [
@@ -3444,6 +3472,17 @@
               ],
               "product_gate_status": "verified_exact_catalogue_subset",
               "product_gate_note": "Verified PMSV flavouring-substances preparation identity (FCS 99.3); other combined categories remain locked."
+            },
+            {
+              "product_category": "Food Colour [curcumin (INS 100)]",
+              "residual_level_mgkg": 10,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "curcumin_ins_100"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
             },
             {
               "product_category": "Spice oleoresins",
@@ -3455,7 +3494,8 @@
               "product_gate_status": "verified_exact_rule_key",
               "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             }
-          ]
+          ],
+          "source_note": "Substituted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         },
         {
           "s_no": 4,
@@ -3498,8 +3538,29 @@
               ],
               "product_gate_status": "verified_exact_rule_key",
               "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
+            },
+            {
+              "product_category": "Food Colours [curcumin; chlorophylls; copper complexes of chlorophylls/chlorophyllins; vegetable carotenes; paprika extract; annatto/bixin/norbixin; tomato lycopene; lutein; anthocyanins]",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "curcumin_ins_100",
+                "chlorophylls_ins_140i",
+                "copper_chlorophylls_ins_141i",
+                "copper_chlorophyllins_ins_141ii",
+                "vegetable_carotenes_ins_160aii",
+                "paprika_capsanthin_capsorubin_ins_160c",
+                "annatto_bixin_norbixin_ins_160b",
+                "tomato_lycopene_ins_160dii",
+                "lutein_ins_161bi",
+                "anthocyanins_ins_163"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact final-amendment food-colour scope; GMP."
             }
-          ]
+          ],
+          "source_note": "Substituted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         },
         {
           "s_no": 6,
@@ -3609,8 +3670,33 @@
               ],
               "product_gate_status": "verified_exact_rule_key",
               "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
+            },
+            {
+              "product_category": "Food Colours [curcumin (INS 100); paprika extract, capsanthin, capsorubin (INS 160c); lycopene preparations (INS 160d(i))]",
+              "residual_level_mgkg": 50,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "curcumin_ins_100",
+                "paprika_capsanthin_capsorubin_ins_160c",
+                "lycopene_preparation_ins_160di"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
+            },
+            {
+              "product_category": "Food Colours [beta-carotene from Blakeslea trispora INS 160a(iii)]",
+              "residual_level_mgkg": 8000,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "beta_carotene_blakeslea_ins_160aiii"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
             }
-          ]
+          ],
+          "source_note": "Substituted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         },
         {
           "s_no": 11,
@@ -3750,8 +3836,39 @@
               ],
               "product_gate_status": "verified_exact_catalogue_subset",
               "product_gate_note": "Exact Chocolate standard identity."
+            },
+            {
+              "product_category": "Food Colours [curcumin (INS 100); annatto bixin, norbixin (INS 160b(i),(ii))]",
+              "residual_level_mgkg": 50,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "curcumin_ins_100",
+                "annatto_bixin_norbixin_ins_160b"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
+            },
+            {
+              "product_category": "Food Colours [chlorophylls; copper complexes of chlorophylls/chlorophyllins; vegetable carotenes; paprika; tomato lycopene; lutein and lutein esters]",
+              "residual_level_mgkg": 25,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "chlorophylls_ins_140i",
+                "copper_chlorophylls_ins_141i",
+                "copper_chlorophyllins_ins_141ii",
+                "vegetable_carotenes_ins_160aii",
+                "paprika_capsanthin_capsorubin_ins_160c",
+                "tomato_lycopene_ins_160dii",
+                "lutein_ins_161bi",
+                "lutein_esters_ins_161bii"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
             }
-          ]
+          ],
+          "source_note": "Substituted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         },
         {
           "s_no": 17,
@@ -3798,8 +3915,49 @@
               "runtime_auto_apply": false,
               "runtime_lock_status": "intentional_fail_closed",
               "runtime_lock_reason": "'Other foods' is an open-ended residual category. PMSV will not auto-apply a solvent limit by treating every unmatched standardized food as this category."
+            },
+            {
+              "product_category": "Food Colours [curcumin; chlorophylls; chlorophyllins; copper complexes of chlorophylls/chlorophyllins; vegetable carotenes; paprika]",
+              "residual_level_mgkg": 50,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "curcumin_ins_100",
+                "chlorophylls_ins_140i",
+                "chlorophyllins_ins_140ii",
+                "copper_chlorophylls_ins_141i",
+                "copper_chlorophyllins_ins_141ii",
+                "vegetable_carotenes_ins_160aii",
+                "paprika_capsanthin_capsorubin_ins_160c"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
+            },
+            {
+              "product_category": "Food Colours [beta-carotene from Blakeslea trispora INS 160a(iii)]",
+              "residual_level_mgkg": 1000,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "beta_carotene_blakeslea_ins_160aiii"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
+            },
+            {
+              "product_category": "Food Colours [lycopene preparations (INS 160d(i),(iii))]",
+              "residual_level_mgkg": 10,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "lycopene_preparation_ins_160di",
+                "lycopene_blakeslea_ins_160diii"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
             }
-          ]
+          ],
+          "source_note": "Substituted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         },
         {
           "s_no": 19,
@@ -3815,8 +3973,22 @@
               ],
               "product_gate_status": "verified_exact_rule_key",
               "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
+            },
+            {
+              "product_category": "Food Colours [curcumin (INS 100); vegetable carotenes (INS 160a(ii)); paprika extract, capsanthin, capsorubin (INS 160c)]",
+              "residual_level_mgkg": 50,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "curcumin_ins_100",
+                "vegetable_carotenes_ins_160aii",
+                "paprika_capsanthin_capsorubin_ins_160c"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
             }
-          ]
+          ],
+          "source_note": "Substituted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         },
         {
           "s_no": 20,
@@ -3883,8 +4055,29 @@
               ],
               "product_gate_status": "verified_exact_catalogue_subset",
               "product_gate_note": "Verified PMSV edible vegetable-oil subset under FCS 02.1.2."
+            },
+            {
+              "product_category": "Food Colours [curcumin; chlorophylls; chlorophyllins; copper complexes of chlorophylls/chlorophyllins; vegetable carotenes; annatto/bixin/norbixin; paprika; lycopene preparations (INS 160d(i),(iii))]",
+              "residual_level_mgkg": 10,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "curcumin_ins_100",
+                "chlorophylls_ins_140i",
+                "chlorophyllins_ins_140ii",
+                "copper_chlorophylls_ins_141i",
+                "copper_chlorophyllins_ins_141ii",
+                "vegetable_carotenes_ins_160aii",
+                "annatto_bixin_norbixin_ins_160b",
+                "paprika_capsanthin_capsorubin_ins_160c",
+                "lycopene_preparation_ins_160di",
+                "lycopene_blakeslea_ins_160diii"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
             }
-          ]
+          ],
+          "source_note": "Substituted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         },
         {
           "s_no": 21,
@@ -3892,7 +4085,7 @@
           "ins": "",
           "permissions": [
             {
-              "product_category": "Fatty acids, flavouring substances, colourings, decaffeination of coffee, tea",
+              "product_category": "Fatty acids, Flavouring substances, decaffeination of coffee, tea",
               "residual_level_mgkg": 2,
               "runtime_auto_apply": false,
               "product_ids": [
@@ -3911,8 +4104,24 @@
                   "source_scope": "Same Table 6 S.No.21 permission row; runtime split represents only its explicit decaffeination-of-coffee/tea scope."
                 }
               ]
+            },
+            {
+              "product_category": "Food Colours [chlorophylls; copper complexes of chlorophylls/chlorophyllins; vegetable carotenes; lutein esters]",
+              "residual_level_mgkg": 50,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "chlorophylls_ins_140i",
+                "copper_chlorophylls_ins_141i",
+                "copper_chlorophyllins_ins_141ii",
+                "vegetable_carotenes_ins_160aii",
+                "lutein_esters_ins_161bii"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
             }
-          ]
+          ],
+          "source_note": "Substituted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         },
         {
           "s_no": 22,
@@ -4013,11 +4222,31 @@
               "product_gate_note": "Exact Spice Oleoresins standard 2.9.32."
             }
           ]
+        },
+        {
+          "s_no": 27,
+          "name": "Isobutyl acetate",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Food Colours [beta-carotene from Blakeslea trispora INS 160a(iii); lycopene from Blakeslea trispora INS 160d(iii)]",
+              "residual_level_mgkg": 10000,
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_food_colour_variant",
+              "qualifier_values": [
+                "beta_carotene_blakeslea_ins_160aiii",
+                "lycopene_blakeslea_ins_160diii"
+              ],
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Exact food-colour/INS scope from the final FSSAI First Amendment Regulations, 2025; activated only when the user confirms the listed colour variant."
+            }
+          ],
+          "source_note": "Inserted by final FSSAI First Amendment Regulations, 2025; effective 1 February 2026."
         }
       ],
-      "audit_status": "verified_current_version_2",
+      "audit_status": "final_2025_first_amendment_effective_2026_02_01_applied",
       "audit_verified_on": "2026-10-04",
-      "audit_note": "Current Version 2 ends at S.No.26 Water. Draft S.No.27 Isobutyl acetate and draft colour-solvent substitutions are excluded."
+      "audit_note": "Final FSSAI Food Products Standards and Food Additives First Amendment Regulations, 2025 substitutions applied to S.No.1,3,5,10,16,18,19,20,21 and S.No.27 inserted. Older generic Acetone→Colours 2 mg/kg row removed as superseded."
     },
     "table_7": {
       "number": 7,
