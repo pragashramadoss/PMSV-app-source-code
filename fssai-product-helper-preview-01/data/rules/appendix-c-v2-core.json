@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Add new permission-level process selectors to UI and run regression.",
+    "next_priority": "Add Starch hydrolysis UI selector; then implement exact decaffeination and ice-cream form qualifiers.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -83,7 +83,7 @@
       "table_9_liquid_nitrogen_scope": "Dairy-based desserts - Ice cream",
       "table_7_hydrogen_peroxide_effective_residual": "5 mg/kg as hydrogen peroxide"
     },
-    "appendix_c_product_gate_audit_status": "exact_gate_pass_3_loaded",
+    "appendix_c_product_gate_audit_status": "exact_gate_pass_4_loaded",
     "appendix_c_product_gated_permissions": 104,
     "appendix_c_product_gate_id_links": 267,
     "appendix_c_product_gate_rule_key_links": 29,
@@ -123,8 +123,10 @@
         "12": 42
       }
     },
-    "appendix_c_product_gate_remaining_fail_closed": 32,
-    "appendix_c_product_gated_or_auto_permissions": 233
+    "appendix_c_product_gate_remaining_fail_closed": 22,
+    "appendix_c_product_gated_or_auto_permissions": 233,
+    "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
+    "table_2_hardened_oil_status": "fail_closed_identity_unresolved"
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -356,7 +358,15 @@
             {
               "product_category": "Hydrogenated vegetable oil",
               "residual_level_mgkg": 0.1,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "02-02-1-vanaspati",
+                "02-02-1-bakery-shortening",
+                "02-02-1-partially-hydrogenated-and-winterised-soyabean-oil",
+                "02-02-1-partially-hydrogenated-soyabean-oil"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Official FoSCoS hydrogenated-vegetable-oil identities: Vanaspati, Bakery shortening and the two partially hydrogenated soyabean-oil products."
             }
           ]
         },
@@ -368,7 +378,15 @@
             {
               "product_category": "Hydrogenated vegetable oil",
               "residual_level_mgkg": 0.1,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "02-02-1-vanaspati",
+                "02-02-1-bakery-shortening",
+                "02-02-1-partially-hydrogenated-and-winterised-soyabean-oil",
+                "02-02-1-partially-hydrogenated-soyabean-oil"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Official FoSCoS hydrogenated-vegetable-oil identities: Vanaspati, Bakery shortening and the two partially hydrogenated soyabean-oil products."
             }
           ]
         },
@@ -380,7 +398,15 @@
             {
               "product_category": "Hydrogenated vegetable oil",
               "residual_level_mgkg": 0.1,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "02-02-1-vanaspati",
+                "02-02-1-bakery-shortening",
+                "02-02-1-partially-hydrogenated-and-winterised-soyabean-oil",
+                "02-02-1-partially-hydrogenated-soyabean-oil"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Official FoSCoS hydrogenated-vegetable-oil identities: Vanaspati, Bakery shortening and the two partially hydrogenated soyabean-oil products."
             }
           ]
         },
@@ -407,7 +433,15 @@
             {
               "product_category": "Hydrogenated vegetable oil",
               "residual_level_mgkg": 1.5,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "02-02-1-vanaspati",
+                "02-02-1-bakery-shortening",
+                "02-02-1-partially-hydrogenated-and-winterised-soyabean-oil",
+                "02-02-1-partially-hydrogenated-soyabean-oil"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Official FoSCoS hydrogenated-vegetable-oil identities; Hardened oil remains a separate locked row."
             }
           ]
         },
@@ -419,7 +453,12 @@
             {
               "product_category": "Interesterified vegetable oil",
               "residual_level_mgkg": 1,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "02-02-1-interesterified-vegetable-fat-oil"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact official FoSCoS Interesterified vegetable fat/Oil identity."
             }
           ]
         },
@@ -431,7 +470,12 @@
             {
               "product_category": "Interesterified vegetable oil",
               "residual_level_mgkg": 1,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "02-02-1-interesterified-vegetable-fat-oil"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact official FoSCoS Interesterified vegetable fat/Oil identity."
             }
           ]
         },
@@ -443,7 +487,12 @@
             {
               "product_category": "Interesterified vegetable oil",
               "residual_level_mgkg": 1,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "02-02-1-interesterified-vegetable-fat-oil"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact official FoSCoS Interesterified vegetable fat/Oil identity."
             }
           ]
         },
@@ -455,7 +504,12 @@
             {
               "product_category": "Interesterified vegetable oil",
               "residual_level_mgkg": 1,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "02-02-1-interesterified-vegetable-fat-oil"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact official FoSCoS Interesterified vegetable fat/Oil identity."
             }
           ]
         },
@@ -467,7 +521,12 @@
             {
               "product_category": "Interesterified vegetable oil",
               "residual_level_mgkg": 1,
-              "runtime_auto_apply": false
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "02-02-1-interesterified-vegetable-fat-oil"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact official FoSCoS Interesterified vegetable fat/Oil identity."
             }
           ]
         }
@@ -817,7 +876,10 @@
             {
               "product_category": "Starch hydrolysis",
               "residual_level": "GMP",
-              "runtime_auto_apply": false
+              "runtime_auto_apply": true,
+              "process_key": "starch_hydrolysis",
+              "product_gate_status": "process_exact",
+              "product_gate_note": "The Appendix C category itself is Starch hydrolysis; selecting the Starch hydrolysis process is the exact gate."
             }
           ]
         },
