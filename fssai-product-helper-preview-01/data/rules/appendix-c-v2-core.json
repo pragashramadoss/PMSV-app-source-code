@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Final Appendix C runtime regression and coverage synchronization.",
+    "next_priority": "Broader end-to-end formulation regression across Appendix A, contaminants, Appendix B, Appendix C and labelling.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -132,7 +132,48 @@
     "table_6_mek_decaffeination_route": "loaded_same_source_row",
     "appendix_c_intentional_fail_closed_permissions": 19,
     "appendix_c_fail_closed_audit_status": "classified_2026-10-04",
-    "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model."
+    "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model.",
+    "appendix_c_final_runtime_regression_status": "passed_2026-10-04",
+    "appendix_c_final_runtime_regression": {
+      "source_permission_rows": 265,
+      "runtime_route_projections": 1,
+      "auto_apply_permission_rows": 95,
+      "exact_gated_permission_rows": 151,
+      "intentional_fail_closed_permission_rows": 19,
+      "unclassified_permission_rows": 0,
+      "invalid_product_ids": 0,
+      "invalid_rule_keys": 0,
+      "missing_process_selectors": 0,
+      "product_master_products": 531,
+      "product_master_profiles": 531,
+      "table_11_non_gmm_entries": 56,
+      "table_11_non_gmm_source_rows": 140,
+      "table_11a_gmm_entries": 51,
+      "table_11a_gmm_variant_rows": 109,
+      "table_12_entries": 75,
+      "table_12_permission_rows": 83,
+      "qualifier_checks": {
+        "liquid_nitrogen_requires_exact_ice_cream_form": true,
+        "dried_ice_cream_mix_rejected": true,
+        "other_combined_frozen_forms_rejected": true
+      },
+      "route_checks": {
+        "vanaspati_catalysts": 4,
+        "bakery_shortening_catalysts": 4,
+        "interesterified_oil_catalysts": 5,
+        "polyols_nickel": true,
+        "decaffeinated_tea_solvents": [
+          "Methylene chloride (Dichloromethane)",
+          "Methyl ethyl ketone (butanone)"
+        ],
+        "decaffeinated_coffee_solvents": [
+          "Methylene chloride (Dichloromethane)",
+          "Methyl ethyl ketone (butanone)"
+        ],
+        "starch_hydrolysis_perlite": true
+      }
+    },
+    "appendix_c_runtime_status": "production_fail_closed_current_version_2"
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
