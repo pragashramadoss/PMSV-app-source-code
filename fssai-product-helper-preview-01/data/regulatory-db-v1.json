@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "database_id": "pmsv-fssai-regulatory-db",
   "build_scope": "Caffeinated Beverage evaluation prototype",
-  "last_verified": "2026-10-02",
+  "last_verified": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",
     "allowed_regulatory_hosts": [
@@ -43,7 +43,16 @@
     "contaminants_v9_crop_contaminant_groups": 6,
     "contaminants_v9_residue_batches_loaded": 5,
     "contaminants_v9_residue_pesticides_loaded": 169,
-    "contaminants_v9_residue_rows_loaded": 928
+    "contaminants_v9_residue_rows_loaded": 928,
+    "appendix_b_rule_file": "./data/rules/appendix-b-v2-core.json",
+    "appendix_b_source_version": "Version 2 (04.11.2024)",
+    "appendix_b_stage": "table_1_fish_complete",
+    "appendix_b_main_table_groups_loaded": 1,
+    "appendix_b_main_table_groups_total": 11,
+    "appendix_b_fish_categories_loaded": 16,
+    "appendix_b_fish_exact_product_mappings": 18,
+    "appendix_b_fish_conditional_product_mappings": 4,
+    "appendix_b_fish_no_direct_table_mapping": 2
   },
   "products": [
     {
@@ -5106,5 +5115,17 @@
       "title": "Approval for Non-Specified Food and Food Ingredients Regulations, 2017",
       "url": "https://fssai.gov.in/upload/uploadfiles/files/Compendium_FSS_NFS_FA_17_10_2022.pdf"
     }
-  ]
+  ],
+  "appendix_b": {
+    "rule_file": "./data/rules/appendix-b-v2-core.json",
+    "source_version": "Version 2 (04.11.2024)",
+    "source_verified_on": "2026-10-04",
+    "status": "table_1_fish_complete",
+    "loaded_groups": [
+      "Table 1A - Fish/Fishery Products Hygiene Indicator Organisms",
+      "Table 1B - Fish/Fishery Products Safety Indicator Organisms"
+    ],
+    "next_priority": "Table 2A/2B - Milk and Milk Products",
+    "fail_closed_rule": "Only exact or explicitly conditional official Appendix B product-category mappings are used. Products without a direct table category are not assigned one by analogy."
+  }
 }
