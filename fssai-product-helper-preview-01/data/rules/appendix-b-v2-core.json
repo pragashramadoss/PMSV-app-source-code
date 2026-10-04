@@ -13,7 +13,7 @@
   },
   "coverage": {
     "main_table_groups_total": 11,
-    "main_table_groups_loaded": 8,
+    "main_table_groups_loaded": 9,
     "loaded_groups": [
       "Table 1 - Fish and Fishery Products",
       "Table 2 - Milk and Milk Products",
@@ -22,13 +22,14 @@
       "Table 5 - Meat and Meat Products",
       "Table 6 - Baker's Yeast",
       "Table 7 - Non-Carbonated Water Based Beverages (Non Alcoholic)",
-      "Table 8 - Eggs and Egg Products"
+      "Table 8 - Eggs and Egg Products",
+      "Table 9 - Food Grain Products"
     ],
     "fish_product_categories_loaded": 16,
     "fish_exact_product_mappings": 18,
     "fish_conditional_product_mappings": 4,
     "fish_no_direct_table_mapping": 2,
-    "next_priority": "Table 9A/9B - Food Grain Products",
+    "next_priority": "Table 10A/10B - Health Supplements, Nutraceuticals, FSDU, FSMP, Functional Food and Novel Food",
     "milk_profiles_loaded": 16,
     "milk_exact_product_mappings": 58,
     "milk_conditional_product_mappings": 17,
@@ -55,7 +56,11 @@
     "egg_profiles_loaded": 4,
     "egg_exact_product_mappings": 4,
     "egg_conditional_product_mappings": 1,
-    "egg_no_direct_table_mapping": 0
+    "egg_no_direct_table_mapping": 0,
+    "food_grain_profiles_loaded": 3,
+    "food_grain_exact_product_mappings": 4,
+    "food_grain_conditional_product_mappings": 0,
+    "food_grain_no_direct_table_mapping": 0
   },
   "organism_labels": {
     "aerobic_plate_count": "Aerobic Plate Count",
@@ -3713,6 +3718,149 @@
         "Definitions related to egg and egg products are those in the Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011.",
         "Reference methods use the latest applicable versions; FSSAI Manual of Methods of Analysis of Foods (Microbiological Testing) may also be referred to alongside the specified IS/ISO methods."
       ]
+    },
+    "food_grains": {
+      "table_9a_title": "Microbiological Standards of Food Grain Products – Process Hygiene Criteria",
+      "table_9b_title": "Microbiological Standards of Food Grain Products – Food Safety Criteria",
+      "source_pages": {
+        "table_9a": [
+          58
+        ],
+        "table_9b": [
+          59
+        ],
+        "stage_and_sampling": [
+          59,
+          60,
+          61
+        ],
+        "reference_methods": [
+          61,
+          62
+        ]
+      },
+      "categories": [
+        {
+          "id": "grain-01",
+          "sl_no": "1",
+          "name": "Sprouted grains, sweet corn cob or packed wet grains for direct consumption",
+          "hygiene": {
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          }
+        },
+        {
+          "id": "grain-02",
+          "sl_no": "2",
+          "name": "Batters and doughs (Ready to Cook)",
+          "hygiene": {
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/g"
+            }
+          },
+          "food_safety_not_applicable": true,
+          "safety": {},
+          "notes": [
+            "Table 9B prints NA for both Salmonella and Listeria monocytogenes for ready-to-cook batters and doughs."
+          ]
+        },
+        {
+          "id": "grain-03",
+          "sl_no": "3",
+          "name": "Fermented products other than batters and doughs (ready to cook), including bread, cakes and doughnuts, other ready-to-eat grain products, malted milk food, instant noodles and pasta products",
+          "hygiene": {
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/g"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "notes": [
+            "Appendix B footnote: instant noodles and pasta products shall be tested for Salmonella but not for Listeria monocytogenes."
+          ]
+        }
+      ],
+      "stage_rules": {
+        "process_hygiene": "Table 9A indicates acceptable functioning of the production process; it is not a market-release requirement and applies at the end of manufacturing.",
+        "food_safety": "Table 9B defines batch/lot acceptability and applies at the end of manufacturing and to products in the market during shelf life."
+      },
+      "action_on_unsatisfactory_process_hygiene": [
+        "Check and improve process hygiene by implementing Schedule 4 requirements.",
+        "Ensure all applicable Table 9B Food Safety Criteria are complied with."
+      ],
+      "sampling_plan_definitions": {
+        "n": "Number of units comprising a sample.",
+        "c": "Maximum allowable number of units having counts above m for a 2-class plan and between m and M for a 3-class plan.",
+        "m": "Limit separating unsatisfactory from satisfactory in a 2-class plan, or acceptable from satisfactory in a 3-class plan.",
+        "M": "Limit separating unsatisfactory from satisfactory in a 3-class plan."
+      },
+      "interpretation": {
+        "two_class": [
+          "Satisfactory if all observed values are <= m.",
+          "Unsatisfactory if one or more observed values are > m."
+        ],
+        "three_class": [
+          "Satisfactory if all observed values are <= m.",
+          "Acceptable if at most c values are between m and M.",
+          "Unsatisfactory if one or more values are > M or more than prescribed c values are > m."
+        ]
+      },
+      "reference_methods": {
+        "enterobacteriaceae": "IS/ISO 7402 / ISO 21528 Part 2",
+        "staphylococcus_aureus": "IS 5887 Part 2 or IS 5887 Part 8 (Sec 1) / ISO 6888-1 or IS 5887 Part 8 (Sec 2) / ISO 6888-2",
+        "salmonella": "IS 5887 Part 3 / ISO 6579",
+        "listeria_monocytogenes": "IS 14988 Part 1 / ISO 11290-1"
+      }
     }
   },
   "product_mappings": {
@@ -6281,6 +6429,47 @@
         }
       ],
       "no_direct_table_mapping": []
+    },
+    "food_grains": {
+      "exact": [
+        {
+          "catalog_id": "07-07-1-bread-and-bread-type-products",
+          "profile_key": "grain-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 9 row 3 expressly includes bread."
+        },
+        {
+          "catalog_id": "06-06-4-macaroni-products-pasta-products",
+          "profile_key": "grain-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 9 row 3 expressly includes pasta products; Listeria testing is excluded by footnote.",
+          "exclude_criteria": [
+            "listeria_monocytogenes"
+          ]
+        },
+        {
+          "catalog_id": "06-06-4-macaroni-products-instant-noodle",
+          "profile_key": "grain-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 9 row 3 expressly includes instant noodles; Listeria testing is excluded by footnote.",
+          "exclude_criteria": [
+            "listeria_monocytogenes"
+          ]
+        },
+        {
+          "catalog_id": "06-06-7-malted-milk-food",
+          "profile_key": "grain-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Appendix B Table 9 row 3 expressly includes malted milk food. Product-standard microbiological provisions remain a separate Chapter 2.4 layer."
+        }
+      ],
+      "conditional": [],
+      "no_direct_table_mapping": [],
+      "not_auto_mapped": [
+        "Generic cereal/grain products not explicitly identified as a Table 9 process class",
+        "Breakfast cereals and other possible ready-to-eat grain products without an exact current Table 9 crosswalk",
+        "Malt Based Foods / Malt Food, which is not the same named identity as Malted Milk Food"
+      ]
     }
   }
 }
