@@ -447,6 +447,18 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="encapsulation"><b>Encapsulation / thickening</b><small>Appendix C Table 12. Product-specific permissions appear only for an exact product gate.</small></label>
 <label class="process-option"><input type="checkbox" value="coating"><b>Coating</b><small>Appendix C Table 12 coating-agent route. Product-specific permissions remain fail-closed unless the selected product exactly matches.</small></label>
 <label class="process-option"><input type="checkbox" value="anti_browning"><b>Anti-browning / colour protection</b><small>Appendix C Table 12 route for processing aids used to prevent darkening; exact product matching is required.</small></label>
+<label class="process-option"><input type="checkbox" value="coagulation"><b>Coagulation</b><small>Product-specific coagulation aids; exact product gate required.</small></label>
+<label class="process-option"><input type="checkbox" value="polishing"><b>Polishing</b><small>Polishing agents for specified products such as confectionery.</small></label>
+<label class="process-option"><input type="checkbox" value="malting"><b>Malting / grain preparation</b><small>Processing aids specifically permitted for malting or grain preparation.</small></label>
+<label class="process-option"><input type="checkbox" value="sequestration"><b>Sequestration</b><small>Product-specific sequestrants where Appendix C explicitly permits the use.</small></label>
+<label class="process-option"><input type="checkbox" value="dough_conditioning"><b>Dough conditioning</b><small>Processing aids used to condition flour dough; exact flour-product matching applies.</small></label>
+<label class="process-option"><input type="checkbox" value="ageing"><b>Ageing / maturation</b><small>Ageing aids for specified alcoholic beverages.</small></label>
+<label class="process-option"><input type="checkbox" value="antioxidant"><b>Antioxidant processing aid</b><small>Processing-aid antioxidant route; product-specific limits remain enforced.</small></label>
+<label class="process-option"><input type="checkbox" value="foam_stabilization"><b>Foam stabilization</b><small>Foam-stabilizing processing aids for specified beverage categories.</small></label>
+<label class="process-option"><input type="checkbox" value="ion_exchange"><b>Ion exchange</b><small>Ion-exchange processing aids for the exact permitted product categories.</small></label>
+<label class="process-option"><input type="checkbox" value="softening"><b>Softening</b><small>Softening-agent route; product identity must match the Appendix C row.</small></label>
+<label class="process-option"><input type="checkbox" value="reducing"><b>Reducing-agent treatment</b><small>Reducing agents used during processing for specified products.</small></label>
+<label class="process-option"><input type="checkbox" value="fermentation"><b>Fermentation aid</b><small>Fermenting agents used in the specified fermentation process.</small></label>
 <label class="process-option"><input type="checkbox" value="enzyme"><b>Enzyme processing</b><small>Any enzyme used as a processing aid during ingredient or beverage manufacture.</small></label>
 <label class="process-option"><input type="checkbox" value="nutrient"><b>Microbial nutrient use</b><small>Applicable only if a microbial culture process is actually used.</small></label>
 </div>
@@ -2219,6 +2231,18 @@ const processLabels={
  encapsulation:'Encapsulation / thickening',
  coating:'Coating',
  anti_browning:'Anti-browning / colour protection',
+ coagulation:'Coagulation',
+ polishing:'Polishing',
+ malting:'Malting / grain preparation',
+ sequestration:'Sequestration',
+ dough_conditioning:'Dough conditioning',
+ ageing:'Ageing / maturation',
+ antioxidant:'Antioxidant processing aid',
+ foam_stabilization:'Foam stabilization',
+ ion_exchange:'Ion exchange',
+ softening:'Softening',
+ reducing:'Reducing-agent treatment',
+ fermentation:'Fermentation aid',
  enzyme:'Enzyme processing',
  nutrient:'Microbial nutrient use'
 };
@@ -2296,7 +2320,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=230',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=233',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
