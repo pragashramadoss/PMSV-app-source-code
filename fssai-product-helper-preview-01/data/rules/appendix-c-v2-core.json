@@ -15,7 +15,7 @@
   "applicability_rule": "Processing aids listed in Tables 1 to 12 may be used only in manufacture of the food specified in the corresponding table and the final food shall not exceed the stated residue level. Product-specific rows remain fail-closed until PMSV has an exact product-category route. 'All foods' rows may auto-apply once the relevant process is selected.",
   "coverage": {
     "tables_total": 12,
-    "tables_loaded": 7,
+    "tables_loaded": 8,
     "loaded_tables": [
       "Table 1 - Antifoaming Agents",
       "Table 2 - Catalyst",
@@ -23,13 +23,14 @@
       "Table 4 - Lubricants, Release and Antistick Agents",
       "Table 5 - Microbial Control Agents, Microbial Nutrients and Microbial Nutrient Adjuncts",
       "Table 6 - Solvent for Extraction and Processing",
-      "Table 7 - Bleaching, Washing, Denuding and Peeling Agents"
+      "Table 7 - Bleaching, Washing, Denuding and Peeling Agents",
+      "Table 8 - Flocculating Agents"
     ],
     "table_1_entries": 9,
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 8 - Flocculating Agents",
+    "next_priority": "Table 9 - Contact Freezing and Cooling Agents",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -41,7 +42,9 @@
     "table_6_entries": 26,
     "table_6_permission_rows": 45,
     "table_7_entries": 16,
-    "table_7_permission_rows": 16
+    "table_7_permission_rows": 16,
+    "table_8_entries": 6,
+    "table_8_permission_rows": 6
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -2133,6 +2136,107 @@
               "runtime_auto_apply": false,
               "residual_level_mgkg": 20000,
               "residual_basis": "on dry basis"
+            }
+          ]
+        }
+      ]
+    },
+    "table_8": {
+      "number": 8,
+      "title": "FLOCCULATING AGENTS",
+      "process_key": "flocculation",
+      "source_pages": [
+        11,
+        12
+      ],
+      "entries": [
+        {
+          "s_no": 1,
+          "name": "Citric acid",
+          "ins": "330",
+          "permissions": [
+            {
+              "product_category": "Unripened cheese – Paneer and Chhana",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "01-01-6-chhana-and-paneer"
+              ],
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "s_no": 2,
+          "name": "Glucono delta lactone",
+          "ins": "575",
+          "permissions": [
+            {
+              "product_category": "Unripened cheese – Paneer and Chhana",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "01-01-6-chhana-and-paneer"
+              ],
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "s_no": 3,
+          "name": "Lactic acid",
+          "ins": "270",
+          "permissions": [
+            {
+              "product_category": "Unripened cheese – Paneer and Chhana",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "01-01-6-chhana-and-paneer"
+              ],
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "s_no": 4,
+          "name": "Malic acid",
+          "ins": "296",
+          "permissions": [
+            {
+              "product_category": "Unripened cheese – Paneer and Chhana",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "01-01-6-chhana-and-paneer"
+              ],
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "s_no": 5,
+          "name": "Sour whey",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Unripened cheese – Paneer and Chhana",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "01-01-6-chhana-and-paneer"
+              ],
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "s_no": 6,
+          "name": "Vinegar",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Unripened cheese – Paneer and Chhana",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "01-01-6-chhana-and-paneer"
+              ],
+              "residual_level": "GMP"
             }
           ]
         }
