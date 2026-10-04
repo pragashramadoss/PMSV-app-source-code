@@ -2336,7 +2336,8 @@ function appendixCStructuredRuntimeRules(db){
            product_ids:Array.isArray(route?.product_ids)?route.product_ids:(Array.isArray(permission.product_ids)?permission.product_ids:[]),
            rule_keys:Array.isArray(route?.rule_keys)?route.rule_keys:(Array.isArray(permission.rule_keys)?permission.rule_keys:[]),
            qualifier_key:String(route?.qualifier_key||permission.qualifier_key||''),
-           qualifier_value:String(route?.qualifier_value||permission.qualifier_value||'')
+           qualifier_value:String(route?.qualifier_value||permission.qualifier_value||''),
+           qualifier_values:Array.isArray(route?.qualifier_values)?route.qualifier_values:(Array.isArray(permission.qualifier_values)?permission.qualifier_values:[])
          });
        };
        emit();
@@ -2348,7 +2349,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=253',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=254',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
@@ -2386,7 +2387,10 @@ function processingAidRuleAutoApplicable(rule){
  if(!baseApplicable)return false;
  if(rule?.qualifier_key){
    const actual=String(processingQualifiers?.[rule.qualifier_key]||'');
-   if(actual!==String(rule.qualifier_value||''))return false;
+   const accepted=Array.isArray(rule?.qualifier_values)?rule.qualifier_values.map(x=>String(x||'')):[];
+   if(accepted.length){
+     if(!accepted.includes(actual))return false;
+   }else if(actual!==String(rule.qualifier_value||''))return false;
  }
  return true;
 }
@@ -2486,6 +2490,31 @@ function renderProcessingQualifierUI(){
      +'<option value="other"'+(current==='other'?' selected':'')+'>Other</option>'
      +'</select><small>This exact confirmation gates the active-list Rapeseed Oil permission.</small></div>');
    bindings.push(['releaseProductCategory','release_product_category']);
+ }
+
+ if(selectedProcesses.includes('solvent')){
+   const current=String(processingQualifiers.solvent_food_colour_variant||'');
+   blocks.push('<div class="field"><label>Food colour being manufactured/extracted, where applicable</label><select id="solventFoodColourVariant">'
+     +'<option value="">Not a listed food-colour route / select exact colour…</option>'
+     +'<option value="curcumin_ins_100"'+(current==='curcumin_ins_100'?' selected':'')+'>Curcumin — INS 100</option>'
+     +'<option value="chlorophylls_ins_140i"'+(current==='chlorophylls_ins_140i'?' selected':'')+'>Chlorophylls — INS 140(i)</option>'
+     +'<option value="chlorophyllins_ins_140ii"'+(current==='chlorophyllins_ins_140ii'?' selected':'')+'>Chlorophyllins — INS 140(ii)</option>'
+     +'<option value="copper_chlorophylls_ins_141i"'+(current==='copper_chlorophylls_ins_141i'?' selected':'')+'>Copper complexes of chlorophylls — INS 141(i)</option>'
+     +'<option value="copper_chlorophyllins_ins_141ii"'+(current==='copper_chlorophyllins_ins_141ii'?' selected':'')+'>Copper complexes of chlorophyllins — INS 141(ii)</option>'
+     +'<option value="vegetable_carotenes_ins_160aii"'+(current==='vegetable_carotenes_ins_160aii'?' selected':'')+'>Vegetable carotenes — INS 160a(ii)</option>'
+     +'<option value="beta_carotene_blakeslea_ins_160aiii"'+(current==='beta_carotene_blakeslea_ins_160aiii'?' selected':'')+'>Beta-carotene from Blakeslea trispora — INS 160a(iii)</option>'
+     +'<option value="carotenes_algae_ins_160aiv"'+(current==='carotenes_algae_ins_160aiv'?' selected':'')+'>Carotenes from algae — INS 160a(iv)</option>'
+     +'<option value="annatto_bixin_norbixin_ins_160b"'+(current==='annatto_bixin_norbixin_ins_160b'?' selected':'')+'>Annatto / bixin / norbixin — INS 160b</option>'
+     +'<option value="paprika_capsanthin_capsorubin_ins_160c"'+(current==='paprika_capsanthin_capsorubin_ins_160c'?' selected':'')+'>Paprika extract / capsanthin / capsorubin — INS 160c</option>'
+     +'<option value="lycopene_preparation_ins_160di"'+(current==='lycopene_preparation_ins_160di'?' selected':'')+'>Lycopene preparation — INS 160d(i)</option>'
+     +'<option value="tomato_lycopene_ins_160dii"'+(current==='tomato_lycopene_ins_160dii'?' selected':'')+'>Tomato lycopene — INS 160d(ii)</option>'
+     +'<option value="lycopene_blakeslea_ins_160diii"'+(current==='lycopene_blakeslea_ins_160diii'?' selected':'')+'>Lycopene from Blakeslea trispora — INS 160d(iii)</option>'
+     +'<option value="lutein_ins_161bi"'+(current==='lutein_ins_161bi'?' selected':'')+'>Lutein — INS 161b(i)</option>'
+     +'<option value="lutein_esters_ins_161bii"'+(current==='lutein_esters_ins_161bii'?' selected':'')+'>Lutein esters — INS 161b(ii)</option>'
+     +'<option value="anthocyanins_ins_163"'+(current==='anthocyanins_ins_163'?' selected':'')+'>Anthocyanins — INS 163</option>'
+     +'<option value="other"'+(current==='other'?' selected':'')+'>Other food colour</option>'
+     +'</select><small>These are exact gates for the final 2025 Table 6 solvent permissions. Selecting “Other” does not unlock a colour-specific solvent limit.</small></div>');
+   bindings.push(['solventFoodColourVariant','solvent_food_colour_variant']);
  }
 
  if(selectedProcesses.includes('washing')){
