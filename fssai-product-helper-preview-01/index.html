@@ -2510,7 +2510,8 @@ function microbiologyProfileHtml(resolved,product=null,variantOption=null){
  const methodRows=microbiologyMethodRows(resolved,profile,includeEnterobacteriaceae);
  const notes=[...(profile.notes||[])];
  if(variantOption?.message)notes.push(variantOption.message);
- const tableLabels={fish:'Table 1',milk:'Table 2',spices:'Table 3',fruits:'Table 4'};
+ if(product?.microbiology_poultry_salmonella_note===true&&resolved.tableKey==='meat'&&resolved.table?.poultry_salmonella_note)notes.push(resolved.table.poultry_salmonella_note);
+ const tableLabels={fish:'Table 1',milk:'Table 2',spices:'Table 3',fruits:'Table 4',meat:'Table 5'};
  const title=tableLabels[resolved.tableKey]||'Appendix B';
  const stageHtml=profile.stage
    ? '<div class="notice"><b>Stage where process-hygiene criterion applies:</b> '+esc(profile.stage)+(profile.action?'<br><b>Action in case of unsatisfactory result:</b> '+esc(profile.action):'')+'</div>'
@@ -2593,11 +2594,19 @@ function renderProductMicrobiology(){
    el.innerHTML='<div class="notice">This dairy/infant product has no stored Appendix B route. PMSV will not infer one from its name.</div>';
    return;
  }
- el.innerHTML='<div class="notice"><b>Appendix B table for this product is not loaded yet.</b><br>Build 191 contains Fish/Fishery Products (Table 1), Milk/Milk Products (Table 2), Spices/Herbs (Table 3), and Fruits/Vegetables (Table 4). The next ingestion block is Meat and Meat Products (Table 5A/5B).</div>';
+ if(String(p.category||'')==='10'){
+   el.innerHTML='<div class="notice"><b>Egg products are not routed through Meat Table 5.</b><br>Appendix B has a separate <b>Table 8 — Eggs and Egg Products</b>. PMSV keeps this product locked until that table is loaded.</div>';
+   return;
+ }
+ if(String(p.category||'')==='08'){
+   el.innerHTML='<div class="notice">This meat product has no stored Appendix B Table 5 route. PMSV will not infer one from its name or FCS alone.</div>';
+   return;
+ }
+ el.innerHTML='<div class="notice"><b>Appendix B table for this product is not loaded yet.</b><br>Build 192 contains Fish/Fishery Products (Table 1), Milk/Milk Products (Table 2), Spices/Herbs (Table 3), Fruits/Vegetables (Table 4), and Meat/Meat Products (Table 5). The next ingestion block is Baker\'s Yeast (Table 6A/6B).</div>';
 }
 async function loadMicrobiologyDb(){
  try{
-   const res=await fetch('./data/rules/appendix-b-v2-core.json?v=191',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-b-v2-core.json?v=192',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    microbiologyDb=await res.json();
  }catch(e){
