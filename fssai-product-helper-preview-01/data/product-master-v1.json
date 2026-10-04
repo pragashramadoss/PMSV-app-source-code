@@ -9,11 +9,11 @@
     "detailed_rule_profiles": [
       "caffeinated-beverage"
     ],
-    "foscos_catalog_products_loaded": 479,
+    "foscos_catalog_products_loaded": 533,
     "foscos_catalog_scope": "Official FoSCoS/FSSAI indexed rows loaded category by category; Build 236 adds the missing catalyst-relevant FCS 02.1.2 identities for Appendix C Table 2.",
     "foscos_subcategory_framework": "Level-2 FoSCoS/FSSAI food-category framework loaded for categories 01–16; special categories without a separate level-2 browse layer are handled directly at product/category level.",
     "level3_status": "Expanded official FoSCoS standardized-product catalogue. Detailed compliance rule profiles remain a separate ingestion layer.",
-    "base_rule_profiles_ready": 182,
+    "base_rule_profiles_ready": 533,
     "profile_architecture_note": "Every loaded FoSCoS standardized product now has at least a base profile. Full formulation compliance is enabled only when detailed product-specific clauses have been ingested.",
     "chapter_ingestion": {
       "3": {
@@ -41,12 +41,12 @@
         "title": "Fats, Oils and Fat Emulsions",
         "rule_file": "./data/rules/chapter-2-2-fats-oils-v1.json",
         "source_version": "Version 4 (07.05.2025)",
-        "mapped_catalog_products": 15,
+        "mapped_catalog_products": 17,
         "structured_core_standards": 12,
         "status": "structured_core_loaded",
         "next_validation": "Appendix A additive inheritance, contaminants, microbiology/processing-aid applicability, labels and full machine validation",
         "source_verified_on": "2026-10-04",
-        "regulatory_note": "Current Chapter 2.2 Version 4 is loaded; Build 236 adds FoSCoS identities for Interesterified vegetable fat/Oil, Vanaspati, Bakery shortening and two partially hydrogenated soyabean-oil products. The latter two remain base profiles because FoSCoS displays FSSR Number as N.A."
+        "regulatory_note": "Current Chapter 2.2 Version 4 now includes PMSV structured routes for 2.2.2 Interesterified Vegetable Fat/Oil and 2.2.6 Hydrogenated Vegetable Oils (Vanaspati/Bakery shortening). FoSCoS-only partially hydrogenated soybean-oil identities are loaded without inferring an unconfirmed FSSR clause."
       },
       "2.3": {
         "title": "Fruit & Vegetable Products",
@@ -21143,6 +21143,62 @@
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-04",
       "chapter_rule_link_status": "not_linked_foscos_fssr_na"
+    },
+    {
+      "id": "02-02-1-partially-hydrogenated-soybean-oil",
+      "display_name": "Partially Hydrogenated Soybean Oil",
+      "foscos_category": "02",
+      "foscos_subcategory": "02.1",
+      "fcs": "02.1.2",
+      "fssr": "",
+      "regulation_chapter": "2.2",
+      "route": "standardized",
+      "status": "base_profile_ready",
+      "coverage_level": "Official FoSCoS product identity mapped; detailed Chapter 2.2 rule route remains fail-closed until an exact standard link is confirmed",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.2 / FoSCoS standardized-product list",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, as applicable",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "FoSCoS identity is loaded without inferring an unconfirmed FSSR clause. Cross-layer permissions remain fail-closed except where an exact FoSCoS identity gate exists.",
+      "source_verified_on": "2026-10-04",
+      "appendix_fcs": "2.1.2",
+      "appendix_fcs_status": "mapped_current_v3",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "foscos_identity_only"
+    },
+    {
+      "id": "02-02-1-partially-hydrogenated-and-winterised-soybean-oil",
+      "display_name": "Partially Hydrogenated and Winterised Soybean Oil",
+      "foscos_category": "02",
+      "foscos_subcategory": "02.1",
+      "fcs": "02.1.2",
+      "fssr": "",
+      "regulation_chapter": "2.2",
+      "route": "standardized",
+      "status": "base_profile_ready",
+      "coverage_level": "Official FoSCoS product identity mapped; detailed Chapter 2.2 rule route remains fail-closed until an exact standard link is confirmed",
+      "detailed_rules_loaded": false,
+      "regulation_source": "FSSAI Food Products Standards & Food Additives Compendium — Chapter 2.2 / FoSCoS standardized-product list",
+      "general_layers": [
+        "Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, as applicable",
+        "Appendix A food-additive permissions by FCS, as applicable",
+        "Contaminants, Toxins and Residues Regulations, as applicable",
+        "Appendix B microbiological requirements, where applicable",
+        "Appendix C processing aids, where applicable"
+      ],
+      "rule_profile_note": "FoSCoS identity is loaded without inferring an unconfirmed FSSR clause. Cross-layer permissions remain fail-closed except where an exact FoSCoS identity gate exists.",
+      "source_verified_on": "2026-10-04",
+      "appendix_fcs": "2.1.2",
+      "appendix_fcs_status": "mapped_current_v3",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "chapter_rule_link_status": "foscos_identity_only"
     }
   ],
   "rule_profile_schema": {
@@ -33601,11 +33657,43 @@
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-04",
       "chapter_rule_link_status": "not_linked_foscos_fssr_na"
+    },
+    {
+      "id": "02-02-1-partially-hydrogenated-soybean-oil",
+      "category": "02",
+      "subcategory": "02.1",
+      "name": "Partially Hydrogenated Soybean Oil",
+      "fcs": "02.1.2",
+      "fssr": "",
+      "profile_status": "base_profile_ready",
+      "catalog_source": "FoSCoS standardized-product list",
+      "profile_id": "02-02-1-partially-hydrogenated-soybean-oil",
+      "appendix_fcs": "2.1.2",
+      "appendix_fcs_status": "mapped_current_v3",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "appendix_fcs_note": "FoSCoS product identity loaded; no separate FSSR number inferred.",
+      "chapter_rule_link_status": "foscos_identity_only"
+    },
+    {
+      "id": "02-02-1-partially-hydrogenated-and-winterised-soybean-oil",
+      "category": "02",
+      "subcategory": "02.1",
+      "name": "Partially Hydrogenated and Winterised Soybean Oil",
+      "fcs": "02.1.2",
+      "fssr": "",
+      "profile_status": "base_profile_ready",
+      "catalog_source": "FoSCoS standardized-product list",
+      "profile_id": "02-02-1-partially-hydrogenated-and-winterised-soybean-oil",
+      "appendix_fcs": "2.1.2",
+      "appendix_fcs_status": "mapped_current_v3",
+      "appendix_fcs_verified_on": "2026-10-04",
+      "appendix_fcs_note": "FoSCoS product identity loaded; no separate FSSR number inferred.",
+      "chapter_rule_link_status": "foscos_identity_only"
     }
   ],
   "last_catalog_expansion": "2026-10-04",
   "build_number": 236,
-  "build_label": "Build 236 — FoSCoS catalyst-product gap",
+  "build_label": "Build 236 — add missing FoSCoS fats/oils catalyst products",
   "build_date": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",
