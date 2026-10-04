@@ -444,6 +444,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="flocculation"><b>Flocculation / curd setting</b><small>Appendix C Table 8 flocculating agents. Current official permissions are for unripened cheese — Paneer and Chhana.</small></label>
 <label class="process-option"><input type="checkbox" value="contact_freezing"><b>Contact freezing / cooling</b><small>Appendix C Table 9. The current permission is Liquid Nitrogen for dairy-based desserts — Ice cream.</small></label>
 <label class="process-option"><input type="checkbox" value="desiccating"><b>Desiccating / anti-caking</b><small>Appendix C Table 10. The current permission is Corn starch for Icing Sugar.</small></label>
+<label class="process-option"><input type="checkbox" value="encapsulation"><b>Encapsulation / thickening</b><small>Appendix C Table 12. Product-specific permissions appear only for an exact product gate.</small></label>
+<label class="process-option"><input type="checkbox" value="coating"><b>Coating</b><small>Appendix C Table 12 coating-agent route. Product-specific permissions remain fail-closed unless the selected product exactly matches.</small></label>
+<label class="process-option"><input type="checkbox" value="anti_browning"><b>Anti-browning / colour protection</b><small>Appendix C Table 12 route for processing aids used to prevent darkening; exact product matching is required.</small></label>
 <label class="process-option"><input type="checkbox" value="enzyme"><b>Enzyme processing</b><small>Any enzyme used as a processing aid during ingredient or beverage manufacture.</small></label>
 <label class="process-option"><input type="checkbox" value="nutrient"><b>Microbial nutrient use</b><small>Applicable only if a microbial culture process is actually used.</small></label>
 </div>
@@ -2213,6 +2216,9 @@ const processLabels={
  flocculation:'Flocculation / curd setting',
  contact_freezing:'Contact freezing / cooling',
  desiccating:'Desiccating / anti-caking',
+ encapsulation:'Encapsulation / thickening',
+ coating:'Coating',
+ anti_browning:'Anti-browning / colour protection',
  enzyme:'Enzyme processing',
  nutrient:'Microbial nutrient use'
 };
@@ -2290,7 +2296,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=226',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=228',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
