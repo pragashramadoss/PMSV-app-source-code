@@ -45,7 +45,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Six permissions remain intentionally fail-closed: Acetone/Ethyl alcohol/Isobutane/Isopropyl alcohol 'Other foods' scopes and Vitamin B12/Vitamin C rows with blank official residue values. No inference is permitted.",
+    "next_priority": "Only Vitamin B12 and Vitamin C remain intentionally fail-closed. Official FSSAI Table 12 and the Section 16(5) active list both show Microbial nutrient / All foods with a blank residue value; PMSV must not infer GMP.",
     "table_3_entries": 16,
     "table_3_permission_rows": 18,
     "table_4_entries": 27,
@@ -95,13 +95,13 @@
       "table_7_hydrogen_peroxide_effective_residual": "5 mg/kg as hydrogen peroxide"
     },
     "appendix_c_product_gate_audit_status": "exact_gate_pass_5_process_routes",
-    "appendix_c_product_gated_permissions": 200,
+    "appendix_c_product_gated_permissions": 204,
     "appendix_c_product_gate_id_links": 314,
     "appendix_c_product_gate_rule_key_links": 29,
-    "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
-    "appendix_c_product_gate_reachable_permissions": 200,
+    "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, exact process gates, or explicit user-confirmed exact Appendix C legal-category qualifiers can activate product-specific permissions. Unmatched products never inherit residual categories such as “Other foods”.",
+    "appendix_c_product_gate_reachable_permissions": 204,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "passed_build_257_authoritative_enzyme_runtime_2026-10-04",
+    "appendix_c_product_gate_regression_status": "passed_build_258_other_foods_explicit_qualifier_2026-10-04",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -120,30 +120,29 @@
     },
     "appendix_c_permission_gate_counts": {
       "auto_apply_permissions": 107,
-      "exact_gated_permissions": 200,
-      "remaining_fail_closed_permissions": 6,
+      "exact_gated_permissions": 204,
+      "remaining_fail_closed_permissions": 2,
       "remaining_fail_closed_by_table": {
-        "6": 4,
         "12": 2
       }
     },
-    "appendix_c_product_gate_remaining_fail_closed": 6,
-    "appendix_c_product_gated_or_auto_permissions": 307,
+    "appendix_c_product_gate_remaining_fail_closed": 2,
+    "appendix_c_product_gated_or_auto_permissions": 311,
     "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
     "table_2_hardened_oil_status": "fail_closed_identity_unresolved",
     "table_6_decaffeination_status": "tea_and_coffee_exact_process_gates_loaded",
     "table_9_liquid_nitrogen_status": "official_section_16_5_active_list_all_foods_gmp",
     "table_6_mek_decaffeination_route": "loaded_same_source_row",
-    "appendix_c_intentional_fail_closed_permissions": 6,
-    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_256",
+    "appendix_c_intentional_fail_closed_permissions": 2,
+    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_258",
     "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model.",
     "appendix_c_final_runtime_regression_status": "passed_2026-10-04",
     "appendix_c_final_runtime_regression": {
       "source_permission_rows": 313,
       "runtime_route_projections": 37,
       "auto_apply_permission_rows": 107,
-      "exact_gated_permission_rows": 200,
-      "intentional_fail_closed_permission_rows": 6,
+      "exact_gated_permission_rows": 204,
+      "intentional_fail_closed_permission_rows": 2,
       "unclassified_permission_rows": 0,
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -167,7 +166,8 @@
         "extrusion_requires_explicit_process": true,
         "hardened_oil_requires_exact_catalyst_category": true,
         "liquid_nitrogen_all_foods_active_list": true,
-        "bone_phosphate_requires_not_milk_confirmation": true
+        "bone_phosphate_requires_not_milk_confirmation": true,
+        "other_foods_solvent_requires_explicit_legal_classification": true
       },
       "route_checks": {
         "vanaspati_catalysts": 4,
@@ -201,41 +201,13 @@
       "table_11a_operational_entries": 51,
       "table_11a_draft_rows_excluded": true
     },
-    "appendix_c_runtime_status": "production_fail_closed_final_2025_plus_section_16_5_build_257",
+    "appendix_c_runtime_status": "production_fail_closed_final_2025_plus_section_16_5_build_258",
     "appendix_c_product_master_count": 533,
     "appendix_c_product_profile_count": 533,
     "appendix_c_product_gate_invalid_ids": 0,
     "appendix_c_product_gate_invalid_rule_keys": 0,
     "appendix_c_product_gate_unreachable": 0,
     "appendix_c_product_gate_remaining_rows": [
-      {
-        "table": 6,
-        "s_no": 1,
-        "name": "Acetone",
-        "category": "Other foods",
-        "process": "solvent"
-      },
-      {
-        "table": 6,
-        "s_no": 11,
-        "name": "Ethyl alcohol",
-        "category": "Other Foods",
-        "process": "solvent"
-      },
-      {
-        "table": 6,
-        "s_no": 17,
-        "name": "Isobutane",
-        "category": "Other foods",
-        "process": "solvent"
-      },
-      {
-        "table": 6,
-        "s_no": 18,
-        "name": "Isopropyl alcohol",
-        "category": "Other foods",
-        "process": "solvent"
-      },
       {
         "table": 12,
         "s_no": 71,
@@ -293,7 +265,8 @@
       "table_11_official_serial_mapping": "pass",
       "table_11_effective_2026_sources": "pass",
       "table_11a_operational_46_51": "pass",
-      "table_11a_draft_4353_excluded": "pass"
+      "table_11a_draft_4353_excluded": "pass",
+      "table_6_other_foods_explicit_legal_category": "pass"
     },
     "table_9_liquid_nitrogen_scope": "All Foods"
   },
@@ -3453,9 +3426,12 @@
             {
               "product_category": "Other foods",
               "residual_level_mgkg": 0.1,
-              "runtime_auto_apply": false,
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "'Other foods' is an open-ended residual category. PMSV will not auto-apply a solvent limit by treating every unmatched standardized food as this category."
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_product_category",
+              "qualifier_value": "other_foods",
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "The final FSSAI Table 6 expressly retains the residual category “Other foods”. PMSV activates this permission only when the user explicitly confirms that the product has been legally classified under that Appendix C category. An unmatched product is never treated as “Other foods” automatically.",
+              "source_note": "Final current FSSAI Table 6 category retained; runtime requires explicit legal-category confirmation."
             }
           ],
           "source_note": "Substituted by final FSSAI Food Products Standards and Food Additives First Amendment Regulations, 2025; effective 1 February 2026."
@@ -3735,9 +3711,12 @@
             {
               "product_category": "Other Foods",
               "residual_level": "GMP",
-              "runtime_auto_apply": false,
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "'Other foods' is an open-ended residual category. PMSV will not auto-apply a solvent limit by treating every unmatched standardized food as this category."
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_product_category",
+              "qualifier_value": "other_foods",
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "The final FSSAI Table 6 expressly retains the residual category “Other foods”. PMSV activates this permission only when the user explicitly confirms that the product has been legally classified under that Appendix C category. An unmatched product is never treated as “Other foods” automatically.",
+              "source_note": "Final current FSSAI Table 6 category retained; runtime requires explicit legal-category confirmation."
             }
           ]
         },
@@ -3907,9 +3886,12 @@
             {
               "product_category": "Other foods",
               "residual_level_mgkg": 0.1,
-              "runtime_auto_apply": false,
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "'Other foods' is an open-ended residual category. PMSV will not auto-apply a solvent limit by treating every unmatched standardized food as this category."
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_product_category",
+              "qualifier_value": "other_foods",
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "The final FSSAI Table 6 expressly retains the residual category “Other foods”. PMSV activates this permission only when the user explicitly confirms that the product has been legally classified under that Appendix C category. An unmatched product is never treated as “Other foods” automatically.",
+              "source_note": "Final current FSSAI Table 6 category retained; runtime requires explicit legal-category confirmation."
             }
           ]
         },
@@ -3931,9 +3913,12 @@
             {
               "product_category": "Other foods",
               "residual_level_mgkg": 10,
-              "runtime_auto_apply": false,
-              "runtime_lock_status": "intentional_fail_closed",
-              "runtime_lock_reason": "'Other foods' is an open-ended residual category. PMSV will not auto-apply a solvent limit by treating every unmatched standardized food as this category."
+              "runtime_auto_apply": true,
+              "qualifier_key": "solvent_product_category",
+              "qualifier_value": "other_foods",
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "The final FSSAI Table 6 expressly retains the residual category “Other foods”. PMSV activates this permission only when the user explicitly confirms that the product has been legally classified under that Appendix C category. An unmatched product is never treated as “Other foods” automatically.",
+              "source_note": "Final current FSSAI Table 6 category retained; runtime requires explicit legal-category confirmation."
             },
             {
               "product_category": "Food Colours [curcumin; chlorophylls; chlorophyllins; copper complexes of chlorophylls/chlorophyllins; vegetable carotenes; paprika]",
