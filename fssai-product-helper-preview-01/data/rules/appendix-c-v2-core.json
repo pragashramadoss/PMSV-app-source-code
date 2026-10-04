@@ -15,7 +15,7 @@
   "applicability_rule": "Processing aids listed in Tables 1 to 12 may be used only in manufacture of the food specified in the corresponding table and the final food shall not exceed the stated residue level. Product-specific rows remain fail-closed until PMSV has an exact product-category route. 'All foods' rows may auto-apply once the relevant process is selected.",
   "coverage": {
     "tables_total": 12,
-    "tables_loaded": 10,
+    "tables_loaded": 11,
     "loaded_tables": [
       "Table 1 - Antifoaming Agents",
       "Table 2 - Catalyst",
@@ -26,13 +26,14 @@
       "Table 7 - Bleaching, Washing, Denuding and Peeling Agents",
       "Table 8 - Flocculating Agents",
       "Table 9 - Contact Freezing and Cooling Agents",
-      "Table 10 - Desiccating Agents"
+      "Table 10 - Desiccating Agents",
+      "Table 11 - Enzymes (non-GMM)"
     ],
     "table_1_entries": 9,
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 11 - Enzymes",
+    "next_priority": "Table 11A - Enzymes derived from Genetically Modified Microorganisms (GMM)",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -50,7 +51,11 @@
     "table_9_entries": 1,
     "table_9_permission_rows": 1,
     "table_10_entries": 1,
-    "table_10_permission_rows": 1
+    "table_10_permission_rows": 1,
+    "table_11_non_gmm_entries": 56,
+    "table_11_non_gmm_source_rows": 139,
+    "table_11_amendment_corrected_entries": 6,
+    "table_11a_gmm_status": "pending_structured_ingestion"
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -2294,6 +2299,673 @@
               "residual_level": "GMP"
             }
           ]
+        }
+      ]
+    },
+    "table_11": {
+      "number": 11,
+      "title": "ENZYMES (for treatment or processing of raw materials, foods, or ingredients)",
+      "process_key": "enzyme",
+      "source_pages": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "source_scope": "Non-genetically modified sources only; Table 11A GMM enzymes remain a separate next block.",
+      "residual_level": "GMP",
+      "entries": [
+        {
+          "sequence": 1,
+          "id": "glucose_oxidase",
+          "name": "Glucose oxidase",
+          "ec": "1.1.3.4",
+          "sources": [
+            "Aspergillus niger",
+            "Aspergillus oryzae"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 2,
+          "id": "catalase",
+          "name": "Catalase",
+          "ec": "1.11.1.6",
+          "sources": [
+            "Aspergillus niger"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 3,
+          "id": "gpc_acyltransferase",
+          "name": "Glycero-phospholipid cholesterol acyltransferase",
+          "ec": "2.3.1.43",
+          "sources": [
+            "Bacillus licheniformis"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 4,
+          "id": "transglutaminase",
+          "name": "Transglutaminase",
+          "ec": "2.3.2.13",
+          "sources": [
+            "Streptomyces mobaraensis"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 5,
+          "id": "lipase_tri",
+          "name": "Lipase triacylglycerol",
+          "ec": "3.1.1.3",
+          "sources": [
+            "Rhizopus oryzae",
+            "Fusarium oxysporum",
+            "Thermomyces lanuginosus",
+            "Rhizopus niveus",
+            "Carica papaya",
+            "Rhizomucor miehei",
+            "Aspergillus niger",
+            "Candida rugosa (cylindracea)",
+            "Pregastric bovine (calf) tissue",
+            "Pregastric ovine (lamb) tissue",
+            "Penicillium roquefortii",
+            "Porcine pancreas",
+            "Mucor javanicus (Mucor circinelloides f. circinelloides)",
+            "Rice bran",
+            "Aspergillus oryzae"
+          ],
+          "residual_level": "GMP",
+          "source_note": "Aspergillus oryzae inserted by amendment effective 2026-02-01."
+        },
+        {
+          "sequence": 6,
+          "id": "phospholipase_a2",
+          "name": "Phospholipase A2",
+          "ec": "3.1.1.4",
+          "sources": [
+            "Streptomyces violaceoruber",
+            "Aspergillus niger",
+            "Aspergillus oryzae"
+          ],
+          "residual_level": "GMP",
+          "source_note": "Aspergillus niger is present in the current table; Aspergillus oryzae inserted by amendment effective 2026-02-01."
+        },
+        {
+          "sequence": 7,
+          "id": "lysophospholipase",
+          "name": "Lysophospholipase",
+          "ec": "3.1.1.5",
+          "sources": [
+            "Aspergillus niger"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 8,
+          "id": "pectin_esterase",
+          "name": "Pectin esterase",
+          "ec": "3.1.1.11",
+          "sources": [
+            "Aspergillus niger"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 9,
+          "id": "acylglycerol_lipase",
+          "name": "Acylglycerol lipase",
+          "ec": "3.1.1.23",
+          "sources": [
+            "Penicillium camembertii"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 10,
+          "id": "phospholipase_a1",
+          "name": "Phospholipase A1",
+          "ec": "3.1.1.32",
+          "sources": [
+            "Aspergillus niger"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 11,
+          "id": "phytase",
+          "name": "Phytase",
+          "ec": "3.1.3.8",
+          "sources": [
+            "Aspergillus niger"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 12,
+          "id": "phosphodiesterase_1",
+          "name": "Phosphodiesterase I",
+          "ec": "3.1.4.1",
+          "sources": [
+            "Leptographium procerum"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 13,
+          "id": "phospholipase_d",
+          "name": "Phospholipase D",
+          "ec": "3.1.4.4",
+          "sources": [
+            "Streptomyces cinnamoneus"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 14,
+          "id": "hemicellulase",
+          "name": "Hemicellulase",
+          "ec": "3.2.1",
+          "sources": [
+            "Aspergillus niger",
+            "Trichoderma reesei / longibrachiatum"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 15,
+          "id": "alpha_amylase",
+          "name": "Alpha amylase",
+          "ec": "3.2.1.1",
+          "sources": [
+            "Aspergillus oryzae",
+            "Aspergillus niger",
+            "Bacillus licheniformis",
+            "Bacillus amyloliquefaciens",
+            "Bacillus subtilis",
+            "Bacillus stearothermophilus",
+            "Cereal (barley) malt"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 16,
+          "id": "beta_amylase",
+          "name": "Beta amylase",
+          "ec": "3.2.1.2",
+          "sources": [
+            "Cereal (barley) malt",
+            "Bacillus amyloliquefaciens",
+            "Hordeum vulgare (barley)",
+            "Soybean"
+          ],
+          "residual_level": "GMP",
+          "source_note": "Soybean is included in the current table."
+        },
+        {
+          "sequence": 17,
+          "id": "glucoamylase",
+          "name": "Glucan 1,4-alpha-glucosidase (Glucoamylase / acid maltase)",
+          "ec": "3.2.1.3",
+          "sources": [
+            "Aspergillus niger",
+            "Aspergillus oryzae",
+            "Trichoderma reesei",
+            "Rhizopus oryzae"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 18,
+          "id": "cellulase",
+          "name": "Cellulase",
+          "ec": "3.2.1.4",
+          "sources": [
+            "Penicillium funiculosum",
+            "Aspergillus niger",
+            "Humicola insolens",
+            "Rasamsonia (Talaromyces) emersonii",
+            "Trichoderma reesei"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 19,
+          "id": "beta_glucanase",
+          "name": "Beta-glucanase",
+          "ec": "3.2.1.6",
+          "sources": [
+            "Aspergillus niger",
+            "Bacillus amyloliquefaciens",
+            "Rasamsonia (Talaromyces) emersonii",
+            "Trichoderma reesei",
+            "Aspergillus aculeatus",
+            "Penicillium funiculosum",
+            "Bacillus subtilis",
+            "Trichoderma harzianum",
+            "Disporotrichum dimorphosporum",
+            "Humicola insolens"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 20,
+          "id": "inulinase",
+          "name": "Inulinase",
+          "ec": "3.2.1.7",
+          "sources": [
+            "Aspergillus niger"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 21,
+          "id": "xylanase_14",
+          "name": "Endo-1,4-beta-xylanase",
+          "ec": "3.2.1.8",
+          "sources": [
+            "Aspergillus niger",
+            "Bacillus licheniformis",
+            "Disporotrichum dimorphosporum",
+            "Rasamsonia (Talaromyces) emersonii",
+            "Trichoderma reesei (longibrachiatum)",
+            "Humicola insolens"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 22,
+          "id": "dextranase",
+          "name": "Dextranase",
+          "ec": "3.2.1.11",
+          "sources": [
+            "Chaetomium erraticum"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 23,
+          "id": "pectinase",
+          "name": "Polygalacturonase (Pectinase)",
+          "ec": "3.2.1.15",
+          "sources": [
+            "Aspergillus niger",
+            "Aspergillus aculeatus"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 24,
+          "id": "lysozyme",
+          "name": "Lysozyme",
+          "ec": "3.2.1.17",
+          "sources": [
+            "Gallus gallus egg"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 25,
+          "id": "alpha_glucosidase",
+          "name": "Alpha-glucosidase",
+          "ec": "3.2.1.20",
+          "sources": [
+            "Aspergillus niger",
+            "Trichoderma reesei"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 26,
+          "id": "beta_glucosidase",
+          "name": "Beta-glucosidase",
+          "ec": "3.2.1.21",
+          "sources": [
+            "Aspergillus niger",
+            "Kluyveromyces lactis",
+            "Trichoderma reesei / longibrachiatum CL 847"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 27,
+          "id": "alpha_galactosidase",
+          "name": "Alpha-galactosidase (Melibiase)",
+          "ec": "3.2.1.22",
+          "sources": [
+            "Aspergillus oryzae",
+            "Aspergillus niger",
+            "Mortierella vinacea",
+            "Saccharomyces carlsbergensis"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 28,
+          "id": "beta_galactosidase",
+          "name": "Beta-galactosidase (Lactase)",
+          "ec": "3.2.1.23",
+          "sources": [
+            "Kluyveromyces lactis",
+            "Bacillus circulans",
+            "Saccharomyces sp.",
+            "Aspergillus niger",
+            "Aspergillus oryzae",
+            "Bacillus licheniformis"
+          ],
+          "residual_level": "GMP",
+          "source_note": "Bacillus licheniformis inserted by amendment effective 2026-02-01."
+        },
+        {
+          "sequence": 29,
+          "id": "invertase",
+          "name": "Beta-fructofuranosidase (Invertase / Saccharase)",
+          "ec": "3.2.1.26",
+          "sources": [
+            "Saccharomyces cerevisiae",
+            "Kluyveromyces fragilis",
+            "Saccharomyces carlsbergensis"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 30,
+          "id": "trehalase",
+          "name": "Trehalase",
+          "ec": "3.2.1.28",
+          "sources": [
+            "Trichoderma reesei"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 31,
+          "id": "xylanase_13",
+          "name": "Endo-1,3-beta-xylanase",
+          "ec": "3.2.1.32",
+          "sources": [
+            "Humicola insolens"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 32,
+          "id": "pullulanase",
+          "name": "Pullulanase",
+          "ec": "3.2.1.41",
+          "sources": [
+            "Bacillus acidopullulyticus",
+            "Bacillus brevis",
+            "Bacillus circulans",
+            "Bacillus naganoensis",
+            "Klebsiella aerogenes"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 33,
+          "id": "alpha_arabinofuranosidase",
+          "name": "Alpha-arabinofuranosidase",
+          "ec": "3.2.1.55",
+          "sources": [
+            "Aspergillus niger"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 34,
+          "id": "glucan_beta_glucosidase",
+          "name": "Glucan 1,3-beta-glucosidase",
+          "ec": "3.2.1.58",
+          "sources": [
+            "Trichoderma harzianum"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 35,
+          "id": "mannanase",
+          "name": "Mannanase (Mannan endo-1,4-beta-mannosidase)",
+          "ec": "3.2.1.78",
+          "sources": [
+            "Trichoderma reesei",
+            "Aspergillus niger"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 36,
+          "id": "protease_bacteria",
+          "name": "Protease (Bacteria)",
+          "ec": "3.4",
+          "sources": [
+            "Bacillus amyloliquefaciens",
+            "Bacillus licheniformis",
+            "Bacillus subtilis",
+            "Geobacillus caldoproteolyticus"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 37,
+          "id": "protease_fungi",
+          "name": "Protease (Fungi)",
+          "ec": "3.4",
+          "sources": [
+            "Aspergillus niger",
+            "Aspergillus oryzae",
+            "Rhizomucor miehei",
+            "Cryphonectria parasitica"
+          ],
+          "residual_level": "GMP",
+          "source_note": "Rhizomucor miehei and Cryphonectria parasitica inserted by amendment effective 2026-02-01."
+        },
+        {
+          "sequence": 38,
+          "id": "aminopeptidase",
+          "name": "Aminopeptidase",
+          "ec": "3.4.11.1",
+          "sources": [
+            "Aspergillus oryzae"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 39,
+          "id": "serine_protease",
+          "name": "Serine protease (Subtilisin)",
+          "ec": "3.4.21.62",
+          "sources": [
+            "Bacillus licheniformis"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 40,
+          "id": "oryzin",
+          "name": "Oryzin",
+          "ec": "3.4.21.63",
+          "sources": [
+            "Aspergillus melleus"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 41,
+          "id": "lactocepin",
+          "name": "PIII-type proteinase (Lactocepin)",
+          "ec": "3.4.21.96",
+          "sources": [
+            "Lactococcus lactis subsp. cremoris (strain SK11)"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 42,
+          "id": "papain",
+          "name": "Papain",
+          "ec": "3.4.22.2",
+          "sources": [
+            "Carica papaya"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 43,
+          "id": "ficin",
+          "name": "Ficin",
+          "ec": "3.4.22.3",
+          "sources": [
+            "Figs"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 44,
+          "id": "bromelain",
+          "name": "Bromelain",
+          "ec": "3.4.22.33",
+          "sources": [
+            "Ananas comosus / bracteatus"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 45,
+          "id": "chymosin",
+          "name": "Chymosin",
+          "ec": "3.4.23.4",
+          "sources": [
+            "Kluyveromyces lactis",
+            "Aspergillus niger (variety-Awamori)"
+          ],
+          "residual_level": "GMP",
+          "source_note": "Aspergillus niger (variety-Awamori) inserted by amendment effective 2026-02-01."
+        },
+        {
+          "sequence": 46,
+          "id": "aspergillopepsin1",
+          "name": "Aspergillopepsin I",
+          "ec": "3.4.23.18",
+          "sources": [
+            "Aspergillus niger",
+            "Aspergillus oryzae"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 47,
+          "id": "aspergillopepsin2",
+          "name": "Aspergillopepsin II",
+          "ec": "3.4.23.19",
+          "sources": [
+            "Aspergillus niger"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 48,
+          "id": "endothiapeptidase",
+          "name": "Endo(thia)peptidase",
+          "ec": "3.4.23.22",
+          "sources": [
+            "Cryphonectria (Endothia) parasitica"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 49,
+          "id": "mucorpepsin",
+          "name": "Mucorpepsin (Aspartic proteinase)",
+          "ec": "3.4.23.23",
+          "sources": [
+            "Rhizomucor miehei"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 50,
+          "id": "thermolysin",
+          "name": "Thermolysin",
+          "ec": "3.4.24.27",
+          "sources": [
+            "Bacillus stearothermophilus",
+            "Geobacillus caldoproteolyticus"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 51,
+          "id": "metalloproteinase",
+          "name": "Metalloproteinase (Bacillolysin / Metalloendopeptidase)",
+          "ec": "3.4.24.28",
+          "sources": [
+            "Bacillus amyloliquefaciens",
+            "Bacillus subtilis"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 52,
+          "id": "glutaminase",
+          "name": "Glutaminase",
+          "ec": "3.5.1.2",
+          "sources": [
+            "Bacillus amyloliquefaciens"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 53,
+          "id": "protein_glutaminase",
+          "name": "Protein glutaminase",
+          "ec": "3.5.1.44",
+          "sources": [
+            "Chryseobacterium proteolyticum"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 54,
+          "id": "amp_deaminase",
+          "name": "AMP deaminase",
+          "ec": "3.5.4.6",
+          "sources": [
+            "Aspergillus melleus",
+            "Streptomyces murinus"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 55,
+          "id": "pectin_lyase",
+          "name": "Pectin lyase",
+          "ec": "4.2.2.10",
+          "sources": [
+            "Aspergillus niger"
+          ],
+          "residual_level": "GMP"
+        },
+        {
+          "sequence": 56,
+          "id": "glucose_isomerase",
+          "name": "Glucose isomerase (Xylose isomerase)",
+          "ec": "5.3.1.5",
+          "sources": [
+            "Streptomyces rubiginosus",
+            "Streptomyces murinus",
+            "Streptomyces olivaceus",
+            "Streptomyces olivochromogenes",
+            "Microbacterium arborescens",
+            "Actinoplanes missouriensis"
+          ],
+          "residual_level": "GMP"
         }
       ]
     }
