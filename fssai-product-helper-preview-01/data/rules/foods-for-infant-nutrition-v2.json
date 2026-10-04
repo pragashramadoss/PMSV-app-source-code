@@ -68,56 +68,219 @@
         "Hydrogenated vegetable oils and fats shall not be used.",
         "L(+) lactic acid producing bacteria require prior Food Authority approval."
       ],
-      "additive_table_status": "direct additive table present in the Infant Nutrition regulation; full row-level normalization pending",
-      "current_additive_examples": [
+      "additive_table_status": "current_direct_table_complete",
+      "direct_additives": [
         {
+          "class": "Thickener",
           "name": "Guar gum",
           "ins": "412",
           "limit": "0.1 g/100 ml",
-          "condition": "Liquid formulas containing hydrolysed protein"
+          "condition": "Liquid infant formula containing hydrolysed protein only"
         },
         {
-          "name": "Carob bean gum",
+          "class": "Thickener",
+          "name": "Carob bean gum (Locust bean gum)",
           "ins": "410",
           "limit": "0.1 g/100 ml",
-          "condition": "All infant formula types"
+          "condition": "All types of infant formula"
         },
         {
+          "class": "Modified starch group",
+          "name": "Distarch phosphate",
+          "ins": "1412",
+          "limit": "0.5 g/100 ml singly or in combination",
+          "condition": "Soy-based infant formula only",
+          "alternate_limit": "2.5 g/100 ml singly or in combination",
+          "alternate_condition": "Hydrolysed-protein and/or amino-acid-based infant formula only"
+        },
+        {
+          "class": "Modified starch group",
+          "name": "Acetylated distarch phosphate",
+          "ins": "1414",
+          "limit": "0.5 g/100 ml singly or in combination",
+          "condition": "Soy-based infant formula only",
+          "alternate_limit": "2.5 g/100 ml singly or in combination",
+          "alternate_condition": "Hydrolysed-protein and/or amino-acid-based infant formula only"
+        },
+        {
+          "class": "Modified starch group",
+          "name": "Phosphated distarch phosphate",
+          "ins": "1413",
+          "limit": "0.5 g/100 ml singly or in combination",
+          "condition": "Soy-based infant formula only",
+          "alternate_limit": "2.5 g/100 ml singly or in combination",
+          "alternate_condition": "Hydrolysed-protein and/or amino-acid-based infant formula only"
+        },
+        {
+          "class": "Modified starch group",
+          "name": "Hydroxypropyl starch",
+          "ins": "1440",
+          "limit": "0.5 g/100 ml singly or in combination",
+          "condition": "Soy-based infant formula only",
+          "alternate_limit": "2.5 g/100 ml singly or in combination",
+          "alternate_condition": "Hydrolysed-protein and/or amino-acid-based infant formula only"
+        },
+        {
+          "class": "Thickener",
+          "name": "Carrageenan",
+          "ins": "407",
+          "limit": "0.03 g/100 ml",
+          "condition": "Regular milk- and soy-based liquid infant formula only",
+          "alternate_limit": "0.1 g/100 ml",
+          "alternate_condition": "Hydrolysed-protein and/or amino-acid-based liquid infant formula only"
+        },
+        {
+          "class": "Emulsifier",
           "name": "Lecithin",
           "ins": "322",
           "limit": "0.5 g/100 ml",
-          "condition": "All infant formula types"
+          "condition": "All types of infant formula; combination adjustment applies with INS 471"
         },
         {
+          "class": "Emulsifier",
           "name": "Mono- and diglycerides",
           "ins": "471",
           "limit": "0.4 g/100 ml",
-          "condition": "All infant formula types"
+          "condition": "All types of infant formula; combination adjustment applies with INS 322"
         },
         {
+          "class": "Emulsifier",
+          "name": "Citric and fatty acid esters of glycerol",
+          "ins": "472c",
+          "limit": "0.9 g/100 ml",
+          "condition": "All types of liquid infant formula",
+          "alternate_limit": "0.75 g/100 ml",
+          "alternate_condition": "All types of powdered infant formula"
+        },
+        {
+          "class": "Acidity regulator",
+          "name": "Sodium hydroxide",
+          "ins": "524",
+          "limit": "0.2 g/100 ml singly or in combination",
+          "condition": "Within sodium/potassium/calcium limits in regulation 7(1)(g)"
+        },
+        {
+          "class": "Acidity regulator",
+          "name": "Sodium hydrogen carbonate",
+          "ins": "500(ii)",
+          "limit": "0.2 g/100 ml singly or in combination",
+          "condition": "Within sodium/potassium/calcium limits in regulation 7(1)(g)"
+        },
+        {
+          "class": "Acidity regulator",
+          "name": "Sodium carbonate",
+          "ins": "500(i)",
+          "limit": "0.2 g/100 ml singly or in combination",
+          "condition": "Within sodium/potassium/calcium limits in regulation 7(1)(g)"
+        },
+        {
+          "class": "Acidity regulator",
+          "name": "Potassium hydrogen carbonate",
+          "ins": "501(ii)",
+          "limit": "0.2 g/100 ml singly or in combination",
+          "condition": "Within sodium/potassium/calcium limits in regulation 7(1)(g)"
+        },
+        {
+          "class": "Acidity regulator",
+          "name": "Potassium carbonate",
+          "ins": "501(i)",
+          "limit": "0.2 g/100 ml singly or in combination",
+          "condition": "Within sodium/potassium/calcium limits in regulation 7(1)(g)"
+        },
+        {
+          "class": "Acidity regulator",
+          "name": "Potassium hydroxide",
+          "ins": "525",
+          "limit": "0.2 g/100 ml singly or in combination",
+          "condition": "Within sodium/potassium/calcium limits in regulation 7(1)(g)"
+        },
+        {
+          "class": "Acidity regulator",
+          "name": "Calcium hydroxide",
+          "ins": "526",
+          "limit": "0.2 g/100 ml singly or in combination",
+          "condition": "Within sodium/potassium/calcium limits in regulation 7(1)(g)"
+        },
+        {
+          "class": "Acidity regulator",
+          "name": "L(+) lactic acid",
+          "ins": "270",
+          "limit": "GMP",
+          "condition": "All types of infant formula"
+        },
+        {
+          "class": "Acidity regulator",
+          "name": "Citric acid",
+          "ins": "330",
+          "limit": "GMP",
+          "condition": "All types of infant formula"
+        },
+        {
+          "class": "Acidity regulator",
+          "name": "Sodium dihydrogen citrate",
+          "ins": "331(i)",
+          "limit": "GMP",
+          "condition": "All types of infant formula"
+        },
+        {
+          "class": "Acidity regulator",
+          "name": "Trisodium citrate",
+          "ins": "331(iii)",
+          "limit": "GMP",
+          "condition": "All types of infant formula"
+        },
+        {
+          "class": "Acidity regulator",
+          "name": "Potassium citrate",
+          "ins": "332",
+          "limit": "GMP",
+          "condition": "All types of infant formula"
+        },
+        {
+          "class": "Phosphate regulator",
+          "name": "Sodium dihydrogen phosphate / disodium hydrogen phosphate / trisodium phosphate",
+          "ins": "339(i), 339(ii), 339(iii)",
+          "limit": "45 mg phosphorus/100 ml singly or in combination",
+          "condition": "Within sodium, potassium and phosphorus limits in regulation 7(1)(g)"
+        },
+        {
+          "class": "Phosphate regulator",
+          "name": "Potassium dihydrogen phosphate / dipotassium hydrogen phosphate / tripotassium phosphate",
+          "ins": "340(i), 340(ii), 340(iii)",
+          "limit": "45 mg phosphorus/100 ml singly or in combination",
+          "condition": "Within sodium, potassium and phosphorus limits in regulation 7(1)(g)"
+        },
+        {
+          "class": "Antioxidant",
           "name": "Mixed tocopherol concentrate",
           "ins": "307b",
-          "limit": "1 mg/100 ml",
-          "condition": "Singly or in combination as specified"
+          "limit": "1 mg/100 ml singly or in combination",
+          "condition": "All types of infant formula"
         },
         {
+          "class": "Antioxidant",
           "name": "Ascorbyl palmitate",
-          "ins": "304i",
-          "limit": "1 mg/100 ml",
-          "condition": "Singly or in combination as specified"
+          "ins": "304(i)",
+          "limit": "1 mg/100 ml singly or in combination",
+          "condition": "All types of infant formula"
         },
         {
+          "class": "Packaging gas",
           "name": "Carbon dioxide",
           "ins": "290",
-          "limit": "GMP",
-          "condition": "Packaging gas"
+          "limit": "GMP"
         },
         {
+          "class": "Packaging gas",
           "name": "Nitrogen",
           "ins": "941",
-          "limit": "GMP",
-          "condition": "Packaging gas"
+          "limit": "GMP"
         }
+      ],
+      "direct_additive_notes": [
+        "Limits are expressed per 100 ml product ready for consumption unless otherwise stated.",
+        "If more than one of INS 322 and INS 471 is used, the maximum level for each is reduced according to the relative proportion of the other substance.",
+        "Schedule I(d) additives for special nutrient formulations may also be used where applicable."
       ]
     },
     "8": {
@@ -364,10 +527,16 @@
       "fcs": "13.1.1",
       "parent": "7",
       "definition_rule": "An infant formula in powder format manufactured without the specific vegetable oil/linoleate/vitamin E/starch/specified additive/optional-ingredient uses described in regulation 7(3) may be named 'Infant Milk Food'.",
-      "foscos_note": "FoSCoS currently displays 'Chapter 4(12) of Infant Nutrition Regulations, 2020' for this product; PMSV preserves that catalogue text but links the actual product-name condition in the current compendium to regulation 7(3)."
+      "foscos_note": "FoSCoS currently displays 'Chapter 4(12) of Infant Nutrition Regulations, 2020' for this product; PMSV preserves that catalogue text but links the actual product-name condition in the current compendium to regulation 7(3).",
+      "additive_naming_condition": "The 'Infant Milk Food' naming route applies only to the powder-format condition in regulation 7(3), including manufacture without the specified food additive use and optional ingredients described there."
     }
   },
   "direct_additive_rule": "For infant-nutrition products, use the product-specific additive tables in these Regulations first. Do not substitute ordinary-food Appendix A permissions merely because an FCS code exists.",
   "source_compound_rule": "Vitamins/minerals/nutrients must use permitted sources under the applicable schedules.",
-  "final_compliance_lock": "Do not issue final formulation compliance until the complete nutrient table, direct additive table, source-compound schedules, microbiology, contaminants and product-specific label declarations for the selected infant product are machine-normalized."
+  "final_compliance_lock": "Do not issue final formulation compliance until the complete nutrient table, direct additive table, source-compound schedules, microbiology, contaminants and product-specific label declarations for the selected infant product are machine-normalized.",
+  "coverage": {
+    "regulation_7_infant_formula_additive_table": "current_direct_table_complete",
+    "direct_additive_rows_regulation_7": 28,
+    "source_verified_on": "2026-10-04"
+  }
 }
