@@ -33,7 +33,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 11A - continue from enzyme 22 (Xylanase)",
+    "next_priority": "Table 11A - continue from enzyme 25 (Lactase / Beta-galactosidase)",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -55,9 +55,9 @@
     "table_11_non_gmm_entries": 56,
     "table_11_non_gmm_source_rows": 139,
     "table_11_amendment_corrected_entries": 6,
-    "table_11a_gmm_status": "partial_structured_ingestion_1_21",
-    "table_11a_gmm_entries_loaded": 21,
-    "table_11a_gmm_variant_rows_loaded": 55
+    "table_11a_gmm_status": "partial_structured_ingestion_1_24",
+    "table_11a_gmm_entries_loaded": 24,
+    "table_11a_gmm_variant_rows_loaded": 66
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -2984,7 +2984,7 @@
         23
       ],
       "source_scope": "Table 11A only. Production organism, donor/source, technological purpose, indicative food use and residual level are stored as linked variants. Runtime remains fail-closed until the full table is ingested and the selected product/use is matched.",
-      "ingestion_status": "partial_1_to_21",
+      "ingestion_status": "partial_1_to_24",
       "entries": [
         {
           "sequence": 1,
@@ -3515,6 +3515,104 @@
               "donor_or_source": "Bacillus subtilis",
               "purpose": "Hydrolysis of beta-glucans, to improve the brewing properties of beer",
               "indicative_food_uses": "Brewing processes",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 22,
+          "name": "Xylanase (Endo-1,4-beta-xylanase)",
+          "ec": "3.2.1.8",
+          "variants": [
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Aspergillus niger",
+              "purpose": "Hydrolysis of plant carbohydrates to improve quality of bakery products (firmness, stiffness, consistency and others)",
+              "indicative_food_uses": "Bakery and other cereal based products",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus oryzae",
+              "donor_or_source": "Humicola lanuginosus",
+              "purpose": "Dough stabilizer, enhancing loaf volume, enhance crumb structure and bloom",
+              "indicative_food_uses": "Bakery products",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Bacillus subtilis",
+              "purpose": "Dough stabilizer, enhancing loaf volume, enhance crumb structure bloom and loaf softening, hydrolysis of plant carbohydrates to improve quality of bakery products (firmness, stiffness, consistency and others)",
+              "indicative_food_uses": "Bakery products, carbohydrate or starch processing, Brewing, Potable alcohol production, non-alcoholic beverages processing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Talaromyces leycettanus",
+              "purpose": "To improve filtration in brewing, Starch liquefaction and enhance oil extraction from grain",
+              "indicative_food_uses": "Baking and Brewing and oil extraction",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Rasamsonia emersonii",
+              "purpose": "Dough stabilizer, enhancing loaf volume, crumb structure, bloom and loaf softening, improving filtration in brewing, starch liquefaction",
+              "indicative_food_uses": "Bakery products production of beer and other cereal based beverages",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Aspergillus niger",
+              "purpose": "Dough stabilizer, enhancing loaf volume, crumb structure, bloom and loaf softening, to improve filtration in brewing, starch liquefaction",
+              "indicative_food_uses": "Brewing and baking products, potable alcohol production, non-alcoholic beverages",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus oryzae",
+              "donor_or_source": "Aspergillus aculeatus",
+              "purpose": "Dough stabilizer, enhance loaf volume, crumb structure, bloom and loaf softening, to improve filtration in brewing, starch liquefaction",
+              "indicative_food_uses": "Baking, brewing and other cereal-based beverages and starch processing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Bacillus licheniformis",
+              "purpose": "Dough stabilizer, enhancer of loaf volume, enhance crumb structure, bloom and loaf softening, starch liquefaction",
+              "indicative_food_uses": "Baking and brewing processes, grain treatment",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Fusarium verticillioides",
+              "purpose": "Hydrolysis of plant carbohydrates to improve quality of bakery products (firmness, stiffness, consistency and others)",
+              "indicative_food_uses": "As processing aid in carbohydrate or starch processing and potable alcohol production",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 23,
+          "name": "Endo-Polygalacturonase (Pectinase)",
+          "ec": "3.2.1.15",
+          "variants": [
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Aspergillus niger",
+              "purpose": "Extraction and clarification of juice from fruits and vegetables, extraction of flavors",
+              "indicative_food_uses": "Fruit and vegetable processing, flavouring production",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 24,
+          "name": "Alpha-glucosidase",
+          "ec": "3.2.1.20",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Aspergillus niger",
+              "purpose": "Aids in fermentation, hydrolysis of terminal, non-reducing (1~4)-linked alpha-D-glucose residues with release of alpha-D-glucose",
+              "indicative_food_uses": "Brewing and starch processing",
               "residual_level": "GMP"
             }
           ]
