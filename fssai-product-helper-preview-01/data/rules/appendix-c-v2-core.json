@@ -34,7 +34,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Wire processing qualifiers in UI and validate decaffeination/contact-freezing scenarios.",
+    "next_priority": "Activate runtime route projections and re-run Appendix C gate regression.",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -128,7 +128,8 @@
     "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
     "table_2_hardened_oil_status": "fail_closed_identity_unresolved",
     "table_6_decaffeination_status": "tea_and_coffee_exact_process_gates_loaded",
-    "table_9_liquid_nitrogen_status": "combined_foscos_row_requires_ice_cream_form_confirmation"
+    "table_9_liquid_nitrogen_status": "combined_foscos_row_requires_ice_cream_form_confirmation",
+    "table_6_mek_decaffeination_route": "loaded_same_source_row"
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -3504,7 +3505,18 @@
                 "99-99-3-mixture-preparations-premix-of-flavouring-substances"
               ],
               "product_gate_status": "verified_exact_catalogue_subset",
-              "product_gate_note": "Verified PMSV flavouring-substances preparation identity (FCS 99.3); other combined categories remain locked."
+              "product_gate_note": "Base runtime gate covers the verified PMSV flavouring-substances identity. The same FSSAI row also has a separate decaffeination runtime route for Tea and Coffee at the same 2 mg/kg residue level.",
+              "runtime_routes": [
+                {
+                  "process_key": "decaffeination",
+                  "product_ids": [
+                    "tea",
+                    "coffee"
+                  ],
+                  "route_label": "Decaffeination of coffee or tea",
+                  "source_scope": "Same Table 6 S.No.21 permission row; runtime split represents only its explicit decaffeination-of-coffee/tea scope."
+                }
+              ]
             }
           ]
         },
