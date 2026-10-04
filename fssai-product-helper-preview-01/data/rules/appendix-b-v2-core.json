@@ -31,7 +31,7 @@
     "fish_exact_product_mappings": 18,
     "fish_conditional_product_mappings": 4,
     "fish_no_direct_table_mapping": 2,
-    "next_priority": "Appendix B complete - validate all table groups and product routes",
+    "next_priority": "Appendix B complete - route integrity audit passed; proceed to Appendix C product/process routing",
     "milk_profiles_loaded": 16,
     "milk_exact_product_mappings": 58,
     "milk_conditional_product_mappings": 17,
@@ -41,8 +41,8 @@
     "spice_conditional_product_mappings": 33,
     "spice_no_direct_table_mapping": 3,
     "fruit_source_categories_loaded": 9,
-    "fruit_runtime_profiles_loaded": 12,
-    "fruit_exact_product_mappings": 7,
+    "fruit_runtime_profiles_loaded": 13,
+    "fruit_exact_product_mappings": 33,
     "fruit_conditional_product_mappings": 19,
     "fruit_no_direct_table_mapping": 4,
     "meat_profiles_loaded": 9,
@@ -70,7 +70,17 @@
     "neera_exact_product_mappings": 0,
     "neera_conditional_product_mappings": 1,
     "neera_no_direct_table_mapping": 0,
-    "appendix_b_complete": true
+    "appendix_b_complete": true,
+    "appendix_b_route_audit": {
+      "checked_on": "2026-10-04",
+      "build": 199,
+      "broken_product_ids": 0,
+      "broken_profile_references": 0,
+      "mapping_conflicts": 0,
+      "rule_master_mismatches": 0,
+      "explicit_table4_product_routes_added": 26,
+      "note": "Added only FoSCoS identities whose product name itself establishes an Appendix B Table 4 Fresh, minimally processed, frozen, dried/dehydrated, pickled, or with-preservatives route. Ambiguous processing remains fail-closed."
+    }
   },
   "organism_labels": {
     "aerobic_plate_count": "Aerobic Plate Count",
@@ -2055,7 +2065,7 @@
         ]
       },
       "source_categories_count": 9,
-      "runtime_profiles_count": 12,
+      "runtime_profiles_count": 13,
       "categories": [
         {
           "id": "fruit-01",
@@ -2263,6 +2273,69 @@
           "notes": [
             "Where the fermentation process involves yeast/mould, the respective Yeast and Mold Count criterion does not apply."
           ]
+        },
+        {
+          "id": "fruit-03-liquid",
+          "sl_no": "3",
+          "name": "Fermented or pickled or acidified or with preservatives — liquid form",
+          "hygiene": {
+            "yeast_and_mold_count": {
+              "n": 5,
+              "c": 1,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/ml"
+            },
+            "enterobacteriaceae": {
+              "n": 5,
+              "c": 2,
+              "m": 100,
+              "M": 1000,
+              "unit": "cfu/ml"
+            },
+            "staphylococcus_aureus": {
+              "n": 5,
+              "c": 1,
+              "m": 10,
+              "M": 100,
+              "unit": "cfu/ml"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "e_coli_o157_or_stec": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "vibrio_cholerae": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25ml",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "notes": [
+            "Where the fermentation process involves yeast/mould, the respective Yeast and Mold Count criterion does not apply.",
+            "Appendix B Table 4 note: 'ml' applies in place of 'g' for liquid products."
+          ],
+          "derived_liquid_profile": true
         },
         {
           "id": "fruit-04a",
@@ -5817,6 +5890,162 @@
           "profile_key": "fruit-05",
           "status": "mapped_exact_appendix_b_v2",
           "note": "Exact frozen processed-vegetable identity."
+        },
+        {
+          "catalog_id": "04-04-1-untreated-fresh-fruit",
+          "profile_key": "fruit-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity is whole untreated fresh fruit; Appendix B Table 4 Fresh applies."
+        },
+        {
+          "catalog_id": "04-04-1-surface-treated-fresh-fruit",
+          "profile_key": "fruit-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity remains whole fresh fruit; Appendix B Table 4 Fresh applies."
+        },
+        {
+          "catalog_id": "04-04-1-peeled-or-cut-minimally-processed-fruit",
+          "profile_key": "fruit-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity directly matches cut/minimally processed fruit."
+        },
+        {
+          "catalog_id": "04-04-2-untreated-fresh-vegetables",
+          "profile_key": "fruit-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity is whole untreated fresh vegetables; Appendix B Table 4 Fresh applies."
+        },
+        {
+          "catalog_id": "04-04-2-surface-treated-fresh-vegetables",
+          "profile_key": "fruit-01",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity remains whole fresh vegetables; Appendix B Table 4 Fresh applies."
+        },
+        {
+          "catalog_id": "04-04-2-peeled-cut-or-shredded-minimally-processed-vegetables",
+          "profile_key": "fruit-02",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity directly matches cut/minimally processed vegetables."
+        },
+        {
+          "catalog_id": "04-04-1-dried-apricots",
+          "profile_key": "fruit-06",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity explicitly states dried fruit."
+        },
+        {
+          "catalog_id": "04-04-1-edible-dried-seeds-obtained-from-fruits",
+          "profile_key": "fruit-06",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity explicitly states dried fruit-derived product."
+        },
+        {
+          "catalog_id": "04-04-2-edible-dried-seeds-obtained-from-vegetables",
+          "profile_key": "fruit-06",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity explicitly states dried vegetable-derived product."
+        },
+        {
+          "catalog_id": "04-04-2-quick-frozen-fungi",
+          "profile_key": "fruit-05",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity explicitly states quick-frozen fungi."
+        },
+        {
+          "catalog_id": "04-04-2-dried-fungi",
+          "profile_key": "fruit-06",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity explicitly states dried fungi."
+        },
+        {
+          "catalog_id": "04-04-2-dried-fungi-concentrate",
+          "profile_key": "fruit-06",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity explicitly states dried fungi concentrate."
+        },
+        {
+          "catalog_id": "04-04-2-quick-frozen-fried-potatoes",
+          "profile_key": "fruit-05",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity explicitly states quick-frozen potato product."
+        },
+        {
+          "catalog_id": "04-04-1-pickles-made-from-fruits",
+          "profile_key": "fruit-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity explicitly states fruit pickle; Appendix B row 3 includes pickled products."
+        },
+        {
+          "catalog_id": "04-04-2-pickles-made-from-vegetables-or-other-edible-plant-material-including-mushrooms",
+          "profile_key": "fruit-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity explicitly states vegetable/plant pickle; Appendix B row 3 includes pickled products."
+        },
+        {
+          "catalog_id": "04-04-2-pickles-made-from-combination-of-fruits-or-vegetables-or-other-edible-plant-materi",
+          "profile_key": "fruit-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity explicitly states mixed fruit/vegetable/plant pickle; Appendix B row 3 includes pickled products."
+        },
+        {
+          "catalog_id": "04-04-2-pickled-fungi",
+          "profile_key": "fruit-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity explicitly states pickled fungi; Appendix B row 3 includes pickled products."
+        },
+        {
+          "catalog_id": "04-04-1-coconut-milk-powder",
+          "profile_key": "fruit-06",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "FoSCoS identity is a powdered fruit-derived product; Appendix B dried/dehydrated route applies."
+        },
+        {
+          "catalog_id": "fruit-juice-preserved-industrial",
+          "profile_key": "fruit-03-liquid",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity explicitly states fruit juice with preservatives; Table 4 row 3 applies with ml substituted for g."
+        },
+        {
+          "catalog_id": "vegetable-juice-preserved-industrial",
+          "profile_key": "fruit-03-liquid",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity explicitly states vegetable juice with preservatives; Table 4 row 3 applies with ml substituted for g."
+        },
+        {
+          "catalog_id": "concentrated-fruit-juice-industrial",
+          "profile_key": "fruit-03-liquid",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity explicitly states concentrated fruit juice with preservatives; Table 4 row 3 applies with ml substituted for g."
+        },
+        {
+          "catalog_id": "concentrated-vegetable-juice-industrial",
+          "profile_key": "fruit-03-liquid",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity explicitly states concentrated vegetable juice with preservatives; Table 4 row 3 applies with ml substituted for g."
+        },
+        {
+          "catalog_id": "04-04-1-fruit-pulp-puree-with-preservatives-for-industrial-use-only",
+          "profile_key": "fruit-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity explicitly states fruit pulp/puree with preservatives."
+        },
+        {
+          "catalog_id": "04-04-1-concentrated-fruit-pulp-puree-with-preservatives-for-industrial-use-only",
+          "profile_key": "fruit-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity explicitly states concentrated fruit pulp/puree with preservatives."
+        },
+        {
+          "catalog_id": "04-04-2-vegetable-pulp-puree-with-preservatives-for-industrial-use-only",
+          "profile_key": "fruit-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity explicitly states vegetable pulp/puree with preservatives."
+        },
+        {
+          "catalog_id": "04-04-2-concentrated-vegetable-pulp-puree-with-preservatives-for-industrial-use-only",
+          "profile_key": "fruit-03",
+          "status": "mapped_exact_appendix_b_v2",
+          "note": "Product identity explicitly states concentrated vegetable pulp/puree with preservatives."
         }
       ],
       "conditional": [
