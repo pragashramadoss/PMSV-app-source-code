@@ -451,6 +451,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="polishing"><b>Polishing</b><small>Polishing agents for specified products such as confectionery.</small></label>
 <label class="process-option"><input type="checkbox" value="malting"><b>Malting / grain preparation</b><small>Processing aids specifically permitted for malting or grain preparation.</small></label>
 <label class="process-option"><input type="checkbox" value="sequestration"><b>Sequestration</b><small>Product-specific sequestrants where Appendix C explicitly permits the use.</small></label>
+<label class="process-option"><input type="checkbox" value="decalcification"><b>Decalcification</b><small>Decalcification aids such as the edible-casing permission in Appendix C.</small></label>
 <label class="process-option"><input type="checkbox" value="dough_conditioning"><b>Dough conditioning</b><small>Processing aids used to condition flour dough; exact flour-product matching applies.</small></label>
 <label class="process-option"><input type="checkbox" value="ageing"><b>Ageing / maturation</b><small>Ageing aids for specified alcoholic beverages.</small></label>
 <label class="process-option"><input type="checkbox" value="antioxidant"><b>Antioxidant processing aid</b><small>Processing-aid antioxidant route; product-specific limits remain enforced.</small></label>
@@ -461,6 +462,10 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="extrusion"><b>Extrusion</b><small>Appendix C processing aids explicitly permitted for extruded foods.</small></label>
 <label class="process-option"><input type="checkbox" value="raising"><b>Raising / leavening</b><small>Raising-agent permissions; exact Appendix C product-category confirmation is required where specified.</small></label>
 <label class="process-option"><input type="checkbox" value="emulsification"><b>Emulsification</b><small>Processing-aid emulsifier route, including the active-list Flavourings permission.</small></label>
+<label class="process-option"><input type="checkbox" value="moisture_retention"><b>Moisture retention</b><small>Moisture-retention processing aids; negative product scopes require explicit confirmation.</small></label>
+<label class="process-option"><input type="checkbox" value="stabilization"><b>Stabilization</b><small>Processing aids used specifically as stabilizers.</small></label>
+<label class="process-option"><input type="checkbox" value="thickening_gelling"><b>Thickening / gelling</b><small>Processing aids used specifically as thickeners or gelling agents.</small></label>
+<label class="process-option"><input type="checkbox" value="sweetening_humectant_bulking"><b>Sweetening / humectant / bulking</b><small>Processing aids used as sweeteners, humectants or bulking agents.</small></label>
 <label class="process-option"><input type="checkbox" value="binding"><b>Binding</b><small>Binding-agent processing route; exact product-category confirmation applies.</small></label>
 <label class="process-option"><input type="checkbox" value="sugar_treatment"><b>Sugar treatment</b><small>Processing aids whose official applicability is the sugar-treatment process itself.</small></label>
 <label class="process-option"><input type="checkbox" value="sugar_inversion"><b>Sugar syrup inversion</b><small>Catalyst use specifically for inversion of sugar in sugar syrups.</small></label>
@@ -471,6 +476,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="instant_tea_processing"><b>Instant Tea processing</b><small>Processing-aid permissions that the final 2025 amendment specifically extends to Instant Tea processing.</small></label>
 <label class="process-option"><input type="checkbox" value="enzyme"><b>Enzyme processing</b><small>Any enzyme used as a processing aid during ingredient or beverage manufacture.</small></label>
 <label class="process-option"><input type="checkbox" value="nutrient"><b>Microbial nutrient use</b><small>Applicable only if a microbial culture process is actually used.</small></label>
+<label class="process-option"><input type="checkbox" value="nutrient_processing"><b>Nutrient processing aid</b><small>General nutrient-purpose processing aids distinct from the microbial-nutrient pathway.</small></label>
 <label class="process-option"><input type="checkbox" value="mineral_salt"><b>Mineral salt processing aid</b><small>Product-specific mineral-salt permissions such as Zinc sulphate for alcoholic beverages.</small></label>
 </div>
 
@@ -2252,6 +2258,7 @@ const processLabels={
  polishing:'Polishing',
  malting:'Malting / grain preparation',
  sequestration:'Sequestration',
+ decalcification:'Decalcification',
  dough_conditioning:'Dough conditioning',
  ageing:'Ageing / maturation',
  antioxidant:'Antioxidant processing aid',
@@ -2262,6 +2269,10 @@ const processLabels={
  extrusion:'Extrusion',
  raising:'Raising / leavening',
  emulsification:'Emulsification',
+ moisture_retention:'Moisture retention',
+ stabilization:'Stabilization',
+ thickening_gelling:'Thickening / gelling',
+ sweetening_humectant_bulking:'Sweetening / humectant / bulking',
  binding:'Binding',
  sugar_treatment:'Sugar treatment',
  sugar_inversion:'Sugar syrup inversion',
@@ -2272,6 +2283,7 @@ const processLabels={
  instant_tea_processing:'Instant Tea processing',
  enzyme:'Enzyme processing',
  nutrient:'Microbial nutrient use',
+ nutrient_processing:'Nutrient processing aid',
  mineral_salt:'Mineral salt processing aid'
 };
 
@@ -2355,7 +2367,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=255',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=256',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
@@ -2562,6 +2574,17 @@ function renderProcessingQualifierUI(){
      +'<option value="other"'+(current==='other'?' selected':'')+'>Other</option>'
      +'</select><small>The specific alcoholic-beverage option activates the active-list Urea and DAP routes; general microbial nutrients remain available normally.</small></div>');
    bindings.push(['nutrientProductCategory','nutrient_product_category']);
+ }
+
+ if(selectedProcesses.includes('emulsification')||selectedProcesses.includes('moisture_retention')){
+   const current=String(processingQualifiers.milk_product_scope||'');
+   blocks.push('<div class="field"><label>Milk / milk-product scope for negative-scope permissions</label><select id="milkProductScope">'
+     +'<option value="">Select only if a permission requires this check…</option>'
+     +'<option value="not_milk_or_milk_product"'+(current==='not_milk_or_milk_product'?' selected':'')+'>This food is NOT milk or a milk product</option>'
+     +'<option value="milk_or_milk_product"'+(current==='milk_or_milk_product'?' selected':'')+'>This food IS milk or a milk product</option>'
+     +'<option value="uncertain"'+(current==='uncertain'?' selected':'')+'>Uncertain</option>'
+     +'</select><small>Bone phosphate as emulsifier/moisture-retention agent is permitted for “All foods except milk and milk products”. PMSV unlocks that route only with the first explicit confirmation.</small></div>');
+   bindings.push(['milkProductScope','milk_product_scope']);
  }
 
  if(!blocks.length){
