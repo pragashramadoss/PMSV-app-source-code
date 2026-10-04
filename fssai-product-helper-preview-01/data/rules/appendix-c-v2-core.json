@@ -15,19 +15,20 @@
   "applicability_rule": "Processing aids listed in Tables 1 to 12 may be used only in manufacture of the food specified in the corresponding table and the final food shall not exceed the stated residue level. Product-specific rows remain fail-closed until PMSV has an exact product-category route. 'All foods' rows may auto-apply once the relevant process is selected.",
   "coverage": {
     "tables_total": 12,
-    "tables_loaded": 5,
+    "tables_loaded": 6,
     "loaded_tables": [
       "Table 1 - Antifoaming Agents",
       "Table 2 - Catalyst",
       "Table 3 - Clarifying Agents and Filtration Aids",
       "Table 4 - Lubricants, Release and Antistick Agents",
-      "Table 5 - Microbial Control Agents, Microbial Nutrients and Microbial Nutrient Adjuncts"
+      "Table 5 - Microbial Control Agents, Microbial Nutrients and Microbial Nutrient Adjuncts",
+      "Table 6 - Solvent for Extraction and Processing"
     ],
     "table_1_entries": 9,
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 6 - Solvent for Extraction and Processing",
+    "next_priority": "Table 7 - Bleaching, Washing, Denuding and Peeling Agents",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -35,7 +36,9 @@
     "table_5_entries": 49,
     "table_5_micro_control_entries": 6,
     "table_5_nutrient_entries": 43,
-    "table_5_permission_rows": 51
+    "table_5_permission_rows": 51,
+    "table_6_entries": 26,
+    "table_6_permission_rows": 43
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -1495,6 +1498,426 @@
               "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
               "residual_level": "GMP",
               "runtime_auto_apply": true
+            }
+          ]
+        }
+      ]
+    },
+    "table_6": {
+      "number": 6,
+      "title": "SOLVENT FOR EXTRACTION AND PROCESSING",
+      "process_key": "solvent",
+      "source_pages": [
+        8,
+        9,
+        10
+      ],
+      "entries": [
+        {
+          "s_no": 1,
+          "name": "Acetone",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Flavouring substances",
+              "residual_level_mgkg": 30,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level_mgkg": 30,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Colours",
+              "residual_level_mgkg": 2,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Vegetable oils",
+              "residual_level_mgkg": 0.1,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Other foods",
+              "residual_level_mgkg": 0.1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 2,
+          "name": "Benzyl alcohol",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fatty acids, flavouring substances, colours",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 3,
+          "name": "Butanol",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fatty acids, flavouring substances, colours",
+              "residual_level_mgkg": 10,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level_mgkg": 2,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 4,
+          "name": "Butan-2-ol",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level_mgkg": 2,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 5,
+          "name": "Carbon dioxide",
+          "ins": "290",
+          "permissions": [
+            {
+              "product_category": "Flavouring substances",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 6,
+          "name": "Cyclohexane",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Flavouring substances, vegetable oils",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 7,
+          "name": "Dibutyl ether",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Flavouring substances",
+              "residual_level_mgkg": 2,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 8,
+          "name": "Diethyl ether",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Flavouring substances, colors",
+              "residual_level_mgkg": 2,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level_mgkg": 2,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 9,
+          "name": "Dimethyl ether",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Flavouring substances",
+              "residual_level_mgkg": 2,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 10,
+          "name": "Ethyl acetate",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Flavouring substances",
+              "residual_level_mgkg": 10,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level_mgkg": 50,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 11,
+          "name": "Ethyl alcohol",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Other Foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 12,
+          "name": "Ethylene dichloride (1,2 Dichloroethane)",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level_mgkg": 30,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 13,
+          "name": "Glycerol diacetate",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 14,
+          "name": "Glycerol monoacetate",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "All foods",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true
+            }
+          ]
+        },
+        {
+          "s_no": 15,
+          "name": "Heptane",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Flavouring substances",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Vegetable oils",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ],
+          "source_note": "One merged residual-level cell of 1 mg/kg applies to both printed product-category rows."
+        },
+        {
+          "s_no": 16,
+          "name": "Hexane",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Flavouring substances, vegetable oils",
+              "residual_level_mgkg": 5,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level_mgkg": 25,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Chocolate and chocolate products",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 17,
+          "name": "Isobutane",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Flavouring substances",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Other foods",
+              "residual_level_mgkg": 0.1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 18,
+          "name": "Isopropyl alcohol",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level_mgkg": 50,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Other foods",
+              "residual_level_mgkg": 10,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 19,
+          "name": "Methyl alcohol",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level_mgkg": 50,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 20,
+          "name": "Methylene chloride (Dichloromethane)",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Decaffeinated tea",
+              "residual_level_mgkg": 2,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Decaffeinated coffee",
+              "residual_level_mgkg": 10,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Flavouring substances",
+              "residual_level_mgkg": 2,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level_mgkg": 30,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Vegetable oils",
+              "residual_level_mgkg": 0.02,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 21,
+          "name": "Methyl ethyl ketone (butanone)",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Fatty acids, flavouring substances, colourings, decaffeination of coffee, tea",
+              "residual_level_mgkg": 2,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 22,
+          "name": "Methyl tert-butyl ether",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level_mgkg": 2,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 23,
+          "name": "Propane",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Flavouring substances",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            },
+            {
+              "product_category": "Edible oils",
+              "residual_level_mgkg": 0.1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 24,
+          "name": "Propan-1-ol",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 25,
+          "name": "Toluene",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Flavouring substances",
+              "residual_level_mgkg": 1,
+              "runtime_auto_apply": false
+            }
+          ]
+        },
+        {
+          "s_no": 26,
+          "name": "Water",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Spice oleoresins",
+              "residual_level": "GMP",
+              "runtime_auto_apply": false
             }
           ]
         }
