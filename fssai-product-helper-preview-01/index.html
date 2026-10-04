@@ -2598,14 +2598,14 @@ function renderProductMicrobiology(){
    return;
  }
  if(String(p.category||'')==='10'){
-   el.innerHTML='<div class="notice"><b>Egg products are not routed through Meat Table 5.</b><br>Appendix B has a separate <b>Table 8 — Eggs and Egg Products</b>. PMSV keeps this product locked until that table is loaded.</div>';
+   el.innerHTML='<div class="notice"><b>No stored Appendix B Table 8 route for this egg product.</b><br>PMSV will not infer an egg microbiology category from FCS or product name alone.</div>';
    return;
  }
  if(String(p.category||'')==='08'){
    el.innerHTML='<div class="notice">This meat product has no stored Appendix B Table 5 route. PMSV will not infer one from its name or FCS alone.</div>';
    return;
  }
- el.innerHTML='<div class="notice"><b>Appendix B table for this product is not loaded yet.</b><br>Build 192 contains Fish/Fishery Products (Table 1), Milk/Milk Products (Table 2), Spices/Herbs (Table 3), Fruits/Vegetables (Table 4), and Meat/Meat Products (Table 5). The next ingestion block is Baker\'s Yeast (Table 6A/6B).</div>';
+ el.innerHTML='<div class="notice"><b>Appendix B table for this product is not loaded yet.</b><br>Build 195 contains Tables 1–8: Fish/Fishery Products, Milk/Milk Products, Spices/Herbs, Fruits/Vegetables, Meat/Meat Products, Baker\'s Yeast, Non-Carbonated Water Based Beverages, and Eggs/Egg Products. The next ingestion block is Food Grain Products (Table 9A/9B).</div>';
 }
 async function loadMicrobiologyDb(){
  try{
