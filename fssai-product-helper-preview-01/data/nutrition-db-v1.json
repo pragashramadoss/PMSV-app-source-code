@@ -333,19 +333,23 @@
       "ifct_code": "K002",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · K002 Coconut Water · Tables 1, 5 and 6",
+      "source": "ICMR-NIN IFCT 2017 · K002 Coconut Water · Table 1 (proximate/energy; dietary fibre not reported), Table 5 (sodium), Table 6 (IFCT total free sugars stored separately), Table 7 (total saturated fatty acids)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
+        "energy_kcal",
         "protein_g",
         "carbohydrate_g",
         "total_fat_g",
+        "saturated_fat_g",
         "sodium_mg"
       ],
       "per_100g": {
+        "energy_kcal": 15.296,
         "protein_g": 0.26,
         "carbohydrate_g": 3.16,
         "total_fat_g": 0.16,
+        "saturated_fat_g": 0.09349,
         "sodium_mg": 28.09,
         "ifct_total_free_sugars_g": 3.06
       },
@@ -353,7 +357,13 @@
         "ifct_total_free_sugars_g"
       ],
       "field_notes": {
-        "ifct_total_free_sugars_g": "Direct IFCT Table 6 value. Retained as an ICMR-NIN analytical field but not mapped to FSSAI 'Total Sugars' because equivalence is not explicitly established in the official sources."
+        "dietary_fibre_g": "IFCT Table 1 does not report dietary fibre for this food; field remains unverified and is not treated as zero.",
+        "ifct_total_free_sugars_g": "Direct IFCT Table 6 value. Not mapped to FSSAI Total Sugars.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       }
     },
     {
@@ -13585,6 +13595,47 @@
         "ifct_total_free_sugars_g": 0.68,
         "dietary_fibre_g": 39.12
       }
+    },
+    {
+      "names": [
+        "toddy"
+      ],
+      "display_name": "Toddy",
+      "ifct_code": "K001",
+      "source_type": "ICMR-NIN IFCT 2017 exact food profile",
+      "source_authority": "ICMR-NIN",
+      "source": "ICMR-NIN IFCT 2017 · K001 Toddy · Table 1 (proximate/energy; dietary fibre not reported), Table 5 (sodium), Table 6 (IFCT total free sugars stored separately), Table 7 (total saturated fatty acids)",
+      "active_for_calculation": true,
+      "verification_status": "partial_verified_ifct_profile",
+      "verified_fields": [
+        "energy_kcal",
+        "protein_g",
+        "carbohydrate_g",
+        "total_fat_g",
+        "saturated_fat_g",
+        "sodium_mg"
+      ],
+      "auxiliary_verified_fields": [
+        "ifct_total_free_sugars_g"
+      ],
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
+      },
+      "field_notes": {
+        "dietary_fibre_g": "IFCT Table 1 does not report dietary fibre for this food; field remains unverified and is not treated as zero.",
+        "ifct_total_free_sugars_g": "Direct IFCT Table 6 value. Not mapped to FSSAI Total Sugars.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "per_100g": {
+        "energy_kcal": 24.14,
+        "protein_g": 0.18,
+        "carbohydrate_g": 5.72,
+        "total_fat_g": 0.03,
+        "saturated_fat_g": 0.03065,
+        "sodium_mg": 1.64,
+        "ifct_total_free_sugars_g": 5.73
+      }
     }
   ],
   "source_policy": {
@@ -13604,8 +13655,8 @@
     "locked_non_icmr_starter_profiles": 7,
     "ifct_master_ingestion": "pending",
     "source_verified_on": "2026-10-03",
-    "ifct_exact_profiles_loaded": 313,
-    "ifct_partial_profiles_loaded": 313,
+    "ifct_exact_profiles_loaded": 314,
+    "ifct_partial_profiles_loaded": 314,
     "field_level_fail_closed": true,
     "refined_sucrose_not_in_ifct_food_list": true,
     "ifct_groups_started": [
@@ -13623,7 +13674,7 @@
     "saturated_fat_field_enabled_from_ifct_table_7": true,
     "ifct_cereal_metadata_correction": "Build 270 corrected earlier 18-entry completion marker after identifying A019-A024.",
     "ifct_grain_legume_entries_total": 25,
-    "ifct_total_free_sugars_profiles_stored_separately": 313,
+    "ifct_total_free_sugars_profiles_stored_separately": 314,
     "fssai_total_sugars_from_ifct_table6_auto_mapping": false,
     "sugar_semantic_fail_closed_build": 274,
     "ifct_green_leafy_entries_loaded": 34,
@@ -13668,7 +13719,10 @@
     "ifct_sugars_stage": "I001_to_I002_complete_for_tables_1_5_6_7_with_field_level_gaps",
     "ifct_mushrooms_entries_loaded": 4,
     "ifct_mushrooms_entries_total": 4,
-    "ifct_mushrooms_stage": "J001_to_J004_complete_for_tables_1_5_6_7"
+    "ifct_mushrooms_stage": "J001_to_J004_complete_for_tables_1_5_6_7",
+    "ifct_miscellaneous_entries_loaded": 2,
+    "ifct_miscellaneous_entries_total": 2,
+    "ifct_miscellaneous_stage": "K001_to_K002_complete_for_tables_1_5_6_7_with_field_level_fibre_gaps"
   },
   "last_verified": "2026-10-04",
   "required_label_fields": [
