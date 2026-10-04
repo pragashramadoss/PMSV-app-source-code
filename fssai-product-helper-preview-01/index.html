@@ -2372,7 +2372,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=258',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=259',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateEnzymeSelector();
@@ -2646,6 +2646,8 @@ function renderProcessingAids(){
  const selectedProcessRules=processingAidRules.filter(x=>selectedProcesses.includes(x.process));
  const rules=selectedProcessRules.filter(processingAidRuleAutoApplicable);
  const lockedProductSpecific=selectedProcessRules.filter(x=>!processingAidRuleAutoApplicable(x));
+ const unresolvedOfficialBlankResidue=lockedProductSpecific.filter(x=>['Vitamin B12','Vitamin C'].includes(String(x.name||'')));
+ const otherLockedProductSpecific=lockedProductSpecific.filter(x=>!['Vitamin B12','Vitamin C'].includes(String(x.name||'')));
  const messages=[];
  if(selectedProcesses.includes('water'))messages.push('<tr><td><b>Water treatment</b></td><td>Process selected</td><td>No processing aid is automatically assigned solely from this selection. Only an aid with an applicable final Appendix C permission should be activated.</td><td>Appendix C applicability check</td></tr>');
  if(selectedProcesses.includes('enzyme')){
@@ -2660,7 +2662,12 @@ function renderProcessingAids(){
      messages.push('<tr><td><b>Enzyme processing</b></td><td>Additional input required</td><td>Select either a complete non-GMM Table 11 enzyme/source pair or a complete GMM Table 11A enzyme/organism-source variant.</td><td>Appendix C · Tables 11 / 11A</td></tr>');
    }
  }
- if(selectedProcesses.includes('nutrient'))messages.push('<tr><td><b>Microbial nutrient use</b></td><td>Table 5 nutrient/adjunct permissions activated</td><td>Shown because a microbial-culture nutrient process was selected. These are GMP permissions for sustaining microbial growth, not ingredients that must be used.</td><td>Appendix C · Table 5</td></tr>');
+ if(selectedProcesses.includes('nutrient')){
+   messages.push('<tr><td><b>Microbial nutrient use</b></td><td>Table 5 nutrient/adjunct permissions activated</td><td>Shown because a microbial-culture nutrient process was selected. These are GMP permissions for sustaining microbial growth, not ingredients that must be used.</td><td>Appendix C · Table 5</td></tr>');
+   unresolvedOfficialBlankResidue.forEach(x=>{
+     messages.push('<tr><td><b>'+esc(x.name)+'</b></td><td>Official FSSAI row present · assessment withheld</td><td><b>Residue level not stated in the official source.</b><br><small>FSSAI lists this processing aid as Microbial nutrient · All foods, but the residue-level field is blank in both Appendix C and the Section 16(5) active list. PMSV therefore does not infer GMP or another limit.</small></td><td>'+esc(x.source||'Appendix C · Table 12')+'</td></tr>');
+   });
+ }
  if(selectedProcesses.includes('catalyst'))messages.push('<tr><td><b>Catalyst route</b></td><td>Appendix C Table 2 loaded</td><td>All catalyst permissions are product-specific. PMSV will not activate a catalyst until the finished product is exactly mapped to Polyols, Hardened oil, Hydrogenated vegetable oil or Interesterified vegetable oil as stated by FSSAI.</td><td>Appendix C · Table 2</td></tr>');
  if(selectedProcesses.includes('contact_freezing')){
    const p=selectedCatalogProductForProcessing();
@@ -2669,12 +2676,12 @@ function renderProcessingAids(){
      if(form!=='ice_cream')messages.push('<tr><td><b>Contact-freezing route</b></td><td>Finished form confirmation required</td><td>Liquid Nitrogen is permitted at GMP for dairy-based desserts — Ice cream. Choose <b>Ice Cream</b> in Processing detail required; other products in the combined FoSCoS row remain locked.</td><td>Appendix C · Table 9</td></tr>');
    }
  }
- if(lockedProductSpecific.length)messages.push('<tr><td><b>Product-specific permissions withheld</b></td><td>'+lockedProductSpecific.length+' selected-process row'+(lockedProductSpecific.length===1?'':'s')+' require an exact product-category gate</td><td>PMSV is failing closed instead of showing these permissions for every selected product.</td><td>Appendix C applicability control</td></tr>');
+ if(otherLockedProductSpecific.length)messages.push('<tr><td><b>Product-specific permissions withheld</b></td><td>'+otherLockedProductSpecific.length+' selected-process row'+(otherLockedProductSpecific.length===1?'':'s')+' require an exact product-category gate</td><td>PMSV is failing closed instead of showing these permissions for every selected product.</td><td>Appendix C applicability control</td></tr>');
  body.innerHTML=rules.map(x=>'<tr><td><b>'+esc(x.name)+'</b><br><small>INS '+esc(x.ins)+'</small></td><td>'+esc(x.purpose)+'</td><td><b>'+esc(x.condition)+'</b></td><td>'+esc(x.source)+'</td></tr>').join('')+messages.join('');
  const total=rules.length+messages.length;
  if(empty)empty.classList.toggle('hidden',selectedProcesses.length>0);
  if(results)results.classList.toggle('hidden',selectedProcesses.length===0);
- if(count)count.textContent=total+' applicable processing-aid / process-result row'+(total===1?'':'s')+' shown for the selected process set';
+ if(count)count.textContent=total+' processing-aid / regulatory-status row'+(total===1?'':'s')+' shown for the selected process set';
 }
 document.querySelectorAll('#processGrid input[type="checkbox"]').forEach(cb=>cb.addEventListener('change',()=>{
  cb.closest('.process-option')?.classList.toggle('selected',cb.checked);
