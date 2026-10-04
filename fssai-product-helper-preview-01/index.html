@@ -435,7 +435,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="filtration"><b>Filtration / clarification</b><small>Removal of suspended matter or filtration of the beverage.</small></label>
 <label class="process-option"><input type="checkbox" value="microbial"><b>Microbial control treatment</b><small>Use of a processing aid to control microorganisms.</small></label>
 <label class="process-option"><input type="checkbox" value="antifoam"><b>Antifoaming</b><small>Control of foam during liquid processing.</small></label>
-<label class="process-option"><input type="checkbox" value="catalyst"><b>Catalysis / hydrogenation / interesterification</b><small>Appendix C Table 2 catalysts; product-specific permissions remain locked until the exact finished-product route is established.</small></label>
+<label class="process-option"><input type="checkbox" value="catalyst"><b>Catalysis / hydrogenation / interesterification</b><small>Appendix C Table 2 catalysts; exact catalogue matching applies, with an additional explicit qualifier where the official category is Hardened oil.</small></label>
 <label class="process-option"><input type="checkbox" value="ph"><b>pH control / acidification</b><small>Processing-aid use for pH adjustment or acidulation.</small></label>
 <label class="process-option"><input type="checkbox" value="gas"><b>Carbonation / gassing / packaging gas</b><small>Gassing, aeration or inert-gas use during processing/packing.</small></label>
 <label class="process-option"><input type="checkbox" value="solvent"><b>Extraction / solvent processing</b><small>Use of a solvent during extraction or processing of ingredients.</small></label>
@@ -2340,7 +2340,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=249',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=250',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    populateGmmEnzymeSelector();
@@ -2412,6 +2412,16 @@ function renderProcessingQualifierUI(){
      +'<option value="dried_mix"'+(current==='dried_mix'?' selected':'')+'>Dried Ice Cream Mix</option>'
      +'</select><small>Appendix C Table 9 currently says “Dairy-based desserts — Ice cream”. PMSV therefore does not extend the permission to the other products combined in the FoSCoS row.</small></div>');
    bindings.push(['contactFreezingProductForm','contact_freezing_product_form']);
+ }
+
+ if(selectedProcesses.includes('catalyst')){
+   const current=String(processingQualifiers.catalyst_product_category||'');
+   blocks.push('<div class="field"><label>Exact product category for catalyst use</label><select id="catalystProductCategory">'
+     +'<option value="">Use selected PMSV product / choose if specifically applicable…</option>'
+     +'<option value="hardened_oil"'+(current==='hardened_oil'?' selected':'')+'>Hardened oil</option>'
+     +'<option value="other"'+(current==='other'?' selected':'')+'>Other / not Hardened oil</option>'
+     +'</select><small>Select Hardened oil only when that is the actual Appendix C product category. PMSV does not infer Hardened oil from Vanaspati, Bakery shortening or another hydrogenated oil identity.</small></div>');
+   bindings.push(['catalystProductCategory','catalyst_product_category']);
  }
 
  if(selectedProcesses.includes('washing')){
