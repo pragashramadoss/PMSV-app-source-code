@@ -39,15 +39,15 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Audit Section 16(5) additions to existing Table 12 rows, then reconcile the remaining 8 fail-closed permissions: Table 6 Colours/Other foods, Bone phosphate negative scope, Vitamin B12 and Vitamin C blank-residue rows.",
-    "table_3_entries": 15,
-    "table_3_permission_rows": 15,
-    "table_4_entries": 26,
-    "table_4_permission_rows": 26,
-    "table_5_entries": 49,
-    "table_5_micro_control_entries": 6,
-    "table_5_nutrient_entries": 43,
-    "table_5_permission_rows": 51,
+    "next_priority": "Reconcile Table 6 Food Colour/Isobutyl acetate changes against the final 2025 amendment effective 1 February 2026, then finish Bone phosphate and blank-residue Vitamin B12/Vitamin C handling.",
+    "table_3_entries": 16,
+    "table_3_permission_rows": 18,
+    "table_4_entries": 27,
+    "table_4_permission_rows": 27,
+    "table_5_entries": 56,
+    "table_5_micro_control_entries": 7,
+    "table_5_nutrient_entries": 49,
+    "table_5_permission_rows": 58,
     "table_6_entries": 26,
     "table_6_permission_rows": 45,
     "table_7_entries": 16,
@@ -89,13 +89,13 @@
       "table_7_hydrogen_peroxide_effective_residual": "5 mg/kg as hydrogen peroxide"
     },
     "appendix_c_product_gate_audit_status": "exact_gate_pass_5_process_routes",
-    "appendix_c_product_gated_permissions": 122,
-    "appendix_c_product_gate_id_links": 308,
+    "appendix_c_product_gated_permissions": 129,
+    "appendix_c_product_gate_id_links": 312,
     "appendix_c_product_gate_rule_key_links": 29,
     "appendix_c_product_gate_policy": "Only exact catalogue IDs, exact FSSAI rule keys, or exact process gates can auto-activate product-specific permissions. Mixed-category permissions may contain only a verified subset; all other scope remains fail-closed.",
-    "appendix_c_product_gate_reachable_permissions": 69,
+    "appendix_c_product_gate_reachable_permissions": 76,
     "appendix_c_product_gate_unreachable_permissions": 0,
-    "appendix_c_product_gate_regression_status": "passed_after_section_16_5_table_12_expansion_2026-10-04",
+    "appendix_c_product_gate_regression_status": "passed_after_section_16_5_tables_1_3_4_5_expansion_2026-10-04",
     "appendix_c_product_gate_regression": {
       "invalid_product_ids": 0,
       "invalid_rule_keys": 0,
@@ -113,8 +113,8 @@
       ]
     },
     "appendix_c_permission_gate_counts": {
-      "auto_apply_permissions": 100,
-      "exact_gated_permissions": 169,
+      "auto_apply_permissions": 104,
+      "exact_gated_permissions": 176,
       "remaining_fail_closed_permissions": 8,
       "remaining_fail_closed_by_table": {
         "6": 5,
@@ -122,21 +122,21 @@
       }
     },
     "appendix_c_product_gate_remaining_fail_closed": 8,
-    "appendix_c_product_gated_or_auto_permissions": 269,
+    "appendix_c_product_gated_or_auto_permissions": 280,
     "table_2_catalyst_product_gate_status": "hydrogenated_and_interesterified_foscos_products_mapped",
     "table_2_hardened_oil_status": "fail_closed_identity_unresolved",
     "table_6_decaffeination_status": "tea_and_coffee_exact_process_gates_loaded",
     "table_9_liquid_nitrogen_status": "official_section_16_5_active_list_all_foods_gmp",
     "table_6_mek_decaffeination_route": "loaded_same_source_row",
     "appendix_c_intentional_fail_closed_permissions": 8,
-    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_252",
+    "appendix_c_fail_closed_audit_status": "classified_2026-10-04_build_253",
     "appendix_c_fail_closed_policy": "Remaining rows are explicitly classified and may be unlocked only by an exact operative FSSAI/FoSCoS product identity, an exact source-text correction, or a deterministic exclusion/qualifier model.",
     "appendix_c_final_runtime_regression_status": "passed_2026-10-04",
     "appendix_c_final_runtime_regression": {
-      "source_permission_rows": 277,
-      "runtime_route_projections": 5,
-      "auto_apply_permission_rows": 100,
-      "exact_gated_permission_rows": 169,
+      "source_permission_rows": 288,
+      "runtime_route_projections": 9,
+      "auto_apply_permission_rows": 104,
+      "exact_gated_permission_rows": 176,
       "intentional_fail_closed_permission_rows": 8,
       "unclassified_permission_rows": 0,
       "invalid_product_ids": 0,
@@ -267,7 +267,12 @@
       "raising_agent_qualifiers": "pass",
       "flavouring_qualifiers": "pass",
       "cellulose_wax_filtration_qualifier": "pass",
-      "sugar_treatment_route": "pass"
+      "sugar_treatment_route": "pass",
+      "pdms_sugar_processing": "pass",
+      "table_3_sugar_treatment_routes": "pass",
+      "sulphur_dioxide_sugar_limits": "pass",
+      "rapeseed_oil_release_gate": "pass",
+      "table_5_active_list_additions_6a_50_55": "pass"
     },
     "table_9_liquid_nitrogen_scope": "All Foods"
   },
@@ -351,7 +356,7 @@
           "ins": "900a",
           "permissions": [
             {
-              "product_category": "Beer, fats & oils, vegetable protein, juices, potato processing, alcoholic beverages",
+              "product_category": "Beer, fats & oils, vegetable protein, juices, potato processing, alcoholic beverages, Sugar processing",
               "residual_level_mgkg": 10,
               "runtime_auto_apply": false,
               "product_ids": [
@@ -387,7 +392,15 @@
                 "14-14-2-honey-wine-or-mead"
               ],
               "product_gate_status": "verified_exact_catalogue_subset",
-              "product_gate_note": "Verified subset only; fats/oils and potato processing stay locked."
+              "product_gate_note": "Verified subset only; fats/oils and potato processing stay locked.",
+              "runtime_routes": [
+                {
+                  "process_key": "sugar_treatment",
+                  "route_label": "Sugar processing",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "source_note": "Version 2 base route plus official FSSAI Section 16(5) active-list Sugar processing permission."
             }
           ]
         },
@@ -1130,14 +1143,22 @@
           "ins": "529",
           "permissions": [
             {
-              "product_category": "Preparation of Corn Flour",
+              "product_category": "Preparation of Corn Flour; Sugar processing/Treatment",
               "residual_level": "GMP",
               "runtime_auto_apply": false,
               "rule_keys": [
                 "2.4.21"
               ],
               "product_gate_status": "verified_exact_rule_key",
-              "product_gate_note": "Exact Whole Maize (Corn) Flour standard."
+              "product_gate_note": "Exact Whole Maize (Corn) Flour standard.",
+              "runtime_routes": [
+                {
+                  "process_key": "sugar_treatment",
+                  "route_label": "Sugar processing/Treatment",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "source_note": "Version 2 Preparation of Corn Flour route plus official Section 16(5) Sugar processing/Treatment route."
             }
           ]
         },
@@ -1147,7 +1168,7 @@
           "ins": "338",
           "permissions": [
             {
-              "product_category": "Sugar",
+              "product_category": "Sugar; Sugar Treatment",
               "residual_level": "GMP",
               "runtime_auto_apply": false,
               "product_ids": [
@@ -1159,9 +1180,75 @@
                 "11-11-1-cube-sugar"
               ],
               "product_gate_status": "verified_exact_catalogue_subset",
-              "product_gate_note": "Exact standardized Chapter 2.8 sugar identities."
+              "product_gate_note": "Exact standardized Chapter 2.8 sugar identities.",
+              "runtime_routes": [
+                {
+                  "process_key": "sugar_treatment",
+                  "route_label": "Sugar Treatment",
+                  "runtime_auto_apply": true
+                }
+              ],
+              "source_note": "Version 2 Sugar route plus official Section 16(5) Sugar Treatment route."
             }
           ]
+        },
+        {
+          "s_no": 16,
+          "name": "Sulphur Dioxide",
+          "ins": "220",
+          "permissions": [
+            {
+              "product_category": "Plantation White Sugar, Cube Sugar, Dextrose, Gur, Jaggery, Misri",
+              "residual_level_mgkg": 70,
+              "runtime_auto_apply": false,
+              "process_key": "filtration",
+              "product_ids": [
+                "11-11-1-plantation-white-sugar",
+                "11-11-1-cube-sugar",
+                "11-11-1-dextrose",
+                "11-11-1-gur-or-jaggery",
+                "11-11-1-cane-jaggery-or-cane-gur",
+                "11-11-1-misri"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset",
+              "product_gate_note": "Exact PMSV standardized sugar identities matching the active-list category."
+            },
+            {
+              "product_category": "Khandsari (Sulphur) and Bura",
+              "residual_level_mgkg": 150,
+              "runtime_auto_apply": false,
+              "process_key": "filtration",
+              "product_ids": [
+                "11-11-1-bura-sugar"
+              ],
+              "runtime_routes": [
+                {
+                  "process_key": "filtration",
+                  "route_label": "Khandsari (Sulphur)",
+                  "runtime_auto_apply": false,
+                  "product_ids": [
+                    "11-11-1-khandsari-sugar"
+                  ],
+                  "qualifier_key": "sugar_variant",
+                  "qualifier_value": "khandsari_sulphur"
+                }
+              ],
+              "product_gate_status": "verified_exact_catalogue_plus_qualifier",
+              "product_gate_note": "Bura is exact. Khandsari requires explicit confirmation that the product is the Sulphur variant."
+            },
+            {
+              "product_category": "Refined Sugar",
+              "residual_level_mgkg": 40,
+              "runtime_auto_apply": false,
+              "process_key": "filtration",
+              "product_ids": [
+                "11-11-1-refined-sugar"
+              ],
+              "product_gate_status": "verified_exact_catalogue_subset"
+            }
+          ],
+          "process_key": "filtration",
+          "source_note": "Official FSSAI Section 16(5) active processing-aids list."
         }
       ],
       "audit_status": "verified_current_version_2",
@@ -2106,6 +2193,24 @@
               "product_gate_note": "Exact PMSV snack/savoury family under FCS 18.2."
             }
           ]
+        },
+        {
+          "s_no": 28,
+          "name": "Rapeseed Oil",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Confectionery including Chewing and Bubble Gum and Bakery",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "release",
+              "qualifier_key": "release_product_category",
+              "qualifier_value": "confectionery_or_bakery",
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Activated only when the user confirms the active-list product category Confectionery (including chewing/bubble gum) or Bakery."
+            }
+          ],
+          "source_note": "Official FSSAI Section 16(5) active processing-aids list."
         }
       ],
       "source_note": "Serial number 25 is not present in the Version 2 Table 4 text; PMSV preserves the official numbering and does not create a row 25.",
@@ -2554,6 +2659,23 @@
               "product_gate_note": "Exact fresh/chilled raw meat and poultry catalogue identities under FCS 08.1."
             }
           ]
+        },
+        {
+          "s_no": "6a",
+          "name": "Quaternary Ammonium Compound",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Sugar Treatment",
+              "residual_level": "GMP",
+              "runtime_auto_apply": true,
+              "process_key": "sugar_treatment",
+              "product_gate_status": "process_exact",
+              "product_gate_note": "The official applicability category is Sugar Treatment itself."
+            }
+          ],
+          "process_key": "sugar_treatment",
+          "source_note": "Official FSSAI Section 16(5) active processing-aids list."
         },
         {
           "s_no": 7,
@@ -3113,6 +3235,112 @@
               "runtime_auto_apply": true
             }
           ]
+        },
+        {
+          "s_no": 50,
+          "name": "Potassium Chloride",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "runtime_auto_apply": true,
+              "process_key": "nutrient",
+              "product_gate_status": "process_exact",
+              "product_gate_note": "The microbial-nutrient process selection is the applicability gate.",
+              "residual_level": "GMP"
+            }
+          ],
+          "process_key": "nutrient",
+          "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+        },
+        {
+          "s_no": 51,
+          "name": "Magnesium Sulphate",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "runtime_auto_apply": true,
+              "process_key": "nutrient",
+              "product_gate_status": "process_exact",
+              "product_gate_note": "The microbial-nutrient process selection is the applicability gate.",
+              "residual_level": "GMP"
+            }
+          ],
+          "process_key": "nutrient",
+          "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+        },
+        {
+          "s_no": 52,
+          "name": "Alanine",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "runtime_auto_apply": true,
+              "process_key": "nutrient",
+              "product_gate_status": "process_exact",
+              "product_gate_note": "The microbial-nutrient process selection is the applicability gate.",
+              "residual_level": "GMP"
+            }
+          ],
+          "process_key": "nutrient",
+          "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+        },
+        {
+          "s_no": 53,
+          "name": "Plant Polypeptides",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrients and microbial nutrient adjuncts for sustaining microbial growth",
+              "runtime_auto_apply": true,
+              "process_key": "nutrient",
+              "product_gate_status": "process_exact",
+              "product_gate_note": "The microbial-nutrient process selection is the applicability gate.",
+              "residual_level": "GMP"
+            }
+          ],
+          "process_key": "nutrient",
+          "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+        },
+        {
+          "s_no": 54,
+          "name": "Urea for Distilled Spirituous Alcoholic Beverages and Aromatized Alcoholic Beverages",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrient for Distilled Spirituous Alcoholic Beverages and Aromatized Alcoholic Beverages",
+              "runtime_auto_apply": true,
+              "process_key": "nutrient",
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Activated only when the user explicitly confirms the active-list alcoholic-beverage category.",
+              "residual_level": "GMP",
+              "qualifier_key": "nutrient_product_category",
+              "qualifier_value": "distilled_or_aromatized_alcoholic_beverages"
+            }
+          ],
+          "process_key": "nutrient",
+          "source_note": "Official FSSAI Section 16(5) active processing-aids list."
+        },
+        {
+          "s_no": 55,
+          "name": "Di-Ammonium Phosphate (DAP)",
+          "ins": "342(ii)",
+          "permissions": [
+            {
+              "product_category": "Microbial nutrient for Distilled Spirituous Alcoholic Beverages and Aromatized Alcoholic Beverages",
+              "runtime_auto_apply": true,
+              "process_key": "nutrient",
+              "product_gate_status": "verified_exact_runtime_qualifier",
+              "product_gate_note": "Activated only when the user explicitly confirms the active-list alcoholic-beverage category.",
+              "residual_level_mgkg": 440,
+              "qualifier_key": "nutrient_product_category",
+              "qualifier_value": "distilled_or_aromatized_alcoholic_beverages"
+            }
+          ],
+          "process_key": "nutrient",
+          "source_note": "Official FSSAI Section 16(5) active processing-aids list."
         }
       ],
       "audit_status": "verified_current_version_2",
