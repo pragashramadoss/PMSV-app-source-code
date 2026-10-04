@@ -943,7 +943,7 @@
       "source_version": "Version 2 (04.11.2024)",
       "status": "tables_1_to_3_complete",
       "main_table_groups_total": 11,
-      "main_table_groups_loaded": 3,
+      "main_table_groups_loaded": 4,
       "fish_product_categories_loaded": 16,
       "fish_exact_product_mappings": 18,
       "fish_conditional_product_mappings": 4,
@@ -957,7 +957,13 @@
       "spice_microbiology_profiles_loaded": 5,
       "spice_exact_product_mappings": 10,
       "spice_conditional_product_mappings": 33,
-      "spice_no_direct_table_mapping": 3
+      "spice_no_direct_table_mapping": 3,
+      "fruit_source_categories_loaded": 9,
+      "fruit_runtime_profiles_loaded": 12,
+      "fruit_exact_product_mappings": 7,
+      "fruit_conditional_product_mappings": 19,
+      "fruit_no_direct_table_mapping": 4,
+      "next_priority": "Table 5A/5B - Meat and Meat Products"
     }
   },
   "source_hierarchy": [
@@ -1278,7 +1284,36 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B uses different rows according to the actual juice process.",
+      "microbiology_candidates": [
+        {
+          "condition": "Non-thermally processed and packaged juice",
+          "profile_key": "fruit-02-liquid"
+        },
+        {
+          "condition": "Pasteurized juice · pH 4.4 or above / pH not established",
+          "profile_key": "fruit-04a"
+        },
+        {
+          "condition": "Pasteurized juice · pH below 4.4",
+          "profile_key": "fruit-04a",
+          "exclude_criteria": [
+            "listeria_monocytogenes"
+          ],
+          "message": "Appendix B footnote 4 allows Listeria testing to be excluded where pH is below 4.4."
+        },
+        {
+          "condition": "Thermally processed (non-retort)",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        }
+      ]
     },
     {
       "id": "fruit-juice-preserved-industrial",
@@ -1340,7 +1375,36 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B uses different rows according to the actual juice process.",
+      "microbiology_candidates": [
+        {
+          "condition": "Non-thermally processed and packaged juice",
+          "profile_key": "fruit-02-liquid"
+        },
+        {
+          "condition": "Pasteurized juice · pH 4.4 or above / pH not established",
+          "profile_key": "fruit-04a"
+        },
+        {
+          "condition": "Pasteurized juice · pH below 4.4",
+          "profile_key": "fruit-04a",
+          "exclude_criteria": [
+            "listeria_monocytogenes"
+          ],
+          "message": "Appendix B footnote 4 allows Listeria testing to be excluded where pH is below 4.4."
+        },
+        {
+          "condition": "Thermally processed (non-retort)",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        }
+      ]
     },
     {
       "id": "tomato-juice",
@@ -1536,7 +1600,25 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product is thermally processed, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "carbonated-water",
@@ -1666,7 +1748,25 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product is thermally processed, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "ginger-cocktail",
@@ -1722,7 +1822,29 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; the actual preservation/thermal process must be selected.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "crush",
@@ -1750,7 +1872,29 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; the actual preservation/thermal process must be selected.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "fruit-syrup-sharbat",
@@ -1778,7 +1922,29 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; the actual preservation/thermal process must be selected.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "cordial",
@@ -1806,7 +1972,29 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; the actual preservation/thermal process must be selected.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "barley-water",
@@ -1924,7 +2112,10 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "Product identity is a powdered fruit-based beverage/mix; Appendix B Table 4 'Dehydrated or dried' applies."
     },
     {
       "id": "carbonated-fruit-beverages",
@@ -1952,7 +2143,24 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Carbonated Fruit Beverages have a direct Table 4 row, but Listeria applicability depends on pH 4.4.",
+      "microbiology_candidates": [
+        {
+          "condition": "pH 4.4 or above / pH not established",
+          "profile_key": "fruit-04b"
+        },
+        {
+          "condition": "pH below 4.4",
+          "profile_key": "fruit-04b",
+          "exclude_criteria": [
+            "listeria_monocytogenes"
+          ],
+          "message": "Appendix B footnote 4 allows Listeria testing to be excluded where pH is below 4.4."
+        }
+      ]
     },
     {
       "id": "tea",
@@ -6249,7 +6457,10 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Vanilla is a spice/herb identity and Appendix B Table 4 is not assigned solely because the standard sits in Chapter 2.3; PMSV preserves the more specific microbiology-route question."
     },
     {
       "id": "04-04-1-cut-vanilla",
@@ -6283,7 +6494,10 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Vanilla is a spice/herb identity and Appendix B Table 4 is not assigned solely because the standard sits in Chapter 2.3."
     },
     {
       "id": "04-04-1-frozen-fruits-fruit-products",
@@ -6317,7 +6531,10 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-05",
+      "microbiology_note": "Exact frozen fruit/product identity."
     },
     {
       "id": "04-04-1-dehydrated-fruits",
@@ -6351,7 +6568,10 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "Exact dehydrated fruit identity."
     },
     {
       "id": "04-04-1-desiccated-coconut",
@@ -6385,7 +6605,10 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "Desiccated Coconut is a dried/dehydrated fruit product."
     },
     {
       "id": "04-04-1-groundnut-kernel-deshelled",
@@ -6677,7 +6900,25 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "04-04-1-thermally-processed-fruit-salad-cocktail-mix",
@@ -6711,7 +6952,25 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "04-04-1-jams-fruit-jellies-and-marmalades",
@@ -6745,7 +7004,29 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; this product name alone does not determine whether the applicable route is preserved/acidified, thermally processed or retort processed.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / pickled / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "04-04-1-fruit-cheese",
@@ -6779,7 +7060,29 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; this product name alone does not determine whether the applicable route is preserved/acidified, thermally processed or retort processed.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / pickled / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "04-04-1-fruits-and-vegetable-chutney",
@@ -6813,7 +7116,29 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; this product name alone does not determine whether the applicable route is preserved/acidified, thermally processed or retort processed.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / pickled / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "04-04-1-mango-chutney",
@@ -7413,7 +7738,10 @@
         "2.3.50"
       ],
       "chapter_rule_variant": "Vanilla powder",
-      "chapter_rule_route_note": "Vanilla powder is an explicit variant inside the loaded 2.3.50 Vanilla rule object."
+      "chapter_rule_route_note": "Vanilla powder is an explicit variant inside the loaded 2.3.50 Vanilla rule object.",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Vanilla powder is not automatically treated as a generic dried fruit/vegetable product because it is a spice/herb identity."
     },
     {
       "id": "04-04-1-edible-dried-seeds-obtained-from-fruits",
@@ -7475,7 +7803,10 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-05",
+      "microbiology_note": "Exact frozen vegetable identity."
     },
     {
       "id": "04-04-2-quick-frozen-fungi",
@@ -7537,7 +7868,10 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "Exact dehydrated vegetable identity."
     },
     {
       "id": "04-04-2-dried-fungi",
@@ -7823,7 +8157,25 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "04-04-2-canned-tomatoes",
@@ -7885,7 +8237,25 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "04-04-2-sterilized-fungi",
@@ -8171,7 +8541,10 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-05",
+      "microbiology_note": "Exact frozen processed-vegetable identity."
     },
     {
       "id": "04-04-2-quick-frozen-fried-potatoes",
@@ -8364,7 +8737,25 @@
         "2.3.61"
       ],
       "chapter_rule_variant": "Canned chestnuts",
-      "chapter_rule_route_note": "Canned chestnuts are an explicit variant inside the loaded 2.3.61 rule object."
+      "chapter_rule_route_note": "Canned chestnuts are an explicit variant inside the loaded 2.3.61 rule object.",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "04-04-2-canned-chestnut-puree",
@@ -8404,7 +8795,25 @@
         "2.3.61"
       ],
       "chapter_rule_variant": "Canned chestnut puree",
-      "chapter_rule_route_note": "Canned chestnut puree is an explicit variant inside the loaded 2.3.61 rule object."
+      "chapter_rule_route_note": "Canned chestnut puree is an explicit variant inside the loaded 2.3.61 rule object.",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "04-04-2-edible-dried-seeds-obtained-from-vegetables",
@@ -16763,7 +17172,10 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 does not expressly identify Vegetable Protein Products as one of its fruit/vegetable process categories."
     },
     {
       "id": "13-13-1-infant-formula",
@@ -20054,7 +20466,24 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product is fermented; Appendix B footnote 3 changes Yeast and Mold Count applicability when the fermentation itself uses yeast/mould.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermentation involves yeast/mould",
+          "profile_key": "fruit-03",
+          "exclude_criteria": [
+            "yeast_and_mold_count"
+          ],
+          "message": "Appendix B footnote 3: the respective Yeast and Mold Count criterion does not apply when fermentation involves yeast/mould."
+        },
+        {
+          "condition": "Fermented without yeast/mould involvement established",
+          "profile_key": "fruit-03"
+        }
+      ]
     }
   ],
   "rule_profile_schema": {
@@ -20564,7 +20993,36 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B uses different rows according to the actual juice process.",
+      "microbiology_candidates": [
+        {
+          "condition": "Non-thermally processed and packaged juice",
+          "profile_key": "fruit-02-liquid"
+        },
+        {
+          "condition": "Pasteurized juice · pH 4.4 or above / pH not established",
+          "profile_key": "fruit-04a"
+        },
+        {
+          "condition": "Pasteurized juice · pH below 4.4",
+          "profile_key": "fruit-04a",
+          "exclude_criteria": [
+            "listeria_monocytogenes"
+          ],
+          "message": "Appendix B footnote 4 allows Listeria testing to be excluded where pH is below 4.4."
+        },
+        {
+          "condition": "Thermally processed (non-retort)",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        }
+      ]
     },
     {
       "id": "fruit-juice-preserved-industrial",
@@ -20596,7 +21054,36 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B uses different rows according to the actual juice process.",
+      "microbiology_candidates": [
+        {
+          "condition": "Non-thermally processed and packaged juice",
+          "profile_key": "fruit-02-liquid"
+        },
+        {
+          "condition": "Pasteurized juice · pH 4.4 or above / pH not established",
+          "profile_key": "fruit-04a"
+        },
+        {
+          "condition": "Pasteurized juice · pH below 4.4",
+          "profile_key": "fruit-04a",
+          "exclude_criteria": [
+            "listeria_monocytogenes"
+          ],
+          "message": "Appendix B footnote 4 allows Listeria testing to be excluded where pH is below 4.4."
+        },
+        {
+          "condition": "Thermally processed (non-retort)",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        }
+      ]
     },
     {
       "id": "tomato-juice",
@@ -20701,7 +21188,25 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product is thermally processed, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "carbonated-water",
@@ -20784,7 +21289,25 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product is thermally processed, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "ginger-cocktail",
@@ -20814,7 +21337,29 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; the actual preservation/thermal process must be selected.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "crush",
@@ -20829,7 +21374,29 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; the actual preservation/thermal process must be selected.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "fruit-syrup-sharbat",
@@ -20844,7 +21411,29 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; the actual preservation/thermal process must be selected.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "cordial",
@@ -20859,7 +21448,29 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; the actual preservation/thermal process must be selected.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07-liquid"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08-liquid"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "barley-water",
@@ -20921,7 +21532,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "Product identity is a powdered fruit-based beverage/mix; Appendix B Table 4 'Dehydrated or dried' applies."
     },
     {
       "id": "carbonated-fruit-beverages",
@@ -20936,7 +21550,24 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "not_linked"
+      "chapter_rule_link_status": "not_linked",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Carbonated Fruit Beverages have a direct Table 4 row, but Listeria applicability depends on pH 4.4.",
+      "microbiology_candidates": [
+        {
+          "condition": "pH 4.4 or above / pH not established",
+          "profile_key": "fruit-04b"
+        },
+        {
+          "condition": "pH below 4.4",
+          "profile_key": "fruit-04b",
+          "exclude_criteria": [
+            "listeria_monocytogenes"
+          ],
+          "message": "Appendix B footnote 4 allows Listeria testing to be excluded where pH is below 4.4."
+        }
+      ]
     },
     {
       "id": "tea",
@@ -23555,7 +24186,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Vanilla is a spice/herb identity and Appendix B Table 4 is not assigned solely because the standard sits in Chapter 2.3; PMSV preserves the more specific microbiology-route question."
     },
     {
       "id": "04-04-1-cut-vanilla",
@@ -23573,7 +24207,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Vanilla is a spice/herb identity and Appendix B Table 4 is not assigned solely because the standard sits in Chapter 2.3."
     },
     {
       "id": "04-04-1-frozen-fruits-fruit-products",
@@ -23591,7 +24228,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-05",
+      "microbiology_note": "Exact frozen fruit/product identity."
     },
     {
       "id": "04-04-1-dehydrated-fruits",
@@ -23609,7 +24249,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "Exact dehydrated fruit identity."
     },
     {
       "id": "04-04-1-desiccated-coconut",
@@ -23627,7 +24270,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "Desiccated Coconut is a dried/dehydrated fruit product."
     },
     {
       "id": "04-04-1-groundnut-kernel-deshelled",
@@ -23791,7 +24437,25 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "04-04-1-thermally-processed-fruit-salad-cocktail-mix",
@@ -23809,7 +24473,25 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "04-04-1-jams-fruit-jellies-and-marmalades",
@@ -23827,7 +24509,29 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; this product name alone does not determine whether the applicable route is preserved/acidified, thermally processed or retort processed.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / pickled / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "04-04-1-fruit-cheese",
@@ -23845,7 +24549,29 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; this product name alone does not determine whether the applicable route is preserved/acidified, thermally processed or retort processed.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / pickled / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "04-04-1-fruits-and-vegetable-chutney",
@@ -23863,7 +24589,29 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 is process-driven; this product name alone does not determine whether the applicable route is preserved/acidified, thermally processed or retort processed.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermented / pickled / acidified / preserved",
+          "profile_key": "fruit-03"
+        },
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Other / processing route not established",
+          "profile_key": "",
+          "message": "No Appendix B Table 4 process category is inferred."
+        }
+      ]
     },
     {
       "id": "04-04-1-mango-chutney",
@@ -24207,7 +24955,10 @@
         "2.3.50"
       ],
       "chapter_rule_variant": "Vanilla powder",
-      "chapter_rule_route_note": "Vanilla powder is an explicit variant inside the loaded 2.3.50 Vanilla rule object."
+      "chapter_rule_route_note": "Vanilla powder is an explicit variant inside the loaded 2.3.50 Vanilla rule object.",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Vanilla powder is not automatically treated as a generic dried fruit/vegetable product because it is a spice/herb identity."
     },
     {
       "id": "04-04-1-edible-dried-seeds-obtained-from-fruits",
@@ -24241,7 +24992,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-05",
+      "microbiology_note": "Exact frozen vegetable identity."
     },
     {
       "id": "04-04-2-quick-frozen-fungi",
@@ -24275,7 +25029,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-06",
+      "microbiology_note": "Exact dehydrated vegetable identity."
     },
     {
       "id": "04-04-2-dried-fungi",
@@ -24437,7 +25194,25 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "04-04-2-canned-tomatoes",
@@ -24471,7 +25246,25 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "04-04-2-sterilized-fungi",
@@ -24633,7 +25426,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "fruit-05",
+      "microbiology_note": "Exact frozen processed-vegetable identity."
     },
     {
       "id": "04-04-2-quick-frozen-fried-potatoes",
@@ -24746,7 +25542,25 @@
         "2.3.61"
       ],
       "chapter_rule_variant": "Canned chestnuts",
-      "chapter_rule_route_note": "Canned chestnuts are an explicit variant inside the loaded 2.3.61 rule object."
+      "chapter_rule_route_note": "Canned chestnuts are an explicit variant inside the loaded 2.3.61 rule object.",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "04-04-2-canned-chestnut-puree",
@@ -24770,7 +25584,25 @@
         "2.3.61"
       ],
       "chapter_rule_variant": "Canned chestnut puree",
-      "chapter_rule_route_note": "Canned chestnut puree is an explicit variant inside the loaded 2.3.61 rule object."
+      "chapter_rule_route_note": "Canned chestnut puree is an explicit variant inside the loaded 2.3.61 rule object.",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product identity establishes thermal processing, but Appendix B separates non-retort thermal processing from retort processing.",
+      "microbiology_candidates": [
+        {
+          "condition": "Thermally processed, non-retort",
+          "profile_key": "fruit-07"
+        },
+        {
+          "condition": "Retort processed",
+          "profile_key": "fruit-08"
+        },
+        {
+          "condition": "Actual process does not match either route / not established",
+          "profile_key": "",
+          "message": "PMSV will not choose a Table 4 process category without the actual process."
+        }
+      ]
     },
     {
       "id": "04-04-2-edible-dried-seeds-obtained-from-vegetables",
@@ -29613,7 +30445,10 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Appendix B Table 4 does not expressly identify Vegetable Protein Products as one of its fruit/vegetable process categories."
     },
     {
       "id": "13-13-1-infant-formula",
@@ -31543,12 +32378,29 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "appendix_cross_category_route": true,
       "appendix_cross_category_note": "Fermented Soybean Paste is listed under FoSCoS category 06/06.8 but current Appendix A routes fermented soybean paste to FCS 12.9.1.",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "The product is fermented; Appendix B footnote 3 changes Yeast and Mold Count applicability when the fermentation itself uses yeast/mould.",
+      "microbiology_candidates": [
+        {
+          "condition": "Fermentation involves yeast/mould",
+          "profile_key": "fruit-03",
+          "exclude_criteria": [
+            "yeast_and_mold_count"
+          ],
+          "message": "Appendix B footnote 3: the respective Yeast and Mold Count criterion does not apply when fermentation involves yeast/mould."
+        },
+        {
+          "condition": "Fermented without yeast/mould involvement established",
+          "profile_key": "fruit-03"
+        }
+      ]
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 190,
-  "build_label": "Build 190 — Appendix B spices and herbs",
+  "build_number": 191,
+  "build_label": "Build 191 — Appendix B fruits and vegetables microbiology",
   "build_date": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",
