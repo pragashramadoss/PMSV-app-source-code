@@ -376,19 +376,23 @@
       "ifct_code": "L001",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · L001 Milk, whole, Buffalo · Tables 1, 5 and 6",
+      "source": "ICMR-NIN IFCT 2017 · L001 Milk, whole, Buffalo · Table 1 (proximate/energy; dietary fibre not reported), Table 5 (sodium), Table 6 (IFCT total free sugars stored separately), Table 7 (total saturated fatty acids)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
+        "energy_kcal",
         "protein_g",
         "carbohydrate_g",
         "total_fat_g",
+        "saturated_fat_g",
         "sodium_mg"
       ],
       "per_100g": {
+        "energy_kcal": 107.314,
         "protein_g": 3.68,
         "carbohydrate_g": 8.39,
         "total_fat_g": 6.58,
+        "saturated_fat_g": 4.63,
         "sodium_mg": 30.1,
         "ifct_total_free_sugars_g": 5.34
       },
@@ -396,7 +400,13 @@
         "ifct_total_free_sugars_g"
       ],
       "field_notes": {
-        "ifct_total_free_sugars_g": "Direct IFCT Table 6 value. Retained as an ICMR-NIN analytical field but not mapped to FSSAI 'Total Sugars' because equivalence is not explicitly established in the official sources."
+        "dietary_fibre_g": "IFCT Table 1 does not report dietary fibre for this food; field remains unverified and is not treated as zero.",
+        "ifct_total_free_sugars_g": "Direct IFCT Table 6 value. Not mapped to FSSAI Total Sugars.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       }
     },
     {
@@ -409,19 +419,23 @@
       "ifct_code": "L002",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · L002 Milk, whole, Cow · Tables 1, 5 and 6",
+      "source": "ICMR-NIN IFCT 2017 · L002 Milk, whole, Cow · Table 1 (proximate/energy; dietary fibre not reported), Table 5 (sodium), Table 6 (IFCT total free sugars stored separately), Table 7 (total saturated fatty acids)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
+        "energy_kcal",
         "protein_g",
         "carbohydrate_g",
         "total_fat_g",
+        "saturated_fat_g",
         "sodium_mg"
       ],
       "per_100g": {
+        "energy_kcal": 72.897,
         "protein_g": 3.26,
         "carbohydrate_g": 4.94,
         "total_fat_g": 4.48,
+        "saturated_fat_g": 2.707,
         "sodium_mg": 25.46,
         "ifct_total_free_sugars_g": 4.89
       },
@@ -429,7 +443,13 @@
         "ifct_total_free_sugars_g"
       ],
       "field_notes": {
-        "ifct_total_free_sugars_g": "Direct IFCT Table 6 value. Retained as an ICMR-NIN analytical field but not mapped to FSSAI 'Total Sugars' because equivalence is not explicitly established in the official sources."
+        "dietary_fibre_g": "IFCT Table 1 does not report dietary fibre for this food; field remains unverified and is not treated as zero.",
+        "ifct_total_free_sugars_g": "Direct IFCT Table 6 value. Not mapped to FSSAI Total Sugars.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       }
     },
     {
@@ -440,19 +460,23 @@
       "ifct_code": "L003",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · L003 Paneer · Tables 1, 5 and 6",
+      "source": "ICMR-NIN IFCT 2017 · L003 Paneer · Table 1 (proximate/energy; dietary fibre not reported), Table 5 (sodium), Table 6 (IFCT total free sugars stored separately), Table 7 (total saturated fatty acids)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
+        "energy_kcal",
         "protein_g",
         "carbohydrate_g",
         "total_fat_g",
+        "saturated_fat_g",
         "sodium_mg"
       ],
       "per_100g": {
+        "energy_kcal": 305.449,
         "protein_g": 18.86,
         "carbohydrate_g": 2.41,
         "total_fat_g": 24.78,
+        "saturated_fat_g": 8.851,
         "sodium_mg": 18.04,
         "ifct_total_free_sugars_g": 11.57
       },
@@ -460,7 +484,13 @@
         "ifct_total_free_sugars_g"
       ],
       "field_notes": {
-        "ifct_total_free_sugars_g": "Direct IFCT Table 6 value. Retained as an ICMR-NIN analytical field but not mapped to FSSAI 'Total Sugars' because equivalence is not explicitly established in the official sources."
+        "dietary_fibre_g": "IFCT Table 1 does not report dietary fibre for this food; field remains unverified and is not treated as zero.",
+        "ifct_total_free_sugars_g": "Direct IFCT Table 6 value. Not mapped to FSSAI Total Sugars.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       }
     },
     {
@@ -472,19 +502,23 @@
       "ifct_code": "L004",
       "source_type": "ICMR-NIN IFCT 2017 exact food profile",
       "source_authority": "ICMR-NIN",
-      "source": "ICMR-NIN IFCT 2017 · L004 Khoa · Tables 1, 5 and 6",
+      "source": "ICMR-NIN IFCT 2017 · L004 Khoa · Table 1 (proximate/energy; dietary fibre not reported), Table 5 (sodium), Table 6 (IFCT total free sugars stored separately), Table 7 (total saturated fatty acids)",
       "active_for_calculation": true,
       "verification_status": "partial_verified_ifct_profile",
       "verified_fields": [
+        "energy_kcal",
         "protein_g",
         "carbohydrate_g",
         "total_fat_g",
+        "saturated_fat_g",
         "sodium_mg"
       ],
       "per_100g": {
+        "energy_kcal": 315.966,
         "protein_g": 16.34,
         "carbohydrate_g": 16.53,
         "total_fat_g": 20.62,
+        "saturated_fat_g": 12.936,
         "sodium_mg": 48.1,
         "ifct_total_free_sugars_g": 16.14
       },
@@ -492,7 +526,13 @@
         "ifct_total_free_sugars_g"
       ],
       "field_notes": {
-        "ifct_total_free_sugars_g": "Direct IFCT Table 6 value. Retained as an ICMR-NIN analytical field but not mapped to FSSAI 'Total Sugars' because equivalence is not explicitly established in the official sources."
+        "dietary_fibre_g": "IFCT Table 1 does not report dietary fibre for this food; field remains unverified and is not treated as zero.",
+        "ifct_total_free_sugars_g": "Direct IFCT Table 6 value. Not mapped to FSSAI Total Sugars.",
+        "trans_fat_g": "Not activated because no row-level IFCT trans-fat total was verified in this ingestion pass."
+      },
+      "field_derivations": {
+        "energy_kcal": "Converted from IFCT ENERC kJ using 1 kcal = 4.184 kJ.",
+        "saturated_fat_g": "Converted from IFCT Table 7 Total Saturated Fatty Acids (mg/100 g) to g/100 g."
       }
     },
     {
@@ -13722,7 +13762,10 @@
     "ifct_mushrooms_stage": "J001_to_J004_complete_for_tables_1_5_6_7",
     "ifct_miscellaneous_entries_loaded": 2,
     "ifct_miscellaneous_entries_total": 2,
-    "ifct_miscellaneous_stage": "K001_to_K002_complete_for_tables_1_5_6_7_with_field_level_fibre_gaps"
+    "ifct_miscellaneous_stage": "K001_to_K002_complete_for_tables_1_5_6_7_with_field_level_fibre_gaps",
+    "ifct_milk_products_entries_loaded": 4,
+    "ifct_milk_products_entries_total": 4,
+    "ifct_milk_products_stage": "L001_to_L004_complete_for_tables_1_5_6_7_with_field_level_fibre_gaps"
   },
   "last_verified": "2026-10-04",
   "required_label_fields": [
