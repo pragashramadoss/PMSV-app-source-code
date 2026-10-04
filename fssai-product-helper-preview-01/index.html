@@ -2463,11 +2463,12 @@ function microbiologyCriterionRows(profile,kind,excludeCriteria=[]){
  Object.entries(src).forEach(([key,c])=>{
    if(excluded.has(key))return;
    const label=labels[key]||key.replaceAll('_',' ');
+   const criterionLabel=kind==='hygiene'?(profile?.hygiene_label||'Process hygiene'):(profile?.safety_label||'Food safety');
    if(c&&c.requirement){
-     rows.push('<tr><td><b>'+(kind==='hygiene'?'Process hygiene':'Food safety')+'</b></td><td><b>'+esc(label)+'</b></td><td colspan="4">'+esc(c.requirement)+'</td></tr>');
+     rows.push('<tr><td><b>'+esc(criterionLabel)+'</b></td><td><b>'+esc(label)+'</b></td><td colspan="4">'+esc(c.requirement)+'</td></tr>');
      return;
    }
-   rows.push('<tr><td><b>'+(kind==='hygiene'?'Process hygiene':'Food safety')+'</b></td><td><b>'+esc(label)+'</b></td><td>'+esc(String(c.n??'—'))+'</td><td>'+esc(String(c.c??'—'))+'</td><td>'+microbiologyValue(c.m,c.unit)+'</td><td>'+microbiologyValue(c.M,c.unit)+(c.notes?'<br><small>'+esc(c.notes)+'</small>':'')+'</td></tr>');
+   rows.push('<tr><td><b>'+esc(criterionLabel)+'</b></td><td><b>'+esc(label)+'</b></td><td>'+esc(String(c.n??'—'))+'</td><td>'+esc(String(c.c??'—'))+'</td><td>'+microbiologyValue(c.m,c.unit)+'</td><td>'+microbiologyValue(c.M,c.unit)+(c.notes?'<br><small>'+esc(c.notes)+'</small>':'')+'</td></tr>');
  });
  return rows;
 }
@@ -2512,7 +2513,7 @@ function microbiologyProfileHtml(resolved,product=null,variantOption=null){
  if(resolved.tableKey==='meat'&&product?.microbiology_poultry_salmonella_footnote===true&&table.poultry_salmonella_note)notes.push(table.poultry_salmonella_note);
  if(variantOption?.message)notes.push(variantOption.message);
  if(product?.microbiology_poultry_salmonella_note===true&&resolved.tableKey==='meat'&&resolved.table?.poultry_salmonella_note)notes.push(resolved.table.poultry_salmonella_note);
- const tableLabels={fish:'Table 1',milk:'Table 2',spices:'Table 3',fruits:'Table 4',meat:'Table 5',bakers_yeast:'Table 6'};
+ const tableLabels={fish:'Table 1',milk:'Table 2',spices:'Table 3',fruits:'Table 4',meat:'Table 5',bakers_yeast:'Table 6',non_carbonated_beverages:'Table 7'};
  const title=tableLabels[resolved.tableKey]||'Appendix B';
  const stageHtml=profile.stage
    ? '<div class="notice"><b>Stage where process-hygiene criterion applies:</b> '+esc(profile.stage)+(profile.action?'<br><b>Action in case of unsatisfactory result:</b> '+esc(profile.action):'')+'</div>'
@@ -2546,14 +2547,15 @@ function renderProductMicrobiology(){
    el.innerHTML='<div class="empty-state">Select and open a standardized product to load its microbiological requirements.</div>';
    return;
  }
- if(p.id==='carbonated-caffeinated-beverage'){
-   el.innerHTML='<div class="notice oknote"><b>Applicable source:</b> Caffeinated Beverage clause <b>2.10.6(2)(IV)</b> requires conformity with the microbiological requirements for <b>Carbonated Water</b>.</div>'
+ if(['carbonated-water','carbonated-caffeinated-beverage','non-carbonated-caffeinated-beverage'].includes(p.id)){
+   const directBasis=p.id==='carbonated-water'?'Carbonated Water clause <b>2.10.6(1)</b> provides the applicable microbiological requirements.':'Caffeinated Beverage clause <b>2.10.6(2)(IV)</b> requires conformity with the microbiological requirements for <b>Carbonated Water</b>.';
+   el.innerHTML='<div class="notice oknote"><b>Applicable source:</b> '+directBasis+'</div>'
     +'<div class="tablewrap"><table><thead><tr><th>Parameter</th><th>FSSAI requirement</th><th>Regulatory source</th></tr></thead><tbody>'
     +'<tr><td><b>Total Plate Count</b></td><td><b>Not more than 50 CFU/ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>'
     +'<tr><td><b>Coliform count</b></td><td><b>0 CFU in 100 ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>'
     +'<tr><td><b>Yeast & mould count</b></td><td><b>Not more than 2 CFU/ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>'
     +'</tbody></table></div>'
-    +'<div class="notice"><b>Appendix B check:</b> Table 7 is specifically for non-carbonated water-based beverages, so it is not applied to this carbonated product.</div>';
+    +'<div class="notice"><b>Appendix B check:</b> Table 7 is not substituted for this product because its current Chapter 2.10 route supplies the microbiological requirements directly.</div>';
    return;
  }
  if(!microbiologyDb){
@@ -2607,7 +2609,7 @@ function renderProductMicrobiology(){
 }
 async function loadMicrobiologyDb(){
  try{
-   const res=await fetch('./data/rules/appendix-b-v2-core.json?v=193',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-b-v2-core.json?v=194',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    microbiologyDb=await res.json();
  }catch(e){
