@@ -440,6 +440,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="gas"><b>Carbonation / gassing / packaging gas</b><small>Gassing, aeration or inert-gas use during processing/packing.</small></label>
 <label class="process-option"><input type="checkbox" value="solvent"><b>Extraction / solvent processing</b><small>Use of a solvent during extraction or processing of ingredients.</small></label>
 <label class="process-option"><input type="checkbox" value="release"><b>Lubrication / release / anti-stick</b><small>Processing aids used on food-contact or processing surfaces.</small></label>
+<label class="process-option"><input type="checkbox" value="washing"><b>Washing / bleaching / peeling</b><small>Appendix C Table 7 processing aids used for washing, bleaching, denuding or peeling.</small></label>
 <label class="process-option"><input type="checkbox" value="enzyme"><b>Enzyme processing</b><small>Any enzyme used as a processing aid during ingredient or beverage manufacture.</small></label>
 <label class="process-option"><input type="checkbox" value="nutrient"><b>Microbial nutrient use</b><small>Applicable only if a microbial culture process is actually used.</small></label>
 </div>
@@ -1648,6 +1649,7 @@ const processLabels={
  gas:'Carbonation / gassing / packaging gas',
  solvent:'Extraction / solvent processing',
  release:'Lubrication / release / anti-stick',
+ washing:'Washing / bleaching / peeling',
  enzyme:'Enzyme processing',
  nutrient:'Microbial nutrient use'
 };
@@ -1701,9 +1703,11 @@ function appendixCStructuredRuntimeRules(db){
          : (permission.residual_level_mgkg!==undefined&&permission.residual_level_mgkg!==null
             ? 'Max residual level '+permission.residual_level_mgkg+' mg/kg'
             : String(permission.residual_level||''));
+       if(permission.residual_basis)condition+=(condition?' ':'')+'('+String(permission.residual_basis)+')';
        if(permission.max_usage_mgkg!==undefined&&permission.max_usage_mgkg!==null){
-         condition='Maximum usage '+permission.max_usage_mgkg+' mg/kg; residue in final product: '+String(permission.residual_level||condition||'');
+         condition='Maximum usage '+permission.max_usage_mgkg+' mg/kg; residue in final product: '+String(permission.residual_level||condition||'')+(permission.residual_basis?' ('+String(permission.residual_basis)+')':'');
        }
+       if(permission.effective_from)condition+=' · effective '+String(permission.effective_from);
        out.push({
          process,
          name:entry.name||'',
@@ -1722,7 +1726,7 @@ function appendixCStructuredRuntimeRules(db){
 }
 async function loadAppendixCDb(){
  try{
-   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=204',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=205',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    appendixCDb=await res.json();
    const structured=appendixCStructuredRuntimeRules(appendixCDb);
@@ -2474,7 +2478,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=204',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=205',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -3086,7 +3090,7 @@ async function loadContaminantsDb(){
 async function loadRegulatoryDb(){
  const status=document.getElementById('regDbStatus');
  try{
-   const res=await fetch('./data/regulatory-db-v1.json?v=204',{cache:'reload'});
+   const res=await fetch('./data/regulatory-db-v1.json?v=205',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    regulatoryDb=await res.json();
    ingredientCatalog=catalogFromDb(regulatoryDb);
