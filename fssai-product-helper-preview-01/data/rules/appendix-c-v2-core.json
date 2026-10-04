@@ -15,7 +15,7 @@
   "applicability_rule": "Processing aids listed in Tables 1 to 12 may be used only in manufacture of the food specified in the corresponding table and the final food shall not exceed the stated residue level. Product-specific rows remain fail-closed until PMSV has an exact product-category route. 'All foods' rows may auto-apply once the relevant process is selected.",
   "coverage": {
     "tables_total": 12,
-    "tables_loaded": 8,
+    "tables_loaded": 9,
     "loaded_tables": [
       "Table 1 - Antifoaming Agents",
       "Table 2 - Catalyst",
@@ -24,13 +24,14 @@
       "Table 5 - Microbial Control Agents, Microbial Nutrients and Microbial Nutrient Adjuncts",
       "Table 6 - Solvent for Extraction and Processing",
       "Table 7 - Bleaching, Washing, Denuding and Peeling Agents",
-      "Table 8 - Flocculating Agents"
+      "Table 8 - Flocculating Agents",
+      "Table 9 - Contact Freezing and Cooling Agents"
     ],
     "table_1_entries": 9,
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 9 - Contact Freezing and Cooling Agents",
+    "next_priority": "Table 10 - Desiccating Agents",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -44,7 +45,9 @@
     "table_7_entries": 16,
     "table_7_permission_rows": 16,
     "table_8_entries": 6,
-    "table_8_permission_rows": 6
+    "table_8_permission_rows": 6,
+    "table_9_entries": 1,
+    "table_9_permission_rows": 1
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -2237,6 +2240,30 @@
                 "01-01-6-chhana-and-paneer"
               ],
               "residual_level": "GMP"
+            }
+          ]
+        }
+      ]
+    },
+    "table_9": {
+      "number": 9,
+      "title": "CONTACT FREEZING AND COOLING AGENTS",
+      "process_key": "contact_freezing",
+      "source_pages": [
+        12
+      ],
+      "entries": [
+        {
+          "s_no": 1,
+          "name": "Liquid Nitrogen",
+          "ins": "941",
+          "permissions": [
+            {
+              "product_category": "Dairy-based desserts - Ice cream",
+              "runtime_auto_apply": false,
+              "product_ids": [],
+              "residual_level": "GMP",
+              "source_note": "The current PMSV FoSCoS product row combines finished ice cream with dried ice-cream mix, so this permission is stored but not auto-applied until the finished form is confirmed as ice cream."
             }
           ]
         }
