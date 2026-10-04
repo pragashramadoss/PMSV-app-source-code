@@ -435,6 +435,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <label class="process-option"><input type="checkbox" value="filtration"><b>Filtration / clarification</b><small>Removal of suspended matter or filtration of the beverage.</small></label>
 <label class="process-option"><input type="checkbox" value="microbial"><b>Microbial control treatment</b><small>Use of a processing aid to control microorganisms.</small></label>
 <label class="process-option"><input type="checkbox" value="antifoam"><b>Antifoaming</b><small>Control of foam during liquid processing.</small></label>
+<label class="process-option"><input type="checkbox" value="catalyst"><b>Catalysis / hydrogenation / interesterification</b><small>Appendix C Table 2 catalysts; product-specific permissions remain locked until the exact finished-product route is established.</small></label>
 <label class="process-option"><input type="checkbox" value="ph"><b>pH control / acidification</b><small>Processing-aid use for pH adjustment or acidulation.</small></label>
 <label class="process-option"><input type="checkbox" value="gas"><b>Carbonation / gassing / packaging gas</b><small>Gassing, aeration or inert-gas use during processing/packing.</small></label>
 <label class="process-option"><input type="checkbox" value="solvent"><b>Extraction / solvent processing</b><small>Use of a solvent during extraction or processing of ingredients.</small></label>
@@ -1642,6 +1643,7 @@ const processLabels={
  filtration:'Filtration / clarification',
  microbial:'Microbial control treatment',
  antifoam:'Antifoaming',
+ catalyst:'Catalysis / hydrogenation / interesterification',
  ph:'pH control / acidification',
  gas:'Carbonation / gassing / packaging gas',
  solvent:'Extraction / solvent processing',
@@ -1650,9 +1652,9 @@ const processLabels={
  nutrient:'Microbial nutrient use'
 };
 
-const processingAidRules=[
- {process:'filtration',name:'Diatomaceous earth',ins:'—',purpose:'Clarifying / filtration aid · non-alcoholic beverages',condition:'GMP',source:'Appendix C · Table 3'},
- {process:'microbial',name:'Dimethyl dicarbonate',ins:'242',purpose:'Microbial control agent · water-based flavoured drinks',condition:'Maximum usage 250 mg/kg; residue in final product: non-detectable',source:'Appendix C · Table 5'},
+let processingAidRules=[
+ {process:'filtration',name:'Diatomaceous earth',ins:'—',purpose:'Clarifying / filtration aid · non-alcoholic beverages',condition:'GMP',source:'Appendix C · Table 3',runtime_auto_apply:false,product_ids:['carbonated-caffeinated-beverage']},
+ {process:'microbial',name:'Dimethyl dicarbonate',ins:'242',purpose:'Microbial control agent · water-based flavoured drinks',condition:'Maximum usage 250 mg/kg; residue in final product: non-detectable',source:'Appendix C · Table 5',runtime_auto_apply:false,product_ids:['carbonated-caffeinated-beverage']},
  {process:'antifoam',name:'Polyethylene glycol',ins:'1521',purpose:'Antifoaming agent · All foods',condition:'GMP',source:'Appendix C · Table 1'},
  {process:'antifoam',name:'Propylene glycol',ins:'1520',purpose:'Antifoaming agent · All foods',condition:'GMP',source:'Appendix C · Table 1'},
  {process:'antifoam',name:'Sorbitan monolaurate',ins:'493',purpose:'Antifoaming agent · All foods',condition:'Max residual level 1 mg/kg',source:'Appendix C · Table 1'},
@@ -1685,6 +1687,61 @@ const processingAidRules=[
  {process:'release',name:'White mineral oil',ins:'905e',purpose:'Lubricant / release / antistick · All foods',condition:'GMP',source:'Appendix C · Table 4'}
 ];
 
+
+function appendixCStructuredRuntimeRules(db){
+ const out=[];
+ for(const table of Object.values(db?.tables||{})){
+   const process=table?.process_key||'';
+   if(!process)continue;
+   for(const entry of table?.entries||[]){
+     for(const permission of entry?.permissions||[]){
+       const condition=permission.residual_level==='GMP'
+         ? 'GMP'
+         : (permission.residual_level_mgkg!==undefined&&permission.residual_level_mgkg!==null
+            ? 'Max residual level '+permission.residual_level_mgkg+' mg/kg'
+            : String(permission.residual_level||''));
+       out.push({
+         process,
+         name:entry.name||'',
+         ins:entry.ins||'—',
+         purpose:(table.title||'Processing aid')+' · '+String(permission.product_category||''),
+         condition,
+         source:'Appendix C · Table '+String(table.number||''),
+         runtime_auto_apply:permission.runtime_auto_apply===true,
+         product_category:String(permission.product_category||'')
+       });
+     }
+   }
+ }
+ return out;
+}
+async function loadAppendixCDb(){
+ try{
+   const res=await fetch('./data/rules/appendix-c-v2-core.json?v=200',{cache:'reload'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   appendixCDb=await res.json();
+   const structured=appendixCStructuredRuntimeRules(appendixCDb);
+   const loadedTables=new Set(Object.values(appendixCDb?.tables||{}).map(t=>'Appendix C · Table '+String(t.number||'')));
+   processingAidRules=[
+     ...processingAidRules.filter(x=>!loadedTables.has(x.source)),
+     ...structured
+   ];
+ }catch(e){
+   appendixCDb=null;
+ }
+ renderProcessingAids();
+}
+function selectedCatalogProductForProcessing(){
+ return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
+}
+function processingAidRuleAutoApplicable(rule){
+ if(rule?.runtime_auto_apply===true)return true;
+ const p=selectedCatalogProductForProcessing();
+ if(Array.isArray(rule?.product_ids)&&p&&rule.product_ids.includes(p.id))return true;
+ if(rule?.runtime_auto_apply===false)return false;
+ return /·\s*All foods\s*$/i.test(String(rule?.purpose||''));
+}
+
 let selectedProcesses=[];
 try{selectedProcesses=JSON.parse(sessionStorage.getItem(PROCESS_KEY)||'[]')}catch(e){selectedProcesses=[]}
 if(!Array.isArray(selectedProcesses))selectedProcesses=[];
@@ -1714,7 +1771,9 @@ function renderProcessingAids(){
  const body=document.getElementById('processingRows');
  const count=document.getElementById('processingCount');
  if(!body)return;
- const rules=processingAidRules.filter(x=>selectedProcesses.includes(x.process));
+ const selectedProcessRules=processingAidRules.filter(x=>selectedProcesses.includes(x.process));
+ const rules=selectedProcessRules.filter(processingAidRuleAutoApplicable);
+ const lockedProductSpecific=selectedProcessRules.filter(x=>!processingAidRuleAutoApplicable(x));
  const messages=[];
  if(selectedProcesses.includes('water'))messages.push('<tr><td><b>Water treatment</b></td><td>Process selected</td><td>No processing aid is automatically assigned solely from this selection. Only an aid with an applicable final Appendix C permission should be activated.</td><td>Appendix C applicability check</td></tr>');
  if(selectedProcesses.includes('enzyme')){
@@ -1726,6 +1785,8 @@ function renderProcessingAids(){
    }
  }
  if(selectedProcesses.includes('nutrient'))messages.push('<tr><td><b>Microbial nutrient use</b></td><td>Additional process detail required</td><td>Activate only when a microbial culture process is genuinely used; Appendix C Table 5 nutrient permissions must then be evaluated against the actual process.</td><td>Appendix C · Table 5</td></tr>');
+ if(selectedProcesses.includes('catalyst'))messages.push('<tr><td><b>Catalyst route</b></td><td>Appendix C Table 2 loaded</td><td>All catalyst permissions are product-specific. PMSV will not activate a catalyst until the finished product is exactly mapped to Polyols, Hardened oil, Hydrogenated vegetable oil or Interesterified vegetable oil as stated by FSSAI.</td><td>Appendix C · Table 2</td></tr>');
+ if(lockedProductSpecific.length)messages.push('<tr><td><b>Product-specific permissions withheld</b></td><td>'+lockedProductSpecific.length+' selected-process row'+(lockedProductSpecific.length===1?'':'s')+' require an exact product-category gate</td><td>PMSV is failing closed instead of showing these permissions for every selected product.</td><td>Appendix C applicability control</td></tr>');
  body.innerHTML=rules.map(x=>'<tr><td><b>'+esc(x.name)+'</b><br><small>INS '+esc(x.ins)+'</small></td><td>'+esc(x.purpose)+'</td><td><b>'+esc(x.condition)+'</b></td><td>'+esc(x.source)+'</td></tr>').join('')+messages.join('');
  const total=rules.length+messages.length;
  if(empty)empty.classList.toggle('hidden',selectedProcesses.length>0);
@@ -1857,6 +1918,7 @@ let nutritionDb=null;
 let productMasterDb=null;
 let appendixCoreDb=null;
 let contaminantsDb=null;
+let appendixCDb=null;
 let microbiologyDb=null;
 let selectedProductId='';
 
@@ -3149,6 +3211,7 @@ document.addEventListener('click',event=>{
 });
 loadProductMaster();
 loadAppendixCore();
+loadAppendixCDb();
 loadRegulatoryDb();
 loadContaminantsDb();
 loadMicrobiologyDb();
