@@ -2048,6 +2048,7 @@ function showSelectedCatalogProduct(p){
      try{sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId)}catch(e){}
      applyProductGate();
      renderProductContaminants();
+     renderProductMicrobiology();
      openTab('formulation',{updateHash:true,save:true});
      window.scrollTo({top:0,behavior:'smooth'});
    });
@@ -3069,6 +3070,7 @@ loadProductMaster();
 loadAppendixCore();
 loadRegulatoryDb();
 loadContaminantsDb();
+loadMicrobiologyDb();
 loadNutritionDb();
 
 const dailyLimits=[
