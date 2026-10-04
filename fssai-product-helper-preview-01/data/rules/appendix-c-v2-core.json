@@ -15,7 +15,7 @@
   "applicability_rule": "Processing aids listed in Tables 1 to 12 may be used only in manufacture of the food specified in the corresponding table and the final food shall not exceed the stated residue level. Product-specific rows remain fail-closed until PMSV has an exact product-category route. 'All foods' rows may auto-apply once the relevant process is selected.",
   "coverage": {
     "tables_total": 12,
-    "tables_loaded": 9,
+    "tables_loaded": 10,
     "loaded_tables": [
       "Table 1 - Antifoaming Agents",
       "Table 2 - Catalyst",
@@ -25,13 +25,14 @@
       "Table 6 - Solvent for Extraction and Processing",
       "Table 7 - Bleaching, Washing, Denuding and Peeling Agents",
       "Table 8 - Flocculating Agents",
-      "Table 9 - Contact Freezing and Cooling Agents"
+      "Table 9 - Contact Freezing and Cooling Agents",
+      "Table 10 - Desiccating Agents"
     ],
     "table_1_entries": 9,
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 10 - Desiccating Agents",
+    "next_priority": "Table 11 - Enzymes",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -47,7 +48,9 @@
     "table_8_entries": 6,
     "table_8_permission_rows": 6,
     "table_9_entries": 1,
-    "table_9_permission_rows": 1
+    "table_9_permission_rows": 1,
+    "table_10_entries": 1,
+    "table_10_permission_rows": 1
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -2264,6 +2267,31 @@
               "product_ids": [],
               "residual_level": "GMP",
               "source_note": "The current PMSV FoSCoS product row combines finished ice cream with dried ice-cream mix, so this permission is stored but not auto-applied until the finished form is confirmed as ice cream."
+            }
+          ]
+        }
+      ]
+    },
+    "table_10": {
+      "number": 10,
+      "title": "DESICCATING AGENTS",
+      "process_key": "desiccating",
+      "source_pages": [
+        12
+      ],
+      "entries": [
+        {
+          "s_no": 1,
+          "name": "Corn starch",
+          "ins": "",
+          "permissions": [
+            {
+              "product_category": "Icing sugar",
+              "runtime_auto_apply": false,
+              "product_ids": [
+                "11-11-1-icing-sugar"
+              ],
+              "residual_level": "GMP"
             }
           ]
         }
