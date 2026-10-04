@@ -33,7 +33,7 @@
     "table_1_permission_rows": 10,
     "table_2_entries": 9,
     "table_2_permission_rows": 11,
-    "next_priority": "Table 11A - continue from enzyme 35",
+    "next_priority": "Table 11A - continue from enzyme 44",
     "table_3_entries": 15,
     "table_3_permission_rows": 15,
     "table_4_entries": 26,
@@ -55,9 +55,9 @@
     "table_11_non_gmm_entries": 56,
     "table_11_non_gmm_source_rows": 139,
     "table_11_amendment_corrected_entries": 6,
-    "table_11a_gmm_status": "partial_structured_ingestion_1_34",
-    "table_11a_gmm_entries_loaded": 34,
-    "table_11a_gmm_variant_rows_loaded": 80
+    "table_11a_gmm_status": "partial_structured_ingestion_1_43",
+    "table_11a_gmm_entries_loaded": 43,
+    "table_11a_gmm_variant_rows_loaded": 96
   },
   "processing_aid_categories": {
     "1": "Antifoaming Agents",
@@ -2984,7 +2984,7 @@
         23
       ],
       "source_scope": "Table 11A only. Production organism, donor/source, technological purpose, indicative food use and residual level are stored as linked variants. Runtime remains fail-closed until the full table is ingested and the selected product/use is matched.",
-      "ingestion_status": "partial_1_to_34",
+      "ingestion_status": "partial_1_to_43",
       "entries": [
         {
           "sequence": 1,
@@ -3816,6 +3816,174 @@
               "donor_or_source": "Fusarium oxysporum",
               "purpose": "Increase digestibility of protein and reduce allergenicity",
               "indicative_food_uses": "Dairy processing, protein hydrolysis",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 35,
+          "name": "Acid prolylendopeptidase",
+          "ec": "3.4.21.26",
+          "variants": [
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Aspergillus niger",
+              "purpose": "Degradation of cereal storage proteins to smaller peptides for optimal fermentation beer stability and prevention of chill haze without loss of foam properties",
+              "indicative_food_uses": "Beer and other cereal based beverages",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 36,
+          "name": "Serine protease (Subtilisin)",
+          "ec": "3.4.21.62",
+          "variants": [
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Bacillus amyloliquefaciens",
+              "purpose": "Facilitates protein hydrolysis during processing",
+              "indicative_food_uses": "Protein processing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Pyrococcus furiosus",
+              "purpose": "Hydrolysis of proteins",
+              "indicative_food_uses": "Protein hydrolysis and protein hydrolysates",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Bacillus lentus",
+              "purpose": "Catalyzes protein hydrolysis",
+              "indicative_food_uses": "As processing aid in plant protein processing, fish and seafood protein processing, yeast processing, animal protein processing, xanthan gum processing and microalgae processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 37,
+          "name": "Chymosin",
+          "ec": "3.4.23.4",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Bos taurus (bovine)",
+              "purpose": "Milk coagulant; processing aid in cheese manufacturing. Chymosin helps coagulate milk by hydrolyzing milk protein",
+              "indicative_food_uses": "Milk or dairy processing, production of cheese, whey and lactose",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Kluyveromyces lactis",
+              "donor_or_source": "Bovine pro-chymosin",
+              "purpose": "Milk coagulant",
+              "indicative_food_uses": "Milk processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 38,
+          "name": "Aspergillopepsin I (Aspartic protease)",
+          "ec": "3.4.23.18",
+          "variants": [
+            {
+              "production_organism": "Trichoderma reesei",
+              "donor_or_source": "Trichoderma reesei",
+              "purpose": "Catalyses hydrolysis of proteins with broad specificity",
+              "indicative_food_uses": "Processing of proteins, clarification of fruit and vegetable juices and alcoholic drinks, modification of wheat gluten in bakery products",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 39,
+          "name": "Mucorpepsin (Mucor rennin)",
+          "ec": "3.4.23.23",
+          "variants": [
+            {
+              "production_organism": "Aspergillus oryzae",
+              "donor_or_source": "Rhizomucor miehei",
+              "purpose": "Milk coagulation in cheese making",
+              "indicative_food_uses": "Dairy processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 40,
+          "name": "Bacillolysin (Bacillus metalloendopeptidase)",
+          "ec": "3.4.24.28",
+          "variants": [
+            {
+              "production_organism": "Bacillus amyloliquefaciens",
+              "donor_or_source": "Bacillus amyloliquefaciens",
+              "purpose": "Protein processing into peptides and hydrolysate",
+              "indicative_food_uses": "Production of bakery and other cereal based products, beer and other cereal based beverages, dairy processing, flavouring production, cereal based distilled alcoholic beverages, protein processing and yeast processing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Bacillus amyloliquefaciens",
+              "purpose": "Protein processing into peptides and hydrolysate",
+              "indicative_food_uses": "Production of bakery and other cereal based products, beer and other cereal based beverages, dairy processing, flavouring production, cereal based distilled alcoholic beverages, protein processing and yeast processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 41,
+          "name": "Asparaginase",
+          "ec": "3.5.1.1",
+          "variants": [
+            {
+              "production_organism": "Aspergillus niger",
+              "donor_or_source": "Aspergillus niger",
+              "purpose": "Reduce acrylamide levels",
+              "indicative_food_uses": "Production of bakery and other cereal based products, potato processing and coffee processing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Aspergillus oryzae",
+              "donor_or_source": "Aspergillus oryzae",
+              "purpose": "Reduce acrylamide levels",
+              "indicative_food_uses": "Baking and other cereal-based processes, coffee processing and potato processing",
+              "residual_level": "GMP"
+            },
+            {
+              "production_organism": "Bacillus subtilis",
+              "donor_or_source": "Pyrococcus furiosus",
+              "purpose": "Reduce acrylamide levels",
+              "indicative_food_uses": "Baking and other cereal-based processes, coffee and cocoa processing, fruit and vegetable processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 42,
+          "name": "Glutaminase",
+          "ec": "3.5.1.2",
+          "variants": [
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Bacillus licheniformis",
+              "purpose": "Controlling taste and flavor of fermented foods containing ingredients such as casein, whey protein, soy and wheat protein",
+              "indicative_food_uses": "Dairy processing, egg processing, protein processing, yeast processing",
+              "residual_level": "GMP"
+            }
+          ]
+        },
+        {
+          "sequence": 43,
+          "name": "Acetolactate decarboxylase (Alpha-acetolactate decarboxylase)",
+          "ec": "4.1.1.5",
+          "variants": [
+            {
+              "production_organism": "Bacillus licheniformis",
+              "donor_or_source": "Bacillus brevis",
+              "purpose": "Reduces formation of diacetyl during fermentation and enhances maturation in brewing and beverage-alcohol processes",
+              "indicative_food_uses": "Brewing beverage processes and beverage alcohol (distilling) processes",
               "residual_level": "GMP"
             }
           ]
