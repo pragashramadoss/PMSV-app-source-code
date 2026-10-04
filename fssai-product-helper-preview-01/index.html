@@ -415,25 +415,16 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <section id="micro" class="view hidden">
 <div class="card">
-<div class="section-title"><h2>Microbiological requirements</h2><span>Automatically selected for this product</span></div>
-<div class="notice oknote"><b>Applicable source:</b> Caffeinated Beverage clause <b>2.10.6(2)(IV)</b> requires conformity with the microbiological requirements for <b>Carbonated Water</b>. Chapter 2.10 therefore supplies the microbiological limits for this Carbonated Caffeinated Beverage.</div>
-<div class="tablewrap"><table>
-<thead><tr><th>Parameter</th><th>FSSAI requirement</th><th>Regulatory source</th></tr></thead>
-<tbody>
-<tr><td><b>Total Plate Count</b></td><td><b>Not more than 50 CFU/ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>
-<tr><td><b>Coliform count</b></td><td><b>0 CFU in 100 ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>
-<tr><td><b>Yeast & mould count</b></td><td><b>Not more than 2 CFU/ml</b></td><td>Chapter 2.10 · Carbonated Water</td></tr>
-</tbody>
-</table></div>
+<div class="section-title"><h2>Microbiological requirements</h2><span>Product-driven · Appendix B Version 2</span></div>
+<div class="notice oknote"><b>Regulatory source policy:</b> PMSV uses the applicable FSSAI product standard and Appendix B only. It will not assign a microbiological category by similarity when the official product route is not clear.</div>
+<div id="microbiologyResults"><div class="empty-state">Select and open a standardized product to load its microbiological requirements.</div></div>
 </div>
-
 <div class="card">
-<div class="section-title"><h2>Appendix B applicability check</h2><span>Checked automatically</span></div>
-<div class="notice"><b>Appendix B has been checked, but no separate Appendix B table is triggered for this selected product.</b> Appendix B Version 2 (04.11.2024), Table 7 is specifically titled <b>“Microbiological Requirements for Non-Carbonated Water Based Beverages (Non Alcoholic)”</b>. This product is <b>carbonated</b>. Therefore, its applicable microbiological limits come from the <b>Carbonated Water standard brought in by clause 2.10.6(2)(IV)</b>, rather than incorrectly applying the non-carbonated beverage table.</div>
-<div class="item"><b>Result</b><small>The three Chapter 2.10 Carbonated Water limits above are the product-specific microbiological requirements currently shown for this Carbonated Caffeinated Beverage. Appendix B was checked, but it does not add a separate carbonated-beverage table.</small></div>
+<div class="section-title"><h2>Appendix B coverage</h2><span>Build 188</span></div>
+<div class="item"><b>Loaded now</b><small>Table 1A and Table 1B - Fish and Fishery Products: 16 product categories, hygiene indicators, safety indicators, sampling plans, stages, corrective actions, test methods and source notes.</small></div>
+<div class="item"><b>Next</b><small>Table 2A and Table 2B - Milk and Milk Products. Other Appendix B groups remain locked until loaded from the official source.</small></div>
 </div>
 </section>
-
 <section id="process" class="view hidden">
 <div class="card">
 <div class="section-title"><h2>Select the actual manufacturing processes used</h2><span>Step 1 of 2</span></div>
@@ -1866,6 +1857,7 @@ let nutritionDb=null;
 let productMasterDb=null;
 let appendixCoreDb=null;
 let contaminantsDb=null;
+let microbiologyDb=null;
 let selectedProductId='';
 
 function fallbackIngredientCatalog(){
@@ -2414,7 +2406,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=187',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=188',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -2841,7 +2833,7 @@ async function loadContaminantsDb(){
 async function loadRegulatoryDb(){
  const status=document.getElementById('regDbStatus');
  try{
-   const res=await fetch('./data/regulatory-db-v1.json?v=141',{cache:'reload'});
+   const res=await fetch('./data/regulatory-db-v1.json?v=188',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    regulatoryDb=await res.json();
    ingredientCatalog=catalogFromDb(regulatoryDb);
