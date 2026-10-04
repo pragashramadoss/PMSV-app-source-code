@@ -941,15 +941,19 @@
     "appendix_b": {
       "rule_file": "./data/rules/appendix-b-v2-core.json",
       "source_version": "Version 2 (04.11.2024)",
-      "status": "table_1_fish_complete",
+      "status": "tables_1_and_2_complete",
       "main_table_groups_total": 11,
-      "main_table_groups_loaded": 1,
+      "main_table_groups_loaded": 2,
       "fish_product_categories_loaded": 16,
       "fish_exact_product_mappings": 18,
       "fish_conditional_product_mappings": 4,
       "fish_no_direct_table_mapping": 2,
       "source_verified_on": "2026-10-04",
-      "next_validation": "Table 2A/2B - Milk and Milk Products"
+      "next_validation": "Table 3A/3B - Spices and Herbs",
+      "milk_microbiology_profiles_loaded": 16,
+      "milk_exact_product_mappings": 56,
+      "milk_conditional_product_mappings": 17,
+      "milk_no_direct_table_mapping": 18
     }
   },
   "source_hierarchy": [
@@ -2502,7 +2506,12 @@
       "source_verified_on": "2026-10-04",
       "chapter_rule_file_verified_on": "2026-10-04",
       "chapter_rule_key_verified_on": "2026-10-04",
-      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules.",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08c",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 8 cereal-based complementary/traditional infant-food route."
     },
     {
       "id": "01-01-1-buffalo-milk",
@@ -2536,7 +2545,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-cow-milk",
@@ -2570,7 +2599,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-goat-milk",
@@ -2604,7 +2653,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-camel-milk",
@@ -2638,7 +2707,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-mixed-milk",
@@ -2672,7 +2761,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-standardized-milk",
@@ -2706,7 +2815,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-toned-milk",
@@ -2740,7 +2869,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-double-toned-milk",
@@ -2774,7 +2923,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-skimmed-milk",
@@ -2808,7 +2977,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-full-cream-milk",
@@ -2842,7 +3031,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-buttermilk-plain",
@@ -2876,7 +3085,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-1-flavoured-milk",
@@ -2910,7 +3124,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled flavoured milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT flavoured milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Other / heat treatment not established",
+          "profile_key": "",
+          "message": "The applicable Appendix B milk row cannot be selected until the actual heat treatment is established."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Flavoured Milk requires the heat treatment to be declared. Appendix B uses different rows for pasteurized/boiled and sterilized/UHT milk."
     },
     {
       "id": "01-01-1-flavoured-fermented-milk",
@@ -2944,7 +3178,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-1-drinks-based-on-fermented-milk",
@@ -2978,7 +3217,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-1-low-lactose-or-lactose-free-milk",
@@ -3012,7 +3256,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-sheep-milk",
@@ -3046,7 +3310,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-2-fermented-milk",
@@ -3080,7 +3364,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-2-chakka",
@@ -3114,7 +3403,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-3-evaporated-or-concentrated-milk",
@@ -3148,7 +3442,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 expressly includes Evaporated Milk with Sterilized/UHT Milk."
     },
     {
       "id": "01-01-3-sweetened-condensed-milk",
@@ -3182,7 +3481,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-05",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Exact Appendix B product identity."
     },
     {
       "id": "01-01-3-milk-protein-concentrate",
@@ -3216,7 +3520,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 row 7 does not expressly list Milk Protein Concentrate."
     },
     {
       "id": "01-01-3-khoa",
@@ -3250,7 +3559,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-14",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Exact Appendix B product class: Khoa."
     },
     {
       "id": "01-01-3-analogue-in-the-dairy-context",
@@ -3285,7 +3599,12 @@
       "foscos_listing_code": "01.3.2.2",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "01-01-4-malai",
@@ -3319,7 +3638,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized cream",
+          "profile_key": "milk-02"
+        },
+        {
+          "condition": "Sterilized or UHT cream",
+          "profile_key": "milk-04"
+        },
+        {
+          "condition": "Other cream type / heat treatment not established",
+          "profile_key": "",
+          "message": "No Table 2 row is assigned until the actual regulated cream form and heat treatment are established."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separately lists Pasteurized Cream and Sterilized/UHT Cream. The selected product name does not establish the actual heat treatment."
     },
     {
       "id": "01-01-4-cream",
@@ -3353,7 +3692,27 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized cream",
+          "profile_key": "milk-02"
+        },
+        {
+          "condition": "Sterilized or UHT cream",
+          "profile_key": "milk-04"
+        },
+        {
+          "condition": "Other cream type / heat treatment not established",
+          "profile_key": "",
+          "message": "No Table 2 row is assigned until the actual regulated cream form and heat treatment are established."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separately lists Pasteurized Cream and Sterilized/UHT Cream. The selected product name does not establish the actual heat treatment."
     },
     {
       "id": "01-01-4-fermented-cultured-sour-cream",
@@ -3387,7 +3746,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 does not expressly identify fermented/cultured/sour cream as a separate product row. PMSV does not automatically equate it with the broader Fermented Milk Products row."
     },
     {
       "id": "01-01-4-analogue-in-the-dairy-context",
@@ -3421,7 +3785,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "01-01-5-milk-powders-and-cream-powder",
@@ -3455,7 +3824,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 expressly lists Milk Powder/SMP/Partly SMP/Cream Powder."
     },
     {
       "id": "01-01-5-edible-casein-products",
@@ -3489,7 +3863,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 expressly lists Casein Powder; current FSSAI Edible Casein Products are powder-form casein/caseinate products."
     },
     {
       "id": "01-01-5-dairy-whitener",
@@ -3523,7 +3902,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 expressly lists Dairy Whitener."
     },
     {
       "id": "01-01-5-dairy-permeate-powders",
@@ -3557,7 +3941,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 does not expressly list Dairy/Milk/Whey Permeate Powders."
     },
     {
       "id": "01-01-5-analogue-in-the-dairy-context",
@@ -3591,7 +3980,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "01-01-6-chhana-and-paneer",
@@ -3625,7 +4019,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-13",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Exact Appendix B product class: Paneer/Chhana."
     },
     {
       "id": "01-01-6-cottage-cheese-and-creamed-cottage-cheese",
@@ -3659,7 +4058,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-cream-cheese-rahmfrischkase",
@@ -3693,7 +4097,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-coulommiers-cheese",
@@ -3727,7 +4136,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-provolone-cheese",
@@ -3761,7 +4175,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-cheddar-cheese",
@@ -3795,7 +4214,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-danbo-cheese",
@@ -3829,7 +4253,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-edam-cheese",
@@ -3863,7 +4292,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-gouda-cheese",
@@ -3897,7 +4331,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-havarti-cheese",
@@ -3931,7 +4370,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-tilsiter-cheese",
@@ -3965,7 +4409,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-camembert-cheese",
@@ -3999,7 +4448,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-brie-cheese",
@@ -4033,7 +4487,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-saint-paulin-cheese",
@@ -4067,7 +4526,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-samsoe-cheese",
@@ -4101,7 +4565,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-emmental-or-emmentaler-cheese",
@@ -4135,7 +4604,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-extra-hard-grating-cheese",
@@ -4169,7 +4643,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-mould-ripened-cheese",
@@ -4203,7 +4682,15 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 applies; footnote 5 excludes Yeast and Mold Count for mould-ripened cheeses.",
+      "microbiology_exclude_criteria": [
+        "yeast_and_mold_count"
+      ]
     },
     {
       "id": "01-01-6-processed-cheese",
@@ -4237,7 +4724,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-10",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Exact Appendix B product class: Processed Cheese/Cheese Spread."
     },
     {
       "id": "01-01-6-processed-cheese-spread",
@@ -4271,7 +4763,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-10",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Exact Appendix B product class: Processed Cheese/Cheese Spread."
     },
     {
       "id": "01-01-6-mozzarella-cheese",
@@ -4305,7 +4802,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-creamed-whey-cheese",
@@ -4339,7 +4841,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-whey-cheese",
@@ -4373,7 +4880,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-skimmed-whey-cheese",
@@ -4407,7 +4919,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-soft-cheese-in-brine",
@@ -4441,7 +4958,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-semi-hard-cheese-in-brine",
@@ -4475,7 +4997,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-analogue-in-the-dairy-context",
@@ -4509,7 +5036,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "01-01-6-ripened-cheese",
@@ -4543,7 +5075,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-unripened-cheese-including-fresh-cheese",
@@ -4577,7 +5114,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-7-shrikhand",
@@ -4611,7 +5153,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-",
@@ -4645,7 +5192,22 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Finished Ice Cream / Kulfi / Chocolate Ice Cream / Softy / Milk Ice / Milk Lolly",
+          "profile_key": "milk-09"
+        },
+        {
+          "condition": "Dried Ice Cream Mix / Ice Cream Mix Powder",
+          "profile_key": "milk-07"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FoSCoS row combines finished ice-cream/milk-ice/milk-lolly products with Dried Ice Cream Mix, but Appendix B places the finished products in row 9 and Ice Cream Mix Powder in the dried-powder row 7."
     },
     {
       "id": "01-01-7-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o",
@@ -4679,7 +5241,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-09",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 9 expressly includes Frozen Dessert."
     },
     {
       "id": "01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi",
@@ -4713,7 +5280,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-7-analogue-in-the-dairy-context",
@@ -4747,7 +5319,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "01-01-8-whey-protein-concentrate",
@@ -4781,7 +5358,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 lists 'Whey based Powder' but does not expressly identify Whey Protein Concentrate. PMSV does not treat the wording as equivalent without a direct FSSAI crosswalk."
     },
     {
       "id": "01-01-8-whey-powder",
@@ -4815,7 +5397,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 expressly lists Whey based Powder."
     },
     {
       "id": "02-02-1-milk-fat",
@@ -4849,7 +5436,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 does not provide a direct Milk Fat product row."
     },
     {
       "id": "02-02-1-butter-oil",
@@ -4883,7 +5475,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 does not provide a direct Butter Oil product row."
     },
     {
       "id": "02-02-1-anhydrous-milk-fat",
@@ -4917,7 +5514,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 does not provide a direct Anhydrous Milk Fat product row."
     },
     {
       "id": "02-02-1-refined-grapeseed-oil",
@@ -5306,7 +5908,31 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized Table Butter",
+          "profile_key": "milk-06"
+        },
+        {
+          "condition": "Ripened Butter",
+          "profile_key": "milk-06",
+          "exclude_criteria": [
+            "aerobic_plate_count"
+          ],
+          "message": "For ripened butter, Appendix B footnote 2 applies the Pasteurized Butter specifications except Aerobic Plate Count."
+        },
+        {
+          "condition": "White/Cooking Butter without confirmed pasteurized route",
+          "profile_key": "",
+          "message": "PMSV will not apply the Pasteurized Butter row unless the product's applicable heat-treatment route is established."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 6 is Pasteurized Butter. FSSAI's butter standard also contains White/Cooking Butter and a ripened-butter footnote, so PMSV requires the actual butter type."
     },
     {
       "id": "02-02-2-table-margarine",
@@ -5416,7 +6042,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "02-02-3-analogue-in-the-dairy-context",
@@ -5450,7 +6081,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "02-02-4-analogue-in-the-dairy-context",
@@ -5484,7 +6120,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "02-02-4-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o",
@@ -5518,7 +6159,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-09",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 9 expressly includes Frozen Dessert."
     },
     {
       "id": "03-03-ice-lollies-or-edible-ices",
@@ -13056,7 +13702,12 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 expressly lists Lactose."
     },
     {
       "id": "11-11-1-plantation-white-sugar",
@@ -15489,7 +16140,13 @@
       "source_verified_on": "2026-10-04",
       "chapter_rule_file_verified_on": "2026-10-04",
       "chapter_rule_key_verified_on": "2026-10-04",
-      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules.",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+      "microbiology_apply_enterobacteriaceae_footnote": true
     },
     {
       "id": "13-13-1-follow-up-formula",
@@ -15530,7 +16187,12 @@
       "source_verified_on": "2026-10-04",
       "chapter_rule_file_verified_on": "2026-10-04",
       "chapter_rule_key_verified_on": "2026-10-04",
-      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules.",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08b",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Exact Appendix B Follow Up Formula row."
     },
     {
       "id": "13-13-1-preterm-infant-milk-substitute",
@@ -15568,7 +16230,13 @@
       "source_verified_on": "2026-10-04",
       "chapter_rule_file_verified_on": "2026-10-04",
       "chapter_rule_key_verified_on": "2026-10-04",
-      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules.",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+      "microbiology_apply_enterobacteriaceae_footnote": true
     },
     {
       "id": "13-13-1-food-for-special-medical-purpose-intended-for-infants",
@@ -15609,7 +16277,13 @@
       "source_verified_on": "2026-10-04",
       "chapter_rule_file_verified_on": "2026-10-04",
       "chapter_rule_key_verified_on": "2026-10-04",
-      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules.",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 8 expressly includes Food for special medical purpose intended for infants.",
+      "microbiology_apply_enterobacteriaceae_footnote": false
     },
     {
       "id": "13-13-1-lactose-free-infant-milk-substitutes",
@@ -15647,7 +16321,13 @@
       "source_verified_on": "2026-10-04",
       "chapter_rule_file_verified_on": "2026-10-04",
       "chapter_rule_key_verified_on": "2026-10-04",
-      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules.",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+      "microbiology_apply_enterobacteriaceae_footnote": true
     },
     {
       "id": "13-13-1-hypoallergenic-infant-milk-substitutes",
@@ -15685,7 +16365,13 @@
       "source_verified_on": "2026-10-04",
       "chapter_rule_file_verified_on": "2026-10-04",
       "chapter_rule_key_verified_on": "2026-10-04",
-      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules.",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+      "microbiology_apply_enterobacteriaceae_footnote": true
     },
     {
       "id": "13-13-1-foods-for-infants-with-inborn-errors-of-metabolism-iem",
@@ -15726,7 +16412,13 @@
       "source_verified_on": "2026-10-04",
       "chapter_rule_file_verified_on": "2026-10-04",
       "chapter_rule_key_verified_on": "2026-10-04",
-      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules.",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI Infant Nutrition Regulations classify the IEM product as Food for Special Medical Purpose intended for infants; Appendix B row 8 applies.",
+      "microbiology_apply_enterobacteriaceae_footnote": false
     },
     {
       "id": "13-13-1-infant-milk-food",
@@ -15767,7 +16459,13 @@
       "source_verified_on": "2026-10-04",
       "chapter_rule_file_verified_on": "2026-10-04",
       "chapter_rule_key_verified_on": "2026-10-04",
-      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules.",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+      "microbiology_apply_enterobacteriaceae_footnote": true
     },
     {
       "id": "13-13-2-milk-cereal-based-complementary-food",
@@ -15808,7 +16506,12 @@
       "source_verified_on": "2026-10-04",
       "chapter_rule_file_verified_on": "2026-10-04",
       "chapter_rule_key_verified_on": "2026-10-04",
-      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules.",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08c",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 8 cereal-based complementary/traditional infant-food route."
     },
     {
       "id": "13-13-2-processed-cereal-based-complementary-food",
@@ -15849,7 +16552,12 @@
       "source_verified_on": "2026-10-04",
       "chapter_rule_file_verified_on": "2026-10-04",
       "chapter_rule_key_verified_on": "2026-10-04",
-      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules."
+      "chapter_rule_route_note": "Special infant-nutrition regulation applies before ordinary Appendix A logic; use the direct infant-nutrition additive tables and schedules.",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08c",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 8 cereal-based complementary/traditional infant-food route."
     },
     {
       "id": "14-14-2-beer",
@@ -17871,7 +18579,12 @@
       "foscos_listing_code": "100",
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
-      "chapter_rule_key_verified_on": "2026-10-03"
+      "chapter_rule_key_verified_on": "2026-10-03",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 does not expressly provide a Cow/Buffalo Colostrum product row."
     },
     {
       "id": "100-100-royal-jelly",
@@ -18154,7 +18867,12 @@
         "https://fcstraining.fssai.gov.in/standard-product",
         "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
         "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
-      ]
+      ],
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "This Ayurveda Aahara special-category product is not automatically treated as the ordinary Sweetened Condensed Milk Table 2 row solely from the parent FSSR reference."
     },
     {
       "id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
@@ -18259,7 +18977,12 @@
         "https://fcstraining.fssai.gov.in/standard-product",
         "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
         "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
-      ]
+      ],
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "This Ayurveda Aahara special-category composite product is not automatically treated as an ordinary cheese Table 2 row solely from the parent FSSR reference."
     },
     {
       "id": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
@@ -19831,7 +20554,12 @@
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
       "rule_key": "11",
       "standard_name": "Food for Infants based on traditional food ingredients",
-      "source_verified_on": "2026-10-04"
+      "source_verified_on": "2026-10-04",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08c",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 8 cereal-based complementary/traditional infant-food route."
     },
     {
       "id": "01-01-1-buffalo-milk",
@@ -19849,7 +20577,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-cow-milk",
@@ -19867,7 +20615,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-goat-milk",
@@ -19885,7 +20653,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-camel-milk",
@@ -19903,7 +20691,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-mixed-milk",
@@ -19921,7 +20729,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-standardized-milk",
@@ -19939,7 +20767,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-toned-milk",
@@ -19957,7 +20805,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-double-toned-milk",
@@ -19975,7 +20843,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-skimmed-milk",
@@ -19993,7 +20881,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-full-cream-milk",
@@ -20011,7 +20919,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-buttermilk-plain",
@@ -20029,7 +20957,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-1-flavoured-milk",
@@ -20047,7 +20980,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled flavoured milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT flavoured milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Other / heat treatment not established",
+          "profile_key": "",
+          "message": "The applicable Appendix B milk row cannot be selected until the actual heat treatment is established."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Flavoured Milk requires the heat treatment to be declared. Appendix B uses different rows for pasteurized/boiled and sterilized/UHT milk."
     },
     {
       "id": "01-01-1-flavoured-fermented-milk",
@@ -20065,7 +21018,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-1-drinks-based-on-fermented-milk",
@@ -20083,7 +21041,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-1-low-lactose-or-lactose-free-milk",
@@ -20101,7 +21064,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-1-sheep-milk",
@@ -20119,7 +21102,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized or boiled milk",
+          "profile_key": "milk-01"
+        },
+        {
+          "condition": "Sterilized or UHT milk",
+          "profile_key": "milk-03"
+        },
+        {
+          "condition": "Raw / no qualifying heat treatment confirmed",
+          "profile_key": "",
+          "message": "Appendix B Table 2 does not provide a direct raw-milk row here. PMSV will not apply the pasteurized or UHT criteria by assumption."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separates Pasteurized/boiled Milk from Sterilized/UHT/Evaporated Milk. The FoSCoS product identity alone does not establish the actual heat treatment."
     },
     {
       "id": "01-01-2-fermented-milk",
@@ -20137,7 +21140,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-2-chakka",
@@ -20155,7 +21163,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-3-evaporated-or-concentrated-milk",
@@ -20173,7 +21186,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-03",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 expressly includes Evaporated Milk with Sterilized/UHT Milk."
     },
     {
       "id": "01-01-3-sweetened-condensed-milk",
@@ -20191,7 +21209,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-05",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Exact Appendix B product identity."
     },
     {
       "id": "01-01-3-milk-protein-concentrate",
@@ -20209,7 +21232,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 row 7 does not expressly list Milk Protein Concentrate."
     },
     {
       "id": "01-01-3-khoa",
@@ -20227,7 +21255,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-14",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Exact Appendix B product class: Khoa."
     },
     {
       "id": "01-01-3-analogue-in-the-dairy-context",
@@ -20246,7 +21279,12 @@
       "appendix_fcs_note": "Official Version 3 internal numbering inconsistency: Section I uses 1.3.2.2 for Non-Dairy based beverage whitener; Table 1 additive permissions use 1.3.2.1 for the same named category.",
       "appendix_fcs_verified_on": "2026-10-03",
       "foscos_listing_code": "01.3.2.2",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "01-01-4-malai",
@@ -20264,7 +21302,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized cream",
+          "profile_key": "milk-02"
+        },
+        {
+          "condition": "Sterilized or UHT cream",
+          "profile_key": "milk-04"
+        },
+        {
+          "condition": "Other cream type / heat treatment not established",
+          "profile_key": "",
+          "message": "No Table 2 row is assigned until the actual regulated cream form and heat treatment are established."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separately lists Pasteurized Cream and Sterilized/UHT Cream. The selected product name does not establish the actual heat treatment."
     },
     {
       "id": "01-01-4-cream",
@@ -20282,7 +21340,27 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized cream",
+          "profile_key": "milk-02"
+        },
+        {
+          "condition": "Sterilized or UHT cream",
+          "profile_key": "milk-04"
+        },
+        {
+          "condition": "Other cream type / heat treatment not established",
+          "profile_key": "",
+          "message": "No Table 2 row is assigned until the actual regulated cream form and heat treatment are established."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B separately lists Pasteurized Cream and Sterilized/UHT Cream. The selected product name does not establish the actual heat treatment."
     },
     {
       "id": "01-01-4-fermented-cultured-sour-cream",
@@ -20300,7 +21378,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 does not expressly identify fermented/cultured/sour cream as a separate product row. PMSV does not automatically equate it with the broader Fermented Milk Products row."
     },
     {
       "id": "01-01-4-analogue-in-the-dairy-context",
@@ -20318,7 +21401,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "01-01-5-milk-powders-and-cream-powder",
@@ -20336,7 +21424,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 expressly lists Milk Powder/SMP/Partly SMP/Cream Powder."
     },
     {
       "id": "01-01-5-edible-casein-products",
@@ -20354,7 +21447,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 expressly lists Casein Powder; current FSSAI Edible Casein Products are powder-form casein/caseinate products."
     },
     {
       "id": "01-01-5-dairy-whitener",
@@ -20372,7 +21470,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 expressly lists Dairy Whitener."
     },
     {
       "id": "01-01-5-dairy-permeate-powders",
@@ -20390,7 +21493,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 does not expressly list Dairy/Milk/Whey Permeate Powders."
     },
     {
       "id": "01-01-5-analogue-in-the-dairy-context",
@@ -20408,7 +21516,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "01-01-6-chhana-and-paneer",
@@ -20426,7 +21539,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-13",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Exact Appendix B product class: Paneer/Chhana."
     },
     {
       "id": "01-01-6-cottage-cheese-and-creamed-cottage-cheese",
@@ -20444,7 +21562,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-cream-cheese-rahmfrischkase",
@@ -20462,7 +21585,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-coulommiers-cheese",
@@ -20480,7 +21608,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-provolone-cheese",
@@ -20498,7 +21631,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-cheddar-cheese",
@@ -20516,7 +21654,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-danbo-cheese",
@@ -20534,7 +21677,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-edam-cheese",
@@ -20552,7 +21700,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-gouda-cheese",
@@ -20570,7 +21723,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-havarti-cheese",
@@ -20588,7 +21746,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-tilsiter-cheese",
@@ -20606,7 +21769,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-camembert-cheese",
@@ -20624,7 +21792,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-brie-cheese",
@@ -20642,7 +21815,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-saint-paulin-cheese",
@@ -20660,7 +21838,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-samsoe-cheese",
@@ -20678,7 +21861,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-emmental-or-emmentaler-cheese",
@@ -20696,7 +21884,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-extra-hard-grating-cheese",
@@ -20714,7 +21907,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-mould-ripened-cheese",
@@ -20732,7 +21930,15 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 applies; footnote 5 excludes Yeast and Mold Count for mould-ripened cheeses.",
+      "microbiology_exclude_criteria": [
+        "yeast_and_mold_count"
+      ]
     },
     {
       "id": "01-01-6-processed-cheese",
@@ -20750,7 +21956,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-10",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Exact Appendix B product class: Processed Cheese/Cheese Spread."
     },
     {
       "id": "01-01-6-processed-cheese-spread",
@@ -20768,7 +21979,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-10",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Exact Appendix B product class: Processed Cheese/Cheese Spread."
     },
     {
       "id": "01-01-6-mozzarella-cheese",
@@ -20786,7 +22002,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-creamed-whey-cheese",
@@ -20804,7 +22025,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-whey-cheese",
@@ -20822,7 +22048,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-skimmed-whey-cheese",
@@ -20840,7 +22071,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-soft-cheese-in-brine",
@@ -20858,7 +22094,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-semi-hard-cheese-in-brine",
@@ -20876,7 +22117,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-analogue-in-the-dairy-context",
@@ -20894,7 +22140,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "01-01-6-ripened-cheese",
@@ -20912,7 +22163,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-6-unripened-cheese-including-fresh-cheese",
@@ -20930,7 +22186,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-11",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 11 covers all other cheese categories including fresh, Cheddar, Cottage, Soft and Semi Soft cheeses."
     },
     {
       "id": "01-01-7-shrikhand",
@@ -20948,7 +22209,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-",
@@ -20966,7 +22232,22 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Finished Ice Cream / Kulfi / Chocolate Ice Cream / Softy / Milk Ice / Milk Lolly",
+          "profile_key": "milk-09"
+        },
+        {
+          "condition": "Dried Ice Cream Mix / Ice Cream Mix Powder",
+          "profile_key": "milk-07"
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FoSCoS row combines finished ice-cream/milk-ice/milk-lolly products with Dried Ice Cream Mix, but Appendix B places the finished products in row 9 and Ice Cream Mix Powder in the dried-powder row 7."
     },
     {
       "id": "01-01-7-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o",
@@ -20984,7 +22265,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-09",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 9 expressly includes Frozen Dessert."
     },
     {
       "id": "01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi",
@@ -21002,7 +22288,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-12",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
     },
     {
       "id": "01-01-7-analogue-in-the-dairy-context",
@@ -21020,7 +22311,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "01-01-8-whey-protein-concentrate",
@@ -21038,7 +22334,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 lists 'Whey based Powder' but does not expressly identify Whey Protein Concentrate. PMSV does not treat the wording as equivalent without a direct FSSAI crosswalk."
     },
     {
       "id": "01-01-8-whey-powder",
@@ -21056,7 +22357,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 expressly lists Whey based Powder."
     },
     {
       "id": "02-02-1-milk-fat",
@@ -21074,7 +22380,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 does not provide a direct Milk Fat product row."
     },
     {
       "id": "02-02-1-butter-oil",
@@ -21092,7 +22403,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 does not provide a direct Butter Oil product row."
     },
     {
       "id": "02-02-1-anhydrous-milk-fat",
@@ -21110,7 +22426,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 does not provide a direct Anhydrous Milk Fat product row."
     },
     {
       "id": "02-02-1-refined-grapeseed-oil",
@@ -21355,7 +22676,31 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_candidates": [
+        {
+          "condition": "Pasteurized Table Butter",
+          "profile_key": "milk-06"
+        },
+        {
+          "condition": "Ripened Butter",
+          "profile_key": "milk-06",
+          "exclude_criteria": [
+            "aerobic_plate_count"
+          ],
+          "message": "For ripened butter, Appendix B footnote 2 applies the Pasteurized Butter specifications except Aerobic Plate Count."
+        },
+        {
+          "condition": "White/Cooking Butter without confirmed pasteurized route",
+          "profile_key": "",
+          "message": "PMSV will not apply the Pasteurized Butter row unless the product's applicable heat-treatment route is established."
+        }
+      ],
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 6 is Pasteurized Butter. FSSAI's butter standard also contains White/Cooking Butter and a ripened-butter footnote, so PMSV requires the actual butter type."
     },
     {
       "id": "02-02-2-table-margarine",
@@ -21417,7 +22762,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "02-02-3-analogue-in-the-dairy-context",
@@ -21435,7 +22785,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "02-02-4-analogue-in-the-dairy-context",
@@ -21453,7 +22808,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B footnote 1 applies microbiological standards to proprietary dairy foods depending on analogy as determined by FSSAI. PMSV does not self-determine that analogy."
     },
     {
       "id": "02-02-4-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o",
@@ -21471,7 +22831,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-09",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 9 expressly includes Frozen Dessert."
     },
     {
       "id": "03-03-ice-lollies-or-edible-ices",
@@ -25629,7 +26994,12 @@
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 expressly lists Lactose."
     },
     {
       "id": "11-11-1-plantation-white-sugar",
@@ -26935,7 +28305,13 @@
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
       "rule_key": "7",
       "standard_name": "Infant formula",
-      "source_verified_on": "2026-10-04"
+      "source_verified_on": "2026-10-04",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+      "microbiology_apply_enterobacteriaceae_footnote": true
     },
     {
       "id": "13-13-1-follow-up-formula",
@@ -26957,7 +28333,12 @@
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
       "rule_key": "10",
       "standard_name": "Follow-up Formula",
-      "source_verified_on": "2026-10-04"
+      "source_verified_on": "2026-10-04",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08b",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Exact Appendix B Follow Up Formula row."
     },
     {
       "id": "13-13-1-preterm-infant-milk-substitute",
@@ -26977,7 +28358,13 @@
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
       "rule_key": "13",
       "standard_name": "Preterm infant milk substitute",
-      "source_verified_on": "2026-10-04"
+      "source_verified_on": "2026-10-04",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+      "microbiology_apply_enterobacteriaceae_footnote": true
     },
     {
       "id": "13-13-1-food-for-special-medical-purpose-intended-for-infants",
@@ -26999,7 +28386,13 @@
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
       "rule_key": "12",
       "standard_name": "Food for special medical purpose intended for infants",
-      "source_verified_on": "2026-10-04"
+      "source_verified_on": "2026-10-04",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 8 expressly includes Food for special medical purpose intended for infants.",
+      "microbiology_apply_enterobacteriaceae_footnote": false
     },
     {
       "id": "13-13-1-lactose-free-infant-milk-substitutes",
@@ -27019,7 +28412,13 @@
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
       "rule_key": "14",
       "standard_name": "Lactose free infant milk substitutes",
-      "source_verified_on": "2026-10-04"
+      "source_verified_on": "2026-10-04",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+      "microbiology_apply_enterobacteriaceae_footnote": true
     },
     {
       "id": "13-13-1-hypoallergenic-infant-milk-substitutes",
@@ -27039,7 +28438,13 @@
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
       "rule_key": "15",
       "standard_name": "Hypoallergenic infant milk substitutes",
-      "source_verified_on": "2026-10-04"
+      "source_verified_on": "2026-10-04",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+      "microbiology_apply_enterobacteriaceae_footnote": true
     },
     {
       "id": "13-13-1-foods-for-infants-with-inborn-errors-of-metabolism-iem",
@@ -27061,7 +28466,13 @@
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
       "rule_key": "16",
       "standard_name": "Foods for Infants with Inborn Errors of Metabolism (IEM)",
-      "source_verified_on": "2026-10-04"
+      "source_verified_on": "2026-10-04",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "The FSSAI Infant Nutrition Regulations classify the IEM product as Food for Special Medical Purpose intended for infants; Appendix B row 8 applies.",
+      "microbiology_apply_enterobacteriaceae_footnote": false
     },
     {
       "id": "13-13-1-infant-milk-food",
@@ -27083,7 +28494,13 @@
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
       "rule_key": "7(3)",
       "standard_name": "Infant Milk Food",
-      "source_verified_on": "2026-10-04"
+      "source_verified_on": "2026-10-04",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08a",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 infant-milk-substitute/infant-formula route.",
+      "microbiology_apply_enterobacteriaceae_footnote": true
     },
     {
       "id": "13-13-2-milk-cereal-based-complementary-food",
@@ -27105,7 +28522,12 @@
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
       "rule_key": "8",
       "standard_name": "Milk-cereal based complementary food",
-      "source_verified_on": "2026-10-04"
+      "source_verified_on": "2026-10-04",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08c",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 8 cereal-based complementary/traditional infant-food route."
     },
     {
       "id": "13-13-2-processed-cereal-based-complementary-food",
@@ -27127,7 +28549,12 @@
       "rule_file": "./data/rules/foods-for-infant-nutrition-v2.json",
       "rule_key": "9",
       "standard_name": "Processed cereal based complementary food",
-      "source_verified_on": "2026-10-04"
+      "source_verified_on": "2026-10-04",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "milk-08c",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B row 8 cereal-based complementary/traditional infant-food route."
     },
     {
       "id": "14-14-2-beer",
@@ -28302,7 +29729,12 @@
       "appendix_fcs_note": "The stored FoSCoS listing/category code is not a loaded Appendix A Version 3 FCS. PMSV must not use it to inherit Appendix A additive permissions.",
       "appendix_fcs_verified_on": "2026-10-03",
       "foscos_listing_code": "100",
-      "chapter_rule_link_status": "file_and_key_verified"
+      "chapter_rule_link_status": "file_and_key_verified",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "Appendix B Table 2 does not expressly provide a Cow/Buffalo Colostrum product row."
     },
     {
       "id": "100-100-royal-jelly",
@@ -28469,7 +29901,12 @@
         "https://fcstraining.fssai.gov.in/standard-product",
         "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
         "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
-      ]
+      ],
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "This Ayurveda Aahara special-category product is not automatically treated as the ordinary Sweetened Condensed Milk Table 2 row solely from the parent FSSR reference."
     },
     {
       "id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
@@ -28534,7 +29971,12 @@
         "https://fcstraining.fssai.gov.in/standard-product",
         "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
         "https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
-      ]
+      ],
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_profile_key": "",
+      "microbiology_status": "appendix_b_no_direct_table_mapping",
+      "microbiology_verified_on": "2026-10-04",
+      "microbiology_note": "This Ayurveda Aahara special-category composite product is not automatically treated as an ordinary cheese Table 2 row solely from the parent FSSR reference."
     },
     {
       "id": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
@@ -28769,8 +30211,8 @@
     }
   ],
   "last_catalog_expansion": "2026-10-03",
-  "build_number": 188,
-  "build_label": "Build 188 — Appendix B fish microbiology",
+  "build_number": 189,
+  "build_label": "Build 189 — Appendix B milk microbiology",
   "build_date": "2026-10-04",
   "source_policy": {
     "regulatory_evidence": "FSSAI/FoSCoS official sources only",
