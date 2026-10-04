@@ -2510,7 +2510,7 @@ function microbiologyProfileHtml(resolved,product=null,variantOption=null){
  const methodRows=microbiologyMethodRows(resolved,profile,includeEnterobacteriaceae);
  const notes=[...(profile.notes||[])];
  if(variantOption?.message)notes.push(variantOption.message);
- const tableLabels={fish:'Table 1',milk:'Table 2',spices:'Table 3'};
+ const tableLabels={fish:'Table 1',milk:'Table 2',spices:'Table 3',fruits:'Table 4'};
  const title=tableLabels[resolved.tableKey]||'Appendix B';
  const stageHtml=profile.stage
    ? '<div class="notice"><b>Stage where process-hygiene criterion applies:</b> '+esc(profile.stage)+(profile.action?'<br><b>Action in case of unsatisfactory result:</b> '+esc(profile.action):'')+'</div>'
@@ -2521,11 +2521,17 @@ function microbiologyProfileHtml(resolved,product=null,variantOption=null){
    ? '<div class="notice"><b>Action for unsatisfactory process-hygiene result:</b><br>'+table.action_on_unsatisfactory_process_hygiene.map(esc).join('<br>')+'</div>'
    : '';
  const naHtml=profile.process_hygiene_not_applicable
-   ? '<div class="notice"><b>Process Hygiene Criteria:</b> Not applicable for this Table 2 product row; use the Food Safety / commercial-sterility requirement below.</div>'
+   ? '<div class="notice"><b>Process Hygiene Criteria:</b> Not applicable for this '+esc(title)+' product row.</div>'
    : '';
+ const safetyNaHtml=profile.food_safety_not_applicable
+   ? '<div class="notice"><b>Food Safety Criteria:</b> Not applicable for this '+esc(title)+' product row.</div>'
+   : '';
+ const criteriaHtml=rows.length
+   ? '<div class="tablewrap"><table><thead><tr><th>Criterion</th><th>Organism / requirement</th><th>n</th><th>c</th><th>m</th><th>M</th></tr></thead><tbody>'+rows.join('')+'</tbody></table></div>'
+   : '<div class="empty-state">No numeric microbiological criterion is prescribed for this Appendix B row.</div>';
  return '<div class="notice oknote"><b>Appendix B category:</b> '+esc(profile.sl_no+'. '+profile.name)+(profile.definition?'<br><small>'+esc(profile.definition)+'</small>':'')+'</div>'
-   +naHtml+stageHtml+actionHtml
-   +'<div class="tablewrap"><table><thead><tr><th>Criterion</th><th>Organism / requirement</th><th>n</th><th>c</th><th>m</th><th>M</th></tr></thead><tbody>'+rows.join('')+'</tbody></table></div>'
+   +naHtml+safetyNaHtml+stageHtml+actionHtml
+   +criteriaHtml
    +'<div class="countline">Values are stored from Appendix B Version 2. “—” means no value is prescribed / applicable in that table cell.</div>'
    +(methodRows?'<div class="section-title" style="margin-top:16px"><h2>Reference test methods</h2><span>'+esc(title)+'</span></div><div class="tablewrap"><table><thead><tr><th>Parameter</th><th>Method</th></tr></thead><tbody>'+methodRows+'</tbody></table></div>':'')
    +(notes.length?'<div class="notice"><b>Product-specific source notes:</b><br>'+[...new Set(notes)].map(esc).join('<br>')+'</div>':'');
@@ -2587,11 +2593,11 @@ function renderProductMicrobiology(){
    el.innerHTML='<div class="notice">This dairy/infant product has no stored Appendix B route. PMSV will not infer one from its name.</div>';
    return;
  }
- el.innerHTML='<div class="notice"><b>Appendix B table for this product is not loaded yet.</b><br>Build 190 contains Fish/Fishery Products (Table 1), Milk/Milk Products (Table 2), and Spices/Herbs (Table 3). The next ingestion block is Fruits and Vegetables and their Products (Table 4A/4B).</div>';
+ el.innerHTML='<div class="notice"><b>Appendix B table for this product is not loaded yet.</b><br>Build 191 contains Fish/Fishery Products (Table 1), Milk/Milk Products (Table 2), Spices/Herbs (Table 3), and Fruits/Vegetables (Table 4). The next ingestion block is Meat and Meat Products (Table 5A/5B).</div>';
 }
 async function loadMicrobiologyDb(){
  try{
-   const res=await fetch('./data/rules/appendix-b-v2-core.json?v=190',{cache:'reload'});
+   const res=await fetch('./data/rules/appendix-b-v2-core.json?v=191',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    microbiologyDb=await res.json();
  }catch(e){
