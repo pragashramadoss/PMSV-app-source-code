@@ -13,19 +13,20 @@
   },
   "coverage": {
     "main_table_groups_total": 11,
-    "main_table_groups_loaded": 5,
+    "main_table_groups_loaded": 6,
     "loaded_groups": [
       "Table 1 - Fish and Fishery Products",
       "Table 2 - Milk and Milk Products",
       "Table 3 - Spices and Herbs",
       "Table 4 - Fruits and Vegetables and their Products",
-      "Table 5 - Meat and Meat Products"
+      "Table 5 - Meat and Meat Products",
+      "Table 6 - Baker's Yeast"
     ],
     "fish_product_categories_loaded": 16,
     "fish_exact_product_mappings": 18,
     "fish_conditional_product_mappings": 4,
     "fish_no_direct_table_mapping": 2,
-    "next_priority": "Table 6A/6B - Baker's Yeast",
+    "next_priority": "Table 7 - Non-Carbonated Water Based Beverages (Non Alcoholic)",
     "milk_profiles_loaded": 16,
     "milk_exact_product_mappings": 58,
     "milk_conditional_product_mappings": 17,
@@ -42,7 +43,10 @@
     "meat_profiles_loaded": 9,
     "meat_exact_product_mappings": 23,
     "meat_conditional_product_mappings": 8,
-    "meat_no_direct_table_mapping": 1
+    "meat_no_direct_table_mapping": 1,
+    "bakers_yeast_profiles_loaded": 1,
+    "bakers_yeast_exact_product_mappings": 0,
+    "bakers_yeast_catalog_gaps": 1
   },
   "organism_labels": {
     "aerobic_plate_count": "Aerobic Plate Count",
@@ -3373,6 +3377,109 @@
       "source_notes": [
         "Products under categories 1–5 are to be cooked to make safe before consumption."
       ]
+    },
+    "bakers_yeast": {
+      "table_6a_title": "Microbiological Standards for Baker's Yeast - Process Hygiene Criteria",
+      "table_6b_title": "Microbiological Standards for Baker's Yeast - Food Safety Criteria",
+      "source_pages": {
+        "current_tables": [
+          49
+        ],
+        "stage_and_sampling": [
+          50,
+          51
+        ],
+        "reference_methods": [
+          52
+        ],
+        "superseded_legacy_table": [
+          48
+        ]
+      },
+      "effective_from": "2025-05-01",
+      "categories": [
+        {
+          "id": "yeast-01",
+          "sl_no": "1",
+          "name": "Baker's Yeast (Compressed and Dried)",
+          "hygiene": {
+            "escherichia_coli": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "safety": {
+            "salmonella": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            },
+            "listeria_monocytogenes": {
+              "n": 5,
+              "c": 0,
+              "m": "Absent/25g",
+              "M": null,
+              "unit": "qualitative"
+            }
+          },
+          "notes": [
+            "Current substituted Table 6A/6B applies to Baker's Yeast (Compressed and Dried).",
+            "For high-value low-volume pack sizes below 100 g and large retail packs above 1 kg, the sampling plan may be modified case-by-case only with prior FSSAI approval."
+          ]
+        }
+      ],
+      "stage_rules": {
+        "process_hygiene": "Table 6A is explicitly titled Process Hygiene Criteria. The subsequent stage paragraph in the current source expressly describes the food-safety criteria; PMSV does not invent an additional stage statement for Table 6A.",
+        "food_safety": "The food-safety criteria define batch/lot acceptability and shall be met at the end of manufacturing and in products in the market during shelf life."
+      },
+      "sampling_plan_note": "For high-value low-volume packs below 100 g and large retail packs above 1 kg, the sample plan may be modified case-by-case with prior FSSAI approval; examples in the source include Salmonella absence in 10 g or 5 g for the former, or drawing n samples from different sites of one large pack.",
+      "sampling_plan_definitions": {
+        "n": "Number of units comprising a sample.",
+        "c": "Maximum allowable number of units having microbiological counts above m for a 2-class plan and between m and M for a 3-class plan.",
+        "m": "Limit separating unsatisfactory from satisfactory in a 2-class plan, or acceptable from satisfactory in a 3-class plan.",
+        "M": "Limit separating unsatisfactory from satisfactory in a 3-class plan."
+      },
+      "interpretation": {
+        "two_class": [
+          "Satisfactory if all observed values are <= m.",
+          "Unsatisfactory if one or more observed values are > m."
+        ],
+        "three_class": [
+          "Satisfactory if all observed values are <= m.",
+          "Acceptable if at most c values are between m and M.",
+          "Unsatisfactory if one or more values are > M or more than the prescribed c values are > m."
+        ]
+      },
+      "reference_methods": {
+        "escherichia_coli": "IS 5887 Part 1 or ISO 16649-3",
+        "salmonella": "IS 5887 Part 3 / ISO 6579",
+        "listeria_monocytogenes": "IS 14988 Part 1 / ISO 11290-1"
+      },
+      "superseded_legacy_provision": {
+        "status": "superseded_by_current_table_6a_6b",
+        "source_page": 48,
+        "title": "Table 6 - Microbiological Requirements of Other Products",
+        "note": "The Version 2 PDF labels the following page as an amendment substituting the highlighted legacy provision. PMSV retains this only as provenance and does not use these limits for current compliance.",
+        "compressed_bakers_yeast": {
+          "total_bacterial_count_max": "7.5×10^5 CFU/g on dry basis",
+          "e_coli": "Absent in 1 g",
+          "salmonella_shigella": "Absent in 25 g",
+          "coliform_count_max": "10 CFU/g",
+          "rope_spore_count_max": "10 CFU/g"
+        },
+        "dried_bakers_yeast": {
+          "total_bacterial_count_max": "8×10^6 CFU/g on dry basis",
+          "e_coli": "Absent in 1 g",
+          "salmonella_shigella": "Absent in 25 g",
+          "coliform_count_max": "50 CFU/g",
+          "rope_spore_count_max": "100 CFU/g"
+        }
+      }
     }
   },
   "product_mappings": {
@@ -5831,6 +5938,18 @@
           "catalog_id": "08-08-4-animal-casings",
           "status": "no_direct_table_mapping",
           "reason": "Appendix B Table 5 does not provide a direct Animal Casings microbiological category; PMSV will not infer one."
+        }
+      ]
+    },
+    "bakers_yeast": {
+      "exact": [],
+      "conditional": [],
+      "no_direct_table_mapping": [],
+      "catalog_gap": [
+        {
+          "source_product": "Baker's Yeast (Compressed and Dried)",
+          "status": "no_current_product_master_identity",
+          "reason": "Appendix B Table 6A/6B provides the microbiological standard, but the current PMSV standardized-product master has no Baker's Yeast catalogue row. PMSV stores the rule without inventing a product identity."
         }
       ]
     }
