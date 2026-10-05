@@ -5280,7 +5280,7 @@ function renderProductContaminants(){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=182',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=425',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
