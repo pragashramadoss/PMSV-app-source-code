@@ -31973,7 +31973,32 @@
         "saturated_fat_g": 0.264,
         "cholesterol_mg": 55.81,
         "sodium_mg": 53.55
-      }
+      },
+      "ifct_table2_water_soluble_vitamins_per_100g": {
+        "thiamine_b1_mg": 0.02,
+        "riboflavin_b2_mg": 0.04,
+        "niacin_b3_mg": 2.72,
+        "pantothenic_acid_b5_mg": 0.66,
+        "vitamin_b6_total_mg": 0.07,
+        "biotin_b7_ug": null,
+        "folate_total_b9_ug": 20.06,
+        "vitamin_c_total_ascorbic_acid_mg": null
+      },
+      "ifct_table2_regions": 1,
+      "ifct_table2_verified_fields": [
+        "thiamine_b1_mg",
+        "riboflavin_b2_mg",
+        "niacin_b3_mg",
+        "pantothenic_acid_b5_mg",
+        "vitamin_b6_total_mg",
+        "folate_total_b9_ug"
+      ],
+      "ifct_table2_below_detection_fields": [],
+      "ifct_table2_not_analysed_fields": [
+        "biotin_b7_ug",
+        "vitamin_c_total_ascorbic_acid_mg"
+      ],
+      "ifct_table2_source": "ICMR-NIN IFCT 2017 · Table 2 Water Soluble Vitamins · national mean per 100 g edible portion"
     },
     {
       "names": [
@@ -32269,7 +32294,32 @@
         "saturated_fat_g": 1.826,
         "cholesterol_mg": 68.54,
         "sodium_mg": 19.6
-      }
+      },
+      "ifct_table2_water_soluble_vitamins_per_100g": {
+        "thiamine_b1_mg": 0.02,
+        "riboflavin_b2_mg": 0.02,
+        "niacin_b3_mg": 1.87,
+        "pantothenic_acid_b5_mg": 1.33,
+        "vitamin_b6_total_mg": 0.14,
+        "biotin_b7_ug": null,
+        "folate_total_b9_ug": 24.62,
+        "vitamin_c_total_ascorbic_acid_mg": null
+      },
+      "ifct_table2_regions": 1,
+      "ifct_table2_verified_fields": [
+        "thiamine_b1_mg",
+        "riboflavin_b2_mg",
+        "niacin_b3_mg",
+        "pantothenic_acid_b5_mg",
+        "vitamin_b6_total_mg",
+        "folate_total_b9_ug"
+      ],
+      "ifct_table2_below_detection_fields": [],
+      "ifct_table2_not_analysed_fields": [
+        "biotin_b7_ug",
+        "vitamin_c_total_ascorbic_acid_mg"
+      ],
+      "ifct_table2_source": "ICMR-NIN IFCT 2017 · Table 2 Water Soluble Vitamins · national mean per 100 g edible portion"
     },
     {
       "names": [
@@ -35015,9 +35065,9 @@
     "ifct_table12_fatty_acid_detail_status": "T001_to_T014_full_component_means_loaded_reference_only",
     "ifct_table12_fatty_acid_blank_policy": "blank_below_detectable_limit_stored_as_null",
     "ifct_table12_fatty_acid_calculation_policy": "reference_only_no_per100g_conversion_without_official_compatible_mass_basis",
-    "ifct_table2_water_soluble_vitamins_profiles_loaded": 526,
-    "ifct_table2_water_soluble_vitamins_stage": "526_of_528_exact_official_profiles_loaded",
-    "ifct_table2_water_soluble_vitamins_build": 447,
+    "ifct_table2_water_soluble_vitamins_profiles_loaded": 528,
+    "ifct_table2_water_soluble_vitamins_stage": "complete_A_to_S_528_of_528",
+    "ifct_table2_water_soluble_vitamins_build": 448,
     "ifct_table2_water_soluble_vitamins_unresolved_source_parse_fields": 0,
     "ifct_table2_poultry_biotin_not_analysed_codes": [
       "N012",
@@ -35056,12 +35106,10 @@
       "P078"
     ],
     "ifct_table2_water_soluble_vitamins_profiles_total": 528,
-    "ifct_table2_pending_exact_official_codes": [
-      "P073",
-      "P078"
-    ],
+    "ifct_table2_pending_exact_official_codes": [],
     "ifct_table2_qrs_complete": true,
-    "ifct_table2_animal_meat_complete": true
+    "ifct_table2_animal_meat_complete": true,
+    "ifct_table2_master_status": "complete_exact_official_ICMR_NIN_only"
   },
   "last_verified": "2026-10-05",
   "required_label_fields": [
@@ -35598,15 +35646,15 @@
       "L — Milk and Milk Products",
       "M — Egg and Egg Products",
       "N — Poultry",
-      "P — Marine Fish (90/92 loaded; P073 and P078 pending exact official rows)",
+      "O — Animal Meat",
+      "P — Marine Fish",
       "Q — Marine Shellfish",
       "R — Marine Mollusks",
-      "S — Freshwater Fish and Shellfish",
-      "O — Animal Meat"
+      "S — Freshwater Fish and Shellfish"
     ],
-    "loaded_codes": "A001-A024; B001-B025; C001-C034; D001-D078; E001-E068; F001-F019; G001-G033; H001-H021; I001-I002; J001-J004; K001-K002; L001-L004; M001-M015; N001-N019; O001-O063; P001-P072; P074-P077; P079-P092; Q001-Q008; R001-R007; S001-S010",
-    "loaded_profiles": 526,
-    "build": 447,
+    "loaded_codes": "A001-S010 (all 528 IFCT food profiles represented according to group-specific Table 2 fields)",
+    "loaded_profiles": 528,
+    "build": 448,
     "verified_on": "2026-10-05",
     "unresolved_source_parse_fields": [],
     "below_detection_examples": [
@@ -35621,15 +35669,13 @@
     ],
     "animal_groups_vitamin_c_policy": "M onward animal-food Table 2 sections do not tabulate Vitamin C; PMSV stores that field as not analysed/not tabulated, not zero.",
     "animal_meat_table2_policy": "ICMR-NIN Table 2 for group O tabulates B1, B2, B3, B5, total B6 and total folates only; Biotin and Vitamin C remain not analysed/not tabulated.",
-    "pending_exact_official_codes": [
-      "P073",
-      "P078"
-    ],
+    "pending_exact_official_codes": [],
     "marine_fish_table2_policy": "ICMR-NIN Table 2 for group P tabulates B1, B2, B3, B5, total B6 and total folates only; Biotin and Vitamin C remain not analysed/not tabulated.",
     "pending_marine_fish_codes": [
       "P073",
       "P078"
     ],
-    "ifct_food_corpus_table2_status": "526_of_528_profiles_loaded_from_exact_official_rows"
+    "ifct_food_corpus_table2_status": "complete_528_of_528_exact_official_profiles_loaded",
+    "completion_note": "All Table 2 values are from official ICMR-NIN IFCT 2017. Group-specific non-tabulated fields remain unavailable; official blank/BDL cells remain null and are never treated as zero."
   }
 }
