@@ -698,6 +698,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="card">
 <div class="section-title"><h2 id="labelPageTitle">Label requirements</h2><span>General + product-specific + formulation-triggered</span></div>
 <div id="labelScopeNote" class="notice oknote"><b>How this page works:</b> PMSV applies the general pre-packaged-food requirements under the Food Safety and Standards (Labelling and Display) Regulations, 2020. Product-specific declarations are shown only when PMSV has an exact verified rule for the selected product. Ingredient-triggered declarations update from the formulation you entered.</div>
+<div id="labelDbStatus" class="notice">Loading local FSSAI labelling rules…</div>
 </div>
 
 <div class="card">
@@ -1732,15 +1733,16 @@ function renderLabelRequirements(){
 
  const selectedProduct=productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
  const selectedName=selectedProduct?.name||currentProductProfile()?.name||'';
- const isCaffeinated=normIngredient(selectedName)==='caffeinated beverage';
+ const productLabelRule=labelProductRuleFor(selectedName);
+ const isCaffeinated=productLabelRule?.id==='caffeinated_beverage';
  if(pageTitle)pageTitle.textContent='Label requirements'+(selectedName?' — '+selectedName:'');
  if(scopeNote){
    scopeNote.innerHTML='<b>How this page works:</b> PMSV applies the general pre-packaged-food requirements under the Food Safety and Standards (Labelling and Display) Regulations, 2020. '+(selectedName?'Selected product: <b>'+esc(selectedName)+'</b>. ':'Select a standardized product to add verified product-specific declarations. ')+'Product-specific declarations are shown only when an exact rule is loaded; PMSV does not carry Caffeinated Beverage warnings into unrelated products.';
  }
  if(productSpecificStatus){
    productSpecificStatus.className=isCaffeinated?'notice oknote':'notice';
-   productSpecificStatus.innerHTML=isCaffeinated
-     ? '<b>Product-specific label rule loaded:</b> Caffeinated Beverage · FSSR 2.10.6(2). The caffeine declaration and mandatory caution/daily-consumption statements below are enabled.'
+   productSpecificStatus.innerHTML=productLabelRule
+     ? '<b>Product-specific label rule loaded:</b> '+esc(selectedName)+' · '+esc(productLabelRule.clause||'verified FSSAI rule')+'. Exact special declarations for this product are enabled.'
      : (selectedName
         ? '<b>Product-specific label rule:</b> No machine-verified special declaration has yet been loaded for <b>'+esc(selectedName)+'</b>. General FSSAI label rules and formulation-triggered checks remain applicable; PMSV will not infer special warnings from a similar product.'
         : '<b>Product-specific label rule:</b> Select a standardized product first. General FSSAI label rules and formulation-triggered checks remain available.');
@@ -2855,6 +2857,7 @@ let appendixCoreDb=null;
 let contaminantsDb=null;
 let appendixCDb=null;
 let microbiologyDb=null;
+let labelDb=null;
 let selectedProductId='';
 
 function fallbackIngredientCatalog(){
@@ -4039,6 +4042,34 @@ async function loadRegulatoryDb(){
  renderFormula();
 }
 
+function labelProductRuleFor(name){
+ if(!labelDb||!Array.isArray(labelDb.product_specific_rules))return null;
+ const n=normIngredient(name);
+ return labelDb.product_specific_rules.find(r=>Array.isArray(r.exact_names)&&r.exact_names.some(x=>normIngredient(x)===n)&&r.status==='active')||null;
+}
+
+async function loadLabelDb(){
+ const status=document.getElementById('labelDbStatus');
+ try{
+   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=351',{cache:'reload'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   labelDb=await res.json();
+   if(status){
+     const general=Array.isArray(labelDb.general_prepackaged_rules)?labelDb.general_prepackaged_rules.length:0;
+     const product=Array.isArray(labelDb.product_specific_rules)?labelDb.product_specific_rules.length:0;
+     status.className='notice oknote';
+     status.innerHTML='<b>Local labelling rule database loaded · no AI.</b><br>'+general+' general pre-packaged-food rules and '+product+' exact product-specific rule set(s) are loaded from official FSSAI sources. The 2026 amendment is stored as future-effective and is not applied before 1 July 2027.';
+   }
+ }catch(e){
+   labelDb=null;
+   if(status){
+     status.className='notice';
+     status.innerHTML='<b>Labelling rule database could not be loaded.</b> PMSV will show the embedded general checklist but will not enable product-specific declarations from fallback assumptions.';
+   }
+ }
+ renderLabelRequirements();
+}
+
 async function loadNutritionDb(){
  const status=document.getElementById('nutritionDbStatus');
  try{
@@ -4154,6 +4185,7 @@ loadRegulatoryDb();
 loadContaminantsDb();
 loadMicrobiologyDb();
 loadNutritionDb();
+loadLabelDb();
 
 const dailyLimits=[
  {name:'Taurine',daily:2000},
