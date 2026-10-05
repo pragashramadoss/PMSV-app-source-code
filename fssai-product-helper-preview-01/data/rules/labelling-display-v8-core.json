@@ -278,7 +278,138 @@
         "saccharins": "Children warning applies.",
         "polyols": "Polyol-specific declaration applies; threshold-based laxative warning is assessed separately."
       }
-    }
+    },
+    "article_specific_rules": [
+      {
+        "id": "treated_maida",
+        "match_terms": [
+          "maida",
+          "refined wheat flour"
+        ],
+        "condition": "treated_with_improver_or_bleaching_agent",
+        "requirement_summary": "Treated maida requires the prescribed bakery-only declaration.",
+        "qualifier_ui_status": "pending"
+      },
+      {
+        "id": "dried_glucose_syrup_so2",
+        "match_terms": [
+          "dried glucose syrup"
+        ],
+        "condition": "sulphur_dioxide_ppm_exceeds_40",
+        "requirement_summary": "Dried glucose syrup above the specified sulphur-dioxide condition requires the prescribed confectionery-use declaration.",
+        "qualifier_ui_status": "pending"
+      },
+      {
+        "id": "fruit_squash_added_salt",
+        "match_terms": [
+          "fruit squash",
+          "squash"
+        ],
+        "condition": "contains_additional_sodium_or_potassium_salt",
+        "requirement_summary": "Fruit squash with additional sodium or potassium salt requires the corresponding added-salt declaration.",
+        "qualifier_ui_status": "pending"
+      },
+      {
+        "id": "flavour_emulsion_paste",
+        "match_terms": [
+          "flavour emulsion",
+          "flavor emulsion",
+          "flavour paste",
+          "flavor paste"
+        ],
+        "condition": "intended_for_carbonated_or_noncarbonated_beverages",
+        "requirement_summary": "Flavour emulsion/paste for beverage use requires the prescribed beverage-only declaration.",
+        "qualifier_ui_status": "pending"
+      },
+      {
+        "id": "cheese_wax_coating",
+        "match_terms": [
+          "cheese"
+        ],
+        "condition": "coated_or_packed_in_food_grade_wax",
+        "requirement_summary": "Wax-coated cheese requires the prescribed instruction to remove the coating before consumption.",
+        "qualifier_ui_status": "pending"
+      },
+      {
+        "id": "frozen_dessert_confection",
+        "match_terms": [
+          "frozen dessert",
+          "frozen desert",
+          "frozen confection"
+        ],
+        "condition": "article_identity_match",
+        "requirement_summary": "Frozen dessert/confection requires the prescribed declaration identifying edible vegetable oil and/or vegetable fat as applicable.",
+        "qualifier_ui_status": "pending"
+      },
+      {
+        "id": "common_salt_use",
+        "match_terms": [
+          "common salt"
+        ],
+        "condition": "intended_use_selection",
+        "requirement_summary": "Common salt requires the prescribed intended-use declaration with non-applicable purposes struck out.",
+        "qualifier_ui_status": "pending"
+      },
+      {
+        "id": "wax_coated_fresh_fruit",
+        "match_terms": [
+          "fresh fruit"
+        ],
+        "condition": "coated_with_wax",
+        "requirement_summary": "Wax-coated fresh fruit requires a declaration naming the wax.",
+        "qualifier_ui_status": "pending"
+      },
+      {
+        "id": "food_grade_gelatin",
+        "match_terms": [
+          "gelatin"
+        ],
+        "condition": "meant_for_human_consumption",
+        "requirement_summary": "Gelatin intended for human consumption requires the food-grade declaration.",
+        "qualifier_ui_status": "pending"
+      },
+      {
+        "id": "refined_vegetable_oil",
+        "match_terms": [
+          "refined vegetable oil",
+          "refined oil"
+        ],
+        "condition": "article_identity_match",
+        "requirement_summary": "Refined vegetable oil must carry the prescribed refined-oil name declaration.",
+        "qualifier_ui_status": "pending"
+      },
+      {
+        "id": "one_time_plastic_water_bottle",
+        "match_terms": [
+          "packaged drinking water",
+          "mineral water",
+          "natural mineral water"
+        ],
+        "condition": "one_time_usable_plastic_bottle",
+        "requirement_summary": "One-time plastic bottles require the current prescribed bottle-disposal declaration.",
+        "qualifier_ui_status": "pending"
+      }
+    ],
+    "ingredient_presence_rules": [
+      {
+        "id": "monosodium_glutamate",
+        "aliases": [
+          "monosodium glutamate",
+          "msg"
+        ],
+        "requirement_summary": "Added monosodium glutamate requires the prescribed contains-MSG declaration and the applicable infant/pregnancy warning.",
+        "status": "active"
+      },
+      {
+        "id": "plant_stanol_esters",
+        "aliases": [
+          "plant stanol ester",
+          "plant stanol esters"
+        ],
+        "requirement_summary": "Added plant stanol esters trigger the prescribed content, medical-supervision, population-suitability and daily-intake declarations.",
+        "status": "active"
+      }
+    ]
   },
   "allergen_rules": {
     "source_clause": "5(14)",
