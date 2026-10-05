@@ -1,0 +1,595 @@
+{
+  "schema_version": "1.0",
+  "database_id": "pmsv-fssai-fortification-v5",
+  "title": "PMSV FSSAI Fortification Rule Core",
+  "last_verified": "2026-10-05",
+  "runtime_ai_required": false,
+  "source_policy": {
+    "regulatory_evidence": "FSSAI official sources only",
+    "fail_closed": true,
+    "note": "Fortification compliance is evaluated only for product routes and nutrient levels explicitly loaded from the current FSSAI compendium. Unmapped products remain unresolved."
+  },
+  "current_source": {
+    "authority": "FSSAI",
+    "regulation": "Food Safety and Standards (Fortification of Foods) Regulations, 2018",
+    "compendium_version": "Version V (01.06.2022)",
+    "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Fortification_Regulations_05_06_2022.pdf",
+    "status": "current_compendium_on_fssai_regulations_page"
+  },
+  "general_rules": [
+    {
+      "id": "general_1",
+      "clause": "Reg. 3",
+      "text": "Micronutrients may be added for the purposes specified in the regulations; heme iron shall not be used where Iron (as Fe) is the nutrient source."
+    },
+    {
+      "id": "processed_food_rda",
+      "clause": "Reg. 3(6)",
+      "text": "Fortified Processed Food shall provide 15–30% of Indian adult RDA of micronutrient based on an average 600 kcal intake from processed foods."
+    },
+    {
+      "id": "hfss_exclusion",
+      "clause": "Reg. 3(7)",
+      "text": "HFSS foods are excluded from the Fortified Processed Foods category."
+    },
+    {
+      "id": "schedule_i_compliance",
+      "clause": "Reg. 4(1)",
+      "text": "Added micronutrients in fortified food shall fall within the Schedule I range; minus 10% tolerance of the declared total label value may be allowed for compliance/analysis, but the Schedule I maximum added level must still be met."
+    },
+    {
+      "id": "schedule_iii_compliance",
+      "clause": "Reg. 4(2)",
+      "text": "Fortified processed foods shall meet Schedule III micronutrient ranges."
+    },
+    {
+      "id": "qa",
+      "clause": "Reg. 5",
+      "text": "Manufacturer/packer shall submit quality-assurance undertaking twice a year, including notified-lab certification, fortificant inventory/source records, process monitoring, random testing and equipment/process audit."
+    },
+    {
+      "id": "other_regulations",
+      "clause": "Reg. 6",
+      "text": "Fortified food must also comply with all other applicable FSSAI regulations."
+    },
+    {
+      "id": "packaging",
+      "clause": "Reg. 7(1)",
+      "text": "Packaging shall consider the nature of the fortificant and its effect on shelf life."
+    },
+    {
+      "id": "label_logo",
+      "clause": "Reg. 7(2)",
+      "text": "Except iodized salt fortified only with iodine, the package shall carry 'fortified with … (name of fortificant)' and the Schedule II +F logo; the tagline may also be used."
+    },
+    {
+      "id": "iron_warning",
+      "clause": "Reg. 7(4)",
+      "text": "Every package of food fortified with iron shall carry the prescribed Thalassemia/Sickle Cell Anaemia warning."
+    }
+  ],
+  "routes": [
+    {
+      "id": "iodized_double_fortified_salt",
+      "names": [
+        "iodized salt",
+        "iodised salt",
+        "double fortified salt",
+        "iron fortified iodized salt",
+        "iron fortified iodised salt"
+      ],
+      "route_type": "schedule_i",
+      "basis": "per_kg",
+      "required_or_permitted": [
+        {
+          "nutrient": "Iodine",
+          "key": "iodine_mg_per_kg",
+          "min": 15,
+          "max": 30,
+          "unit": "mg/kg (ppm)",
+          "required": true,
+          "sources": [
+            "Potassium Iodate"
+          ]
+        },
+        {
+          "nutrient": "Iron",
+          "key": "iron_mg_per_kg",
+          "min": 850,
+          "max": 1100,
+          "unit": "mg/kg (ppm)",
+          "required": false,
+          "sources": [
+            "Ferrous sulphate",
+            "Ferrous fumarate"
+          ],
+          "applies_to": "Double Fortified Salt"
+        }
+      ],
+      "notes": [
+        "Iodine-only iodized salt is exempt from the Reg. 7(2) +F/fortified-with label requirement.",
+        "Double Fortified Salt ingredient/insoluble-matter provisions also apply."
+      ]
+    },
+    {
+      "id": "fortified_oil",
+      "match_terms": [
+        "vegetable oil",
+        "edible oil",
+        "oil"
+      ],
+      "route_type": "schedule_i",
+      "basis": "per_g",
+      "required_or_permitted": [
+        {
+          "nutrient": "Vitamin A",
+          "key": "vitamin_a_ug_re_per_g",
+          "min": 6,
+          "max": 9.9,
+          "unit": "µg RE/g",
+          "required": true,
+          "sources": [
+            "Retinyl acetate",
+            "Retinyl palmitate"
+          ]
+        },
+        {
+          "nutrient": "Vitamin D",
+          "key": "vitamin_d_ug_per_g",
+          "min": 0.11,
+          "max": 0.16,
+          "unit": "µg/g",
+          "required": true,
+          "sources": [
+            "Cholecalciferol",
+            "Ergocalciferol"
+          ],
+          "source_condition": "Plant source only"
+        }
+      ]
+    },
+    {
+      "id": "fortified_milk",
+      "exact_or_terms": [
+        "buffalo milk",
+        "cow milk",
+        "goat milk",
+        "sheep milk",
+        "camel milk",
+        "full cream milk",
+        "toned milk",
+        "double toned milk",
+        "skimmed milk",
+        "standardized milk",
+        "standardised milk"
+      ],
+      "route_type": "schedule_i",
+      "basis": "per_litre",
+      "required_or_permitted": [
+        {
+          "nutrient": "Vitamin A",
+          "key": "vitamin_a_ug_re_per_l",
+          "min": 270,
+          "max": 450,
+          "unit": "µg RE/L",
+          "required": true,
+          "sources": [
+            "Retinyl acetate",
+            "Retinyl palmitate"
+          ]
+        },
+        {
+          "nutrient": "Vitamin D",
+          "key": "vitamin_d_ug_per_l",
+          "min": 5,
+          "max": 7.5,
+          "unit": "µg/L",
+          "required": true,
+          "sources": [
+            "Cholecalciferol",
+            "Ergocalciferol"
+          ],
+          "source_condition": "Plant source only"
+        }
+      ],
+      "process_condition": "Milk shall undergo pasteurization, sterilization, UHT treatment or boiling."
+    },
+    {
+      "id": "fortified_milk_powder",
+      "match_terms": [
+        "milk powder"
+      ],
+      "route_type": "schedule_i_reconstituted",
+      "basis": "reconstituted_milk",
+      "required_or_permitted": [
+        {
+          "nutrient": "Vitamin A",
+          "key": "vitamin_a_ug_re_per_l_reconstituted",
+          "min": 270,
+          "max": 450,
+          "unit": "µg RE/L reconstituted milk",
+          "required": true
+        },
+        {
+          "nutrient": "Vitamin D",
+          "key": "vitamin_d_ug_per_l_reconstituted",
+          "min": 5,
+          "max": 7.5,
+          "unit": "µg/L reconstituted milk",
+          "required": true
+        }
+      ],
+      "government_program_only": true,
+      "additional_label_statements": [
+        "NOT RECOMMENDED FOR DIRECT CONSUMPTION",
+        "ONLY FOR USE UNDER [Name of the Government Funded Programme]",
+        "TO BE CONSUMED ONLY AFTER RECONSTITUTION OF THE ENTIRE CONTENT AS PER THE DIRECTIONS ON THE LABEL.",
+        "PACK ONCE OPENED, TO BE CONSUMED ON THE SAME DAY."
+      ]
+    },
+    {
+      "id": "fortified_atta",
+      "exact_or_terms": [
+        "atta",
+        "wheat flour, atta",
+        "multigrain atta",
+        "multi-grain atta"
+      ],
+      "route_type": "schedule_i",
+      "basis": "per_kg",
+      "core": [
+        {
+          "nutrient": "Iron",
+          "key": "iron_mg_per_kg",
+          "options": [
+            {
+              "min": 28,
+              "max": 42.5,
+              "sources": [
+                "Ferrous citrate",
+                "Ferrous lactate",
+                "Ferrous sulphate",
+                "Ferric pyrophosphate",
+                "Electrolytic iron",
+                "Ferrous fumarate",
+                "Ferrous bisglycinate"
+              ]
+            },
+            {
+              "min": 14,
+              "max": 21.25,
+              "sources": [
+                "NaFeEDTA",
+                "Sodium feredetate"
+              ]
+            }
+          ],
+          "unit": "mg/kg",
+          "required": true
+        },
+        {
+          "nutrient": "Folic acid",
+          "key": "folic_acid_ug_per_kg",
+          "min": 75,
+          "max": 125,
+          "unit": "µg/kg",
+          "required": true
+        },
+        {
+          "nutrient": "Vitamin B12",
+          "key": "vitamin_b12_ug_per_kg",
+          "min": 0.75,
+          "max": 1.25,
+          "unit": "µg/kg",
+          "required": true,
+          "sources": [
+            "Cyanocobalamin",
+            "Hydroxycobalamin"
+          ]
+        }
+      ],
+      "optional": [
+        {
+          "nutrient": "Zinc",
+          "key": "zinc_mg_per_kg",
+          "min": 10,
+          "max": 15,
+          "unit": "mg/kg",
+          "sources": [
+            "Zinc sulphate"
+          ]
+        },
+        {
+          "nutrient": "Vitamin A",
+          "key": "vitamin_a_ug_re_per_kg",
+          "min": 500,
+          "max": 750,
+          "unit": "µg RE/kg"
+        },
+        {
+          "nutrient": "Thiamine (B1)",
+          "key": "b1_mg_per_kg",
+          "min": 1,
+          "max": 1.5,
+          "unit": "mg/kg"
+        },
+        {
+          "nutrient": "Riboflavin (B2)",
+          "key": "b2_mg_per_kg",
+          "min": 1.25,
+          "max": 1.75,
+          "unit": "mg/kg"
+        },
+        {
+          "nutrient": "Niacin (B3)",
+          "key": "b3_mg_per_kg",
+          "min": 12.5,
+          "max": 20,
+          "unit": "mg/kg"
+        },
+        {
+          "nutrient": "Pyridoxine (B6)",
+          "key": "b6_mg_per_kg",
+          "min": 1.5,
+          "max": 2.5,
+          "unit": "mg/kg"
+        }
+      ],
+      "special_condition": "Multigrain atta may use the same levels only when it contains more than 50% wheat flour."
+    },
+    {
+      "id": "fortified_maida",
+      "exact_or_terms": [
+        "maida",
+        "wheat flour, refined",
+        "refined wheat flour"
+      ],
+      "route_type": "schedule_i",
+      "basis": "per_kg",
+      "same_levels_as": "fortified_atta"
+    },
+    {
+      "id": "fortified_rice",
+      "exact_or_terms": [
+        "rice",
+        "fortified rice",
+        "rice, raw, milled"
+      ],
+      "route_type": "schedule_i",
+      "basis": "per_kg",
+      "core": [
+        {
+          "nutrient": "Iron",
+          "key": "iron_mg_per_kg",
+          "options": [
+            {
+              "min": 28,
+              "max": 42.5,
+              "sources": [
+                "Ferric pyrophosphate"
+              ]
+            },
+            {
+              "min": 14,
+              "max": 21.25,
+              "sources": [
+                "NaFeEDTA",
+                "Sodium feredetate"
+              ]
+            }
+          ],
+          "unit": "mg/kg",
+          "required": true
+        },
+        {
+          "nutrient": "Folic acid",
+          "key": "folic_acid_ug_per_kg",
+          "min": 75,
+          "max": 125,
+          "unit": "µg/kg",
+          "required": true
+        },
+        {
+          "nutrient": "Vitamin B12",
+          "key": "vitamin_b12_ug_per_kg",
+          "min": 0.75,
+          "max": 1.25,
+          "unit": "µg/kg",
+          "required": true,
+          "sources": [
+            "Cyanocobalamin",
+            "Hydroxycobalamin"
+          ]
+        }
+      ],
+      "optional": [
+        {
+          "nutrient": "Zinc",
+          "key": "zinc_mg_per_kg",
+          "min": 10,
+          "max": 15,
+          "unit": "mg/kg",
+          "sources": [
+            "Zinc oxide"
+          ]
+        },
+        {
+          "nutrient": "Vitamin A",
+          "key": "vitamin_a_ug_re_per_kg",
+          "min": 500,
+          "max": 750,
+          "unit": "µg RE/kg"
+        },
+        {
+          "nutrient": "Thiamine (B1)",
+          "key": "b1_mg_per_kg",
+          "min": 1,
+          "max": 1.5,
+          "unit": "mg/kg"
+        },
+        {
+          "nutrient": "Riboflavin (B2)",
+          "key": "b2_mg_per_kg",
+          "min": 1.25,
+          "max": 1.75,
+          "unit": "mg/kg"
+        },
+        {
+          "nutrient": "Niacin (B3)",
+          "key": "b3_mg_per_kg",
+          "min": 12.5,
+          "max": 20,
+          "unit": "mg/kg"
+        },
+        {
+          "nutrient": "Pyridoxine (B6)",
+          "key": "b6_mg_per_kg",
+          "min": 1.5,
+          "max": 2.5,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    {
+      "id": "fortified_processed_cereal",
+      "match_terms": [
+        "breakfast cereal",
+        "pasta",
+        "noodle",
+        "noodles"
+      ],
+      "route_type": "schedule_iii",
+      "basis": "per_100g",
+      "core": [
+        {
+          "nutrient": "Iron",
+          "key": "iron_mg_per_100g",
+          "min": 1.4,
+          "max": 2.7,
+          "unit": "mg/100g",
+          "required": true
+        },
+        {
+          "nutrient": "Folic acid",
+          "key": "folic_acid_ug_per_100g",
+          "min": 8,
+          "max": 16,
+          "unit": "µg/100g",
+          "required": true
+        },
+        {
+          "nutrient": "Vitamin B12",
+          "key": "vitamin_b12_ug_per_100g",
+          "min": 0.08,
+          "max": 0.16,
+          "unit": "µg/100g",
+          "required": true
+        }
+      ],
+      "optional": [
+        {
+          "nutrient": "Zinc",
+          "key": "zinc_mg_per_100g",
+          "min": 1,
+          "max": 1.9,
+          "unit": "mg/100g"
+        },
+        {
+          "nutrient": "Vitamin A",
+          "key": "vitamin_a_ug_re_per_100g",
+          "min": 48,
+          "max": 96,
+          "unit": "µg RE/100g"
+        },
+        {
+          "nutrient": "Thiamine (B1)",
+          "key": "b1_mg_per_100g",
+          "min": 0.1,
+          "max": 0.19,
+          "unit": "mg/100g"
+        },
+        {
+          "nutrient": "Riboflavin (B2)",
+          "key": "b2_mg_per_100g",
+          "min": 0.11,
+          "max": 0.22,
+          "unit": "mg/100g"
+        },
+        {
+          "nutrient": "Niacin (B3)",
+          "key": "b3_mg_per_100g",
+          "min": 1.3,
+          "max": 2.6,
+          "unit": "mg/100g"
+        },
+        {
+          "nutrient": "Pyridoxine (B6)",
+          "key": "b6_mg_per_100g",
+          "min": 0.2,
+          "max": 0.3,
+          "unit": "mg/100g"
+        }
+      ],
+      "hfss_excluded": true
+    },
+    {
+      "id": "fortified_bakery",
+      "match_terms": [
+        "bread",
+        "biscuit",
+        "biscuits",
+        "rusk",
+        "rusks",
+        "bun",
+        "buns"
+      ],
+      "route_type": "schedule_iii",
+      "basis": "per_100g",
+      "same_levels_as": "fortified_processed_cereal",
+      "hfss_excluded": true
+    },
+    {
+      "id": "fortified_fruit_juice",
+      "match_terms": [
+        "fruit juice",
+        "juice"
+      ],
+      "route_type": "schedule_iii",
+      "basis": "per_100ml",
+      "core": [
+        {
+          "nutrient": "Vitamin C",
+          "key": "vitamin_c_mg_per_100ml",
+          "min": 6,
+          "max": 12,
+          "unit": "mg/100ml",
+          "required": true,
+          "sources": [
+            "Ascorbic acid"
+          ]
+        }
+      ],
+      "hfss_excluded": true
+    }
+  ],
+  "labeling": {
+    "iron_warning": "People with Thalassemia may take under medical supervision and persons with Sickle Cell Anaemia are advised not to consume iron fortified food products.",
+    "plus_f_required": true,
+    "iodized_salt_iodine_only_exemption": true
+  },
+  "quality_assurance": {
+    "undertaking_frequency_per_year": 2,
+    "notified_lab_certification": true,
+    "fortificant_inventory_and_source_records": true,
+    "process_monitoring": true,
+    "random_testing": true,
+    "equipment_process_audit": true
+  },
+  "runtime_coverage": {
+    "status": "phase_1_rule_core_build_401",
+    "routes": 10,
+    "schedule_i_routes": 7,
+    "schedule_iii_routes": 3,
+    "fail_closed": true
+  }
+}
