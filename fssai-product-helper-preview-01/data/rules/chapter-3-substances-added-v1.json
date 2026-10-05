@@ -1933,6 +1933,103 @@
       ],
       "machine_requirements_complete": true,
       "permission_note": "Permission and maximum use level in a finished food remain governed separately by the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.2.2(1)",
+      "name": "Steviol Glycosides from Stevia rebaudiana Bertoni",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "ins": "960",
+        "definition": "Mixture of compounds containing a steviol backbone conjugated to sugar moieties occurring in Stevia rebaudiana Bertoni leaves.",
+        "process_summary": "Leaves are extracted with hot water; aqueous extract is passed through adsorption resin, washed with solvent alcohol to release glycosides, recrystallized from methanol or aqueous ethanol; ion-exchange resins may be used; final product may be spray-dried.",
+        "description": "White to light-yellow powder, odourless or with slight characteristic odour; about 200–300 times sweeter than sucrose."
+      },
+      "identification": [
+        {
+          "parameter": "Solubility",
+          "requirement": "Freely soluble in ethanol:water 50:50"
+        },
+        {
+          "parameter": "HPLC chromatographic assay",
+          "requirement": "Main peaks correspond to steviol glycosides using JECFA assay method."
+        },
+        {
+          "parameter": "pH",
+          "operator": "range",
+          "min": 4.5,
+          "max": 7,
+          "basis": "1 in 100 solution"
+        }
+      ],
+      "requirements": [
+        {
+          "parameter": "Assay/purity — total steviol glycosides on dried basis",
+          "operator": ">=",
+          "value": 95,
+          "unit": "%"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 1,
+          "unit": "%"
+        },
+        {
+          "parameter": "Loss on drying at 105°C for 2 h",
+          "operator": "<=",
+          "value": 6,
+          "unit": "%"
+        },
+        {
+          "parameter": "Residual methanol",
+          "operator": "<=",
+          "value": 200,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Residual ethanol",
+          "operator": "<=",
+          "value": 5000,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 1,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 1,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Total aerobic plate count",
+          "operator": "<=",
+          "value": 1000,
+          "unit": "CFU/g"
+        },
+        {
+          "parameter": "Yeasts and moulds",
+          "operator": "<=",
+          "value": 200,
+          "unit": "CFU/g"
+        },
+        {
+          "parameter": "E. coli",
+          "operator": "negative",
+          "basis": "per g"
+        },
+        {
+          "parameter": "Salmonella",
+          "operator": "negative",
+          "basis": "per 25 g"
+        }
+      ],
+      "analytical_method": "JECFA monograph (2017) on Steviol Glycosides from Stevia rebaudiana Bertoni",
+      "machine_requirements_complete": true,
+      "permission_note": "This is the additive identity/purity standard. Finished-food permission and maximum use level remain governed separately by Appendix A and applicable vertical standards."
     }
   ],
   "coverage": {
@@ -1940,8 +2037,8 @@
     "other_substances_exact_limit_routes": 5,
     "other_substances_auto_apply": 0,
     "other_substances_fail_closed": true,
-    "build": 434,
-    "identity_purity_standards_structured": 19,
+    "build": 436,
+    "identity_purity_standards_structured": 20,
     "food_colour_clause12_effective_standard_loaded": true,
     "food_colour_amendment_84_effective_from": "2026-02-01",
     "food_colour_legacy_omission_policy_loaded": true,
@@ -1952,7 +2049,11 @@
     "caramel_variant_types_loaded": 4,
     "food_colour_sequence_through": "3.2.1(12) Food Colour - Preparation and Mixtures",
     "food_colour_standard_sequence_complete": true,
-    "food_colour_next_section": "3.2.2 Sweetener"
+    "food_colour_next_section": "3.2.2 Sweetener",
+    "sweetener_standards_loaded": 1,
+    "sweetener_classification_loaded": true,
+    "sweetener_3_2_2_stage": "Steviol glycosides current standard structured; classification list retained separately without inventing absent specifications.",
+    "chapter_3_next_section": "3.2.3 Baker's Yeast / 3.2.4 onward additive standards"
   },
   "effective_amendments": [
     {
