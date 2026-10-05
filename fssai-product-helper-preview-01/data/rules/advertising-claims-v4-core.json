@@ -867,7 +867,7 @@
     "non_addition_claims": "direct_disqualifier_screen_ready",
     "health_claims": "fail_closed_pending_evidence_workflow",
     "schedule_v_terms": "evidence_questionnaire_ready",
-    "status": "phase_4_schedules_structured_build_387",
+    "status": "phase_5_complete_current_compendium_structure_build_389",
     "runtime_audit": {
       "build": 381,
       "schedule_i_rules": 25,
@@ -880,7 +880,8 @@
     },
     "schedule_iia_edible_oils": 19,
     "schedule_iii_disease_risk_claims": 8,
-    "schedule_iv_fortified_food_claims": 11
+    "schedule_iv_fortified_food_claims": 11,
+    "approval_and_enforcement": "regulations_11_to_15_structured"
   },
   "schedule_iia_edible_oils": [
     {
@@ -1144,5 +1145,44 @@
       "status": "official_reference",
       "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
     }
-  ]
+  ],
+  "approval_and_enforcement": {
+    "prior_approval": {
+      "clause": "Reg. 11",
+      "text": "Prior Food Authority approval is required for reduction-of-disease-risk claims other than those defined with criteria under these or other FSSAI regulations."
+    },
+    "approval_application": {
+      "clause": "Reg. 12",
+      "required_information": [
+        "Claim proposed to be made.",
+        "Ingredient, nutrient or substance on which the claim is based.",
+        "Validated analytical method for the ingredient or substance.",
+        "Scientific information/material substantiating the claim.",
+        "Explanation of how the claim is clear, meaningful and comprehensible to consumers.",
+        "Well-designed human intervention studies for health claims conducted by or under guidance of established research institutions.",
+        "Any other useful information requested."
+      ],
+      "scrutiny_decision_days": 90,
+      "applicant_information_response_days": 30,
+      "reconsideration_days": 30,
+      "rejected_claim_must_not_be_used": true,
+      "fee_refundable": false
+    },
+    "non_compliance": {
+      "clause": "Reg. 13",
+      "text": "Advertisements or claims not complying with the regulation are subject to penalty under section 53 of the Food Safety and Standards Act, 2006."
+    },
+    "redress": {
+      "clause": "Reg. 14",
+      "clarification_response_days": 30,
+      "authority_decision_days": 90,
+      "improvement_intimation_days": 45,
+      "text": "Misleading claims may be referred to or taken up by the Food Authority, which may seek clarification, decide acceptance/rejection and suggest improvement."
+    },
+    "corrective_advertisement": {
+      "clause": "Reg. 15",
+      "corrective_advertisement_days": 30,
+      "text": "Where an advertisement violates the regulation, the Food Authority may require it to stop immediately and require a corrective advertisement through the same medium."
+    }
+  }
 }
