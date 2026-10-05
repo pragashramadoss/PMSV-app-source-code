@@ -17,7 +17,7 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_49_chapter_2_6_fish_specific_routes_operational",
+    "stage": "phase_50_chapter_2_6_fish_specific_profile_leakage_audited",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 146,
     "universal_rules": 1,
@@ -220,14 +220,24 @@
     "chapter_2_6_mercury_species_gates": 2,
     "chapter_2_6_arsenic_source_literal_auto_apply": false,
     "chapter_2_6_review_started_build_426": true,
-    "chapter_2_6_chromium_all_fishery_products_mapped": 24,
+    "chapter_2_6_chromium_all_fishery_products_mapped": 23,
     "chapter_2_6_bivalve_biotoxin_products_mapped": 3,
     "chapter_2_6_bivalve_biotoxin_rule_rows": 15,
     "chapter_2_6_smoked_benzoapyrene_routes": 1,
     "chapter_2_6_histamine_exact_product_routes": 8,
     "chapter_2_6_histamine_species_gated_routes": 2,
     "chapter_2_6_pcb_habitat_gate": true,
-    "chapter_2_6_fish_specific_routes_build": 427
+    "chapter_2_6_fish_specific_routes_build": 427,
+    "chapter_2_6_gelatin_chromium_precedence": {
+      "catalog_id": "99-99-1-gelatin-from-fish-processing-waste",
+      "retained_article": "Gelatin",
+      "retained_limit_mg_per_kg": 10,
+      "suppressed_broad_article": "All fishery products",
+      "broad_limit_mg_per_kg": 12,
+      "reason": "The shared Gelatin profile already has the exact product/substance Chromium row at 10 mg/kg. The broader fishery-product row is not duplicated onto the shared generic/fish-gelatin profile."
+    },
+    "chapter_2_6_shared_profile_leakage_audit_build": 428,
+    "chapter_2_6_shared_profile_leakage_count": 0
   },
   "all_food_rules": [
     {
@@ -897,7 +907,7 @@
     },
     {
       "id": "gelatin",
-      "label": "Gelatin from Fish Processing Waste",
+      "label": "Gelatin",
       "catalog_ids": [
         "99-99-1-gelatin",
         "99-99-1-gelatin-from-fish-processing-waste"
@@ -930,14 +940,6 @@
           "unit": "mg/kg",
           "article": "Gelatin",
           "source_basis": "Section 2.1 · Chromium"
-        },
-        {
-          "contaminant": "Chromium",
-          "limit": 12,
-          "unit": "mg/kg",
-          "article": "All fishery products",
-          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
-          "verification": "official_fssai_v9_direct_all_fishery_products"
         }
       ]
     },
