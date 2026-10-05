@@ -870,6 +870,19 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div class="card">
+<div class="section-title"><h2>Check a restricted word</h2><span>Schedule V · Regulation 9(2)</span></div>
+<div class="field">
+  <label>Word / phrase</label>
+  <select id="scheduleVTerm"><option value="">Select term</option></select>
+  <small>Natural, Fresh, Pure, Authentic/Genuine/Real, Traditional and Original have specific FSSAI conditions.</small>
+</div>
+<div id="scheduleVSummary" class="notice">Select a term to see its evidence gates.</div>
+<div id="scheduleVQuestions"></div>
+<div class="flow-actions"><button class="btn" type="button" id="evaluateScheduleV">Evaluate restricted word</button></div>
+<div id="scheduleVResult" class="notice">No restricted word evaluated yet.</div>
+</div>
+
+<div class="card">
 <div class="section-title"><h2>General claim gates</h2><span>Regulations 4, 5, 6, 7, 9 & 10</span></div>
 <div id="claimsGeneralRules" class="grid2"></div>
 </div>
@@ -4589,6 +4602,61 @@ function runNonAdditionClaimEvaluation(){
  box.innerHTML='<b>No direct disqualifier detected, but the claim is NOT auto-approved.</b><br>'+esc(cfg.screening_note||cfg.direct_runtime_rule||'Compound ingredients, carry-over and processing/substitution evidence must still be reviewed.')+'<br><small>PMSV remains fail-closed until those evidence gates are satisfied.</small>';
 }
 
+function selectedScheduleVRule(){
+ const term=document.getElementById('scheduleVTerm')?.value||'';
+ return (claimsDb?.schedule_v||[]).find(r=>r.term===term)||null;
+}
+function renderScheduleVQuestions(){
+ const select=document.getElementById('scheduleVTerm');
+ const summary=document.getElementById('scheduleVSummary');
+ const box=document.getElementById('scheduleVQuestions');
+ if(select&&claimsDb){
+   const current=select.value;
+   select.innerHTML='<option value="">Select term</option>'+(claimsDb.schedule_v||[]).map(r=>'<option value="'+esc(r.term)+'">'+esc(r.term)+'</option>').join('');
+   if([...select.options].some(o=>o.value===current))select.value=current;
+ }
+ const rule=selectedScheduleVRule();
+ if(summary){
+   summary.innerHTML=rule?'<b>'+esc(rule.term)+'</b> · '+esc(rule.clause||'Schedule V')+'<br>'+esc(rule.summary||'Specific FSSAI conditions apply.'):'Select a term to see its evidence gates.';
+ }
+ if(!box)return;
+ if(!rule){
+   box.innerHTML='';
+   return;
+ }
+ const questions=rule.evidence_questions||[];
+ box.innerHTML='<div class="checker-grid">'+questions.map(q=>'<div class="field"><label>'+esc(q.question)+'</label><select data-schedule-v-question="'+esc(q.id)+'"><option value="">Not answered</option><option value="yes">Yes</option><option value="no">No</option></select></div>').join('')+'</div>';
+}
+function runScheduleVEvaluation(){
+ const out=document.getElementById('scheduleVResult');
+ if(!out)return;
+ const rule=selectedScheduleVRule();
+ if(!rule){
+   out.className='notice';
+   out.innerHTML='Select a Schedule V term first.';
+   return;
+ }
+ const answers=[...document.querySelectorAll('[data-schedule-v-question]')].map(el=>({id:el.dataset.scheduleVQuestion,value:el.value}));
+ const missing=answers.filter(a=>!a.value);
+ if(missing.length){
+   out.className='notice';
+   out.innerHTML='<b>Needs evidence.</b> Answer every Schedule V condition before PMSV can assess this word.';
+   return;
+ }
+ const failed=answers.filter(a=>a.value!=='yes');
+ if(failed.length){
+   out.className='notice';
+   let extra='';
+   if(rule.term==='Natural')extra='<br><small>A composite food should not itself be described as “natural”; “made from natural ingredients” requires every ingredient/additive to meet the applicable Schedule V criteria.</small>';
+   out.innerHTML='<b>Schedule V condition NOT met.</b> At least one required condition is answered “No”.'+extra;
+   return;
+ }
+ out.className='notice oknote';
+ let note='<br><small>All stored Schedule V evidence questions are satisfied. Final wording must still be truthful, non-misleading and consistent with the product and advertisement.</small>';
+ if(rule.term==='Natural')note='<br><small>All stored direct “Natural” conditions are satisfied. Claims such as “natural goodness”, “naturally better” and “nature’s way” remain prohibited by Schedule V.</small>';
+ out.innerHTML='<b>Stored Schedule V conditions supported.</b>'+note;
+}
+
 function renderClaimsReference(){
  const general=document.getElementById('claimsGeneralRules');
  const manual=document.getElementById('claimsManualRules');
@@ -4632,11 +4700,12 @@ function renderClaims(){
    }
  }
  renderClaimsReference();
+ renderScheduleVQuestions();
 }
 async function loadClaimsDb(){
  const status=document.getElementById('claimsDbStatus');
  try{
-   const res=await fetch('./data/rules/advertising-claims-v4-core.json?v=383',{cache:'reload'});
+   const res=await fetch('./data/rules/advertising-claims-v4-core.json?v=385',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    claimsDb=await res.json();
  }catch(e){
@@ -4844,6 +4913,8 @@ document.getElementById('comparativeNutrient')?.addEventListener('change',runCom
 document.getElementById('comparativeDirection')?.addEventListener('change',runComparativeClaimEvaluation);
 document.getElementById('evaluateNonAdditionClaim')?.addEventListener('click',runNonAdditionClaimEvaluation);
 document.getElementById('nonAdditionType')?.addEventListener('change',runNonAdditionClaimEvaluation);
+document.getElementById('scheduleVTerm')?.addEventListener('change',()=>{renderScheduleVQuestions();const out=document.getElementById('scheduleVResult');if(out){out.className='notice';out.innerHTML='Answer the evidence questions, then evaluate the restricted word.';}});
+document.getElementById('evaluateScheduleV')?.addEventListener('click',runScheduleVEvaluation);
 renderConversions();
 
 
