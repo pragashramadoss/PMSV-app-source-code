@@ -109,7 +109,8 @@
       "notes": [
         "Iodine-only iodized salt is exempt from the Reg. 7(2) +F/fortified-with label requirement.",
         "Double Fortified Salt ingredient/insoluble-matter provisions also apply."
-      ]
+      ],
+      "suggestion_match_policy": "strict_identity"
     },
     {
       "id": "fortified_oil",
@@ -172,7 +173,8 @@
         "essential oil",
         "mineral oil"
       ],
-      "runtime_note": "Auto-suggestion is restricted to listed edible/vegetable-oil identities. Generic 'oil' is never sufficient."
+      "runtime_note": "Auto-suggestion is restricted to listed edible/vegetable-oil identities. Generic 'oil' is never sufficient.",
+      "suggestion_match_policy": "allowlisted_class_terms_with_exclusions"
     },
     {
       "id": "fortified_milk",
@@ -218,7 +220,8 @@
           "source_condition": "Plant source only"
         }
       ],
-      "process_condition": "Milk shall undergo pasteurization, sterilization, UHT treatment or boiling."
+      "process_condition": "Milk shall undergo pasteurization, sterilization, UHT treatment or boiling.",
+      "suggestion_match_policy": "strict_identity"
     },
     {
       "id": "fortified_milk_powder",
@@ -234,7 +237,12 @@
           "min": 270,
           "max": 450,
           "unit": "µg RE/L reconstituted milk",
-          "required": true
+          "required": true,
+          "sources": [
+            "Retinyl acetate",
+            "Retinyl palmitate"
+          ],
+          "source_basis": "Inherited through Schedule I Clause 3 Fortified Milk reference"
         },
         {
           "nutrient": "Vitamin D",
@@ -242,7 +250,13 @@
           "min": 5,
           "max": 7.5,
           "unit": "µg/L reconstituted milk",
-          "required": true
+          "required": true,
+          "sources": [
+            "Cholecalciferol",
+            "Ergocalciferol"
+          ],
+          "source_condition": "Plant source only",
+          "source_basis": "Inherited through Schedule I Clause 3 Fortified Milk reference"
         }
       ],
       "government_program_only": true,
@@ -251,7 +265,8 @@
         "ONLY FOR USE UNDER [Name of the Government Funded Programme]",
         "TO BE CONSUMED ONLY AFTER RECONSTITUTION OF THE ENTIRE CONTENT AS PER THE DIRECTIONS ON THE LABEL.",
         "PACK ONCE OPENED, TO BE CONSUMED ON THE SAME DAY."
-      ]
+      ],
+      "suggestion_match_policy": "strict_identity"
     },
     {
       "id": "fortified_atta",
@@ -299,7 +314,10 @@
           "min": 75,
           "max": 125,
           "unit": "µg/kg",
-          "required": true
+          "required": true,
+          "sources": [
+            "Folic acid"
+          ]
         },
         {
           "nutrient": "Vitamin B12",
@@ -330,38 +348,58 @@
           "key": "vitamin_a_ug_re_per_kg",
           "min": 500,
           "max": 750,
-          "unit": "µg RE/kg"
+          "unit": "µg RE/kg",
+          "sources": [
+            "Retinyl acetate",
+            "Retinyl palmitate"
+          ]
         },
         {
           "nutrient": "Thiamine (B1)",
           "key": "b1_mg_per_kg",
           "min": 1,
           "max": 1.5,
-          "unit": "mg/kg"
+          "unit": "mg/kg",
+          "sources": [
+            "Thiamine hydrochloride",
+            "Thiamine mononitrate"
+          ]
         },
         {
           "nutrient": "Riboflavin (B2)",
           "key": "b2_mg_per_kg",
           "min": 1.25,
           "max": 1.75,
-          "unit": "mg/kg"
+          "unit": "mg/kg",
+          "sources": [
+            "Riboflavin",
+            "Riboflavin 5’-phosphate sodium"
+          ]
         },
         {
           "nutrient": "Niacin (B3)",
           "key": "b3_mg_per_kg",
           "min": 12.5,
           "max": 20,
-          "unit": "mg/kg"
+          "unit": "mg/kg",
+          "sources": [
+            "Nicotinamide",
+            "Nicotinic acid"
+          ]
         },
         {
           "nutrient": "Pyridoxine (B6)",
           "key": "b6_mg_per_kg",
           "min": 1.5,
           "max": 2.5,
-          "unit": "mg/kg"
+          "unit": "mg/kg",
+          "sources": [
+            "Pyridoxine hydrochloride"
+          ]
         }
       ],
-      "special_condition": "Multigrain atta may use the same levels only when it contains more than 50% wheat flour."
+      "special_condition": "Multigrain atta may use the same levels only when it contains more than 50% wheat flour.",
+      "suggestion_match_policy": "strict_identity"
     },
     {
       "id": "fortified_maida",
@@ -372,7 +410,8 @@
       ],
       "route_type": "schedule_i",
       "basis": "per_kg",
-      "same_levels_as": "fortified_atta"
+      "same_levels_as": "fortified_atta",
+      "suggestion_match_policy": "strict_identity"
     },
     {
       "id": "fortified_rice",
@@ -413,7 +452,10 @@
           "min": 75,
           "max": 125,
           "unit": "µg/kg",
-          "required": true
+          "required": true,
+          "sources": [
+            "Folic acid"
+          ]
         },
         {
           "nutrient": "Vitamin B12",
@@ -444,37 +486,56 @@
           "key": "vitamin_a_ug_re_per_kg",
           "min": 500,
           "max": 750,
-          "unit": "µg RE/kg"
+          "unit": "µg RE/kg",
+          "sources": [
+            "Retinyl palmitate"
+          ]
         },
         {
           "nutrient": "Thiamine (B1)",
           "key": "b1_mg_per_kg",
           "min": 1,
           "max": 1.5,
-          "unit": "mg/kg"
+          "unit": "mg/kg",
+          "sources": [
+            "Thiamine hydrochloride",
+            "Thiamine mononitrate"
+          ]
         },
         {
           "nutrient": "Riboflavin (B2)",
           "key": "b2_mg_per_kg",
           "min": 1.25,
           "max": 1.75,
-          "unit": "mg/kg"
+          "unit": "mg/kg",
+          "sources": [
+            "Riboflavin",
+            "Riboflavin 5’-phosphate sodium"
+          ]
         },
         {
           "nutrient": "Niacin (B3)",
           "key": "b3_mg_per_kg",
           "min": 12.5,
           "max": 20,
-          "unit": "mg/kg"
+          "unit": "mg/kg",
+          "sources": [
+            "Nicotinamide",
+            "Nicotinic acid"
+          ]
         },
         {
           "nutrient": "Pyridoxine (B6)",
           "key": "b6_mg_per_kg",
           "min": 1.5,
           "max": 2.5,
-          "unit": "mg/kg"
+          "unit": "mg/kg",
+          "sources": [
+            "Pyridoxine hydrochloride"
+          ]
         }
-      ]
+      ],
+      "suggestion_match_policy": "strict_identity"
     },
     {
       "id": "fortified_processed_cereal",
@@ -493,7 +554,18 @@
           "min": 1.4,
           "max": 2.7,
           "unit": "mg/100g",
-          "required": true
+          "required": true,
+          "sources": [
+            "Ferrous citrate",
+            "Ferrous lactate",
+            "Ferrous sulphate",
+            "Ferric pyrophosphate",
+            "Electrolytic iron",
+            "Ferrous fumarate",
+            "Ferrous bisglycinate",
+            "Sodium feredetate",
+            "NaFeEDTA"
+          ]
         },
         {
           "nutrient": "Folic acid",
@@ -501,7 +573,10 @@
           "min": 8,
           "max": 16,
           "unit": "µg/100g",
-          "required": true
+          "required": true,
+          "sources": [
+            "Folic acid"
+          ]
         },
         {
           "nutrient": "Vitamin B12",
@@ -509,7 +584,11 @@
           "min": 0.08,
           "max": 0.16,
           "unit": "µg/100g",
-          "required": true
+          "required": true,
+          "sources": [
+            "Cyanocobalamin",
+            "Hydroxycobalamin"
+          ]
         }
       ],
       "optional": [
@@ -518,45 +597,68 @@
           "key": "zinc_mg_per_100g",
           "min": 1,
           "max": 1.9,
-          "unit": "mg/100g"
+          "unit": "mg/100g",
+          "sources": [
+            "Zinc sulphate"
+          ]
         },
         {
           "nutrient": "Vitamin A",
           "key": "vitamin_a_ug_re_per_100g",
           "min": 48,
           "max": 96,
-          "unit": "µg RE/100g"
+          "unit": "µg RE/100g",
+          "sources": [
+            "Retinyl acetate",
+            "Retinyl palmitate"
+          ]
         },
         {
           "nutrient": "Thiamine (B1)",
           "key": "b1_mg_per_100g",
           "min": 0.1,
           "max": 0.19,
-          "unit": "mg/100g"
+          "unit": "mg/100g",
+          "sources": [
+            "Thiamine hydrochloride",
+            "Thiamine mononitrate"
+          ]
         },
         {
           "nutrient": "Riboflavin (B2)",
           "key": "b2_mg_per_100g",
           "min": 0.11,
           "max": 0.22,
-          "unit": "mg/100g"
+          "unit": "mg/100g",
+          "sources": [
+            "Riboflavin",
+            "Riboflavin 5’-phosphate sodium"
+          ]
         },
         {
           "nutrient": "Niacin (B3)",
           "key": "b3_mg_per_100g",
           "min": 1.3,
           "max": 2.6,
-          "unit": "mg/100g"
+          "unit": "mg/100g",
+          "sources": [
+            "Nicotinamide",
+            "Nicotinic acid"
+          ]
         },
         {
           "nutrient": "Pyridoxine (B6)",
           "key": "b6_mg_per_100g",
           "min": 0.2,
           "max": 0.3,
-          "unit": "mg/100g"
+          "unit": "mg/100g",
+          "sources": [
+            "Pyridoxine hydrochloride"
+          ]
         }
       ],
-      "hfss_excluded": true
+      "hfss_excluded": true,
+      "suggestion_match_policy": "enumerated_processed_food_terms"
     },
     {
       "id": "fortified_bakery",
@@ -572,13 +674,13 @@
       "route_type": "schedule_iii",
       "basis": "per_100g",
       "same_levels_as": "fortified_processed_cereal",
-      "hfss_excluded": true
+      "hfss_excluded": true,
+      "suggestion_match_policy": "enumerated_bakery_terms"
     },
     {
       "id": "fortified_fruit_juice",
       "match_terms": [
-        "fruit juice",
-        "juice"
+        "fruit juice"
       ],
       "route_type": "schedule_iii",
       "basis": "per_100ml",
@@ -595,7 +697,8 @@
           ]
         }
       ],
-      "hfss_excluded": true
+      "hfss_excluded": true,
+      "suggestion_match_policy": "fruit_juice_only_fail_closed"
     }
   ],
   "labeling": {
@@ -610,14 +713,26 @@
     "fortificant_inventory_and_source_records": true,
     "process_monitoring": true,
     "random_testing": true,
-    "equipment_process_audit": true
+    "equipment_process_audit": true,
+    "purity_criteria_reference": true,
+    "purity_criteria_authorities": [
+      "Indian Pharmacopoeia",
+      "British Pharmacopoeia",
+      "Food Chemicals Codex",
+      "FAO/WHO JECFA",
+      "Codex Alimentarius"
+    ]
   },
   "runtime_coverage": {
-    "status": "phase_1_rule_core_current_source_reconciled_build_402",
+    "status": "phase_2_source_identity_audited_build_405",
     "routes": 10,
     "schedule_i_routes": 7,
     "schedule_iii_routes": 3,
-    "fail_closed": true
+    "fail_closed": true,
+    "source_identity_gates": true,
+    "fruit_juice_route_fail_closed": true,
+    "strict_identity_routes": 6,
+    "schedule_iii_source_lists_complete": true
   },
   "excluded_drafts": [
     {
