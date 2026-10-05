@@ -5146,7 +5146,7 @@ function renderPackaging(){
 }
 async function loadPackagingDb(){
  try{
-   const res=await fetch('./data/rules/packaging-current-core.json?v=396',{cache:'reload'});
+   const res=await fetch('./data/rules/packaging-current-core.json?v=399',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    packagingDb=await res.json();
  }catch(e){
