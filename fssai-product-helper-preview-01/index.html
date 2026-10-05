@@ -39,6 +39,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <button class="tab" data-tab="micro">Microbiology</button>
 <button class="tab" data-tab="process">Manufacturing process</button>
 <button class="tab" data-tab="processing">Processing aids</button>
+<button class="tab" data-tab="packaging">Packaging</button>
 <button class="tab" data-tab="nutrition">Nutrition</button>
 <button class="tab" data-tab="quality">Label requirements</button>
 <button class="tab" data-tab="claims">Claims</button>
@@ -643,6 +644,140 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="section-title"><h2>Coverage status</h2><span>Build 182 · Chapter 2.8 contaminant review complete</span></div>
 <div class="notice">The reusable contaminant master now includes exact standardized-product profiles, 14 exact ingredient-trigger groups, the complete PCB/PAH fish table, and all 213 pesticide entries and 1,098 residue MRL commodity rows in Section 2.3.1, plus the Section 2.3.2 seafood antibiotic limits, prohibited veterinary-drug EMRL rules and honey antibiotic MRPL table. Sections 2.3.2, 2.4, 2.5.1 and 2.5.2 are now loaded from current FSSAI Version IX. Histamine includes the official high-histidine fish-family/species list and all 11 product-category n/c/m/M limits. No missing limit is estimated from another website.</div>
 <div class="notice"><b>2026 amendment:</b> FSSAI notified a final Contaminants, Toxins and Residues amendment on 25 May 2026 with commencement on <b>1 December 2026</b>. Build 141 continues to use the currently effective Version IX basis as of 3 October 2026.</div>
+</div>
+</section>
+
+<section id="packaging" class="view hidden">
+<div class="card">
+<div class="section-title"><h2>Packaging compliance</h2><span>FSSAI Packaging Regulations · deterministic</span></div>
+<div id="packagingDbStatus" class="notice">Loading current FSSAI Packaging rules…</div>
+<div id="packagingProductRoute" class="notice">Select a standardized product to map the applicable Schedule IV category.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Schedule IV — suggestive packaging materials</h2><span>Indicative unless a specific restriction applies</span></div>
+<div id="packagingSuggestedMaterials" class="notice">No product route selected.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Primary packaging assessment</h2><span>Direct-contact compliance gates</span></div>
+<div class="checker-grid">
+  <div class="field">
+    <label>Food-contact layer material</label>
+    <select id="packagingMaterialFamily">
+      <option value="">Select material family</option>
+      <option value="paper_board">Paper / paperboard</option>
+      <option value="glass">Glass</option>
+      <option value="metal">Metal / metal alloy</option>
+      <option value="plastic">Plastic</option>
+      <option value="multilayer">Multilayer / composite</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Does this layer come, or is it likely to come, into direct contact with food?</label>
+    <select id="packagingDirectContact">
+      <option value="">Not answered</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>NABL-accredited laboratory certificate of conformity available?</label>
+    <select id="packagingCoc">
+      <option value="">Not answered</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Clean, hygienic and tamper-proof package/container?</label>
+    <select id="packagingTamperProof">
+      <option value="">Not answered</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Printing ink conforms to IS 15495?</label>
+    <select id="packagingInk">
+      <option value="">Not answered</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+      <option value="na">No printing ink used</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Does a printed surface directly contact the food?</label>
+    <select id="packagingPrintedContact">
+      <option value="">Not answered</option>
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Is a previously used tin container being reused?</label>
+    <select id="packagingReusedTin">
+      <option value="">Not answered</option>
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+      <option value="na">Not a tin container</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Is recycled PET (FCM-rPET) used?</label>
+    <select id="packagingRpet">
+      <option value="">Not answered</option>
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>If FCM-rPET is used, is the recycling technology/material authorised under the FSSAI guideline?</label>
+    <select id="packagingRpetAuth">
+      <option value="">Not answered</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+      <option value="na">Not applicable</option>
+    </select>
+  </div>
+</div>
+<div id="packagingMaterialStandards" class="notice">Select the food-contact material family to see the applicable Schedule I–III standards.</div>
+<div class="flow-actions"><button class="btn" type="button" id="evaluatePackaging">Evaluate packaging</button></div>
+<div id="packagingAssessment" class="notice">Complete the packaging questions, then evaluate.</div>
+</div>
+
+<div class="card" id="packagingPlasticCard">
+<div class="section-title"><h2>Plastic migration assessment</h2><span>Reg. 4(4)</span></div>
+<div class="checker-grid">
+  <div class="field">
+    <label>Overall migration result — mg/kg</label>
+    <input id="packagingOverallMgKg" type="number" min="0" step="any" placeholder="Optional if result is reported in mg/dm²">
+    <small>Maximum: 60 mg/kg.</small>
+  </div>
+  <div class="field">
+    <label>Overall migration result — mg/dm²</label>
+    <input id="packagingOverallMgDm2" type="number" min="0" step="any" placeholder="Optional if result is reported in mg/kg">
+    <small>Maximum: 10 mg/dm².</small>
+  </div>
+  <div class="field">
+    <label>Visible colour migration?</label>
+    <select id="packagingColourMigration">
+      <option value="">Not answered</option>
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+  </div>
+</div>
+<div class="tablewrap"><table>
+<thead><tr><th>Specific migration substance</th><th>Limit (mg/kg)</th><th>Lab result (mg/kg)</th><th>Status</th></tr></thead>
+<tbody id="packagingMigrationRows"></tbody>
+</table></div>
+<div class="notice"><b>Fail-closed:</b> Blank laboratory fields are treated as missing evidence, not as zero migration.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>General packaging requirements</h2><span>Regulation 3</span></div>
+<div id="packagingGeneralRules" class="grid2"></div>
 </div>
 </section>
 
@@ -3303,6 +3438,7 @@ let appendixCDb=null;
 let microbiologyDb=null;
 let labelDb=null;
 let claimsDb=null;
+let packagingDb=null;
 let selectedProductId='';
 
 function fallbackIngredientCatalog(){
@@ -3497,6 +3633,7 @@ function showSelectedCatalogProduct(p){
      renderProductMicrobiology();
      renderLabelRequirements();
      renderClaims();
+     renderPackaging();
      openTab('formulation',{updateHash:true,save:true});
      window.scrollTo({top:0,behavior:'smooth'});
    });
@@ -3866,6 +4003,7 @@ async function loadProductMaster(){
  renderProductMicrobiology();
  renderLabelRequirements();
  renderClaims();
+ renderPackaging();
 }
 document.getElementById('productSearch')?.addEventListener('input',renderProductSearch);
 document.getElementById('productCategorySelect')?.addEventListener('change',()=>{
@@ -4853,6 +4991,202 @@ function renderClaims(){
  renderScheduleVQuestions();
  renderScheduleClaimRoutes();
 }
+function selectedProductForPackaging(){
+ return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
+}
+function packagingScheduleRoute(){
+ if(!packagingDb)return null;
+ const product=selectedProductForPackaging();
+ const name=normIngredient(product?.name||currentProductProfile()?.name||'');
+ const cats=packagingDb?.schedule_iv?.categories||[];
+ const exact=cats.find(c=>(c.exact_product_terms||[]).some(t=>name===normIngredient(t)));
+ if(exact)return exact;
+ const code=normFoodCode(product?.category||'');
+ const top=code.split('.')[0];
+ return cats.find(c=>(c.fcs_prefixes||[]).includes(top))||null;
+}
+function packagingMaterialStandardRows(family){
+ if(!packagingDb)return [];
+ if(family==='paper_board')return packagingDb.schedule_i_paper_board||[];
+ if(family==='metal')return packagingDb.schedule_ii_metal||[];
+ if(family==='plastic')return packagingDb.schedule_iii_plastic||[];
+ if(family==='multilayer')return [];
+ return [];
+}
+function renderPackagingMigrationRows(){
+ const body=document.getElementById('packagingMigrationRows');
+ if(!body||!packagingDb)return;
+ const limits=packagingDb.primary_material_rules?.plastic?.specific_migration_limits_mg_per_kg||{};
+ body.innerHTML=Object.entries(limits).map(([name,limit])=>{
+   const id='packMig_'+name.replace(/[^a-z0-9]/gi,'_');
+   const value=document.getElementById(id)?.value||'';
+   const num=value===''?null:Number(value);
+   const status=num===null?'<span class="status-warn">Not entered</span>':num<=Number(limit)?'<span class="status-good">Pass</span>':'<span class="status-bad">Fail</span>';
+   return '<tr><td><b>'+esc(name)+'</b></td><td>'+fmt(limit,3)+'</td><td><input id="'+esc(id)+'" data-pack-migration="'+esc(name)+'" type="number" min="0" step="any" value="'+esc(value)+'" placeholder="Enter result"></td><td>'+status+'</td></tr>';
+ }).join('');
+ body.querySelectorAll('[data-pack-migration]').forEach(el=>el.addEventListener('input',renderPackagingMigrationRows));
+}
+function renderPackaging(){
+ const status=document.getElementById('packagingDbStatus');
+ const routeBox=document.getElementById('packagingProductRoute');
+ const suggested=document.getElementById('packagingSuggestedMaterials');
+ const standards=document.getElementById('packagingMaterialStandards');
+ const general=document.getElementById('packagingGeneralRules');
+ if(!packagingDb){
+   if(status){status.className='notice';status.innerHTML='<b>Packaging rules unavailable.</b> PMSV will not infer packaging compliance.';}
+   return;
+ }
+ if(status){
+   status.className='notice oknote';
+   status.innerHTML='<b>Current Packaging rules loaded · no AI.</b><br>Base source: '+esc(packagingDb.current_sources?.[0]?.version||'FSSAI Packaging Regulations')+' plus the operative 10 Aug 2026 Pan Masala amendment and FCM-rPET guideline.';
+ }
+ const product=selectedProductForPackaging();
+ const route=packagingScheduleRoute();
+ if(routeBox){
+   if(route){
+     routeBox.className='notice oknote';
+     routeBox.innerHTML='<b>Schedule IV route:</b> '+esc(route.name)+(product?'<br>Selected product: <b>'+esc(product.name)+'</b>':'')+(route.id==='pan_masala'?'<br><b>Product-specific 2026 restrictions apply.</b>':'<br><small>Schedule IV is an indicative list; another compliant packaging system is not automatically prohibited.</small>');
+   }else{
+     routeBox.className='notice';
+     routeBox.innerHTML=product
+       ? '<b>No direct Schedule IV category route is mapped for '+esc(product.name)+'.</b> General Regulations 3–4 and the applicable material standard still apply; PMSV will not force the product into a similar category.'
+       : 'Select a standardized product to map the applicable Schedule IV category.';
+   }
+ }
+ if(suggested){
+   if(route){
+     suggested.innerHTML='<b>'+esc(route.name)+' — loaded packaging options:</b><br>'+(route.materials||[]).map(x=>'• '+esc(x)).join('<br>')+(route.restrictions?.length?'<br><br><b>Restrictions:</b><br>'+route.restrictions.map(x=>'• '+esc(x)).join('<br>'):'');
+   }else suggested.innerHTML='No Schedule IV material list mapped for the current product. This does not waive the general and material-specific requirements.';
+ }
+ const family=document.getElementById('packagingMaterialFamily')?.value||'';
+ if(standards){
+   if(family==='glass'){
+     standards.innerHTML='<b>Glass · Reg. 4(2)</b><br>Check visible defects, smooth surface, absence of cracks/pinholes/sharp edges and sealing-surface integrity.';
+   }else if(family==='multilayer'){
+     standards.innerHTML='<b>Multilayer/composite · Reg. 3(12)</b><br>The food-contact or likely-food-contact layer must meet the applicable Schedule I, II or III requirements. Select and verify the actual contact-layer material in your conformity evidence.';
+   }else{
+     const rows=packagingMaterialStandardRows(family);
+     standards.innerHTML=rows.length
+       ? '<b>Applicable listed Indian Standards:</b><br>'+rows.map(r=>'• '+esc(r.material)+' — <b>'+esc(r.standard)+'</b>').join('<br>')
+       : 'Select the food-contact material family to see the applicable Schedule I–III standards.';
+   }
+ }
+ if(general)general.innerHTML=(packagingDb.general_requirements||[]).map(r=>'<div class="item"><b>'+esc(r.clause)+'</b><small>'+esc(r.text)+'</small></div>').join('');
+ renderPackagingMigrationRows();
+}
+async function loadPackagingDb(){
+ try{
+   const res=await fetch('./data/rules/packaging-current-core.json?v=393',{cache:'reload'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   packagingDb=await res.json();
+ }catch(e){
+   packagingDb=null;
+ }
+ renderPackaging();
+}
+function packagingSpecificMigrationAssessment(){
+ const limits=packagingDb?.primary_material_rules?.plastic?.specific_migration_limits_mg_per_kg||{};
+ const rows=[];
+ for(const [name,limit] of Object.entries(limits)){
+   const id='packMig_'+name.replace(/[^a-z0-9]/gi,'_');
+   const raw=document.getElementById(id)?.value??'';
+   if(raw===''){rows.push({name,limit,status:'missing'});continue;}
+   const value=Number(raw);
+   rows.push({name,limit,value,status:Number.isFinite(value)&&value<=Number(limit)?'pass':'fail'});
+ }
+ return rows;
+}
+function evaluatePackaging(){
+ const out=document.getElementById('packagingAssessment');
+ if(!out)return;
+ if(!packagingDb){
+   out.className='notice';
+   out.innerHTML='<b>Cannot evaluate:</b> Packaging rules are not loaded.';
+   return;
+ }
+ const fails=[],missing=[],passes=[];
+ const direct=document.getElementById('packagingDirectContact')?.value||'';
+ const coc=document.getElementById('packagingCoc')?.value||'';
+ const tamper=document.getElementById('packagingTamperProof')?.value||'';
+ const ink=document.getElementById('packagingInk')?.value||'';
+ const printed=document.getElementById('packagingPrintedContact')?.value||'';
+ const reusedTin=document.getElementById('packagingReusedTin')?.value||'';
+ const rpet=document.getElementById('packagingRpet')?.value||'';
+ const rpetAuth=document.getElementById('packagingRpetAuth')?.value||'';
+ const family=document.getElementById('packagingMaterialFamily')?.value||'';
+
+ if(!family)missing.push('Food-contact material family');
+ if(!direct)missing.push('Direct-contact status');
+ if(direct==='yes'){
+   if(coc==='no')fails.push('NABL-accredited certificate of conformity is required for food-contact / likely-food-contact packaging.');
+   else if(coc!=='yes')missing.push('NABL-accredited conformity certificate');
+   else passes.push('NABL conformity-certificate gate');
+ }
+ if(tamper==='no')fails.push('Package/container is not confirmed clean, hygienic and tamper-proof.');
+ else if(tamper!=='yes')missing.push('Clean/hygienic/tamper-proof confirmation');
+ else passes.push('Clean/hygienic/tamper-proof gate');
+
+ if(ink==='no')fails.push('Printing ink is not confirmed to IS 15495.');
+ else if(!ink)missing.push('Printing-ink compliance');
+ else passes.push('Printing-ink gate');
+
+ if(printed==='yes')fails.push('Printed surface directly contacts food, which Reg. 3(10) prohibits.');
+ else if(!printed)missing.push('Printed-surface food-contact check');
+ else passes.push('Printed-surface separation gate');
+
+ if(reusedTin==='yes')fails.push('Previously used tin container cannot be reused for packaging food.');
+ else if(!reusedTin)missing.push('Tin-reuse check');
+
+ if(rpet==='yes'){
+   if(rpetAuth==='no')fails.push('FCM-rPET is used without confirmed FSSAI guideline/technology authorisation.');
+   else if(rpetAuth!=='yes')missing.push('FCM-rPET authorisation evidence');
+   else passes.push('FCM-rPET authorisation gate');
+ }
+
+ if(family==='plastic'){
+   const mgkgRaw=document.getElementById('packagingOverallMgKg')?.value??'';
+   const mgdmRaw=document.getElementById('packagingOverallMgDm2')?.value??'';
+   const mgkg=mgkgRaw===''?null:Number(mgkgRaw);
+   const mgdm=mgdmRaw===''?null:Number(mgdmRaw);
+   if(mgkg===null&&mgdm===null)missing.push('Overall migration result (mg/kg or mg/dm²)');
+   if(mgkg!==null){
+     if(mgkg>60)fails.push('Overall migration '+fmt(mgkg,3)+' mg/kg exceeds 60 mg/kg.');
+     else passes.push('Overall migration mg/kg gate');
+   }
+   if(mgdm!==null){
+     if(mgdm>10)fails.push('Overall migration '+fmt(mgdm,3)+' mg/dm² exceeds 10 mg/dm².');
+     else passes.push('Overall migration mg/dm² gate');
+   }
+   const colour=document.getElementById('packagingColourMigration')?.value||'';
+   if(colour==='yes')fails.push('Visible colour migration detected.');
+   else if(!colour)missing.push('Visible colour-migration result');
+   else passes.push('No visible colour migration');
+
+   const sml=packagingSpecificMigrationAssessment();
+   const failed=sml.filter(x=>x.status==='fail');
+   const miss=sml.filter(x=>x.status==='missing');
+   if(failed.length)fails.push('Specific migration limit exceeded: '+failed.map(x=>x.name).join(', ')+'.');
+   if(miss.length)missing.push('Specific migration results: '+miss.map(x=>x.name).join(', '));
+   if(!failed.length&&!miss.length)passes.push('All loaded specific migration limits');
+ }
+ const route=packagingScheduleRoute();
+ if(route?.id==='pan_masala'){
+   const text=(document.getElementById('packagingMaterialFamily')?.selectedOptions?.[0]?.textContent||'').toLowerCase();
+   if(family==='plastic'||family==='multilayer')fails.push('Pan Masala has a product-specific 2026 restriction against plastic/synthetic-polymer packaging routes.');
+   if(family==='paper_board')passes.push('Pan Masala paper/naturally-derived route still requires confirmation that it contains no plastic, aluminium foil or metallised layer.');
+ }
+ if(fails.length){
+   out.className='notice';
+   out.innerHTML='<b>Packaging assessment: NOT COMPLIANT / BLOCKED.</b><br>'+fails.map(x=>'• '+esc(x)).join('<br>')+(missing.length?'<br><br><b>Additional missing evidence:</b><br>'+missing.map(x=>'• '+esc(x)).join('<br>'):'');
+ }else if(missing.length){
+   out.className='notice';
+   out.innerHTML='<b>Packaging assessment: INCOMPLETE.</b><br>No loaded rule has failed, but required evidence is missing:<br>'+missing.map(x=>'• '+esc(x)).join('<br>')+'<br><small>Blank evidence is never treated as compliant.</small>';
+ }else{
+   out.className='notice oknote';
+   out.innerHTML='<b>Packaging assessment: loaded deterministic gates passed.</b><br>'+passes.map(x=>'• '+esc(x)).join('<br>')+'<br><small>Final compliance still requires the selected material/structure to be suitable for the actual food, process, storage and transport conditions and to satisfy its applicable material standard.</small>';
+ }
+}
+
 async function loadClaimsDb(){
  const status=document.getElementById('claimsDbStatus');
  try{
@@ -5031,6 +5365,7 @@ loadMicrobiologyDb();
 loadNutritionDb();
 loadLabelDb();
 loadClaimsDb();
+loadPackagingDb();
 
 const dailyLimits=[
  {name:'Taurine',daily:2000},
@@ -5072,6 +5407,8 @@ document.getElementById('evaluateScheduleIII')?.addEventListener('click',runSche
 document.getElementById('scheduleIVNutrient')?.addEventListener('change',runScheduleIVEvaluation);
 document.getElementById('scheduleIVFortified')?.addEventListener('change',runScheduleIVEvaluation);
 document.getElementById('evaluateScheduleIV')?.addEventListener('click',runScheduleIVEvaluation);
+document.getElementById('packagingMaterialFamily')?.addEventListener('change',renderPackaging);
+document.getElementById('evaluatePackaging')?.addEventListener('click',evaluatePackaging);
 renderConversions();
 
 
