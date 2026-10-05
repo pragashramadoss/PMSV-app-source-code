@@ -106,7 +106,28 @@
         "No ingredient containing sugars that substitutes for added sugars is used.",
         "The sugar content is not increased by other means such as enzymatic starch hydrolysis."
       ],
-      "naturally_occurring_declaration": "CONTAINS NATURALLY OCCURRING SUGARS"
+      "naturally_occurring_declaration": "CONTAINS NATURALLY OCCURRING SUGARS",
+      "direct_disqualifier_terms": [
+        "sugar",
+        "sucrose",
+        "glucose",
+        "dextrose",
+        "fructose",
+        "maltose",
+        "lactose",
+        "invert sugar",
+        "honey",
+        "molasses",
+        "corn syrup",
+        "jam",
+        "jelly",
+        "sweetened chocolate",
+        "sweetened fruit",
+        "fruit juice concentrate",
+        "concentrated fruit juice",
+        "dried fruit paste"
+      ],
+      "screening_note": "A direct match fails the no-added-sugars screen. No match does not approve the claim because compound ingredients and process-generated sugars still require evidence."
     },
     "sodium_salts": {
       "clause": "Reg. 6(2)",
@@ -114,7 +135,21 @@
         "No sodium salts are added.",
         "No ingredient containing added sodium salts is used.",
         "No ingredient containing sodium salts that substitutes for added salt is used."
-      ]
+      ],
+      "direct_disqualifier_terms": [
+        "salt",
+        "sodium chloride",
+        "sodium tripolyphosphate",
+        "sauce",
+        "pickle",
+        "pepperoni",
+        "soya sauce",
+        "soy sauce",
+        "salted fish",
+        "fish sauce",
+        "seaweed"
+      ],
+      "screening_note": "A direct match fails the no-added-salt screen. No match does not approve the claim because sodium salts in compound ingredients or substitutes still require evidence."
     },
     "additives": {
       "clause": "Reg. 6(3)",
@@ -123,7 +158,8 @@
         "It is not contained in any ingredient except where naturally present.",
         "It is an additive permitted for that product.",
         "It has not been replaced by another additive giving equivalent characteristics."
-      ]
+      ],
+      "direct_runtime_rule": "Use PMSV ingredient qualification: any ingredient classified as an active food additive is a direct disqualifier for a broad 'no additives' claim. Compound ingredients remain a manual evidence gate."
     }
   },
   "prohibited_claims": [
@@ -603,11 +639,11 @@
   "runtime_coverage": {
     "schedule_i_total_rules": 25,
     "schedule_i_auto_evaluable_rules": 16,
-    "comparative_claims": "structured_manual",
-    "non_addition_claims": "structured_manual",
+    "comparative_claims": "numeric_difference_screen_ready",
+    "non_addition_claims": "direct_disqualifier_screen_ready",
     "health_claims": "fail_closed_pending_evidence_workflow",
     "schedule_v_terms": "structured_manual",
-    "status": "phase_1_active_build_380",
+    "status": "phase_2_rules_ready_build_383",
     "runtime_audit": {
       "build": 381,
       "schedule_i_rules": 25,
