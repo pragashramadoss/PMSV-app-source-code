@@ -17,9 +17,9 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_51_chapter_2_6_contaminant_identity_review_complete",
+    "stage": "phase_52_chapter_2_5_direct_meat_metal_routes_started",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 146,
+    "exact_product_profiles": 152,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
@@ -77,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Audit Chapter 2.6 runtime presentation (sampling-plan wording and conditional-gate visibility), then continue to the next chapter family without a dedicated contaminant identity review.",
+    "next_priority": "Wire the canned-meat package-format Lead gate into runtime, then continue Chapter 2.5 processed-meat, egg and veterinary-residue identity review.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -243,7 +243,13 @@
     "chapter_2_6_catalog_products_reviewed": 24,
     "chapter_2_6_partial_locked_products": 4,
     "chapter_2_6_conditional_route_scopes": 3,
-    "chapter_2_6_review_note": "All 24 Chapter 2.6 catalogue products reviewed. Direct taxonomy, all-fishery Chromium, bivalve biotoxins, smoked-fish PAH and exact histamine product-category routes are operational. Mercury species class, PCB habitat class and raw/frozen histamine species remain conditional. Fish Oil, Edible Fish Powder, Sturgeon Caviar and fish gelatin retain only proven exact rules and do not inherit broad fallback categories."
+    "chapter_2_6_review_note": "All 24 Chapter 2.6 catalogue products reviewed. Direct taxonomy, all-fishery Chromium, bivalve biotoxins, smoked-fish PAH and exact histamine product-category routes are operational. Mercury species class, PCB habitat class and raw/frozen histamine species remain conditional. Fish Oil, Edible Fish Powder, Sturgeon Caviar and fish gelatin retain only proven exact rules and do not inherit broad fallback categories.",
+    "chapter_2_5_direct_cattle_sheep_pig_lead_routes": 6,
+    "chapter_2_5_direct_poultry_lead_routes": 2,
+    "chapter_2_5_canned_meat_package_lead_routes": 2,
+    "chapter_2_5_locked_goat_rabbit_lead_families": 2,
+    "chapter_2_5_canned_retort_lead_unconditional_removed": true,
+    "chapter_2_5_review_started_build_431": true
   },
   "all_food_rules": [
     {
@@ -1066,16 +1072,7 @@
         "08-08-2-canned-or-retort-pouch-meat-products",
         "08-08-3-canned-or-retort-pouch-meat-products"
       ],
-      "rules": [
-        {
-          "contaminant": "Lead",
-          "limit": 5,
-          "unit": "mg/kg",
-          "article": "Canned meats",
-          "source_basis": "Section 2.1 · Lead",
-          "condition": "Tin is not auto-applied because this PMSV product may be packed in a retort pouch or another non-tin container."
-        }
-      ]
+      "rules": []
     },
     {
       "id": "iron-fortified-common-salt",
@@ -2322,8 +2319,8 @@
           "limit": 0.1,
           "unit": "mg/kg",
           "article": "Poultry meat",
-          "source_basis": "Section 2.1 · Lead",
-          "verification": "explicit_product_subclass_verified_v9"
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_5_exact_poultry_identity"
         }
       ]
     },
@@ -2339,8 +2336,8 @@
           "limit": 0.1,
           "unit": "mg/kg",
           "article": "Poultry meat",
-          "source_basis": "Section 2.1 · Lead",
-          "verification": "explicit_product_subclass_verified_v9"
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_5_exact_poultry_identity"
         }
       ]
     },
@@ -4895,6 +4892,108 @@
           "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_6_exact_product_category",
           "condition": "Sampling plan: n=9, c=2; m=200 mg/kg; M=400 mg/kg. M is the rejection threshold; interpretation also depends on the mean and c/n criteria."
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-5-08-08-1-fresh-or-chilled-pork-or-pig-meat",
+      "label": "Fresh or Chilled Pork or Pig Meat",
+      "catalog_ids": [
+        "08-08-1-fresh-or-chilled-pork-or-pig-meat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Meat of cattle, sheep and pig (also applies to fat from meat)",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_5_exact_species_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-5-08-08-1-fresh-or-chilled-beef",
+      "label": "Fresh or Chilled Beef",
+      "catalog_ids": [
+        "08-08-1-fresh-or-chilled-beef"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Meat of cattle, sheep and pig (also applies to fat from meat)",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_5_exact_species_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-5-08-08-1-fresh-or-chilled-mutton-or-sheep-meat",
+      "label": "Fresh or Chilled Mutton or Sheep Meat",
+      "catalog_ids": [
+        "08-08-1-fresh-or-chilled-mutton-or-sheep-meat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Meat of cattle, sheep and pig (also applies to fat from meat)",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_5_exact_species_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-5-08-08-2-frozen-pork-or-pig-meat",
+      "label": "Frozen Pork or Pig Meat",
+      "catalog_ids": [
+        "08-08-2-frozen-pork-or-pig-meat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Meat of cattle, sheep and pig (also applies to fat from meat)",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_5_exact_species_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-5-08-08-2-frozen-beef",
+      "label": "Frozen Beef",
+      "catalog_ids": [
+        "08-08-2-frozen-beef"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Meat of cattle, sheep and pig (also applies to fat from meat)",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_5_exact_species_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-5-08-08-2-frozen-mutton-or-sheep-meat",
+      "label": "Frozen Mutton or Sheep Meat",
+      "catalog_ids": [
+        "08-08-2-frozen-mutton-or-sheep-meat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "article": "Meat of cattle, sheep and pig (also applies to fat from meat)",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_5_exact_species_identity"
         }
       ]
     }
@@ -22381,6 +22480,56 @@
       "status": "specific_gelatin_profile_additional_fish_routes_locked",
       "active_exact_basis": "Specific Gelatin Lead/Copper/Arsenic/Chromium profile",
       "reason": "The specific Gelatin contaminant rows are retained. Broader fishery-product Chromium and histamine fallbacks are suppressed because the exact Gelatin Chromium limit is more specific and the histamine table has no Gelatin category."
+    }
+  ],
+  "product_package_conditional_lead_rules_v9": [
+    {
+      "catalog_id": "08-08-2-canned-or-retort-pouch-meat-products",
+      "contaminant": "Lead",
+      "limit": 5,
+      "unit": "mg/kg",
+      "article": "Canned fish, canned meats, edible gelatin, meat extracts and hydrolysed protein, dried or dehydrated vegetables (other than onions)",
+      "auto_apply": false,
+      "requires_input": "packaging.format",
+      "requires_packaging_format": "canned",
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "product_basis": "FSSAI 2.5.2(1) combines Canned and Retort Pouch Meat Products; the Version IX Lead article expressly covers canned meats. Exact product identity plus Canned package format is required.",
+      "verification": "official_fssai_v9_plus_exact_product_and_package_gate"
+    },
+    {
+      "catalog_id": "08-08-3-canned-or-retort-pouch-meat-products",
+      "contaminant": "Lead",
+      "limit": 5,
+      "unit": "mg/kg",
+      "article": "Canned fish, canned meats, edible gelatin, meat extracts and hydrolysed protein, dried or dehydrated vegetables (other than onions)",
+      "auto_apply": false,
+      "requires_input": "packaging.format",
+      "requires_packaging_format": "canned",
+      "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+      "product_basis": "FSSAI 2.5.2(1) combines Canned and Retort Pouch Meat Products; the Version IX Lead article expressly covers canned meats. Exact product identity plus Canned package format is required.",
+      "verification": "official_fssai_v9_plus_exact_product_and_package_gate"
+    }
+  ],
+  "chapter_2_5_locked_fresh_meat_routes_v9": [
+    {
+      "catalog_ids": [
+        "08-08-1-fresh-or-chilled-chevon-or-goat-meat",
+        "08-08-2-frozen-chevon-or-goat-meat"
+      ],
+      "product_family": "Chevon / Goat Meat",
+      "contaminant": "Lead",
+      "status": "locked_no_exact_current_article",
+      "reason": "Version IX expressly names meat of cattle, sheep and pig and separately poultry meat; goat meat is not included in that direct raw/frozen meat article."
+    },
+    {
+      "catalog_ids": [
+        "08-08-1-fresh-or-chilled-rabbit-meat",
+        "08-08-2-frozen-rabbit-meat"
+      ],
+      "product_family": "Rabbit Meat",
+      "contaminant": "Lead",
+      "status": "locked_no_exact_current_article",
+      "reason": "No exact Rabbit Meat Lead article is present in the current Version IX metal table. PMSV does not use the generic Foods not specified fallback automatically."
     }
   ]
 }
