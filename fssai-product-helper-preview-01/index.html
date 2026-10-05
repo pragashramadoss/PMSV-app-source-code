@@ -5326,8 +5326,11 @@ function fortificationLabelHtml(route){
  if(!route)return 'Select a route to see the applicable fortification label requirements.';
  const r=fortificationExpandedRoute(route);
  const saltType=document.getElementById('fortificationSaltType')?.value||'';
+ if(r.id==='iodized_double_fortified_salt'&&!saltType){
+   return '<b>Select the salt fortification type.</b> Iodine-only iodized salt and Double Fortified Salt have different Regulation 7 label consequences.';
+ }
  const reqs=fortificationRequirements(route);
- const hasIron=reqs.some(x=>x.nutrient==='Iron'&&(x.group==='core'||(r.id==='iodized_double_fortified_salt'&&saltType==='double')));
+ const hasIron=reqs.some(x=>x.nutrient==='Iron'&&(x.required!==false||(r.id==='iodized_double_fortified_salt'&&saltType==='double')));
  const rows=[];
  if(r.id==='iodized_double_fortified_salt'&&saltType==='iodized'){
    rows.push('<b>Iodized salt — iodine only:</b> exempt from the Reg. 7(2) “fortified with…” +F-logo requirement.');
@@ -5377,6 +5380,7 @@ function renderFortification(){
  }
  const route=fortificationRouteById(select?.value||'');
  if(elig)elig.innerHTML=fortificationRouteEligibilityHtml(route);
+ document.getElementById('fortificationSaltType')?.addEventListener('change',()=>{if(label)label.innerHTML=fortificationLabelHtml(route);});
  renderFortificationNutrients();
  if(label)label.innerHTML=fortificationLabelHtml(route);
  if(general)general.innerHTML=(fortificationDb.general_rules||[]).map(r=>'<div class="item"><b>'+esc(r.clause)+'</b><small>'+esc(r.text)+'</small></div>').join('');
