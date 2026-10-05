@@ -719,6 +719,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="labelProductSpecificStatus" class="notice"></div>
 <div id="labelConditionalArticleStatus" class="notice hidden"></div>
 <div id="labelConditionalArticleQualifiers" class="hidden"></div>
+<div id="labelSpecificMannerStatus" class="notice hidden"></div>
 <div id="labelCaffeinePreview" class="notice hidden"></div>
 <div id="labelTriggeredRequirements"></div>
 </div>
@@ -1838,6 +1839,32 @@ function labelProductIngredientAssessments(productName){
 function labelUniversalProcessRules(){
  return (labelDb?.schedule_ii?.universal_process_rules||[]).filter(rule=>rule.status==='active');
 }
+function labelSpecificMannerRules(productName){
+ const n=normIngredient(productName);
+ if(!n)return [];
+ return (labelDb?.specific_manner_rules?.sections_2_1_to_2_5||[]).filter(rule=>{
+   if(rule.status!=='active')return false;
+   const excluded=(rule.exclude_product_terms||[]).some(term=>n.includes(normIngredient(term)));
+   if(excluded)return false;
+   return (rule.eligible_product_terms||[]).some(term=>n.includes(normIngredient(term)));
+ });
+}
+function labelSpecificMannerAssessments(productName,rules,qualifierAssessments){
+ const qmap=new Map((qualifierAssessments||[]).map(x=>[x.rule.id,x]));
+ return (rules||[]).map(rule=>{
+   if(rule.rule_type==='always'||rule.rule_type==='prohibition')return {rule,status:'triggered',triggered:true,matched:[]};
+   if(rule.rule_type==='product_ingredient'){
+     const aliases=new Set((rule.ingredient_aliases||[]).map(normIngredient));
+     const matched=formulationIngredients.filter(item=>aliases.has(normIngredient(item.name)));
+     return {rule,status:matched.length?'triggered':'not_triggered',triggered:matched.length>0,matched};
+   }
+   if(rule.rule_type==='conditional_numeric'||rule.rule_type==='conditional_boolean'){
+     const q=qmap.get(rule.id);
+     return {rule,status:q?.status||'unanswered',triggered:!!q?.triggered,matched:[],qualifier:q||null};
+   }
+   return {rule,status:'pending',triggered:false,matched:[]};
+ });
+}
 function labelArticleRuleCandidates(productName){
  const n=normIngredient(productName);
  if(!n)return [];
@@ -1879,6 +1906,7 @@ function renderLabelRequirements(){
  const productSpecificStatus=document.getElementById('labelProductSpecificStatus');
  const conditionalArticleStatus=document.getElementById('labelConditionalArticleStatus');
  const conditionalArticleQualifiers=document.getElementById('labelConditionalArticleQualifiers');
+ const specificMannerStatus=document.getElementById('labelSpecificMannerStatus');
  const caffeinatedSpecific=document.getElementById('caffeinatedLabelSpecific');
  const servingHelp=document.getElementById('labelServingHelp');
  if(!mass&&!preview&&!caffeinePreview&&!triggers)return;
@@ -1901,7 +1929,9 @@ function renderLabelRequirements(){
  }
  const articleCandidates=labelArticleRuleCandidates(selectedName);
  const universalProcessRules=labelUniversalProcessRules();
- const qualifierCandidates=[...articleCandidates,...universalProcessRules];
+ const specificMannerRules=labelSpecificMannerRules(selectedName);
+ const specificQualifierCandidates=specificMannerRules.filter(rule=>rule.qualifier_ui).map(rule=>({...rule,qualifier_ui_status:'active'}));
+ const qualifierCandidates=[...articleCandidates,...universalProcessRules,...specificQualifierCandidates];
  const articleAssessments=renderLabelArticleQualifierControls(qualifierCandidates,selectedName||'__global__');
  if(conditionalArticleStatus){
    conditionalArticleStatus.classList.toggle('hidden',qualifierCandidates.length===0);
@@ -1917,6 +1947,19 @@ function renderLabelRequirements(){
      const hasTriggered=articleAssessments.some(x=>x.triggered);
      conditionalArticleStatus.className=hasTriggered?'notice oknote':'notice';
      conditionalArticleStatus.innerHTML='<b>Conditional Schedule-II assessment:</b><br>'+lines.join('<br>');
+   }
+ }
+ const specificMannerAssessments=labelSpecificMannerAssessments(selectedName,specificMannerRules,articleAssessments);
+ if(specificMannerStatus){
+   specificMannerStatus.classList.toggle('hidden',specificMannerAssessments.length===0);
+   if(specificMannerAssessments.length){
+     const lines=specificMannerAssessments.map(x=>{
+       if(x.triggered)return '• <b>APPLIES:</b> '+esc(x.rule.requirement_summary)+(x.matched?.length?'<br><small>Detected: '+x.matched.map(m=>esc(m.name)).join(', ')+'</small>':'');
+       if(x.status==='not_triggered')return '• <b>Not triggered:</b> '+esc(x.rule.requirement_summary);
+       return '• <b>Locked pending condition:</b> '+esc(x.rule.requirement_summary);
+     });
+     specificMannerStatus.className=specificMannerAssessments.some(x=>x.triggered)?'notice oknote':'notice';
+     specificMannerStatus.innerHTML='<b>Specific manner-of-labelling rules (Schedule II Section 2):</b><br>'+lines.join('<br>');
    }
  }
  if(caffeinatedSpecific)caffeinatedSpecific.classList.toggle('hidden',!isCaffeinated);
@@ -1979,6 +2022,11 @@ function renderLabelRequirements(){
    const productIngredientTriggered=productIngredientChecks.filter(x=>x.triggered);
    if(productIngredientTriggered.length){
      blocks.push('<div class="item"><b>Product + ingredient Schedule-II declarations</b><small>'+productIngredientTriggered.map(x=>'• <b>'+esc(x.rule.requirement_summary)+'</b><br>Detected ingredient: '+x.matched.map(m=>esc(m.name)).join(', ')).join('<br><br>')+'</small></div>');
+   }
+
+   const specificTriggered=specificMannerAssessments.filter(x=>x.triggered);
+   if(specificTriggered.length){
+     blocks.push('<div class="item"><b>Specific manner-of-labelling requirements</b><small>'+specificTriggered.map(x=>'• <b>'+esc(x.rule.requirement_summary)+'</b>'+(x.matched?.length?'<br>Detected: '+x.matched.map(m=>esc(m.name)).join(', '):'')).join('<br><br>')+'</small></div>');
    }
 
    const presenceChecks=labelScheduleIiPresenceAssessments();
@@ -4256,7 +4304,7 @@ function labelProductRuleFor(name){
 async function loadLabelDb(){
  const status=document.getElementById('labelDbStatus');
  try{
-   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=368',{cache:'reload'});
+   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=371',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    labelDb=await res.json();
    if(status){
