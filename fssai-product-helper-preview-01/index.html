@@ -41,6 +41,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <button class="tab" data-tab="processing">Processing aids</button>
 <button class="tab" data-tab="packaging">Packaging</button>
 <button class="tab" data-tab="nutrition">Nutrition</button>
+<button class="tab" data-tab="fortification">Fortification</button>
 <button class="tab" data-tab="quality">Label requirements</button>
 <button class="tab" data-tab="claims">Claims</button>
 <button class="tab" data-tab="sources">Official sources</button>
@@ -829,6 +830,46 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="item"><b>Per 100 ml conversion</b><small>PMSV first totals nutrients from the actual ingredient quantities, calculates nutrient content per 100 g of formulation, then converts to per 100 ml using the entered finished-product density.</small></div>
 <div class="item"><b>Unmatched ingredients</b><small>No generic internet, crowdsourced or foreign database value is substituted. An unmatched ingredient is shown explicitly and the calculated panel remains <b>INCOMPLETE</b> until an official Indian-government value is loaded or a separately identified supplier/laboratory value is intentionally provided in a future workflow.</small></div>
 </div>
+</div>
+</section>
+
+<section id="fortification" class="view hidden">
+<div class="card">
+<div class="section-title"><h2>Fortification compliance</h2><span>FSSAI Fortification of Foods Regulations · deterministic</span></div>
+<div id="fortificationDbStatus" class="notice">Loading current FSSAI Fortification rules…</div>
+<div id="fortificationProductSuggestion" class="notice">Select a standardized product to check for a fortification route.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Choose fortification route</h2><span>Schedule I / Schedule III</span></div>
+<div class="field">
+  <label>Fortified-food route to assess</label>
+  <select id="fortificationRoute"><option value="">Select route</option></select>
+  <small>PMSV may suggest a route from the selected standardized product, but it does not assume that the product is fortified. Select the route explicitly.</small>
+</div>
+<div id="fortificationEligibilityControls"></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Micronutrient level assessment</h2><span>Declared added levels + permitted sources</span></div>
+<div id="fortificationNutrientStatus" class="notice">Select a fortification route first.</div>
+<div class="tablewrap"><table>
+<thead><tr><th>Nutrient</th><th>Requirement</th><th>Fortificant source</th><th>Declared added level</th><th>Status</th></tr></thead>
+<tbody id="fortificationNutrientRows"></tbody>
+</table></div>
+<div class="flow-actions"><button class="btn" type="button" id="evaluateFortification">Evaluate fortification</button></div>
+<div id="fortificationAssessment" class="notice">Select a route and enter the applicable nutrient levels.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Fortification label output</h2><span>Regulation 7</span></div>
+<div id="fortificationLabelRequirements" class="notice">Select a route to see the applicable +F, “fortified with…” and warning requirements.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Quality assurance & general gates</h2><span>Regulations 3–6</span></div>
+<div id="fortificationGeneralRules" class="grid2"></div>
+<div id="fortificationQaRules" class="notice"></div>
 </div>
 </section>
 
@@ -3445,6 +3486,7 @@ let microbiologyDb=null;
 let labelDb=null;
 let claimsDb=null;
 let packagingDb=null;
+let fortificationDb=null;
 let selectedProductId='';
 
 function fallbackIngredientCatalog(){
@@ -3640,6 +3682,7 @@ function showSelectedCatalogProduct(p){
      renderLabelRequirements();
      renderClaims();
      renderPackaging();
+     renderFortification();
      openTab('formulation',{updateHash:true,save:true});
      window.scrollTo({top:0,behavior:'smooth'});
    });
@@ -4010,6 +4053,7 @@ async function loadProductMaster(){
  renderLabelRequirements();
  renderClaims();
  renderPackaging();
+ renderFortification();
 }
 document.getElementById('productSearch')?.addEventListener('input',renderProductSearch);
 document.getElementById('productCategorySelect')?.addEventListener('change',()=>{
@@ -5144,6 +5188,306 @@ function renderPackaging(){
  if(general)general.innerHTML=(packagingDb.general_requirements||[]).map(r=>'<div class="item"><b>'+esc(r.clause)+'</b><small>'+esc(r.text)+'</small></div>').join('');
  renderPackagingMigrationRows();
 }
+function selectedProductForFortification(){
+ return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
+}
+function fortificationRouteById(id){
+ return (fortificationDb?.routes||[]).find(r=>r.id===id)||null;
+}
+function fortificationExpandedRoute(route){
+ if(!route)return null;
+ if(!route.same_levels_as)return route;
+ const base=fortificationRouteById(route.same_levels_as);
+ if(!base)return route;
+ return {
+   ...base,
+   ...route,
+   core:base.core||route.core,
+   optional:base.optional||route.optional,
+   required_or_permitted:base.required_or_permitted||route.required_or_permitted,
+   inherited_from:base.id
+ };
+}
+function fortificationSuggestedRoute(){
+ if(!fortificationDb)return null;
+ const product=selectedProductForFortification();
+ const name=normIngredient(product?.name||currentProductProfile()?.name||'');
+ if(!name)return null;
+ const candidates=[];
+ (fortificationDb.routes||[]).forEach(route=>{
+   const exact=[...(route.names||[]),...(route.exact_or_terms||[])].map(normIngredient);
+   exact.forEach(term=>{
+     if(term&&name===term)candidates.push({route,score:1000+term.length,reason:'exact name'});
+     else if(term&&name.includes(term))candidates.push({route,score:500+term.length,reason:'specific product term'});
+   });
+   (route.auto_match_terms||route.match_terms||[]).map(normIngredient).forEach(term=>{
+     if(!term)return;
+     const excluded=(route.auto_match_exclusions||[]).map(normIngredient).some(x=>name.includes(x));
+     if(!excluded&&(name===term||name.includes(term)))candidates.push({route,score:300+term.length,reason:'safe class term'});
+   });
+ });
+ if(!candidates.length)return null;
+ candidates.sort((a,b)=>b.score-a.score);
+ if(candidates.length>1&&candidates[0].score===candidates[1].score&&candidates[0].route.id!==candidates[1].route.id)return null;
+ return candidates[0];
+}
+function fortificationRequirements(route){
+ const r=fortificationExpandedRoute(route);
+ if(!r)return [];
+ const rows=[];
+ (r.required_or_permitted||[]).forEach(x=>rows.push({...x,group:'core'}));
+ (r.core||[]).forEach(x=>rows.push({...x,group:'core'}));
+ (r.optional||[]).forEach(x=>rows.push({...x,required:false,group:'optional'}));
+ return rows;
+}
+function fortificationNutrientId(key){
+ return String(key||'nutrient').replace(/[^a-z0-9]/gi,'_');
+}
+function fortificationAllSources(req){
+ const rows=[...(req.sources||[])];
+ (req.options||[]).forEach(o=>(o.sources||[]).forEach(x=>rows.push(x)));
+ return [...new Set(rows)];
+}
+function fortificationRangeFor(req,source){
+ if(Array.isArray(req.options)&&req.options.length){
+   if(!source)return null;
+   const n=normIngredient(source);
+   const opt=req.options.find(o=>(o.sources||[]).some(x=>normIngredient(x)===n));
+   return opt||null;
+ }
+ return req;
+}
+function fortificationRequirementText(req){
+ if(Array.isArray(req.options)){
+   return req.options.map(o=>fmt(o.min,4)+'–'+fmt(o.max,4)+' '+esc(req.unit)+' · '+(o.sources||[]).map(esc).join(' / ')).join('<br><b>or</b><br>');
+ }
+ return (Number.isFinite(Number(req.min))&&Number.isFinite(Number(req.max)))
+   ? fmt(req.min,4)+'–'+fmt(req.max,4)+' '+esc(req.unit||'')
+   : esc(req.unit||'Specified FSSAI level');
+}
+function fortificationWheatPercent(){
+ const total=totalFormulaKg();
+ if(!(total>0))return null;
+ const wheat=formulationIngredients
+   .filter(item=>{const n=normIngredient(item.name);return n==='atta'||n.includes('wheat flour');})
+   .reduce((sum,item)=>sum+qtyToKg(item.qty,item.unit),0);
+ return wheat>0?(wheat/total)*100:0;
+}
+function fortificationRouteEligibilityHtml(route){
+ const r=fortificationExpandedRoute(route);
+ if(!r)return '';
+ const selected=normIngredient(selectedProductForFortification()?.name||currentProductProfile()?.name||'');
+ let html='';
+ if(r.id==='iodized_double_fortified_salt'){
+   html+='<div class="field"><label>Salt fortification type</label><select id="fortificationSaltType"><option value="">Select type</option><option value="iodized">Iodized salt — iodine only</option><option value="double">Double Fortified Salt — iodine + iron</option></select></div>';
+ }
+ if(['fortified_processed_cereal','fortified_bakery','fortified_fruit_juice'].includes(r.id)){
+   html+='<div class="field"><label>Is this finished food an HFSS food under the FSSAI Labelling & Display definition?</label><select id="fortificationHfss"><option value="">Not answered</option><option value="no">No</option><option value="yes">Yes</option></select><small>HFSS foods are excluded from the Fortified Processed Foods category.</small></div>';
+ }
+ if(r.id==='fortified_milk'){
+   html+='<div class="field"><label>Milk treatment</label><select id="fortificationMilkProcess"><option value="">Select process</option><option value="pasteurization">Pasteurization</option><option value="sterilization">Sterilization</option><option value="uht">UHT treatment</option><option value="boiling">Boiling</option><option value="other">Other / not one of the listed processes</option></select></div>';
+ }
+ if(r.id==='fortified_milk_powder'){
+   html+='<div class="field"><label>Is this fortified milk powder for a Government-funded programme?</label><select id="fortificationGovProgramme"><option value="">Not answered</option><option value="yes">Yes</option><option value="no">No</option></select></div>';
+ }
+ if(r.id==='fortified_atta'&&(selected.includes('multigrain')||selected.includes('multi-grain'))){
+   const auto=fortificationWheatPercent();
+   html+='<div class="field"><label>Wheat flour content in Multigrain Atta (%)</label><input id="fortificationWheatPct" type="number" min="0" max="100" step="any" value="'+(auto===null?'':esc(String(Number(auto.toFixed(4)))))+'" placeholder="Enter %"><small>Same fortification levels apply only when Multigrain Atta contains more than 50% wheat flour.'+(auto!==null?' PMSV prefilled '+fmt(auto,2)+'% from the current formulation.':'')+'</small></div>';
+ }
+ return html?'<div class="notice"><b>Route-specific eligibility</b></div><div class="checker-grid">'+html+'</div>':'';
+}
+function renderFortificationNutrients(){
+ const body=document.getElementById('fortificationNutrientRows');
+ const note=document.getElementById('fortificationNutrientStatus');
+ if(!body)return;
+ const route=fortificationRouteById(document.getElementById('fortificationRoute')?.value||'');
+ if(!route){
+   body.innerHTML='';
+   if(note)note.innerHTML='Select a fortification route first.';
+   return;
+ }
+ const requirements=fortificationRequirements(route);
+ if(note){
+   const expanded=fortificationExpandedRoute(route);
+   note.className='notice oknote';
+   note.innerHTML='<b>'+esc(route.id.replaceAll('_',' '))+'</b> · '+esc(expanded.route_type||'FSSAI fortification route')+' · basis: <b>'+esc(expanded.basis||'specified basis')+'</b>'+(expanded.inherited_from?'<br><small>Nutrient levels inherited from '+esc(expanded.inherited_from)+'.</small>':'');
+ }
+ body.innerHTML=requirements.map(req=>{
+   const id=fortificationNutrientId(req.key);
+   const sources=fortificationAllSources(req);
+   const sourceHtml=sources.length
+     ? '<select id="fortSource_'+id+'" data-fort-source="'+esc(req.key)+'"><option value="">Select source</option>'+sources.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('')+'</select>'+(req.source_condition?'<br><select id="fortSourceCondition_'+id+'"><option value="">'+esc(req.source_condition)+' — not confirmed</option><option value="yes">Confirmed</option><option value="no">Not confirmed</option></select>':'')
+     : '<small>No separate fortificant-source gate stored for this row.</small>';
+   const required=req.group==='core'&&req.required!==false;
+   return '<tr><td><b>'+esc(req.nutrient)+'</b><br><small>'+(required?'Required':'Optional / conditional')+'</small></td><td>'+fortificationRequirementText(req)+'</td><td>'+sourceHtml+'</td><td><input id="fortValue_'+id+'" data-fort-value="'+esc(req.key)+'" type="number" min="0" step="any" placeholder="'+esc(req.unit||'Enter level')+'"></td><td id="fortStatus_'+id+'"><span class="status-warn">Not evaluated</span></td></tr>';
+ }).join('');
+}
+function fortificationLabelHtml(route){
+ if(!route)return 'Select a route to see the applicable fortification label requirements.';
+ const r=fortificationExpandedRoute(route);
+ const saltType=document.getElementById('fortificationSaltType')?.value||'';
+ const reqs=fortificationRequirements(route);
+ const hasIron=reqs.some(x=>x.nutrient==='Iron'&&(x.group==='core'||(r.id==='iodized_double_fortified_salt'&&saltType==='double')));
+ const rows=[];
+ if(r.id==='iodized_double_fortified_salt'&&saltType==='iodized'){
+   rows.push('<b>Iodized salt — iodine only:</b> exempt from the Reg. 7(2) “fortified with…” +F-logo requirement.');
+ }else{
+   rows.push('Package shall carry <b>“fortified with …”</b> naming the fortificant(s) and the prescribed <b>+F logo</b>, subject to the applicable Regulation 7 conditions.');
+ }
+ if(hasIron)rows.push('<b>Iron warning currently operative:</b> '+esc(fortificationDb?.labeling?.iron_warning||'Regulation 7(4) warning applies.'));
+ if(r.additional_label_statements?.length)rows.push('<b>Additional milk-powder statements:</b><br>'+r.additional_label_statements.map(x=>'• '+esc(x)).join('<br>'));
+ return rows.join('<br><br>');
+}
+function renderFortification(){
+ const status=document.getElementById('fortificationDbStatus');
+ const suggestion=document.getElementById('fortificationProductSuggestion');
+ const select=document.getElementById('fortificationRoute');
+ const elig=document.getElementById('fortificationEligibilityControls');
+ const general=document.getElementById('fortificationGeneralRules');
+ const qa=document.getElementById('fortificationQaRules');
+ const label=document.getElementById('fortificationLabelRequirements');
+ if(!fortificationDb){
+   if(status){status.className='notice';status.innerHTML='<b>Fortification rules unavailable.</b> PMSV will not infer fortification compliance.';}
+   return;
+ }
+ if(status){
+   status.className='notice oknote';
+   status.innerHTML='<b>Current Fortification rules loaded · no AI.</b><br>Operative source: '+esc(fortificationDb.current_source?.compendium_version||'FSSAI Fortification Regulations')+'. The 2024 proposal to remove the iron warning is stored as <b>draft-only</b> and is not applied.';
+ }
+ if(select){
+   const current=select.value;
+   select.innerHTML='<option value="">Select route</option>'+(fortificationDb.routes||[]).map(r=>'<option value="'+esc(r.id)+'">'+esc(r.id.replaceAll('_',' '))+'</option>').join('');
+   if([...select.options].some(o=>o.value===current))select.value=current;
+ }
+ const product=selectedProductForFortification();
+ const hit=fortificationSuggestedRoute();
+ if(suggestion){
+   if(hit){
+     suggestion.className='notice oknote';
+     suggestion.innerHTML='<b>Suggested route for '+esc(product?.name||'selected product')+':</b> '+esc(hit.route.id.replaceAll('_',' '))+' <small>('+esc(hit.reason)+'). This is only a route suggestion; select it explicitly to assess fortification.</small><div class="flow-actions"><button class="btn-secondary" type="button" id="useFortificationSuggestion">Use suggested route</button></div>';
+     setTimeout(()=>document.getElementById('useFortificationSuggestion')?.addEventListener('click',()=>{
+       const el=document.getElementById('fortificationRoute');if(el){el.value=hit.route.id;renderFortification();}
+     }),0);
+   }else{
+     suggestion.className='notice';
+     suggestion.innerHTML=product
+       ? '<b>No safe automatic fortification route mapped for '+esc(product.name)+'.</b> Choose a route manually only if the finished food is intentionally fortified under that FSSAI route.'
+       : 'Select a standardized product to check for a fortification-route suggestion.';
+   }
+ }
+ const route=fortificationRouteById(select?.value||'');
+ if(elig)elig.innerHTML=fortificationRouteEligibilityHtml(route);
+ renderFortificationNutrients();
+ if(label)label.innerHTML=fortificationLabelHtml(route);
+ if(general)general.innerHTML=(fortificationDb.general_rules||[]).map(r=>'<div class="item"><b>'+esc(r.clause)+'</b><small>'+esc(r.text)+'</small></div>').join('');
+ if(qa){
+   const q=fortificationDb.quality_assurance||{};
+   qa.innerHTML='<b>Quality assurance:</b> '+Number(q.undertaking_frequency_per_year||2)+' undertakings/year · notified-laboratory certification · fortificant inventory/source records · process monitoring · random testing · equipment/process audit. These are evidence obligations and are not inferred from formulation data.';
+ }
+}
+async function loadFortificationDb(){
+ try{
+   const res=await fetch('./data/rules/fortification-v5-core.json?v=402',{cache:'reload'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   fortificationDb=await res.json();
+ }catch(e){
+   fortificationDb=null;
+ }
+ renderFortification();
+}
+function fortificationNutrientAssessment(route,req){
+ const r=fortificationExpandedRoute(route);
+ const id=fortificationNutrientId(req.key);
+ const raw=document.getElementById('fortValue_'+id)?.value??'';
+ const source=document.getElementById('fortSource_'+id)?.value||'';
+ const sourceCondition=document.getElementById('fortSourceCondition_'+id)?.value||'';
+ const saltType=document.getElementById('fortificationSaltType')?.value||'';
+ let required=req.group==='core'&&req.required!==false;
+ if(r.id==='iodized_double_fortified_salt'&&req.nutrient==='Iron')required=saltType==='double';
+ const entered=raw!=='';
+ if(!required&&!entered&&!source)return {status:'not_applicable',required:false};
+ if(raw==='')return {status:'missing',required,message:'Declared added level missing'};
+ const value=Number(raw);
+ if(!Number.isFinite(value)||value<0)return {status:'fail',required,message:'Invalid numeric level'};
+ const sources=fortificationAllSources(req);
+ if(sources.length&&!source)return {status:'missing',required,message:'Fortificant source not selected'};
+ if(req.source_condition&&sourceCondition!=='yes')return {status:sourceCondition==='no'?'fail':'missing',required,message:req.source_condition+' not confirmed'};
+ const range=fortificationRangeFor(req,source);
+ if(!range)return {status:'missing',required,message:'Selected source is not tied to a loaded FSSAI range'};
+ const pass=value>=Number(range.min)&&value<=Number(range.max);
+ return {status:pass?'pass':'fail',required,value,source,min:range.min,max:range.max,unit:req.unit,message:pass?'Within FSSAI range':'Outside '+range.min+'–'+range.max+' '+req.unit};
+}
+function evaluateFortification(){
+ const out=document.getElementById('fortificationAssessment');
+ if(!out)return;
+ if(!fortificationDb){
+   out.className='notice';out.innerHTML='<b>Cannot evaluate:</b> Fortification rules are not loaded.';return;
+ }
+ const route=fortificationRouteById(document.getElementById('fortificationRoute')?.value||'');
+ if(!route){
+   out.className='notice';out.innerHTML='Select the fortification route first.';return;
+ }
+ const r=fortificationExpandedRoute(route);
+ const fails=[],missing=[],passes=[];
+ if(r.id==='iodized_double_fortified_salt'){
+   const type=document.getElementById('fortificationSaltType')?.value||'';
+   if(!type)missing.push('Salt fortification type');
+ }
+ if(['fortified_processed_cereal','fortified_bakery','fortified_fruit_juice'].includes(r.id)){
+   const hfss=document.getElementById('fortificationHfss')?.value||'';
+   if(hfss==='yes')fails.push('HFSS foods are excluded from the Fortified Processed Foods category.');
+   else if(hfss!=='no')missing.push('HFSS status');
+   else passes.push('Not-HFSS eligibility gate');
+ }
+ if(r.id==='fortified_milk'){
+   const proc=document.getElementById('fortificationMilkProcess')?.value||'';
+   if(proc==='other')fails.push('Milk process is outside pasteurization, sterilization, UHT treatment or boiling.');
+   else if(!proc)missing.push('Milk treatment');
+   else passes.push('Milk treatment eligibility');
+ }
+ if(r.id==='fortified_milk_powder'){
+   const gov=document.getElementById('fortificationGovProgramme')?.value||'';
+   if(gov==='no')fails.push('The loaded fortified milk-powder route is for Government-funded programmes only.');
+   else if(gov!=='yes')missing.push('Government-funded-programme eligibility');
+   else passes.push('Government-funded-programme gate');
+ }
+ const selected=normIngredient(selectedProductForFortification()?.name||currentProductProfile()?.name||'');
+ if(r.id==='fortified_atta'&&(selected.includes('multigrain')||selected.includes('multi-grain'))){
+   const raw=document.getElementById('fortificationWheatPct')?.value??'';
+   if(raw==='')missing.push('Multigrain Atta wheat-flour percentage');
+   else if(Number(raw)<=50)fails.push('Multigrain Atta contains '+fmt(Number(raw),2)+'% wheat flour; this route requires more than 50%.');
+   else passes.push('Multigrain Atta >50% wheat-flour gate');
+ }
+ const reqs=fortificationRequirements(route);
+ reqs.forEach(req=>{
+   const a=fortificationNutrientAssessment(route,req);
+   const id=fortificationNutrientId(req.key);
+   const cell=document.getElementById('fortStatus_'+id);
+   if(cell){
+     cell.innerHTML=a.status==='pass'?'<span class="status-good">Pass</span>'
+       :a.status==='fail'?'<span class="status-bad">Fail</span>'
+       :a.status==='missing'?'<span class="status-warn">Missing evidence</span>'
+       :'<small>Not added</small>';
+   }
+   if(a.status==='fail')fails.push(req.nutrient+': '+a.message);
+   else if(a.status==='missing'&&a.required!==false)missing.push(req.nutrient+': '+a.message);
+   else if(a.status==='missing'&&a.required===false)missing.push(req.nutrient+' was entered/selected but its evidence is incomplete');
+   else if(a.status==='pass')passes.push(req.nutrient+' within loaded range');
+ });
+ const label=document.getElementById('fortificationLabelRequirements');
+ if(label)label.innerHTML=fortificationLabelHtml(route);
+ if(fails.length){
+   out.className='notice';
+   out.innerHTML='<b>Fortification assessment: NOT COMPLIANT / BLOCKED.</b><br>'+fails.map(x=>'• '+esc(x)).join('<br>')+(missing.length?'<br><br><b>Missing evidence:</b><br>'+missing.map(x=>'• '+esc(x)).join('<br>'):'');
+ }else if(missing.length){
+   out.className='notice';
+   out.innerHTML='<b>Fortification assessment: INCOMPLETE.</b><br>'+missing.map(x=>'• '+esc(x)).join('<br>')+'<br><small>Blank nutrient/source/eligibility evidence is never treated as compliant.</small>';
+ }else{
+   out.className='notice oknote';
+   out.innerHTML='<b>Fortification assessment: loaded deterministic gates passed.</b><br>'+passes.map(x=>'• '+esc(x)).join('<br>')+'<br><small>Final compliance still requires the Regulation 5 quality-assurance records, notified-laboratory evidence and all other applicable FSSAI regulations.</small>';
+ }
+}
+
 async function loadPackagingDb(){
  try{
    const res=await fetch('./data/rules/packaging-current-core.json?v=399',{cache:'reload'});
@@ -5496,6 +5840,7 @@ loadNutritionDb();
 loadLabelDb();
 loadClaimsDb();
 loadPackagingDb();
+loadFortificationDb();
 
 const dailyLimits=[
  {name:'Taurine',daily:2000},
@@ -5539,6 +5884,8 @@ document.getElementById('scheduleIVFortified')?.addEventListener('change',runSch
 document.getElementById('evaluateScheduleIV')?.addEventListener('click',runScheduleIVEvaluation);
 document.getElementById('packagingMaterialFamily')?.addEventListener('change',renderPackaging);
 document.getElementById('evaluatePackaging')?.addEventListener('click',evaluatePackaging);
+document.getElementById('fortificationRoute')?.addEventListener('change',renderFortification);
+document.getElementById('evaluateFortification')?.addEventListener('click',evaluateFortification);
 renderConversions();
 
 
