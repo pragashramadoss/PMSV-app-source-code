@@ -6504,7 +6504,7 @@ async function loadChapterRuleDbs(){
 async function loadNutritionDb(){
  const status=document.getElementById('nutritionDbStatus');
  try{
-   const res=await fetch('./data/nutrition-db-v1.json?v=431',{cache:'reload'});
+   const res=await fetch('./data/nutrition-db-v1.json?v=432',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    nutritionDb=await res.json();
    if(status){
