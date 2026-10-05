@@ -491,7 +491,178 @@
     ],
     "qualifier_runtime_policy": "Conditional article declarations activate only after the stored qualifier evaluates true. Unanswered, false, unsupported or ambiguous qualifiers remain fail-closed.",
     "qualifier_ui_active_rules": 11,
-    "qualifier_ui_pending_rules": []
+    "qualifier_ui_pending_rules": [],
+    "article_warning_rules": [
+      {
+        "id": "pan_masala_warning",
+        "exact_names": [
+          "Pan Masala"
+        ],
+        "requirement_summary": "Pan Masala must carry the prescribed chewing-health warning; the warning statement must cover 50% of the front-of-pack label.",
+        "status": "active"
+      },
+      {
+        "id": "supari_warning",
+        "exact_names": [
+          "Supari"
+        ],
+        "requirement_summary": "Supari must carry the prescribed chewing-health warning.",
+        "status": "active"
+      }
+    ],
+    "product_ingredient_rules": [
+      {
+        "id": "plant_stanol_esters",
+        "ingredient_aliases": [
+          "plant stanol ester",
+          "plant stanol esters"
+        ],
+        "eligible_product_terms": [
+          "fat spread",
+          "milk product",
+          "milk based fruit drink",
+          "fermented milk",
+          "soy drink",
+          "rice drink",
+          "cheese product",
+          "yoghurt",
+          "yogurt",
+          "spice sauce",
+          "salad dressing",
+          "juice",
+          "nectar"
+        ],
+        "requirement_summary": "Eligible products containing added plant stanol esters require the prescribed Plant Stanol content, medical-supervision, population-suitability and maximum-daily-consumption declarations.",
+        "status": "active"
+      },
+      {
+        "id": "trehalose",
+        "ingredient_aliases": [
+          "trehalose"
+        ],
+        "eligible_product_terms": [
+          "biscuit",
+          "bread",
+          "cake",
+          "breakfast cereal",
+          "carbonated water",
+          "thermally processed fruit",
+          "fruit juice",
+          "fruit nectar",
+          "fruit beverage",
+          "fruit squash",
+          "jam",
+          "jelly",
+          "fruit cheese",
+          "marmalade",
+          "dairy based drink",
+          "milk powder",
+          "gulabjamun",
+          "gulab jamun",
+          "rosogolla",
+          "rasgulla",
+          "peda",
+          "khoya burfi",
+          "macaroni",
+          "noodle",
+          "pasta",
+          "sweet",
+          "confectionery",
+          "candy",
+          "icing",
+          "savoury",
+          "savory",
+          "snack"
+        ],
+        "declaration_short": "Contains Trehalose",
+        "requirement_summary": "Where trehalose is added to an eligible listed food, the label must carry the prescribed Contains Trehalose declaration.",
+        "status": "active"
+      },
+      {
+        "id": "dextrin_soluble_fibre",
+        "ingredient_aliases": [
+          "dextrin-soluble fibre",
+          "dextrin soluble fibre",
+          "dietary fibre (dextrin-soluble fibre)",
+          "dietary fiber (dextrin-soluble fiber)"
+        ],
+        "eligible_product_terms": [
+          "flake",
+          "ready to eat dry breakfast cereal",
+          "breakfast cereal",
+          "noodle",
+          "pasta",
+          "salad dressing",
+          "topping",
+          "spread",
+          "table top fibre",
+          "table top fiber",
+          "cereal",
+          "snack",
+          "savoury",
+          "savory",
+          "biscuit",
+          "cookie",
+          "bread",
+          "cake mix",
+          "pastry",
+          "bakery product"
+        ],
+        "declaration_short": "Contains Dietary Fibre (Dextrin) — source of soluble dietary fibre",
+        "requirement_summary": "Eligible foods containing added Dietary Fibre (Dextrin-soluble fibre) require the prescribed source-of-soluble-dietary-fibre declaration.",
+        "status": "active"
+      },
+      {
+        "id": "plant_sterol",
+        "ingredient_aliases": [
+          "plant sterol",
+          "plant sterols",
+          "phytosterol",
+          "phytosterols"
+        ],
+        "eligible_product_terms": [
+          "fat spread",
+          "milk product",
+          "milk based fruit drink",
+          "fermented milk",
+          "soy drink",
+          "rice drink",
+          "cheese product",
+          "yoghurt",
+          "yogurt",
+          "spice sauce",
+          "salad dressing",
+          "juice",
+          "nectar",
+          "edible oil",
+          "bakery product",
+          "biscuit",
+          "cookie",
+          "bread",
+          "cake",
+          "pastry"
+        ],
+        "requirement_summary": "Eligible products containing added plant sterol require the prescribed phytosterol content, medical-supervision, population-suitability and maximum-daily-consumption declarations.",
+        "status": "active"
+      }
+    ],
+    "universal_process_rules": [
+      {
+        "id": "ionizing_radiation",
+        "condition": "treated_with_ionizing_radiation",
+        "qualifier_ui_status": "active",
+        "qualifier_ui": {
+          "type": "boolean",
+          "question": "Has this food been treated with ionizing radiation?"
+        },
+        "requirement_summary": "Irradiated food requires a treatment statement near the food name and, where processed under regulation 2.13, the green Radura logo plus the prescribed radiation-processing particulars.",
+        "status": "active"
+      }
+    ],
+    "coverage_status": {
+      "paragraphs_1_to_11": "structured_for_current_runtime",
+      "note": "Schedule II paragraph 1 ingredient thresholds, paragraph 2 article rules, paragraph 3 Pan Masala/Supari warnings, paragraph 4 sweetener/MSG rules, paragraphs 5-6 oil/water article rules, paragraphs 7-10 plant stanol/trehalose/dextrin/plant sterol rules, and paragraph 11 irradiation are represented. Specific manner-of-labelling rules beginning at section 2 are a separate next module."
+    }
   },
   "allergen_rules": {
     "source_clause": "5(14)",
