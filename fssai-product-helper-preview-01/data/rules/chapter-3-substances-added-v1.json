@@ -1173,6 +1173,289 @@
         "auto_apply": false,
         "permission_to_use_finished_food": "Separate Appendix A / product-standard permission is required."
       }
+    },
+    {
+      "key": "3.2.1(8)",
+      "name": "Annatto",
+      "status": "identity_purity_variant_standard_current",
+      "identity": {
+        "class": "Carotenoids",
+        "colour_index": "75120",
+        "eec": "E-160b",
+        "bixin": {
+          "formula": "C25H30O4",
+          "molecular_weight": 394.5
+        },
+        "norbixin": {
+          "formula": "C24H28O4",
+          "molecular_weight": 380.48
+        },
+        "source": "Derived only from Bixa orellana L.; no extraneous colouring matter."
+      },
+      "variants": {
+        "oil_solution": {
+          "scope": "For butter and other food products",
+          "preparation": "Extract outer coating of seeds with edible vegetable oil(s).",
+          "colour_requirement": {
+            "yellow_units_min": 5,
+            "red_units_min": 0.4,
+            "test_dilution": "1:1000 (m/v) in amyl acetate, 1 cm cell"
+          },
+          "carotenoid": {
+            "expressed_as": "bixin",
+            "operator": ">=",
+            "value": 0.24,
+            "unit": "% by mass"
+          }
+        },
+        "water_solution": {
+          "scope": "For cheese and other food products",
+          "preparation": "Extract outer coating of seeds with aqueous sodium or potassium hydroxide using potable water; 0.5–3% alkali may be added.",
+          "colour_requirement": {
+            "reference": "Same colour criterion as oil solution, measured after 1:1000 dilution in 0.1 N sodium/potassium hydroxide"
+          },
+          "carotenoid": {
+            "expressed_as": "norbixin",
+            "operator": ">=",
+            "value": 0.24,
+            "unit": "% by mass"
+          }
+        }
+      },
+      "common_requirements": [
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Copper",
+          "operator": "<=",
+          "value": 30,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Heavy metals",
+          "operator": "<=",
+          "value": 40,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This specification qualifies the colour/additive itself. Permission and maximum use level in a finished food remain governed separately by the applicable product standard and/or Appendix A.",
+      "amendment_84_policy": "Highlighted legacy provisions marked omitted by Amendment 84 are not enforced from 1 February 2026."
+    },
+    {
+      "key": "3.2.1(9)",
+      "name": "Riboflavin",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "synonyms": [
+          "Vitamin B2",
+          "Lactoflavin",
+          "Lactroflavine"
+        ],
+        "appearance": "Yellow to orange-yellow crystalline powder",
+        "melting_point": "About 280°C with decomposition",
+        "colour": "Yellow to orange-yellow",
+        "class": "Isoalloxazine",
+        "chemical_name": "6,7-dimethyl-9-(d-1-ribityl)-isoalloxazine",
+        "empirical_formula": "C17H20N4O6",
+        "molecular_weight": 376.38,
+        "solubility": "Slightly soluble in water; more soluble in saline and 10% urea solution; sparingly soluble in alcohol; practically insoluble in chloroform and solvent ether; soluble in dilute alkali hydroxides."
+      },
+      "identification": [
+        "1 mg/100 ml aqueous solution is pale greenish-yellow in transmitted light with intense yellowish-green fluorescence that disappears with sodium dithionite and with mineral acids or alkalies.",
+        "Absorption maxima of aqueous solution: 220–225, 266, 371 and 444 mμ.",
+        "Specific rotation of the prescribed solution, calculated on material dried to constant weight in the dark at 105°C: -122°."
+      ],
+      "requirements": [
+        {
+          "parameter": "Purity",
+          "operator": ">=",
+          "value": 97,
+          "unit": "%"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 20,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This specification qualifies the colour/additive itself. Permission and maximum use level in a finished food remain governed separately by the applicable product standard and/or Appendix A.",
+      "amendment_84_policy": "Highlighted legacy provisions marked omitted by Amendment 84 are not enforced from 1 February 2026."
+    },
+    {
+      "key": "3.2.1(10)",
+      "name": "Ponceau 4R",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "synonyms": [
+          "CI Food Red 7",
+          "L-Rot No.4",
+          "Coccine Nouvelle",
+          "Cochineal Red A",
+          "E124"
+        ],
+        "colour": "Red",
+        "colour_index": "16255",
+        "class": "Monoazo",
+        "chemical_name": "Trisodium salt of 1-(4-sulpho-1-naphthylazo) naphthol-6,8-disulphonic acid",
+        "empirical_formula": "C20H11N2O10S3Na3",
+        "molecular_weight": 604.5,
+        "solubility": "Soluble in water; sparingly soluble in ethanol."
+      },
+      "requirements": [
+        {
+          "parameter": "Total dye content, corrected for sample dried at 105±1°C for 2 hours",
+          "operator": ">=",
+          "value": 85,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Loss on drying at 135°C plus chlorides and sulphates expressed as sodium salt",
+          "operator": "<=",
+          "value": 18,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Water insoluble matter",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Combined ether extracts",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Subsidiary dyes",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Dye intermediates",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Heavy metals",
+          "operator": "<=",
+          "value": 40,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This specification qualifies the colour/additive itself. Permission and maximum use level in a finished food remain governed separately by the applicable product standard and/or Appendix A.",
+      "amendment_84_policy": "Highlighted legacy provisions marked omitted by Amendment 84 are not enforced from 1 February 2026."
+    },
+    {
+      "key": "3.2.1(11)",
+      "name": "Carmoisine",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "synonyms": [
+          "Azorubine",
+          "C.I. Food Red 3",
+          "E122"
+        ],
+        "colour": "Red",
+        "colour_index": "14720",
+        "class": "Monoazo",
+        "chemical_name": "Disodium salt of 2-(4-sulpho-1-naphthylazo)-1-hydroxynaphthalene-4-sulphonic acid",
+        "empirical_formula": "C20H12N2O7S2Na2",
+        "molecular_weight": 502.44
+      },
+      "requirements": [
+        {
+          "parameter": "Total dye content, corrected for sample dried at 105±1°C for 2 hours",
+          "operator": ">=",
+          "value": 87,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Loss on drying at 135°C plus chlorides and sulphates expressed as sodium salt",
+          "operator": "<=",
+          "value": 13,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Water insoluble matter",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Combined ether extracts",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Subsidiary dyes",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Dye intermediates",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Heavy metals",
+          "operator": "<=",
+          "value": 40,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This specification qualifies the colour/additive itself. Permission and maximum use level in a finished food remain governed separately by the applicable product standard and/or Appendix A.",
+      "amendment_84_policy": "Highlighted legacy provisions marked omitted by Amendment 84 are not enforced from 1 February 2026."
     }
   ],
   "coverage": {
@@ -1180,16 +1463,17 @@
     "other_substances_exact_limit_routes": 5,
     "other_substances_auto_apply": 0,
     "other_substances_fail_closed": true,
-    "build": 431,
-    "identity_purity_standards_structured": 9,
+    "build": 432,
+    "identity_purity_standards_structured": 13,
     "food_colour_clause12_effective_standard_loaded": true,
     "food_colour_amendment_84_effective_from": "2026-02-01",
     "food_colour_legacy_omission_policy_loaded": true,
-    "food_colour_individual_standards_loaded": 7,
-    "food_colour_machine_complete_standards": 6,
+    "food_colour_individual_standards_loaded": 11,
+    "food_colour_machine_complete_standards": 10,
     "food_colour_partial_fail_closed_standards": 1,
-    "food_colour_next_standard": "3.2.1(8) Annatto",
-    "caramel_variant_types_loaded": 4
+    "food_colour_next_standard": "3.2.1(13) Brilliant Blue FCF",
+    "caramel_variant_types_loaded": 4,
+    "food_colour_sequence_through": "3.2.1(12) Food Colour - Preparation and Mixtures"
   },
   "effective_amendments": [
     {
