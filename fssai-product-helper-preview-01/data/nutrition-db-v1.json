@@ -22359,7 +22359,21 @@
     "ifct_direct_label_completion_possible": false,
     "ifct_label_completion_note": "IFCT is the composition source only where the exact field is present. FSSAI Total Sugars, Added Sugars and Trans Fat are not inferred from IFCT Total Free Sugars or from absence of a value. A final label remains fail-closed until every required field has a verified basis.",
     "ifct_dry_spice_reconciliation_build": 423,
-    "ifct_dry_spice_reconciliation_note": "Restored complete G019-G033 metadata after a later misnumbered G019-G025 verification commit inherited the already-complete 528-food corpus."
+    "ifct_dry_spice_reconciliation_note": "Restored complete G019-G033 metadata after a later misnumbered G019-G025 verification commit inherited the already-complete 528-food corpus.",
+    "ifct_dry_spice_runtime_audit_build": 424,
+    "ifct_dry_spice_runtime_audit_date": "2026-10-05",
+    "ifct_dry_spice_runtime_audit_status": "passed_G019_to_G033",
+    "ifct_dry_spice_runtime_audit_checks": {
+      "exact_contiguous_codes": true,
+      "all_15_rows_present": true,
+      "all_active_for_calculation": true,
+      "all_icmr_nin_authority": true,
+      "required_verified_fields_present": true,
+      "ifct_free_sugars_auxiliary_only": true,
+      "trans_fat_not_inferred": true,
+      "source_tables_1_5_6_7_declared": true
+    },
+    "ifct_dry_spice_runtime_audit_scope": "Structural/runtime consistency audit of the already-loaded G019-G033 ICMR-NIN IFCT profiles. This does not reinterpret IFCT Total Free Sugars as FSSAI Total Sugars and does not infer trans fat."
   },
   "last_verified": "2026-10-05",
   "required_label_fields": [
