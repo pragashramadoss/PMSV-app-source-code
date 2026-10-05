@@ -22311,10 +22311,16 @@
     "ifct_generic_crab_route": "unresolved_between_Q001_marine_and_S007_freshwater",
     "ifct_food_corpus_entries_loaded": 528,
     "ifct_food_corpus_entries_total": 528,
-    "ifct_food_corpus_stage": "complete_528_IFCT_foods_field_level_fail_closed",
+    "ifct_food_corpus_stage": "complete_A_to_S_528_foods_plus_T_table12_reference_14_fail_closed",
     "ifct_duplicate_code_count": 0,
     "ifct_duplicate_alias_count": 0,
-    "ifct_generic_cat_fish_route": "unresolved_between_P009_marine_and_S001_freshwater"
+    "ifct_generic_cat_fish_route": "unresolved_between_P009_marine_and_S001_freshwater",
+    "ifct_core_food_groups_A_to_S_entries_loaded": 528,
+    "ifct_core_food_groups_A_to_S_entries_total": 528,
+    "ifct_table12_edible_oils_fats_entries_loaded": 14,
+    "ifct_table12_edible_oils_fats_entries_total": 14,
+    "ifct_total_code_rows_represented": 542,
+    "ifct_table12_mass_basis_policy": "reference_only_percent_total_fatty_acid_methylesters_not_per_100g_nutrition"
   },
   "last_verified": "2026-10-05",
   "required_label_fields": [
@@ -22330,5 +22336,113 @@
     "sodium_mg",
     "dietary_fibre_g"
   ],
-  "field_safety_policy": "A nutrient is calculated only when that nutrient field is explicitly verified for 100% of formulation mass. Missing IFCT fields are unknown, not zero. IFCT 'Total Free Sugars' is stored separately and is not used as FSSAI 'Total Sugars' unless an official equivalence is established."
+  "field_safety_policy": "A nutrient is calculated only when that nutrient field is explicitly verified for 100% of formulation mass. Missing IFCT fields are unknown, not zero. IFCT 'Total Free Sugars' is stored separately and is not used as FSSAI 'Total Sugars' unless an official equivalence is established.",
+  "edible_oils_fats_ifct_table12": {
+    "source_authority": "ICMR-NIN",
+    "source_title": "Indian Food Composition Tables 2017 — Table 12: Fatty acid profile of edible oils and fats",
+    "basis": "Percent of total methylester of fatty acid; not g/100 g finished food.",
+    "calculation_policy": "Reference-only. These percentages are not converted to per-100-g total fat, saturated fat or trans fat without an official compatible mass basis.",
+    "entries": [
+      {
+        "ifct_code": "T001",
+        "name": "Coconut oil",
+        "tsfa_pct": 90.86,
+        "tmufa_pct": 7.24,
+        "tpufa_pct": 1.9
+      },
+      {
+        "ifct_code": "T002",
+        "name": "Corn oil",
+        "tsfa_pct": 16.6,
+        "tmufa_pct": 33.67,
+        "tpufa_pct": 49.74
+      },
+      {
+        "ifct_code": "T003",
+        "name": "Cotton seed oil",
+        "tsfa_pct": 28.17,
+        "tmufa_pct": 19.66,
+        "tpufa_pct": 52.16
+      },
+      {
+        "ifct_code": "T004",
+        "name": "Gingelly oil",
+        "tsfa_pct": 16.25,
+        "tmufa_pct": 41.41,
+        "tpufa_pct": 42.34
+      },
+      {
+        "ifct_code": "T005",
+        "name": "Groundnut oil",
+        "tsfa_pct": 18.94,
+        "tmufa_pct": 53.89,
+        "tpufa_pct": 27.17
+      },
+      {
+        "ifct_code": "T006",
+        "name": "Mustard oil",
+        "tsfa_pct": 5.72,
+        "tmufa_pct": 67.09,
+        "tpufa_pct": 27.19
+      },
+      {
+        "ifct_code": "T007",
+        "name": "Palm oil",
+        "tsfa_pct": 44.98,
+        "tmufa_pct": 43.53,
+        "tpufa_pct": 11.49
+      },
+      {
+        "ifct_code": "T008",
+        "name": "Rice bran oil",
+        "tsfa_pct": 23.76,
+        "tmufa_pct": 44.12,
+        "tpufa_pct": 32.12
+      },
+      {
+        "ifct_code": "T009",
+        "name": "Safflower oil",
+        "tsfa_pct": 9.19,
+        "tmufa_pct": 14.04,
+        "tpufa_pct": 76.78
+      },
+      {
+        "ifct_code": "T010",
+        "name": "Safflower oil (blended)",
+        "tsfa_pct": 19.53,
+        "tmufa_pct": 37.61,
+        "tpufa_pct": 42.86
+      },
+      {
+        "ifct_code": "T011",
+        "name": "Soyabean oil",
+        "tsfa_pct": 15.96,
+        "tmufa_pct": 24.06,
+        "tpufa_pct": 59.98
+      },
+      {
+        "ifct_code": "T012",
+        "name": "Sunflower oil",
+        "tsfa_pct": 11.39,
+        "tmufa_pct": 25.96,
+        "tpufa_pct": 62.65
+      },
+      {
+        "ifct_code": "T013",
+        "name": "Ghee",
+        "tsfa_pct": 71.02,
+        "tmufa_pct": 26.44,
+        "tpufa_pct": 2.54,
+        "elaidic_c18_1n9t_pct": 0.44
+      },
+      {
+        "ifct_code": "T014",
+        "name": "Vanaspati",
+        "tsfa_pct": 61.44,
+        "tmufa_pct": 33.87,
+        "tpufa_pct": 4.69,
+        "elaidic_c18_1n9t_pct": 4.68
+      }
+    ]
+  }
 }
