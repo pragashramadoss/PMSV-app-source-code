@@ -22185,19 +22185,34 @@
     "fail_closed_rule": "An ingredient without an explicitly verified ICMR-NIN composition mapping is unmatched. PMSV must not estimate it from websites, supplier pages, search results, social media, generic databases or hand-entered starter assumptions."
   },
   "coverage": {
-    "active_icmr_nin_profiles": 329,
+    "active_icmr_nin_profiles": 528,
     "locked_non_icmr_starter_profiles": 7,
-    "ifct_master_ingestion": "in_progress",
-    "source_verified_on": "2026-10-03",
+    "ifct_master_ingestion": "complete",
+    "source_verified_on": "2026-10-05",
     "ifct_exact_profiles_loaded": 528,
     "ifct_partial_profiles_loaded": 527,
     "field_level_fail_closed": true,
     "refined_sucrose_not_in_ifct_food_list": true,
     "ifct_groups_started": [
       "A — Cereals and Millets",
+      "B — Grain Legumes",
+      "C — Green Leafy Vegetables",
+      "D — Other Vegetables",
+      "E — Fruits",
+      "F — Roots and Tubers",
+      "G — Condiments and Spices",
+      "H — Nuts and Oilseeds",
       "I — Sugars",
+      "J — Mushrooms",
       "K — Miscellaneous Foods",
-      "L — Milk and Milk Products"
+      "L — Milk and Milk Products",
+      "M — Egg and Egg Products",
+      "N — Poultry",
+      "O — Animal Meat",
+      "P — Marine Fish",
+      "Q — Marine Shellfish",
+      "R — Marine Mollusks",
+      "S — Freshwater Fish and Shellfish"
     ],
     "ifct_cereal_group_entries_loaded": 24,
     "ifct_cereal_group_entries_total": 24,
@@ -22283,7 +22298,7 @@
     "ifct_poultry_cholesterol_profiles_loaded": 19,
     "ifct_animal_meat_entries_loaded": 63,
     "ifct_animal_meat_stage": "O001_to_O063_complete_for_tables_1_5_7",
-    "ifct_animal_meat_endpoint_status": "open_from_O025_beef_onward",
+    "ifct_animal_meat_endpoint_status": "complete_group_O",
     "ifct_animal_meat_entries_total": 63,
     "ifct_marine_fish_entries_loaded": 92,
     "ifct_marine_fish_stage": "P001_to_P092_complete_for_tables_1_5_7",
@@ -22296,7 +22311,7 @@
       "trans_fat_g"
     ],
     "ifct_marine_fish_endpoint_status": "complete_group_P",
-    "ifct_next_group": "S — Freshwater Fish and Shellfish",
+    "ifct_next_group": null,
     "ifct_marine_shellfish_entries_loaded": 8,
     "ifct_marine_shellfish_entries_total": 8,
     "ifct_marine_shellfish_stage": "Q001_to_Q008_complete_for_tables_1_5_7",
@@ -22320,7 +22335,9 @@
     "ifct_table12_edible_oils_fats_entries_loaded": 14,
     "ifct_table12_edible_oils_fats_entries_total": 14,
     "ifct_total_code_rows_represented": 542,
-    "ifct_table12_mass_basis_policy": "reference_only_percent_total_fatty_acid_methylesters_not_per_100g_nutrition"
+    "ifct_table12_mass_basis_policy": "reference_only_percent_total_fatty_acid_methylesters_not_per_100g_nutrition",
+    "ifct_master_audit_status": "complete_A_to_S_528_foods; Table 12 oils/fats retained as reference-only mass-basis data",
+    "ifct_master_audit_build": 348
   },
   "last_verified": "2026-10-05",
   "required_label_fields": [
