@@ -44,6 +44,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <button class="tab" data-tab="fortification">Fortification</button>
 <button class="tab" data-tab="quality">Label requirements</button>
 <button class="tab" data-tab="claims">Claims</button>
+<button class="tab" data-tab="summary">Compliance summary</button>
 <button class="tab" data-tab="sources">Official sources</button>
 </nav>
 
@@ -1131,6 +1132,24 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 </section>
 
+<section id="summary" class="view hidden">
+<div class="card">
+<div class="section-title"><h2>Master compliance summary</h2><span>Fail-closed release gate</span></div>
+<div class="notice"><b>Purpose:</b> This page consolidates the loaded PMSV checks into one release-readiness view. An explicit loaded-rule failure blocks the product. Missing inputs, unresolved mappings or missing evidence hold the product for review. A green module status means only that the <b>loaded deterministic PMSV gate</b> passed; it is not a legal compliance certificate.</div>
+<div id="masterComplianceDecision" class="notice"><b>Assessment not yet refreshed.</b></div>
+<div class="flow-actions"><button class="btn" type="button" id="refreshComplianceSummary">Refresh assessment</button></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Compliance gates</h2><span>Product-wide view</span></div>
+<div class="tablewrap"><table>
+<thead><tr><th>Module</th><th>Status</th><th>Current basis</th><th>Action</th></tr></thead>
+<tbody id="masterComplianceRows"></tbody>
+</table></div>
+<div class="notice"><b>Release rule:</b> <span class="status-bad">BLOCKED</span> overrides every other status. If there is no blocker but one or more required gates are incomplete, the overall status is <b>HOLD — REQUIRED GATES INCOMPLETE</b>. Only when all deterministic gates are resolved can PMSV show <b>READY FOR FINAL QA REVIEW</b>; laboratory reports, artwork approval, records and regulatory responsibility still remain with the food business.</div>
+</div>
+</section>
+
 <section id="sources" class="view hidden">
 <div class="card source">
 <h2>Official regulatory sources used</h2>
@@ -1225,6 +1244,13 @@ function openTab(id,{updateHash=true,save=true}={}){
     id='product';
     document.getElementById('product')?.classList.remove('hidden');
     tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab==='product'));
+  }
+
+  if(id==='summary'){
+    setTimeout(()=>{try{renderMasterComplianceSummary()}catch(e){
+      const out=document.getElementById('masterComplianceDecision');
+      if(out){out.className='notice';out.innerHTML='<b>Master assessment could not be refreshed.</b> Review the individual modules directly.';}
+    }},0);
   }
 
   if(save){
@@ -3711,6 +3737,149 @@ function profileForCatalogProduct(p){
  const pid=p.profile_id||p.id;
  return productProfiles().find(x=>x.id===pid&&['rule_profile_ready','chapter_profile_ready','base_profile_ready'].includes(x.status))||null;
 }
+function masterComplianceRow(module,status,detail,tab){
+ const labels={pass:'PASS / MAPPED',fail:'BLOCKED',incomplete:'INCOMPLETE',evidence:'QA EVIDENCE'};
+ const classes={pass:'status-good',fail:'status-bad',incomplete:'status-warn',evidence:'status-warn'};
+ return {module,status,detail,tab,label:labels[status]||status,cls:classes[status]||'status-warn'};
+}
+function masterResultState(id){
+ const el=document.getElementById(id);
+ if(!el)return {status:'incomplete',detail:'Assessment output is not available.'};
+ const text=(el.textContent||'').replace(/\s+/g,' ').trim();
+ if(/NOT COMPLIANT|BLOCKED|NOT met|NOT PERMITTED|condition NOT met|exceeds/i.test(text)){
+   return {status:'fail',detail:text||'Loaded rule failure.'};
+ }
+ if(el.classList.contains('oknote')&&/passed|condition met|permitted|eligible/i.test(text)){
+   return {status:'pass',detail:text||'Loaded deterministic gate passed.'};
+ }
+ return {status:'incomplete',detail:text||'Assessment has not been completed.'};
+}
+function masterClaimsState(){
+ const routes=[
+  ['claimType','claimCheckResult'],
+  ['comparativeNutrient','comparativeClaimResult'],
+  ['nonAdditionType','nonAdditionClaimResult'],
+  ['scheduleVTerm','scheduleVResult'],
+  ['scheduleIIIClaim','scheduleIIIResult'],
+  ['scheduleIVNutrient','scheduleIVResult']
+ ];
+ const used=routes.filter(([input])=>String(document.getElementById(input)?.value||'').trim()!=='');
+ if(!used.length)return {status:'evidence',detail:'No claim route is currently selected. Final artwork must confirm that no regulated nutrition/health/comparative/non-addition or restricted-word claim is being made.'};
+ const states=used.map(([,output])=>masterResultState(output));
+ const fail=states.find(x=>x.status==='fail');
+ if(fail)return {status:'fail',detail:'At least one selected claim route is blocked: '+fail.detail};
+ const incomplete=states.find(x=>x.status!=='pass');
+ if(incomplete)return {status:'incomplete',detail:'At least one selected claim route is not fully resolved: '+incomplete.detail};
+ return {status:'pass',detail:'All currently selected claim routes have passed their loaded deterministic checks. Final wording/substantiation review is still required.'};
+}
+function renderMasterComplianceSummary(){
+ const body=document.getElementById('masterComplianceRows');
+ const decision=document.getElementById('masterComplianceDecision');
+ if(!body||!decision)return;
+
+ const rows=[];
+ const product=selectedProductForFortification();
+ const profile=currentProductProfile();
+ const productName=product?.name||profile?.name||'';
+ if(!productName){
+   rows.push(masterComplianceRow('Product standard','incomplete','Select the exact standardized product before a product-wide assessment can run.','product'));
+ }else if(profile?.status==='rule_profile_ready'){
+   rows.push(masterComplianceRow('Product standard','pass',productName+' has a fully validated PMSV rule profile.','standard'));
+ }else{
+   rows.push(masterComplianceRow('Product standard','incomplete',productName+' is loaded at '+esc(profile?.status||'catalog-only')+' status; detailed product clauses are not fully machine-validated.','standard'));
+ }
+
+ if(!formulationIngredients.length){
+   rows.push(masterComplianceRow('Ingredients & limits','incomplete','No formulation ingredients have been entered.','formulation'));
+ }else{
+   const qs=formulationIngredients.map(qualifyIngredient);
+   const live=formulationIngredients.map((x,i)=>checkUsageAgainstRule(x,qs[i]));
+   const failed=live.some(x=>x&&x.pass===false);
+   const pending=live.some(x=>x&&x.pass===null);
+   const unresolved=qs.some(q=>q.route==='unresolved'||q.route==='proprietary'||q.status==='review'||q.status==='unresolved');
+   if(failed)rows.push(masterComplianceRow('Ingredients & limits','fail','At least one entered ingredient exceeds a loaded quantitative FSSAI limit.','formulation'));
+   else if(pending||unresolved)rows.push(masterComplianceRow('Ingredients & limits','incomplete','At least one ingredient permission, product route or quantitative condition remains unresolved.','formulation'));
+   else rows.push(masterComplianceRow('Ingredients & limits','pass','Entered ingredients match the selected product/FCS permissions and no loaded quantitative limit is exceeded.','formulation'));
+ }
+
+ if(!contaminantsDb||!product){
+   rows.push(masterComplianceRow('Contaminants / residues','incomplete','Select a product and load the current contaminant master.','contaminants'));
+ }else{
+   const cp=contaminantProfileForProduct(product);
+   const pending=[];
+   if(!cp)pending.push('no exact product contaminant profile');
+   if(tinVariantRulesForProduct(product).length&&!selectedVariantTinRule(product))pending.push('Tin variant/package qualifier');
+   if(metalSubtypeRulesForProduct(product).length&&!selectedMetalSubtypeRule(product))pending.push('metal subtype qualifier');
+   if(sulphatedAshRulesForProduct(product).length&&!selectedSulphatedAshLeadRule(product))pending.push('sulphated-ash Lead qualifier');
+   const milkConditional=(Array.isArray(contaminantsDb.dehydrated_milk_conditional_lead_rules_v9)&&contaminantsDb.dehydrated_milk_conditional_lead_rules_v9.some(x=>x.catalog_id===product.id))||dehydratedMilkSubtypeConfigsForProduct(product).length>0;
+   if(milkConditional&&!selectedDehydratedMilkLeadRule(product))pending.push('dehydrated-milk Lead qualifier');
+   const packageRows=Array.isArray(contaminantsDb.product_package_conditional_tin_rules_v9)?contaminantsDb.product_package_conditional_tin_rules_v9.filter(x=>x.catalog_id===product.id):[];
+   if(packageRows.length&&!selectedProductPackageTinRule(product))pending.push('package-format Tin qualifier');
+   if(pending.length)rows.push(masterComplianceRow('Contaminants / residues','incomplete','Regulatory mapping still needs: '+pending.join(', ')+'.','contaminants'));
+   else rows.push(masterComplianceRow('Contaminants / residues','pass','Exact loaded contaminant rules are mapped for the selected product/qualifiers. Laboratory results and COAs remain QA evidence.','contaminants'));
+ }
+
+ if(!product){
+   rows.push(masterComplianceRow('Microbiology','incomplete','Select a standardized product first.','micro'));
+ }else if(['carbonated-water','carbonated-caffeinated-beverage','non-carbonated-caffeinated-beverage'].includes(product.id)){
+   rows.push(masterComplianceRow('Microbiology','pass','Direct Chapter 2.10 microbiological criteria are mapped. Product test results remain QA evidence.','micro'));
+ }else if(product.microbiology_status==='mapped_appendix_b_v2'){
+   rows.push(masterComplianceRow('Microbiology','pass','An exact Appendix B Version 2 microbiology profile is mapped. Product test results remain QA evidence.','micro'));
+ }else{
+   rows.push(masterComplianceRow('Microbiology','incomplete','The selected product has no single fully resolved microbiology route; review its Appendix B/direct-standard status and any required variant.','micro'));
+ }
+
+ const proc=Array.isArray(selectedProcesses)?selectedProcesses:[];
+ if(!proc.length){
+   rows.push(masterComplianceRow('Processing aids','evidence','No Appendix C processing-aid process is selected. Final process review must confirm that no processing aid was used.','processing'));
+ }else{
+   rows.push(masterComplianceRow('Processing aids','incomplete',proc.length+' manufacturing process route'+(proc.length===1?' is':'s are')+' selected. Review the exact Appendix C aid/qualifier results before release.','processing'));
+ }
+
+ const pack=masterResultState('packagingAssessment');
+ rows.push(masterComplianceRow('Packaging',pack.status,pack.detail,'packaging'));
+
+ if(!nutritionDb||!formulationIngredients.length){
+   rows.push(masterComplianceRow('Nutrition','incomplete','Nutrition cannot be finalized until the formulation and official-source nutrition database are available.','nutrition'));
+ }else{
+   const n=calculateNutrition();
+   if(n.complete)rows.push(masterComplianceRow('Nutrition','pass','All required nutrition fields are verified for 100% of formulation mass.','nutrition'));
+   else rows.push(masterComplianceRow('Nutrition','incomplete','Mandatory nutrition fields remain unverified: '+(n.incompleteFields.length?n.incompleteFields.map(x=>x.replaceAll('_',' ')).join(', '):'ingredient coverage incomplete')+'. Missing values are not treated as zero.','nutrition'));
+ }
+
+ const fortRoute=document.getElementById('fortificationRoute')?.value||'';
+ if(!fortRoute){
+   rows.push(masterComplianceRow('Fortification','evidence','No fortification route is selected. Final product review must confirm the food is not intentionally fortified under an applicable FSSAI route.','fortification'));
+ }else{
+   const fort=masterResultState('fortificationAssessment');
+   rows.push(masterComplianceRow('Fortification',fort.status,fort.detail,'fortification'));
+ }
+
+ rows.push(masterComplianceRow('Labelling / artwork','evidence','FSSAI general, product-specific and formulation-triggered label rules are loaded, but final artwork, placement, font/box requirements, declared values and licence/traceability details require QA approval.','quality'));
+
+ const claims=masterClaimsState();
+ rows.push(masterComplianceRow('Advertising & claims',claims.status,claims.detail,'claims'));
+
+ const labels={pass:'PASS / MAPPED',fail:'BLOCKED',incomplete:'INCOMPLETE',evidence:'QA EVIDENCE'};
+ const classes={pass:'status-good',fail:'status-bad',incomplete:'status-warn',evidence:'status-warn'};
+ body.innerHTML=rows.map(r=>'<tr><td><b>'+esc(r.module)+'</b></td><td><span class="'+r.cls+'"><b>'+labels[r.status]+'</b></span></td><td>'+r.detail+'</td><td><button class="btn-secondary" type="button" data-summary-tab="'+esc(r.tab)+'">Open module</button></td></tr>').join('');
+ body.querySelectorAll('[data-summary-tab]').forEach(btn=>btn.addEventListener('click',()=>openTab(btn.dataset.summaryTab,{updateHash:true,save:true})));
+
+ const failed=rows.filter(r=>r.status==='fail');
+ const incomplete=rows.filter(r=>r.status==='incomplete');
+ const evidence=rows.filter(r=>r.status==='evidence');
+ if(failed.length){
+   decision.className='notice';
+   decision.innerHTML='<b>MASTER STATUS: STOP — NON-COMPLIANCE / BLOCKER FOUND.</b><br>'+failed.map(r=>'• '+esc(r.module)+': '+r.detail).join('<br>')+(incomplete.length?'<br><br><b>Additional incomplete gates:</b> '+incomplete.map(r=>esc(r.module)).join(', ')+'.':'')+'<br><br><small>This is a PMSV screening result, not a legal compliance certificate.</small>';
+ }else if(incomplete.length){
+   decision.className='notice';
+   decision.innerHTML='<b>MASTER STATUS: HOLD — REQUIRED GATES INCOMPLETE.</b><br>No explicit loaded-rule failure is currently recorded, but these gates are unresolved: <b>'+incomplete.map(r=>esc(r.module)).join(', ')+'</b>.'+(evidence.length?'<br>Final QA evidence/review is also required for: '+evidence.map(r=>esc(r.module)).join(', ')+'.':'')+'<br><br><small>PMSV does not convert missing data into a pass.</small>';
+ }else{
+   decision.className='notice oknote';
+   decision.innerHTML='<b>MASTER STATUS: READY FOR FINAL QA REVIEW.</b><br>All currently applicable deterministic PMSV gates are resolved without a loaded-rule failure.'+(evidence.length?'<br>Final QA evidence/review remains required for: '+evidence.map(r=>esc(r.module)).join(', ')+'.':'')+'<br><br><small>This is not a legal compliance certificate. Final laboratory evidence, artwork approval, records and regulatory responsibility remain with the food business.</small>';
+ }
+}
+
 function currentProductProfile(){
  return productProfiles().find(x=>x.id===selectedProductId&&['rule_profile_ready','chapter_profile_ready','base_profile_ready'].includes(x.status))||null;
 }
@@ -6135,6 +6304,7 @@ document.getElementById('packagingMaterialFamily')?.addEventListener('change',re
 document.getElementById('evaluatePackaging')?.addEventListener('click',evaluatePackaging);
 document.getElementById('fortificationRoute')?.addEventListener('change',renderFortification);
 document.getElementById('evaluateFortification')?.addEventListener('click',evaluateFortification);
+document.getElementById('refreshComplianceSummary')?.addEventListener('click',renderMasterComplianceSummary);
 renderConversions();
 
 
