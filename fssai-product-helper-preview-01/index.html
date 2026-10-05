@@ -871,6 +871,11 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="fortificationGeneralRules" class="grid2"></div>
 <div id="fortificationQaRules" class="notice"></div>
 </div>
+
+<div class="card source">
+<div class="section-title"><h2>Official source</h2><span>FSSAI only</span></div>
+<div class="item"><b>Food Safety and Standards (Fortification of Foods) Regulations, 2018 — Compendium Version V (01.06.2022)</b><small><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Fortification_Regulations_05_06_2022.pdf">Open official FSSAI compendium</a><br>The 2024 amendment is retained as draft-only and is not applied to operative compliance logic.</small></div>
+</div>
 </section>
 
 <section id="quality" class="view hidden">
@@ -5215,16 +5220,22 @@ function fortificationSuggestedRoute(){
  if(!name)return null;
  const candidates=[];
  (fortificationDb.routes||[]).forEach(route=>{
-   const exact=[...(route.names||[]),...(route.exact_or_terms||[])].map(normIngredient);
-   exact.forEach(term=>{
-     if(term&&name===term)candidates.push({route,score:1000+term.length,reason:'exact name'});
-     else if(term&&name.includes(term))candidates.push({route,score:500+term.length,reason:'specific product term'});
+   const policy=route.suggestion_match_policy||'legacy';
+   const excluded=(route.auto_match_exclusions||[]).map(normIngredient).some(x=>x&&name.includes(x));
+   const strictTerms=[
+     ...(route.names||[]),
+     ...(route.exact_or_terms||[]),
+     ...(policy==='strict_identity'?(route.match_terms||[]):[]),
+     ...(policy==='strict_identity'?(route.auto_match_terms||[]):[])
+   ].map(normIngredient).filter(Boolean);
+   strictTerms.forEach(term=>{
+     if(name===term)candidates.push({route,score:1000+term.length,reason:'exact verified identity'});
    });
-   (route.auto_match_terms||route.match_terms||[]).map(normIngredient).forEach(term=>{
-     if(!term)return;
-     const excluded=(route.auto_match_exclusions||[]).map(normIngredient).some(x=>name.includes(x));
-     if(!excluded&&(name===term||name.includes(term)))candidates.push({route,score:300+term.length,reason:'safe class term'});
-   });
+   if(policy!=='strict_identity'&&!excluded){
+     [...(route.auto_match_terms||[]),...(route.match_terms||[])].map(normIngredient).filter(Boolean).forEach(term=>{
+       if(name===term||name.includes(term))candidates.push({route,score:300+term.length,reason:'allowlisted product-class term'});
+     });
+   }
  });
  if(!candidates.length)return null;
  candidates.sort((a,b)=>b.score-a.score);
@@ -5386,12 +5397,12 @@ function renderFortification(){
  if(general)general.innerHTML=(fortificationDb.general_rules||[]).map(r=>'<div class="item"><b>'+esc(r.clause)+'</b><small>'+esc(r.text)+'</small></div>').join('');
  if(qa){
    const q=fortificationDb.quality_assurance||{};
-   qa.innerHTML='<b>Quality assurance:</b> '+Number(q.undertaking_frequency_per_year||2)+' undertakings/year · notified-laboratory certification · fortificant inventory/source records · process monitoring · random testing · equipment/process audit. These are evidence obligations and are not inferred from formulation data.';
+   qa.innerHTML='<b>Quality assurance:</b> '+Number(q.undertaking_frequency_per_year||2)+' undertakings/year · notified-laboratory certification · fortificant inventory/source records · process monitoring · random testing · equipment/process audit'+(q.purity_criteria_reference?' · fortificant purity criteria from the permitted pharmacopoeial/Codex references':'')+'. These are evidence obligations and are not inferred from formulation data.';
  }
 }
 async function loadFortificationDb(){
  try{
-   const res=await fetch('./data/rules/fortification-v5-core.json?v=402',{cache:'reload'});
+   const res=await fetch('./data/rules/fortification-v5-core.json?v=405',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    fortificationDb=await res.json();
  }catch(e){
