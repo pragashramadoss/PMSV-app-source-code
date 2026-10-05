@@ -5243,6 +5243,37 @@ function renderDehydratedMilkLeadStatus(p){
  el.className='notice oknote';
  el.innerHTML='<b>Adjusted Lead maximum:</b> 0.02 mg/kg × '+esc(String(factor))+' = <b>'+esc(String(rule.limit))+' mg/kg</b>.';
 }
+function chapter26ContaminantGateNotices(p){
+ if(!p||!contaminantsDb||!String(p.fssr||'').startsWith('2.6.'))return '';
+ const id=p.id||p.profile_id||'';
+ const conditional=Array.isArray(contaminantsDb.chapter_2_6_conditional_fish_specific_routes_v9)
+   ? contaminantsDb.chapter_2_6_conditional_fish_specific_routes_v9.filter(r=>!Array.isArray(r.catalog_ids)||r.catalog_ids.includes(id))
+   : [];
+ const legacyConditional=Array.isArray(contaminantsDb.chapter_2_6_conditional_contaminant_routes_v9)
+   ? contaminantsDb.chapter_2_6_conditional_contaminant_routes_v9.filter(r=>!Array.isArray(r.catalog_ids)||r.catalog_ids.includes(id))
+   : [];
+ const locked=Array.isArray(contaminantsDb.chapter_2_6_locked_contaminant_routes_v9)
+   ? contaminantsDb.chapter_2_6_locked_contaminant_routes_v9.filter(r=>r.catalog_id===id)
+   : [];
+ const seen=new Set();
+ const conditionalRows=[...conditional,...legacyConditional].filter(r=>{
+   const key=(r.scope||r.contaminant||'')+'|'+(r.requires_input||'')+'|'+(r.reason||'');
+   if(seen.has(key))return false;seen.add(key);return true;
+ });
+ let html='';
+ if(conditionalRows.length){
+   html+='<div class="notice"><b>Conditional FSSAI contaminant gate'+(conditionalRows.length===1?'':'s')+' — not auto-applied:</b><br>'+
+     conditionalRows.map(r=>'• <b>'+esc(r.scope||r.contaminant||'Conditional route')+'</b>'+(r.requires_input?' · needs <b>'+esc(r.requires_input)+'</b>':'')+'<br><small>'+esc(r.reason||'Additional product evidence is required before selecting the applicable limit.')+'</small>').join('<br>')+
+     '</div>';
+ }
+ if(locked.length){
+   html+='<div class="notice"><b>Intentionally fail-closed route:</b><br>'+
+     locked.map(r=>'• <b>'+esc(r.product_name||p.name)+'</b><br><small>'+esc(r.reason||'No exact current FSSAI article is available for automatic mapping.')+'</small>').join('<br>')+
+     '</div>';
+ }
+ return html;
+}
+
 function renderProductContaminants(){
  const el=document.getElementById('productContaminantResults');
  if(!el)return;
@@ -5275,12 +5306,13 @@ function renderProductContaminants(){
   ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+exact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
   : '<div class="notice"><b>No exact contaminant profile is loaded yet for '+esc(p.name)+'.</b> PMSV shows only explicit “all foods” rules. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
-   +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant</th><th>FSSAI maximum</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="empty-state">No auto-applicable contaminant rule is loaded for this product yet.</div>')
+   +chapter26ContaminantGateNotices(p)
+   +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="empty-state">No auto-applicable contaminant rule is loaded for this product yet.</div>')
    +'<div class="countline">'+rules.length+' current Version IX rule'+(rules.length===1?'':'s')+' shown after exact product/input gates · “Foods not specified” and generic canned-food fallbacks are disabled.</div>';
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=425',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=430',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
