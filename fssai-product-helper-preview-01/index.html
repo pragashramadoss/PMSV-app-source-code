@@ -41,6 +41,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <button class="tab" data-tab="processing">Processing aids</button>
 <button class="tab" data-tab="nutrition">Nutrition</button>
 <button class="tab" data-tab="quality">Label requirements</button>
+<button class="tab" data-tab="claims">Claims</button>
 <button class="tab" data-tab="sources">Official sources</button>
 </nav>
 
@@ -779,6 +780,50 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <div class="card">
 <div class="notice"><b>Regulatory date note:</b> this module applies the Labelling & Display requirements currently in force. The First Amendment Regulations, 2026 were notified on 24 March 2026 but come into force on <b>1 July 2027</b>; PMSV should not apply those future-effective changes prematurely.</div>
+</div>
+</section>
+
+<section id="claims" class="view hidden">
+<div class="card">
+<div class="section-title"><h2>Advertising & Claims checker</h2><span>FSSAI · deterministic · no AI</span></div>
+<div class="notice oknote"><b>What this checks:</b> PMSV evaluates FSSAI claim conditions only when the required formulation/nutrition evidence is available. A numeric pass means the <b>Schedule I numeric condition is met</b>; it does not by itself approve the final wording, advertisement or health claim.</div>
+<div id="claimsDbStatus" class="notice">Loading FSSAI Advertising & Claims rules…</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Check a nutrient-content claim</h2><span>Schedule I</span></div>
+<div class="checker-grid">
+  <div class="field">
+    <label>Product basis</label>
+    <select id="claimBasis">
+      <option value="solid">Solid food · per 100 g</option>
+      <option value="liquid">Liquid food · per 100 ml</option>
+    </select>
+    <small>Select the legal basis that applies to the finished product.</small>
+  </div>
+  <div class="field">
+    <label>Claim to assess</label>
+    <select id="claimType"><option value="">Select claim</option></select>
+    <small>Includes both auto-evaluable and evidence-dependent Schedule I claims.</small>
+  </div>
+</div>
+<div class="flow-actions"><button class="btn" type="button" id="evaluateClaim">Evaluate claim</button></div>
+<div id="claimCheckResult" class="notice">Select a claim to assess it against the current formulation.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>General claim gates</h2><span>Regulations 4, 5, 6, 7, 9 & 10</span></div>
+<div id="claimsGeneralRules" class="grid2"></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Claims that need additional evidence</h2><span>Fail-closed</span></div>
+<div id="claimsManualRules" class="grid2"></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Prohibited claim checks</h2><span>Regulation 10</span></div>
+<div id="claimsProhibitedRules" class="grid2"></div>
 </div>
 </section>
 
@@ -3140,6 +3185,7 @@ let contaminantsDb=null;
 let appendixCDb=null;
 let microbiologyDb=null;
 let labelDb=null;
+let claimsDb=null;
 let selectedProductId='';
 
 function fallbackIngredientCatalog(){
@@ -4330,6 +4376,157 @@ function labelProductRuleFor(name){
  return labelDb.product_specific_rules.find(r=>Array.isArray(r.exact_names)&&r.exact_names.some(x=>normIngredient(x)===n)&&r.status==='active')||null;
 }
 
+function claimRuleById(id){
+ return claimsDb?.schedule_i?.find(r=>r.id===id)||null;
+}
+function claimSelectedProductName(){
+ const selectedProduct=productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
+ return selectedProduct?.name||currentProductProfile()?.name||'';
+}
+function claimCompare(op,value,limit){
+ if(!Number.isFinite(Number(value))||!Number.isFinite(Number(limit)))return null;
+ if(op==='<')return Number(value)<Number(limit);
+ if(op==='<=')return Number(value)<=Number(limit);
+ if(op==='>')return Number(value)>Number(limit);
+ if(op==='>=')return Number(value)>=Number(limit);
+ return null;
+}
+function evaluateNutrientClaim(rule,basis){
+ if(!rule)return {status:'needs_evidence',message:'Select a claim first.'};
+ if(rule.auto_evaluable!==true)return {status:'needs_evidence',message:rule.note||rule.condition||'This claim requires evidence not yet available to the deterministic runtime.'};
+ const threshold=rule[basis];
+ if(!threshold)return {status:'needs_evidence',message:'FSSAI Schedule I does not provide an automatic '+basis+' threshold for this rule in the loaded source. PMSV will not invent one.'};
+ const calc=calculateNutrition();
+ const set=basis==='solid'?calc.per100g:calc.per100ml;
+ const value=set?.[rule.nutrient_key];
+ if(value===null||value===undefined||!Number.isFinite(Number(value))){
+   const cov=Number(calc.coverageByField?.[rule.nutrient_key]||0);
+   return {status:'needs_evidence',message:'The required '+rule.nutrient.replaceAll('_',' ')+' value is not fully verified for this formulation ('+fmt(cov,1)+'% mass coverage). Missing values are not treated as zero.'};
+ }
+ let pass=claimCompare(threshold.op,Number(value),Number(threshold.value));
+ const checks=[rule.nutrient+': '+fmt(value,3)+' vs '+threshold.op+' '+threshold.value+' '+threshold.unit];
+
+ if(Number.isFinite(Number(threshold.sat_fat_max_g))){
+   const sat=set?.saturated_fat_g;
+   if(sat===null||sat===undefined||!Number.isFinite(Number(sat)))return {status:'needs_evidence',message:'The cholesterol claim also requires a fully verified saturated-fat value.'};
+   const satPass=Number(sat)<=Number(threshold.sat_fat_max_g);
+   pass=pass&&satPass;
+   checks.push('Saturated fat: '+fmt(sat,3)+' g vs ≤ '+threshold.sat_fat_max_g+' g');
+ }
+ if(Number.isFinite(Number(threshold.sat_energy_max_percent))){
+   const sat=set?.saturated_fat_g;
+   const energy=set?.energy_kcal;
+   if(sat===null||energy===null||sat===undefined||energy===undefined||!Number.isFinite(Number(sat))||!Number.isFinite(Number(energy))||Number(energy)<=0){
+     return {status:'needs_evidence',message:'This claim also requires verified saturated-fat and energy values to assess the ≤'+threshold.sat_energy_max_percent+'% energy-from-saturated-fat condition.'};
+   }
+   const fatFactor=Number(nutritionDb?.energy_factors_kcal_per_g?.fat||9);
+   const pct=(Number(sat)*fatFactor/Number(energy))*100;
+   const pctPass=pct<=Number(threshold.sat_energy_max_percent);
+   pass=pass&&pctPass;
+   checks.push('Energy from saturated fat: '+fmt(pct,2)+'% vs ≤ '+threshold.sat_energy_max_percent+'%');
+ }
+ if(Number.isFinite(Number(threshold.alternative_per_100kcal))){
+   const fibre=Number(value);
+   const energy=set?.energy_kcal;
+   if(Number.isFinite(Number(energy))&&Number(energy)>0){
+     const per100kcal=fibre/Number(energy)*100;
+     const altPass=per100kcal>=Number(threshold.alternative_per_100kcal);
+     pass=pass||altPass;
+     checks.push('Alternative basis: '+fmt(per100kcal,3)+' g/100 kcal vs ≥ '+threshold.alternative_per_100kcal);
+   }
+ }
+ if(rule.id==='trans_fat_free'){
+   const selected=normIngredient(claimSelectedProductName());
+   const mayBeOilFat=/\b(oil|fat|ghee|vanaspati|shortening|margarine)\b/.test(selected);
+   if(!pass&&mayBeOilFat&&rule.edible_oils_fats_exception){
+     return {status:'needs_evidence',message:'The ordinary-food threshold is not met, but Schedule I has a separate edible-oils/fats threshold. PMSV requires exact confirmation that this finished product falls under that exception before applying it.'};
+   }
+ }
+ return {status:pass?'pass':'fail',message:checks.join('<br>')};
+}
+function renderClaimsReference(){
+ const general=document.getElementById('claimsGeneralRules');
+ const manual=document.getElementById('claimsManualRules');
+ const prohibited=document.getElementById('claimsProhibitedRules');
+ if(general){
+   const rows=[
+     ...(claimsDb?.general_principles||[]).slice(0,8),
+     {clause:claimsDb?.comparative_claims?.clause||'Reg. 5',text:'Comparative claims require the correct comparator and minimum relative difference; PMSV does not infer a reference product.'},
+     {clause:'Reg. 6',text:'No-added-sugar, no-added-salt and no-additive claims require ingredient/process evidence in addition to the finished-product composition.'}
+   ];
+   general.innerHTML=rows.map(r=>'<div class="item"><b>'+esc(r.clause||'FSSAI')+'</b><small>'+esc(r.text||'')+'</small></div>').join('');
+ }
+ if(manual){
+   const schedule=(claimsDb?.schedule_i||[]).filter(r=>r.auto_evaluable!==true);
+   const words=claimsDb?.schedule_v||[];
+   manual.innerHTML=[
+     ...schedule.map(r=>'<div class="item"><b>'+esc(r.nutrient+' — '+r.claim)+'</b><small>' + esc(r.note||r.condition||'Additional evidence required.')+'</small></div>'),
+     ...words.map(r=>'<div class="item"><b>'+esc(r.term)+'</b><small>'+esc(r.summary||'Schedule V conditions apply.')+'</small></div>')
+   ].join('');
+ }
+ if(prohibited){
+   prohibited.innerHTML=(claimsDb?.prohibited_claims||[]).map(r=>'<div class="item"><b>'+esc(r.clause)+'</b><small>'+esc(r.text)+'</small></div>').join('');
+ }
+}
+function renderClaims(){
+ const status=document.getElementById('claimsDbStatus');
+ const select=document.getElementById('claimType');
+ if(select&&claimsDb){
+   const current=select.value;
+   select.innerHTML='<option value="">Select claim</option>'+(claimsDb.schedule_i||[]).map(r=>'<option value="'+esc(r.id)+'">'+esc(r.nutrient+' — '+r.claim)+(r.auto_evaluable===true?'':' · needs evidence')+'</option>').join('');
+   if([...select.options].some(o=>o.value===current))select.value=current;
+ }
+ if(status){
+   if(claimsDb){
+     const auto=(claimsDb.schedule_i||[]).filter(r=>r.auto_evaluable===true).length;
+     status.className='notice oknote';
+     status.innerHTML='<b>Advertising & Claims database loaded · no AI.</b><br>FSSAI '+esc(claimsDb.current_source?.compendium_version||'current compendium')+' is loaded. '+auto+' Schedule-I claim rules have deterministic numeric checks; evidence-dependent claims remain fail-closed.';
+   }else{
+     status.className='notice';
+     status.innerHTML='<b>Claims database unavailable.</b> PMSV will not approve claims from fallback assumptions.';
+   }
+ }
+ renderClaimsReference();
+}
+async function loadClaimsDb(){
+ const status=document.getElementById('claimsDbStatus');
+ try{
+   const res=await fetch('./data/rules/advertising-claims-v4-core.json?v=379',{cache:'reload'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   claimsDb=await res.json();
+ }catch(e){
+   claimsDb=null;
+ }
+ renderClaims();
+}
+function runClaimEvaluation(){
+ const box=document.getElementById('claimCheckResult');
+ if(!box)return;
+ const rule=claimRuleById(document.getElementById('claimType')?.value||'');
+ const basis=document.getElementById('claimBasis')?.value||'solid';
+ if(!claimsDb){
+   box.className='notice';
+   box.innerHTML='<b>Cannot evaluate:</b> Claims database is not loaded.';
+   return;
+ }
+ if(!rule){
+   box.className='notice';
+   box.innerHTML='Select a claim to assess it against the current formulation.';
+   return;
+ }
+ const result=evaluateNutrientClaim(rule,basis);
+ if(result.status==='pass'){
+   box.className='notice oknote';
+   box.innerHTML='<b>Schedule I numeric condition met.</b><br>'+result.message+'<br><small>This is not final legal approval of the claim. General principles, wording, substantiation and any product-specific rules still apply.</small>';
+ }else if(result.status==='fail'){
+   box.className='notice';
+   box.innerHTML='<b>Schedule I numeric condition NOT met.</b><br>'+result.message;
+ }else{
+   box.className='notice';
+   box.innerHTML='<b>Needs evidence / cannot auto-approve.</b><br>'+esc(result.message);
+ }
+}
+
 async function loadLabelDb(){
  const status=document.getElementById('labelDbStatus');
  try{
@@ -4468,6 +4665,7 @@ loadContaminantsDb();
 loadMicrobiologyDb();
 loadNutritionDb();
 loadLabelDb();
+loadClaimsDb();
 
 const dailyLimits=[
  {name:'Taurine',daily:2000},
@@ -4492,6 +4690,9 @@ function renderConversions(){
 }
 document.getElementById('packSize')?.addEventListener('input',renderConversions);
 document.getElementById('density')?.addEventListener('input',renderConversions);
+document.getElementById('evaluateClaim')?.addEventListener('click',runClaimEvaluation);
+document.getElementById('claimType')?.addEventListener('change',runClaimEvaluation);
+document.getElementById('claimBasis')?.addEventListener('change',runClaimEvaluation);
 renderConversions();
 
 
