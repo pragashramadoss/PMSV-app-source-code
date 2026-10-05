@@ -1853,6 +1853,29 @@ function labelSpecificMannerRules(productName){
    return (rule.eligible_product_terms||[]).some(term=>n.includes(normIngredient(term)));
  });
 }
+function labelBreadFlourBasisItems(){
+ return formulationIngredients.filter(item=>{
+   const n=normIngredient(item.name);
+   return n==='atta'||n==='maida'||n.includes('flour');
+ });
+}
+function labelBreadAutoCalculation(rule){
+ const cfg=rule?.auto_calculation;
+ if(!cfg||rule.rule_type!=='conditional_numeric')return null;
+ const basisItems=labelBreadFlourBasisItems();
+ const basisKg=basisItems.reduce((sum,item)=>sum+qtyToKg(item.qty,item.unit),0);
+ if(!(basisKg>0))return null;
+ const aliases=new Set((cfg.numerator_aliases||[]).map(normIngredient));
+ const numeratorItems=formulationIngredients.filter(item=>aliases.has(normIngredient(item.name)));
+ if(!numeratorItems.length)return null;
+ const numeratorKg=numeratorItems.reduce((sum,item)=>sum+qtyToKg(item.qty,item.unit),0);
+ const value=(numeratorKg/basisKg)*100;
+ const ui=rule.qualifier_ui||{};
+ const threshold=Number(ui.threshold);
+ const op=ui.operator||'>=';
+ const triggered=op==='>'?value>threshold:op==='<'?value<threshold:op==='<='?value<=threshold:value>=threshold;
+ return {status:triggered?'triggered':'not_triggered',triggered,value,auto:true,basisKg,numeratorKg,basisItems,numeratorItems};
+}
 function labelSpecificMannerAssessments(productName,rules,qualifierAssessments){
  const qmap=new Map((qualifierAssessments||[]).map(x=>[x.rule.id,x]));
  return (rules||[]).map(rule=>{
@@ -1863,6 +1886,8 @@ function labelSpecificMannerAssessments(productName,rules,qualifierAssessments){
      return {rule,status:matched.length?'triggered':'not_triggered',triggered:matched.length>0,matched};
    }
    if(rule.rule_type==='conditional_numeric'||rule.rule_type==='conditional_boolean'){
+     const auto=labelBreadAutoCalculation(rule);
+     if(auto)return {rule,...auto,matched:auto.numeratorItems||[],qualifier:null};
      const q=qmap.get(rule.id);
      return {rule,status:q?.status||'unanswered',triggered:!!q?.triggered,matched:[],qualifier:q||null};
    }
@@ -1934,7 +1959,7 @@ function renderLabelRequirements(){
  const articleCandidates=labelArticleRuleCandidates(selectedName);
  const universalProcessRules=labelUniversalProcessRules();
  const specificMannerRules=labelSpecificMannerRules(selectedName);
- const specificQualifierCandidates=specificMannerRules.filter(rule=>rule.qualifier_ui).map(rule=>({...rule,qualifier_ui_status:'active'}));
+ const specificQualifierCandidates=specificMannerRules.filter(rule=>rule.qualifier_ui&&!labelBreadAutoCalculation(rule)).map(rule=>({...rule,qualifier_ui_status:'active'}));
  const qualifierCandidates=[...articleCandidates,...universalProcessRules,...specificQualifierCandidates];
  const articleAssessments=renderLabelArticleQualifierControls(qualifierCandidates,selectedName||'__global__');
  if(conditionalArticleStatus){
@@ -1958,8 +1983,8 @@ function renderLabelRequirements(){
    specificMannerStatus.classList.toggle('hidden',specificMannerAssessments.length===0);
    if(specificMannerAssessments.length){
      const lines=specificMannerAssessments.map(x=>{
-       if(x.triggered)return '• <b>APPLIES:</b> '+esc(x.rule.requirement_summary)+(x.matched?.length?'<br><small>Detected: '+x.matched.map(m=>esc(m.name)).join(', ')+'</small>':'');
-       if(x.status==='not_triggered')return '• <b>Not triggered:</b> '+esc(x.rule.requirement_summary);
+       if(x.triggered)return '• <b>APPLIES:</b> '+esc(x.rule.requirement_summary)+(x.auto?'<br><small>Calculated from formulation: '+fmt(x.value,2)+'% of flour basis.</small>':(x.matched?.length?'<br><small>Detected: '+x.matched.map(m=>esc(m.name)).join(', ')+'</small>':''));
+       if(x.status==='not_triggered')return '• <b>Not triggered:</b> '+esc(x.rule.requirement_summary)+(x.auto?'<br><small>Calculated from formulation: '+fmt(x.value,2)+'% of flour basis.</small>':'');
        return '• <b>Locked pending condition:</b> '+esc(x.rule.requirement_summary);
      });
      specificMannerStatus.className=specificMannerAssessments.some(x=>x.triggered)?'notice oknote':'notice';
@@ -2030,7 +2055,7 @@ function renderLabelRequirements(){
 
    const specificTriggered=specificMannerAssessments.filter(x=>x.triggered);
    if(specificTriggered.length){
-     blocks.push('<div class="item"><b>Specific manner-of-labelling requirements</b><small>'+specificTriggered.map(x=>'• <b>'+esc(x.rule.requirement_summary)+'</b>'+(x.matched?.length?'<br>Detected: '+x.matched.map(m=>esc(m.name)).join(', '):'')).join('<br><br>')+'</small></div>');
+     blocks.push('<div class="item"><b>Specific manner-of-labelling requirements</b><small>'+specificTriggered.map(x=>'• <b>'+esc(x.rule.requirement_summary)+'</b>'+(x.auto?'<br>Calculated: '+fmt(x.value,2)+'% of flour basis':(x.matched?.length?'<br>Detected: '+x.matched.map(m=>esc(m.name)).join(', '):''))).join('<br><br>')+'</small></div>');
    }
 
    const presenceChecks=labelScheduleIiPresenceAssessments();
@@ -4308,7 +4333,7 @@ function labelProductRuleFor(name){
 async function loadLabelDb(){
  const status=document.getElementById('labelDbStatus');
  try{
-   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=373',{cache:'reload'});
+   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=375',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    labelDb=await res.json();
    if(status){
