@@ -742,6 +742,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   </div>
 </div>
 <div id="packagingMaterialStandards" class="notice">Select the food-contact material family to see the applicable Schedule I–III standards.</div>
+<div id="packagingStandardControls"></div>
 <div id="packagingSpecialControls" class="hidden"></div>
 <div class="flow-actions"><button class="btn" type="button" id="evaluatePackaging">Evaluate packaging</button></div>
 <div id="packagingAssessment" class="notice">Complete the packaging questions, then evaluate.</div>
@@ -5018,6 +5019,14 @@ function packagingMaterialStandardRows(family){
  if(family==='multilayer')return [];
  return [];
 }
+function packagingEffectiveContactFamily(){
+ const family=document.getElementById('packagingMaterialFamily')?.value||'';
+ if(family!=='multilayer')return family;
+ return document.getElementById('packagingContactLayerFamily')?.value||'';
+}
+function packagingStandardsForEffectiveLayer(){
+ return packagingMaterialStandardRows(packagingEffectiveContactFamily());
+}
 function renderPackagingMigrationRows(){
  const body=document.getElementById('packagingMigrationRows');
  if(!body||!packagingDb)return;
@@ -5068,13 +5077,39 @@ function renderPackaging(){
    if(family==='glass'){
      standards.innerHTML='<b>Glass · Reg. 4(2)</b><br>Check visible defects, smooth surface, absence of cracks/pinholes/sharp edges and sealing-surface integrity.';
    }else if(family==='multilayer'){
-     standards.innerHTML='<b>Multilayer/composite · Reg. 3(12)</b><br>The food-contact or likely-food-contact layer must meet the applicable Schedule I, II or III requirements. Select and verify the actual contact-layer material in your conformity evidence.';
+     standards.innerHTML='<b>Multilayer/composite · Reg. 3(12)</b><br>The food-contact or likely-food-contact layer must meet the applicable Schedule I, II or III requirements. Select and verify the actual contact-layer material below.';
    }else{
      const rows=packagingMaterialStandardRows(family);
      standards.innerHTML=rows.length
        ? '<b>Applicable listed Indian Standards:</b><br>'+rows.map(r=>'• '+esc(r.material)+' — <b>'+esc(r.standard)+'</b>').join('<br>')
        : 'Select the food-contact material family to see the applicable Schedule I–III standards.';
    }
+ }
+ const stdControls=document.getElementById('packagingStandardControls');
+ if(stdControls){
+   const oldContact=document.getElementById('packagingContactLayerFamily')?.value||'';
+   const oldStd=document.getElementById('packagingStandardSelect')?.value||'';
+   const oldConform=document.getElementById('packagingStandardConforms')?.value||'';
+   const oldPhysical=document.getElementById('packagingPhysicalCondition')?.value||'';
+   let effective=family==='multilayer'?oldContact:family;
+   let html='';
+   if(family==='multilayer'){
+     html+='<div class="field"><label>Actual food-contact / likely-food-contact layer</label><select id="packagingContactLayerFamily"><option value="">Select contact layer</option><option value="paper_board"'+(oldContact==='paper_board'?' selected':'')+'>Paper / paperboard</option><option value="glass"'+(oldContact==='glass'?' selected':'')+'>Glass</option><option value="metal"'+(oldContact==='metal'?' selected':'')+'>Metal / metal alloy</option><option value="plastic"'+(oldContact==='plastic'?' selected':'')+'>Plastic</option></select><small>Reg. 3(12): this contact layer must meet the applicable Schedule I–III requirement.</small></div>';
+   }
+   const rows=packagingMaterialStandardRows(effective);
+   if(rows.length){
+     html+='<div class="checker-grid"><div class="field"><label>Applicable Indian Standard for the contact layer</label><select id="packagingStandardSelect"><option value="">Select exact standard</option>'+rows.map(r=>'<option value="'+esc(r.standard)+'"'+(oldStd===r.standard?' selected':'')+'>'+esc(r.standard)+' — '+esc(r.material)+'</option>').join('')+'</select></div>'
+       +'<div class="field"><label>Does the packaging material conform to that selected standard?</label><select id="packagingStandardConforms"><option value="">Not answered</option><option value="yes"'+(oldConform==='yes'?' selected':'')+'>Yes</option><option value="no"'+(oldConform==='no'?' selected':'')+'>No</option></select></div></div>';
+   }
+   if(effective==='paper_board'){
+     html+='<div class="field"><label>Paper/board uniform, food grade, free from contaminants and required visible defects?</label><select id="packagingPhysicalCondition"><option value="">Not answered</option><option value="yes"'+(oldPhysical==='yes'?' selected':'')+'>Yes</option><option value="no"'+(oldPhysical==='no'?' selected':'')+'>No</option></select></div>';
+   }else if(effective==='glass'){
+     html+='<div class="field"><label>Glass surface/sealing area acceptable: no cracks, pinholes, sharp edges or disqualifying defects?</label><select id="packagingPhysicalCondition"><option value="">Not answered</option><option value="yes"'+(oldPhysical==='yes'?' selected':'')+'>Yes</option><option value="no"'+(oldPhysical==='no'?' selected':'')+'>No</option></select></div>';
+   }else if(effective==='metal'){
+     html+='<div class="field"><label>Metal container free from prohibited conditions (rust; chipped/rusty enamel; untinned copper/brass)?</label><select id="packagingPhysicalCondition"><option value="">Not answered</option><option value="yes"'+(oldPhysical==='yes'?' selected':'')+'>Yes</option><option value="no"'+(oldPhysical==='no'?' selected':'')+'>No</option></select></div>';
+   }
+   stdControls.innerHTML=html?'<div class="notice"><b>Exact food-contact layer verification</b></div><div class="checker-grid">'+html+'</div>':'';
+   document.getElementById('packagingContactLayerFamily')?.addEventListener('change',renderPackaging);
  }
  const special=document.getElementById('packagingSpecialControls');
  if(special){
@@ -5151,6 +5186,29 @@ function evaluatePackaging(){
  const family=document.getElementById('packagingMaterialFamily')?.value||'';
 
  if(!family)missing.push('Food-contact material family');
+ const effectiveFamily=packagingEffectiveContactFamily();
+ if(family==='multilayer'&&!effectiveFamily)missing.push('Actual food-contact layer family for multilayer packaging');
+ const stdRows=packagingStandardsForEffectiveLayer();
+ if(stdRows.length){
+   const std=document.getElementById('packagingStandardSelect')?.value||'';
+   const conforms=document.getElementById('packagingStandardConforms')?.value||'';
+   if(!std)missing.push('Applicable Indian Standard for food-contact layer');
+   if(conforms==='no')fails.push('Food-contact packaging material is not confirmed to conform to the selected Indian Standard.');
+   else if(conforms!=='yes')missing.push('Conformity to selected Indian Standard');
+   else if(std)passes.push('Material-standard conformity · '+std);
+ }
+ if(['paper_board','glass','metal'].includes(effectiveFamily)){
+   const physical=document.getElementById('packagingPhysicalCondition')?.value||'';
+   if(physical==='no'){
+     const msg=effectiveFamily==='paper_board'
+       ? 'Paper/board physical/food-grade condition does not meet the loaded Reg. 4(1) checks.'
+       : effectiveFamily==='glass'
+         ? 'Glass container condition does not meet the loaded Reg. 4(2) checks.'
+         : 'Metal container has a prohibited/unsuitable condition under Reg. 4(3).';
+     fails.push(msg);
+   }else if(physical!=='yes')missing.push('Material-specific physical condition check');
+   else passes.push('Material-specific physical condition gate');
+ }
  if(!direct)missing.push('Direct-contact status');
  if(direct==='yes'){
    if(coc==='no')fails.push('NABL-accredited certificate of conformity is required for food-contact / likely-food-contact packaging.');
@@ -5178,7 +5236,7 @@ function evaluatePackaging(){
    else passes.push('FCM-rPET authorisation gate');
  }
 
- if(family==='plastic'){
+ if(effectiveFamily==='plastic'){
    const mgkgRaw=document.getElementById('packagingOverallMgKg')?.value??'';
    const mgdmRaw=document.getElementById('packagingOverallMgDm2')?.value??'';
    const mgkg=mgkgRaw===''?null:Number(mgkgRaw);
