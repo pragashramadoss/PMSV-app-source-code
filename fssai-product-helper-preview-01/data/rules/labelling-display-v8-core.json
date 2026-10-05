@@ -1,0 +1,164 @@
+{
+  "schema_version": "1.0",
+  "database_id": "pmsv-fssai-labelling-display-core",
+  "title": "PMSV FSSAI Labelling & Display Rule Core",
+  "last_verified": "2026-10-05",
+  "runtime_ai_required": false,
+  "source_policy": {
+    "regulatory_evidence": "FSSAI official sources only",
+    "allowed_hosts": [
+      "fssai.gov.in",
+      "www.fssai.gov.in"
+    ],
+    "fail_closed_rule": "A product-specific label declaration is shown only when an exact verified product rule is loaded. Similar product names are not used to infer warnings or declarations."
+  },
+  "current_source": {
+    "authority": "Food Safety and Standards Authority of India",
+    "title": "Food Safety and Standards (Labelling and Display) Regulations, 2020 — Compendium Version VIII (09.09.2025)",
+    "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Comp_Labelling%20Display_Version%20VIII_09_09_2025.pdf",
+    "status": "current_effective_base"
+  },
+  "future_amendment": {
+    "title": "Food Safety and Standards (Labelling and Display) First Amendment Regulations, 2026",
+    "notification_date": "2026-03-24",
+    "effective_date": "2027-07-01",
+    "url": "https://www.fssai.gov.in/upload/notifications/2026/04/69cca2b3f3ce9Notification%20dt%2024.03.2026_NRC.pdf",
+    "runtime_status": "future_not_active",
+    "rule": "Do not apply the 2026 amendment before 1 July 2027."
+  },
+  "general_prepackaged_rules": [
+    {
+      "id": "name_of_food",
+      "clause": "5(1)",
+      "title": "Name of the food",
+      "scope": "prepackaged_food"
+    },
+    {
+      "id": "ingredients",
+      "clause": "5(2)",
+      "title": "List of ingredients",
+      "scope": "prepackaged_food"
+    },
+    {
+      "id": "nutrition",
+      "clause": "5(3)",
+      "title": "Nutritional information",
+      "scope": "prepackaged_food"
+    },
+    {
+      "id": "veg_nonveg",
+      "clause": "5(4)",
+      "title": "Veg / Non-Veg declaration",
+      "scope": "prepackaged_food"
+    },
+    {
+      "id": "food_additives",
+      "clause": "5(5)",
+      "title": "Declaration regarding food additives",
+      "scope": "prepackaged_food"
+    },
+    {
+      "id": "brand_owner",
+      "clause": "5(6)",
+      "title": "Name and complete address",
+      "scope": "prepackaged_food"
+    },
+    {
+      "id": "fssai_logo_licence",
+      "clause": "5(7)",
+      "title": "FSSAI logo and licence number",
+      "scope": "prepackaged_food"
+    },
+    {
+      "id": "net_quantity_mrp_consumer_care",
+      "clause": "5(8)",
+      "title": "Net quantity, retail sale price and consumer care",
+      "scope": "prepackaged_food"
+    },
+    {
+      "id": "lot_batch",
+      "clause": "5(9)",
+      "title": "Lot / code / batch identification",
+      "scope": "prepackaged_food"
+    },
+    {
+      "id": "date_marking",
+      "clause": "5(10)",
+      "title": "Date marking",
+      "scope": "prepackaged_food"
+    },
+    {
+      "id": "country_origin",
+      "clause": "5(11)-5(12)",
+      "title": "Country of origin / import declarations",
+      "scope": "imported_food_conditional"
+    },
+    {
+      "id": "instructions",
+      "clause": "5(13)",
+      "title": "Instructions for use",
+      "scope": "conditional"
+    },
+    {
+      "id": "allergens",
+      "clause": "5(14)",
+      "title": "Allergen declaration",
+      "scope": "conditional"
+    },
+    {
+      "id": "schedule_ii",
+      "clause": "7 + Schedule II",
+      "title": "Mandatory Schedule-II declarations",
+      "scope": "ingredient_or_product_triggered"
+    }
+  ],
+  "presentation_rules": [
+    {
+      "id": "general_presentation",
+      "clause": "4",
+      "title": "General presentation, legibility and language"
+    },
+    {
+      "id": "schedule_ii_lettering",
+      "clause": "7",
+      "title": "Schedule-II presentation and lettering"
+    },
+    {
+      "id": "exemptions",
+      "clause": "8",
+      "title": "Exemptions from certain labelling requirements"
+    }
+  ],
+  "product_specific_rules": [
+    {
+      "id": "caffeinated_beverage",
+      "exact_names": [
+        "Caffeinated Beverage"
+      ],
+      "source": "Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011",
+      "clause": "2.10.6(2)",
+      "status": "active",
+      "declarations": [
+        {
+          "id": "high_caffeine",
+          "type": "calculated",
+          "text_template": "High Caffeine: X mg/serving size",
+          "requires": [
+            "caffeine",
+            "serving_size"
+          ]
+        },
+        {
+          "id": "caffeine_caution",
+          "type": "fixed",
+          "text": "Not recommended for children, pregnant or lactating women, persons sensitive to caffeine."
+        },
+        {
+          "id": "daily_consumption",
+          "type": "fixed",
+          "text": "Consume not more than 500 ml per day"
+        }
+      ]
+    }
+  ]
+}
