@@ -936,6 +936,358 @@
         "status": "active"
       }
     ],
-    "bread_section_status": "next_module"
+    "bread_section_status": "structured_19_rows_with_flour_basis_thresholds",
+    "bread_rules": [
+      {
+        "id": "whole_wheat_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "whole wheat bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is whole wheat flour (Atta)?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 75
+        },
+        "requirement_summary": "Whole Wheat Bread requires whole wheat flour (Atta) at not less than 75% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "wheat_brown_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "wheat bread",
+          "brown bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is whole wheat flour (Atta)?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 50
+        },
+        "requirement_summary": "Wheat Bread / Brown Bread requires whole wheat flour (Atta) at not less than 50% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "white_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "white bread"
+        ],
+        "rule_type": "always",
+        "basis": "nomenclature",
+        "requirement_summary": "White Bread is the nomenclature row associated with refined wheat flour (Maida); the table specifies no minimum specialty-ingredient percentage.",
+        "status": "active"
+      },
+      {
+        "id": "multigrain_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "multigrain bread",
+          "multi grain bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is made up of permitted grains other than wheat?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 20
+        },
+        "requirement_summary": "Multigrain Bread requires at least 20% permitted grains other than wheat on the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "milk_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "milk bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is milk solids?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 6
+        },
+        "requirement_summary": "Milk Bread requires milk solids at not less than 6% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "honey_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "honey bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is honey?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 5
+        },
+        "requirement_summary": "Honey Bread requires honey at not less than 5% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "cheese_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "cheese bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is cheese?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 10
+        },
+        "requirement_summary": "Cheese Bread requires cheese at not less than 10% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "oatmeal_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "oatmeal bread",
+          "oat meal bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is oats?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 15
+        },
+        "requirement_summary": "Oatmeal Bread requires oats at not less than 15% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "cracked_wheat_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "cracked wheat bread",
+          "dhalia bread",
+          "dalia bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is cracked wheat / Dhalia?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 15
+        },
+        "requirement_summary": "Cracked Wheat / Dhalia Bread requires cracked wheat / Dhalia at not less than 15% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "wheat_germ_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "bread with wheat germ",
+          "wheat germ bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is wheat germ?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 2
+        },
+        "requirement_summary": "Bread with Wheat Germ requires wheat germ at not less than 2% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "egg_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "egg bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is edible whole egg solids?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 1.5
+        },
+        "requirement_summary": "Egg Bread requires edible whole egg solids at not less than 1.5% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "fruit_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "fruit bread",
+          "fruit loaf"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is candied fruit?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 10
+        },
+        "requirement_summary": "Fruit Bread / Loaf requires candied fruit at not less than 10% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "triticale_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "triticale bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is triticale flour?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 20
+        },
+        "requirement_summary": "Triticale Bread requires triticale flour at not less than 20% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "rye_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "rye bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is rye flour?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 20
+        },
+        "requirement_summary": "Rye Bread requires rye flour at not less than 20% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "raisin_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "raisin bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is raisins?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 10
+        },
+        "requirement_summary": "Raisin Bread requires raisins at not less than 10% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "bran_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "bran bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is edible bran?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 5
+        },
+        "requirement_summary": "Bran Bread requires edible bran at not less than 5% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "protein_enriched_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "protein enriched bread",
+          "protein prachur bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is edible protein?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 15
+        },
+        "requirement_summary": "Protein-enriched / Protein Prachur Bread requires edible protein at not less than 15% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "flavoured_specialty_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "garlic bread",
+          "masala bread",
+          "oregano bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is the named specialty ingredient (for example garlic, masala or oregano)?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 2
+        },
+        "requirement_summary": "Garlic / Masala / Oregano and similar named specialty breads require the named specialty ingredient at not less than 2% of the flour basis.",
+        "status": "active"
+      },
+      {
+        "id": "seed_bread",
+        "section": "2.6",
+        "eligible_product_terms": [
+          "bread with seeds",
+          "seed bread",
+          "flax seed bread",
+          "sesame seed bread",
+          "pumpkin seed bread"
+        ],
+        "rule_type": "conditional_numeric",
+        "basis": "percent_of_flour_basis",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage of the flour basis is the named seed ingredient?",
+          "unit": "% of flour basis",
+          "operator": ">=",
+          "threshold": 5
+        },
+        "requirement_summary": "Bread with seeds such as flax, sesame or pumpkin seeds requires the named seed ingredient at not less than 5% of the flour basis.",
+        "status": "active"
+      }
+    ],
+    "bread_source_note": "Specialty-ingredient percentages are assessed on a 100 g flour basis, as specified in Schedule II section 2.6."
   }
 }
