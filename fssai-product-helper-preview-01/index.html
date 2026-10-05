@@ -1715,19 +1715,16 @@ function labelScheduleIiThresholdAssessments(){
  });
 }
 function labelSweetenerTriggers(){
+ const map=labelDb?.schedule_ii?.sweetener_rules?.exact_alias_types||{};
  const out=[];
  formulationIngredients.forEach(item=>{
    const n=normIngredient(item.name);
-   let type='';
-   if(/aspartame-acesulfame|aspartame acesulfame/.test(n))type='aspartame_acesulfame';
-   else if(/\baspartame\b/.test(n))type='aspartame';
-   else if(/acesulfame|ace[- ]?k/.test(n))type='acesulfame';
-   else if(/saccharin/.test(n))type='saccharin';
-   else if(/sucralose/.test(n))type='sucralose';
-   else if(/neotame/.test(n))type='neotame';
-   else if(/steviol|stevia/.test(n))type='steviol';
-   else if(/\b(sorbitol|mannitol|xylitol|maltitol|lactitol|isomalt|erythritol|polyol)\b/.test(n))type='polyol';
-   if(type)out.push({name:item.name,type});
+   for(const [type,aliases] of Object.entries(map)){
+     if((aliases||[]).some(alias=>normIngredient(alias)===n)){
+       out.push({name:item.name,type});
+       break;
+     }
+   }
  });
  return out;
 }
@@ -1799,14 +1796,12 @@ function renderLabelRequirements(){
      const names=sweeteners.map(s=>s.name);
      let text='Schedule-II declaration triggered: <b>This contains '+names.map(esc).join(', ')+'</b>. ';
      if(sweeteners.length>1)text+='Because more than one sweetener is present, the mixture-of-sweeteners declaration and the individual applicable warnings must also be carried. ';
+     const summaries=labelDb?.schedule_ii?.sweetener_rules?.individual_warning_summaries||{};
      sweeteners.forEach(s=>{
-       if(s.type==='aspartame')text+='<br>• Aspartame: prescribed warning for phenylketonurics, children with seizure disorders, and pregnant/lactating mothers.';
-       if(s.type==='acesulfame')text+='<br>• Acesulfame potassium: prescribed warning for children and pregnant/lactating mothers.';
-       if(s.type==='aspartame_acesulfame')text+='<br>• Aspartame-Acesulfame salt: prescribed warning for phenylketonurics, children and pregnant/lactating mothers.';
-       if(s.type==='saccharin')text+='<br>• Saccharin: prescribed “Not recommended for children” warning.';
-       if(s.type==='polyol')text+='<br>• Polyol: the sweetener declaration applies; the separate 10% polyol/sorbitol threshold warning is assessed from the formulation percentage below.';
+       const summary=summaries[s.type];
+       if(summary)text+='<br>• '+esc(s.name)+': '+esc(summary);
      });
-     text+='<br>Also check the prescribed <b>CONTAINS NON-CALORIC SWEETENER</b> declaration where applicable.';
+     if(labelDb?.schedule_ii?.sweetener_rules?.non_caloric_sweetener_declaration)text+='<br>Also apply the prescribed non-caloric-sweetener declaration where the selected sweetener and food permission require it.';
      blocks.push('<div class="item"><b>Sweetener-specific mandatory declarations</b><small>'+text+'</small></div>');
    }else{
      blocks.push('<div class="item"><b>Sweetener-specific declarations</b><small>No Schedule-II sweetener trigger has been detected from the current ingredient names.</small></div>');
