@@ -3830,10 +3830,30 @@ function renderMasterComplianceSummary(){
  }
 
  const proc=Array.isArray(selectedProcesses)?selectedProcesses:[];
- if(!proc.length){
+ if(!appendixCDb){
+   rows.push(masterComplianceRow('Processing aids','incomplete','Appendix C processing-aid database is not loaded.','processing'));
+ }else if(!proc.length){
    rows.push(masterComplianceRow('Processing aids','evidence','No Appendix C processing-aid process is selected. Final process review must confirm that no processing aid was used.','processing'));
  }else{
-   rows.push(masterComplianceRow('Processing aids','incomplete',proc.length+' manufacturing process route'+(proc.length===1?' is':'s are')+' selected. Review the exact Appendix C aid/qualifier results before release.','processing'));
+   const processIssues=[];
+   if(proc.includes('enzyme')){
+     const nonGmm=table11RuntimeEnzymes().find(x=>x.id===selectedEnzyme?.id);
+     const gmm=table11aEntries().find(x=>x.sequence===selectedGmmEnzyme?.sequence);
+     const gmmVariant=gmm&&Number.isInteger(selectedGmmEnzyme?.variantIndex)?gmm.variants?.[selectedGmmEnzyme.variantIndex]:null;
+     if(!(nonGmm&&selectedEnzyme?.source)&&!gmmVariant)processIssues.push('enzyme/source or GMM enzyme variant');
+   }
+   if(proc.includes('contact_freezing')){
+     const pp=selectedCatalogProductForProcessing();
+     if(pp?.id==='01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-'&&String(processingQualifiers.contact_freezing_product_form||'')!=='ice_cream'){
+       processIssues.push('exact Ice Cream finished-form qualifier for contact freezing');
+     }
+   }
+   const mapped=processingAidRules.filter(x=>proc.includes(x.process)&&processingAidRuleAutoApplicable(x)).length;
+   if(processIssues.length){
+     rows.push(masterComplianceRow('Processing aids','incomplete','Selected process route(s) still need: '+processIssues.join(', ')+'.','processing'));
+   }else{
+     rows.push(masterComplianceRow('Processing aids','evidence',proc.length+' process route'+(proc.length===1?' is':'s are')+' selected and '+mapped+' currently applicable Appendix C permission row'+(mapped===1?' is':'s are')+' mapped. Confirm the actual aid used, its source/qualifier and residue/usage evidence before QA release.','processing'));
+   }
  }
 
  const pack=masterResultState('packagingAssessment');
@@ -3862,7 +3882,7 @@ function renderMasterComplianceSummary(){
 
  const labels={pass:'PASS / MAPPED',fail:'BLOCKED',incomplete:'INCOMPLETE',evidence:'QA EVIDENCE'};
  const classes={pass:'status-good',fail:'status-bad',incomplete:'status-warn',evidence:'status-warn'};
- body.innerHTML=rows.map(r=>'<tr><td><b>'+esc(r.module)+'</b></td><td><span class="'+r.cls+'"><b>'+labels[r.status]+'</b></span></td><td>'+r.detail+'</td><td><button class="btn-secondary" type="button" data-summary-tab="'+esc(r.tab)+'">Open module</button></td></tr>').join('');
+ body.innerHTML=rows.map(r=>'<tr><td><b>'+esc(r.module)+'</b></td><td><span class="'+r.cls+'"><b>'+labels[r.status]+'</b></span></td><td>'+esc(r.detail)+'</td><td><button class="btn-secondary" type="button" data-summary-tab="'+esc(r.tab)+'">Open module</button></td></tr>').join('');
  body.querySelectorAll('[data-summary-tab]').forEach(btn=>btn.addEventListener('click',()=>openTab(btn.dataset.summaryTab,{updateHash:true,save:true})));
 
  const failed=rows.filter(r=>r.status==='fail');
