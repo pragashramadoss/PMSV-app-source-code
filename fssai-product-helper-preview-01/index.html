@@ -4285,6 +4285,45 @@ document.getElementById('clearProprietaryRoute')?.addEventListener('click',()=>{
  const o=document.getElementById('proprietaryRouteResult');if(o){o.classList.add('hidden');o.innerHTML='';}
 });
 
+function chapterRuleDisplayRows(standard){
+ const fields=[
+   ['composition','Composition'],
+   ['common_composition','Common composition'],
+   ['whole_composition','Whole-product composition'],
+   ['powder_composition','Powder composition'],
+   ['composition_rules','Composition rule'],
+   ['formulation_rules','Formulation rule']
+ ];
+ const rows=[];
+ fields.forEach(([field,label])=>{
+   const value=standard?.[field];
+   const list=Array.isArray(value)?value:(value?[value]:[]);
+   list.forEach(rule=>{
+     if(rule&&typeof rule==='object'){
+       const parameter=rule.parameter||rule.name||label;
+       let requirement='';
+       if(rule.operator!==undefined&&rule.value!==undefined)requirement=String(rule.operator)+' '+String(rule.value)+(rule.unit?' '+String(rule.unit):'');
+       else if(rule.min!==undefined||rule.max!==undefined){
+         const bits=[];
+         if(rule.min!==undefined)bits.push('Min '+rule.min+(rule.unit?' '+rule.unit:''));
+         if(rule.max!==undefined)bits.push('Max '+rule.max+(rule.unit?' '+rule.unit:''));
+         requirement=bits.join(' · ');
+       }else requirement=rule.text||rule.requirement||rule.condition||JSON.stringify(rule);
+       rows.push({section:label,parameter,requirement,condition:rule.condition||''});
+     }else if(typeof rule==='string'){
+       rows.push({section:label,parameter:label,requirement:rule,condition:''});
+     }
+   });
+ });
+ return rows;
+}
+function chapterStandardIngredientSections(standard){
+ const explicit=ingredientStringsFromStandard(standard);
+ const groups=Array.isArray(standard?.permitted_ingredient_groups)?standard.permitted_ingredient_groups:[];
+ const conditional=Array.isArray(standard?.conditional_ingredients)?standard.conditional_ingredients:[];
+ const rules=Array.isArray(standard?.permitted_ingredient_rules)?standard.permitted_ingredient_rules:[];
+ return {explicit,groups,conditional,rules};
+}
 function renderLegacyProductScopePages(){
  const product=selectedProductForFortification();
  const profile=currentProductProfile();
@@ -4293,6 +4332,7 @@ function renderLegacyProductScopePages(){
  const fssr=product?.fssr||profile?.fssr||profile?.rule_key||'Not shown in loaded product profile';
  const fcs=appendixFcsForRecord(product)||appendixFcsForRecord(profile);
  const status=profile?.status||'profile_unavailable';
+ const standards=currentChapterStandards();
  const standardDynamic=document.getElementById('selectedProductStandardContent');
  const standardLegacy=document.getElementById('caffeinatedStandardContent');
  const ingredientDynamic=document.getElementById('selectedProductIngredientsContent');
@@ -4311,13 +4351,33 @@ function renderLegacyProductScopePages(){
      const linked=Array.isArray(profile.linked_rule_keys)?profile.linked_rule_keys:[];
      const ready=status==='rule_profile_ready';
      const chapter=status==='chapter_profile_ready';
-     standardDynamic.innerHTML='<div class="card"><div class="section-title"><h2>'+esc(name)+'</h2><span>Selected FSSAI product profile</span></div>'
+     let html='<div class="card"><div class="section-title"><h2>'+esc(name)+'</h2><span>Selected FSSAI product profile</span></div>'
        +'<div class="grid2"><div class="item"><b>FSSAI standard / route</b><small>'+esc(fssr)+'</small></div>'
        +'<div class="item"><b>Appendix A FCS</b><small>'+(fcs?esc(fcs):'<span class="status-warn">No safe FCS mapping loaded</span>')+'</small></div>'
        +'<div class="item"><b>Machine-validation status</b><small>'+(ready?'<span class="status-good">Detailed rule profile complete</span>':chapter?'<span class="status-warn">Chapter profile loaded; detailed formulation validation still locked</span>':'<span class="status-warn">Base profile only; detailed formulation validation locked</span>')+'</small></div>'
        +'<div class="item"><b>Linked structured rule keys</b><small>'+(linked.length?linked.map(esc).join('<br>'):'No linked rule key shown in the loaded profile.')+'</small></div></div>'
        +(profile.chapter_rule_route_note?'<div class="notice"><b>Routing note:</b> '+esc(profile.chapter_rule_route_note)+'</div>':'')
-       +'<div class="notice"><b>Scope protection:</b> the legacy Caffeinated Beverage standard is hidden for this product. PMSV shows only the selected product mapping and does not invent missing clause text.</div></div>';
+       +'<div class="notice"><b>Scope protection:</b> PMSV shows only chapter rules whose exact rule key is linked to this selected product. It does not borrow a similar product standard.</div></div>';
+     if(standards.length){
+       standards.forEach(({db,standard})=>{
+         const rows=chapterRuleDisplayRows(standard);
+         html+='<div class="card"><div class="section-title"><h2>'+esc(standard.name||name)+'</h2><span>'+esc('Chapter '+(db?.chapter||'')+' · '+(standard.key||''))+'</span></div>';
+         if(standard.definition)html+='<div class="notice oknote"><b>Definition:</b> '+esc(standard.definition)+'</div>';
+         if(rows.length){
+           html+='<div class="tablewrap"><table><thead><tr><th>Section</th><th>Parameter / rule</th><th>Requirement</th></tr></thead><tbody>'
+             +rows.map(r=>'<tr><td>'+esc(r.section)+'</td><td><b>'+esc(r.parameter)+'</b></td><td>'+esc(r.requirement)+(r.condition?'<br><small>'+esc(r.condition)+'</small>':'')+'</td></tr>').join('')
+             +'</tbody></table></div>';
+         }else{
+           html+='<div class="notice"><b>No machine-readable numerical composition row is loaded for this exact standard.</b> The product mapping remains available, but PMSV will not invent missing limits.</div>';
+         }
+         const quality=Array.isArray(standard.quality_rules)?standard.quality_rules:[];
+         if(quality.length)html+='<div class="notice"><b>Other product-standard requirements:</b><br>'+quality.map(x=>'• '+esc(typeof x==='string'?x:JSON.stringify(x))).join('<br>')+'</div>';
+         html+='</div>';
+       });
+     }else if(chapter||ready){
+       html+='<div class="card"><div class="notice"><b>Structured chapter file is loaded, but no exact standard key matched this product profile.</b> Detailed clause text remains fail-closed until the mapping is reconciled.</div></div>';
+     }
+     standardDynamic.innerHTML=html;
    }
  }
  if(ingredientDynamic){
@@ -4325,10 +4385,30 @@ function renderLegacyProductScopePages(){
      ingredientDynamic.innerHTML='<div class="card"><div class="notice"><b>Select a product first.</b> Ingredient permissions remain locked.</div></div>';
    }else{
      const ready=status==='rule_profile_ready';
-     ingredientDynamic.innerHTML='<div class="card"><div class="section-title"><h2>Ingredients & limits — '+esc(name)+'</h2><span>Product-scoped</span></div>'
+     let html='<div class="card"><div class="section-title"><h2>Ingredients & limits — '+esc(name)+'</h2><span>Product-scoped</span></div>'
        +'<div class="notice '+(ready?'oknote':'')+'"><b>'+(ready?'Detailed product profile selected.':'Detailed ingredient profile not fully validated.')+'</b><br>'
-       +(ready?'Use <b>Formulation ingredients</b> to enter the actual formula. PMSV evaluates only exact loaded product rules and Appendix A permissions for FCS '+esc(fcs||'not mapped')+'.':'PMSV will not show or borrow the Caffeinated Beverage ingredient table. Formulation editing remains locked until the selected product reaches detailed rule-profile status.')+'</div>'
-       +'<div class="flow-actions"><button class="btn-secondary" type="button" id="openScopedFormulation">Open formulation ingredients →</button></div></div>';
+       +(ready?'PMSV evaluates exact chapter ingredient entries plus Appendix A permissions for FCS '+esc(fcs||'not mapped')+'. Broad groups and conditional permissions are displayed separately and are not treated as an automatic exact match.':'PMSV will not show or borrow the Caffeinated Beverage ingredient table. Formulation editing remains locked until the selected product reaches detailed rule-profile status.')+'</div></div>';
+     if(standards.length){
+       standards.forEach(({db,standard})=>{
+         const ing=chapterStandardIngredientSections(standard);
+         html+='<div class="card"><div class="section-title"><h2>'+esc(standard.name||name)+'</h2><span>'+esc('Chapter '+(db?.chapter||'')+' · '+(standard.key||''))+'</span></div>';
+         if(ing.explicit.length){
+           html+='<div class="tablewrap"><table><thead><tr><th>Explicit ingredient / rule entry</th><th>Status</th><th>Source field</th></tr></thead><tbody>'
+             +ing.explicit.map(row=>'<tr><td><b>'+esc(row.name)+'</b>'+(row.rule?.condition?'<br><small>'+esc(row.rule.condition)+'</small>':'')+'</td><td><span class="status-good">Exact chapter entry</span></td><td>'+esc(row.field)+'</td></tr>').join('')
+             +'</tbody></table></div>';
+         }else{
+           html+='<div class="notice"><b>No explicit exact ingredient list is encoded for this standard.</b> Do not infer unrestricted ingredient permission from the absence of a list.</div>';
+         }
+         if(ing.groups.length)html+='<div class="notice"><b>Permitted ingredient groups — review required:</b><br>'+ing.groups.map(x=>'• '+esc(typeof x==='string'?x:JSON.stringify(x))).join('<br>')+'<br><small>These are group-level permissions. PMSV does not automatically convert a specific entered ingredient into one of these groups without an exact mapping.</small></div>';
+         if(ing.conditional.length)html+='<div class="notice"><b>Conditional ingredients — fail-closed until condition is established:</b><br>'+ing.conditional.map(x=>'• '+esc(typeof x==='string'?x:((x.required||x.name||'Ingredient')+(x.condition?' — '+x.condition:'')))).join('<br>')+'</div>';
+         if(ing.rules.length)html+='<div class="notice"><b>Additional ingredient-rule text:</b><br>'+ing.rules.map(x=>'• '+esc(typeof x==='string'?x:JSON.stringify(x))).join('<br>')+'</div>';
+         html+='</div>';
+       });
+     }else if(ready){
+       html+='<div class="card"><div class="notice"><b>No exact chapter ingredient structure matched this product rule key.</b> Appendix A checks remain product/FCS-scoped, but product-standard ingredient permission stays fail-closed.</div></div>';
+     }
+     html+='<div class="card"><div class="flow-actions"><button class="btn-secondary" type="button" id="openScopedFormulation">Open formulation ingredients →</button></div></div>';
+     ingredientDynamic.innerHTML=html;
      setTimeout(()=>document.getElementById('openScopedFormulation')?.addEventListener('click',()=>openTab('formulation',{updateHash:true,save:true})),0);
    }
  }
@@ -6127,6 +6207,7 @@ async function loadChapterRuleDbs(){
  }
  renderIngredientAutocomplete();
  renderFormula();
+ renderLegacyProductScopePages();
 }
 
 async function loadNutritionDb(){
