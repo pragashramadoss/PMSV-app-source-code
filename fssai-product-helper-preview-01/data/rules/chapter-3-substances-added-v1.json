@@ -810,6 +810,143 @@
       "machine_requirements_complete": true,
       "permission_note": "This specification qualifies the food colour itself. Permission and maximum level in a finished food remain governed separately by the applicable product standard and/or Appendix A.",
       "amendment_84_policy": "Do not enforce highlighted legacy text marked for omission by Amendment 84 from 1 February 2026."
+    },
+    {
+      "key": "3.2.1(5)",
+      "name": "β-Carotene",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "synonyms": [
+          "C.I. Natural Yellow 26"
+        ],
+        "colour_index": "75130",
+        "class": "Carotenoids",
+        "chemical_name": "all-trans β-Carotene",
+        "empirical_formula": "C40H56",
+        "molecular_weight": 536.89,
+        "melting_point": "183°C ± 1°C",
+        "solubility": "Soluble in carbon disulphide, benzene and chloroform; moderately soluble in normal hexane, cyclohexane, ether, petroleum ether and oils; practically insoluble in methanol; insoluble in water."
+      },
+      "identification": [
+        "Absorption maxima of an approximately 0.2 mg/100 ml cyclohexane solution in a 1 cm cell shall be in the 456–484 mμ region.",
+        "No cis-peak in the 330–355 mμ region.",
+        "Chloroform solution with antimony trichloride gives dark blue colour with maximum absorption at 590 mμ.",
+        "With concentrated sulphuric acid, the acid layer of the specified chloroform solution turns blue."
+      ],
+      "requirements": [
+        {
+          "parameter": "Purity",
+          "operator": ">=",
+          "value": 96,
+          "unit": "%"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Heavy metals",
+          "operator": "<=",
+          "value": 40,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Subsidiary colouring matter",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Sulphated ash",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% of total colouring matters"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This specification qualifies the colour/additive itself. Permission and maximum use level in a finished food remain governed separately by the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.2.1(6)",
+      "name": "Chlorophyll",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "synonyms": [
+          "C.I. Natural Green 3",
+          "Lebensmittel Green No.1"
+        ],
+        "colour_index_1956": "75810",
+        "colour_index_1924": "12499",
+        "colour": "Green",
+        "class": "Phorbin (dihydrophorphin)",
+        "chlorophyll_a": {
+          "empirical_formula": "C55H72O5N4Mg",
+          "molecular_weight": 893.54
+        },
+        "chlorophyll_b": {
+          "empirical_formula": "C55H70O6N4Mg",
+          "molecular_weight": 907.52
+        },
+        "general": "Intensely dark green aqueous, ethanolic or oily solution of chlorophyll degradation products; soluble in ethanol, ether, chloroform and benzene; insoluble in water."
+      },
+      "identification": [
+        "Solution in ethanol is blue with deep red fluorescence.",
+        "Brown-phase reaction with 10% potassium hydroxide in methanol: green ether/petroleum ether solution becomes brown quickly and returns to green; test applies only when chlorophyll has not been treated with alkalies."
+      ],
+      "requirements": [
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Copper",
+          "operator": "<=",
+          "value": 30,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Zinc",
+          "operator": "<=",
+          "value": 50,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Total combined phaeophytines and their magnesium complexes",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Residual solvents — acetone, methanol, ethanol, propan-2-ol, hexane",
+          "operator": "<=",
+          "value": 50,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Residual solvent — dichloromethane",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This specification qualifies the colour/additive itself. Permission and maximum use level in a finished food remain governed separately by the applicable product standard and/or Appendix A."
     }
   ],
   "coverage": {
@@ -817,15 +954,15 @@
     "other_substances_exact_limit_routes": 5,
     "other_substances_auto_apply": 0,
     "other_substances_fail_closed": true,
-    "build": 429,
-    "identity_purity_standards_structured": 6,
+    "build": 430,
+    "identity_purity_standards_structured": 8,
     "food_colour_clause12_effective_standard_loaded": true,
     "food_colour_amendment_84_effective_from": "2026-02-01",
     "food_colour_legacy_omission_policy_loaded": true,
-    "food_colour_individual_standards_loaded": 4,
-    "food_colour_machine_complete_standards": 3,
+    "food_colour_individual_standards_loaded": 6,
+    "food_colour_machine_complete_standards": 5,
     "food_colour_partial_fail_closed_standards": 1,
-    "food_colour_next_standard": "3.2.1(5) Beta-Carotene"
+    "food_colour_next_standard": "3.2.1(7) Caramel"
   },
   "effective_amendments": [
     {
