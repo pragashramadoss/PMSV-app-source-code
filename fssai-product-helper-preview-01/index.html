@@ -2036,7 +2036,94 @@ function currentSelectedProductName(){
  const profile=currentProductProfile();
  return product?.name||profile?.name||'Selected product';
 }
+function currentChapterRuleKeys(){
+ const product=selectedProductForFortification();
+ const profile=currentProductProfile();
+ return new Set([
+   product?.rule_key,
+   ...(Array.isArray(product?.rule_keys)?product.rule_keys:[]),
+   profile?.rule_key,
+   ...(Array.isArray(profile?.rule_keys)?profile.rule_keys:[]),
+   ...(Array.isArray(profile?.linked_rule_keys)?profile.linked_rule_keys:[])
+ ].map(x=>String(x||'').trim()).filter(x=>/^\d+(?:\.\d+)+(?:\([^)]*\))?$/.test(x)));
+}
+function currentChapterStandards(){
+ const keys=currentChapterRuleKeys();
+ if(!keys.size||!Array.isArray(chapterRuleDbs))return [];
+ const out=[];
+ chapterRuleDbs.forEach(db=>(db?.standards||[]).forEach(st=>{
+   if(keys.has(String(st?.key||'').trim()))out.push({db,standard:st});
+ }));
+ return out;
+}
+function ingredientStringsFromStandard(st){
+ const directFields=[
+   'permitted_ingredients','optional_ingredients','permitted_base_ingredients',
+   'basic_ingredients','required_ingredients','base_ingredients',
+   'permitted_optional_ingredients','other_permitted_ingredients'
+ ];
+ const rows=[];
+ directFields.forEach(field=>{
+   const v=st?.[field];
+   if(Array.isArray(v))v.forEach(x=>{if(typeof x==='string'&&x.trim())rows.push({name:x.trim(),field});});
+   else if(typeof v==='string'&&v.trim())rows.push({name:v.trim(),field});
+ });
+ const mandatory=st?.mandatory_ingredient;
+ if(typeof mandatory==='string'&&mandatory.trim())rows.push({name:mandatory.trim(),field:'mandatory_ingredient'});
+ const structuredFields=['ingredient_rules','ingredient_limits','optional_ingredient_daily_max'];
+ structuredFields.forEach(field=>{
+   const v=st?.[field];
+   if(Array.isArray(v))v.forEach(x=>{
+     if(x&&typeof x==='object'&&typeof x.name==='string'&&x.name.trim())rows.push({name:x.name.trim(),field,rule:x});
+   });
+   else if(v&&typeof v==='object'&&typeof v.name==='string'&&v.name.trim())rows.push({name:v.name.trim(),field,rule:v});
+ });
+ return rows;
+}
+function findChapterPermittedIngredient(name){
+ const n=normIngredient(name);
+ if(!n)return null;
+ for(const {db,standard} of currentChapterStandards()){
+   for(const row of ingredientStringsFromStandard(standard)){
+     if(normIngredient(row.name)!==n)continue;
+     const r=row.rule||{};
+     const limit=Number.isFinite(Number(r.max))?('Max '+r.max+(r.unit?' '+r.unit:'')):(Number.isFinite(Number(r.min))?('Min '+r.min+(r.unit?' '+r.unit:'')):'As specified by the product standard');
+     return {
+       names:[row.name],
+       label:row.name,
+       kind:'chapter_ingredient',
+       qualification:'Explicitly listed for '+standard.name+' in the loaded FSSAI chapter rule.',
+       clause:String(standard.key||db?.chapter||'FSSAI product standard'),
+       route:'standard',
+       limit,
+       condition:r.condition||'',
+       source:'FSSAI Chapter '+String(db?.chapter||'')+' · '+String(standard.key||'')
+     };
+   }
+ }
+ return null;
+}
+function currentChapterIngredientCatalog(){
+ const rows=[];
+ currentChapterStandards().forEach(({db,standard})=>{
+   ingredientStringsFromStandard(standard).forEach(row=>{
+     rows.push({
+       name:row.name,
+       label:row.name,
+       source:'FSSAI Chapter '+String(db?.chapter||'')+' · '+String(standard.key||'')+' · '+String(standard.name||'')
+     });
+   });
+ });
+ const seen=new Set();
+ return rows.filter(x=>{
+   const k=normIngredient(x.name);
+   if(!k||seen.has(k))return false;
+   seen.add(k);return true;
+ });
+}
 function findKnownIngredient(name){
+ const chapterHit=findChapterPermittedIngredient(name);
+ if(chapterHit)return chapterHit;
  if(!caffeinatedPrototypeScopeActive())return null;
  const n=normIngredient(name);
  if(regulatoryDb&&Array.isArray(regulatoryDb.ingredient_rules)){
@@ -3545,6 +3632,21 @@ let labelDb=null;
 let claimsDb=null;
 let packagingDb=null;
 let fortificationDb=null;
+let chapterRuleDbs=[];
+const CHAPTER_RULE_URLS=[
+ './data/rules/chapter-2-1-dairy-v1.json',
+ './data/rules/chapter-2-2-fats-oils-v1.json',
+ './data/rules/chapter-2-3-fruit-vegetable-v1.json',
+ './data/rules/chapter-2-4-cereals-v1.json',
+ './data/rules/chapter-2-5-meat-eggs-v1.json',
+ './data/rules/chapter-2-6-fish-v1.json',
+ './data/rules/chapter-2-7-sweets-confectionery-v1.json',
+ './data/rules/chapter-2-8-sweetening-honey-v1.json',
+ './data/rules/chapter-2-9-salt-spices-condiments-v1.json',
+ './data/rules/chapter-2-10-beverages-v1.json',
+ './data/rules/chapter-2-11-other-food-products-v1.json',
+ './data/rules/chapter-2-16-hemp-v1.json'
+];
 let selectedProductId='';
 
 function fallbackIngredientCatalog(){
@@ -5844,6 +5946,20 @@ async function loadLabelDb(){
  renderLabelRequirements();
 }
 
+async function loadChapterRuleDbs(){
+ try{
+   const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=413',{cache:'reload'}).then(async res=>{
+     if(!res.ok)throw new Error(url+' HTTP '+res.status);
+     return res.json();
+   })));
+   chapterRuleDbs=results.filter(Boolean);
+ }catch(e){
+   chapterRuleDbs=[];
+ }
+ renderIngredientAutocomplete();
+ renderFormula();
+}
+
 async function loadNutritionDb(){
  const status=document.getElementById('nutritionDbStatus');
  try{
@@ -5867,9 +5983,18 @@ async function loadNutritionDb(){
  renderNutrition();
 }
 
+function currentIngredientCatalog(){
+ const rows=[...(ingredientCatalog||[]),...currentChapterIngredientCatalog()];
+ const seen=new Set();
+ return rows.filter(x=>{
+   const k=normIngredient(x.name);
+   if(!k||seen.has(k))return false;
+   seen.add(k);return true;
+ });
+}
 function exactCatalogMatch(value){
  const n=normIngredient(value);
- return ingredientCatalog.find(x=>normIngredient(x.name)===n)||null;
+ return currentIngredientCatalog().find(x=>normIngredient(x.name)===n)||null;
 }
 function renderIngredientAutocomplete(){
  const input=document.getElementById('ingredientName');
@@ -5905,7 +6030,7 @@ function renderIngredientAutocomplete(){
    if(recognized)recognized.classList.add('hidden');
  }
 
- const matches=ingredientCatalog
+ const matches=currentIngredientCatalog()
    .filter(x=>normIngredient(x.name).includes(q))
    .sort((a,b)=>{
      const ae=normIngredient(a.name)===q?0:1;
@@ -5956,6 +6081,7 @@ loadProductMaster();
 loadAppendixCore();
 loadAppendixCDb();
 loadRegulatoryDb();
+loadChapterRuleDbs();
 loadContaminantsDb();
 loadMicrobiologyDb();
 loadNutritionDb();
