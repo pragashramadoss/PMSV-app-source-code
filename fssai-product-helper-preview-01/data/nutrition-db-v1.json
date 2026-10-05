@@ -22373,7 +22373,23 @@
       "trans_fat_not_inferred": true,
       "source_tables_1_5_6_7_declared": true
     },
-    "ifct_dry_spice_runtime_audit_scope": "Structural/runtime consistency audit of the already-loaded G019-G033 ICMR-NIN IFCT profiles. This does not reinterpret IFCT Total Free Sugars as FSSAI Total Sugars and does not infer trans fat."
+    "ifct_dry_spice_runtime_audit_scope": "Structural/runtime consistency audit of the already-loaded G019-G033 ICMR-NIN IFCT profiles. This does not reinterpret IFCT Total Free Sugars as FSSAI Total Sugars and does not infer trans fat.",
+    "ifct_nuts_oilseeds_runtime_audit_build": 425,
+    "ifct_nuts_oilseeds_runtime_audit_date": "2026-10-05",
+    "ifct_nuts_oilseeds_runtime_audit_status": "passed_H001_to_H021",
+    "ifct_nuts_oilseeds_runtime_audit_checks": {
+      "exact_contiguous_codes": true,
+      "all_21_rows_present": true,
+      "all_active_for_calculation": true,
+      "all_icmr_nin_authority": true,
+      "required_verified_fields_present": true,
+      "ifct_free_sugars_auxiliary_only": true,
+      "trans_fat_not_inferred": true,
+      "source_tables_1_5_6_7_declared": true,
+      "ambiguous_generic_arecanut_fail_closed": true,
+      "ambiguous_generic_gingelly_fail_closed": true
+    },
+    "ifct_nuts_oilseeds_runtime_audit_scope": "Structural/runtime consistency audit of already-loaded H001-H021 ICMR-NIN IFCT profiles. Generic arecanut and gingelly remain fail-closed because multiple exact IFCT identities exist."
   },
   "last_verified": "2026-10-05",
   "required_label_fields": [
