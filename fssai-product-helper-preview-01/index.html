@@ -2018,7 +2018,20 @@ try{
 }catch(e){formulationIngredients=[]}
 
 function normIngredient(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,' ')}
+function caffeinatedPrototypeScopeActive(){
+ const product=selectedProductForFortification();
+ const profile=currentProductProfile();
+ const id=normIngredient(profile?.id||selectedProductId||product?.profile_id||product?.id||'');
+ const name=normIngredient(product?.name||profile?.name||'');
+ return id==='carbonated-caffeinated-beverage'||name==='caffeinated beverage'||name==='carbonated caffeinated beverage'||name.includes('caffeinated beverage');
+}
+function currentSelectedProductName(){
+ const product=selectedProductForFortification();
+ const profile=currentProductProfile();
+ return product?.name||profile?.name||'Selected product';
+}
 function findKnownIngredient(name){
+ if(!caffeinatedPrototypeScopeActive())return null;
  const n=normIngredient(name);
  if(regulatoryDb&&Array.isArray(regulatoryDb.ingredient_rules)){
    const hit=regulatoryDb.ingredient_rules.find(r=>Array.isArray(r.names)&&r.names.some(x=>n===normIngredient(x)));
@@ -2028,6 +2041,24 @@ function findKnownIngredient(name){
 }
 function findAppendixAdditive(name){
  const n=normIngredient(name);
+ const product=selectedProductForFortification();
+ const fcs=appendixFcsForRecord(product);
+ if(product&&fcs&&appendixCoreDb){
+   const resolved=appendixEntriesForFcs(fcs);
+   if(resolved.status!=='loaded')return null;
+   for(const entry of resolved.entries||[]){
+     if(normIngredient(entry.name)===n||normIngredient(entry.ins)===n){
+       return {...entry,source:'Appendix A · FCS '+(entry.applied_from||resolved.resolvedFcs||fcs),resolved_fcs:resolved.resolvedFcs||fcs};
+     }
+     const members=appendixCoreDb?.annexure_1_groups?.[entry.name]||[];
+     const member=members.find(m=>normIngredient(m.name)===n||normIngredient(m.ins)===n);
+     if(member){
+       return {...entry,name:member.name,ins:member.ins,group_name:entry.name,source:'Appendix A · FCS '+(entry.applied_from||resolved.resolvedFcs||fcs),resolved_fcs:resolved.resolvedFcs||fcs};
+     }
+   }
+   return null;
+ }
+ if(!caffeinatedPrototypeScopeActive())return null;
  const dbCategory=regulatoryDb?.appendix_a?.category_entries;
  const dbGmp=regulatoryDb?.appendix_a?.general_gmp_entries;
  const categoryHit=(Array.isArray(dbCategory)?dbCategory:appendixAdditives).find(a=>normIngredient(a.name)===n || normIngredient(a.ins)===n);
@@ -2037,28 +2068,33 @@ function findAppendixAdditive(name){
  return null;
 }
 function qualifyIngredient(item){
+ const productName=currentSelectedProductName();
+ const caffeinated=caffeinatedPrototypeScopeActive();
+ const product=selectedProductForFortification();
+ const fcs=appendixFcsForRecord(product);
  const known=findKnownIngredient(item.name);
  if(known){
-   return {...known,name:item.name,status:'qualified',impact:'Fits standardized Caffeinated Beverage route, subject to its applicable limit/condition.'};
+   return {...known,name:item.name,status:'qualified',impact:'Fits the loaded '+productName+' ingredient rule, subject to its applicable limit/condition.'};
  }
  const additive=findAppendixAdditive(item.name);
  if(additive){
-   return {name:item.name,kind:'additive',status:'qualified',qualification:'Food additive present in the applicable Appendix A category permissions for this product.',clause:'2.10.6(2)(IV) + Appendix A '+additive.source,route:'standard',impact:'Does not by itself require a Proprietary Food route if used within the applicable Appendix A permission and any stricter product-standard limit.',appendix:additive};
+   const clause='Appendix A'+(additive.applied_from?' · FCS '+additive.applied_from:(fcs?' · FCS '+fcs:''));
+   return {name:item.name,kind:'additive',status:'qualified',qualification:'Food additive matched to the loaded Appendix A permission set for '+productName+'.',clause,route:'standard',impact:'Does not by itself change the product route when used within the applicable Appendix A level, condition and product standard.',appendix:additive};
  }
  switch(item.basis){
   case 'standardized':
-   return {name:item.name,kind:'extra',status:'review',qualification:'Potential non-additive ingredient basis for Proprietary Food because Regulation 2.12.1(2) permits ingredients that are standardized or otherwise permitted under FSSAI regulations. The exact ingredient-specific FSSAI permission must still be verified.',clause:'2.12.1(2)'+(item.clause?' · user-entered FSSAI reference: '+item.clause:''),route:'proprietary',impact:'Possible Proprietary Food route only if the finished food is genuinely not standardized. If it is still marketed/assessed as Caffeinated Beverage, 2.10.6(2)(III)(A) requires Food Authority approval for this additional ingredient.'};
+   return {name:item.name,kind:'extra',status:'review',qualification:'This ingredient is not matched to an exact loaded ingredient permission for '+productName+'. A user-entered or general FSSAI basis is not treated as product-specific permission until the exact clause is verified.',clause:'Product-specific FSSAI permission required'+(item.clause?' · user-entered reference: '+item.clause:''),route:'proprietary',impact:caffeinated?'If the product remains Caffeinated Beverage, clause 2.10.6(2)(III)(A) requires Food Authority approval for an additional ingredient outside the specified list. Otherwise assess whether the finished food remains standardized before considering Chapter 2.12.':'Do not automatically call the product Proprietary Food. First determine whether the finished food still complies with its standardized product definition; Chapter 2.12 applies only where the finished food is genuinely not standardized.'};
   case 'botanical':
-   return {name:item.name,kind:'extra',status:'review',qualification:'This extra botanical/extract is not assumed permitted merely from its name. A qualifying FSSAI ingredient standard/permission must be established under Regulation 2.12.1(2), and the standardized Caffeinated Beverage additional-ingredient rule must also be considered.',clause:'2.12.1(2)'+(item.clause?' · user-entered FSSAI reference: '+item.clause:''),route:'proprietary',impact:'Further route review required; do not automatically call the product Proprietary Food.'};
+   return {name:item.name,kind:'extra',status:'review',qualification:'This botanical/extract has no exact loaded product-specific permission for '+productName+'. Its FSSAI ingredient basis must be verified before use.',clause:'Exact FSSAI ingredient / product-standard permission required',route:'proprietary',impact:caffeinated?'The Caffeinated Beverage additional-ingredient approval rule must also be considered.':'Further route review required; do not infer permission or Proprietary Food status from the ingredient name alone.'};
   case 'vitamin':
-   return {name:item.name,kind:'extra',status:'review',qualification:'A Proprietary Food may contain vitamins/minerals subject to the Regulation 2.12 proviso.',clause:'2.12.1(2) proviso',route:'proprietary',impact:'Possible Proprietary Food route; quantity must not exceed one RDA of the respective micronutrient unless another specific regulation applies.'};
+   return {name:item.name,kind:'extra',status:'review',qualification:'A vitamin/mineral route requires the exact applicable product standard, Fortification regulation or other FSSAI permission. PMSV does not infer a one-RDA allowance across unrelated standardized products.',clause:'Exact FSSAI vitamin/mineral permission required',route:'proprietary',impact:'Product-specific or Fortification-route review required before a compliance conclusion.'};
   case 'additive': {
    const a=findAppendixAdditive(item.name);
-   if(a)return {name:item.name,kind:'additive',status:'qualified',qualification:'Applicable Appendix A food additive for this category.',clause:'2.12.1(3) + Appendix A '+a.source,route:'standard',impact:'Use only within the applicable Appendix A level/condition.',appendix:a};
-   return {name:item.name,kind:'additive',status:'unresolved',qualification:'This name is not matched to the applicable Appendix A list in the current product dataset.',clause:'2.12.1(3) + Appendix A',route:'unresolved',impact:'Do not treat it as permitted until the exact additive/INS and applicable Appendix A entry are verified.'};
+   if(a)return {name:item.name,kind:'additive',status:'qualified',qualification:'Applicable Appendix A food additive for the selected product FCS.',clause:'Appendix A'+(a.applied_from?' · FCS '+a.applied_from:(fcs?' · FCS '+fcs:'')),route:'standard',impact:'Use only within the applicable Appendix A level/condition.',appendix:a};
+   return {name:item.name,kind:'additive',status:'unresolved',qualification:'This additive/INS is not matched to the selected product’s loaded Appendix A permission set.',clause:'Appendix A'+(fcs?' · selected FCS '+fcs:''),route:'unresolved',impact:'Do not treat it as permitted until the exact additive/INS and applicable FCS permission are verified.'};
   }
   default:
-   return {name:item.name,kind:'extra',status:'unresolved',qualification:'No FSSAI qualification has been established for this ingredient from the information entered. If no standard exists under FSSAI regulations, the Non-Specified Food and Food Ingredients Regulations, 2017 must be assessed.',clause:'Non-Specified Food Regulations 2017 · regulation 2(1)(d) and prior-approval rule 3(1)',route:'unresolved',impact:'Do not treat the ingredient as permitted or the finished product as Proprietary Food until the FSSAI regulatory basis is established.'};
+   return {name:item.name,kind:'extra',status:'unresolved',qualification:'No exact product-specific FSSAI qualification has been established for this ingredient in '+productName+'. If no standard or permitted route exists, the Non-Specified Food and Food Ingredients Regulations, 2017 must be assessed.',clause:'Exact product-standard / Appendix / Non-Specified Food route required',route:'unresolved',impact:'Do not treat the ingredient as permitted or the finished product as compliant until the regulatory basis is established.'};
  }
 }
 function qtyToKg(qty,unit){
