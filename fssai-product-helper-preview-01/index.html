@@ -718,6 +718,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="labelIngredientPreview" class="notice"></div>
 <div id="labelProductSpecificStatus" class="notice"></div>
 <div id="labelConditionalArticleStatus" class="notice hidden"></div>
+<div id="labelConditionalArticleQualifiers" class="hidden"></div>
 <div id="labelCaffeinePreview" class="notice hidden"></div>
 <div id="labelTriggeredRequirements"></div>
 </div>
@@ -848,7 +849,8 @@ if(isFreshPageNavigation()){
      'pmsv_fssai_product_helper_formula',
      'pmsv_fssai_product_helper_processes',
      'pmsv_fssai_formula_density',
-     'pmsv_fssai_selected_product'
+     'pmsv_fssai_selected_product',
+     'pmsv_fssai_label_article_qualifiers'
    ].forEach(k=>sessionStorage.removeItem(k));
    sessionStorage.setItem(WORKING_STATE_RESET_FLAG,'1');
  }catch(e){}
@@ -1564,6 +1566,63 @@ document.getElementById('gmmEnzymeName')?.addEventListener('change',()=>{
 });
 document.getElementById('gmmEnzymeVariant')?.addEventListener('change',saveGmmEnzymeSelection);
 
+const LABEL_ARTICLE_QUALIFIER_KEY='pmsv_fssai_label_article_qualifiers';
+let labelArticleQualifierState={};
+try{
+ const raw=JSON.parse(sessionStorage.getItem(LABEL_ARTICLE_QUALIFIER_KEY)||'{}');
+ if(raw&&typeof raw==='object'&&!Array.isArray(raw))labelArticleQualifierState=raw;
+}catch(e){labelArticleQualifierState={}}
+function labelArticleQualifierStateKey(productName,ruleId){
+ return normIngredient(productName)+'::'+String(ruleId||'');
+}
+function labelArticleQualifierValue(productName,ruleId){
+ return labelArticleQualifierState[labelArticleQualifierStateKey(productName,ruleId)]??'';
+}
+function saveLabelArticleQualifier(productName,ruleId,value){
+ labelArticleQualifierState[labelArticleQualifierStateKey(productName,ruleId)]=value;
+ try{sessionStorage.setItem(LABEL_ARTICLE_QUALIFIER_KEY,JSON.stringify(labelArticleQualifierState))}catch(e){}
+}
+function evaluateLabelArticleQualifier(rule,productName){
+ const ui=rule?.qualifier_ui;
+ if(!ui||rule.qualifier_ui_status!=='active')return {status:'pending',triggered:false,value:''};
+ const value=labelArticleQualifierValue(productName,rule.id);
+ if(ui.type==='number_threshold'){
+   const n=Number(value);
+   if(value===''||!Number.isFinite(n))return {status:'unanswered',triggered:false,value};
+   const threshold=Number(ui.threshold);
+   const triggered=ui.operator==='>='?n>=threshold:ui.operator==='<'?n<threshold:ui.operator==='<='?n<=threshold:n>threshold;
+   return {status:triggered?'triggered':'not_triggered',triggered,value:n};
+ }
+ if(ui.type==='boolean'||ui.type==='identity_confirm'){
+   if(value!=='yes'&&value!=='no')return {status:'unanswered',triggered:false,value};
+   return {status:value==='yes'?'triggered':'not_triggered',triggered:value==='yes',value};
+ }
+ return {status:'pending',triggered:false,value};
+}
+function renderLabelArticleQualifierControls(candidates,productName){
+ const box=document.getElementById('labelConditionalArticleQualifiers');
+ if(!box)return [];
+ const active=(candidates||[]).filter(r=>r.qualifier_ui_status==='active'&&r.qualifier_ui);
+ box.classList.toggle('hidden',active.length===0);
+ if(!active.length){box.innerHTML='';return [];}
+ const assessments=active.map(rule=>({rule,...evaluateLabelArticleQualifier(rule,productName)}));
+ box.innerHTML='<div class="card" style="margin-top:10px"><div class="section-title"><h2>Conditional article qualifiers</h2><span>Fail-closed until answered</span></div><div class="checker-grid">'+active.map(rule=>{
+   const ui=rule.qualifier_ui||{};
+   const key=labelArticleQualifierStateKey(productName,rule.id);
+   const value=labelArticleQualifierValue(productName,rule.id);
+   if(ui.type==='number_threshold'){
+     return '<div class="field"><label>'+esc(ui.question||rule.requirement_summary)+'</label><input type="number" min="0" step="0.01" data-label-article-key="'+esc(key)+'" data-label-article-rule="'+esc(rule.id)+'" value="'+esc(value)+'"><small>Rule activates only when the entered value is '+esc(ui.operator||'>')+' '+esc(ui.threshold)+' '+esc(ui.unit||'')+'. Blank remains locked.</small></div>';
+   }
+   return '<div class="field"><label>'+esc(ui.question||rule.requirement_summary)+'</label><select data-label-article-key="'+esc(key)+'" data-label-article-rule="'+esc(rule.id)+'"><option value="">Not answered</option><option value="yes"'+(value==='yes'?' selected':'')+'>Yes</option><option value="no"'+(value==='no'?' selected':'')+'>No</option></select><small>'+esc(rule.requirement_summary)+'</small></div>';
+ }).join('')+'</div></div>';
+ box.querySelectorAll('[data-label-article-rule]').forEach(el=>el.addEventListener('change',()=>{
+   const ruleId=el.dataset.labelArticleRule;
+   saveLabelArticleQualifier(productName,ruleId,el.value);
+   renderLabelRequirements();
+ }));
+ return assessments;
+}
+
 const FORMULA_KEY='pmsv_fssai_product_helper_formula';
 
 const ingredientRules=[
@@ -1785,6 +1844,7 @@ function renderLabelRequirements(){
  const scopeNote=document.getElementById('labelScopeNote');
  const productSpecificStatus=document.getElementById('labelProductSpecificStatus');
  const conditionalArticleStatus=document.getElementById('labelConditionalArticleStatus');
+ const conditionalArticleQualifiers=document.getElementById('labelConditionalArticleQualifiers');
  const caffeinatedSpecific=document.getElementById('caffeinatedLabelSpecific');
  const servingHelp=document.getElementById('labelServingHelp');
  if(!mass&&!preview&&!caffeinePreview&&!triggers)return;
@@ -1806,10 +1866,21 @@ function renderLabelRequirements(){
         : '<b>Product-specific label rule:</b> Select a standardized product first. General FSSAI label rules and formulation-triggered checks remain available.');
  }
  const articleCandidates=labelArticleRuleCandidates(selectedName);
+ const articleAssessments=renderLabelArticleQualifierControls(articleCandidates,selectedName);
  if(conditionalArticleStatus){
    conditionalArticleStatus.classList.toggle('hidden',articleCandidates.length===0);
    if(articleCandidates.length){
-     conditionalArticleStatus.innerHTML='<b>Conditional Schedule-II article rule(s) found — locked pending qualifier:</b><br>'+articleCandidates.map(x=>'• '+esc(x.requirement_summary)+' <small>Condition: '+esc(String(x.condition||'').replaceAll('_',' '))+'. PMSV does not activate this declaration until the condition is confirmed.</small>').join('<br>');
+     const evaluated=new Map(articleAssessments.map(x=>[x.rule.id,x]));
+     const lines=articleCandidates.map(rule=>{
+       const a=evaluated.get(rule.id);
+       if(!a)return '• <b>'+esc(rule.requirement_summary)+'</b> <small>Qualifier UI not yet structured; remains fail-closed.</small>';
+       if(a.status==='triggered')return '• <b>REQUIRED:</b> '+esc(rule.requirement_summary);
+       if(a.status==='not_triggered')return '• <b>Not triggered:</b> '+esc(rule.requirement_summary);
+       return '• <b>Locked pending answer:</b> '+esc(rule.requirement_summary);
+     });
+     const hasTriggered=articleAssessments.some(x=>x.triggered);
+     conditionalArticleStatus.className=hasTriggered?'notice oknote':'notice';
+     conditionalArticleStatus.innerHTML='<b>Conditional Schedule-II article assessment:</b><br>'+lines.join('<br>');
    }
  }
  if(caffeinatedSpecific)caffeinatedSpecific.classList.toggle('hidden',!isCaffeinated);
@@ -1868,6 +1939,11 @@ function renderLabelRequirements(){
    const presenceTriggered=presenceChecks.filter(x=>x.triggered);
    if(presenceTriggered.length){
      blocks.push('<div class="item"><b>Schedule-II ingredient-presence declarations</b><small>'+presenceTriggered.map(x=>'• <b>'+esc(x.rule.requirement_summary)+'</b><br>Detected: '+x.matched.map(m=>esc(m.name)).join(', ')).join('<br><br>')+'</small></div>');
+   }
+
+   const articleTriggered=articleAssessments.filter(x=>x.triggered);
+   if(articleTriggered.length){
+     blocks.push('<div class="item"><b>Conditional article-specific declarations</b><small>'+articleTriggered.map(x=>'• <b>'+esc(x.rule.requirement_summary)+'</b>').join('<br><br>')+'<br><br>The declaration is shown only because the selected article matched the stored rule and its qualifier was answered as triggering the condition.</small></div>');
    }
 
    const thresholdChecks=labelScheduleIiThresholdAssessments();
