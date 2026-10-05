@@ -160,5 +160,124 @@
         }
       ]
     }
-  ]
+  ],
+  "schedule_ii": {
+    "source_clause": "Schedule II · Mandatory Declarations",
+    "ingredient_threshold_rules": [
+      {
+        "id": "polyols_10_percent",
+        "aliases": [
+          "sorbitol",
+          "sorbitol syrup",
+          "mannitol",
+          "xylitol",
+          "maltitol",
+          "maltitol syrup",
+          "lactitol",
+          "isomalt",
+          "erythritol",
+          "polyol"
+        ],
+        "aggregation": "sum_matching_ingredients_w_w",
+        "min_percent_w_w": 10,
+        "declaration_short": "Polyols may have laxative effect",
+        "status": "active"
+      },
+      {
+        "id": "polydextrose_10_percent",
+        "aliases": [
+          "polydextrose"
+        ],
+        "aggregation": "sum_matching_ingredients_w_w",
+        "min_percent_w_w": 10,
+        "declaration_short": "Polydextrose may have laxative effect",
+        "status": "active"
+      },
+      {
+        "id": "added_caffeine",
+        "aliases": [
+          "caffeine"
+        ],
+        "aggregation": "presence",
+        "min_percent_w_w": 0,
+        "declaration_short": "CONTAINS CAFFEINE",
+        "status": "active"
+      },
+      {
+        "id": "isomaltulose",
+        "aliases": [
+          "isomaltulose"
+        ],
+        "aggregation": "presence",
+        "min_percent_w_w": 0,
+        "declaration_short": "Contains Isomaltulose — energy per 100 g or 100 ml must be declared",
+        "status": "active"
+      },
+      {
+        "id": "sorbitol_10_percent",
+        "aliases": [
+          "sorbitol",
+          "sorbitol syrup"
+        ],
+        "aggregation": "sum_matching_ingredients_w_w",
+        "min_percent_w_w": 10,
+        "declaration_short": "Special sorbitol laxative/bloating/diarrhea and calcium-absorption warning required",
+        "status": "active"
+      }
+    ],
+    "sweetener_rules": {
+      "appendix_a_sweetener_declaration": true,
+      "mixture_declaration": true,
+      "non_caloric_sweetener_declaration": true,
+      "exact_alias_types": {
+        "aspartame": [
+          "aspartame",
+          "aspartame methyl ester"
+        ],
+        "acesulfame_potassium": [
+          "acesulfame potassium",
+          "acesulfame k",
+          "ace-k"
+        ],
+        "aspartame_acesulfame": [
+          "aspartame-acesulfame salt",
+          "aspartame acesulfame salt"
+        ],
+        "saccharins": [
+          "saccharin",
+          "saccharin sodium",
+          "saccharins"
+        ],
+        "sucralose": [
+          "sucralose"
+        ],
+        "neotame": [
+          "neotame"
+        ],
+        "steviol_glycosides": [
+          "steviol glycoside",
+          "steviol glycosides",
+          "stevia"
+        ],
+        "polyols": [
+          "sorbitol",
+          "sorbitol syrup",
+          "mannitol",
+          "xylitol",
+          "maltitol",
+          "maltitol syrup",
+          "lactitol",
+          "isomalt",
+          "erythritol"
+        ]
+      },
+      "individual_warning_summaries": {
+        "aspartame": "Phenylketonuric / seizure-disorder / pregnancy-lactation warning applies.",
+        "acesulfame_potassium": "Children and pregnancy-lactation warning applies.",
+        "aspartame_acesulfame": "Phenylketonuric / children / pregnancy-lactation warning applies.",
+        "saccharins": "Children warning applies.",
+        "polyols": "Polyol-specific declaration applies; threshold-based laxative warning is assessed separately."
+      }
+    }
+  }
 }
