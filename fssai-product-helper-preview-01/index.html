@@ -1842,7 +1842,11 @@ function labelUniversalProcessRules(){
 function labelSpecificMannerRules(productName){
  const n=normIngredient(productName);
  if(!n)return [];
- return (labelDb?.specific_manner_rules?.sections_2_1_to_2_5||[]).filter(rule=>{
+ const rules=[
+   ...(labelDb?.specific_manner_rules?.sections_2_1_to_2_5||[]),
+   ...(labelDb?.specific_manner_rules?.bread_rules||[])
+ ];
+ return rules.filter(rule=>{
    if(rule.status!=='active')return false;
    const excluded=(rule.exclude_product_terms||[]).some(term=>n.includes(normIngredient(term)));
    if(excluded)return false;
@@ -4304,7 +4308,7 @@ function labelProductRuleFor(name){
 async function loadLabelDb(){
  const status=document.getElementById('labelDbStatus');
  try{
-   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=371',{cache:'reload'});
+   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=373',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    labelDb=await res.json();
    if(status){
