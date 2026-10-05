@@ -588,15 +588,137 @@
     ]
   },
   "schedule_iii": {
-    "clause": "Reg. 7(3)",
+    "clause": "Schedule III / Reg. 7(3)",
     "status": "structured_reference_only",
-    "claim_count": 8,
-    "note": "Disease-risk claims require every stated condition and prescribed context. PMSV does not auto-approve Schedule III claims in the first runtime."
+    "claims": [
+      {
+        "id": "calcium_osteoporosis",
+        "relationship": "Calcium or calcium + Vitamin D and osteoporosis",
+        "conditions": [
+          "Food is a source/high in calcium or calcium + vitamin D.",
+          "Beneficial effect linked to daily recommended intake."
+        ],
+        "auto_evaluable": false
+      },
+      {
+        "id": "sodium_hypertension",
+        "relationship": "Sodium and hypertension",
+        "conditions": [
+          "Food is low in sodium at the Schedule III threshold.",
+          "Claim context states benefit is obtained with a low-sodium diet."
+        ],
+        "auto_evaluable": "partial"
+      },
+      {
+        "id": "satfat_cholesterol",
+        "relationship": "Dietary saturated fat and blood cholesterol",
+        "conditions": [
+          "Food meets low-saturated-fat condition.",
+          "Claim context states benefit is obtained with a diet low in fat/saturated fat and physical activity."
+        ],
+        "auto_evaluable": "partial"
+      },
+      {
+        "id": "potassium_blood_pressure",
+        "relationship": "Potassium and risk of high blood pressure",
+        "conditions": [
+          "Food is a good source of potassium.",
+          "Food is low in sodium.",
+          "Food is low in total fat and saturated fat."
+        ],
+        "auto_evaluable": false
+      },
+      {
+        "id": "ala_cholesterol",
+        "relationship": "Alpha-linolenic acid (ALA) and blood cholesterol",
+        "conditions": [
+          "At least 1 g omega-3 fatty acids per 100 g, 100 ml or 100 kcal.",
+          "Claim context states beneficial effect with daily intake of 2 g ALA."
+        ],
+        "auto_evaluable": false
+      },
+      {
+        "id": "soluble_fibre_cholesterol",
+        "relationship": "Soluble dietary fibre and blood cholesterol",
+        "conditions": [
+          "Applicable soluble fibre source such as oats/barley/millets.",
+          "At least 1 g soluble dietary fibre per serving.",
+          "Claim context states beneficial effect with daily intake of 3 g soluble dietary fibre."
+        ],
+        "auto_evaluable": false
+      },
+      {
+        "id": "phytosterol_cholesterol",
+        "relationship": "Phytosterol/stanol and blood cholesterol",
+        "conditions": [
+          "At least 1 g plant sterols/stanols per serving.",
+          "Claim context states beneficial effect with daily intake up to 3 g/day."
+        ],
+        "auto_evaluable": false
+      },
+      {
+        "id": "beta_glucan_glucose",
+        "relationship": "Beta-glucans (oats/barley) and blood glucose",
+        "conditions": [
+          "Food is oats or barley.",
+          "At least 4 g beta-glucans per 30 g available carbohydrate in the quantified portion.",
+          "Claim states it is taken as part of a meal."
+        ],
+        "auto_evaluable": false
+      }
+    ],
+    "prior_approval_note": "Reduction-of-disease-risk claims outside claims defined with criteria under these or other FSSAI regulations require prior Food Authority approval under Regulation 11."
   },
   "schedule_iv": {
-    "clause": "Reg. 7(4)",
-    "status": "structured_reference_only",
-    "fortified_food_claim_count": 11
+    "clause": "Schedule IV / Reg. 7(4)",
+    "status": "fortified_food_only",
+    "claims": [
+      {
+        "nutrient": "Vitamin A",
+        "claim": "Vitamin A helps against night blindness."
+      },
+      {
+        "nutrient": "Vitamin D",
+        "claim": "Vitamin D supports strong bones."
+      },
+      {
+        "nutrient": "Vitamin B12",
+        "claim": "Vitamin B12 is important for normal nervous-system function and blood formation."
+      },
+      {
+        "nutrient": "Folate & Folic acid",
+        "claim": "Folate and folic acid are important for blood formation."
+      },
+      {
+        "nutrient": "Iron",
+        "claim": "Iron fights anemia."
+      },
+      {
+        "nutrient": "Iodine",
+        "claim": "Iodine is required for normal growth and thyroid and brain function."
+      },
+      {
+        "nutrient": "Zinc",
+        "claim": "Zinc supports a healthy immune system."
+      },
+      {
+        "nutrient": "Thiamine",
+        "claim": "Thiamine is required for normal nerve and heart function."
+      },
+      {
+        "nutrient": "Riboflavin",
+        "claim": "Riboflavin is necessary to release energy from food."
+      },
+      {
+        "nutrient": "Niacin",
+        "claim": "Niacin is necessary to release energy from food."
+      },
+      {
+        "nutrient": "Pyridoxine",
+        "claim": "Pyridoxine is necessary to release energy from food."
+      }
+    ],
+    "eligibility_note": "These claims apply to food articles fortified in accordance with the Food Safety and Standards (Fortification of Foods) Regulations, 2018."
   },
   "schedule_v": [
     {
@@ -745,7 +867,7 @@
     "non_addition_claims": "direct_disqualifier_screen_ready",
     "health_claims": "fail_closed_pending_evidence_workflow",
     "schedule_v_terms": "evidence_questionnaire_ready",
-    "status": "phase_3_schedule_v_rules_ready_build_385",
+    "status": "phase_4_schedules_structured_build_387",
     "runtime_audit": {
       "build": 381,
       "schedule_i_rules": 25,
@@ -755,6 +877,272 @@
       "auto_rules_without_nutrient_key": 0,
       "fail_closed": true,
       "current_source_verified_against_fssai_regulations_page": true
+    },
+    "schedule_iia_edible_oils": 19,
+    "schedule_iii_disease_risk_claims": 8,
+    "schedule_iv_fortified_food_claims": 11
+  },
+  "schedule_iia_edible_oils": [
+    {
+      "id": "coconut_oil",
+      "names": [
+        "Coconut Oil",
+        "Virgin Coconut Oil"
+      ],
+      "claims": [
+        "Contains medium-chain fatty acids that are easily metabolized."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "corn_oil",
+      "names": [
+        "Corn Oil"
+      ],
+      "claims": [
+        "Rich in Omega-6 PUFA (linoleic acid).",
+        "Linoleic acid is an essential fatty acid that helps maintain normal blood cholesterol levels."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "cottonseed_oil",
+      "names": [
+        "Cottonseed Oil"
+      ],
+      "claims": [
+        "Rich in Omega-6 PUFA (linoleic acid).",
+        "Linoleic acid helps maintain normal blood cholesterol levels.",
+        "Contains tocopherols, which are natural antioxidants."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "groundnut_oil",
+      "names": [
+        "Groundnut Oil",
+        "Peanut Oil"
+      ],
+      "claims": [
+        "Contains MUFA and Omega-6 PUFA that help in lowering cholesterol.",
+        "Contains tocopherols, which are natural antioxidants."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "linseed_oil",
+      "names": [
+        "Linseed Oil",
+        "Flax Seed Oil",
+        "Flaxseed Oil"
+      ],
+      "claims": [
+        "Rich in Omega-3 PUFA (alpha-linolenic acid).",
+        "Alpha-linolenic acid contributes to maintenance of normal blood cholesterol levels."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "mustard_rapeseed_low_erucic",
+      "names": [
+        "Mustard/Rapeseed Oil (Low Erucic)",
+        "Low Erucic Mustard Oil",
+        "Low Erucic Rapeseed Oil"
+      ],
+      "claims": [
+        "Rich in MUFA that helps maintain blood cholesterol levels.",
+        "Contains Omega-3 PUFA (alpha-linolenic acid).",
+        "Alpha-linolenic acid contributes to maintenance of normal blood cholesterol levels."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "mustard_oil",
+      "names": [
+        "Mustard Oil"
+      ],
+      "claims": [
+        "Contains Omega-3 PUFA.",
+        "Alpha-linolenic acid contributes to maintenance of normal blood cholesterol levels.",
+        "Contains tocopherols, which are natural antioxidants."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "olive_oil",
+      "names": [
+        "Olive Oil",
+        "Olive Pomace Oil",
+        "Extra Virgin Olive Oil"
+      ],
+      "claims": [
+        "Rich in MUFA that helps maintain normal blood cholesterol levels.",
+        "Contains polyphenols, which are natural antioxidants."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "safflower_oil",
+      "names": [
+        "Safflower Oil"
+      ],
+      "claims": [
+        "Rich in Omega-6 PUFA (linoleic acid).",
+        "Linoleic acid helps maintain normal blood cholesterol levels."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "palm_kernel_oil",
+      "names": [
+        "Palm Kernel Oil"
+      ],
+      "claims": [
+        "Contains medium-chain fatty acids that are easily metabolized."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "palmolein_oil",
+      "names": [
+        "Palmolein Oil"
+      ],
+      "claims": [
+        "Contains tocopherols and tocotrienols, which are natural antioxidants."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "rice_bran_oil",
+      "names": [
+        "Rice Bran Oil"
+      ],
+      "claims": [
+        "Contains MUFA and Omega-6 PUFA that help in lowering cholesterol.",
+        "Contains oryzanol, tocopherols and tocotrienols, which are natural antioxidants.",
+        "Oryzanol has antioxidant properties and reduces high blood cholesterol."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "sesame_oil",
+      "names": [
+        "Sesame Oil"
+      ],
+      "claims": [
+        "Contains approximately equal proportions of MUFA and Omega-6 PUFA that help in lowering cholesterol.",
+        "Contains lignans, which are natural antioxidants.",
+        "Contains tocopherols, which are natural antioxidants."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "soybean_oil",
+      "names": [
+        "Soybean Oil",
+        "Soya Bean Oil"
+      ],
+      "claims": [
+        "Contains Omega-6 PUFA and Omega-3 PUFA in proportions referenced to ICMR RDA guidance.",
+        "Linoleic acid helps maintain normal blood cholesterol levels.",
+        "Alpha-linolenic acid contributes to maintenance of normal blood cholesterol levels.",
+        "Contains tocopherols, which are natural antioxidants."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "sunflower_oil",
+      "names": [
+        "Sunflower Oil"
+      ],
+      "claims": [
+        "Rich in Omega-6 PUFA (linoleic acid).",
+        "Linoleic acid helps maintain normal blood cholesterol levels.",
+        "Contains tocopherols."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "chia_oil",
+      "names": [
+        "Chia Oil"
+      ],
+      "claims": [
+        "Rich in Omega-3 PUFA (alpha-linolenic acid).",
+        "Alpha-linolenic acid contributes to maintenance of normal blood cholesterol levels."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "avocado_oil",
+      "names": [
+        "Avocado Oil"
+      ],
+      "claims": [
+        "Rich in MUFA that helps maintain normal blood cholesterol levels."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "sunflower_high_oleic",
+      "names": [
+        "Sunflower seed Oil-High Oleic Acid",
+        "High Oleic Sunflower Oil"
+      ],
+      "claims": [
+        "Rich in MUFA that helps maintain normal blood cholesterol levels.",
+        "Contains tocopherols, which are natural antioxidants."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
+    },
+    {
+      "id": "safflower_high_oleic",
+      "names": [
+        "Safflowerseed Oil-High Oleic Acid",
+        "High Oleic Safflower Oil"
+      ],
+      "claims": [
+        "Rich in MUFA that helps maintain normal blood cholesterol levels."
+      ],
+      "clause": "Schedule IIA / Reg. 7(2A)",
+      "status": "official_reference",
+      "qualification_note": "Where the wording uses 'Rich' or 'Contains' as a nutrient-content term, the applicable Schedule I condition must also be satisfied."
     }
-  }
+  ]
 }
