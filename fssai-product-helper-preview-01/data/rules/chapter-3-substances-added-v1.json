@@ -3363,6 +3363,576 @@
       ],
       "machine_requirements_complete": true,
       "permission_note": "This is an identity/purity specification. Permission and maximum use level in a finished food remain governed separately by the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.2.11(1)",
+      "name": "Sodium alginate",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "ins": "401",
+        "cas": "9005-38-3",
+        "appearance": "White, yellowish or pale brown fibrous or granular powder",
+        "chemical_name": "Sodium alginate",
+        "empirical_formula": "(C6H7O6Na)n",
+        "equivalent_weight_average": 222
+      },
+      "requirements": [
+        {
+          "parameter": "Purity as C6H7O6Na",
+          "operator": "range",
+          "min": 91,
+          "max": 106,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 15,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Matter insoluble in water",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Viscosity of 1% solution",
+          "operator": ">=",
+          "value": 30,
+          "unit": "centipoise"
+        },
+        {
+          "parameter": "Ash on dry basis",
+          "operator": "range",
+          "min": 18,
+          "max": 27,
+          "unit": "% by mass",
+          "source_note": "Current table labels the row 'Max' while printing 18 to 27; stored as printed numeric range."
+        },
+        {
+          "parameter": "Acid insoluble ash on dry basis",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.2.11(2)",
+      "name": "Sodium carboxymethyl cellulose",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "ins": "466",
+        "cas": "9004-32-4",
+        "appearance": "White or slightly yellowish powder of very fine particles, fine granules or fine fibres; hygroscopic",
+        "chemical_name": "Sodium salt of carboxymethyl ether of cellulose",
+        "empirical_formula": "[C6H7O2(OH)x(OCH2COONa)y]n",
+        "substitution_relation": "x=2.00–2.80; y=0.20–1.00; x+y=3.00",
+        "molecular_weight_as_printed": 178.14
+      },
+      "requirements": [
+        {
+          "parameter": "Purity as sodium carboxymethyl cellulose",
+          "operator": ">=",
+          "value": 99.5,
+          "unit": "% by mass",
+          "basis": "100 minus combined sodium chloride and free glycolate"
+        },
+        {
+          "parameter": "Degree of substitution",
+          "operator": "range",
+          "min": 0.2,
+          "max": 1
+        },
+        {
+          "parameter": "Loss on drying",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Sodium chloride on dry basis",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Free glycolate on dry basis",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "pH of 1% colloidal solution",
+          "operator": "range",
+          "min": 6,
+          "max": 8.5
+        },
+        {
+          "parameter": "Combined sodium chloride and free glycolate on dry basis",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 2,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.2.11(3)",
+      "name": "Sodium carboxymethyl cellulose, enzyme hydrolysed",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "common_name": "Enzymatically hydrolyzed sodium carboxymethyl cellulose",
+        "ins": "469",
+        "appearance": "White or slightly yellowish or greyish, odourless, slightly hygroscopic granular or fibrous powder",
+        "chemical_name": "Carboxymethyl cellulose, sodium, partially enzymatically hydrolyzed",
+        "empirical_formula": "[C6H7O2(OH)x(OCH2COONa)y]n",
+        "substitution_relation": "x=1.50–2.80; y=0.20–1.50; x+y=3.00",
+        "molecular_weight_as_printed": 178.14
+      },
+      "requirements": [
+        {
+          "parameter": "Loss on drying",
+          "operator": "<=",
+          "value": 12,
+          "unit": "%"
+        },
+        {
+          "parameter": "pH",
+          "operator": "range",
+          "min": 6,
+          "max": 8.5
+        },
+        {
+          "parameter": "Sodium chloride and sodium glycolate",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Degree of substitution",
+          "operator": "range",
+          "min": 0.2,
+          "max": 1.5
+        },
+        {
+          "parameter": "Residual enzyme activity",
+          "operator": "pass",
+          "method": "BIS standard"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.2.11(4)",
+      "name": "Agar",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "common_names": [
+          "Agar-agar",
+          "Gelose",
+          "Japanese isinglass"
+        ],
+        "ins": "406",
+        "cas": "9002-18-0",
+        "definition": "Dried hydrophilic colloidal polygalactoside extracted from Gelidiella, Gracilaria or other red algae of class Rhodophyceae.",
+        "appearance": "White to pale-yellow bundles/strips, cut, flaked, granulated or powdered form."
+      },
+      "requirements": [
+        {
+          "parameter": "Water absorption",
+          "operator": "pass",
+          "method": "BIS standard"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 6.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Gelatin",
+          "operator": "pass",
+          "method": "BIS standard"
+        },
+        {
+          "parameter": "Insoluble matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Starch and dextrins",
+          "operator": "pass",
+          "method": "BIS standard"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.2.11(5)",
+      "name": "Gum Arabic or Acacia Gum",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "common_name": "Acacia gum",
+        "ins": "414",
+        "cas": "9000-01-5",
+        "source": "Dried gummy exudation from stems and branches of Acacia senegal (L.) wild, Acacia seyal (L.) wild, or related Acacia species.",
+        "forms": [
+          "whole spheroidal tears",
+          "flakes",
+          "granules",
+          "powder",
+          "roller dried",
+          "spray dried"
+        ]
+      },
+      "requirements": [
+        {
+          "parameter": "Loss on drying — granular material",
+          "operator": "<=",
+          "value": 15,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Loss on drying — spray-dried material",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 4,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Insoluble matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Starch and dextrins",
+          "operator": "pass",
+          "method": "BIS standard"
+        },
+        {
+          "parameter": "Tannin-bearing gums",
+          "operator": "pass",
+          "method": "BIS standard"
+        },
+        {
+          "parameter": "Salmonella",
+          "operator": "negative",
+          "basis": "per g"
+        },
+        {
+          "parameter": "Escherichia coli",
+          "operator": "negative",
+          "basis": "per g"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 2,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.2.11(6)",
+      "name": "Tragacanth gum",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "ins": "413",
+        "cas": "9000-65-1",
+        "source": "Dried gummy exudation from Astragalus strobiliferus or other Astragalus species.",
+        "appearance": "White to yellowish-white, nearly odourless powder; unground material may be flattened/lamellated/curved or spiral linear pieces."
+      },
+      "requirements": [
+        {
+          "parameter": "Loss on drying",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 4,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Starch and dextrins",
+          "operator": "pass",
+          "method": "BIS standard"
+        },
+        {
+          "parameter": "Tannin-bearing gums",
+          "operator": "pass",
+          "method": "BIS standard"
+        },
+        {
+          "parameter": "Viscosity of 1% solution",
+          "operator": ">=",
+          "value": 250,
+          "unit": "source viscosity units"
+        },
+        {
+          "parameter": "Karaya gum test",
+          "operator": "pass",
+          "method": "BIS standard"
+        },
+        {
+          "parameter": "Salmonella",
+          "operator": "negative",
+          "basis": "per g"
+        },
+        {
+          "parameter": "Escherichia coli",
+          "operator": "negative",
+          "basis": "per g"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 2,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.2.11(7)",
+      "name": "Gum Ghatti",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "common_names": [
+          "Indian gum",
+          "Ghatti gum",
+          "Gum ghati"
+        ],
+        "ins": "419",
+        "cas": "9000-28-6",
+        "source": "Dried gummy exudation from Anogeissus latifolia Wall (family Combretaceae).",
+        "description": "Mainly calcium salt, occasionally magnesium salt, of high molecular weight polysaccharide."
+      },
+      "requirements": [
+        {
+          "parameter": "Loss on drying",
+          "operator": "<=",
+          "value": 14,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 6,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Insoluble matter",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Starch and dextrins",
+          "operator": "pass",
+          "method": "BIS standard"
+        },
+        {
+          "parameter": "Tannin-bearing gums",
+          "operator": "pass",
+          "method": "BIS standard"
+        },
+        {
+          "parameter": "Salmonella",
+          "operator": "negative",
+          "basis": "per g"
+        },
+        {
+          "parameter": "Escherichia coli",
+          "operator": "negative",
+          "basis": "per g"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.2.11(8)",
+      "name": "Calcium Alginate",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "ins": "404",
+        "cas": "9005-35-0",
+        "appearance": "White to yellowish fibrous or granular powder",
+        "chemical_name": "Calcium alginate",
+        "empirical_formula_as_extracted": "[(C6H706)2Ca]",
+        "equivalent_weight_average": 219,
+        "source_note": "Empirical formula retained exactly as extracted from current official FSSAI PDF."
+      },
+      "requirements": [
+        {
+          "parameter": "Purity as source-printed formula on dry basis",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Moisture after drying at 105°C for 4 h",
+          "operator": "<=",
+          "value": 15,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Insoluble matter",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Ash",
+          "operator": "range",
+          "min": 18,
+          "max": 27,
+          "unit": "% by mass",
+          "source_note": "Table prints 'Max' while giving 18–27; stored as numeric range."
+        },
+        {
+          "parameter": "Total plate count",
+          "operator": "<=",
+          "value": 5000,
+          "unit": "per g"
+        },
+        {
+          "parameter": "Yeasts and moulds",
+          "operator": "<=",
+          "value": 500,
+          "unit": "per g"
+        },
+        {
+          "parameter": "Arsenic",
+          "operator": "<=",
+          "value": 3,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/kg"
+        }
+      ],
+      "machine_requirements_complete": true,
+      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A."
     }
   ],
   "coverage": {
@@ -3370,8 +3940,8 @@
     "other_substances_exact_limit_routes": 5,
     "other_substances_auto_apply": 0,
     "other_substances_fail_closed": true,
-    "build": 440,
-    "identity_purity_standards_structured": 42,
+    "build": 442,
+    "identity_purity_standards_structured": 50,
     "food_colour_clause12_effective_standard_loaded": true,
     "food_colour_amendment_84_effective_from": "2026-02-01",
     "food_colour_legacy_omission_policy_loaded": true,
@@ -3394,7 +3964,11 @@
     "preservative_section": "3.2.9_complete",
     "acidity_regulator_standards_loaded": 9,
     "acidity_regulator_standards_total": 9,
-    "acidity_regulator_section": "3.2.10_complete"
+    "acidity_regulator_section": "3.2.10_complete",
+    "gelling_thickener_stabilizer_loaded": 8,
+    "gelling_thickener_stabilizer_total": 16,
+    "gelling_thickener_stabilizer_stage": "3.2.11(1)_to_(8)_loaded",
+    "chapter_3_next_standard": "3.2.11(9) Alginic acid"
   },
   "effective_amendments": [
     {
