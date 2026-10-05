@@ -696,8 +696,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <section id="quality" class="view hidden">
 <div class="card">
-<div class="section-title"><h2>Label requirements — Caffeinated Beverage</h2><span>General + product-specific + formulation-triggered</span></div>
-<div class="notice oknote"><b>How this page works:</b> PMSV combines the mandatory pre-packaged-food requirements under the Food Safety and Standards (Labelling and Display) Regulations, 2020 with the additional declarations required specifically for Caffeinated Beverage under regulation 2.10.6(2). Ingredient-triggered declarations below update from the formulation you entered.</div>
+<div class="section-title"><h2 id="labelPageTitle">Label requirements</h2><span>General + product-specific + formulation-triggered</span></div>
+<div id="labelScopeNote" class="notice oknote"><b>How this page works:</b> PMSV applies the general pre-packaged-food requirements under the Food Safety and Standards (Labelling and Display) Regulations, 2020. Product-specific declarations are shown only when PMSV has an exact verified rule for the selected product. Ingredient-triggered declarations update from the formulation you entered.</div>
 </div>
 
 <div class="card">
@@ -706,7 +706,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   <div class="field">
     <label>Declared serving / pack size (ml)</label>
     <input id="labelServingMl" type="number" min="1" step="1" value="250">
-    <small>Used only to calculate the product-specific “High Caffeine: X mg/serving size” declaration.</small>
+    <small id="labelServingHelp">Used for applicable per-serving label calculations. Product-specific calculations are enabled only when an exact rule is loaded.</small>
   </div>
   <div class="field">
     <label>Current formulation quantity</label>
@@ -715,18 +715,19 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   </div>
 </div>
 <div id="labelIngredientPreview" class="notice"></div>
-<div id="labelCaffeinePreview" class="notice"></div>
+<div id="labelProductSpecificStatus" class="notice"></div>
+<div id="labelCaffeinePreview" class="notice hidden"></div>
 <div id="labelTriggeredRequirements"></div>
 </div>
 
 <div class="card">
 <div class="section-title"><h2>Mandatory label requirements — pre-packaged food</h2><span>FSSAI Labelling & Display Regulations</span></div>
 <div class="grid2">
-<div class="item"><b>1. Name of the food — Front of Pack</b><small>Use the name that indicates the true nature of the food. If this formulation is classified under the standardized product, use <b>Caffeinated Beverage</b>. A brand/fancy name may be additional, not a substitute. <span class="clause">Reg. 5(1)</span></small></div>
+<div class="item"><b>1. Name of the food — Front of Pack</b><small>Use the name that indicates the true nature of the food. For a standardized food, use the applicable standardized name or other name permitted by the governing FSSAI provision. A brand/fancy name may be additional, not a substitute. <span class="clause">Reg. 5(1)</span></small></div>
 
 <div class="item"><b>2. List of ingredients</b><small>Declare “Ingredients” / “List of Ingredients” and list ingredients in <b>descending order by weight or volume at manufacture</b>. Added water and compound ingredients must be handled as required. Quantitative ingredient declaration applies where an ingredient is emphasized or characterises the food. <span class="clause">Reg. 5(2)</span></small></div>
 
-<div class="item"><b>3. Nutrition information</b><small>For this beverage, declare nutrition per <b>100 ml or single-consumption pack</b> and the applicable per-serve % contribution to RDA. Include energy, protein, carbohydrate, total sugars, added sugars, total fat, saturated fat, trans fat, cholesterol where applicable, and sodium. Also declare serving size and number of servings per pack. <span class="clause">Reg. 5(3)</span></small></div>
+<div class="item"><b>3. Nutrition information</b><small>Declare nutrition in the format applicable to the selected food and package under Regulation 5(3), including the required nutrient declarations and applicable per-serve % contribution to RDA. PMSV keeps any nutrient field unavailable when its calculation basis is not fully verified. <span class="clause">Reg. 5(3)</span></small></div>
 
 <div class="item"><b>4. Veg / Non-Veg declaration</b><small>Display the applicable prescribed symbol on the principal display panel close to the product/brand name, unless a specific exemption legally applies to the finished product. The decision must consider <b>ingredients, additives and processing aids</b>, not only the main raw materials. <span class="clause">Reg. 5(4)</span></small></div>
 
@@ -752,7 +753,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 </div>
 
-<div class="card">
+<div id="caffeinatedLabelSpecific" class="card hidden">
 <div class="section-title"><h2>Additional declarations specific to Caffeinated Beverage</h2><span>Reg. 2.10.6(2)</span></div>
 <div class="grid2">
 <div class="item"><b>High caffeine declaration</b><small>Declare <b>“High Caffeine: X mg/serving size”</b>, where X is the caffeine present in the declared pack/serve. PMSV calculates the current value above when caffeine and serving size are available.</small></div>
@@ -1722,7 +1723,31 @@ function renderLabelRequirements(){
  const preview=document.getElementById('labelIngredientPreview');
  const caffeinePreview=document.getElementById('labelCaffeinePreview');
  const triggers=document.getElementById('labelTriggeredRequirements');
+ const pageTitle=document.getElementById('labelPageTitle');
+ const scopeNote=document.getElementById('labelScopeNote');
+ const productSpecificStatus=document.getElementById('labelProductSpecificStatus');
+ const caffeinatedSpecific=document.getElementById('caffeinatedLabelSpecific');
+ const servingHelp=document.getElementById('labelServingHelp');
  if(!mass&&!preview&&!caffeinePreview&&!triggers)return;
+
+ const selectedProduct=productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
+ const selectedName=selectedProduct?.name||currentProductProfile()?.name||'';
+ const isCaffeinated=normIngredient(selectedName)==='caffeinated beverage';
+ if(pageTitle)pageTitle.textContent='Label requirements'+(selectedName?' — '+selectedName:'');
+ if(scopeNote){
+   scopeNote.innerHTML='<b>How this page works:</b> PMSV applies the general pre-packaged-food requirements under the Food Safety and Standards (Labelling and Display) Regulations, 2020. '+(selectedName?'Selected product: <b>'+esc(selectedName)+'</b>. ':'Select a standardized product to add verified product-specific declarations. ')+'Product-specific declarations are shown only when an exact rule is loaded; PMSV does not carry Caffeinated Beverage warnings into unrelated products.';
+ }
+ if(productSpecificStatus){
+   productSpecificStatus.className=isCaffeinated?'notice oknote':'notice';
+   productSpecificStatus.innerHTML=isCaffeinated
+     ? '<b>Product-specific label rule loaded:</b> Caffeinated Beverage · FSSR 2.10.6(2). The caffeine declaration and mandatory caution/daily-consumption statements below are enabled.'
+     : (selectedName
+        ? '<b>Product-specific label rule:</b> No machine-verified special declaration has yet been loaded for <b>'+esc(selectedName)+'</b>. General FSSAI label rules and formulation-triggered checks remain applicable; PMSV will not infer special warnings from a similar product.'
+        : '<b>Product-specific label rule:</b> Select a standardized product first. General FSSAI label rules and formulation-triggered checks remain available.');
+ }
+ if(caffeinatedSpecific)caffeinatedSpecific.classList.toggle('hidden',!isCaffeinated);
+ if(caffeinePreview)caffeinePreview.classList.toggle('hidden',!isCaffeinated);
+ if(servingHelp)servingHelp.textContent=isCaffeinated?'Used to calculate the verified “High Caffeine: X mg/serving size” declaration for Caffeinated Beverage.':'Used for applicable per-serving label calculations. No product-specific serving calculation is enabled for the current selection.';
 
  const total=totalFormulaKg();
  if(mass)mass.innerHTML=total>0?'<b>'+fmt(total,6)+' kg</b>':'Enter formulation ingredients first.';
@@ -1738,7 +1763,7 @@ function renderLabelRequirements(){
 
  const serving=Math.max(1,Number(document.getElementById('labelServingMl')?.value||250));
  const caffeineItem=formulationIngredients.find(x=>normIngredient(x.name)==='caffeine');
- if(caffeinePreview){
+ if(caffeinePreview&&isCaffeinated){
    if(caffeineItem&&total>0){
      const mgL=usageForIngredient(caffeineItem).mgL;
      const mgServe=mgL*(serving/1000);
@@ -3022,6 +3047,7 @@ function showSelectedCatalogProduct(p){
      renderProcessingQualifierUI();
      renderProductContaminants();
      renderProductMicrobiology();
+     renderLabelRequirements();
      openTab('formulation',{updateHash:true,save:true});
      window.scrollTo({top:0,behavior:'smooth'});
    });
@@ -3389,6 +3415,7 @@ async function loadProductMaster(){
  }
  renderProductMaster();
  renderProductMicrobiology();
+ renderLabelRequirements();
 }
 document.getElementById('productSearch')?.addEventListener('input',renderProductSearch);
 document.getElementById('productCategorySelect')?.addEventListener('change',()=>{
