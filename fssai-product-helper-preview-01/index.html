@@ -1813,12 +1813,30 @@ function labelAllergenAssessment(){
  return {declarations:[...declarations],review};
 }
 function labelScheduleIiPresenceAssessments(){
- const rules=labelDb?.schedule_ii?.ingredient_presence_rules||[];
+ const rules=(labelDb?.schedule_ii?.ingredient_presence_rules||[]).filter(rule=>rule.status==='active');
  return rules.map(rule=>{
    const aliases=new Set((rule.aliases||[]).map(normIngredient));
    const matched=formulationIngredients.filter(item=>aliases.has(normIngredient(item.name)));
    return {rule,matched,triggered:matched.length>0};
  });
+}
+function labelArticleWarningRules(productName){
+ const n=normIngredient(productName);
+ if(!n)return [];
+ return (labelDb?.schedule_ii?.article_warning_rules||[]).filter(rule=>rule.status==='active'&&(rule.exact_names||[]).some(name=>normIngredient(name)===n));
+}
+function labelProductIngredientAssessments(productName){
+ const n=normIngredient(productName);
+ const rules=(labelDb?.schedule_ii?.product_ingredient_rules||[]).filter(rule=>rule.status==='active');
+ return rules.map(rule=>{
+   const productMatched=!!n&&(rule.eligible_product_terms||[]).some(term=>n.includes(normIngredient(term)));
+   const aliases=new Set((rule.ingredient_aliases||[]).map(normIngredient));
+   const matched=formulationIngredients.filter(item=>aliases.has(normIngredient(item.name)));
+   return {rule,productMatched,matched,triggered:productMatched&&matched.length>0};
+ });
+}
+function labelUniversalProcessRules(){
+ return (labelDb?.schedule_ii?.universal_process_rules||[]).filter(rule=>rule.status==='active');
 }
 function labelArticleRuleCandidates(productName){
  const n=normIngredient(productName);
@@ -1882,12 +1900,14 @@ function renderLabelRequirements(){
         : '<b>Product-specific label rule:</b> Select a standardized product first. General FSSAI label rules and formulation-triggered checks remain available.');
  }
  const articleCandidates=labelArticleRuleCandidates(selectedName);
- const articleAssessments=renderLabelArticleQualifierControls(articleCandidates,selectedName);
+ const universalProcessRules=labelUniversalProcessRules();
+ const qualifierCandidates=[...articleCandidates,...universalProcessRules];
+ const articleAssessments=renderLabelArticleQualifierControls(qualifierCandidates,selectedName||'__global__');
  if(conditionalArticleStatus){
-   conditionalArticleStatus.classList.toggle('hidden',articleCandidates.length===0);
-   if(articleCandidates.length){
+   conditionalArticleStatus.classList.toggle('hidden',qualifierCandidates.length===0);
+   if(qualifierCandidates.length){
      const evaluated=new Map(articleAssessments.map(x=>[x.rule.id,x]));
-     const lines=articleCandidates.map(rule=>{
+     const lines=qualifierCandidates.map(rule=>{
        const a=evaluated.get(rule.id);
        if(!a)return '• <b>'+esc(rule.requirement_summary)+'</b> <small>Qualifier UI not yet structured; remains fail-closed.</small>';
        if(a.status==='triggered')return '• <b>REQUIRED:</b> '+esc(rule.requirement_summary);
@@ -1896,7 +1916,7 @@ function renderLabelRequirements(){
      });
      const hasTriggered=articleAssessments.some(x=>x.triggered);
      conditionalArticleStatus.className=hasTriggered?'notice oknote':'notice';
-     conditionalArticleStatus.innerHTML='<b>Conditional Schedule-II article assessment:</b><br>'+lines.join('<br>');
+     conditionalArticleStatus.innerHTML='<b>Conditional Schedule-II assessment:</b><br>'+lines.join('<br>');
    }
  }
  if(caffeinatedSpecific)caffeinatedSpecific.classList.toggle('hidden',!isCaffeinated);
@@ -1932,6 +1952,8 @@ function renderLabelRequirements(){
    const allergens=allergenAssessment.declarations;
    const sweeteners=labelSweetenerTriggers();
    const additiveItems=formulationIngredients.map((x,i)=>({x,q:qualifyIngredient(x)})).filter(z=>z.q.kind==='additive');
+   const articleWarnings=labelArticleWarningRules(selectedName);
+   const productIngredientChecks=labelProductIngredientAssessments(selectedName);
    const blocks=[];
    blocks.push('<div class="item"><b>Allergen declaration assessment</b><small>'+(allergens.length?'Current direct declaration: <b>Contains: '+allergens.map(esc).join(', ')+'</b>.':'No direct allergen declaration is generated from the currently entered ingredient identities.')+(allergenAssessment.review.length?'<br><br><b>Verification required:</b><br>• '+allergenAssessment.review.map(esc).join('<br>• '):'')+'<br><br>Compound ingredients and cross-contact still require separate review before artwork approval.</small></div>');
    blocks.push('<div class="item"><b>Food-additive declaration</b><small>'+(additiveItems.length?'Detected additive(s): '+additiveItems.map(z=>esc(z.x.name)+(z.q.appendix&&z.q.appendix.ins?' (INS '+esc(z.q.appendix.ins)+')':'')).join(', ')+'. Declare the applicable <b>functional class + specific name/INS</b> in the ingredient list.':'No ingredient currently classified by PMSV as an Appendix-A food additive requiring a generated additive line.')+'</small></div>');
@@ -1949,6 +1971,14 @@ function renderLabelRequirements(){
      blocks.push('<div class="item"><b>Sweetener-specific mandatory declarations</b><small>'+text+'</small></div>');
    }else{
      blocks.push('<div class="item"><b>Sweetener-specific declarations</b><small>No Schedule-II sweetener trigger has been detected from the current ingredient names.</small></div>');
+   }
+
+   if(articleWarnings.length){
+     blocks.push('<div class="item"><b>Article-specific warnings</b><small>'+articleWarnings.map(rule=>'• <b>'+esc(rule.requirement_summary)+'</b>').join('<br><br>')+'</small></div>');
+   }
+   const productIngredientTriggered=productIngredientChecks.filter(x=>x.triggered);
+   if(productIngredientTriggered.length){
+     blocks.push('<div class="item"><b>Product + ingredient Schedule-II declarations</b><small>'+productIngredientTriggered.map(x=>'• <b>'+esc(x.rule.requirement_summary)+'</b><br>Detected ingredient: '+x.matched.map(m=>esc(m.name)).join(', ')).join('<br><br>')+'</small></div>');
    }
 
    const presenceChecks=labelScheduleIiPresenceAssessments();
@@ -4226,7 +4256,7 @@ function labelProductRuleFor(name){
 async function loadLabelDb(){
  const status=document.getElementById('labelDbStatus');
  try{
-   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=365',{cache:'reload'});
+   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=368',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    labelDb=await res.json();
    if(status){
