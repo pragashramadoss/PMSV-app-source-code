@@ -1,0 +1,569 @@
+{
+  "schema_version": "1.0",
+  "database_id": "pmsv-fssai-packaging-current",
+  "title": "PMSV FSSAI Packaging Compliance Rule Core",
+  "last_verified": "2026-10-05",
+  "runtime_ai_required": false,
+  "source_policy": {
+    "regulatory_evidence": "FSSAI official sources only",
+    "fail_closed": true,
+    "note": "Schedule IV is an indicative list except where a product-specific amendment imposes an explicit restriction. PMSV never treats absence from the indicative list as automatic non-compliance."
+  },
+  "current_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Food Safety and Standards (Packaging) Regulations, 2018 — Compendium Version V",
+      "version": "Version V (02.04.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Packaging_V_%2002-04-2025.pdf",
+      "status": "operative_base_compendium"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Food Safety and Standards (Packaging) Amendment Regulations, 2026 — Pan Masala",
+      "effective_date": "2026-08-10",
+      "url": "https://fssai.gov.in/docs/food-law/notice-comment/Final%20Food%20Safety%20and%20Standards%20%28Packaging%29%20Amendment%20Regulations%2C%202026.pdf",
+      "status": "operative_amendment"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "Guidelines for acceptance of recycled Polyethylene terephthalate (PET) as Food Contact Material (FCM-rPET)",
+      "notified_date": "2025-05-23",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Guidelines%20for%20acceptance%20of%20recycled%20Polyethylene%20terephthalate_PET_as%20Food%20Contact%20Material.pdf",
+      "status": "operative_guideline"
+    }
+  ],
+  "excluded_drafts": [
+    {
+      "title": "Draft Packaging Amendment Regulations, 2026 — additional definitions",
+      "date": "2026-03-11",
+      "reason": "Draft only; not applied unless finally notified."
+    }
+  ],
+  "general_requirements": [
+    {
+      "id": "reg3_1",
+      "clause": "Reg. 3(1)",
+      "text": "Packaging material shall comply with the Packaging Regulations; where Indian Standards are unavailable, relevant international standards may be complied with."
+    },
+    {
+      "id": "reg3_2",
+      "clause": "Reg. 3(2)",
+      "text": "Any material that comes or is likely to come into direct contact with food during packaging, preparation, storage, wrapping, transportation, sale or service shall be food grade."
+    },
+    {
+      "id": "reg3_3",
+      "clause": "Reg. 3(3)",
+      "text": "Packaging shall be suitable for the product, storage conditions, filling/sealing equipment and transportation conditions."
+    },
+    {
+      "id": "reg3_4",
+      "clause": "Reg. 3(4)",
+      "text": "Packaging shall withstand mechanical, chemical and thermal stresses encountered during normal transportation; flexible/semi-rigid containers may require overwrap."
+    },
+    {
+      "id": "reg3_5",
+      "clause": "Reg. 3(5)",
+      "text": "Food shall be packed in clean, hygienic and tamper-proof packaging or containers."
+    },
+    {
+      "id": "reg3_6",
+      "clause": "Reg. 3(6)",
+      "text": "Sealing material shall be compatible with the product, container and closure system."
+    },
+    {
+      "id": "reg3_7",
+      "clause": "Reg. 3(7)",
+      "text": "Tin containers once used shall not be reused for packaging food."
+    },
+    {
+      "id": "reg3_8",
+      "clause": "Reg. 3(8)",
+      "text": "Reused plastic containers of 5 L and above and reused glass bottles shall be suitably durable and easy to clean/disinfect."
+    },
+    {
+      "id": "reg3_9",
+      "clause": "Reg. 3(9)",
+      "text": "Printing inks for food packages shall conform to IS 15495."
+    },
+    {
+      "id": "reg3_10",
+      "clause": "Reg. 3(10)",
+      "text": "Printed surfaces of packaging material shall not come into direct contact with food."
+    },
+    {
+      "id": "reg3_11",
+      "clause": "Reg. 3(11)",
+      "text": "Newspaper or similar material shall not be used for storing or wrapping food."
+    },
+    {
+      "id": "reg3_12",
+      "clause": "Reg. 3(12)",
+      "text": "For multilayer packaging, food-contact or likely-food-contact layers shall meet the applicable Schedule I, II and III requirements."
+    },
+    {
+      "id": "reg3_13",
+      "clause": "Reg. 3(13)",
+      "text": "Schedule I, II and III materials shall be compatible with intended use and shall not alter food quality or safety."
+    },
+    {
+      "id": "reg3_14",
+      "clause": "Reg. 3(14)",
+      "text": "The FBO shall obtain a certificate of conformity from an NABL-accredited laboratory against these regulations for packaging that comes or is likely to come into direct contact with food."
+    }
+  ],
+  "primary_material_rules": {
+    "paper_board": {
+      "clause": "Reg. 4(1)",
+      "checks": [
+        "Uniform formation, thickness and substance.",
+        "Free from visible specks, grease marks, cuts, pinholes and other blemishes.",
+        "Food-contact paper shall be food grade and free from contaminants.",
+        "Applicable Schedule I Indian Standard shall be met."
+      ]
+    },
+    "glass": {
+      "clause": "Reg. 4(2)",
+      "checks": [
+        "As far as possible free from blisters, mould marks, stones, chippings, cords, seeds and visible defects.",
+        "Smooth surface without cracks, pinholes or sharp edges.",
+        "Sealing surface free from hairline cracks and prominent seam marks."
+      ]
+    },
+    "metal": {
+      "clause": "Reg. 4(3)",
+      "prohibited_conditions": [
+        "Rusty containers",
+        "Chipped and rusty enamelled containers",
+        "Copper or brass containers not properly tinned"
+      ],
+      "checks": [
+        "Use appropriate grades of metal/alloy where applicable.",
+        "Applicable Schedule II Indian Standard shall be met."
+      ]
+    },
+    "plastic": {
+      "clause": "Reg. 4(4)",
+      "overall_migration": {
+        "max_mg_per_kg": 60,
+        "max_mg_per_dm2": 10,
+        "test_standard": "IS 9845",
+        "visible_colour_migration_allowed": false
+      },
+      "specific_migration_limits_mg_per_kg": {
+        "Barium": 1,
+        "Cobalt": 0.05,
+        "Copper": 5,
+        "Iron": 48,
+        "Lithium": 0.6,
+        "Manganese": 0.6,
+        "Zinc": 25,
+        "Antimony": 0.04,
+        "DEHP": 1.5
+      },
+      "pigment_colourant_standard": "IS 9833",
+      "recycled_pet": {
+        "allowed": true,
+        "condition": "Only FCM-rPET complying with FSSAI-notified standards/guidelines and using FSSAI-approved recycling technology.",
+        "guideline_source": "Guidelines for acceptance of recycled PET as Food Contact Material (FCM-rPET), notified 23.05.2025"
+      }
+    }
+  },
+  "drinking_water_special_route": {
+    "product_terms": [
+      "packaged drinking water",
+      "natural mineral water",
+      "mineral water"
+    ],
+    "clause": "Reg. 4(4)(a)",
+    "listed_materials": [
+      {
+        "material": "Polyethylene (PE)",
+        "standard": "IS 10146"
+      },
+      {
+        "material": "Polyvinyl chloride (PVC)",
+        "standard": "IS 10151"
+      },
+      {
+        "material": "PET/PBT",
+        "standard": "IS 12252"
+      },
+      {
+        "material": "Polypropylene (PP)",
+        "standard": "IS 10910"
+      },
+      {
+        "material": "Food-grade polycarbonate",
+        "standard": "IS 14971"
+      },
+      {
+        "material": "Polystyrene",
+        "standard": "IS 10142"
+      },
+      {
+        "material": "Sterile glass",
+        "standard": "Reg. 4(2)"
+      }
+    ],
+    "transparency_requirement": "Colourless, transparent and tamper-proof; transparency not less than 85% light transmittance for listed bottle/container route, subject to the additional food-grade compatible-material proviso.",
+    "pigments_over_5l": "Pigments/colorants conforming to IS 9833 may be allowed in ≥5 L polycarbonate and PET containers; transparency remains ≥85% for that route.",
+    "other_food_grade_materials_proviso": "Other food-grade packaging materials compatible with the water may also be used; in such cases the transparency requirement does not apply."
+  },
+  "schedule_i_paper_board": [
+    {
+      "standard": "IS 6622",
+      "material": "Grease proof paper"
+    },
+    {
+      "standard": "IS 7161",
+      "material": "Vegetable parchment / grease proof paper / aluminium foil laminate"
+    },
+    {
+      "standard": "IS 8970",
+      "material": "Aluminium foil laminates for packaging"
+    },
+    {
+      "standard": "IS 6615",
+      "material": "General-purpose packing or wrapping paper"
+    },
+    {
+      "standard": "IS 1776",
+      "material": "Folding box board, uncoated"
+    },
+    {
+      "standard": "IS 2771 Part 1",
+      "material": "Corrugated fibre board boxes"
+    }
+  ],
+  "schedule_i_note": "Wax used for coating paper/board shall be paraffin wax conforming to Type I of IS 4654.",
+  "schedule_ii_metal": [
+    {
+      "standard": "IS 1993 / ISO 11949",
+      "material": "Cold-reduced electrolytic tinplate"
+    },
+    {
+      "standard": "IS 12591 / ISO 11950",
+      "material": "Cold-reduced electrolytic chromium/chromium-oxide coated steel"
+    },
+    {
+      "standard": "IS 737",
+      "material": "Wrought aluminium and aluminium-alloy sheet/strip for general engineering"
+    },
+    {
+      "standard": "IS 15392",
+      "material": "Aluminium and aluminium-alloy bare foil for food packaging"
+    },
+    {
+      "standard": "IS 1994",
+      "material": "Crown closures"
+    },
+    {
+      "standard": "IS 9396 Part 1",
+      "material": "Round open-top sanitary cans for foods and drinks"
+    },
+    {
+      "standard": "IS 9396 Part 2",
+      "material": "Round open-top sanitary cans for foods and drinks"
+    }
+  ],
+  "schedule_iii_plastic": [
+    {
+      "standard": "IS 10146",
+      "material": "Polyethylene"
+    },
+    {
+      "standard": "IS 10142",
+      "material": "Polystyrene"
+    },
+    {
+      "standard": "IS 10151",
+      "material": "PVC and copolymers"
+    },
+    {
+      "standard": "IS 10910",
+      "material": "Polypropylene and copolymers"
+    },
+    {
+      "standard": "IS 11434",
+      "material": "Ionomer resins"
+    },
+    {
+      "standard": "IS 11704",
+      "material": "Ethylene acrylic acid copolymers"
+    },
+    {
+      "standard": "IS 12252",
+      "material": "PET/PBT for safe food contact"
+    },
+    {
+      "standard": "IS 12247",
+      "material": "Nylon 6 polymer"
+    },
+    {
+      "standard": "IS 13601",
+      "material": "Ethylene vinyl acetate copolymers"
+    },
+    {
+      "standard": "IS 13576",
+      "material": "Ethylene methacrylic acid copolymers/terpolymers"
+    },
+    {
+      "standard": "IS 14971",
+      "material": "Polycarbonate resins"
+    },
+    {
+      "standard": "IS 14636",
+      "material": "Flexible packaging materials for edible oils, ghee and vanaspati"
+    },
+    {
+      "standard": "IS 13193",
+      "material": "PET/PBT for moulding and extrusion"
+    },
+    {
+      "standard": "IS 2508",
+      "material": "Polyethylene films and sheets"
+    },
+    {
+      "standard": "IS 14500",
+      "material": "LLDPE films"
+    },
+    {
+      "standard": "IS 7328",
+      "material": "HDPE materials for moulding and extrusion"
+    },
+    {
+      "standard": "IS 14999",
+      "material": "Melamine-formaldehyde resins"
+    },
+    {
+      "standard": "IS 2508",
+      "material": "Low-density polyethylene films"
+    },
+    {
+      "standard": "IS 7408 Part 2",
+      "material": "Blow-moulded polyolefin containers >5 L to 60 L"
+    },
+    {
+      "standard": "IS 14995",
+      "material": "Stretch cling films"
+    }
+  ],
+  "schedule_iv": {
+    "indicative": true,
+    "note": "The Schedule IV list is suggestive and does not restrict other packaging materials that comply with the specified standards.",
+    "categories": [
+      {
+        "id": "milk",
+        "name": "Milk and milk products",
+        "fcs_prefixes": [
+          "1"
+        ],
+        "materials": [
+          "Glass bottle with metal/PP/HDPE caps",
+          "Rigid PET container with PP/HDPE caps",
+          "Rigid HDPE/PP/PS container with PP/HDPE caps",
+          "PE or PP-based co-extruded multilayer flexible pouch",
+          "Aseptic paperboard/aluminium-foil/PE multilayer structure",
+          "Tinplate container",
+          "Paper-based lined carton with aluminium-foil laminate liner",
+          "PP/PS cup with paper or peel-off lid",
+          "Wax-coated paper butter wrapper",
+          "Paper/paperboard folding carton with butter paper",
+          "Metal container with PP/metal/plastic closure",
+          "PET container with plastic lid",
+          "Thermoform cup/tray with paper or peel-off lid",
+          "Paper/paperboard setup box with plastic-film or grease-proof-paper inside",
+          "Plastic multilayer flexible laminated heat-sealed pouch",
+          "Mud/clay pot",
+          "Thermoformed plastic blister container with aluminium-foil or PE lid"
+        ]
+      },
+      {
+        "id": "fats",
+        "name": "Fats, oils and fat emulsions",
+        "fcs_prefixes": [
+          "2"
+        ],
+        "materials": [
+          "Tinplate container",
+          "Glass bottle with metal/PP/HDPE caps",
+          "Rigid HDPE jar",
+          "PET bottle/jar with plastic caps",
+          "Multilayer laminated or co-extruded plastic pouch",
+          "Aseptic paperboard/aluminium-foil/PE multilayer structure",
+          "Plastic laminated pouch in duplex board box (bag-in-box)",
+          "Thermoformed plastic jar with plastic caps",
+          "Paper-based lined carton with aluminium-foil laminate liner"
+        ]
+      },
+      {
+        "id": "fruit_veg",
+        "name": "Fruit & Vegetable products",
+        "fcs_prefixes": [
+          "4"
+        ],
+        "materials": [
+          "Glass bottle with metal/PP/HDPE caps",
+          "Aluminium can with easy-open end",
+          "Tinplate container",
+          "Aseptic paperboard/aluminium-foil/PE multilayer structure",
+          "Rigid HDPE or co-extruded plastic jar with PP/HDPE caps",
+          "Plastic stand-up pouch with spout",
+          "Flexible PE or laminated plastic pouch",
+          "Thermoformed plastic blister container with aluminium-foil or PE lid",
+          "Co-extruded plastic jar with metal caps",
+          "Plastic tray with overwrap",
+          "PET/PP/PVC punnets"
+        ]
+      },
+      {
+        "id": "confectionery",
+        "name": "Sweets and Confectionery",
+        "fcs_prefixes": [
+          "5"
+        ],
+        "materials": [
+          "Metal container with PP/metal/plastic closure",
+          "Plastic multilayer laminated heat-sealed pouch",
+          "Composite paperboard/aluminium-foil/plastic-film container with plastic/metal lid",
+          "Rigid plastic container",
+          "Foil wrap",
+          "PET/PP/PVC twist wrap",
+          "Thermoformed tray/punnet with lid",
+          "Glass bottle with metal/plastic caps",
+          "Plastic cup with film lid"
+        ]
+      },
+      {
+        "id": "cereals",
+        "name": "Cereals and cereal products",
+        "fcs_prefixes": [
+          "6"
+        ],
+        "materials": [
+          "Tin container",
+          "Aluminium-foil laminated pouch in metal container",
+          "Wax-coated paper wrapper",
+          "Three-layer laminated wrapper",
+          "Plastic multilayer laminated heat-sealed pouch",
+          "Thermoformed plastic container with plastic lid",
+          "Lined carton with multilayer laminated liner",
+          "Plastic multilayer laminated zipper pouch",
+          "Thermoform tray with plastic lid/overwrap",
+          "Glass bottle with metal cap",
+          "PET or plastic rigid container with metal/PP/HDPE cap",
+          "Plastic film/co-extruded film/PP/PE"
+        ]
+      },
+      {
+        "id": "meat",
+        "name": "Meat and Meat Products or Poultry Products",
+        "fcs_prefixes": [
+          "8"
+        ],
+        "materials": [
+          "Glass jar with PP/HDPE caps",
+          "Metal container with metal lid (lacquered tin)",
+          "Plastic flexible pouch in paper/paperboard carton",
+          "Plastic multilayer flexible laminate heat-sealed pouch",
+          "Plastic tray with overwrap",
+          "Aluminium foil wrap",
+          "PET punnet/container with plastic caps"
+        ]
+      },
+      {
+        "id": "fish",
+        "name": "Fish and fish products or Seafood",
+        "fcs_prefixes": [
+          "9"
+        ],
+        "materials": [
+          "Glass jar with PP/HDPE caps",
+          "Metal container with metal lid (lacquered tin)",
+          "PET punnet/container with plastic caps",
+          "Plastic multilayer flexible laminate heat-sealed pouch",
+          "Plastic tray with overwrap"
+        ]
+      },
+      {
+        "id": "sweeteners",
+        "name": "Sweetening agents including Honey",
+        "fcs_prefixes": [
+          "11"
+        ],
+        "materials": [
+          "Glass bottle with metal/PP/HDPE caps",
+          "Plastic thermoformed container",
+          "Blister pack with foil or PE lid",
+          "PET container with plastic caps",
+          "Plastic laminated tube"
+        ]
+      },
+      {
+        "id": "spices",
+        "name": "Salt, spices, Condiments and related products",
+        "fcs_prefixes": [
+          "12"
+        ],
+        "materials": [
+          "Glass bottle with metal/PP/HDPE closure",
+          "Rigid PET/HDPE plastic container with plastic cap",
+          "Paper/paperboard/aluminium-foil/plastic-film composite container",
+          "Folding carton with heat-sealed flexible laminated pouch inside",
+          "Plastic multilayer laminated heat-sealed pouch"
+        ]
+      },
+      {
+        "id": "beverages",
+        "name": "Beverages (other than Dairy and Fruits & vegetables based)",
+        "fcs_prefixes": [
+          "14"
+        ],
+        "materials": [
+          "PET or PC plastic bottle with PP/HDPE/aluminium cap",
+          "Heat-sealed PE plastic pouch",
+          "Glass bottle with metal/plastic cap",
+          "PE pouch in corrugated fibreboard box",
+          "Aluminium can with easy-open end",
+          "Tinplate container",
+          "Laminated-structure plastic pouch",
+          "Aseptic paperboard/aluminium-foil/PE multilayer structure",
+          "Plastic multilayer heat-sealed pouch",
+          "Plastic multilayer zipper/stand-up pouch",
+          "Metal container with PP/metal/plastic closure or rigid plastic container with PP cap",
+          "Wooden cask for wines"
+        ]
+      },
+      {
+        "id": "pan_masala",
+        "name": "Pan Masala",
+        "exact_product_terms": [
+          "pan masala"
+        ],
+        "operative_from": "2026-08-10",
+        "materials": [
+          "Paper, paperboard, cellulose or other naturally derived material free from plastic/synthetic polymers/laminates and free from aluminium foil/metallised layers",
+          "Tin container",
+          "Glass container"
+        ],
+        "restrictions": [
+          "No plastic, including PE, PP, polyester, PVC or other synthetic polymer/copolymer/laminate, in the naturally-derived-material route.",
+          "No aluminium foil or metallised layer in the naturally-derived-material route.",
+          "Plastic Waste Management Rules 2016 clauses 4(1)(f) and 4(1)(i) also apply."
+        ]
+      }
+    ]
+  },
+  "runtime_coverage": {
+    "status": "phase_1_rule_core_build_393",
+    "general_requirements": 14,
+    "schedule_i_standards": 6,
+    "schedule_ii_standards": 7,
+    "schedule_iii_standards": 20,
+    "schedule_iv_categories": 11,
+    "plastic_specific_migration_substances": 9,
+    "pan_masala_2026_amendment": true,
+    "rpet_guideline_linked": true,
+    "fail_closed": true
+  }
+}
