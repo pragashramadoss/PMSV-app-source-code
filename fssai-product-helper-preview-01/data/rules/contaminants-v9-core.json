@@ -17,7 +17,7 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_50_chapter_2_6_fish_specific_profile_leakage_audited",
+    "stage": "phase_51_chapter_2_6_contaminant_identity_review_complete",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 146,
     "universal_rules": 1,
@@ -77,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Finish Chapter 2.6 identity review by explicitly classifying the remaining processed products as exact, conditional or locked; then audit runtime rendering of sampling-plan and biotoxin criteria.",
+    "next_priority": "Audit Chapter 2.6 runtime presentation (sampling-plan wording and conditional-gate visibility), then continue to the next chapter family without a dedicated contaminant identity review.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -224,7 +224,7 @@
     "chapter_2_6_bivalve_biotoxin_products_mapped": 3,
     "chapter_2_6_bivalve_biotoxin_rule_rows": 15,
     "chapter_2_6_smoked_benzoapyrene_routes": 1,
-    "chapter_2_6_histamine_exact_product_routes": 8,
+    "chapter_2_6_histamine_exact_product_routes": 11,
     "chapter_2_6_histamine_species_gated_routes": 2,
     "chapter_2_6_pcb_habitat_gate": true,
     "chapter_2_6_fish_specific_routes_build": 427,
@@ -237,7 +237,13 @@
       "reason": "The shared Gelatin profile already has the exact product/substance Chromium row at 10 mg/kg. The broader fishery-product row is not duplicated onto the shared generic/fish-gelatin profile."
     },
     "chapter_2_6_shared_profile_leakage_audit_build": 428,
-    "chapter_2_6_shared_profile_leakage_count": 0
+    "chapter_2_6_shared_profile_leakage_count": 0,
+    "chapter_2_6_contaminant_identity_review_complete": true,
+    "chapter_2_6_review_completed_build_429": true,
+    "chapter_2_6_catalog_products_reviewed": 24,
+    "chapter_2_6_partial_locked_products": 4,
+    "chapter_2_6_conditional_route_scopes": 3,
+    "chapter_2_6_review_note": "All 24 Chapter 2.6 catalogue products reviewed. Direct taxonomy, all-fishery Chromium, bivalve biotoxins, smoked-fish PAH and exact histamine product-category routes are operational. Mercury species class, PCB habitat class and raw/frozen histamine species remain conditional. Fish Oil, Edible Fish Powder, Sturgeon Caviar and fish gelatin retain only proven exact rules and do not inherit broad fallback categories."
   },
   "all_food_rules": [
     {
@@ -4294,6 +4300,15 @@
           "article": "All fishery products",
           "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        },
+        {
+          "contaminant": "Histamine",
+          "limit": 400,
+          "unit": "mg/kg",
+          "article": "Dried/ Salted and Dried fishery products",
+          "condition": "Sampling plan: n=9, c=2; m=200 mg/kg; M=400 mg/kg. M is the rejection threshold; interpretation also depends on the mean and c/n criteria.",
+          "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_explicit_freeze_dried_product_identity"
         }
       ]
     },
@@ -4335,6 +4350,15 @@
           "article": "All fishery products",
           "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        },
+        {
+          "contaminant": "Histamine",
+          "limit": 200,
+          "unit": "mg/kg",
+          "article": "Thermally Processed Fishery Products",
+          "condition": "Sampling plan: n=9, c=2; m=100 mg/kg; M=200 mg/kg. M is the rejection threshold; interpretation also depends on the mean and c/n criteria.",
+          "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_explicit_pasteurisation_process"
         }
       ]
     },
@@ -4767,6 +4791,15 @@
           "article": "All fishery products",
           "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_direct_all_fishery_products"
+        },
+        {
+          "contaminant": "Histamine",
+          "limit": 200,
+          "unit": "mg/kg",
+          "article": "Thermally Processed Fishery Products",
+          "condition": "Sampling plan: n=9, c=2; m=100 mg/kg; M=200 mg/kg. M is the rejection threshold; interpretation also depends on the mean and c/n criteria.",
+          "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_explicit_pasteurisation_process"
         }
       ]
     },
@@ -22314,6 +22347,40 @@
       "requires_input": "fish.species",
       "status": "fail_closed",
       "reason": "The 100/200 mg/kg sampling plan applies to listed species with high free histidine; generic finfish identity is insufficient."
+    }
+  ],
+  "chapter_2_6_locked_contaminant_routes_v9": [
+    {
+      "catalog_id": "02-02-1-fish-oil",
+      "product_name": "Fish Oil",
+      "fssr": "2.6.1(12)",
+      "status": "partial_profile_additional_routes_locked",
+      "active_exact_basis": "Chromium — All fishery products",
+      "reason": "Fish Oil has no exact Fish Oil article in the current Version IX metal table. PMSV does not inherit raw-fish Mercury/Cadmium/Lead or broad histamine categories from biological origin alone."
+    },
+    {
+      "catalog_id": "09-09-2-edible-fish-powder",
+      "product_name": "Edible Fish Powder",
+      "fssr": "2.6.1(13)",
+      "status": "partial_profile_additional_routes_locked",
+      "active_exact_basis": "Chromium — All fishery products",
+      "reason": "The standard defines an edible fish powder, but Version IX does not name Fish Powder in the histamine product categories. PMSV does not auto-select the fallback 'Other fish based products' category without an explicit current identity rule."
+    },
+    {
+      "catalog_id": "09-09-3-sturgeon-caviar",
+      "product_name": "Sturgeon Caviar",
+      "fssr": "2.6.1(19)",
+      "status": "partial_profile_additional_routes_locked",
+      "active_exact_basis": "Chromium — All fishery products",
+      "reason": "No exact Caviar article appears in the current metal/histamine product-category tables. PMSV does not infer 'Other Ready to Eat fishery products' solely from customary consumption."
+    },
+    {
+      "catalog_id": "99-99-1-gelatin-from-fish-processing-waste",
+      "product_name": "Gelatin from Fish Processing Waste",
+      "fssr": "2.6.1(25)",
+      "status": "specific_gelatin_profile_additional_fish_routes_locked",
+      "active_exact_basis": "Specific Gelatin Lead/Copper/Arsenic/Chromium profile",
+      "reason": "The specific Gelatin contaminant rows are retained. Broader fishery-product Chromium and histamine fallbacks are suppressed because the exact Gelatin Chromium limit is more specific and the histamine table has no Gelatin category."
     }
   ]
 }
