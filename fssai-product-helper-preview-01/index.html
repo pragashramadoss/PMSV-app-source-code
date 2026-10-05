@@ -2114,6 +2114,7 @@ function ruleDbStandards(db){
    if(st&&typeof st==='object')rows.push({...st,key:st.key||key});
  });
  if(Array.isArray(db?.identity_purity_standards))db.identity_purity_standards.forEach(st=>rows.push(st));
+ if(Array.isArray(db?.other_substances))db.other_substances.forEach(st=>rows.push(st));
  return rows;
 }
 function ruleDbLabel(db){
@@ -6333,7 +6334,7 @@ async function loadLabelDb(){
 
 async function loadChapterRuleDbs(){
  try{
-   const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=417',{cache:'reload'}).then(async res=>{
+   const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=418',{cache:'reload'}).then(async res=>{
      if(!res.ok)throw new Error(url+' HTTP '+res.status);
      return res.json();
    })));
