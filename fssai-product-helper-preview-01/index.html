@@ -231,12 +231,12 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   <small>Use only an official FSSAI regulation reference. A typed clause is not treated as verified until matched to the stored regulatory source.</small>
 </div>
 
-<div class="notice" style="margin-top:10px"><b>Database behaviour:</b> the page loads <code>data/regulatory-db-v1.json</code> and applies deterministic rules. <b>No AI call is used.</b> The current database is the Caffeinated Beverage prototype dataset and is <b>not yet the complete FSSAI master</b>; additional FSSAI chapters and amendments can be added to the same schema.<br><br><b>Working assessment:</b> your current ingredients, process selections and page position are kept only for this tab. Reloading this tab keeps the work; opening the helper in a new tab starts a new blank assessment.</div>
+<div class="notice" style="margin-top:10px"><b>Database behaviour:</b> PMSV applies deterministic local FSSAI rule data. <b>No AI call is used.</b> Ingredient permissions are scoped to the selected product and its applicable Appendix FCS; a permission from another product is never borrowed as a fallback. Unmapped ingredient/product combinations remain fail-closed.<br><br><b>Working assessment:</b> your current ingredients, process selections and page position are kept only for this tab. Reloading this tab keeps the work; opening the helper in a new tab starts a new blank assessment.</div>
 
 <div class="flow-actions">
   <button class="btn" type="button" id="addIngredient">Add ingredient</button>
   <button class="btn-secondary hidden" type="button" id="cancelIngredientEdit">Cancel edit</button>
-  <button class="btn-secondary" type="button" id="loadExampleFormula">Load example formulation</button>
+  <button class="btn-secondary" type="button" id="loadExampleFormula">Load caffeinated-beverage example</button>
   <button class="btn-secondary" type="button" id="clearIngredients">Clear ingredients</button>
 </div>
 <div id="ingredientInputMessage" class="notice hidden"></div>
@@ -2776,6 +2776,13 @@ function renderFormula(){
  const summary=document.getElementById('classificationSummary');
  const contamChips=document.getElementById('contaminantIngredientChips');
  const triggered=document.getElementById('ingredientTriggeredContaminants');
+ const selectedProduct=selectedProductForFortification();
+ const selectedProfile=currentProductProfile();
+ const selectedName=selectedProduct?.name||selectedProfile?.name||'Selected product';
+ const selectedFcs=appendixFcsForRecord(selectedProduct);
+ const caffeinatedScope=caffeinatedPrototypeScopeActive();
+ const exampleBtn=document.getElementById('loadExampleFormula');
+ if(exampleBtn)exampleBtn.classList.toggle('hidden',!caffeinatedScope);
 
  if(count)count.textContent=formulationIngredients.length+' ingredient'+(formulationIngredients.length===1?'':'s');
  const totalKg=totalFormulaKg();
@@ -2838,42 +2845,43 @@ function renderFormula(){
    }else{
      finalAssessment.classList.remove('hidden');
      const route=hasUnresolved
-       ? 'Unable to classify — ingredient / non-specified food approval review required'
+       ? selectedName+' — ingredient / non-specified-food approval review required'
        : hasProp
-         ? 'Proprietary Food / additional-ingredient regulatory review'
-         : 'Standardized Caffeinated Beverage';
+         ? selectedName+' — product-specific / Proprietary Food route review required'
+         : selectedName+' — selected standardized-product route';
      const compliance=hasUsageFail
-       ? 'NOT COMPLIANT'
+       ? 'INGREDIENT-STAGE FAIL'
        : (hasUsagePending||hasUnresolved||hasProp)
-         ? 'INCOMPLETE ASSESSMENT'
-         : 'COMPLIANT WITH EVALUATED FORMULATION REQUIREMENTS';
+         ? 'INGREDIENT-STAGE INCOMPLETE'
+         : 'INGREDIENT-STAGE CHECKS PASS';
      const complianceClass=hasUsageFail?'status-bad':(hasUsagePending||hasUnresolved||hasProp)?'status-warn':'status-good';
      let reason='';
      if(hasUsageFail)reason='At least one entered ingredient exceeds a loaded quantitative FSSAI limit.';
      else if(hasUsagePending)reason='At least one quantitative requirement cannot yet be calculated from the ingredients entered.';
-     else if(hasUnresolved)reason='At least one ingredient does not yet have a verified regulatory basis.';
-     else if(hasProp)reason='The ingredient list triggers a Proprietary Food / additional-ingredient route review before a final compliance conclusion.';
-     else reason='All entered ingredients are matched to the loaded product-standard/additive permissions and all loaded quantitative formulation checks currently pass.';
-     finalAssessment.innerHTML='<b>Final formulation assessment</b><br><br><b>Product route:</b> '+route+'<br><b>Formulation compliance:</b> <span class="'+complianceClass+'">'+compliance+'</span><br><small>'+reason+'</small><br><br><small>This result covers the formulation checks currently loaded in PMSV. Product-wide compliance may also depend on contaminants, microbiology, processing aids, manufacturing process, packaging and labelling requirements.</small>';
+     else if(hasUnresolved)reason='At least one ingredient does not yet have an exact permission for this selected product/FCS.';
+     else if(hasProp)reason='The ingredient list requires product-route review before any final compliance conclusion.';
+     else reason='The entered ingredients pass the currently loaded ingredient-level permissions and quantitative checks for this selected product.';
+     finalAssessment.innerHTML='<b>Ingredient-stage formulation assessment</b><br><br><b>Selected route:</b> '+esc(route)+'<br><b>Ingredient-stage status:</b> <span class="'+complianceClass+'">'+compliance+'</span><br><small>'+esc(reason)+'</small><br><br><small><b>This is not a final product-compliance decision.</b> Product-wide compliance still requires the applicable contaminant, microbiology, processing-aid/process, packaging, nutrition, fortification, labelling and claims gates.</small>';
    }
  }
  if(summary){
    if(!qs.length)summary.innerHTML='<b>No formulation entered.</b> Enter ingredients first.';
-   else if(hasUsageFail)summary.innerHTML='<b>Formulation is NOT COMPLIANT with at least one loaded quantitative FSSAI limit.</b> Compliance is recalculated automatically whenever any ingredient or quantity changes.';
-   else if(hasUsagePending)summary.innerHTML='<b>Quantity compliance is incomplete.</b> At least one limit uses a special basis such as fat/oil and the required basis ingredient has not yet been entered or identified.';
-   else if(hasUnresolved)summary.innerHTML='<b>Classification unresolved.</b> At least one ingredient has no verified FSSAI qualification. Do not claim the formulation is standardized or Proprietary Food until that ingredient is resolved.';
-   else if(hasProp)summary.innerHTML='<b>Possible Proprietary Food review required.</b> One or more extra non-additive ingredients rely on Regulation 2.12. This does not automatically make the product proprietary. If the finished product is still being treated as standardized Caffeinated Beverage, the additional-ingredient approval requirement in <b>2.10.6(2)(III)(A)</b> must also be addressed.';
-   else summary.innerHTML='<b>Standardized Caffeinated Beverage route remains available.</b> The entered ingredients are matched to the product standard, its Carbonated Water cross-reference, or applicable Appendix A permissions, subject to all listed limits and conditions.';
+   else if(hasUsageFail)summary.innerHTML='<b>Ingredient-stage check failed.</b> At least one loaded quantitative FSSAI limit is exceeded.';
+   else if(hasUsagePending)summary.innerHTML='<b>Ingredient-stage quantity check is incomplete.</b> At least one special-basis requirement cannot yet be calculated.';
+   else if(hasUnresolved)summary.innerHTML='<b>Ingredient qualification is unresolved for '+esc(selectedName)+'.</b> At least one ingredient has no exact product/FCS permission. Do not call the formulation compliant or proprietary until that ingredient is resolved.';
+   else if(hasProp)summary.innerHTML='<b>Product-route review required for '+esc(selectedName)+'.</b> One or more extra ingredients are not covered by an exact loaded permission. '+(caffeinatedScope?'For Caffeinated Beverage, the additional-ingredient approval rule in 2.10.6(2)(III)(A) must also be addressed.':'A deviation from a standardized product does not automatically become Proprietary Food; the finished-food route must be established first.');
+   else summary.innerHTML='<b>'+esc(selectedName)+' ingredient-stage route remains available.</b> The entered ingredients are matched to product-specific rules or the selected product’s Appendix A FCS, subject to all loaded limits and conditions.';
  }
 
  if(standards){
    const cards=[];
-   cards.push('<div class="item"><b>Caffeinated Beverage standard</b><small>2.10.6(2) applies to the selected base product, including its Carbonated Water cross-reference.</small></div>');
-   cards.push('<div class="item"><b>Appendix A</b><small>Applies to food additives for category 14.1.4 / 14.1.4.1.</small></div>');
-   if(hasProp)cards.push('<div class="item"><b>Chapter 2.12 — Proprietary Food</b><small>Relevant because at least one extra non-additive ingredient has been entered under a potential 2.12 ingredient basis. Final classification still depends on whether the finished food is genuinely not standardized.</small></div>');
-   if(hasUnresolved)cards.push('<div class="item"><b>Approval for Non-Specified Food and Food Ingredients Regulations, 2017</b><small>Regulation 2(1)(d) defines non-specified food/ingredients and regulation 3(1) requires prior Food Authority approval before manufacture/import where applicable.</small></div>');
-   cards.push('<div class="item"><b>Contaminants, Toxins and Residues Regulations</b><small>Product-level requirements apply, and ingredient-specific requirements are added from the formulation where a verified trigger exists.</small></div>');
-   cards.push('<div class="item"><b>Appendix B / microbiology</b><small>Microbiological applicability is assessed separately for the final product category.</small></div>');
+   const fssr=selectedProduct?.fssr||selectedProfile?.fssr||'Loaded FSSAI product profile';
+   cards.push('<div class="item"><b>'+esc(selectedName)+'</b><small>'+esc(fssr)+(caffeinatedScope?'<br>Caffeinated Beverage-specific Carbonated Water cross-references are applied only for this exact product scope.':'')+'</small></div>');
+   cards.push('<div class="item"><b>Appendix A</b><small>'+(selectedFcs?'Selected product FCS: <b>'+esc(selectedFcs)+'</b>. Additive permissions are resolved against this FCS and its loaded hierarchy.':'No Appendix A FCS is safely mapped for the selected product; additive permissions remain fail-closed.')+'</small></div>');
+   if(hasProp)cards.push('<div class="item"><b>Chapter 2.12 — Proprietary Food</b><small>Relevant only after confirming that the finished food is genuinely not standardized; an extra ingredient alone does not automatically create a Proprietary Food.</small></div>');
+   if(hasUnresolved)cards.push('<div class="item"><b>Approval for Non-Specified Food and Food Ingredients Regulations, 2017</b><small>Assess prior Food Authority approval where an ingredient has no applicable standard or other permitted FSSAI route.</small></div>');
+   cards.push('<div class="item"><b>Contaminants, Toxins and Residues Regulations</b><small>Product-level requirements apply, with exact ingredient/package qualifiers added where verified.</small></div>');
+   cards.push('<div class="item"><b>Appendix B / microbiology</b><small>Microbiological applicability is assessed separately for the selected final-product category.</small></div>');
    cards.push('<div class="item"><b>Appendix C / processing aids</b><small>Applies according to the actual manufacturing processes and processing aids used.</small></div>');
    standards.innerHTML='<div class="grid2">'+cards.join('')+'</div>';
  }
@@ -2930,6 +2938,7 @@ document.getElementById('cancelIngredientEdit')?.addEventListener('click',()=>{
 });
 document.getElementById('ingredientName')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addIngredient()}});
 document.getElementById('loadExampleFormula')?.addEventListener('click',()=>{
+ if(!caffeinatedPrototypeScopeActive())return;
  resetIngredientEditor();
  formulationIngredients=[
   {name:'Water',basis:'auto',clause:'',qty:0.94,unit:'kg'},
