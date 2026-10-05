@@ -2030,6 +2030,379 @@
       "analytical_method": "JECFA monograph (2017) on Steviol Glycosides from Stevia rebaudiana Bertoni",
       "machine_requirements_complete": true,
       "permission_note": "This is the additive identity/purity standard. Finished-food permission and maximum use level remain governed separately by Appendix A and applicable vertical standards."
+    },
+    {
+      "key": "3.2.3",
+      "name": "Baker's Yeast",
+      "status": "two_variant_product_standard_current",
+      "variants": {
+        "compressed": {
+          "appearance": "Creamy-white block with characteristic good baker's-yeast odour and fine even texture; not slimy or mouldy; no deterioration/decomposition; free from extraneous material.",
+          "starch_max": {
+            "value": 7,
+            "unit": "% by weight on dry basis"
+          },
+          "storage": "1–5°C",
+          "requirements": [
+            {
+              "parameter": "Moisture",
+              "operator": "<=",
+              "value": 73,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Dispersibility in water",
+              "operator": "pass",
+              "method": "IS 1320"
+            },
+            {
+              "parameter": "Fermenting power",
+              "operator": ">=",
+              "value": 1000,
+              "method": "IS 1320"
+            },
+            {
+              "parameter": "Dough-raising capacity",
+              "operator": "pass",
+              "method": "IS 1320"
+            }
+          ]
+        },
+        "dried": {
+          "appearance": "Small powder granules, pellets or flakes with characteristic good dried baker's-yeast odour; not mouldy; no deterioration/decomposition; free from adulterants/extraneous material.",
+          "starch_max": {
+            "value": 10,
+            "unit": "% by weight of material"
+          },
+          "storage": "Cool, dry place at ≤25°C",
+          "requirements": [
+            {
+              "parameter": "Moisture",
+              "operator": "<=",
+              "value": 8,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Dispersibility in water",
+              "operator": "pass",
+              "method": "IS 1320"
+            },
+            {
+              "parameter": "Fermenting power",
+              "operator": ">=",
+              "value": 350,
+              "method": "IS 1320"
+            },
+            {
+              "parameter": "Dough-raising capacity",
+              "operator": "pass",
+              "method": "IS 1320"
+            }
+          ]
+        }
+      },
+      "test_timing": "Specified quality parameters are to be tested within 24 hours of production.",
+      "microbiology": "Apply applicable Appendix B microbiological requirements.",
+      "current_labelling_note": "The Chapter 3 text retains a historical Packaging and Labelling Regulations, 2011 cross-reference; PMSV requires final artwork to be checked against the currently operative FSSAI labelling rules.",
+      "machine_requirements_complete": true
+    },
+    {
+      "key": "3.2.4",
+      "name": "Lactic Acid (Food Grade)",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "ins": "270",
+        "appearance": "Yellowish to colourless syrupy liquid with acidic taste and no odour",
+        "source": "Lactic fermentation of sugars or synthetic preparation",
+        "solubility": "Miscible with water and ethanol; positive test for lactate."
+      },
+      "requirements": [
+        {
+          "parameter": "Purity as C3H6O3 relative to labelled concentration",
+          "operator": ">=",
+          "value": 95,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Sulphated ash",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Chlorides",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Sulphates as SO4",
+          "operator": "<=",
+          "value": 0.25,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Citric, oxalic, phosphoric and tartaric acids",
+          "operator": "pass",
+          "method": "IS 9971"
+        },
+        {
+          "parameter": "Sugars",
+          "operator": "pass",
+          "method": "IS 9971"
+        },
+        {
+          "parameter": "Readily carbonizable substances",
+          "operator": "pass",
+          "method": "IS 9971"
+        },
+        {
+          "parameter": "Cyanide",
+          "operator": "pass",
+          "method": "IS 9971"
+        },
+        {
+          "parameter": "Iron",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 2,
+          "unit": "mg/kg"
+        }
+      ],
+      "current_labelling_note": "The Chapter 3 text retains a historical Packaging and Labelling Regulations, 2011 cross-reference; PMSV requires final artwork to be checked against the currently operative FSSAI labelling rules.",
+      "machine_requirements_complete": true
+    },
+    {
+      "key": "3.2.5",
+      "name": "Ascorbic Acid (Food Grade)",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "ins": "300",
+        "appearance": "White or almost white odourless crystalline solid",
+        "melting_range": "190–192°C with decomposition",
+        "solubility": "Freely soluble in water, sparingly soluble in ethanol, insoluble in ether."
+      },
+      "requirements": [
+        {
+          "parameter": "Purity as C6H8O6",
+          "operator": ">=",
+          "value": 99,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Loss on drying over sulphuric acid for 24 hours",
+          "operator": "<=",
+          "value": 0.4,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Sulphated ash",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Specific rotation in 2% (m/v) aqueous solution at 20°C",
+          "operator": "range",
+          "min": 20.5,
+          "max": 21.5,
+          "unit": "degrees"
+        },
+        {
+          "parameter": "pH of 2% (m/v) solution",
+          "operator": "range",
+          "min": 2.4,
+          "max": 2.8
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 2,
+          "unit": "mg/kg"
+        }
+      ],
+      "current_labelling_note": "The Chapter 3 text retains a historical Packaging and Labelling Regulations, 2011 cross-reference; PMSV requires final artwork to be checked against the currently operative FSSAI labelling rules.",
+      "machine_requirements_complete": true
+    },
+    {
+      "key": "3.2.6",
+      "name": "Calcium Propionate (Food Grade)",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "ins": "282",
+        "appearance": "White crystals or crystalline solid with faint odour of propionic acid",
+        "solubility": "Freely soluble in water."
+      },
+      "requirements": [
+        {
+          "parameter": "Purity as C6H10O4Ca on dry basis",
+          "operator": ">=",
+          "value": 98,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Matter insoluble in water",
+          "operator": "<=",
+          "value": 0.3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Iron as Fe",
+          "operator": "<=",
+          "value": 50,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Fluoride",
+          "operator": "<=",
+          "value": 10,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Magnesium as MgO",
+          "operator": "pass",
+          "note": "About 0.4%"
+        },
+        {
+          "parameter": "pH of 10% (m/v) solution at 25±2°C",
+          "operator": "range",
+          "min": 7,
+          "max": 9
+        }
+      ],
+      "current_labelling_note": "The Chapter 3 text retains a historical Packaging and Labelling Regulations, 2011 cross-reference; PMSV requires final artwork to be checked against the currently operative FSSAI labelling rules.",
+      "machine_requirements_complete": true
+    },
+    {
+      "key": "3.2.7",
+      "name": "Sodium Metabisulphite (Food Grade)",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "ins": "223",
+        "appearance": "Colourless crystals or white to yellowish crystalline powder with sulphur-dioxide odour",
+        "solubility": "Soluble in water; insoluble in ethanol."
+      },
+      "requirements": [
+        {
+          "parameter": "Purity as Na2S2O5",
+          "operator": ">=",
+          "value": 95,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Purity as SO2",
+          "operator": ">=",
+          "value": 64,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Water insoluble matter",
+          "operator": "<=",
+          "value": 0.05,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Thiosulphate",
+          "operator": "<=",
+          "value": 0.01,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Iron",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Selenium",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 2,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "pH",
+          "operator": "acidic_to_litmus"
+        }
+      ],
+      "current_labelling_note": "The Chapter 3 text retains a historical Packaging and Labelling Regulations, 2011 cross-reference; PMSV requires final artwork to be checked against the currently operative FSSAI labelling rules.",
+      "machine_requirements_complete": true
+    },
+    {
+      "key": "3.2.8",
+      "name": "Potassium Metabisulphite (Food Grade)",
+      "status": "identity_purity_standard_current",
+      "identity": {
+        "ins": "224",
+        "appearance": "White or colourless free-flowing crystals, crystalline powder or granules, usually with sulphur-dioxide odour; gradually oxidizes in air to sulphate.",
+        "solubility": "Soluble in water; insoluble in ethanol."
+      },
+      "requirements": [
+        {
+          "parameter": "Purity as K2S2O5",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Water insoluble matter",
+          "operator": "<=",
+          "value": 0.05,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Thiosulphate",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Iron",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Selenium",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "Lead",
+          "operator": "<=",
+          "value": 2,
+          "unit": "mg/kg"
+        },
+        {
+          "parameter": "pH",
+          "operator": "acidic_to_litmus"
+        }
+      ],
+      "current_labelling_note": "The Chapter 3 text retains a historical Packaging and Labelling Regulations, 2011 cross-reference; PMSV requires final artwork to be checked against the currently operative FSSAI labelling rules.",
+      "machine_requirements_complete": true
     }
   ],
   "coverage": {
@@ -2037,8 +2410,8 @@
     "other_substances_exact_limit_routes": 5,
     "other_substances_auto_apply": 0,
     "other_substances_fail_closed": true,
-    "build": 436,
-    "identity_purity_standards_structured": 20,
+    "build": 438,
+    "identity_purity_standards_structured": 26,
     "food_colour_clause12_effective_standard_loaded": true,
     "food_colour_amendment_84_effective_from": "2026-02-01",
     "food_colour_legacy_omission_policy_loaded": true,
@@ -2053,7 +2426,9 @@
     "sweetener_standards_loaded": 1,
     "sweetener_classification_loaded": true,
     "sweetener_3_2_2_stage": "Steviol glycosides current standard structured; classification list retained separately without inventing absent specifications.",
-    "chapter_3_next_section": "3.2.3 Baker's Yeast / 3.2.4 onward additive standards"
+    "chapter_3_next_section": "3.2.9 Preservatives",
+    "chapter_3_sections_3_2_3_to_3_2_8_loaded": 6,
+    "chapter_3_3_2_3_to_3_2_8_machine_complete": 6
   },
   "effective_amendments": [
     {
