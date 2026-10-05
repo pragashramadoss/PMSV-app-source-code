@@ -717,6 +717,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 <div id="labelIngredientPreview" class="notice"></div>
 <div id="labelProductSpecificStatus" class="notice"></div>
+<div id="labelConditionalArticleStatus" class="notice hidden"></div>
 <div id="labelCaffeinePreview" class="notice hidden"></div>
 <div id="labelTriggeredRequirements"></div>
 </div>
@@ -1736,6 +1737,19 @@ function labelAllergenAssessment(){
 
  return {declarations:[...declarations],review};
 }
+function labelScheduleIiPresenceAssessments(){
+ const rules=labelDb?.schedule_ii?.ingredient_presence_rules||[];
+ return rules.map(rule=>{
+   const aliases=new Set((rule.aliases||[]).map(normIngredient));
+   const matched=formulationIngredients.filter(item=>aliases.has(normIngredient(item.name)));
+   return {rule,matched,triggered:matched.length>0};
+ });
+}
+function labelArticleRuleCandidates(productName){
+ const n=normIngredient(productName);
+ if(!n)return [];
+ return (labelDb?.schedule_ii?.article_specific_rules||[]).filter(rule=>(rule.match_terms||[]).some(term=>n.includes(normIngredient(term))));
+}
 function labelScheduleIiThresholdAssessments(){
  const rules=labelDb?.schedule_ii?.ingredient_threshold_rules||[];
  const totalKg=totalFormulaKg();
@@ -1770,6 +1784,7 @@ function renderLabelRequirements(){
  const pageTitle=document.getElementById('labelPageTitle');
  const scopeNote=document.getElementById('labelScopeNote');
  const productSpecificStatus=document.getElementById('labelProductSpecificStatus');
+ const conditionalArticleStatus=document.getElementById('labelConditionalArticleStatus');
  const caffeinatedSpecific=document.getElementById('caffeinatedLabelSpecific');
  const servingHelp=document.getElementById('labelServingHelp');
  if(!mass&&!preview&&!caffeinePreview&&!triggers)return;
@@ -1789,6 +1804,13 @@ function renderLabelRequirements(){
      : (selectedName
         ? '<b>Product-specific label rule:</b> No machine-verified special declaration has yet been loaded for <b>'+esc(selectedName)+'</b>. General FSSAI label rules and formulation-triggered checks remain applicable; PMSV will not infer special warnings from a similar product.'
         : '<b>Product-specific label rule:</b> Select a standardized product first. General FSSAI label rules and formulation-triggered checks remain available.');
+ }
+ const articleCandidates=labelArticleRuleCandidates(selectedName);
+ if(conditionalArticleStatus){
+   conditionalArticleStatus.classList.toggle('hidden',articleCandidates.length===0);
+   if(articleCandidates.length){
+     conditionalArticleStatus.innerHTML='<b>Conditional Schedule-II article rule(s) found — locked pending qualifier:</b><br>'+articleCandidates.map(x=>'• '+esc(x.requirement_summary)+' <small>Condition: '+esc(String(x.condition||'').replaceAll('_',' '))+'. PMSV does not activate this declaration until the condition is confirmed.</small>').join('<br>');
+   }
  }
  if(caffeinatedSpecific)caffeinatedSpecific.classList.toggle('hidden',!isCaffeinated);
  if(caffeinePreview)caffeinePreview.classList.toggle('hidden',!isCaffeinated);
@@ -1840,6 +1862,12 @@ function renderLabelRequirements(){
      blocks.push('<div class="item"><b>Sweetener-specific mandatory declarations</b><small>'+text+'</small></div>');
    }else{
      blocks.push('<div class="item"><b>Sweetener-specific declarations</b><small>No Schedule-II sweetener trigger has been detected from the current ingredient names.</small></div>');
+   }
+
+   const presenceChecks=labelScheduleIiPresenceAssessments();
+   const presenceTriggered=presenceChecks.filter(x=>x.triggered);
+   if(presenceTriggered.length){
+     blocks.push('<div class="item"><b>Schedule-II ingredient-presence declarations</b><small>'+presenceTriggered.map(x=>'• <b>'+esc(x.rule.requirement_summary)+'</b><br>Detected: '+x.matched.map(m=>esc(m.name)).join(', ')).join('<br><br>')+'</small></div>');
    }
 
    const thresholdChecks=labelScheduleIiThresholdAssessments();
@@ -4106,7 +4134,7 @@ function labelProductRuleFor(name){
 async function loadLabelDb(){
  const status=document.getElementById('labelDbStatus');
  try{
-   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=358',{cache:'reload'});
+   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=360',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    labelDb=await res.json();
    if(status){
