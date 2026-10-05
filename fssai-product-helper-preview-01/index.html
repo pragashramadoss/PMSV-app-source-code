@@ -275,7 +275,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <div class="card">
 <div class="section-title"><h2>Important Proprietary Food distinction</h2><span>Regulation 2.12</span></div>
-<div class="notice"><b>Adding an extra ingredient does not automatically make the product Proprietary Food.</b> Regulation 2.12.1(1) covers food that has not been standardized, while a mere deviation in the quality parameters of a standardized food does not qualify it as proprietary. Regulation 2.12.1(2) restricts non-additive ingredients in proprietary foods to the permitted categories stated there. If the product continues to be assessed as a standardized Caffeinated Beverage, clause <b>2.10.6(2)(III)(A)</b> separately requires Food Authority approval for an additional item/ingredient outside the specified list. <b>PMSV verifies regulatory conclusions only from FSSAI regulations; it does not independently verify IFCT listings.</b></div>
+<div class="notice"><b>Adding an extra ingredient does not automatically make the product Proprietary Food.</b> Regulation 2.12.1(1) covers food that has not been standardized, while a mere deviation in the quality parameters of a standardized food does not qualify it as proprietary. Regulation 2.12.1(2) restricts non-additive ingredients in proprietary foods to the permitted categories stated there. Product-specific additional-ingredient approval provisions, where they exist, are applied only to the exact product carrying that rule. <b>PMSV verifies regulatory conclusions only from official FSSAI sources and does not borrow another product’s permission.</b></div>
 </div>
 </section>
 
@@ -428,19 +428,19 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="microbiologyResults"><div class="empty-state">Select and open a standardized product to load its microbiological requirements.</div></div>
 </div>
 <div class="card">
-<div class="section-title"><h2>Appendix B coverage</h2><span>Build 190</span></div>
-<div class="item"><b>Loaded now</b><small>Table 1 - Fish and Fishery Products; Table 2 - Milk and Milk Products; and Table 3 - Spices and Herbs, with process-hygiene and food-safety criteria, form-dependent routing, sampling plans, footnotes and reference methods.</small></div>
-<div class="item"><b>Next</b><small>Table 4A and Table 4B - Fruits and Vegetables and their Products. Other Appendix B groups remain locked until loaded from the official source.</small></div>
+<div class="section-title"><h2>Appendix B coverage</h2><span>Current Version 2 · route audited</span></div>
+<div class="item"><b>Current structured coverage</b><small>PMSV has loaded the current Appendix B Version 2 microbiological groups and their explicit product/category routes. Exact product mappings are used where available; conditional mappings require their qualifier, and products without a direct table route remain fail-closed instead of receiving a similar-looking category.</small></div>
+<div class="item"><b>Runtime rule</b><small>Product-standard microbiological provisions take precedence where the applicable FSSAI chapter supplies them directly. Appendix B is not substituted merely because a product name looks similar to a listed food category.</small></div>
 </div>
 </section>
 <section id="process" class="view hidden">
 <div class="card">
 <div class="section-title"><h2>Select the actual manufacturing processes used</h2><span>Step 1 of 2</span></div>
-<div class="notice oknote"><b>Why this is needed:</b> Appendix C processing aids are permitted for specific technological purposes and product categories. They should not all be shown simply because the product is a beverage. Select only the processes actually used in manufacturing this finished Caffeinated Beverage.</div>
+<div class="notice oknote"><b>Why this is needed:</b> Appendix C processing aids are permitted for specific technological purposes and product categories. They should not all be shown merely because a process exists in Appendix C. Select only the processes actually used in manufacturing the selected finished product.</div>
 
 <div class="process-grid" id="processGrid">
-<label class="process-option"><input type="checkbox" value="water"><b>Water treatment</b><small>Water preparation or treatment before beverage manufacture.</small></label>
-<label class="process-option"><input type="checkbox" value="filtration"><b>Filtration / clarification</b><small>Removal of suspended matter or filtration of the beverage.</small></label>
+<label class="process-option"><input type="checkbox" value="water"><b>Water treatment</b><small>Water preparation or treatment used in manufacture of the selected product.</small></label>
+<label class="process-option"><input type="checkbox" value="filtration"><b>Filtration / clarification</b><small>Removal of suspended matter or filtration/clarification during manufacture.</small></label>
 <label class="process-option"><input type="checkbox" value="microbial"><b>Microbial control treatment</b><small>Use of a processing aid to control microorganisms.</small></label>
 <label class="process-option"><input type="checkbox" value="antifoam"><b>Antifoaming</b><small>Control of foam during liquid processing.</small></label>
 <label class="process-option"><input type="checkbox" value="catalyst"><b>Catalysis / hydrogenation / interesterification</b><small>Appendix C Table 2 catalysts; exact catalogue matching applies, with an additional explicit qualifier where the official category is Hardened oil.</small></label>
@@ -4071,6 +4071,11 @@ function applyProductGate(){
  const profile=currentProductProfile();
  const detailed=profile&&profile.status==='rule_profile_ready';
  const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
+ if(load){
+   const exampleAllowed=!!profile&&detailed&&caffeinatedPrototypeScopeActive();
+   load.disabled=!exampleAllowed;
+   load.classList.toggle('hidden',!exampleAllowed);
+ }
  if(profile){
    if(gate){
      gate.className=detailed?'notice oknote':'notice';
@@ -4083,7 +4088,6 @@ function applyProductGate(){
      gate.classList.remove('hidden');
    }
    if(add)add.disabled=!detailed;
-   if(load)load.disabled=!detailed;
  }else{
    if(gate){
      gate.className='notice';
@@ -4091,7 +4095,7 @@ function applyProductGate(){
      gate.classList.remove('hidden');
    }
    if(add)add.disabled=true;
-   if(load)load.disabled=true;
+   if(load){load.disabled=true;load.classList.add('hidden');}
  }
 }
 function renderProductMaster(){
