@@ -1597,6 +1597,12 @@ function evaluateLabelArticleQualifier(rule,productName){
    if(value!=='yes'&&value!=='no')return {status:'unanswered',triggered:false,value};
    return {status:value==='yes'?'triggered':'not_triggered',triggered:value==='yes',value};
  }
+ if(ui.type==='multi_select'){
+   const values=Array.isArray(value)?value:[];
+   const min=Math.max(1,Number(ui.minimum_selections||1));
+   const triggered=values.length>=min;
+   return {status:triggered?'triggered':'unanswered',triggered,value:values};
+ }
  return {status:'pending',triggered:false,value};
 }
 function renderLabelArticleQualifierControls(candidates,productName){
@@ -1613,11 +1619,21 @@ function renderLabelArticleQualifierControls(candidates,productName){
    if(ui.type==='number_threshold'){
      return '<div class="field"><label>'+esc(ui.question||rule.requirement_summary)+'</label><input type="number" min="0" step="0.01" data-label-article-key="'+esc(key)+'" data-label-article-rule="'+esc(rule.id)+'" value="'+esc(value)+'"><small>Rule activates only when the entered value is '+esc(ui.operator||'>')+' '+esc(ui.threshold)+' '+esc(ui.unit||'')+'. Blank remains locked.</small></div>';
    }
+   if(ui.type==='multi_select'){
+     const selected=new Set(Array.isArray(value)?value:[]);
+     const options=(ui.options||[]).map(opt=>'<label style="display:block;margin:7px 0"><input type="checkbox" data-label-article-multiselect="1" data-label-article-rule="'+esc(rule.id)+'" value="'+esc(opt.value)+'"'+(selected.has(opt.value)?' checked':'')+'> '+esc(opt.label)+'</label>').join('');
+     return '<div class="field"><label>'+esc(ui.question||rule.requirement_summary)+'</label><div class="recognized">'+options+'</div><small>'+esc(ui.presentation_note||rule.requirement_summary)+'</small></div>';
+   }
    return '<div class="field"><label>'+esc(ui.question||rule.requirement_summary)+'</label><select data-label-article-key="'+esc(key)+'" data-label-article-rule="'+esc(rule.id)+'"><option value="">Not answered</option><option value="yes"'+(value==='yes'?' selected':'')+'>Yes</option><option value="no"'+(value==='no'?' selected':'')+'>No</option></select><small>'+esc(rule.requirement_summary)+'</small></div>';
  }).join('')+'</div></div>';
  box.querySelectorAll('[data-label-article-rule]').forEach(el=>el.addEventListener('change',()=>{
    const ruleId=el.dataset.labelArticleRule;
-   saveLabelArticleQualifier(productName,ruleId,el.value);
+   if(el.dataset.labelArticleMultiselect==='1'){
+     const values=[...box.querySelectorAll('[data-label-article-multiselect="1"][data-label-article-rule="'+CSS.escape(ruleId)+'"]:checked')].map(x=>x.value);
+     saveLabelArticleQualifier(productName,ruleId,values);
+   }else{
+     saveLabelArticleQualifier(productName,ruleId,el.value);
+   }
    renderLabelRequirements();
  }));
  return assessments;
@@ -4210,7 +4226,7 @@ function labelProductRuleFor(name){
 async function loadLabelDb(){
  const status=document.getElementById('labelDbStatus');
  try{
-   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=362',{cache:'reload'});
+   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=365',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    labelDb=await res.json();
    if(status){
