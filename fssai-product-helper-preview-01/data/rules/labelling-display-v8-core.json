@@ -781,5 +781,157 @@
     ],
     "gluten_exemption_note": "Do not auto-approve the exemption from the ingredient name alone; the applicable safety/gluten condition must be verified.",
     "sulphite_note": "The 10 mg/kg threshold is based on sulphur dioxide content. Direct sulphur dioxide can be assessed from formulation mass; sulphite salts require SO2-equivalent verification."
+  },
+  "specific_manner_rules": {
+    "source_clause": "Schedule II · 2. Specific requirements / restrictions on manner of labelling",
+    "sections_2_1_to_2_5": [
+      {
+        "id": "refined_oil_exaggerated_terms",
+        "section": "2.1(1)",
+        "eligible_product_terms": [
+          "refined vegetable oil",
+          "refined edible oil",
+          "refined vegetable fat",
+          "refined edible fat"
+        ],
+        "rule_type": "prohibition",
+        "requirement_summary": "Edible refined vegetable oils and fats must not use exaggerated refining expressions such as Super-Refined, Extra-Refined, Micro-Refined, Double Refined or Ultra-Refined.",
+        "status": "active"
+      },
+      {
+        "id": "vanaspati_rice_bran_gt30",
+        "section": "2.1(2)",
+        "eligible_product_terms": [
+          "vanaspati"
+        ],
+        "rule_type": "conditional_numeric",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What percentage by weight of this Vanaspati is Rice Bran Oil?",
+          "unit": "%",
+          "operator": ">",
+          "threshold": 30
+        },
+        "requirement_summary": "Vanaspati made from more than 30% Rice Bran Oil must carry the prescribed more-than-30%-rice-bran-oil declaration.",
+        "status": "active"
+      },
+      {
+        "id": "vanaspati_physically_refined_rice_bran",
+        "section": "2.1(2A)",
+        "eligible_product_terms": [
+          "vanaspati"
+        ],
+        "ingredient_aliases": [
+          "physically refined rice bran oil"
+        ],
+        "rule_type": "product_ingredient",
+        "requirement_summary": "If physically refined Rice Bran Oil is used in Vanaspati, it must be declared in the ingredient list as Physically Refined Rice Bran Oil.",
+        "status": "active"
+      },
+      {
+        "id": "vegetable_oil_annatto",
+        "section": "2.1(3)",
+        "eligible_product_terms": [
+          "vegetable oil",
+          "edible oil"
+        ],
+        "ingredient_aliases": [
+          "annatto",
+          "annatto colour",
+          "annatto color"
+        ],
+        "rule_type": "product_ingredient",
+        "requirement_summary": "Vegetable oil containing annatto colour must carry the prescribed Contains Annatto colour declaration.",
+        "status": "active"
+      },
+      {
+        "id": "multi_source_edible_oil",
+        "section": "2.1(4)",
+        "eligible_product_terms": [
+          "multi-source edible oil",
+          "multisource edible oil",
+          "admixture of edible oils"
+        ],
+        "rule_type": "always",
+        "requirement_summary": "Multi-source edible oil requires the prescribed front-of-pack product name, each oil name/nature and percentage by weight, pack-size-dependent minimum lettering, and NOT TO BE SOLD LOOSE.",
+        "status": "active"
+      },
+      {
+        "id": "coffee_chicory_mixture",
+        "section": "2.2",
+        "eligible_product_terms": [
+          "coffee-chicory mixture",
+          "coffee chicory mixture",
+          "coffee blended with chicory"
+        ],
+        "rule_type": "always",
+        "effective_date": "2026-07-01",
+        "requirement_summary": "Coffee–Chicory Mixture must carry the current front-of-package coffee/chicory percentage declaration.",
+        "status": "active"
+      },
+      {
+        "id": "instant_coffee_chicory_mixture",
+        "section": "2.2",
+        "eligible_product_terms": [
+          "instant coffee-chicory mixture",
+          "instant coffee chicory mixture"
+        ],
+        "rule_type": "always",
+        "effective_date": "2026-07-01",
+        "requirement_summary": "Instant Coffee–Chicory Mixture must carry the current front-of-package declaration identifying the blend and coffee/chicory percentages.",
+        "status": "active"
+      },
+      {
+        "id": "reconstitutable_milk_infant_warning",
+        "section": "2.3",
+        "eligible_product_terms": [
+          "milk powder",
+          "skimmed milk powder",
+          "condensed milk"
+        ],
+        "rule_type": "always",
+        "requirement_summary": "Milk powders, skimmed milk powders and condensed milk or similar products that can be reconstituted into liquid milk must carry the prescribed warning that they are not to be used for infants below six months.",
+        "status": "active"
+      },
+      {
+        "id": "drinking_water_label_prohibitions",
+        "section": "2.4",
+        "eligible_product_terms": [
+          "packaged drinking water",
+          "mineral water",
+          "natural mineral water"
+        ],
+        "rule_type": "prohibition",
+        "requirement_summary": "Packaged/mineral drinking water labels must not make medicinal or other health-benefit claims; locality names are restricted; statements or pictorial devices must not mislead about nature, origin, composition or properties.",
+        "status": "active"
+      },
+      {
+        "id": "gluten_free_name_declaration",
+        "section": "2.5(1)",
+        "eligible_product_terms": [
+          "gluten free",
+          "gluten-free"
+        ],
+        "rule_type": "always",
+        "requirement_summary": "For products under the Gluten Free standard, the term Gluten Free must appear in immediate proximity to the product name.",
+        "status": "active"
+      },
+      {
+        "id": "gluten_free_shared_plant",
+        "section": "2.5(1)",
+        "eligible_product_terms": [
+          "gluten free",
+          "gluten-free"
+        ],
+        "rule_type": "conditional_boolean",
+        "qualifier_ui": {
+          "type": "boolean",
+          "question": "Is this gluten-free product manufactured in a plant where gluten-containing products are also manufactured?"
+        },
+        "requirement_summary": "A gluten-free product made in a plant where gluten-containing products are also manufactured requires the prescribed shared-plant declaration.",
+        "status": "active"
+      }
+    ],
+    "bread_section_status": "next_module"
   }
 }
