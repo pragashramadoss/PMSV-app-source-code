@@ -1225,7 +1225,8 @@ if(isFreshPageNavigation()){
      'pmsv_fssai_product_helper_processes',
      'pmsv_fssai_formula_density',
      'pmsv_fssai_selected_product',
-     'pmsv_fssai_label_article_qualifiers'
+     'pmsv_fssai_label_article_qualifiers',
+     'pmsv_fssai_product_standard_tests'
    ].forEach(k=>sessionStorage.removeItem(k));
    sessionStorage.setItem(WORKING_STATE_RESET_FLAG,'1');
  }catch(e){}
@@ -2042,6 +2043,38 @@ const ingredientRules=[
  {key:'gelatin',names:['gelatin','albumin','licorice','licorice derivative'],label:'Permitted Carbonated Water ingredient',kind:'crossref',qualification:'Listed in the Carbonated Water ingredient framework brought into this product by clause 2.10.6(2)(IV).',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'},
  {key:'gellan',names:['gellan gum'],label:'Gellan gum',kind:'crossref',qualification:'Specifically permitted in the Carbonated Water standard at GMP level and carried into Caffeinated Beverage by clause 2.10.6(2)(IV).',clause:'2.10.6(2)(IV) → 2.10.6(1)',route:'standard'}
 ];
+
+const STANDARD_TEST_KEY='pmsv_fssai_product_standard_tests';
+let standardTestResults={};
+try{
+ const rawTests=JSON.parse(sessionStorage.getItem(STANDARD_TEST_KEY)||'{}');
+ if(rawTests&&typeof rawTests==='object'&&!Array.isArray(rawTests))standardTestResults=rawTests;
+}catch(e){standardTestResults={}}
+function saveStandardTestResults(){
+ try{sessionStorage.setItem(STANDARD_TEST_KEY,JSON.stringify(standardTestResults))}catch(e){}
+}
+function standardTestId(standard,row,index){
+ return [selectedProductId||'none',standard?.key||'standard',row?.section||'',row?.parameter||'',row?.rule?.unit||'',index].join('::');
+}
+function standardNumericRuleSupported(rule){
+ return !!rule&&['<=','>=','<','>','=','range'].includes(String(rule.operator||''))&&(
+   rule.operator==='range'
+    ?Number.isFinite(Number(rule.min))&&Number.isFinite(Number(rule.max))
+    :Number.isFinite(Number(rule.value))
+ );
+}
+function evaluateStandardNumericRule(rule,actual){
+ const value=Number(actual);
+ if(!Number.isFinite(value)||!standardNumericRuleSupported(rule))return null;
+ const op=String(rule.operator||'');
+ if(op==='<=')return value<=Number(rule.value);
+ if(op==='>=')return value>=Number(rule.value);
+ if(op==='<')return value<Number(rule.value);
+ if(op==='>')return value>Number(rule.value);
+ if(op==='=')return Math.abs(value-Number(rule.value))<1e-9;
+ if(op==='range')return value>=Number(rule.min)&&value<=Number(rule.max);
+ return null;
+}
 
 let formulationIngredients=[];
 try{
@@ -4329,9 +4362,9 @@ function chapterRuleDisplayRows(standard){
          if(rule.max!==undefined)bits.push('Max '+rule.max+(rule.unit?' '+rule.unit:''));
          requirement=bits.join(' · ');
        }else requirement=rule.text||rule.requirement||rule.condition||JSON.stringify(rule);
-       rows.push({section:label,parameter,requirement,condition:rule.condition||''});
+       rows.push({section:label,parameter,requirement,condition:rule.condition||'',rule});
      }else if(typeof rule==='string'){
-       rows.push({section:label,parameter:label,requirement:rule,condition:''});
+       rows.push({section:label,parameter:label,requirement:rule,condition:'',rule:null});
      }
    });
  });
@@ -4387,6 +4420,33 @@ function renderLegacyProductScopePages(){
            html+='<div class="tablewrap"><table><thead><tr><th>Section</th><th>Parameter / rule</th><th>Requirement</th></tr></thead><tbody>'
              +rows.map(r=>'<tr><td>'+esc(r.section)+'</td><td><b>'+esc(r.parameter)+'</b></td><td>'+esc(r.requirement)+(r.condition?'<br><small>'+esc(r.condition)+'</small>':'')+'</td></tr>').join('')
              +'</tbody></table></div>';
+           const numericRows=rows.map((r,i)=>({r,i})).filter(x=>standardNumericRuleSupported(x.r.rule));
+           if(numericRows.length){
+             const assessed=numericRows.map(({r,i})=>{
+               const key=standardTestId(standard,r,i);
+               const raw=Object.prototype.hasOwnProperty.call(standardTestResults,key)?standardTestResults[key]:'';
+               const result=raw===''?null:evaluateStandardNumericRule(r.rule,raw);
+               return {r,i,key,raw,result};
+             });
+             const entered=assessed.filter(x=>x.raw!=='');
+             const failed=assessed.filter(x=>x.result===false);
+             const allEntered=entered.length===assessed.length;
+             html+='<h3 style="margin:16px 0 9px">Finished-product test results</h3>'
+               +'<div class="notice '+(failed.length?'':(allEntered?'oknote':''))+'"><b>Analytical gate:</b> '
+               +(failed.length?'<span class="status-bad">'+failed.length+' entered result(s) fail the loaded product-standard limit.</span>'
+                 :allEntered?'<span class="status-good">All '+assessed.length+' machine-readable numeric requirement(s) pass.</span>'
+                 :'Enter laboratory/specification results below. Missing results stay incomplete and are never assumed compliant.')
+               +'</div>'
+               +'<div class="tablewrap"><table><thead><tr><th>Parameter</th><th>Requirement</th><th>Actual result</th><th>Status</th></tr></thead><tbody>'
+               +assessed.map(x=>{
+                 const unit=x.r.rule?.unit||'';
+                 const status=x.raw===''?'<span class="status-warn">Not entered</span>':(x.result?'<span class="status-good">PASS</span>':'<span class="status-bad">FAIL</span>');
+                 return '<tr><td><b>'+esc(x.r.parameter)+'</b></td><td>'+esc(x.r.requirement)+(x.r.condition?'<br><small>'+esc(x.r.condition)+'</small>':'')+'</td>'
+                   +'<td><input type="number" step="any" data-standard-test-key="'+esc(x.key)+'" value="'+esc(x.raw)+'" placeholder="'+esc(unit?'Result in '+unit:'Enter result')+'"></td><td>'+status+'</td></tr>';
+               }).join('')
+               +'</tbody></table></div>'
+               +'<div class="notice"><small>Enter the result on the same basis/unit stated by the FSSAI requirement. PMSV auto-evaluates only simple numeric and range operators; qualitative, ratio and conditional rules remain manual/fail-closed.</small></div>';
+           }
          }else{
            html+='<div class="notice"><b>No machine-readable numerical composition row is loaded for this exact standard.</b> The product mapping remains available, but PMSV will not invent missing limits.</div>';
          }
@@ -4398,6 +4458,14 @@ function renderLegacyProductScopePages(){
        html+='<div class="card"><div class="notice"><b>Structured chapter file is loaded, but no exact standard key matched this product profile.</b> Detailed clause text remains fail-closed until the mapping is reconciled.</div></div>';
      }
      standardDynamic.innerHTML=html;
+     standardDynamic.querySelectorAll('[data-standard-test-key]').forEach(input=>input.addEventListener('change',()=>{
+       const key=input.dataset.standardTestKey||'';
+       const value=String(input.value||'').trim();
+       if(value==='')delete standardTestResults[key];
+       else standardTestResults[key]=value;
+       saveStandardTestResults();
+       renderLegacyProductScopePages();
+     }));
    }
  }
  if(ingredientDynamic){
