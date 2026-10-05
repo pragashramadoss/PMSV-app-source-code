@@ -724,7 +724,7 @@
     ]
   },
   "runtime_coverage": {
-    "status": "phase_2_source_identity_audited_build_405",
+    "status": "complete_current_version_v_build_407",
     "routes": 10,
     "schedule_i_routes": 7,
     "schedule_iii_routes": 3,
@@ -732,7 +732,21 @@
     "source_identity_gates": true,
     "fruit_juice_route_fail_closed": true,
     "strict_identity_routes": 6,
-    "schedule_iii_source_lists_complete": true
+    "schedule_iii_source_lists_complete": true,
+    "source_identity_gap_count": 0,
+    "route_suggestion_audit": "strict staple identities; allowlisted edible-oil classes; enumerated Schedule III classes; fruit juice fail-closed",
+    "audited_edge_cases": {
+      "rice": "fortified_rice",
+      "rice_bran_oil": "fortified_oil",
+      "fish_oil": "no_automatic_route",
+      "sugarcane_juice": "no_automatic_route",
+      "orange_juice": "no_automatic_route_without_explicit_fruit_juice_identity",
+      "breakfast_cereal": "fortified_processed_cereal",
+      "multigrain_atta": "fortified_atta",
+      "milk_powder": "fortified_milk_powder"
+    },
+    "operative_compendium_verified": "Version V (01.06.2022)",
+    "draft_2024_excluded": true
   },
   "excluded_drafts": [
     {
@@ -743,5 +757,24 @@
       "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/gazette_draft230924.pdf",
       "note": "FSSAI's current operative compendium remains Version V (01.06.2022); this draft is excluded until a final notification is found."
     }
-  ]
+  ],
+  "audit": {
+    "build": 407,
+    "date": "2026-10-05",
+    "result": "closed_to_current_operational_source",
+    "checks": [
+      "10 routes present",
+      "all expanded nutrient rows have explicit source gates or source-tied options",
+      "Schedule III source lists complete",
+      "iodized-salt +F exemption gated separately from Double Fortified Salt",
+      "iron warning retained because 2024 deletion proposal is draft-only",
+      "HFSS exclusion enforced for Schedule III routes",
+      "milk process gate enforced",
+      "milk-powder Government-funded-programme gate enforced",
+      "multigrain atta >50% wheat-flour gate enforced",
+      "official FSSAI source surfaced in runtime",
+      "quality-assurance purity-criteria obligation surfaced",
+      "automatic product-route suggestions fail closed on ambiguous identities"
+    ]
+  }
 }
