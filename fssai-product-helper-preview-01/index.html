@@ -822,6 +822,16 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div class="card">
+<div class="section-title"><h2>ICMR-NIN micronutrients</h2><span>IFCT Table 2 · water-soluble vitamins</span></div>
+<div id="nutritionMicronutrientStatus" class="notice">Micronutrient values are shown only where the exact ICMR-NIN field is available for 100% of the formulation mass.</div>
+<div class="tablewrap"><table>
+<thead><tr><th>Nutrient</th><th>Per 100 ml</th><th>Per serving</th><th>ICMR-NIN field coverage</th></tr></thead>
+<tbody id="nutritionMicronutrientRows"></tbody>
+</table></div>
+<div class="notice"><b>Source handling:</b> IFCT Table 2 values are per 100 g edible portion. Official blank cells mean below detectable limit; PMSV keeps them unavailable rather than treating them as zero.</div>
+</div>
+
+<div class="card">
 <div class="section-title"><h2>Ingredient nutrition-source coverage</h2><span>Every value must be traceable</span></div>
 <div class="tablewrap"><table>
 <thead><tr><th>Ingredient</th><th>Quantity</th><th>Nutrition match</th><th>Source / status</th></tr></thead>
@@ -2739,6 +2749,81 @@ function nutritionRdaPercent(key,value){
  const den=Number(map[key]);
  return Number.isFinite(den)&&den>0?(Number(value||0)/den)*100:null;
 }
+function calculateIfctTable2Micronutrients(){
+ const totalG=totalFormulaKg()*1000;
+ const fields=nutritionDb?.ifct_table2_water_soluble_vitamins?.fields||{};
+ const keys=Object.keys(fields);
+ const totals={},verifiedMass={};
+ keys.forEach(k=>{totals[k]=0;verifiedMass[k]=0;});
+ formulationIngredients.forEach(item=>{
+   const g=qtyToKg(item.qty,item.unit)*1000;
+   if(!(g>0))return;
+   const profile=nutritionProfileFor(item.name);
+   const p=profile?.ifct_table2_water_soluble_vitamins_per_100g||null;
+   if(!p)return;
+   const factor=g/100;
+   keys.forEach(k=>{
+     const value=Number(p[k]);
+     if(!Number.isFinite(value))return;
+     totals[k]+=value*factor;
+     verifiedMass[k]+=g;
+   });
+ });
+ const density=formulaDensity();
+ const servingMl=nutritionServingMl();
+ const rows={};
+ keys.forEach(k=>{
+   const coverage=totalG>0?(verifiedMass[k]/totalG)*100:0;
+   const complete=totalG>0&&verifiedMass[k]>=totalG-0.000001;
+   const per100g=complete?(totals[k]*100/totalG):null;
+   const per100ml=per100g===null?null:per100g*density;
+   rows[k]={
+     coverage,
+     complete,
+     per100g,
+     per100ml,
+     perServing:per100ml===null?null:per100ml*(servingMl/100),
+     unit:fields[k]?.unit||''
+   };
+ });
+ return {totalG,fields,rows};
+}
+function renderIfctTable2Micronutrients(){
+ const body=document.getElementById('nutritionMicronutrientRows');
+ const status=document.getElementById('nutritionMicronutrientStatus');
+ if(!body&&!status)return;
+ if(!nutritionDb||!formulationIngredients.length){
+   if(body)body.innerHTML='<tr><td colspan="4">Enter formulation ingredients first.</td></tr>';
+   if(status)status.innerHTML='<b>No micronutrient calculation yet.</b> Enter formulation ingredients first.';
+   return;
+ }
+ const calc=calculateIfctTable2Micronutrients();
+ const defs=[
+   ['thiamine_b1_mg','Thiamine (B1)'],
+   ['riboflavin_b2_mg','Riboflavin (B2)'],
+   ['niacin_b3_mg','Niacin (B3)'],
+   ['pantothenic_acid_b5_mg','Pantothenic acid (B5)'],
+   ['vitamin_b6_total_mg','Total vitamin B6'],
+   ['biotin_b7_ug','Biotin (B7)'],
+   ['folate_total_b9_ug','Total folates (B9)'],
+   ['vitamin_c_total_ascorbic_acid_mg','Total ascorbic acid (Vitamin C)']
+ ];
+ let completeCount=0;
+ if(body)body.innerHTML=defs.map(([key,label])=>{
+   const r=calc.rows[key]||{coverage:0,complete:false,per100ml:null,perServing:null,unit:calc.fields[key]?.unit||''};
+   if(r.complete)completeCount++;
+   const unit=esc(r.unit||'');
+   return '<tr><td><b>'+label+'</b></td>'
+     +(r.complete
+       ?'<td>'+fmt(r.per100ml,2)+' '+unit+'</td><td>'+fmt(r.perServing,2)+' '+unit+' / '+fmt(nutritionServingMl(),0)+' ml</td>'
+       :'<td><span class="status-bad">Not fully verified</span></td><td><span class="status-bad">Not fully verified</span></td>')
+     +'<td>'+fmt(r.coverage,1)+'%</td></tr>';
+ }).join('');
+ if(status){
+   status.className='notice'+(completeCount===defs.length?' oknote':'');
+   status.innerHTML='<b>ICMR-NIN Table 2:</b> '+completeCount+' of '+defs.length+' water-soluble vitamin fields are fully verified across the current formulation. Fields with incomplete mass coverage remain unavailable.';
+ }
+}
 function renderNutrition(){
  const rows=document.getElementById('nutritionRows');
  const coverage=document.getElementById('nutritionCoverageRows');
@@ -2809,6 +2894,7 @@ function renderNutrition(){
      return '<tr><td><b>'+esc(item.name)+'</b></td><td>'+q+'</td><td><span class="status-good">'+esc(profile.display_name||item.name)+'</span></td><td>'+esc(profile.source||'Official-source local profile')+(missing.length?'<br><small><b>Partial profile:</b> '+esc(missing.map(k=>k.replaceAll('_',' ')).join(', '))+' not verified.</small>':'')+'</td></tr>';
    }).join('');
  }
+ renderIfctTable2Micronutrients();
 }
 function numericLimitMgKg(text){
  const s=String(text||'').replace(/,/g,'');
@@ -6418,7 +6504,7 @@ async function loadChapterRuleDbs(){
 async function loadNutritionDb(){
  const status=document.getElementById('nutritionDbStatus');
  try{
-   const res=await fetch('./data/nutrition-db-v1.json?v=426',{cache:'reload'});
+   const res=await fetch('./data/nutrition-db-v1.json?v=428',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    nutritionDb=await res.json();
    if(status){
