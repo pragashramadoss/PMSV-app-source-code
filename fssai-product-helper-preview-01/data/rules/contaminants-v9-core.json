@@ -3,7 +3,7 @@
   "database_id": "pmsv-fssai-contaminants-v9-core",
   "regulation": "Food Safety and Standards (Contaminants, Toxins and Residues) Regulations, 2011",
   "source_version": "Version IX (03.02.2026)",
-  "source_verified_on": "2026-10-03",
+  "source_verified_on": "2026-10-05",
   "source_policy": "Official FSSAI source only",
   "official_sources": [
     {
@@ -17,9 +17,9 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_46_chapter_2_8_contaminant_review_complete",
+    "stage": "phase_47_chapter_2_7_contaminant_review_complete",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 125,
+    "exact_product_profiles": 126,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
@@ -77,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Move to the next unresolved exact standardized-product family, starting with combined products that require subtype gates rather than whole-product mappings.",
+    "next_priority": "Continue with the next standardized-product family lacking a dedicated contaminant identity review. Do not unlock Chapter 2.7 locked products without exact current FSSAI article evidence.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -201,7 +201,19 @@
     "sulphated_ash_input_ui": true,
     "chapter_2_8_contaminant_identity_review_complete": true,
     "chapter_2_8_locked_routes": 14,
-    "chapter_2_8_review_completed_build_182": true
+    "chapter_2_8_review_completed_build_182": true,
+    "chapter_2_7_contaminant_identity_review_complete": true,
+    "chapter_2_7_review_completed_build_423": true,
+    "chapter_2_7_catalog_products_reviewed": 9,
+    "chapter_2_7_exact_product_routes": 3,
+    "chapter_2_7_exact_rule_rows": 8,
+    "chapter_2_7_locked_routes": 6,
+    "chapter_2_7_exact_products": [
+      "05-05-2-sugar-boiled-confectionery-hard-candy",
+      "05-05-1-cocoa-powder",
+      "03-03-ice-lollies-or-edible-ices"
+    ],
+    "chapter_2_7_review_note": "Hard Candy and Cocoa Powder retain existing exact Version IX profiles. Build 423 adds Ice Lollies/Edible Ices using the exact article 'Ice-cream, iced lollies and similar frozen confections' (Lead 1.0 mg/kg; Arsenic 0.5 mg/kg). Soft Candy, Lozenges, Chewing/Bubble Gum, Chocolate, Dry Cocoa-Sugar Mixes and Cocoa Mass/Liquor/Cake remain explicitly fail-closed because no exact current Version IX finished-product article was found."
   },
   "all_food_rules": [
     {
@@ -4021,6 +4033,31 @@
           "condition": "Use of any antibiotic is not permitted during honey production. This value is an MRPL used to test misuse; it is not a permitted residue tolerance.",
           "source_basis": "Section 2.3.2 · Honey antibiotic MRPL · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_direct_honey_mrpl"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-7-ice-lollies-edible-ices",
+      "label": "Ice Lollies or Edible Ices",
+      "catalog_ids": [
+        "03-03-ice-lollies-or-edible-ices"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 1,
+          "unit": "mg/kg",
+          "article": "Ice-cream, iced lollies and similar frozen confections",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_iced_lollies_identity"
+        },
+        {
+          "contaminant": "Arsenic",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Ice-cream, iced lollies and similar frozen confections",
+          "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_iced_lollies_identity"
         }
       ]
     }
@@ -21379,6 +21416,56 @@
       "status": "locked_no_exact_current_article",
       "lock_scope": "automatic contaminant mapping",
       "reason": "Bees Wax is a separate standardized bee product. Honey antibiotic MRPLs are not inherited."
+    }
+  ],
+  "chapter_2_7_locked_contaminant_routes_v9": [
+    {
+      "catalog_id": "05-05-2-sugar-boiled-confectionery-soft-candy",
+      "product_name": "Sugar boiled confectionery (Soft Candy)",
+      "fssr": "2.7.1",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "automatic product-level contaminant mapping",
+      "reason": "Version IX expressly names 'Hard boiled sugar confectionery'. PMSV does not transfer those Lead/Copper/Arsenic/Tin limits to the separate FoSCoS Soft Candy identity."
+    },
+    {
+      "catalog_id": "05-05-2-lozenges",
+      "product_name": "Lozenges",
+      "fssr": "2.7.2",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "automatic product-level contaminant mapping",
+      "reason": "No exact Lozenges article is present in the current Version IX contaminant tables. Ingredient-level contaminant rules remain independent."
+    },
+    {
+      "catalog_id": "05-05-3-chewing-gum-and-bubble-gum",
+      "product_name": "Chewing gum and bubble gum",
+      "fssr": "2.7.3",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "automatic product-level contaminant mapping",
+      "reason": "No exact finished-product Chewing Gum/Bubble Gum article is present in Version IX. PMSV does not inherit contaminant limits from individual gum-base ingredients."
+    },
+    {
+      "catalog_id": "05-05-1-chocolate",
+      "product_name": "Chocolate",
+      "fssr": "2.7.4",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "automatic product-level contaminant mapping",
+      "reason": "Version IX has an exact Cocoa Powder article but no exact Chocolate article. Cocoa-powder limits are not transferred to finished chocolate."
+    },
+    {
+      "catalog_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "product_name": "Dry Mixtures of Cocoa and Sugars",
+      "fssr": "2.7.6",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "automatic product-level contaminant mapping",
+      "reason": "No exact Dry Mixtures of Cocoa and Sugars article is present in Version IX. PMSV does not inherit Cocoa Powder limits solely because cocoa powder is an ingredient."
+    },
+    {
+      "catalog_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "fssr": "2.7.8",
+      "status": "locked_no_exact_current_article",
+      "lock_scope": "automatic product-level contaminant mapping",
+      "reason": "No exact Cocoa Mass, Cocoa/Chocolate Liquor or Cocoa Cake article is present in Version IX. PMSV does not reuse Cocoa Powder limits for these separate standardized identities."
     }
   ]
 }
