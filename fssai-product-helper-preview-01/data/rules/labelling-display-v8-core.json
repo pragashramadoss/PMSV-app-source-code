@@ -374,9 +374,44 @@
           "common salt"
         ],
         "condition": "intended_use_selection",
-        "requirement_summary": "Common salt requires the prescribed intended-use declaration with non-applicable purposes struck out.",
-        "qualifier_ui_status": "pending_exact_intended_use_options",
-        "qualifier_ui_note": "Remain fail-closed until the exact prescribed intended-use choices are structured from the official source."
+        "requirement_summary": "Common Salt requires the prescribed intended-use declaration, retaining the applicable purpose(s) and striking out the others.",
+        "qualifier_ui_status": "active",
+        "qualifier_ui": {
+          "type": "multi_select",
+          "question": "Select every intended use that applies to this Common Salt package.",
+          "options": [
+            {
+              "value": "iodisation",
+              "label": "Iodisation"
+            },
+            {
+              "value": "iron_fortification",
+              "label": "Iron fortification"
+            },
+            {
+              "value": "animal_use",
+              "label": "Animal use"
+            },
+            {
+              "value": "preservation_not_direct_consumption",
+              "label": "Preservation — not meant for direct consumption"
+            },
+            {
+              "value": "infant_food_products",
+              "label": "Infant food products"
+            },
+            {
+              "value": "medicine",
+              "label": "Medicine"
+            },
+            {
+              "value": "industrial_use",
+              "label": "Industrial use"
+            }
+          ],
+          "minimum_selections": 1,
+          "presentation_note": "Strike out every purpose that is not applicable."
+        }
       },
       {
         "id": "wax_coated_fresh_fruit",
@@ -455,10 +490,8 @@
       }
     ],
     "qualifier_runtime_policy": "Conditional article declarations activate only after the stored qualifier evaluates true. Unanswered, false, unsupported or ambiguous qualifiers remain fail-closed.",
-    "qualifier_ui_active_rules": 10,
-    "qualifier_ui_pending_rules": [
-      "common_salt_use"
-    ]
+    "qualifier_ui_active_rules": 11,
+    "qualifier_ui_pending_rules": []
   },
   "allergen_rules": {
     "source_clause": "5(14)",
