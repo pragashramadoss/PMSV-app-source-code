@@ -5402,7 +5402,7 @@ function renderFortification(){
 }
 async function loadFortificationDb(){
  try{
-   const res=await fetch('./data/rules/fortification-v5-core.json?v=405',{cache:'reload'});
+   const res=await fetch('./data/rules/fortification-v5-core.json?v=407',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    fortificationDb=await res.json();
  }catch(e){
