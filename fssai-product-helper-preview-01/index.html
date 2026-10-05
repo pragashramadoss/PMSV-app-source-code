@@ -936,6 +936,10 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="section-title"><h2>Prohibited claim checks</h2><span>Regulation 10</span></div>
 <div id="claimsProhibitedRules" class="grid2"></div>
 </div>
+<div class="card">
+<div class="section-title"><h2>Approval & enforcement workflow</h2><span>Regulations 11–15</span></div>
+<div id="claimsProcedures" class="grid2"></div>
+</div>
 </section>
 
 <section id="sources" class="view hidden">
@@ -4815,6 +4819,17 @@ function renderClaimsReference(){
  if(prohibited){
    prohibited.innerHTML=(claimsDb?.prohibited_claims||[]).map(r=>'<div class="item"><b>'+esc(r.clause)+'</b><small>'+esc(r.text)+'</small></div>').join('');
  }
+ const procedures=document.getElementById('claimsProcedures');
+ if(procedures){
+   const p=claimsDb?.approval_and_enforcement||{};
+   const rows=[];
+   if(p.prior_approval)rows.push({title:p.prior_approval.clause+' · Prior approval',text:p.prior_approval.text});
+   if(p.approval_application)rows.push({title:p.approval_application.clause+' · Claim application',text:'Submit the claim, its nutrient/ingredient basis, validated analytical method, scientific substantiation and health-claim study evidence where applicable. FSSAI scrutiny decision: '+Number(p.approval_application.scrutiny_decision_days||90)+' days; requested applicant information: '+Number(p.approval_application.applicant_information_response_days||30)+' days; reconsideration: '+Number(p.approval_application.reconsideration_days||30)+' days.'});
+   if(p.non_compliance)rows.push({title:p.non_compliance.clause+' · Non-compliance',text:p.non_compliance.text});
+   if(p.redress)rows.push({title:p.redress.clause+' · Misleading-claim redress',text:p.redress.text+' Clarification response: '+Number(p.redress.clarification_response_days||30)+' days; authority decision: '+Number(p.redress.authority_decision_days||90)+' days; improvement intimation: '+Number(p.redress.improvement_intimation_days||45)+' days.'});
+   if(p.corrective_advertisement)rows.push({title:p.corrective_advertisement.clause+' · Corrective advertisement',text:p.corrective_advertisement.text+' Corrective advertisement period: '+Number(p.corrective_advertisement.corrective_advertisement_days||30)+' days.'});
+   procedures.innerHTML=rows.map(r=>'<div class="item"><b>'+esc(r.title)+'</b><small>'+esc(r.text)+'</small></div>').join('');
+ }
 }
 function renderClaims(){
  const status=document.getElementById('claimsDbStatus');
@@ -4841,7 +4856,7 @@ function renderClaims(){
 async function loadClaimsDb(){
  const status=document.getElementById('claimsDbStatus');
  try{
-   const res=await fetch('./data/rules/advertising-claims-v4-core.json?v=387',{cache:'reload'});
+   const res=await fetch('./data/rules/advertising-claims-v4-core.json?v=389',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    claimsDb=await res.json();
  }catch(e){
