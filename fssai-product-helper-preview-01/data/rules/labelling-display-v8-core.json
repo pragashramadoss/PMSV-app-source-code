@@ -288,7 +288,11 @@
         ],
         "condition": "treated_with_improver_or_bleaching_agent",
         "requirement_summary": "Treated maida requires the prescribed bakery-only declaration.",
-        "qualifier_ui_status": "pending"
+        "qualifier_ui_status": "active",
+        "qualifier_ui": {
+          "type": "boolean",
+          "question": "Was this maida treated with an improver or bleaching agent?"
+        }
       },
       {
         "id": "dried_glucose_syrup_so2",
@@ -297,7 +301,14 @@
         ],
         "condition": "sulphur_dioxide_ppm_exceeds_40",
         "requirement_summary": "Dried glucose syrup above the specified sulphur-dioxide condition requires the prescribed confectionery-use declaration.",
-        "qualifier_ui_status": "pending"
+        "qualifier_ui_status": "active",
+        "qualifier_ui": {
+          "type": "number_threshold",
+          "question": "What is the sulphur dioxide level in the dried glucose syrup (ppm)?",
+          "unit": "ppm",
+          "operator": ">",
+          "threshold": 40
+        }
       },
       {
         "id": "fruit_squash_added_salt",
@@ -307,7 +318,11 @@
         ],
         "condition": "contains_additional_sodium_or_potassium_salt",
         "requirement_summary": "Fruit squash with additional sodium or potassium salt requires the corresponding added-salt declaration.",
-        "qualifier_ui_status": "pending"
+        "qualifier_ui_status": "active",
+        "qualifier_ui": {
+          "type": "boolean",
+          "question": "Does this fruit squash contain additional sodium or potassium salt?"
+        }
       },
       {
         "id": "flavour_emulsion_paste",
@@ -319,7 +334,11 @@
         ],
         "condition": "intended_for_carbonated_or_noncarbonated_beverages",
         "requirement_summary": "Flavour emulsion/paste for beverage use requires the prescribed beverage-only declaration.",
-        "qualifier_ui_status": "pending"
+        "qualifier_ui_status": "active",
+        "qualifier_ui": {
+          "type": "boolean",
+          "question": "Is this flavour emulsion/paste intended for carbonated or non-carbonated beverages?"
+        }
       },
       {
         "id": "cheese_wax_coating",
@@ -328,7 +347,11 @@
         ],
         "condition": "coated_or_packed_in_food_grade_wax",
         "requirement_summary": "Wax-coated cheese requires the prescribed instruction to remove the coating before consumption.",
-        "qualifier_ui_status": "pending"
+        "qualifier_ui_status": "active",
+        "qualifier_ui": {
+          "type": "boolean",
+          "question": "Is this cheese coated or packed in food-grade wax?"
+        }
       },
       {
         "id": "frozen_dessert_confection",
@@ -339,7 +362,11 @@
         ],
         "condition": "article_identity_match",
         "requirement_summary": "Frozen dessert/confection requires the prescribed declaration identifying edible vegetable oil and/or vegetable fat as applicable.",
-        "qualifier_ui_status": "pending"
+        "qualifier_ui_status": "active",
+        "qualifier_ui": {
+          "type": "identity_confirm",
+          "question": "Confirm that the selected standardized product is the frozen dessert/frozen confection article covered by this rule."
+        }
       },
       {
         "id": "common_salt_use",
@@ -348,7 +375,8 @@
         ],
         "condition": "intended_use_selection",
         "requirement_summary": "Common salt requires the prescribed intended-use declaration with non-applicable purposes struck out.",
-        "qualifier_ui_status": "pending"
+        "qualifier_ui_status": "pending_exact_intended_use_options",
+        "qualifier_ui_note": "Remain fail-closed until the exact prescribed intended-use choices are structured from the official source."
       },
       {
         "id": "wax_coated_fresh_fruit",
@@ -357,7 +385,11 @@
         ],
         "condition": "coated_with_wax",
         "requirement_summary": "Wax-coated fresh fruit requires a declaration naming the wax.",
-        "qualifier_ui_status": "pending"
+        "qualifier_ui_status": "active",
+        "qualifier_ui": {
+          "type": "boolean",
+          "question": "Is this fresh fruit coated with wax?"
+        }
       },
       {
         "id": "food_grade_gelatin",
@@ -366,7 +398,11 @@
         ],
         "condition": "meant_for_human_consumption",
         "requirement_summary": "Gelatin intended for human consumption requires the food-grade declaration.",
-        "qualifier_ui_status": "pending"
+        "qualifier_ui_status": "active",
+        "qualifier_ui": {
+          "type": "boolean",
+          "question": "Is this gelatin intended for human consumption?"
+        }
       },
       {
         "id": "refined_vegetable_oil",
@@ -376,7 +412,11 @@
         ],
         "condition": "article_identity_match",
         "requirement_summary": "Refined vegetable oil must carry the prescribed refined-oil name declaration.",
-        "qualifier_ui_status": "pending"
+        "qualifier_ui_status": "active",
+        "qualifier_ui": {
+          "type": "identity_confirm",
+          "question": "Confirm that the selected standardized product is refined vegetable oil covered by this declaration."
+        }
       },
       {
         "id": "one_time_plastic_water_bottle",
@@ -387,7 +427,11 @@
         ],
         "condition": "one_time_usable_plastic_bottle",
         "requirement_summary": "One-time plastic bottles require the current prescribed bottle-disposal declaration.",
-        "qualifier_ui_status": "pending"
+        "qualifier_ui_status": "active",
+        "qualifier_ui": {
+          "type": "boolean",
+          "question": "Is this water packed in a one-time usable plastic bottle?"
+        }
       }
     ],
     "ingredient_presence_rules": [
@@ -409,6 +453,11 @@
         "requirement_summary": "Added plant stanol esters trigger the prescribed content, medical-supervision, population-suitability and daily-intake declarations.",
         "status": "active"
       }
+    ],
+    "qualifier_runtime_policy": "Conditional article declarations activate only after the stored qualifier evaluates true. Unanswered, false, unsupported or ambiguous qualifiers remain fail-closed.",
+    "qualifier_ui_active_rules": 10,
+    "qualifier_ui_pending_rules": [
+      "common_salt_use"
     ]
   },
   "allergen_rules": {
