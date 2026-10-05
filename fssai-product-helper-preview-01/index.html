@@ -1702,6 +1702,18 @@ function labelAllergenTriggers(){
  });
  return [...found];
 }
+function labelScheduleIiThresholdAssessments(){
+ const rules=labelDb?.schedule_ii?.ingredient_threshold_rules||[];
+ const totalKg=totalFormulaKg();
+ return rules.map(rule=>{
+   const aliases=new Set((rule.aliases||[]).map(normIngredient));
+   const matched=formulationIngredients.filter(item=>aliases.has(normIngredient(item.name)));
+   const matchedKg=matched.reduce((sum,item)=>sum+qtyToKg(item.qty,item.unit),0);
+   const pct=totalKg>0?(matchedKg/totalKg)*100:0;
+   const triggered=rule.aggregation==='presence'?matchedKg>0:(matchedKg>0&&pct>=Number(rule.min_percent_w_w||0));
+   return {rule,matched,matchedKg,pct,triggered};
+ });
+}
 function labelSweetenerTriggers(){
  const out=[];
  formulationIngredients.forEach(item=>{
@@ -1792,12 +1804,25 @@ function renderLabelRequirements(){
        if(s.type==='acesulfame')text+='<br>• Acesulfame potassium: prescribed warning for children and pregnant/lactating mothers.';
        if(s.type==='aspartame_acesulfame')text+='<br>• Aspartame-Acesulfame salt: prescribed warning for phenylketonurics, children and pregnant/lactating mothers.';
        if(s.type==='saccharin')text+='<br>• Saccharin: prescribed “Not recommended for children” warning.';
-       if(s.type==='polyol')text+='<br>• Polyol: check the applicable laxative-effect warning; sorbitol/sorbitol syrup has an additional specific warning.';
+       if(s.type==='polyol')text+='<br>• Polyol: the sweetener declaration applies; the separate 10% polyol/sorbitol threshold warning is assessed from the formulation percentage below.';
      });
      text+='<br>Also check the prescribed <b>CONTAINS NON-CALORIC SWEETENER</b> declaration where applicable.';
      blocks.push('<div class="item"><b>Sweetener-specific mandatory declarations</b><small>'+text+'</small></div>');
    }else{
      blocks.push('<div class="item"><b>Sweetener-specific declarations</b><small>No Schedule-II sweetener trigger has been detected from the current ingredient names.</small></div>');
+   }
+
+   const thresholdChecks=labelScheduleIiThresholdAssessments();
+   const thresholdTriggered=thresholdChecks.filter(x=>x.triggered);
+   if(thresholdTriggered.length){
+     blocks.push('<div class="item"><b>Schedule-II threshold / presence declarations</b><small>'+thresholdTriggered.map(x=>{
+       const basis=x.rule.aggregation==='presence'
+         ? 'Detected ingredient: '+x.matched.map(m=>esc(m.name)).join(', ')
+         : fmt(x.pct,2)+'% w/w from '+x.matched.map(m=>esc(m.name)).join(', ')+' · threshold '+fmt(Number(x.rule.min_percent_w_w||0),2)+'%';
+       return '• <b>'+esc(x.rule.declaration_short)+'</b><br>'+basis;
+     }).join('<br><br>')+'</small></div>');
+   }else if(formulationIngredients.length){
+     blocks.push('<div class="item"><b>Schedule-II threshold declarations</b><small>No loaded threshold/presence rule is triggered by the current formulation. PMSV evaluates polyols, polydextrose, added caffeine, isomaltulose and the separate ≥10% sorbitol condition from actual formulation quantities.</small></div>');
    }
 
    blocks.push('<div class="item"><b>Veg / Non-Veg symbol</b><small>PMSV does not auto-approve this from ingredient names alone because additive and processing-aid origin can change the declaration. Confirm the origin of <b>all ingredients, additives and processing aids</b> and then apply the required green/brown symbol.</small></div>');
@@ -4051,7 +4076,7 @@ function labelProductRuleFor(name){
 async function loadLabelDb(){
  const status=document.getElementById('labelDbStatus');
  try{
-   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=351',{cache:'reload'});
+   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=355',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    labelDb=await res.json();
    if(status){
