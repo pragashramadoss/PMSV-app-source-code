@@ -419,6 +419,87 @@
         }
       ],
       "engine_note": "This is the identity/purity standard for Sorbitol. Permission to use Sorbitol in a finished food remains governed separately by the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.2.1(12)",
+      "name": "Food Colour - Preparation and Mixtures",
+      "status": "identity_purity_standard_effective_amendment_84",
+      "effective_from": "2026-02-01",
+      "amendment": "84",
+      "identity": {
+        "scope": "Preparation containing one or more permitted food colours conforming to the prescribed standard, with permitted diluents/filler materials or both, intended to impart colour to food.",
+        "forms": [
+          "liquid",
+          "solid"
+        ],
+        "solid_condition": "Free from lumps and visible extraneous or foreign matter.",
+        "liquid_condition": "Free from sediments."
+      },
+      "permitted_diluents_fillers": [
+        "Potable water",
+        "Edible common salt",
+        "Sugar",
+        "Dextrose Monohydrate",
+        "Liquid glucose",
+        "Sodium sulphate",
+        "Tartaric acid",
+        "Glycerine",
+        "Propylene glycol",
+        "Acetic acid, dilute",
+        "Sorbitol",
+        "Citric acid",
+        "Sodium carbonate and sodium hydrogen carbonate",
+        "Lactose",
+        "Ammonium, sodium and potassium alginates",
+        "Dextrins",
+        "Ethyl acetate",
+        "Starches",
+        "Diethyl ether",
+        "Ethanol",
+        "Glycerol mono, di and tri acetate",
+        "Edible oils and fats",
+        "Isopropyl alcohol",
+        "Bees wax",
+        "Sodium and ammonium hydroxide",
+        "Lactic acid",
+        "Carrageenan and gum arabic",
+        "Gelatin",
+        "Pectin"
+      ],
+      "additives_condition": "May contain permitted additives as applicable under Appendix A and Appendix C.",
+      "general_requirements": [
+        {
+          "parameter": "Total dye content declaration",
+          "requirement": "Declare total dye content, percent by mass (m/v), on the container label."
+        },
+        {
+          "parameter": "Declared-value basis",
+          "requirement": "For both solid and liquid preparations, the amended clause states the declared value on 'as is' basis."
+        },
+        {
+          "parameter": "Liquid preparation dye-content tolerance",
+          "operator": "±",
+          "value": 15,
+          "unit": "% of declared value"
+        },
+        {
+          "parameter": "Solid preparation dye-content tolerance",
+          "operator": "±",
+          "value": 7.5,
+          "unit": "% of declared value"
+        },
+        {
+          "parameter": "Contaminants",
+          "requirement": "Must comply with the Food Safety and Standards (Contaminants, Toxins and Residues) Regulations, 2011, as amended."
+        }
+      ],
+      "runtime_policy": {
+        "auto_apply": false,
+        "route": "substance_identity_purity",
+        "permission_to_use_finished_food": "Separate Appendix A / product-standard permission is still required.",
+        "legacy_clause12": "superseded from 2026-02-01"
+      },
+      "source_note": "Current Chapter 3 Version 4 marks clause 12 as substituted by Amendment 84 with effect from 1 February 2026."
     }
   ],
   "coverage": {
@@ -426,6 +507,39 @@
     "other_substances_exact_limit_routes": 5,
     "other_substances_auto_apply": 0,
     "other_substances_fail_closed": true,
-    "build": 425
+    "build": 427,
+    "identity_purity_standards_structured": 2,
+    "food_colour_clause12_effective_standard_loaded": true,
+    "food_colour_amendment_84_effective_from": "2026-02-01",
+    "food_colour_legacy_omission_policy_loaded": true
+  },
+  "effective_amendments": [
+    {
+      "id": "amendment-84-2025",
+      "title": "Food Safety and Standards (Food Products Standards and Food Additives) First Amendment Regulations, 2025",
+      "notified": "2025-07-18",
+      "effective_from": "2026-02-01",
+      "status": "effective",
+      "scope": "Food colours and other amended FPSFA provisions",
+      "chapter_3_policy": "Where Version 4 marks a highlighted provision as omitted or substituted by Amendment 84, PMSV applies the amended text from 1 February 2026 and does not enforce the superseded highlighted text.",
+      "source": "Official FSSAI Chapter 3 Version 4 (01.08.2025) amendment annotations and 2025 notification."
+    }
+  ],
+  "food_colour_runtime_policy": {
+    "effective_date": "2026-02-01",
+    "amendment": "84",
+    "amendment_status": "effective",
+    "apply_substituted_clause_12": true,
+    "ignore_superseded_highlighted_text": true,
+    "note": "Version 4 contains Amendment 84 omission/substitution markers across food-colour standards. PMSV must not carry omitted highlighted requirements into current compliance decisions.",
+    "examples_of_marked_omissions": [
+      "Sunset Yellow / adjacent highlighted legacy provision",
+      "Erythrosine / adjacent highlighted legacy provision",
+      "Indigo Carmine / adjacent highlighted legacy provision",
+      "Carmoisine highlighted legacy provision",
+      "Fast Green FCF highlighted legacy provision",
+      "Aluminium Lake of Sunset Yellow FCF highlighted legacy provision"
+    ],
+    "fail_closed_rule": "Where the exact scope of an omission marker is not machine-resolved, do not recreate the superseded requirement from older text."
   }
 }
