@@ -17,9 +17,9 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_48_chapter_2_6_taxonomic_metal_routes_loaded",
+    "stage": "phase_49_chapter_2_6_fish_specific_routes_operational",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 135,
+    "exact_product_profiles": 146,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
@@ -77,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Continue Chapter 2.6 with processed fishery-product identities, PCB/PAH, biotoxin and histamine routing. Preserve species/package/process gates where Version IX distinguishes product classes.",
+    "next_priority": "Finish Chapter 2.6 identity review by explicitly classifying the remaining processed products as exact, conditional or locked; then audit runtime rendering of sampling-plan and biotoxin criteria.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -219,7 +219,15 @@
     "chapter_2_6_taxonomic_rule_policy": "Direct Version IX Fish/Crustaceans/Cephalopods/Bivalve Molluscs/All fishery products articles only; source-literal Arsenic 76/86 rows are not promoted; generic finfish Mercury remains species-gated.",
     "chapter_2_6_mercury_species_gates": 2,
     "chapter_2_6_arsenic_source_literal_auto_apply": false,
-    "chapter_2_6_review_started_build_426": true
+    "chapter_2_6_review_started_build_426": true,
+    "chapter_2_6_chromium_all_fishery_products_mapped": 24,
+    "chapter_2_6_bivalve_biotoxin_products_mapped": 3,
+    "chapter_2_6_bivalve_biotoxin_rule_rows": 15,
+    "chapter_2_6_smoked_benzoapyrene_routes": 1,
+    "chapter_2_6_histamine_exact_product_routes": 8,
+    "chapter_2_6_histamine_species_gated_routes": 2,
+    "chapter_2_6_pcb_habitat_gate": true,
+    "chapter_2_6_fish_specific_routes_build": 427
   },
   "all_food_rules": [
     {
@@ -889,7 +897,7 @@
     },
     {
       "id": "gelatin",
-      "label": "Gelatin",
+      "label": "Gelatin from Fish Processing Waste",
       "catalog_ids": [
         "99-99-1-gelatin",
         "99-99-1-gelatin-from-fish-processing-waste"
@@ -922,6 +930,14 @@
           "unit": "mg/kg",
           "article": "Gelatin",
           "source_basis": "Section 2.1 · Chromium"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
         }
       ]
     },
@@ -1015,6 +1031,23 @@
           "unit": "mg/kg",
           "article": "Canned fish products",
           "source_basis": "Section 2.1 · Tin"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
+        },
+        {
+          "contaminant": "Histamine",
+          "limit": 200,
+          "unit": "mg/kg",
+          "article": "Thermally Processed Fishery Products",
+          "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_product_category",
+          "condition": "Sampling plan: n=9, c=2; m=100 mg/kg; M=200 mg/kg. M is the rejection threshold; interpretation also depends on the mean and c/n criteria."
         }
       ]
     },
@@ -2185,6 +2218,46 @@
           "article": "All fishery products",
           "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        },
+        {
+          "contaminant": "Paralytic Shellfish Poison (PSP)",
+          "limit": 80,
+          "unit": "μg/100g (Saxitoxin Equivalent)",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Amnesic Shellfish Poison (ASP)",
+          "limit": 20,
+          "unit": "μg/g (Domoic acid equivalent)",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Diarrhetic shellfish poison (DSP)",
+          "limit": 160,
+          "unit": "μg Okadaic acid equivalent/kg",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Azaspiracid poison (AZP)",
+          "limit": 160,
+          "unit": "μg azaspiracid equivalent/kg",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Brevetoxin (BTX)",
+          "limit": 200,
+          "unit": "mouse units or equivalent/kg",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
         }
       ]
     },
@@ -4183,7 +4256,7 @@
     },
     {
       "id": "chapter-2-6-freeze-dried-prawns",
-      "label": "Freeze dried prawns (Shrimps)",
+      "label": "Freeze Dried Prawns (Shrimps)",
       "catalog_ids": [
         "09-09-2-freeze-dried-prawns-shrimps"
       ],
@@ -4342,6 +4415,46 @@
           "article": "All fishery products",
           "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        },
+        {
+          "contaminant": "Paralytic Shellfish Poison (PSP)",
+          "limit": 80,
+          "unit": "μg/100g (Saxitoxin Equivalent)",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Amnesic Shellfish Poison (ASP)",
+          "limit": 20,
+          "unit": "μg/g (Domoic acid equivalent)",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Diarrhetic shellfish poison (DSP)",
+          "limit": 160,
+          "unit": "μg Okadaic acid equivalent/kg",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Azaspiracid poison (AZP)",
+          "limit": 160,
+          "unit": "μg azaspiracid equivalent/kg",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Brevetoxin (BTX)",
+          "limit": 200,
+          "unit": "mouse units or equivalent/kg",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
         }
       ]
     },
@@ -4383,6 +4496,46 @@
           "article": "All fishery products",
           "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        },
+        {
+          "contaminant": "Paralytic Shellfish Poison (PSP)",
+          "limit": 80,
+          "unit": "μg/100g (Saxitoxin Equivalent)",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Amnesic Shellfish Poison (ASP)",
+          "limit": 20,
+          "unit": "μg/g (Domoic acid equivalent)",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Diarrhetic shellfish poison (DSP)",
+          "limit": 160,
+          "unit": "μg Okadaic acid equivalent/kg",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Azaspiracid poison (AZP)",
+          "limit": 160,
+          "unit": "μg azaspiracid equivalent/kg",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Brevetoxin (BTX)",
+          "limit": 200,
+          "unit": "mouse units or equivalent/kg",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.4 · Limits of biotoxins in fish and fishery products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
         }
       ]
     },
@@ -4449,6 +4602,264 @@
           "article": "All fishery products",
           "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-02-02-1-fish-oil",
+      "label": "Fish Oil",
+      "catalog_ids": [
+        "02-02-1-fish-oil"
+      ],
+      "rules": [
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-09-09-2-quick-frozen-fish-sticks-fish-fingers-fish-portions-and-fish-fillets-breaded-or-ba",
+      "label": "Quick Frozen Fish Sticks / Fish Fingers / Portions / Fillets — Breaded or Battered",
+      "catalog_ids": [
+        "09-09-2-quick-frozen-fish-sticks-fish-fingers-fish-portions-and-fish-fillets-breaded-or-ba"
+      ],
+      "rules": [
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
+        },
+        {
+          "contaminant": "Histamine",
+          "limit": 200,
+          "unit": "mg/kg",
+          "article": "Battered and breaded fishery products",
+          "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_product_category",
+          "condition": "Sampling plan: n=9, c=2; m=100 mg/kg; M=200 mg/kg. M is the rejection threshold; interpretation also depends on the mean and c/n criteria."
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-09-09-2-frozen-minced-fish-meat",
+      "label": "Frozen Minced Fish Meat",
+      "catalog_ids": [
+        "09-09-2-frozen-minced-fish-meat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
+        },
+        {
+          "contaminant": "Histamine",
+          "limit": 200,
+          "unit": "mg/kg",
+          "article": "Fish Mince/Surimi and analogues",
+          "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_product_category",
+          "condition": "Sampling plan: n=9, c=2; m=100 mg/kg; M=200 mg/kg. M is the rejection threshold; interpretation also depends on the mean and c/n criteria."
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-09-09-2-salted-fish-dried-salted-fish",
+      "label": "Salted Fish / Dried Salted Fish",
+      "catalog_ids": [
+        "09-09-2-salted-fish-dried-salted-fish"
+      ],
+      "rules": [
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
+        },
+        {
+          "contaminant": "Histamine",
+          "limit": 400,
+          "unit": "mg/kg",
+          "article": "Dried/ Salted and Dried fishery products",
+          "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_product_category",
+          "condition": "Sampling plan: n=9, c=2; m=200 mg/kg; M=400 mg/kg. M is the rejection threshold; interpretation also depends on the mean and c/n criteria."
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-09-09-2-edible-fish-powder",
+      "label": "Edible Fish Powder",
+      "catalog_ids": [
+        "09-09-2-edible-fish-powder"
+      ],
+      "rules": [
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-09-09-2-smoked-fishery-products",
+      "label": "Smoked Fishery Products",
+      "catalog_ids": [
+        "09-09-2-smoked-fishery-products"
+      ],
+      "rules": [
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
+        },
+        {
+          "contaminant": "Benzo(a)pyrene",
+          "limit": 5,
+          "unit": "ppb",
+          "article": "Smoked Fishery Products",
+          "source_basis": "Section 2.2.1 · PCBs/PAH in Fish and Fishery Products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_smoked_fishery_products"
+        },
+        {
+          "contaminant": "Histamine",
+          "limit": 200,
+          "unit": "mg/kg",
+          "article": "Smoked fishery products",
+          "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_product_category",
+          "condition": "Sampling plan: n=9, c=2; m=100 mg/kg; M=200 mg/kg. M is the rejection threshold; interpretation also depends on the mean and c/n criteria."
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-09-09-2-pasteurized-fish-sausage",
+      "label": "Pasteurized Fish Sausage",
+      "catalog_ids": [
+        "09-09-2-pasteurized-fish-sausage"
+      ],
+      "rules": [
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-09-09-3-fish-pickles",
+      "label": "Fish Pickles",
+      "catalog_ids": [
+        "09-09-3-fish-pickles"
+      ],
+      "rules": [
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
+        },
+        {
+          "contaminant": "Histamine",
+          "limit": 400,
+          "unit": "mg/kg",
+          "article": "Fish Pickle",
+          "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_product_category",
+          "condition": "Sampling plan: n=9, c=2; m=200 mg/kg; M=400 mg/kg. M is the rejection threshold; interpretation also depends on the mean and c/n criteria."
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-09-09-3-sturgeon-caviar",
+      "label": "Sturgeon Caviar",
+      "catalog_ids": [
+        "09-09-3-sturgeon-caviar"
+      ],
+      "rules": [
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-09-09-4-ready-to-eat-finfish-or-shell-fish-curry-in-retortable-pouches",
+      "label": "Ready-to-Eat Finfish or Shell Fish Curry in Retortable Pouches",
+      "catalog_ids": [
+        "09-09-4-ready-to-eat-finfish-or-shell-fish-curry-in-retortable-pouches"
+      ],
+      "rules": [
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
+        },
+        {
+          "contaminant": "Histamine",
+          "limit": 200,
+          "unit": "mg/kg",
+          "article": "Thermally Processed Fishery Products",
+          "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_product_category",
+          "condition": "Sampling plan: n=9, c=2; m=100 mg/kg; M=200 mg/kg. M is the rejection threshold; interpretation also depends on the mean and c/n criteria."
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-12-12-6-fish-sauce",
+      "label": "Fish Sauce",
+      "catalog_ids": [
+        "12-12-6-fish-sauce"
+      ],
+      "rules": [
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct_all_fishery_products"
+        },
+        {
+          "contaminant": "Histamine",
+          "limit": 400,
+          "unit": "mg/kg",
+          "article": "Fermented Fishery products",
+          "source_basis": "Section 2.5.2 · Histamine in Fish and Fishery Products · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_product_category",
+          "condition": "Sampling plan: n=9, c=2; m=200 mg/kg; M=400 mg/kg. M is the rejection threshold; interpretation also depends on the mean and c/n criteria."
         }
       ]
     }
@@ -21873,6 +22284,34 @@
       "contaminant": "Mercury",
       "status": "locked_requires_species_predatory_classification",
       "reason": "Version IX provides distinct Mercury limits for non-predatory and named predatory fish. A generic fillet identity is insufficient to choose the legal limit."
+    }
+  ],
+  "chapter_2_6_conditional_fish_specific_routes_v9": [
+    {
+      "scope": "Mercury — finfish",
+      "catalog_ids": [
+        "09-09-2-frozen-finfish",
+        "09-09-2-frozen-fish-fillets"
+      ],
+      "requires_input": "fish.species_or_predatory_class",
+      "status": "fail_closed",
+      "reason": "Version IX distinguishes non-predatory fish (0.5 mg/kg) from named predatory fish (1.0 mg/kg)."
+    },
+    {
+      "scope": "PCB — fish/crustaceans/molluscs",
+      "requires_input": "fish.habitat_or_marine_class",
+      "status": "fail_closed",
+      "reason": "Version IX distinguishes Inland and Migratory Fish (2.0 ppm) from Marine Fish, Crustaceans and molluscs (0.5 ppm). PMSV will not infer habitat from the generic standardized-product identity."
+    },
+    {
+      "scope": "Histamine — raw/chilled/frozen finfish",
+      "catalog_ids": [
+        "09-09-2-frozen-finfish",
+        "09-09-2-frozen-fish-fillets"
+      ],
+      "requires_input": "fish.species",
+      "status": "fail_closed",
+      "reason": "The 100/200 mg/kg sampling plan applies to listed species with high free histidine; generic finfish identity is insufficient."
     }
   ]
 }
