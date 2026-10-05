@@ -1,0 +1,612 @@
+{
+  "schema_version": "1.0",
+  "database_id": "pmsv-fssai-advertising-claims-v4",
+  "title": "PMSV FSSAI Advertising & Claims Rule Core",
+  "last_verified": "2026-10-05",
+  "runtime_ai_required": false,
+  "source_policy": {
+    "regulatory_evidence": "FSSAI official sources only",
+    "allowed_hosts": [
+      "fssai.gov.in",
+      "www.fssai.gov.in"
+    ],
+    "fail_closed_rule": "If the claim condition depends on a nutrient, comparator, laboratory result, process history, scientific substantiation or product classification that PMSV cannot verify deterministically, the claim is returned as NEEDS EVIDENCE rather than approved."
+  },
+  "current_source": {
+    "authority": "Food Safety and Standards Authority of India",
+    "regulation": "Food Safety and Standards (Advertising and Claims) Regulations, 2018",
+    "compendium_version": "Version IV (14.12.2022)",
+    "url": "https://fssai.gov.in/upload/uploadfiles/files/Compendium_Advertising_Claims_Regulations_14_12_2022.pdf",
+    "amendment_count": 3,
+    "amendments": [
+      "09.10.2020",
+      "30.08.2022",
+      "13.12.2022"
+    ]
+  },
+  "general_principles": [
+    {
+      "id": "truthful",
+      "clause": "Reg. 4(1)",
+      "text": "Claims must be truthful, unambiguous, meaningful, not misleading and help consumers comprehend the information."
+    },
+    {
+      "id": "no_excess",
+      "clause": "Reg. 4(2)",
+      "text": "Claims shall not encourage or condone excess consumption of a particular food."
+    },
+    {
+      "id": "balanced_diet",
+      "clause": "Reg. 4(3)",
+      "text": "Claims shall not suggest that a balanced and varied diet cannot provide appropriate quantities of nutrients."
+    },
+    {
+      "id": "prep_method",
+      "clause": "Reg. 4(4)",
+      "text": "Where the claimed benefit depends on preparation, the relevant preparation method must be provided on the label."
+    },
+    {
+      "id": "disease_servings",
+      "clause": "Reg. 4(5)",
+      "text": "Reduction-of-disease-risk claims must specify the number of servings per day for the claimed benefit."
+    },
+    {
+      "id": "substantiation",
+      "clause": "Reg. 4(6)",
+      "text": "Nutritional or health attributes must be scientifically substantiated using validated methods for the ingredient or substance that is the basis of the claim."
+    },
+    {
+      "id": "brand_disclaimer",
+      "clause": "Reg. 4(7)",
+      "text": "Potentially misleading brand/fancy names using words such as natural, fresh, pure, original, traditional, authentic, genuine or real require the prescribed front-of-pack disclaimer."
+    },
+    {
+      "id": "no_fssai_promotion",
+      "clause": "Reg. 4(9)",
+      "text": "FSSAI logo or licence number shall not be used to make or promote a claim."
+    },
+    {
+      "id": "healthy_lifestyle",
+      "clause": "Reg. 4(10)",
+      "text": "Advertisements shall not undermine the importance of healthy lifestyles."
+    },
+    {
+      "id": "meal_replacement",
+      "clause": "Reg. 4(11)",
+      "text": "Food or beverage advertisements shall not portray the product as a meal replacement unless specifically permitted."
+    },
+    {
+      "id": "label_consistency",
+      "clause": "Reg. 4(12)",
+      "text": "Claims in advertisements must be consistent with information on the label."
+    },
+    {
+      "id": "no_deception",
+      "clause": "Reg. 4(13)",
+      "text": "No deceptive advertisement shall be made."
+    }
+  ],
+  "comparative_claims": {
+    "clause": "Reg. 5(4)-(5)",
+    "same_or_similar_food_required": true,
+    "thresholds": {
+      "energy_or_macronutrients_percent": 30,
+      "micronutrients_other_than_sodium_rda_percent_per_100g_or_100ml": 10,
+      "sodium_percent": 25,
+      "salt_sold_as_such_percent": 10
+    },
+    "proximity_declaration_required": true
+  },
+  "non_addition_claims": {
+    "sugars": {
+      "clause": "Reg. 6(1)",
+      "conditions": [
+        "No sugars of any type are added.",
+        "No ingredient containing sugars as an ingredient is used.",
+        "No ingredient containing sugars that substitutes for added sugars is used.",
+        "The sugar content is not increased by other means such as enzymatic starch hydrolysis."
+      ],
+      "naturally_occurring_declaration": "CONTAINS NATURALLY OCCURRING SUGARS"
+    },
+    "sodium_salts": {
+      "clause": "Reg. 6(2)",
+      "conditions": [
+        "No sodium salts are added.",
+        "No ingredient containing added sodium salts is used.",
+        "No ingredient containing sodium salts that substitutes for added salt is used."
+      ]
+    },
+    "additives": {
+      "clause": "Reg. 6(3)",
+      "conditions": [
+        "The additive or functional class has not been added or removed at manufacture.",
+        "It is not contained in any ingredient except where naturally present.",
+        "It is an additive permitted for that product.",
+        "It has not been replaced by another additive giving equivalent characteristics."
+      ]
+    }
+  },
+  "prohibited_claims": [
+    {
+      "id": "disease_prevention_treatment_cure",
+      "clause": "Reg. 10(1)",
+      "text": "No claim may refer to suitability for prevention, alleviation, treatment or cure of a disease, disorder or physiological condition unless specifically permitted under another FSSAI regulation."
+    },
+    {
+      "id": "medical_recommendation",
+      "clause": "Reg. 10(2)",
+      "text": "Labels shall not state or imply recommendation, prescription or approval by medical, nutrition or health professionals or for medical purpose."
+    },
+    {
+      "id": "added_nutrients_replacement",
+      "clause": "Reg. 10(3)",
+      "text": "The term 'added nutrients' shall not be claimed when nutrients were added merely to compensate nutrients lost or removed during processing."
+    },
+    {
+      "id": "fear_or_safety_doubt",
+      "clause": "Reg. 10(5)",
+      "text": "Claims that create doubt or suspicion about the safety of similar food or arouse fear are prohibited."
+    },
+    {
+      "id": "adverse_quantity_health_claim",
+      "clause": "Reg. 10(6)",
+      "text": "No health claim shall be made for food containing nutrients or constituents in quantities that increase disease or adverse-health risk."
+    },
+    {
+      "id": "undermine_competitor",
+      "clause": "Reg. 10(7)",
+      "text": "Advertisements or claims shall not undermine another manufacturer's products to promote the advertiser's product."
+    }
+  ],
+  "schedule_i": [
+    {
+      "id": "energy_low",
+      "nutrient_key": "energy_kcal",
+      "nutrient": "Energy / Calorie",
+      "claim": "Low",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<=",
+        "value": 40,
+        "unit": "kcal/100g"
+      },
+      "liquid": {
+        "op": "<=",
+        "value": 20,
+        "unit": "kcal/100ml"
+      }
+    },
+    {
+      "id": "energy_free",
+      "nutrient_key": "energy_kcal",
+      "nutrient": "Energy / Calorie",
+      "claim": "Free",
+      "auto_evaluable": true,
+      "solid": null,
+      "liquid": {
+        "op": "<=",
+        "value": 4,
+        "unit": "kcal/100ml"
+      },
+      "note": "Schedule I specifies the 4 kcal threshold for liquids; PMSV does not invent a solid threshold."
+    },
+    {
+      "id": "fat_low",
+      "nutrient_key": "total_fat_g",
+      "nutrient": "Fat",
+      "claim": "Low",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<=",
+        "value": 3,
+        "unit": "g/100g"
+      },
+      "liquid": {
+        "op": "<=",
+        "value": 1.5,
+        "unit": "g/100ml"
+      }
+    },
+    {
+      "id": "fat_free",
+      "nutrient_key": "total_fat_g",
+      "nutrient": "Fat",
+      "claim": "Free",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<=",
+        "value": 0.5,
+        "unit": "g/100g"
+      },
+      "liquid": {
+        "op": "<=",
+        "value": 0.5,
+        "unit": "g/100ml"
+      }
+    },
+    {
+      "id": "cholesterol_low",
+      "nutrient_key": "cholesterol_mg",
+      "nutrient": "Cholesterol",
+      "claim": "Low",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<=",
+        "value": 20,
+        "unit": "mg/100g",
+        "sat_fat_max_g": 1.5,
+        "sat_energy_max_percent": 10
+      },
+      "liquid": {
+        "op": "<=",
+        "value": 10,
+        "unit": "mg/100ml",
+        "sat_fat_max_g": 0.75,
+        "sat_energy_max_percent": 10
+      }
+    },
+    {
+      "id": "cholesterol_free",
+      "nutrient_key": "cholesterol_mg",
+      "nutrient": "Cholesterol",
+      "claim": "Free",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<=",
+        "value": 5,
+        "unit": "mg/100g",
+        "sat_fat_max_g": 1.5,
+        "sat_energy_max_percent": 10
+      },
+      "liquid": {
+        "op": "<=",
+        "value": 5,
+        "unit": "mg/100ml",
+        "sat_fat_max_g": 0.75,
+        "sat_energy_max_percent": 10
+      }
+    },
+    {
+      "id": "saturated_fat_low",
+      "nutrient_key": "saturated_fat_g",
+      "nutrient": "Saturated fat",
+      "claim": "Low",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<=",
+        "value": 1.5,
+        "unit": "g/100g",
+        "sat_energy_max_percent": 10
+      },
+      "liquid": {
+        "op": "<=",
+        "value": 0.75,
+        "unit": "g/100ml",
+        "sat_energy_max_percent": 10
+      }
+    },
+    {
+      "id": "saturated_fat_free",
+      "nutrient_key": "saturated_fat_g",
+      "nutrient": "Saturated fat",
+      "claim": "Free",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<=",
+        "value": 0.1,
+        "unit": "g/100g"
+      },
+      "liquid": {
+        "op": "<=",
+        "value": 0.1,
+        "unit": "g/100ml"
+      }
+    },
+    {
+      "id": "trans_fat_free",
+      "nutrient_key": "trans_fat_g",
+      "nutrient": "Trans fat",
+      "claim": "Free",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<",
+        "value": 0.2,
+        "unit": "g/100g"
+      },
+      "liquid": {
+        "op": "<",
+        "value": 0.2,
+        "unit": "g/100ml"
+      },
+      "edible_oils_fats_exception": {
+        "op": "<",
+        "value": 1,
+        "unit": "g/100g or 100ml"
+      }
+    },
+    {
+      "id": "sugars_low",
+      "nutrient_key": "total_sugars_g",
+      "nutrient": "Sugars",
+      "claim": "Low",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<=",
+        "value": 5,
+        "unit": "g/100g"
+      },
+      "liquid": {
+        "op": "<=",
+        "value": 2.5,
+        "unit": "g/100ml"
+      }
+    },
+    {
+      "id": "sugars_free",
+      "nutrient_key": "total_sugars_g",
+      "nutrient": "Sugars",
+      "claim": "Free",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<=",
+        "value": 0.5,
+        "unit": "g/100g"
+      },
+      "liquid": {
+        "op": "<=",
+        "value": 0.5,
+        "unit": "g/100ml"
+      }
+    },
+    {
+      "id": "sodium_low",
+      "nutrient_key": "sodium_mg",
+      "nutrient": "Sodium",
+      "claim": "Low",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<=",
+        "value": 120,
+        "unit": "mg/100g"
+      },
+      "liquid": {
+        "op": "<=",
+        "value": 120,
+        "unit": "mg/100ml"
+      }
+    },
+    {
+      "id": "sodium_very_low",
+      "nutrient_key": "sodium_mg",
+      "nutrient": "Sodium",
+      "claim": "Very low",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<=",
+        "value": 40,
+        "unit": "mg/100g"
+      },
+      "liquid": {
+        "op": "<=",
+        "value": 40,
+        "unit": "mg/100ml"
+      }
+    },
+    {
+      "id": "sodium_free",
+      "nutrient_key": "sodium_mg",
+      "nutrient": "Sodium",
+      "claim": "Free",
+      "auto_evaluable": true,
+      "solid": {
+        "op": "<=",
+        "value": 5,
+        "unit": "mg/100g"
+      },
+      "liquid": {
+        "op": "<=",
+        "value": 5,
+        "unit": "mg/100ml"
+      }
+    },
+    {
+      "id": "fibre_source",
+      "nutrient_key": "dietary_fibre_g",
+      "nutrient": "Dietary fibre",
+      "claim": "Source",
+      "auto_evaluable": true,
+      "solid": {
+        "op": ">=",
+        "value": 3,
+        "unit": "g/100g",
+        "alternative_per_100kcal": 1.5
+      },
+      "liquid": {
+        "op": ">=",
+        "value": 1.5,
+        "unit": "g/100ml",
+        "alternative_per_100kcal": 1.5
+      }
+    },
+    {
+      "id": "fibre_high",
+      "nutrient_key": "dietary_fibre_g",
+      "nutrient": "Dietary fibre",
+      "claim": "High / Rich",
+      "auto_evaluable": true,
+      "solid": {
+        "op": ">=",
+        "value": 6,
+        "unit": "g/100g",
+        "alternative_per_100kcal": 3
+      },
+      "liquid": {
+        "op": ">=",
+        "value": 3,
+        "unit": "g/100ml",
+        "alternative_per_100kcal": 3
+      }
+    },
+    {
+      "id": "protein_source",
+      "nutrient_key": "protein_g",
+      "nutrient": "Protein",
+      "claim": "Source",
+      "auto_evaluable": false,
+      "note": "Depends on current RDA percentage under Schedule I; PMSV does not auto-approve until a current official RDA denominator is linked."
+    },
+    {
+      "id": "protein_high",
+      "nutrient_key": "protein_g",
+      "nutrient": "Protein",
+      "claim": "Rich / High",
+      "auto_evaluable": false,
+      "note": "Depends on current RDA percentage under Schedule I; PMSV does not auto-approve until a current official RDA denominator is linked."
+    },
+    {
+      "id": "vitamin_mineral_source",
+      "nutrient_key": null,
+      "nutrient": "Vitamin(s) / Mineral(s)",
+      "claim": "Source",
+      "auto_evaluable": false
+    },
+    {
+      "id": "vitamin_mineral_high",
+      "nutrient_key": null,
+      "nutrient": "Vitamin(s) / Mineral(s)",
+      "claim": "High",
+      "auto_evaluable": false
+    },
+    {
+      "id": "probiotics_source",
+      "nutrient_key": null,
+      "nutrient": "Probiotics",
+      "claim": "Source",
+      "auto_evaluable": false,
+      "condition": "≥10^8 CFU in recommended serving size per day"
+    },
+    {
+      "id": "gi_low",
+      "nutrient_key": null,
+      "nutrient": "Glycemic index",
+      "claim": "Low GI",
+      "auto_evaluable": false,
+      "condition": "GI below 55 using the prescribed test definition/reference foods"
+    },
+    {
+      "id": "dha_source",
+      "nutrient_key": null,
+      "nutrient": "DHA",
+      "claim": "Source",
+      "auto_evaluable": false,
+      "condition": "At least 40 mg DHA per 100 g or per 100 kcal"
+    },
+    {
+      "id": "lactose_free",
+      "nutrient_key": null,
+      "nutrient": "Lactose",
+      "claim": "Free",
+      "auto_evaluable": false,
+      "condition": "Lactose ≤0.1%"
+    },
+    {
+      "id": "gluten_free",
+      "nutrient_key": null,
+      "nutrient": "Gluten",
+      "claim": "Free",
+      "auto_evaluable": false,
+      "condition": "Gluten ≤20 mg/kg"
+    }
+  ],
+  "schedule_ii_synonyms": {
+    "free": [
+      "Zero",
+      "No",
+      "Without",
+      "Negligible Source"
+    ],
+    "low": [
+      "Little",
+      "few (for calories)",
+      "contains a small amount of",
+      "low source of",
+      "Lite",
+      "Light"
+    ],
+    "reduced": [
+      "Lower",
+      "Lesser",
+      "fewer (for calories)"
+    ],
+    "high": [
+      "Rich"
+    ],
+    "increased": [
+      "More",
+      "Higher",
+      "Enhanced"
+    ],
+    "source": [
+      "Provides",
+      "Contains"
+    ]
+  },
+  "schedule_iii": {
+    "clause": "Reg. 7(3)",
+    "status": "structured_reference_only",
+    "claim_count": 8,
+    "note": "Disease-risk claims require every stated condition and prescribed context. PMSV does not auto-approve Schedule III claims in the first runtime."
+  },
+  "schedule_iv": {
+    "clause": "Reg. 7(4)",
+    "status": "structured_reference_only",
+    "fortified_food_claim_count": 11
+  },
+  "schedule_v": [
+    {
+      "term": "Natural",
+      "clause": "Reg. 9(2) / Schedule V",
+      "auto_evaluable": false,
+      "summary": "Restricted to qualifying single foods or qualifying natural ingredients/additives; composite foods may use 'made from natural ingredients' only when all ingredients/additives qualify. 'Natural goodness', 'naturally better' and 'nature's way' shall not be used."
+    },
+    {
+      "term": "Fresh",
+      "clause": "Reg. 9(2) / Schedule V",
+      "auto_evaluable": false,
+      "summary": "Restricted to products not processed beyond the permitted minimal processes; special conditions apply to frozen-from-fresh expressions."
+    },
+    {
+      "term": "Pure",
+      "clause": "Reg. 9(2) / Schedule V",
+      "auto_evaluable": false,
+      "summary": "Restricted to qualifying single-ingredient food with nothing added and compliant contaminant levels; compound foods may use 'made with pure ingredients' only when all ingredients qualify."
+    },
+    {
+      "term": "Authentic / Genuine / Real",
+      "clause": "Reg. 9(2) / Schedule V",
+      "auto_evaluable": false,
+      "summary": "Use requires clarification of the tangible quality justification and why the term is used."
+    },
+    {
+      "term": "Traditional",
+      "clause": "Reg. 9(2) / Schedule V",
+      "auto_evaluable": false,
+      "summary": "Recipe, fundamental formulation or process must demonstrably have existed substantially unchanged for a generation (30 years)."
+    },
+    {
+      "term": "Original",
+      "clause": "Reg. 9(2) / Schedule V",
+      "auto_evaluable": false,
+      "summary": "Origin of formulation/process must be traceable and essentially unchanged; major ingredients cannot be replaced and the product must remain the standard product when variants are introduced."
+    }
+  ],
+  "runtime_coverage": {
+    "schedule_i_total_rules": 25,
+    "schedule_i_auto_evaluable_rules": 16,
+    "comparative_claims": "structured_manual",
+    "non_addition_claims": "structured_manual",
+    "health_claims": "fail_closed_pending_evidence_workflow",
+    "schedule_v_terms": "structured_manual",
+    "status": "phase_1_nutrient_content_claims"
+  }
+}
