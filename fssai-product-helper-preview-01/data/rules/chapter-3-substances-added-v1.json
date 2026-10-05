@@ -3,7 +3,7 @@
   "chapter": "3",
   "title": "Substances Added to Food",
   "source_version": "Version 4 (01.08.2025)",
-  "source_verified_on": "2026-10-03",
+  "source_verified_on": "2026-10-05",
   "source_policy": "Official FSSAI/FoSCoS sources only",
   "official_sources": [
     {
@@ -145,27 +145,183 @@
     {
       "key": "3.3.2",
       "name": "Lactulose syrup",
-      "status": "conditional_product_specific"
+      "status": "structured_conditional_permissions",
+      "auto_apply": false,
+      "permissions": [
+        {
+          "route_id": "special_milk_based_infant_food",
+          "product_scope": "Special milk based infant food formulations",
+          "max": 0.5,
+          "unit": "% of final food",
+          "conditions": [
+            "Product is to be taken under medical advice.",
+            "Subject to label declaration."
+          ],
+          "runtime_status": "exact_product_scope_requires_product-family match"
+        },
+        {
+          "route_id": "bakery_products",
+          "product_scope": "Bakery products",
+          "max": 0.5,
+          "unit": "% by weight",
+          "conditions": [],
+          "runtime_status": "exact bakery-product route required"
+        }
+      ],
+      "engine_note": "Permission is product-specific. Do not treat Lactulose syrup as generally permitted outside these routes."
     },
     {
       "key": "3.3.3",
       "name": "Oligofructose",
-      "status": "conditional_product_specific"
+      "status": "structured_usage_table_fail_closed",
+      "auto_apply": false,
+      "usage_table": [
+        {
+          "row": 1,
+          "max": 10,
+          "unit": "%",
+          "category_scope_summary": [
+            "Listed dairy products and dairy-based drinks",
+            "Listed frozen desserts",
+            "Flakes and ready-to-eat dry breakfast cereals",
+            "Chocolate and listed sweets",
+            "Listed carbohydrate-based and milk-product-based sweets",
+            "Cooked sausages, ham and meat spreads",
+            "Listed confectionery",
+            "Listed cereal and cereal products including specified soybean-based products"
+          ],
+          "runtime_status": "category text partly summarized; exact product-to-row mapping required before auto-application"
+        },
+        {
+          "row": 2,
+          "max": 15,
+          "unit": "%",
+          "category_scope_summary": [
+            "Processed fruits including the listed canned/bottled fruits, jams, jellies, marmalades, fruit bar/toffee, fruit cheese, fruit-based spreads, candied fruit and fruit preparations",
+            "Soups and broths",
+            "Sauces and like products",
+            "Fruit and vegetable nectars and concentrates",
+            "Ready-to-eat savouries including the listed potato/cereal/flour/starch snacks and processed nuts",
+            "Bread and bread-type products and biscuit"
+          ],
+          "runtime_status": "exact product-to-row mapping required before auto-application"
+        },
+        {
+          "row": 3,
+          "max": 1,
+          "unit": "%",
+          "category_scope_summary": [
+            "Non-alcoholic soft beverages including water-based flavoured drinks, sport/energy/electrolyte drinks, carbonated and non-carbonated flavoured drinks, punches/ades, concentrates and hot cereal/grain beverages excluding cocoa"
+          ],
+          "runtime_status": "exact beverage route required before auto-application"
+        }
+      ],
+      "source_note": "Current Chapter 3 table controls the maximum level by listed category. PMSV keeps product mapping fail-closed until the selected product is deterministically assigned to one table row."
     },
     {
       "key": "3.3.4",
       "name": "Trehalose",
-      "status": "GMP_except_infant_food_subject_to_standard"
+      "status": "structured_general_permission_with_exclusion",
+      "auto_apply": false,
+      "identity": {
+        "appearance": "White or almost white crystals",
+        "solubility": "Soluble in water; slightly soluble in ethanol"
+      },
+      "permission": {
+        "level": "GMP",
+        "product_scope": "All food categories except infant food",
+        "exclusion": "Infant food",
+        "condition": "The standard specifications of the food product prescribed under the Food Safety and Standards Regulations must not be altered."
+      },
+      "purity_requirements": [
+        {
+          "parameter": "Loss on drying",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 0.05,
+          "unit": "%"
+        }
+      ],
+      "labelling": {
+        "declaration_required": true,
+        "source_reference": "Schedule II, provision 1.8 of the Food Safety and Standards (Labelling and Display) Regulations, 2020",
+        "health_claims": "not permitted by this Chapter 3 provision"
+      },
+      "method_of_analysis": "JECFA (2000)",
+      "runtime_status": "Requires explicit infant-food exclusion check and selected-product standard compatibility check before PASS."
     },
     {
       "key": "3.3.5",
       "name": "Phyto or Plant Stanol",
-      "status": "conditional_product_specific"
+      "status": "structured_daily_limit_and_portion_rules",
+      "auto_apply": false,
+      "substance_form": "Phyto or Plant stanol esters",
+      "permitted_product_categories": [
+        "Fat spread",
+        "Milk products",
+        "Milk based fruit drink",
+        "Fermented milk products",
+        "Soy and rice drink",
+        "Cheese products",
+        "Yoghurt products",
+        "Spice sauces",
+        "Salad dressings",
+        "Juices and nectars"
+      ],
+      "daily_max": {
+        "value": 3,
+        "unit": "g stanol/day",
+        "basis": "calculated as free Phyto or Plant Stanols"
+      },
+      "portion_rules": [
+        "A single portion may contain maximum 3 g.",
+        "Alternatively, three portions may each contain 1 g.",
+        "Where products are not sold in those single-portion formats, clearly indicate the standard portion in g or ml and the amount of free Phyto or Plant Stanols in that portion."
+      ],
+      "label_reference_status": "The Chapter 3 source retains a historical Packaging and Labelling cross-reference; current artwork must be validated against the operative Labelling and Display regulations.",
+      "runtime_status": "Exact product-category and serving-size route required before PASS."
     },
     {
       "key": "3.3.6",
       "name": "Phyto or Plant Sterol",
-      "status": "conditional_product_specific"
+      "status": "structured_daily_limit_source_and_portion_rules",
+      "auto_apply": false,
+      "source_condition": "Non-Genetically Modified source",
+      "permitted_product_categories": [
+        "Fat spread",
+        "Milk products",
+        "Milk based fruit drink",
+        "Fermented milk products",
+        "Soy and rice drinks",
+        "Cheese products",
+        "Yoghurt products",
+        "Spice sauces",
+        "Salad dressings",
+        "Juices and nectars",
+        "Edible oils",
+        "Bakery products"
+      ],
+      "daily_max": {
+        "value": 3,
+        "unit": "g/day",
+        "basis": "calculated as free Phyto or Plant Sterols"
+      },
+      "portion_rules": [
+        "A single portion may contain maximum 3 g.",
+        "Alternatively, portions may contain maximum 1 g, with composition and labelling enabling the consumer to restrict intake to maximum 3 g/day.",
+        "Where the product is not sold in those portion formats, clearly indicate the standard portion in g or ml and the amount of free Phyto or Plant Sterol in that portion."
+      ],
+      "additional_conditions": [
+        "The product must not exceed the applicable Acceptable Daily Intake for Phytosterols.",
+        "Current label declarations must be validated under the operative labelling regulation before final approval."
+      ],
+      "label_reference_status": "The Chapter 3 source retains a historical Packaging and Labelling cross-reference; current artwork must be validated against the operative Labelling and Display regulations.",
+      "runtime_status": "Exact product-category, non-GM source, ADI and serving-size gates required before PASS."
     }
   ],
   "runtime_policy": {
@@ -174,7 +330,8 @@
     "use_appendix_a_database": true,
     "direct_addition_and_carry_over_are_separate": true,
     "vertical_standard_can_be_stricter": true,
-    "current_label_rules_required_before_final_label_conclusion": true
+    "current_label_rules_required_before_final_label_conclusion": true,
+    "other_substances_3_3": "Chapter 3.3 named substances never auto-apply solely from ingredient name. PMSV must match the selected product to the exact permission route and evaluate limits, exclusions, source/serving conditions and current labelling before PASS."
   },
   "identity_purity_standards": [
     {
@@ -263,5 +420,12 @@
       ],
       "engine_note": "This is the identity/purity standard for Sorbitol. Permission to use Sorbitol in a finished food remains governed separately by the applicable product standard and/or Appendix A."
     }
-  ]
+  ],
+  "coverage": {
+    "other_substances_structured": 5,
+    "other_substances_exact_limit_routes": 5,
+    "other_substances_auto_apply": 0,
+    "other_substances_fail_closed": true,
+    "build": 425
+  }
 }
