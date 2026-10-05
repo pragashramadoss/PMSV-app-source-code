@@ -4586,6 +4586,36 @@ function applyProductGate(){
    if(load){load.disabled=true;load.classList.add('hidden');}
  }
 }
+function productProfileRuleKeys(profile){
+ return [
+   profile?.rule_key,
+   ...(Array.isArray(profile?.rule_keys)?profile.rule_keys:[]),
+   ...(Array.isArray(profile?.linked_rule_keys)?profile.linked_rule_keys:[])
+ ].map(x=>String(x||'').trim()).filter(Boolean);
+}
+function structuredMatchesForProfile(profile){
+ const keys=new Set(productProfileRuleKeys(profile));
+ const matches=[];
+ (chapterRuleDbs||[]).forEach(db=>ruleDbStandards(db).forEach(standard=>{
+   if(keys.has(String(standard?.key||'').trim()))matches.push({db,standard});
+ }));
+ return matches;
+}
+function productMasterStructuredCoverage(){
+ const profiles=productProfiles();
+ const chapter=profiles.filter(p=>p.status==='chapter_profile_ready');
+ let matched=0,guarded=0,specialLocked=0,variantPending=0;
+ chapter.forEach(profile=>{
+   const matches=structuredMatchesForProfile(profile);
+   if(matches.length)matched++;
+   const special=matches.some(x=>!ruleDbAllowsGuardedFormulation(x.db));
+   const variant=profile.chapter_rule_route_status==='specific_variant_table_pending';
+   if(special)specialLocked++;
+   if(variant)variantPending++;
+   if(matches.length&&!special&&!variant)guarded++;
+ });
+ return {chapter:chapter.length,matched,guarded,specialLocked,variantPending};
+}
 function renderProductMaster(){
  const status=document.getElementById('productMasterStatus');
  const catBody=document.getElementById('productCategoryRows');
@@ -4601,7 +4631,9 @@ function renderProductMaster(){
  const base=productProfiles().filter(p=>p.status==='base_profile_ready');
  if(status){
    status.className='notice oknote';
-   status.innerHTML='<b>Product selector loaded.</b><br>'+categories.length+' main category routes · '+(productMasterDb.subcategories||[]).length+' loaded sub-categories · '+catalog.length+' standardized-product catalogue rows · <b>'+chapter.length+' FSSAI chapter profiles loaded</b> · <b>'+base.length+' base profiles</b> · <b>'+ready.length+' fully validated rule profile'+(ready.length===1?'':'s')+'</b>.';
+   const sc=productMasterStructuredCoverage();
+   status.innerHTML='<b>Product selector loaded.</b><br>'+categories.length+' main category routes · '+(productMasterDb.subcategories||[]).length+' loaded sub-categories · '+catalog.length+' standardized-product catalogue rows · <b>'+chapter.length+' FSSAI chapter profiles loaded</b> · <b>'+base.length+' base profiles</b> · <b>'+ready.length+' fully validated rule profile'+(ready.length===1?'':'s')+'</b>.'
+     +(chapterRuleDbs.length?'<br><b>Structured runtime:</b> '+sc.matched+'/'+sc.chapter+' chapter profiles matched · <b>'+sc.guarded+' guarded formulation-review profiles</b> · '+sc.specialLocked+' special-family profiles intentionally locked · '+sc.variantPending+' variant-table-pending profile'+(sc.variantPending===1?'':'s')+'.':'');
  }
  const chapterStatus=document.getElementById('chapterIngestionStatus');
  if(chapterStatus){
@@ -4624,7 +4656,10 @@ function renderProductMaster(){
      });
    if(rows.length){
      chapterStatus.className='notice oknote';
-     chapterStatus.innerHTML='<b>Bulk rule ingestion in progress.</b><br>'+rows.join('<br>')+'<br><small>Chapter mapping and structured product rules are loaded separately from Appendix A additives, contaminants, microbiology, processing aids and labelling validation. Full formulation compliance is enabled only after all linked layers for that product are machine-validated.</small>';
+     const sc=productMasterStructuredCoverage();
+     chapterStatus.innerHTML='<b>Structured product-rule coverage.</b><br>'+rows.join('<br>')
+       +(chapterRuleDbs.length?'<br><br><b>Runtime reconciliation:</b> '+sc.matched+'/'+sc.chapter+' chapter profiles resolve to a structured rule. '+sc.guarded+' may be reviewed in guarded formulation mode; '+sc.specialLocked+' remain intentionally locked under special rule-family safeguards; '+sc.variantPending+' remain locked for pending variant-specific tables.':'')
+       +'<br><small>Guarded review is not a final compliance verdict. Base-only products and any missing/conditional legal layer remain fail-closed.</small>';
      chapterStatus.classList.remove('hidden');
    }else chapterStatus.classList.add('hidden');
  }
@@ -6345,6 +6380,7 @@ async function loadChapterRuleDbs(){
  renderIngredientAutocomplete();
  renderFormula();
  renderLegacyProductScopePages();
+ if(productMasterDb)renderProductMaster();
 }
 
 async function loadNutritionDb(){
