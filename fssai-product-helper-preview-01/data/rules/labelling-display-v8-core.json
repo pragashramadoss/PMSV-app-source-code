@@ -486,7 +486,8 @@
           "plant stanol esters"
         ],
         "requirement_summary": "Added plant stanol esters trigger the prescribed content, medical-supervision, population-suitability and daily-intake declarations.",
-        "status": "active"
+        "status": "superseded_by_product_ingredient_rule",
+        "runtime_note": "Do not trigger on ingredient presence alone; use schedule_ii.product_ingredient_rules plant_stanol_esters with eligible-product gating."
       }
     ],
     "qualifier_runtime_policy": "Conditional article declarations activate only after the stored qualifier evaluates true. Unanswered, false, unsupported or ambiguous qualifiers remain fail-closed.",
