@@ -947,6 +947,232 @@
       ],
       "machine_requirements_complete": true,
       "permission_note": "This specification qualifies the colour/additive itself. Permission and maximum use level in a finished food remain governed separately by the applicable product standard and/or Appendix A."
+    },
+    {
+      "key": "3.2.1(7)",
+      "name": "Caramel",
+      "status": "identity_purity_variant_standard_current",
+      "identity": {
+        "appearance": "Dark brown to black liquid or solid with characteristic odour of burnt sugar and pleasant bitter taste; solution spread in a thin layer is homogeneous, transparent and reddish-brown; miscible with water.",
+        "types": {
+          "I": {
+            "name": "Plain Caramel",
+            "process": "Heating carbohydrates with or without acids or alkalis or their salts; no ammonium or sulphite compounds."
+          },
+          "II": {
+            "name": "Caustic Sulphite Caramel",
+            "process": "Heating carbohydrates with or without acids or alkalis or their salts in the presence of sulphite compounds; no ammonium compounds."
+          },
+          "III": {
+            "name": "Ammonia Process Caramel",
+            "process": "Heating carbohydrates with or without acids or alkalis or their salts in the presence of ammonium compounds; no sulphites."
+          },
+          "IV": {
+            "name": "Ammonia Sulphite Caramel",
+            "process": "Heating carbohydrates with or without acids or alkalis or their salts in the presence of both sulphite and ammonium compounds."
+          }
+        }
+      },
+      "raw_materials": {
+        "carbohydrates": [
+          "Sucrose",
+          "Glucose",
+          "Fructose",
+          "Invert sugar",
+          "Lactose",
+          "Malt syrup",
+          "Molasses",
+          "Starch hydrolysates and fractions thereof and/or polymer thereof"
+        ],
+        "acids": [
+          "Sulphuric acid",
+          "Phosphoric acid",
+          "Acetic acid",
+          "Citric acid"
+        ],
+        "alkalis": [
+          "Sodium hydroxide",
+          "Potassium hydroxide",
+          "Calcium hydroxide"
+        ],
+        "ammonium_compounds": [
+          "Ammonium hydroxide",
+          "Ammonium carbonate and bicarbonate",
+          "Ammonium phosphate",
+          "Ammonium sulphate",
+          "Ammonium sulphite",
+          "Ammonium bisulphite",
+          "Ammonium metasulphite"
+        ],
+        "sulphite_compounds": [
+          "Sulphurous acid",
+          "Potassium sulphite/bisulphite",
+          "Sodium sulphite/bisulphite",
+          "Ammonium sulphite/bisulphite"
+        ]
+      },
+      "variant_requirements": {
+        "I": {
+          "name": "Plain Caramel",
+          "process": "Heating carbohydrates with or without acids or alkalis or their salts; no ammonium or sulphite compounds.",
+          "routine": {
+            "solid_content_pct": {
+              "min": 62,
+              "max": 77
+            },
+            "colour_intensity": {
+              "min": 0.01,
+              "max": 0.12
+            },
+            "ammoniacal_nitrogen_pct_max": 0.01,
+            "lead_mgkg_max": 5,
+            "arsenic_mgkg_max": 3
+          },
+          "type_tests": {
+            "total_sulphur_pct": {
+              "operator": "<=",
+              "value": 0.3
+            },
+            "sulphur_dioxide_pct": null,
+            "total_nitrogen_pct": {
+              "operator": "<=",
+              "value": 0.1
+            },
+            "thi": null,
+            "heavy_metals_mgkg_max": 25,
+            "mercury_mgkg_max": 0.1,
+            "copper_mgkg_max": 20
+          }
+        },
+        "II": {
+          "name": "Caustic Sulphite Caramel",
+          "process": "Heating carbohydrates with or without acids or alkalis or their salts in the presence of sulphite compounds; no ammonium compounds.",
+          "routine": {
+            "solid_content_pct": {
+              "min": 65,
+              "max": 72
+            },
+            "colour_intensity": {
+              "min": 0.06,
+              "max": 0.1
+            },
+            "ammoniacal_nitrogen_pct_max": 0.01,
+            "lead_mgkg_max": 5,
+            "arsenic_mgkg_max": 3
+          },
+          "type_tests": {
+            "total_sulphur_pct": {
+              "operator": "range",
+              "min": 1.3,
+              "max": 2.5
+            },
+            "sulphur_dioxide_pct": {
+              "operator": "<=",
+              "value": 0.2
+            },
+            "total_nitrogen_pct": {
+              "operator": "<=",
+              "value": 0.2
+            },
+            "thi": null,
+            "heavy_metals_mgkg_max": 25,
+            "mercury_mgkg_max": 0.1,
+            "copper_mgkg_max": 20
+          }
+        },
+        "III": {
+          "name": "Ammonia Process Caramel",
+          "process": "Heating carbohydrates with or without acids or alkalis or their salts in the presence of ammonium compounds; no sulphites.",
+          "routine": {
+            "solid_content_pct": {
+              "min": 53,
+              "max": 83
+            },
+            "colour_intensity": {
+              "min": 0.08,
+              "max": 0.36
+            },
+            "ammoniacal_nitrogen_pct_max": 0.4,
+            "four_methylimidazole": {
+              "mgkg_max": 300,
+              "equivalent_colour_basis_mgkg_max": 200
+            },
+            "lead_mgkg_max": 5,
+            "arsenic_mgkg_max": 3
+          },
+          "type_tests": {
+            "total_sulphur_pct": {
+              "operator": "<=",
+              "value": 0.3
+            },
+            "sulphur_dioxide_pct": null,
+            "total_nitrogen_pct": {
+              "operator": "range",
+              "min": 1.3,
+              "max": 6.8
+            },
+            "thi": {
+              "mgkg_max": 40,
+              "equivalent_colour_basis_mgkg_max": 25
+            },
+            "heavy_metals_mgkg_max": 25,
+            "mercury_mgkg_max": 0.1,
+            "copper_mgkg_max": 20
+          }
+        },
+        "IV": {
+          "name": "Ammonia Sulphite Caramel",
+          "process": "Heating carbohydrates with or without acids or alkalis or their salts in the presence of both sulphite and ammonium compounds.",
+          "routine": {
+            "solid_content_pct": {
+              "min": 40,
+              "max": 75
+            },
+            "colour_intensity": {
+              "min": 0.1,
+              "max": 0.6
+            },
+            "ammoniacal_nitrogen_pct_max": 0.5,
+            "four_methylimidazole": {
+              "mgkg_max": 1000,
+              "equivalent_colour_basis_mgkg_max": 250
+            },
+            "lead_mgkg_max": 5,
+            "arsenic_mgkg_max": 3
+          },
+          "type_tests": {
+            "total_sulphur_pct": {
+              "operator": "range",
+              "min": 1.4,
+              "max": 10
+            },
+            "sulphur_dioxide_pct": {
+              "operator": "<=",
+              "value": 0.5
+            },
+            "total_nitrogen_pct": {
+              "operator": "range",
+              "min": 0.5,
+              "max": 7.5
+            },
+            "thi": null,
+            "heavy_metals_mgkg_max": 25,
+            "mercury_mgkg_max": 0.1,
+            "copper_mgkg_max": 20
+          }
+        }
+      },
+      "calculation_notes": [
+        "Routine and type-test requirements are on solids basis except metallic impurities.",
+        "Ammoniacal-nitrogen requirement is based on product colour having the minimum colour intensity; proportionately higher values apply at higher colour intensity."
+      ],
+      "packaging": "Fill in amber-coloured glass, high-density polyethylene, or another suitable well-closed container with as little air space as possible; container must preclude contamination with metals or other impurities.",
+      "machine_requirements_complete": true,
+      "runtime_policy": {
+        "variant_required": true,
+        "auto_apply": false,
+        "permission_to_use_finished_food": "Separate Appendix A / product-standard permission is required."
+      }
     }
   ],
   "coverage": {
@@ -954,15 +1180,16 @@
     "other_substances_exact_limit_routes": 5,
     "other_substances_auto_apply": 0,
     "other_substances_fail_closed": true,
-    "build": 430,
-    "identity_purity_standards_structured": 8,
+    "build": 431,
+    "identity_purity_standards_structured": 9,
     "food_colour_clause12_effective_standard_loaded": true,
     "food_colour_amendment_84_effective_from": "2026-02-01",
     "food_colour_legacy_omission_policy_loaded": true,
-    "food_colour_individual_standards_loaded": 6,
-    "food_colour_machine_complete_standards": 5,
+    "food_colour_individual_standards_loaded": 7,
+    "food_colour_machine_complete_standards": 6,
     "food_colour_partial_fail_closed_standards": 1,
-    "food_colour_next_standard": "3.2.1(7) Caramel"
+    "food_colour_next_standard": "3.2.1(8) Annatto",
+    "caramel_variant_types_loaded": 4
   },
   "effective_amendments": [
     {
