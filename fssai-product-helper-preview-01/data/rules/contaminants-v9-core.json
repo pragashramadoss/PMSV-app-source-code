@@ -17,9 +17,9 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_47_chapter_2_7_contaminant_review_complete",
+    "stage": "phase_48_chapter_2_6_taxonomic_metal_routes_loaded",
     "section": "2.1 Metal Contaminants",
-    "exact_product_profiles": 126,
+    "exact_product_profiles": 135,
     "universal_rules": 1,
     "food_not_specified_defaults_stored": 6,
     "auto_apply_food_not_specified_defaults": false,
@@ -77,7 +77,7 @@
     ],
     "metal_article_master_rows_loaded": 382,
     "metal_article_master_auto_apply": false,
-    "next_priority": "Continue with the next standardized-product family lacking a dedicated contaminant identity review. Do not unlock Chapter 2.7 locked products without exact current FSSAI article evidence.",
+    "next_priority": "Continue Chapter 2.6 with processed fishery-product identities, PCB/PAH, biotoxin and histamine routing. Preserve species/package/process gates where Version IX distinguishes product classes.",
     "arsenic_article_rows_loaded": 95,
     "source_literal_anomalies": [
       {
@@ -213,7 +213,13 @@
       "05-05-1-cocoa-powder",
       "03-03-ice-lollies-or-edible-ices"
     ],
-    "chapter_2_7_review_note": "Hard Candy and Cocoa Powder retain existing exact Version IX profiles. Build 423 adds Ice Lollies/Edible Ices using the exact article 'Ice-cream, iced lollies and similar frozen confections' (Lead 1.0 mg/kg; Arsenic 0.5 mg/kg). Soft Candy, Lozenges, Chewing/Bubble Gum, Chocolate, Dry Cocoa-Sugar Mixes and Cocoa Mass/Liquor/Cake remain explicitly fail-closed because no exact current Version IX finished-product article was found."
+    "chapter_2_7_review_note": "Hard Candy and Cocoa Powder retain existing exact Version IX profiles. Build 423 adds Ice Lollies/Edible Ices using the exact article 'Ice-cream, iced lollies and similar frozen confections' (Lead 1.0 mg/kg; Arsenic 0.5 mg/kg). Soft Candy, Lozenges, Chewing/Bubble Gum, Chocolate, Dry Cocoa-Sugar Mixes and Cocoa Mass/Liquor/Cake remain explicitly fail-closed because no exact current Version IX finished-product article was found.",
+    "chapter_2_6_taxonomic_products_reviewed": 11,
+    "chapter_2_6_taxonomic_exact_profiles": 11,
+    "chapter_2_6_taxonomic_rule_policy": "Direct Version IX Fish/Crustaceans/Cephalopods/Bivalve Molluscs/All fishery products articles only; source-literal Arsenic 76/86 rows are not promoted; generic finfish Mercury remains species-gated.",
+    "chapter_2_6_mercury_species_gates": 2,
+    "chapter_2_6_arsenic_source_literal_auto_apply": false,
+    "chapter_2_6_review_started_build_426": true
   },
   "all_food_rules": [
     {
@@ -2163,6 +2169,22 @@
           "article": "Bivalve molluscs",
           "source_basis": "Section 2.1 · Lead",
           "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Non-predatory fish, crustaceans, cephalopods, molluscs",
+          "source_basis": "Section 2.1 · Mercury · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_mollusc_identity"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
         }
       ]
     },
@@ -2188,6 +2210,22 @@
           "article": "Cephalopods",
           "source_basis": "Section 2.1 · Lead",
           "verification": "explicit_product_subclass_verified_v9"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Non-predatory fish, crustaceans, cephalopods, molluscs",
+          "source_basis": "Section 2.1 · Mercury · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_cephalopod_identity"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
         }
       ]
     },
@@ -4058,6 +4096,359 @@
           "article": "Ice-cream, iced lollies and similar frozen confections",
           "source_basis": "Section 2.1 · Arsenic · Version IX (03.02.2026)",
           "verification": "official_fssai_v9_direct_iced_lollies_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-frozen-shrimp",
+      "label": "Frozen shrimp",
+      "catalog_ids": [
+        "09-09-2-frozen-shrimp"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Crustaceans",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_crustacean_identity"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Crustaceans",
+          "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_crustacean_identity"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Non-predatory fish, crustaceans, cephalopods, molluscs",
+          "source_basis": "Section 2.1 · Mercury · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_crustacean_identity"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-frozen-lobsters",
+      "label": "Frozen Lobsters",
+      "catalog_ids": [
+        "09-09-2-frozen-lobsters"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Crustaceans",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_crustacean_identity"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Crustaceans",
+          "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_crustacean_identity"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Non-predatory fish, crustaceans, cephalopods, molluscs",
+          "source_basis": "Section 2.1 · Mercury · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_crustacean_identity"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-freeze-dried-prawns",
+      "label": "Freeze dried prawns (Shrimps)",
+      "catalog_ids": [
+        "09-09-2-freeze-dried-prawns-shrimps"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Crustaceans",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_crustacean_identity"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Crustaceans",
+          "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_crustacean_identity"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Non-predatory fish, crustaceans, cephalopods, molluscs",
+          "source_basis": "Section 2.1 · Mercury · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_crustacean_identity"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-pasteurised-crab-meat",
+      "label": "Pasteurised Crab Meat",
+      "catalog_ids": [
+        "09-09-2-pasteurised-crab-meat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Crustaceans",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_crustacean_identity"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Crustaceans",
+          "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_crustacean_identity"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Non-predatory fish, crustaceans, cephalopods, molluscs",
+          "source_basis": "Section 2.1 · Mercury · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_crustacean_identity"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-frozen-squid",
+      "label": "Frozen squid and parts of squid",
+      "catalog_ids": [
+        "09-09-2-frozen-squid-and-parts-of-squid"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 1,
+          "unit": "mg/kg",
+          "article": "Cephalopods",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_cephalopod_identity"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Cephalopods",
+          "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_cephalopod_identity"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Non-predatory fish, crustaceans, cephalopods, molluscs",
+          "source_basis": "Section 2.1 · Mercury · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_cephalopod_identity"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-frozen-clam-meat",
+      "label": "Frozen Clam meat",
+      "catalog_ids": [
+        "09-09-2-frozen-clam-meat"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 1.5,
+          "unit": "mg/kg",
+          "article": "Bivalve molluscs",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Non-predatory fish, crustaceans, cephalopods, molluscs",
+          "source_basis": "Section 2.1 · Mercury · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_mollusc_identity"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-raw-scallop",
+      "label": "Fresh and Quick Frozen Raw Scallop Products",
+      "catalog_ids": [
+        "09-09-2-fresh-and-quick-frozen-raw-scallop-products"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 1.5,
+          "unit": "mg/kg",
+          "article": "Bivalve molluscs",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Bivalve Molluscs",
+          "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_bivalve_identity"
+        },
+        {
+          "contaminant": "Mercury",
+          "limit": 0.5,
+          "unit": "mg/kg",
+          "article": "Non-predatory fish, crustaceans, cephalopods, molluscs",
+          "source_basis": "Section 2.1 · Mercury · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_mollusc_identity"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-frozen-finfish",
+      "label": "Frozen finfish",
+      "catalog_ids": [
+        "09-09-2-frozen-finfish"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.3,
+          "unit": "mg/kg",
+          "article": "Fish",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_finfish_identity"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.3,
+          "unit": "mg/kg",
+          "article": "Fish",
+          "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_finfish_identity"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
+        }
+      ]
+    },
+    {
+      "id": "chapter-2-6-frozen-fish-fillets",
+      "label": "Frozen fish fillets",
+      "catalog_ids": [
+        "09-09-2-frozen-fish-fillets"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.3,
+          "unit": "mg/kg",
+          "article": "Fish",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_finfish_identity"
+        },
+        {
+          "contaminant": "Cadmium",
+          "limit": 0.3,
+          "unit": "mg/kg",
+          "article": "Fish",
+          "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_finfish_identity"
+        },
+        {
+          "contaminant": "Chromium",
+          "limit": 12,
+          "unit": "mg/kg",
+          "article": "All fishery products",
+          "source_basis": "Section 2.1 · Chromium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_plus_chapter_2_6_exact_fishery_product_identity"
         }
       ]
     }
@@ -21466,6 +21857,22 @@
       "status": "locked_no_exact_current_article",
       "lock_scope": "automatic product-level contaminant mapping",
       "reason": "No exact Cocoa Mass, Cocoa/Chocolate Liquor or Cocoa Cake article is present in Version IX. PMSV does not reuse Cocoa Powder limits for these separate standardized identities."
+    }
+  ],
+  "chapter_2_6_conditional_contaminant_routes_v9": [
+    {
+      "catalog_id": "09-09-2-frozen-finfish",
+      "product_name": "Frozen finfish",
+      "contaminant": "Mercury",
+      "status": "locked_requires_species_predatory_classification",
+      "reason": "Version IX provides 0.5 mg/kg for Fish/non-predatory fish and 1.0 mg/kg for named predatory fish (Tuna, Marlin, Sword Fish, Elasmobranch). The FoSCoS product identity does not resolve species/predatory class."
+    },
+    {
+      "catalog_id": "09-09-2-frozen-fish-fillets",
+      "product_name": "Frozen fish fillets",
+      "contaminant": "Mercury",
+      "status": "locked_requires_species_predatory_classification",
+      "reason": "Version IX provides distinct Mercury limits for non-predatory and named predatory fish. A generic fillet identity is insufficient to choose the legal limit."
     }
   ]
 }
