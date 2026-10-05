@@ -2935,6 +2935,7 @@ function renderFormula(){
  const selectedName=selectedProduct?.name||selectedProfile?.name||'Selected product';
  const selectedFcs=appendixFcsForRecord(selectedProduct);
  const caffeinatedScope=caffeinatedPrototypeScopeActive();
+ const guardedChapterReview=selectedProfile?.status==='chapter_profile_ready'&&currentChapterStandards().length>0&&selectedProfile?.chapter_rule_route_status!=='specific_variant_table_pending';
  const exampleBtn=document.getElementById('loadExampleFormula');
  if(exampleBtn)exampleBtn.classList.toggle('hidden',!caffeinatedScope);
 
@@ -3015,7 +3016,9 @@ function renderFormula(){
      else if(hasUnresolved)reason='At least one ingredient does not yet have an exact permission for this selected product/FCS.';
      else if(hasProp)reason='The ingredient list requires product-route review before any final compliance conclusion.';
      else reason='The entered ingredients pass the currently loaded ingredient-level permissions and quantitative checks for this selected product.';
-     finalAssessment.innerHTML='<b>Ingredient-stage formulation assessment</b><br><br><b>Selected route:</b> '+esc(route)+'<br><b>Ingredient-stage status:</b> <span class="'+complianceClass+'">'+compliance+'</span><br><small>'+esc(reason)+'</small><br><br><small><b>This is not a final product-compliance decision.</b> Product-wide compliance still requires the applicable contaminant, microbiology, processing-aid/process, packaging, nutrition, fortification, labelling and claims gates.</small>';
+     finalAssessment.innerHTML='<b>Ingredient-stage formulation assessment</b><br><br><b>Selected route:</b> '+esc(route)+'<br><b>Ingredient-stage status:</b> <span class="'+complianceClass+'">'+compliance+'</span><br><small>'+esc(reason)+'</small>'
+       +(guardedChapterReview?'<br><br><span class="status-warn"><b>Guarded chapter-profile mode:</b> this product has not been promoted to fully validated rule-profile status. Passing ingredient-stage checks does not close outstanding product-standard or cross-layer requirements.</span>':'')
+       +'<br><br><small><b>This is not a final product-compliance decision.</b> Product-wide compliance still requires the applicable product-standard test results, contaminant, microbiology, processing-aid/process, packaging, nutrition, fortification, labelling and claims gates.</small>';
    }
  }
  if(summary){
@@ -4473,9 +4476,12 @@ function renderLegacyProductScopePages(){
      ingredientDynamic.innerHTML='<div class="card"><div class="notice"><b>Select a product first.</b> Ingredient permissions remain locked.</div></div>';
    }else{
      const ready=status==='rule_profile_ready';
+     const chapterReview=status==='chapter_profile_ready'&&standards.length>0&&profile.chapter_rule_route_status!=='specific_variant_table_pending';
      let html='<div class="card"><div class="section-title"><h2>Ingredients & limits — '+esc(name)+'</h2><span>Product-scoped</span></div>'
-       +'<div class="notice '+(ready?'oknote':'')+'"><b>'+(ready?'Detailed product profile selected.':'Detailed ingredient profile not fully validated.')+'</b><br>'
-       +(ready?'PMSV evaluates exact chapter ingredient entries plus Appendix A permissions for FCS '+esc(fcs||'not mapped')+'. Broad groups and conditional permissions are displayed separately and are not treated as an automatic exact match.':'PMSV will not show or borrow the Caffeinated Beverage ingredient table. Formulation editing remains locked until the selected product reaches detailed rule-profile status.')+'</div></div>';
+       +'<div class="notice '+(ready?'oknote':'')+'"><b>'+(ready?'Detailed product profile selected.':chapterReview?'Guarded chapter-profile review available.':'Detailed ingredient profile not fully validated.')+'</b><br>'
+       +(ready?'PMSV evaluates exact chapter ingredient entries plus Appendix A permissions for FCS '+esc(fcs||'not mapped')+'. Broad groups and conditional permissions are displayed separately and are not treated as an automatic exact match.'
+         :chapterReview?'Ingredient entry is enabled against the exact structured chapter standard and selected Appendix A FCS. <b>This does not upgrade the product to fully validated status:</b> unresolved ingredients, conditional groups and missing cross-layer rules remain fail-closed, and PMSV will not issue a final product-compliance verdict.'
+         :'PMSV will not show or borrow the Caffeinated Beverage ingredient table. Formulation editing remains locked because an exact usable chapter rule is not yet available for this selected product.')+'</div></div>';
      if(standards.length){
        standards.forEach(({db,standard})=>{
          const ing=chapterStandardIngredientSections(standard);
@@ -4510,6 +4516,7 @@ function applyProductGate(){
  const profile=currentProductProfile();
  const detailed=profile&&profile.status==='rule_profile_ready';
  const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
+ const chapterReviewReady=!!profile&&chapterLoaded&&currentChapterStandards().length>0&&profile.chapter_rule_route_status!=='specific_variant_table_pending';
  if(load){
    const exampleAllowed=!!profile&&detailed&&caffeinatedPrototypeScopeActive();
    load.disabled=!exampleAllowed;
@@ -4523,10 +4530,11 @@ function applyProductGate(){
        +(!appendixFcs?'<span class="status-warn">'+esc(appendixFcsStatusLabel(profile)||'Appendix A FCS mapping is not available; additive inheritance must remain locked.')+'</span><br>':'')
        +(detailed
          ?'<b>Detailed rule profile complete.</b> Formulation compliance checks are enabled for this product.'
-         :chapterLoaded?'<b>FSSAI chapter profile loaded.</b> The product is mapped to '+esc(profile.fssr||profile.rule_key||'its applicable standard')+' and structured chapter rules are present. '+(profile.chapter_rule_route_status==='specific_variant_table_pending'?'<b>Its product-specific variant table is still pending and remains locked.</b> ':'')+'Full formulation editing remains locked until every linked product clause and Appendix rule is machine-validated.':'<b>Base rule profile loaded.</b> General regulatory layers and the official product mapping are available, but product-specific composition/ingredient clauses are not complete yet. Formulation editing is locked so PMSV does not apply another product\'s rules by mistake.');
+         :chapterReviewReady?'<b>Guarded chapter-profile review enabled.</b> The exact structured rule '+esc([...currentChapterRuleKeys()].join(', '))+' is loaded. Ingredient entry is enabled, but this product is <b>not</b> promoted to fully validated status; missing/conditional rules and cross-layer gaps remain fail-closed.'
+         :chapterLoaded?'<b>FSSAI chapter profile loaded.</b> The product is mapped to '+esc(profile.fssr||profile.rule_key||'its applicable standard')+' and structured chapter rules are present. '+(profile.chapter_rule_route_status==='specific_variant_table_pending'?'<b>Its product-specific variant table is still pending and remains locked.</b> ':'')+'Formulation editing stays locked because no exact safely usable chapter rule is available yet.':'<b>Base rule profile loaded.</b> General regulatory layers and the official product mapping are available, but product-specific composition/ingredient clauses are not complete yet. Formulation editing is locked so PMSV does not apply another product\'s rules by mistake.');
      gate.classList.remove('hidden');
    }
-   if(add)add.disabled=!detailed;
+   if(add)add.disabled=!(detailed||chapterReviewReady);
  }else{
    if(gate){
      gate.className='notice';
