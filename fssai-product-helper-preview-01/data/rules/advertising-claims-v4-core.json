@@ -603,37 +603,139 @@
       "term": "Natural",
       "clause": "Reg. 9(2) / Schedule V",
       "auto_evaluable": false,
-      "summary": "Restricted to qualifying single foods or qualifying natural ingredients/additives; composite foods may use 'made from natural ingredients' only when all ingredients/additives qualify. 'Natural goodness', 'naturally better' and 'nature's way' shall not be used."
+      "summary": "Restricted to qualifying single foods or qualifying natural ingredients/additives; composite foods may use 'made from natural ingredients' only when all ingredients/additives qualify. 'Natural goodness', 'naturally better' and 'nature's way' shall not be used.",
+      "evidence_questions": [
+        {
+          "id": "single_food",
+          "question": "Is the finished product a single food (not a composite food)?",
+          "required": true
+        },
+        {
+          "id": "nothing_added",
+          "question": "Has nothing been added to that single food?",
+          "required": true
+        },
+        {
+          "id": "permitted_processing",
+          "question": "Has it undergone only the processing permitted by Schedule V for 'Natural'?",
+          "required": true
+        },
+        {
+          "id": "packaging_condition",
+          "question": "Where packaging applies, is it done without chemicals and preservatives as required by Schedule V?",
+          "required": true
+        }
+      ]
     },
     {
       "term": "Fresh",
       "clause": "Reg. 9(2) / Schedule V",
       "auto_evaluable": false,
-      "summary": "Restricted to products not processed beyond the permitted minimal processes; special conditions apply to frozen-from-fresh expressions."
+      "summary": "Restricted to products not processed beyond the permitted minimal processes; special conditions apply to frozen-from-fresh expressions.",
+      "evidence_questions": [
+        {
+          "id": "minimal_processing",
+          "question": "Has the product avoided processing other than the Schedule V permitted minimal/safety processes?",
+          "required": true
+        },
+        {
+          "id": "basic_characteristics",
+          "question": "Have those processes not altered the product's basic characteristics?",
+          "required": true
+        }
+      ]
     },
     {
       "term": "Pure",
       "clause": "Reg. 9(2) / Schedule V",
       "auto_evaluable": false,
-      "summary": "Restricted to qualifying single-ingredient food with nothing added and compliant contaminant levels; compound foods may use 'made with pure ingredients' only when all ingredients qualify."
+      "summary": "Restricted to qualifying single-ingredient food with nothing added and compliant contaminant levels; compound foods may use 'made with pure ingredients' only when all ingredients qualify.",
+      "evidence_questions": [
+        {
+          "id": "single_ingredient",
+          "question": "Is this a single-ingredient food?",
+          "required": true
+        },
+        {
+          "id": "nothing_added",
+          "question": "Has nothing been added?",
+          "required": true
+        },
+        {
+          "id": "avoidable_contamination",
+          "question": "Is the food free from avoidable contamination?",
+          "required": true
+        },
+        {
+          "id": "unavoidable_contaminants",
+          "question": "Are unavoidable contaminants below the applicable FSSAI limits?",
+          "required": true
+        }
+      ]
     },
     {
       "term": "Authentic / Genuine / Real",
       "clause": "Reg. 9(2) / Schedule V",
       "auto_evaluable": false,
-      "summary": "Use requires clarification of the tangible quality justification and why the term is used."
+      "summary": "Use requires clarification of the tangible quality justification and why the term is used.",
+      "evidence_questions": [
+        {
+          "id": "tangible_justification",
+          "question": "Does the label/advertisement clearly state the tangible quality justification for using this term?",
+          "required": true
+        },
+        {
+          "id": "why_term_used",
+          "question": "Does it clearly explain why this particular term is used?",
+          "required": true
+        }
+      ]
     },
     {
       "term": "Traditional",
       "clause": "Reg. 9(2) / Schedule V",
       "auto_evaluable": false,
-      "summary": "Recipe, fundamental formulation or process must demonstrably have existed substantially unchanged for a generation (30 years)."
+      "summary": "Recipe, fundamental formulation or process must demonstrably have existed substantially unchanged for a generation (30 years).",
+      "evidence_questions": [
+        {
+          "id": "thirty_years",
+          "question": "Can the recipe, fundamental formulation or processing method be demonstrated to have existed for at least 30 years?",
+          "required": true
+        },
+        {
+          "id": "substantially_unchanged",
+          "question": "Has it remained substantially unchanged for that same period?",
+          "required": true
+        }
+      ]
     },
     {
       "term": "Original",
       "clause": "Reg. 9(2) / Schedule V",
       "auto_evaluable": false,
-      "summary": "Origin of formulation/process must be traceable and essentially unchanged; major ingredients cannot be replaced and the product must remain the standard product when variants are introduced."
+      "summary": "Origin of formulation/process must be traceable and essentially unchanged; major ingredients cannot be replaced and the product must remain the standard product when variants are introduced.",
+      "evidence_questions": [
+        {
+          "id": "traceable_origin",
+          "question": "Can the origin of the formulation or process be traced?",
+          "required": true
+        },
+        {
+          "id": "essentially_unchanged",
+          "question": "Has it remained essentially unchanged over time?",
+          "required": true
+        },
+        {
+          "id": "no_major_replacements",
+          "question": "Does it contain no replacements for major ingredients?",
+          "required": true
+        },
+        {
+          "id": "standard_product",
+          "question": "When newer variants exist, does this remain available as the standard product?",
+          "required": true
+        }
+      ]
     }
   ],
   "runtime_coverage": {
@@ -642,8 +744,8 @@
     "comparative_claims": "numeric_difference_screen_ready",
     "non_addition_claims": "direct_disqualifier_screen_ready",
     "health_claims": "fail_closed_pending_evidence_workflow",
-    "schedule_v_terms": "structured_manual",
-    "status": "phase_2_rules_ready_build_383",
+    "schedule_v_terms": "evidence_questionnaire_ready",
+    "status": "phase_3_schedule_v_rules_ready_build_385",
     "runtime_audit": {
       "build": 381,
       "schedule_i_rules": 25,
