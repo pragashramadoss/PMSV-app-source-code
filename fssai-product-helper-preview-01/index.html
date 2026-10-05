@@ -6401,7 +6401,7 @@ async function loadLabelDb(){
 
 async function loadChapterRuleDbs(){
  try{
-   const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=434',{cache:'reload'}).then(async res=>{
+   const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=436',{cache:'reload'}).then(async res=>{
      if(!res.ok)throw new Error(url+' HTTP '+res.status);
      return res.json();
    })));
