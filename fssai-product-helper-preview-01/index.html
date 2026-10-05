@@ -1687,20 +1687,54 @@ function fatOilBasis(){
  const kg=items.reduce((s,x)=>s+qtyToKg(x.qty,x.unit),0);
  return {items,kg};
 }
-function labelAllergenTriggers(){
- const found=new Set();
+function labelAllergenAssessment(){
+ const rules=labelDb?.allergen_rules||{};
+ const categories=Array.isArray(rules.categories)?rules.categories:[];
+ const glutenExemptions=(rules.gluten_exemption_candidates||[]).map(normIngredient);
+ const declarations=new Set();
+ const review=[];
+
  formulationIngredients.forEach(item=>{
    const n=normIngredient(item.name);
-   if(/\b(wheat|rye|barley|oat|oats|spelt)\b/.test(n)) found.add('Gluten cereal: '+item.name);
-   if(/\b(crustacean|shrimp|prawn|crab|lobster)\b/.test(n)) found.add('Crustacean');
-   if(/\b(milk|whey|casein|caseinate|cheese|cream|butter|ghee|yoghurt|yogurt)\b/.test(n)) found.add('Milk');
-   if(/\b(egg|albumin|ovalbumin)\b/.test(n)) found.add('Egg');
-   if(/\b(fish|anchovy|tuna|salmon|cod)\b/.test(n)) found.add('Fish');
-   if(/\b(peanut|groundnut|almond|walnut|pistachio|cashew|hazelnut|pecan|tree nut)\b/.test(n)) found.add('Nut');
-   if(/\b(soy|soya|soybean)\b/.test(n)) found.add('Soy');
-   if(/\b(sulphite|sulfite|metabisulphite|metabisulfite|sulphur dioxide|sulfur dioxide)\b/.test(n)) found.add('Sulphite — verify final level is ≥10 mg/kg');
+   if(!n)return;
+
+   const glutenExemption=glutenExemptions.some(x=>n.includes(x));
+   if(glutenExemption){
+     review.push(item.name+': potential gluten-cereal exemption candidate; verify the FSSAI exemption conditions, including the applicable gluten criterion, before omitting the allergen declaration.');
+     return;
+   }
+
+   const matchedCategories=categories.filter(cat=>(cat.keywords||[]).some(k=>n.includes(normIngredient(k))));
+   if(!matchedCategories.length)return;
+
+   const allergenOil=matchedCategories.some(cat=>cat.id!=='sulphite') && /\boil\b/.test(n);
+   if(allergenOil&&rules.derived_oils_exempt){
+     review.push(item.name+': oil derived from a listed allergen may be exempt under Regulation 5(14); confirm the ingredient is actually the derived oil before omitting the declaration.');
+     return;
+   }
+
+   matchedCategories.forEach(cat=>{
+     if(cat.id==='sulphite'){
+       const direct=/^(sulphur dioxide|sulfur dioxide)$/.test(n);
+       if(direct){
+         const mgkg=usageForIngredient(item).mgkg;
+         if(mgkg>=Number(cat.threshold_mgkg_as_so2||10))declarations.add(cat.declaration||'Sulphite');
+       }else{
+         review.push(item.name+': sulphite allergen declaration depends on sulphur-dioxide equivalent at ≥'+Number(cat.threshold_mgkg_as_so2||10)+' mg/kg; PMSV will not infer the SO₂ conversion from the salt name alone.');
+       }
+       return;
+     }
+
+     if(cat.id==='gluten_cereal'){
+       const cereal=(cat.keywords||[]).find(k=>n.includes(normIngredient(k)));
+       if(cereal)declarations.add(cereal==='oat'?'Oat':cereal==='oats'?'Oats':cereal.charAt(0).toUpperCase()+cereal.slice(1));
+       return;
+     }
+     declarations.add(cat.declaration||cat.id);
+   });
  });
- return [...found];
+
+ return {declarations:[...declarations],review};
 }
 function labelScheduleIiThresholdAssessments(){
  const rules=labelDb?.schedule_ii?.ingredient_threshold_rules||[];
@@ -1785,11 +1819,12 @@ function renderLabelRequirements(){
  }
 
  if(triggers){
-   const allergens=labelAllergenTriggers();
+   const allergenAssessment=labelAllergenAssessment();
+   const allergens=allergenAssessment.declarations;
    const sweeteners=labelSweetenerTriggers();
    const additiveItems=formulationIngredients.map((x,i)=>({x,q:qualifyIngredient(x)})).filter(z=>z.q.kind==='additive');
    const blocks=[];
-   blocks.push('<div class="item"><b>Allergen declaration generated from entered names</b><small>'+(allergens.length?'Potential declaration: <b>Contains: '+allergens.map(esc).join(', ')+'</b>.':'No listed allergen has been identified from the ingredient names entered.')+'<br>Confirm compound ingredients, processing aids, sulphite concentration and cross-contact before final artwork.</small></div>');
+   blocks.push('<div class="item"><b>Allergen declaration assessment</b><small>'+(allergens.length?'Current direct declaration: <b>Contains: '+allergens.map(esc).join(', ')+'</b>.':'No direct allergen declaration is generated from the currently entered ingredient identities.')+(allergenAssessment.review.length?'<br><br><b>Verification required:</b><br>• '+allergenAssessment.review.map(esc).join('<br>• '):'')+'<br><br>Compound ingredients and cross-contact still require separate review before artwork approval.</small></div>');
    blocks.push('<div class="item"><b>Food-additive declaration</b><small>'+(additiveItems.length?'Detected additive(s): '+additiveItems.map(z=>esc(z.x.name)+(z.q.appendix&&z.q.appendix.ins?' (INS '+esc(z.q.appendix.ins)+')':'')).join(', ')+'. Declare the applicable <b>functional class + specific name/INS</b> in the ingredient list.':'No ingredient currently classified by PMSV as an Appendix-A food additive requiring a generated additive line.')+'</small></div>');
 
    if(sweeteners.length){
@@ -4071,7 +4106,7 @@ function labelProductRuleFor(name){
 async function loadLabelDb(){
  const status=document.getElementById('labelDbStatus');
  try{
-   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=355',{cache:'reload'});
+   const res=await fetch('./data/rules/labelling-display-v8-core.json?v=358',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    labelDb=await res.json();
    if(status){
