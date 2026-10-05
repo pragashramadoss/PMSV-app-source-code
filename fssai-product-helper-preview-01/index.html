@@ -2104,17 +2104,45 @@ function currentChapterRuleKeys(){
    profile?.rule_key,
    ...(Array.isArray(profile?.rule_keys)?profile.rule_keys:[]),
    ...(Array.isArray(profile?.linked_rule_keys)?profile.linked_rule_keys:[])
- ].map(x=>String(x||'').trim()).filter(x=>/^\d+(?:\.\d+)+(?:\([^)]*\))?$/.test(x)));
+ ].map(x=>String(x||'').trim()).filter(x=>/^\d+(?:\.\d+)*(?:\([^)]*\))?(?:[a-z])?$/.test(x)));
+}
+function ruleDbStandards(db){
+ const rows=[];
+ const raw=db?.standards;
+ if(Array.isArray(raw))raw.forEach(st=>rows.push(st));
+ else if(raw&&typeof raw==='object')Object.entries(raw).forEach(([key,st])=>{
+   if(st&&typeof st==='object')rows.push({...st,key:st.key||key});
+ });
+ if(Array.isArray(db?.identity_purity_standards))db.identity_purity_standards.forEach(st=>rows.push(st));
+ return rows;
+}
+function ruleDbLabel(db){
+ if(db?.chapter)return 'FSSAI Chapter '+String(db.chapter);
+ if(db?.regulation)return String(db.regulation);
+ return String(db?.title||db?.database_id||'FSSAI rule file');
+}
+function ruleDbAllowsGuardedFormulation(db){
+ if(!db)return false;
+ if(db.final_compliance_lock)return false;
+ if(db.database_id==='fssai-foods-for-infant-nutrition-v2')return false;
+ if(db.database_id==='fssai-alcoholic-beverages-v5')return false;
+ if(String(db.chapter||'')==='3')return false;
+ return true;
 }
 function currentChapterStandards(){
  const keys=currentChapterRuleKeys();
  if(!keys.size||!Array.isArray(chapterRuleDbs))return [];
  const out=[];
- chapterRuleDbs.forEach(db=>(db?.standards||[]).forEach(st=>{
+ chapterRuleDbs.forEach(db=>ruleDbStandards(db).forEach(st=>{
    if(keys.has(String(st?.key||'').trim()))out.push({db,standard:st});
  }));
  return out;
 }
+function currentGuardedFormulationStandards(){
+ const matches=currentChapterStandards();
+ return matches.length&&matches.every(x=>ruleDbAllowsGuardedFormulation(x.db))?matches:[];
+}
+
 function ingredientStringsFromStandard(st){
  const directFields=[
    'permitted_ingredients','optional_ingredients','permitted_base_ingredients',
@@ -2156,7 +2184,7 @@ function findChapterPermittedIngredient(name){
        route:'standard',
        limit,
        condition:r.condition||'',
-       source:'FSSAI Chapter '+String(db?.chapter||'')+' · '+String(standard.key||'')
+       source:ruleDbLabel(db)+' · '+String(standard.key||'')
      };
    }
  }
@@ -2169,7 +2197,7 @@ function currentChapterIngredientCatalog(){
      rows.push({
        name:row.name,
        label:row.name,
-       source:'FSSAI Chapter '+String(db?.chapter||'')+' · '+String(standard.key||'')+' · '+String(standard.name||'')
+       source:ruleDbLabel(db)+' · '+String(standard.key||'')+' · '+String(standard.name||'')
      });
    });
  });
@@ -2935,7 +2963,7 @@ function renderFormula(){
  const selectedName=selectedProduct?.name||selectedProfile?.name||'Selected product';
  const selectedFcs=appendixFcsForRecord(selectedProduct);
  const caffeinatedScope=caffeinatedPrototypeScopeActive();
- const guardedChapterReview=selectedProfile?.status==='chapter_profile_ready'&&currentChapterStandards().length>0&&selectedProfile?.chapter_rule_route_status!=='specific_variant_table_pending';
+ const guardedChapterReview=selectedProfile?.status==='chapter_profile_ready'&&currentGuardedFormulationStandards().length>0&&selectedProfile?.chapter_rule_route_status!=='specific_variant_table_pending';
  const exampleBtn=document.getElementById('loadExampleFormula');
  if(exampleBtn)exampleBtn.classList.toggle('hidden',!caffeinatedScope);
 
@@ -3707,7 +3735,10 @@ const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-9-salt-spices-condiments-v1.json',
  './data/rules/chapter-2-10-beverages-v1.json',
  './data/rules/chapter-2-11-other-food-products-v1.json',
- './data/rules/chapter-2-16-hemp-v1.json'
+ './data/rules/chapter-2-16-hemp-v1.json',
+ './data/rules/alcoholic-beverages-v5.json',
+ './data/rules/foods-for-infant-nutrition-v2.json',
+ './data/rules/chapter-3-substances-added-v1.json'
 ];
 let selectedProductId='';
 
@@ -4344,11 +4375,13 @@ document.getElementById('clearProprietaryRoute')?.addEventListener('click',()=>{
 function chapterRuleDisplayRows(standard){
  const fields=[
    ['composition','Composition'],
+   ['core_composition','Core composition'],
    ['common_composition','Common composition'],
    ['whole_composition','Whole-product composition'],
    ['powder_composition','Powder composition'],
    ['composition_rules','Composition rule'],
-   ['formulation_rules','Formulation rule']
+   ['formulation_rules','Formulation rule'],
+   ['requirements','Identity / purity requirement']
  ];
  const rows=[];
  fields.forEach(([field,label])=>{
@@ -4358,13 +4391,15 @@ function chapterRuleDisplayRows(standard){
      if(rule&&typeof rule==='object'){
        const parameter=rule.parameter||rule.name||label;
        let requirement='';
-       if(rule.operator!==undefined&&rule.value!==undefined)requirement=String(rule.operator)+' '+String(rule.value)+(rule.unit?' '+String(rule.unit):'');
+       if(rule.operator==='range'&&rule.min!==undefined&&rule.max!==undefined)requirement=String(rule.min)+'–'+String(rule.max)+(rule.unit?' '+String(rule.unit):'');
+       else if(rule.operator!==undefined&&rule.value!==undefined)requirement=String(rule.operator)+' '+String(rule.value)+(rule.unit?' '+String(rule.unit):'');
        else if(rule.min!==undefined||rule.max!==undefined){
          const bits=[];
          if(rule.min!==undefined)bits.push('Min '+rule.min+(rule.unit?' '+rule.unit:''));
          if(rule.max!==undefined)bits.push('Max '+rule.max+(rule.unit?' '+rule.unit:''));
          requirement=bits.join(' · ');
-       }else requirement=rule.text||rule.requirement||rule.condition||JSON.stringify(rule);
+       }else if(rule.range)requirement=String(rule.range)+(rule.unit?' '+String(rule.unit):'');
+       else requirement=rule.text||rule.requirement||rule.condition||rule.per_100g||rule.per_100kcal||JSON.stringify(rule);
        rows.push({section:label,parameter,requirement,condition:rule.condition||'',rule});
      }else if(typeof rule==='string'){
        rows.push({section:label,parameter:label,requirement:rule,condition:'',rule:null});
@@ -4417,8 +4452,9 @@ function renderLegacyProductScopePages(){
      if(standards.length){
        standards.forEach(({db,standard})=>{
          const rows=chapterRuleDisplayRows(standard);
-         html+='<div class="card"><div class="section-title"><h2>'+esc(standard.name||name)+'</h2><span>'+esc('Chapter '+(db?.chapter||'')+' · '+(standard.key||''))+'</span></div>';
-         if(standard.definition)html+='<div class="notice oknote"><b>Definition:</b> '+esc(standard.definition)+'</div>';
+         html+='<div class="card"><div class="section-title"><h2>'+esc(standard.name||name)+'</h2><span>'+esc(ruleDbLabel(db)+' · '+(standard.key||''))+'</span></div>';
+         if(standard.definition||standard.definition_summary)html+='<div class="notice oknote"><b>Definition:</b> '+esc(standard.definition||standard.definition_summary)+'</div>';
+         if(!ruleDbAllowsGuardedFormulation(db)&&db?.final_compliance_lock)html+='<div class="notice"><b>Formulation lock for this rule family:</b> '+esc(db.final_compliance_lock)+'</div>';
          if(rows.length){
            html+='<div class="tablewrap"><table><thead><tr><th>Section</th><th>Parameter / rule</th><th>Requirement</th></tr></thead><tbody>'
              +rows.map(r=>'<tr><td>'+esc(r.section)+'</td><td><b>'+esc(r.parameter)+'</b></td><td>'+esc(r.requirement)+(r.condition?'<br><small>'+esc(r.condition)+'</small>':'')+'</td></tr>').join('')
@@ -4453,6 +4489,10 @@ function renderLegacyProductScopePages(){
          }else{
            html+='<div class="notice"><b>No machine-readable numerical composition row is loaded for this exact standard.</b> The product mapping remains available, but PMSV will not invent missing limits.</div>';
          }
+         const nutrientRows=Array.isArray(standard.nutrient_requirements)?standard.nutrient_requirements:[];
+         if(nutrientRows.length)html+='<h3 style="margin:16px 0 9px">Product-specific nutrient requirements</h3><div class="tablewrap"><table><thead><tr><th>Parameter</th><th>Per 100 g</th><th>Per 100 kcal</th></tr></thead><tbody>'
+           +nutrientRows.map(r=>'<tr><td><b>'+esc(r.parameter||'Requirement')+'</b></td><td>'+esc(r.per_100g||'—')+'</td><td>'+esc(r.per_100kcal||'—')+'</td></tr>').join('')
+           +'</tbody></table></div>';
          const quality=Array.isArray(standard.quality_rules)?standard.quality_rules:[];
          if(quality.length)html+='<div class="notice"><b>Other product-standard requirements:</b><br>'+quality.map(x=>'• '+esc(typeof x==='string'?x:JSON.stringify(x))).join('<br>')+'</div>';
          html+='</div>';
@@ -4476,7 +4516,7 @@ function renderLegacyProductScopePages(){
      ingredientDynamic.innerHTML='<div class="card"><div class="notice"><b>Select a product first.</b> Ingredient permissions remain locked.</div></div>';
    }else{
      const ready=status==='rule_profile_ready';
-     const chapterReview=status==='chapter_profile_ready'&&standards.length>0&&profile.chapter_rule_route_status!=='specific_variant_table_pending';
+     const chapterReview=status==='chapter_profile_ready'&&currentGuardedFormulationStandards().length>0&&profile.chapter_rule_route_status!=='specific_variant_table_pending';
      let html='<div class="card"><div class="section-title"><h2>Ingredients & limits — '+esc(name)+'</h2><span>Product-scoped</span></div>'
        +'<div class="notice '+(ready?'oknote':'')+'"><b>'+(ready?'Detailed product profile selected.':chapterReview?'Guarded chapter-profile review available.':'Detailed ingredient profile not fully validated.')+'</b><br>'
        +(ready?'PMSV evaluates exact chapter ingredient entries plus Appendix A permissions for FCS '+esc(fcs||'not mapped')+'. Broad groups and conditional permissions are displayed separately and are not treated as an automatic exact match.'
@@ -4485,7 +4525,7 @@ function renderLegacyProductScopePages(){
      if(standards.length){
        standards.forEach(({db,standard})=>{
          const ing=chapterStandardIngredientSections(standard);
-         html+='<div class="card"><div class="section-title"><h2>'+esc(standard.name||name)+'</h2><span>'+esc('Chapter '+(db?.chapter||'')+' · '+(standard.key||''))+'</span></div>';
+         html+='<div class="card"><div class="section-title"><h2>'+esc(standard.name||name)+'</h2><span>'+esc(ruleDbLabel(db)+' · '+(standard.key||''))+'</span></div>';
          if(ing.explicit.length){
            html+='<div class="tablewrap"><table><thead><tr><th>Explicit ingredient / rule entry</th><th>Status</th><th>Source field</th></tr></thead><tbody>'
              +ing.explicit.map(row=>'<tr><td><b>'+esc(row.name)+'</b>'+(row.rule?.condition?'<br><small>'+esc(row.rule.condition)+'</small>':'')+'</td><td><span class="status-good">Exact chapter entry</span></td><td>'+esc(row.field)+'</td></tr>').join('')
@@ -4516,7 +4556,7 @@ function applyProductGate(){
  const profile=currentProductProfile();
  const detailed=profile&&profile.status==='rule_profile_ready';
  const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
- const chapterReviewReady=!!profile&&chapterLoaded&&currentChapterStandards().length>0&&profile.chapter_rule_route_status!=='specific_variant_table_pending';
+ const chapterReviewReady=!!profile&&chapterLoaded&&currentGuardedFormulationStandards().length>0&&profile.chapter_rule_route_status!=='specific_variant_table_pending';
  if(load){
    const exampleAllowed=!!profile&&detailed&&caffeinatedPrototypeScopeActive();
    load.disabled=!exampleAllowed;
@@ -6293,7 +6333,7 @@ async function loadLabelDb(){
 
 async function loadChapterRuleDbs(){
  try{
-   const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=413',{cache:'reload'}).then(async res=>{
+   const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=417',{cache:'reload'}).then(async res=>{
      if(!res.ok)throw new Error(url+' HTTP '+res.status);
      return res.json();
    })));
