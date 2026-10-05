@@ -742,6 +742,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   </div>
 </div>
 <div id="packagingMaterialStandards" class="notice">Select the food-contact material family to see the applicable Schedule I–III standards.</div>
+<div id="packagingSpecialControls" class="hidden"></div>
 <div class="flow-actions"><button class="btn" type="button" id="evaluatePackaging">Evaluate packaging</button></div>
 <div id="packagingAssessment" class="notice">Complete the packaging questions, then evaluate.</div>
 </div>
@@ -5024,7 +5025,7 @@ function renderPackagingMigrationRows(){
    const status=num===null?'<span class="status-warn">Not entered</span>':num<=Number(limit)?'<span class="status-good">Pass</span>':'<span class="status-bad">Fail</span>';
    return '<tr><td><b>'+esc(name)+'</b></td><td>'+fmt(limit,3)+'</td><td><input id="'+esc(id)+'" data-pack-migration="'+esc(name)+'" type="number" min="0" step="any" value="'+esc(value)+'" placeholder="Enter result"></td><td>'+status+'</td></tr>';
  }).join('');
- body.querySelectorAll('[data-pack-migration]').forEach(el=>el.addEventListener('input',renderPackagingMigrationRows));
+ body.querySelectorAll('[data-pack-migration]').forEach(el=>el.addEventListener('change',renderPackagingMigrationRows));
 }
 function renderPackaging(){
  const status=document.getElementById('packagingDbStatus');
@@ -5069,6 +5070,36 @@ function renderPackaging(){
      standards.innerHTML=rows.length
        ? '<b>Applicable listed Indian Standards:</b><br>'+rows.map(r=>'• '+esc(r.material)+' — <b>'+esc(r.standard)+'</b>').join('<br>')
        : 'Select the food-contact material family to see the applicable Schedule I–III standards.';
+   }
+ }
+ const special=document.getElementById('packagingSpecialControls');
+ if(special){
+   const selectedName=normIngredient(product?.name||currentProductProfile()?.name||'');
+   const water=(packagingDb.drinking_water_special_route?.product_terms||[]).some(t=>selectedName.includes(normIngredient(t)));
+   if(route?.id==='pan_masala'){
+     special.classList.remove('hidden');
+     const pType=document.getElementById('packagingPanType')?.value||'';
+     const pPlastic=document.getElementById('packagingPanPlastic')?.value||'';
+     const pMetal=document.getElementById('packagingPanMetalLayer')?.value||'';
+     special.innerHTML='<div class="notice"><b>Pan Masala · operative 10 Aug 2026 amendment</b><br>Choose the exact route and confirm the specific prohibitions.</div><div class="checker-grid">'
+       +'<div class="field"><label>Pan Masala packaging route</label><select id="packagingPanType"><option value="">Select route</option><option value="natural"'+(pType==='natural'?' selected':'')+'>Paper / paperboard / cellulose / other naturally derived material</option><option value="tin"'+(pType==='tin'?' selected':'')+'>Tin container</option><option value="glass"'+(pType==='glass'?' selected':'')+'>Glass container</option><option value="other"'+(pType==='other'?' selected':'')+'>Other</option></select></div>'
+       +'<div class="field"><label>Does the naturally-derived route contain any plastic, synthetic polymer, copolymer or laminate?</label><select id="packagingPanPlastic"><option value="">Not answered</option><option value="no"'+(pPlastic==='no'?' selected':'')+'>No</option><option value="yes"'+(pPlastic==='yes'?' selected':'')+'>Yes</option><option value="na"'+(pPlastic==='na'?' selected':'')+'>Not applicable — tin/glass route</option></select></div>'
+       +'<div class="field"><label>Does the naturally-derived route contain aluminium foil or a metallised layer?</label><select id="packagingPanMetalLayer"><option value="">Not answered</option><option value="no"'+(pMetal==='no'?' selected':'')+'>No</option><option value="yes"'+(pMetal==='yes'?' selected':'')+'>Yes</option><option value="na"'+(pMetal==='na'?' selected':'')+'>Not applicable — tin/glass route</option></select></div>'
+       +'</div>';
+   }else if(water){
+     special.classList.remove('hidden');
+     const wMat=document.getElementById('packagingWaterMaterial')?.value||'';
+     const wColour=document.getElementById('packagingWaterColourless')?.value||'';
+     const wTrans=document.getElementById('packagingWaterTransparency')?.value||'';
+     const opts=(packagingDb.drinking_water_special_route?.listed_materials||[]).map(x=>'<option value="'+esc(x.material)+'"'+(wMat===x.material?' selected':'')+'>'+esc(x.material)+' — '+esc(x.standard)+'</option>').join('');
+     special.innerHTML='<div class="notice"><b>Packaged / mineral water special route · Reg. 4(4)(a)</b><br>'+esc(packagingDb.drinking_water_special_route?.transparency_requirement||'')+'</div><div class="checker-grid">'
+       +'<div class="field"><label>Water packaging material route</label><select id="packagingWaterMaterial"><option value="">Select material</option>'+opts+'<option value="other_compatible"'+(wMat==='other_compatible'?' selected':'')+'>Other food-grade compatible material under proviso</option></select></div>'
+       +'<div class="field"><label>Colourless?</label><select id="packagingWaterColourless"><option value="">Not answered</option><option value="yes"'+(wColour==='yes'?' selected':'')+'>Yes</option><option value="no"'+(wColour==='no'?' selected':'')+'>No</option><option value="na"'+(wColour==='na'?' selected':'')+'>Not applicable under other-compatible-material proviso</option></select></div>'
+       +'<div class="field"><label>Light transmittance (%)</label><input id="packagingWaterTransparency" type="number" min="0" max="100" step="any" value="'+esc(wTrans)+'" placeholder="Enter % if applicable"><small>Listed bottle/container route: not less than 85%.</small></div>'
+       +'</div>';
+   }else{
+     special.classList.add('hidden');
+     special.innerHTML='';
    }
  }
  if(general)general.innerHTML=(packagingDb.general_requirements||[]).map(r=>'<div class="item"><b>'+esc(r.clause)+'</b><small>'+esc(r.text)+'</small></div>').join('');
@@ -5170,10 +5201,47 @@ function evaluatePackaging(){
    if(!failed.length&&!miss.length)passes.push('All loaded specific migration limits');
  }
  const route=packagingScheduleRoute();
+ const selectedProduct=selectedProductForPackaging();
+ const selectedName=normIngredient(selectedProduct?.name||currentProductProfile()?.name||'');
+ const waterRoute=(packagingDb.drinking_water_special_route?.product_terms||[]).some(t=>selectedName.includes(normIngredient(t)));
  if(route?.id==='pan_masala'){
-   const text=(document.getElementById('packagingMaterialFamily')?.selectedOptions?.[0]?.textContent||'').toLowerCase();
-   if(family==='plastic'||family==='multilayer')fails.push('Pan Masala has a product-specific 2026 restriction against plastic/synthetic-polymer packaging routes.');
-   if(family==='paper_board')passes.push('Pan Masala paper/naturally-derived route still requires confirmation that it contains no plastic, aluminium foil or metallised layer.');
+   const pType=document.getElementById('packagingPanType')?.value||'';
+   const pPlastic=document.getElementById('packagingPanPlastic')?.value||'';
+   const pMetal=document.getElementById('packagingPanMetalLayer')?.value||'';
+   if(!pType)missing.push('Pan Masala packaging route');
+   else if(pType==='other')fails.push('Pan Masala packaging route is outside the operative Schedule IV item 11 routes loaded in PMSV.');
+   if(pType==='natural'){
+     if(pPlastic==='yes')fails.push('Pan Masala naturally-derived packaging contains prohibited plastic/synthetic polymer/copolymer/laminate.');
+     else if(pPlastic!=='no')missing.push('Pan Masala plastic/synthetic-polymer exclusion');
+     else passes.push('Pan Masala plastic/synthetic-polymer exclusion');
+     if(pMetal==='yes')fails.push('Pan Masala naturally-derived packaging contains prohibited aluminium foil/metallised layer.');
+     else if(pMetal!=='no')missing.push('Pan Masala aluminium/metallised-layer exclusion');
+     else passes.push('Pan Masala aluminium/metallised-layer exclusion');
+     if(family==='plastic'||family==='multilayer')fails.push('Selected material family conflicts with the Pan Masala naturally-derived route.');
+   }else if(pType==='tin'){
+     if(family&&family!=='metal')fails.push('Pan Masala route is tin but selected food-contact material family is not metal.');
+     else passes.push('Pan Masala tin-container route');
+   }else if(pType==='glass'){
+     if(family&&family!=='glass')fails.push('Pan Masala route is glass but selected food-contact material family is not glass.');
+     else passes.push('Pan Masala glass-container route');
+   }
+ }
+ if(waterRoute){
+   const wMat=document.getElementById('packagingWaterMaterial')?.value||'';
+   const wColour=document.getElementById('packagingWaterColourless')?.value||'';
+   const raw=document.getElementById('packagingWaterTransparency')?.value??'';
+   const trans=raw===''?null:Number(raw);
+   if(!wMat)missing.push('Packaged/mineral-water material route');
+   else if(wMat==='other_compatible'){
+     if(wColour&&wColour!=='na')passes.push('Water other-compatible-material route selected; transparency requirement does not apply under the proviso.');
+   }else{
+     if(wColour==='no')fails.push('Listed packaged/mineral-water bottle/container route is not colourless.');
+     else if(wColour!=='yes')missing.push('Packaged/mineral-water colourless confirmation');
+     else passes.push('Water colourless-container gate');
+     if(trans===null)missing.push('Packaged/mineral-water light transmittance');
+     else if(trans<85)fails.push('Packaged/mineral-water light transmittance '+fmt(trans,2)+'% is below 85%.');
+     else passes.push('Water ≥85% light-transmittance gate');
+   }
  }
  if(fails.length){
    out.className='notice';
