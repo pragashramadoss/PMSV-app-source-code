@@ -4856,7 +4856,7 @@ function renderClaims(){
 async function loadClaimsDb(){
  const status=document.getElementById('claimsDbStatus');
  try{
-   const res=await fetch('./data/rules/advertising-claims-v4-core.json?v=389',{cache:'reload'});
+   const res=await fetch('./data/rules/advertising-claims-v4-core.json?v=391',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    claimsDb=await res.json();
  }catch(e){
