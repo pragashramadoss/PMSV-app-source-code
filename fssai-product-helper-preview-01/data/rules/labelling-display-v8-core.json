@@ -279,5 +279,122 @@
         "polyols": "Polyol-specific declaration applies; threshold-based laxative warning is assessed separately."
       }
     }
+  },
+  "allergen_rules": {
+    "source_clause": "5(14)",
+    "declaration_format": "Contains ...",
+    "cross_contact_status": "may_be_declared_separately",
+    "derived_oils_exempt": true,
+    "categories": [
+      {
+        "id": "gluten_cereal",
+        "declaration": "Declare cereal name",
+        "keywords": [
+          "wheat",
+          "rye",
+          "barley",
+          "oat",
+          "oats",
+          "spelt"
+        ]
+      },
+      {
+        "id": "crustacean",
+        "declaration": "Crustacean",
+        "keywords": [
+          "crustacean",
+          "shrimp",
+          "prawn",
+          "crab",
+          "lobster"
+        ]
+      },
+      {
+        "id": "milk",
+        "declaration": "Milk",
+        "keywords": [
+          "milk",
+          "whey",
+          "casein",
+          "caseinate",
+          "cheese",
+          "cream",
+          "butter",
+          "ghee",
+          "yoghurt",
+          "yogurt"
+        ]
+      },
+      {
+        "id": "egg",
+        "declaration": "Egg",
+        "keywords": [
+          "egg",
+          "albumin",
+          "ovalbumin"
+        ]
+      },
+      {
+        "id": "fish",
+        "declaration": "Fish",
+        "keywords": [
+          "fish",
+          "anchovy",
+          "tuna",
+          "salmon",
+          "cod"
+        ]
+      },
+      {
+        "id": "nut",
+        "declaration": "Nut",
+        "keywords": [
+          "peanut",
+          "groundnut",
+          "almond",
+          "walnut",
+          "pistachio",
+          "cashew",
+          "hazelnut",
+          "pecan",
+          "brazil nut",
+          "macadamia",
+          "tree nut"
+        ]
+      },
+      {
+        "id": "soy",
+        "declaration": "Soy",
+        "keywords": [
+          "soy",
+          "soya",
+          "soybean"
+        ]
+      },
+      {
+        "id": "sulphite",
+        "declaration": "Sulphite",
+        "threshold_mgkg_as_so2": 10,
+        "keywords": [
+          "sulphur dioxide",
+          "sulfur dioxide",
+          "sulphite",
+          "sulfite",
+          "metabisulphite",
+          "metabisulfite"
+        ]
+      }
+    ],
+    "gluten_exemption_candidates": [
+      "wheat based glucose syrup",
+      "wheat glucose syrup",
+      "wheat based dextrose",
+      "wheat based maltodextrin",
+      "wheat maltodextrin",
+      "glucose syrup based on barley",
+      "barley glucose syrup"
+    ],
+    "gluten_exemption_note": "Do not auto-approve the exemption from the ingredient name alone; the applicable safety/gluten condition must be verified.",
+    "sulphite_note": "The 10 mg/kg threshold is based on sulphur dioxide content. Direct sulphur dioxide can be assessed from formulation mass; sulphite salts require SO2-equivalent verification."
   }
 }
