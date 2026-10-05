@@ -113,11 +113,6 @@
     },
     {
       "id": "fortified_oil",
-      "match_terms": [
-        "vegetable oil",
-        "edible oil",
-        "oil"
-      ],
       "route_type": "schedule_i",
       "basis": "per_g",
       "required_or_permitted": [
@@ -146,7 +141,38 @@
           ],
           "source_condition": "Plant source only"
         }
-      ]
+      ],
+      "auto_match_terms": [
+        "vegetable oil",
+        "edible vegetable oil",
+        "soybean oil",
+        "soya bean oil",
+        "sunflower oil",
+        "safflower oil",
+        "groundnut oil",
+        "peanut oil",
+        "mustard oil",
+        "rapeseed oil",
+        "rice bran oil",
+        "sesame oil",
+        "corn oil",
+        "cottonseed oil",
+        "palmolein oil",
+        "palm oil",
+        "coconut oil",
+        "olive oil",
+        "avocado oil",
+        "chia oil",
+        "linseed oil",
+        "flaxseed oil"
+      ],
+      "auto_match_exclusions": [
+        "fish oil",
+        "cod liver oil",
+        "essential oil",
+        "mineral oil"
+      ],
+      "runtime_note": "Auto-suggestion is restricted to listed edible/vegetable-oil identities. Generic 'oil' is never sufficient."
     },
     {
       "id": "fortified_milk",
@@ -575,7 +601,8 @@
   "labeling": {
     "iron_warning": "People with Thalassemia may take under medical supervision and persons with Sickle Cell Anaemia are advised not to consume iron fortified food products.",
     "plus_f_required": true,
-    "iodized_salt_iodine_only_exemption": true
+    "iodized_salt_iodine_only_exemption": true,
+    "iron_warning_status": "operative_in_current_compendium; 2024 deletion proposal remains draft as of 2026-10-05"
   },
   "quality_assurance": {
     "undertaking_frequency_per_year": 2,
@@ -586,10 +613,20 @@
     "equipment_process_audit": true
   },
   "runtime_coverage": {
-    "status": "phase_1_rule_core_build_401",
+    "status": "phase_1_rule_core_current_source_reconciled_build_402",
     "routes": 10,
     "schedule_i_routes": 7,
     "schedule_iii_routes": 3,
     "fail_closed": true
-  }
+  },
+  "excluded_drafts": [
+    {
+      "title": "Draft Food Safety and Standards (Fortification of Foods) Amendment Regulations, 2024",
+      "notification_date": "2024-09-18",
+      "proposed_change": "Omit Regulation 7(4), the iron-fortification Thalassemia/Sickle Cell Anaemia warning.",
+      "status": "draft_not_applied",
+      "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/gazette_draft230924.pdf",
+      "note": "FSSAI's current operative compendium remains Version V (01.06.2022); this draft is excluded until a final notification is found."
+    }
+  ]
 }
