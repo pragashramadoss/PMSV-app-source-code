@@ -280,6 +280,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </section>
 
 <section id="standard" class="view hidden">
+<div id="selectedProductStandardContent"></div>
+<div id="caffeinatedStandardContent">
 <div class="card">
 <div class="searchbox"><span>🔎</span><input value="Carbonated Caffeinated Beverage" aria-label="Product search" readonly></div>
 <div class="hero"><div><span class="pill">BEVERAGES</span><div class="product-title">Carbonated Caffeinated Beverage</div><div class="muted">Prototype product showing the complete regulatory stack: product standard, applicable food additives, processing aids, microbiology, contaminants/residues and special labelling.</div></div><span class="pill">FCS 14.1.4.1</span></div>
@@ -310,9 +312,12 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="item"><b>Labelling · Applicable</b><small>Caffeinated-beverage declarations and other applicable labelling requirements remain a separate compliance layer.</small></div>
 </div>
 </div>
+</div>
 </section>
 
 <section id="ingredients" class="view hidden">
+<div id="selectedProductIngredientsContent"></div>
+<div id="caffeinatedIngredientsContent">
 <div class="card">
 <div class="section-title"><h2>First: what does “500 ml per day” mean?</h2><span>Important before reading the limits</span></div>
 <div class="notice oknote"><b>500 ml means the total quantity of the finished Caffeinated Beverage consumed in one day.</b> It does <b>not</b> mean 500 ml of taurine, caffeine or any other ingredient. FSSAI requires the label declaration <b>“consume not more than 500 ml per day”</b> for the caffeinated beverage.</div>
@@ -557,6 +562,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="countline" id="processingCount"></div>
 </div>
 <div class="notice"><b>Enzymes:</b> PMSV now supports both <b>Table 11 non-GMM</b> enzyme/source selection and the complete <b>Table 11A GMM</b> production-organism/donor-source pathway. GMM variants remain linked to their exact technological purpose and indicative food use.</div>
+</div>
 </div>
 </section>
 
@@ -2649,12 +2655,14 @@ function checkUsageAgainstRule(item,q){
      return {unit:'mg/kg',value:u.mgkg,limit:lim,pass:u.mgkg<=lim};
    }
  }
- const n=normIngredient(item.name);
- if(n==='caffeine')return {unit:'mg/L',value:u.mgL,min:145,max:300,pass:u.mgL>=145&&u.mgL<=300};
- if(n==='taurine')return {unit:'mg/L',value:u.mgL,max:4000,pass:u.mgL<=4000,calculated:true};
- if(n==='d-glucurono-γ-lactone'||n==='d-glucurono-y-lactone'||n==='glucuronolactone')return {unit:'mg/L',value:u.mgL,max:2400,pass:u.mgL<=2400,calculated:true};
- if(n==='inositol')return {unit:'mg/L',value:u.mgL,max:200,pass:u.mgL<=200,calculated:true};
- if(n==='pantothenic acid'||n==='vitamin b5')return {unit:'mg/L',value:u.mgL,max:20,pass:u.mgL<=20,calculated:true};
+ if(caffeinatedPrototypeScopeActive()){
+   const n=normIngredient(item.name);
+   if(n==='caffeine')return {unit:'mg/L',value:u.mgL,min:145,max:300,pass:u.mgL>=145&&u.mgL<=300};
+   if(n==='taurine')return {unit:'mg/L',value:u.mgL,max:4000,pass:u.mgL<=4000,calculated:true};
+   if(n==='d-glucurono-γ-lactone'||n==='d-glucurono-y-lactone'||n==='glucuronolactone')return {unit:'mg/L',value:u.mgL,max:2400,pass:u.mgL<=2400,calculated:true};
+   if(n==='inositol')return {unit:'mg/L',value:u.mgL,max:200,pass:u.mgL<=200,calculated:true};
+   if(n==='pantothenic acid'||n==='vitamin b5')return {unit:'mg/L',value:u.mgL,max:20,pass:u.mgL<=20,calculated:true};
+ }
  return null;
 }
 
@@ -4006,7 +4014,57 @@ document.getElementById('clearProprietaryRoute')?.addEventListener('click',()=>{
  const o=document.getElementById('proprietaryRouteResult');if(o){o.classList.add('hidden');o.innerHTML='';}
 });
 
+function renderLegacyProductScopePages(){
+ const product=selectedProductForFortification();
+ const profile=currentProductProfile();
+ const caffeinated=caffeinatedPrototypeScopeActive();
+ const name=product?.name||profile?.display_name||profile?.name||'Selected product';
+ const fssr=product?.fssr||profile?.fssr||profile?.rule_key||'Not shown in loaded product profile';
+ const fcs=appendixFcsForRecord(product)||appendixFcsForRecord(profile);
+ const status=profile?.status||'profile_unavailable';
+ const standardDynamic=document.getElementById('selectedProductStandardContent');
+ const standardLegacy=document.getElementById('caffeinatedStandardContent');
+ const ingredientDynamic=document.getElementById('selectedProductIngredientsContent');
+ const ingredientLegacy=document.getElementById('caffeinatedIngredientsContent');
+ if(standardLegacy)standardLegacy.classList.toggle('hidden',!caffeinated);
+ if(ingredientLegacy)ingredientLegacy.classList.toggle('hidden',!caffeinated);
+ if(caffeinated){
+   if(standardDynamic)standardDynamic.innerHTML='';
+   if(ingredientDynamic)ingredientDynamic.innerHTML='';
+   return;
+ }
+ if(standardDynamic){
+   if(!profile){
+     standardDynamic.innerHTML='<div class="card"><div class="notice"><b>Select a standardized product first.</b> PMSV will not display another product\'s standard as a fallback.</div></div>';
+   }else{
+     const linked=Array.isArray(profile.linked_rule_keys)?profile.linked_rule_keys:[];
+     const ready=status==='rule_profile_ready';
+     const chapter=status==='chapter_profile_ready';
+     standardDynamic.innerHTML='<div class="card"><div class="section-title"><h2>'+esc(name)+'</h2><span>Selected FSSAI product profile</span></div>'
+       +'<div class="grid2"><div class="item"><b>FSSAI standard / route</b><small>'+esc(fssr)+'</small></div>'
+       +'<div class="item"><b>Appendix A FCS</b><small>'+(fcs?esc(fcs):'<span class="status-warn">No safe FCS mapping loaded</span>')+'</small></div>'
+       +'<div class="item"><b>Machine-validation status</b><small>'+(ready?'<span class="status-good">Detailed rule profile complete</span>':chapter?'<span class="status-warn">Chapter profile loaded; detailed formulation validation still locked</span>':'<span class="status-warn">Base profile only; detailed formulation validation locked</span>')+'</small></div>'
+       +'<div class="item"><b>Linked structured rule keys</b><small>'+(linked.length?linked.map(esc).join('<br>'):'No linked rule key shown in the loaded profile.')+'</small></div></div>'
+       +(profile.chapter_rule_route_note?'<div class="notice"><b>Routing note:</b> '+esc(profile.chapter_rule_route_note)+'</div>':'')
+       +'<div class="notice"><b>Scope protection:</b> the legacy Caffeinated Beverage standard is hidden for this product. PMSV shows only the selected product mapping and does not invent missing clause text.</div></div>';
+   }
+ }
+ if(ingredientDynamic){
+   if(!profile){
+     ingredientDynamic.innerHTML='<div class="card"><div class="notice"><b>Select a product first.</b> Ingredient permissions remain locked.</div></div>';
+   }else{
+     const ready=status==='rule_profile_ready';
+     ingredientDynamic.innerHTML='<div class="card"><div class="section-title"><h2>Ingredients & limits — '+esc(name)+'</h2><span>Product-scoped</span></div>'
+       +'<div class="notice '+(ready?'oknote':'')+'"><b>'+(ready?'Detailed product profile selected.':'Detailed ingredient profile not fully validated.')+'</b><br>'
+       +(ready?'Use <b>Formulation ingredients</b> to enter the actual formula. PMSV evaluates only exact loaded product rules and Appendix A permissions for FCS '+esc(fcs||'not mapped')+'.':'PMSV will not show or borrow the Caffeinated Beverage ingredient table. Formulation editing remains locked until the selected product reaches detailed rule-profile status.')+'</div>'
+       +'<div class="flow-actions"><button class="btn-secondary" type="button" id="openScopedFormulation">Open formulation ingredients →</button></div></div>';
+     setTimeout(()=>document.getElementById('openScopedFormulation')?.addEventListener('click',()=>openTab('formulation',{updateHash:true,save:true})),0);
+   }
+ }
+}
+
 function applyProductGate(){
+ renderLegacyProductScopePages();
  const gate=document.getElementById('formulationProductGate');
  const add=document.getElementById('addIngredient');
  const load=document.getElementById('loadExampleFormula');
@@ -5910,6 +5968,7 @@ const dailyLimits=[
 ];
 function fmt(n,d=3){return Number(n).toLocaleString('en-IN',{maximumFractionDigits:d})}
 function renderConversions(){
+ if(!caffeinatedPrototypeScopeActive())return;
  const pack=Math.max(1,Number(document.getElementById('packSize')?.value||250));
  const density=Math.max(0.001,Number(document.getElementById('density')?.value||1));
  const head=document.getElementById('packHead');if(head)head.textContent='mg/'+fmt(pack,0)+' ml pack';
