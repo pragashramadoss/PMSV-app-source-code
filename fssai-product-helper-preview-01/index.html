@@ -883,6 +883,46 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div class="card">
+<div class="section-title"><h2>Product-specific claim routes</h2><span>Schedules IIA, III & IV</span></div>
+<div id="scheduleIIAOilClaims" class="notice">Select a standardized product to check for an edible-oil Schedule IIA route.</div>
+
+<h3 style="margin:16px 0 9px">Schedule III · Reduction-of-disease-risk claims</h3>
+<div class="checker-grid">
+  <div class="field">
+    <label>Claim relationship</label>
+    <select id="scheduleIIIClaim"><option value="">Select Schedule III claim</option></select>
+  </div>
+  <div class="field">
+    <label>Product basis</label>
+    <select id="scheduleIIIBasis">
+      <option value="solid">Solid food · per 100 g</option>
+      <option value="liquid">Liquid food · per 100 ml</option>
+    </select>
+  </div>
+</div>
+<div class="flow-actions"><button class="btn" type="button" id="evaluateScheduleIII">Evaluate Schedule III conditions</button></div>
+<div id="scheduleIIIResult" class="notice">Select a disease-risk relationship to see its required conditions.</div>
+
+<h3 style="margin:16px 0 9px">Schedule IV · Fortified-food health claims</h3>
+<div class="checker-grid">
+  <div class="field">
+    <label>Fortified nutrient</label>
+    <select id="scheduleIVNutrient"><option value="">Select nutrient</option></select>
+  </div>
+  <div class="field">
+    <label>Is this food fortified under the FSSAI Fortification of Foods Regulations, 2018?</label>
+    <select id="scheduleIVFortified">
+      <option value="">Not answered</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+</div>
+<div class="flow-actions"><button class="btn" type="button" id="evaluateScheduleIV">Check fortified-food claim route</button></div>
+<div id="scheduleIVResult" class="notice">Select a nutrient and confirm the fortified-food route.</div>
+</div>
+
+<div class="card">
 <div class="section-title"><h2>General claim gates</h2><span>Regulations 4, 5, 6, 7, 9 & 10</span></div>
 <div id="claimsGeneralRules" class="grid2"></div>
 </div>
@@ -3452,6 +3492,7 @@ function showSelectedCatalogProduct(p){
      renderProductContaminants();
      renderProductMicrobiology();
      renderLabelRequirements();
+     renderClaims();
      openTab('formulation',{updateHash:true,save:true});
      window.scrollTo({top:0,behavior:'smooth'});
    });
@@ -3820,6 +3861,7 @@ async function loadProductMaster(){
  renderProductMaster();
  renderProductMicrobiology();
  renderLabelRequirements();
+ renderClaims();
 }
 document.getElementById('productSearch')?.addEventListener('input',renderProductSearch);
 document.getElementById('productCategorySelect')?.addEventListener('change',()=>{
@@ -4657,6 +4699,99 @@ function runScheduleVEvaluation(){
  out.innerHTML='<b>Stored Schedule V conditions supported.</b>'+note;
 }
 
+function scheduleIIAOilRouteForProduct(){
+ const name=normIngredient(claimSelectedProductName());
+ if(!name)return null;
+ const routes=claimsDb?.schedule_iia_edible_oils||[];
+ const matches=[];
+ routes.forEach(route=>{
+   (route.names||[]).forEach(alias=>{
+     const a=normIngredient(alias);
+     if(a&&(name===a||name.includes(a)||a.includes(name)))matches.push({route,score:a.length});
+   });
+ });
+ if(!matches.length)return null;
+ matches.sort((a,b)=>b.score-a.score);
+ return matches[0].route;
+}
+function renderScheduleClaimRoutes(){
+ const oilBox=document.getElementById('scheduleIIAOilClaims');
+ const iiiSelect=document.getElementById('scheduleIIIClaim');
+ const ivSelect=document.getElementById('scheduleIVNutrient');
+ if(oilBox){
+   const product=claimSelectedProductName();
+   const route=scheduleIIAOilRouteForProduct();
+   if(route){
+     oilBox.className='notice oknote';
+     oilBox.innerHTML='<b>Schedule IIA route found for '+esc(product)+'.</b><br>'+route.claims.map(c=>'• '+esc(c)).join('<br>')+'<br><small>'+esc(route.qualification_note||'Applicable Schedule I conditions must also be met.')+'</small>';
+   }else{
+     oilBox.className='notice';
+     oilBox.innerHTML=product
+       ? '<b>No exact Schedule IIA edible-oil route matched:</b> '+esc(product)+'. PMSV will not borrow an oil claim from a similar product.'
+       : 'Select a standardized product to check for an edible-oil Schedule IIA route.';
+   }
+ }
+ if(iiiSelect&&claimsDb){
+   const current=iiiSelect.value;
+   iiiSelect.innerHTML='<option value="">Select Schedule III claim</option>'+(claimsDb.schedule_iii?.claims||[]).map(r=>'<option value="'+esc(r.id)+'">'+esc(r.relationship)+'</option>').join('');
+   if([...iiiSelect.options].some(o=>o.value===current))iiiSelect.value=current;
+ }
+ if(ivSelect&&claimsDb){
+   const current=ivSelect.value;
+   ivSelect.innerHTML='<option value="">Select nutrient</option>'+(claimsDb.schedule_iv?.claims||[]).map(r=>'<option value="'+esc(r.nutrient)+'">'+esc(r.nutrient)+'</option>').join('');
+   if([...ivSelect.options].some(o=>o.value===current))ivSelect.value=current;
+ }
+}
+function runScheduleIIIEvaluation(){
+ const out=document.getElementById('scheduleIIIResult');
+ if(!out)return;
+ const id=document.getElementById('scheduleIIIClaim')?.value||'';
+ const rule=(claimsDb?.schedule_iii?.claims||[]).find(r=>r.id===id);
+ const basis=document.getElementById('scheduleIIIBasis')?.value||'solid';
+ if(!rule){
+   out.className='notice';
+   out.innerHTML='Select a Schedule III disease-risk relationship.';
+   return;
+ }
+ let numeric=null;
+ if(rule.id==='sodium_hypertension')numeric=evaluateNutrientClaim(claimRuleById('sodium_low'),basis);
+ if(rule.id==='satfat_cholesterol')numeric=evaluateNutrientClaim(claimRuleById('saturated_fat_low'),basis);
+ const conditions=(rule.conditions||[]).map(x=>'• '+esc(x)).join('<br>');
+ if(numeric&&numeric.status==='fail'){
+   out.className='notice';
+   out.innerHTML='<b>Schedule III numeric prerequisite NOT met.</b><br>'+numeric.message+'<br><br><b>Other required conditions:</b><br>'+conditions;
+   return;
+ }
+ if(numeric&&numeric.status==='pass'){
+   out.className='notice oknote';
+   out.innerHTML='<b>Numeric prerequisite met; contextual conditions still required.</b><br>'+numeric.message+'<br><br><b>Other required conditions:</b><br>'+conditions+'<br><small>This is not blanket approval of the final disease-risk claim wording.</small>';
+   return;
+ }
+ out.className='notice';
+ out.innerHTML='<b>Needs evidence / manual substantiation.</b><br><b>Required conditions:</b><br>'+conditions+'<br><small>'+esc(claimsDb?.schedule_iii?.prior_approval_note||'Only claims defined with applicable criteria may use this route without a separate undefined-claim approval path.')+'</small>';
+}
+function runScheduleIVEvaluation(){
+ const out=document.getElementById('scheduleIVResult');
+ if(!out)return;
+ const nutrient=document.getElementById('scheduleIVNutrient')?.value||'';
+ const fortified=document.getElementById('scheduleIVFortified')?.value||'';
+ const rule=(claimsDb?.schedule_iv?.claims||[]).find(r=>r.nutrient===nutrient);
+ if(!rule){
+   out.className='notice';
+   out.innerHTML='Select a Schedule IV nutrient.';
+   return;
+ }
+ if(fortified!=='yes'){
+   out.className='notice';
+   out.innerHTML=fortified==='no'
+     ? '<b>Schedule IV route not applicable.</b> These health claims are for food articles fortified under the FSSAI Fortification of Foods Regulations, 2018.'
+     : '<b>Needs evidence.</b> Confirm whether the finished food is fortified under the FSSAI Fortification of Foods Regulations, 2018.';
+   return;
+ }
+ out.className='notice oknote';
+ out.innerHTML='<b>Schedule IV fortified-food claim route identified.</b><br>Permitted claim statement in the loaded FSSAI schedule: <b>'+esc(rule.claim)+'</b><br><small>'+esc(claimsDb?.schedule_iv?.eligibility_note||'Fortification requirements must also be met.')+' PMSV does not infer fortification compliance merely from the presence of the nutrient in the formulation.</small>';
+}
+
 function renderClaimsReference(){
  const general=document.getElementById('claimsGeneralRules');
  const manual=document.getElementById('claimsManualRules');
@@ -4701,11 +4836,12 @@ function renderClaims(){
  }
  renderClaimsReference();
  renderScheduleVQuestions();
+ renderScheduleClaimRoutes();
 }
 async function loadClaimsDb(){
  const status=document.getElementById('claimsDbStatus');
  try{
-   const res=await fetch('./data/rules/advertising-claims-v4-core.json?v=385',{cache:'reload'});
+   const res=await fetch('./data/rules/advertising-claims-v4-core.json?v=387',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    claimsDb=await res.json();
  }catch(e){
@@ -4915,6 +5051,12 @@ document.getElementById('evaluateNonAdditionClaim')?.addEventListener('click',ru
 document.getElementById('nonAdditionType')?.addEventListener('change',runNonAdditionClaimEvaluation);
 document.getElementById('scheduleVTerm')?.addEventListener('change',()=>{renderScheduleVQuestions();const out=document.getElementById('scheduleVResult');if(out){out.className='notice';out.innerHTML='Answer the evidence questions, then evaluate the restricted word.';}});
 document.getElementById('evaluateScheduleV')?.addEventListener('click',runScheduleVEvaluation);
+document.getElementById('scheduleIIIClaim')?.addEventListener('change',runScheduleIIIEvaluation);
+document.getElementById('scheduleIIIBasis')?.addEventListener('change',runScheduleIIIEvaluation);
+document.getElementById('evaluateScheduleIII')?.addEventListener('click',runScheduleIIIEvaluation);
+document.getElementById('scheduleIVNutrient')?.addEventListener('change',runScheduleIVEvaluation);
+document.getElementById('scheduleIVFortified')?.addEventListener('change',runScheduleIVEvaluation);
+document.getElementById('evaluateScheduleIV')?.addEventListener('click',runScheduleIVEvaluation);
 renderConversions();
 
 
