@@ -661,8 +661,13 @@
       }
     ],
     "coverage_status": {
-      "paragraphs_1_to_11": "structured_for_current_runtime",
-      "note": "Schedule II paragraph 1 ingredient thresholds, paragraph 2 article rules, paragraph 3 Pan Masala/Supari warnings, paragraph 4 sweetener/MSG rules, paragraphs 5-6 oil/water article rules, paragraphs 7-10 plant stanol/trehalose/dextrin/plant sterol rules, and paragraph 11 irradiation are represented. Specific manner-of-labelling rules beginning at section 2 are a separate next module."
+      "paragraphs_1_to_11": "runtime_active_current_compendium",
+      "note": "Schedule II paragraph 1 ingredient thresholds, paragraph 2 article rules, paragraph 3 Pan Masala/Supari warnings, paragraph 4 sweetener/MSG rules, paragraphs 5-6 oil/water article rules, paragraphs 7-10 plant stanol/trehalose/dextrin/plant sterol rules, and paragraph 11 irradiation are represented. Specific manner-of-labelling rules beginning at section 2 are a separate next module.",
+      "qualifier_rules_active": 11,
+      "qualifier_rules_pending": 0,
+      "product_ingredient_rules_active": 4,
+      "article_warning_rules_active": 2,
+      "universal_process_rules_active": 1
     }
   },
   "allergen_rules": {
@@ -1457,6 +1462,31 @@
         "multigrain_bread"
       ],
       "fail_closed_rule": "Automatic assessment is used only when the flour basis is greater than zero and at least one exact numerator alias is present. Otherwise PMSV keeps the numeric qualifier available for manual verified input."
+    },
+    "coverage_status": {
+      "sections_loaded": [
+        "2.1",
+        "2.2",
+        "2.3",
+        "2.4",
+        "2.5",
+        "2.6"
+      ],
+      "current_compendium_status": "complete_structured_current_effective_rules",
+      "section_2_1_to_2_5_rules": 11,
+      "bread_rules": 19,
+      "bread_auto_calculation_rules": 17,
+      "bread_manual_only_rules": [
+        "multigrain_bread"
+      ],
+      "future_2026_amendment_effective_2027_07_01": "not_applied"
     }
+  },
+  "runtime_coverage": {
+    "general_prepackaged_rules": 14,
+    "product_specific_rule_sets": 1,
+    "schedule_ii_current_compendium": true,
+    "specific_manner_section_2_current_compendium": true,
+    "runtime_ai_required": false
   }
 }
