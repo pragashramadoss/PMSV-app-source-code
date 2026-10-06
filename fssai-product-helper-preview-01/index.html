@@ -832,6 +832,13 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div class="card">
+<div class="section-title"><h2>Additional IFCT composition</h2><span>Official ICMR-NIN Tables 4–12</span></div>
+<div id="nutritionAdditionalStatus" class="notice">Loading additional official composition…</div>
+<div id="nutritionAdditionalTables"></div>
+<div class="notice"><b>Source basis:</b> Formulation values require a verified field for 100% of ingredient mass. Amino acids are listed per 100 g protein. Oil profiles are percentages of total fatty-acid methylesters. These reference values are shown separately from food-mass calculations.</div>
+</div>
+
+<div class="card">
 <div class="section-title"><h2>Ingredient nutrition-source coverage</h2><span>Every value must be traceable</span></div>
 <div class="tablewrap"><table>
 <thead><tr><th>Ingredient</th><th>Quantity</th><th>Nutrition match</th><th>Source / status</th></tr></thead>
@@ -1208,6 +1215,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <div class="footer">Standalone evaluation prototype · not connected to live PMSV · no formulation data is uploaded or stored.</div>
 </main>
+<script src="./nutrition-modules.js?v=475"></script>
 <script>
 const tabs=[...document.querySelectorAll('nav.tabs .tab[data-tab]')];
 const validTabs=new Set(tabs.map(t=>t.dataset.tab).filter(Boolean));
@@ -2671,18 +2679,12 @@ function nutritionServingMl(){
  const n=Number(document.getElementById('nutritionServingMl')?.value||document.getElementById('labelServingMl')?.value||250);
  return Number.isFinite(n)&&n>0?n:250;
 }
+function isNutritionNumber(value){
+ return typeof value==='number'&&Number.isFinite(value)&&value>=0;
+}
 function nutritionEnergyPer100g(profile){
- const p=profile?.per_100g||{};
- if(Number.isFinite(Number(p.energy_kcal)))return Number(p.energy_kcal);
- const f=nutritionDb?.energy_factors_kcal_per_g||{};
- return (Number(p.carbohydrate_g||0)*Number(f.carbohydrate||4))
-   +(Number(p.protein_g||0)*Number(f.protein||4))
-   +(Number(p.total_fat_g||0)*Number(f.fat||9))
-   +(Number(p.polyols_g||0)*Number(f.polyols_except_erythritol||2))
-   +(Number(p.erythritol_g||0)*Number(f.erythritol||0))
-   +(Number(p.ethanol_g||0)*Number(f.alcohol_ethanol||7))
-   +(Number(p.organic_acid_g||0)*Number(f.organic_acid||3))
-   +(Number(p.dietary_fibre_g||0)*Number(f.dietary_fibre||2));
+ const value=profile?.per_100g?.energy_kcal;
+ return isNutritionNumber(value)?value:null;
 }
 function calculateNutrition(){
  const totalG=totalFormulaKg()*1000;
@@ -2707,8 +2709,8 @@ function calculateNutrition(){
    const factor=g/100;
    keys.forEach(k=>{
      if(!verified.has(k))return;
-     const value=k==='energy_kcal'?nutritionEnergyPer100g(profile):Number(p[k]);
-     if(!Number.isFinite(value))return;
+     const value=k==='energy_kcal'?nutritionEnergyPer100g(profile):p[k];
+     if(!isNutritionNumber(value))return;
      totals[k]+=value*factor;
      verifiedMass[k]+=g;
    });
@@ -2763,8 +2765,8 @@ function calculateIfctTable2Micronutrients(){
    if(!p)return;
    const factor=g/100;
    keys.forEach(k=>{
-     const value=Number(p[k]);
-     if(!Number.isFinite(value))return;
+     const value=p[k];
+     if(!isNutritionNumber(value))return;
      totals[k]+=value*factor;
      verifiedMass[k]+=g;
    });
@@ -2824,6 +2826,47 @@ function renderIfctTable2Micronutrients(){
    status.innerHTML='<b>ICMR-NIN Table 2:</b> '+completeCount+' of '+defs.length+' water-soluble vitamin fields are fully verified across the current formulation. Fields with incomplete mass coverage remain unavailable.';
  }
 }
+function renderAdditionalIfctComposition(){
+ const status=document.getElementById('nutritionAdditionalStatus');
+ const body=document.getElementById('nutritionAdditionalTables');
+ if(!status||!body)return;
+ body.innerHTML='';
+ if(!nutritionDb?.modular_ifct||!window.PMSVNutritionModules){
+   status.className='notice';
+   status.textContent='Additional official composition is unavailable. Existing verified nutrition fields remain available.';
+   return;
+ }
+ const ingredients=formulationIngredients.map(item=>({profile:nutritionProfileFor(item.name),grams:qtyToKg(item.qty,item.unit)*1000}));
+ const hasMass=ingredients.some(item=>item.grams>0);
+ status.className='notice'+(hasMass?' oknote':'');
+ status.textContent=hasMass?'Official IFCT composition is shown below. Fields with incomplete mass coverage remain unavailable.':'Nine official IFCT tables are loaded. Enter formulation ingredients to view their composition.';
+ if(!hasMass)return;
+ const tables=nutritionDb.modular_ifct.tables;
+ const density=formulaDensity();
+ const servingFactor=nutritionServingMl()/100;
+ const formatValue=(value,unit)=>isNutritionNumber(value)?esc(String(Number(value.toPrecision(6))))+' '+esc(unit):'<span class="status-bad">Unavailable</span>';
+ const tableHeader='<div class="tablewrap"><table><thead><tr><th>Nutrient</th><th>Per 100 ml</th><th>Per serving</th><th>Verified mass</th></tr></thead><tbody>';
+ const panels=[4,5,6,7,9,10,11].map(table=>{
+   const definition=tables[table];
+   const values=window.PMSVNutritionModules.aggregate(nutritionDb,table,ingredients);
+   const rows=Object.entries(definition.fields).map(([key,field])=>{
+     const result=values[key];
+     const per100ml=result.value===null?null:result.value*density;
+     return '<tr><td>'+esc(field.label)+'</td><td>'+formatValue(per100ml,field.unit)+'</td><td>'+formatValue(per100ml===null?null:per100ml*servingFactor,field.unit)+'</td><td>'+fmt(result.coverage,1)+'%</td></tr>';
+   }).join('');
+   return '<details><summary><b>'+esc(definition.title)+'</b> · IFCT Table '+table+'</summary>'+tableHeader+rows+'</tbody></table></div></details>';
+ });
+ const aminoRows=ingredients.filter(item=>item.grams>0&&item.profile?.ifct_tables?.[8]).map(item=>{
+   const profile=item.profile;
+   const row=profile.ifct_tables[8];
+   const fields=tables[8].fields;
+   return '<details><summary>'+esc(profile.display_name)+' · '+esc(row.code)+'</summary><div class="tablewrap"><table><thead><tr><th>Amino acid</th><th>g / 100 g protein</th></tr></thead><tbody>'+Object.entries(fields).map(([key,field])=>'<tr><td>'+esc(field.label)+'</td><td>'+formatValue(row.values[key],field.unit)+'</td></tr>').join('')+'</tbody></table></div></details>';
+ });
+ panels.push('<details><summary><b>Amino acid references</b> · IFCT Table 8</summary><p>Values are per 100 g protein. They require a protein-basis conversion before food-mass calculations.</p>'+aminoRows.join('')+'</details>');
+ const oils=Object.values(nutritionDb.ifct_reference_by_code||{}).map(row=>'<tr><td>'+esc(row.name)+' · '+esc(row.code)+'</td><td>'+formatValue(row.values.FASAT,'%')+'</td><td>'+formatValue(row.values.FAMS,'%')+'</td><td>'+formatValue(row.values.FAPU,'%')+'</td></tr>').join('');
+ panels.push('<details><summary><b>Oil and fat references</b> · IFCT Table 12</summary><p>Percent of total fatty-acid methylesters; these values require a compatible composition basis before food-mass calculations.</p><div class="tablewrap"><table><thead><tr><th>Oil / fat</th><th>Saturated</th><th>Monounsaturated</th><th>Polyunsaturated</th></tr></thead><tbody>'+oils+'</tbody></table></div></details>');
+ body.innerHTML=panels.join('');
+}
 function renderNutrition(){
  const rows=document.getElementById('nutritionRows');
  const coverage=document.getElementById('nutritionCoverageRows');
@@ -2833,6 +2876,8 @@ function renderNutrition(){
 
  const calc=calculateNutrition();
  if(densityEl)densityEl.innerHTML='<b>'+fmt(calc.density,3)+' kg/L</b>';
+ renderIfctTable2Micronutrients();
+ renderAdditionalIfctComposition();
 
  if(!nutritionDb){
    if(status)status.innerHTML='<b>Nutrition calculation unavailable.</b> Official-source nutrition database is not loaded.';
@@ -2894,7 +2939,6 @@ function renderNutrition(){
      return '<tr><td><b>'+esc(item.name)+'</b></td><td>'+q+'</td><td><span class="status-good">'+esc(profile.display_name||item.name)+'</span></td><td>'+esc(profile.source||'Official-source local profile')+(missing.length?'<br><small><b>Partial profile:</b> '+esc(missing.map(k=>k.replaceAll('_',' ')).join(', '))+' not verified.</small>':'')+'</td></tr>';
    }).join('');
  }
- renderIfctTable2Micronutrients();
 }
 function numericLimitMgKg(text){
  const s=String(text||'').replace(/,/g,'');
@@ -6504,15 +6548,21 @@ async function loadChapterRuleDbs(){
 async function loadNutritionDb(){
  const status=document.getElementById('nutritionDbStatus');
  try{
-   const res=await fetch('./data/nutrition-db-v1.json?v=473',{cache:'reload'});
-   if(!res.ok)throw new Error('HTTP '+res.status);
-   nutritionDb=await res.json();
+   let loaded;
+   if(window.PMSVNutritionModules){
+     loaded=await window.PMSVNutritionModules.load();
+   }else{
+     const res=await fetch('./data/nutrition-db-v1.json?v=473',{cache:'reload'});
+     if(!res.ok)throw new Error('HTTP '+res.status);
+     loaded={database:await res.json(),supplementsLoaded:false,warning:'Additional official composition could not be loaded. Existing verified nutrition data remains available.'};
+   }
+   nutritionDb=loaded.database;
    if(status){
      const profiles=Array.isArray(nutritionDb.profiles)?nutritionDb.profiles:[];
      const active=profiles.filter(p=>p.active_for_calculation===true&&p.source_authority==='ICMR-NIN').length;
      const locked=profiles.length-active;
-     status.className=active?'notice oknote':'notice';
-     status.innerHTML='<b>Nutrition source policy: ICMR-NIN composition only.</b><br>'+active+' active ICMR-NIN nutrition profiles are loaded; '+locked+' previous starter profile(s) are locked and cannot enter the calculation. FSSAI is used separately for labelling/RDA rules. Unmatched ingredients are never estimated.';
+     status.className=active&&loaded.supplementsLoaded?'notice oknote':'notice';
+     status.innerHTML='<b>Nutrition source policy: ICMR-NIN composition only.</b><br>'+active+' active ICMR-NIN nutrition profiles are loaded; '+locked+' previous starter profile(s) are locked and cannot enter the calculation. FSSAI is used separately for labelling/RDA rules. Unmatched ingredients are never estimated.'+(loaded.supplementsLoaded?'<br><b>IFCT Tables 4–12:</b> Nine additional official tables are verified and loaded. Nutrition version 475.':'<br>'+esc(loaded.warning));
    }
  }catch(e){
    nutritionDb=null;
