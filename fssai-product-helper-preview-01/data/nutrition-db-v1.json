@@ -33960,7 +33960,41 @@
         "biotin_b7_ug",
         "vitamin_c_total_ascorbic_acid_mg"
       ],
-      "ifct_table2_source": "ICMR-NIN IFCT 2017 · Table 2 Water Soluble Vitamins · national mean per 100 g edible portion"
+      "ifct_table2_source": "ICMR-NIN IFCT 2017 · Table 2 Water Soluble Vitamins · national mean per 100 g edible portion",
+      "ifct_table3_animal_fat_soluble_vitamins_per_100g": {
+        "retinol_ug": 7.57,
+        "cholecalciferol_d3_ug": 0.8,
+        "calcidiol_25_oh_d3_ug": null,
+        "tocopherol_alpha_mg": 0.35,
+        "tocopherol_beta_mg": null,
+        "tocopherol_gamma_mg": null,
+        "tocopherol_delta_mg": null,
+        "tocotrienol_alpha_mg": null,
+        "tocotrienol_beta_mg": null,
+        "tocotrienol_gamma_mg": null,
+        "tocotrienol_delta_mg": null,
+        "alpha_tocopherol_equivalent_mg": 0.35,
+        "menaquinone_k2_ug": 5.8
+      },
+      "ifct_table3_animal_regions": 6,
+      "ifct_table3_animal_verified_fields": [
+        "retinol_ug",
+        "cholecalciferol_d3_ug",
+        "tocopherol_alpha_mg",
+        "alpha_tocopherol_equivalent_mg",
+        "menaquinone_k2_ug"
+      ],
+      "ifct_table3_animal_below_detection_fields": [
+        "calcidiol_25_oh_d3_ug",
+        "tocopherol_beta_mg",
+        "tocopherol_gamma_mg",
+        "tocopherol_delta_mg",
+        "tocotrienol_alpha_mg",
+        "tocotrienol_beta_mg",
+        "tocotrienol_gamma_mg",
+        "tocotrienol_delta_mg"
+      ],
+      "ifct_table3_animal_source": "ICMR-NIN IFCT 2017 · Table 3 Fat Soluble Vitamins · animal-food schema · national mean per 100 g edible portion"
     },
     {
       "names": [
@@ -45796,10 +45830,10 @@
     "ifct_table2_qrs_complete": true,
     "ifct_table2_animal_meat_complete": true,
     "ifct_table2_master_status": "complete_exact_official_ICMR_NIN_only",
-    "ifct_table3_fat_soluble_vitamins_profiles_loaded": 346,
-    "ifct_table3_fat_soluble_vitamins_stage": "plant_L_complete_animal_M_partial_N_complete",
-    "ifct_table3_fat_soluble_vitamins_build": 472,
-    "ifct_table3_next_code": "O001",
+    "ifct_table3_fat_soluble_vitamins_profiles_loaded": 347,
+    "ifct_table3_fat_soluble_vitamins_stage": "plant_L_complete_animal_M_partial_N_complete_O001_loaded",
+    "ifct_table3_fat_soluble_vitamins_build": 473,
+    "ifct_table3_next_code": "O002",
     "ifct_table3_fail_closed_codes": [
       "A010",
       "B011",
@@ -46554,12 +46588,13 @@
     "calculation_policy": "Field-level fail-closed: formulation-level values may be calculated only when every contributing ingredient has an exact ICMR-NIN value for that field.",
     "loaded_groups": [
       "M — Egg and Egg Products (M001-M008 and M010-M015 loaded; M009 fail-closed)",
-      "N — Poultry (N001-N019 complete)"
+      "N — Poultry (N001-N019 complete)",
+      "O — Animal Meat (O001 loaded)"
     ],
-    "loaded_codes": "M001-M008; M010-M015; N001-N019",
-    "loaded_profiles": 33,
-    "pending_next_code": "O001",
-    "build": 472,
+    "loaded_codes": "M001-M008; M010-M015; N001-N019; O001",
+    "loaded_profiles": 34,
+    "pending_next_code": "O002",
+    "build": 473,
     "verified_on": "2026-10-06",
     "parse_fail_closed": [
       {
