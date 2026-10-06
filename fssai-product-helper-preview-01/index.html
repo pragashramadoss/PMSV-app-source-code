@@ -1217,6 +1217,39 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </main>
 <script src="./nutrition-modules.js?v=475"></script>
 <script>
+// Initialize shared data state before selectors and renderers can read it.
+let regulatoryDb=null;
+let ingredientCatalog=[];
+let nutritionDb=null;
+let productMasterDb=null;
+let appendixCoreDb=null;
+let contaminantsDb=null;
+let appendixCDb=null;
+let microbiologyDb=null;
+let labelDb=null;
+let claimsDb=null;
+let packagingDb=null;
+let fortificationDb=null;
+let chapterRuleDbs=[];
+const CHAPTER_RULE_URLS=[
+ './data/rules/chapter-2-1-dairy-v1.json',
+ './data/rules/chapter-2-2-fats-oils-v1.json',
+ './data/rules/chapter-2-3-fruit-vegetable-v1.json',
+ './data/rules/chapter-2-4-cereals-v1.json',
+ './data/rules/chapter-2-5-meat-eggs-v1.json',
+ './data/rules/chapter-2-6-fish-v1.json',
+ './data/rules/chapter-2-7-sweets-confectionery-v1.json',
+ './data/rules/chapter-2-8-sweetening-honey-v1.json',
+ './data/rules/chapter-2-9-salt-spices-condiments-v1.json',
+ './data/rules/chapter-2-10-beverages-v1.json',
+ './data/rules/chapter-2-11-other-food-products-v1.json',
+ './data/rules/chapter-2-16-hemp-v1.json',
+ './data/rules/alcoholic-beverages-v5.json',
+ './data/rules/foods-for-infant-nutrition-v2.json',
+ './data/rules/chapter-3-substances-added-v1.json'
+];
+let selectedProductId='';
+
 const tabs=[...document.querySelectorAll('nav.tabs .tab[data-tab]')];
 const validTabs=new Set(tabs.map(t=>t.dataset.tab).filter(Boolean));
 const TAB_KEY='pmsv_fssai_product_helper_active_tab';
@@ -3841,37 +3874,7 @@ function renderGmp(){
  const count=document.getElementById('gmpCount');if(count)count.textContent=rows.length+' applicable general GMP entries included automatically';
 }
 renderAppendix();renderGmp();
-let regulatoryDb=null;
-let ingredientCatalog=[];
-let nutritionDb=null;
-let productMasterDb=null;
-let appendixCoreDb=null;
-let contaminantsDb=null;
-let appendixCDb=null;
-let microbiologyDb=null;
-let labelDb=null;
-let claimsDb=null;
-let packagingDb=null;
-let fortificationDb=null;
-let chapterRuleDbs=[];
-const CHAPTER_RULE_URLS=[
- './data/rules/chapter-2-1-dairy-v1.json',
- './data/rules/chapter-2-2-fats-oils-v1.json',
- './data/rules/chapter-2-3-fruit-vegetable-v1.json',
- './data/rules/chapter-2-4-cereals-v1.json',
- './data/rules/chapter-2-5-meat-eggs-v1.json',
- './data/rules/chapter-2-6-fish-v1.json',
- './data/rules/chapter-2-7-sweets-confectionery-v1.json',
- './data/rules/chapter-2-8-sweetening-honey-v1.json',
- './data/rules/chapter-2-9-salt-spices-condiments-v1.json',
- './data/rules/chapter-2-10-beverages-v1.json',
- './data/rules/chapter-2-11-other-food-products-v1.json',
- './data/rules/chapter-2-16-hemp-v1.json',
- './data/rules/alcoholic-beverages-v5.json',
- './data/rules/foods-for-infant-nutrition-v2.json',
- './data/rules/chapter-3-substances-added-v1.json'
-];
-let selectedProductId='';
+
 
 function fallbackIngredientCatalog(){
  const rows=[];

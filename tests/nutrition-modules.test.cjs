@@ -246,3 +246,25 @@ test('index loader shows the verified version or a supplement warning while reta
     }
   }
 });
+
+test('complete application startup initializes enzyme state and reaches nutrition loading', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const script = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m => m[1]).find(s => s.includes('function loadNutritionDb('));
+  const classList = {add(){},remove(){},toggle(){}};
+  const element = () => ({value:'',innerHTML:'',classList,dataset:{},addEventListener(){},querySelectorAll:() => []});
+  const nodes = {enzymeName:element(),enzymeSource:element(),enzymeResult:element(),nutritionDbStatus:element()};
+  const requests = [];
+  const fetchImpl = url => {requests.push(url); return new Promise(() => {});};
+  const storage = {getItem:() => null,setItem(){},removeItem(){}};
+  const sandbox = {
+    document:{querySelectorAll:() => [],querySelector:() => null,getElementById:id => nodes[id] || null,addEventListener(){}},
+    window:{addEventListener(){},PMSVNutritionModules:{load:() => api.load({fetchImpl})}},
+    location:{hash:'',pathname:'/',search:''},history:{replaceState(){}},sessionStorage:storage,localStorage:storage,
+    performance:{getEntriesByType:() => [{type:'navigate'}]},fetch:fetchImpl,setTimeout:() => 0,console
+  };
+  vm.createContext(sandbox);
+  assert.doesNotThrow(() => vm.runInContext(script,sandbox));
+  assert.ok(nodes.enzymeName.innerHTML.includes('Glucose oxidase'));
+  assert.ok(requests.some(url => url.endsWith('nutrition-db-v1.json?v=473')));
+  assert.ok(requests.some(url => url.includes('product-master')));
+});

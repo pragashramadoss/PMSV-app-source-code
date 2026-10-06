@@ -79,10 +79,14 @@ python3 scripts/build-ifct-modules.py --pdf IFCT2017.pdf --bbox tables-bbox.html
 node --test tests/nutrition-modules.test.cjs
 ```
 
-All 29 tests pass, covering the actual complete module set, master preservation,
+All 30 tests pass, covering the actual complete module set, master preservation,
 invalid codes/fields/units, altered or missing files, atomic fallback,
 mass-weighted aggregation, reference-basis exclusion, null-versus-zero handling,
-page rendering and index-loader status. The runtime and inline application
+page rendering, index-loader status and complete synchronous application startup.
+Live browser verification exposed a pre-existing startup error: the enzyme
+selector read `appendixCDb` before its `let` initialization. Shared database state
+is now initialized before any selectors or renderers run, so startup reaches
+the nutrition and other database loaders. The runtime and inline application
 JavaScript pass syntax checks. Representative original PDF pages were visually
 inspected, including oil percentage units, split polyphenol headings and the
 cholesterol panel.
