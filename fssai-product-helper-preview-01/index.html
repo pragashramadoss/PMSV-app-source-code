@@ -5011,6 +5011,11 @@ function exactStandardizedIngredientProduct(name){
    return normIngredient(p.name)===n&&hasRealFssrStandard(p)&&!/^3(?:\.|$)/.test(fssr);
  })||null;
 }
+function exactFoscosIngredientIdentity(name){
+ const n=normIngredient(name);
+ if(!n)return null;
+ return productCatalog().find(p=>normIngredient(p.name)===n)||null;
+}
 function proprietaryQuantityCheck(item,appendix){
  const limit=appendix?.entry?.limit||appendix?.entry?.maximum||appendix?.entry?.max_level||appendix?.entry?.maximum_level||'';
  const condition=appendix?.entry?.condition||appendix?.entry?.conditions||'';
@@ -5027,7 +5032,8 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
  const activeAdditive=activeFcs?proprietaryAppendixIngredientHit(name,activeFcs):null;
  const alternatives=allStandardIngredientPermissions(name);
  const standardizedIngredient=exactStandardizedIngredientProduct(name);
- const hasSeparateFssaiBasis=alternatives.length>0||!!standardizedIngredient;
+ const foscosIdentity=exactFoscosIngredientIdentity(name);
+ const hasSeparateFssaiBasis=alternatives.length>0||!!standardizedIngredient||!!foscosIdentity;
 
  if(fpc){
    if(activeAdditive){
@@ -5041,7 +5047,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
        detail:(activeAdditive.member?.name||activeAdditive.entry?.name||name)
          +(activeAdditive.member?.ins||activeAdditive.entry?.ins?' · INS '+String(activeAdditive.member?.ins||activeAdditive.entry?.ins):'')
          +(check?.value!=null?' · calculated '+fmt(check.value,3)+' '+check.unit:''),
-       alternatives,standardizedIngredient,quantityCheck:check,fpc18:fpc,
+       alternatives,standardizedIngredient,foscosIdentity,quantityCheck:check,fpc18:fpc,
        next:fail?'Reformulate or change the selected lawful FCS route.':
          pending?'Complete the quantity basis before deciding the route.':
          'Ingredient clears the selected-FCS additive gate; continue Chapter 2.12 and other applicable checks.'
@@ -5053,7 +5059,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
        standardStatus:'Explicitly described in confirmed FoSCoS category',
        standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A.',
        detail:standardCheck.requirement,
-       alternatives,standardizedIngredient,fpc18:fpc,
+       alternatives,standardizedIngredient,foscosIdentity,fpc18:fpc,
        next:'Ingredient fits the confirmed category descriptor. Because this is not a vertical FSSR standard, continue the Chapter 2.12 ingredient-basis assessment rather than treating the product as standardized.'
      };
    }
@@ -5063,7 +5069,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
        standardStatus:'Fits “other ingredients” route with separate FSSAI basis',
        standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A. + separate FSSAI ingredient basis',
        detail:'Not expressly named in the category descriptor, but the category permits other ingredients and PMSV found another explicit FSSAI food/use basis. Chapter 3 identity/purity specifications are excluded from this eligibility decision.',
-       alternatives,standardizedIngredient,fpc18:fpc,
+       alternatives,standardizedIngredient,foscosIdentity,fpc18:fpc,
        next:'Continue Chapter 2.12 assessment using the separate FSSAI basis shown below.'
      };
    }
@@ -5072,7 +5078,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
      standardStatus:'Ingredient basis not yet established',
      standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A.',
      detail:'The ingredient is not expressly named in the category descriptor and no separate explicit FSSAI basis has been identified.',
-     alternatives,standardizedIngredient,fpc18:fpc,
+     alternatives,standardizedIngredient,foscosIdentity,fpc18:fpc,
      next:'Do not conclude Proprietary eligibility until the ingredient’s FSSAI basis is established.'
    };
  }
@@ -5086,7 +5092,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
      standardStatus:'Allowed in confirmed standard',
      standardBasis:(standardCheck.standard?.name||standardProduct.name)+' · '+String(standardCheck.standard?.key||standardProduct.fssr||''),
      detail:standardCheck.requirement||'Explicit ingredient permission',
-     alternatives,standardizedIngredient,
+     alternatives,standardizedIngredient,foscosIdentity,
      next:'Keep standardized route, subject to all other applicable product-standard requirements.'
    };
  }
@@ -5101,7 +5107,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
      detail:(standardAdditive.member?.name||standardAdditive.entry?.name||name)
        +(standardAdditive.member?.ins||standardAdditive.entry?.ins?' · INS '+String(standardAdditive.member?.ins||standardAdditive.entry?.ins):'')
        +(check?.value!=null?' · '+fmt(check.value,3)+' '+check.unit:''),
-     alternatives,standardizedIngredient,quantityCheck:check,
+     alternatives,standardizedIngredient,foscosIdentity,quantityCheck:check,
      next:fail?'Reformulate or use another lawful route; the confirmed standardized product cannot use this quantity.':
        pending?'Complete the quantity basis before deciding the route.':
        'Keep standardized route if the rest of the product standard is met.'
@@ -5113,7 +5119,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
      standardStatus:'No explicit ingredient permission identified in the applicable FSSAI standard',
      standardBasis:(standardProduct?.fssr||'Confirmed FSSAI standard')+' · explicit ingredient permission not stated in the product-standard rule used for this check',
      detail:'The applicable FSSAI product standard does not give PMSV an explicit ingredient permission for this ingredient. Absence of an explicit permission is not treated as either permission or prohibition; another applicable FSSAI provision must be checked.',
-     alternatives,standardizedIngredient,
+     alternatives,standardizedIngredient,foscosIdentity,
      next:'Check another applicable FSSAI provision before deciding the standardized vs Proprietary route.'
    };
  }
@@ -5129,14 +5135,14 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
      standardBasis:(standardProduct?.fssr||standardProduct?.name||'Confirmed standard'),
      detail:'The additive does not fit the confirmed standardized-product route, but the selected Proprietary FCS '+String(proprietaryAdditive.resolvedFcs)+' has an Appendix A permission for it.'
        +(check?.value!=null?' Calculated '+fmt(check.value,3)+' '+check.unit+'.':''),
-     alternatives,standardizedIngredient,quantityCheck:check,
+     alternatives,standardizedIngredient,foscosIdentity,quantityCheck:check,
      next:fail?'Cannot proceed at this quantity under the selected Proprietary FCS.':
        pending?'Quantity basis must be completed before Proprietary assessment.':
        'May proceed to Chapter 2.12 assessment because the confirmed standard does not cover it but the selected FCS has an Appendix A basis.'
    };
  }
 
- const hasOtherFssaiBasis=alternatives.length>0||!!standardizedIngredient;
+ const hasOtherFssaiBasis=alternatives.length>0||!!standardizedIngredient||!!foscosIdentity;
  return {
    name,item,status:hasOtherFssaiBasis?'proprietary_trigger':'unresolved',kind:'non_additive',usage,
    standardStatus:'Outside confirmed standard ingredient provisions — supports Proprietary route',
@@ -5144,7 +5150,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
    detail:hasOtherFssaiBasis
      ? 'The ingredient does not fit the confirmed standardized-product ingredient provisions, but it has a separate applicable FSSAI basis. This is a Proprietary-route trigger, subject to all Chapter 2.12 conditions.'
      : 'No other explicit FSSAI standardized-food basis or ingredient permission has been identified for this ingredient.',
-   alternatives,standardizedIngredient,
+   alternatives,standardizedIngredient,foscosIdentity,
    next:hasOtherFssaiBasis
      ? 'This ingredient supports moving the finished formulation out of the confirmed standardized-product route and into Chapter 2.12 assessment, subject to all remaining Proprietary Food conditions.'
      : 'Do not conclude Proprietary eligibility until an exact FSSAI regulatory basis is established.'
@@ -5156,6 +5162,13 @@ function proprietaryAlternativeHtml(r){
    bits.push('<b>Separate standardized-food basis:</b> '+esc(r.standardizedIngredient.name)
      +(r.standardizedIngredient.fssr?' · <span class="clause">'+esc(r.standardizedIngredient.fssr)+'</span>':'')
      +'<br><small>This is an ingredient/food standard. It does not by itself override the selected product/FCS permission check.</small>');
+ }
+ if(r.foscosIdentity&&!r.standardizedIngredient){
+   const fssr=String(r.foscosIdentity.fssr||'').trim();
+   bits.push('<b>Separate FoSCoS ingredient identity:</b> '+esc(r.foscosIdentity.name)
+     +(fssr?' · <span class="clause">'+esc(fssr)+'</span>':' · <b>FSSR standard: N.A.</b>')
+     +(r.foscosIdentity.fcs?' · FCS '+esc(r.foscosIdentity.fcs):'')
+     +'<br><small>This official FoSCoS identity supports the ingredient-basis review under Chapter 2.12. Where FSSR is N.A., PMSV does not invent a standard number and does not treat the identity itself as a product-specific use permission.</small>');
  }
  if(r.alternatives?.length){
    bits.push('<b>Explicit use / food-standard bases found elsewhere:</b><br>'
@@ -5304,10 +5317,11 @@ function evaluateProprietaryRoute(){
  const fpc=fpc18CategoryForProduct(standardProduct);
  const allStandard=assessments.every(x=>x.status==='allowed_standard');
  const allCategory=!!fpc&&assessments.every(x=>x.status==='allowed_category'||x.status==='allowed_category_other_basis');
+ const proprietarySupport=assessments.filter(x=>x.status==='not_allowed_standard_proprietary_basis');
  const standardIncomplete=assessments.some(x=>x.status==='standard_check_incomplete'||x.status==='quantity_pending_standard'||x.status==='quantity_pending_category');
  const hardFail=assessments.some(x=>x.status==='limit_fail_standard'||x.status==='proprietary_limit_fail'||x.status==='limit_fail_category');
  const proprietaryPending=assessments.some(x=>x.status==='proprietary_quantity_pending');
- const unresolved=assessments.some(x=>x.status==='unresolved');
+ const unresolved=assessments.filter(x=>x.status==='unresolved');
 
  if(allCategory){
    out.className='notice oknote';
@@ -5343,7 +5357,7 @@ function evaluateProprietaryRoute(){
      +'<br><b>Why it is not final yet:</b> at least one other ingredient has no explicit permission identified in the applicable FSSAI provisions, or a quantity-dependent condition is incomplete. The Proprietary trigger is retained; only the remaining eligibility point is unresolved.';
    return;
  }
- if(hardFail||proprietaryPending||unresolved){
+ if(hardFail||proprietaryPending||unresolved.length){
    out.className='notice';
    out.innerHTML=(proprietaryTriggers.length
        ? '<b>Proprietary route is triggered, but final Chapter 2.12 ingredient eligibility is not yet complete.</b><br>'
@@ -5356,6 +5370,20 @@ function evaluateProprietaryRoute(){
      +(unresolved?'At least one other ingredient still has no standardized/permitted FSSAI basis identified for clause 2.12.1(2). ':'')
      +'The Proprietary trigger itself is not cancelled; resolve only the remaining blocker(s).';
    if(guide)guide.classList.remove('hidden');
+   return;
+ }
+
+ if(proprietarySupport.length&&!standardIncomplete&&!hardFail&&!proprietaryPending&&!unresolved.length){
+   out.className='notice oknote';
+   out.innerHTML='<b>Proprietary Food route supported by the formulation.</b><br>'
+     +'<b>Confirmed standardized product checked first:</b> '+esc(standardProduct.name)
+     +(standardProduct.fssr?' · <span class="clause">'+esc(standardProduct.fssr)+'</span>':'')
+     +'<br><b>'+proprietarySupport.length+' ingredient'+(proprietarySupport.length===1?' is':'s are')+' outside the confirmed standard and have a separate FSSAI/FoSCoS basis.</b>'
+     +cards
+     +'<br><b>Route decision:</b> The formulation no longer fits the confirmed standardized product because of the ingredient deviation(s). Since those ingredient(s) have a separate regulatory basis, continue the Chapter 2.12 Proprietary Food assessment under the user-selected FCS '+esc(proprietaryFcs)+'.'
+     +'<br><br><b>Not a final compliance pass.</b> Appendix A quantity conditions, microbiology, contaminants, processing aids, labelling, claims and all other applicable FSSAI requirements still apply.';
+   if(guide)guide.classList.remove('hidden');
+   renderProprietaryAppendixA();
    return;
  }
 
