@@ -26,12 +26,10 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span id="buildBadge" class="badge">PRODUCT STANDARDS PROTOTYPE</span><h1>PMSV FSSAI Product Helper</h1><p>Evaluate one product before we scale the database: ingredients, limits, checks, tests and labelling.</p></div></header>
+<header class="top"><div class="wrap"><span id="buildBadge" class="badge">PRODUCT STANDARDS PROTOTYPE</span><h1>PMSV FSSAI Product Helper</h1><p>Enter the formulation once, then route it to the applicable standardized product or Proprietary Food pathway.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
-<button class="tab active" data-tab="product">Product selection</button>
-<button class="tab" data-tab="proprietary">Proprietary route</button>
-<button class="tab" data-tab="formulation">Formulation ingredients</button>
+<button class="tab active" data-tab="formulation">Formulation</button>
 <button class="tab" data-tab="standards">Applicable standards</button>
 <button class="tab" data-tab="standard">Product standard</button>
 <button class="tab" data-tab="ingredients">Ingredients & limits</button>
@@ -45,10 +43,11 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <button class="tab" data-tab="quality">Label requirements</button>
 <button class="tab" data-tab="claims">Claims</button>
 <button class="tab" data-tab="summary">Compliance summary</button>
+<button class="tab" data-tab="product">Product catalogue</button>
 <button class="tab" data-tab="sources">Official sources</button>
 </nav>
 
-<section id="product" class="view">
+<section id="product" class="view hidden">
 <div class="card">
 <div class="section-title"><h2>Choose your product</h2><span>FoSCoS-style product selection</span></div>
 <div class="notice oknote"><b>Two ways to find the product:</b> search the standardized-product catalogue directly, or browse the FoSCoS hierarchy <b>Main Category → Sub-category → Standardized Product</b>. Once the detailed FSSAI rule profile for that product is available, PMSV enables the formulation compliance checker.</div>
@@ -106,150 +105,29 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 </section>
 
-<section id="proprietary" class="view hidden">
-<div class="card">
-<div class="section-title"><h2>Chapter 2.12 — Proprietary Food route</h2><span>Ingredient-led deterministic screening</span></div>
-<div class="notice oknote"><b>Build the actual formulation first.</b> Add ingredients one by one with quantity and unit. PMSV first checks the applicable FSSAI standardized product. If every ingredient/additive is covered by that standard and its applicable horizontal permissions, keep the standardized route. If an additional ingredient is introduced that is not covered by the standardized product's permitted formulation/ingredient provisions, route the finished product to Proprietary Food, provided the added ingredient has a valid FSSAI/IFCT basis. A mere deviation only in a quality parameter, without such a formulation change, is not treated as Proprietary Food.</div>
-
-<div class="checker-grid">
-  <div class="field">
-    <label>1. Generic product name</label>
-    <input id="proprietaryProductName" autocomplete="off" placeholder="e.g. cereal snack with seasoning">
-    <small>Use the generic food name, not a brand name. PMSV uses this only to rank the nearest loaded FSSAI standardized products; the user must confirm the standard.</small>
-  </div>
-  <div class="field">
-    <label>2. Proprietary Food eligibility</label>
-    <select id="proprietaryExcludedClass">
-      <option value="">Continue Proprietary Food screening</option>
-      <option value="excluded">Product belongs to a separately regulated / excluded class</option>
-    </select>
-    <small>Novel food, FSDU, FSMP, functional food, nutraceutical and health supplement use separate FSSAI regulatory routes.</small>
-  </div>
-</div>
-
-<div class="field" style="margin-top:10px">
-  <label>3. Nearest FSSAI standard or FoSCoS regulatory category</label>
-  <select id="proprietaryStandardSelect" disabled><option value="">Enter product name first</option></select>
-  <small>PMSV suggests the nearest loaded FSSAI standard or FoSCoS regulatory category. Where FSSAI has created a category without a notified vertical standard, PMSV shows FSSR standard N.A. You can confirm or change the selection.</small>
-</div>
-<div id="proprietaryStandardSuggestion" class="notice" style="margin-top:10px"><b>Standard confirmation required.</b> Enter the generic product name first.</div>
-<div class="flow-actions">
-  <button class="btn" type="button" id="confirmProprietaryStandard" disabled>Confirm selected standard</button>
-</div>
-</div>
+<section id="formulation" class="view">
+<div id="formulationProductGate" class="notice"></div>
 
 <div class="card">
-<div class="section-title"><h2>4. Enter formulation ingredients</h2><span>Checked against confirmed standard/category</span></div>
-<div class="field">
-  <label>Ingredient / substance</label>
-  <div class="autocomplete-wrap">
-    <input id="proprietaryIngredientName" autocomplete="off" placeholder="Start typing an ingredient">
-    <div id="proprietaryIngredientAutocomplete" class="autocomplete-list hidden"></div>
-  </div>
-  <small>Add one ingredient at a time. PMSV checks exact FSSAI regulatory bases and exact ICMR-NIN IFCT 2017 food/ingredient identities for non-additive ingredient eligibility under Regulation 2.12.1(2). Additives are assessed separately under Appendix A.</small>
-</div>
-
-<div class="checker-grid" style="margin-top:10px">
-  <div class="field">
-    <label>Quantity used</label>
-    <input id="proprietaryIngredientQty" type="number" min="0" step="0.001" placeholder="e.g. 10">
-    <small>Enter the actual amount used in this formulation.</small>
-  </div>
-  <div class="field">
-    <label>Unit</label>
-    <select id="proprietaryIngredientUnit">
-      <option value="kg">kg</option>
-      <option value="g">g</option>
-      <option value="mg">mg</option>
-    </select>
-    <small>PMSV normalizes ingredient quantities to mass and calculates usage against the complete formula.</small>
-  </div>
-</div>
-
-<div class="flow-actions">
-  <button class="btn" type="button" id="addProprietaryIngredient">Add ingredient</button>
-  <button class="btn-secondary hidden" type="button" id="cancelProprietaryIngredientEdit">Cancel edit</button>
-  <button class="btn-secondary" type="button" id="clearProprietaryIngredients">Clear ingredients</button>
-</div>
-<div id="proprietaryIngredientInputMessage" class="notice hidden"></div>
-</div>
-
-<div class="card">
-<div class="section-title"><h2>Formulation entered</h2><span id="proprietaryIngredientCount">0 ingredients</span></div>
-<div id="proprietaryFormulaTotals" class="notice hidden"></div>
-<div id="proprietaryIngredientList" class="empty-state">No ingredients entered yet.</div>
-<div id="proprietaryIngredientStatus" class="notice" style="margin-top:10px"><b>Ingredient entry required.</b> PMSV will not issue a clause-level Proprietary Food result until at least one ingredient with quantity is entered.</div>
-</div>
-
-<div class="card">
-<div class="section-title"><h2>5. Assign Food Category System route</h2><span>Suggested from confirmed standard; user may change</span></div>
-<div class="checker-grid">
-  <div class="field">
-    <label>Nearest FCS category</label>
-    <select id="proprietaryCategorySelect"><option value="">Select category</option></select>
-  </div>
-  <div class="field">
-    <label>Nearest FCS sub-category</label>
-    <select id="proprietarySubcategorySelect" disabled><option value="">Select sub-category</option></select>
-  </div>
-  <div class="field">
-    <label>Specific FCS, where available</label>
-    <select id="proprietarySpecificFcsSelect" disabled><option value="">Select specific FCS</option></select>
-    <small>Loaded from the local Appendix A hierarchy. PMSV does not invent deeper FCS codes.</small>
-  </div>
-</div>
-<div class="flow-actions">
-  <button class="btn" type="button" id="evaluateProprietaryRoute">Evaluate formulation and regulatory route</button>
-  <button class="btn-secondary" type="button" id="clearProprietaryRoute">Clear route</button>
-</div>
-<div id="proprietaryRouteResult" class="notice hidden"></div>
-<div id="proprietaryAppendixA" class="hidden" style="margin-top:12px"></div>
-</div>
-
-<div id="proprietaryClauseGuide" class="card hidden">
-<div class="section-title"><h2>Applicable Chapter 2.12 validation gates</h2><span>Shown only after formulation entry</span></div>
-<div class="grid2">
-  <div class="item"><b>Ingredient eligibility · 2.12.1(2)</b><small>Each non-additive ingredient must have an eligible FSSAI regulatory basis. PMSV does not use IFCT to decide Proprietary Food ingredient eligibility. Unresolved ingredients block a positive route conclusion.</small></div>
-  <div class="item"><b>Food additives · 2.12.1(3)</b><small>Only additives and levels permitted for the selected FCS category/sub-category under Appendix A may be used. PMSV checks a stored numeric mg/kg maximum against the entered formulation quantity where possible.</small></div>
-  <div class="item"><b>Microbiology · 2.12.1(4)</b><small>Apply Appendix B for the selected food category. Where no specific standard exists, the pathogenic-microorganism safety fallback still applies.</small></div>
-  <div class="item"><b>Other FSSAI regulations · 2.12.1(5)</b><small>Contaminants, processing aids, labelling/display, advertising and claims and every other applicable FSSAI requirement remain part of the final assessment.</small></div>
-</div>
-<div class="notice"><b>No false pass:</b> an ingredient outside the confirmed standard can trigger the Proprietary Food route when that ingredient independently satisfies clause 2.12.1(2). A route trigger is not a final compliance pass; all linked regulatory layers still apply.</div>
-</div>
-
-<div class="card">
-<div class="section-title"><h2>Official sources</h2><span>FSSAI / FoSCoS only</span></div>
-<div class="grid2 source">
-  <div class="item"><b>FSSAI Chapter 2.12 — Proprietary Food</b><small><a target="_blank" rel="noopener" href="https://fssai.gov.in/upload/uploadfiles/files/13_%20Chapter%202_12%20%28Proprietary%20Food%29.pdf">Open official chapter</a></small></div>
-  <div class="item"><b>FSSAI Proprietary Food page</b><small><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/standards/proprietary-food">Open official page</a></small></div>
-  <div class="item"><b>FoSCoS standardized-product search</b><small><a target="_blank" rel="noopener" href="https://foscos.fssai.gov.in/standard-product">Open official product search</a></small></div>
-  <div class="item"><b>FoSCoS Proprietary Food application guide</b><small><a target="_blank" rel="noopener" href="https://foscos.fssai.gov.in/assets/docs/fbo/HowtoapplylicenseforProprietaryfood.pdf">Open official guide</a></small></div>
-</div>
-</div>
-</section>
-
-<section id="formulation" class="view hidden">
-<div id="formulationProductGate" class="notice hidden"></div>
-<div class="card">
-<div class="section-title"><h2>Step 1 — Enter the actual formulation ingredients</h2><span>Ingredient-led compliance</span></div>
-<div class="notice oknote"><b>Start with what is actually in the product.</b> Enter each ingredient and its actual quantity. PMSV sums all ingredient quantities to calculate the final formulation quantity, derives each ingredient's usage level, checks applicable numerical limits, and uses the same formulation for route and contaminant assessment.</div>
+<div class="section-title"><h2>Step 1 — Build the actual formulation</h2><span>Single ingredient entry for every route</span></div>
+<div class="notice oknote"><b>Start with the formulation, not the regulatory route.</b> Enter every ingredient once with its actual quantity. PMSV keeps this single formulation and then checks whether it fits an FSSAI standardized product or must be assessed as Proprietary Food.</div>
 <div id="regDbStatus" class="notice"><b>Regulatory database:</b> loading local PMSV FSSAI data…</div>
 
 <div class="field">
-  <label>1. Ingredient / substance</label>
+  <label>Ingredient / substance</label>
   <div class="autocomplete-wrap">
-    <input id="ingredientName" autocomplete="off" placeholder="Start typing: taurine, sugar, aspartame…">
+    <input id="ingredientName" autocomplete="off" placeholder="Start typing an ingredient">
     <div id="ingredientAutocomplete" class="autocomplete-list hidden"></div>
   </div>
-  <small>Type the ingredient name. Matching entries from the regulatory data loaded in this module will appear automatically.</small>
+  <small>PMSV suggests exact matches from loaded FSSAI regulatory data and ICMR-NIN IFCT 2017. An ingredient can still be entered when no match is found; its regulatory basis is resolved during route assessment.</small>
   <div id="ingredientRecognized" class="recognized hidden"></div>
 </div>
 
 <div class="checker-grid" style="margin-top:10px">
   <div class="field">
-    <label>2. Quantity used</label>
-    <input id="ingredientQty" type="number" min="0" step="0.001" placeholder="e.g. 0.150">
-    <small>Enter the actual amount used in this formulation.</small>
+    <label>Quantity used</label>
+    <input id="ingredientQty" type="number" min="0" step="0.001" placeholder="e.g. 10">
+    <small>Enter the actual amount used in the formulation.</small>
   </div>
   <div class="field">
     <label>Unit</label>
@@ -258,54 +136,107 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
       <option value="g">g</option>
       <option value="mg">mg</option>
     </select>
-    <small>PMSV normalizes all ingredient quantities to mass before calculating the total formulation quantity.</small>
+    <small>PMSV normalizes all quantities to mass before checking limits.</small>
   </div>
 </div>
 
 <div class="field" style="margin-top:10px">
-  <label>Finished beverage density (kg/L)</label>
+  <label>Finished product density (kg/L), when relevant</label>
   <input id="formulaDensity" type="number" min="0.1" step="0.001" value="1.000">
-  <small>Used to convert the summed formulation mass into finished beverage volume for FSSAI limits expressed in mg/L.</small>
+  <small>Used only where a regulatory limit or downstream calculation requires a volume basis.</small>
 </div>
-
-<div id="ingredientBasisField" class="field hidden" style="margin-top:10px">
-  <label>3. How should this extra / custom ingredient be checked?</label>
-  <select id="ingredientBasis">
-    <option value="">Select FSSAI regulatory basis…</option>
-    <option value="standardized">Standardized / specifically permitted under an FSSAI regulation</option>
-    <option value="vitamin">Vitamin or mineral</option>
-    <option value="additive">Food additive — check Appendix A</option>
-    <option value="botanical">Botanical / extract / other food ingredient</option>
-    <option value="unknown">Not sure / new / other</option>
-  </select>
-  <small>This appears only when the ingredient is not already recognized in the loaded FSSAI regulatory data.</small>
-</div>
-
-<div id="ingredientClauseField" class="field hidden" style="margin-top:10px">
-  <label>4. Exact FSSAI regulation / clause, if available</label>
-  <input id="ingredientClause" placeholder="e.g. Chapter 2.x / clause 2.x.x / Appendix A INS ...">
-  <small>Use only an official FSSAI regulation reference. A typed clause is not treated as verified until matched to the stored regulatory source.</small>
-</div>
-
-<div class="notice" style="margin-top:10px"><b>Database behaviour:</b> PMSV applies deterministic local FSSAI rule data. <b>No AI call is used.</b> Ingredient permissions are scoped to the selected product and its applicable Appendix FCS; a permission from another product is never borrowed as a fallback. Unmapped ingredient/product combinations remain fail-closed.<br><br><b>Working assessment:</b> your current ingredients, process selections and page position are kept only for this tab. Reloading this tab keeps the work; opening the helper in a new tab starts a new blank assessment.</div>
 
 <div class="flow-actions">
   <button class="btn" type="button" id="addIngredient">Add ingredient</button>
   <button class="btn-secondary hidden" type="button" id="cancelIngredientEdit">Cancel edit</button>
   <button class="btn-secondary" type="button" id="loadExampleFormula">Load caffeinated-beverage example</button>
-  <button class="btn-secondary" type="button" id="clearIngredients">Clear ingredients</button>
+  <button class="btn-secondary" type="button" id="clearIngredients">Clear formulation</button>
 </div>
 <div id="ingredientInputMessage" class="notice hidden"></div>
 </div>
 
 <div class="card">
-<div class="section-title"><h2>Ingredients entered</h2><span id="ingredientCount">0 ingredients</span></div>
+<div class="section-title"><h2>Formulation entered</h2><span id="ingredientCount">0 ingredients</span></div>
 <div id="formulaTotals" class="notice hidden"></div>
 <div id="ingredientList" class="empty-state">No ingredients entered yet.</div>
 <div id="finalFormulationAssessment" class="notice hidden"></div>
 <div id="formulationNext" class="hidden">
-  <div class="notice oknote"><b>Ingredient list saved.</b> The next page explains how every ingredient qualifies, which FSSAI clause applies, and whether the formulation still fits the standardized product route or needs a Proprietary Food / approval review.</div>
-  <button class="btn" type="button" id="goToStandards">View applicable standards →</button>
+  <div class="notice oknote"><b>Formulation captured.</b> Now route this same formulation below. No ingredient needs to be entered again.</div>
+  <button class="btn" type="button" id="goToRouteAssessment">Route this formulation →</button>
+</div>
+</div>
+
+<div class="card" id="formulationRouteCard">
+<div class="section-title"><h2>Step 2 — Route the finished formulation</h2><span>Standardized Product or Proprietary Food</span></div>
+<div class="checker-grid">
+  <div class="field">
+    <label>Generic product name</label>
+    <input id="proprietaryProductName" autocomplete="off" placeholder="e.g. cereal snack with seasoning">
+    <small>Used to rank the nearest FSSAI/FoSCoS standardized product. The suggested result must be confirmed before the route decision.</small>
+  </div>
+  <div class="field">
+    <label>Special regulatory class check</label>
+    <select id="proprietaryExcludedClass">
+      <option value="">Ordinary standardized / Proprietary Food assessment</option>
+      <option value="excluded">Separately regulated / excluded class</option>
+    </select>
+    <small>Novel food, FSDU, FSMP, functional food, nutraceutical and health supplement require their applicable separate FSSAI route.</small>
+  </div>
+</div>
+
+<div class="field" style="margin-top:10px">
+  <label>Nearest FSSAI standard or FoSCoS regulatory category</label>
+  <select id="proprietaryStandardSelect" disabled><option value="">Enter product name first</option></select>
+  <small>PMSV suggests the nearest loaded standard/category from the product master. Confirm or change it before assessment.</small>
+</div>
+<div id="proprietaryStandardSuggestion" class="notice" style="margin-top:10px"><b>Standard/category confirmation required.</b> Enter the generic product name.</div>
+<div class="flow-actions">
+  <button class="btn" type="button" id="confirmProprietaryStandard" disabled>Confirm nearest standard/category</button>
+</div>
+
+<div class="notice" style="margin-top:12px"><b>Routing rule:</b> if the complete formulation is covered by the confirmed standardized product and applicable horizontal permissions, keep the Standardized Product route. If the formulation contains an additional ingredient outside the standardized product's permitted formulation, assess the finished product as Proprietary Food and establish that ingredient's FSSAI/IFCT basis. Food additives are checked against Appendix A for the applicable FCS.</div>
+
+<div class="checker-grid" style="margin-top:10px">
+  <div class="field">
+    <label>Food Category System — main category</label>
+    <select id="proprietaryCategorySelect"><option value="">Select category</option></select>
+  </div>
+  <div class="field">
+    <label>Food Category System — sub-category</label>
+    <select id="proprietarySubcategorySelect" disabled><option value="">Select sub-category</option></select>
+  </div>
+  <div class="field">
+    <label>Specific FCS, where available</label>
+    <select id="proprietarySpecificFcsSelect" disabled><option value="">Select specific FCS</option></select>
+    <small>Suggested from the confirmed standard/category; it remains editable where another category genuinely describes the finished food.</small>
+  </div>
+</div>
+
+<div class="flow-actions">
+  <button class="btn" type="button" id="evaluateProprietaryRoute">Determine regulatory route</button>
+  <button class="btn-secondary" type="button" id="clearProprietaryRoute">Clear route selection</button>
+</div>
+<div id="proprietaryRouteResult" class="notice hidden"></div>
+<div id="proprietaryAppendixA" class="hidden" style="margin-top:12px"></div>
+</div>
+
+<div id="proprietaryClauseGuide" class="card hidden">
+<div class="section-title"><h2>Proprietary Food evidence gates</h2><span>Applied only when the formulation routes to Chapter 2.12</span></div>
+<div class="grid2">
+  <div class="item"><b>Non-additive ingredients · 2.12.1(2)</b><small>An ingredient may be supported by an exact applicable FSSAI standardized/permitted basis or an exact ICMR-NIN IFCT 2017 food/ingredient identity. PMSV shows the supporting reference.</small></div>
+  <div class="item"><b>Food additives · 2.12.1(3)</b><small>Additives must be permitted for the applicable FCS category/sub-category under Appendix A and must comply with the applicable level and conditions.</small></div>
+  <div class="item"><b>Microbiology · 2.12.1(4)</b><small>Appendix B and the applicable food-category microbiological requirements remain separate compliance gates.</small></div>
+  <div class="item"><b>Other FSSAI requirements · 2.12.1(5)</b><small>Contaminants, processing aids, packaging, labelling, claims and every other applicable horizontal requirement still apply.</small></div>
+</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Route references</h2><span>Official sources only</span></div>
+<div class="grid2 source">
+  <div class="item"><b>FSSAI Chapter 2.12 — Proprietary Food</b><small><a target="_blank" rel="noopener" href="https://fssai.gov.in/upload/uploadfiles/files/13_%20Chapter%202_12%20%28Proprietary%20Food%29.pdf">Open official chapter</a></small></div>
+  <div class="item"><b>ICMR-NIN IFCT 2017</b><small><a target="_blank" rel="noopener" href="https://www.nin.res.in/ebooks/IFCT2017_16122024.pdf">Open official IFCT</a></small></div>
+  <div class="item"><b>FoSCoS standardized-product search</b><small><a target="_blank" rel="noopener" href="https://foscos.fssai.gov.in/standard-product">Open official product search</a></small></div>
+  <div class="item"><b>FSSAI Proprietary Food page</b><small><a target="_blank" rel="noopener" href="https://www.fssai.gov.in/standards/proprietary-food">Open official page</a></small></div>
 </div>
 </div>
 </section>
@@ -331,7 +262,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <div class="card">
 <div class="section-title"><h2>Important Proprietary Food distinction</h2><span>Regulation 2.12</span></div>
-<div class="notice"><b>Adding an extra ingredient does not automatically make the product Proprietary Food.</b> Regulation 2.12.1(1) covers food that has not been standardized, while a mere deviation in the quality parameters of a standardized food does not qualify it as proprietary. Regulation 2.12.1(2) restricts non-additive ingredients in proprietary foods to the permitted categories stated there. Product-specific additional-ingredient approval provisions, where they exist, are applied only to the exact product carrying that rule. <b>PMSV verifies regulatory conclusions only from official FSSAI sources and does not borrow another product’s permission.</b></div>
+<div class="notice"><b>Route follows the finished formulation.</b> If the formulation remains within the confirmed standardized product and its applicable permitted ingredients/additives, the standardized route remains applicable. An additional ingredient outside that standardized formulation routes the finished product to Proprietary Food, provided the ingredient itself has the required FSSAI/IFCT basis. A mere deviation only in a quality parameter of a standardized food is not treated as a Proprietary Food route. <b>PMSV does not borrow another product’s permission.</b></div>
 </div>
 </section>
 
@@ -1350,7 +1281,7 @@ if(isFreshPageNavigation()){
 }
 
 function openTab(id,{updateHash=true,save=true}={}){
-  if(typeof id!=='string' || !validTabs.has(id)) id='product';
+  if(typeof id!=='string' || !validTabs.has(id)) id='formulation';
 
   tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab===id));
   document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
@@ -1359,9 +1290,9 @@ function openTab(id,{updateHash=true,save=true}={}){
   if(view){
     view.classList.remove('hidden');
   }else{
-    id='product';
-    document.getElementById('product')?.classList.remove('hidden');
-    tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab==='product'));
+    id='formulation';
+    document.getElementById('formulation')?.classList.remove('hidden');
+    tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab==='formulation'));
   }
 
   if(id==='summary'){
@@ -1400,7 +1331,7 @@ try{
 }catch(e){}
 
 const hashTab=location.hash.slice(1);
-const initialTab=validTabs.has(hashTab) ? hashTab : (validTabs.has(savedTab) ? savedTab : 'product');
+const initialTab=validTabs.has(hashTab) ? hashTab : (validTabs.has(savedTab) ? savedTab : 'formulation');
 openTab(initialTab,{updateHash:true,save:true});
 function num(id){const v=document.getElementById(id).value.trim();return v===''?null:Number(v)}
 function row(label,value,pass,msg){
@@ -2380,6 +2311,14 @@ function qualifyIngredient(item){
    return {name:item.name,kind:'additive',status:'qualified',qualification:'Food additive matched to the loaded Appendix A permission set for '+productName+'.',clause,route:'standard',impact:'Does not by itself change the product route when used within the applicable Appendix A level, condition and product standard.',appendix:additive};
  }
  switch(item.basis){
+  case 'ifct': {
+   const ifct=exactIfctIngredientProfile(item.name);
+   return {name:item.name,kind:'extra',status:ifct?'review':'unresolved',
+     qualification:ifct?'Exact ICMR-NIN IFCT 2017 food/ingredient identity found. If this ingredient is outside the confirmed standardized formulation, it can support the Proprietary Food ingredient gate under Regulation 2.12.1(2).':'No exact IFCT identity is currently loaded.',
+     clause:ifct?('FSSAI 2.12.1(2) · IFCT 2017'+(ifct.ifct_code?' · '+ifct.ifct_code:'')):'Exact FSSAI / IFCT basis required',
+     route:ifct?'proprietary':'unresolved',
+     impact:ifct?'Route after confirming the nearest standard/category.':'Do not conclude eligibility until an exact basis is established.'};
+  }
   case 'standardized':
    return {name:item.name,kind:'extra',status:'review',qualification:'This ingredient is not matched to an exact loaded ingredient permission for '+productName+'. A user-entered or general FSSAI basis is not treated as product-specific permission until the exact clause is verified.',clause:'Product-specific FSSAI permission required'+(item.clause?' · user-entered reference: '+item.clause:''),route:'proprietary',impact:caffeinated?'If the product remains Caffeinated Beverage, clause 2.10.6(2)(III)(A) requires Food Authority approval for an additional ingredient outside the specified list. Otherwise assess whether the finished food remains standardized before considering Chapter 2.12.':'Do not automatically call the product Proprietary Food. First determine whether the finished food still complies with its standardized product definition; Chapter 2.12 applies only where the finished food is genuinely not standardized.'};
   case 'botanical':
@@ -3198,7 +3137,8 @@ function addIngredient(){
  const input=document.getElementById('ingredientName');
  const name=String(input?.value||'').trim();
  const known=findKnownIngredient(name) || findAppendixAdditive(name);
- const basis=known?'auto':(document.getElementById('ingredientBasis')?.value||'');
+ const ifct=exactIfctIngredientProfile(name);
+ const basis=known?'auto':ifct?'ifct':'unknown';
  const clause=String(document.getElementById('ingredientClause')?.value||'').trim();
  const msg=document.getElementById('ingredientInputMessage');
  const qty=Number(document.getElementById('ingredientQty')?.value);
@@ -3212,12 +3152,6 @@ function addIngredient(){
    if(msg){msg.textContent='Enter the ingredient quantity before adding it.';msg.classList.remove('hidden')}
    return;
  }
- if(!known && !basis){
-   if(msg){msg.textContent='This ingredient is not recognized in the loaded regulatory data. Answer Question 2 before adding it.';msg.classList.remove('hidden')}
-   document.getElementById('ingredientBasisField')?.classList.remove('hidden');
-   return;
- }
-
  const duplicateIndex=formulationIngredients.findIndex((x,i)=>i!==editingIngredientIndex && normIngredient(x.name)===normIngredient(name));
  const updatedItem={name,basis:known?'auto':basis,clause,qty,unit};
 
@@ -3437,7 +3371,7 @@ document.getElementById('clearIngredients')?.addEventListener('click',()=>{
  formulationIngredients=[];
  saveFormula();
 });
-document.getElementById('goToStandards')?.addEventListener('click',()=>{openTab('standards',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
+document.getElementById('goToRouteAssessment')?.addEventListener('click',()=>{document.getElementById('formulationRouteCard')?.scrollIntoView({behavior:'smooth',block:'start'})});
 document.getElementById('backToFormulation')?.addEventListener('click',()=>{openTab('formulation',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
 document.getElementById('goToContaminants')?.addEventListener('click',()=>{openTab('contaminants',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
 document.getElementById('backToStandards')?.addEventListener('click',()=>{openTab('standards',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
@@ -4696,7 +4630,19 @@ function confirmProprietaryStandard(){
    return;
  }
  proprietaryConfirmedStandardId=p.id;
+ const profile=profileForCatalogProduct(p);
+ selectedProductId=profile?.id||p.profile_id||p.id;
+ try{sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId)}catch(e){}
  applyProprietaryStandardFcs(p);
+ applyProductGate();
+ renderFormula();
+ renderProcessingQualifierUI();
+ renderProductContaminants();
+ renderProductMicrobiology();
+ renderLabelRequirements();
+ renderClaims();
+ renderPackaging();
+ renderFortification();
  if(note){
    const fpc=fpc18CategoryForProduct(p);
    note.className='notice oknote';
@@ -5533,8 +5479,8 @@ function openProprietaryRoute(){
  renderProprietaryStandardSuggestion();
  resetProprietaryOutcome();
  renderProprietaryFormula();
- openTab('proprietary',{updateHash:true,save:true});
- window.scrollTo({top:0,behavior:'smooth'});
+ openTab('formulation',{updateHash:true,save:true});
+ document.getElementById('formulationRouteCard')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
 function bindProprietaryButtons(root){
  (root||document).querySelectorAll('[data-start-proprietary]').forEach(btn=>{
@@ -5593,7 +5539,7 @@ document.getElementById('clearProprietaryRoute')?.addEventListener('click',()=>{
  renderProprietaryFormula();
 });
 document.addEventListener('click',event=>{
- if(!event.target.closest('#proprietary .autocomplete-wrap'))document.getElementById('proprietaryIngredientAutocomplete')?.classList.add('hidden');
+ if(!event.target.closest('#formulation .autocomplete-wrap'))document.getElementById('ingredientAutocomplete')?.classList.add('hidden');
 });
 
 function chapterRuleDisplayRows(standard){
@@ -5778,35 +5724,21 @@ function applyProductGate(){
  const add=document.getElementById('addIngredient');
  const load=document.getElementById('loadExampleFormula');
  const profile=currentProductProfile();
- const detailed=profile&&profile.status==='rule_profile_ready';
- const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
- const chapterReviewReady=!!profile&&chapterLoaded&&currentGuardedFormulationStandards().length>0&&profile.chapter_rule_route_status!=='specific_variant_table_pending';
+ const product=selectedProductForFortification();
+ if(add)add.disabled=false;
  if(load){
-   const exampleAllowed=!!profile&&detailed&&caffeinatedPrototypeScopeActive();
+   const exampleAllowed=!!profile&&caffeinatedPrototypeScopeActive();
    load.disabled=!exampleAllowed;
    load.classList.toggle('hidden',!exampleAllowed);
  }
- if(profile){
-   if(gate){
-     gate.className=detailed?'notice oknote':'notice';
-     const appendixFcs=appendixFcsForRecord(profile);
-     gate.innerHTML='<b>Selected product:</b> '+esc(profile.display_name)+' · Appendix A FCS '+esc(appendixFcs||'not mapped')+' · FSSR '+esc(profile.fssr||'—')+'.<br>'
-       +(!appendixFcs?'<span class="status-warn">'+esc(appendixFcsStatusLabel(profile)||'Appendix A FCS mapping is not available; additive inheritance must remain locked.')+'</span><br>':'')
-       +(detailed
-         ?'<b>Detailed rule profile complete.</b> Formulation compliance checks are enabled for this product.'
-         :chapterReviewReady?'<b>Guarded chapter-profile review enabled.</b> The exact structured rule '+esc([...currentChapterRuleKeys()].join(', '))+' is loaded. Ingredient entry is enabled, but this product is <b>not</b> promoted to fully validated status; missing/conditional rules and cross-layer gaps remain fail-closed.'
-         :chapterLoaded?'<b>FSSAI chapter profile loaded.</b> The product is mapped to '+esc(profile.fssr||profile.rule_key||'its applicable standard')+' and structured chapter rules are present. '+(profile.chapter_rule_route_status==='specific_variant_table_pending'?'<b>Its product-specific variant table is still pending and remains locked.</b> ':'')+'Formulation editing stays locked because no exact safely usable chapter rule is available yet.':'<b>Base rule profile loaded.</b> General regulatory layers and the official product mapping are available, but product-specific composition/ingredient clauses are not complete yet. Formulation editing is locked so PMSV does not apply another product\'s rules by mistake.');
-     gate.classList.remove('hidden');
-   }
-   if(add)add.disabled=!(detailed||chapterReviewReady);
- }else{
-   if(gate){
-     gate.className='notice';
-     gate.innerHTML='<b>Select a product first.</b> Return to Product selection.';
-     gate.classList.remove('hidden');
-   }
-   if(add)add.disabled=true;
-   if(load){load.disabled=true;load.classList.add('hidden');}
+ if(gate){
+   gate.className=profile?'notice oknote':'notice';
+   gate.innerHTML=profile
+     ? '<b>Confirmed routing reference:</b> '+esc(product?.name||profile.display_name||profile.name||'Selected product')
+       +(profile.fssr?' · FSSR '+esc(profile.fssr):'')
+       +'.<br><small>You may continue editing the same formulation; re-run the route decision after any formulation change.</small>'
+     : '<b>Formulation-first mode.</b> Enter the complete formulation below. Product selection is intentionally not required before ingredient entry; PMSV will determine the nearest standard/category from this same screen.';
+   gate.classList.remove('hidden');
  }
 }
 function productProfileRuleKeys(profile){
@@ -7683,6 +7615,10 @@ async function loadNutritionDb(){
 
 function currentIngredientCatalog(){
  const rows=[...(ingredientCatalog||[]),...currentChapterIngredientCatalog()];
+ (nutritionDb?.profiles||[]).filter(p=>p?.active_for_calculation===true&&p?.source_authority==='ICMR-NIN').forEach(p=>{
+   const name=String(p.display_name||p.names?.[0]||'').trim();
+   if(name)rows.push({name,label:name,source:'ICMR-NIN IFCT 2017'+(p.ifct_code?' · '+p.ifct_code:'')});
+ });
  const seen=new Set();
  return rows.filter(x=>{
    const k=normIngredient(x.name);
