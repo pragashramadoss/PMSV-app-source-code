@@ -806,7 +806,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   <div class="field">
     <label>Process yield</label>
     <div id="nutritionYieldDisplay" class="recognized">100.00%</div>
-    <small>Input formulation mass ÷ finished product mass is used to express nutrients on the finished-product basis.</small>
+    <small>Finished product mass ÷ input formulation mass is the process yield; nutrient concentrations are expressed on the actual finished-product basis.</small>
   </div>
   <div class="field">
     <label>Serving size (ml)</label>
@@ -2820,8 +2820,9 @@ function calculateNutrition(){
    polyols_g:specials.polyols_g*scale,
    erythritol_g:specials.erythritol_g*scale
  };
- per100g.energy_kcal=fssaiEnergyFromPanel(per100g,extras);
- coverageByField.energy_kcal=['carbohydrate_g','protein_g','total_fat_g'].every(k=>coverageByField[k]>=99.999999)?100:0;
+ const energyInputsComplete=['carbohydrate_g','protein_g','total_fat_g'].every(k=>coverageByField[k]>=99.999999)&&organic.coverage>=99.999999;
+ per100g.energy_kcal=energyInputsComplete?fssaiEnergyFromPanel(per100g,extras):null;
+ coverageByField.energy_kcal=energyInputsComplete?100:Math.min(organic.coverage,...['carbohydrate_g','protein_g','total_fat_g'].map(k=>coverageByField[k]||0));
  const density=formulaDensity();
  const per100ml={},perServe={};
  const serveFactor=nutritionServingMl()/100;
@@ -3004,7 +3005,7 @@ function renderNutrition(){
  if(status){
    if(calc.complete){
      status.className='notice oknote';
-     status.innerHTML='<b>Nutrition calculation COMPLETE for the currently loaded ICMR-NIN profiles.</b><br>100% of the formulation mass is matched to a verified local nutrition profile. Finished-product yield: <b>'+fmt(calc.yieldPct,2)+'%</b>. Energy is derived with FSSAI conversion factors; IFCT energy is not directly summed.';
+     status.innerHTML='<b>Nutrition calculation COMPLETE for the currently loaded ICMR-NIN profiles.</b><br>100% of the formulation mass is matched to a verified local nutrition profile. Finished-product yield: <b>'+fmt(calc.yieldPct,2)+'%</b>. Energy is derived with FSSAI conversion factors; IFCT energy is not directly summed. Organic-acid contribution is included only with complete IFCT Table 9 evidence.';
    }else{
      status.className='notice';
      const unmatchedText=calc.unmatched.length?'<br>Unmatched ingredient(s): <b>'+calc.unmatched.map(x=>esc(x.item.name)).join(', ')+'</b>.':'';
