@@ -5033,7 +5033,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
  const alternatives=allStandardIngredientPermissions(name);
  const standardizedIngredient=exactStandardizedIngredientProduct(name);
  const foscosIdentity=exactFoscosIngredientIdentity(name);
- const hasSeparateFssaiBasis=alternatives.length>0||!!standardizedIngredient||!!foscosIdentity;
+ const hasSeparateFssaiBasis=alternatives.length>0||!!standardizedIngredient;
 
  if(fpc){
    if(activeAdditive){
@@ -5163,12 +5163,10 @@ function proprietaryAlternativeHtml(r){
      +(r.standardizedIngredient.fssr?' · <span class="clause">'+esc(r.standardizedIngredient.fssr)+'</span>':'')
      +'<br><small>This is an ingredient/food standard. It does not by itself override the selected product/FCS permission check.</small>');
  }
- if(r.foscosIdentity&&!r.standardizedIngredient){
-   const fssr=String(r.foscosIdentity.fssr||'').trim();
-   bits.push('<b>Separate FoSCoS ingredient identity:</b> '+esc(r.foscosIdentity.name)
-     +(fssr?' · <span class="clause">'+esc(fssr)+'</span>':' · <b>FSSR standard: N.A.</b>')
-     +(r.foscosIdentity.fcs?' · FCS '+esc(r.foscosIdentity.fcs):'')
-     +'<br><small>This official FoSCoS identity supports the ingredient-basis review under Chapter 2.12. Where FSSR is N.A., PMSV does not invent a standard number and does not treat the identity itself as a product-specific use permission.</small>');
+ if(r.foscosIdentity&&!r.standardizedIngredient&&hasRealFssrStandard(r.foscosIdentity)){
+   bits.push('<b>Separate standardized-food basis:</b> '+esc(r.foscosIdentity.name)
+     +' · <span class="clause">'+esc(r.foscosIdentity.fssr)+'</span>'
+     +(r.foscosIdentity.fcs?' · FCS '+esc(r.foscosIdentity.fcs):''));
  }
  if(r.alternatives?.length){
    bits.push('<b>Explicit use / food-standard bases found elsewhere:</b><br>'
@@ -5366,7 +5364,7 @@ function evaluateProprietaryRoute(){
      +(standardProduct.fssr?' · <span class="clause">'+esc(standardProduct.fssr)+'</span>':'')
      +cards
      +'<br><b>Remaining blocker:</b> '+(hardFail?'At least one quantitative FSSAI condition fails. ':proprietaryPending?'At least one quantity-dependent FSSAI check is incomplete. ':'')
-     +(unresolved.length?'At least one other ingredient still has no standardized/permitted FSSAI basis identified for clause 2.12.1(2). ':'')
+     +(unresolved.length?'At least one other ingredient still has no standardized/permitted FSSAI basis identified for clause 2.12.1(2). A FoSCoS identity with FSSR N.A. is shown as evidence but is not counted as permission. ':'')
      +'The Proprietary trigger itself is not cancelled; resolve only the remaining blocker(s).';
    if(guide)guide.classList.remove('hidden');
    return;
