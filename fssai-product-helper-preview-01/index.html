@@ -558,8 +558,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <section id="contaminants" class="view hidden">
 <div style="margin-bottom:10px"><button class="btn-secondary" type="button" id="backToStandards">← Back to Applicable Standards</button></div>
-<div class="card">
-<div class="section-title"><h2>Ingredients considered in this contaminant review</h2><span>From your formulation</span></div>
+<div class="card" id="contaminantIngredientCard">
+<div class="section-title"><h2>Ingredient-triggered contaminant review</h2><span>Shown only when a formulation is entered</span></div>
 <div id="contaminantIngredientChips" class="process-summary"></div>
 <div id="ingredientTriggeredContaminants"></div>
 </div>
@@ -2621,11 +2621,11 @@ function renderLabelRequirements(){
  if(servingHelp)servingHelp.textContent=isCaffeinated?'Used to calculate the verified “High Caffeine: X mg/serving size” declaration for Caffeinated Beverage.':'Used for applicable per-serving label calculations. No product-specific serving calculation is enabled for the current selection.';
 
  const total=totalFormulaKg();
- if(mass)mass.innerHTML=total>0?'<b>'+fmt(total,6)+' kg</b>':'Enter formulation ingredients first.';
+ if(mass)mass.innerHTML=total>0?'<b>'+fmt(total,6)+' kg</b>':(selectedName?'<b>Standard lookup mode.</b> Product-level labelling requirements are available; formulation-triggered declarations are not evaluated.':'Enter formulation ingredients first.');
 
  if(preview){
    if(!formulationIngredients.length){
-     preview.innerHTML='<b>Ingredient list preview:</b> Enter formulation ingredients first.';
+     preview.innerHTML=selectedName?'<b>Ingredient list preview:</b> Not evaluated in Standard Lookup mode. Product-level labelling requirements remain available above.':'<b>Ingredient list preview:</b> Enter formulation ingredients first.';
    }else{
      const ordered=[...formulationIngredients].sort((a,b)=>qtyToKg(b.qty,b.unit)-qtyToKg(a.qty,a.unit));
      preview.innerHTML='<b>Ingredient list order:</b> '+ordered.map(x=>esc(x.name)).join(', ')+'.<br><small>This is the quantity-based order only. Compound-ingredient, additive functional-class/INS and quantitative-ingredient-declaration rules still need to be applied where relevant.</small>';
@@ -3246,7 +3246,7 @@ function renderFormula(){
    const chk=checkUsageAgainstRule(x,q);
    const usage='<b>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+'</b><br><small>'+fmt(u.percent,4)+'% w/w · '+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small>'+(chk?'<br><small class="'+(chk.pass===false?'status-bad':chk.pass===true?'status-good':'status-warn')+'"><b>Quantity:</b> '+(chk.pass===false?'Above FSSAI limit':chk.pass===true?'Within FSSAI limit':chk.specialBasis&&!(chk.basisKg>0)?'Cannot determine — no fat/oil ingredient entered':chk.specialBasis?'Fat/oil basis check required':'Quantity check required')+(chk.specialBasis&&chk.basisKg>0?'<br>'+fmt(chk.value,3)+' mg/kg fat/oil · limit '+fmt(chk.limit,3)+' mg/kg':'')+'</small>':'<br><small><b>Quantity:</b> No specific numerical maximum in loaded standard</small>');
    return '<tr><td><b>'+esc(q.name)+'</b></td><td>'+usage+'</td><td>'+esc(q.qualification)+(q.appendix?'<br><small>Appendix A limit: <b>'+esc(q.appendix.limit)+'</b></small>':'')+'</td><td><span class="clause">'+esc(q.clause)+'</span></td><td>'+esc(q.impact)+'</td></tr>';
- }).join('') || '<tr><td colspan="5">'+(selectedProduct||selectedProfile?'No formulation entered — product-level standards remain available below.':'Enter formulation ingredients first.')+'</td></tr>';
+ }).join('') || '<tr><td colspan="5">'+(selectedProduct||selectedProfile?'No formulation entered — product-level standards remain available below.':(selectedName?'<b>Standard lookup mode.</b> Product-level labelling requirements are available; formulation-triggered declarations are not evaluated.':'Enter formulation ingredients first.'))+'</td></tr>';
 
  const hasUnresolved=qs.some(q=>q.route==='unresolved');
  const hasProp=qs.some(q=>q.route==='proprietary');
@@ -4688,6 +4688,9 @@ function confirmProprietaryStandard(){
  renderProprietaryFormula();
  resetProprietaryOutcome();
  renderStandardLookupDashboard();
+ if(!formulationIngredients.length){
+   setTimeout(()=>document.getElementById('standardLookupPanel')?.scrollIntoView({behavior:'smooth',block:'start'}),0);
+ }
 }
 function fpc18IngredientMatch(rule,name){
  const n=normIngredient(name);
@@ -5385,7 +5388,7 @@ function evaluateProprietaryRoute(){
  }
  if(!ingredients.length){
    out.className='notice oknote';
-   out.innerHTML='<b>Standard lookup mode — '+esc(standardProduct.name)+'.</b><br>No formulation has been entered, so PMSV is not performing a Standardized-vs-Proprietary formulation decision. You can still inspect the complete product-level standard and regulatory stack.'
+   out.innerHTML='<b>STANDARD LOOKUP — '+esc(standardProduct.name)+'.</b><br><b>No ingredient entry is required to view this standardized product.</b> PMSV is not performing a formulation-route decision; it is showing the product-level FSSAI standard and all currently mapped regulatory layers.'
      +'<div class="flow-actions"><button class="btn" type="button" data-regulatory-route-target="standard">View product standard →</button><button class="btn-secondary" type="button" data-regulatory-route-target="ingredients">View Appendix A / ingredient permissions →</button><button class="btn-secondary" type="button" data-regulatory-route-target="contaminants">View contaminants →</button></div>';
    renderProprietaryAppendixA();
    return;
@@ -6573,8 +6576,36 @@ function chapter26ContaminantGateNotices(p){
  return html;
 }
 
+
+function exactPesticideMrlRowsForProduct(p){
+ if(!p||!contaminantsDb)return [];
+ const target=normIngredient(p.name||'');
+ if(!target)return [];
+ const out=[];
+ (contaminantsDb?.residue_mrls?.pesticides||[]).forEach(pest=>{
+   (pest.rows||[]).forEach(row=>{
+     if(normIngredient(row?.food||'')!==target)return;
+     out.push({
+       pesticide:String(pest.name||pest.pesticide||pest.common_name||pest.id||'Pesticide'),
+       food:String(row.food||''),
+       mrl:String(row.mrl??row.limit??''),
+       unit:String(row.unit||'mg/kg'),
+       condition:String(row.condition||''),
+       source:String(row.source_basis||contaminantsDb?.residue_mrls?.source||'FSSAI Contaminants, Toxins and Residues Regulations · pesticide MRL table')
+     });
+   });
+ });
+ const seen=new Set();
+ return out.filter(x=>{
+   const key=[x.pesticide,x.food,x.mrl,x.unit,x.condition].join('|');
+   if(seen.has(key))return false;
+   seen.add(key);return true;
+ });
+}
 function renderProductContaminants(){
  const el=document.getElementById('productContaminantResults');
+ const ingredientCard=document.getElementById('contaminantIngredientCard');
+ if(ingredientCard)ingredientCard.classList.toggle('hidden',formulationIngredients.length===0);
  if(!el)return;
  if(!contaminantsDb){
    el.innerHTML='<div class="notice">Current FSSAI contaminant master is loading or unavailable. PMSV will not substitute fallback limits.</div>';
@@ -6600,14 +6631,17 @@ function renderProductContaminants(){
  const metalSubtypeRule=selectedMetalSubtypeRule(p);
  const sugarAshLeadRule=selectedSulphatedAshLeadRule(p);
  const rules=[...exact,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
+ const pesticideMrls=exactPesticideMrlRowsForProduct(p);
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
+ const pesticideRows=pesticideMrls.map(x=>'<tr><td><b>'+esc(x.pesticide)+'</b></td><td><b>'+esc(x.mrl)+' '+esc(x.unit)+'</b></td><td>'+esc(x.food)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source)+'</td></tr>').join('');
  const profileMsg=profile
   ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+exact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
-  : '<div class="notice"><b>No exact contaminant profile is loaded yet for '+esc(p.name)+'.</b> PMSV shows only explicit “all foods” rules. It does not apply a “Foods not specified” fallback by assumption.</div>';
+  : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
    +chapter26ContaminantGateNotices(p)
-   +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="empty-state">No auto-applicable contaminant rule is loaded for this product yet.</div>')
-   +'<div class="countline">'+rules.length+' current Version IX rule'+(rules.length===1?'':'s')+' shown after exact product/input gates · “Foods not specified” and generic canned-food fallbacks are disabled.</div>';
+   +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant / toxin</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="notice">No exact metal/toxin row is auto-applicable for this product under the current stored product gates.</div>')
+   +(pesticideRows?'<div class="card" style="margin-top:12px;background:#fafcff"><div class="section-title"><h3 style="margin:0">Pesticide residue MRLs — '+esc(p.name)+'</h3><span>Exact commodity match · no formulation required</span></div><div class="notice oknote"><b>'+pesticideMrls.length+' exact commodity MRL row'+(pesticideMrls.length===1?'':'s')+' found.</b> These are taken from the stored current FSSAI pesticide-residue table because the commodity name exactly matches the selected standardized product. Similar commodity names are not borrowed.</div><div class="tablewrap"><table><thead><tr><th>Pesticide</th><th>MRL</th><th>Commodity / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+pesticideRows+'</tbody></table></div></div>':'<div class="notice"><b>Pesticide residues:</b> no exact commodity-name MRL rows are stored for '+esc(p.name)+'. PMSV will not infer a commodity mapping.</div>')
+   +'<div class="countline">'+rules.length+' metal/toxin/all-food rule'+(rules.length===1?'':'s')+' + '+pesticideMrls.length+' exact pesticide MRL row'+(pesticideMrls.length===1?'':'s')+' shown · “Foods not specified” and generic canned-food fallbacks remain disabled.</div>';
 }
 async function loadContaminantsDb(){
  try{
