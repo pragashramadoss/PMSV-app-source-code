@@ -109,8 +109,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="formulationProductGate" class="notice"></div>
 
 <div class="card">
-<div class="section-title"><h2>Step 1 — Build the actual formulation</h2><span>Single ingredient entry for every route</span></div>
-<div class="notice oknote"><b>Start with the formulation, not the regulatory route.</b> Enter every ingredient once with its actual quantity. PMSV keeps this single formulation and then checks whether it fits an FSSAI standardized product or must be assessed as Proprietary Food.</div>
+<div class="section-title"><h2>Step 1 — Formulation</h2><span>Optional for Standard Lookup · required for formulation assessment</span></div>
+<div class="notice oknote"><b>Two ways to use this page.</b> To assess a formulation, enter every ingredient once with its actual quantity and PMSV will route it to Standardized Product or Proprietary Food. To inspect an existing FSSAI standardized product only, you may <b>leave the formulation blank</b> and go directly to Step 2 below.</div>
 <div id="regDbStatus" class="notice"><b>Regulatory database:</b> loading local PMSV FSSAI data…</div>
 
 <div class="field">
@@ -918,7 +918,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   </div>
   <div class="field">
     <label>Current formulation quantity</label>
-    <div id="labelFormulaMass" class="recognized">Enter formulation ingredients first.</div>
+    <div id="labelFormulaMass" class="recognized">Formulation not entered — product-level label rules can still be viewed.</div>
     <small>Ingredient order below follows quantity used at manufacture.</small>
   </div>
 </div>
@@ -5669,11 +5669,12 @@ function renderLegacyProductScopePages(){
      const linked=Array.isArray(profile.linked_rule_keys)?profile.linked_rule_keys:[];
      const ready=status==='rule_profile_ready';
      const chapter=status==='chapter_profile_ready';
+     const productOverlays=standards.filter(x=>Array.isArray(x.standard?.applies_to_product_names)&&x.standard.applies_to_product_names.some(v=>normIngredient(v)===normIngredient(name)));
      let html='<div class="card"><div class="section-title"><h2>'+esc(name)+'</h2><span>Selected FSSAI product profile</span></div>'
        +'<div class="grid2"><div class="item"><b>FSSAI standard / route</b><small>'+esc(fssr)+'</small></div>'
        +'<div class="item"><b>Appendix A FCS</b><small>'+(fcs?esc(fcs):'<span class="status-warn">No safe FCS mapping loaded</span>')+'</small></div>'
        +'<div class="item"><b>Machine-validation status</b><small>'+(ready?'<span class="status-good">Detailed rule profile complete</span>':chapter?'<span class="status-warn">Chapter profile loaded; detailed formulation validation still locked</span>':'<span class="status-warn">Base profile only; detailed formulation validation locked</span>')+'</small></div>'
-       +'<div class="item"><b>Linked structured rule keys</b><small>'+(linked.length?linked.map(esc).join('<br>'):'No linked rule key shown in the loaded profile.')+'</small></div></div>'
+       +'<div class="item"><b>Linked structured rule keys</b><small>'+(linked.length?linked.map(esc).join('<br>'):'No linked rule key shown in the loaded profile.')+(productOverlays.length?'<br><span class="status-good">Exact product overlay: '+productOverlays.map(x=>esc(x.standard.key)).join(', ')+'</span>':'')+'</small></div></div>'
        +(profile.chapter_rule_route_note?'<div class="notice"><b>Routing note:</b> '+esc(profile.chapter_rule_route_note)+'</div>':'')
        +'<div class="notice"><b>Scope protection:</b> PMSV shows only chapter rules whose exact rule key is linked to this selected product. It does not borrow a similar product standard.</div></div>';
      if(standards.length){
@@ -5725,7 +5726,7 @@ function renderLegacyProductScopePages(){
                +'</tbody></table></div>'
                +'<div class="notice"><small>Enter the result on the same basis/unit stated by the FSSAI requirement. PMSV auto-evaluates only simple numeric and range operators; qualitative, ratio and conditional rules remain manual/fail-closed.</small></div>';
            }
-         }else{
+         }else if(!(Array.isArray(standard.variants)&&standard.variants.length&&Array.isArray(standard.variant_requirements)&&standard.variant_requirements.length)){
            html+='<div class="notice"><b>No machine-readable numerical composition row is loaded for this exact standard.</b> The product mapping remains available, but PMSV will not invent missing limits.</div>';
          }
          const nutrientRows=Array.isArray(standard.nutrient_requirements)?standard.nutrient_requirements:[];
@@ -6717,7 +6718,9 @@ function renderProductContaminants(){
    : '';
  const profileMsg=profile
   ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+exact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
-  : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
+  : baseline.length
+    ? '<div class="notice oknote"><b>Product-level FSSAI contaminant baseline:</b> '+baseline.length+' directly applicable general article'+(baseline.length===1?'':'s')+' resolved for '+esc(p.name)+'. Exact commodity pesticide-residue MRLs are shown separately below.</div>'
+    : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
    +chapter26ContaminantGateNotices(p)
    +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant / toxin</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="notice">No exact metal/toxin row is auto-applicable for this product under the current stored product gates.</div>')
