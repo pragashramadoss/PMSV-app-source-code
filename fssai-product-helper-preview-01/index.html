@@ -2183,10 +2183,20 @@ function ruleDbAllowsGuardedFormulation(db){
 }
 function currentChapterStandards(){
  const keys=currentChapterRuleKeys();
- if(!keys.size||!Array.isArray(chapterRuleDbs))return [];
+ if(!Array.isArray(chapterRuleDbs))return [];
+ const productName=normIngredient(currentSelectedProductName());
  const out=[];
+ const seen=new Set();
  chapterRuleDbs.forEach(db=>ruleDbStandards(db).forEach(st=>{
-   if(keys.has(String(st?.key||'').trim()))out.push({db,standard:st});
+   const key=String(st?.key||'').trim();
+   const keyMatch=keys.has(key);
+   const exactProductOverlay=productName&&Array.isArray(st?.applies_to_product_names)
+     &&st.applies_to_product_names.some(name=>normIngredient(name)===productName);
+   if(!keyMatch&&!exactProductOverlay)return;
+   const id=(db?.database_id||db?.chapter||'db')+'|'+key;
+   if(seen.has(id))return;
+   seen.add(id);
+   out.push({db,standard:st});
  }));
  return out;
 }
@@ -2898,8 +2908,9 @@ function renderIfctTable2Micronutrients(){
  const status=document.getElementById('nutritionMicronutrientStatus');
  if(!body&&!status)return;
  if(!nutritionDb||!formulationIngredients.length){
-   if(body)body.innerHTML='<tr><td colspan="4">Enter formulation ingredients first.</td></tr>';
-   if(status)status.innerHTML='<b>No micronutrient calculation yet.</b> Enter formulation ingredients first.';
+   const lookup=!!(selectedProductForFortification()||currentProductProfile());
+   if(body)body.innerHTML='<tr><td colspan="4">'+(lookup?'Not evaluated in Standard Lookup mode — micronutrient calculation requires a formulation.':'Enter formulation ingredients first.')+'</td></tr>';
+   if(status)status.innerHTML=lookup?'<b>Standard Lookup mode.</b> Micronutrient calculation is formulation-dependent and is not required to view the selected product standard.':'<b>No micronutrient calculation yet.</b> Enter formulation ingredients first.';
    return;
  }
  const calc=calculateIfctTable2Micronutrients();
@@ -2942,7 +2953,7 @@ function renderAdditionalIfctComposition(){
  const ingredients=formulationIngredients.map(item=>({profile:nutritionProfileFor(item.name),grams:qtyToKg(item.qty,item.unit)*1000}));
  const hasMass=ingredients.some(item=>item.grams>0);
  status.className='notice'+(hasMass?' oknote':'');
- status.textContent=hasMass?'Official IFCT composition is shown below. Fields with incomplete mass coverage remain unavailable.':'Nine official IFCT tables are loaded. Enter formulation ingredients to view their composition.';
+ status.textContent=hasMass?'Official IFCT composition is shown below. Fields with incomplete mass coverage remain unavailable.':((selectedProductForFortification()||currentProductProfile())?'Standard Lookup mode: IFCT composition calculation is formulation-dependent and is not evaluated here.':'Nine official IFCT tables are loaded. Enter formulation ingredients to view their composition.');
  if(!hasMass)return;
  const tables=nutritionDb.modular_ifct.tables;
  const density=formulaDensity();
@@ -2994,9 +3005,10 @@ function renderNutrition(){
  }
 
  if(!formulationIngredients.length){
-   if(status)status.innerHTML='<b>No formulation entered.</b> Enter ingredients and quantities first.';
-   if(rows)rows.innerHTML='<tr><td colspan="4">Enter formulation ingredients first.</td></tr>';
-   if(coverage)coverage.innerHTML='<tr><td colspan="4">Enter formulation ingredients first.</td></tr>';
+   const lookup=!!(selectedProductForFortification()||currentProductProfile());
+   if(status)status.innerHTML=lookup?'<b>Standard Lookup mode.</b> Nutrition is formulation-dependent and is not required to inspect the standardized product and its regulatory requirements.':'<b>No formulation entered.</b> Enter ingredients and quantities first.';
+   if(rows)rows.innerHTML='<tr><td colspan="4">'+(lookup?'Not evaluated in Standard Lookup mode.':'Enter formulation ingredients first.')+'</td></tr>';
+   if(coverage)coverage.innerHTML='<tr><td colspan="4">'+(lookup?'No formulation-source coverage is required for Standard Lookup.':'Enter formulation ingredients first.')+'</td></tr>';
    return;
  }
 
@@ -5669,6 +5681,18 @@ function renderLegacyProductScopePages(){
          const rows=chapterRuleDisplayRows(standard);
          html+='<div class="card"><div class="section-title"><h2>'+esc(standard.name||name)+'</h2><span>'+esc(ruleDbLabel(db)+' · '+(standard.key||''))+'</span></div>';
          if(standard.definition||standard.definition_summary)html+='<div class="notice oknote"><b>Definition:</b> '+esc(standard.definition||standard.definition_summary)+'</div>';
+         if(Array.isArray(standard.variants)&&standard.variants.length&&Array.isArray(standard.variant_requirements)&&standard.variant_requirements.length){
+           const variants=standard.variants;
+           html+='<h3 style="margin:16px 0 9px">Product-specific variant limits</h3>'
+             +'<div class="notice oknote"><b>'+esc(standard.name||name)+' has '+variants.length+' regulated variant'+(variants.length===1?'':'s')+'.</b> Standard Lookup shows all columns; a formulation/compliance assessment must use the actual finished-product variant.</div>'
+             +'<div class="tablewrap"><table><thead><tr><th>Requirement</th>'+variants.map(v=>'<th>'+esc(v)+'</th>').join('')+'</tr></thead><tbody>'
+             +standard.variant_requirements.map(r=>'<tr><td><b>'+esc(r.parameter||'Requirement')+'</b>'+(r.condition?'<br><small>'+esc(r.condition)+(r.unit?' · '+esc(r.unit):'')+'</small>':'')+'</td>'
+               +variants.map(v=>'<td><b>'+esc(String(r.values?.[v]??'—'))+'</b>'+(r.unit?'<br><small>'+esc(r.unit)+'</small>':'')+'</td>').join('')+'</tr>').join('')
+             +'</tbody></table></div>';
+           if(Array.isArray(standard.regulatory_notes)&&standard.regulatory_notes.length){
+             html+='<div class="notice"><b>Regulatory notes:</b><br>'+standard.regulatory_notes.map(x=>'• '+esc(x)).join('<br>')+'</div>';
+           }
+         }
          if(!ruleDbAllowsGuardedFormulation(db)&&db?.final_compliance_lock)html+='<div class="notice"><b>Formulation lock for this rule family:</b> '+esc(db.final_compliance_lock)+'</div>';
          if(rows.length){
            html+='<div class="tablewrap"><table><thead><tr><th>Section</th><th>Parameter / rule</th><th>Requirement</th></tr></thead><tbody>'
@@ -5757,7 +5781,7 @@ function renderLegacyProductScopePages(){
        html+='<div class="card"><div class="notice"><b>No exact chapter ingredient structure matched this product rule key.</b> Appendix A checks remain product/FCS-scoped, but product-standard ingredient permission stays fail-closed.</div></div>';
      }
      html+=productAppendixABaselineHtml(fcs);
-     html+='<div class="card"><div class="flow-actions"><button class="btn-secondary" type="button" id="openScopedFormulation">Open formulation →</button></div></div>';
+     html+='<div class="card"><div class="flow-actions"><button class="btn-secondary" type="button" id="openScopedFormulation">Optional: assess a formulation →</button></div></div>';
      ingredientDynamic.innerHTML=html;
      setTimeout(()=>document.getElementById('openScopedFormulation')?.addEventListener('click',()=>openTab('formulation',{updateHash:true,save:true})),0);
    }
@@ -6577,6 +6601,50 @@ function chapter26ContaminantGateNotices(p){
 }
 
 
+
+function productBaselineContaminantRules(p){
+ if(!p||!contaminantsDb)return [];
+ const n=normIngredient(p.name||'');
+ const out=[];
+ if(n==='rice'){
+   // Lead article expressly covers cereal grains except buckwheat/canihua/quinoa, so Rice is included.
+   const leadRows=contaminantsDb?.metal_article_rules_v9?.Lead||[];
+   const lead=leadRows.find(r=>normIngredient(r.article||'')===normIngredient('Cereal grains, except buckwheat, canihua and quinoa'));
+   if(lead)out.push({contaminant:'Lead',...lead});
+   // Current crop-contaminant table expressly applies these two limits to cereal and cereal products.
+   const totalAflatoxin=contaminantsDb?.crop_contaminants?.total_aflatoxins?.rules?.find(r=>normIngredient(r.article||'')===normIngredient('Cereal and cereal products'));
+   if(totalAflatoxin)out.push({contaminant:'Total Aflatoxins',unit:'µg/kg',source_basis:'Section 2.2.1 · Crop contaminants',...totalAflatoxin});
+   const b1=contaminantsDb?.crop_contaminants?.aflatoxin_b1?.rules?.find(r=>normIngredient(r.article||'')===normIngredient('Cereal and cereal products'));
+   if(b1)out.push({contaminant:'Aflatoxin B1',unit:'µg/kg',source_basis:'Section 2.2.1 · Crop contaminants',...b1});
+ }
+ const seen=new Set();
+ return out.filter(r=>{
+   const key=[r.contaminant,r.limit,r.unit,r.article].join('|');
+   if(seen.has(key))return false;
+   seen.add(key);return true;
+ });
+}
+function conditionalMetalRowsForProduct(p){
+ if(!p||!contaminantsDb)return [];
+ const n=normIngredient(p.name||'');
+ if(!n)return [];
+ const out=[];
+ Object.entries(contaminantsDb?.metal_article_rules_v9||{}).forEach(([contaminant,rows])=>{
+   (rows||[]).forEach(r=>{
+     const article=normIngredient(r.article||'');
+     if(!article||article===n)return;
+     if(article.startsWith(n+' ' )||article.startsWith(n+',')){
+       out.push({contaminant,...r});
+     }
+   });
+ });
+ const seen=new Set();
+ return out.filter(r=>{
+   const key=[r.contaminant,r.article,r.limit,r.unit].join('|');
+   if(seen.has(key))return false;
+   seen.add(key);return true;
+ });
+}
 function exactPesticideMrlRowsForProduct(p){
  if(!p||!contaminantsDb)return [];
  const target=normIngredient(p.name||'');
@@ -6624,28 +6692,42 @@ function renderProductContaminants(){
  const profile=contaminantProfileForProduct(p);
  const universal=Array.isArray(contaminantsDb.all_food_rules)?contaminantsDb.all_food_rules.filter(x=>x.auto_apply===true):[];
  const exact=profile&&Array.isArray(profile.rules)?profile.rules:[];
+ const baseline=productBaselineContaminantRules(p);
+ const conditionalMetals=conditionalMetalRowsForProduct(p);
  const packagingTin=selectedPackagingTinRule(p);
  const variantTin=selectedVariantTinRule(p);
  const productPackageTin=variantTin?null:selectedProductPackageTinRule(p);
  const dehydratedMilkLead=selectedDehydratedMilkLeadRule(p);
  const metalSubtypeRule=selectedMetalSubtypeRule(p);
  const sugarAshLeadRule=selectedSulphatedAshLeadRule(p);
- const rules=[...exact,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
+ const rawRules=[...exact,...baseline,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
+ const ruleSeen=new Set();
+ const rules=rawRules.filter(r=>{
+   const key=[r.contaminant,r.limit,r.unit,r.article].join('|');
+   if(ruleSeen.has(key))return false;
+   ruleSeen.add(key);return true;
+ });
  const pesticideMrls=exactPesticideMrlRowsForProduct(p);
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
  const pesticideRows=pesticideMrls.map(x=>'<tr><td><b>'+esc(x.pesticide)+'</b></td><td><b>'+esc(x.mrl)+' '+esc(x.unit)+'</b></td><td>'+esc(x.food)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source)+'</td></tr>').join('');
+ const conditionalMetalHtml=conditionalMetals.length
+   ? '<div class="card" style="margin-top:12px;background:#fffaf0"><div class="section-title"><h3 style="margin:0">Conditional metal limits — exact subtype required</h3><span>Not auto-applied</span></div><div class="notice"><b>These rows are narrower than the selected product name.</b> They are shown for reference but are not applied unless the finished product exactly matches the stated subtype.</div><div class="tablewrap"><table><thead><tr><th>Contaminant</th><th>Limit</th><th>Exact article / subtype</th><th>Source</th></tr></thead><tbody>'
+     +conditionalMetals.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit||'')+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis||'FSSAI Version IX')+'</td></tr>').join('')
+     +'</tbody></table></div></div>'
+   : '';
  const profileMsg=profile
   ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+exact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
   : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
    +chapter26ContaminantGateNotices(p)
    +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant / toxin</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="notice">No exact metal/toxin row is auto-applicable for this product under the current stored product gates.</div>')
+   +conditionalMetalHtml
    +(pesticideRows?'<div class="card" style="margin-top:12px;background:#fafcff"><div class="section-title"><h3 style="margin:0">Pesticide residue MRLs — '+esc(p.name)+'</h3><span>Exact commodity match · no formulation required</span></div><div class="notice oknote"><b>'+pesticideMrls.length+' exact commodity MRL row'+(pesticideMrls.length===1?'':'s')+' found.</b> These are taken from the stored current FSSAI pesticide-residue table because the commodity name exactly matches the selected standardized product. Similar commodity names are not borrowed.</div><div class="tablewrap"><table><thead><tr><th>Pesticide</th><th>MRL</th><th>Commodity / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+pesticideRows+'</tbody></table></div></div>':'<div class="notice"><b>Pesticide residues:</b> no exact commodity-name MRL rows are stored for '+esc(p.name)+'. PMSV will not infer a commodity mapping.</div>')
-   +'<div class="countline">'+rules.length+' metal/toxin/all-food rule'+(rules.length===1?'':'s')+' + '+pesticideMrls.length+' exact pesticide MRL row'+(pesticideMrls.length===1?'':'s')+' shown · “Foods not specified” and generic canned-food fallbacks remain disabled.</div>';
+   +'<div class="countline">'+rules.length+' metal/toxin/all-food rule'+(rules.length===1?'':'s')+' + '+conditionalMetals.length+' conditional subtype metal row'+(conditionalMetals.length===1?'':'s')+' + '+pesticideMrls.length+' exact pesticide MRL row'+(pesticideMrls.length===1?'':'s')+' shown · “Foods not specified” and generic canned-food fallbacks remain disabled.</div>';
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=430',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=431',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
@@ -7746,7 +7828,7 @@ async function loadFpc18Db(){
 
 async function loadChapterRuleDbs(){
  try{
-   const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=441',{cache:'reload'}).then(async res=>{
+   const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=442',{cache:'reload'}).then(async res=>{
      if(!res.ok)throw new Error(url+' HTTP '+res.status);
      return res.json();
    })));
