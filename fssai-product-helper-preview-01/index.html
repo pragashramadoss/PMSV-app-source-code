@@ -4893,20 +4893,49 @@ function standardIngredientPermission(product,name){
  }
  return {allowed:false,hasExplicitIngredientStructure,matches};
 }
+function isChapter3IdentityDb(db){
+ return String(db?.chapter||'').trim()==='3'||/substances added to food/i.test(String(db?.title||''));
+}
+function chapter3IdentityStandardForIngredient(name){
+ const q=normIngredient(name);
+ if(!q)return null;
+ for(const db of (chapterRuleDbs||[])){
+   if(!isChapter3IdentityDb(db))continue;
+   for(const standard of ruleDbStandards(db)){
+     const n=normIngredient(standard?.name||'');
+     const ins=normIngredient(standard?.identity?.ins||'');
+     const exactName=n===q||n.replace(/\s*\(food grade\)\s*/g,'').trim()===q;
+     const containsName=q.length>=4&&(n.includes(q)||q.includes(n.replace(/\s*\(food grade\)\s*/g,'').trim()));
+     if(!(exactName||containsName||ins===q))continue;
+     return {
+       name:standard.name||name,
+       clause:String(standard.key||db.chapter||''),
+       source:ruleDbLabel(db),
+       ins:standard?.identity?.ins||'',
+       status:standard?.status||'',
+       note:standard?.permission_note||'Identity/purity specification only. Permission and maximum use level in a finished food are governed separately by the applicable product standard and/or Appendix A.'
+     };
+   }
+ }
+ return null;
+}
 function namedFssaiStandardsForIngredient(name){
  const q=normIngredient(name);
  if(!q)return [];
  const out=[];
- (chapterRuleDbs||[]).forEach(db=>ruleDbStandards(db).forEach(standard=>{
-   const n=normIngredient(standard?.name||'');
-   if(q.length<4||!(n===q||n.includes(q)||q.includes(n)))return;
-   out.push({
-     product:standard.name||'FSSAI standardized product',
-     clause:String(standard.key||db.chapter||''),
-     source:ruleDbLabel(db),
-     requirement:'Ingredient/product itself has a notified FSSAI product standard'
+ (chapterRuleDbs||[]).forEach(db=>{
+   if(isChapter3IdentityDb(db))return;
+   ruleDbStandards(db).forEach(standard=>{
+     const n=normIngredient(standard?.name||'');
+     if(q.length<4||!(n===q||n.includes(q)||q.includes(n)))return;
+     out.push({
+       product:standard.name||'FSSAI standardized product',
+       clause:String(standard.key||db.chapter||''),
+       source:ruleDbLabel(db),
+       requirement:'Ingredient/food itself has a notified FSSAI food standard'
+     });
    });
- }));
+ });
  const seen=new Set();
  return out.filter(x=>{
    const key=x.product+'|'+x.clause;
@@ -4918,7 +4947,9 @@ function allStandardIngredientPermissions(name){
  const n=normIngredient(name);
  if(!n)return [];
  const out=[...namedFssaiStandardsForIngredient(name)];
- (chapterRuleDbs||[]).forEach(db=>ruleDbStandards(db).forEach(standard=>{
+ (chapterRuleDbs||[]).forEach(db=>{
+   if(isChapter3IdentityDb(db))return;
+   ruleDbStandards(db).forEach(standard=>{
    ingredientStringsFromStandard(standard).forEach(row=>{
      if(normIngredient(row.name)!==n)return;
      out.push({
@@ -4932,7 +4963,8 @@ function allStandardIngredientPermissions(name){
        )
      });
    });
- }));
+  });
+ });
  fpc18Categories().forEach(rule=>{
    if(!fpc18IngredientMatch(rule,name))return;
    out.push({
@@ -4951,7 +4983,10 @@ function allStandardIngredientPermissions(name){
 }
 function exactStandardizedIngredientProduct(name){
  const n=normIngredient(name);
- return productCatalog().find(p=>normIngredient(p.name)===n&&hasRealFssrStandard(p))||null;
+ return productCatalog().find(p=>{
+   const fssr=String(p?.fssr||'').trim();
+   return normIngredient(p.name)===n&&hasRealFssrStandard(p)&&!/^3(?:\.|$)/.test(fssr);
+ })||null;
 }
 function proprietaryQuantityCheck(item,appendix){
  const limit=appendix?.entry?.limit||appendix?.entry?.maximum||appendix?.entry?.max_level||appendix?.entry?.maximum_level||'';
@@ -5004,7 +5039,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
        name,item,status:'allowed_category_other_basis',kind:'non_additive',usage,
        standardStatus:'Fits “other ingredients” route with separate FSSAI basis',
        standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A. + separate FSSAI ingredient basis',
-       detail:'Not expressly named in the category descriptor, but the category permits other ingredients and PMSV found another exact loaded FSSAI basis.',
+       detail:'Not expressly named in the category descriptor, but the category permits other ingredients and PMSV found another exact loaded FSSAI food/use basis. Chapter 3 identity/purity specifications are excluded from this eligibility decision.',
        alternatives,standardizedIngredient,fpc18:fpc,
        next:'Continue Chapter 2.12 assessment using the separate FSSAI basis shown below.'
      };
@@ -5095,16 +5130,25 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
 function proprietaryAlternativeHtml(r){
  const bits=[];
  if(r.standardizedIngredient){
-   bits.push('<b>Ingredient itself standardized:</b> '+esc(r.standardizedIngredient.name)
-     +(r.standardizedIngredient.fssr?' · <span class="clause">'+esc(r.standardizedIngredient.fssr)+'</span>':''));
+   bits.push('<b>Separate standardized-food basis:</b> '+esc(r.standardizedIngredient.name)
+     +(r.standardizedIngredient.fssr?' · <span class="clause">'+esc(r.standardizedIngredient.fssr)+'</span>':'')
+     +'<br><small>This is an ingredient/food standard. It does not by itself override the selected product/FCS permission check.</small>');
  }
  if(r.alternatives?.length){
-   bits.push('<b>Explicitly permitted in other loaded standards:</b><br>'
+   bits.push('<b>Explicit use / food-standard bases found elsewhere:</b><br>'
      +r.alternatives.slice(0,8).map(x=>'• '+esc(x.product)+' · <span class="clause">'+esc(x.clause||x.source)+'</span>'
        +(x.requirement?' · '+esc(x.requirement):'')).join('<br>')
-     +(r.alternatives.length>8?'<br><small>+'+(r.alternatives.length-8)+' more matching standard entries.</small>':''));
+     +(r.alternatives.length>8?'<br><small>+'+(r.alternatives.length-8)+' more matching entries.</small>':''));
  }
- return bits.length?bits.join('<br>'):'<span class="status-warn">No alternative exact FSSAI standard permission found in the loaded data.</span>';
+ const identity=chapter3IdentityStandardForIngredient(r.name);
+ if(identity){
+   bits.push('<b>Identity/purity specification — not use permission:</b><br>• '+esc(identity.name)
+     +' · <span class="clause">'+esc(identity.clause)+'</span>'
+     +(identity.ins?' · INS '+esc(identity.ins):'')
+     +'<br><small>'+esc(identity.note)+'</small>');
+ }
+ if(bits.length)return bits.join('<br><br>');
+ return '<span class="status-warn">No alternative exact FSSAI use permission or standardized-food basis found in the loaded data.</span>';
 }
 function proprietaryIngredientCards(rows){
  return '<div style="margin-top:12px">'+rows.map(r=>{
@@ -5175,7 +5219,7 @@ function renderProprietaryFormula(){
    resetProprietaryOutcome();
  }));
  status.className='notice oknote';
- status.innerHTML='<b>'+items.length+' ingredient'+(items.length===1?'':'s')+' entered with quantity.</b> PMSV will evaluate the confirmed standard first, then alternative FSSAI standards and only then the Proprietary route.';
+ status.innerHTML='<b>'+items.length+' ingredient'+(items.length===1?'':'s')+' entered with quantity.</b> PMSV will evaluate the confirmed standard/category first, then product/FCS use permissions. Chapter 3 identity/purity specifications are shown separately and never treated as use permission.';
 }
 function evaluateProprietaryRoute(){
  const out=document.getElementById('proprietaryRouteResult');
