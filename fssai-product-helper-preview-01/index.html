@@ -109,7 +109,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="proprietary" class="view hidden">
 <div class="card">
 <div class="section-title"><h2>Chapter 2.12 — Proprietary Food route</h2><span>Ingredient-led deterministic screening</span></div>
-<div class="notice oknote"><b>Use the actual formulation before PMSV gives a clause-level route.</b> PMSV first checks the loaded FoSCoS/FSSAI standardized-product catalogue, then screens the entered ingredients, and only then applies the nearest FCS and Chapter 2.12 gates.</div>
+<div class="notice oknote"><b>Build the actual formulation first.</b> Add ingredients one by one with quantity and unit. PMSV uses the same shared formulation data for Proprietary Food screening, nutrition, contaminants, labelling and the other downstream checks.</div>
+
 <div class="checker-grid">
   <div class="field">
     <label>1. Generic product name</label>
@@ -125,42 +126,81 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     <small>Novel food, FSDU, FSMP, functional food, nutraceutical and health supplement use separate FSSAI regulatory routes.</small>
   </div>
 </div>
-
-<div class="field" style="margin-top:10px">
-  <label>3. Ingredients used in the product</label>
-  <textarea id="proprietaryIngredientStatement" rows="6" placeholder="Enter all ingredients, one per line or comma-separated. Example: wheat flour, sugar, vegetable oil, cocoa powder, lecithin"></textarea>
-  <small>Enter the complete ingredient statement before evaluation. PMSV checks each entry against the loaded FSSAI/FoSCoS standardized-product data, ICMR-NIN IFCT 2017 data, and Appendix A for the selected FCS. Unresolved ingredients remain fail-closed.</small>
 </div>
-<div id="proprietaryIngredientStatus" class="notice" style="margin-top:10px"><b>Ingredient entry required.</b> PMSV will not issue a clause-level Proprietary Food result until at least one ingredient is entered.</div>
+
+<div class="card">
+<div class="section-title"><h2>3. Enter formulation ingredients</h2><span>Same formulation logic</span></div>
+<div class="field">
+  <label>Ingredient / substance</label>
+  <div class="autocomplete-wrap">
+    <input id="proprietaryIngredientName" autocomplete="off" placeholder="Start typing an ingredient">
+    <div id="proprietaryIngredientAutocomplete" class="autocomplete-list hidden"></div>
+  </div>
+  <small>Add one ingredient at a time. Matching local regulatory / IFCT candidates are suggested where available; the final regulatory basis is determined only during route evaluation.</small>
+</div>
 
 <div class="checker-grid" style="margin-top:10px">
   <div class="field">
-    <label>4. Nearest FCS category</label>
+    <label>Quantity used</label>
+    <input id="proprietaryIngredientQty" type="number" min="0" step="0.001" placeholder="e.g. 10">
+    <small>Enter the actual amount used in this formulation.</small>
+  </div>
+  <div class="field">
+    <label>Unit</label>
+    <select id="proprietaryIngredientUnit">
+      <option value="kg">kg</option>
+      <option value="g">g</option>
+      <option value="mg">mg</option>
+    </select>
+    <small>PMSV normalizes ingredient quantities to mass and calculates usage against the complete formula.</small>
+  </div>
+</div>
+
+<div class="flow-actions">
+  <button class="btn" type="button" id="addProprietaryIngredient">Add ingredient</button>
+  <button class="btn-secondary hidden" type="button" id="cancelProprietaryIngredientEdit">Cancel edit</button>
+  <button class="btn-secondary" type="button" id="clearProprietaryIngredients">Clear ingredients</button>
+</div>
+<div id="proprietaryIngredientInputMessage" class="notice hidden"></div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>Formulation entered</h2><span id="proprietaryIngredientCount">0 ingredients</span></div>
+<div id="proprietaryFormulaTotals" class="notice hidden"></div>
+<div id="proprietaryIngredientList" class="empty-state">No ingredients entered yet.</div>
+<div id="proprietaryIngredientStatus" class="notice" style="margin-top:10px"><b>Ingredient entry required.</b> PMSV will not issue a clause-level Proprietary Food result until at least one ingredient with quantity is entered.</div>
+</div>
+
+<div class="card">
+<div class="section-title"><h2>4. Assign nearest Food Category System route</h2><span>Used after formulation entry</span></div>
+<div class="checker-grid">
+  <div class="field">
+    <label>Nearest FCS category</label>
     <select id="proprietaryCategorySelect"><option value="">Select category</option></select>
   </div>
   <div class="field">
-    <label>5. Nearest FCS sub-category</label>
+    <label>Nearest FCS sub-category</label>
     <select id="proprietarySubcategorySelect" disabled><option value="">Select sub-category</option></select>
   </div>
   <div class="field">
-    <label>6. Specific FCS, where available</label>
+    <label>Specific FCS, where available</label>
     <select id="proprietarySpecificFcsSelect" disabled><option value="">Select specific FCS</option></select>
     <small>Loaded from the local Appendix A hierarchy. PMSV does not invent deeper FCS codes.</small>
   </div>
 </div>
 <div class="flow-actions">
-  <button class="btn" type="button" id="evaluateProprietaryRoute">Evaluate ingredients and regulatory route</button>
-  <button class="btn-secondary" type="button" id="clearProprietaryRoute">Clear</button>
+  <button class="btn" type="button" id="evaluateProprietaryRoute">Evaluate formulation and regulatory route</button>
+  <button class="btn-secondary" type="button" id="clearProprietaryRoute">Clear route</button>
 </div>
 <div id="proprietaryRouteResult" class="notice hidden"></div>
 <div id="proprietaryAppendixA" class="hidden" style="margin-top:12px"></div>
 </div>
 
 <div id="proprietaryClauseGuide" class="card hidden">
-<div class="section-title"><h2>Applicable Chapter 2.12 validation gates</h2><span>Shown only after ingredient entry</span></div>
+<div class="section-title"><h2>Applicable Chapter 2.12 validation gates</h2><span>Shown only after formulation entry</span></div>
 <div class="grid2">
   <div class="item"><b>Ingredient eligibility · 2.12.1(2)</b><small>Each non-additive ingredient must have an eligible FSSAI regulatory basis or an exact ICMR-NIN IFCT 2017 basis. Unresolved ingredients block a positive route conclusion.</small></div>
-  <div class="item"><b>Food additives · 2.12.1(3)</b><small>Only additives and levels permitted for the selected FCS category/sub-category under Appendix A may be used.</small></div>
+  <div class="item"><b>Food additives · 2.12.1(3)</b><small>Only additives and levels permitted for the selected FCS category/sub-category under Appendix A may be used. PMSV checks a stored numeric mg/kg maximum against the entered formulation quantity where possible.</small></div>
   <div class="item"><b>Microbiology · 2.12.1(4)</b><small>Apply Appendix B for the selected food category. Where no specific standard exists, the pathogenic-microorganism safety fallback still applies.</small></div>
   <div class="item"><b>Other FSSAI regulations · 2.12.1(5)</b><small>Contaminants, processing aids, labelling/display, advertising and claims and every other applicable FSSAI requirement remain part of the final assessment.</small></div>
 </div>
@@ -4501,14 +4541,13 @@ async function loadAppendixCore(){
  renderProprietaryAppendixA();
 }
 
+let proprietaryEditingIngredientIndex=-1;
+
+function proprietaryIngredientItems(){
+ return Array.isArray(formulationIngredients)?formulationIngredients:[];
+}
 function proprietaryIngredientNames(){
- const raw=document.getElementById('proprietaryIngredientStatement')?.value||'';
- const seen=new Set();
- return raw.split(/[\r\n,;]+/).map(x=>x.trim()).filter(Boolean).filter(x=>{
-   const k=normIngredient(x);
-   if(!k||seen.has(k))return false;
-   seen.add(k);return true;
- });
+ return proprietaryIngredientItems().map(x=>String(x?.name||'').trim()).filter(Boolean);
 }
 function proprietaryAppendixIngredientHit(name,fcs){
  const n=normIngredient(name);
@@ -4525,15 +4564,135 @@ function proprietaryAppendixIngredientHit(name,fcs){
  }
  return null;
 }
-function proprietaryIngredientBasis(name,fcs){
+function proprietaryIngredientCatalog(){
+ const rows=[];
+ (ingredientCatalog||[]).forEach(x=>rows.push({name:x.name,label:x.label||x.name,source:x.source||'Stored FSSAI regulatory data'}));
+ (typeof productCatalog==='function'?productCatalog():[]).forEach(x=>rows.push({name:x.name,label:x.name,source:x.fssr?'FSSAI standardized product · '+x.fssr:'FSSAI / FoSCoS standardized product'}));
+ (nutritionDb?.profiles||[]).filter(p=>p.active_for_calculation===true&&p.source_authority==='ICMR-NIN').forEach(p=>{
+   (p.names||[]).forEach(name=>rows.push({name,label:p.display_name||name,source:'ICMR-NIN IFCT 2017'}));
+ });
+ const fcs=document.getElementById('proprietarySpecificFcsSelect')?.value||document.getElementById('proprietarySubcategorySelect')?.value||document.getElementById('proprietaryCategorySelect')?.value||'';
+ if(fcs&&appendixCoreDb){
+   const resolved=appendixEntriesForFcs(fcs);
+   if(resolved?.status==='loaded'){
+     (resolved.entries||[]).forEach(entry=>{
+       rows.push({name:entry.name,label:entry.name,source:'Appendix A · FCS '+String(entry.applied_from||resolved.resolvedFcs||fcs)});
+       (appendixCoreDb?.annexure_1_groups?.[entry.name]||[]).forEach(member=>{
+         rows.push({name:member.name,label:member.name,source:'Appendix A · '+entry.name+(member.ins?' · INS '+member.ins:'')});
+       });
+     });
+   }
+ }
+ const seen=new Set();
+ return rows.filter(x=>{
+   const key=normIngredient(x.name);
+   if(!key||seen.has(key))return false;
+   seen.add(key);return true;
+ });
+}
+function renderProprietaryIngredientAutocomplete(){
+ const input=document.getElementById('proprietaryIngredientName');
+ const box=document.getElementById('proprietaryIngredientAutocomplete');
+ if(!input||!box)return;
+ const q=normIngredient(input.value);
+ if(!q){
+   box.classList.add('hidden');box.innerHTML='';return;
+ }
+ const matches=proprietaryIngredientCatalog()
+   .filter(x=>normIngredient(x.name).includes(q))
+   .sort((a,b)=>{
+     const ae=normIngredient(a.name)===q?0:1;
+     const be=normIngredient(b.name)===q?0:1;
+     return ae-be||a.name.localeCompare(b.name);
+   }).slice(0,10);
+ if(!matches.length){
+   box.classList.add('hidden');box.innerHTML='';return;
+ }
+ box.innerHTML=matches.map(x=>'<button type="button" class="autocomplete-item" data-proprietary-ingredient-suggestion="'+esc(x.name)+'"><b>'+esc(x.name)+'</b><small>'+esc(x.source||'Stored source')+'</small></button>').join('');
+ box.classList.remove('hidden');
+ box.querySelectorAll('[data-proprietary-ingredient-suggestion]').forEach(btn=>btn.addEventListener('click',()=>{
+   input.value=btn.dataset.proprietaryIngredientSuggestion||'';
+   box.classList.add('hidden');
+ }));
+}
+function resetProprietaryIngredientEditor(){
+ proprietaryEditingIngredientIndex=-1;
+ const name=document.getElementById('proprietaryIngredientName');if(name)name.value='';
+ const qty=document.getElementById('proprietaryIngredientQty');if(qty)qty.value='';
+ const unit=document.getElementById('proprietaryIngredientUnit');if(unit)unit.value='kg';
+ const btn=document.getElementById('addProprietaryIngredient');if(btn)btn.textContent='Add ingredient';
+ document.getElementById('cancelProprietaryIngredientEdit')?.classList.add('hidden');
+ document.getElementById('proprietaryIngredientAutocomplete')?.classList.add('hidden');
+}
+function editProprietaryIngredient(index){
+ const item=proprietaryIngredientItems()[index];
+ if(!item)return;
+ proprietaryEditingIngredientIndex=index;
+ const name=document.getElementById('proprietaryIngredientName');if(name)name.value=item.name||'';
+ const qty=document.getElementById('proprietaryIngredientQty');if(qty)qty.value=item.qty??'';
+ const unit=document.getElementById('proprietaryIngredientUnit');if(unit)unit.value=item.unit||'kg';
+ const btn=document.getElementById('addProprietaryIngredient');if(btn)btn.textContent='Update ingredient';
+ document.getElementById('cancelProprietaryIngredientEdit')?.classList.remove('hidden');
+ const msg=document.getElementById('proprietaryIngredientInputMessage');
+ if(msg){msg.textContent='Editing '+String(item.name||'ingredient')+'. Change the quantity or unit, then tap Update ingredient.';msg.classList.remove('hidden');}
+ name?.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function addProprietaryIngredient(){
+ const name=String(document.getElementById('proprietaryIngredientName')?.value||'').trim();
+ const qty=Number(document.getElementById('proprietaryIngredientQty')?.value);
+ const unit=document.getElementById('proprietaryIngredientUnit')?.value||'kg';
+ const msg=document.getElementById('proprietaryIngredientInputMessage');
+ if(!name){
+   if(msg){msg.textContent='Enter an ingredient first.';msg.classList.remove('hidden');}
+   return;
+ }
+ if(!Number.isFinite(qty)||qty<=0){
+   if(msg){msg.textContent='Enter the ingredient quantity before adding it.';msg.classList.remove('hidden');}
+   return;
+ }
+ const duplicateIndex=formulationIngredients.findIndex((x,i)=>i!==proprietaryEditingIngredientIndex&&normIngredient(x.name)===normIngredient(name));
+ const old=proprietaryEditingIngredientIndex>=0?formulationIngredients[proprietaryEditingIngredientIndex]:null;
+ const updated={...(old||{}),name,qty,unit,basis:old?.basis||'auto',clause:old?.clause||''};
+ if(proprietaryEditingIngredientIndex>=0){
+   if(duplicateIndex>=0){
+     if(msg){msg.textContent='Another '+name+' row already exists. Edit that row or remove it before renaming this ingredient.';msg.classList.remove('hidden');}
+     return;
+   }
+   formulationIngredients[proprietaryEditingIngredientIndex]=updated;
+   if(msg){msg.textContent=name+' updated.';msg.classList.remove('hidden');}
+ }else if(duplicateIndex>=0){
+   const existing=formulationIngredients[duplicateIndex];
+   const mergedUnit=existing.unit||unit||'kg';
+   const mergedQty=cleanQty(kgToQty(qtyToKg(existing.qty,existing.unit)+qtyToKg(qty,unit),mergedUnit));
+   formulationIngredients[duplicateIndex]={...existing,qty:mergedQty,unit:mergedUnit};
+   if(msg){msg.textContent=(existing.name||name)+' already existed. Added '+cleanQty(qty)+' '+unit+'; total is now '+mergedQty+' '+mergedUnit+'.';msg.classList.remove('hidden');}
+ }else{
+   formulationIngredients.push(updated);
+   if(msg)msg.classList.add('hidden');
+ }
+ resetProprietaryIngredientEditor();
+ saveFormula();
+ renderProprietaryFormula();
+ resetProprietaryOutcome();
+}
+function proprietaryQuantityCheck(item,appendix){
+ const limit=appendix?.entry?.limit||appendix?.entry?.maximum||appendix?.entry?.max_level||appendix?.entry?.maximum_level||'';
+ const condition=appendix?.entry?.condition||appendix?.entry?.conditions||'';
+ const q={appendix:{limit:String(limit),condition:String(condition)}};
+ return checkUsageAgainstRule(item,q);
+}
+function proprietaryIngredientBasis(item,fcs){
+ const name=String(item?.name||'').trim();
  const n=normIngredient(name);
+ const usage=usageForIngredient(item);
  const standardized=(typeof productCatalog==='function'?productCatalog():[]).find(p=>normIngredient(p?.name)===n);
  if(standardized){
    return {
-     name,status:'eligible',kind:'non_additive',
+     name,item,status:'eligible',kind:'non_additive',
      basis:'Standardized food / ingredient in the loaded FSSAI/FoSCoS catalogue',
      clause:'2.12.1(2) · '+String(standardized.fssr||'applicable FSSAI product standard'),
-     detail:'Eligible ingredient basis must still remain applicable to the actual ingredient used.'
+     detail:'Eligible ingredient basis must still remain applicable to the actual ingredient used.',
+     usage
    };
  }
  const appendix=proprietaryAppendixIngredientHit(name,fcs);
@@ -4541,32 +4700,50 @@ function proprietaryIngredientBasis(name,fcs){
    const display=appendix.member?.name||appendix.entry?.name||name;
    const ins=appendix.member?.ins||appendix.entry?.ins||'';
    const limit=appendix.entry?.limit||appendix.entry?.maximum||appendix.entry?.max_level||appendix.entry?.maximum_level||'As specified in Appendix A';
+   const check=proprietaryQuantityCheck(item,appendix);
+   const limitFail=check?.pass===false;
+   const quantityPending=check?.pass===null;
    return {
-     name,status:'eligible',kind:'additive',
+     name,item,status:limitFail?'limit_fail':quantityPending?'quantity_pending':'eligible',kind:'additive',
      basis:'Food additive permitted in Appendix A for the selected FCS',
      clause:'2.12.1(3) · Appendix A FCS '+String(appendix.resolvedFcs),
      detail:String(display)+(ins?' · INS '+String(ins):'')+' · '+String(limit)
+       +(check?.value!=null?' · calculated '+fmt(check.value,3)+' '+check.unit:'')
+       +(limitFail?' · ABOVE STORED LIMIT':quantityPending?' · quantity basis cannot yet be completed':''),
+     usage,quantityCheck:check
    };
  }
  const ifct=(typeof nutritionProfileFor==='function'?nutritionProfileFor(name):null);
  if(ifct){
    return {
-     name,status:'eligible',kind:'non_additive',
+     name,item,status:'eligible',kind:'non_additive',
      basis:'Exact active ICMR-NIN IFCT 2017 food/ingredient profile',
      clause:'2.12.1(2) · ICMR-NIN IFCT 2017',
-     detail:String(ifct.display_name||ifct.names?.[0]||name)
+     detail:String(ifct.display_name||ifct.names?.[0]||name),
+     usage
    };
  }
  return {
-   name,status:'unresolved',kind:'unknown',
+   name,item,status:'unresolved',kind:'unknown',
    basis:'No exact standardized/FSSAI-permitted, IFCT 2017, or selected-FCS Appendix A basis is established in the loaded data',
    clause:'2.12.1(2) eligibility not established',
-   detail:'Fail-closed: verify an official FSSAI permission/standard or exact ICMR-NIN IFCT 2017 entry before continuing.'
+   detail:'Fail-closed: verify an official FSSAI permission/standard or exact ICMR-NIN IFCT 2017 entry before continuing.',
+   usage
  };
 }
 function proprietaryIngredientTable(rows){
- return '<div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Ingredient</th><th>Status</th><th>Basis</th><th>Clause / source</th></tr></thead><tbody>'
-   +rows.map(r=>'<tr><td><b>'+esc(r.name)+'</b></td><td><span class="'+(r.status==='eligible'?'status-good':'status-bad')+'">'+(r.status==='eligible'?'Resolved':'Unresolved')+'</span></td><td>'+esc(r.basis)+'<br><small>'+esc(r.detail||'')+'</small></td><td><span class="clause">'+esc(r.clause)+'</span></td></tr>').join('')
+ return '<div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Ingredient</th><th>Quantity / usage</th><th>Status</th><th>Basis</th><th>Clause / source</th></tr></thead><tbody>'
+   +rows.map(r=>{
+     const cls=r.status==='eligible'?'status-good':r.status==='limit_fail'?'status-bad':'status-warn';
+     const label=r.status==='eligible'?'Resolved':r.status==='limit_fail'?'Limit exceeded':r.status==='quantity_pending'?'Quantity check pending':'Unresolved';
+     const u=r.usage||{};
+     const item=r.item||{};
+     return '<tr><td><b>'+esc(r.name)+'</b></td>'
+       +'<td><b>'+fmt(Number(item.qty||0),6)+' '+esc(item.unit||'kg')+'</b><br><small>'+fmt(Number(u.percent||0),4)+'% w/w · '+fmt(Number(u.mgkg||0),2)+' mg/kg</small></td>'
+       +'<td><span class="'+cls+'">'+label+'</span></td>'
+       +'<td>'+esc(r.basis)+'<br><small>'+esc(r.detail||'')+'</small></td>'
+       +'<td><span class="clause">'+esc(r.clause)+'</span></td></tr>';
+   }).join('')
    +'</tbody></table></div>';
 }
 function resetProprietaryOutcome(){
@@ -4577,14 +4754,42 @@ function resetProprietaryOutcome(){
  const guide=document.getElementById('proprietaryClauseGuide');
  if(guide)guide.classList.add('hidden');
 }
-function updateProprietaryIngredientStatus(){
+function renderProprietaryFormula(){
+ const list=document.getElementById('proprietaryIngredientList');
+ const count=document.getElementById('proprietaryIngredientCount');
+ const totals=document.getElementById('proprietaryFormulaTotals');
  const status=document.getElementById('proprietaryIngredientStatus');
- if(!status)return;
- const names=proprietaryIngredientNames();
- status.className='notice'+(names.length?' oknote':'');
- status.innerHTML=names.length
-   ? '<b>'+names.length+' ingredient'+(names.length===1?'':'s')+' entered.</b> Select the nearest FCS and evaluate to resolve the ingredient basis before PMSV shows the applicable clause-level route.'
-   : '<b>Ingredient entry required.</b> PMSV will not issue a clause-level Proprietary Food result until at least one ingredient is entered.';
+ if(!list||!count||!totals||!status)return;
+ const items=proprietaryIngredientItems();
+ count.textContent=items.length+' ingredient'+(items.length===1?'':'s');
+ if(!items.length){
+   list.className='empty-state';
+   list.innerHTML='No ingredients entered yet.';
+   totals.classList.add('hidden');
+   totals.innerHTML='';
+   status.className='notice';
+   status.innerHTML='<b>Ingredient entry required.</b> PMSV will not issue a clause-level Proprietary Food result until at least one ingredient with quantity is entered.';
+   return;
+ }
+ const totalKg=totalFormulaKg();
+ totals.classList.remove('hidden');
+ totals.innerHTML='<b>Total formulation quantity:</b> '+fmt(totalKg,6)+' kg &nbsp;·&nbsp; <b>Calculation basis:</b> '+items.length+' entered ingredient'+(items.length===1?'':'s')+'.';
+ list.className='';
+ list.innerHTML=items.map((item,i)=>{
+   const u=usageForIngredient(item);
+   return '<div class="ingredient-row"><div><b>'+esc(item.name)+'</b><br><small>'+fmt(Number(item.qty),6)+' '+esc(item.unit||'kg')+' · '+fmt(u.percent,4)+'% w/w<br>'+fmt(u.mgkg,2)+' mg/kg</small></div>'
+     +'<div><small>Shared formulation row used by Proprietary Food screening and downstream PMSV checks.</small></div>'
+     +'<div class="ingredient-actions"><button class="ingredient-edit" type="button" data-edit-proprietary-ingredient="'+i+'">Edit</button><button class="ingredient-remove" type="button" data-remove-proprietary-ingredient="'+i+'">Remove</button></div></div>';
+ }).join('');
+ list.querySelectorAll('[data-edit-proprietary-ingredient]').forEach(btn=>btn.addEventListener('click',()=>editProprietaryIngredient(Number(btn.dataset.editProprietaryIngredient))));
+ list.querySelectorAll('[data-remove-proprietary-ingredient]').forEach(btn=>btn.addEventListener('click',()=>{
+   formulationIngredients.splice(Number(btn.dataset.removeProprietaryIngredient),1);
+   saveFormula();
+   renderProprietaryFormula();
+   resetProprietaryOutcome();
+ }));
+ status.className='notice oknote';
+ status.innerHTML='<b>'+items.length+' ingredient'+(items.length===1?'':'s')+' entered with quantity.</b> Select the nearest FCS and evaluate to resolve ingredient eligibility and quantity-dependent Appendix A checks.';
 }
 function evaluateProprietaryRoute(){
  const out=document.getElementById('proprietaryRouteResult');
@@ -4595,7 +4800,7 @@ function evaluateProprietaryRoute(){
  const cat=document.getElementById('proprietaryCategorySelect')?.value||'';
  const sub=document.getElementById('proprietarySubcategorySelect')?.value||'';
  const specific=document.getElementById('proprietarySpecificFcsSelect')?.value||'';
- const ingredients=proprietaryIngredientNames();
+ const ingredients=proprietaryIngredientItems();
  out.classList.remove('hidden');
  const guide=document.getElementById('proprietaryClauseGuide');
  if(guide)guide.classList.add('hidden');
@@ -4612,12 +4817,17 @@ function evaluateProprietaryRoute(){
  }
  if(!ingredients.length){
    out.className='notice';
-   out.innerHTML='<b>Enter the formulation ingredients before PMSV gives the applicable clause.</b><br>The Proprietary Food route cannot be screened from product name and FCS alone.';
+   out.innerHTML='<b>Add the formulation ingredients with quantity before PMSV gives the applicable clause.</b><br>The Proprietary Food route cannot be screened from product name and FCS alone.';
+   return;
+ }
+ if(ingredients.some(x=>!(Number(x.qty)>0))){
+   out.className='notice';
+   out.innerHTML='<b>Every ingredient needs a valid quantity.</b><br>Edit the formulation before route evaluation.';
    return;
  }
  if(!cat){
    out.className='notice';
-   out.innerHTML='<b>Ingredients entered, but FCS is still required.</b><br>Select the nearest Food Category System category so additives can be checked against the correct Appendix A scope.';
+   out.innerHTML='<b>Formulation entered, but FCS is still required.</b><br>Select the nearest Food Category System category so additives can be checked against the correct Appendix A scope.';
    return;
  }
 
@@ -4633,7 +4843,7 @@ function evaluateProprietaryRoute(){
    out.innerHTML='<b>Standardized product found — do not route this product to Chapter 2.12.</b><br>'
      +esc(exact.name)+' · Appendix A FCS '+esc(appendixFcsForRecord(exact)||'not mapped')+' · FSSR '+esc(exact.fssr||'—')+'.'
      +ingredientTable
-     +'<br><small>The formulation was entered first as required; select this standardized product from Product selection and apply its product standard.</small>';
+     +'<br><small>The complete formulation with quantities was entered first; select this standardized product from Product selection and apply its product standard.</small>';
    return;
  }
  if(matches.length){
@@ -4646,11 +4856,15 @@ function evaluateProprietaryRoute(){
  }
 
  if(unresolved.length){
+   const limitFails=unresolved.filter(x=>x.status==='limit_fail');
+   const pendingQty=unresolved.filter(x=>x.status==='quantity_pending');
    out.className='notice';
-   out.innerHTML='<b>Ingredient eligibility is not established — Proprietary Food route not concluded.</b><br>'
-     +unresolved.length+' of '+assessments.length+' entered ingredient'+(assessments.length===1?' is':'s are')+' unresolved under the loaded official-source rules.'
+   out.innerHTML='<b>Formulation does not yet clear the Proprietary Food ingredient gate.</b><br>'
+     +(limitFails.length?'<b>'+limitFails.length+' additive quantity check'+(limitFails.length===1?'':'s')+' exceed the stored Appendix A maximum.</b><br>':'')
+     +(pendingQty.length?'<b>'+pendingQty.length+' quantity-dependent check'+(pendingQty.length===1?' is':'s are')+' incomplete.</b><br>':'')
+     +(unresolved.length-limitFails.length-pendingQty.length>0?'<b>'+(unresolved.length-limitFails.length-pendingQty.length)+' ingredient eligibility check'+((unresolved.length-limitFails.length-pendingQty.length)===1?' is':'s are')+' unresolved.</b><br>':'')
      +ingredientTable
-     +'<br><b>Blocking gate:</b> clause 2.12.1(2) must be satisfied for every non-additive ingredient before PMSV can give a positive Chapter 2.12 route conclusion.';
+     +'<br><b>Blocking gate:</b> every non-additive ingredient must satisfy 2.12.1(2), and every additive must satisfy the applicable 2.12.1(3) / Appendix A quantity condition before PMSV can give a positive Chapter 2.12 route conclusion.';
    if(guide)guide.classList.remove('hidden');
    return;
  }
@@ -4660,9 +4874,10 @@ function evaluateProprietaryRoute(){
  const hasAdditives=assessments.some(x=>x.kind==='additive');
  const clauseText='2.12.1(1) route definition + 2.12.1(2) ingredient eligibility'+(hasAdditives?' + 2.12.1(3) Appendix A additive control':'');
  out.className='notice oknote';
- out.innerHTML='<b>Potential Chapter 2.12 Proprietary Food route after ingredient screening.</b><br>'
+ out.innerHTML='<b>Potential Chapter 2.12 Proprietary Food route after formulation screening.</b><br>'
    +'No matching standardized product was found in the loaded catalogue, no excluded class was selected, and every entered ingredient has a currently resolved basis in the loaded official-source data.'
    +ingredientTable
+   +'<br><b>Total formulation:</b> '+fmt(totalFormulaKg(),6)+' kg'
    +'<br><b>Nearest FCS:</b> '+esc(selectedFcs)+(category?' — '+esc(category.name):'')+(subcat?'<br><b>Sub-category route:</b> '+esc(subcat.code)+' — '+esc(subcat.name):'')
    +'<br><b>Applicable clause-level route at this stage:</b> '+esc(clauseText)
    +'<br><br><b>Not a compliance pass.</b> Appendix B microbiology, contaminants, processing aids, labelling/display, claims and all other applicable FSSAI requirements still have to be validated.';
@@ -4684,7 +4899,7 @@ function openProprietaryRoute(){
    if(sub&&srcSub&&!sub.disabled)sub.value=srcSub;
  }
  resetProprietaryOutcome();
- updateProprietaryIngredientStatus();
+ renderProprietaryFormula();
  openTab('proprietary',{updateHash:true,save:true});
  window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -4695,22 +4910,36 @@ function bindProprietaryButtons(root){
    btn.addEventListener('click',openProprietaryRoute);
  });
 }
-document.getElementById('proprietaryCategorySelect')?.addEventListener('change',()=>{populateProprietarySubcategories();resetProprietaryOutcome();});
-document.getElementById('proprietarySubcategorySelect')?.addEventListener('change',()=>{populateProprietarySpecificFcs();resetProprietaryOutcome();});
-document.getElementById('proprietarySpecificFcsSelect')?.addEventListener('change',resetProprietaryOutcome);
+document.getElementById('proprietaryCategorySelect')?.addEventListener('change',()=>{populateProprietarySubcategories();resetProprietaryOutcome();renderProprietaryIngredientAutocomplete();});
+document.getElementById('proprietarySubcategorySelect')?.addEventListener('change',()=>{populateProprietarySpecificFcs();resetProprietaryOutcome();renderProprietaryIngredientAutocomplete();});
+document.getElementById('proprietarySpecificFcsSelect')?.addEventListener('change',()=>{resetProprietaryOutcome();renderProprietaryIngredientAutocomplete();});
 document.getElementById('proprietaryProductName')?.addEventListener('input',resetProprietaryOutcome);
 document.getElementById('proprietaryExcludedClass')?.addEventListener('change',resetProprietaryOutcome);
-document.getElementById('proprietaryIngredientStatement')?.addEventListener('input',()=>{updateProprietaryIngredientStatus();resetProprietaryOutcome();});
+document.getElementById('proprietaryIngredientName')?.addEventListener('input',renderProprietaryIngredientAutocomplete);
+document.getElementById('proprietaryIngredientName')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addProprietaryIngredient();}});
+document.getElementById('addProprietaryIngredient')?.addEventListener('click',addProprietaryIngredient);
+document.getElementById('cancelProprietaryIngredientEdit')?.addEventListener('click',()=>{
+ resetProprietaryIngredientEditor();
+ const msg=document.getElementById('proprietaryIngredientInputMessage');if(msg)msg.classList.add('hidden');
+});
+document.getElementById('clearProprietaryIngredients')?.addEventListener('click',()=>{
+ resetProprietaryIngredientEditor();
+ formulationIngredients=[];
+ saveFormula();
+ renderProprietaryFormula();
+ resetProprietaryOutcome();
+});
 document.getElementById('evaluateProprietaryRoute')?.addEventListener('click',evaluateProprietaryRoute);
 document.getElementById('clearProprietaryRoute')?.addEventListener('click',()=>{
  const n=document.getElementById('proprietaryProductName');if(n)n.value='';
  const e=document.getElementById('proprietaryExcludedClass');if(e)e.value='';
- const ing=document.getElementById('proprietaryIngredientStatement');if(ing)ing.value='';
  const cat=document.getElementById('proprietaryCategorySelect');if(cat)cat.value='';
  populateProprietarySubcategories();
  populateProprietarySpecificFcs();
- updateProprietaryIngredientStatus();
  resetProprietaryOutcome();
+});
+document.addEventListener('click',event=>{
+ if(!event.target.closest('#proprietary .autocomplete-wrap'))document.getElementById('proprietaryIngredientAutocomplete')?.classList.add('hidden');
 });
 
 function chapterRuleDisplayRows(standard){
