@@ -4652,12 +4652,12 @@ function renderProprietaryStandardSuggestion(){
    note.className='notice oknote';
    note.innerHTML='<b>Nearest FoSCoS regulatory category suggested:</b> '+esc(best.p.name)
      +' · <span class="clause">'+esc(fpc.code)+'</span> · <b>FSSR standard: N.A.</b>'
-     +'<br><small>This is an FSSAI/FoSCoS category, not a notified Chapter 2 vertical product standard. Confirm it or choose another loaded standard/category.</small>';
+     +'<br><small>This is an FSSAI/FoSCoS category, not a notified Chapter 2 vertical product standard. Confirm it or choose another applicable standard/category.</small>';
  }else if(confident){
    note.className='notice oknote';
-   note.innerHTML='<b>Nearest loaded FSSAI standard suggested:</b> '+esc(best.p.name)
+   note.innerHTML='<b>Nearest FSSAI standard suggested:</b> '+esc(best.p.name)
      +(hasRealFssrStandard(best.p)?' · <span class="clause">'+esc(best.p.fssr)+'</span>':' · <b>FSSR standard: N.A.</b>')
-     +'<br><small>Confirm this selection or choose another loaded standard/category.</small>';
+     +'<br><small>Confirm this selection or choose another applicable standard/category.</small>';
  }else{
    note.className='notice';
    note.innerHTML='<b>No reliable name match was found.</b> Choose the closest applicable FSSAI standard or FoSCoS category manually.';
@@ -5039,7 +5039,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
        name,item,status:'allowed_category_other_basis',kind:'non_additive',usage,
        standardStatus:'Fits “other ingredients” route with separate FSSAI basis',
        standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A. + separate FSSAI ingredient basis',
-       detail:'Not expressly named in the category descriptor, but the category permits other ingredients and PMSV found another exact loaded FSSAI food/use basis. Chapter 3 identity/purity specifications are excluded from this eligibility decision.',
+       detail:'Not expressly named in the category descriptor, but the category permits other ingredients and PMSV found another explicit FSSAI food/use basis. Chapter 3 identity/purity specifications are excluded from this eligibility decision.',
        alternatives,standardizedIngredient,fpc18:fpc,
        next:'Continue Chapter 2.12 assessment using the separate FSSAI basis shown below.'
      };
@@ -5048,7 +5048,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
      name,item,status:'unresolved',kind:'non_additive',usage,
      standardStatus:'Ingredient basis not yet established',
      standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A.',
-     detail:'The ingredient is not expressly named in the category descriptor and no separate exact FSSAI basis is loaded.',
+     detail:'The ingredient is not expressly named in the category descriptor and no separate explicit FSSAI basis has been identified.',
      alternatives,standardizedIngredient,fpc18:fpc,
      next:'Do not conclude Proprietary eligibility until the ingredient’s FSSAI basis is established.'
    };
@@ -5087,11 +5087,11 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
  if(!standardCheck.hasExplicitIngredientStructure){
    return {
      name,item,status:'standard_check_incomplete',kind:'unknown',usage,
-     standardStatus:'Cannot determine from loaded standard',
-     standardBasis:(standardProduct?.fssr||'Confirmed FSSAI standard')+' · exact ingredient list not machine-readable/loaded',
-     detail:'PMSV will not treat absence of a machine-readable ingredient list as permission or prohibition.',
+     standardStatus:'No explicit ingredient permission identified in the applicable FSSAI standard',
+     standardBasis:(standardProduct?.fssr||'Confirmed FSSAI standard')+' · explicit ingredient permission not stated in the product-standard rule used for this check',
+     detail:'The applicable FSSAI product standard does not give PMSV an explicit ingredient permission for this ingredient. Absence of an explicit permission is not treated as either permission or prohibition; another applicable FSSAI provision must be checked.',
      alternatives,standardizedIngredient,
-     next:'Manual/structured-standard completion required before deciding standardized vs Proprietary route.'
+     next:'Check another applicable FSSAI provision before deciding the standardized vs Proprietary route.'
    };
  }
 
@@ -5119,8 +5119,8 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
    standardStatus:'Not found in the confirmed standard’s explicit permitted-ingredient list',
    standardBasis:(standardProduct?.fssr||standardProduct?.name||'Confirmed standard'),
    detail:hasOtherFssaiBasis
-     ? 'The ingredient has another loaded FSSAI regulatory basis, but that does not make it permitted in the confirmed standard.'
-     : 'No other exact FSSAI standardized-product or explicit standard ingredient permission is loaded for this ingredient.',
+     ? 'The ingredient has another applicable FSSAI regulatory basis, but that does not make it permitted in the confirmed standard.'
+     : 'No other explicit FSSAI standardized-food basis or ingredient permission has been identified for this ingredient.',
    alternatives,standardizedIngredient,
    next:hasOtherFssaiBasis
      ? 'The finished product may be assessed under Chapter 2.12 after all Proprietary Food conditions are checked.'
@@ -5148,7 +5148,7 @@ function proprietaryAlternativeHtml(r){
      +'<br><small>'+esc(identity.note)+'</small>');
  }
  if(bits.length)return bits.join('<br><br>');
- return '<span class="status-warn">No alternative exact FSSAI use permission or standardized-food basis found in the loaded data.</span>';
+ return '<span class="status-warn">No alternative explicit FSSAI use permission or standardized-food basis identified.</span>';
 }
 function proprietaryIngredientCards(rows){
  return '<div style="margin-top:12px">'+rows.map(r=>{
@@ -5191,13 +5191,13 @@ function renderProprietaryFormula(){
    totals.innerHTML='';
    status.className='notice';
    status.innerHTML=standard
-     ? '<b>Confirmed standard:</b> '+esc(standard.name)+'. Add ingredients one by one with quantity.'
-     : '<b>Confirm the nearest/applicable FSSAI standard first.</b> PMSV will check each entered ingredient against that standard.';
+     ? '<b>Confirmed regulatory identity:</b> '+esc(standard.name)+'. Add ingredients one by one with quantity.'
+     : '<b>Confirm the nearest/applicable FSSAI standard or FoSCoS category first.</b> PMSV will check each entered ingredient against that regulatory identity.';
    return;
  }
  const totalKg=totalFormulaKg();
  totals.classList.remove('hidden');
- totals.innerHTML='<b>Total formulation quantity:</b> '+fmt(totalKg,6)+' kg &nbsp;·&nbsp; <b>Confirmed standard:</b> '+esc(standard?.name||'not confirmed');
+ totals.innerHTML='<b>Total formulation quantity:</b> '+fmt(totalKg,6)+' kg &nbsp;·&nbsp; <b>Confirmed regulatory identity:</b> '+esc(standard?.name||'not confirmed');
  list.className='';
  list.innerHTML=items.map((item,i)=>{
    const u=usageForIngredient(item);
@@ -5206,7 +5206,7 @@ function renderProprietaryFormula(){
      pre.categoryRoute&&pre.allowed?'Explicitly named in confirmed FoSCoS category':
      pre.categoryRoute&&pre.categoryAllowsOtherIngredients?'Not expressly named; separate FSSAI basis will be checked':
      pre.allowed?'Explicitly listed in confirmed standard':
-     pre.hasExplicitIngredientStructure?'Not found in confirmed standard list':'Standard ingredient list not fully machine-readable';
+     pre.hasExplicitIngredientStructure?'Not found in confirmed standard ingredient provisions':'No explicit ingredient permission identified in the applicable FSSAI standard';
    return '<div class="ingredient-row"><div><b>'+esc(item.name)+'</b><br><small>'+fmt(Number(item.qty),6)+' '+esc(item.unit||'kg')+' · '+fmt(u.percent,4)+'% w/w<br>'+fmt(u.mgkg,2)+' mg/kg</small></div>'
      +'<div><small><b>Immediate standard check:</b> '+esc(preText)+'</small></div>'
      +'<div class="ingredient-actions"><button class="ingredient-edit" type="button" data-edit-proprietary-ingredient="'+i+'">Edit</button><button class="ingredient-remove" type="button" data-remove-proprietary-ingredient="'+i+'">Remove</button></div></div>';
@@ -5305,7 +5305,7 @@ function evaluateProprietaryRoute(){
      +'<b>Confirmed standard:</b> '+esc(standardProduct.name)
      +(standardProduct.fssr?' · <span class="clause">'+esc(standardProduct.fssr)+'</span>':'')
      +cards
-     +'<br><b>Reason:</b> at least one ingredient cannot be conclusively checked because the confirmed standard’s exact ingredient structure or quantity basis is not fully machine-readable/loaded. PMSV will not infer “not allowed” from missing data.';
+     +'<br><b>Reason:</b> at least one ingredient has no explicit permission identified in the applicable FSSAI standard, or a quantity-dependent condition is incomplete. PMSV does not treat absence of an explicit provision as “not allowed”; it checks other applicable FSSAI provisions before deciding the route.';
    return;
  }
  if(hardFail||proprietaryPending||unresolved){
@@ -5315,7 +5315,7 @@ function evaluateProprietaryRoute(){
      +(standardProduct.fssr?' · <span class="clause">'+esc(standardProduct.fssr)+'</span>':'')
      +cards
      +'<br><b>Route decision:</b> '+(hardFail?'At least one quantitative FSSAI condition fails. ':proprietaryPending?'At least one quantity-dependent FSSAI check is incomplete. ':'')
-     +(unresolved?'At least one ingredient has no exact loaded FSSAI regulatory basis. ':'')
+     +(unresolved?'At least one ingredient has no explicit FSSAI regulatory basis identified. ':'')
      +'Resolve these points before Chapter 2.12 assessment.';
    if(guide)guide.classList.remove('hidden');
    return;
@@ -5331,7 +5331,7 @@ function evaluateProprietaryRoute(){
    +'<br><b>Proposed Proprietary FCS:</b> '+esc(proprietaryFcs)
    +(category?' — '+esc(category.name):'')
    +(subcat?'<br><b>Sub-category:</b> '+esc(subcat.code)+' — '+esc(subcat.name):'')
-   +'<br><b>Chapter 2.12 route:</b> the ingredients that fall outside the confirmed standard have another loaded FSSAI basis; proceed to 2.12.1(2) ingredient eligibility and 2.12.1(3) Appendix A checks, followed by microbiology, contaminants, processing aids, labelling and claims.'
+   +'<br><b>Chapter 2.12 route:</b> the ingredients that fall outside the confirmed standard have another applicable FSSAI basis; proceed to 2.12.1(2) ingredient eligibility and 2.12.1(3) Appendix A checks, followed by microbiology, contaminants, processing aids, labelling and claims.'
    +'<br><br><b>Not a final compliance pass.</b>';
  if(guide)guide.classList.remove('hidden');
  renderProprietaryAppendixA();
