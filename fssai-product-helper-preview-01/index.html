@@ -214,7 +214,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   <div class="item"><b>Microbiology · 2.12.1(4)</b><small>Apply Appendix B for the selected food category. Where no specific standard exists, the pathogenic-microorganism safety fallback still applies.</small></div>
   <div class="item"><b>Other FSSAI regulations · 2.12.1(5)</b><small>Contaminants, processing aids, labelling/display, advertising and claims and every other applicable FSSAI requirement remain part of the final assessment.</small></div>
 </div>
-<div class="notice"><b>No false pass:</b> completing the ingredient gate can identify a potential Proprietary Food route, but PMSV will not call the formulation compliant until all linked regulatory layers are machine-validated.</div>
+<div class="notice"><b>No false pass:</b> an ingredient outside the confirmed standard can trigger the Proprietary Food route when that ingredient independently satisfies clause 2.12.1(2). A route trigger is not a final compliance pass; all linked regulatory layers still apply.</div>
 </div>
 
 <div class="card">
@@ -5192,20 +5192,69 @@ function proprietaryAlternativeHtml(r){
  if(bits.length)return bits.join('<br><br>');
  return '<span class="status-warn">No alternative explicit FSSAI use permission or standardized-food basis identified.</span>';
 }
+function proprietaryStandardDecision(r){
+ const s=String(r?.status||'');
+ if(s==='allowed_standard')return {label:'FITS CONFIRMED STANDARD',cls:'status-good',detail:'This ingredient/additive does not create a Proprietary-route deviation at this stage.'};
+ if(s==='proprietary_trigger')return {label:'OUTSIDE CONFIRMED STANDARD',cls:'status-warn',detail:'This is a formulation deviation from the confirmed standardized product and therefore triggers Proprietary Food assessment, provided the separate ingredient-eligibility gate passes.'};
+ if(s==='limit_fail_standard')return {label:'FAILS CONFIRMED STANDARD LIMIT',cls:'status-bad',detail:'The quantity does not comply with the confirmed standardized-product route.'};
+ if(s==='quantity_pending_standard')return {label:'CONFIRMED STANDARD CHECK INCOMPLETE',cls:'status-warn',detail:'A quantity-dependent condition still needs to be resolved.'};
+ if(s==='standard_check_incomplete')return {label:'STANDARD PERMISSION NOT DETERMINED',cls:'status-warn',detail:'The applicable FSSAI product standard does not provide an explicit ingredient conclusion in the current rule used for this assessment.'};
+ if(s==='allowed_category'||s==='allowed_category_other_basis')return {label:'FITS CONFIRMED FoSCoS CATEGORY',cls:'status-good',detail:'The confirmed identity is a FoSCoS regulatory category rather than a vertical FSSR product standard.'};
+ if(s==='limit_fail_category')return {label:'SELECTED-FCS LIMIT FAILED',cls:'status-bad',detail:'The selected horizontal FCS permission exists but the entered quantity exceeds its applicable limit.'};
+ if(s==='quantity_pending_category')return {label:'SELECTED-FCS CHECK INCOMPLETE',cls:'status-warn',detail:'The selected-FCS quantity condition still needs to be resolved.'};
+ if(s==='proprietary_limit_fail'||s==='proprietary_quantity_pending')return {label:'OUTSIDE CONFIRMED STANDARD',cls:'status-warn',detail:'The formulation deviation triggers Proprietary review, but the proposed Proprietary FCS still has a separate quantity condition to resolve.'};
+ if(s==='unresolved')return {label:'OUTSIDE / NOT ESTABLISHED IN CONFIRMED STANDARD',cls:'status-warn',detail:'The ingredient does not establish compliance with the confirmed standard; the separate Proprietary ingredient-eligibility gate decides whether it may be used.'};
+ return {label:'REVIEW REQUIRED',cls:'status-warn',detail:'Review the applicable FSSAI provision.'};
+}
+function proprietaryEligibilityDecision(r){
+ const s=String(r?.status||'');
+ if(s==='proprietary_trigger')return {label:'PASS — SUPPORTS PROPRIETARY ROUTE',cls:'status-good',detail:'A separate FSSAI standardized/permitted ingredient basis has been identified for clause 2.12.1(2).'};
+ if(s==='allowed_category'||s==='allowed_category_other_basis')return {label:'PASS AT INGREDIENT-BASIS STAGE',cls:'status-good',detail:'The ingredient has an applicable category/independent FSSAI basis; continue all remaining Chapter 2.12 checks.'};
+ if(s==='proprietary_limit_fail'||s==='limit_fail_category')return {label:'FAIL — QUANTITY NOT PERMITTED',cls:'status-bad',detail:'The applicable Appendix A permission is exceeded at the entered quantity.'};
+ if(s==='proprietary_quantity_pending'||s==='quantity_pending_category')return {label:'PENDING — QUANTITY CHECK INCOMPLETE',cls:'status-warn',detail:'The use permission cannot be concluded until the quantity basis is completed.'};
+ if(s==='unresolved')return {label:'UNRESOLVED — DOES NOT YET SATISFY 2.12.1(2)',cls:'status-bad',detail:'No standardized/permitted FSSAI ingredient basis has been established. A FoSCoS identity with FSSR N.A. alone is not counted as permission.'};
+ if(s==='standard_check_incomplete')return {label:'NOT YET REACHED',cls:'status-warn',detail:'The standardized-product applicability question must be resolved before PMSV can rely on the Proprietary route.'};
+ if(s==='allowed_standard'||s==='limit_fail_standard'||s==='quantity_pending_standard')return {label:'NOT THE CURRENT ROUTE',cls:'status-warn',detail:'The confirmed standardized-product route remains the first regulatory route to resolve for this ingredient.'};
+ return {label:'REVIEW REQUIRED',cls:'status-warn',detail:'Review the applicable Chapter 2.12 ingredient basis.'};
+}
+function proprietaryAssessmentSummaryHtml(rows){
+ const triggers=rows.filter(x=>x.status==='proprietary_trigger').length;
+ const unresolved=rows.filter(x=>x.status==='unresolved').length;
+ const quantitativeFails=rows.filter(x=>['proprietary_limit_fail','limit_fail_category','limit_fail_standard'].includes(x.status)).length;
+ const pending=rows.filter(x=>['standard_check_incomplete','proprietary_quantity_pending','quantity_pending_category','quantity_pending_standard'].includes(x.status)).length;
+ const standardFit=rows.filter(x=>x.status==='allowed_standard').length;
+ return '<div class="notice '+((triggers&&!unresolved&&!quantitativeFails&&!pending)?'oknote':'')+'" style="margin-top:10px">'
+   +'<b>Ingredient route summary:</b> '
+   +standardFit+' fit confirmed standard · '
+   +triggers+' Proprietary trigger'+(triggers===1?'':'s')+' · '
+   +unresolved+' unresolved 2.12.1(2) basis · '
+   +quantitativeFails+' quantitative failure'+(quantitativeFails===1?'':'s')+' · '
+   +pending+' pending check'+(pending===1?'':'s')
+   +'</div>';
+}
 function proprietaryIngredientCards(rows){
- return '<div style="margin-top:12px">'+rows.map(r=>{
-   const cls=(r.status==='allowed_standard'||r.status==='allowed_category'||r.status==='allowed_category_other_basis'||r.status==='proprietary_trigger')?'status-good':
-     /fail/.test(r.status)?'status-bad':'status-warn';
+ return proprietaryAssessmentSummaryHtml(rows)
+   +'<div style="margin-top:12px">'+rows.map(r=>{
+   const std=proprietaryStandardDecision(r);
+   const prop=proprietaryEligibilityDecision(r);
    const u=r.usage||{};
    const item=r.item||{};
-   return '<div class="item" style="margin-bottom:10px">'
-     +'<b>'+esc(r.name)+'</b><small><b>Quantity:</b> '+fmt(Number(item.qty||0),6)+' '+esc(item.unit||'kg')
+   return '<div class="item" style="margin-bottom:12px">'
+     +'<b>'+esc(r.name)+'</b>'
+     +'<small><b>Quantity:</b> '+fmt(Number(item.qty||0),6)+' '+esc(item.unit||'kg')
      +' · '+fmt(Number(u.percent||0),4)+'% w/w · '+fmt(Number(u.mgkg||0),2)+' mg/kg</small>'
-     +'<small><b>Confirmed standard/category check:</b> <span class="'+cls+'">'+esc(r.standardStatus)+'</span><br>'
-     +'<b>Standard / clause:</b> <span class="clause">'+esc(r.standardBasis)+'</span><br>'
-     +esc(r.detail||'')+'</small>'
+     +'<div class="notice" style="margin:10px 0 8px">'
+       +'<b>1. Against confirmed standard/category:</b> <span class="'+std.cls+'">'+esc(std.label)+'</span><br>'
+       +'<small>'+esc(std.detail)+'</small><br>'
+       +'<b>Applicable standard/category basis:</b> <span class="clause">'+esc(r.standardBasis||'—')+'</span>'
+       +(r.detail?'<br><small>'+esc(r.detail)+'</small>':'')
+     +'</div>'
+     +'<div class="notice '+(prop.cls==='status-good'?'oknote':'')+'" style="margin:8px 0">'
+       +'<b>2. Chapter 2.12 ingredient eligibility:</b> <span class="'+prop.cls+'">'+esc(prop.label)+'</span><br>'
+       +'<small>'+esc(prop.detail)+'</small>'
+     +'</div>'
      +'<small>'+proprietaryAlternativeHtml(r)+'</small>'
-     +'<small><b>Route effect:</b> '+esc(r.next||'')+'</small>'
+     +'<small><b>Next regulatory action:</b> '+esc(r.next||'')+'</small>'
      +'</div>';
  }).join('')+'</div>';
 }
@@ -5345,7 +5394,7 @@ function evaluateProprietaryRoute(){
  if(standardIncomplete){
    out.className='notice';
    out.innerHTML=(proprietaryTriggers.length
-       ? '<b>Proprietary route trigger identified, but the full eligibility decision is still incomplete.</b><br>'
+       ? '<b>Proprietary route trigger confirmed; another ingredient/regulatory check is still incomplete.</b><br>'
          +'<b>'+proprietaryTriggers.length+' ingredient'+(proprietaryTriggers.length===1?'':'s')+' fall outside the confirmed standard and have a separate FSSAI basis.</b><br>'
        : '<b>Standardized-vs-Proprietary decision is still incomplete.</b><br>')
      +'<b>Confirmed standard:</b> '+esc(standardProduct.name)
@@ -5357,9 +5406,9 @@ function evaluateProprietaryRoute(){
  if(hardFail||proprietaryPending||unresolved.length){
    out.className='notice';
    out.innerHTML=(proprietaryTriggers.length
-       ? '<b>Proprietary route is triggered, but final Chapter 2.12 ingredient eligibility is not yet complete.</b><br>'
+       ? '<b>Proprietary route trigger confirmed; final Chapter 2.12 ingredient eligibility still has a blocker.</b><br>'
          +'<b>'+proprietaryTriggers.length+' ingredient'+(proprietaryTriggers.length===1?'':'s')+' fall outside the confirmed standard and have a separate applicable FSSAI basis.</b><br>'
-       : '<b>The formulation cannot yet reach a positive Proprietary Food eligibility conclusion.</b><br>')
+       : '<b>No positive Proprietary Food eligibility conclusion yet.</b><br>')
      +'<b>Confirmed standard checked first:</b> '+esc(standardProduct.name)
      +(standardProduct.fssr?' · <span class="clause">'+esc(standardProduct.fssr)+'</span>':'')
      +cards
@@ -5372,7 +5421,7 @@ function evaluateProprietaryRoute(){
 
  if(proprietaryTriggers.length&&!standardIncomplete&&!hardFail&&!proprietaryPending&&!unresolved.length){
    out.className='notice oknote';
-   out.innerHTML='<b>Proprietary Food route supported by the formulation.</b><br>'
+   out.innerHTML='<b>Proprietary Food route supported at the ingredient-routing stage.</b><br>'
      +'<b>Confirmed standardized product checked first:</b> '+esc(standardProduct.name)
      +(standardProduct.fssr?' · <span class="clause">'+esc(standardProduct.fssr)+'</span>':'')
      +'<br><b>'+proprietaryTriggers.length+' ingredient'+(proprietaryTriggers.length===1?' is':'s are')+' outside the confirmed standard and have a separate FSSAI/FoSCoS basis.</b>'
