@@ -799,6 +799,16 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <div class="checker-grid">
   <div class="field">
+    <label>Finished product quantity (kg)</label>
+    <input id="nutritionFinishedKg" type="number" min="0.001" step="0.001" placeholder="e.g. 91.5">
+    <small>Enter the actual finished-product yield after processing. Leave blank only when finished mass equals the input formulation mass.</small>
+  </div>
+  <div class="field">
+    <label>Process yield</label>
+    <div id="nutritionYieldDisplay" class="recognized">100.00%</div>
+    <small>Input formulation mass ÷ finished product mass is used to express nutrients on the finished-product basis.</small>
+  </div>
+  <div class="field">
     <label>Serving size (ml)</label>
     <input id="nutritionServingMl" type="number" min="1" step="1" value="250">
     <small>Used for the per-serving nutrition column and %RDA calculation.</small>
@@ -2719,30 +2729,39 @@ function nutritionEnergyPer100g(profile){
  const value=profile?.per_100g?.energy_kcal;
  return isNutritionNumber(value)?value:null;
 }
+function nutritionFinishedMassG(inputMassG){
+ const kg=Number(document.getElementById('nutritionFinishedKg')?.value);
+ return Number.isFinite(kg)&&kg>0?kg*1000:inputMassG;
+}
+function fssaiEnergyFromPanel(n){
+ if(!window.PMSVFssaiNutrition)return null;
+ return window.PMSVFssaiNutrition.energy({
+   carbohydrate_g:n.carbohydrate_g,
+   protein_g:n.protein_g,
+   total_fat_g:n.total_fat_g,
+   dietary_fibre_g:n.dietary_fibre_g
+ });
+}
 function calculateNutrition(){
- const totalG=totalFormulaKg()*1000;
+ const inputG=totalFormulaKg()*1000;
+ const finishedG=nutritionFinishedMassG(inputG);
  const keys=['energy_kcal','protein_g','carbohydrate_g','total_sugars_g','added_sugars_g','total_fat_g','saturated_fat_g','trans_fat_g','cholesterol_mg','sodium_mg','dietary_fibre_g'];
  const required=Array.isArray(nutritionDb?.required_label_fields)&&nutritionDb.required_label_fields.length?nutritionDb.required_label_fields:keys;
- const totals={};
- const verifiedMass={};
+ const totals={},verifiedMass={};
  keys.forEach(k=>{totals[k]=0;verifiedMass[k]=0;});
  const matched=[],unmatched=[];
  let profileCoveredG=0;
-
  formulationIngredients.forEach(item=>{
    const g=qtyToKg(item.qty,item.unit)*1000;
    if(!(g>0))return;
    const profile=nutritionProfileFor(item.name);
-   if(!profile){
-     unmatched.push({item,g});
-     return;
-   }
+   if(!profile){unmatched.push({item,g});return;}
    const p=profile.per_100g||{};
    const verified=new Set(Array.isArray(profile.verified_fields)?profile.verified_fields:[]);
    const factor=g/100;
    keys.forEach(k=>{
-     if(!verified.has(k))return;
-     const value=k==='energy_kcal'?nutritionEnergyPer100g(profile):p[k];
+     if(k==='energy_kcal'||!verified.has(k))return;
+     const value=p[k];
      if(!isNutritionNumber(value))return;
      totals[k]+=value*factor;
      verifiedMass[k]+=g;
@@ -2750,12 +2769,13 @@ function calculateNutrition(){
    profileCoveredG+=g;
    matched.push({item,g,profile});
  });
-
  const per100g={},coverageByField={};
- keys.forEach(k=>{
-   coverageByField[k]=totalG>0?(verifiedMass[k]/totalG)*100:0;
-   per100g[k]=totalG>0&&verifiedMass[k]>=totalG-0.000001?(totals[k]*100/totalG):null;
+ keys.filter(k=>k!=='energy_kcal').forEach(k=>{
+   coverageByField[k]=inputG>0?(verifiedMass[k]/inputG)*100:0;
+   per100g[k]=inputG>0&&finishedG>0&&verifiedMass[k]>=inputG-0.000001?(totals[k]*100/finishedG):null;
  });
+ per100g.energy_kcal=fssaiEnergyFromPanel(per100g);
+ coverageByField.energy_kcal=['carbohydrate_g','protein_g','total_fat_g'].every(k=>coverageByField[k]>=99.999999)?100:0;
  const density=formulaDensity();
  const per100ml={},perServe={};
  const serveFactor=nutritionServingMl()/100;
@@ -2764,11 +2784,14 @@ function calculateNutrition(){
    perServe[k]=per100ml[k]===null?null:per100ml[k]*serveFactor;
  });
  const incompleteFields=required.filter(k=>coverageByField[k]<99.999999);
-
+ const yieldPct=inputG>0&&finishedG>0?(finishedG/inputG)*100:null;
+ const yd=document.getElementById('nutritionYieldDisplay');
+ if(yd)yd.textContent=yieldPct===null?'—':fmt(yieldPct,2)+'%';
  return {
-   totalG,coveredG:profileCoveredG,coveragePct:totalG>0?(profileCoveredG/totalG)*100:0,
+   totalG:inputG,inputG,finishedG,yieldPct,coveredG:profileCoveredG,coveragePct:inputG>0?(profileCoveredG/inputG)*100:0,
    matched,unmatched,per100g,per100ml,perServe,density,coverageByField,incompleteFields,
-   complete:totalG>0&&unmatched.length===0&&incompleteFields.length===0
+   energyBasis:'FSSAI conversion factors; IFCT energy is not directly aggregated',
+   complete:inputG>0&&finishedG>0&&unmatched.length===0&&incompleteFields.length===0
  };
 }
 function nutritionRdaPercent(key,value){
@@ -6734,4 +6757,5 @@ renderConversions();
 
 
 </script>
+<script src="./fssai-nutrition-v476.js?v=476"></script>
 </body></html>
