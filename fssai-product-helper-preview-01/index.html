@@ -117,17 +117,12 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     <small>Use the generic food name, not a brand name.</small>
   </div>
   <div class="field">
-    <label>2. Excluded / separately regulated class</label>
+    <label>2. Proprietary Food eligibility</label>
     <select id="proprietaryExcludedClass">
-      <option value="">None / not known to be excluded</option>
-      <option value="novel">Novel food</option>
-      <option value="fsdu">Food for special dietary use</option>
-      <option value="fsmp">Food for special medical purpose</option>
-      <option value="functional">Functional food</option>
-      <option value="nutraceutical">Nutraceutical</option>
-      <option value="health-supplement">Health supplement</option>
-      <option value="other-notified">Other food article separately notified / excluded</option>
+      <option value="">Eligible for Chapter 2.12 screening</option>
+      <option value="excluded">Product belongs to a separately regulated / excluded class</option>
     </select>
+    <small>Novel food, FSDU, FSMP, functional food, nutraceutical and health supplement are not Proprietary Food under 2.12.1(1). If applicable, stop this route and use the relevant FSSAI regulation.</small>
   </div>
   <div class="field">
     <label>3. Nearest FCS category</label>
@@ -4525,9 +4520,8 @@ function evaluateProprietaryRoute(){
    return;
  }
  if(excluded){
-   const label=document.getElementById('proprietaryExcludedClass')?.selectedOptions?.[0]?.textContent||'Selected class';
    out.className='notice';
-   out.innerHTML='<b>Do not use the Chapter 2.12 Proprietary Food route for this screening.</b><br>'+esc(label)+' is an excluded / separately regulated class under the Chapter 2.12 definition. Use the applicable separate FSSAI regulation or approval route.';
+   out.innerHTML='<b>Not eligible for assessment as Proprietary Food.</b><br>Novel food, food for special dietary use, food for special medical purpose, functional food, nutraceutical and health supplement are excluded from the Chapter 2.12 Proprietary Food definition. Use the applicable separate FSSAI regulatory or approval route.';
    return;
  }
  if(!cat){
