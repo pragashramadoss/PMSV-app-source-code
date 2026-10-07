@@ -5144,18 +5144,22 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
    };
  }
 
- const hasOtherFssaiBasis=alternatives.length>0||!!standardizedIngredient||!!foscosIdentity;
+ const hasOtherFssaiBasis=alternatives.length>0||!!standardizedIngredient;
  return {
    name,item,status:hasOtherFssaiBasis?'proprietary_trigger':'unresolved',kind:'non_additive',usage,
    standardStatus:'Outside confirmed standard ingredient provisions — supports Proprietary route',
    standardBasis:(standardProduct?.fssr||standardProduct?.name||'Confirmed standard'),
    detail:hasOtherFssaiBasis
-     ? 'The ingredient does not fit the confirmed standardized-product ingredient provisions, but it has a separate applicable FSSAI basis. This is a Proprietary-route trigger, subject to all Chapter 2.12 conditions.'
-     : 'No other explicit FSSAI standardized-food basis or ingredient permission has been identified for this ingredient.',
+     ? 'The ingredient does not fit the confirmed standardized-product ingredient provisions, but it has a separate applicable FSSAI standardized/permitted basis. This is a Proprietary-route trigger, subject to all Chapter 2.12 conditions.'
+     : (foscosIdentity&&!hasRealFssrStandard(foscosIdentity)
+       ? 'A FoSCoS product identity is present, but its FSSR field is N.A. PMSV therefore treats it as identity evidence only, not as proof that clause 2.12.1(2) is satisfied.'
+       : 'No other explicit FSSAI standardized-food basis or ingredient permission has been identified for this ingredient.'),
    alternatives,standardizedIngredient,foscosIdentity,
    next:hasOtherFssaiBasis
      ? 'This ingredient supports moving the finished formulation out of the confirmed standardized-product route and into Chapter 2.12 assessment, subject to all remaining Proprietary Food conditions.'
-     : 'Do not conclude Proprietary eligibility until an exact FSSAI regulatory basis is established.'
+     : (foscosIdentity&&!hasRealFssrStandard(foscosIdentity)
+       ? 'Proprietary route may already be triggered by other ingredients, but this ingredient still needs a standardized/permitted FSSAI basis before the 2.12.1(2) ingredient gate can pass.'
+       : 'Do not conclude Proprietary eligibility until an exact FSSAI standardized/permitted ingredient basis is established.')
  };
 }
 function proprietaryAlternativeHtml(r){
@@ -5415,7 +5419,7 @@ function evaluateProprietaryRoute(){
      +(standardProduct.fssr?' · <span class="clause">'+esc(standardProduct.fssr)+'</span>':'')
      +cards
      +'<br><b>Remaining blocker:</b> '+(hardFail?'At least one quantitative FSSAI condition fails. ':proprietaryPending?'At least one quantity-dependent FSSAI check is incomplete. ':'')
-     +(unresolved.length?'At least one other ingredient still has no standardized/permitted FSSAI basis identified for clause 2.12.1(2). A FoSCoS identity with FSSR N.A. is shown as evidence but is not counted as permission. ':'')
+     +(unresolved.length?'At least one other ingredient still has no standardized/permitted FSSAI basis identified for clause 2.12.1(2). A FoSCoS catalogue identity with FSSR N.A. is shown as identity evidence only and is not counted as ingredient permission. ':'')
      +'The Proprietary trigger itself is not cancelled; resolve only the remaining blocker(s).';
    if(guide)guide.classList.remove('hidden');
    return;
