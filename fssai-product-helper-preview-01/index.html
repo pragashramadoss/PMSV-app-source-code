@@ -109,7 +109,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="proprietary" class="view hidden">
 <div class="card">
 <div class="section-title"><h2>Chapter 2.12 — Proprietary Food route</h2><span>Ingredient-led deterministic screening</span></div>
-<div class="notice oknote"><b>Build the actual formulation first.</b> Add ingredients one by one with quantity and unit. PMSV uses the same shared formulation data for Proprietary Food screening, nutrition, contaminants, labelling and the other downstream checks.</div>
+<div class="notice oknote"><b>Build the actual formulation first.</b> Add ingredients one by one with quantity and unit. PMSV first checks whether the finished formulation still conforms to an applicable FSSAI standardized product. If it does, the standardized route remains primary. If the formulation genuinely falls outside that standard's defined identity/composition, PMSV screens the Proprietary Food route. A mere deviation in quality parameters of a standardized food is not by itself treated as Proprietary Food.</div>
 
 <div class="checker-grid">
   <div class="field">
@@ -146,7 +146,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     <input id="proprietaryIngredientName" autocomplete="off" placeholder="Start typing an ingredient">
     <div id="proprietaryIngredientAutocomplete" class="autocomplete-list hidden"></div>
   </div>
-  <small>Add one ingredient at a time. Matching local FSSAI regulatory candidates are suggested where available. IFCT is not used to decide Proprietary Food ingredient eligibility.</small>
+  <small>Add one ingredient at a time. PMSV checks exact FSSAI regulatory bases and exact ICMR-NIN IFCT 2017 food/ingredient identities for non-additive ingredient eligibility under Regulation 2.12.1(2). Additives are assessed separately under Appendix A.</small>
 </div>
 
 <div class="checker-grid" style="margin-top:10px">
@@ -4741,9 +4741,24 @@ function proprietaryAppendixIngredientHit(name,fcs){
  }
  return null;
 }
+const IFCT_2017_OFFICIAL_URL='https://www.nin.res.in/ebooks/IFCT2017_16122024.pdf';
+function exactIfctIngredientProfile(name){
+ if(!nutritionDb||!Array.isArray(nutritionDb.profiles))return null;
+ const n=normIngredient(name);
+ if(!n)return null;
+ return nutritionDb.profiles.find(p=>{
+   if(p?.active_for_calculation!==true||p?.source_authority!=='ICMR-NIN')return false;
+   const names=[...(Array.isArray(p.names)?p.names:[]),p.display_name].filter(Boolean);
+   return names.some(x=>normIngredient(x)===n);
+ })||null;
+}
 function proprietaryIngredientCatalog(){
  const rows=[];
  (ingredientCatalog||[]).forEach(x=>rows.push({name:x.name,label:x.label||x.name,source:x.source||'Stored FSSAI regulatory data'}));
+ (nutritionDb?.profiles||[]).filter(p=>p?.active_for_calculation===true&&p?.source_authority==='ICMR-NIN').forEach(p=>{
+   const name=String(p.display_name||p.names?.[0]||'').trim();
+   if(name)rows.push({name,label:name,source:'ICMR-NIN IFCT 2017'+(p.ifct_code?' · '+p.ifct_code:'')});
+ });
  (typeof productCatalog==='function'?productCatalog():[]).forEach(x=>rows.push({name:x.name,label:x.name,source:x.fssr?'FSSAI standardized product · '+x.fssr:'FSSAI / FoSCoS standardized product'}));
  (chapterRuleDbs||[]).forEach(db=>ruleDbStandards(db).forEach(st=>ingredientStringsFromStandard(st).forEach(row=>{
    rows.push({name:row.name,label:row.name,source:(st.name||'FSSAI standard')+' · '+String(st.key||db.chapter||'')});
@@ -4873,7 +4888,7 @@ function standardIngredientPermission(product,name){
      fpc18:fpc,
      standard:{key:fpc.code,name:fpc.name},
      row:descriptor?{name:descriptor,field:'fpc18_descriptor'}:null,
-     requirement:descriptor?'Explicitly named in the FSSAI FPC 18 category descriptor':'Not expressly named; assess under the category’s “other ingredients” wording using a separate FSSAI basis.'
+     requirement:descriptor?'Explicitly named in the FSSAI FPC 18 category descriptor':'Not expressly named; assess under the category’s “other ingredients” wording using a separate FSSAI/IFCT basis.'
    };
  }
  const n=normIngredient(name);
@@ -5024,6 +5039,36 @@ function proprietaryQuantityCheck(item,appendix){
  const q={appendix:{limit:String(limit),condition:String(condition)}};
  return checkUsageAgainstRule(item,q);
 }
+function proprietaryAppendixCategoriesForIngredient(name){
+ const n=normIngredient(name);
+ if(!n||!appendixCoreDb)return [];
+ const rows=[];
+ const sets=appendixCoreDb.loaded_permission_sets||{};
+ Object.keys(sets).forEach(code=>{
+   const resolved=appendixEntriesForFcs(code);
+   if(resolved?.status!=='loaded')return;
+   (resolved.entries||[]).forEach(entry=>{
+     const direct=normIngredient(entry?.name)===n||normIngredient(entry?.ins)===n;
+     const member=direct?null:(appendixCoreDb?.annexure_1_groups?.[entry?.name]||[]).find(m=>normIngredient(m?.name)===n||normIngredient(m?.ins)===n)||null;
+     if(!direct&&!member)return;
+     rows.push({
+       fcs:String(code),
+       category:String(sets[code]?.name||entry?.category_name||''),
+       additive:String(member?.name||entry?.name||name),
+       ins:String(member?.ins||entry?.ins||''),
+       limit:String(entry?.limit||entry?.maximum||entry?.max_level||entry?.maximum_level||''),
+       condition:String(entry?.condition||entry?.conditions||''),
+       appliedFrom:String(entry?.applied_from||resolved.resolvedFcs||code)
+     });
+   });
+ });
+ const seen=new Set();
+ return rows.filter(x=>{
+   const key=[x.fcs,x.additive,x.ins,x.limit,x.condition].join('|');
+   if(seen.has(key))return false;
+   seen.add(key);return true;
+ }).sort((a,b)=>a.fcs.localeCompare(b.fcs,undefined,{numeric:true}));
+}
 function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
  const name=String(item?.name||'').trim();
  const usage=usageForIngredient(item);
@@ -5035,7 +5080,10 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
  const alternatives=allStandardIngredientPermissions(name);
  const standardizedIngredient=exactStandardizedIngredientProduct(name);
  const foscosIdentity=exactFoscosIngredientIdentity(name);
+ const ifctIngredient=exactIfctIngredientProfile(name);
+ const appendixCategories=proprietaryAppendixCategoriesForIngredient(name);
  const hasSeparateFssaiBasis=alternatives.length>0||!!standardizedIngredient;
+ const hasSeparateIngredientBasis=hasSeparateFssaiBasis||!!ifctIngredient;
 
  if(fpc){
    if(activeAdditive){
@@ -5049,7 +5097,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
        detail:(activeAdditive.member?.name||activeAdditive.entry?.name||name)
          +(activeAdditive.member?.ins||activeAdditive.entry?.ins?' · INS '+String(activeAdditive.member?.ins||activeAdditive.entry?.ins):'')
          +(check?.value!=null?' · calculated '+fmt(check.value,3)+' '+check.unit:''),
-       alternatives,standardizedIngredient,foscosIdentity,quantityCheck:check,fpc18:fpc,
+       alternatives,standardizedIngredient,foscosIdentity,ifctIngredient,appendixCategories,quantityCheck:check,fpc18:fpc,
        next:fail?'Reformulate or change the selected lawful FCS route.':
          pending?'Complete the quantity basis before deciding the route.':
          'Ingredient clears the selected-FCS additive gate; continue Chapter 2.12 and other applicable checks.'
@@ -5061,27 +5109,27 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
        standardStatus:'Explicitly described in confirmed FoSCoS category',
        standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A.',
        detail:standardCheck.requirement,
-       alternatives,standardizedIngredient,foscosIdentity,fpc18:fpc,
+       alternatives,standardizedIngredient,foscosIdentity,ifctIngredient,appendixCategories,fpc18:fpc,
        next:'Ingredient fits the confirmed category descriptor. Because this is not a vertical FSSR standard, continue the Chapter 2.12 ingredient-basis assessment rather than treating the product as standardized.'
      };
    }
-   if(standardCheck.categoryAllowsOtherIngredients&&hasSeparateFssaiBasis){
+   if(standardCheck.categoryAllowsOtherIngredients&&hasSeparateIngredientBasis){
      return {
        name,item,status:'allowed_category_other_basis',kind:'non_additive',usage,
-       standardStatus:'Fits “other ingredients” route with separate FSSAI basis',
-       standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A. + separate FSSAI ingredient basis',
-       detail:'Not expressly named in the category descriptor, but the category permits other ingredients and PMSV found another explicit FSSAI food/use basis. Chapter 3 identity/purity specifications are excluded from this eligibility decision.',
-       alternatives,standardizedIngredient,foscosIdentity,fpc18:fpc,
-       next:'Continue Chapter 2.12 assessment using the separate FSSAI basis shown below.'
+       standardStatus:'Fits “other ingredients” route with separate FSSAI/IFCT basis',
+       standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A. + Regulation 2.12.1(2) ingredient basis',
+       detail:'Not expressly named in the category descriptor, but the category permits other ingredients and PMSV found an exact FSSAI food/use basis or exact ICMR-NIN IFCT 2017 food/ingredient identity. Chapter 3 identity/purity specifications are excluded from this eligibility decision.',
+       alternatives,standardizedIngredient,foscosIdentity,ifctIngredient,appendixCategories,fpc18:fpc,
+       next:'Continue Chapter 2.12 assessment using the exact FSSAI and/or IFCT 2017 basis shown below.'
      };
    }
    return {
      name,item,status:'unresolved',kind:'non_additive',usage,
      standardStatus:'Ingredient basis not yet established',
      standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A.',
-     detail:'The ingredient is not expressly named in the category descriptor and no separate explicit FSSAI basis has been identified.',
-     alternatives,standardizedIngredient,foscosIdentity,fpc18:fpc,
-     next:'Do not conclude Proprietary eligibility until the ingredient’s FSSAI basis is established.'
+     detail:'The ingredient is not expressly named in the category descriptor and no exact FSSAI standardized/permitted basis or exact ICMR-NIN IFCT 2017 identity has been identified.',
+     alternatives,standardizedIngredient,foscosIdentity,ifctIngredient,appendixCategories,fpc18:fpc,
+     next:'Do not conclude Proprietary eligibility until an exact FSSAI or IFCT 2017 ingredient basis is established.'
    };
  }
 
@@ -5094,7 +5142,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
      standardStatus:'Allowed in confirmed standard',
      standardBasis:(standardCheck.standard?.name||standardProduct.name)+' · '+String(standardCheck.standard?.key||standardProduct.fssr||''),
      detail:standardCheck.requirement||'Explicit ingredient permission',
-     alternatives,standardizedIngredient,foscosIdentity,
+     alternatives,standardizedIngredient,foscosIdentity,ifctIngredient,appendixCategories,
      next:'Keep standardized route, subject to all other applicable product-standard requirements.'
    };
  }
@@ -5109,7 +5157,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
      detail:(standardAdditive.member?.name||standardAdditive.entry?.name||name)
        +(standardAdditive.member?.ins||standardAdditive.entry?.ins?' · INS '+String(standardAdditive.member?.ins||standardAdditive.entry?.ins):'')
        +(check?.value!=null?' · '+fmt(check.value,3)+' '+check.unit:''),
-     alternatives,standardizedIngredient,foscosIdentity,quantityCheck:check,
+     alternatives,standardizedIngredient,foscosIdentity,ifctIngredient,appendixCategories,quantityCheck:check,
      next:fail?'Reformulate or use another lawful route; the confirmed standardized product cannot use this quantity.':
        pending?'Complete the quantity basis before deciding the route.':
        'Keep standardized route if the rest of the product standard is met.'
@@ -5121,7 +5169,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
      standardStatus:'No explicit ingredient permission identified in the applicable FSSAI standard',
      standardBasis:(standardProduct?.fssr||'Confirmed FSSAI standard')+' · explicit ingredient permission not stated in the product-standard rule used for this check',
      detail:'The applicable FSSAI product standard does not give PMSV an explicit ingredient permission for this ingredient. Absence of an explicit permission is not treated as either permission or prohibition; another applicable FSSAI provision must be checked.',
-     alternatives,standardizedIngredient,foscosIdentity,
+     alternatives,standardizedIngredient,foscosIdentity,ifctIngredient,appendixCategories,
      next:'Check another applicable FSSAI provision before deciding the standardized vs Proprietary route.'
    };
  }
@@ -5133,33 +5181,32 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
    const pending=check?.pass===null;
    return {
      name,item,status:fail?'proprietary_limit_fail':pending?'proprietary_quantity_pending':'proprietary_trigger',kind:'additive',usage,
-     standardStatus:'Outside confirmed standard — supports Proprietary route',
+     standardStatus:'Outside confirmed standard — Proprietary ingredient gate evaluated',
      standardBasis:(standardProduct?.fssr||standardProduct?.name||'Confirmed standard'),
      detail:'The additive does not fit the confirmed standardized-product route, but the selected Proprietary FCS '+String(proprietaryAdditive.resolvedFcs)+' has an Appendix A permission for it.'
        +(check?.value!=null?' Calculated '+fmt(check.value,3)+' '+check.unit+'.':''),
-     alternatives,standardizedIngredient,foscosIdentity,quantityCheck:check,
+     alternatives,standardizedIngredient,foscosIdentity,ifctIngredient,appendixCategories,quantityCheck:check,
      next:fail?'Cannot proceed at this quantity under the selected Proprietary FCS.':
        pending?'Quantity basis must be completed before Proprietary assessment.':
-       'May proceed to Chapter 2.12 assessment because the confirmed standard does not cover it but the selected FCS has an Appendix A basis.'
+       'The additive clears the selected Proprietary FCS gate. Final routing still depends on whether the finished formulation remains within the confirmed standardized product.'
    };
  }
 
- const hasOtherFssaiBasis=alternatives.length>0||!!standardizedIngredient;
  return {
-   name,item,status:hasOtherFssaiBasis?'proprietary_trigger':'unresolved',kind:'non_additive',usage,
-   standardStatus:'Outside confirmed standard ingredient provisions — supports Proprietary route',
+   name,item,status:hasSeparateIngredientBasis?'proprietary_trigger':'unresolved',kind:'non_additive',usage,
+   standardStatus:'Outside confirmed standard ingredient provisions — Proprietary ingredient gate evaluated',
    standardBasis:(standardProduct?.fssr||standardProduct?.name||'Confirmed standard'),
-   detail:hasOtherFssaiBasis
-     ? 'The ingredient does not fit the confirmed standardized-product ingredient provisions, but it has a separate applicable FSSAI standardized/permitted basis. This is a Proprietary-route trigger, subject to all Chapter 2.12 conditions.'
+   detail:hasSeparateIngredientBasis
+     ? 'The ingredient does not fit the confirmed standardized-product ingredient provisions, but it has an exact FSSAI standardized/permitted basis and/or an exact ICMR-NIN IFCT 2017 food/ingredient identity. This satisfies the non-additive ingredient-basis gate under Regulation 2.12.1(2), subject to the finished-product routing decision and all remaining Chapter 2.12 conditions.'
      : (foscosIdentity&&!hasRealFssrStandard(foscosIdentity)
        ? 'A FoSCoS product identity is present, but its FSSR field is N.A. PMSV therefore treats it as identity evidence only, not as proof that clause 2.12.1(2) is satisfied.'
-       : 'No other explicit FSSAI standardized-food basis or ingredient permission has been identified for this ingredient.'),
-   alternatives,standardizedIngredient,foscosIdentity,
-   next:hasOtherFssaiBasis
-     ? 'This ingredient supports moving the finished formulation out of the confirmed standardized-product route and into Chapter 2.12 assessment, subject to all remaining Proprietary Food conditions.'
+       : 'No exact FSSAI standardized/permitted basis or exact ICMR-NIN IFCT 2017 food/ingredient identity has been identified for this ingredient.'),
+   alternatives,standardizedIngredient,foscosIdentity,ifctIngredient,appendixCategories,
+   next:hasSeparateIngredientBasis
+     ? 'If this ingredient makes the finished formulation fall outside the confirmed standard’s defined identity/composition, continue Chapter 2.12 assessment. An ingredient addition alone is not treated as an automatic Proprietary conclusion.'
      : (foscosIdentity&&!hasRealFssrStandard(foscosIdentity)
-       ? 'Proprietary route may already be triggered by other ingredients, but this ingredient still needs a standardized/permitted FSSAI basis before the 2.12.1(2) ingredient gate can pass.'
-       : 'Do not conclude Proprietary eligibility until an exact FSSAI standardized/permitted ingredient basis is established.')
+       ? 'This ingredient still needs an exact FSSAI standardized/permitted basis or exact IFCT 2017 identity before the 2.12.1(2) ingredient gate can pass.'
+       : 'Do not conclude Proprietary eligibility until an exact FSSAI standardized/permitted basis or exact IFCT 2017 food/ingredient identity is established.')
  };
 }
 function proprietaryAlternativeHtml(r){
@@ -5175,10 +5222,25 @@ function proprietaryAlternativeHtml(r){
      +(r.foscosIdentity.fcs?' · FCS '+esc(r.foscosIdentity.fcs):''));
  }
  if(r.alternatives?.length){
-   bits.push('<b>Explicit use / food-standard bases found elsewhere:</b><br>'
+   bits.push('<b>Explicit FSSAI use / food-standard bases found elsewhere:</b><br>'
      +r.alternatives.slice(0,8).map(x=>'• '+esc(x.product)+' · <span class="clause">'+esc(x.clause||x.source)+'</span>'
        +(x.requirement?' · '+esc(x.requirement):'')).join('<br>')
      +(r.alternatives.length>8?'<br><small>+'+(r.alternatives.length-8)+' more matching entries.</small>':''));
+ }
+ if(r.ifctIngredient){
+   const p=r.ifctIngredient;
+   bits.push('<b>ICMR-NIN IFCT 2017 ingredient basis:</b><br>• '+esc(p.display_name||r.name)
+     +(p.ifct_code?' · <span class="clause">IFCT code '+esc(p.ifct_code)+'</span>':'')
+     +(p.source?'<br><small>'+esc(p.source)+'</small>':'')
+     +'<br><small><b>Legal link:</b> FSSAI Regulation 2.12.1(2) expressly includes foods or ingredients mentioned in IFCT 2017. <a target="_blank" rel="noopener" href="'+esc(IFCT_2017_OFFICIAL_URL)+'">Open official ICMR-NIN IFCT 2017</a>.</small>');
+ }
+ if(r.kind==='additive'&&r.appendixCategories?.length){
+   bits.push('<b>Other loaded Appendix A categories permitting this additive:</b><br>'
+     +r.appendixCategories.slice(0,20).map(x=>'• FCS '+esc(x.fcs)+(x.category?' — '+esc(x.category):'')
+       +(x.limit?' · <b>'+esc(x.limit)+'</b>':'')
+       +(x.condition?' · '+esc(x.condition):'')).join('<br>')
+     +(r.appendixCategories.length>20?'<br><small>+'+(r.appendixCategories.length-20)+' more loaded FCS permissions.</small>':'')
+     +'<br><small>These are alternative regulatory categories only. PMSV does not change the category merely to make an additive permissible; the finished food must genuinely belong to that category.</small>');
  }
  const foscosIdentity=foscosIdentityOnlyIngredient(r.name);
  if(foscosIdentity){
@@ -5186,7 +5248,7 @@ function proprietaryAlternativeHtml(r){
      +esc(foscosIdentity.name)
      +(foscosIdentity.fcs?' · FoSCoS/FCS '+esc(foscosIdentity.fcs):'')
      +' · FSSR standard: N.A.'
-     +'<br><small>This confirms a FoSCoS catalogue identity only. PMSV still requires a standardized/permitted ingredient basis before treating it as eligible under the Proprietary Food ingredient gate.</small>');
+     +'<br><small>This confirms a FoSCoS catalogue identity only. PMSV still requires an exact FSSAI standardized/permitted basis or exact IFCT 2017 identity before treating it as eligible under the Proprietary Food ingredient gate.</small>');
  }
  const identity=chapter3IdentityStandardForIngredient(r.name);
  if(identity){
@@ -5196,7 +5258,7 @@ function proprietaryAlternativeHtml(r){
      +'<br><small>'+esc(identity.note)+'</small>');
  }
  if(bits.length)return bits.join('<br><br>');
- return '<span class="status-warn">No alternative explicit FSSAI use permission or standardized-food basis identified.</span>';
+ return '<span class="status-warn">No exact FSSAI standardized/permitted basis or exact ICMR-NIN IFCT 2017 identity identified.</span>';
 }
 function proprietaryStandardDecision(r){
  const s=String(r?.status||'');
@@ -5214,11 +5276,11 @@ function proprietaryStandardDecision(r){
 }
 function proprietaryEligibilityDecision(r){
  const s=String(r?.status||'');
- if(s==='proprietary_trigger')return {label:'PASS — SUPPORTS PROPRIETARY ROUTE',cls:'status-good',detail:'A separate FSSAI standardized/permitted ingredient basis has been identified for clause 2.12.1(2).'};
- if(s==='allowed_category'||s==='allowed_category_other_basis')return {label:'PASS AT INGREDIENT-BASIS STAGE',cls:'status-good',detail:'The ingredient has an applicable category/independent FSSAI basis; continue all remaining Chapter 2.12 checks.'};
+ if(s==='proprietary_trigger')return {label:'PASS — PROPRIETARY INGREDIENT GATE',cls:'status-good',detail:'An applicable Appendix A additive permission or an exact FSSAI/IFCT 2017 non-additive ingredient basis has been identified. Final product routing still depends on whether the finished formulation remains within the confirmed standardized product.'};
+ if(s==='allowed_category'||s==='allowed_category_other_basis')return {label:'PASS AT INGREDIENT-BASIS STAGE',cls:'status-good',detail:'The ingredient has an applicable FSSAI category basis and/or exact FSSAI/IFCT 2017 ingredient basis; continue all remaining Chapter 2.12 checks.'};
  if(s==='proprietary_limit_fail'||s==='limit_fail_category')return {label:'FAIL — QUANTITY NOT PERMITTED',cls:'status-bad',detail:'The applicable Appendix A permission is exceeded at the entered quantity.'};
  if(s==='proprietary_quantity_pending'||s==='quantity_pending_category')return {label:'PENDING — QUANTITY CHECK INCOMPLETE',cls:'status-warn',detail:'The use permission cannot be concluded until the quantity basis is completed.'};
- if(s==='unresolved')return {label:'UNRESOLVED — DOES NOT YET SATISFY 2.12.1(2)',cls:'status-bad',detail:'No standardized/permitted FSSAI ingredient basis has been established. A FoSCoS identity with FSSR N.A. alone is not counted as permission.'};
+ if(s==='unresolved')return {label:'UNRESOLVED — DOES NOT YET SATISFY 2.12.1(2)',cls:'status-bad',detail:'No exact FSSAI standardized/permitted basis or exact ICMR-NIN IFCT 2017 food/ingredient identity has been established. A FoSCoS identity with FSSR N.A. alone is not counted as permission.'};
  if(s==='standard_check_incomplete')return {label:'NOT YET REACHED',cls:'status-warn',detail:'The standardized-product applicability question must be resolved before PMSV can rely on the Proprietary route.'};
  if(s==='allowed_standard'||s==='limit_fail_standard'||s==='quantity_pending_standard')return {label:'NOT THE CURRENT ROUTE',cls:'status-warn',detail:'The confirmed standardized-product route remains the first regulatory route to resolve for this ingredient.'};
  return {label:'REVIEW REQUIRED',cls:'status-warn',detail:'Review the applicable Chapter 2.12 ingredient basis.'};
@@ -5233,7 +5295,7 @@ function proprietaryAssessmentSummaryHtml(rows){
    +'<b>Ingredient route summary:</b> '
    +standardFit+' fit confirmed standard · '
    +triggers+' Proprietary trigger'+(triggers===1?'':'s')+' · '
-   +unresolved+' unresolved 2.12.1(2) basis · '
+   +unresolved+' unresolved FSSAI/IFCT 2.12.1(2) basis · '
    +quantitativeFails+' quantitative failure'+(quantitativeFails===1?'':'s')+' · '
    +pending+' pending check'+(pending===1?'':'s')
    +'</div>';
@@ -5301,7 +5363,7 @@ function renderProprietaryFormula(){
    const pre=standard?standardIngredientPermission(standard,item.name):null;
    const preText=!standard?'Standard/category not confirmed':
      pre.categoryRoute&&pre.allowed?'Explicitly named in confirmed FoSCoS category':
-     pre.categoryRoute&&pre.categoryAllowsOtherIngredients?'Not expressly named; separate FSSAI basis will be checked':
+     pre.categoryRoute&&pre.categoryAllowsOtherIngredients?'Not expressly named; separate FSSAI/IFCT basis will be checked':
      pre.allowed?'Explicitly listed in confirmed standard':
      pre.hasExplicitIngredientStructure?'Not found in confirmed standard ingredient provisions':'No explicit ingredient permission identified in the applicable FSSAI standard';
    return '<div class="ingredient-row"><div><b>'+esc(item.name)+'</b><br><small>'+fmt(Number(item.qty),6)+' '+esc(item.unit||'kg')+' · '+fmt(u.percent,4)+'% w/w<br>'+fmt(u.mgkg,2)+' mg/kg</small></div>'
@@ -5316,7 +5378,7 @@ function renderProprietaryFormula(){
    resetProprietaryOutcome();
  }));
  status.className='notice oknote';
- status.innerHTML='<b>'+items.length+' ingredient'+(items.length===1?'':'s')+' entered with quantity.</b> PMSV will evaluate the confirmed standard/category first, then product/FCS use permissions. Chapter 3 identity/purity specifications are shown separately and never treated as use permission.';
+ status.innerHTML='<b>'+items.length+' ingredient'+(items.length===1?'':'s')+' entered with quantity.</b> PMSV evaluates the confirmed standard/category first. Non-additives can then qualify through an exact FSSAI standardized/permitted basis or an exact ICMR-NIN IFCT 2017 identity under 2.12.1(2); additives remain subject to the selected Appendix A FCS. Chapter 3 identity/purity specifications are shown separately and never treated as use permission.';
 }
 function evaluateProprietaryRoute(){
  const out=document.getElementById('proprietaryRouteResult');
@@ -5382,7 +5444,7 @@ function evaluateProprietaryRoute(){
      +cards
      +'<br><b>Current user-selected FCS for horizontal checks:</b> '+esc(proprietaryFcs)
      +(fpc.mapped_fssr_categories?.length?'<br><small>PMSV suggestion from the FSSAI category mapping: '+fpc.mapped_fssr_categories.map(esc).join(', ')+'. Your manual selection is retained.</small>':'')
-     +'<br><b>Route decision:</b> Continue the Chapter 2.12 Proprietary Food assessment. The category descriptor and separate FSSAI ingredient bases are satisfied at this stage; Appendix A, microbiology, contaminants, processing aids, labelling and claims still require their own checks.';
+     +'<br><b>Route decision:</b> Continue the Chapter 2.12 Proprietary Food assessment. The category descriptor and separate FSSAI/IFCT ingredient bases are satisfied at this stage; Appendix A, microbiology, contaminants, processing aids, labelling and claims still require their own checks.';
    if(guide)guide.classList.remove('hidden');
    renderProprietaryAppendixA();
    return;
@@ -5401,7 +5463,7 @@ function evaluateProprietaryRoute(){
    out.className='notice';
    out.innerHTML=(proprietaryTriggers.length
        ? '<b>Proprietary route trigger confirmed; another ingredient/regulatory check is still incomplete.</b><br>'
-         +'<b>'+proprietaryTriggers.length+' ingredient'+(proprietaryTriggers.length===1?'':'s')+' fall outside the confirmed standard and have a separate FSSAI basis.</b><br>'
+         +'<b>'+proprietaryTriggers.length+' ingredient'+(proprietaryTriggers.length===1?'':'s')+' fall outside the confirmed standard and have a separate FSSAI/IFCT basis.</b><br>'
        : '<b>Standardized-vs-Proprietary decision is still incomplete.</b><br>')
      +'<b>Confirmed standard:</b> '+esc(standardProduct.name)
      +(standardProduct.fssr?' · <span class="clause">'+esc(standardProduct.fssr)+'</span>':'')
@@ -5413,13 +5475,13 @@ function evaluateProprietaryRoute(){
    out.className='notice';
    out.innerHTML=(proprietaryTriggers.length
        ? '<b>Proprietary route trigger confirmed; final Chapter 2.12 ingredient eligibility still has a blocker.</b><br>'
-         +'<b>'+proprietaryTriggers.length+' ingredient'+(proprietaryTriggers.length===1?'':'s')+' fall outside the confirmed standard and have a separate applicable FSSAI basis.</b><br>'
+         +'<b>'+proprietaryTriggers.length+' ingredient'+(proprietaryTriggers.length===1?'':'s')+' fall outside the confirmed standard and have an applicable Appendix A or FSSAI/IFCT basis.</b><br>'
        : '<b>No positive Proprietary Food eligibility conclusion yet.</b><br>')
      +'<b>Confirmed standard checked first:</b> '+esc(standardProduct.name)
      +(standardProduct.fssr?' · <span class="clause">'+esc(standardProduct.fssr)+'</span>':'')
      +cards
      +'<br><b>Remaining blocker:</b> '+(hardFail?'At least one quantitative FSSAI condition fails. ':proprietaryPending?'At least one quantity-dependent FSSAI check is incomplete. ':'')
-     +(unresolved.length?'At least one other ingredient still has no standardized/permitted FSSAI basis identified for clause 2.12.1(2). A FoSCoS catalogue identity with FSSR N.A. is shown as identity evidence only and is not counted as ingredient permission. ':'')
+     +(unresolved.length?'At least one other ingredient still has no exact FSSAI standardized/permitted or IFCT 2017 basis identified for clause 2.12.1(2). A FoSCoS catalogue identity with FSSR N.A. is shown as identity evidence only and is not counted as ingredient permission. ':'')
      +'The Proprietary trigger itself is not cancelled; resolve only the remaining blocker(s).';
    if(guide)guide.classList.remove('hidden');
    return;
@@ -5430,7 +5492,7 @@ function evaluateProprietaryRoute(){
    out.innerHTML='<b>Proprietary Food route supported at the ingredient-routing stage.</b><br>'
      +'<b>Confirmed standardized product checked first:</b> '+esc(standardProduct.name)
      +(standardProduct.fssr?' · <span class="clause">'+esc(standardProduct.fssr)+'</span>':'')
-     +'<br><b>'+proprietaryTriggers.length+' ingredient'+(proprietaryTriggers.length===1?' is':'s are')+' outside the confirmed standard and have a separate FSSAI/FoSCoS basis.</b>'
+     +'<br><b>'+proprietaryTriggers.length+' ingredient'+(proprietaryTriggers.length===1?' is':'s are')+' outside the confirmed standard and have an applicable Appendix A or FSSAI/IFCT basis.</b>'
      +cards
      +'<br><b>Route decision:</b> The formulation no longer fits the confirmed standardized product because of the ingredient deviation(s). Since those ingredient(s) have a separate regulatory basis, continue the Chapter 2.12 Proprietary Food assessment under the user-selected FCS '+esc(proprietaryFcs)+'.'
      +'<br><br><b>Not a final compliance pass.</b> Appendix A quantity conditions, microbiology, contaminants, processing aids, labelling, claims and all other applicable FSSAI requirements still apply.';
@@ -5449,7 +5511,7 @@ function evaluateProprietaryRoute(){
    +'<br><b>Proposed Proprietary FCS:</b> '+esc(proprietaryFcs)
    +(category?' — '+esc(category.name):'')
    +(subcat?'<br><b>Sub-category:</b> '+esc(subcat.code)+' — '+esc(subcat.name):'')
-   +'<br><b>Chapter 2.12 route:</b> '+proprietaryTriggers.length+' ingredient'+(proprietaryTriggers.length===1?'':'s')+' fall outside the confirmed standardized-product provisions and have a separate applicable FSSAI basis. This supports the Proprietary Food route; continue with 2.12.1(2), Appendix A under 2.12.1(3), microbiology, contaminants, processing aids, labelling and claims.'
+   +'<br><b>Chapter 2.12 route:</b> '+proprietaryTriggers.length+' ingredient'+(proprietaryTriggers.length===1?'':'s')+' fall outside the confirmed standardized-product provisions and have an applicable Appendix A or FSSAI/IFCT basis. This supports the Proprietary Food route; continue with 2.12.1(2), Appendix A under 2.12.1(3), microbiology, contaminants, processing aids, labelling and claims.'
    +'<br><br><b>Not a final compliance pass.</b>';
  if(guide)guide.classList.remove('hidden');
  renderProprietaryAppendixA();
@@ -7615,6 +7677,8 @@ async function loadNutritionDb(){
    }
  }
  renderNutrition();
+ renderProprietaryIngredientAutocomplete();
+ renderProprietaryFormula();
 }
 
 function currentIngredientCatalog(){
