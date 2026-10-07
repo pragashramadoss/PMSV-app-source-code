@@ -2,13 +2,19 @@
   "schema_version": "1.0",
   "chapter": "2.4",
   "title": "Cereals and Cereal Products",
-  "source_version": "Version 1 (01.09.2023)",
-  "source_verified_on": "2026-10-04",
+  "source_version": "Version 4 (07.05.2025)",
+  "source_verified_on": "2026-10-07",
   "official_sources": [
     {
       "authority": "FSSAI",
       "title": "Chapter 2.4 — Cereals and Cereal Products",
       "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4%20%28Cereals%20and%20Cereal%20products%29%281%29.pdf"
+    },
+    {
+      "title": "FSSAI Chapter 2.4 — Cereals and Cereal Products",
+      "authority": "FSSAI",
+      "version": "Version 4 (07.05.2025)",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf"
     }
   ],
   "common_rules": [
@@ -337,6 +343,117 @@
       "quality_rules": [
         "Food grains for human consumption shall be whole or broken kernels of cereals, millets and pulses and comply with the applicable grain-specific table."
       ]
+    },
+    {
+      "key": "2.4.6(24)",
+      "name": "Rice",
+      "status": "structured_core",
+      "applies_to_product_names": [
+        "Rice"
+      ],
+      "definition": "Rice shall be whole and broken kernels obtained from Oryza sativa L.",
+      "variants": [
+        "Brown Rice (De-Husked)",
+        "Milled Rice",
+        "Parboiled brown (De-Husked) Rice",
+        "Milled Parboiled Rice"
+      ],
+      "variant_requirements": [
+        {
+          "parameter": "Moisture",
+          "condition": "Not more than",
+          "unit": "% by mass",
+          "values": {
+            "Brown Rice (De-Husked)": 15.5,
+            "Milled Rice": 15.5,
+            "Parboiled brown (De-Husked) Rice": 15.5,
+            "Milled Parboiled Rice": 15.5
+          }
+        },
+        {
+          "parameter": "Organic extraneous matter",
+          "condition": "Not more than; impurities of animal origin including dead insects shall not be more than 0.1%",
+          "unit": "% by mass",
+          "values": {
+            "Brown Rice (De-Husked)": 1.5,
+            "Milled Rice": 0.8,
+            "Parboiled brown (De-Husked) Rice": 1.5,
+            "Milled Parboiled Rice": 0.8
+          }
+        },
+        {
+          "parameter": "Inorganic extraneous matter",
+          "condition": "Not more than",
+          "unit": "% by mass",
+          "values": {
+            "Brown Rice (De-Husked)": 0.2,
+            "Milled Rice": 0.2,
+            "Parboiled brown (De-Husked) Rice": 0.2,
+            "Milled Parboiled Rice": 0.2
+          }
+        },
+        {
+          "parameter": "Weevilled kernels",
+          "condition": "Not more than",
+          "unit": "% by count",
+          "values": {
+            "Brown Rice (De-Husked)": 5,
+            "Milled Rice": 5,
+            "Parboiled brown (De-Husked) Rice": 5,
+            "Milled Parboiled Rice": 5
+          }
+        },
+        {
+          "parameter": "Damaged Kernels including Heat-Damaged and Pin Point damaged",
+          "condition": "Not more than",
+          "unit": "% m/m",
+          "values": {
+            "Brown Rice (De-Husked)": 5,
+            "Milled Rice": 5,
+            "Parboiled brown (De-Husked) Rice": 8,
+            "Milled Parboiled Rice": 8
+          }
+        },
+        {
+          "parameter": "Immature Kernels",
+          "condition": "Not more than",
+          "unit": "% m/m",
+          "values": {
+            "Brown Rice (De-Husked)": 12,
+            "Milled Rice": 0.5,
+            "Parboiled brown (De-Husked) Rice": 12,
+            "Milled Parboiled Rice": 0.5
+          }
+        },
+        {
+          "parameter": "Chalky Kernels",
+          "condition": "Not more than",
+          "unit": "% m/m",
+          "values": {
+            "Brown Rice (De-Husked)": 11,
+            "Milled Rice": 5,
+            "Parboiled brown (De-Husked) Rice": "Nil",
+            "Milled Parboiled Rice": 0.1
+          }
+        },
+        {
+          "parameter": "Uric acid",
+          "condition": "Maximum",
+          "unit": "mg/kg",
+          "values": {
+            "Brown Rice (De-Husked)": 100,
+            "Milled Rice": 100,
+            "Parboiled brown (De-Husked) Rice": 100,
+            "Milled Parboiled Rice": 100
+          }
+        }
+      ],
+      "regulatory_notes": [
+        "Clause 2.4.6(24) contains separate limits for four rice types; PMSV must not collapse them into one generic numeric limit.",
+        "The row formerly appearing between damaged kernels and immature kernels is omitted in the current consolidated text."
+      ],
+      "source_page_range": "Chapter 2.4 Version 4 (07.05.2025), pp. 19–21",
+      "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf"
     },
     {
       "key": "2.4.6-24(a)",
