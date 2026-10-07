@@ -128,9 +128,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div class="field" style="margin-top:10px">
-  <label>3. Nearest FSSAI standardized product / standard</label>
+  <label>3. Nearest FSSAI standard or FoSCoS regulatory category</label>
   <select id="proprietaryStandardSelect" disabled><option value="">Enter product name first</option></select>
-  <small>PMSV suggests the nearest loaded standardized product from the name. You can change the selection to any other loaded FSSAI/FoSCoS product before confirming.</small>
+  <small>PMSV suggests the nearest loaded FSSAI standard or FoSCoS regulatory category. Where FSSAI has created a category without a notified vertical standard, PMSV shows FSSR standard N.A. You can confirm or change the selection.</small>
 </div>
 <div id="proprietaryStandardSuggestion" class="notice" style="margin-top:10px"><b>Standard confirmation required.</b> Enter the generic product name first.</div>
 <div class="flow-actions">
@@ -139,7 +139,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div class="card">
-<div class="section-title"><h2>4. Enter formulation ingredients</h2><span>Checked against confirmed standard</span></div>
+<div class="section-title"><h2>4. Enter formulation ingredients</h2><span>Checked against confirmed standard/category</span></div>
 <div class="field">
   <label>Ingredient / substance</label>
   <div class="autocomplete-wrap">
@@ -1295,6 +1295,7 @@ let labelDb=null;
 let claimsDb=null;
 let packagingDb=null;
 let fortificationDb=null;
+let fpc18Db=null;
 let chapterRuleDbs=[];
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
@@ -4564,6 +4565,27 @@ function proprietarySearchTokens(value){
  const stop=new Set(['and','with','the','for','food','foods','product','products','based','style','type']);
  return normIngredient(value).replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(x=>x.length>1&&!stop.has(x));
 }
+function fpc18Categories(){
+ return Array.isArray(fpc18Db?.categories)?fpc18Db.categories:[];
+}
+function fpc18CategoryForProduct(product){
+ if(!product)return null;
+ const codes=[product.fcs,product.appendix_fcs,product.subcategory,product.category].map(normFoodCode).filter(Boolean);
+ let hit=fpc18Categories().find(x=>codes.includes(normFoodCode(x.code)));
+ if(hit)return hit;
+ const name=normIngredient(product.name||'');
+ return fpc18Categories().find(x=>normIngredient(x.name)===name)||null;
+}
+function hasRealFssrStandard(product){
+ const raw=String(product?.fssr||'').trim();
+ return !!raw&&!/^(?:n\.?\s*a\.?|na|n\/a|—|-)$/i.test(raw);
+}
+function proprietaryCandidateLabel(product,{suggested=false}={}){
+ const fpc=fpc18CategoryForProduct(product);
+ const prefix=suggested?'Suggested — ':'';
+ if(fpc)return prefix+String(product?.name||fpc.name)+' · FoSCoS '+fpc.code+' · FSSR N.A.';
+ return prefix+String(product?.name||'FSSAI product')+(hasRealFssrStandard(product)?' · '+String(product.fssr):' · FSSR N.A.');
+}
 function proprietaryStandardScore(product,raw){
  const q=normIngredient(raw);
  const n=normIngredient(product?.name||'');
@@ -4584,7 +4606,7 @@ function proprietaryStandardScore(product,raw){
 }
 function proprietaryStandardCandidates(raw){
  const rows=productCatalog().map(p=>({p,score:proprietaryStandardScore(p,raw)}));
- rows.sort((a,b)=>b.score-a.score||String(a.p.name||'').localeCompare(String(b.p.name||'')));
+ rows.sort((x,y)=>y.score-x.score||String(x.p.name||'').localeCompare(String(y.p.name||'')));
  return rows;
 }
 function selectedProprietaryStandardProduct(){
@@ -4607,37 +4629,43 @@ function renderProprietaryStandardSuggestion(){
    select.disabled=true;
    confirm.disabled=true;
    note.className='notice';
-   note.innerHTML='<b>Standard confirmation required.</b> Enter the generic product name first.';
+   note.innerHTML='<b>Standard/category confirmation required.</b> Enter the generic product name first.';
    return;
  }
  const ranked=proprietaryStandardCandidates(raw);
  if(!ranked.length){
-   select.innerHTML='<option value="">No standardized products loaded</option>';
+   select.innerHTML='<option value="">No FSSAI/FoSCoS products loaded</option>';
    select.disabled=true;
    confirm.disabled=true;
    note.className='notice';
-   note.innerHTML='<b>No loaded standardized product catalogue is available.</b> PMSV cannot perform the nearest-standard gate.';
+   note.innerHTML='<b>No loaded product catalogue is available.</b>';
    return;
  }
  const best=ranked[0];
  const confident=best.score>0;
- select.innerHTML='<option value="">'+(confident?'Select a standard':'No reliable automatic match — choose a standard')+'</option>'
-   +ranked.map((x,i)=>'<option value="'+esc(x.p.id)+'"'+(confident&&i===0?' selected':'')+'>'
-     +(i===0&&confident?'Suggested — ':'')+esc(x.p.name)+(x.p.fssr?' · '+esc(x.p.fssr):'')+'</option>').join('');
+ select.innerHTML='<option value="">'+(confident?'Select a standard/category':'No reliable automatic match — choose manually')+'</option>'
+   +ranked.map((x,i)=>'<option value="'+esc(x.p.id)+'"'+(confident&&i===0?' selected':'')+'>'+esc(proprietaryCandidateLabel(x.p,{suggested:confident&&i===0}))+'</option>').join('');
  select.disabled=false;
  confirm.disabled=!select.value;
- if(confident){
+ const fpc=fpc18CategoryForProduct(best.p);
+ if(confident&&fpc){
    note.className='notice oknote';
-   note.innerHTML='<b>Nearest loaded standard suggested:</b> '+esc(best.p.name)
-     +(best.p.fssr?' · <span class="clause">'+esc(best.p.fssr)+'</span>':'')
-     +'<br><small>Confirm this standard or choose another one from the list. PMSV will not check ingredient permission until you confirm.</small>';
+   note.innerHTML='<b>Nearest FoSCoS regulatory category suggested:</b> '+esc(best.p.name)
+     +' · <span class="clause">'+esc(fpc.code)+'</span> · <b>FSSR standard: N.A.</b>'
+     +'<br><small>This is an FSSAI/FoSCoS category, not a notified Chapter 2 vertical product standard. Confirm it or choose another loaded standard/category.</small>';
+ }else if(confident){
+   note.className='notice oknote';
+   note.innerHTML='<b>Nearest loaded FSSAI standard suggested:</b> '+esc(best.p.name)
+     +(hasRealFssrStandard(best.p)?' · <span class="clause">'+esc(best.p.fssr)+'</span>':' · <b>FSSR standard: N.A.</b>')
+     +'<br><small>Confirm this selection or choose another loaded standard/category.</small>';
  }else{
    note.className='notice';
-   note.innerHTML='<b>No reliable name match was found.</b> Choose the closest applicable FSSAI standardized product manually, then confirm it. PMSV will not invent a standard.';
+   note.innerHTML='<b>No reliable name match was found.</b> Choose the closest applicable FSSAI standard or FoSCoS category manually.';
  }
 }
 function applyProprietaryStandardFcs(product){
- const fcs=appendixFcsForRecord(product);
+ const fpc=fpc18CategoryForProduct(product);
+ const fcs=fpc?.mapped_fssr_categories?.[0]||appendixFcsForRecord(product);
  if(!fcs)return;
  const cat=document.getElementById('proprietaryCategorySelect');
  if(!cat)return;
@@ -4649,7 +4677,7 @@ function applyProprietaryStandardFcs(product){
    if(sub&&!sub.disabled){
      const matches=[...sub.options].filter(o=>o.value&&(
        normFoodCode(fcs)===normFoodCode(o.value)||normFoodCode(fcs).startsWith(normFoodCode(o.value)+'.')
-     )).sort((a,b)=>normFoodCode(b.value).length-normFoodCode(a.value).length);
+     )).sort((x,y)=>normFoodCode(y.value).length-normFoodCode(x.value).length);
      if(matches[0])sub.value=matches[0].value;
    }
    populateProprietarySpecificFcs();
@@ -4664,21 +4692,40 @@ function confirmProprietaryStandard(){
  const p=selectedProprietaryStandardProduct();
  const note=document.getElementById('proprietaryStandardSuggestion');
  if(!p){
-   if(note){note.className='notice';note.innerHTML='<b>Select a standard before confirming.</b>';}
+   if(note){note.className='notice';note.innerHTML='<b>Select a standard/category before confirming.</b>';}
    return;
  }
  proprietaryConfirmedStandardId=p.id;
  applyProprietaryStandardFcs(p);
  if(note){
+   const fpc=fpc18CategoryForProduct(p);
    note.className='notice oknote';
-   note.innerHTML='<b>Confirmed standard:</b> '+esc(p.name)
-     +(p.fssr?' · <span class="clause">'+esc(p.fssr)+'</span>':'')
-     +(appendixFcsForRecord(p)?'<br><b>Appendix A FCS:</b> '+esc(appendixFcsForRecord(p)):'')
-     +'<br><small>You can change the dropdown and confirm again at any time. Ingredient checks below now use this confirmed standard.</small>';
+   if(fpc){
+     note.innerHTML='<b>Confirmed FoSCoS regulatory category:</b> '+esc(p.name)
+       +' · <span class="clause">'+esc(fpc.code)+'</span> · <b>FSSR standard: N.A.</b>'
+       +(fpc.mapped_fssr_categories?.length?'<br><b>Suggested horizontal FSSR category:</b> '+fpc.mapped_fssr_categories.map(esc).join(', '):'')
+       +'<br><small>The FCS suggestion remains editable. If you change it manually, PMSV will use your selected FCS for the subsequent Appendix A check.</small>';
+   }else{
+     note.innerHTML='<b>Confirmed FSSAI standard/product:</b> '+esc(p.name)
+       +(hasRealFssrStandard(p)?' · <span class="clause">'+esc(p.fssr)+'</span>':' · <b>FSSR standard: N.A.</b>')
+       +(appendixFcsForRecord(p)?'<br><b>Suggested Appendix A FCS:</b> '+esc(appendixFcsForRecord(p)):'')
+       +'<br><small>The FCS suggestion remains editable. If you change it manually, PMSV will use your selected FCS.</small>';
+   }
  }
  renderProprietaryFormula();
  resetProprietaryOutcome();
 }
+function fpc18IngredientMatch(rule,name){
+ const n=normIngredient(name);
+ if(!rule||!n)return null;
+ const clean=x=>normIngredient(x).replace(/\b(the|and|or)\b/g,' ').replace(/\s+/g,' ').trim();
+ const target=clean(n);
+ return (rule.descriptor_ingredients||[]).find(x=>{
+   const a=clean(x);
+   return a===target||(a.endsWith('s')&&a.slice(0,-1)===target)||(target.endsWith('s')&&target.slice(0,-1)===a);
+ })||null;
+}
+
 function proprietaryAppendixIngredientHit(name,fcs){
  const n=normIngredient(name);
  if(!n||!fcs||!appendixCoreDb)return null;
@@ -4815,6 +4862,20 @@ function standardRuleMatchesForProduct(product){
  return profile?structuredMatchesForProfile(profile):[];
 }
 function standardIngredientPermission(product,name){
+ const fpc=fpc18CategoryForProduct(product);
+ if(fpc){
+   const descriptor=fpc18IngredientMatch(fpc,name);
+   return {
+     allowed:!!descriptor,
+     hasExplicitIngredientStructure:true,
+     categoryRoute:true,
+     categoryAllowsOtherIngredients:fpc.other_ingredients_allowed_subject_to_fssai_basis===true,
+     fpc18:fpc,
+     standard:{key:fpc.code,name:fpc.name},
+     row:descriptor?{name:descriptor,field:'fpc18_descriptor'}:null,
+     requirement:descriptor?'Explicitly named in the FSSAI FPC 18 category descriptor':'Not expressly named; assess under the category’s “other ingredients” wording using a separate FSSAI basis.'
+   };
+ }
  const n=normIngredient(name);
  const matches=standardRuleMatchesForProduct(product);
  let hasExplicitIngredientStructure=false;
@@ -4832,10 +4893,31 @@ function standardIngredientPermission(product,name){
  }
  return {allowed:false,hasExplicitIngredientStructure,matches};
 }
+function namedFssaiStandardsForIngredient(name){
+ const q=normIngredient(name);
+ if(!q)return [];
+ const out=[];
+ (chapterRuleDbs||[]).forEach(db=>ruleDbStandards(db).forEach(standard=>{
+   const n=normIngredient(standard?.name||'');
+   if(q.length<4||!(n===q||n.includes(q)||q.includes(n)))return;
+   out.push({
+     product:standard.name||'FSSAI standardized product',
+     clause:String(standard.key||db.chapter||''),
+     source:ruleDbLabel(db),
+     requirement:'Ingredient/product itself has a notified FSSAI product standard'
+   });
+ }));
+ const seen=new Set();
+ return out.filter(x=>{
+   const key=x.product+'|'+x.clause;
+   if(seen.has(key))return false;
+   seen.add(key);return true;
+ });
+}
 function allStandardIngredientPermissions(name){
  const n=normIngredient(name);
  if(!n)return [];
- const out=[];
+ const out=[...namedFssaiStandardsForIngredient(name)];
  (chapterRuleDbs||[]).forEach(db=>ruleDbStandards(db).forEach(standard=>{
    ingredientStringsFromStandard(standard).forEach(row=>{
      if(normIngredient(row.name)!==n)return;
@@ -4851,6 +4933,15 @@ function allStandardIngredientPermissions(name){
      });
    });
  }));
+ fpc18Categories().forEach(rule=>{
+   if(!fpc18IngredientMatch(rule,name))return;
+   out.push({
+     product:rule.name,
+     clause:'FoSCoS '+rule.code+' · FSSR N.A.',
+     source:'FSSAI FPC 18 direction',
+     requirement:'Explicitly named in the category descriptor'
+   });
+ });
  const seen=new Set();
  return out.filter(x=>{
    const key=[x.product,x.clause,x.requirement].join('|');
@@ -4860,7 +4951,7 @@ function allStandardIngredientPermissions(name){
 }
 function exactStandardizedIngredientProduct(name){
  const n=normIngredient(name);
- return productCatalog().find(p=>normIngredient(p.name)===n)||null;
+ return productCatalog().find(p=>normIngredient(p.name)===n&&hasRealFssrStandard(p))||null;
 }
 function proprietaryQuantityCheck(item,appendix){
  const limit=appendix?.entry?.limit||appendix?.entry?.maximum||appendix?.entry?.max_level||appendix?.entry?.maximum_level||'';
@@ -4872,13 +4963,64 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
  const name=String(item?.name||'').trim();
  const usage=usageForIngredient(item);
  const standardCheck=standardIngredientPermission(standardProduct,name);
+ const fpc=standardCheck.fpc18||fpc18CategoryForProduct(standardProduct);
+ const suggestedFcs=fpc?.mapped_fssr_categories?.[0]||appendixFcsForRecord(standardProduct);
+ const activeFcs=proprietaryFcs||suggestedFcs;
+ const activeAdditive=activeFcs?proprietaryAppendixIngredientHit(name,activeFcs):null;
+ const alternatives=allStandardIngredientPermissions(name);
+ const standardizedIngredient=exactStandardizedIngredientProduct(name);
+ const hasSeparateFssaiBasis=alternatives.length>0||!!standardizedIngredient;
+
+ if(fpc){
+   if(activeAdditive){
+     const check=proprietaryQuantityCheck(item,activeAdditive);
+     const fail=check?.pass===false;
+     const pending=check?.pass===null;
+     return {
+       name,item,status:fail?'limit_fail_category':pending?'quantity_pending_category':'allowed_category',kind:'additive',usage,
+       standardStatus:fail?'Selected-FCS additive limit exceeded':pending?'Selected-FCS additive quantity check incomplete':'Allowed under selected FCS Appendix A',
+       standardBasis:'FoSCoS '+fpc.code+' · FSSR N.A. → selected FCS '+String(activeAdditive.resolvedFcs),
+       detail:(activeAdditive.member?.name||activeAdditive.entry?.name||name)
+         +(activeAdditive.member?.ins||activeAdditive.entry?.ins?' · INS '+String(activeAdditive.member?.ins||activeAdditive.entry?.ins):'')
+         +(check?.value!=null?' · calculated '+fmt(check.value,3)+' '+check.unit:''),
+       alternatives,standardizedIngredient,quantityCheck:check,fpc18:fpc,
+       next:fail?'Reformulate or change the selected lawful FCS route.':
+         pending?'Complete the quantity basis before deciding the route.':
+         'Ingredient clears the selected-FCS additive gate; continue Chapter 2.12 and other applicable checks.'
+     };
+   }
+   if(standardCheck.allowed){
+     return {
+       name,item,status:'allowed_category',kind:'non_additive',usage,
+       standardStatus:'Explicitly described in confirmed FoSCoS category',
+       standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A.',
+       detail:standardCheck.requirement,
+       alternatives,standardizedIngredient,fpc18:fpc,
+       next:'Ingredient fits the confirmed category descriptor. Because this is not a vertical FSSR standard, continue the Chapter 2.12 ingredient-basis assessment rather than treating the product as standardized.'
+     };
+   }
+   if(standardCheck.categoryAllowsOtherIngredients&&hasSeparateFssaiBasis){
+     return {
+       name,item,status:'allowed_category_other_basis',kind:'non_additive',usage,
+       standardStatus:'Fits “other ingredients” route with separate FSSAI basis',
+       standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A. + separate FSSAI ingredient basis',
+       detail:'Not expressly named in the category descriptor, but the category permits other ingredients and PMSV found another exact loaded FSSAI basis.',
+       alternatives,standardizedIngredient,fpc18:fpc,
+       next:'Continue Chapter 2.12 assessment using the separate FSSAI basis shown below.'
+     };
+   }
+   return {
+     name,item,status:'unresolved',kind:'non_additive',usage,
+     standardStatus:'Ingredient basis not yet established',
+     standardBasis:'FoSCoS '+fpc.code+' · FSSR standard N.A.',
+     detail:'The ingredient is not expressly named in the category descriptor and no separate exact FSSAI basis is loaded.',
+     alternatives,standardizedIngredient,fpc18:fpc,
+     next:'Do not conclude Proprietary eligibility until the ingredient’s FSSAI basis is established.'
+   };
+ }
+
  const standardFcs=appendixFcsForRecord(standardProduct);
  const standardAdditive=standardFcs?proprietaryAppendixIngredientHit(name,standardFcs):null;
- const alternatives=allStandardIngredientPermissions(name).filter(x=>!(
-   normIngredient(x.product)===normIngredient(standardProduct?.name||'') &&
-   String(x.clause||'')===String(standardProduct?.fssr||'')
- ));
- const standardizedIngredient=exactStandardizedIngredientProduct(name);
 
  if(standardCheck.allowed){
    return {
@@ -4907,7 +5049,6 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
        'Keep standardized route if the rest of the product standard is met.'
    };
  }
-
  if(!standardCheck.hasExplicitIngredientStructure){
    return {
      name,item,status:'standard_check_incomplete',kind:'unknown',usage,
@@ -4919,7 +5060,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
    };
  }
 
- const proprietaryAdditive=proprietaryFcs?proprietaryAppendixIngredientHit(name,proprietaryFcs):null;
+ const proprietaryAdditive=activeFcs?proprietaryAppendixIngredientHit(name,activeFcs):null;
  if(proprietaryAdditive){
    const check=proprietaryQuantityCheck(item,proprietaryAdditive);
    const fail=check?.pass===false;
@@ -4928,20 +5069,18 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
      name,item,status:fail?'proprietary_limit_fail':pending?'proprietary_quantity_pending':'not_allowed_standard_proprietary_basis',kind:'additive',usage,
      standardStatus:'Not in confirmed standard ingredient/additive permission',
      standardBasis:(standardProduct?.fssr||standardProduct?.name||'Confirmed standard'),
-     detail:'Proposed Proprietary FCS '+String(proprietaryAdditive.resolvedFcs)+' has an Appendix A permission for this additive.'
+     detail:'Selected Proprietary FCS '+String(proprietaryAdditive.resolvedFcs)+' has an Appendix A permission for this additive.'
        +(check?.value!=null?' Calculated '+fmt(check.value,3)+' '+check.unit+'.':''),
      alternatives,standardizedIngredient,quantityCheck:check,
-     next:fail?'Cannot proceed at this quantity under the proposed Proprietary FCS.':
+     next:fail?'Cannot proceed at this quantity under the selected Proprietary FCS.':
        pending?'Quantity basis must be completed before Proprietary assessment.':
-       'May proceed to Chapter 2.12 assessment because the confirmed standard does not cover it but the proposed FCS has an Appendix A basis.'
+       'May proceed to Chapter 2.12 assessment because the confirmed standard does not cover it but the selected FCS has an Appendix A basis.'
    };
  }
 
  const hasOtherFssaiBasis=alternatives.length>0||!!standardizedIngredient;
  return {
-   name,item,
-   status:hasOtherFssaiBasis?'not_allowed_standard_proprietary_basis':'unresolved',
-   kind:'non_additive',usage,
+   name,item,status:hasOtherFssaiBasis?'not_allowed_standard_proprietary_basis':'unresolved',kind:'non_additive',usage,
    standardStatus:'Not found in the confirmed standard’s explicit permitted-ingredient list',
    standardBasis:(standardProduct?.fssr||standardProduct?.name||'Confirmed standard'),
    detail:hasOtherFssaiBasis
@@ -4969,14 +5108,14 @@ function proprietaryAlternativeHtml(r){
 }
 function proprietaryIngredientCards(rows){
  return '<div style="margin-top:12px">'+rows.map(r=>{
-   const cls=r.status==='allowed_standard'?'status-good':
+   const cls=(r.status==='allowed_standard'||r.status==='allowed_category'||r.status==='allowed_category_other_basis')?'status-good':
      /fail/.test(r.status)?'status-bad':'status-warn';
    const u=r.usage||{};
    const item=r.item||{};
    return '<div class="item" style="margin-bottom:10px">'
      +'<b>'+esc(r.name)+'</b><small><b>Quantity:</b> '+fmt(Number(item.qty||0),6)+' '+esc(item.unit||'kg')
      +' · '+fmt(Number(u.percent||0),4)+'% w/w · '+fmt(Number(u.mgkg||0),2)+' mg/kg</small>'
-     +'<small><b>Confirmed-standard check:</b> <span class="'+cls+'">'+esc(r.standardStatus)+'</span><br>'
+     +'<small><b>Confirmed standard/category check:</b> <span class="'+cls+'">'+esc(r.standardStatus)+'</span><br>'
      +'<b>Standard / clause:</b> <span class="clause">'+esc(r.standardBasis)+'</span><br>'
      +esc(r.detail||'')+'</small>'
      +'<small>'+proprietaryAlternativeHtml(r)+'</small>'
@@ -5019,7 +5158,9 @@ function renderProprietaryFormula(){
  list.innerHTML=items.map((item,i)=>{
    const u=usageForIngredient(item);
    const pre=standard?standardIngredientPermission(standard,item.name):null;
-   const preText=!standard?'Standard not confirmed':
+   const preText=!standard?'Standard/category not confirmed':
+     pre.categoryRoute&&pre.allowed?'Explicitly named in confirmed FoSCoS category':
+     pre.categoryRoute&&pre.categoryAllowsOtherIngredients?'Not expressly named; separate FSSAI basis will be checked':
      pre.allowed?'Explicitly listed in confirmed standard':
      pre.hasExplicitIngredientStructure?'Not found in confirmed standard list':'Standard ingredient list not fully machine-readable';
    return '<div class="ingredient-row"><div><b>'+esc(item.name)+'</b><br><small>'+fmt(Number(item.qty),6)+' '+esc(item.unit||'kg')+' · '+fmt(u.percent,4)+'% w/w<br>'+fmt(u.mgkg,2)+' mg/kg</small></div>'
@@ -5062,12 +5203,12 @@ function evaluateProprietaryRoute(){
  }
  if(!standardProduct){
    out.className='notice';
-   out.innerHTML='<b>Confirm the nearest/applicable FSSAI standard first.</b><br>PMSV must check the formulation against a user-confirmed standardized product before considering Chapter 2.12.';
+   out.innerHTML='<b>Confirm the nearest/applicable FSSAI standard or FoSCoS category first.</b><br>PMSV must check the formulation against a user-confirmed regulatory identity before considering Chapter 2.12.';
    return;
  }
  if(!ingredients.length){
    out.className='notice';
-   out.innerHTML='<b>Add formulation ingredients with quantity.</b><br>Each ingredient will first be checked against '+esc(standardProduct.name)+'.';
+   out.innerHTML='<b>Add formulation ingredients with quantity.</b><br>Each ingredient will first be checked against the confirmed standard/category: '+esc(standardProduct.name)+'.';
    return;
  }
  if(ingredients.some(x=>!(Number(x.qty)>0))){
@@ -5084,11 +5225,26 @@ function evaluateProprietaryRoute(){
  const proprietaryFcs=specific||sub||cat;
  const assessments=ingredients.map(x=>proprietaryIngredientBasis(x,proprietaryFcs,standardProduct));
  const cards=proprietaryIngredientCards(assessments);
+ const fpc=fpc18CategoryForProduct(standardProduct);
  const allStandard=assessments.every(x=>x.status==='allowed_standard');
- const standardIncomplete=assessments.some(x=>x.status==='standard_check_incomplete'||x.status==='quantity_pending_standard');
- const hardFail=assessments.some(x=>x.status==='limit_fail_standard'||x.status==='proprietary_limit_fail');
+ const allCategory=!!fpc&&assessments.every(x=>x.status==='allowed_category'||x.status==='allowed_category_other_basis');
+ const standardIncomplete=assessments.some(x=>x.status==='standard_check_incomplete'||x.status==='quantity_pending_standard'||x.status==='quantity_pending_category');
+ const hardFail=assessments.some(x=>x.status==='limit_fail_standard'||x.status==='proprietary_limit_fail'||x.status==='limit_fail_category');
  const proprietaryPending=assessments.some(x=>x.status==='proprietary_quantity_pending');
  const unresolved=assessments.some(x=>x.status==='unresolved');
+
+ if(allCategory){
+   out.className='notice oknote';
+   out.innerHTML='<b>FoSCoS category fit established; no vertical FSSR product standard applies to this category.</b><br>'
+     +'<b>Confirmed category:</b> '+esc(standardProduct.name)+' · <span class="clause">FoSCoS '+esc(fpc.code)+'</span> · <b>FSSR standard: N.A.</b>'
+     +cards
+     +'<br><b>Current user-selected FCS for horizontal checks:</b> '+esc(proprietaryFcs)
+     +(fpc.mapped_fssr_categories?.length?'<br><small>PMSV suggestion from the FSSAI category mapping: '+fpc.mapped_fssr_categories.map(esc).join(', ')+'. Your manual selection is retained.</small>':'')
+     +'<br><b>Route decision:</b> Continue the Chapter 2.12 Proprietary Food assessment. The category descriptor and separate FSSAI ingredient bases are satisfied at this stage; Appendix A, microbiology, contaminants, processing aids, labelling and claims still require their own checks.';
+   if(guide)guide.classList.remove('hidden');
+   renderProprietaryAppendixA();
+   return;
+ }
 
  if(allStandard){
    out.className='notice oknote';
@@ -7242,6 +7398,18 @@ async function loadLabelDb(){
  renderLabelRequirements();
 }
 
+async function loadFpc18Db(){
+ try{
+   const res=await fetch('./data/rules/foscos-category-18-indian-sweets-snacks-v1.json?v=1',{cache:'reload'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   fpc18Db=await res.json();
+ }catch(e){
+   fpc18Db=null;
+ }
+ renderProprietaryStandardSuggestion();
+ renderProprietaryFormula();
+}
+
 async function loadChapterRuleDbs(){
  try{
    const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=440',{cache:'reload'}).then(async res=>{
@@ -7382,6 +7550,7 @@ document.addEventListener('click',event=>{
  if(!event.target.closest('.autocomplete-wrap'))document.getElementById('ingredientAutocomplete')?.classList.add('hidden');
 });
 loadProductMaster();
+loadFpc18Db();
 loadAppendixCore();
 loadAppendixCDb();
 loadRegulatoryDb();
