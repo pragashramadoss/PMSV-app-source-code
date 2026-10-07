@@ -4925,7 +4925,9 @@ function ingredientStandardAliasMatch(name,standard){
  const key=String(standard?.key||'');
  if(!q||!n)return false;
  const strip=x=>x.replace(/\s*\(food grade\)\s*/g,'').replace(/\s+/g,' ').trim();
- if(strip(n)===strip(q))return true;
+ const sq=strip(q);
+ if(strip(n)===sq)return true;
+ if((standard?.aliases||[]).some(alias=>strip(normIngredient(alias))===sq))return true;
  // Generic "sugar" is a family term. Restrict it to the actual 2.8.1 sugar standards,
  // never to unrelated products whose names merely contain the word sugar.
  if(q==='sugar'&&/^2\.8\.1(?:\(|$)/.test(key)&&/(^|\s)sugar$/.test(n))return true;
