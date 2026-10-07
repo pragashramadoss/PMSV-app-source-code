@@ -109,7 +109,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="proprietary" class="view hidden">
 <div class="card">
 <div class="section-title"><h2>Chapter 2.12 — Proprietary Food route</h2><span>Ingredient-led deterministic screening</span></div>
-<div class="notice oknote"><b>Build the actual formulation first.</b> Add ingredients one by one with quantity and unit. PMSV first checks whether the finished formulation still conforms to an applicable FSSAI standardized product. If it does, the standardized route remains primary. If the formulation genuinely falls outside that standard's defined identity/composition, PMSV screens the Proprietary Food route. A mere deviation in quality parameters of a standardized food is not by itself treated as Proprietary Food.</div>
+<div class="notice oknote"><b>Build the actual formulation first.</b> Add ingredients one by one with quantity and unit. PMSV first checks the applicable FSSAI standardized product. If every ingredient/additive is covered by that standard and its applicable horizontal permissions, keep the standardized route. If an additional ingredient is introduced that is not covered by the standardized product's permitted formulation/ingredient provisions, route the finished product to Proprietary Food, provided the added ingredient has a valid FSSAI/IFCT basis. A mere deviation only in a quality parameter, without such a formulation change, is not treated as Proprietary Food.</div>
 
 <div class="checker-grid">
   <div class="field">
@@ -5188,7 +5188,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
      alternatives,standardizedIngredient,foscosIdentity,ifctIngredient,appendixCategories,quantityCheck:check,
      next:fail?'Cannot proceed at this quantity under the selected Proprietary FCS.':
        pending?'Quantity basis must be completed before Proprietary assessment.':
-       'The additive clears the selected Proprietary FCS gate. Final routing still depends on whether the finished formulation remains within the confirmed standardized product.'
+       'The additive clears the selected Proprietary FCS gate. Because it is outside the confirmed standardized-product formulation, continue under the Proprietary Food route.'
    };
  }
 
@@ -5203,7 +5203,7 @@ function proprietaryIngredientBasis(item,proprietaryFcs,standardProduct){
        : 'No exact FSSAI standardized/permitted basis or exact ICMR-NIN IFCT 2017 food/ingredient identity has been identified for this ingredient.'),
    alternatives,standardizedIngredient,foscosIdentity,ifctIngredient,appendixCategories,
    next:hasSeparateIngredientBasis
-     ? 'If this ingredient makes the finished formulation fall outside the confirmed standard’s defined identity/composition, continue Chapter 2.12 assessment. An ingredient addition alone is not treated as an automatic Proprietary conclusion.'
+     ? 'This ingredient is additional to the confirmed standardized-product formulation. Because it has a valid FSSAI/IFCT basis, route the finished product to Chapter 2.12 Proprietary Food assessment.'
      : (foscosIdentity&&!hasRealFssrStandard(foscosIdentity)
        ? 'This ingredient still needs an exact FSSAI standardized/permitted basis or exact IFCT 2017 identity before the 2.12.1(2) ingredient gate can pass.'
        : 'Do not conclude Proprietary eligibility until an exact FSSAI standardized/permitted basis or exact IFCT 2017 food/ingredient identity is established.')
@@ -5276,7 +5276,7 @@ function proprietaryStandardDecision(r){
 }
 function proprietaryEligibilityDecision(r){
  const s=String(r?.status||'');
- if(s==='proprietary_trigger')return {label:'PASS — PROPRIETARY INGREDIENT GATE',cls:'status-good',detail:'An applicable Appendix A additive permission or an exact FSSAI/IFCT 2017 non-additive ingredient basis has been identified. Final product routing still depends on whether the finished formulation remains within the confirmed standardized product.'};
+ if(s==='proprietary_trigger')return {label:'PASS — PROPRIETARY INGREDIENT GATE',cls:'status-good',detail:'An applicable Appendix A additive permission or an exact FSSAI/IFCT 2017 non-additive ingredient basis has been identified. Because this ingredient is outside the confirmed standardized-product formulation, it triggers the Proprietary Food route once its FSSAI/IFCT or Appendix A basis is established.'};
  if(s==='allowed_category'||s==='allowed_category_other_basis')return {label:'PASS AT INGREDIENT-BASIS STAGE',cls:'status-good',detail:'The ingredient has an applicable FSSAI category basis and/or exact FSSAI/IFCT 2017 ingredient basis; continue all remaining Chapter 2.12 checks.'};
  if(s==='proprietary_limit_fail'||s==='limit_fail_category')return {label:'FAIL — QUANTITY NOT PERMITTED',cls:'status-bad',detail:'The applicable Appendix A permission is exceeded at the entered quantity.'};
  if(s==='proprietary_quantity_pending'||s==='quantity_pending_category')return {label:'PENDING — QUANTITY CHECK INCOMPLETE',cls:'status-warn',detail:'The use permission cannot be concluded until the quantity basis is completed.'};
