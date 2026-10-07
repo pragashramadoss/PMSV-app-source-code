@@ -2,9 +2,14 @@
   "schema_version": "1.0",
   "chapter": "2.2",
   "title": "Fats, Oils and Fat Emulsions",
-  "source_version": "Version 4 (07.05.2025)",
-  "source_verified_on": "2026-10-04",
+  "source_version": "Version 5 (01.08.2025)",
+  "source_verified_on": "2026-10-07",
   "official_sources": [
+    {
+      "authority": "FSSAI",
+      "title": "Chapter 2.2 — Fats, Oils and Fat Emulsions, Version 5 (01.08.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats_oils%20and%20fat%20emulsions.pdf"
+    },
     {
       "authority": "FSSAI",
       "title": "Chapter 2.2 — Fats, Oils and Fat Emulsions, Version 4 (07.05.2025)",
@@ -232,6 +237,189 @@
           "unit": "test"
         }
       ]
+    },
+    {
+      "key": "2.2.3(1)",
+      "name": "Partially hydrogenated and winterised soyabean oil",
+      "aliases": [
+        "Partially Hydrogenated and Winterised Soybean Oil",
+        "Partially hydrogenated and winterised soybean oil"
+      ],
+      "status": "structured_core",
+      "parent_standard": "2.2.3",
+      "definition": "Deodorised product obtained by light (mild or Brush) hydrogenation of degummed, deacidified, decolourised and winterised soyabean oil, with the processing steps specified by FSSAI.",
+      "quality_rules": [
+        "Product shall be clear and free from rancidity, suspended or other foreign matter, separated water, added colouring or flavouring substances, castor oil, mineral oil, and other vegetable and animal fats.",
+        "Test for argemone oil shall be negative.",
+        "If obtained by solvent extraction, and for imported oil whether obtained by solvent extraction or otherwise, supply for human consumption only after refining in accordance with 2.2.1(16); refined oil shall not contain hexane above 5 ppm."
+      ],
+      "additives": "Food additives permitted in the Regulations and Appendices may be used.",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Refractive Index at 40°C",
+          "operator": "range",
+          "min": 1.463,
+          "max": 1.469,
+          "unit": ""
+        },
+        {
+          "parameter": "Butyro-refractometer reading at 40°C",
+          "operator": "range",
+          "min": 55.6,
+          "max": 64.8,
+          "unit": ""
+        },
+        {
+          "parameter": "Saponification value",
+          "operator": "range",
+          "min": 189,
+          "max": 195,
+          "unit": ""
+        },
+        {
+          "parameter": "Iodine value (Wijs method)",
+          "operator": "range",
+          "min": 107,
+          "max": 120,
+          "unit": ""
+        },
+        {
+          "parameter": "Acid value",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": ""
+        },
+        {
+          "parameter": "Unsaponifiable Matter",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Linolenic Acid (C18:3)",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Cloud Point",
+          "operator": "<=",
+          "value": 10,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Flash Point (Pensky Marten Closed method)",
+          "operator": ">=",
+          "value": 250,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Trans fatty acids",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight",
+          "effective_from": "2022-01-01"
+        }
+      ],
+      "source_note": "Current FSSAI Chapter 2.2 Version 5 (01.08.2025), clause 2.2.3(1)."
+    },
+    {
+      "key": "2.2.3(2)",
+      "name": "Partially hydrogenated soyabean oil",
+      "aliases": [
+        "Partially Hydrogenated Soybean Oil",
+        "Partially hydrogenated soybean oil"
+      ],
+      "status": "structured_core",
+      "parent_standard": "2.2.3",
+      "definition": "Deodorised product obtained by light (mild or brush) hydrogenation of degummed, deacidified and decolourised soyabean oil, followed by the further deacidification, bleaching and deodorisation steps specified by FSSAI.",
+      "quality_rules": [
+        "Product shall be a clear liquid at 35°C; on melting it shall be clear and free from rancidity, suspended or other foreign matter, separated water, added colouring or flavouring substances, castor oil, mineral oil or other vegetable and animal oils and fats.",
+        "Test for argemone oil shall be negative.",
+        "Edible oils prescribed under 2.2.1 shall be free from castor oil.",
+        "If obtained by solvent extraction, and for imported oil whether obtained by solvent extraction or otherwise, supply for human consumption only after refining in accordance with 2.2.1(16); refined oil shall not contain hexane above 5 ppm."
+      ],
+      "additives": "Food additives permitted in the Regulations and Appendices may be used.",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Refractive Index at 40°C",
+          "operator": "range",
+          "min": 1.463,
+          "max": 1.467,
+          "unit": ""
+        },
+        {
+          "parameter": "Butyro-refractometer reading at 40°C",
+          "operator": "range",
+          "min": 55.6,
+          "max": 61.7,
+          "unit": ""
+        },
+        {
+          "parameter": "Saponification value",
+          "operator": "range",
+          "min": 189,
+          "max": 195,
+          "unit": ""
+        },
+        {
+          "parameter": "Iodine value (Wijs method)",
+          "operator": "range",
+          "min": 95,
+          "max": 110,
+          "unit": ""
+        },
+        {
+          "parameter": "Acid value",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": ""
+        },
+        {
+          "parameter": "Unsaponifiable Matter",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Linolenic Acid (C18:3)",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Cloud Point",
+          "operator": "<=",
+          "value": 25,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Flash Point (Pensky Marten Closed method)",
+          "operator": ">=",
+          "value": 250,
+          "unit": "°C"
+        },
+        {
+          "parameter": "Trans fatty acids",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight",
+          "effective_from": "2022-01-01"
+        }
+      ],
+      "source_note": "Current FSSAI Chapter 2.2 Version 5 (01.08.2025), clause 2.2.3(2)."
     },
     {
       "key": "2.2.5(1)",
@@ -680,5 +868,5 @@
       "validation_state": "product identities and current standard route mapped from official FSSAI Chapter 2.2; detailed composition remains source-linked"
     }
   ],
-  "structured_core_standards": 10
+  "structured_core_standards": 12
 }
