@@ -20,6 +20,7 @@ function adjustForYield(per100g,inputMassG,finishedMassG){
  return out;
 }
 function calculate({per100g,inputMassG,finishedMassG,retention={}}){
+ if(!(finite(inputMassG)&&inputMassG>0&&finite(finishedMassG)&&finishedMassG>0)) throw new Error('Valid input and finished product mass required');
  const ratio=inputMassG/finishedMassG;
  const adjusted={};
  for(const [k,v] of Object.entries(per100g||{})){
