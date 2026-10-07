@@ -5833,7 +5833,7 @@ function renderProductMaster(){
 }
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=261',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=262',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -7570,7 +7570,7 @@ async function loadFpc18Db(){
 
 async function loadChapterRuleDbs(){
  try{
-   const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=440',{cache:'reload'}).then(async res=>{
+   const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=441',{cache:'reload'}).then(async res=>{
      if(!res.ok)throw new Error(url+' HTTP '+res.status);
      return res.json();
    })));
