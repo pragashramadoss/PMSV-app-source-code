@@ -4,3 +4,13 @@ test('yield concentrates nutrients on finished-product basis',()=>{const r=api.c
 test('nutrient-specific retention can reduce process-sensitive nutrients',()=>{const r=api.calculate({per100g:{protein_g:10,carbohydrate_g:20,total_fat_g:5,dietary_fibre_g:2,vitamin_c_mg:40},inputMassG:1000,finishedMassG:800,retention:{vitamin_c_mg:0.5}});assert.equal(r.per100g.vitamin_c_mg,25);});
 test('protein factors follow FSSAI defaults',()=>{assert.equal(api.proteinFromNitrogen(1),6.25);assert.equal(api.proteinFromNitrogen(1,{milk:true}),6.38);assert.equal(api.proteinFromNitrogen(1,{factor:5.7}),5.7);});
 test('invalid yield and retention fail closed',()=>{assert.throws(()=>api.calculate({per100g:{protein_g:1},inputMassG:100,finishedMassG:0}));assert.throws(()=>api.calculate({per100g:{protein_g:1},inputMassG:100,finishedMassG:90,retention:{protein_g:1.2}}));});
+
+test('FSSAI energy does not reuse source energy and includes fibre factor', () => {
+  assert.equal(calc.energy({carbohydrate_g:10,protein_g:5,total_fat_g:2,dietary_fibre_g:3}), 84);
+});
+test('finished-product yield concentrates nutrients before FSSAI energy calculation', () => {
+  const r=calc.calculate({per100g:{carbohydrate_g:40,protein_g:8,total_fat_g:10,dietary_fibre_g:4,energy_kcal:999},inputMassG:1000,finishedMassG:800});
+  assert.equal(r.per100g.carbohydrate_g,50);
+  assert.equal(r.per100g.energy_kcal,352.5);
+  assert.equal(r.yield_percent,80);
+});
