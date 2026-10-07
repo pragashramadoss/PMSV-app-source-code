@@ -169,7 +169,14 @@
       "Current contaminants, processing aids, labelling and claims layers"
     ],
     "final_compliance_lock": "Do not issue a final proprietary-food compliant conclusion until the standardized-product gate, excluded-class gate, ingredient eligibility, nearest FCS, Appendix A, Appendix B and all other applicable FSSAI regulatory layers are machine-validated.",
-    "route_ui": "enabled_in_build_59"
+    "route_ui": "enabled_in_build_59",
+    "ingredient_basis_distinction": {
+      "standardized_or_permitted_basis_required": true,
+      "foscos_identity_only": "A FoSCoS catalogue identity whose FSSR standard is N.A. is identity evidence only and is not, by itself, treated as satisfying clause 2.12.1(2).",
+      "chapter_3_identity_purity": "A Chapter 3 identity/purity specification is not, by itself, permission to use the substance in the finished food.",
+      "out_of_standard_effect": "Where an ingredient falls outside the confirmed standardized-product provisions but has a separate standardized/permitted FSSAI basis, it is a Proprietary-route trigger rather than a Proprietary-route blocker.",
+      "aggregate_decision": "A Proprietary-route trigger remains valid even if another ingredient is unresolved; the overall result must state the trigger separately from the remaining blocker."
+    }
   },
   "foscos_route_implementation": {
     "status": "active_router_spec",
