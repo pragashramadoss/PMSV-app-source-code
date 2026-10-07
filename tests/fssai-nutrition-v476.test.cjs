@@ -11,6 +11,6 @@ test('FSSAI energy does not reuse source energy and includes fibre factor', () =
 test('finished-product yield concentrates nutrients before FSSAI energy calculation', () => {
   const r=calc.calculate({per100g:{carbohydrate_g:40,protein_g:8,total_fat_g:10,dietary_fibre_g:4,energy_kcal:999},inputMassG:1000,finishedMassG:800});
   assert.equal(r.per100g.carbohydrate_g,50);
-  assert.equal(r.per100g.energy_kcal,352.5);
+  assert.equal(r.per100g.energy_kcal,362.5);
   assert.equal(r.yield_percent,80);
 });
