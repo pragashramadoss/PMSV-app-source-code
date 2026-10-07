@@ -193,6 +193,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="flow-actions">
   <button class="btn" type="button" id="confirmProprietaryStandard" disabled>Confirm nearest standard/category</button>
 </div>
+<div id="standardLookupPanel" class="hidden" style="margin-top:12px"></div>
 
 <div class="notice" style="margin-top:12px"><b>Routing rule:</b> if the complete formulation is covered by the confirmed standardized product and applicable horizontal permissions, keep the Standardized Product route. If the formulation contains an additional ingredient outside the standardized product's permitted formulation, assess the finished product as Proprietary Food and establish that ingredient's FSSAI/IFCT basis. Food additives are checked against Appendix A for the applicable FCS.</div>
 
@@ -421,6 +422,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 </section>
 <section id="process" class="view hidden">
+<div id="processProductScope" class="card hidden"></div>
 <div class="card">
 <div class="section-title"><h2>Select the actual manufacturing processes used</h2><span>Step 1 of 2</span></div>
 <div class="notice oknote"><b>Why this is needed:</b> Appendix C processing aids are permitted for specific technological purposes and product categories. They should not all be shown merely because a process exists in Appendix C. Select only the processes actually used in manufacturing the selected finished product.</div>
@@ -533,6 +535,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </section>
 
 <section id="processing" class="view hidden">
+<div id="processingProductScope" class="card hidden"></div>
 <div style="margin-bottom:10px">
   <button class="btn-secondary" type="button" id="backToProcess">← Back to Manufacturing Process</button>
 </div>
@@ -540,7 +543,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="section-title"><h2>Appendix C processing aids applicable to your process</h2><span>Step 2 of 2 · Version 2 · 01.08.2025</span></div>
 <div class="notice oknote"><b>Only selected-process results are shown.</b> These are permissions under Appendix C, not ingredients that must be used. If a processing aid is not used, it does not need to be added just because it appears here.</div>
 <div class="process-summary" id="processingSelectedSummary"></div>
-<div id="processingEmpty" class="empty-state">No manufacturing process selected yet. Open <b>Manufacturing process</b>, select the actual processes used, then return here.</div>
+<div id="processingEmpty" class="empty-state">No manufacturing process selected yet. Product-specific Appendix C scope is shown above when available. Select the actual process only when you want to determine which processing-aid permissions are truly applicable.</div>
 <div id="processingResults" class="hidden">
 <div class="tablewrap"><table>
 <thead><tr><th>Processing aid</th><th>Technological purpose / applicable process</th><th>FSSAI condition / residue</th><th>Regulatory source</th></tr></thead>
@@ -3243,7 +3246,7 @@ function renderFormula(){
    const chk=checkUsageAgainstRule(x,q);
    const usage='<b>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+'</b><br><small>'+fmt(u.percent,4)+'% w/w · '+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small>'+(chk?'<br><small class="'+(chk.pass===false?'status-bad':chk.pass===true?'status-good':'status-warn')+'"><b>Quantity:</b> '+(chk.pass===false?'Above FSSAI limit':chk.pass===true?'Within FSSAI limit':chk.specialBasis&&!(chk.basisKg>0)?'Cannot determine — no fat/oil ingredient entered':chk.specialBasis?'Fat/oil basis check required':'Quantity check required')+(chk.specialBasis&&chk.basisKg>0?'<br>'+fmt(chk.value,3)+' mg/kg fat/oil · limit '+fmt(chk.limit,3)+' mg/kg':'')+'</small>':'<br><small><b>Quantity:</b> No specific numerical maximum in loaded standard</small>');
    return '<tr><td><b>'+esc(q.name)+'</b></td><td>'+usage+'</td><td>'+esc(q.qualification)+(q.appendix?'<br><small>Appendix A limit: <b>'+esc(q.appendix.limit)+'</b></small>':'')+'</td><td><span class="clause">'+esc(q.clause)+'</span></td><td>'+esc(q.impact)+'</td></tr>';
- }).join('') || '<tr><td colspan="5">Enter formulation ingredients first.</td></tr>';
+ }).join('') || '<tr><td colspan="5">'+(selectedProduct||selectedProfile?'No formulation entered — product-level standards remain available below.':'Enter formulation ingredients first.')+'</td></tr>';
 
  const hasUnresolved=qs.some(q=>q.route==='unresolved');
  const hasProp=qs.some(q=>q.route==='proprietary');
@@ -3284,7 +3287,9 @@ function renderFormula(){
    }
  }
  if(summary){
-   if(!qs.length)summary.innerHTML='<b>No formulation entered.</b> Enter ingredients first.';
+   if(!qs.length)summary.innerHTML=selectedProduct||selectedProfile
+     ? '<b>Standard lookup mode.</b> No formulation is entered, but the selected product standard and product/category-level regulatory layers are shown below. Ingredient-specific qualification will appear only after ingredients are entered.'
+     : '<b>No formulation or standardized product selected.</b> Enter a formulation or confirm a product first.';
    else if(hasUsageFail)summary.innerHTML='<b>Ingredient-stage check failed.</b> At least one loaded quantitative FSSAI limit is exceeded.';
    else if(hasUsagePending)summary.innerHTML='<b>Ingredient-stage quantity check is incomplete.</b> At least one special-basis requirement cannot yet be calculated.';
    else if(hasUnresolved)summary.innerHTML='<b>Ingredient qualification is unresolved for '+esc(selectedName)+'.</b> At least one ingredient has no exact product/FCS permission. Do not call the formulation compliant or proprietary until that ingredient is resolved.';
@@ -3306,7 +3311,7 @@ function renderFormula(){
  }
 
  const chipHtml=formulationIngredients.map(x=>'<span class="process-chip">'+esc(x.name)+'</span>').join('');
- if(contamChips)contamChips.innerHTML=chipHtml||'<span class="muted">No ingredients entered. Return to Formulation ingredients first.</span>';
+ if(contamChips)contamChips.innerHTML=chipHtml||'<span class="muted"><b>No formulation entered.</b> Product-level contaminant limits below are still shown for the selected standardized product. Ingredient-triggered contaminant rows will be added only when ingredients are entered.</span>';
 
  renderLabelRequirements();
  renderNutrition();
@@ -3778,6 +3783,7 @@ function saveProcessSelection(){
  syncProcessUI();
 }
 function renderProcessingAids(){
+ renderProcessingProductScope();
  const empty=document.getElementById('processingEmpty');
  const results=document.getElementById('processingResults');
  const body=document.getElementById('processingRows');
@@ -4292,18 +4298,31 @@ function showSelectedCatalogProduct(p){
   +(profile?.chapter_rule_route_note?'<div class="notice '+(profile.chapter_rule_route_status==='specific_variant_table_pending'?'':'oknote')+'"><b>Chapter routing:</b> '+esc(profile.chapter_rule_route_note)+(Array.isArray(profile.linked_rule_keys)&&profile.linked_rule_keys.length?'<br><small>Linked rule key(s): '+profile.linked_rule_keys.map(esc).join(' + ')+'</small>':'')+'</div>':'')
   +(profile&&!detailed?'<div class="notice"><b>'+(chapterLoaded?'Chapter profile loaded':'Base profile ready')+':</b> '+(chapterLoaded?'The product has been mapped to its applicable FSSAI chapter standard and structured chapter-rule data is loaded. Machine validation of every product-specific clause and linked Appendix rule is still being completed before full formulation compliance is enabled.':'Product identity, Appendix FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.')+'</div>':'');
  if(profile){
-   actions.innerHTML='<button class="btn" type="button" id="startSelectedProduct">'+(detailed?'Start formulation assessment →':chapterLoaded?'Open chapter product profile →':'Open base product profile →')+'</button>';
-   document.getElementById('startSelectedProduct')?.addEventListener('click',()=>{
+   actions.innerHTML='<button class="btn" type="button" id="viewSelectedProduct">View standard & applicable requirements →</button><button class="btn-secondary" type="button" id="startSelectedProduct">Use this product with formulation →</button>';
+   const activate=()=>{
      selectedProductId=profile.id;
+     proprietaryConfirmedStandardId=p.id;
      try{sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId)}catch(e){}
+     applyProprietaryStandardFcs(p);
      applyProductGate();
+     renderFormula();
      renderProcessingQualifierUI();
+     renderProcessingProductScope();
      renderProductContaminants();
      renderProductMicrobiology();
      renderLabelRequirements();
      renderClaims();
      renderPackaging();
      renderFortification();
+     renderStandardLookupDashboard();
+   };
+   document.getElementById('viewSelectedProduct')?.addEventListener('click',()=>{
+     activate();
+     openTab('standard',{updateHash:true,save:true});
+     window.scrollTo({top:0,behavior:'smooth'});
+   });
+   document.getElementById('startSelectedProduct')?.addEventListener('click',()=>{
+     activate();
      openTab('formulation',{updateHash:true,save:true});
      window.scrollTo({top:0,behavior:'smooth'});
    });
@@ -4488,6 +4507,8 @@ async function loadAppendixCore(){
  }catch(e){appendixCoreDb=null;}
  populateProprietarySpecificFcs();
  renderProprietaryAppendixA();
+ renderLegacyProductScopePages();
+ renderStandardLookupDashboard();
 }
 
 let proprietaryEditingIngredientIndex=-1;
@@ -4647,6 +4668,8 @@ function confirmProprietaryStandard(){
  renderClaims();
  renderPackaging();
  renderFortification();
+ renderProcessingProductScope();
+ renderStandardLookupDashboard();
  if(note){
    const fpc=fpc18CategoryForProduct(p);
    note.className='notice oknote';
@@ -4664,6 +4687,7 @@ function confirmProprietaryStandard(){
  }
  renderProprietaryFormula();
  resetProprietaryOutcome();
+ renderStandardLookupDashboard();
 }
 function fpc18IngredientMatch(rule,name){
  const n=normIngredient(name);
@@ -5360,8 +5384,10 @@ function evaluateProprietaryRoute(){
    return;
  }
  if(!ingredients.length){
-   out.className='notice';
-   out.innerHTML='<b>Add formulation ingredients with quantity.</b><br>Each ingredient will first be checked against the confirmed standard/category: '+esc(standardProduct.name)+'.';
+   out.className='notice oknote';
+   out.innerHTML='<b>Standard lookup mode — '+esc(standardProduct.name)+'.</b><br>No formulation has been entered, so PMSV is not performing a Standardized-vs-Proprietary formulation decision. You can still inspect the complete product-level standard and regulatory stack.'
+     +'<div class="flow-actions"><button class="btn" type="button" data-regulatory-route-target="standard">View product standard →</button><button class="btn-secondary" type="button" data-regulatory-route-target="ingredients">View Appendix A / ingredient permissions →</button><button class="btn-secondary" type="button" data-regulatory-route-target="contaminants">View contaminants →</button></div>';
+   renderProprietaryAppendixA();
    return;
  }
  if(ingredients.some(x=>!(Number(x.qty)>0))){
@@ -5727,13 +5753,113 @@ function renderLegacyProductScopePages(){
      }else if(ready){
        html+='<div class="card"><div class="notice"><b>No exact chapter ingredient structure matched this product rule key.</b> Appendix A checks remain product/FCS-scoped, but product-standard ingredient permission stays fail-closed.</div></div>';
      }
-     html+='<div class="card"><div class="flow-actions"><button class="btn-secondary" type="button" id="openScopedFormulation">Open formulation ingredients →</button></div></div>';
+     html+=productAppendixABaselineHtml(fcs);
+     html+='<div class="card"><div class="flow-actions"><button class="btn-secondary" type="button" id="openScopedFormulation">Open formulation →</button></div></div>';
      ingredientDynamic.innerHTML=html;
      setTimeout(()=>document.getElementById('openScopedFormulation')?.addEventListener('click',()=>openTab('formulation',{updateHash:true,save:true})),0);
    }
  }
 }
 
+
+function productAppendixABaselineHtml(fcs){
+ if(!fcs)return '<div class="notice"><b>Appendix A:</b> No safe FCS mapping is loaded for this product, so PMSV will not infer additive permissions.</div>';
+ const resolved=appendixEntriesForFcs(fcs);
+ if(!resolved||resolved.status==='not_loaded')return '<div class="notice"><b>Appendix A · FCS '+esc(fcs)+':</b> Permission table is not loaded yet.</div>';
+ if(resolved.status==='component_carry_over')return '<div class="notice"><b>Appendix A · FCS '+esc(fcs)+': component/carry-over route.</b><br>'+esc(resolved.message)+'</div>';
+ if(resolved.status==='no_additives')return '<div class="notice oknote"><b>Appendix A · FCS '+esc(fcs)+': no additives permitted.</b><br>'+esc(resolved.message)+'</div>';
+ if(resolved.status==='no_additives_pending')return '<div class="notice"><b>Appendix A · FCS '+esc(fcs)+': no-additives row requires current-version recheck.</b><br>'+esc(resolved.message)+'</div>';
+ if(resolved.status==='special_regulation')return '<div class="notice"><b>Appendix A · FCS '+esc(fcs)+': special regulation route.</b><br>'+esc(resolved.message)+'</div>';
+ if(resolved.status!=='loaded')return '<div class="notice"><b>Appendix A · FCS '+esc(fcs)+':</b> '+esc(resolved.message||'No loaded permission set.')+'</div>';
+ const rows=(resolved.entries||[]).map(x=>{
+   const members=appendixCoreDb?.annexure_1_groups?.[x.name]||[];
+   const ins=x.ins||members.map(m=>m.ins).filter(Boolean).join(', ')||'—';
+   const memberText=members.length?'<br><small>'+members.map(m=>esc(m.name)+(m.ins?' (INS '+esc(m.ins)+')':'')).join('; ')+'</small>':'';
+   return '<tr><td><b>'+esc(x.name)+'</b>'+memberText+'</td><td>'+esc(ins)+'</td><td><b>'+esc(x.limit||'—')+'</b>'+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.applied_from||resolved.resolvedFcs||fcs)+'</td></tr>';
+ }).join('');
+ return '<div class="card"><div class="section-title"><h2>Appendix A additives — FCS '+esc(fcs)+'</h2><span>Product/category-level view · no formulation required</span></div>'
+   +'<div class="notice oknote"><b>'+resolved.entries.length+' applicable direct/inherited Appendix A permission row'+(resolved.entries.length===1?'':'s')+' loaded for this FCS.</b> These are permissions, not ingredients that must be present.</div>'
+   +(resolved.incomplete?'<div class="notice"><b>Coverage note:</b> '+esc(resolved.completenessNote||'One or more hierarchy levels remain incomplete; PMSV does not convert missing rows into permission.')+'</div>':'')
+   +'<div class="tablewrap"><table><thead><tr><th>Additive / group</th><th>INS</th><th>Maximum / condition</th><th>Applied from FCS</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+}
+
+function processingAidProductScopeMatches(){
+ const p=selectedCatalogProductForProcessing();
+ if(!p)return [];
+ const profile=profileForCatalogProduct(p);
+ const keys=new Set([
+   p?.rule_key,
+   ...(Array.isArray(p?.rule_keys)?p.rule_keys:[]),
+   p?.fssr,
+   profile?.rule_key,
+   ...(Array.isArray(profile?.rule_keys)?profile.rule_keys:[]),
+   ...(Array.isArray(profile?.linked_rule_keys)?profile.linked_rule_keys:[]),
+   profile?.fssr
+ ].map(x=>String(x||'').trim()).filter(Boolean));
+ return processingAidRules.filter(rule=>{
+   if(Array.isArray(rule?.product_ids)&&rule.product_ids.includes(p.id))return true;
+   if(Array.isArray(rule?.rule_keys)&&rule.rule_keys.some(k=>keys.has(String(k||'').trim())))return true;
+   return false;
+ });
+}
+function renderProcessingProductScope(){
+ const p=selectedCatalogProductForProcessing();
+ const processBox=document.getElementById('processProductScope');
+ const aidBox=document.getElementById('processingProductScope');
+ const candidates=processingAidProductScopeMatches();
+ const productName=p?.name||currentProductProfile()?.name||'';
+ const summary=!p
+   ? '<div class="notice"><b>No standardized product selected.</b> Confirm a product to see product-specific Appendix C scope.</div>'
+   : candidates.length
+     ? '<div class="notice oknote"><b>'+esc(productName)+' — '+candidates.length+' product-specific Appendix C candidate'+(candidates.length===1?'':'s')+' loaded.</b><br><small>These are product/category-level possibilities only. Select the actual manufacturing process before PMSV activates a processing-aid permission.</small></div>'
+       +'<div class="tablewrap"><table><thead><tr><th>Processing aid</th><th>Purpose / process</th><th>Condition</th><th>Source</th></tr></thead><tbody>'
+       +candidates.map(x=>'<tr><td><b>'+esc(x.name)+'</b>'+(x.ins?'<br><small>INS '+esc(x.ins)+'</small>':'')+'</td><td>'+esc(x.purpose||x.process||'')+'</td><td>'+esc(x.condition||'')+'</td><td>'+esc(x.source||'Appendix C')+'</td></tr>').join('')
+       +'</tbody></table></div>'
+     : '<div class="notice"><b>'+esc(productName)+' — no exact product-specific Appendix C row is loaded.</b><br>All-food or process-specific processing-aid permissions may still apply, but PMSV needs the actual manufacturing process before displaying them as applicable.</div>';
+ if(processBox){
+   processBox.classList.toggle('hidden',!p);
+   if(p)processBox.innerHTML='<div class="section-title"><h2>Product processing-aid scope — '+esc(productName)+'</h2><span>Appendix C baseline</span></div>'+summary;
+ }
+ if(aidBox){
+   aidBox.classList.toggle('hidden',!p);
+   if(p)aidBox.innerHTML='<div class="section-title"><h2>Product-level Appendix C scope — '+esc(productName)+'</h2><span>Before process selection</span></div>'+summary;
+ }
+}
+
+function renderStandardLookupDashboard(){
+ const box=document.getElementById('standardLookupPanel');
+ if(!box)return;
+ const p=selectedProductForFortification();
+ const profile=currentProductProfile();
+ if(!p&&!profile){
+   box.classList.add('hidden');
+   box.innerHTML='';
+   return;
+ }
+ const name=p?.name||profile?.display_name||profile?.name||'Selected product';
+ const fssr=p?.fssr||profile?.fssr||profile?.rule_key||'Not shown';
+ const fcs=appendixFcsForRecord(p)||appendixFcsForRecord(profile)||'Not mapped';
+ box.classList.remove('hidden');
+ box.innerHTML='<div class="card" style="margin:0;background:#f7fbff"><div class="section-title"><h2>Standard lookup mode — '+esc(name)+'</h2><span>No formulation required</span></div>'
+   +'<div class="grid2"><div class="item"><b>FSSAI standard</b><small>'+esc(fssr)+'</small></div><div class="item"><b>Appendix A FCS</b><small>'+esc(fcs)+'</small></div></div>'
+   +'<div class="notice oknote"><b>You can inspect this standardized product directly.</b> Product-level requirements are available even when the formulation contains zero ingredients. Formulation-dependent checks are kept separate and will say when ingredient/process input is required.</div>'
+   +'<div class="flow-actions">'
+   +'<button class="btn" type="button" data-standard-lookup-tab="standard">Product standard</button>'
+   +'<button class="btn-secondary" type="button" data-standard-lookup-tab="ingredients">Ingredients & Appendix A</button>'
+   +'<button class="btn-secondary" type="button" data-standard-lookup-tab="contaminants">Contaminants</button>'
+   +'<button class="btn-secondary" type="button" data-standard-lookup-tab="micro">Microbiology</button>'
+   +'<button class="btn-secondary" type="button" data-standard-lookup-tab="process">Processing aids</button>'
+   +'<button class="btn-secondary" type="button" data-standard-lookup-tab="packaging">Packaging</button>'
+   +'<button class="btn-secondary" type="button" data-standard-lookup-tab="quality">Labelling</button>'
+   +'</div></div>';
+ box.querySelectorAll('[data-standard-lookup-tab]').forEach(btn=>btn.addEventListener('click',()=>{
+   const tab=btn.dataset.standardLookupTab;
+   if(validTabs.has(tab)){
+     openTab(tab,{updateHash:true,save:true});
+     window.scrollTo({top:0,behavior:'smooth'});
+   }
+ }));
+}
 function applyProductGate(){
  renderLegacyProductScopePages();
  const gate=document.getElementById('formulationProductGate');
@@ -5844,6 +5970,8 @@ function renderProductMaster(){
  populateProprietaryCategories();
  renderProductSearch();
  applyProductGate();
+ renderStandardLookupDashboard();
+ renderProcessingProductScope();
 }
 async function loadProductMaster(){
  try{
@@ -7595,6 +7723,8 @@ async function loadChapterRuleDbs(){
  renderIngredientAutocomplete();
  renderFormula();
  renderLegacyProductScopePages();
+ renderProcessingProductScope();
+ renderStandardLookupDashboard();
  if(productMasterDb)renderProductMaster();
 }
 
