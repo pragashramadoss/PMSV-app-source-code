@@ -909,8 +909,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div class="card">
-<div class="section-title"><h2>Live label information from this formulation</h2><span>Updates automatically</span></div>
-<div class="checker-grid">
+<div class="section-title"><h2>Label applicability for the selected product</h2><span>Product-level rules work without formulation</span></div>
+<div id="labelFormulationInputs" class="checker-grid">
   <div class="field">
     <label>Declared serving / pack size (ml)</label>
     <input id="labelServingMl" type="number" min="1" step="1" value="250">
@@ -923,6 +923,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
   </div>
 </div>
 <div id="labelIngredientPreview" class="notice"></div>
+</div>
 <div id="labelProductSpecificStatus" class="notice"></div>
 <div id="labelConditionalArticleStatus" class="notice hidden"></div>
 <div id="labelConditionalArticleQualifiers" class="hidden"></div>
@@ -2573,10 +2574,14 @@ function renderLabelRequirements(){
  const specificMannerStatus=document.getElementById('labelSpecificMannerStatus');
  const caffeinatedSpecific=document.getElementById('caffeinatedLabelSpecific');
  const servingHelp=document.getElementById('labelServingHelp');
+ const formulationInputs=document.getElementById('labelFormulationInputs');
  if(!mass&&!preview&&!caffeinePreview&&!triggers)return;
 
  const selectedProduct=productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
  const selectedName=selectedProduct?.name||currentProductProfile()?.name||'';
+ const lookupMode=!!selectedName&&standardLookupModeActive();
+ if(formulationInputs)formulationInputs.classList.toggle('hidden',lookupMode);
+ if(triggers)triggers.classList.toggle('hidden',lookupMode);
  const productLabelRule=labelProductRuleFor(selectedName);
  const isCaffeinated=productLabelRule?.id==='caffeinated_beverage';
  if(pageTitle)pageTitle.textContent='Label requirements'+(selectedName?' — '+selectedName:'');
@@ -2627,7 +2632,7 @@ function renderLabelRequirements(){
    }
  }
  if(caffeinatedSpecific)caffeinatedSpecific.classList.toggle('hidden',!isCaffeinated);
- if(caffeinePreview)caffeinePreview.classList.toggle('hidden',!isCaffeinated);
+ if(caffeinePreview)caffeinePreview.classList.toggle('hidden',!isCaffeinated||lookupMode);
  if(servingHelp)servingHelp.textContent=isCaffeinated?'Used to calculate the verified “High Caffeine: X mg/serving size” declaration for Caffeinated Beverage.':'Used for applicable per-serving label calculations. No product-specific serving calculation is enabled for the current selection.';
 
  const total=totalFormulaKg();
@@ -3223,7 +3228,7 @@ function renderFormula(){
  if(list){
    if(!formulationIngredients.length){
      list.className='empty-state';
-     list.innerHTML='No ingredients entered yet.';
+     list.innerHTML=standardLookupModeActive()?'No formulation entered — Standard Lookup mode is active. Product-level requirements can be viewed below.':'No ingredients entered yet.';
    }else{
      list.className='';
      list.innerHTML=formulationIngredients.map((x,i)=>{
@@ -4077,6 +4082,70 @@ function renderMasterComplianceSummary(){
    rows.push(masterComplianceRow('Product standard','pass',productName+' has a fully validated PMSV rule profile.','standard'));
  }else{
    rows.push(masterComplianceRow('Product standard','incomplete',productName+' is loaded at '+esc(profile?.status||'catalog-only')+' status; detailed product clauses are not fully machine-validated.','standard'));
+ }
+
+ if(standardLookupModeActive()){
+   const fcs=appendixFcsForRecord(product)||appendixFcsForRecord(profile);
+   const standards=currentChapterStandards();
+   const appendix=fcs?appendixEntriesForFcs(fcs):null;
+   const appendixAvailable=!!appendix&&['loaded','no_additives','component_carry_over','special_regulation','no_additives_pending'].includes(appendix.status);
+   rows.push(masterComplianceRow('Ingredients & Appendix A',appendixAvailable||standards.length?'pass':'incomplete',
+     standards.length||appendixAvailable
+       ? 'Product-standard ingredient provisions and/or Appendix A FCS '+(fcs||'route')+' are available without entering a formulation.'
+       : 'No usable product-standard ingredient structure or Appendix A FCS mapping is currently loaded for this product.',
+     'ingredients'));
+
+   if(contaminantsDb&&product){
+     const cp=contaminantProfileForProduct(product);
+     const exactCount=Array.isArray(cp?.rules)?cp.rules.length:0;
+     const baselineCount=productBaselineContaminantRules(product).length;
+     const pesticideCount=exactPesticideMrlRowsForProduct(product).length;
+     const conditionalCount=conditionalMetalRowsForProduct(product).length;
+     const universalCount=Array.isArray(contaminantsDb.all_food_rules)?contaminantsDb.all_food_rules.filter(x=>x.auto_apply===true).length:0;
+     const totalMapped=exactCount+baselineCount+pesticideCount+conditionalCount+universalCount;
+     rows.push(masterComplianceRow('Contaminants / residues',totalMapped?'pass':'incomplete',
+       totalMapped
+         ? totalMapped+' product-level/commodity contaminant, residue or all-food rule row'+(totalMapped===1?' is':'s are')+' available. Ingredient-triggered contaminant rules are intentionally excluded in lookup mode.'
+         : 'No exact product/commodity contaminant route is currently mapped; PMSV does not invent a fallback.',
+       'contaminants'));
+   }else{
+     rows.push(masterComplianceRow('Contaminants / residues','incomplete','Current contaminant master or selected product is unavailable.','contaminants'));
+   }
+
+   if(!product){
+     rows.push(masterComplianceRow('Microbiology','incomplete','Select a standardized product first.','micro'));
+   }else if(['carbonated-water','carbonated-caffeinated-beverage','non-carbonated-caffeinated-beverage'].includes(product.id)||product.microbiology_status==='mapped_appendix_b_v2'){
+     rows.push(masterComplianceRow('Microbiology','pass','A direct product-standard or exact Appendix B route is mapped and can be inspected without formulation ingredients.','micro'));
+   }else{
+     rows.push(masterComplianceRow('Microbiology','evidence','No single exact microbiology route is auto-assigned. Review the product/process category; no formulation ingredient list is required for that review.','micro'));
+   }
+
+   if(appendixCDb&&product){
+     const processCandidates=processingAidProductScopeMatches();
+     rows.push(masterComplianceRow('Processing aids','evidence',
+       processCandidates.length
+         ? processCandidates.length+' product-specific Appendix C candidate'+(processCandidates.length===1?' is':'s are')+' visible. Actual process selection is required only to decide applicability.'
+         : 'No exact product-specific Appendix C row is loaded. All-food/process-specific permissions can still be reviewed after selecting the actual manufacturing process.',
+       'process'));
+   }else rows.push(masterComplianceRow('Processing aids','evidence','Select the actual manufacturing process when Appendix C applicability needs to be determined.','process'));
+
+   rows.push(masterComplianceRow('Packaging','evidence','General packaging requirements and any product/Schedule-IV route can be inspected without formulation ingredients. Material/package inputs are needed only for a compliance decision.','packaging'));
+   rows.push(masterComplianceRow('Nutrition','evidence','Not evaluated in Standard Lookup mode. Nutrition calculation is formulation-dependent and does not block viewing the standard.','nutrition'));
+   rows.push(masterComplianceRow('Fortification','evidence','Applicable fortification routes can be inspected for the selected standardized product; formulation quantities are required only for fortificant calculations.','fortification'));
+   rows.push(masterComplianceRow('Labelling / artwork','evidence','General and exact product-specific label requirements are available. Ingredient-triggered declarations are intentionally not evaluated in lookup mode.','quality'));
+   rows.push(masterComplianceRow('Advertising & claims','evidence','General and product-specific claim rules are available for review. Numeric claim evaluation requires finished-product evidence.','claims'));
+
+   const lookupLabels={pass:'AVAILABLE',fail:'BLOCKED',incomplete:'DATA GAP',evidence:'CONDITIONAL / INPUT'};
+   body.innerHTML=rows.map(r=>'<tr><td><b>'+esc(r.module)+'</b></td><td><span class="'+r.cls+'"><b>'+lookupLabels[r.status]+'</b></span></td><td>'+esc(r.detail)+'</td><td><button class="btn-secondary" type="button" data-summary-tab="'+esc(r.tab)+'">Open module</button></td></tr>').join('');
+   body.querySelectorAll('[data-summary-tab]').forEach(btn=>btn.addEventListener('click',()=>openTab(btn.dataset.summaryTab,{updateHash:true,save:true})));
+   const gaps=rows.filter(r=>r.status==='incomplete');
+   decision.className=gaps.length?'notice':'notice oknote';
+   decision.innerHTML='<b>STANDARD LOOKUP MODE — no formulation assessment is being performed.</b><br>'
+     +(gaps.length
+       ? 'Product-level requirements are available, with data gaps in: <b>'+gaps.map(r=>esc(r.module)).join(', ')+'</b>.'
+       : 'The loaded product-level regulatory layers can be inspected without entering ingredients.')
+     +'<br><small>Formulation-dependent calculations and declarations are intentionally outside this lookup view and do not turn the standard lookup into a HOLD status.</small>';
+   return;
  }
 
  if(!formulationIngredients.length){
@@ -5854,6 +5923,9 @@ function renderProcessingProductScope(){
  }
 }
 
+function standardLookupModeActive(){
+ return formulationIngredients.length===0&&!!(selectedProductForFortification()||currentProductProfile());
+}
 function renderStandardLookupDashboard(){
  const box=document.getElementById('standardLookupPanel');
  if(!box)return;
@@ -5878,8 +5950,11 @@ function renderStandardLookupDashboard(){
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="micro">Microbiology</button>'
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="process">Processing aids</button>'
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="packaging">Packaging</button>'
+   +'<button class="btn-secondary" type="button" data-standard-lookup-tab="fortification">Fortification</button>'
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="quality">Labelling</button>'
-   +'</div></div>';
+   +'<button class="btn-secondary" type="button" data-standard-lookup-tab="claims">Claims rules</button>'
+   +'<button class="btn-secondary" type="button" data-standard-lookup-tab="summary">Standard lookup summary</button>'
+   +'</div><div class="notice" style="margin-top:10px"><b>Formulation-dependent only:</b> nutrition calculation, ingredient-triggered allergens/warnings, ingredient-specific contaminant triggers and quantitative formulation compliance are intentionally not evaluated in Standard Lookup mode. They do not block viewing the standardized product.</div></div>';
  box.querySelectorAll('[data-standard-lookup-tab]').forEach(btn=>btn.addEventListener('click',()=>{
    const tab=btn.dataset.standardLookupTab;
    if(validTabs.has(tab)){
@@ -5904,9 +5979,11 @@ function applyProductGate(){
  if(gate){
    gate.className=profile?'notice oknote':'notice';
    gate.innerHTML=profile
-     ? '<b>Confirmed routing reference:</b> '+esc(product?.name||profile.display_name||profile.name||'Selected product')
+     ? '<b>Confirmed product:</b> '+esc(product?.name||profile.display_name||profile.name||'Selected product')
        +(profile.fssr?' · FSSR '+esc(profile.fssr):'')
-       +'.<br><small>You may continue editing the same formulation; re-run the route decision after any formulation change.</small>'
+       +(formulationIngredients.length
+         ? '.<br><small>Formulation Assessment mode: re-run the route decision after any formulation change.</small>'
+         : '.<br><small><b>Standard Lookup mode:</b> no formulation is required to inspect this product’s standard and product-level regulatory requirements.</small>')
      : '<b>Formulation-first mode.</b> Enter the complete formulation below. Product selection is intentionally not required before ingredient entry; PMSV will determine the nearest standard/category from this same screen.';
    gate.classList.remove('hidden');
  }
@@ -7107,6 +7184,15 @@ function renderClaimsReference(){
 function renderClaims(){
  const status=document.getElementById('claimsDbStatus');
  const select=document.getElementById('claimType');
+ const lookupMode=standardLookupModeActive();
+ const claimResult=document.getElementById('claimCheckResult');
+ const comparativeResult=document.getElementById('comparativeClaimResult');
+ const nonAdditionResult=document.getElementById('nonAdditionClaimResult');
+ if(lookupMode){
+   if(claimResult)claimResult.innerHTML='<b>Standard Lookup mode.</b> Schedule-I claim rules can be inspected, but numeric claim compliance is not evaluated without finished-product nutrition evidence.';
+   if(comparativeResult)comparativeResult.innerHTML='<b>Standard Lookup mode.</b> Comparative-claim rules remain available; calculation requires the finished-product value and comparator.';
+   if(nonAdditionResult)nonAdditionResult.innerHTML='<b>Standard Lookup mode.</b> Non-addition claim rules can be reviewed, but formulation screening is not run.';
+ }
  if(select&&claimsDb){
    const current=select.value;
    select.innerHTML='<option value="">Select claim</option>'+(claimsDb.schedule_i||[]).map(r=>'<option value="'+esc(r.id)+'">'+esc(r.nutrient+' — '+r.claim)+(r.auto_evaluable===true?'':' · needs evidence')+'</option>').join('');
