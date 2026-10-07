@@ -2733,13 +2733,50 @@ function nutritionFinishedMassG(inputMassG){
  const kg=Number(document.getElementById('nutritionFinishedKg')?.value);
  return Number.isFinite(kg)&&kg>0?kg*1000:inputMassG;
 }
-function fssaiEnergyFromPanel(n){
+function formulationEnergySpecials(){
+ const out={alcohol_g:0,polyols_g:0,erythritol_g:0,evidence:[]};
+ const polyols=new Set(['sorbitol','mannitol','xylitol','maltitol','lactitol','isomalt','polyglycitol syrup']);
+ formulationIngredients.forEach(item=>{
+   const g=qtyToKg(item.qty,item.unit)*1000;
+   if(!(g>0))return;
+   const n=normIngredient(item.name);
+   if(n==='ethanol'||n==='ethyl alcohol'||n==='alcohol'){
+     out.alcohol_g+=g; out.evidence.push(item.name+' → ethanol');
+   }else if(n==='erythritol'){
+     out.erythritol_g+=g; out.evidence.push(item.name+' → erythritol');
+   }else if(polyols.has(n)){
+     out.polyols_g+=g; out.evidence.push(item.name+' → polyol');
+   }
+ });
+ return out;
+}
+function formulationOrganicAcids(inputG,finishedG){
+ const fields=['OXAL_TOTAL','CIS_ACONITIC','CITAC','FUMAC','MALAC','QUINIC','SUCAC','TARAC'];
+ let totalMg=0, coveredG=0;
+ formulationIngredients.forEach(item=>{
+   const g=qtyToKg(item.qty,item.unit)*1000;
+   if(!(g>0))return;
+   const profile=nutritionProfileFor(item.name);
+   const row=profile?.ifct_tables?.[9]?.values;
+   if(!row)return;
+   if(!fields.every(k=>isNutritionNumber(row[k])))return;
+   totalMg+=fields.reduce((sum,k)=>sum+row[k],0)*g/100;
+   coveredG+=g;
+ });
+ const complete=inputG>0&&Math.abs(inputG-coveredG)<=0.000001;
+ return {per100g:complete&&finishedG>0?(totalMg/1000)*100/finishedG:null,coverage:inputG>0?coveredG/inputG*100:0};
+}
+function fssaiEnergyFromPanel(n,extras={}){
  if(!window.PMSVFssaiNutrition)return null;
  return window.PMSVFssaiNutrition.energy({
    carbohydrate_g:n.carbohydrate_g,
    protein_g:n.protein_g,
    total_fat_g:n.total_fat_g,
-   dietary_fibre_g:n.dietary_fibre_g
+   dietary_fibre_g:n.dietary_fibre_g,
+   organic_acids_g:extras.organic_acids_g,
+   alcohol_g:extras.alcohol_g,
+   polyols_g:extras.polyols_g,
+   erythritol_g:extras.erythritol_g
  });
 }
 function calculateNutrition(){
@@ -2774,7 +2811,16 @@ function calculateNutrition(){
    coverageByField[k]=inputG>0?(verifiedMass[k]/inputG)*100:0;
    per100g[k]=inputG>0&&finishedG>0&&verifiedMass[k]>=inputG-0.000001?(totals[k]*100/finishedG):null;
  });
- per100g.energy_kcal=fssaiEnergyFromPanel(per100g);
+ const organic=formulationOrganicAcids(inputG,finishedG);
+ const specials=formulationEnergySpecials();
+ const scale=finishedG>0?100/finishedG:0;
+ const extras={
+   organic_acids_g:organic.per100g,
+   alcohol_g:specials.alcohol_g*scale,
+   polyols_g:specials.polyols_g*scale,
+   erythritol_g:specials.erythritol_g*scale
+ };
+ per100g.energy_kcal=fssaiEnergyFromPanel(per100g,extras);
  coverageByField.energy_kcal=['carbohydrate_g','protein_g','total_fat_g'].every(k=>coverageByField[k]>=99.999999)?100:0;
  const density=formulaDensity();
  const per100ml={},perServe={};
@@ -2791,6 +2837,7 @@ function calculateNutrition(){
    totalG:inputG,inputG,finishedG,yieldPct,coveredG:profileCoveredG,coveragePct:inputG>0?(profileCoveredG/inputG)*100:0,
    matched,unmatched,per100g,per100ml,perServe,density,coverageByField,incompleteFields,
    energyBasis:'FSSAI conversion factors; IFCT energy is not directly aggregated',
+   energyComponents:{organic_acids_g:organic.per100g,organic_acid_coverage:organic.coverage,alcohol_g:extras.alcohol_g,polyols_g:extras.polyols_g,erythritol_g:extras.erythritol_g,special_evidence:specials.evidence},
    complete:inputG>0&&finishedG>0&&unmatched.length===0&&incompleteFields.length===0
  };
 }
