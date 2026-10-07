@@ -5317,7 +5317,6 @@ function evaluateProprietaryRoute(){
  const fpc=fpc18CategoryForProduct(standardProduct);
  const allStandard=assessments.every(x=>x.status==='allowed_standard');
  const allCategory=!!fpc&&assessments.every(x=>x.status==='allowed_category'||x.status==='allowed_category_other_basis');
- const proprietarySupport=assessments.filter(x=>x.status==='not_allowed_standard_proprietary_basis');
  const standardIncomplete=assessments.some(x=>x.status==='standard_check_incomplete'||x.status==='quantity_pending_standard'||x.status==='quantity_pending_category');
  const hardFail=assessments.some(x=>x.status==='limit_fail_standard'||x.status==='proprietary_limit_fail'||x.status==='limit_fail_category');
  const proprietaryPending=assessments.some(x=>x.status==='proprietary_quantity_pending');
@@ -5367,18 +5366,18 @@ function evaluateProprietaryRoute(){
      +(standardProduct.fssr?' · <span class="clause">'+esc(standardProduct.fssr)+'</span>':'')
      +cards
      +'<br><b>Remaining blocker:</b> '+(hardFail?'At least one quantitative FSSAI condition fails. ':proprietaryPending?'At least one quantity-dependent FSSAI check is incomplete. ':'')
-     +(unresolved?'At least one other ingredient still has no standardized/permitted FSSAI basis identified for clause 2.12.1(2). ':'')
+     +(unresolved.length?'At least one other ingredient still has no standardized/permitted FSSAI basis identified for clause 2.12.1(2). ':'')
      +'The Proprietary trigger itself is not cancelled; resolve only the remaining blocker(s).';
    if(guide)guide.classList.remove('hidden');
    return;
  }
 
- if(proprietarySupport.length&&!standardIncomplete&&!hardFail&&!proprietaryPending&&!unresolved.length){
+ if(proprietaryTriggers.length&&!standardIncomplete&&!hardFail&&!proprietaryPending&&!unresolved.length){
    out.className='notice oknote';
    out.innerHTML='<b>Proprietary Food route supported by the formulation.</b><br>'
      +'<b>Confirmed standardized product checked first:</b> '+esc(standardProduct.name)
      +(standardProduct.fssr?' · <span class="clause">'+esc(standardProduct.fssr)+'</span>':'')
-     +'<br><b>'+proprietarySupport.length+' ingredient'+(proprietarySupport.length===1?' is':'s are')+' outside the confirmed standard and have a separate FSSAI/FoSCoS basis.</b>'
+     +'<br><b>'+proprietaryTriggers.length+' ingredient'+(proprietaryTriggers.length===1?' is':'s are')+' outside the confirmed standard and have a separate FSSAI/FoSCoS basis.</b>'
      +cards
      +'<br><b>Route decision:</b> The formulation no longer fits the confirmed standardized product because of the ingredient deviation(s). Since those ingredient(s) have a separate regulatory basis, continue the Chapter 2.12 Proprietary Food assessment under the user-selected FCS '+esc(proprietaryFcs)+'.'
      +'<br><br><b>Not a final compliance pass.</b> Appendix A quantity conditions, microbiology, contaminants, processing aids, labelling, claims and all other applicable FSSAI requirements still apply.';
