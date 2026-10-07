@@ -910,7 +910,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <div class="card">
 <div class="section-title"><h2>Label applicability for the selected product</h2><span>Product-level rules work without formulation</span></div>
-<div id="labelFormulationInputs" class="checker-grid">
+<div id="labelFormulationInputs"><div class="checker-grid">
   <div class="field">
     <label>Declared serving / pack size (ml)</label>
     <input id="labelServingMl" type="number" min="1" step="1" value="250">
@@ -5923,6 +5923,22 @@ function renderProcessingProductScope(){
  }
 }
 
+function standardLookupStructuralAudit(){
+ const required=[
+   ['standard','selectedProductStandardContent'],
+   ['ingredients','selectedProductIngredientsContent'],
+   ['contaminants','productContaminantResults'],
+   ['micro','microbiologyResults'],
+   ['process','processGrid'],
+   ['processing','processingEmpty'],
+   ['packaging','packagingProductRoute'],
+   ['fortification','fortificationRoute'],
+   ['quality','labelPageTitle'],
+   ['claims','claimsDbStatus'],
+   ['summary','masterComplianceDecision']
+ ];
+ return required.map(([tab,id])=>({tab,id,present:!!document.getElementById(id)}));
+}
 function standardLookupModeActive(){
  return formulationIngredients.length===0&&!!(selectedProductForFortification()||currentProductProfile());
 }
@@ -6683,18 +6699,46 @@ function chapter26ContaminantGateNotices(p){
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  const n=normIngredient(p.name||'');
+ if(!n)return [];
  const out=[];
- if(n==='rice'){
-   // Lead article expressly covers cereal grains except buckwheat/canihua/quinoa, so Rice is included.
+
+ // 1) Exact current metal-article matches for any standardized product name.
+ Object.entries(contaminantsDb?.metal_article_rules_v9||{}).forEach(([contaminant,rows])=>{
+   (rows||[]).forEach(r=>{
+     if(normIngredient(r.article||'')===n)out.push({contaminant,...r});
+   });
+ });
+
+ // 2) Exact current crop-contaminant article matches for any standardized product name.
+ Object.entries(contaminantsDb?.crop_contaminants||{}).forEach(([key,group])=>{
+   (group?.rules||[]).forEach(r=>{
+     if(normIngredient(r.article||'')!==n)return;
+     out.push({
+       contaminant:String(group.name||group.label||key.replaceAll('_',' ')),
+       unit:String(r.unit||group.unit||''),
+       source_basis:String(r.source_basis||group.source_basis||'Section 2.2 · Crop contaminants'),
+       ...r
+     });
+   });
+ });
+
+ // 3) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
+ // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
+ const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
+ const grainNames=(grainStandard?.applies_to||[]).map(normIngredient);
+ const exactFoodGrain=grainNames.includes(n);
+ if(exactFoodGrain){
    const leadRows=contaminantsDb?.metal_article_rules_v9?.Lead||[];
    const lead=leadRows.find(r=>normIngredient(r.article||'')===normIngredient('Cereal grains, except buckwheat, canihua and quinoa'));
-   if(lead)out.push({contaminant:'Lead',...lead});
-   // Current crop-contaminant table expressly applies these two limits to cereal and cereal products.
+   if(lead&&!['buckwheat','canihua','quinoa'].includes(n))out.push({contaminant:'Lead',...lead});
+
    const totalAflatoxin=contaminantsDb?.crop_contaminants?.total_aflatoxins?.rules?.find(r=>normIngredient(r.article||'')===normIngredient('Cereal and cereal products'));
-   if(totalAflatoxin)out.push({contaminant:'Total Aflatoxins',unit:'µg/kg',source_basis:'Section 2.2.1 · Crop contaminants',...totalAflatoxin});
+   if(totalAflatoxin)out.push({contaminant:'Total Aflatoxins',unit:String(totalAflatoxin.unit||'µg/kg'),source_basis:'Section 2.2.1 · Crop contaminants',...totalAflatoxin});
+
    const b1=contaminantsDb?.crop_contaminants?.aflatoxin_b1?.rules?.find(r=>normIngredient(r.article||'')===normIngredient('Cereal and cereal products'));
-   if(b1)out.push({contaminant:'Aflatoxin B1',unit:'µg/kg',source_basis:'Section 2.2.1 · Crop contaminants',...b1});
+   if(b1)out.push({contaminant:'Aflatoxin B1',unit:String(b1.unit||'µg/kg'),source_basis:'Section 2.2.1 · Crop contaminants',...b1});
  }
+
  const seen=new Set();
  return out.filter(r=>{
    const key=[r.contaminant,r.limit,r.unit,r.article].join('|');
@@ -6796,7 +6840,7 @@ function renderProductContaminants(){
  const profileMsg=profile
   ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+exact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
   : baseline.length
-    ? '<div class="notice oknote"><b>Product-level FSSAI contaminant baseline:</b> '+baseline.length+' directly applicable general article'+(baseline.length===1?'':'s')+' resolved for '+esc(p.name)+'. Exact commodity pesticide-residue MRLs are shown separately below.</div>'
+    ? '<div class="notice oknote"><b>Product-level FSSAI contaminant baseline:</b> '+baseline.length+' directly applicable general article'+(baseline.length===1?'':'s')+' resolved for '+esc(p.name)+'. Exact commodity pesticide-residue MRLs are shown separately below when the selected standardized product has an exact commodity match.</div>'
     : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
    +chapter26ContaminantGateNotices(p)
