@@ -1236,7 +1236,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-nearest-standard-v13';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-nearest-standard-v14';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -4811,12 +4811,12 @@ function renderProprietaryStandardSuggestion(){
    mirrorNearestStandardPreview(note);
    return;
  }
- if(!productMasterDb||!productCatalog().length){
-   select.innerHTML='<option value="">Product catalogue loading…</option>';
+ if(!productCatalog().length){
+   select.innerHTML='<option value="">Standard search index loading…</option>';
    select.disabled=true;
    confirm.disabled=true;
    note.className='notice';
-   note.innerHTML='<b>Finding the nearest FSSAI standard…</b><br><small>The fast standard index or full product catalogue is still loading. PMSV retries automatically; you can also tap “Find nearest standard”. Your entry is retained.</small>';
+   note.innerHTML='<b>Finding the nearest FSSAI standard…</b><br><small>The lightweight standard-search index is still loading. PMSV retries automatically and keeps your entry.</small>';
    mirrorNearestStandardPreview(note);
    return;
  }
@@ -4836,13 +4836,15 @@ function renderProprietaryStandardSuggestion(){
    +ranked.map((x,i)=>'<option value="'+esc(x.p.id)+'"'+(confident&&i===0?' selected':'')+'>'+esc(proprietaryCandidateLabel(x.p,{suggested:confident&&i===0}))+'</option>').join('');
  select.disabled=false;
  confirm.disabled=!select.value;
- const basisText=basis.source==='product_name'
+ const usingFastIndex=!productMasterDb&&!!standardSearchIndexDb;
+ const basisText=(basis.source==='product_name'
    ? 'Matched from the finished-product name you entered.'
    : basis.source==='single_ingredient'
      ? 'Matched automatically from the single ingredient in the formulation: <b>'+esc(raw)+'</b>.'
      : basis.source==='pending_ingredient'
        ? 'Preview matched from the ingredient currently being entered: <b>'+esc(raw)+'</b>. Add it with quantity to make it part of the formulation.'
-       : 'Matched automatically from the entered formulation. Entering an optional finished-product name can improve the ranking for multi-ingredient products.';
+       : 'Matched automatically from the entered formulation. Entering an optional finished-product name can improve the ranking for multi-ingredient products.')
+   +(usingFastIndex?' <b>Fast standard index active.</b> Full product details will enrich automatically when the main catalogue finishes loading.':'');
  const fpc=fpc18CategoryForProduct(best.p);
  if(confident&&fpc){
    note.className='notice oknote';
@@ -5808,7 +5810,8 @@ function ensureNearestStandardSuggestion(force=false){
  }
 }
 const proprietaryProductNameInput=document.getElementById('proprietaryProductName');
-['input','change','keyup','blur','focus'].forEach(type=>proprietaryProductNameInput?.addEventListener(type,()=>ensureNearestStandardSuggestion(type!=='focus')));
+['input','change','keyup','blur','focus','compositionend'].forEach(type=>proprietaryProductNameInput?.addEventListener(type,()=>ensureNearestStandardSuggestion(type!=='focus')));
+proprietaryProductNameInput?.addEventListener('input',()=>setTimeout(()=>ensureNearestStandardSuggestion(true),0));
 
 document.getElementById('proprietaryStandardSelect')?.addEventListener('change',event=>{
  proprietaryConfirmedStandardId='';
@@ -6456,12 +6459,14 @@ function renderProductMaster(){
 }
 async function loadStandardSearchIndex(){
  try{
-   const res=await fetch('./data/standard-search-index-v1.json?v=1',{cache:'reload'});
+   const res=await fetch('./data/standard-search-index-v1.json?v=2',{cache:'no-store'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    standardSearchIndexDb=await res.json();
  }catch(e){
    standardSearchIndexDb=null;
  }
+ // Nearest-standard search must work from this lightweight index alone.
+ // Do not wait for the 1.7 MB full product master.
  ensureNearestStandardSuggestion(true);
  renderProprietaryStandardSuggestion();
 }
