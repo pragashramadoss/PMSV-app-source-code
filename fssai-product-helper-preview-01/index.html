@@ -1233,7 +1233,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v8';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v9';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -2178,7 +2178,14 @@ function currentChapterRuleKeys(){
    ...(Array.isArray(profile?.rule_keys)?profile.rule_keys:[]),
    ...(Array.isArray(profile?.linked_rule_keys)?profile.linked_rule_keys:[])
  ].filter(Boolean);
- return new Set(raw.flatMap(standardRuleKeyTokens));
+ const out=new Set();
+ raw.forEach(value=>{
+   const exact=String(value||'').trim();
+   if(!exact)return;
+   out.add(exact);
+   standardRuleKeyTokens(exact).forEach(k=>out.add(k));
+ });
+ return out;
 }
 function ruleDbStandards(db){
  const rows=[];
@@ -2212,7 +2219,7 @@ function currentChapterStandards(){
  const seen=new Set();
  chapterRuleDbs.forEach(db=>ruleDbStandards(db).forEach(st=>{
    const key=String(st?.key||'').trim();
-   const keyMatch=keys.has(key);
+   const keyMatch=keys.has(key)||standardRuleKeyTokens(key).some(k=>keys.has(k));
    const exactProductOverlay=productName&&Array.isArray(st?.applies_to_product_names)
      &&st.applies_to_product_names.some(name=>normIngredient(name)===productName);
    if(!keyMatch&&!exactProductOverlay)return;
