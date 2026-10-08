@@ -1246,10 +1246,11 @@ function pmsvStandardLookupAlias(raw){
  const q=pmsvDirectNorm(raw);
  if(q==='dahi'||q==='plain dahi'||q==='curd'||q==='plain curd'){
    return {
-     productId:'01-01-2-fermented-milk',
+     productId:'01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi',
      variant:'Dahi',
      displayName:'Dahi',
-     routeLabel:'Dahi · FSSR 2.1.13 (Fermented Milk sub-route)'
+     routeLabel:'Dahi · FSSR 2.1.13 (Fermented Milk / Dahi route)',
+     exactIdentity:true
    };
  }
  return null;
@@ -1337,6 +1338,9 @@ async function pmsvDirectProductNameNearestStandard(value){
    }
 
    const best=ranked[0];
+   if(alias&&best.p&&String(best.p.id||'')===alias.productId){
+     best.p={...best.p,lookup_display_name:alias.displayName,chapter_rule_variant:alias.variant,alias_route_label:alias.routeLabel};
+   }
    select.innerHTML='';
    select.add(new Option(best.score>0?'Select a standard/category':'No reliable automatic match — choose manually',''));
    ranked.forEach((row,index)=>{
