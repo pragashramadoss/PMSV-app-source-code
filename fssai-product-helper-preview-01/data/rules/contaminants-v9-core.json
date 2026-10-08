@@ -249,7 +249,9 @@
     "chapter_2_5_canned_meat_package_lead_routes": 2,
     "chapter_2_5_locked_goat_rabbit_lead_families": 2,
     "chapter_2_5_canned_retort_lead_unconditional_removed": true,
-    "chapter_2_5_review_started_build_431": true
+    "chapter_2_5_review_started_build_431": true,
+    "last_runtime_fix": "2026-10-08",
+    "last_runtime_fix_note": "Added exact fermented-milk standardized-product contaminant profile for Yoghurt/Flavoured Dahi. Methyl Mercury remains the official all-food rule; Lead is now product-specific at 0.02 mg/kg for secondary milk products as consumed. Milk-product pesticide MRLs and prohibited veterinary-substance rules remain separate."
   },
   "all_food_rules": [
     {
@@ -4996,6 +4998,23 @@
           "verification": "official_fssai_v9_plus_chapter_2_5_exact_species_identity"
         }
       ]
+    },
+    {
+      "label": "Fermented Milk Products — Yoghurt / Flavoured Dahi",
+      "catalog_ids": [
+        "01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "article": "Secondary milk products (as consumed)",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_direct · FSSR 2.1.13 fermented-milk product mapping"
+        }
+      ],
+      "verification": "FSSR 2.1.13 exact standardized-product mapping; Lead row verified against current Version IX"
     }
   ],
   "conditional_rules": [
