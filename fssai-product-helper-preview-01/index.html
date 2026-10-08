@@ -261,7 +261,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 </div>
 
-<div class="card">
+<div class="card" id="proprietaryDistinctionCard">
 <div class="section-title"><h2>Important Proprietary Food distinction</h2><span>Regulation 2.12</span></div>
 <div class="notice"><b>Route follows the finished formulation.</b> If the formulation remains within the confirmed standardized product and its applicable permitted ingredients/additives, the standardized route remains applicable. An additional ingredient outside that standardized formulation routes the finished product to Proprietary Food, provided the ingredient itself has the required FSSAI/IFCT basis. A mere deviation only in a quality parameter of a standardized food is not treated as a Proprietary Food route. <b>PMSV does not borrow another product’s permission.</b></div>
 </div>
@@ -5959,7 +5959,11 @@ function renderStandardLookupModeUi(){
  const title=document.getElementById('applicableStandardsTitle');
  const subtitle=document.getElementById('applicableStandardsSubtitle');
  const contamButton=document.getElementById('goToContaminants');
+ const backButton=document.getElementById('backToFormulation');
+ const proprietaryDistinction=document.getElementById('proprietaryDistinctionCard');
  if(ingredientCard)ingredientCard.classList.toggle('hidden',lookup);
+ if(proprietaryDistinction)proprietaryDistinction.classList.toggle('hidden',lookup);
+ if(backButton)backButton.textContent=lookup?'← Back to Standard Lookup':'← Back to Formulation';
  if(title)title.textContent=lookup?'Regulatory stack for the selected standardized product':'Standards applicable to this formulation';
  if(subtitle)subtitle.textContent=lookup?'Product-level view · no formulation required':'Assembled after ingredient input';
  if(contamButton)contamButton.textContent=lookup?'Review product-level contaminants & residues →':'Review contaminants for this formulation →';
@@ -6012,6 +6016,64 @@ function standardLookupStructuralAudit(){
    return {...check,present,rendered,text:text.slice(0,180)};
  });
 }
+function standardLookupDataCoverageHtml(){
+ if(!standardLookupModeActive())return '';
+ const p=selectedProductForFortification();
+ const profile=currentProductProfile();
+ if(!p&&!profile)return '';
+ const name=p?.name||profile?.name||'Selected product';
+ const standards=currentChapterStandards();
+ const fcs=appendixFcsForRecord(p)||appendixFcsForRecord(profile)||'';
+ const appendix=fcs&&appendixCoreDb?appendixEntriesForFcs(fcs):null;
+ const appendixText=!fcs
+   ? 'No Appendix A FCS is safely mapped for this product.'
+   : !appendixCoreDb
+     ? 'Appendix A database is loading.'
+     : appendix?.status==='loaded'
+       ? (appendix.entries||[]).length+' direct/inherited permission row'+((appendix.entries||[]).length===1?'':'s')+' loaded for FCS '+fcs+'.'
+       : appendix?.status==='no_additives'
+         ? 'FCS '+fcs+' is loaded as a no-additives route.'
+         : appendix?.status==='component_carry_over'
+           ? 'FCS '+fcs+' uses the loaded component/carry-over route.'
+           : appendix?.status==='special_regulation'
+             ? 'FCS '+fcs+' is governed through a special regulation route.'
+             : 'Appendix A mapping exists for FCS '+fcs+', but its permission set is not fully loaded.';
+ let contaminantText='Contaminant database is loading.';
+ if(contaminantsDb&&p){
+   const cp=contaminantProfileForProduct(p);
+   const exact=Array.isArray(cp?.rules)?cp.rules.length:0;
+   const baseline=productBaselineContaminantRules(p).length;
+   const conditional=conditionalMetalRowsForProduct(p).length;
+   const pesticide=exactPesticideMrlRowsForProduct(p).length;
+   const universal=Array.isArray(contaminantsDb.all_food_rules)?contaminantsDb.all_food_rules.filter(x=>x.auto_apply===true).length:0;
+   const total=exact+baseline+conditional+pesticide+universal;
+   contaminantText=total
+     ? total+' product/commodity/all-food contaminant or residue row'+(total===1?'':'s')+' available ('+pesticide+' exact pesticide MRL'+(pesticide===1?'':'s')+').'
+     : 'No exact product/commodity contaminant row is currently mapped; PMSV does not infer a fallback.';
+ }
+ let microText='Microbiology database is loading.';
+ if(p&&microbiologyDb){
+   if(p.microbiology_status==='mapped_appendix_b_v2')microText='Exact Appendix B route mapped: '+String(p.microbiology_profile_key||'verified profile')+'.';
+   else if(p.microbiology_status==='conditional_appendix_b_variant_required')microText='Appendix B route is mapped but requires the actual product form/process variant.';
+   else if(p.microbiology_status==='appendix_b_no_direct_table_mapping'||p.microbiology_status==='appendix_b_no_direct_fish_table_mapping')microText='No direct Appendix B row is assigned; this is an explicit product-level result, not a missing ingredient issue.';
+   else microText='No single exact Appendix B route is stored for this product; PMSV keeps the microbiology route fail-closed.';
+ }
+ const processCount=p&&appendixCDb?processingAidProductScopeMatches().length:null;
+ const processText=processCount===null
+   ? 'Appendix C database is loading.'
+   : processCount
+     ? processCount+' product-specific Appendix C candidate'+(processCount===1?'':'s')+' loaded; actual process selection determines applicability.'
+     : 'No exact product-specific Appendix C row is loaded; process/all-food permissions remain available after process selection.';
+ return '<div class="card" style="margin-top:10px;background:#fbfcff"><div class="section-title"><h2>Product-level coverage — '+esc(name)+'</h2><span>Zero formulation ingredients</span></div>'
+   +'<div class="grid2">'
+   +'<div class="item"><b>Product standard</b><small>'+(standards.length?standards.length+' exact structured standard/rule row'+(standards.length===1?'':'s')+' resolved: '+standards.map(x=>esc(x.standard?.key||'')).join(', '):'No exact structured vertical-standard row is currently resolved; the selected FoSCoS/product identity is still retained without borrowing another standard.')+'</small></div>'
+   +'<div class="item"><b>Appendix A / FCS</b><small>'+appendixText+'</small></div>'
+   +'<div class="item"><b>Contaminants & residues</b><small>'+contaminantText+'</small></div>'
+   +'<div class="item"><b>Microbiology</b><small>'+microText+'</small></div>'
+   +'<div class="item"><b>Processing aids</b><small>'+processText+'</small></div>'
+   +'<div class="item"><b>Formulation-dependent checks</b><small>Nutrition, ingredient-triggered warnings/allergens, ingredient-specific contaminant triggers and quantitative formulation compliance are intentionally not evaluated in Standard Lookup mode.</small></div>'
+   +'</div></div>';
+}
 function standardLookupRuntimeAuditHtml(){
  if(!standardLookupModeActive())return '';
  const audit=standardLookupStructuralAudit();
@@ -6030,6 +6092,7 @@ function refreshStandardLookupAudit(){
  try{renderMasterComplianceSummary();}catch(e){}
 }
 function renderSelectedProductRegulatoryStack(){
+ renderFormula();
  renderStandardLookupModeUi();
  renderLegacyProductScopePages();
  renderProcessingQualifierUI();
@@ -6073,6 +6136,7 @@ function renderStandardLookupDashboard(){
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="summary">Standard lookup summary</button>'
    +'</div>'
    +standardLookupRuntimeAuditHtml()
+   +standardLookupDataCoverageHtml()
    +'<div class="notice" style="margin-top:10px"><b>Formulation-dependent only:</b> nutrition calculation, ingredient-triggered allergens/warnings, ingredient-specific contaminant triggers and quantitative formulation compliance are intentionally not evaluated in Standard Lookup mode. They do not block viewing the standardized product.</div></div>';
  box.querySelectorAll('[data-standard-lookup-tab]').forEach(btn=>btn.addEventListener('click',()=>{
    const tab=btn.dataset.standardLookupTab;
