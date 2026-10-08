@@ -3549,6 +3549,7 @@ async function loadAppendixCDb(){
    appendixCDb=null;
  }
  renderProcessingAids();
+ refreshStandardLookupAudit();
 }
 function selectedCatalogProductForProcessing(){
  return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
@@ -4390,15 +4391,7 @@ function showSelectedCatalogProduct(p){
      applyProprietaryStandardFcs(p);
      applyProductGate();
      renderFormula();
-     renderProcessingQualifierUI();
-     renderProcessingProductScope();
-     renderProductContaminants();
-     renderProductMicrobiology();
-     renderLabelRequirements();
-     renderClaims();
-     renderPackaging();
-     renderFortification();
-     renderStandardLookupDashboard();
+     renderSelectedProductRegulatoryStack();
    };
    document.getElementById('viewSelectedProduct')?.addEventListener('click',()=>{
      activate();
@@ -4592,7 +4585,7 @@ async function loadAppendixCore(){
  populateProprietarySpecificFcs();
  renderProprietaryAppendixA();
  renderLegacyProductScopePages();
- renderStandardLookupDashboard();
+ refreshStandardLookupAudit();
 }
 
 let proprietaryEditingIngredientIndex=-1;
@@ -4745,15 +4738,7 @@ function confirmProprietaryStandard(){
  applyProprietaryStandardFcs(p);
  applyProductGate();
  renderFormula();
- renderProcessingQualifierUI();
- renderProductContaminants();
- renderProductMicrobiology();
- renderLabelRequirements();
- renderClaims();
- renderPackaging();
- renderFortification();
- renderProcessingProductScope();
- renderStandardLookupDashboard();
+ renderSelectedProductRegulatoryStack();
  if(note){
    const fpc=fpc18CategoryForProduct(p);
    note.className='notice oknote';
@@ -4771,7 +4756,7 @@ function confirmProprietaryStandard(){
  }
  renderProprietaryFormula();
  resetProprietaryOutcome();
- renderStandardLookupDashboard();
+ refreshStandardLookupAudit();
  if(!formulationIngredients.length){
    setTimeout(()=>document.getElementById('standardLookupPanel')?.scrollIntoView({behavior:'smooth',block:'start'}),0);
  }
@@ -5973,6 +5958,23 @@ function standardLookupRuntimeAuditHtml(){
 function standardLookupModeActive(){
  return formulationIngredients.length===0&&!!(selectedProductForFortification()||currentProductProfile());
 }
+function refreshStandardLookupAudit(){
+ if(!standardLookupModeActive())return;
+ renderStandardLookupDashboard();
+ try{renderMasterComplianceSummary();}catch(e){}
+}
+function renderSelectedProductRegulatoryStack(){
+ renderLegacyProductScopePages();
+ renderProcessingQualifierUI();
+ renderProcessingProductScope();
+ renderProductContaminants();
+ renderProductMicrobiology();
+ renderLabelRequirements();
+ renderClaims();
+ renderPackaging();
+ renderFortification();
+ refreshStandardLookupAudit();
+}
 function renderStandardLookupDashboard(){
  const box=document.getElementById('standardLookupPanel');
  if(!box)return;
@@ -6137,11 +6139,7 @@ async function loadProductMaster(){
    productMasterDb=null;
  }
  renderProductMaster();
- renderProductMicrobiology();
- renderLabelRequirements();
- renderClaims();
- renderPackaging();
- renderFortification();
+ renderSelectedProductRegulatoryStack();
 }
 document.getElementById('productSearch')?.addEventListener('input',renderProductSearch);
 document.getElementById('productCategorySelect')?.addEventListener('change',()=>{
@@ -6346,6 +6344,7 @@ async function loadMicrobiologyDb(){
    microbiologyDb=null;
  }
  renderProductMicrobiology();
+ refreshStandardLookupAudit();
 }
 
 function selectedCatalogProductForContaminants(){
@@ -6891,6 +6890,7 @@ async function loadContaminantsDb(){
    contaminantsDb=null;
  }
  renderProductContaminants();
+ refreshStandardLookupAudit();
 }
 
 async function loadRegulatoryDb(){
@@ -7652,6 +7652,7 @@ async function loadFortificationDb(){
    fortificationDb=null;
  }
  renderFortification();
+ refreshStandardLookupAudit();
 }
 function fortificationNutrientAssessment(route,req){
  const r=fortificationExpandedRoute(route);
@@ -7755,6 +7756,7 @@ async function loadPackagingDb(){
    packagingDb=null;
  }
  renderPackaging();
+ refreshStandardLookupAudit();
 }
 function packagingSpecificMigrationAssessment(){
  const limits=packagingDb?.primary_material_rules?.plastic?.specific_migration_limits_mg_per_kg||{};
@@ -7929,6 +7931,7 @@ async function loadClaimsDb(){
    claimsDb=null;
  }
  renderClaims();
+ refreshStandardLookupAudit();
 }
 function runClaimEvaluation(){
  const box=document.getElementById('claimCheckResult');
@@ -7978,6 +7981,7 @@ async function loadLabelDb(){
    }
  }
  renderLabelRequirements();
+ refreshStandardLookupAudit();
 }
 
 async function loadFpc18Db(){
@@ -8004,10 +8008,8 @@ async function loadChapterRuleDbs(){
  }
  renderIngredientAutocomplete();
  renderFormula();
- renderLegacyProductScopePages();
- renderProcessingProductScope();
- renderStandardLookupDashboard();
  if(productMasterDb)renderProductMaster();
+ renderSelectedProductRegulatoryStack();
 }
 
 async function loadNutritionDb(){
