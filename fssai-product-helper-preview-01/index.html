@@ -1228,7 +1228,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-dahi-subroute-v31';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-dahi-contaminants-v26';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -7958,7 +7958,7 @@ function renderProductContaminants(){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=431',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=432',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
