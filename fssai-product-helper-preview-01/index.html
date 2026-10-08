@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span id="buildBadge" class="badge">PRODUCT STANDARDS PROTOTYPE</span><h1>PMSV FSSAI Product Helper</h1><p>Enter the formulation once, then route it to the applicable standardized product or Proprietary Food pathway.</p></div></header>
+<header class="top"><div class="wrap"><span id="buildBadge" class="badge">PRODUCT STANDARDS PROTOTYPE · UI v14</span><h1>PMSV FSSAI Product Helper</h1><p>Enter the formulation once, then route it to the applicable standardized product or Proprietary Food pathway.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation</button>
@@ -6458,12 +6458,15 @@ function renderProductMaster(){
  renderProcessingProductScope();
 }
 async function loadStandardSearchIndex(){
+ const badge=document.getElementById('buildBadge');
  try{
    const res=await fetch('./data/standard-search-index-v1.json?v=2',{cache:'no-store'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    standardSearchIndexDb=await res.json();
+   if(badge&&!productMasterDb)badge.textContent='PRODUCT STANDARDS PROTOTYPE · FAST INDEX '+Number(standardSearchIndexDb?.product_count||standardSearchIndexDb?.products?.length||0)+' · UI '+PRODUCT_HELPER_UI_BUILD;
  }catch(e){
    standardSearchIndexDb=null;
+   if(badge&&!productMasterDb)badge.textContent='PRODUCT STANDARDS PROTOTYPE · STANDARD INDEX RETRY · UI '+PRODUCT_HELPER_UI_BUILD;
  }
  // Nearest-standard search must work from this lightweight index alone.
  // Do not wait for the 1.7 MB full product master.
