@@ -1228,7 +1228,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-nutrition-variant-scope-v28';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-structured-standard-coverage-v29';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -2992,7 +2992,10 @@ function standardLookupRegulatoryCompositionHtml(){
    const standardKey=esc(standard.key||'');
    const standardName=esc(standard.name||product.name);
 
-   const compositionRows=chapterRuleDisplayRows(standard).filter(r=>/composition/i.test(String(r.section||'')));
+   const compositionRows=chapterRuleDisplayRows(standard).filter(r=>
+     /composition|general limits|other limits|quality parameters|specific requirements|physical \/ chemical|physical requirements|whole-product requirements|ingredient limits|optional ingredient daily maximum|natural spring-water special|fresh product requirements|processed product requirements|coffee requirements|instant-product requirements|calculated requirement/i
+       .test(String(r.section||''))
+   );
    const applicableComposition=compositionRows.filter(r=>{
      const scope=r.rule?.variant||r.rule?.product||'';
      if(!scope)return true;
@@ -6280,12 +6283,38 @@ function chapterRuleDisplayRows(standard){
  const fields=[
    ['composition','Composition'],
    ['core_composition','Core composition'],
+   ['composition_core','Core composition'],
    ['common_composition','Common composition'],
    ['whole_composition','Whole-product composition'],
    ['powder_composition','Powder composition'],
    ['composition_rules','Composition rule'],
    ['formulation_rules','Formulation rule'],
-   ['requirements','Identity / purity requirement']
+   ['general_limits','General limits'],
+   ['other_limits','Other limits'],
+   ['quality_parameters','Quality parameters'],
+   ['specific_rules','Specific requirements'],
+   ['physical_ranges','Physical requirements'],
+   ['physical_chemical','Physical / chemical requirements'],
+   ['pesticide','Pesticide requirements'],
+   ['toxic_substances','Toxic-substance requirements'],
+   ['whole_rules','Whole-product requirements'],
+   ['ingredient_limits','Ingredient limits'],
+   ['ester_gum_quality','Ester-gum quality requirements'],
+   ['optional_ingredient_daily_max','Optional ingredient daily maximum'],
+   ['optional_nutrients_per_100ml_ready','Optional nutrients — ready-to-use basis'],
+   ['spring_water_special','Natural spring-water special requirement'],
+   ['fresh','Fresh product requirements'],
+   ['processed','Processed product requirements'],
+   ['roasted_ground','Roasted / ground requirements'],
+   ['decaffeinated_roasted_ground','Decaffeinated roasted / ground requirements'],
+   ['soluble_coffee','Soluble coffee requirements'],
+   ['decaffeinated_soluble','Decaffeinated soluble coffee requirements'],
+   ['regular_roasted_ground','Regular roasted / ground requirements'],
+   ['instant','Instant-product requirements'],
+   ['decaffeinated_instant','Decaffeinated instant-product requirements'],
+   ['process_rules','Process requirements'],
+   ['requirements','Identity / purity requirement'],
+   ['calculated_rules','Calculated requirement']
  ];
  const rows=[];
  fields.forEach(([field,label])=>{
@@ -6303,6 +6332,7 @@ function chapterRuleDisplayRows(standard){
          if(rule.max!==undefined)bits.push('Max '+rule.max+(rule.unit?' '+rule.unit:''));
          requirement=bits.join(' · ');
        }else if(rule.range)requirement=String(rule.range)+(rule.unit?' '+String(rule.unit):'');
+       else if(rule.formula)requirement=(rule.operator?String(rule.operator)+' ':'')+String(rule.formula)+(rule.unit?' '+String(rule.unit):'');
        else requirement=rule.text||rule.requirement||rule.condition||rule.per_100g||rule.per_100kcal||JSON.stringify(rule);
        rows.push({section:label,parameter,requirement,condition:rule.condition||'',rule});
      }else if(typeof rule==='string'){
