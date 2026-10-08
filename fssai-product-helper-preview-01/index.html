@@ -1221,7 +1221,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-packaging-reference-v23';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-dahi-contaminants-v24';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -7272,6 +7272,56 @@ function productContaminantGateNotices(p){
  }
  return html;
 }
+function isVerifiedFermentedMilkProduct(p){
+ return !!p&&String(p.fssr||'').trim()==='2.1.13';
+}
+function milkProductContaminantScope(p){
+ if(!p)return false;
+ if(isVerifiedFermentedMilkProduct(p))return true;
+ return false;
+}
+function genericOtherContaminantRulesForProduct(p){
+ if(!p||!contaminantsDb)return [];
+ const out=[];
+ const melamine=contaminantsDb?.other_contaminants?.melamine;
+ if(melamine&&Array.isArray(melamine.rows)){
+   const name=normIngredient(p.name||'');
+   const isPowderedInfant=/powdered infant formula/.test(name);
+   const isLiquidInfant=/liquid infant formula/.test(name);
+   const row=melamine.rows.find(r=>{
+     const food=normIngredient(r.food||'');
+     if(isPowderedInfant)return food==='powdered infant formula';
+     if(isLiquidInfant)return food==='liquid infant formula';
+     return food==='other foods';
+   });
+   if(row){
+     out.push({
+       contaminant:'Melamine',
+       limit:row.maximum_level,
+       unit:String(melamine.unit||'mg/kg'),
+       article:String(row.food||'Other foods'),
+       source_basis:String(melamine.source_basis||'Section 2.5.1 · Melamine')
+     });
+   }
+ }
+ return out;
+}
+function prohibitedVeterinaryRowsForProduct(p){
+ if(!p||!contaminantsDb||!milkProductContaminantScope(p))return [];
+ const cfg=contaminantsDb?.antibiotic_and_pharmacological_substances?.prohibited_veterinary_practice_substances;
+ if(!cfg||!Array.isArray(cfg.substances))return [];
+ const defaultValue=String(cfg.default_emrl?.value||'0.001');
+ const defaultUnit=String(cfg.default_emrl?.unit||'mg/kg');
+ const chlorValue=String(cfg.chloramphenicol_emrl?.value||'0.0003');
+ const chlorUnit=String(cfg.chloramphenicol_emrl?.unit||defaultUnit);
+ return cfg.substances.map(name=>({
+   substance:String(name),
+   limit:/chloramphenicol/i.test(String(name))?chlorValue:defaultValue,
+   unit:/chloramphenicol/i.test(String(name))?chlorUnit:defaultUnit,
+   scope:String(cfg.scope||'Milk and milk products'),
+   source:'Section 2.3.2 · Antibiotic and other pharmacologically active substances'
+ }));
+}
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  const n=normIngredient(p.name||'');
@@ -7375,6 +7425,18 @@ function productBaselineContaminantRules(p){
    if(b1)pushRule({contaminant:'Aflatoxin B1',unit:String(b1.unit||'µg/kg'),source_basis:'Section 2.2.1 · Crop contaminants',...b1});
  }
 
+ // 7) FSSR 2.1.13 explicitly defines Dahi/Yoghurt and related fermented milks as milk products.
+ // The current FSSAI Lead table has a separate "Secondary milk products (as consumed)" row.
+ if(isVerifiedFermentedMilkProduct(p)){
+   const leadRows=contaminantsDb?.metal_article_rules_v9?.Lead||[];
+   const lead=leadRows.find(r=>normIngredient(r.article||'')===normIngredient('Secondary milk products (as consumed)'));
+   if(lead)pushRule({
+     contaminant:'Lead',
+     ...lead,
+     source_basis:String(lead.source_basis||'Section 2.1 · Lead')+' · FSSR 2.1.13 verified fermented-milk product mapping'
+   });
+ }
+
  const seen=new Set();
  return out.filter(r=>{
    const key=[r.contaminant,r.limit,r.unit,r.article].join('|');
@@ -7408,9 +7470,11 @@ function exactPesticideMrlRowsForProduct(p){
  const target=normIngredient(p.name||'');
  if(!target)return [];
  const out=[];
+ const acceptedFoods=new Set([target]);
+ if(milkProductContaminantScope(p))acceptedFoods.add(normIngredient('Milk and Milk products'));
  (contaminantsDb?.residue_mrls?.pesticides||[]).forEach(pest=>{
    (pest.rows||[]).forEach(row=>{
-     if(normIngredient(row?.food||'')!==target)return;
+     if(!acceptedFoods.has(normIngredient(row?.food||'')))return;
      out.push({
        pesticide:String(pest.name||pest.pesticide||pest.common_name||pest.id||'Pesticide'),
        food:String(row.food||''),
@@ -7533,7 +7597,8 @@ function renderProductContaminants(){
  const dehydratedMilkLead=selectedDehydratedMilkLeadRule(p);
  const metalSubtypeRule=selectedMetalSubtypeRule(p);
  const sugarAshLeadRule=selectedSulphatedAshLeadRule(p);
- const rawRules=[...exact,...baseline,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
+ const otherContaminants=genericOtherContaminantRulesForProduct(p);
+ const rawRules=[...exact,...baseline,...otherContaminants,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
  const ruleSeen=new Set();
  const rules=rawRules.filter(r=>{
    const key=[r.contaminant,r.limit,r.unit,r.article].join('|');
@@ -7543,6 +7608,8 @@ function renderProductContaminants(){
  const pesticideMrls=exactPesticideMrlRowsForProduct(p);
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
  const pesticideRows=pesticideMrls.map(x=>'<tr><td><b>'+esc(x.pesticide)+'</b></td><td><b>'+esc(x.mrl)+' '+esc(x.unit)+'</b></td><td>'+esc(x.food)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source)+'</td></tr>').join('');
+ const prohibitedVet=prohibitedVeterinaryRowsForProduct(p);
+ const prohibitedVetRows=prohibitedVet.map(x=>'<tr><td><b>'+esc(x.substance)+'</b></td><td><b>Not permitted</b><br><small>EMRL '+esc(x.limit)+' '+esc(x.unit)+'</small></td><td>'+esc(x.scope)+'</td><td>'+esc(x.source)+'</td></tr>').join('');
  const conditionalMetalHtml=conditionalMetals.length
    ? '<div class="card" style="margin-top:12px;background:#fffaf0"><div class="section-title"><h3 style="margin:0">Conditional metal limits — exact subtype required</h3><span>Not auto-applied</span></div><div class="notice"><b>These rows are narrower than the selected product name.</b> They are shown for reference but are not applied unless the finished product exactly matches the stated subtype.</div><div class="tablewrap"><table><thead><tr><th>Contaminant</th><th>Limit</th><th>Exact article / subtype</th><th>Source</th></tr></thead><tbody>'
      +conditionalMetals.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit||'')+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis||'FSSAI Version IX')+'</td></tr>').join('')
@@ -7557,8 +7624,9 @@ function renderProductContaminants(){
    +productContaminantGateNotices(p)
    +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant / toxin</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="notice">No exact metal/toxin row is auto-applicable for this product under the current stored product gates.</div>')
    +conditionalMetalHtml
-   +(pesticideRows?'<div class="card" style="margin-top:12px;background:#fafcff"><div class="section-title"><h3 style="margin:0">Pesticide residue MRLs — '+esc(p.name)+'</h3><span>Exact commodity match · no formulation required</span></div><div class="notice oknote"><b>'+pesticideMrls.length+' exact commodity MRL row'+(pesticideMrls.length===1?'':'s')+' found.</b> These are taken from the stored current FSSAI pesticide-residue table because the commodity name exactly matches the selected standardized product. Similar commodity names are not borrowed.</div><div class="tablewrap"><table><thead><tr><th>Pesticide</th><th>MRL</th><th>Commodity / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+pesticideRows+'</tbody></table></div></div>':'<div class="notice"><b>Pesticide residues:</b> no exact commodity-name MRL rows are stored for '+esc(p.name)+'. PMSV will not infer a commodity mapping.</div>')
-   +'<div class="countline">'+rules.length+' metal/toxin/all-food rule'+(rules.length===1?'':'s')+' + '+conditionalMetals.length+' conditional subtype metal row'+(conditionalMetals.length===1?'':'s')+' + '+pesticideMrls.length+' exact pesticide MRL row'+(pesticideMrls.length===1?'':'s')+' shown · “Foods not specified” and generic canned-food fallbacks remain disabled.</div>';
+   +(pesticideRows?'<div class="card" style="margin-top:12px;background:#fafcff"><div class="section-title"><h3 style="margin:0">Pesticide residue MRLs — '+esc(p.name)+'</h3><span>Verified FSSAI commodity scope · no formulation required</span></div><div class="notice oknote"><b>'+pesticideMrls.length+' applicable pesticide MRL row'+(pesticideMrls.length===1?'':'s')+' found.</b> '+(milkProductContaminantScope(p)?'FSSR 2.1.13 defines this finished food as a fermented <b>milk product</b>, so the current FSSAI commodity rows explicitly written for <b>Milk and Milk products</b> are applied.':'The commodity name exactly matches the selected standardized product.')+'</div><div class="tablewrap"><table><thead><tr><th>Pesticide</th><th>MRL</th><th>Commodity / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+pesticideRows+'</tbody></table></div></div>':'<div class="notice"><b>Pesticide residues:</b> no verified commodity-scope MRL rows are stored for '+esc(p.name)+'. PMSV will not infer an unrelated commodity mapping.</div>')
+   +(prohibitedVetRows?'<div class="card" style="margin-top:12px;background:#fffaf0"><div class="section-title"><h3 style="margin:0">Prohibited veterinary / pharmacologically active substances</h3><span>Milk and milk products · Section 2.3.2</span></div><div class="notice"><b>These substances are not permitted to be used at any stage of production of milk and milk products.</b> PMSV shows the current FSSAI extraneous maximum residue level (EMRL) used for enforcement/testing.</div><div class="tablewrap"><table><thead><tr><th>Substance</th><th>Requirement / EMRL</th><th>Scope</th><th>Regulatory basis</th></tr></thead><tbody>'+prohibitedVetRows+'</tbody></table></div></div>':'')
+   +'<div class="countline">'+rules.length+' metal/toxin/all-food rule'+(rules.length===1?'':'s')+' + '+conditionalMetals.length+' conditional subtype metal row'+(conditionalMetals.length===1?'':'s')+' + '+pesticideMrls.length+' pesticide MRL row'+(pesticideMrls.length===1?'':'s')+' + '+prohibitedVet.length+' prohibited veterinary-substance row'+(prohibitedVet.length===1?'':'s')+' shown · “Foods not specified” and generic canned-food fallbacks remain disabled.</div>';
 }
 async function loadContaminantsDb(){
  try{
