@@ -767,6 +767,12 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <section id="nutrition" class="view hidden">
 <div id="nutritionLookupNotice" class="notice hidden"></div>
+<div class="card hidden" id="nutritionStandardReferenceCard">
+<div class="section-title"><h2>Standardized-product nutrition reference</h2><span>ICMR-NIN IFCT 2017 · exact match only</span></div>
+<div id="nutritionStandardReferenceStatus" class="notice"></div>
+<div id="nutritionStandardReferenceTable"></div>
+<div class="flow-actions"><button class="btn-secondary" type="button" id="nutritionGoToProductStandard">View FSSAI product standard</button></div>
+</div>
 <div class="card" id="nutritionFormulationControlsCard">
 <div class="section-title"><h2>Nutritional information</h2><span>Calculated from formulation quantities</span></div>
 <div class="notice oknote"><b>Government-source rule:</b> PMSV uses only Indian government nutrition sources for default calculations. Food composition is matched to the local ICMR–NIN / IFCT dataset loaded in this module, while nutrient declarations, adult reference values and energy conversion factors follow the FSSAI Labelling & Display Regulations. If an ingredient has no verified government nutrition profile loaded, PMSV does <b>not</b> guess its nutrients; the result is marked incomplete.</div>
@@ -831,7 +837,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </table></div>
 </div>
 
-<div class="card">
+<div class="card" id="nutritionCalculationBasisCard">
 <div class="section-title"><h2>Calculation basis</h2><span>Deterministic · no AI</span></div>
 <div class="grid2">
 <div class="item"><b>Food composition</b><small><b>ICMR–National Institute of Nutrition — Indian Food Composition Tables (IFCT) 2017</b> is the primary Indian government source for foods with an exact applicable entry.</small></div>
@@ -1221,7 +1227,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-dahi-contaminants-v24';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-nutrition-reference-v25';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -2924,6 +2930,86 @@ function nutritionProfileFor(name){
  const n=normIngredient(name);
  return nutritionDb.profiles.find(p=>p.active_for_calculation===true&&p.source_authority==='ICMR-NIN'&&Array.isArray(p.names)&&p.names.some(x=>normIngredient(x)===n))||null;
 }
+function standardLookupNutritionProfile(){
+ if(!nutritionDb)return null;
+ const product=currentAssessmentCatalogProduct();
+ if(!product)return null;
+
+ // Only exact, regulatorily safe mappings are allowed here. No fuzzy food substitution.
+ const direct=nutritionProfileFor(product.name||'');
+ if(direct)return {profile:direct,basis:'Exact IFCT name match'};
+
+ const verifiedAliases={
+   '01-01-1-cow-milk':'Milk, whole, Cow',
+   '01-01-1-buffalo-milk':'Milk, whole, Buffalo'
+ };
+ const alias=verifiedAliases[String(product.id||'')];
+ if(alias){
+   const p=nutritionProfileFor(alias);
+   if(p)return {profile:p,basis:'Verified product-to-IFCT identity mapping'};
+ }
+ return null;
+}
+function renderStandardLookupNutritionReference(){
+ const card=document.getElementById('nutritionStandardReferenceCard');
+ const status=document.getElementById('nutritionStandardReferenceStatus');
+ const table=document.getElementById('nutritionStandardReferenceTable');
+ if(!card||!status||!table)return;
+
+ const lookup=standardLookupModeActive();
+ card.classList.toggle('hidden',!lookup);
+ if(!lookup){
+   table.innerHTML='';
+   return;
+ }
+
+ const product=currentAssessmentCatalogProduct();
+ const productName=product?.name||currentProductProfile()?.name||'Selected standardized product';
+ if(!nutritionDb){
+   status.className='notice';
+   status.innerHTML='<b>ICMR-NIN nutrition database is still loading.</b>';
+   table.innerHTML='';
+   return;
+ }
+
+ const match=standardLookupNutritionProfile();
+ if(!match){
+   status.className='notice';
+   status.innerHTML='<b>No exact ICMR-NIN IFCT 2017 nutrition profile is available for '+esc(productName)+'.</b><br>'
+     +'No ingredient entry is required to inspect this standardized product. However, PMSV will <b>not estimate nutrition from milk, a similar food, or another database</b>. '
+     +'The FSSAI product standard remains available separately; enter a formulation only if you want a calculated nutrition label for a specific recipe/product.';
+   table.innerHTML='<div class="notice oknote"><b>What Standard Lookup still provides without ingredients:</b> FSSAI product standard, permitted ingredients/additives, contaminants and residues, microbiology, processing aids, packaging, fortification applicability, labelling and claims rules.</div>';
+   return;
+ }
+
+ const profile=match.profile;
+ const verified=new Set(Array.isArray(profile.verified_fields)?profile.verified_fields:[]);
+ const defs=[
+   ['energy_kcal','Energy','kcal'],
+   ['protein_g','Protein','g'],
+   ['carbohydrate_g','Carbohydrate','g'],
+   ['total_sugars_g','Total sugars','g'],
+   ['total_fat_g','Total fat','g'],
+   ['saturated_fat_g','Saturated fat','g'],
+   ['trans_fat_g','Trans fat','g'],
+   ['cholesterol_mg','Cholesterol','mg'],
+   ['sodium_mg','Sodium','mg'],
+   ['dietary_fibre_g','Dietary fibre','g']
+ ];
+ const data=profile.per_100g||{};
+ const rows=defs
+   .filter(([key])=>verified.has(key)&&isNutritionNumber(data[key]))
+   .map(([key,label,unit])=>'<tr><td><b>'+esc(label)+'</b></td><td>'+fmt(data[key],3)+' '+esc(unit)+'</td></tr>')
+   .join('');
+
+ status.className='notice oknote';
+ status.innerHTML='<b>Exact ICMR-NIN IFCT reference found:</b> '+esc(profile.display_name||profile.names?.[0]||productName)
+   +(profile.ifct_code?' · <span class="clause">'+esc(profile.ifct_code)+'</span>':'')
+   +'<br><small>'+esc(match.basis)+'. These are official reference values per 100 g of the IFCT food, not a calculated nutrition label for every commercial formulation sold under the FSSAI standard.</small>';
+ table.innerHTML=rows
+   ? '<div class="tablewrap"><table><thead><tr><th>Nutrient</th><th>ICMR-NIN IFCT reference per 100 g</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+   : '<div class="notice">The exact IFCT food identity is loaded, but no verified core nutrition fields are available for display in this runtime.</div>';
+}
 function nutritionServingMl(){
  const n=Number(document.getElementById('nutritionServingMl')?.value||document.getElementById('labelServingMl')?.value||250);
  return Number.isFinite(n)&&n>0?n:250;
@@ -3190,6 +3276,11 @@ function renderNutrition(){
  const status=document.getElementById('nutritionCalculationStatus');
  const densityEl=document.getElementById('nutritionDensityDisplay');
  if(!rows&&!coverage&&!status&&!densityEl)return;
+
+ if(standardLookupModeActive()&&!formulationIngredients.length){
+   renderStandardLookupNutritionReference();
+   return;
+ }
 
  const calc=calculateNutrition();
  if(densityEl)densityEl.innerHTML='<b>'+fmt(calc.density,3)+' kg/L</b>';
@@ -6303,16 +6394,18 @@ function renderStandardLookupModeUi(){
  if(contamButton)contamButton.textContent=lookup?'Review product-level contaminants & residues →':'Review contaminants for this formulation →';
 
  const nutritionNotice=document.getElementById('nutritionLookupNotice');
- ['nutritionFormulationControlsCard','nutritionCalculatedCard','nutritionMicronutrientCard','nutritionAdditionalCard','nutritionCoverageCard']
+ ['nutritionFormulationControlsCard','nutritionCalculatedCard','nutritionMicronutrientCard','nutritionAdditionalCard','nutritionCoverageCard','nutritionCalculationBasisCard']
    .forEach(id=>document.getElementById(id)?.classList.toggle('hidden',lookup));
+ document.getElementById('nutritionStandardReferenceCard')?.classList.toggle('hidden',!lookup);
  if(nutritionNotice){
    nutritionNotice.classList.toggle('hidden',!lookup);
    if(lookup){
      const name=selectedProductForFortification()?.name||currentProductProfile()?.name||'selected standardized product';
      nutritionNotice.className='notice oknote';
-     nutritionNotice.innerHTML='<b>Standard Lookup mode — '+esc(name)+'.</b><br>Nutrition calculation is formulation-dependent and is intentionally not evaluated here. It requires the actual ingredients, quantities, finished yield and density. This does not block viewing any product-level FSSAI standard or horizontal regulatory requirement.';
+     nutritionNotice.innerHTML='<b>Standard Lookup mode — '+esc(name)+'.</b><br><b>No formulation is required to view the standardized product.</b> PMSV will show an ICMR-NIN IFCT nutrition reference only when the selected product has an exact official IFCT food identity. A recipe-based nutrition label remains a separate calculation.';
    }
  }
+ if(lookup)renderStandardLookupNutritionReference();
 
  ['claimNutrientEvaluationCard','claimComparativeEvaluationCard','claimNonAdditionEvaluationCard']
    .forEach(id=>document.getElementById(id)?.classList.toggle('hidden',lookup));
@@ -6471,7 +6564,7 @@ function renderStandardLookupDashboard(){
    +'</div>'
    +standardLookupRuntimeAuditHtml()
    +standardLookupDataCoverageHtml()
-   +'<div class="notice" style="margin-top:10px"><b>Formulation-dependent only:</b> nutrition calculation, ingredient-triggered allergens/warnings, ingredient-specific contaminant triggers and quantitative formulation compliance are intentionally not evaluated in Standard Lookup mode. They do not block viewing the standardized product.</div></div>';
+   +'<div class="notice" style="margin-top:10px"><b>Formulation-dependent only:</b> recipe/brand nutrition calculation, ingredient-triggered allergens/warnings, ingredient-specific contaminant triggers and quantitative formulation compliance are intentionally not evaluated in Standard Lookup mode. Exact ICMR-NIN IFCT reference nutrition is shown separately when the selected standardized product has an exact IFCT food identity. They do not block viewing the standardized product.</div></div>';
  box.querySelectorAll('[data-standard-lookup-tab]').forEach(btn=>btn.addEventListener('click',()=>{
    const tab=btn.dataset.standardLookupTab;
    if(validTabs.has(tab)){
@@ -8918,6 +9011,10 @@ document.getElementById('evaluatePackaging')?.addEventListener('click',evaluateP
 document.getElementById('fortificationRoute')?.addEventListener('change',renderFortification);
 document.getElementById('evaluateFortification')?.addEventListener('click',evaluateFortification);
 document.getElementById('refreshComplianceSummary')?.addEventListener('click',renderMasterComplianceSummary);
+document.getElementById('nutritionGoToProductStandard')?.addEventListener('click',()=>{
+ openTab('standard',{updateHash:true,save:true});
+ window.scrollTo({top:0,behavior:'smooth'});
+});
 // Render only after every shared state declaration and event binding is ready.
 syncProcessUI();
 renderAppendix();
