@@ -1233,7 +1233,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v3';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v4';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -5739,21 +5739,23 @@ function renderLegacyProductScopePages(){
    if(!product&&!profile){
      standardDynamic.innerHTML='<div class="card"><div class="notice"><b>Select a standardized product first.</b> PMSV will not display another product\'s standard as a fallback.</div></div>';
    }else{
-     const linked=[
+     const linked=[...new Set([
        product?.rule_key,
+       product?.fssr,
        ...(Array.isArray(product?.rule_keys)?product.rule_keys:[]),
        profile?.rule_key,
+       profile?.fssr,
        ...(Array.isArray(profile?.rule_keys)?profile.rule_keys:[]),
        ...(Array.isArray(profile?.linked_rule_keys)?profile.linked_rule_keys:[])
-     ].map(x=>String(x||'').trim()).filter(Boolean);
+     ].map(x=>String(x||'').trim()).filter(Boolean))];
      const ready=status==='rule_profile_ready';
      const chapter=status==='chapter_profile_ready';
-     const catalogStructured=!profile&&!!product&&standards.length>0;
+     const catalogStructured=!storedProfile&&!!product&&standards.length>0;
      const productOverlays=standards.filter(x=>Array.isArray(x.standard?.applies_to_product_names)&&x.standard.applies_to_product_names.some(v=>normIngredient(v)===normIngredient(name)));
-     let html='<div class="card"><div class="section-title"><h2>'+esc(name)+'</h2><span>Selected FSSAI product profile</span></div>'
+     let html='<div class="card"><div class="section-title"><h2>'+esc(name)+'</h2><span>Selected FSSAI product / standard lookup</span></div>'
        +'<div class="grid2"><div class="item"><b>FSSAI standard / route</b><small>'+esc(fssr)+'</small></div>'
        +'<div class="item"><b>Appendix A FCS</b><small>'+(fcs?esc(fcs):'<span class="status-warn">No safe FCS mapping loaded</span>')+'</small></div>'
-       +'<div class="item"><b>Machine-validation status</b><small>'+(ready?'<span class="status-good">Detailed rule profile complete</span>':chapter?'<span class="status-warn">Chapter profile loaded; detailed formulation validation still locked</span>':catalogStructured?'<span class="status-good">Structured standard available for lookup</span>':'<span class="status-warn">Catalog/base mapping only; missing detailed rule data stays visible as a data gap</span>')+'</small></div>'
+       +'<div class="item"><b>Machine-validation status</b><small>'+(ready?'<span class="status-good">Detailed rule profile complete</span>':chapter?'<span class="status-good">Chapter standard loaded for lookup</span><br><small>Detailed formulation validation is a separate readiness state.</small>':catalogStructured?'<span class="status-good">Structured standard available for lookup</span>':'<span class="status-warn">Catalog/base mapping only; missing detailed rule data stays visible as a data gap</span>')+'</small></div>'
        +'<div class="item"><b>Linked structured rule keys</b><small>'+(linked.length?linked.map(esc).join('<br>'):'No linked rule key shown for this catalog product.')+(productOverlays.length?'<br><span class="status-good">Exact product overlay: '+productOverlays.map(x=>esc(x.standard.key)).join(', ')+'</span>':'')+'</small></div></div>'
        +(profile?.chapter_rule_route_note?'<div class="notice"><b>Routing note:</b> '+esc(profile.chapter_rule_route_note)+'</div>':'')
        +'<div class="notice"><b>Scope protection:</b> PMSV shows only chapter rules whose exact rule key is linked to this selected product. It does not borrow a similar product standard.</div></div>';
