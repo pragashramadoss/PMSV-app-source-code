@@ -170,9 +170,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="section-title"><h2>Step 2 — Route the finished formulation</h2><span>Standardized Product or Proprietary Food</span></div>
 <div class="checker-grid">
   <div class="field">
-    <label>Generic product name</label>
-    <input id="proprietaryProductName" autocomplete="off" placeholder="e.g. cereal snack with seasoning">
-    <small>Used to rank the nearest FSSAI/FoSCoS standardized product. The suggested result must be confirmed before the route decision.</small>
+    <label>Generic product name <span class="muted">(optional)</span></label>
+    <input id="proprietaryProductName" autocomplete="off" placeholder="Optional — e.g. cereal snack with seasoning">
+    <small>If you enter a finished-product name, PMSV uses it as the strongest search basis. If left blank, PMSV derives the nearest-standard suggestion from the formulation you entered.</small>
   </div>
   <div class="field">
     <label>Special regulatory class check</label>
@@ -186,12 +186,12 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <div class="field" style="margin-top:10px">
   <label>Nearest FSSAI standard or FoSCoS regulatory category</label>
-  <select id="proprietaryStandardSelect" disabled><option value="">Enter product name first</option></select>
-  <small>PMSV suggests the nearest loaded standard/category from the product master. Confirm or change it before assessment.</small>
+  <select id="proprietaryStandardSelect" disabled><option value="">Enter a formulation or product name first</option></select>
+  <small>PMSV suggests the nearest loaded standard/category from the finished-product name when supplied, otherwise from the entered formulation. Confirm or change it before assessment.</small>
 </div>
-<div id="proprietaryStandardSuggestion" class="notice" style="margin-top:10px"><b>Standard/category confirmation required.</b> Enter the generic product name.</div>
+<div id="proprietaryStandardSuggestion" class="notice" style="margin-top:10px"><b>Standard/category confirmation required.</b> Enter the formulation or optional generic product name.</div>
 <div class="flow-actions">
-  <button class="btn" type="button" id="confirmProprietaryStandard" disabled>Confirm nearest standard/category</button>
+  <button class="btn" type="button" id="confirmProprietaryStandard" disabled>Confirm this standard/category</button>
 </div>
 <div id="standardLookupPanel" class="hidden" style="margin-top:12px"></div>
 
@@ -1233,7 +1233,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v9';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-formulation-routing-v10';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -3182,6 +3182,7 @@ function saveFormula(){
    sessionStorage.setItem('pmsv_fssai_formula_density',String(formulaDensity()));
  }catch(e){}
  renderFormula();
+ refreshNearestStandardFromFormula();
 }
 function addIngredient(){
  const input=document.getElementById('ingredientName');
@@ -3428,7 +3429,10 @@ document.getElementById('clearIngredients')?.addEventListener('click',()=>{
  formulationIngredients=[];
  saveFormula();
 });
-document.getElementById('goToRouteAssessment')?.addEventListener('click',()=>{document.getElementById('formulationRouteCard')?.scrollIntoView({behavior:'smooth',block:'start'})});
+document.getElementById('goToRouteAssessment')?.addEventListener('click',()=>{
+ refreshNearestStandardFromFormula();
+ document.getElementById('formulationRouteCard')?.scrollIntoView({behavior:'smooth',block:'start'});
+});
 document.getElementById('backToFormulation')?.addEventListener('click',()=>{openTab('formulation',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
 document.getElementById('goToContaminants')?.addEventListener('click',()=>{openTab('contaminants',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
 document.getElementById('backToStandards')?.addEventListener('click',()=>{openTab('standards',{updateHash:true,save:true});window.scrollTo({top:0,behavior:'smooth'})});
@@ -4679,23 +4683,72 @@ function selectedProprietaryStandardProduct(){
 function confirmedProprietaryStandardProduct(){
  return proprietaryConfirmedStandardId?findCatalogProductById(proprietaryConfirmedStandardId):null;
 }
+function proprietaryRoutingSearchBasis(){
+ const input=document.getElementById('proprietaryProductName');
+ const manual=String(input?.value||'').trim();
+ if(manual)return {raw:manual,source:'product_name',label:'finished-product name'};
+ const ordered=[...formulationIngredients]
+   .filter(x=>String(x?.name||'').trim())
+   .sort((a,b)=>qtyToKg(b.qty,b.unit)-qtyToKg(a.qty,a.unit));
+ if(!ordered.length)return {raw:'',source:'none',label:'none'};
+ if(ordered.length===1)return {raw:String(ordered[0].name).trim(),source:'single_ingredient',label:'single-ingredient formulation'};
+ const names=[];
+ const seen=new Set();
+ ordered.forEach(x=>{
+   const name=String(x.name||'').trim();
+   const key=normIngredient(name);
+   if(name&&key&&!seen.has(key)){seen.add(key);names.push(name);}
+ });
+ return {raw:names.join(' '),source:'formulation',label:'entered formulation'};
+}
+function proprietaryStandardCandidatesFromBasis(basis){
+ const raw=String(basis?.raw||'').trim();
+ if(!raw)return [];
+ if(basis?.source==='product_name'||basis?.source==='single_ingredient')return proprietaryStandardCandidates(raw);
+ const ingredients=[...formulationIngredients]
+   .filter(x=>String(x?.name||'').trim())
+   .sort((a,b)=>qtyToKg(b.qty,b.unit)-qtyToKg(a.qty,a.unit));
+ const totalKg=ingredients.reduce((sum,x)=>sum+Math.max(0,qtyToKg(x.qty,x.unit)),0);
+ const rows=productCatalog().map(p=>{
+   let score=proprietaryStandardScore(p,raw);
+   ingredients.forEach((item,index)=>{
+     const itemScore=proprietaryStandardScore(p,item.name);
+     const mass=qtyToKg(item.qty,item.unit);
+     const fraction=totalKg>0?mass/totalKg:0;
+     const weight=1+Math.min(1,fraction)+(index===0?0.35:0);
+     score=Math.max(score,Math.round(itemScore*weight));
+   });
+   return {p,score};
+ });
+ rows.sort((x,y)=>y.score-x.score||String(x.p.name||'').localeCompare(String(y.p.name||'')));
+ return rows;
+}
 function renderProprietaryStandardSuggestion(){
  const input=document.getElementById('proprietaryProductName');
  const select=document.getElementById('proprietaryStandardSelect');
  const note=document.getElementById('proprietaryStandardSuggestion');
  const confirm=document.getElementById('confirmProprietaryStandard');
  if(!input||!select||!note||!confirm)return;
- const raw=input.value.trim();
+ const basis=proprietaryRoutingSearchBasis();
+ const raw=basis.raw;
  proprietaryConfirmedStandardId='';
  if(!raw){
-   select.innerHTML='<option value="">Enter product name first</option>';
+   select.innerHTML='<option value="">Enter a formulation or product name first</option>';
    select.disabled=true;
    confirm.disabled=true;
    note.className='notice';
-   note.innerHTML='<b>Standard/category confirmation required.</b> Enter the generic product name first.';
+   note.innerHTML='<b>Standard/category confirmation required.</b> Add at least one formulation ingredient or enter the optional finished-product name.';
    return;
  }
- const ranked=proprietaryStandardCandidates(raw);
+ if(!productMasterDb||!productCatalog().length){
+   select.innerHTML='<option value="">Product catalogue loading…</option>';
+   select.disabled=true;
+   confirm.disabled=true;
+   note.className='notice';
+   note.innerHTML='<b>Finding the nearest FSSAI standard…</b><br><small>The product catalogue is still loading. PMSV will retry automatically when it is ready.</small>';
+   return;
+ }
+ const ranked=proprietaryStandardCandidatesFromBasis(basis);
  if(!ranked.length){
    select.innerHTML='<option value="">No FSSAI/FoSCoS products loaded</option>';
    select.disabled=true;
@@ -4710,21 +4763,32 @@ function renderProprietaryStandardSuggestion(){
    +ranked.map((x,i)=>'<option value="'+esc(x.p.id)+'"'+(confident&&i===0?' selected':'')+'>'+esc(proprietaryCandidateLabel(x.p,{suggested:confident&&i===0}))+'</option>').join('');
  select.disabled=false;
  confirm.disabled=!select.value;
+ const basisText=basis.source==='product_name'
+   ? 'Matched from the finished-product name you entered.'
+   : basis.source==='single_ingredient'
+     ? 'Matched automatically from the single ingredient in the formulation: <b>'+esc(raw)+'</b>.'
+     : 'Matched automatically from the entered formulation. Entering an optional finished-product name can improve the ranking for multi-ingredient products.';
  const fpc=fpc18CategoryForProduct(best.p);
  if(confident&&fpc){
    note.className='notice oknote';
    note.innerHTML='<b>Nearest FoSCoS regulatory category suggested:</b> '+esc(best.p.name)
      +' · <span class="clause">'+esc(fpc.code)+'</span> · <b>FSSR standard: N.A.</b>'
-     +'<br><small>This is an FSSAI/FoSCoS category, not a notified Chapter 2 vertical product standard. Confirm it or choose another applicable standard/category.</small>';
+     +'<br><small>'+basisText+' Confirm it or choose another applicable standard/category.</small>';
  }else if(confident){
    note.className='notice oknote';
    note.innerHTML='<b>Nearest FSSAI standard suggested:</b> '+esc(best.p.name)
      +(hasRealFssrStandard(best.p)?' · <span class="clause">'+esc(best.p.fssr)+'</span>':' · <b>FSSR standard: N.A.</b>')
-     +'<br><small>Confirm this selection or choose another applicable standard/category.</small>';
+     +'<br><small>'+basisText+' Confirm this selection or choose another applicable standard/category.</small>';
  }else{
    note.className='notice';
-   note.innerHTML='<b>No reliable name match was found.</b> Choose the closest applicable FSSAI standard or FoSCoS category manually.';
+   note.innerHTML='<b>No reliable match was found from the '+esc(basis.label)+'.</b> Choose the closest applicable FSSAI standard or FoSCoS category manually.';
  }
+}
+function refreshNearestStandardFromFormula(){
+ if(proprietaryConfirmedStandardId)return;
+ renderProprietaryStandardSuggestion();
+ resetProprietaryOutcome();
+ renderProprietaryFormula();
 }
 function applyProprietaryStandardFcs(product){
  const fpc=fpc18CategoryForProduct(product);
@@ -5633,7 +5697,7 @@ document.getElementById('proprietaryStandardSelect')?.addEventListener('change',
  const note=document.getElementById('proprietaryStandardSuggestion');
  if(note&&p){
    note.className='notice';
-   note.innerHTML='<b>Selected but not confirmed:</b> '+esc(p.name)+(p.fssr?' · <span class="clause">'+esc(p.fssr)+'</span>':'')+'<br><small>Tap Confirm selected standard before adding/evaluating ingredients.</small>';
+   note.innerHTML='<b>Selected but not confirmed:</b> '+esc(p.name)+(p.fssr?' · <span class="clause">'+esc(p.fssr)+'</span>':'')+'<br><small>Tap Confirm selected standard before determining the regulatory route.</small>';
  }
  resetProprietaryOutcome();
  renderProprietaryFormula();
@@ -6280,6 +6344,7 @@ async function loadProductMaster(){
  }
  renderProductMaster();
  renderSelectedProductRegulatoryStack();
+ refreshNearestStandardFromFormula();
 }
 document.getElementById('productSearch')?.addEventListener('input',renderProductSearch);
 document.getElementById('productCategorySelect')?.addEventListener('change',()=>{
