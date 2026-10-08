@@ -1228,7 +1228,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-structured-standard-coverage-v29';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-dahi-subroute-v30';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -1241,6 +1241,18 @@ function pmsvDirectNorm(value){
    .replace(/[^a-z0-9]+/g,' ')
    .trim()
    .replace(/\s+/g,' ');
+}
+function pmsvStandardLookupAlias(raw){
+ const q=pmsvDirectNorm(raw);
+ if(q==='dahi'||q==='plain dahi'||q==='curd'||q==='plain curd'){
+   return {
+     productId:'01-01-2-fermented-milk',
+     variant:'Dahi',
+     displayName:'Dahi',
+     routeLabel:'Dahi · FSSR 2.1.13 (Fermented Milk sub-route)'
+   };
+ }
+ return null;
 }
 function pmsvDirectScore(product,raw){
  const q=pmsvDirectNorm(raw);
@@ -1313,8 +1325,9 @@ async function pmsvDirectProductNameNearestStandard(value){
      ? productMasterDb.catalog_products
      : [];
    const products=full.length?full:(Array.isArray(db?.products)?db.products:[]);
+   const alias=pmsvStandardLookupAlias(raw);
    const ranked=products
-     .map(p=>({p,score:pmsvDirectScore(p,raw)}))
+     .map(p=>({p,score:alias&&String(p.id||'')===alias.productId?200000:pmsvDirectScore(p,raw)}))
      .sort((a,b)=>b.score-a.score||String(a.p?.name||'').localeCompare(String(b.p?.name||'')));
 
    if(!ranked.length){
@@ -1329,14 +1342,20 @@ async function pmsvDirectProductNameNearestStandard(value){
    ranked.forEach((row,index)=>{
      const p=row.p||{};
      const standard=String(p.fssr||'').trim();
+     const aliasLabel=alias&&String(p.id||'')===alias.productId?alias.displayName:String(p.name||'FSSAI product');
      const label=(index===0&&best.score>0?'Suggested — ':'')
-       +String(p.name||'FSSAI product')
+       +aliasLabel
        +(standard&&!/^(?:n\.?\s*a\.?|na|n\/a|—|-)$/i.test(standard)?' · '+standard:' · FSSR N.A.');
      select.add(new Option(label,String(p.id||''),false,index===0&&best.score>0));
    });
    select.disabled=false;
    confirm.disabled=!select.value;
    if(best.score>0){
+     if(alias&&String(best.p?.id||'')===alias.productId){
+       try{sessionStorage.setItem(ASSESSMENT_VARIANT_KEY,alias.variant);}catch(e){}
+     }else{
+       try{sessionStorage.removeItem(ASSESSMENT_VARIANT_KEY);}catch(e){}
+     }
      setAssessmentProductFromCatalog(best.p,{confirmed:false});
      try{
        renderSelectedProductRegulatoryStack();
@@ -1350,10 +1369,11 @@ async function pmsvDirectProductNameNearestStandard(value){
      const standard=String(p.fssr||'').trim();
      const standardText=standard&&!/^(?:n\.?\s*a\.?|na|n\/a|—|-)$/i.test(standard)?standard:'FSSR N.A.';
      note.className='notice oknote';
+     const displayName=alias&&String(p.id||'')===alias.productId?alias.displayName:String(p.name||'FSSAI product');
      note.innerHTML='<b>Nearest FSSAI standard suggested:</b> '
-       +String(p.name||'FSSAI product').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))
+       +displayName.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))
        +' · <span class="clause">'+standardText.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))+'</span>'
-       +'<br><small>Matched immediately from the finished-product name. Confirm this selection or choose another applicable standard/category.</small>';
+       +(alias&&String(p.id||'')===alias.productId?'<br><small>Plain Dahi is routed to the Dahi sub-route under the Fermented Milk standard; it is not treated as Flavoured Dahi/Yoghurt.</small>':'<br><small>Matched immediately from the finished-product name. Confirm this selection or choose another applicable standard/category.</small>');
    }else{
      note.className='notice';
      note.innerHTML='<b>No reliable automatic match was found.</b> Choose the closest applicable FSSAI standard or FoSCoS category manually.';
@@ -1408,6 +1428,7 @@ const CHAPTER_RULE_URLS=[
 let selectedProductId='';
 const CONFIRMED_STANDARD_KEY='pmsv_fssai_confirmed_standard';
 const ASSESSMENT_PRODUCT_KEY='pmsv_fssai_assessment_product';
+const ASSESSMENT_VARIANT_KEY='pmsv_fssai_assessment_variant';
 
 function currentAssessmentCatalogProduct(){
  const ids=[];
@@ -1421,7 +1442,14 @@ function currentAssessmentCatalogProduct(){
  const catalog=productCatalog();
  for(const id of ids){
    const p=catalog.find(x=>x.id===id||x.profile_id===id);
-   if(p)return p;
+   if(p){
+     let variant='';
+     try{variant=sessionStorage.getItem(ASSESSMENT_VARIANT_KEY)||'';}catch(e){}
+     if(variant){
+       return {...p,chapter_rule_variant:variant,lookup_display_name:variant==='Dahi'?'Dahi':variant,catalog_name:p.name};
+     }
+     return p;
+   }
  }
  const typed=normIngredient(document.getElementById('proprietaryProductName')?.value||'');
  if(typed){
@@ -1471,6 +1499,7 @@ if(isFreshPageNavigation()){
      'pmsv_fssai_formula_density',
      'pmsv_fssai_selected_product',
      ASSESSMENT_PRODUCT_KEY,
+     ASSESSMENT_VARIANT_KEY,
      CONFIRMED_STANDARD_KEY,
      'pmsv_fssai_label_article_qualifiers',
    ].forEach(k=>sessionStorage.removeItem(k));
@@ -2322,7 +2351,7 @@ function caffeinatedPrototypeScopeActive(){
 function currentSelectedProductName(){
  const product=selectedProductForFortification();
  const profile=currentProductProfile();
- return product?.name||profile?.name||'Selected product';
+ return product?.lookup_display_name||product?.name||profile?.name||'Selected product';
 }
 function standardRuleKeyTokens(value){
  const raw=String(value||'').trim();
@@ -2968,9 +2997,11 @@ function standardLookupRegulatoryCompositionHtml(){
  }
 
  const selectedName=normIngredient(product.name||'');
- const selectedVariant=normIngredient(product.chapter_rule_variant||profile?.chapter_rule_variant||'');
+ let storedVariant='';
+ try{storedVariant=sessionStorage.getItem(ASSESSMENT_VARIANT_KEY)||'';}catch(e){}
+ const selectedVariant=normIngredient(storedVariant||product.chapter_rule_variant||profile?.chapter_rule_variant||'');
  const explicitScopes={
-   '01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi':['flavoured fermented milk'],
+   '01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi':['flavoured fermented milk','yoghurt and flavoured dahi'],
    '01-01-1-flavoured-fermented-milk':['flavoured fermented milk'],
    '01-01-1-drinks-based-on-fermented-milk':['drinks based on fermented milk']
  };
@@ -2993,7 +3024,7 @@ function standardLookupRegulatoryCompositionHtml(){
    const standardName=esc(standard.name||product.name);
 
    const compositionRows=chapterRuleDisplayRows(standard).filter(r=>
-     /composition|general limits|other limits|quality parameters|specific requirements|physical \/ chemical|physical requirements|whole-product requirements|ingredient limits|optional ingredient daily maximum|natural spring-water special|fresh product requirements|processed product requirements|coffee requirements|instant-product requirements|calculated requirement/i
+     /composition|starter-culture|general limits|other limits|quality parameters|specific requirements|physical \/ chemical|physical requirements|whole-product requirements|ingredient limits|optional ingredient daily maximum|natural spring-water special|fresh product requirements|processed product requirements|coffee requirements|instant-product requirements|calculated requirement/i
        .test(String(r.section||''))
    );
    const applicableComposition=compositionRows.filter(r=>{
@@ -3077,6 +3108,16 @@ function standardLookupRegulatoryCompositionHtml(){
         }).join('<br>')
        +'</div>'
      );
+   }
+
+   const namedCultures=Array.isArray(standard?.named_fermented_milk_cultures)?standard.named_fermented_milk_cultures:[];
+   const cultureTarget=selectedVariant||selectedName;
+   const culture=namedCultures.find(r=>{
+     const n=normIngredient(r.product||'');
+     return n&&cultureTarget&&(n===cultureTarget||cultureTarget.includes(n)||n.includes(cultureTarget));
+   });
+   if(culture){
+     blocks.push('<div class="notice oknote"><b>Named starter culture — '+esc(culture.product)+':</b> '+esc(culture.culture)+'</div>');
    }
  });
 
@@ -5081,7 +5122,8 @@ function proprietaryStandardScore(product,raw){
  return score;
 }
 function proprietaryStandardCandidates(raw){
- const rows=productCatalog().map(p=>({p,score:proprietaryStandardScore(p,raw)}));
+ const alias=pmsvStandardLookupAlias(raw);
+ const rows=productCatalog().map(p=>({p,score:alias&&String(p.id||'')===alias.productId?200000:proprietaryStandardScore(p,raw)}));
  rows.sort((x,y)=>y.score-x.score||String(x.p.name||'').localeCompare(String(y.p.name||'')));
  return rows;
 }
@@ -6205,6 +6247,7 @@ proprietaryProductNameInput?.addEventListener('input',()=>{
  try{
    sessionStorage.removeItem(CONFIRMED_STANDARD_KEY);
    sessionStorage.removeItem(ASSESSMENT_PRODUCT_KEY);
+   sessionStorage.removeItem(ASSESSMENT_VARIANT_KEY);
  }catch(e){}
 });
 ['input','change','keyup','blur','focus','compositionend'].forEach(type=>proprietaryProductNameInput?.addEventListener(type,()=>ensureNearestStandardSuggestion(type!=='focus')));
@@ -6215,6 +6258,9 @@ document.getElementById('proprietaryStandardSelect')?.addEventListener('change',
  try{sessionStorage.removeItem(CONFIRMED_STANDARD_KEY);}catch(e){}
  document.getElementById('confirmProprietaryStandard').disabled=!event.currentTarget.value;
  const p=selectedProprietaryStandardProduct();
+ if(!p||String(p.id||'')!=='01-01-2-fermented-milk'){
+   try{sessionStorage.removeItem(ASSESSMENT_VARIANT_KEY);}catch(e){}
+ }
  if(p){
    setAssessmentProductFromCatalog(p,{confirmed:false});
    try{renderSelectedProductRegulatoryStack();}catch(e){}
@@ -6264,6 +6310,7 @@ document.getElementById('clearProprietaryRoute')?.addEventListener('click',()=>{
  selectedProductId='';
  try{
    sessionStorage.removeItem(ASSESSMENT_PRODUCT_KEY);
+   sessionStorage.removeItem(ASSESSMENT_VARIANT_KEY);
    sessionStorage.removeItem(CONFIRMED_STANDARD_KEY);
    sessionStorage.removeItem('pmsv_fssai_selected_product');
  }catch(e){}
@@ -6288,6 +6335,7 @@ function chapterRuleDisplayRows(standard){
    ['whole_composition','Whole-product composition'],
    ['powder_composition','Powder composition'],
    ['composition_rules','Composition rule'],
+   ['starter_culture_requirements','Starter-culture requirement'],
    ['formulation_rules','Formulation rule'],
    ['general_limits','General limits'],
    ['other_limits','Other limits'],
@@ -6363,7 +6411,7 @@ function renderLegacyProductScopePages(){
    status:'catalog_standard_lookup'
  }:null);
  const caffeinated=caffeinatedPrototypeScopeActive();
- const name=product?.name||profile?.display_name||profile?.name||'Selected product';
+ const name=product?.lookup_display_name||product?.name||profile?.display_name||profile?.name||'Selected product';
  const fssr=product?.fssr||profile?.fssr||profile?.rule_key||'Not shown in loaded product profile';
  const fcs=appendixFcsForRecord(product)||appendixFcsForRecord(profile);
  const status=profile?.status||'profile_unavailable';
