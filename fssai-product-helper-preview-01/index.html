@@ -26,7 +26,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span id="buildBadge" class="badge">PRODUCT STANDARDS PROTOTYPE · UI v14</span><h1>PMSV FSSAI Product Helper</h1><p>Enter the formulation once, then route it to the applicable standardized product or Proprietary Food pathway.</p></div></header>
+<header class="top"><div class="wrap"><span id="buildBadge" class="badge">PRODUCT STANDARDS PROTOTYPE · UI v21</span><h1>PMSV FSSAI Product Helper</h1><p>Enter the formulation once, then route it to the applicable standardized product or Proprietary Food pathway.</p></div></header>
 <main class="wrap">
 <nav class="tabs">
 <button class="tab active" data-tab="formulation">Formulation</button>
@@ -1238,7 +1238,9 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-assessment-product-v20';
+let proprietaryEditingIngredientIndex=-1;
+let proprietaryConfirmedStandardId='';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-startup-order-v21';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -4140,7 +4142,7 @@ document.getElementById('clearProcesses')?.addEventListener('click',event=>{
  syncProcessUI();
  openTab(activeTab,{updateHash:true,save:true});
 });
-syncProcessUI();
+// Initial process rendering runs after all shared state has initialized.
 
 const appendixAdditives=[
 {name:'Ascorbyl esters',ins:'304, 305',limit:'1,000 mg/kg',condition:'Notes 15, 10: on fat/oil basis; as ascorbyl stearate.',source:'14.1.4'},
@@ -4226,7 +4228,7 @@ function renderGmp(){
  body.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x[1])+'</b></td><td>'+esc(x[0])+'</td><td><b>GMP</b></td><td>'+(x[1].includes('FS01')?'FS01: glucose oxidase source organisms specified in Appendix A.':x[1].includes('FS02')?'FS02: lipase source organisms specified in Appendix A.':'General GMP Table provision.')+'</td></tr>').join('');
  const count=document.getElementById('gmpCount');if(count)count.textContent=rows.length+' applicable general GMP entries included automatically';
 }
-renderAppendix();renderGmp();
+// Initial appendix rendering runs at the end of bootstrap.
 
 
 function fallbackIngredientCatalog(){
@@ -4845,8 +4847,6 @@ async function loadAppendixCore(){
  refreshStandardLookupAudit();
 }
 
-let proprietaryEditingIngredientIndex=-1;
-let proprietaryConfirmedStandardId='';
 
 function proprietaryIngredientItems(){
  return Array.isArray(formulationIngredients)?formulationIngredients:[];
@@ -8976,6 +8976,10 @@ document.getElementById('evaluatePackaging')?.addEventListener('click',evaluateP
 document.getElementById('fortificationRoute')?.addEventListener('change',renderFortification);
 document.getElementById('evaluateFortification')?.addEventListener('click',evaluateFortification);
 document.getElementById('refreshComplianceSummary')?.addEventListener('click',renderMasterComplianceSummary);
+// Render only after every shared state declaration and event binding is ready.
+syncProcessUI();
+renderAppendix();
+renderGmp();
 renderConversions();
 
 
