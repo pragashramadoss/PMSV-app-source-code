@@ -1238,7 +1238,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-contaminants-product-driven-v18';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-state-v19';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -1346,6 +1346,10 @@ async function pmsvDirectProductNameNearestStandard(value){
    });
    select.disabled=false;
    confirm.disabled=!select.value;
+   if(best.score>0){
+     setAssessmentProductFromCatalog(best.p,{confirmed:false});
+     try{renderSelectedProductRegulatoryStack();}catch(e){}
+   }
 
    if(best.score>0){
      const p=best.p||{};
@@ -1408,6 +1412,31 @@ const CHAPTER_RULE_URLS=[
  './data/rules/chapter-3-substances-added-v1.json'
 ];
 let selectedProductId='';
+const CONFIRMED_STANDARD_KEY='pmsv_fssai_confirmed_standard';
+
+function currentAssessmentCatalogProduct(){
+ const ids=[];
+ const add=id=>{id=String(id||'').trim();if(id&&!ids.includes(id))ids.push(id);};
+ add(proprietaryConfirmedStandardId);
+ try{add(sessionStorage.getItem(CONFIRMED_STANDARD_KEY)||'');}catch(e){}
+ add(document.getElementById('proprietaryStandardSelect')?.value||'');
+ add(selectedProductId);
+ try{add(sessionStorage.getItem('pmsv_fssai_selected_product')||'');}catch(e){}
+ for(const id of ids){
+   const p=productCatalog().find(x=>x.id===id||x.profile_id===id);
+   if(p)return p;
+ }
+ return null;
+}
+function setAssessmentProductFromCatalog(p,{confirmed=false}={}){
+ if(!p)return;
+ selectedProductId=p.profile_id||p.id;
+ try{sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId);}catch(e){}
+ if(confirmed){
+   proprietaryConfirmedStandardId=p.id;
+   try{sessionStorage.setItem(CONFIRMED_STANDARD_KEY,p.id);}catch(e){}
+ }
+}
 
 const tabs=[...document.querySelectorAll('nav.tabs .tab[data-tab]')];
 const validTabs=new Set(tabs.map(t=>t.dataset.tab).filter(Boolean));
@@ -1435,6 +1464,7 @@ if(isFreshPageNavigation()){
      'pmsv_fssai_product_helper_processes',
      'pmsv_fssai_formula_density',
      'pmsv_fssai_selected_product',
+     CONFIRMED_STANDARD_KEY,
      'pmsv_fssai_label_article_qualifiers',
      'pmsv_fssai_product_standard_tests'
    ].forEach(k=>sessionStorage.removeItem(k));
@@ -1457,7 +1487,7 @@ function openTab(id,{updateHash=true,save=true}={}){
     tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab==='formulation'));
   }
 
-  if(standardLookupModeActive()&&['standard','ingredients','contaminants','micro','process','processing','packaging','fortification','quality','claims'].includes(id)){
+  if(['standard','ingredients','contaminants','micro','process','processing','packaging','fortification','quality','claims'].includes(id)){
     setTimeout(()=>{try{renderSelectedProductRegulatoryStack()}catch(e){}},0);
   }
 
@@ -4474,7 +4504,9 @@ function renderMasterComplianceSummary(){
 }
 
 function currentProductProfile(){
- return productProfiles().find(x=>x.id===selectedProductId&&['rule_profile_ready','chapter_profile_ready','base_profile_ready'].includes(x.status))||null;
+ const p=currentAssessmentCatalogProduct();
+ const ids=[selectedProductId,p?.profile_id,p?.id].filter(Boolean);
+ return productProfiles().find(x=>ids.includes(x.id)&&['rule_profile_ready','chapter_profile_ready','base_profile_ready'].includes(x.status))||null;
 }
 function findCatalogProductById(id){
  return productCatalog().find(x=>x.id===id)||null;
@@ -5077,10 +5109,8 @@ function confirmProprietaryStandard(){
    if(note){note.className='notice';note.innerHTML='<b>Select a standard/category before confirming.</b>';}
    return;
  }
- proprietaryConfirmedStandardId=p.id;
  const profile=profileForCatalogProduct(p);
- selectedProductId=profile?.id||p.profile_id||p.id;
- try{sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId)}catch(e){}
+ setAssessmentProductFromCatalog({...p,profile_id:profile?.id||p.profile_id||p.id},{confirmed:true});
  applyProprietaryStandardFcs(p);
  applyProductGate();
  renderFormula();
@@ -5973,6 +6003,10 @@ document.getElementById('proprietaryStandardSelect')?.addEventListener('change',
  proprietaryConfirmedStandardId='';
  document.getElementById('confirmProprietaryStandard').disabled=!event.currentTarget.value;
  const p=selectedProprietaryStandardProduct();
+ if(p){
+   setAssessmentProductFromCatalog(p,{confirmed:false});
+   try{renderSelectedProductRegulatoryStack();}catch(e){}
+ }
  const note=document.getElementById('proprietaryStandardSuggestion');
  if(note&&p){
    note.className='notice';
@@ -6634,7 +6668,10 @@ async function loadProductMaster(){
    const res=await fetch('./data/product-master-v1.json?v=263',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
-   try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
+   try{
+     selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||'';
+     proprietaryConfirmedStandardId=sessionStorage.getItem(CONFIRMED_STANDARD_KEY)||proprietaryConfirmedStandardId||'';
+   }catch(e){}
  }catch(e){
    productMasterDb=null;
  }
@@ -6667,7 +6704,7 @@ document.getElementById('contaminantMilkConcentrationFactor')?.addEventListener(
 
 
 function selectedCatalogProductForMicrobiology(){
- return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
+ return currentAssessmentCatalogProduct();
 }
 function microbiologyProfileByKey(key){
  const tables=microbiologyDb?.tables||{};
@@ -6851,7 +6888,7 @@ async function loadMicrobiologyDb(){
 }
 
 function selectedCatalogProductForContaminants(){
- return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
+ return currentAssessmentCatalogProduct();
 }
 function contaminantProfileForProduct(p){
  if(!p||!contaminantsDb||!Array.isArray(contaminantsDb.profiles))return null;
@@ -7618,7 +7655,7 @@ function claimRuleById(id){
  return claimsDb?.schedule_i?.find(r=>r.id===id)||null;
 }
 function claimSelectedProductName(){
- const selectedProduct=productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
+ const selectedProduct=currentAssessmentCatalogProduct();
  return selectedProduct?.name||currentProductProfile()?.name||'';
 }
 function claimCompare(op,value,limit){
@@ -7983,7 +8020,7 @@ function renderClaims(){
  renderScheduleClaimRoutes();
 }
 function selectedProductForPackaging(){
- return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
+ return currentAssessmentCatalogProduct();
 }
 function packagingScheduleRoute(){
  if(!packagingDb)return null;
@@ -8130,7 +8167,7 @@ function renderPackaging(){
  renderPackagingMigrationRows();
 }
 function selectedProductForFortification(){
- return productCatalog().find(x=>x.id===selectedProductId||x.profile_id===selectedProductId)||null;
+ return currentAssessmentCatalogProduct();
 }
 function fortificationRouteById(id){
  return (fortificationDb?.routes||[]).find(r=>r.id===id)||null;
