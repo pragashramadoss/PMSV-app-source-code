@@ -1233,7 +1233,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v7';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v8';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -6874,10 +6874,12 @@ function productContaminantGateNotices(p){
    rows.filter(predicate).forEach(r=>locked.push(r));
  };
 
- addConditional(contaminantsDb.chapter_2_6_conditional_fish_specific_routes_v9,r=>!Array.isArray(r.catalog_ids)||r.catalog_ids.includes(id));
- addConditional(contaminantsDb.chapter_2_6_conditional_contaminant_routes_v9,r=>!Array.isArray(r.catalog_ids)||r.catalog_ids.includes(id));
-
- addLocked(contaminantsDb.chapter_2_6_locked_contaminant_routes_v9,r=>r.catalog_id===id);
+ const isChapter26=String(p.fssr||'').startsWith('2.6.');
+ if(isChapter26){
+   addConditional(contaminantsDb.chapter_2_6_conditional_fish_specific_routes_v9,r=>!Array.isArray(r.catalog_ids)||r.catalog_ids.includes(id));
+   addConditional(contaminantsDb.chapter_2_6_conditional_contaminant_routes_v9,r=>!Array.isArray(r.catalog_ids)||r.catalog_ids.includes(id));
+   addLocked(contaminantsDb.chapter_2_6_locked_contaminant_routes_v9,r=>r.catalog_id===id);
+ }
  addLocked(contaminantsDb.chapter_2_9_locked_contaminant_routes_v9,r=>r.catalog_id===id);
  addLocked(contaminantsDb.chapter_2_8_locked_contaminant_routes_v9,r=>r.catalog_id===id);
  addLocked(contaminantsDb.chapter_2_7_locked_contaminant_routes_v9,r=>r.catalog_id===id);
