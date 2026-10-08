@@ -243,8 +243,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </section>
 
 <section id="standards" class="view hidden">
-<div style="margin-bottom:10px"><button class="btn-secondary" type="button" id="backToFormulation">← Back to Formulation Ingredients</button></div>
-<div class="card">
+<div style="margin-bottom:10px"><button class="btn-secondary" type="button" id="backToFormulation">← Back to Formulation</button></div>
+<div class="card" id="ingredientQualificationCard">
 <div class="section-title"><h2>Step 2 — How each ingredient qualifies under FSSAI</h2><span>Clause-level traceability</span></div>
 <div id="classificationSummary" class="notice"></div>
 <div class="tablewrap"><table>
@@ -253,8 +253,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </table></div>
 </div>
 
-<div class="card">
-<div class="section-title"><h2>Standards applicable to this formulation</h2><span>Assembled after ingredient input</span></div>
+<div class="card" id="applicableStandardsCard">
+<div class="section-title"><h2 id="applicableStandardsTitle">Standards applicable to this formulation</h2><span id="applicableStandardsSubtitle">Assembled after ingredient input</span></div>
 <div id="applicableStandards"></div>
 <div class="flow-actions">
   <button class="btn" type="button" id="goToContaminants">Review contaminants for this formulation →</button>
@@ -781,7 +781,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </section>
 
 <section id="nutrition" class="view hidden">
-<div class="card">
+<div id="nutritionLookupNotice" class="notice hidden"></div>
+<div class="card" id="nutritionFormulationControlsCard">
 <div class="section-title"><h2>Nutritional information</h2><span>Calculated from formulation quantities</span></div>
 <div class="notice oknote"><b>Government-source rule:</b> PMSV uses only Indian government nutrition sources for default calculations. Food composition is matched to the local ICMR–NIN / IFCT dataset loaded in this module, while nutrient declarations, adult reference values and energy conversion factors follow the FSSAI Labelling & Display Regulations. If an ingredient has no verified government nutrition profile loaded, PMSV does <b>not</b> guess its nutrients; the result is marked incomplete.</div>
 <div id="nutritionDbStatus" class="notice"><b>Nutrition database:</b> loading official-source local data…</div>
@@ -810,7 +811,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 </div>
 
-<div class="card">
+<div class="card" id="nutritionCalculatedCard">
 <div class="section-title"><h2>Calculated nutrition panel</h2><span>FSSAI label format</span></div>
 <div id="nutritionCalculationStatus" class="notice"></div>
 <div class="tablewrap"><table>
@@ -820,7 +821,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="notice"><b>FSSAI adult reference values used for %RDA:</b> 2,000 kcal energy, 67 g total fat, 22 g saturated fat, 2 g trans fat, 50 g added sugars and 2,000 mg sodium. For protein, carbohydrate, total sugars, cholesterol and dietary fibre, this table shows <b>Not specified by FSSAI</b> rather than inventing an RDA value. These nutrients are still declared where applicable; only the FSSAI per-serve %RDA denominator is not provided in this mandatory labelling provision.</div>
 </div>
 
-<div class="card">
+<div class="card" id="nutritionMicronutrientCard">
 <div class="section-title"><h2>ICMR-NIN micronutrients</h2><span>IFCT Table 2 · water-soluble vitamins</span></div>
 <div id="nutritionMicronutrientStatus" class="notice">Micronutrient values are shown only where the exact ICMR-NIN field is available for 100% of the formulation mass.</div>
 <div class="tablewrap"><table>
@@ -830,14 +831,14 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="notice"><b>Source handling:</b> IFCT Table 2 values are per 100 g edible portion. Official blank cells mean below detectable limit; PMSV keeps them unavailable rather than treating them as zero.</div>
 </div>
 
-<div class="card">
+<div class="card" id="nutritionAdditionalCard">
 <div class="section-title"><h2>Additional IFCT composition</h2><span>Official ICMR-NIN Tables 4–12</span></div>
 <div id="nutritionAdditionalStatus" class="notice">Loading additional official composition…</div>
 <div id="nutritionAdditionalTables"></div>
 <div class="notice"><b>Source basis:</b> Formulation values require a verified field for 100% of ingredient mass. Amino acids are listed per 100 g protein. Oil profiles are percentages of total fatty-acid methylesters. These reference values are shown separately from food-mass calculations.</div>
 </div>
 
-<div class="card">
+<div class="card" id="nutritionCoverageCard">
 <div class="section-title"><h2>Ingredient nutrition-source coverage</h2><span>Every value must be traceable</span></div>
 <div class="tablewrap"><table>
 <thead><tr><th>Ingredient</th><th>Quantity</th><th>Nutrition match</th><th>Source / status</th></tr></thead>
@@ -993,11 +994,11 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="claims" class="view hidden">
 <div class="card">
 <div class="section-title"><h2>Advertising & Claims checker</h2><span>FSSAI · deterministic · no AI</span></div>
-<div class="notice oknote"><b>What this checks:</b> PMSV evaluates FSSAI claim conditions only when the required formulation/nutrition evidence is available. A numeric pass means the <b>Schedule I numeric condition is met</b>; it does not by itself approve the final wording, advertisement or health claim.</div>
+<div id="claimsScopeNote" class="notice oknote"><b>What this checks:</b> PMSV evaluates FSSAI claim conditions only when the required formulation/nutrition evidence is available. A numeric pass means the <b>Schedule I numeric condition is met</b>; it does not by itself approve the final wording, advertisement or health claim.</div>
 <div id="claimsDbStatus" class="notice">Loading FSSAI Advertising & Claims rules…</div>
 </div>
 
-<div class="card">
+<div class="card" id="claimNutrientEvaluationCard">
 <div class="section-title"><h2>Check a nutrient-content claim</h2><span>Schedule I</span></div>
 <div class="checker-grid">
   <div class="field">
@@ -1018,7 +1019,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="claimCheckResult" class="notice">Select a claim to assess it against the current formulation.</div>
 </div>
 
-<div class="card">
+<div class="card" id="claimComparativeEvaluationCard">
 <div class="section-title"><h2>Check a comparative claim</h2><span>Regulation 5(4)–(5)</span></div>
 <div class="checker-grid">
   <div class="field">
@@ -1059,7 +1060,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="comparativeClaimResult" class="notice">Enter a reference food and value to calculate the regulatory difference.</div>
 </div>
 
-<div class="card">
+<div class="card" id="claimNonAdditionEvaluationCard">
 <div class="section-title"><h2>Screen a non-addition claim</h2><span>Regulation 6</span></div>
 <div class="checker-grid">
   <div class="field">
@@ -1232,7 +1233,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08.2';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v3';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -2998,6 +2999,7 @@ function renderAdditionalIfctComposition(){
  body.innerHTML=panels.join('');
 }
 function renderNutrition(){
+ renderStandardLookupModeUi();
  const rows=document.getElementById('nutritionRows');
  const coverage=document.getElementById('nutritionCoverageRows');
  const status=document.getElementById('nutritionCalculationStatus');
@@ -3205,6 +3207,7 @@ function addIngredient(){
 }
 function renderFormula(){
  applyProductGate();
+ renderStandardLookupModeUi();
  const list=document.getElementById('ingredientList');
  const count=document.getElementById('ingredientCount');
  const totals=document.getElementById('formulaTotals');
@@ -4097,7 +4100,7 @@ function renderMasterComplianceSummary(){
 
  if(standardLookupModeActive()){
    const fcs=appendixFcsForRecord(product)||appendixFcsForRecord(profile);
-   const standards=currentChapterStandards();
+   const standards=lookupStandards;
    const appendix=fcs?appendixEntriesForFcs(fcs):null;
    const appendixAvailable=!!appendix&&['loaded','no_additives','component_carry_over','special_regulation','no_additives_pending'].includes(appendix.status);
    rows.push(masterComplianceRow('Ingredients & Appendix A',appendixAvailable||standards.length?'pass':'incomplete',
@@ -5933,9 +5936,43 @@ function renderProcessingProductScope(){
  }
 }
 
+function renderStandardLookupModeUi(){
+ const lookup=standardLookupModeActive();
+
+ const ingredientCard=document.getElementById('ingredientQualificationCard');
+ const title=document.getElementById('applicableStandardsTitle');
+ const subtitle=document.getElementById('applicableStandardsSubtitle');
+ const contamButton=document.getElementById('goToContaminants');
+ if(ingredientCard)ingredientCard.classList.toggle('hidden',lookup);
+ if(title)title.textContent=lookup?'Regulatory stack for the selected standardized product':'Standards applicable to this formulation';
+ if(subtitle)subtitle.textContent=lookup?'Product-level view · no formulation required':'Assembled after ingredient input';
+ if(contamButton)contamButton.textContent=lookup?'Review product-level contaminants & residues →':'Review contaminants for this formulation →';
+
+ const nutritionNotice=document.getElementById('nutritionLookupNotice');
+ ['nutritionFormulationControlsCard','nutritionCalculatedCard','nutritionMicronutrientCard','nutritionAdditionalCard','nutritionCoverageCard']
+   .forEach(id=>document.getElementById(id)?.classList.toggle('hidden',lookup));
+ if(nutritionNotice){
+   nutritionNotice.classList.toggle('hidden',!lookup);
+   if(lookup){
+     const name=selectedProductForFortification()?.name||currentProductProfile()?.name||'selected standardized product';
+     nutritionNotice.className='notice oknote';
+     nutritionNotice.innerHTML='<b>Standard Lookup mode — '+esc(name)+'.</b><br>Nutrition calculation is formulation-dependent and is intentionally not evaluated here. It requires the actual ingredients, quantities, finished yield and density. This does not block viewing any product-level FSSAI standard or horizontal regulatory requirement.';
+   }
+ }
+
+ ['claimNutrientEvaluationCard','claimComparativeEvaluationCard','claimNonAdditionEvaluationCard']
+   .forEach(id=>document.getElementById(id)?.classList.toggle('hidden',lookup));
+ const claimsScope=document.getElementById('claimsScopeNote');
+ if(claimsScope){
+   claimsScope.innerHTML=lookup
+     ? '<b>Standard Lookup mode:</b> general, restricted-word and product-specific FSSAI claim rules are available below. Numeric nutrient/comparative and non-addition claim evaluation is formulation-dependent, so those calculators are hidden until a formulation is entered.'
+     : '<b>What this checks:</b> PMSV evaluates FSSAI claim conditions only when the required formulation/nutrition evidence is available. A numeric pass means the <b>Schedule I numeric condition is met</b>; it does not by itself approve the final wording, advertisement or health claim.';
+ }
+}
 function standardLookupStructuralAudit(){
  const selected=selectedProductForFortification()||currentProductProfile();
  const checks=[
+   {label:'Applicable regulatory stack',tab:'standards',id:'applicableStandards',block:/no formulation or standardized product selected/i},
    {label:'Product standard',tab:'standard',id:'selectedProductStandardContent',fallbackId:'caffeinatedStandardContent',block:/select a standardized product first/i},
    {label:'Ingredients / Appendix A',tab:'ingredients',id:'selectedProductIngredientsContent',fallbackId:'caffeinatedIngredientsContent',block:/select a product first/i},
    {label:'Contaminants / residues',tab:'contaminants',id:'productContaminantResults',block:/select a standardized product/i},
@@ -5977,6 +6014,7 @@ function refreshStandardLookupAudit(){
  try{renderMasterComplianceSummary();}catch(e){}
 }
 function renderSelectedProductRegulatoryStack(){
+ renderStandardLookupModeUi();
  renderLegacyProductScopePages();
  renderProcessingQualifierUI();
  renderProcessingProductScope();
@@ -5989,6 +6027,7 @@ function renderSelectedProductRegulatoryStack(){
  refreshStandardLookupAudit();
 }
 function renderStandardLookupDashboard(){
+ renderStandardLookupModeUi();
  const box=document.getElementById('standardLookupPanel');
  if(!box)return;
  const p=selectedProductForFortification();
@@ -7273,6 +7312,7 @@ function renderClaimsReference(){
  }
 }
 function renderClaims(){
+ renderStandardLookupModeUi();
  const status=document.getElementById('claimsDbStatus');
  const select=document.getElementById('claimType');
  const lookupMode=standardLookupModeActive();
