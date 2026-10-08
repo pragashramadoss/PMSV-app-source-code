@@ -1418,8 +1418,8 @@ function currentAssessmentCatalogProduct(){
  const ids=[];
  const add=id=>{id=String(id||'').trim();if(id&&!ids.includes(id))ids.push(id);};
  add(proprietaryConfirmedStandardId);
- try{add(sessionStorage.getItem(CONFIRMED_STANDARD_KEY)||'');}catch(e){}
  add(document.getElementById('proprietaryStandardSelect')?.value||'');
+ try{add(sessionStorage.getItem(CONFIRMED_STANDARD_KEY)||'');}catch(e){}
  add(selectedProductId);
  try{add(sessionStorage.getItem('pmsv_fssai_selected_product')||'');}catch(e){}
  for(const id of ids){
@@ -4888,7 +4888,9 @@ function selectedProprietaryStandardProduct(){
  return findCatalogProductById(id);
 }
 function confirmedProprietaryStandardProduct(){
- return proprietaryConfirmedStandardId?findCatalogProductById(proprietaryConfirmedStandardId):null;
+ let id=proprietaryConfirmedStandardId;
+ if(!id){try{id=sessionStorage.getItem(CONFIRMED_STANDARD_KEY)||'';}catch(e){}}
+ return id?findCatalogProductById(id):null;
 }
 function proprietaryRoutingSearchBasis(){
  const input=document.getElementById('proprietaryProductName');
@@ -5996,11 +5998,16 @@ function ensureNearestStandardSuggestion(force=false){
  }
 }
 const proprietaryProductNameInput=document.getElementById('proprietaryProductName');
+proprietaryProductNameInput?.addEventListener('input',()=>{
+ proprietaryConfirmedStandardId='';
+ try{sessionStorage.removeItem(CONFIRMED_STANDARD_KEY);}catch(e){}
+});
 ['input','change','keyup','blur','focus','compositionend'].forEach(type=>proprietaryProductNameInput?.addEventListener(type,()=>ensureNearestStandardSuggestion(type!=='focus')));
 proprietaryProductNameInput?.addEventListener('input',()=>setTimeout(()=>ensureNearestStandardSuggestion(true),0));
 
 document.getElementById('proprietaryStandardSelect')?.addEventListener('change',event=>{
  proprietaryConfirmedStandardId='';
+ try{sessionStorage.removeItem(CONFIRMED_STANDARD_KEY);}catch(e){}
  document.getElementById('confirmProprietaryStandard').disabled=!event.currentTarget.value;
  const p=selectedProprietaryStandardProduct();
  if(p){
