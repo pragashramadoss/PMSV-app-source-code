@@ -1233,7 +1233,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v5';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v6';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -2153,10 +2153,23 @@ function currentSelectedProductName(){
  const profile=currentProductProfile();
  return product?.name||profile?.name||'Selected product';
 }
+function standardRuleKeyTokens(value){
+ const raw=String(value||'').trim();
+ if(!raw)return [];
+ const out=new Set();
+ const clean=raw.replace(/\s+\(/g,'(').replace(/\)\s+/g,') ').trim();
+ if(/^\d+(?:\.\d+)*(?:\([^)]*\))?(?:[a-z])?$/i.test(clean))out.add(clean);
+ const matches=raw.match(/\d+(?:\.\d+)+(?:\s*\([^)]*\))?(?:[a-z])?/gi)||[];
+ matches.forEach(x=>{
+   const k=x.replace(/\s+/g,'').trim();
+   if(k)out.add(k);
+ });
+ return [...out];
+}
 function currentChapterRuleKeys(){
  const product=selectedProductForFortification();
  const profile=currentProductProfile();
- return new Set([
+ const raw=[
    product?.rule_key,
    product?.fssr,
    ...(Array.isArray(product?.rule_keys)?product.rule_keys:[]),
@@ -2164,7 +2177,8 @@ function currentChapterRuleKeys(){
    profile?.fssr,
    ...(Array.isArray(profile?.rule_keys)?profile.rule_keys:[]),
    ...(Array.isArray(profile?.linked_rule_keys)?profile.linked_rule_keys:[])
- ].map(x=>String(x||'').trim()).filter(x=>/^\d+(?:\.\d+)*(?:\([^)]*\))?(?:[a-z])?$/.test(x)));
+ ].filter(Boolean);
+ return new Set(raw.flatMap(standardRuleKeyTokens));
 }
 function ruleDbStandards(db){
  const rows=[];
