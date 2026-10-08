@@ -1233,7 +1233,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v6';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v7';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -6795,18 +6795,78 @@ function chapter26ContaminantGateNotices(p){
  return html;
 }
 
+function productContaminantGateNotices(p){
+ if(!p||!contaminantsDb)return '';
+ const id=p.id||p.profile_id||'';
+ const conditional=[];
+ const locked=[];
 
+ const addConditional=(rows,predicate)=>{
+   if(!Array.isArray(rows))return;
+   rows.filter(predicate).forEach(r=>conditional.push(r));
+ };
+ const addLocked=(rows,predicate)=>{
+   if(!Array.isArray(rows))return;
+   rows.filter(predicate).forEach(r=>locked.push(r));
+ };
 
+ addConditional(contaminantsDb.chapter_2_6_conditional_fish_specific_routes_v9,r=>!Array.isArray(r.catalog_ids)||r.catalog_ids.includes(id));
+ addConditional(contaminantsDb.chapter_2_6_conditional_contaminant_routes_v9,r=>!Array.isArray(r.catalog_ids)||r.catalog_ids.includes(id));
+
+ addLocked(contaminantsDb.chapter_2_6_locked_contaminant_routes_v9,r=>r.catalog_id===id);
+ addLocked(contaminantsDb.chapter_2_9_locked_contaminant_routes_v9,r=>r.catalog_id===id);
+ addLocked(contaminantsDb.chapter_2_8_locked_contaminant_routes_v9,r=>r.catalog_id===id);
+ addLocked(contaminantsDb.chapter_2_7_locked_contaminant_routes_v9,r=>r.catalog_id===id);
+ addLocked(contaminantsDb.chapter_2_5_locked_fresh_meat_routes_v9,r=>Array.isArray(r.catalog_ids)&&r.catalog_ids.includes(id));
+
+ const seenConditional=new Set();
+ const conditionalRows=conditional.filter(r=>{
+   const key=[r.scope||r.contaminant||'',r.requires_input||'',r.reason||''].join('|');
+   if(seenConditional.has(key))return false;
+   seenConditional.add(key);return true;
+ });
+ const seenLocked=new Set();
+ const lockedRows=locked.filter(r=>{
+   const key=[r.lock_scope||r.contaminant||'',r.reason||'',r.status||''].join('|');
+   if(seenLocked.has(key))return false;
+   seenLocked.add(key);return true;
+ });
+
+ let html='';
+ if(conditionalRows.length){
+   html+='<div class="notice"><b>Conditional FSSAI contaminant gate'+(conditionalRows.length===1?'':'s')+' — not auto-applied:</b><br>'
+     +conditionalRows.map(r=>'• <b>'+esc(r.scope||r.contaminant||'Conditional route')+'</b>'
+       +(r.requires_input?' · needs <b>'+esc(r.requires_input)+'</b>':'')
+       +'<br><small>'+esc(r.reason||'Additional product evidence is required before selecting the applicable limit.')+'</small>').join('<br>')
+     +'</div>';
+ }
+ if(lockedRows.length){
+   html+='<div class="notice"><b>Intentionally fail-closed contaminant route'+(lockedRows.length===1?'':'s')+':</b><br>'
+     +lockedRows.map(r=>'• <b>'+esc(r.lock_scope||r.contaminant||p.name||'Product contaminant route')+'</b>'
+       +(r.status?' · '+esc(r.status):'')
+       +'<br><small>'+esc(r.reason||'No exact current FSSAI article is available for automatic mapping.')+'</small>').join('<br>')
+     +'</div>';
+ }
+ return html;
+}
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  const n=normIngredient(p.name||'');
- if(!n)return [];
+ const id=p.id||p.profile_id||'';
+ if(!n&&!id)return [];
  const out=[];
+
+ const pushRule=(rule)=>{if(rule)out.push(rule);};
+ const exactMetalRule=(metal,article)=>{
+   const rows=contaminantsDb?.metal_article_rules_v9?.[metal]||[];
+   const target=normIngredient(article||'');
+   return rows.find(r=>normIngredient(r.article||'')===target)||null;
+ };
 
  // 1) Exact current metal-article matches for any standardized product name.
  Object.entries(contaminantsDb?.metal_article_rules_v9||{}).forEach(([contaminant,rows])=>{
    (rows||[]).forEach(r=>{
-     if(normIngredient(r.article||'')===n)out.push({contaminant,...r});
+     if(normIngredient(r.article||'')===n)pushRule({contaminant,...r});
    });
  });
 
@@ -6814,7 +6874,7 @@ function productBaselineContaminantRules(p){
  Object.entries(contaminantsDb?.crop_contaminants||{}).forEach(([key,group])=>{
    (group?.rules||[]).forEach(r=>{
      if(normIngredient(r.article||'')!==n)return;
-     out.push({
+     pushRule({
        contaminant:String(group.name||group.label||key.replaceAll('_',' ')),
        unit:String(r.unit||group.unit||''),
        source_basis:String(r.source_basis||group.source_basis||'Section 2.2 · Crop contaminants'),
@@ -6823,7 +6883,59 @@ function productBaselineContaminantRules(p){
    });
  });
 
- // 3) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
+ // 3) Verified product-to-metal aliases stored in the contaminant master.
+ // These are explicit FSSAI identity mappings, not fuzzy product-name matches.
+ (contaminantsDb?.explicit_metal_alias_mappings_v9||[])
+   .filter(m=>m.product_id===id)
+   .forEach(mapping=>{
+     (mapping.verified_alias_basis||[]).forEach(basis=>{
+       const exact=exactMetalRule(basis.metal,basis.article);
+       if(exact){
+         pushRule({
+           contaminant:basis.metal,
+           ...exact,
+           source_basis:String(exact.source_basis||'Section 2.1 · Metal contaminants')+' · verified PMSV product/article mapping'
+         });
+       }else{
+         pushRule({
+           contaminant:String(basis.metal||'Metal contaminant'),
+           article:String(basis.article||p.name||''),
+           limit:basis.limit,
+           unit:String(basis.unit||''),
+           condition:String(basis.condition||basis.mapping_basis||''),
+           source_basis:'FSSAI Version IX · verified product/article identity mapping'
+         });
+       }
+     });
+   });
+
+ // 4) Direct numeric contaminant/impurity limits written inside an exact product standard.
+ (contaminantsDb?.direct_product_standard_contaminant_rules_v1||[])
+   .filter(x=>x.catalog_id===id)
+   .forEach(group=>(group.rules||[]).forEach(r=>pushRule({...r})));
+
+ // 5) Verified spice identity mappings to the current Spices/Spice Mix crop-contaminant article.
+ const spice=(contaminantsDb?.spice_crop_contaminant_identity_mappings_v9||[]).find(x=>x.catalog_id===id);
+ if(spice){
+   pushRule({
+     contaminant:'Total Aflatoxins',
+     article:String(spice.article||'Spices/Spice Mix'),
+     limit:spice.total_aflatoxins_limit,
+     unit:String(spice.unit||'µg/kg'),
+     source_basis:String(spice.source_basis||'Section 2.2.1 · Crop contaminants'),
+     condition:'Verified exact spice identity mapping'
+   });
+   pushRule({
+     contaminant:'Aflatoxin B1',
+     article:String(spice.article||'Spices/Spice Mix'),
+     limit:spice.aflatoxin_b1_limit,
+     unit:String(spice.unit||'µg/kg'),
+     source_basis:String(spice.source_basis||'Section 2.2.1 · Crop contaminants'),
+     condition:'Verified exact spice identity mapping'
+   });
+ }
+
+ // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
  const grainNames=(grainStandard?.applies_to||[]).map(normIngredient);
@@ -6831,13 +6943,13 @@ function productBaselineContaminantRules(p){
  if(exactFoodGrain){
    const leadRows=contaminantsDb?.metal_article_rules_v9?.Lead||[];
    const lead=leadRows.find(r=>normIngredient(r.article||'')===normIngredient('Cereal grains, except buckwheat, canihua and quinoa'));
-   if(lead&&!['buckwheat','canihua','quinoa'].includes(n))out.push({contaminant:'Lead',...lead});
+   if(lead&&!['buckwheat','canihua','quinoa'].includes(n))pushRule({contaminant:'Lead',...lead});
 
    const totalAflatoxin=contaminantsDb?.crop_contaminants?.total_aflatoxins?.rules?.find(r=>normIngredient(r.article||'')===normIngredient('Cereal and cereal products'));
-   if(totalAflatoxin)out.push({contaminant:'Total Aflatoxins',unit:String(totalAflatoxin.unit||'µg/kg'),source_basis:'Section 2.2.1 · Crop contaminants',...totalAflatoxin});
+   if(totalAflatoxin)pushRule({contaminant:'Total Aflatoxins',unit:String(totalAflatoxin.unit||'µg/kg'),source_basis:'Section 2.2.1 · Crop contaminants',...totalAflatoxin});
 
    const b1=contaminantsDb?.crop_contaminants?.aflatoxin_b1?.rules?.find(r=>normIngredient(r.article||'')===normIngredient('Cereal and cereal products'));
-   if(b1)out.push({contaminant:'Aflatoxin B1',unit:String(b1.unit||'µg/kg'),source_basis:'Section 2.2.1 · Crop contaminants',...b1});
+   if(b1)pushRule({contaminant:'Aflatoxin B1',unit:String(b1.unit||'µg/kg'),source_basis:'Section 2.2.1 · Crop contaminants',...b1});
  }
 
  const seen=new Set();
@@ -6941,10 +7053,10 @@ function renderProductContaminants(){
  const profileMsg=profile
   ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+exact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
   : baseline.length
-    ? '<div class="notice oknote"><b>Product-level FSSAI contaminant baseline:</b> '+baseline.length+' directly applicable general article'+(baseline.length===1?'':'s')+' resolved for '+esc(p.name)+'. Exact commodity pesticide-residue MRLs are shown separately below when the selected standardized product has an exact commodity match.</div>'
+    ? '<div class="notice oknote"><b>Product-level FSSAI contaminant mapping:</b> '+baseline.length+' directly applicable rule'+(baseline.length===1?'':'s')+' resolved for '+esc(p.name)+' from exact product articles, verified product/article aliases, direct product-standard limits, verified commodity-family mappings or other structured FSSAI evidence. Exact pesticide-residue MRLs are shown separately when the commodity name matches exactly.</div>'
     : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
-   +chapter26ContaminantGateNotices(p)
+   +productContaminantGateNotices(p)
    +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant / toxin</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="notice">No exact metal/toxin row is auto-applicable for this product under the current stored product gates.</div>')
    +conditionalMetalHtml
    +(pesticideRows?'<div class="card" style="margin-top:12px;background:#fafcff"><div class="section-title"><h3 style="margin:0">Pesticide residue MRLs — '+esc(p.name)+'</h3><span>Exact commodity match · no formulation required</span></div><div class="notice oknote"><b>'+pesticideMrls.length+' exact commodity MRL row'+(pesticideMrls.length===1?'':'s')+' found.</b> These are taken from the stored current FSSAI pesticide-residue table because the commodity name exactly matches the selected standardized product. Similar commodity names are not borrowed.</div><div class="tablewrap"><table><thead><tr><th>Pesticide</th><th>MRL</th><th>Commodity / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+pesticideRows+'</tbody></table></div></div>':'<div class="notice"><b>Pesticide residues:</b> no exact commodity-name MRL rows are stored for '+esc(p.name)+'. PMSV will not infer a commodity mapping.</div>')
