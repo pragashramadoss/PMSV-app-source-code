@@ -1228,7 +1228,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-nutrition-layers-v27';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-nutrition-variant-scope-v28';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -2961,36 +2961,85 @@ function standardLookupNutritionProfile(){
 }
 function standardLookupRegulatoryCompositionHtml(){
  const product=currentAssessmentCatalogProduct();
+ const profile=currentProductProfile();
  const standards=currentChapterStandards();
  if(!product||!standards.length){
    return '<div class="notice"><b>FSSAI regulatory composition:</b> no exact structured composition row is loaded for this selected product. PMSV will not borrow another standard.</div>';
  }
+
+ const selectedName=normIngredient(product.name||'');
+ const selectedVariant=normIngredient(product.chapter_rule_variant||profile?.chapter_rule_variant||'');
+ const explicitScopes={
+   '01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi':['flavoured fermented milk'],
+   '01-01-1-flavoured-fermented-milk':['flavoured fermented milk'],
+   '01-01-1-drinks-based-on-fermented-milk':['drinks based on fermented milk']
+ };
+ const scopeAliases=(explicitScopes[String(product.id||'')]||[]).map(normIngredient);
+ const scopeMatches=value=>{
+   const n=normIngredient(value||'');
+   if(!n)return true;
+   if(selectedVariant&&(n===selectedVariant||selectedVariant.includes(n)||n.includes(selectedVariant)))return true;
+   if(selectedName&&(n===selectedName||selectedName.includes(n)||n.includes(selectedName)))return true;
+   if(scopeAliases.includes(n))return true;
+   return false;
+ };
+
  const blocks=[];
+ let heldNarrowRows=0;
+
  standards.forEach(({db,standard})=>{
+   const sourceLabel=esc(ruleDbLabel(db));
+   const standardKey=esc(standard.key||'');
+   const standardName=esc(standard.name||product.name);
+
    const compositionRows=chapterRuleDisplayRows(standard).filter(r=>/composition/i.test(String(r.section||'')));
-   const nutrientRows=Array.isArray(standard?.nutrient_requirements)?standard.nutrient_requirements:[];
+   const applicableComposition=compositionRows.filter(r=>{
+     const scope=r.rule?.variant||r.rule?.product||'';
+     if(!scope)return true;
+     const ok=scopeMatches(scope);
+     if(!ok)heldNarrowRows++;
+     return ok;
+   });
+
+   if(applicableComposition.length){
+     blocks.push(
+       '<div class="notice oknote"><b>FSSAI product composition requirements · '+standardKey+'</b><br><small>'+standardName+' · '+sourceLabel+'</small></div>'
+       +'<div class="tablewrap"><table><thead><tr><th>Parameter</th><th>Requirement</th><th>Basis / condition</th></tr></thead><tbody>'
+       +applicableComposition.map(r=>'<tr><td><b>'+esc(r.parameter)+'</b></td><td>'+esc(r.requirement)+'</td><td>'+esc(r.condition||r.rule?.variant||r.rule?.product||r.section||'')+'</td></tr>').join('')
+       +'</tbody></table></div>'
+     );
+   }
+
    const variants=Array.isArray(standard?.variants)?standard.variants:[];
    const variantReqs=Array.isArray(standard?.variant_requirements)?standard.variant_requirements:[];
-
-   if(compositionRows.length){
-     blocks.push(
-       '<div class="notice oknote"><b>FSSAI product composition requirements · '+esc(standard.key||'')+'</b><br><small>'+esc(standard.name||product.name)+' · '+esc(ruleDbLabel(db))+'</small></div>'
-       +'<div class="tablewrap"><table><thead><tr><th>Parameter</th><th>Requirement</th><th>Basis / condition</th></tr></thead><tbody>'
-       +compositionRows.map(r=>'<tr><td><b>'+esc(r.parameter)+'</b></td><td>'+esc(r.requirement)+'</td><td>'+esc(r.condition||r.section||'')+'</td></tr>').join('')
-       +'</tbody></table></div>'
-     );
-   }
-
    if(variants.length&&variantReqs.length){
-     blocks.push(
-       '<div class="notice"><b>FSSAI regulated variants:</b> the exact finished-product variant determines which composition column applies.</div>'
-       +'<div class="tablewrap"><table><thead><tr><th>Requirement</th>'+variants.map(v=>'<th>'+esc(v)+'</th>').join('')+'</tr></thead><tbody>'
-       +variantReqs.map(r=>'<tr><td><b>'+esc(r.parameter||'Requirement')+'</b>'+(r.unit?'<br><small>'+esc(r.unit)+'</small>':'')+'</td>'
-         +variants.map(v=>'<td>'+esc(String(r.values?.[v]??'—'))+'</td>').join('')+'</tr>').join('')
-       +'</tbody></table></div>'
-     );
+     const matchedVariants=variants.filter(v=>scopeMatches(v));
+     if(matchedVariants.length===1){
+       const variant=matchedVariants[0];
+       blocks.push(
+         '<div class="notice oknote"><b>Exact regulated variant:</b> '+esc(variant)+'. Only this variant column is applied in Standard Lookup.</div>'
+         +'<div class="tablewrap"><table><thead><tr><th>Requirement</th><th>'+esc(variant)+'</th></tr></thead><tbody>'
+         +variantReqs.map(r=>'<tr><td><b>'+esc(r.parameter||'Requirement')+'</b>'+(r.condition?'<br><small>'+esc(r.condition)+'</small>':'')+(r.unit?'<br><small>'+esc(r.unit)+'</small>':'')+'</td>'
+           +'<td><b>'+esc(String(r.values?.[variant]??'—'))+'</b></td></tr>').join('')
+         +'</tbody></table></div>'
+       );
+       heldNarrowRows+=Math.max(0,variants.length-1)*variantReqs.length;
+     }else{
+       heldNarrowRows+=variants.length*variantReqs.length;
+       blocks.push(
+         '<div class="notice"><b>Variant-specific composition exists under '+standardKey+', but PMSV has not established one exact variant for '+esc(product.name)+'.</b><br>'
+         +'Those variant columns are intentionally <b>not auto-applied</b> in this Nutrition view. Open the full Product Standard page to inspect them and choose the actual finished-product variant where required.</div>'
+       );
+     }
    }
 
+   const nutrientRows=(Array.isArray(standard?.nutrient_requirements)?standard.nutrient_requirements:[]).filter(r=>{
+     const scope=r?.variant||r?.product||'';
+     if(!scope)return true;
+     const ok=scopeMatches(scope);
+     if(!ok)heldNarrowRows++;
+     return ok;
+   });
    if(nutrientRows.length){
      blocks.push(
        '<div class="tablewrap"><table><thead><tr><th>FSSAI nutrient requirement</th><th>Per 100 g</th><th>Per 100 kcal</th></tr></thead><tbody>'
@@ -3000,12 +3049,20 @@ function standardLookupRegulatoryCompositionHtml(){
    }
 
    const standardRules=Array.isArray(standard?.rules)?standard.rules:[];
-   if(standardRules.length){
+   const applicableRules=standardRules.filter(r=>{
+     if(typeof r==='string')return true;
+     const scope=r?.product||r?.variant||'';
+     if(!scope)return true;
+     const ok=scopeMatches(scope);
+     if(!ok)heldNarrowRows++;
+     return ok;
+   });
+   if(applicableRules.length){
      blocks.push(
-       '<div class="notice"><b>Other FSSAI standard conditions · '+esc(standard.key||'')+':</b><br>'
-       +standardRules.map(r=>{
+       '<div class="notice"><b>Other applicable FSSAI standard conditions · '+standardKey+':</b><br>'
+       +applicableRules.map(r=>{
           if(typeof r==='string')return '• '+esc(r);
-          const subject=r.product?'<b>'+esc(r.product)+'</b> · ':'';
+          const subject=(r.product||r.variant)?'<b>'+esc(r.product||r.variant)+'</b> · ':'';
           const parameter=esc(r.parameter||r.type||'Requirement');
           const bits=[];
           if(r.min_pct!==undefined)bits.push('Min '+esc(String(r.min_pct))+'%');
@@ -3015,14 +3072,20 @@ function standardLookupRegulatoryCompositionHtml(){
           const requirement=bits.length?bits.join(' · '):esc(r.text||r.requirement||'As specified');
           return '• '+subject+'<b>'+parameter+'</b> — '+requirement+(r.basis?' <small>('+esc(r.basis)+')</small>':'');
         }).join('<br>')
-       +'<br><small>These rows are shown as product-standard conditions. A condition naming a narrower variant is not automatically applied to every product under the parent standard.</small></div>'
+       +'</div>'
      );
    }
  });
+
+ const heldNotice=heldNarrowRows
+   ? '<div class="notice"><b>Fail-closed variant protection:</b> '+heldNarrowRows+' narrower composition/variant row'+(heldNarrowRows===1?' is':'s are')+' not auto-applied because they belong to another named variant or the exact variant is not established.</div>'
+   : '';
+
  return blocks.length
-   ? '<div class="notice oknote"><b>Layer 1 — FSSAI regulatory composition.</b> These are legal identity/composition limits from the selected product standard. They are <b>not</b> the same as a nutrition-facts panel.</div>'+blocks.join('')
-   : '<div class="notice"><b>Layer 1 — FSSAI regulatory composition:</b> the selected standard is loaded, but no machine-readable composition/nutrient table is encoded for this exact product in the current PMSV rule file. This is a data gap, not a request for ingredient entry.</div>';
+   ? '<div class="notice oknote"><b>Layer 1 — FSSAI regulatory composition.</b> These are legal identity/composition limits applicable to the selected product or its explicitly verified sub-route. They are <b>not</b> the same as a nutrition-facts panel.</div>'+blocks.join('')+heldNotice
+   : '<div class="notice"><b>Layer 1 — FSSAI regulatory composition:</b> the selected standard is loaded, but no machine-readable composition/nutrient row is safely applicable to this exact product. This is a data/variant result, not a request for ingredient entry.</div>'+heldNotice;
 }
+
 function renderStandardLookupNutritionReference(){
  const card=document.getElementById('nutritionStandardReferenceCard');
  const regulatory=document.getElementById('nutritionStandardRegulatory');
@@ -3051,10 +3114,12 @@ function renderStandardLookupNutritionReference(){
  const match=standardLookupNutritionProfile();
  if(!match){
    status.className='notice';
-   status.innerHTML='<b>No exact ICMR-NIN IFCT 2017 nutrition profile is available for '+esc(productName)+'.</b><br>'
-     +'No ingredient entry is required to inspect this standardized product. However, PMSV will <b>not estimate nutrition from a related food, a different processing form/variety, or another database</b>. '
-     +'The FSSAI product standard remains available separately; enter a formulation only if you want a calculated nutrition label for a specific recipe/product.';
-   table.innerHTML='<div class="notice oknote"><b>What Standard Lookup still provides without ingredients:</b> FSSAI product standard, permitted ingredients/additives, contaminants and residues, microbiology, processing aids, packaging, fortification applicability, labelling and claims rules.</div>';
+   status.innerHTML='<b>Layer 2 — no exact ICMR-NIN IFCT 2017 nutrition profile is available for '+esc(productName)+'.</b><br>'
+     +'No ingredient entry is required to establish or inspect this standardized product. PMSV will <b>not estimate nutrition from a related food, a different processing form/variety, or another database</b>. '
+     +'The applicable FSSAI legal composition/identity conditions are shown above; enter a formulation only if you want a recipe-specific nutrition calculation.';
+   table.innerHTML='<div class="notice oknote"><b>Standardized product ≠ one fixed nutrition label.</b><br>'
+     +'The FSSAI standard controls legal identity and composition. Actual energy, carbohydrate, sugars, fat, protein, sodium and other declared nutrition values may vary within that standard depending on the finished recipe and processing. '
+     +'PMSV therefore shows an IFCT reference only for an exact official food identity and otherwise leaves the nutrition value unestimated.</div>';
    return;
  }
 
