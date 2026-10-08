@@ -1232,7 +1232,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08.1';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08.2';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -1298,6 +1298,10 @@ function openTab(id,{updateHash=true,save=true}={}){
     id='formulation';
     document.getElementById('formulation')?.classList.remove('hidden');
     tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab==='formulation'));
+  }
+
+  if(standardLookupModeActive()&&['standard','ingredients','contaminants','micro','process','processing','packaging','fortification','quality','claims'].includes(id)){
+    setTimeout(()=>{try{renderSelectedProductRegulatoryStack()}catch(e){}},0);
   }
 
   if(id==='summary'){
@@ -2153,8 +2157,10 @@ function currentChapterRuleKeys(){
  const profile=currentProductProfile();
  return new Set([
    product?.rule_key,
+   product?.fssr,
    ...(Array.isArray(product?.rule_keys)?product.rule_keys:[]),
    profile?.rule_key,
+   profile?.fssr,
    ...(Array.isArray(profile?.rule_keys)?profile.rule_keys:[]),
    ...(Array.isArray(profile?.linked_rule_keys)?profile.linked_rule_keys:[])
  ].map(x=>String(x||'').trim()).filter(x=>/^\d+(?:\.\d+)*(?:\([^)]*\))?(?:[a-z])?$/.test(x)));
@@ -3264,7 +3270,7 @@ function renderFormula(){
    const chk=checkUsageAgainstRule(x,q);
    const usage='<b>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+'</b><br><small>'+fmt(u.percent,4)+'% w/w · '+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small>'+(chk?'<br><small class="'+(chk.pass===false?'status-bad':chk.pass===true?'status-good':'status-warn')+'"><b>Quantity:</b> '+(chk.pass===false?'Above FSSAI limit':chk.pass===true?'Within FSSAI limit':chk.specialBasis&&!(chk.basisKg>0)?'Cannot determine — no fat/oil ingredient entered':chk.specialBasis?'Fat/oil basis check required':'Quantity check required')+(chk.specialBasis&&chk.basisKg>0?'<br>'+fmt(chk.value,3)+' mg/kg fat/oil · limit '+fmt(chk.limit,3)+' mg/kg':'')+'</small>':'<br><small><b>Quantity:</b> No specific numerical maximum in loaded standard</small>');
    return '<tr><td><b>'+esc(q.name)+'</b></td><td>'+usage+'</td><td>'+esc(q.qualification)+(q.appendix?'<br><small>Appendix A limit: <b>'+esc(q.appendix.limit)+'</b></small>':'')+'</td><td><span class="clause">'+esc(q.clause)+'</span></td><td>'+esc(q.impact)+'</td></tr>';
- }).join('') || '<tr><td colspan="5">'+(selectedProduct||selectedProfile?'No formulation entered — product-level standards remain available below.':(selectedName?'<b>Standard lookup mode.</b> Product-level labelling requirements are available; formulation-triggered declarations are not evaluated.':'Enter formulation ingredients first.'))+'</td></tr>';
+ }).join('') || '<tr><td colspan="5">'+(selectedProduct||selectedProfile?'Standard Lookup mode — no formulation is required. Product-standard ingredient provisions and Appendix A permissions are shown below.':(selectedName?'<b>Standard lookup mode.</b> Product-level labelling requirements are available; formulation-triggered declarations are not evaluated.':'Enter formulation ingredients first.'))+'</td></tr>';
 
  const hasUnresolved=qs.some(q=>q.route==='unresolved');
  const hasProp=qs.some(q=>q.route==='proprietary');
@@ -4378,35 +4384,31 @@ function showSelectedCatalogProduct(p){
  const appendixStatus=appendixFcsStatusLabel(p);
  details.innerHTML='<div class="grid2">'
   +'<div class="item"><b>'+esc(p.name)+'</b><small>FoSCoS listing/category code: '+esc(p.fcs||p.subcategory||p.category||'—')+'<br>Appendix A FCS: '+esc(appendixFcs||'Not mapped')+(appendixStatus?'<br><span class="'+(appendixFcs?'status-good':'status-warn')+'">'+esc(appendixStatus)+'</span>':'')+'<br>FSSR: '+esc(p.fssr||'Not shown in loaded catalogue row')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FoSCoS hierarchy mapping pending official verification</span>':'')+'</small></div>'
-  +'<div class="item"><b>PMSV profile status</b><small>'+(detailed?'<span class="status-good">Detailed rule profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base rule profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small></div>'
+  +'<div class="item"><b>PMSV profile status</b><small>'+(detailed?'<span class="status-good">Detailed rule profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base rule profile loaded</span>':'<span class="status-warn">Catalogue standard available · enhanced profile not loaded</span>')+'</small></div>'
   +'</div>'
   +(p.appendix_fcs_status==='foscos_special_category_outside_appendix_a_fcs'?'<div class="notice"><b>Appendix A route:</b> '+esc(p.appendix_fcs_note||'This FoSCoS special category is outside Appendix A FCS 1–16; PMSV does not infer an additive FCS.')+'</div>':'')
   +(profile?.chapter_rule_route_note?'<div class="notice '+(profile.chapter_rule_route_status==='specific_variant_table_pending'?'':'oknote')+'"><b>Chapter routing:</b> '+esc(profile.chapter_rule_route_note)+(Array.isArray(profile.linked_rule_keys)&&profile.linked_rule_keys.length?'<br><small>Linked rule key(s): '+profile.linked_rule_keys.map(esc).join(' + ')+'</small>':'')+'</div>':'')
   +(profile&&!detailed?'<div class="notice"><b>'+(chapterLoaded?'Chapter profile loaded':'Base profile ready')+':</b> '+(chapterLoaded?'The product has been mapped to its applicable FSSAI chapter standard and structured chapter-rule data is loaded. Machine validation of every product-specific clause and linked Appendix rule is still being completed before full formulation compliance is enabled.':'Product identity, Appendix FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.')+'</div>':'');
- if(profile){
-   actions.innerHTML='<button class="btn" type="button" id="viewSelectedProduct">View standard & applicable requirements →</button><button class="btn-secondary" type="button" id="startSelectedProduct">Use this product with formulation →</button>';
-   const activate=()=>{
-     selectedProductId=profile.id;
-     proprietaryConfirmedStandardId=p.id;
-     try{sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId)}catch(e){}
-     applyProprietaryStandardFcs(p);
-     applyProductGate();
-     renderFormula();
-     renderSelectedProductRegulatoryStack();
-   };
-   document.getElementById('viewSelectedProduct')?.addEventListener('click',()=>{
-     activate();
-     openTab('standard',{updateHash:true,save:true});
-     window.scrollTo({top:0,behavior:'smooth'});
-   });
-   document.getElementById('startSelectedProduct')?.addEventListener('click',()=>{
-     activate();
-     openTab('formulation',{updateHash:true,save:true});
-     window.scrollTo({top:0,behavior:'smooth'});
-   });
- }else{
-   actions.innerHTML='<span class="muted">No PMSV profile is available for this catalogue row.</span>';
- }
+ actions.innerHTML='<button class="btn" type="button" id="viewSelectedProduct">View standard & applicable requirements →</button><button class="btn-secondary" type="button" id="startSelectedProduct">Use this product with formulation →</button>';
+ const activate=()=>{
+   selectedProductId=profile?.id||p.id;
+   proprietaryConfirmedStandardId=p.id;
+   try{sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId)}catch(e){}
+   applyProprietaryStandardFcs(p);
+   applyProductGate();
+   renderFormula();
+   renderSelectedProductRegulatoryStack();
+ };
+ document.getElementById('viewSelectedProduct')?.addEventListener('click',()=>{
+   activate();
+   openTab('standard',{updateHash:true,save:true});
+   window.scrollTo({top:0,behavior:'smooth'});
+ });
+ document.getElementById('startSelectedProduct')?.addEventListener('click',()=>{
+   activate();
+   openTab('formulation',{updateHash:true,save:true});
+   window.scrollTo({top:0,behavior:'smooth'});
+ });
 }
 function renderProductSearch(){
  const box=document.getElementById('productSearchResults');
@@ -5702,7 +5704,17 @@ function chapterStandardIngredientSections(standard){
 }
 function renderLegacyProductScopePages(){
  const product=selectedProductForFortification();
- const profile=currentProductProfile();
+ const storedProfile=currentProductProfile();
+ const profile=storedProfile||(product?{
+   id:product.id,
+   name:product.name,
+   display_name:product.name,
+   fssr:product.fssr||'',
+   rule_key:product.rule_key||product.fssr||'',
+   rule_keys:Array.isArray(product.rule_keys)?product.rule_keys:[],
+   linked_rule_keys:[],
+   status:'catalog_standard_lookup'
+ }:null);
  const caffeinated=caffeinatedPrototypeScopeActive();
  const name=product?.name||profile?.display_name||profile?.name||'Selected product';
  const fssr=product?.fssr||profile?.fssr||profile?.rule_key||'Not shown in loaded product profile';
@@ -6029,10 +6041,11 @@ function applyProductGate(){
    load.classList.toggle('hidden',!exampleAllowed);
  }
  if(gate){
-   gate.className=profile?'notice oknote':'notice';
-   gate.innerHTML=profile
-     ? '<b>Confirmed product:</b> '+esc(product?.name||profile.display_name||profile.name||'Selected product')
-       +(profile.fssr?' · FSSR '+esc(profile.fssr):'')
+   const selected=product||profile;
+   gate.className=selected?'notice oknote':'notice';
+   gate.innerHTML=selected
+     ? '<b>Confirmed product:</b> '+esc(product?.name||profile?.display_name||profile?.name||'Selected product')
+       +((product?.fssr||profile?.fssr)?' · FSSR '+esc(product?.fssr||profile?.fssr):'')
        +(formulationIngredients.length
          ? '.<br><small>Formulation Assessment mode: re-run the route decision after any formulation change.</small>'
          : '.<br><small><b>Standard Lookup mode:</b> no formulation is required to inspect this product’s standard and product-level regulatory requirements.</small>')
