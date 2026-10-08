@@ -192,6 +192,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 <div id="proprietaryStandardSuggestion" class="notice" style="margin-top:10px"><b>Standard/category confirmation required.</b> Enter the formulation or optional generic product name.</div>
 <div class="flow-actions">
+  <button class="btn-secondary" type="button" id="findNearestStandard">Find nearest standard</button>
   <button class="btn" type="button" id="confirmProprietaryStandard" disabled>Confirm this standard/category</button>
 </div>
 <div id="standardLookupPanel" class="hidden" style="margin-top:12px"></div>
@@ -1224,6 +1225,7 @@ let regulatoryDb=null;
 let ingredientCatalog=[];
 let nutritionDb=null;
 let productMasterDb=null;
+let standardSearchIndexDb=null;
 let appendixCoreDb=null;
 let contaminantsDb=null;
 let appendixCDb=null;
@@ -1234,7 +1236,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-nearest-standard-v12';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-nearest-standard-v13';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -3239,6 +3241,7 @@ function addIngredient(){
 }
 function renderFormula(){
  applyProductGate();
+ if((standardSearchIndexDb||productMasterDb)&&proprietaryRoutingSearchBasis().raw)ensureNearestStandardSuggestion(false);
  renderStandardLookupModeUi();
  const list=document.getElementById('ingredientList');
  const count=document.getElementById('ingredientCount');
@@ -4075,7 +4078,8 @@ function appendixFcsStatusLabel(record){
  return '';
 }
 function productCatalog(){
- return productMasterDb&&Array.isArray(productMasterDb.catalog_products)?productMasterDb.catalog_products:[];
+ if(productMasterDb&&Array.isArray(productMasterDb.catalog_products)&&productMasterDb.catalog_products.length)return productMasterDb.catalog_products;
+ return standardSearchIndexDb&&Array.isArray(standardSearchIndexDb.products)?standardSearchIndexDb.products:[];
 }
 function productProfiles(){
  return productMasterDb&&Array.isArray(productMasterDb.profiles)?productMasterDb.profiles:[];
@@ -4749,13 +4753,19 @@ function proprietaryStandardCandidatesFromBasis(basis){
 function nearestStandardEngineAudit(){
  const catalog=productCatalog();
  if(!catalog.length)return {tested:0,passed:0,failed:[]};
+ const exactNames=['Rice','Honey','Carbonated Water','Mineral water','Packaged Drinking Water (other than Mineral Water)'];
+ const samples=[];
+ exactNames.forEach(name=>{
+   const p=catalog.find(x=>normIngredient(x?.name||'')===normIngredient(name));
+   if(p)samples.push(p);
+ });
  const byCategory=new Map();
  catalog.forEach(p=>{
    if(!String(p?.name||'').trim())return;
    const key=String(p.category||'unknown');
    if(!byCategory.has(key)&&hasRealFssrStandard(p))byCategory.set(key,p);
  });
- const samples=[...byCategory.values()].slice(0,12);
+ [...byCategory.values()].forEach(p=>{if(!samples.some(x=>x.id===p.id)&&samples.length<15)samples.push(p);});
  const failed=[];
  let passed=0;
  samples.forEach(p=>{
@@ -4765,7 +4775,6 @@ function nearestStandardEngineAudit(){
  });
  return {tested:samples.length,passed,failed};
 }
-
 function mirrorNearestStandardPreview(note){
  const preview=document.getElementById('nearestStandardInlinePreview');
  if(!preview)return;
@@ -4807,7 +4816,7 @@ function renderProprietaryStandardSuggestion(){
    select.disabled=true;
    confirm.disabled=true;
    note.className='notice';
-   note.innerHTML='<b>Finding the nearest FSSAI standard…</b><br><small>The product catalogue is still loading. PMSV will retry automatically when it is ready. Keep the product/formulation entry as it is.</small>';
+   note.innerHTML='<b>Finding the nearest FSSAI standard…</b><br><small>The fast standard index or full product catalogue is still loading. PMSV retries automatically; you can also tap “Find nearest standard”. Your entry is retained.</small>';
    mirrorNearestStandardPreview(note);
    return;
  }
@@ -5813,6 +5822,7 @@ document.getElementById('proprietaryStandardSelect')?.addEventListener('change',
  resetProprietaryOutcome();
  renderProprietaryFormula();
 });
+document.getElementById('findNearestStandard')?.addEventListener('click',()=>ensureNearestStandardSuggestion(true));
 document.getElementById('confirmProprietaryStandard')?.addEventListener('click',confirmProprietaryStandard);
 document.getElementById('proprietaryCategorySelect')?.addEventListener('change',()=>{populateProprietarySubcategories();resetProprietaryOutcome();renderProprietaryIngredientAutocomplete();});
 document.getElementById('proprietarySubcategorySelect')?.addEventListener('change',()=>{populateProprietarySpecificFcs();resetProprietaryOutcome();renderProprietaryIngredientAutocomplete();});
@@ -6444,9 +6454,20 @@ function renderProductMaster(){
  renderStandardLookupDashboard();
  renderProcessingProductScope();
 }
+async function loadStandardSearchIndex(){
+ try{
+   const res=await fetch('./data/standard-search-index-v1.json?v=1',{cache:'reload'});
+   if(!res.ok)throw new Error('HTTP '+res.status);
+   standardSearchIndexDb=await res.json();
+ }catch(e){
+   standardSearchIndexDb=null;
+ }
+ ensureNearestStandardSuggestion(true);
+ renderProprietaryStandardSuggestion();
+}
 async function loadProductMaster(){
  try{
-   const res=await fetch('./data/product-master-v1.json?v=262',{cache:'reload'});
+   const res=await fetch('./data/product-master-v1.json?v=263',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||''}catch(e){}
@@ -8575,6 +8596,7 @@ document.getElementById('ingredientBasis')?.addEventListener('change',()=>{
 document.addEventListener('click',event=>{
  if(!event.target.closest('.autocomplete-wrap'))document.getElementById('ingredientAutocomplete')?.classList.add('hidden');
 });
+loadStandardSearchIndex();
 loadProductMaster();
 loadFpc18Db();
 loadAppendixCore();
