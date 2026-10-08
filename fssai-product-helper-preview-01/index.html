@@ -271,7 +271,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <section id="standard" class="view hidden">
 <div id="selectedProductStandardContent"></div>
-<div id="caffeinatedStandardContent">
+<div id="caffeinatedStandardContent" class="hidden">
 <div class="card">
 <div class="searchbox"><span>🔎</span><input value="Carbonated Caffeinated Beverage" aria-label="Product search" readonly></div>
 <div class="hero"><div><span class="pill">BEVERAGES</span><div class="product-title">Carbonated Caffeinated Beverage</div><div class="muted">Prototype product showing the complete regulatory stack: product standard, applicable food additives, processing aids, microbiology, contaminants/residues and special labelling.</div></div><span class="pill">FCS 14.1.4.1</span></div>
@@ -307,7 +307,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 
 <section id="ingredients" class="view hidden">
 <div id="selectedProductIngredientsContent"></div>
-<div id="caffeinatedIngredientsContent">
+<div id="caffeinatedIngredientsContent" class="hidden">
 <div class="card">
 <div class="section-title"><h2>First: what does “500 ml per day” mean?</h2><span>Important before reading the limits</span></div>
 <div class="notice oknote"><b>500 ml means the total quantity of the finished Caffeinated Beverage consumed in one day.</b> It does <b>not</b> mean 500 ml of taurine, caffeine or any other ingredient. FSSAI requires the label declaration <b>“consume not more than 500 ml per day”</b> for the caffeinated beverage.</div>
@@ -1238,7 +1238,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-state-v19';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-assessment-product-v20';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -1348,7 +1348,11 @@ async function pmsvDirectProductNameNearestStandard(value){
    confirm.disabled=!select.value;
    if(best.score>0){
      setAssessmentProductFromCatalog(best.p,{confirmed:false});
-     try{renderSelectedProductRegulatoryStack();}catch(e){}
+     try{
+       renderSelectedProductRegulatoryStack();
+       renderProductContaminants();
+       renderLegacyProductScopePages();
+     }catch(e){}
    }
 
    if(best.score>0){
@@ -1413,28 +1417,40 @@ const CHAPTER_RULE_URLS=[
 ];
 let selectedProductId='';
 const CONFIRMED_STANDARD_KEY='pmsv_fssai_confirmed_standard';
+const ASSESSMENT_PRODUCT_KEY='pmsv_fssai_assessment_product';
 
 function currentAssessmentCatalogProduct(){
  const ids=[];
  const add=id=>{id=String(id||'').trim();if(id&&!ids.includes(id))ids.push(id);};
- add(proprietaryConfirmedStandardId);
+ try{add(sessionStorage.getItem(ASSESSMENT_PRODUCT_KEY)||'');}catch(e){}
  add(document.getElementById('proprietaryStandardSelect')?.value||'');
+ add(proprietaryConfirmedStandardId);
  try{add(sessionStorage.getItem(CONFIRMED_STANDARD_KEY)||'');}catch(e){}
  add(selectedProductId);
  try{add(sessionStorage.getItem('pmsv_fssai_selected_product')||'');}catch(e){}
+ const catalog=productCatalog();
  for(const id of ids){
-   const p=productCatalog().find(x=>x.id===id||x.profile_id===id);
+   const p=catalog.find(x=>x.id===id||x.profile_id===id);
    if(p)return p;
+ }
+ const typed=normIngredient(document.getElementById('proprietaryProductName')?.value||'');
+ if(typed){
+   const exact=catalog.find(x=>normIngredient(x?.name||'')===typed);
+   if(exact)return exact;
  }
  return null;
 }
 function setAssessmentProductFromCatalog(p,{confirmed=false}={}){
  if(!p)return;
- selectedProductId=p.profile_id||p.id;
- try{sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId);}catch(e){}
+ const catalogId=String(p.id||'').trim();
+ selectedProductId=p.profile_id||catalogId;
+ try{
+   if(catalogId)sessionStorage.setItem(ASSESSMENT_PRODUCT_KEY,catalogId);
+   sessionStorage.setItem('pmsv_fssai_selected_product',selectedProductId);
+ }catch(e){}
  if(confirmed){
-   proprietaryConfirmedStandardId=p.id;
-   try{sessionStorage.setItem(CONFIRMED_STANDARD_KEY,p.id);}catch(e){}
+   proprietaryConfirmedStandardId=catalogId;
+   try{sessionStorage.setItem(CONFIRMED_STANDARD_KEY,catalogId);}catch(e){}
  }
 }
 
@@ -1464,6 +1480,7 @@ if(isFreshPageNavigation()){
      'pmsv_fssai_product_helper_processes',
      'pmsv_fssai_formula_density',
      'pmsv_fssai_selected_product',
+     ASSESSMENT_PRODUCT_KEY,
      CONFIRMED_STANDARD_KEY,
      'pmsv_fssai_label_article_qualifiers',
      'pmsv_fssai_product_standard_tests'
@@ -2337,11 +2354,13 @@ try{
 
 function normIngredient(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,' ')}
 function caffeinatedPrototypeScopeActive(){
- const product=selectedProductForFortification();
- const profile=currentProductProfile();
- const id=normIngredient(profile?.id||selectedProductId||product?.profile_id||product?.id||'');
- const name=normIngredient(product?.name||profile?.name||'');
- return id==='carbonated-caffeinated-beverage'||name==='caffeinated beverage'||name==='carbonated caffeinated beverage'||name.includes('caffeinated beverage');
+ const product=currentAssessmentCatalogProduct();
+ if(!product)return false;
+ const id=normIngredient(product.id||product.profile_id||'');
+ const name=normIngredient(product.name||'');
+ return id==='carbonated-caffeinated-beverage'
+   || name==='caffeinated beverage'
+   || name==='carbonated caffeinated beverage';
 }
 function currentSelectedProductName(){
  const product=selectedProductForFortification();
@@ -6000,7 +6019,10 @@ function ensureNearestStandardSuggestion(force=false){
 const proprietaryProductNameInput=document.getElementById('proprietaryProductName');
 proprietaryProductNameInput?.addEventListener('input',()=>{
  proprietaryConfirmedStandardId='';
- try{sessionStorage.removeItem(CONFIRMED_STANDARD_KEY);}catch(e){}
+ try{
+   sessionStorage.removeItem(CONFIRMED_STANDARD_KEY);
+   sessionStorage.removeItem(ASSESSMENT_PRODUCT_KEY);
+ }catch(e){}
 });
 ['input','change','keyup','blur','focus','compositionend'].forEach(type=>proprietaryProductNameInput?.addEventListener(type,()=>ensureNearestStandardSuggestion(type!=='focus')));
 proprietaryProductNameInput?.addEventListener('input',()=>setTimeout(()=>ensureNearestStandardSuggestion(true),0));
@@ -6056,6 +6078,12 @@ document.getElementById('clearProprietaryRoute')?.addEventListener('click',()=>{
  const n=document.getElementById('proprietaryProductName');if(n)n.value='';
  const e=document.getElementById('proprietaryExcludedClass');if(e)e.value='';
  proprietaryConfirmedStandardId='';
+ selectedProductId='';
+ try{
+   sessionStorage.removeItem(ASSESSMENT_PRODUCT_KEY);
+   sessionStorage.removeItem(CONFIRMED_STANDARD_KEY);
+   sessionStorage.removeItem('pmsv_fssai_selected_product');
+ }catch(e){}
  const std=document.getElementById('proprietaryStandardSelect');if(std){std.value='';std.disabled=true;}
  const cat=document.getElementById('proprietaryCategorySelect');if(cat)cat.value='';
  populateProprietarySubcategories();
@@ -6676,7 +6704,8 @@ async function loadProductMaster(){
    if(!res.ok)throw new Error('HTTP '+res.status);
    productMasterDb=await res.json();
    try{
-     selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||'';
+     const assessmentId=sessionStorage.getItem(ASSESSMENT_PRODUCT_KEY)||'';
+     selectedProductId=sessionStorage.getItem('pmsv_fssai_selected_product')||assessmentId||selectedProductId||'';
      proprietaryConfirmedStandardId=sessionStorage.getItem(CONFIRMED_STANDARD_KEY)||proprietaryConfirmedStandardId||'';
    }catch(e){}
  }catch(e){
