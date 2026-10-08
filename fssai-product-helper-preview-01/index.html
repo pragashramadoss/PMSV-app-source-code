@@ -569,8 +569,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="section-title"><h2>Contaminants, toxins & residues</h2><span>FSSAI Version IX · product-driven</span></div>
 <div class="notice oknote"><b>Current regulatory basis:</b> Food Safety and Standards (Contaminants, Toxins and Residues) Regulations, 2011 — consolidated <b>Version IX (03.02.2026)</b>. Contaminant limits are separate from Appendix A food-additive permissions.</div>
 <div class="notice"><b>Fail-closed matching:</b> PMSV automatically applies only an exact loaded product/FSSR contaminant profile plus rules that FSSAI explicitly states apply to <b>all foods</b>. “Foods not specified” limits are stored as reference defaults but are <b>not automatically applied</b> until the full current table confirms that no more-specific row governs the selected product.</div>
-<div class="checker-grid">
-  <div class="field">
+<div id="contaminantQualifierSummary" class="notice hidden"></div>
+<div class="checker-grid" id="contaminantQualifierGrid">
+  <div class="field" id="contaminantPackageFormatField">
     <label>Package format</label>
     <select id="contaminantPackageFormat">
       <option value="">Not specified</option>
@@ -579,7 +580,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     </select>
     <small>Required before PMSV can evaluate packaging-dependent Tin provisions.</small>
   </div>
-  <div class="field">
+  <div class="field" id="contaminantContainerMaterialField">
     <label>Container material</label>
     <select id="contaminantContainerMaterial">
       <option value="">Not specified</option>
@@ -588,7 +589,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     </select>
     <small>Tinplate and other-container limits are not interchangeable.</small>
   </div>
-  <div class="field">
+  <div class="field" id="contaminantTinProductIdentityField">
     <label>Exact Tin product identity</label>
     <select id="contaminantTinProductIdentity">
       <option value="">Not specified / not one of the named meat rows</option>
@@ -600,33 +601,33 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     </select>
     <small>Select this only when the finished product is exactly the named FSSAI Tin article. PMSV never infers it from a broader meat category.</small>
   </div>
-  <div class="field">
+  <div class="field" id="contaminantTinVariantField">
     <label>Exact regulated variant for Tin</label>
     <select id="contaminantTinVariant">
       <option value="">Not applicable / not specified</option>
     </select>
     <small>PMSV loads only verified FoSCoS variants relevant to the selected product. Some variants also require an exact package format before a Tin row applies.</small>
   </div>
-  <div class="field">
+  <div class="field" id="contaminantMilkLeadSubtypeField">
     <label>Exact milk-powder subtype for Lead</label>
     <select id="contaminantMilkLeadSubtype">
       <option value="">Not applicable / not specified</option>
     </select>
     <small>Enabled only for the combined FoSCoS Milk Powders and Cream Powder product. Cream Powder is deliberately not offered because this Lead rule is for milks.</small>
   </div>
-  <div class="field">
+  <div class="field" id="contaminantMetalSubtypeField">
     <label>Exact product subtype for metal rule</label>
     <select id="contaminantMetalSubtype">
       <option value="">Not applicable / not specified</option>
     </select>
     <small>Shown only where a current FSSAI metal article applies to specific FoSCoS/FSSAI subtypes rather than the whole standardized product.</small>
   </div>
-  <div class="field">
+  <div class="field" id="contaminantSulphatedAshField">
     <label>Sulphated ash (%) for conditional Lead rule</label>
     <input id="contaminantSulphatedAsh" type="number" min="0" step="0.001" placeholder="Enter sulphated ash %">
     <small>Enabled only for verified sugar/invert-syrup identities whose current FSSAI Lead article is conditional on sulphated ash. PMSV never assumes this value.</small>
   </div>
-  <div class="field">
+  <div class="field" id="contaminantMilkConcentrationFactorField">
     <label>Milk concentration factor for Lead</label>
     <input id="contaminantMilkConcentrationFactor" type="number" min="0.000001" step="0.01" placeholder="Enter factor">
     <small>Used only when FSSAI requires the 0.02 mg/kg milk Lead limit to be adjusted for a partially or wholly dehydrated milk. PMSV calculates 0.02 × factor and does not guess the factor.</small>
@@ -1236,7 +1237,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-nearest-standard-v16';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-contaminants-product-driven-v17';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -7439,6 +7440,73 @@ function exactPesticideMrlRowsForProduct(p){
    seen.add(key);return true;
  });
 }
+function contaminantQualifierNeeds(p){
+ const namedTin=tinNamedIdentityEligible(p);
+ const packageRules=(!p||!Array.isArray(contaminantsDb?.product_package_conditional_tin_rules_v9))
+   ? []
+   : contaminantsDb.product_package_conditional_tin_rules_v9.filter(x=>x.catalog_id===p.id);
+ const variantRules=tinVariantRulesForProduct(p);
+ const milkSubtype=dehydratedMilkSubtypeConfigsForProduct(p);
+ const directMilk=!!(p&&Array.isArray(contaminantsDb?.dehydrated_milk_conditional_lead_rules_v9)
+   &&contaminantsDb.dehydrated_milk_conditional_lead_rules_v9.some(x=>x.catalog_id===p.id));
+ const metalSubtype=metalSubtypeRulesForProduct(p);
+ const ash=sulphatedAshRulesForProduct(p);
+ const packageFormat=namedTin
+   || packageRules.some(x=>!!x.requires_packaging_format)
+   || variantRules.some(x=>!!x.requires_packaging_format);
+ return {
+   packageFormat,
+   containerMaterial:namedTin,
+   tinIdentity:namedTin,
+   tinVariant:variantRules.length>0,
+   milkSubtype:milkSubtype.length>0,
+   milkFactor:directMilk||milkSubtype.length>0,
+   metalSubtype:metalSubtype.length>0,
+   sulphatedAsh:ash.length>0
+ };
+}
+function syncContaminantQualifierVisibility(p){
+ const needs=contaminantQualifierNeeds(p);
+ const pairs=[
+   ['contaminantPackageFormatField',needs.packageFormat],
+   ['contaminantContainerMaterialField',needs.containerMaterial],
+   ['contaminantTinProductIdentityField',needs.tinIdentity],
+   ['contaminantTinVariantField',needs.tinVariant],
+   ['contaminantMilkLeadSubtypeField',needs.milkSubtype],
+   ['contaminantMetalSubtypeField',needs.metalSubtype],
+   ['contaminantSulphatedAshField',needs.sulphatedAsh],
+   ['contaminantMilkConcentrationFactorField',needs.milkFactor]
+ ];
+ pairs.forEach(([id,show])=>document.getElementById(id)?.classList.toggle('hidden',!show));
+
+ const any=pairs.some(([,show])=>show);
+ document.getElementById('contaminantQualifierGrid')?.classList.toggle('hidden',!any);
+
+ const statusPairs=[
+   ['packagingTinStatus',needs.packageFormat||needs.containerMaterial||needs.tinIdentity],
+   ['variantTinStatus',needs.tinVariant],
+   ['dehydratedMilkLeadStatus',needs.milkSubtype||needs.milkFactor],
+   ['metalSubtypeStatus',needs.metalSubtype],
+   ['sugarAshLeadStatus',needs.sulphatedAsh]
+ ];
+ statusPairs.forEach(([id,show])=>document.getElementById(id)?.classList.toggle('hidden',!show));
+
+ const summary=document.getElementById('contaminantQualifierSummary');
+ if(summary){
+   summary.classList.remove('hidden');
+   if(!p){
+     summary.className='notice';
+     summary.innerHTML='<b>Product-specific inputs:</b> confirm a standardized product first. PMSV will then show only contaminant qualifiers actually required for that product.';
+   }else if(!any){
+     summary.className='notice oknote';
+     summary.innerHTML='<b>No additional contaminant qualifiers are required for '+esc(p.name)+'.</b> PMSV is showing the directly applicable product-specific, commodity-specific and “all foods” rules below.';
+   }else{
+     const count=pairs.filter(([,show])=>show).length;
+     summary.className='notice';
+     summary.innerHTML='<b>'+count+' product-specific contaminant input'+(count===1?' is':'s are')+' relevant to '+esc(p.name)+'.</b> Unrelated Tin, milk, sugar and subtype controls are hidden.';
+   }
+ }
+}
 function renderProductContaminants(){
  const el=document.getElementById('productContaminantResults');
  const ingredientCard=document.getElementById('contaminantIngredientCard');
@@ -7454,6 +7522,7 @@ function renderProductContaminants(){
  renderDehydratedMilkLeadStatus(p);
  renderMetalSubtypeStatus(p);
  renderSugarAshLeadStatus(p);
+ syncContaminantQualifierVisibility(p);
  if(!p){
    el.innerHTML='<div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div>';
    return;
