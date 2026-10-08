@@ -1236,7 +1236,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-nearest-standard-v14';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-nearest-standard-v15';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -3195,6 +3195,7 @@ function saveFormula(){
  }catch(e){}
  renderFormula();
  refreshNearestStandardFromFormula();
+ setTimeout(()=>ensureNearestStandardSuggestion(true),0);
 }
 function addIngredient(){
  const input=document.getElementById('ingredientName');
@@ -4786,7 +4787,9 @@ function mirrorNearestStandardPreview(note){
  }
  preview.className=note?.className||'notice';
  preview.classList.remove('hidden');
+ const selected=selectedProprietaryStandardProduct();
  preview.innerHTML=(note?.innerHTML||'')
+   +(selected?'<div class="notice oknote" style="margin-top:8px"><b>Current nearest-standard selection:</b> '+esc(selected.name)+(hasRealFssrStandard(selected)?' · <span class="clause">'+esc(selected.fssr)+'</span>':' · FSSR N.A.')+'</div>':'')
    +'<div class="flow-actions"><button class="btn-secondary" type="button" id="jumpToNearestStandard">Review / confirm standard →</button></div>';
  document.getElementById('jumpToNearestStandard')?.addEventListener('click',()=>{
    document.getElementById('formulationRouteCard')?.scrollIntoView({behavior:'smooth',block:'start'});
@@ -8576,6 +8579,10 @@ function renderIngredientAutocomplete(){
      input.dataset.autocompleteConfirmed='1';
      box.classList.add('hidden');
      renderIngredientAutocomplete();
+     // The exact autocomplete choice is a stronger search basis than the partial text
+     // that opened the suggestion list. Re-run nearest-standard matching immediately.
+     ensureNearestStandardSuggestion(true);
+     setTimeout(()=>ensureNearestStandardSuggestion(true),0);
    }));
  }else{
    box.classList.add('hidden');
@@ -8591,7 +8598,10 @@ function renderIngredientAutocomplete(){
 document.getElementById('ingredientName')?.addEventListener('input',event=>{
  delete event.currentTarget.dataset.autocompleteConfirmed;
  renderIngredientAutocomplete();
- if(!formulationIngredients.length)ensureNearestStandardSuggestion(true);
+ // Always refresh the visible nearest-standard preview. For an empty formulation the
+ // pending ingredient is the search basis; for an existing formulation the saved rows
+ // remain the authoritative basis until the new ingredient is actually added.
+ ensureNearestStandardSuggestion(true);
 });
 document.getElementById('ingredientName')?.addEventListener('focus',event=>{
  if(event.currentTarget.dataset.autocompleteConfirmed!=='1')renderIngredientAutocomplete();
