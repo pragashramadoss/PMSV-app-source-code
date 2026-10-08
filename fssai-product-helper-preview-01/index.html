@@ -1232,6 +1232,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
+const PRODUCT_HELPER_UI_BUILD='2026-10-08.1';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -4275,7 +4276,7 @@ function populateProductCategories(){
  const buildBadge=document.getElementById('buildBadge');
  if(buildBadge){
    const buildNo=Number(productMasterDb.build_number||0);
-   buildBadge.textContent='PRODUCT STANDARDS PROTOTYPE'+(buildNo?' · BUILD '+buildNo:'');
+   buildBadge.textContent='PRODUCT STANDARDS PROTOTYPE'+(buildNo?' · DATA '+buildNo:'')+' · UI '+PRODUCT_HELPER_UI_BUILD;
  }
  const categories=productMasterDb.categories||[];
  const current=select.value;
@@ -5991,7 +5992,7 @@ function renderStandardLookupDashboard(){
  box.classList.remove('hidden');
  box.innerHTML='<div class="card" style="margin:0;background:#f7fbff"><div class="section-title"><h2>Standard lookup mode — '+esc(name)+'</h2><span>No formulation required</span></div>'
    +'<div class="grid2"><div class="item"><b>FSSAI standard</b><small>'+esc(fssr)+'</small></div><div class="item"><b>Appendix A FCS</b><small>'+esc(fcs)+'</small></div></div>'
-   +'<div class="notice oknote"><b>You can inspect this standardized product directly.</b> Product-level requirements are available even when the formulation contains zero ingredients. Formulation-dependent checks are kept separate and will say when ingredient/process input is required.</div>'
+   +'<div class="notice oknote"><b>You can inspect this standardized product directly.</b> Product-level requirements are available even when the formulation contains zero ingredients. Formulation-dependent checks are kept separate and will say when ingredient/process input is required.<br><small>Runtime: UI '+esc(PRODUCT_HELPER_UI_BUILD)+'</small></div>'
    +'<div class="flow-actions">'
    +'<button class="btn" type="button" data-standard-lookup-tab="standard">Product standard</button>'
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="ingredients">Ingredients & Appendix A</button>'
