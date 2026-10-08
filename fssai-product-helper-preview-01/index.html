@@ -568,10 +568,11 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="card">
 <div class="section-title"><h2>Contaminants, toxins & residues</h2><span>FSSAI Version IX · product-driven</span></div>
 <div class="notice oknote"><b>Current regulatory basis:</b> Food Safety and Standards (Contaminants, Toxins and Residues) Regulations, 2011 — consolidated <b>Version IX (03.02.2026)</b>. Contaminant limits are separate from Appendix A food-additive permissions.</div>
+<div id="contaminantCurrentProduct" class="notice"><b>Assessment target:</b> waiting for a confirmed standardized product.</div>
 <div class="notice"><b>Fail-closed matching:</b> PMSV automatically applies only an exact loaded product/FSSR contaminant profile plus rules that FSSAI explicitly states apply to <b>all foods</b>. “Foods not specified” limits are stored as reference defaults but are <b>not automatically applied</b> until the full current table confirms that no more-specific row governs the selected product.</div>
 <div id="contaminantQualifierSummary" class="notice hidden"></div>
-<div class="checker-grid" id="contaminantQualifierGrid">
-  <div class="field" id="contaminantPackageFormatField">
+<div class="checker-grid hidden" id="contaminantQualifierGrid">
+  <div class="field hidden" id="contaminantPackageFormatField">
     <label>Package format</label>
     <select id="contaminantPackageFormat">
       <option value="">Not specified</option>
@@ -580,7 +581,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     </select>
     <small>Required before PMSV can evaluate packaging-dependent Tin provisions.</small>
   </div>
-  <div class="field" id="contaminantContainerMaterialField">
+  <div class="field hidden" id="contaminantContainerMaterialField">
     <label>Container material</label>
     <select id="contaminantContainerMaterial">
       <option value="">Not specified</option>
@@ -589,7 +590,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     </select>
     <small>Tinplate and other-container limits are not interchangeable.</small>
   </div>
-  <div class="field" id="contaminantTinProductIdentityField">
+  <div class="field hidden" id="contaminantTinProductIdentityField">
     <label>Exact Tin product identity</label>
     <select id="contaminantTinProductIdentity">
       <option value="">Not specified / not one of the named meat rows</option>
@@ -601,43 +602,43 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     </select>
     <small>Select this only when the finished product is exactly the named FSSAI Tin article. PMSV never infers it from a broader meat category.</small>
   </div>
-  <div class="field" id="contaminantTinVariantField">
+  <div class="field hidden" id="contaminantTinVariantField">
     <label>Exact regulated variant for Tin</label>
     <select id="contaminantTinVariant">
       <option value="">Not applicable / not specified</option>
     </select>
     <small>PMSV loads only verified FoSCoS variants relevant to the selected product. Some variants also require an exact package format before a Tin row applies.</small>
   </div>
-  <div class="field" id="contaminantMilkLeadSubtypeField">
+  <div class="field hidden" id="contaminantMilkLeadSubtypeField">
     <label>Exact milk-powder subtype for Lead</label>
     <select id="contaminantMilkLeadSubtype">
       <option value="">Not applicable / not specified</option>
     </select>
     <small>Enabled only for the combined FoSCoS Milk Powders and Cream Powder product. Cream Powder is deliberately not offered because this Lead rule is for milks.</small>
   </div>
-  <div class="field" id="contaminantMetalSubtypeField">
+  <div class="field hidden" id="contaminantMetalSubtypeField">
     <label>Exact product subtype for metal rule</label>
     <select id="contaminantMetalSubtype">
       <option value="">Not applicable / not specified</option>
     </select>
     <small>Shown only where a current FSSAI metal article applies to specific FoSCoS/FSSAI subtypes rather than the whole standardized product.</small>
   </div>
-  <div class="field" id="contaminantSulphatedAshField">
+  <div class="field hidden" id="contaminantSulphatedAshField">
     <label>Sulphated ash (%) for conditional Lead rule</label>
     <input id="contaminantSulphatedAsh" type="number" min="0" step="0.001" placeholder="Enter sulphated ash %">
     <small>Enabled only for verified sugar/invert-syrup identities whose current FSSAI Lead article is conditional on sulphated ash. PMSV never assumes this value.</small>
   </div>
-  <div class="field" id="contaminantMilkConcentrationFactorField">
+  <div class="field hidden" id="contaminantMilkConcentrationFactorField">
     <label>Milk concentration factor for Lead</label>
     <input id="contaminantMilkConcentrationFactor" type="number" min="0.000001" step="0.01" placeholder="Enter factor">
     <small>Used only when FSSAI requires the 0.02 mg/kg milk Lead limit to be adjusted for a partially or wholly dehydrated milk. PMSV calculates 0.02 × factor and does not guess the factor.</small>
   </div>
 </div>
-<div id="packagingTinStatus" class="notice">Packaging-dependent Tin rules remain inactive until both an exact product identity and the required packaging input are available.</div>
-<div id="variantTinStatus" class="notice">Variant-dependent Tin rules remain inactive until the selected product has a verified FoSCoS variant mapping and all required inputs are provided.</div>
-<div id="dehydratedMilkLeadStatus" class="notice">Dehydrated-milk Lead adjustment remains inactive unless the selected product is covered and a valid concentration factor is entered.</div>
-<div id="metalSubtypeStatus" class="notice">Subtype-dependent metal rules remain inactive until an exact verified subtype is selected.</div>
-<div id="sugarAshLeadStatus" class="notice">Sulphated-ash-dependent Lead rules remain inactive until an eligible sugar product and a sulphated ash value are provided.</div>
+<div id="packagingTinStatus" class="notice hidden">Packaging-dependent Tin rules remain inactive until both an exact product identity and the required packaging input are available.</div>
+<div id="variantTinStatus" class="notice hidden">Variant-dependent Tin rules remain inactive until the selected product has a verified FoSCoS variant mapping and all required inputs are provided.</div>
+<div id="dehydratedMilkLeadStatus" class="notice hidden">Dehydrated-milk Lead adjustment remains inactive unless the selected product is covered and a valid concentration factor is entered.</div>
+<div id="metalSubtypeStatus" class="notice hidden">Subtype-dependent metal rules remain inactive until an exact verified subtype is selected.</div>
+<div id="sugarAshLeadStatus" class="notice hidden">Sulphated-ash-dependent Lead rules remain inactive until an eligible sugar product and a sulphated ash value are provided.</div>
 <div id="productContaminantResults"><div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div></div>
 </div>
 <div class="card">
@@ -1237,7 +1238,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-contaminants-product-driven-v17';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-contaminants-product-driven-v18';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -7517,12 +7518,19 @@ function renderProductContaminants(){
    return;
  }
  const p=selectedCatalogProductForContaminants();
- renderPackagingTinStatus(p);
- renderVariantTinStatus(p);
- renderDehydratedMilkLeadStatus(p);
- renderMetalSubtypeStatus(p);
- renderSugarAshLeadStatus(p);
  syncContaminantQualifierVisibility(p);
+ const target=document.getElementById('contaminantCurrentProduct');
+ if(target){
+   target.className=p?'notice oknote':'notice';
+   target.innerHTML=p
+     ? '<b>Assessment target:</b> '+esc(p.name)+(hasRealFssrStandard(p)?' · <span class="clause">'+esc(p.fssr)+'</span>':'')
+     : '<b>Assessment target:</b> no confirmed standardized product. Confirm the nearest standard in Formulation Step 2 first.';
+ }
+ try{renderPackagingTinStatus(p);}catch(e){console.error('Packaging Tin status',e);}
+ try{renderVariantTinStatus(p);}catch(e){console.error('Variant Tin status',e);}
+ try{renderDehydratedMilkLeadStatus(p);}catch(e){console.error('Milk Lead status',e);}
+ try{renderMetalSubtypeStatus(p);}catch(e){console.error('Metal subtype status',e);}
+ try{renderSugarAshLeadStatus(p);}catch(e){console.error('Sugar ash Lead status',e);}
  if(!p){
    el.innerHTML='<div class="empty-state">Select a standardized product to load its verified FSSAI contaminant profile.</div>';
    return;
