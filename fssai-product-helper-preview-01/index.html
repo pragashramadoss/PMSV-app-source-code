@@ -1227,7 +1227,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-nutrition-reference-v25';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-ifct-exact-mappings-v26';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -2940,8 +2940,16 @@ function standardLookupNutritionProfile(){
  if(direct)return {profile:direct,basis:'Exact IFCT name match'};
 
  const verifiedAliases={
+   // Exact identity mappings where the product and IFCT food are the same food,
+   // but the naming/order differs. Do not add processing-form or varietal guesses here.
    '01-01-1-cow-milk':'Milk, whole, Cow',
-   '01-01-1-buffalo-milk':'Milk, whole, Buffalo'
+   '01-01-1-buffalo-milk':'Milk, whole, Buffalo',
+   '06-06-2-maida-refined-wheat-flour':'Wheat flour, refined',
+   '04-04-1-almond-kernels':'Almond',
+   '04-04-1-walnut-kernels':'Walnut',
+   '12-12-2-cloves-laung':'Cloves',
+   '12-12-2-nutmeg-jaiphal':'Nutmeg',
+   '12-12-2-asafoetida-hing-or-hingra':'Asafoetida'
  };
  const alias=verifiedAliases[String(product.id||'')];
  if(alias){
@@ -2976,7 +2984,7 @@ function renderStandardLookupNutritionReference(){
  if(!match){
    status.className='notice';
    status.innerHTML='<b>No exact ICMR-NIN IFCT 2017 nutrition profile is available for '+esc(productName)+'.</b><br>'
-     +'No ingredient entry is required to inspect this standardized product. However, PMSV will <b>not estimate nutrition from milk, a similar food, or another database</b>. '
+     +'No ingredient entry is required to inspect this standardized product. However, PMSV will <b>not estimate nutrition from a related food, a different processing form/variety, or another database</b>. '
      +'The FSSAI product standard remains available separately; enter a formulation only if you want a calculated nutrition label for a specific recipe/product.';
    table.innerHTML='<div class="notice oknote"><b>What Standard Lookup still provides without ingredients:</b> FSSAI product standard, permitted ingredients/additives, contaminants and residues, microbiology, processing aids, packaging, fortification applicability, labelling and claims rules.</div>';
    return;
@@ -3005,7 +3013,7 @@ function renderStandardLookupNutritionReference(){
  status.className='notice oknote';
  status.innerHTML='<b>Exact ICMR-NIN IFCT reference found:</b> '+esc(profile.display_name||profile.names?.[0]||productName)
    +(profile.ifct_code?' · <span class="clause">'+esc(profile.ifct_code)+'</span>':'')
-   +'<br><small>'+esc(match.basis)+'. These are official reference values per 100 g of the IFCT food, not a calculated nutrition label for every commercial formulation sold under the FSSAI standard.</small>';
+   +'<br><small>'+esc(match.basis)+'. These are official reference values per 100 g of the IFCT food, not a calculated nutrition label for every commercial formulation sold under the FSSAI standard. PMSV uses only literal IFCT matches or a small explicit verified-identity map; it never selects the nearest food by similarity.</small>';
  table.innerHTML=rows
    ? '<div class="tablewrap"><table><thead><tr><th>Nutrient</th><th>ICMR-NIN IFCT reference per 100 g</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
    : '<div class="notice">The exact IFCT food identity is loaded, but no verified core nutrition fields are available for display in this runtime.</div>';
