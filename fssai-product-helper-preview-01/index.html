@@ -1228,7 +1228,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-ifct-exact-mappings-v26';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-nutrition-layers-v27';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -2996,6 +2996,26 @@ function standardLookupRegulatoryCompositionHtml(){
        '<div class="tablewrap"><table><thead><tr><th>FSSAI nutrient requirement</th><th>Per 100 g</th><th>Per 100 kcal</th></tr></thead><tbody>'
        +nutrientRows.map(r=>'<tr><td><b>'+esc(r.parameter||'Requirement')+'</b></td><td>'+esc(r.per_100g||'—')+'</td><td>'+esc(r.per_100kcal||'—')+'</td></tr>').join('')
        +'</tbody></table></div>'
+     );
+   }
+
+   const standardRules=Array.isArray(standard?.rules)?standard.rules:[];
+   if(standardRules.length){
+     blocks.push(
+       '<div class="notice"><b>Other FSSAI standard conditions · '+esc(standard.key||'')+':</b><br>'
+       +standardRules.map(r=>{
+          if(typeof r==='string')return '• '+esc(r);
+          const subject=r.product?'<b>'+esc(r.product)+'</b> · ':'';
+          const parameter=esc(r.parameter||r.type||'Requirement');
+          const bits=[];
+          if(r.min_pct!==undefined)bits.push('Min '+esc(String(r.min_pct))+'%');
+          if(r.max_pct!==undefined)bits.push('Max '+esc(String(r.max_pct))+'%');
+          if(r.min!==undefined)bits.push('Min '+esc(String(r.min))+(r.unit?' '+esc(r.unit):''));
+          if(r.max!==undefined)bits.push('Max '+esc(String(r.max))+(r.unit?' '+esc(r.unit):''));
+          const requirement=bits.length?bits.join(' · '):esc(r.text||r.requirement||'As specified');
+          return '• '+subject+'<b>'+parameter+'</b> — '+requirement+(r.basis?' <small>('+esc(r.basis)+')</small>':'');
+        }).join('<br>')
+       +'<br><small>These rows are shown as product-standard conditions. A condition naming a narrower variant is not automatically applied to every product under the parent standard.</small></div>'
      );
    }
  });
