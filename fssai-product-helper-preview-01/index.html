@@ -172,7 +172,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="checker-grid">
   <div class="field">
     <label>Generic product name <span class="muted">(optional)</span></label>
-    <input id="proprietaryProductName" autocomplete="off" placeholder="Optional — e.g. cereal snack with seasoning" oninput="ensureNearestStandardSuggestion(true)" onchange="ensureNearestStandardSuggestion(true)" onfocus="ensureNearestStandardSuggestion(false)">
+    <input id="proprietaryProductName" autocomplete="off" placeholder="Optional — e.g. cereal snack with seasoning" oninput="pmsvDirectProductNameNearestStandard(this.value)" onchange="pmsvDirectProductNameNearestStandard(this.value)" onkeyup="pmsvDirectProductNameNearestStandard(this.value)" onfocus="pmsvDirectProductNameNearestStandard(this.value)">
     <small>If you enter a finished-product name, PMSV uses it as the strongest search basis. If left blank, PMSV derives the nearest-standard suggestion from the formulation you entered.</small>
   </div>
   <div class="field">
@@ -1236,7 +1236,158 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-nearest-standard-v15';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-nearest-standard-v16';
+
+// Step 2 direct nearest-standard path.
+// This is intentionally bound near the top of the page so the finished-product-name
+// field remains functional even if a later module throws while the rest of the helper loads.
+let pmsvDirectStandardIndexPromise=null;
+let pmsvDirectNearestRequest=0;
+function pmsvDirectNorm(value){
+ return String(value||'').toLowerCase().normalize('NFKD')
+   .replace(/[\u0300-\u036f]/g,'')
+   .replace(/[^a-z0-9]+/g,' ')
+   .trim()
+   .replace(/\s+/g,' ');
+}
+function pmsvDirectScore(product,raw){
+ const q=pmsvDirectNorm(raw);
+ const n=pmsvDirectNorm(product?.name||'');
+ if(!q||!n)return 0;
+ if(q===n)return 100000;
+ let score=0;
+ if(n.includes(q)||q.includes(n))score+=12000;
+ const qt=q.split(' ').filter(Boolean);
+ const nt=n.split(' ').filter(Boolean);
+ const ns=new Set(nt);
+ const overlap=qt.filter(x=>ns.has(x));
+ score+=overlap.length*1800;
+ const union=new Set([...qt,...nt]).size||1;
+ score+=Math.round((overlap.length/union)*4000);
+ if(qt[0]&&nt[0]&&qt[0]===nt[0])score+=800;
+ return score;
+}
+async function pmsvDirectLoadStandardIndex(){
+ if(standardSearchIndexDb&&Array.isArray(standardSearchIndexDb.products)&&standardSearchIndexDb.products.length){
+   return standardSearchIndexDb;
+ }
+ if(!pmsvDirectStandardIndexPromise){
+   pmsvDirectStandardIndexPromise=fetch('./data/standard-search-index-v1.json?v=3',{cache:'no-store'})
+     .then(res=>{
+       if(!res.ok)throw new Error('HTTP '+res.status);
+       return res.json();
+     })
+     .then(db=>{
+       standardSearchIndexDb=db;
+       return db;
+     })
+     .catch(err=>{
+       pmsvDirectStandardIndexPromise=null;
+       throw err;
+     });
+ }
+ return pmsvDirectStandardIndexPromise;
+}
+async function pmsvDirectProductNameNearestStandard(value){
+ const input=document.getElementById('proprietaryProductName');
+ const raw=String(value??input?.value??'').trim();
+ const select=document.getElementById('proprietaryStandardSelect');
+ const note=document.getElementById('proprietaryStandardSuggestion');
+ const confirm=document.getElementById('confirmProprietaryStandard');
+ if(!select||!note||!confirm)return;
+ const request=++pmsvDirectNearestRequest;
+
+ if(!raw){
+   select.innerHTML='<option value="">Enter a formulation or product name first</option>';
+   select.disabled=true;
+   confirm.disabled=true;
+   note.className='notice';
+   note.innerHTML='<b>Standard/category confirmation required.</b> Enter the formulation or optional generic product name.';
+   return;
+ }
+
+ select.innerHTML='<option value="">Finding nearest FSSAI standard…</option>';
+ select.disabled=true;
+ confirm.disabled=true;
+ note.className='notice';
+ note.innerHTML='<b>Finding the nearest FSSAI standard…</b>';
+
+ try{
+   const db=await pmsvDirectLoadStandardIndex();
+   if(request!==pmsvDirectNearestRequest)return;
+   if(String(document.getElementById('proprietaryProductName')?.value||'').trim()!==raw)return;
+
+   const full=(productMasterDb&&Array.isArray(productMasterDb.catalog_products)&&productMasterDb.catalog_products.length)
+     ? productMasterDb.catalog_products
+     : [];
+   const products=full.length?full:(Array.isArray(db?.products)?db.products:[]);
+   const ranked=products
+     .map(p=>({p,score:pmsvDirectScore(p,raw)}))
+     .sort((a,b)=>b.score-a.score||String(a.p?.name||'').localeCompare(String(b.p?.name||'')));
+
+   if(!ranked.length){
+     select.innerHTML='<option value="">No loaded FSSAI/FoSCoS products</option>';
+     note.innerHTML='<b>No product catalogue is available for nearest-standard matching.</b>';
+     return;
+   }
+
+   const best=ranked[0];
+   select.innerHTML='';
+   select.add(new Option(best.score>0?'Select a standard/category':'No reliable automatic match — choose manually',''));
+   ranked.forEach((row,index)=>{
+     const p=row.p||{};
+     const standard=String(p.fssr||'').trim();
+     const label=(index===0&&best.score>0?'Suggested — ':'')
+       +String(p.name||'FSSAI product')
+       +(standard&&!/^(?:n\.?\s*a\.?|na|n\/a|—|-)$/i.test(standard)?' · '+standard:' · FSSR N.A.');
+     select.add(new Option(label,String(p.id||''),false,index===0&&best.score>0));
+   });
+   select.disabled=false;
+   confirm.disabled=!select.value;
+
+   if(best.score>0){
+     const p=best.p||{};
+     const standard=String(p.fssr||'').trim();
+     const standardText=standard&&!/^(?:n\.?\s*a\.?|na|n\/a|—|-)$/i.test(standard)?standard:'FSSR N.A.';
+     note.className='notice oknote';
+     note.innerHTML='<b>Nearest FSSAI standard suggested:</b> '
+       +String(p.name||'FSSAI product').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))
+       +' · <span class="clause">'+standardText.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))+'</span>'
+       +'<br><small>Matched immediately from the finished-product name. Confirm this selection or choose another applicable standard/category.</small>';
+   }else{
+     note.className='notice';
+     note.innerHTML='<b>No reliable automatic match was found.</b> Choose the closest applicable FSSAI standard or FoSCoS category manually.';
+   }
+
+   try{
+     if(typeof mirrorNearestStandardPreview==='function')mirrorNearestStandardPreview(note);
+   }catch(e){}
+ }catch(err){
+   if(request!==pmsvDirectNearestRequest)return;
+   select.innerHTML='<option value="">Standard index could not load — tap Find nearest standard to retry</option>';
+   select.disabled=true;
+   confirm.disabled=true;
+   note.className='notice';
+   note.innerHTML='<b>Nearest-standard index could not load.</b><br><small>Your product name is retained. Retry without re-entering it.</small>';
+ }
+}
+document.addEventListener('input',event=>{
+ if(event.target&&event.target.id==='proprietaryProductName'){
+   pmsvDirectProductNameNearestStandard(event.target.value);
+ }
+},true);
+document.addEventListener('change',event=>{
+ if(event.target&&event.target.id==='proprietaryProductName'){
+   pmsvDirectProductNameNearestStandard(event.target.value);
+ }
+},true);
+document.addEventListener('click',event=>{
+ const btn=event.target?.closest?.('#findNearestStandard');
+ if(btn){
+   pmsvDirectProductNameNearestStandard(document.getElementById('proprietaryProductName')?.value||'');
+ }
+},true);
+
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
