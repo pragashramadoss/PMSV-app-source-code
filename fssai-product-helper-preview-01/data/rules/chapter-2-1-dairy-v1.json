@@ -2,7 +2,7 @@
   "schema_version": "1.1",
   "chapter": "2.1",
   "title": "Dairy Products and Analogues",
-  "source_verified_on": "2026-10-02",
+  "source_verified_on": "2026-10-08",
   "official_sources": [
     {
       "authority": "FSSAI",
@@ -696,7 +696,142 @@
           "sucrose_db_max_pct": 72.5,
           "total_ash_db_max_pct": 0.9
         }
-      ]
+      ],
+      "definition": "Fermented Milk is a milk product obtained by fermentation of milk by suitable microorganisms with lowering of pH, with or without coagulation. Fermented milk may be heat treated after fermentation; the raw material is subject to the heat-treatment provisions of the General Standard for Milk and Milk Products.",
+      "permitted_ingredients": [
+        "starter cultures of harmless microorganisms, including the cultures specified for the named fermented milks",
+        "other suitable and harmless microorganisms",
+        "salt",
+        "prebiotics and probiotics"
+      ],
+      "conditional_ingredients": [
+        {
+          "name": "Sugar",
+          "condition": "Only in Flavoured Fermented Milks, Drinks based on Fermented Milks, Yoghurt, Dahi and Shrikhand."
+        },
+        {
+          "name": "Nutritive sweeteners other than sugar",
+          "condition": "Only in Flavoured Fermented Milks, Drinks based on Fermented Milks, Yoghurt and pre-packaged Dahi."
+        },
+        {
+          "name": "Permitted non-dairy ingredients / natural flavouring foods",
+          "condition": "Only in Flavoured Fermented Milks, Drinks based on Fermented Milks and Shrikhand; examples in the standard include fruits/vegetables and their products, cereals, coconut products, honey, chocolate, nuts, coffee, spices, condiments and culinary herbs."
+        },
+        {
+          "name": "Milk and milk products",
+          "condition": "Only in Drinks based on Fermented Milks."
+        },
+        {
+          "name": "Starch",
+          "condition": "Only in fermented milks heat treated after fermentation, flavoured fermented milks and drinks based on fermented milks; GMP and Appendix A stabilizer/thickener use must be considered."
+        }
+      ],
+      "starter_culture_requirements": [
+        {
+          "parameter": "Starter-culture microorganisms",
+          "operator": ">=",
+          "value": 10000000,
+          "unit": "cfu/g",
+          "condition": "Viable, active and abundant up to the date of minimum durability. Does not apply if the product is heat treated after fermentation."
+        },
+        {
+          "parameter": "Specifically labelled added microorganisms",
+          "operator": ">=",
+          "value": 1000000,
+          "unit": "cfu/g",
+          "condition": "When microorganisms other than the specified starter cultures are added and a content claim is made. Does not apply if the product is heat treated after fermentation."
+        }
+      ],
+      "composition_rules": [
+        {
+          "parameter": "Milk protein",
+          "operator": ">=",
+          "value": 2.9,
+          "unit": "% m/m",
+          "condition": "General fermented-milk minimum unless otherwise specified. For Flavoured Fermented Milks and Drinks based on Fermented Milks, applies to the fermented-milk part unless otherwise specified."
+        },
+        {
+          "parameter": "Titratable acidity",
+          "operator": ">=",
+          "value": 0.45,
+          "unit": "% m/m as lactic acid",
+          "condition": "General fermented-milk minimum unless otherwise specified. For Flavoured Fermented Milks and Drinks based on Fermented Milks, applies to the fermented-milk part unless otherwise specified."
+        },
+        {
+          "product": "Dahi",
+          "parameter": "Milk fat and milk solids-not-fat",
+          "requirement": "Same minimum percentages as the milk from which the plain Dahi is prepared.",
+          "condition": "If plain Dahi is sold without an indication of milk class, the standards for Dahi prepared from mixed milk apply."
+        }
+      ],
+      "variants": [
+        "Yoghurt and Flavoured Dahi",
+        "Partly skimmed Yoghurt and Flavoured Partly Skimmed Dahi",
+        "Skimmed Yoghurt and Flavoured Skimmed Dahi"
+      ],
+      "variant_requirements": [
+        {
+          "parameter": "Milk fat",
+          "unit": "% m/m",
+          "values": {
+            "Yoghurt and Flavoured Dahi": "3.0–15",
+            "Partly skimmed Yoghurt and Flavoured Partly Skimmed Dahi": ">0.5 and <3.0",
+            "Skimmed Yoghurt and Flavoured Skimmed Dahi": "≤0.5"
+          }
+        },
+        {
+          "parameter": "Milk solids-not-fat",
+          "unit": "% m/m minimum",
+          "values": {
+            "Yoghurt and Flavoured Dahi": "8.5",
+            "Partly skimmed Yoghurt and Flavoured Partly Skimmed Dahi": "8.5",
+            "Skimmed Yoghurt and Flavoured Skimmed Dahi": "8.5"
+          }
+        },
+        {
+          "parameter": "Milk protein",
+          "unit": "% m/m minimum",
+          "condition": "Protein content is 6.38 multiplied by total nitrogen determined.",
+          "values": {
+            "Yoghurt and Flavoured Dahi": "2.9",
+            "Partly skimmed Yoghurt and Flavoured Partly Skimmed Dahi": "2.9",
+            "Skimmed Yoghurt and Flavoured Skimmed Dahi": "2.9"
+          }
+        },
+        {
+          "parameter": "Titratable acidity",
+          "unit": "% as lactic acid minimum",
+          "values": {
+            "Yoghurt and Flavoured Dahi": "0.6",
+            "Partly skimmed Yoghurt and Flavoured Partly Skimmed Dahi": "0.6",
+            "Skimmed Yoghurt and Flavoured Skimmed Dahi": "0.6"
+          }
+        }
+      ],
+      "named_fermented_milk_cultures": [
+        {
+          "product": "Dahi",
+          "culture": "Lactic acid bacteria"
+        },
+        {
+          "product": "Yoghurt",
+          "culture": "Symbiotic cultures of Streptococcus thermophilus and Lactobacillus delbrueckii subsp. bulgaricus"
+        },
+        {
+          "product": "Alternate Culture Yoghurt",
+          "culture": "Streptococcus thermophilus and Lactobacillus species"
+        },
+        {
+          "product": "Acidophilus milk",
+          "culture": "Lactobacillus acidophilus"
+        }
+      ],
+      "regulatory_notes": [
+        "When Yoghurt or Flavoured Dahi is sold without a fat-class indication, it must conform to the Yoghurt / Flavoured Dahi column.",
+        "The term flavoured includes sweetened, flavoured and fruit variants.",
+        "Whey removal after fermentation is not permitted except for concentrated fermented milk."
+      ],
+      "validation_state": "Definition, permitted/conditional ingredients, starter-culture requirements, general fermented-milk composition, plain-Dahi fat/SNF rule, Yoghurt/Flavoured Dahi composition table, Chakka and Shrikhand core tables structured from official FSSAI Chapter 2.1."
     },
     {
       "key": "2.1.14",
@@ -1095,6 +1230,6 @@
     "structured_core": 23,
     "superseded": 1,
     "chapter_indexed": 0,
-    "note": "Chapter 2.1 core standard structure is complete. Remaining work is product-variant table normalization and cross-layer machine validation before full formulation compliance is enabled for every dairy product."
+    "note": "Chapter 2.1 core standard structure is complete. FSSR 2.1.13 fermented-milk definition, ingredients, starter-culture requirements and Yoghurt/Flavoured Dahi composition are now structured; remaining work is other product-variant normalization and cross-layer machine validation."
   }
 }
