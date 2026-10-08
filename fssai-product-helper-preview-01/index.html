@@ -768,10 +768,11 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="nutrition" class="view hidden">
 <div id="nutritionLookupNotice" class="notice hidden"></div>
 <div class="card hidden" id="nutritionStandardReferenceCard">
-<div class="section-title"><h2>Standardized-product nutrition reference</h2><span>ICMR-NIN IFCT 2017 · exact match only</span></div>
+<div class="section-title"><h2>Standardized-product composition & nutrition</h2><span>FSSAI standard + ICMR-NIN IFCT 2017</span></div>
+<div id="nutritionStandardRegulatory"></div>
 <div id="nutritionStandardReferenceStatus" class="notice"></div>
 <div id="nutritionStandardReferenceTable"></div>
-<div class="flow-actions"><button class="btn-secondary" type="button" id="nutritionGoToProductStandard">View FSSAI product standard</button></div>
+<div class="flow-actions"><button class="btn-secondary" type="button" id="nutritionGoToProductStandard">View full FSSAI product standard</button><button class="btn-secondary" type="button" id="nutritionGoToFormulation">Optional: calculate recipe nutrition</button></div>
 </div>
 <div class="card" id="nutritionFormulationControlsCard">
 <div class="section-title"><h2>Nutritional information</h2><span>Calculated from formulation quantities</span></div>
@@ -1492,7 +1493,7 @@ function openTab(id,{updateHash=true,save=true}={}){
     tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab==='formulation'));
   }
 
-  if(['standard','ingredients','contaminants','micro','process','processing','packaging','fortification','quality','claims'].includes(id)){
+  if(['standard','ingredients','contaminants','micro','process','processing','packaging','nutrition','fortification','quality','claims'].includes(id)){
     setTimeout(()=>{try{renderSelectedProductRegulatoryStack()}catch(e){}},0);
   }
 
@@ -2958,8 +2959,53 @@ function standardLookupNutritionProfile(){
  }
  return null;
 }
+function standardLookupRegulatoryCompositionHtml(){
+ const product=currentAssessmentCatalogProduct();
+ const standards=currentChapterStandards();
+ if(!product||!standards.length){
+   return '<div class="notice"><b>FSSAI regulatory composition:</b> no exact structured composition row is loaded for this selected product. PMSV will not borrow another standard.</div>';
+ }
+ const blocks=[];
+ standards.forEach(({db,standard})=>{
+   const compositionRows=chapterRuleDisplayRows(standard).filter(r=>/composition/i.test(String(r.section||'')));
+   const nutrientRows=Array.isArray(standard?.nutrient_requirements)?standard.nutrient_requirements:[];
+   const variants=Array.isArray(standard?.variants)?standard.variants:[];
+   const variantReqs=Array.isArray(standard?.variant_requirements)?standard.variant_requirements:[];
+
+   if(compositionRows.length){
+     blocks.push(
+       '<div class="notice oknote"><b>FSSAI product composition requirements · '+esc(standard.key||'')+'</b><br><small>'+esc(standard.name||product.name)+' · '+esc(ruleDbLabel(db))+'</small></div>'
+       +'<div class="tablewrap"><table><thead><tr><th>Parameter</th><th>Requirement</th><th>Basis / condition</th></tr></thead><tbody>'
+       +compositionRows.map(r=>'<tr><td><b>'+esc(r.parameter)+'</b></td><td>'+esc(r.requirement)+'</td><td>'+esc(r.condition||r.section||'')+'</td></tr>').join('')
+       +'</tbody></table></div>'
+     );
+   }
+
+   if(variants.length&&variantReqs.length){
+     blocks.push(
+       '<div class="notice"><b>FSSAI regulated variants:</b> the exact finished-product variant determines which composition column applies.</div>'
+       +'<div class="tablewrap"><table><thead><tr><th>Requirement</th>'+variants.map(v=>'<th>'+esc(v)+'</th>').join('')+'</tr></thead><tbody>'
+       +variantReqs.map(r=>'<tr><td><b>'+esc(r.parameter||'Requirement')+'</b>'+(r.unit?'<br><small>'+esc(r.unit)+'</small>':'')+'</td>'
+         +variants.map(v=>'<td>'+esc(String(r.values?.[v]??'—'))+'</td>').join('')+'</tr>').join('')
+       +'</tbody></table></div>'
+     );
+   }
+
+   if(nutrientRows.length){
+     blocks.push(
+       '<div class="tablewrap"><table><thead><tr><th>FSSAI nutrient requirement</th><th>Per 100 g</th><th>Per 100 kcal</th></tr></thead><tbody>'
+       +nutrientRows.map(r=>'<tr><td><b>'+esc(r.parameter||'Requirement')+'</b></td><td>'+esc(r.per_100g||'—')+'</td><td>'+esc(r.per_100kcal||'—')+'</td></tr>').join('')
+       +'</tbody></table></div>'
+     );
+   }
+ });
+ return blocks.length
+   ? '<div class="notice oknote"><b>Layer 1 — FSSAI regulatory composition.</b> These are legal identity/composition limits from the selected product standard. They are <b>not</b> the same as a nutrition-facts panel.</div>'+blocks.join('')
+   : '<div class="notice"><b>Layer 1 — FSSAI regulatory composition:</b> the selected standard is loaded, but no machine-readable composition/nutrient table is encoded for this exact product in the current PMSV rule file. This is a data gap, not a request for ingredient entry.</div>';
+}
 function renderStandardLookupNutritionReference(){
  const card=document.getElementById('nutritionStandardReferenceCard');
+ const regulatory=document.getElementById('nutritionStandardRegulatory');
  const status=document.getElementById('nutritionStandardReferenceStatus');
  const table=document.getElementById('nutritionStandardReferenceTable');
  if(!card||!status||!table)return;
@@ -2967,10 +3013,12 @@ function renderStandardLookupNutritionReference(){
  const lookup=standardLookupModeActive();
  card.classList.toggle('hidden',!lookup);
  if(!lookup){
+   if(regulatory)regulatory.innerHTML='';
    table.innerHTML='';
    return;
  }
 
+ if(regulatory)regulatory.innerHTML=standardLookupRegulatoryCompositionHtml();
  const product=currentAssessmentCatalogProduct();
  const productName=product?.name||currentProductProfile()?.name||'Selected standardized product';
  if(!nutritionDb){
@@ -3011,7 +3059,7 @@ function renderStandardLookupNutritionReference(){
    .join('');
 
  status.className='notice oknote';
- status.innerHTML='<b>Exact ICMR-NIN IFCT reference found:</b> '+esc(profile.display_name||profile.names?.[0]||productName)
+ status.innerHTML='<b>Layer 2 — exact ICMR-NIN IFCT reference found:</b> '+esc(profile.display_name||profile.names?.[0]||productName)
    +(profile.ifct_code?' · <span class="clause">'+esc(profile.ifct_code)+'</span>':'')
    +'<br><small>'+esc(match.basis)+'. These are official reference values per 100 g of the IFCT food, not a calculated nutrition label for every commercial formulation sold under the FSSAI standard. PMSV uses only literal IFCT matches or a small explicit verified-identity map; it never selects the nearest food by similarity.</small>';
  table.innerHTML=rows
@@ -6410,7 +6458,7 @@ function renderStandardLookupModeUi(){
    if(lookup){
      const name=selectedProductForFortification()?.name||currentProductProfile()?.name||'selected standardized product';
      nutritionNotice.className='notice oknote';
-     nutritionNotice.innerHTML='<b>Standard Lookup mode — '+esc(name)+'.</b><br><b>No formulation is required to view the standardized product.</b> PMSV will show an ICMR-NIN IFCT nutrition reference only when the selected product has an exact official IFCT food identity. A recipe-based nutrition label remains a separate calculation.';
+     nutritionNotice.innerHTML='<b>Standard Lookup mode — '+esc(name)+'.</b><br><b>No formulation is required.</b> PMSV separates <b>FSSAI regulatory composition requirements</b> from <b>ICMR-NIN IFCT food-composition reference values</b>. IFCT values are shown only for an exact official food identity; recipe/brand nutrition calculation remains optional.';
    }
  }
  if(lookup)renderStandardLookupNutritionReference();
@@ -6434,6 +6482,7 @@ function standardLookupStructuralAudit(){
    {label:'Microbiology',tab:'micro',id:'microbiologyResults',block:/select and open a standardized product/i},
    {label:'Processing-aid scope',tab:'process',id:'processProductScope',fallbackId:'processGrid',block:/no standardized product selected/i},
    {label:'Packaging',tab:'packaging',id:'packagingProductRoute',block:/select a standardized product/i},
+   {label:'Nutrition reference',tab:'nutrition',id:'nutritionStandardReferenceCard',block:/nutrition database is still loading/i},
    {label:'Fortification',tab:'fortification',id:'fortificationProductSuggestion',block:/select a standardized product/i},
    {label:'Labelling',tab:'quality',id:'labelProductSpecificStatus',block:/select a standardized product first/i},
    {label:'Claims rules',tab:'claims',id:'claimsDbStatus',block:/loading/i}
@@ -6499,6 +6548,12 @@ function standardLookupDataCoverageHtml(){
    : processCount
      ? processCount+' product-specific Appendix C candidate'+(processCount===1?'':'s')+' loaded; actual process selection determines applicability.'
      : 'No exact product-specific Appendix C row is loaded; process/all-food permissions remain available after process selection.';
+ const nutritionMatch=nutritionDb?standardLookupNutritionProfile():null;
+ const nutritionText=!nutritionDb
+   ? 'ICMR-NIN nutrition database is loading.'
+   : nutritionMatch
+     ? 'Exact ICMR-NIN IFCT reference available: '+String(nutritionMatch.profile?.display_name||nutritionMatch.profile?.names?.[0]||name)+(nutritionMatch.profile?.ifct_code?' · '+nutritionMatch.profile.ifct_code:'')+'.'
+     : 'No exact ICMR-NIN IFCT food identity for this standardized product; no substitute or estimate is used.';
  return '<div class="card" style="margin-top:10px;background:#fbfcff"><div class="section-title"><h2>Product-level coverage — '+esc(name)+'</h2><span>Zero formulation ingredients</span></div>'
    +'<div class="grid2">'
    +'<div class="item"><b>Product standard</b><small>'+(standards.length?standards.length+' exact structured standard/rule row'+(standards.length===1?'':'s')+' resolved: '+standards.map(x=>esc(x.standard?.key||'')).join(', '):'No exact structured vertical-standard row is currently resolved; the selected FoSCoS/product identity is still retained without borrowing another standard.')+'</small></div>'
@@ -6506,6 +6561,7 @@ function standardLookupDataCoverageHtml(){
    +'<div class="item"><b>Contaminants & residues</b><small>'+contaminantText+'</small></div>'
    +'<div class="item"><b>Microbiology</b><small>'+microText+'</small></div>'
    +'<div class="item"><b>Processing aids</b><small>'+processText+'</small></div>'
+   +'<div class="item"><b>Nutrition reference</b><small>'+esc(nutritionText)+'</small></div>'
    +'<div class="item"><b>Formulation-dependent checks</b><small>Nutrition, ingredient-triggered warnings/allergens, ingredient-specific contaminant triggers and quantitative formulation compliance are intentionally not evaluated in Standard Lookup mode.</small></div>'
    +'</div></div>';
 }
@@ -6565,6 +6621,7 @@ function renderStandardLookupDashboard(){
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="micro">Microbiology</button>'
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="process">Processing aids</button>'
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="packaging">Packaging</button>'
+   +'<button class="btn-secondary" type="button" data-standard-lookup-tab="nutrition">Nutrition reference</button>'
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="fortification">Fortification</button>'
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="quality">Labelling</button>'
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="claims">Claims rules</button>'
@@ -9021,6 +9078,10 @@ document.getElementById('evaluateFortification')?.addEventListener('click',evalu
 document.getElementById('refreshComplianceSummary')?.addEventListener('click',renderMasterComplianceSummary);
 document.getElementById('nutritionGoToProductStandard')?.addEventListener('click',()=>{
  openTab('standard',{updateHash:true,save:true});
+ window.scrollTo({top:0,behavior:'smooth'});
+});
+document.getElementById('nutritionGoToFormulation')?.addEventListener('click',()=>{
+ openTab('formulation',{updateHash:true,save:true});
  window.scrollTo({top:0,behavior:'smooth'});
 });
 // Render only after every shared state declaration and event binding is ready.
