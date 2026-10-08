@@ -159,6 +159,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="section-title"><h2>Formulation entered</h2><span id="ingredientCount">0 ingredients</span></div>
 <div id="formulaTotals" class="notice hidden"></div>
 <div id="ingredientList" class="empty-state">No ingredients entered yet.</div>
+<div id="nearestStandardInlinePreview" class="notice hidden"></div>
 <div id="finalFormulationAssessment" class="notice hidden"></div>
 <div id="formulationNext" class="hidden">
   <div class="notice oknote"><b>Formulation captured.</b> Now route this same formulation below. No ingredient needs to be entered again.</div>
@@ -1233,7 +1234,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-nearest-standard-v11';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-nearest-standard-v12';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -3436,6 +3437,13 @@ document.getElementById('loadExampleFormula')?.addEventListener('click',()=>{
 document.getElementById('clearIngredients')?.addEventListener('click',()=>{
  resetIngredientEditor();
  formulationIngredients=[];
+ proprietaryConfirmedStandardId='';
+ const pending=document.getElementById('proprietaryProductName');
+ if(!String(pending?.value||'').trim()){
+   const std=document.getElementById('proprietaryStandardSelect');
+   if(std){std.value='';std.disabled=true;}
+   const confirm=document.getElementById('confirmProprietaryStandard');if(confirm)confirm.disabled=true;
+ }
  saveFormula();
 });
 document.getElementById('goToRouteAssessment')?.addEventListener('click',()=>{
@@ -4696,9 +4704,15 @@ function proprietaryRoutingSearchBasis(){
  const input=document.getElementById('proprietaryProductName');
  const manual=String(input?.value||'').trim();
  if(manual)return {raw:manual,source:'product_name',label:'finished-product name'};
+
+ const pendingIngredient=String(document.getElementById('ingredientName')?.value||'').trim();
  const ordered=[...formulationIngredients]
    .filter(x=>String(x?.name||'').trim())
    .sort((a,b)=>qtyToKg(b.qty,b.unit)-qtyToKg(a.qty,a.unit));
+
+ if(!ordered.length&&pendingIngredient){
+   return {raw:pendingIngredient,source:'pending_ingredient',label:'ingredient currently being entered'};
+ }
  if(!ordered.length)return {raw:'',source:'none',label:'none'};
  if(ordered.length===1)return {raw:String(ordered[0].name).trim(),source:'single_ingredient',label:'single-ingredient formulation'};
  const names=[];
@@ -4713,7 +4727,7 @@ function proprietaryRoutingSearchBasis(){
 function proprietaryStandardCandidatesFromBasis(basis){
  const raw=String(basis?.raw||'').trim();
  if(!raw)return [];
- if(basis?.source==='product_name'||basis?.source==='single_ingredient')return proprietaryStandardCandidates(raw);
+ if(['product_name','single_ingredient','pending_ingredient'].includes(basis?.source))return proprietaryStandardCandidates(raw);
  const ingredients=[...formulationIngredients]
    .filter(x=>String(x?.name||'').trim())
    .sort((a,b)=>qtyToKg(b.qty,b.unit)-qtyToKg(a.qty,a.unit));
@@ -4732,6 +4746,44 @@ function proprietaryStandardCandidatesFromBasis(basis){
  rows.sort((x,y)=>y.score-x.score||String(x.p.name||'').localeCompare(String(y.p.name||'')));
  return rows;
 }
+function nearestStandardEngineAudit(){
+ const catalog=productCatalog();
+ if(!catalog.length)return {tested:0,passed:0,failed:[]};
+ const byCategory=new Map();
+ catalog.forEach(p=>{
+   if(!String(p?.name||'').trim())return;
+   const key=String(p.category||'unknown');
+   if(!byCategory.has(key)&&hasRealFssrStandard(p))byCategory.set(key,p);
+ });
+ const samples=[...byCategory.values()].slice(0,12);
+ const failed=[];
+ let passed=0;
+ samples.forEach(p=>{
+   const best=proprietaryStandardCandidates(p.name)[0]?.p;
+   if(best?.id===p.id)passed++;
+   else failed.push({name:p.name,expected:p.id,actual:best?.id||''});
+ });
+ return {tested:samples.length,passed,failed};
+}
+
+function mirrorNearestStandardPreview(note){
+ const preview=document.getElementById('nearestStandardInlinePreview');
+ if(!preview)return;
+ const basis=proprietaryRoutingSearchBasis();
+ if(!basis.raw){
+   preview.classList.add('hidden');
+   preview.innerHTML='';
+   return;
+ }
+ preview.className=note?.className||'notice';
+ preview.classList.remove('hidden');
+ preview.innerHTML=(note?.innerHTML||'')
+   +'<div class="flow-actions"><button class="btn-secondary" type="button" id="jumpToNearestStandard">Review / confirm standard →</button></div>';
+ document.getElementById('jumpToNearestStandard')?.addEventListener('click',()=>{
+   document.getElementById('formulationRouteCard')?.scrollIntoView({behavior:'smooth',block:'start'});
+ });
+}
+
 function renderProprietaryStandardSuggestion(){
  const input=document.getElementById('proprietaryProductName');
  const select=document.getElementById('proprietaryStandardSelect');
@@ -4747,6 +4799,7 @@ function renderProprietaryStandardSuggestion(){
    confirm.disabled=true;
    note.className='notice';
    note.innerHTML='<b>Standard/category confirmation required.</b> Add at least one formulation ingredient or enter the optional finished-product name.';
+   mirrorNearestStandardPreview(note);
    return;
  }
  if(!productMasterDb||!productCatalog().length){
@@ -4755,6 +4808,7 @@ function renderProprietaryStandardSuggestion(){
    confirm.disabled=true;
    note.className='notice';
    note.innerHTML='<b>Finding the nearest FSSAI standard…</b><br><small>The product catalogue is still loading. PMSV will retry automatically when it is ready. Keep the product/formulation entry as it is.</small>';
+   mirrorNearestStandardPreview(note);
    return;
  }
  const ranked=proprietaryStandardCandidatesFromBasis(basis);
@@ -4764,6 +4818,7 @@ function renderProprietaryStandardSuggestion(){
    confirm.disabled=true;
    note.className='notice';
    note.innerHTML='<b>No loaded product catalogue is available.</b>';
+   mirrorNearestStandardPreview(note);
    return;
  }
  const best=ranked[0];
@@ -4776,7 +4831,9 @@ function renderProprietaryStandardSuggestion(){
    ? 'Matched from the finished-product name you entered.'
    : basis.source==='single_ingredient'
      ? 'Matched automatically from the single ingredient in the formulation: <b>'+esc(raw)+'</b>.'
-     : 'Matched automatically from the entered formulation. Entering an optional finished-product name can improve the ranking for multi-ingredient products.';
+     : basis.source==='pending_ingredient'
+       ? 'Preview matched from the ingredient currently being entered: <b>'+esc(raw)+'</b>. Add it with quantity to make it part of the formulation.'
+       : 'Matched automatically from the entered formulation. Entering an optional finished-product name can improve the ranking for multi-ingredient products.';
  const fpc=fpc18CategoryForProduct(best.p);
  if(confident&&fpc){
    note.className='notice oknote';
@@ -4792,12 +4849,34 @@ function renderProprietaryStandardSuggestion(){
    note.className='notice';
    note.innerHTML='<b>No reliable match was found from the '+esc(basis.label)+'.</b> Choose the closest applicable FSSAI standard or FoSCoS category manually.';
  }
+ const audit=nearestStandardEngineAudit();
+ if(audit.tested){
+   note.innerHTML+='<br><small>Nearest-standard matcher self-test: '+audit.passed+'/'+audit.tested+' exact cross-category names resolved to themselves'+(audit.failed.length?' · '+audit.failed.length+' mismatch'+(audit.failed.length===1?'':'es')+' retained for review':'')+'.</small>';
+ }
+ mirrorNearestStandardPreview(note);
 }
 function refreshNearestStandardFromFormula(){
- if(proprietaryConfirmedStandardId)return;
- renderProprietaryStandardSuggestion();
- resetProprietaryOutcome();
- renderProprietaryFormula();
+ if(proprietaryConfirmedStandardId){
+   proprietaryConfirmedStandardId='';
+   const note=document.getElementById('proprietaryStandardSuggestion');
+   if(note){
+     note.className='notice';
+     note.innerHTML='<b>Formulation changed.</b> Rechecking the nearest FSSAI standard/category before confirmation.';
+   }
+ }
+ try{
+   renderProprietaryStandardSuggestion();
+   resetProprietaryOutcome();
+   renderProprietaryFormula();
+ }catch(err){
+   const note=document.getElementById('proprietaryStandardSuggestion');
+   if(note){
+     note.className='notice';
+     note.innerHTML='<b>Nearest-standard search could not refresh.</b><br><small>'+esc(err?.message||'Runtime error')+'</small>';
+     mirrorNearestStandardPreview(note);
+   }
+   console.error('PMSV formulation nearest-standard refresh failed',err);
+ }
 }
 function applyProprietaryStandardFcs(product){
  const fpc=fpc18CategoryForProduct(product);
@@ -5695,7 +5774,8 @@ function bindProprietaryButtons(root){
  });
 }
 function ensureNearestStandardSuggestion(force=false){
- if(proprietaryConfirmedStandardId)return;
+ if(proprietaryConfirmedStandardId&&force)proprietaryConfirmedStandardId='';
+ if(proprietaryConfirmedStandardId&&!force)return;
  const basis=proprietaryRoutingSearchBasis();
  if(!basis.raw)return;
  const select=document.getElementById('proprietaryStandardSelect');
@@ -6377,6 +6457,7 @@ async function loadProductMaster(){
  renderSelectedProductRegulatoryStack();
  refreshNearestStandardFromFormula();
  ensureNearestStandardSuggestion(true);
+ setTimeout(()=>ensureNearestStandardSuggestion(true),0);
 }
 document.getElementById('productSearch')?.addEventListener('input',renderProductSearch);
 document.getElementById('productCategorySelect')?.addEventListener('change',()=>{
@@ -8481,6 +8562,7 @@ function renderIngredientAutocomplete(){
 document.getElementById('ingredientName')?.addEventListener('input',event=>{
  delete event.currentTarget.dataset.autocompleteConfirmed;
  renderIngredientAutocomplete();
+ if(!formulationIngredients.length)ensureNearestStandardSuggestion(true);
 });
 document.getElementById('ingredientName')?.addEventListener('focus',event=>{
  if(event.currentTarget.dataset.autocompleteConfirmed!=='1')renderIngredientAutocomplete();
