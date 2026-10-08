@@ -4076,8 +4076,11 @@ function renderMasterComplianceSummary(){
  const product=selectedProductForFortification();
  const profile=currentProductProfile();
  const productName=product?.name||profile?.name||'';
+ const lookupStandards=currentChapterStandards();
  if(!productName){
    rows.push(masterComplianceRow('Product standard','incomplete','Select the exact standardized product before a product-wide assessment can run.','product'));
+ }else if(standardLookupModeActive()&&(profile?.status==='rule_profile_ready'||lookupStandards.length)){
+   rows.push(masterComplianceRow('Product standard','pass',productName+' has '+(profile?.status==='rule_profile_ready'?'a fully validated PMSV rule profile':lookupStandards.length+' exact structured standard/rule row'+(lookupStandards.length===1?'':'s')+' available for lookup')+'.','standard'));
  }else if(profile?.status==='rule_profile_ready'){
    rows.push(masterComplianceRow('Product standard','pass',productName+' has a fully validated PMSV rule profile.','standard'));
  }else{
@@ -5732,19 +5735,26 @@ function renderLegacyProductScopePages(){
    return;
  }
  if(standardDynamic){
-   if(!profile){
+   if(!product&&!profile){
      standardDynamic.innerHTML='<div class="card"><div class="notice"><b>Select a standardized product first.</b> PMSV will not display another product\'s standard as a fallback.</div></div>';
    }else{
-     const linked=Array.isArray(profile.linked_rule_keys)?profile.linked_rule_keys:[];
+     const linked=[
+       product?.rule_key,
+       ...(Array.isArray(product?.rule_keys)?product.rule_keys:[]),
+       profile?.rule_key,
+       ...(Array.isArray(profile?.rule_keys)?profile.rule_keys:[]),
+       ...(Array.isArray(profile?.linked_rule_keys)?profile.linked_rule_keys:[])
+     ].map(x=>String(x||'').trim()).filter(Boolean);
      const ready=status==='rule_profile_ready';
      const chapter=status==='chapter_profile_ready';
+     const catalogStructured=!profile&&!!product&&standards.length>0;
      const productOverlays=standards.filter(x=>Array.isArray(x.standard?.applies_to_product_names)&&x.standard.applies_to_product_names.some(v=>normIngredient(v)===normIngredient(name)));
      let html='<div class="card"><div class="section-title"><h2>'+esc(name)+'</h2><span>Selected FSSAI product profile</span></div>'
        +'<div class="grid2"><div class="item"><b>FSSAI standard / route</b><small>'+esc(fssr)+'</small></div>'
        +'<div class="item"><b>Appendix A FCS</b><small>'+(fcs?esc(fcs):'<span class="status-warn">No safe FCS mapping loaded</span>')+'</small></div>'
-       +'<div class="item"><b>Machine-validation status</b><small>'+(ready?'<span class="status-good">Detailed rule profile complete</span>':chapter?'<span class="status-warn">Chapter profile loaded; detailed formulation validation still locked</span>':'<span class="status-warn">Base profile only; detailed formulation validation locked</span>')+'</small></div>'
-       +'<div class="item"><b>Linked structured rule keys</b><small>'+(linked.length?linked.map(esc).join('<br>'):'No linked rule key shown in the loaded profile.')+(productOverlays.length?'<br><span class="status-good">Exact product overlay: '+productOverlays.map(x=>esc(x.standard.key)).join(', ')+'</span>':'')+'</small></div></div>'
-       +(profile.chapter_rule_route_note?'<div class="notice"><b>Routing note:</b> '+esc(profile.chapter_rule_route_note)+'</div>':'')
+       +'<div class="item"><b>Machine-validation status</b><small>'+(ready?'<span class="status-good">Detailed rule profile complete</span>':chapter?'<span class="status-warn">Chapter profile loaded; detailed formulation validation still locked</span>':catalogStructured?'<span class="status-good">Structured standard available for lookup</span>':'<span class="status-warn">Catalog/base mapping only; missing detailed rule data stays visible as a data gap</span>')+'</small></div>'
+       +'<div class="item"><b>Linked structured rule keys</b><small>'+(linked.length?linked.map(esc).join('<br>'):'No linked rule key shown for this catalog product.')+(productOverlays.length?'<br><span class="status-good">Exact product overlay: '+productOverlays.map(x=>esc(x.standard.key)).join(', ')+'</span>':'')+'</small></div></div>'
+       +(profile?.chapter_rule_route_note?'<div class="notice"><b>Routing note:</b> '+esc(profile.chapter_rule_route_note)+'</div>':'')
        +'<div class="notice"><b>Scope protection:</b> PMSV shows only chapter rules whose exact rule key is linked to this selected product. It does not borrow a similar product standard.</div></div>';
      if(standards.length){
        standards.forEach(({db,standard})=>{
@@ -5806,8 +5816,8 @@ function renderLegacyProductScopePages(){
          if(quality.length)html+='<div class="notice"><b>Other product-standard requirements:</b><br>'+quality.map(x=>'• '+esc(typeof x==='string'?x:JSON.stringify(x))).join('<br>')+'</div>';
          html+='</div>';
        });
-     }else if(chapter||ready){
-       html+='<div class="card"><div class="notice"><b>Structured chapter file is loaded, but no exact standard key matched this product profile.</b> Detailed clause text remains fail-closed until the mapping is reconciled.</div></div>';
+     }else if(product||profile){
+       html+='<div class="card"><div class="notice"><b>No exact structured standard row matched this selected product.</b> The product remains selectable for lookup, but PMSV will not invent clause text or borrow a similar standard. This is shown as a data gap, not as a request for formulation ingredients.</div></div>';
      }
      standardDynamic.innerHTML=html;
      standardDynamic.querySelectorAll('[data-standard-test-key]').forEach(input=>input.addEventListener('change',()=>{
@@ -5821,16 +5831,18 @@ function renderLegacyProductScopePages(){
    }
  }
  if(ingredientDynamic){
-   if(!profile){
+   if(!product&&!profile){
      ingredientDynamic.innerHTML='<div class="card"><div class="notice"><b>Select a product first.</b> Ingredient permissions remain locked.</div></div>';
    }else{
      const ready=status==='rule_profile_ready';
-     const chapterReview=status==='chapter_profile_ready'&&currentGuardedFormulationStandards().length>0&&profile.chapter_rule_route_status!=='specific_variant_table_pending';
+     const chapterReview=standards.length>0&&currentGuardedFormulationStandards().length>0&&profile?.chapter_rule_route_status!=='specific_variant_table_pending';
+     const lookupOnly=standardLookupModeActive();
      let html='<div class="card"><div class="section-title"><h2>Ingredients & limits — '+esc(name)+'</h2><span>Product-scoped</span></div>'
-       +'<div class="notice '+(ready?'oknote':'')+'"><b>'+(ready?'Detailed product profile selected.':chapterReview?'Guarded chapter-profile review available.':'Detailed ingredient profile not fully validated.')+'</b><br>'
+       +'<div class="notice '+(ready||lookupOnly?'oknote':'')+'"><b>'+(ready?'Detailed product profile selected.':lookupOnly?'Standard Lookup mode — formulation not required.':chapterReview?'Guarded chapter-profile review available.':'Detailed ingredient profile not fully validated.')+'</b><br>'
        +(ready?'PMSV evaluates exact chapter ingredient entries plus Appendix A permissions for FCS '+esc(fcs||'not mapped')+'. Broad groups and conditional permissions are displayed separately and are not treated as an automatic exact match.'
+         :lookupOnly?'PMSV shows the selected product standard’s ingredient provisions and the complete loaded Appendix A permission set for FCS '+esc(fcs||'not mapped')+'. These are product/category-level permissions; no ingredient list is required to view them.'
          :chapterReview?'Ingredient entry is enabled against the exact structured chapter standard and selected Appendix A FCS. <b>This does not upgrade the product to fully validated status:</b> unresolved ingredients, conditional groups and missing cross-layer rules remain fail-closed, and PMSV will not issue a final product-compliance verdict.'
-         :'PMSV will not show or borrow the Caffeinated Beverage ingredient table. Formulation editing remains locked because an exact usable chapter rule is not yet available for this selected product.')+'</div></div>';
+         :'PMSV does not borrow another product’s ingredient table. Missing exact rule data remains a visible data gap.')+'</div></div>';
      if(standards.length){
        standards.forEach(({db,standard})=>{
          const ing=chapterStandardIngredientSections(standard);
@@ -5847,8 +5859,8 @@ function renderLegacyProductScopePages(){
          if(ing.rules.length)html+='<div class="notice"><b>Additional ingredient-rule text:</b><br>'+ing.rules.map(x=>'• '+esc(typeof x==='string'?x:JSON.stringify(x))).join('<br>')+'</div>';
          html+='</div>';
        });
-     }else if(ready){
-       html+='<div class="card"><div class="notice"><b>No exact chapter ingredient structure matched this product rule key.</b> Appendix A checks remain product/FCS-scoped, but product-standard ingredient permission stays fail-closed.</div></div>';
+     }else if(product||profile){
+       html+='<div class="card"><div class="notice"><b>No exact chapter ingredient structure matched this product.</b> Appendix A remains product/FCS-scoped where mapped; PMSV does not interpret the absence of an encoded ingredient list as permission or as a reason to request a formulation.</div></div>';
      }
      html+=productAppendixABaselineHtml(fcs);
      html+='<div class="card"><div class="flow-actions"><button class="btn-secondary" type="button" id="openScopedFormulation">Optional: assess a formulation →</button></div></div>';
@@ -5924,20 +5936,39 @@ function renderProcessingProductScope(){
 }
 
 function standardLookupStructuralAudit(){
- const required=[
-   ['standard','selectedProductStandardContent'],
-   ['ingredients','selectedProductIngredientsContent'],
-   ['contaminants','productContaminantResults'],
-   ['micro','microbiologyResults'],
-   ['process','processGrid'],
-   ['processing','processingEmpty'],
-   ['packaging','packagingProductRoute'],
-   ['fortification','fortificationRoute'],
-   ['quality','labelPageTitle'],
-   ['claims','claimsDbStatus'],
-   ['summary','masterComplianceDecision']
+ const selected=selectedProductForFortification()||currentProductProfile();
+ const checks=[
+   {label:'Product standard',tab:'standard',id:'selectedProductStandardContent',fallbackId:'caffeinatedStandardContent',block:/select a standardized product first/i},
+   {label:'Ingredients / Appendix A',tab:'ingredients',id:'selectedProductIngredientsContent',fallbackId:'caffeinatedIngredientsContent',block:/select a product first/i},
+   {label:'Contaminants / residues',tab:'contaminants',id:'productContaminantResults',block:/select a standardized product/i},
+   {label:'Microbiology',tab:'micro',id:'microbiologyResults',block:/select and open a standardized product/i},
+   {label:'Processing-aid scope',tab:'process',id:'processProductScope',fallbackId:'processGrid',block:/no standardized product selected/i},
+   {label:'Packaging',tab:'packaging',id:'packagingProductRoute',block:/select a standardized product/i},
+   {label:'Fortification',tab:'fortification',id:'fortificationProductSuggestion',block:/select a standardized product/i},
+   {label:'Labelling',tab:'quality',id:'labelProductSpecificStatus',block:/select a standardized product first/i},
+   {label:'Claims rules',tab:'claims',id:'claimsDbStatus',block:/loading/i}
  ];
- return required.map(([tab,id])=>({tab,id,present:!!document.getElementById(id)}));
+ return checks.map(check=>{
+   let el=document.getElementById(check.id);
+   let text=(el?.textContent||'').replace(/\s+/g,' ').trim();
+   if((!text||el?.classList.contains('hidden'))&&check.fallbackId){
+     const fallback=document.getElementById(check.fallbackId);
+     const fallbackText=(fallback?.textContent||'').replace(/\s+/g,' ').trim();
+     if(fallbackText){el=fallback;text=fallbackText;}
+   }
+   const present=!!el;
+   const rendered=!!selected&&present&&text.length>20&&!(check.block&&check.block.test(text));
+   return {...check,present,rendered,text:text.slice(0,180)};
+ });
+}
+function standardLookupRuntimeAuditHtml(){
+ if(!standardLookupModeActive())return '';
+ const audit=standardLookupStructuralAudit();
+ const passed=audit.filter(x=>x.rendered);
+ const failed=audit.filter(x=>!x.rendered);
+ return '<div class="notice '+(failed.length?'':'oknote')+'"><b>Standard Lookup runtime check:</b> '+passed.length+'/'+audit.length+' core product-level panels rendered without a formulation.'
+   +(failed.length?'<br><b>Still unavailable / loading:</b> '+failed.map(x=>esc(x.label)).join(', ')+'. Open those modules to see the exact data gap; PMSV will not replace missing data with an ingredient prompt.':'<br>Product-level viewing is independent of ingredient entry. Formulation-only calculations remain separate.')
+   +'</div>';
 }
 function standardLookupModeActive(){
  return formulationIngredients.length===0&&!!(selectedProductForFortification()||currentProductProfile());
@@ -5970,7 +6001,9 @@ function renderStandardLookupDashboard(){
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="quality">Labelling</button>'
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="claims">Claims rules</button>'
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="summary">Standard lookup summary</button>'
-   +'</div><div class="notice" style="margin-top:10px"><b>Formulation-dependent only:</b> nutrition calculation, ingredient-triggered allergens/warnings, ingredient-specific contaminant triggers and quantitative formulation compliance are intentionally not evaluated in Standard Lookup mode. They do not block viewing the standardized product.</div></div>';
+   +'</div>'
+   +standardLookupRuntimeAuditHtml()
+   +'<div class="notice" style="margin-top:10px"><b>Formulation-dependent only:</b> nutrition calculation, ingredient-triggered allergens/warnings, ingredient-specific contaminant triggers and quantitative formulation compliance are intentionally not evaluated in Standard Lookup mode. They do not block viewing the standardized product.</div></div>';
  box.querySelectorAll('[data-standard-lookup-tab]').forEach(btn=>btn.addEventListener('click',()=>{
    const tab=btn.dataset.standardLookupTab;
    if(validTabs.has(tab)){
