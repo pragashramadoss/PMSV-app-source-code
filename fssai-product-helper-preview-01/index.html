@@ -750,32 +750,13 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 </div>
 
 <div class="card" id="packagingPlasticCard">
-<div class="section-title"><h2>Plastic migration assessment</h2><span>Reg. 4(4)</span></div>
-<div class="checker-grid">
-  <div class="field">
-    <label>Overall migration result — mg/kg</label>
-    <input id="packagingOverallMgKg" type="number" min="0" step="any" placeholder="Optional if result is reported in mg/dm²">
-    <small>Maximum: 60 mg/kg.</small>
-  </div>
-  <div class="field">
-    <label>Overall migration result — mg/dm²</label>
-    <input id="packagingOverallMgDm2" type="number" min="0" step="any" placeholder="Optional if result is reported in mg/kg">
-    <small>Maximum: 10 mg/dm².</small>
-  </div>
-  <div class="field">
-    <label>Visible colour migration?</label>
-    <select id="packagingColourMigration">
-      <option value="">Not answered</option>
-      <option value="no">No</option>
-      <option value="yes">Yes</option>
-    </select>
-  </div>
-</div>
+<div class="section-title"><h2>Plastic migration limits</h2><span>Reg. 4(4) · reference</span></div>
+<div class="notice oknote"><b>FSSAI migration requirements:</b> Overall migration must not exceed <b>60 mg/kg</b> or <b>10 mg/dm²</b>, as applicable. The specific migration limits below are shown as regulatory reference only; PMSV does not require laboratory-result entry in this module.</div>
 <div class="tablewrap"><table>
-<thead><tr><th>Specific migration substance</th><th>Limit (mg/kg)</th><th>Lab result (mg/kg)</th><th>Status</th></tr></thead>
+<thead><tr><th>Specific migration substance</th><th>FSSAI limit (mg/kg)</th></tr></thead>
 <tbody id="packagingMigrationRows"></tbody>
 </table></div>
-<div class="notice"><b>Fail-closed:</b> Blank laboratory fields are treated as missing evidence, not as zero migration.</div>
+<div class="notice"><small>Laboratory verification and certificate review remain part of the food-business/operator's compliance evidence. This screen is for identifying the applicable FSSAI limits, not recording test results.</small></div>
 </div>
 
 <div class="card">
@@ -1240,7 +1221,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-reference-v22';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-packaging-reference-v23';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -8022,14 +8003,9 @@ function renderPackagingMigrationRows(){
  const body=document.getElementById('packagingMigrationRows');
  if(!body||!packagingDb)return;
  const limits=packagingDb.primary_material_rules?.plastic?.specific_migration_limits_mg_per_kg||{};
- body.innerHTML=Object.entries(limits).map(([name,limit])=>{
-   const id='packMig_'+name.replace(/[^a-z0-9]/gi,'_');
-   const value=document.getElementById(id)?.value||'';
-   const num=value===''?null:Number(value);
-   const status=num===null?'<span class="status-warn">Not entered</span>':num<=Number(limit)?'<span class="status-good">Pass</span>':'<span class="status-bad">Fail</span>';
-   return '<tr><td><b>'+esc(name)+'</b></td><td>'+fmt(limit,3)+'</td><td><input id="'+esc(id)+'" data-pack-migration="'+esc(name)+'" type="number" min="0" step="any" value="'+esc(value)+'" placeholder="Enter result"></td><td>'+status+'</td></tr>';
- }).join('');
- body.querySelectorAll('[data-pack-migration]').forEach(el=>el.addEventListener('change',renderPackagingMigrationRows));
+ body.innerHTML=Object.entries(limits).map(([name,limit])=>
+   '<tr><td><b>'+esc(name)+'</b></td><td><b>'+fmt(limit,3)+'</b></td></tr>'
+ ).join('');
 }
 function renderPackaging(){
  const status=document.getElementById('packagingDbStatus');
@@ -8457,18 +8433,6 @@ async function loadPackagingDb(){
  renderPackaging();
  refreshStandardLookupAudit();
 }
-function packagingSpecificMigrationAssessment(){
- const limits=packagingDb?.primary_material_rules?.plastic?.specific_migration_limits_mg_per_kg||{};
- const rows=[];
- for(const [name,limit] of Object.entries(limits)){
-   const id='packMig_'+name.replace(/[^a-z0-9]/gi,'_');
-   const raw=document.getElementById(id)?.value??'';
-   if(raw===''){rows.push({name,limit,status:'missing'});continue;}
-   const value=Number(raw);
-   rows.push({name,limit,value,status:Number.isFinite(value)&&value<=Number(limit)?'pass':'fail'});
- }
- return rows;
-}
 function evaluatePackaging(){
  const out=document.getElementById('packagingAssessment');
  if(!out)return;
@@ -8540,30 +8504,7 @@ function evaluatePackaging(){
  }
 
  if(effectiveFamily==='plastic'){
-   const mgkgRaw=document.getElementById('packagingOverallMgKg')?.value??'';
-   const mgdmRaw=document.getElementById('packagingOverallMgDm2')?.value??'';
-   const mgkg=mgkgRaw===''?null:Number(mgkgRaw);
-   const mgdm=mgdmRaw===''?null:Number(mgdmRaw);
-   if(mgkg===null&&mgdm===null)missing.push('Overall migration result (mg/kg or mg/dm²)');
-   if(mgkg!==null){
-     if(mgkg>60)fails.push('Overall migration '+fmt(mgkg,3)+' mg/kg exceeds 60 mg/kg.');
-     else passes.push('Overall migration mg/kg gate');
-   }
-   if(mgdm!==null){
-     if(mgdm>10)fails.push('Overall migration '+fmt(mgdm,3)+' mg/dm² exceeds 10 mg/dm².');
-     else passes.push('Overall migration mg/dm² gate');
-   }
-   const colour=document.getElementById('packagingColourMigration')?.value||'';
-   if(colour==='yes')fails.push('Visible colour migration detected.');
-   else if(!colour)missing.push('Visible colour-migration result');
-   else passes.push('No visible colour migration');
-
-   const sml=packagingSpecificMigrationAssessment();
-   const failed=sml.filter(x=>x.status==='fail');
-   const miss=sml.filter(x=>x.status==='missing');
-   if(failed.length)fails.push('Specific migration limit exceeded: '+failed.map(x=>x.name).join(', ')+'.');
-   if(miss.length)missing.push('Specific migration results: '+miss.map(x=>x.name).join(', '));
-   if(!failed.length&&!miss.length)passes.push('All loaded specific migration limits');
+   passes.push('Plastic migration limits identified for reference; laboratory-result entry is outside this PMSV assessment screen.');
  }
  const route=packagingScheduleRoute();
  const selectedProduct=selectedProductForPackaging();
