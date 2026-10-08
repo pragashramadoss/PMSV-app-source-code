@@ -1228,7 +1228,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-dahi-subroute-v30';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-dahi-subroute-v31';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -3147,7 +3147,7 @@ function renderStandardLookupNutritionReference(){
 
  if(regulatory)regulatory.innerHTML=standardLookupRegulatoryCompositionHtml();
  const product=currentAssessmentCatalogProduct();
- const productName=product?.name||currentProductProfile()?.name||'Selected standardized product';
+ const productName=product?.lookup_display_name||product?.name||currentProductProfile()?.name||'Selected standardized product';
  if(!nutritionDb){
    status.className='notice';
    status.innerHTML='<b>ICMR-NIN nutrition database is still loading.</b>';
@@ -4561,7 +4561,7 @@ function renderMasterComplianceSummary(){
  const rows=[];
  const product=selectedProductForFortification();
  const profile=currentProductProfile();
- const productName=product?.name||profile?.name||'';
+ const productName=product?.lookup_display_name||product?.name||profile?.name||'';
  const lookupStandards=currentChapterStandards();
  if(!productName){
    rows.push(masterComplianceRow('Product standard','incomplete','Select the exact standardized product before a product-wide assessment can run.','product'));
@@ -5205,7 +5205,13 @@ function nearestStandardEngineAudit(){
    if(best?.id===p.id)passed++;
    else failed.push({name:p.name,expected:p.id,actual:best?.id||''});
  });
- return {tested:samples.length,passed,failed};
+ const aliasTests=[{name:'Dahi',expected:'01-01-2-fermented-milk'}];
+ aliasTests.forEach(test=>{
+   const best=proprietaryStandardCandidates(test.name)[0]?.p;
+   if(best?.id===test.expected)passed++;
+   else failed.push({name:test.name,expected:test.expected,actual:best?.id||''});
+ });
+ return {tested:samples.length+aliasTests.length,passed,failed};
 }
 function mirrorNearestStandardPreview(note){
  const preview=document.getElementById('nearestStandardInlinePreview');
@@ -6577,7 +6583,7 @@ function renderProcessingProductScope(){
  const processBox=document.getElementById('processProductScope');
  const aidBox=document.getElementById('processingProductScope');
  const candidates=processingAidProductScopeMatches();
- const productName=p?.name||currentProductProfile()?.name||'';
+ const productName=p?.lookup_display_name||p?.name||currentProductProfile()?.name||'';
  const summary=!p
    ? '<div class="notice"><b>No standardized product selected.</b> Confirm a product to see product-specific Appendix C scope.</div>'
    : candidates.length
@@ -6619,7 +6625,8 @@ function renderStandardLookupModeUi(){
  if(nutritionNotice){
    nutritionNotice.classList.toggle('hidden',!lookup);
    if(lookup){
-     const name=selectedProductForFortification()?.name||currentProductProfile()?.name||'selected standardized product';
+     const activeProduct=selectedProductForFortification();
+     const name=activeProduct?.lookup_display_name||activeProduct?.name||currentProductProfile()?.name||'selected standardized product';
      nutritionNotice.className='notice oknote';
      nutritionNotice.innerHTML='<b>Standard Lookup mode — '+esc(name)+'.</b><br><b>No formulation is required.</b> PMSV separates <b>FSSAI regulatory composition requirements</b> from <b>ICMR-NIN IFCT food-composition reference values</b>. IFCT values are shown only for an exact official food identity; recipe/brand nutrition calculation remains optional.';
    }
@@ -6668,7 +6675,7 @@ function standardLookupDataCoverageHtml(){
  const p=selectedProductForFortification();
  const profile=currentProductProfile();
  if(!p&&!profile)return '';
- const name=p?.name||profile?.name||'Selected product';
+ const name=p?.lookup_display_name||p?.name||profile?.name||'Selected product';
  const standards=currentChapterStandards();
  const fcs=appendixFcsForRecord(p)||appendixFcsForRecord(profile)||'';
  const appendix=fcs&&appendixCoreDb?appendixEntriesForFcs(fcs):null;
@@ -7872,11 +7879,11 @@ function syncContaminantQualifierVisibility(p){
      summary.innerHTML='<b>Product-specific inputs:</b> confirm a standardized product first. PMSV will then show only contaminant qualifiers actually required for that product.';
    }else if(!any){
      summary.className='notice oknote';
-     summary.innerHTML='<b>No additional contaminant qualifiers are required for '+esc(p.name)+'.</b> PMSV is showing the directly applicable product-specific, commodity-specific and “all foods” rules below.';
+     summary.innerHTML='<b>No additional contaminant qualifiers are required for '+esc(p.lookup_display_name||p.name)+'.</b> PMSV is showing the directly applicable product-specific, commodity-specific and “all foods” rules below.';
    }else{
      const count=pairs.filter(([,show])=>show).length;
      summary.className='notice';
-     summary.innerHTML='<b>'+count+' product-specific contaminant input'+(count===1?' is':'s are')+' relevant to '+esc(p.name)+'.</b> Unrelated Tin, milk, sugar and subtype controls are hidden.';
+     summary.innerHTML='<b>'+count+' product-specific contaminant input'+(count===1?' is':'s are')+' relevant to '+esc(p.lookup_display_name||p.name)+'.</b> Unrelated Tin, milk, sugar and subtype controls are hidden.';
    }
  }
 }
@@ -7895,7 +7902,7 @@ function renderProductContaminants(){
  if(target){
    target.className=p?'notice oknote':'notice';
    target.innerHTML=p
-     ? '<b>Assessment target:</b> '+esc(p.name)+(hasRealFssrStandard(p)?' · <span class="clause">'+esc(p.fssr)+'</span>':'')
+     ? '<b>Assessment target:</b> '+esc(p.lookup_display_name||p.name)+(hasRealFssrStandard(p)?' · <span class="clause">'+esc(p.fssr)+'</span>':'')
      : '<b>Assessment target:</b> no confirmed standardized product. Confirm the nearest standard in Formulation Step 2 first.';
  }
  try{renderPackagingTinStatus(p);}catch(e){console.error('Packaging Tin status',e);}
