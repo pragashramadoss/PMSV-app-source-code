@@ -1233,7 +1233,7 @@ let packagingDb=null;
 let fortificationDb=null;
 let fpc18Db=null;
 let chapterRuleDbs=[];
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v4';
+const PRODUCT_HELPER_UI_BUILD='2026-10-08-standard-lookup-v5';
 const CHAPTER_RULE_URLS=[
  './data/rules/chapter-2-1-dairy-v1.json',
  './data/rules/chapter-2-2-fats-oils-v1.json',
@@ -4433,7 +4433,7 @@ function renderProductSearch(){
    const detailed=profile&&profile.status==='rule_profile_ready';
    const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
    const appendixFcs=appendixFcsForRecord(p);
-   return '<div class="item" style="margin-bottom:8px"><b>'+esc(p.name)+'</b><small>'+(p.category?'FoSCoS '+esc(p.category)+' · '+esc(p.subcategory||'—')+' · ':'')+'Appendix A FCS '+esc(appendixFcs||'not mapped')+(p.fssr?'<br>FSSR: '+esc(p.fssr):'')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FSSAI standard loaded · FoSCoS hierarchy mapping pending</span>':'')+(!appendixFcs?'<br><span class="status-warn">'+esc(appendixFcsStatusLabel(p)||'Appendix A mapping pending')+'</span>':'')+'<br>'+(detailed?'<span class="status-good">Detailed profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base profile loaded</span>':'<span class="status-bad">Profile unavailable</span>')+'</small><div style="margin-top:8px"><button class="btn-secondary" type="button" data-show-catalog-product="'+esc(p.id)+'">Select</button></div></div>';
+   return '<div class="item" style="margin-bottom:8px"><b>'+esc(p.name)+'</b><small>'+(p.category?'FoSCoS '+esc(p.category)+' · '+esc(p.subcategory||'—')+' · ':'')+'Appendix A FCS '+esc(appendixFcs||'not mapped')+(p.fssr?'<br>FSSR: '+esc(p.fssr):'')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FSSAI standard loaded · FoSCoS hierarchy mapping pending</span>':'')+(!appendixFcs?'<br><span class="status-warn">'+esc(appendixFcsStatusLabel(p)||'Appendix A mapping pending')+'</span>':'')+'<br>'+(detailed?'<span class="status-good">Detailed profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base profile loaded</span>':'<span class="status-good">Catalogue standard available for lookup</span>')+'</small><div style="margin-top:8px"><button class="btn-secondary" type="button" data-show-catalog-product="'+esc(p.id)+'">Select</button></div></div>';
  }).join('');
  box.querySelectorAll('[data-show-catalog-product]').forEach(btn=>btn.addEventListener('click',()=>{
    const p=findCatalogProductById(btn.dataset.showCatalogProduct);
@@ -6077,7 +6077,7 @@ function applyProductGate(){
  const product=selectedProductForFortification();
  if(add)add.disabled=false;
  if(load){
-   const exampleAllowed=!!profile&&caffeinatedPrototypeScopeActive();
+   const exampleAllowed=!!(product||profile)&&caffeinatedPrototypeScopeActive();
    load.disabled=!exampleAllowed;
    load.classList.toggle('hidden',!exampleAllowed);
  }
@@ -6089,8 +6089,8 @@ function applyProductGate(){
        +((product?.fssr||profile?.fssr)?' · FSSR '+esc(product?.fssr||profile?.fssr):'')
        +(formulationIngredients.length
          ? '.<br><small>Formulation Assessment mode: re-run the route decision after any formulation change.</small>'
-         : '.<br><small><b>Standard Lookup mode:</b> no formulation is required to inspect this product’s standard and product-level regulatory requirements.</small>')
-     : '<b>Formulation-first mode.</b> Enter the complete formulation below. Product selection is intentionally not required before ingredient entry; PMSV will determine the nearest standard/category from this same screen.';
+         : '.<br><small><b>Standard Lookup mode:</b> the selected catalogue product is sufficient to inspect all loaded product-level regulatory requirements; a detailed PMSV profile is not required merely to view the standard.</small>')
+     : '<b>Formulation-first mode.</b> Enter the complete formulation below, or select a standardized product in Step 2 to use Standard Lookup mode without entering ingredients.';
    gate.classList.remove('hidden');
  }
 }
