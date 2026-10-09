@@ -69,8 +69,9 @@ test("source rows are escaped, and prohibited auto-approval is not enabled",()=>
 test("master contaminant lookup does not pass with universal-only methylmercury",()=>{
  const at=html.indexOf("function renderMasterComplianceSummary(){");
  assert.ok(at>0);
- const end=html.indexOf("function ",at+20);
- const scoped=html.slice(at,end>at?end:at+14000);
+ const end=html.indexOf("   if(!product){",at);
+ assert.ok(end>at,"Could not locate the microbiology boundary in the lookup summary");
+ const scoped=html.slice(at,end);
  assert.match(scoped,/const productSpecificCount=exactCount\+baselineCount\+pesticideCount/);
  assert.match(scoped,/const state=productSpecificCount\?'evidence':'incomplete'/);
  assert.match(scoped,/universal-only evidence as complete coverage/);
