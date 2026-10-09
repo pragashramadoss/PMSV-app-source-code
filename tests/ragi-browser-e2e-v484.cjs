@@ -95,6 +95,11 @@ const child=spawn('python3',['-m','http.server','18777','--bind','127.0.0.1','--
   const confirmation=await page.evaluate(()=>document.getElementById('proprietaryStandardSuggestion')?.innerText||'');
   assert.match(confirmation,/Confirmed FSSAI standard\/product: Jowar/i);
   assert.ok(!confirmation.includes('Jowar Flour'),'Confirmation silently switched to flour');
-  console.log('PASS: all millet grains, flour variants, live dropdown and Jowar confirmation');
+  const gate=await page.locator('#formulationProductGate').innerText();
+  assert.match(gate,/Confirmed product: Jowar\s*·\s*FSSR 2\.4\.6\(23\)/i,'Product display reverted to generic Millets');
+  assert.ok(!gate.includes('Jowar Flour'),'Product gate assigned processed flour to whole grain');
+  const coverage=await page.locator('#productMasterStatus').innerText();
+  assert.match(coverage,/complete current official FoSCoS standardized-product snapshot has not yet been independently verified/i,'Catalogue completeness caveat missing');
+  console.log('PASS: all millet grains, flour variants, live dropdown, Jowar confirmation, product gate and source coverage disclosure');
  }finally{await browser.close();}
 })().catch(e=>{console.error('BROWSER TEST FAILURE:',e.stack||e);process.exitCode=1;}).finally(()=>{child.kill('SIGTERM');});
