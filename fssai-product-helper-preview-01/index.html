@@ -1230,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-ifct-status-first-v478';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-ifct-rice-variants-v479';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -2974,8 +2974,18 @@ function standardLookupNutritionSelection(){
  if(!product)return null;
  const id=String(product.id||'');
  const isCombined=id==='01-01-6-chhana-and-paneer';
+ const isRice=id==='06-06-1-rice';
  let name=String(product.lookup_display_name||product.chapter_rule_variant||product.name||'');
  let choice='';
+ let riceCode='';
+ if(isRice){
+   try{
+     const saved=JSON.parse(sessionStorage.getItem(PMSV_IFCT_VARIANT_KEY)||'null');
+     if(saved?.id===id&&['A015','A013','A014'].includes(saved.choice))riceCode=saved.choice;
+   }catch(e){}
+   // Generic rice is not a unique IFCT food; do not assume milling or parboiling.
+   name='';
+ }
  if(isCombined){
    const explicit=normIngredient(name);
    if(explicit==='paneer'||explicit==='chhana')choice=explicit;
@@ -2987,12 +2997,12 @@ function standardLookupNutritionSelection(){
    }
    name=choice==='paneer'?'Paneer':choice==='chhana'?'Chhana':'';
  }
- return {product,id,name,isCombined,choice};
+ return {product,id,name,isCombined,choice,isRice,riceCode};
 }
 function standardLookupNutritionProfile(){
  if(!nutritionDb||!Array.isArray(nutritionDb.profiles))return null;
  const selection=standardLookupNutritionSelection();
- if(!selection||selection.isCombined&&!selection.choice)return null;
+ if(!selection||selection.isCombined&&!selection.choice||selection.isRice&&!selection.riceCode)return null;
  if(selection.isCombined&&selection.choice==='chhana')return null; // IFCT L003 is Paneer, never Chhana.
  const {product,id,name}=selection;
  const verifiedCodes={
@@ -3003,6 +3013,10 @@ function standardLookupNutritionProfile(){
  if(selection.isCombined&&selection.choice==='paneer')verifiedCodes[id]='L003';
  const byCode=code=>nutritionDb.profiles.find(p=>p.ifct_code===code
    &&p.active_for_calculation===true&&p.source_authority==='ICMR-NIN');
+ if(selection.isRice){
+   const profile=byCode(selection.riceCode);
+   return profile?{profile,basis:'Explicit rice milling/parboiling identity chosen from IFCT 2017; not an assumption about all standardized rice'}:null;
+ }
  if(verifiedCodes[id]){
    const profile=byCode(verifiedCodes[id]);
    return profile?{profile,basis:selection.isCombined?'Confirmed Paneer finished-product identity (not Chhana)':'Explicit audited FoSCoS-to-IFCT identity; verify applicable milk class where relevant'}:null;
@@ -3171,18 +3185,14 @@ function renderStandardLookupNutritionReference(){
  const regulatory=document.getElementById('nutritionStandardRegulatory');
  const status=document.getElementById('nutritionStandardReferenceStatus');
  const table=document.getElementById('nutritionStandardReferenceTable');
+ const variantSlot=document.getElementById('nutritionStandardIfctVariant');
  if(!card||!status||!table)return;
  const lookup=standardLookupModeActive();
  card.classList.toggle('hidden',!lookup);
- if(!lookup){if(regulatory)regulatory.innerHTML='';table.innerHTML='';return;}
+ if(!lookup){if(regulatory)regulatory.innerHTML='';if(variantSlot)variantSlot.innerHTML='';table.innerHTML='';return;}
  if(regulatory)regulatory.innerHTML=standardLookupRegulatoryCompositionHtml();
  const selection=standardLookupNutritionSelection();
  const productName=selection?.product?.lookup_display_name||selection?.product?.name||currentProductProfile()?.name||'Selected standardized product';
- if(!nutritionDb){
-   status.className='notice';
-   status.innerHTML='<b>ICMR-NIN IFCT nutrition database is still loading.</b>';
-   table.innerHTML='';return;
- }
  const source='<a target="_blank" rel="noopener noreferrer" href="https://www.nin.res.in/ebooks/IFCT2017_16122024.pdf">Official ICMR-NIN IFCT 2017</a>';
  const variantUi=selection?.isCombined
    ?'<div class="notice"><label for="nutritionIfctExactVariantV477"><b>Choose the actual finished food (no ingredients required)</b></label>'
@@ -3190,17 +3200,34 @@ function renderStandardLookupNutritionReference(){
      +'<option value="paneer"'+(selection.choice==='paneer'?' selected':'')+'>Paneer</option>'
      +'<option value="chhana"'+(selection.choice==='chhana'?' selected':'')+'>Chhana</option></select>'
      +'<small>FSSAI 2.1.16 groups Chhana and Paneer; IFCT L003 measures Paneer alone. The choice selects an IFCT food identity, not regulatory approval.</small></div>'
+   :selection?.isRice
+   ?'<div class="notice"><label for="nutritionIfctExactVariantV477"><b>Select the exact rice form (no ingredients required)</b></label>'
+     +'<select id="nutritionIfctExactVariantV477"><option value="">Choose milling/parboiling form</option>'
+     +'<option value="A015"'+(selection.riceCode==='A015'?' selected':'')+'>Rice, raw, milled · IFCT A015</option>'
+     +'<option value="A013"'+(selection.riceCode==='A013'?' selected':'')+'>Rice, raw, brown · IFCT A013</option>'
+     +'<option value="A014"'+(selection.riceCode==='A014'?' selected':'')+'>Rice, parboiled, milled · IFCT A014</option></select>'
+     +'<small>IFCT lists multiple rice forms. Select the actual form; PMSV never assumes that every Rice or Basmati Rice product is identical.</small></div>'
    :'';
+ if(variantSlot)variantSlot.innerHTML=variantUi;
+ if(!nutritionDb){
+   const n=normIngredient(selection?.name||productName);
+   const dahi=['dahi','plain dahi','curd','plain curd'].includes(n);
+   status.className='notice';
+   status.innerHTML=dahi?'<b>Layer 2 — No direct IFCT 2017 Dahi/Curd entry.</b> This food is not individually analysed in IFCT 2017. The database is still loading for other foods.': '<b>ICMR-NIN IFCT nutrition database is still loading.</b>';
+   table.innerHTML=dahi?'<div class="notice">Data status: unavailable (not zero). Dahi cannot borrow raw-milk nutrients. Source: '+source+'.</div>':'';
+   return;
+ }
  const match=standardLookupNutritionProfile();
  if(!match){
    const n=normIngredient(selection?.name||productName);
    const dahi=['dahi','plain dahi','curd','plain curd'].includes(n);
    const combined=!selection?.choice&&selection?.isCombined;
+   const rice=selection?.isRice&&!selection.riceCode;
    const chhana=selection?.isCombined&&selection.choice==='chhana';
    status.className='notice';
-   status.innerHTML='<b>Layer 2 — '+(dahi?'No direct IFCT 2017 Dahi/Curd entry.':combined?'Confirm Paneer or Chhana to find the correct IFCT reference.':chhana?'No direct IFCT 2017 Chhana entry.':'No exact verified IFCT nutrition entry for '+esc(productName)+'.')+'</b><br>'
+   status.innerHTML='<b>Layer 2 — '+(dahi?'No direct IFCT 2017 Dahi/Curd entry.':combined?'Confirm Paneer or Chhana to find the correct IFCT reference.':rice?'Select the exact rice form to view IFCT nutrition.':chhana?'No direct IFCT 2017 Chhana entry.':'No exact verified IFCT nutrition entry for '+esc(productName)+'.')+'</b><br>'
      +'The FSSAI legal composition above is available without entering ingredients. PMSV will not substitute a related food, use legal minima as measured nutrients, or invent missing values.';
-   table.innerHTML=variantUi+'<div class="notice"><b>Reference unavailable — not zero.</b> To obtain a recipe-specific estimate, use the optional formulation calculator. The estimate is not a direct IFCT measurement. Source: '+source+'.</div>';
+   table.innerHTML='<div class="notice"><b>Reference unavailable — not zero.</b> To obtain a recipe-specific estimate, use the optional formulation calculator. The estimate is not a direct IFCT measurement. Source: '+source+'.</div>';
    return;
  }
  const profile=match.profile;
@@ -3248,15 +3275,15 @@ function renderStandardLookupNutritionReference(){
  status.innerHTML='<b>Layer 2 — direct ICMR-NIN IFCT 2017 nutrition reference:</b> '+esc(profile.display_name||productName)
    +(profile.ifct_code?' · <span class="clause">'+esc(profile.ifct_code)+'</span>':'')
    +'<br><small>'+esc(match.basis)+'. Values are from the exact identified IFCT food, not a guaranteed label for every commercial product. Nutrients without verified values remain unavailable. '+source+'.</small>';
- table.innerHTML=variantUi+(panels.join('')||'<div class="notice">No verified nutrients are currently available for this IFCT identity.</div>');
+ table.innerHTML=panels.join('')||'<div class="notice">No verified nutrients are currently available for this IFCT identity.</div>';
 }
 document.addEventListener('change',function(ev){
  if(ev.target?.id!=='nutritionIfctExactVariantV477')return;
  const selection=standardLookupNutritionSelection();
- if(!selection?.isCombined)return;
+ if(!selection?.isCombined&&!selection?.isRice)return;
  const choice=String(ev.target.value||'');
  try{
-   if(['paneer','chhana'].includes(choice))sessionStorage.setItem(PMSV_IFCT_VARIANT_KEY,JSON.stringify({id:selection.id,choice}));
+   if(selection.isCombined&&['paneer','chhana'].includes(choice)||selection.isRice&&['A015','A013','A014'].includes(choice))sessionStorage.setItem(PMSV_IFCT_VARIANT_KEY,JSON.stringify({id:selection.id,choice}));
    else sessionStorage.removeItem(PMSV_IFCT_VARIANT_KEY);
  }catch(e){}
  renderStandardLookupNutritionReference();
