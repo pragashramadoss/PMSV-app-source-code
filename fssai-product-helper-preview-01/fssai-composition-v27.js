@@ -29,6 +29,12 @@ window.standardLookupRegulatoryCompositionHtml=function(){
  const variants=Array.isArray(st.variants)?st.variants:[];
  const alias=aliasVariant();
  const isPlainDahi=norm(alias)==='dahi'||norm(product.chapter_rule_variant)==='dahi';
+ // Main helper now owns the exact FSSAI Dahi scope, including mixed-milk
+ // limits. Do not replace that richer output with this legacy v27 wrapper.
+ if(isPlainDahi){
+   const current=original();
+   if(current.includes('data-pmsv-exact-dairy="2.1.13"'))return current;
+ }
  const chosen=isPlainDahi?'':savedVariant(product);
  const validChoice=variants.includes(chosen)?chosen:'';
  const selectedName=norm(product.lookup_display_name||product.name);
