@@ -8402,6 +8402,12 @@ function conditionalMetalRowsForProduct(p){
 }
 function exactPesticideMrlRowsForProduct(p){
  if(!p||!contaminantsDb)return [];
+ // Chapter 2.3 and 2.4 finished products have source-only commodity reviews.
+ // Exact name collisions (e.g. Rice/Wheat) do not establish processing basis,
+ // pesticide residue definition, amendments, or complete finished-food approval.
+ // Preserve every source MRL inside the separate REVIEW ONLY panel instead.
+ if((contaminantsDb.chapter_2_3_commodity_mrl_review_v1||[]).some(r=>r.catalog_id===p.id)
+   ||(contaminantsDb.chapter_2_4_commodity_mrl_review_v1||[]).some(r=>r.catalog_id===p.id))return [];
  const target=normIngredient(p.name||'');
  if(!target)return [];
  const out=[];

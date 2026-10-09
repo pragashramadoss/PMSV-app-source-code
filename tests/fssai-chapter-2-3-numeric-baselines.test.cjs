@@ -420,3 +420,25 @@ test("tomato, coconut, mango, groundnut and potato Chapter 2.3 raw-ingredient re
  assert.match(html,/\+fruitVegCommodityReview/);
  assert.match(html,/These refer to precursor commodities, not confirmed finished-product MRLs/);
 });
+
+
+test("Chapter 2.3 98-product review-only scope blocks exact-name pesticide auto approval",()=>{
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const at=html.indexOf("function exactPesticideMrlRowsForProduct(p){");
+ assert.ok(at>=0);
+ const end=html.indexOf("\nfunction ",at+12);
+ const fn=html.slice(at,end);
+ const vm=require("node:vm");
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const c=vm.createContext({contaminantsDb:db,normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),milkProductContaminantScope:()=>false});
+ vm.runInContext(fn,c);
+ const rows=p=>Array.from(vm.runInContext("exactPesticideMrlRowsForProduct("+JSON.stringify(p)+")",c));
+ const products=index.products.filter(p=>String(p.fssr||"").startsWith("2.3."));
+ assert.equal(products.length,98);
+ for(const p of products)assert.deepEqual(rows(p),[],p.name+" must not be approved based on commodity name");
+ // This deliberately colliding source commodity demonstrates that record ID, not name,
+// controls review-only scope, even where a future article says Tomato verbatim.
+ assert.ok(db.residue_mrls.pesticides.some(x=>(x.rows||[]).some(r=>r.food==="Tomato")));
+ assert.deepEqual(rows({id:"tomato-juice",name:"Tomato",fssr:"2.3.8"}),[]);
+ assert.ok(rows({id:"unscoped-synthetic-tomato",name:"Tomato",fssr:"2.10.99"}).length>0);
+});

@@ -160,3 +160,29 @@ test("pulse flour crop-contaminant candidates do not silently become cereal cand
  }
  assert.match(html,/Chapter 2\.4 — FSSAI commodity residue review/);
 });
+
+
+test("Chapter 2.4 review-only status blocks direct exact-name pesticide approval (Rice, Wheat, Maize)",()=>{
+ const pesticide=s("function exactPesticideMrlRowsForProduct(p){");
+ const c=vm.createContext({
+  contaminantsDb:db,
+  normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+  milkProductContaminantScope:()=>false
+ });
+ vm.runInContext(pesticide,c);
+ const getRows=p=>Array.from(vm.runInContext("exactPesticideMrlRowsForProduct("+JSON.stringify(p)+")",c));
+ for(const name of ["Rice","Wheat","Maize","Durum Wheat","Pearl Barley"]){
+  const p=chapter.find(x=>x.name===name);
+  assert.ok(p,"Missing "+name);
+  assert.deepEqual(getRows(p),[],name+" must be REVIEW ONLY");
+  assert.ok(byId.get(p.id),name+" must retain its official source-reference panel");
+ }
+ const rice=chapter.find(x=>x.name==="Rice");
+ const ref=run("productCerealCommodityMrlReviewHtml",rice);
+ assert.match(ref,/\bRice\b/);
+ assert.match(ref,/REVIEW ONLY · NOT APPLIED/);
+ assert.match(ref,/official commodity MRL reference/);
+ // Guard applies to exact catalogue identity; other chapters retain their existing route.
+ const tea=getRows({id:"non-cereal-tea",name:"Tea",fssr:"2.10.0"});
+ assert.ok(tea.length>0,"Non-Chapter 2.3/2.4 commodity behavior must remain unchanged");
+});
