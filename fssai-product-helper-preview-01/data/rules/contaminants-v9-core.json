@@ -27194,5 +27194,59 @@
     "current_amendments_fully_reconciled": false,
     "cross_product_inheritance": false,
     "automatic_pesticide_mrl_approval": false
+  },
+  "chapter_2_4_exact_unprocessed_raw_pulses_v9": {
+    "catalog_id": "06-06-1-unprocessed-whole-raw-pulses-not-for-direct-human-consumption",
+    "product_name": "Unprocessed whole raw pulses (not for direct human consumption)",
+    "existing_catalogue_fssr": "2.4.6",
+    "specific_source_clause": "2.4.6(16)",
+    "official_standard_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf",
+    "official_contaminants_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "official_contaminant_article": "Pulses",
+    "exact_raw_pulses_identity_verified": true,
+    "source_version_contaminants": "Version IX (03.02.2026)",
+    "source_version_standard": "Chapter 2.4 Version 4 (07.05.2025)",
+    "rules": [
+      {
+        "crop_contaminant_key": "total_aflatoxins",
+        "contaminant": "Total Aflatoxins",
+        "limit": 15,
+        "unit": "µg/kg"
+      },
+      {
+        "crop_contaminant_key": "aflatoxin_b1",
+        "contaminant": "Aflatoxin B1",
+        "limit": 10,
+        "unit": "µg/kg"
+      }
+    ],
+    "source_specific_quality_limits": [
+      {
+        "parameter": "Foreign matter (extraneous matter)",
+        "operator": "<=",
+        "value": 3,
+        "unit": "% by weight"
+      },
+      {
+        "parameter": "Inorganic matter and impurities of animal origin within foreign matter",
+        "operator": "<=",
+        "value": 0.5,
+        "unit": "% by weight"
+      }
+    ],
+    "quality_clause_catalogue_link_status": "pending_master_and_search_index_reconciliation",
+    "compliance_decision_allowed": false,
+    "pesticide_mrl_auto_apply": false,
+    "derivative_inheritance": false,
+    "full_contaminant_coverage": false,
+    "amendments_fully_reconciled": false,
+    "excluded_other_forms": [
+      "06-06-1-pulses",
+      "06-06-1-soybean",
+      "06-06-2-besan",
+      "06-06-2-roasted-bengal-gram-flour-chana-sattu",
+      "06-06-8-tofu",
+      "06-06-2-solvent-extract-soya-flour"
+    ]
   }
 }

@@ -259,6 +259,32 @@ for(const x of exactBeverageSaffrole.verified_finished_product_identities){
  exactBeverageSaffroleById.set(x.catalog_id,x);
 }
 for(const id of exactBeverageSaffrole.excluded_concentrate_powder_and_other_ids)assert.ok(index.products.some(x=>x.id===id),"Unknown excluded product "+id);
+const exactRawPulses=contaminants.chapter_2_4_exact_unprocessed_raw_pulses_v9;
+assert.equal(exactRawPulses?.catalog_id,"06-06-1-unprocessed-whole-raw-pulses-not-for-direct-human-consumption");
+assert.equal(exactRawPulses?.existing_catalogue_fssr,"2.4.6");
+assert.equal(exactRawPulses?.specific_source_clause,"2.4.6(16)");
+assert.equal(exactRawPulses?.quality_clause_catalogue_link_status,"pending_master_and_search_index_reconciliation");
+assert.equal(exactRawPulses?.exact_raw_pulses_identity_verified,true);
+assert.equal(exactRawPulses?.full_contaminant_coverage,false);
+assert.equal(exactRawPulses?.compliance_decision_allowed,false);
+assert.equal(exactRawPulses?.pesticide_mrl_auto_apply,false);
+assert.equal(exactRawPulses?.derivative_inheritance,false);
+assert.ok(official(exactRawPulses.official_standard_url)&&official(exactRawPulses.official_contaminants_url));
+assert.deepEqual(exactRawPulses.source_specific_quality_limits.map(x=>x.value),[3,0.5]);
+const rawPulsesIndex=index.products.find(p=>p.id===exactRawPulses.catalog_id);
+assert.equal(rawPulsesIndex?.name,exactRawPulses.product_name);
+assert.equal(rawPulsesIndex?.fssr,exactRawPulses.existing_catalogue_fssr);
+const rawPulsesStandard=read("rules/chapter-2-4-cereals-v1.json").standards.find(x=>x.key===exactRawPulses.specific_source_clause);
+assert.ok(rawPulsesStandard);
+assert.equal(rawPulsesStandard.status,"source_exact_specific_clause_pending_catalogue_link");
+assert.deepEqual(rawPulsesStandard.general_limits.map(x=>x.value),[3,0.5]);
+assert.ok(official(rawPulsesStandard.official_source_url));
+for(const item of exactRawPulses.rules){
+ const g=contaminants.crop_contaminants[item.crop_contaminant_key];
+ assert.ok(g?.rules?.some(x=>x.article==="Pulses"&&Number(x.limit)===Number(item.limit)));
+ assert.equal(g.unit,item.unit);
+}
+for(const id of exactRawPulses.excluded_other_forms)assert.ok(index.products.some(p=>p.id===id));
 const namedSoupSauceSaffrole=contaminants.chapter_2_3_exact_soup_sauce_saffrole_v9;
 const officialSoupSauceSaffrole=(contaminants.naturally_occurring_toxic_substances?.saffrole||[])
  .find(x=>x.article===namedSoupSauceSaffrole?.official_article);
@@ -309,6 +335,7 @@ function contaminantEvidenceForProduct(p){
  const namedNutCropEvidence=namedNutById.get(p.id)||null;
  const namedRawCerealEvidence=namedRawCerealById.get(p.id)||null;
  const rawSoyEvidence=rawSoy.catalog_id===p.id?rawSoy:null;
+ const rawPulsesEvidence=exactRawPulses.catalog_id===p.id?exactRawPulses:null;
  const beverageSaffroleEvidence=exactBeverageSaffroleById.get(p.id)||null;
  const soupSauceSaffrole=namedSoupSauceIds.get(p.id)||null;
  const explicitKinds=[];
@@ -322,6 +349,7 @@ function contaminantEvidenceForProduct(p){
  if(namedNutCropEvidence)explicitKinds.push("verified_exact_nut_arecanut_crop_toxin_article");
  if(namedRawCerealEvidence)explicitKinds.push("verified_exact_raw_cereal_crop_toxin_article");
  if(rawSoyEvidence)explicitKinds.push("verified_exact_raw_soybean_oilseed_crop_article");
+ if(rawPulsesEvidence)explicitKinds.push("verified_exact_unprocessed_whole_raw_pulses_crop_article");
  if(beverageSaffroleEvidence)explicitKinds.push("verified_exact_finished_beverage_saffrole_article");
  if(soupSauceSaffrole)explicitKinds.push("verified_soup_sauce_saffrole_official_article");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
@@ -380,6 +408,12 @@ function contaminantEvidenceForProduct(p){
        contaminant:"Saffrole",limit:exactBeverageSaffrole.limit,unit:exactBeverageSaffrole.unit,
        official_source_url:exactBeverageSaffrole.official_contaminants_url,
        full_compliance_verified:false,concentrate_or_powder_inheritance:false}:null,
+   chapter_2_4_exact_unprocessed_whole_raw_pulses:rawPulsesEvidence
+     ?{specific_source_clause:exactRawPulses.specific_source_clause,currently_linked_clause:exactRawPulses.existing_catalogue_fssr,
+       source_standard_quality:exactRawPulses.source_specific_quality_limits,
+       crop_toxin_limits:exactRawPulses.rules.map(r=>({contaminant:r.contaminant,limit:r.limit,unit:r.unit})),
+       quality_clause_catalogue_link_status:exactRawPulses.quality_clause_catalogue_link_status,
+       full_compliance_verified:false,pesticide_mrls_auto_applied:false}:null,
    chapter_2_4_pesticide_commodity_review:cerealById.get(p.id)
      ? {scope:cerealById.get(p.id).scope,
         review_status:cerealById.get(p.id).scope_review_status,
@@ -583,6 +617,10 @@ const products = index.products.map(p => {
     tally("chapter_2_3_exact_finished_beverage_saffrole","finished_juice_or_drink");
     action.push("Named finished non-alcoholic juice/drink has official Saffrole 10 ppm article only; other contaminants, process/form and amendments remain unverified");
   }
+  if(contaminantEvidence.chapter_2_4_exact_unprocessed_whole_raw_pulses){
+    tally("chapter_2_4_unprocessed_whole_raw_pulses","partial_exact_source_contaminant_and_quality_clause");
+    action.push("Chapter 2.4.6(16) raw pulse quality limits transcribed and exact Pulses aflatoxins mapped; master/index still route via generic 2.4.6 and need a follow-up clause-link correction. Do not treat this as a complete product standard or regulatory compliance pass.");
+  }
   if(contaminantEvidence.chapter_2_4_pesticide_commodity_review){
     tally("chapter_2_4_pesticide_review","reference_only_by_exact_catalog_id");
     action.push("Check Chapter 2.4 raw versus milled, oilseed-flour and composite food form before deciding individual official MRL/crop contaminant applicability; candidates are reference-only");
@@ -735,6 +773,7 @@ const summary = [
   "| Chapter 2.4 processed Pearl Barley OTA/DON article form held for verification | "+(counts.chapter_2_4_crop_toxin_form_pending?.pearl_barley_article_form_unverified||0)+" |",
   "| Chapter 2.4 cereal and flour commodity candidates indexed without automatic MRL applicability | "+(counts.chapter_2_4_pesticide_review?.reference_only_by_exact_catalog_id||0)+" |",
   "| Chapter 2.4 exact raw Soybean seed with partial official oilseed aflatoxin evidence | "+(counts.chapter_2_4_exact_soybean_oilseed_toxins?.raw_seed_source_backed_partial||0)+" |",
+  "| Chapter 2.4 Unprocessed raw Pulses aflatoxins + specific quality clause, master link outstanding | "+(counts.chapter_2_4_unprocessed_whole_raw_pulses?.partial_exact_source_contaminant_and_quality_clause||0)+" |",
   "| Chapter 2.3 exact finished beverages with sourced 10 ppm Saffrole | "+(counts.chapter_2_3_exact_finished_beverage_saffrole?.finished_juice_or_drink||0)+" |",
   "| Chapter 2.4 Wheat / Wheat Bran and Chapter 2.10 Coffee with exact Version IX crop-toxin articles | "+(counts.chapter_2_4_exact_named_crop_toxins?.version_ix_wheat_bran_coffee||0)+" |",
   "| Chapter 2.4 exact raw cereal identities with partial Version IX aflatoxin evidence | "+(counts.chapter_2_4_verified_raw_cereal_aflatoxin?.exact_raw_grain_partial_source_evidence||0)+" |",

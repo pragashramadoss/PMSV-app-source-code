@@ -8480,6 +8480,25 @@ function productBaselineContaminantRules(p){
      source_basis:'FSSAI CTR Version IX · Section 2.2.1(2) · exact finished non-alcoholic beverage',
      condition:'Only '+namedBeverage.product_name+' in finished beverage form. Do not transfer to concentrate, syrup, fruit powder, juice ingredient, industrial-use product or other FSSR category. Full product compliance remains unassessed.'});
 
+ // 5g) Unprocessed whole RAW pulses explicitly governed by FSSR 2.4.6(16)
+ // and its parent 2.4.6. The Version IX toxin article names "Pulses".
+ // This is NOT a finished-product compliance pass or automatic MRL route.
+ const rawPulses=contaminantsDb?.chapter_2_4_exact_unprocessed_raw_pulses_v9;
+ if(rawPulses?.catalog_id===id && rawPulses?.existing_catalogue_fssr===p.fssr &&
+   rawPulses.exact_raw_pulses_identity_verified===true &&
+   p.name===rawPulses.product_name &&
+   !(rawPulses.excluded_other_forms||[]).includes(id)){
+   for(const item of rawPulses.rules||[]){
+     const group=contaminantsDb?.crop_contaminants?.[item.crop_contaminant_key];
+     const official=(group?.rules||[]).find(x=>x.article===rawPulses.official_contaminant_article &&
+       Number(x.limit)===Number(item.limit) && group.unit===item.unit);
+     if(!official)continue;
+     pushRule({contaminant:item.contaminant,article:official.article,limit:item.limit,unit:item.unit,
+       source_basis:'FSSAI CTR Version IX · Section 2.2.1 · exact unprocessed raw pulses FSSR 2.4.6(16)',
+       condition:'Exact unprocessed whole raw pulses for further processing only; quality limits from FSSR 2.4.6(16): foreign matter max 3%, including inorganic matter and animal-origin impurities max 0.5%. Catalogue standard-link reconciliation still pending. Does not transfer to pulses flour, soy products, other derivatives or pesticide MRLs.'});
+   }
+ }
+
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');

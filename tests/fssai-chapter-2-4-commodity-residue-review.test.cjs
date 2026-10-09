@@ -237,3 +237,42 @@ test("Pearl Barley shows source-linked OTA/DON values as not applied in the rend
  const rice=run("productCerealCommodityMrlReviewHtml",chapter.find(x=>x.id==="06-06-1-rice"));
  assert.doesNotMatch(rice,/Grouped crop-contaminant article/);
 });
+
+
+test("unprocessed raw pulses source 2.4.6(16) has exact aflatoxins and quality limits without processed pulse inheritance",()=>{
+ const m=db.chapter_2_4_exact_unprocessed_raw_pulses_v9;
+ assert.equal(m.catalog_id,"06-06-1-unprocessed-whole-raw-pulses-not-for-direct-human-consumption");
+ assert.equal(m.existing_catalogue_fssr,"2.4.6");
+ assert.equal(m.specific_source_clause,"2.4.6(16)");
+ assert.equal(m.quality_clause_catalogue_link_status,"pending_master_and_search_index_reconciliation");
+ assert.equal(m.pesticide_mrl_auto_apply,false);
+ assert.equal(m.full_contaminant_coverage,false);
+ const rules=JSON.parse(fs.readFileSync(path.join(root,"data/rules/chapter-2-4-cereals-v1.json"),"utf8"));
+ const exact=rules.standards.find(x=>x.key===m.specific_source_clause);
+ assert.ok(exact);
+ assert.deepEqual(exact.general_limits.map(x=>x.value),[3,0.5]);
+ assert.equal(exact.full_compliance_assessment_enabled,false);
+ const idx=catalog.find(x=>x.id===m.catalog_id);assert.ok(idx);
+ assert.equal(idx.fssr,m.existing_catalogue_fssr);
+ const snippet=s("function productBaselineContaminantRules(p){");
+ const internal=vm.createContext({contaminantsDb:db,chapterRuleDbs:[],ruleDbStandards:()=>[],
+   exactFinishedProductContaminantLock:()=>null,exactRawMeatMetalLock:()=>null,
+   normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+   isVerifiedFermentedMilkProduct:()=>false});
+ vm.runInContext(snippet,internal);
+ const list=p=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",internal));
+ const direct=list(idx).filter(x=>x.source_basis?.includes("exact unprocessed raw pulses"));
+ assert.deepEqual(direct.map(x=>[x.contaminant,x.limit,x.unit]),[["Total Aflatoxins",15,"µg/kg"],["Aflatoxin B1",10,"µg/kg"]]);
+ for(const id of m.excluded_other_forms){
+  const p=catalog.find(x=>x.id===id);assert.ok(p,id);
+  assert.equal(list(p).some(x=>x.source_basis?.includes("exact unprocessed raw pulses")),false,id);
+ }
+ const changed=structuredClone(db);
+ changed.crop_contaminants.total_aflatoxins.rules.find(x=>x.article==="Pulses").limit=999;
+ internal.contaminantsDb=changed;
+ const after=list(idx).filter(x=>x.source_basis?.includes("exact unprocessed raw pulses"));
+ assert.deepEqual(after.map(x=>x.contaminant),["Aflatoxin B1"]);
+ const audit=fs.readFileSync(path.resolve(root,"../scripts/audit-fssai-product-readiness.cjs"),"utf8");
+ assert.match(audit,/pending_master_and_search_index_reconciliation/);
+ assert.match(audit,/chapter_2_4_unprocessed_whole_raw_pulses/);
+});
