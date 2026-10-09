@@ -87,3 +87,26 @@ test("date paste highlights its absolute no-additives clause",()=>{
  assert.match(x,/No food additives allowed/);
  assert.match(x,/not a full compliance verdict/);
 });
+
+test("named product-specific additive prohibitions are prominent and cannot be overridden by generic FCS",()=>{
+ for(const key of ["2.3.56","2.3.58"]){
+  const v=render(standards.get(key));
+  assert.match(v,/no additives permitted under this named standard/i,key);
+  assert.match(v,/generic Appendix A classification must not override it/,key);
+  assert.match(v,/Current amendment verification remains pending/,key);
+  assert.doesNotMatch(v,/Compliance passed|compliant.*yes/i,key);
+ }
+});
+test("groundnut product only restricts named additive classes, not every additive",()=>{
+ const v=render(standards.get("2.3.47(1)"),"04-04-1-groundnut-kernel-deshelled");
+ assert.match(v,/Added colouring matter/);
+ assert.match(v,/Preservatives/);
+ assert.match(v,/do not infer a blanket ban/);
+ assert.doesNotMatch(v,/no additives permitted under this named standard/);
+});
+test("canned tomatoes source-required negative vacuum is readable, not an unknown condition",()=>{
+ const v=render(standards.get("2.3.3A"),"04-04-2-canned-tomatoes");
+ assert.match(v,/Minimum can vacuum/);
+ assert.match(v,/Negative/);
+ assert.match(v,/Can packaging only/);
+});
