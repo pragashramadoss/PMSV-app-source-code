@@ -105,7 +105,8 @@ test("official Version IX Ochratoxin A and DON exact grouped articles map Wheat,
  });
  vm.runInContext(snippet,internal);
  const list=fragment=>{
-   const {product}=get(fragment);
+   const product=catalog.find(p=>p.name.toLowerCase()===fragment.toLowerCase())
+     ||get(fragment).product;
    return vm.runInContext("productBaselineContaminantRules("+JSON.stringify(product)+")",internal);
  };
  const named=x=>Array.from(list(x),r=>({contaminant:r.contaminant,limit:r.limit,unit:r.unit})).filter(r=>["Ochratoxin A","Deoxynivalenol"].includes(r.contaminant));
