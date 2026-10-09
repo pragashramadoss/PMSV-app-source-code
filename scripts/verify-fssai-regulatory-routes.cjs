@@ -31,7 +31,8 @@ const officialHost = (value) => {
 };
 for(const r of rules.routes){
  assert.ok(r.product_id && r.key,"Special route missing identity/key");
- assert.ok(officialHost(r.official_source),"Non-official or missing source on "+r.key);
+ const sources = r.official_sources || (r.official_source ? [r.official_source] : []);
+ assert.ok(sources.length>0 && sources.every(officialHost),"Non-official or missing source on "+r.key);
  assert.notEqual(r.compliance_status,"complete","Category evidence must not imply full compliance: "+r.key);
  assert.notEqual(r.compliance_pass_enabled,true,"Premature approval on "+r.key);
 }
@@ -56,7 +57,7 @@ for(const p of products){
  assert.ok(r&&r.product_id===p.id,"Missing special file/key "+p.id);
  assert.equal(q.regulatory_route_key,r.key,"Search index route mismatch "+p.id);
  assert.equal(q.name,p.name,"Index display name mismatch "+p.id);
- assert.ok(officialHost(r.official_source),"Special route has invalid official source "+p.id);
+ assert.ok((r.official_sources || (r.official_source ? [r.official_source] : [])).every(officialHost),"Special route has invalid official source "+p.id);
  assert.equal(v.regulatory_route_key,r.key,"Profile route mismatch "+p.id);
  assert.notEqual(r.compliance_pass_enabled,true,"Unverified compliance prematurely approved "+p.id);
  count[p.category]=(count[p.category]||0)+1;
