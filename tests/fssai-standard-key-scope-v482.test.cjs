@@ -12,7 +12,7 @@ const section=(start,end)=>{
 };
 const matching=section('function currentSelectedProductName(){','function currentGuardedFormulationStandards(){');
 const rows=section('function chapterRuleDisplayRows(standard){','function chapterStandardIngredientSections(standard){');
-const sourcePinned=section('function sourcePinnedStandardSupplementHtml(st){','function standardLookupRegulatoryCompositionHtml(){');
+const sourcePinned=section('function sourcePinnedStandardSupplementHtml(st,selectedCatalogId){','function standardLookupRegulatoryCompositionHtml(){');
 const rendering=section('function standardLookupRegulatoryCompositionHtml(){','function renderStandardLookupNutritionReference(){');
 const norm=x=>String(x||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
 const products={
