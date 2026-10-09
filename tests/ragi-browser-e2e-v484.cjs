@@ -82,7 +82,7 @@ const child=spawn('python3',['-m','http.server','18777','--bind','127.0.0.1','--
     console.log('PULSE QUERY',JSON.stringify(query),'STATE',JSON.stringify(state));
     assert.equal(state.chosen,'06-06-1-pulses',query+' should resolve to FSSAI 2.4.6(22)');
     assert.equal(state.options.length,2,'Only the verified Pulses identity should appear for '+query);
-    assert.match(state.options[1],/2\\.4\\.6\\(22\\)/);
+    assert.ok(state.options[1].includes('2.4.6(22)'), 'Pulses clause missing for '+query);
     assert.doesNotMatch(state.options[1],/flour|sattu|oil|paste/i);
   }
   for(const query of ['moong flour','masur flour','chana oil','rajma paste']){
