@@ -1230,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-jowar-grain-match-v486';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-grain-form-browser-v487';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -7073,7 +7073,7 @@ function applyProductGate(){
    const selected=product||profile;
    gate.className=selected?'notice oknote':'notice';
    gate.innerHTML=selected
-     ? '<b>Confirmed product:</b> '+esc(product?.name||profile?.display_name||profile?.name||'Selected product')
+     ? '<b>Confirmed product:</b> '+esc(currentSelectedProductName()||product?.name||profile?.display_name||profile?.name||'Selected product')
        +((product?.fssr||profile?.fssr)?' · FSSR '+esc(product?.fssr||profile?.fssr):'')
        +(formulationIngredients.length
          ? '.<br><small>Formulation Assessment mode: re-run the route decision after any formulation change.</small>'
@@ -7129,7 +7129,8 @@ function renderProductMaster(){
    status.className='notice oknote';
    const sc=productMasterStructuredCoverage();
    status.innerHTML='<b>Product selector loaded.</b><br>'+categories.length+' main category routes · '+(productMasterDb.subcategories||[]).length+' loaded sub-categories · '+catalog.length+' standardized-product catalogue rows · <b>'+chapter.length+' FSSAI chapter profiles loaded</b> · <b>'+base.length+' base profiles</b> · <b>'+ready.length+' fully validated rule profile'+(ready.length===1?'':'s')+'</b>.'
-     +(chapterRuleDbs.length?'<br><b>Structured runtime:</b> '+sc.matched+'/'+sc.chapter+' chapter profiles matched · <b>'+sc.guarded+' guarded formulation-review profiles</b> · '+sc.specialLocked+' special-family profiles intentionally locked · '+sc.variantPending+' variant-table-pending profile'+(sc.variantPending===1?'':'s')+'.':'');
+     +(chapterRuleDbs.length?'<br><b>Structured runtime:</b> '+sc.matched+'/'+sc.chapter+' chapter profiles matched · <b>'+sc.guarded+' guarded formulation-review profiles</b> · '+sc.specialLocked+' special-family profiles intentionally locked · '+sc.variantPending+' variant-table-pending profile'+(sc.variantPending===1?'':'s')+'.':'')
+     +'<br><small><b>Coverage notice:</b> '+catalog.length+' catalogue identities are loaded; the complete current official FoSCoS standardized-product snapshot has not yet been independently verified. A loaded identity is not equivalent to a fully validated product standard.</small>';
  }
  const chapterStatus=document.getElementById('chapterIngestionStatus');
  if(chapterStatus){
