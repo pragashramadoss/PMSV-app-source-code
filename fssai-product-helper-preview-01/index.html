@@ -7707,6 +7707,15 @@ function productFruitVegCommodityMrlReviewHtml(p){
  let html='<div class="card"><div class="section-title"><h3>Chapter 2.3 — pesticide commodity applicability review</h3><span>REVIEW ONLY · NOT APPLIED</span></div>'
   +'<div class="notice"><b>Exact finished product:</b> '+esc(p.name)+'<br><b>Product processing scope:</b> '+esc(review.scope)+'<br>'
   +esc(review.qualifier_review)+' No pesticide MRL is automatically assigned or approved by this chapter review. '+link+'</div>';
+ const metalCandidates=review.conditional_metal_article_candidates||[];
+ if(metalCandidates.length){
+  html+='<div class="notice"><b>Conditional FSSAI metal references — NOT APPLIED:</b> Processing form, product subtype and/or container must be verified before applying any of these limits.</div>'
+   +'<div class="tablewrap"><table><thead><tr><th>Metal</th><th>Official commodity article</th><th>Reference value — NOT APPLIED</th><th>Required evidence</th></tr></thead><tbody>'
+   +metalCandidates.map(x=>'<tr><td>'+esc(x.contaminant)+'</td><td>'+esc(x.official_article)+'</td><td>'+esc(String(x.limit))+' '+esc(x.unit)+(x.source_condition?' · '+esc(x.source_condition):'')+'</td><td>'+esc(x.required_qualification)+'</td></tr>').join('')
+   +'</tbody></table></div>';
+ }
+ if(review.excluded_non_equivalent_finished_product_articles?.length)
+  html+='<div class="notice"><b>Non-equivalent contaminant article — NOT APPLIED:</b> '+esc(review.exclusion_reason)+'</div>';
  const articles=review.raw_ingredient_article_references_only||[];
  if(articles.length){
    html+='<div class="notice"><b>Raw-ingredient source articles for manual review only:</b> '+articles.map(esc).join('; ')
