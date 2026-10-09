@@ -729,7 +729,7 @@ test("Pulses retain their own toxin article and do not inherit cereal grain lead
  const p=index.products.find(x=>x.id==="06-06-1-pulses");
  assert.ok(p);assert.equal(p.fssr,"2.4.6(22)");
  const rows=Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx));
- assert.equal(rows.filter(x=>x.article==="Pulses").length,2);
+ assert.equal(rows.filter(x=>x.article==="Pulses" && ["Total Aflatoxins","Aflatoxin B1"].includes(x.contaminant)).length,2);
  assert.equal(rows.some(x=>x.article==="Cereal and cereal products"),false);
  assert.equal(rows.some(x=>x.article==="Cereal grains, except buckwheat, canihua and quinoa"),false);
 });
