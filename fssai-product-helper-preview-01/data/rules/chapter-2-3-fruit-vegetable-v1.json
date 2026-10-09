@@ -1070,29 +1070,216 @@
     {
       "key": "2.3.17",
       "name": "Concentrated Fruit Juice with Preservatives for industrial use only",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 compendium numeric baseline transcribed. Product/process or variant matching, any effective later amendments and all cross-regulation checks remain necessary. No compliance PASS is authorized.",
+      "relative_composition": [
+        {
+          "parameter": "Total soluble solids relative to original juice/pulp/puree",
+          "operator": ">=",
+          "value": 2,
+          "unit": "× original soluble solids",
+          "reference_standard_keys": [
+            "2.3.6",
+            "2.3.7"
+          ],
+          "requires_original_product_measurement": true
+        }
+      ],
+      "quality_rules": [
+        "Do not evaluate the double-concentration requirement without identifying the corresponding original juice/pulp/puree and its soluble-solids basis."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          27
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      },
+      "reference_material_measurement_required": true
     },
     {
       "key": "2.3.21",
       "name": "Squash",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 compendium numeric baseline transcribed. Product/process or variant matching, any effective later amendments and all cross-regulation checks remain necessary. No compliance PASS is authorized.",
+      "variant_composition": [
+        {
+          "variant": "Squash",
+          "composition": [
+            {
+              "parameter": "Fruit juice or puree in final product",
+              "operator": ">=",
+              "value": 25,
+              "unit": "%"
+            },
+            {
+              "parameter": "Total soluble solids",
+              "operator": ">=",
+              "value": 40,
+              "unit": "%"
+            },
+            {
+              "parameter": "Acidity as citric acid",
+              "operator": "<=",
+              "value": 3.5,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Crush",
+          "composition": [
+            {
+              "parameter": "Fruit juice or puree in final product",
+              "operator": ">=",
+              "value": 25,
+              "unit": "%"
+            },
+            {
+              "parameter": "Total soluble solids",
+              "operator": ">=",
+              "value": 55,
+              "unit": "%"
+            },
+            {
+              "parameter": "Acidity as citric acid",
+              "operator": "<=",
+              "value": 3.5,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Fruit syrup or fruit sharbat",
+          "composition": [
+            {
+              "parameter": "Fruit juice or puree in final product",
+              "operator": ">=",
+              "value": 25,
+              "unit": "%"
+            },
+            {
+              "parameter": "Total soluble solids",
+              "operator": ">=",
+              "value": 65,
+              "unit": "%"
+            },
+            {
+              "parameter": "Acidity as citric acid",
+              "operator": "<=",
+              "value": 3.5,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Cordial",
+          "composition": [
+            {
+              "parameter": "Fruit juice or puree in final product",
+              "operator": ">=",
+              "value": 25,
+              "unit": "%"
+            },
+            {
+              "parameter": "Total soluble solids",
+              "operator": ">=",
+              "value": 30,
+              "unit": "%"
+            },
+            {
+              "parameter": "Acidity as citric acid",
+              "operator": "<=",
+              "value": 3.5,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Barley water",
+          "composition": [
+            {
+              "parameter": "Fruit juice or puree in final product",
+              "operator": ">=",
+              "value": 25,
+              "unit": "%"
+            },
+            {
+              "parameter": "Total soluble solids",
+              "operator": ">=",
+              "value": 30,
+              "unit": "%"
+            },
+            {
+              "parameter": "Acidity as citric acid",
+              "operator": "<=",
+              "value": 2.5,
+              "unit": "%"
+            },
+            {
+              "parameter": "Barley starch",
+              "operator": ">=",
+              "value": 0.25,
+              "unit": "%"
+            }
+          ]
+        }
+      ],
+      "quality_rules": [
+        "Variant gates mandatory: squash, crush, fruit syrup, cordial and barley water each have different solids/acidity rules.",
+        "An additional dry-fruit basis may permit a fruit-syrup description under the official clause; this requires separate recipe and labelling assessment."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          29,
+          30
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      },
+      "variant_resolution_required": true
     },
     {
       "key": "2.3.22",
       "name": "Ginger Cocktail",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 compendium numeric baseline transcribed. Product/process or variant matching, any effective later amendments and all cross-regulation checks remain necessary. No compliance PASS is authorized.",
+      "composition": [
+        {
+          "parameter": "Total soluble solids",
+          "operator": ">=",
+          "value": 30,
+          "unit": "% m/m"
+        }
+      ],
+      "quality_rules": [
+        "Ginger cocktail includes ginger juice, oleoresin or essence with water and nutritive sweeteners; applicable Appendix A/B and labelling checks remain outstanding."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          30
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.23",
@@ -1301,11 +1488,74 @@
     {
       "key": "2.3.18",
       "name": "Tamarind Pulp/Puree and Concentrate",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 compendium numeric baseline transcribed. Product/process or variant matching, any effective later amendments and all cross-regulation checks remain necessary. No compliance PASS is authorized.",
+      "variant_composition": [
+        {
+          "variant": "Tamarind pulp or puree",
+          "composition": [
+            {
+              "parameter": "Total soluble solids",
+              "operator": ">=",
+              "value": 32,
+              "unit": "%"
+            },
+            {
+              "parameter": "Acidity",
+              "operator": ">=",
+              "value": 4.5,
+              "unit": "%"
+            },
+            {
+              "parameter": "Acid-insoluble ash in dilute HCl",
+              "operator": "<=",
+              "value": 0.4,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Tamarind concentrate",
+          "composition": [
+            {
+              "parameter": "Total soluble solids",
+              "operator": ">=",
+              "value": 65,
+              "unit": "%"
+            },
+            {
+              "parameter": "Acidity",
+              "operator": ">=",
+              "value": 9,
+              "unit": "%"
+            },
+            {
+              "parameter": "Acid-insoluble ash in dilute HCl",
+              "operator": "<=",
+              "value": 0.8,
+              "unit": "%"
+            }
+          ]
+        }
+      ],
+      "quality_rules": [
+        "Select pulp/puree versus concentrate; the two sets of numerical criteria differ."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          27,
+          28
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      },
+      "variant_resolution_required": true
     },
     {
       "key": "2.3.19",
@@ -1412,11 +1662,49 @@
     {
       "key": "2.3.14",
       "name": "Thermally Processed Tomato Puree and Paste",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 compendium numeric baseline transcribed. Product/process or variant matching, any effective later amendments and all cross-regulation checks remain necessary. No compliance PASS is authorized.",
+      "variant_composition": [
+        {
+          "variant": "Tomato puree",
+          "composition": [
+            {
+              "parameter": "Total soluble solids",
+              "operator": ">=",
+              "value": 9,
+              "unit": "% w/w"
+            }
+          ]
+        },
+        {
+          "variant": "Tomato paste",
+          "composition": [
+            {
+              "parameter": "Total soluble solids",
+              "operator": ">=",
+              "value": 25,
+              "unit": "% w/w"
+            }
+          ]
+        }
+      ],
+      "quality_rules": [
+        "Do not select a single total soluble solids minimum without confirming puree versus paste."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          25
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      },
+      "variant_resolution_required": true
     },
     {
       "key": "2.3.28",
