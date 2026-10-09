@@ -248,7 +248,8 @@ test("unprocessed raw pulses source 2.4.6(16) has exact aflatoxins and quality l
  assert.equal(m.catalog_id,"06-06-1-unprocessed-whole-raw-pulses-not-for-direct-human-consumption");
  assert.equal(m.existing_catalogue_fssr,"2.4.6");
  assert.equal(m.specific_source_clause,"2.4.6(16)");
- assert.equal(m.quality_clause_catalogue_link_status,"pending_master_and_search_index_reconciliation");
+ assert.equal(m.quality_clause_catalogue_link_status,"verified_specific_clause_rule_key_parent_fssr_retained");
+ assert.equal(m.quality_clause_catalogue_key,"2.4.6(16)");
  assert.equal(m.pesticide_mrl_auto_apply,false);
  assert.equal(m.full_contaminant_coverage,false);
  const rules=JSON.parse(fs.readFileSync(path.join(root,"data/rules/chapter-2-4-cereals-v1.json"),"utf8"));
@@ -258,6 +259,8 @@ test("unprocessed raw pulses source 2.4.6(16) has exact aflatoxins and quality l
  assert.equal(exact.full_compliance_assessment_enabled,false);
  const idx=catalog.find(x=>x.id===m.catalog_id);assert.ok(idx);
  assert.equal(idx.fssr,m.existing_catalogue_fssr);
+ assert.equal(idx.rule_key,"2.4.6(16)");
+ assert.equal(exact.status,"source_exact_specific_clause_linked_parent_fssr");
  const snippet=s("function productBaselineContaminantRules(p){");
  const internal=vm.createContext({contaminantsDb:db,chapterRuleDbs:[],ruleDbStandards:()=>[],
    exactFinishedProductContaminantLock:()=>null,exactRawMeatMetalLock:()=>null,
@@ -277,7 +280,7 @@ test("unprocessed raw pulses source 2.4.6(16) has exact aflatoxins and quality l
  const after=list(idx).filter(x=>x.source_basis?.includes("exact unprocessed raw pulses"));
  assert.deepEqual(after.map(x=>x.contaminant),["Aflatoxin B1"]);
  const audit=fs.readFileSync(path.resolve(root,"../scripts/audit-fssai-product-readiness.cjs"),"utf8");
- assert.match(audit,/pending_master_and_search_index_reconciliation/);
+ assert.match(audit,/verified_specific_clause_rule_key_parent_fssr_retained/);
  assert.match(audit,/chapter_2_4_unprocessed_whole_raw_pulses/);
 });
 

@@ -320,7 +320,9 @@ const exactRawPulses=contaminants.chapter_2_4_exact_unprocessed_raw_pulses_v9;
 assert.equal(exactRawPulses?.catalog_id,"06-06-1-unprocessed-whole-raw-pulses-not-for-direct-human-consumption");
 assert.equal(exactRawPulses?.existing_catalogue_fssr,"2.4.6");
 assert.equal(exactRawPulses?.specific_source_clause,"2.4.6(16)");
-assert.equal(exactRawPulses?.quality_clause_catalogue_link_status,"pending_master_and_search_index_reconciliation");
+assert.equal(exactRawPulses?.quality_clause_catalogue_link_status,"verified_specific_clause_rule_key_parent_fssr_retained");
+assert.equal(exactRawPulses?.quality_clause_catalogue_key,"2.4.6(16)");
+assert.equal(index.products.find(p=>p.id===exactRawPulses.catalog_id)?.rule_key,"2.4.6(16)");
 assert.equal(exactRawPulses?.exact_raw_pulses_identity_verified,true);
 assert.equal(exactRawPulses?.full_contaminant_coverage,false);
 assert.equal(exactRawPulses?.compliance_decision_allowed,false);
@@ -490,6 +492,7 @@ function contaminantEvidenceForProduct(p){
        source_standard_quality:exactRawPulses.source_specific_quality_limits,
        crop_toxin_limits:exactRawPulses.rules.map(r=>({contaminant:r.contaminant,limit:r.limit,unit:r.unit})),
        quality_clause_catalogue_link_status:exactRawPulses.quality_clause_catalogue_link_status,
+       quality_clause_catalogue_key:exactRawPulses.quality_clause_catalogue_key,
        full_compliance_verified:false,pesticide_mrls_auto_applied:false}:null,
    chapter_2_4_pesticide_commodity_review:cerealById.get(p.id)
      ? {scope:cerealById.get(p.id).scope,
@@ -708,7 +711,7 @@ const products = index.products.map(p => {
   }
   if(contaminantEvidence.chapter_2_4_exact_unprocessed_whole_raw_pulses){
     tally("chapter_2_4_unprocessed_whole_raw_pulses","partial_exact_source_contaminant_and_quality_clause");
-    action.push("Chapter 2.4.6(16) raw pulse quality limits transcribed and exact Pulses aflatoxins mapped; master/index still route via generic 2.4.6 and need a follow-up clause-link correction. Do not treat this as a complete product standard or regulatory compliance pass.");
+    action.push("Chapter 2.4.6(16) raw pulse quality limits transcribed and exact Pulses aflatoxins mapped; specific quality rule 2.4.6(16) is linked and parent FoSCoS 2.4.6 retained. Do not treat this as a complete product standard or regulatory compliance pass.");
   }
   if(contaminantEvidence.chapter_2_4_pesticide_commodity_review){
     tally("chapter_2_4_pesticide_review","reference_only_by_exact_catalog_id");
@@ -865,7 +868,7 @@ const summary = [
   "| Chapter 2.4 processed Pearl Barley OTA/DON article form held for verification | "+(counts.chapter_2_4_crop_toxin_form_pending?.pearl_barley_article_form_unverified||0)+" |",
   "| Chapter 2.4 cereal and flour commodity candidates indexed without automatic MRL applicability | "+(counts.chapter_2_4_pesticide_review?.reference_only_by_exact_catalog_id||0)+" |",
   "| Chapter 2.4 exact raw Soybean seed with partial official oilseed aflatoxin evidence | "+(counts.chapter_2_4_exact_soybean_oilseed_toxins?.raw_seed_source_backed_partial||0)+" |",
-  "| Chapter 2.4 Unprocessed raw Pulses aflatoxins + specific quality clause, master link outstanding | "+(counts.chapter_2_4_unprocessed_whole_raw_pulses?.partial_exact_source_contaminant_and_quality_clause||0)+" |",
+  "| Chapter 2.4 Unprocessed raw Pulses aflatoxins + linked specific 2.4.6(16) quality clause | "+(counts.chapter_2_4_unprocessed_whole_raw_pulses?.partial_exact_source_contaminant_and_quality_clause||0)+" |",
   "| Chapter 2.3 exact finished beverages with sourced 10 ppm Saffrole | "+(counts.chapter_2_3_exact_finished_beverage_saffrole?.finished_juice_or_drink||0)+" |",
   "| Chapter 2.4 Wheat / Wheat Bran and Chapter 2.10 Coffee with exact Version IX crop-toxin articles | "+(counts.chapter_2_4_exact_named_crop_toxins?.version_ix_wheat_bran_coffee||0)+" |",
   "| Chapter 2.4 exact raw cereal identities with partial Version IX aflatoxin evidence | "+(counts.chapter_2_4_verified_raw_cereal_aflatoxin?.exact_raw_grain_partial_source_evidence||0)+" |",
