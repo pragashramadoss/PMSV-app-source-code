@@ -3197,7 +3197,7 @@ function exactDairyCompositionHtml(product){
  return html;
 }
 /* FSSAI source-pinned Chapter 2.3/2.4 baselines; variant and process gates stay fail-closed. */
-function sourcePinnedStandardSupplementHtml(st){
+function sourcePinnedStandardSupplementHtml(st,selectedCatalogId){
  const evidence=st?.numeric_evidence||st?.source_review;
  if(!evidence)return '';
  const formatRequirement=r=>{
@@ -3224,7 +3224,14 @@ function sourcePinnedStandardSupplementHtml(st){
  const source=String(evidence.source_url||'');
  if(/^https:\/\/(?:www\.)?fssai\.gov\.in\//i.test(source))html+=' <a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Official Chapter PDF</a>.';
  html+='</div>';
- const variants=Array.isArray(st.variant_composition)?st.variant_composition:[];
+ const allVariants=Array.isArray(st.variant_composition)?st.variant_composition:[];
+ const hasExactCatalogGates=allVariants.some(v=>Array.isArray(v.catalog_product_ids)&&v.catalog_product_ids.length);
+ const variants=selectedCatalogId&&hasExactCatalogGates
+   ?allVariants.filter(v=>!Array.isArray(v.catalog_product_ids)||!v.catalog_product_ids.length||v.catalog_product_ids.includes(selectedCatalogId))
+   :allVariants;
+ if(hasExactCatalogGates&&selectedCatalogId&&!variants.length){
+   html+='<div class="notice"><b>No exact product-specific variant mapping was found.</b> PMSV will not borrow figures from another finished-food identity.</div>';
+ }
  if(variants.length){
    html+='<div class="notice"><b>Choose the actual regulated variant before applying any figures.</b> '+variants.length+' variants below are displayed as separate references; none is automatically selected or approved.</div>';
    for(const v of variants){
@@ -3235,6 +3242,9 @@ function sourcePinnedStandardSupplementHtml(st){
          parameter:'Through '+String(x.sieve_mm)+' mm sieve',operator:x.operator,value:x.percent,unit:'% by mass',condition:'Only selected particle-size grade'
        })));
      }
+     if(Array.isArray(v.process_requirements)&&v.process_requirements.length)html+=rows('Variant-specific process requirements',v.process_requirements);
+     if(Array.isArray(v.other_criteria)&&v.other_criteria.length)html+='<div class="notice"><b>Other criteria:</b><ul>'+v.other_criteria.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+     if(v.source_qualification)html+='<div class="notice">'+esc(v.source_qualification)+'</div>';
      if(!v.composition?.length&&!v.sieve_rules?.length)html+='<div class="notice">No blanket composition figure is supplied for this variant; verify its own rules.</div>';
      if(v.additional_non_numeric_requirement)html+='<div class="notice">'+esc(v.additional_non_numeric_requirement)+'</div>';
      if(v.verification_note)html+='<div class="notice">'+esc(v.verification_note)+'</div>';
@@ -3346,7 +3356,7 @@ function standardLookupRegulatoryCompositionHtml(){
      );
    }
 
-   const sourcePinnedSupplement=sourcePinnedStandardSupplementHtml(standard);
+   const sourcePinnedSupplement=sourcePinnedStandardSupplementHtml(standard,product?.id);
    if(sourcePinnedSupplement)blocks.push(sourcePinnedSupplement);
 
    const standardRules=Array.isArray(standard?.rules)?standard.rules:[];
@@ -6820,7 +6830,7 @@ function renderLegacyProductScopePages(){
              html+='<div class="notice"><b>Regulatory notes:</b><br>'+standard.regulatory_notes.map(x=>'• '+esc(x)).join('<br>')+'</div>';
            }
          }
-         html+=sourcePinnedStandardSupplementHtml(standard);
+         html+=sourcePinnedStandardSupplementHtml(standard,product?.id);
          if(!ruleDbAllowsGuardedFormulation(db)&&db?.final_compliance_lock)html+='<div class="notice"><b>Formulation lock for this rule family:</b> '+esc(db.final_compliance_lock)+'</div>';
          if(rows.length){
            html+='<div class="tablewrap"><table><thead><tr><th>Section</th><th>Parameter / rule</th><th>Requirement</th></tr></thead><tbody>'
