@@ -679,7 +679,7 @@ test("five named Chapter 2.3 nut/arecanut identities map aflatoxins only on exac
  assert.equal(cfg.amendments_fully_reconciled,false);
  assert.equal(cfg.automatic_pesticide_mrl_approval,false);
  const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
- const at=html.indexOf("function productBaselineContaminantRules(p){"),end=html.indexOf("\\nfunction ",at+12);
+ const at=html.indexOf("function productBaselineContaminantRules(p){"),end=html.indexOf("\nfunction ",at+12);
  const vm=require("node:vm");
  const ctx=vm.createContext({contaminantsDb:db,
   normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
@@ -720,7 +720,7 @@ test("five named Chapter 2.3 nut/arecanut identities map aflatoxins only on exac
 test("Pulses retain their own toxin article and do not inherit cereal grain lead or toxin article",()=>{
  const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
  const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
- const at=html.indexOf("function productBaselineContaminantRules(p){"),end=html.indexOf("\\nfunction ",at+12);
+ const at=html.indexOf("function productBaselineContaminantRules(p){"),end=html.indexOf("\nfunction ",at+12);
  const vm=require("node:vm"),ctx=vm.createContext({contaminantsDb:db,
    normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
    chapterRuleDbs:[{}],ruleDbStandards:()=>[{key:"2.4.6",applies_to:["wheat","maize","rice","pulses","millets","other food grains"]}],
