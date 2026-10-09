@@ -4956,7 +4956,7 @@ function renderMasterComplianceSummary(){
          : 'No usable product-standard ingredient structure or Appendix A FCS mapping is currently loaded for this product.',
      'ingredients'));
 
-   const strictProductLock=exactFinishedProductContaminantLock(product);
+   const strictProductLock=exactFinishedProductContaminantLock(product)||exactRawMeatMetalLock(product);
    if(strictProductLock){
      rows.push(masterComplianceRow('Contaminants / residues','incomplete',
        'FSSAI '+(product.fssr||'')+' finished-product article is intentionally LOCKED against automatic metal/commodity matching: '+strictProductLock.reason
@@ -5036,8 +5036,8 @@ function renderMasterComplianceSummary(){
 
  if(!contaminantsDb||!product){
    rows.push(masterComplianceRow('Contaminants / residues','incomplete','Select a product and load the current contaminant master.','contaminants'));
- }else if(exactFinishedProductContaminantLock(product)){
-   const locked=exactFinishedProductContaminantLock(product);
+ }else if(exactFinishedProductContaminantLock(product)||exactRawMeatMetalLock(product)){
+   const locked=exactFinishedProductContaminantLock(product)||exactRawMeatMetalLock(product);
    rows.push(masterComplianceRow('Contaminants / residues','incomplete',
      'No exact approved finished-product contaminant article has been mapped for '+product.name+'. '+locked.reason
      +' Ingredient and universal rules require their own review; the product cannot receive a full contaminant PASS.',
@@ -7658,9 +7658,44 @@ function exactFinishedProductContaminantLock(p){
  const rows=contaminantsDb.chapter_2_7_locked_contaminant_routes_v9||[];
  return rows.find(row=>row.catalog_id===p.id && row.status==='locked_no_exact_current_article')||null;
 }
+function exactMeatEggCommodityReview(p){
+ if(!p||!contaminantsDb)return null;
+ return (contaminantsDb.chapter_2_5_commodity_mrl_review_v1||[]).find(row=>row.catalog_id===p.id)||null;
+}
+function exactRawMeatMetalLock(p){
+ if(!p||!contaminantsDb)return null;
+ return (contaminantsDb.chapter_2_5_locked_fresh_meat_routes_v9||[]).find(row=>
+    Array.isArray(row.catalog_ids)&&row.catalog_ids.includes(p.id)
+ )||null;
+}
+function productMeatEggCommodityMrlReviewHtml(p){
+ const review=exactMeatEggCommodityReview(p);
+ if(!review)return '';
+ const source=String(contaminantsDb?.official_sources?.[0]?.url||'');
+ const official=/^https:\/\/(?:www\.)?fssai\.gov\.in\//i.test(source);
+ const link=official?' <a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX PDF</a>':'';
+ let html='<div class="card"><div class="section-title"><h3>FSSAI commodity pesticide MRL candidates — '+esc(p.name)+'</h3><span>REVIEW ONLY · NOT APPLIED</span></div>'
+   +'<div class="notice"><b>Do not assume these rows apply automatically.</b> '+esc(review.qualifier_review)
+   +' Verify animal source, product treatment, edible tissue and the stated residue basis before selecting an individual MRL. This review does not establish full contaminant or residue compliance.'
+   +link+'</div>';
+ const groups=review.candidate_commodity_articles||[];
+ for(const article of groups){
+   const rows=(contaminantsDb?.residue_mrls?.pesticides||[]).flatMap(pesticide=>
+     (pesticide.rows||[]).filter(r=>String(r.food||'').trim().toLowerCase()===String(article).trim().toLowerCase())
+       .map(r=>({pesticide:pesticide.name||pesticide.pesticide||'',mrl:r.mrl,unit:r.unit,condition:r.condition,article:r.food}))
+   );
+   if(!rows.length)continue;
+   html+='<details><summary><b>'+esc(article)+'</b> · '+rows.length+' FSSAI commodity MRL reference'+(rows.length===1?'':'s')+' — applicability unconfirmed</summary>'
+     +'<div class="tablewrap"><table><thead><tr><th>Pesticide</th><th>FSSAI commodity MRL (not auto applied)</th><th>Specific basis</th></tr></thead><tbody>'
+     +rows.map(r=>'<tr><td>'+esc(r.pesticide)+'</td><td>'+esc(r.mrl)+' '+esc(r.unit||'mg/kg')+'</td><td>'+esc(r.condition||'Verify commodity/matrix and residue definition')+'</td></tr>').join('')
+     +'</tbody></table></div></details>';
+ }
+ return html+'</div>';
+}
 function contaminantProfileForProduct(p){
  if(!p||!contaminantsDb||!Array.isArray(contaminantsDb.profiles))return null;
  if(exactFinishedProductContaminantLock(p))return null;
+ if(exactRawMeatMetalLock(p))return null;
  return contaminantsDb.profiles.find(profile=>{
    if(Array.isArray(profile.catalog_ids)&&profile.catalog_ids.includes(p.id))return true;
    if(Array.isArray(profile.match_fssr)&&profile.match_fssr.includes(p.fssr||''))return true;
@@ -8144,6 +8179,7 @@ function prohibitedVeterinaryRowsForProduct(p){
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  if(exactFinishedProductContaminantLock(p))return [];
+ if(exactRawMeatMetalLock(p))return [];
  const n=normIngredient(p.name||'');
  const id=p.id||p.profile_id||'';
  if(!n&&!id)return [];
@@ -8426,6 +8462,7 @@ function renderProductContaminants(){
    ruleSeen.add(key);return true;
  });
  const pesticideMrls=exactPesticideMrlRowsForProduct(p);
+ const meatEggCommodityReview=productMeatEggCommodityMrlReviewHtml(p);
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
  const pesticideRows=pesticideMrls.map(x=>'<tr><td><b>'+esc(x.pesticide)+'</b></td><td><b>'+esc(x.mrl)+' '+esc(x.unit)+'</b></td><td>'+esc(x.food)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source)+'</td></tr>').join('');
  const prohibitedVet=prohibitedVeterinaryRowsForProduct(p);
@@ -8442,6 +8479,7 @@ function renderProductContaminants(){
     : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
    +productContaminantGateNotices(p)
+   +meatEggCommodityReview
    +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant / toxin</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="notice">No exact metal/toxin row is auto-applicable for this product under the current stored product gates.</div>')
    +conditionalMetalHtml
    +(pesticideRows?'<div class="card" style="margin-top:12px;background:#fafcff"><div class="section-title"><h3 style="margin:0">Pesticide residue MRLs — '+esc(p.name)+'</h3><span>Verified FSSAI commodity scope · no formulation required</span></div><div class="notice oknote"><b>'+pesticideMrls.length+' applicable pesticide MRL row'+(pesticideMrls.length===1?'':'s')+' found.</b> '+(milkProductContaminantScope(p)?'FSSR 2.1.13 defines this finished food as a fermented <b>milk product</b>, so the current FSSAI commodity rows explicitly written for <b>Milk and Milk products</b> are applied.':'The commodity name exactly matches the selected standardized product.')+'</div><div class="tablewrap"><table><thead><tr><th>Pesticide</th><th>MRL</th><th>Commodity / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+pesticideRows+'</tbody></table></div></div>':'<div class="notice"><b>Pesticide residues:</b> no verified commodity-scope MRL rows are stored for '+esc(p.name)+'. PMSV will not infer an unrelated commodity mapping.</div>')
