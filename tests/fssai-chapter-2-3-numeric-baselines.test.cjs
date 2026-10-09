@@ -8,10 +8,10 @@ const dataRoot = path.resolve(__dirname,"../fssai-product-helper-preview-01/data
 const chapter = JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/chapter-2-3-fruit-vegetable-v1.json"),"utf8"));
 const index = JSON.parse(fs.readFileSync(path.join(dataRoot,"standard-search-index-v1.json"),"utf8"));
 const records=new Map(chapter.standards.map(row=>[row.key,row]));
-const keys=["2.3.8","2.3.9","2.3.10","2.3.11","2.3.12","2.3.13","2.3.14","2.3.15","2.3.17","2.3.18","2.3.19","2.3.21","2.3.22","2.3.23","2.3.24","2.3.25","2.3.26","2.3.27","2.3.28","2.3.29","2.3.30","2.3.42","2.3.43","2.3.47(7)","2.3.47(8)","2.3.49","2.3.54","2.3.55","2.3.56","2.3.62","2.3.63","2.3.64","2.3.65"];
+const keys=["2.3.8","2.3.9","2.3.10","2.3.11","2.3.12","2.3.13","2.3.14","2.3.15","2.3.17","2.3.18","2.3.19","2.3.21","2.3.22","2.3.23","2.3.24","2.3.25","2.3.26","2.3.27","2.3.28","2.3.29","2.3.30","2.3.42","2.3.43","2.3.47(7)","2.3.47(8)","2.3.49","2.3.54","2.3.55","2.3.56","2.3.62","2.3.63","2.3.64","2.3.65","2.3.47(4)","2.3.47(5)","2.3.46","2.3.51","2.3.52","2.3.58","2.3.60"];
 const get = key => {const r=records.get(key);assert.ok(r, "Missing "+key);return r;};
 const metric=(key,parameter)=>get(key).composition.find(r=>r.parameter===parameter);
-test("thirty-three known partial standards now have source-pinned numeric baselines",()=>{
+test("forty known partial standards now have source-pinned numeric baselines",()=>{
  for(const key of keys){
   const r=get(key);
   assert.equal(r.full_compliance_assessment_enabled,false,key);
@@ -265,4 +265,42 @@ test("coconut milk powder, singhara flour, and liquid/powder colouring foods are
  assert.equal(uric.source_text,"100 mg/kg");
  assert.deepEqual(get("2.3.65").variant_composition.map(v=>v.composition.map(c=>c.value)),[[45,0.5,20],[90,1]]);
  assert.equal(get("2.3.65").variant_resolution_required,true);
+});
+
+test("dates and generic dry fruits have separate clause-level standards",()=>{
+ assert.deepEqual(get("2.3.47(4)").composition.map(z=>z.value),[30,0.1,5,1]);
+ assert.deepEqual(get("2.3.47(5)").composition.map(z=>z.value),[1,2,1.25]);
+ assert.equal(get("2.3.47(4)").full_compliance_assessment_enabled,false);
+});
+test("brewed and synthetic vinegar never inherit the wrong solids or ash limits",()=>{
+ const record=get("2.3.46");
+ assert.ok(record.variant_resolution_required);
+ assert.equal(record.composition?.length||0,0);
+ assert.deepEqual(record.variant_composition.map(v=>v.composition.map(c=>c.value)),[[3.75,1.5,0.18],[3.75]]);
+ assert.match(record.variant_composition[1].source_qualification,/SYNTHETIC/);
+ assert.equal(record.packaging_requirements[0].value,90);
+});
+test("light coconut milk and coconut cream concentrate retain proper composition tables",()=>{
+ const milk=get("2.3.51"),cream=get("2.3.52");
+ assert.ok(milk.variant_resolution_required&&cream.variant_resolution_required);
+ assert.deepEqual(milk.variant_composition.map(v=>v.composition[3].value),[5,10]);
+ assert.deepEqual(cream.variant_composition.map(v=>v.composition[3].value),[20,29]);
+ assert.deepEqual([milk.variant_composition[0].composition[1].min,milk.variant_composition[0].composition[1].max],[6.6,12.6]);
+ assert.deepEqual([cream.variant_composition[0].composition[1].min,cream.variant_composition[0].composition[1].max],[25.4,37.3]);
+ assert.equal(cream.variant_composition[1].composition[1].value,37.4);
+ assert.equal(milk.composition?.length||0,0);
+ assert.equal(cream.composition?.length||0,0);
+});
+test("Harissa has four correct limits and expressly disallows additives",()=>{
+ const harissa=get("2.3.58");
+ assert.deepEqual(harissa.composition.map(v=>v.value),[3.6,14,1.5,0.15]);
+ assert.equal(harissa.permitted_additives_policy.permitted,false);
+ assert.equal(harissa.permitted_additives_policy.automatic_compliance_pass,false);
+ assert.ok(harissa.quality_rules.some(s=>s.includes("No food additives")));
+});
+test("quick-frozen fried potatoes retain fry limits and frozen strip qualifier",()=>{
+ const x=get("2.3.60");
+ assert.deepEqual(x.composition.map(z=>z.value),[78,1.5,0.5]);
+ assert.equal(x.conditional_requirements[0].value,4);
+ assert.equal(x.conditional_requirements[0].auto_evaluate,false);
 });
