@@ -5,6 +5,10 @@ const html=fs.readFileSync(path.join(root,"index.html"),"utf8"),start=html.index
 const ctx=vm.createContext({contaminantsDb:db,chapterRuleDbs:[],ruleDbStandards:()=>[],exactFinishedProductContaminantLock:()=>null,exactRawMeatMetalLock:()=>null,normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),isVerifiedFermentedMilkProduct:()=>false});vm.runInContext(html.slice(start,end),ctx);
 const run=p=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx)).filter(x=>/verified (hydrogenated\/interesterified oil identity|edible seed oil article)/.test(x.source_basis||"")).map(x=>[x.contaminant,x.limit,x.unit]);
 const f=db.chapter_2_2_verified_oil_metal_articles_v9;
+test("Version IX nickel article preserves even repeated original FSSAI text without silent simplification",()=>{
+ assert.equal(f.hydrogenated_interesterified_nickel.article,"All hydrogenated, partially hydrogenated, interesterified vegetable oils and fats such as vanaspati, table margarine, bakery and industrial margarine, bakery shortening, fat spread and partially hydrogenated margarine, bakery shortening, fat spread and partially hydrogenated soyabean oil");
+ assert.equal(db.metal_article_rules_v9.Nickel.find(x=>x.article.startsWith("All hydrogenated, partially hydrogenated"))?.article,f.hydrogenated_interesterified_nickel.article);
+});
 test("eight exact hydrogenated/interesterified FSSR products get source-pinned Nickel 1.5 mg/kg",()=>{
  assert.equal(f.hydrogenated_interesterified_nickel.verified_identities.length,8);
  for(const x of f.hydrogenated_interesterified_nickel.verified_identities){
