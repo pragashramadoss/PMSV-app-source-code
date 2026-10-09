@@ -1230,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-grain-and-pulses-v488';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-grain-pulse-audit-v489';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -1313,7 +1313,7 @@ function pmsvPulseIdentity(raw){
  // sattu, protein powder, paste, oil or extract is not a pulse grain.
  if(/\b(?:flour|powder|atta|sattu|paste|oil|extract|protein|starch|meal)\b/.test(q))return null;
  const bare=q.replace(/^(?:whole|dehusked|de husked|split|shelled) /,'').replace(/ (?:whole|split|grain|grains|pulses)$/,'').trim();
- const item=PMSV_PULSE_VARIETIES_V488.find(x=>x.names.some(n=>pmsvDirectNorm(n)===bare));
+ const item=PMSV_PULSE_VARIETIES_V488.find(x=>x.names.some(n=>[q,bare].includes(pmsvDirectNorm(n))));
  if(!item)return null;
  // Never override a standalone official standardized Soybean product.
  return {productId:'06-06-1-pulses',variant:item.name,displayName:item.name,
