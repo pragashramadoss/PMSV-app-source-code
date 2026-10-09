@@ -8378,6 +8378,23 @@ function productBaselineContaminantRules(p){
    }
  }
  
+ // 5c) Version IX naturally occurring toxic substance Saffrole: only exact
+ // finished soup or sauce identities in the official Chapter 2.3 list.
+ const saffrole=contaminantsDb?.chapter_2_3_exact_soup_sauce_saffrole_v9;
+ const namedSoupSauce=(saffrole?.verified_product_identities||[])
+   .find(x=>x.catalog_id===id && x.fssr===p.fssr
+     && x.product_identity_verified===true && x.exact_form==='finished_soup_or_sauce');
+ const officialSaffrole=(contaminantsDb?.naturally_occurring_toxic_substances?.saffrole||[])
+   .find(r=>r.article===saffrole?.official_article
+     && Number(r.limit)===Number(saffrole?.limit) && r.unit===saffrole?.unit);
+ if(namedSoupSauce && officialSaffrole && !(saffrole.excluded_similar_identity_ids||[]).includes(id))
+   pushRule({
+     contaminant:'Saffrole',article:saffrole.official_article,
+     limit:officialSaffrole.limit,unit:officialSaffrole.unit,
+     source_basis:'FSSAI CTR Version IX · Section 2.2.1(2) · Naturally occurring toxic substances; named Chapter 2.3 soup/sauce identity',
+     condition:'Exact finished soup or sauce only; do not apply by fuzzy ingredient or keyword matching to soup powder, paste or an unrelated product. Complete contaminant review and operative amendments remain separate.'
+   });
+
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
