@@ -74,6 +74,23 @@ const child=spawn('python3',['-m','http.server','18777','--bind','127.0.0.1','--
       assert.match(chosen,/flour/i,'Flour search did not show flour');
     }
   }
+  // Pulse grain and dehusked/split identities must stay out of flours.
+  for(const query of ['moong','moong dal','masur','chana','arhar','rajma','lobia','matki']){
+    await input.fill(query);
+    await page.waitForTimeout(520);
+    const state=await snapshot();
+    console.log('PULSE QUERY',JSON.stringify(query),'STATE',JSON.stringify(state));
+    assert.equal(state.chosen,'06-06-1-pulses',query+' should resolve to FSSAI 2.4.6(22)');
+    assert.equal(state.options.length,2,'Only the verified Pulses identity should appear for '+query);
+    assert.match(state.options[1],/2\\.4\\.6\\(22\\)/);
+    assert.doesNotMatch(state.options[1],/flour|sattu|oil|paste/i);
+  }
+  for(const query of ['moong flour','masur flour','chana oil','rajma paste']){
+    await input.fill(query);
+    await page.waitForTimeout(520);
+    const state=await snapshot();
+    assert.notEqual(state.chosen,'06-06-1-pulses','Processed food was incorrectly treated as whole pulses: '+query);
+  }
   // Unsupported flour variants do not inherit a whole-grain standard.
   for(const unsupported of ['kodo flour','teff flour','buckwheat flour']){
     await input.fill(unsupported);
@@ -100,6 +117,6 @@ const child=spawn('python3',['-m','http.server','18777','--bind','127.0.0.1','--
   assert.ok(!gate.includes('Jowar Flour'),'Product gate assigned processed flour to whole grain');
   const coverage=await page.locator('#productMasterStatus').innerText();
   assert.match(coverage,/complete current official FoSCoS standardized-product snapshot has not yet been independently verified/i,'Catalogue completeness caveat missing');
-  console.log('PASS: all millet grains, flour variants, live dropdown, Jowar confirmation, product gate and source coverage disclosure');
+  console.log('PASS: all millet and pulse grains, flour variants, live dropdown, Jowar confirmation, product gate and source coverage disclosure');
  }finally{await browser.close();}
 })().catch(e=>{console.error('BROWSER TEST FAILURE:',e.stack||e);process.exitCode=1;}).finally(()=>{child.kill('SIGTERM');});
