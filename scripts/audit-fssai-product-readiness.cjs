@@ -16,6 +16,22 @@ const date = "2026-10-09";
 const read = name => JSON.parse(fs.readFileSync(path.join(dataDir, name), "utf8"));
 const index = read("standard-search-index-v1.json");
 const special = read("rules/special-regulatory-routes-v1.json");
+const contaminants = read("rules/contaminants-v9-core.json");
+const normalizeArticle = x => String(x || "").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+const directContaminantProfiles = new Map();
+for(const profile of contaminants.profiles || []){
+  for(const id of profile.catalog_ids || []){
+    assert.ok(index.products.some(p=>p.id===id),"Contaminant profile references unknown catalogue product: "+id);
+    if(!directContaminantProfiles.has(id))directContaminantProfiles.set(id,[]);
+    directContaminantProfiles.get(id).push({id:profile.id,rows:(profile.rules || []).length});
+  }
+}
+const contaminantAliases = new Map((contaminants.explicit_metal_alias_mappings_v9 || []).map(row=>[row.product_id,row]));
+const contaminantDirectStandards = new Map((contaminants.direct_product_standard_contaminant_rules_v1 || []).map(row=>[row.catalog_id,row]));
+const spiceAflatoxinIds = new Set((contaminants.spice_crop_contaminant_identity_mappings_v9 || []).map(row=>row.catalog_id));
+const exactContaminantArticles = new Set(Object.values(contaminants.metal_article_rules_v9 || {})
+  .flatMap(rows=>(rows || []).map(row=>normalizeArticle(row.article))));
+const familyContaminantProfiles = (contaminants.profiles || []).filter(p=>Array.isArray(p.match_fssr) && p.match_fssr.length);
 const bySpecialKey = new Map(special.routes.map(r => [r.key, r]));
 const chapterCache = new Map();
 const counts = {};
@@ -49,6 +65,36 @@ function chapterRecord(p) {
   const sourceUrls = (source.official_sources || []).map(x => typeof x === "string" ? x : x.url).filter(Boolean);
   assert.ok(sourceUrls.length > 0 && sourceUrls.every(official), "Non-official chapter source link: " + p.id);
   return {key, file, record, sourceUrls};
+}
+function contaminantEvidenceForProduct(p){
+ const profiles=directContaminantProfiles.get(p.id) || [];
+ const explicitAliases=contaminantAliases.get(p.id);
+ const direct=contaminantDirectStandards.get(p.id);
+ const exactArticle=exactContaminantArticles.has(normalizeArticle(p.name));
+ const spiceAflatoxin=spiceAflatoxinIds.has(p.id);
+ const fssrFamilies=familyContaminantProfiles.filter(profile=>(profile.match_fssr || []).includes(p.fssr))
+   .map(profile=>({id:profile.id,rule_rows:(profile.rules || []).length}));
+ const explicitKinds=[];
+ if(profiles.length)explicitKinds.push("direct_catalog_profile");
+ if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
+ if(direct)explicitKinds.push("exact_product_clause");
+ if(exactArticle)explicitKinds.push("exact_named_article");
+ if(spiceAflatoxin)explicitKinds.push("verified_spice_crop_identity");
+ const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
+   fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
+   "no_exact_catalog_evidence_in_this_inventory";
+ return {
+   status,
+   exact_evidence_kinds:explicitKinds,
+   direct_profile_ids:profiles.map(x=>x.id),
+   direct_profile_rule_rows:profiles.reduce((n,x)=>n+x.rows,0),
+   family_clause_profiles:fssrFamilies,
+   universal_rule_count:(contaminants.all_food_rules||[]).filter(r=>r.auto_apply===true).length,
+   universal_rule_proves_product_coverage:false,
+   laboratory_results_assessed:false,
+   conditional_package_process_and_ingredient_scopes_assessed:false,
+   full_current_version_coverage_verified:false
+ };
 }
 function sourcesForSpecial(route) {
   const urls = route.official_sources || (route.official_source ? [route.official_source] : []);
@@ -100,6 +146,7 @@ const products = index.products.map(p => {
   let routeKind, rule, chapterStatus = "not_a_chapter_route";
   let numericCompositionPresent = false;
   let numericBaselineStatus = "not_recorded";
+  let chapterMicrobiologyRows = [];
   let productAdditiveRestriction = null;
   let sourceUrls = [];
   const action = [];
@@ -107,6 +154,8 @@ const products = index.products.map(p => {
     routeKind = "chapter_rule";
     const target = chapterRecord(p);
     sourceUrls = target.sourceUrls;
+    chapterMicrobiologyRows = Array.isArray(target.record.chapter_specific_microbiology)
+      ? target.record.chapter_specific_microbiology:[];
     rule = {file:target.file, key:target.key, record_status:target.record.status || "not_recorded"};
     const productBan=target.record.permitted_additives_policy;
     if(productBan?.permitted === false){
@@ -162,6 +211,17 @@ const products = index.products.map(p => {
     action.push("Check special category conditions; FCS or ingredient identity is not a standalone finished-food permission");
     if(route.compliance_status === "complete" || route.compliance_pass_enabled === true) throw new Error("Special route incorrectly asserts compliance: " + p.id);
   }
+  const contaminantEvidence=contaminantEvidenceForProduct(p);
+  if(contaminantEvidence.status==="no_exact_catalog_evidence_in_this_inventory")
+    action.push("Map exact FSSAI contaminant/commodity articles; universal all-food rows do not demonstrate product-specific coverage");
+  if(contaminantEvidence.status==="only_family_fssr_evidence_needs_identity_review")
+    action.push("Confirm exact finished-product eligibility for the matching FSSR-family contaminant article");
+  tally("contaminant_evidence",contaminantEvidence.status);
+  if(chapterMicrobiologyRows.length){
+    assert.equal(routeKind,"chapter_rule");
+    assert.ok(sourceUrls.every(official),"Direct chapter microbiology source must be official: "+p.id);
+    tally("direct_chapter_microbiology","exact_clause_microbiology_rows");
+  }
   let micro = p.microbiology_status || "not_recorded_in_search_index";
   if(micro === "conditional_appendix_b_variant_required") action.push("Confirm manufacturing process, food variant and the exact Appendix B sampling criteria");
   if(micro === "not_recorded_in_search_index") action.push("Review whether microbiology applies; missing index flag does not mean not applicable");
@@ -182,6 +242,8 @@ const products = index.products.map(p => {
     numeric_composition_values_present:numericCompositionPresent,
     numeric_baseline_status:numericBaselineStatus,
     microbiology_index_status:micro,
+    direct_chapter_microbiology_criteria:chapterMicrobiologyRows,
+    contaminant_evidence_index:contaminantEvidence,
     appendix_b_evidence_route:appendixBRoutes.get(p.id) || null,
     microbiology_profile_key:p.microbiology_profile_key || null,
     microbiology_candidates_count:(p.microbiology_candidates || []).length,
@@ -230,6 +292,10 @@ const summary = [
   "| Appendix B conditional, variant-dependent routes | "+(counts.microbiology.conditional_appendix_b_variant_required||0)+" |",
   "| Named product-standard complete additive bans flagged | "+(counts.product_additive_restrictions?.all_added_food_additives_prohibited_in_named_product_standard||0)+" |",
   "| Named limited additive-class restrictions flagged | "+(counts.product_additive_restrictions?.named_additive_classes_only||0)+" |",
+  "| Exact contaminant evidence of at least one kind (not full coverage) | "+(counts.contaminant_evidence?.some_exact_product_evidence_not_full_coverage||0)+" |",
+  "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
+  "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
+  "| Direct FSSAI chapter microbiology criteria indexed | "+(counts.direct_chapter_microbiology?.exact_clause_microbiology_rows||0)+" |",
   "| Appendix B exact/conditional/no-direct mappings cross-checked against Table profiles | "+appendixBRoutes.size+" |",
   "| Microbiology absent from lightweight search index (not necessarily exempt) | "+(counts.microbiology.not_recorded_in_search_index||0)+" |",
   "| All product-specific compliance outcomes independently verified | 0 claimed |",
