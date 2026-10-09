@@ -145,6 +145,24 @@ for(const row of namedCropMappings){
     "Official crop toxin article or limit not found: "+id+" "+rule.crop_contaminant_key);
  }
 }
+const exactGroundnutCrop=contaminants.chapter_2_3_verified_groundnut_aflatoxin_v9;
+assert.equal(exactGroundnutCrop?.catalog_id,"04-04-1-groundnut-kernel-deshelled","Groundnut-only exact crop identity expected");
+assert.equal(exactGroundnutCrop?.fssr,"2.3.47(1)");
+assert.equal(exactGroundnutCrop?.product_identity_verified,true);
+assert.equal(exactGroundnutCrop?.complete_contaminant_coverage,false);
+assert.equal(exactGroundnutCrop?.amendments_fully_reconciled,false);
+assert.equal(exactGroundnutCrop?.automatic_pesticide_mrl_approval,false);
+assert.ok(official(exactGroundnutCrop.official_crop_contaminant_source));
+assert.ok(official(exactGroundnutCrop.official_standard_source));
+assert.equal(exactGroundnutCrop.rules.length,2);
+for(const rule of exactGroundnutCrop.rules){
+ const sourceRules=contaminants.crop_contaminants[rule.crop_contaminant_key]?.rules||[];
+ assert.equal(rule.official_articles.length,4,rule.contaminant);
+ for(const article of rule.official_articles){
+  assert.ok(sourceRules.some(r=>r.article===article&&Number(r.limit)===Number(rule.limit)),
+   "Groundnut source category lacks matching crop limit: "+article);
+ }
+}
 const rawMeatMetalLocks=new Map();
 for(const row of contaminants.chapter_2_5_locked_fresh_meat_routes_v9||[]){
  for(const id of row.catalog_ids||[]){
@@ -169,6 +187,7 @@ function contaminantEvidenceForProduct(p){
    assert.ok(!explicitAliases && !direct && !exactArticle && !spiceAflatoxin,"Locked product accidentally gained exact evidence; re-review before unlocking: "+p.id);
  }
  const cropToxin=namedCropById.get(p.id)||null;
+ const groundnutCrop=exactGroundnutCrop.catalog_id===p.id ? exactGroundnutCrop:null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
@@ -176,6 +195,7 @@ function contaminantEvidenceForProduct(p){
  if(exactArticle)explicitKinds.push("exact_named_article");
  if(spiceAflatoxin)explicitKinds.push("verified_spice_crop_identity");
  if(cropToxin)explicitKinds.push("exact_named_crop_toxin_article");
+ if(groundnutCrop)explicitKinds.push("verified_groundnut_crop_toxin_identical_category_limits");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
    "no_exact_catalog_evidence_in_this_inventory";
@@ -188,6 +208,11 @@ function contaminantEvidenceForProduct(p){
      source:cropToxin.official_source_url,
      full_contaminant_coverage_verified:false
    }:null,
+   chapter_2_3_exact_groundnut_crop_limits:groundnutCrop
+     ?{fssr:groundnutCrop.fssr,product_name:groundnutCrop.product_name,
+       crop_limits:groundnutCrop.rules.map(x=>({contaminant:x.contaminant,limit:x.limit,unit:x.unit,articles:x.official_articles})),
+       source:groundnutCrop.official_crop_contaminant_source,
+       full_compliance_verified:false,pesticide_mrls_auto_applied:false}:null,
    chapter_2_3_pesticide_commodity_review:fruitVegById.get(p.id)
      ? {scope:fruitVegById.get(p.id).scope,
         review_status:fruitVegById.get(p.id).review_status,
@@ -378,6 +403,10 @@ const products = index.products.map(p => {
       tally("chapter_2_3_non_equivalent_articles","raw_cocoa_beans_not_cocoa_powder");
     action.push("Review Chapter 2.3 specific fruit, vegetable, nut or processed-product matrix, raw-ingredient commodity MRL, processing factor and sample basis; no finished-product pesticide MRL automatically established");
   }
+  if(contaminantEvidence.chapter_2_3_exact_groundnut_crop_limits){
+    tally("chapter_2_3_verified_groundnut_crop_limits","identity_and_same_limits_across_source_articles");
+    action.push("Groundnut kernel: verify other contaminants, pesticide MRLs, processing use and operative amendments separately; aflatoxin identity alone does not establish product compliance");
+  }
   if(contaminantEvidence.chapter_2_4_pesticide_commodity_review){
     tally("chapter_2_4_pesticide_review","reference_only_by_exact_catalog_id");
     action.push("Check Chapter 2.4 raw versus milled, oilseed-flour and composite food form before deciding individual official MRL/crop contaminant applicability; candidates are reference-only");
@@ -521,6 +550,7 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| Chapter 2.3 deshelled groundnut kernel identities with sourced aflatoxin ceiling | "+(counts.chapter_2_3_verified_groundnut_crop_limits?.identity_and_same_limits_across_source_articles||0)+" |",
   "| Chapter 2.3 conditional metal article products requiring subtype or packaging evidence | "+(counts.chapter_2_3_conditional_metal_products?.subtype_or_package_required||0)+" |",
   "| Chapter 2.3 cocoa bean/cocoa powder non-equivalence guards | "+(counts.chapter_2_3_non_equivalent_articles?.raw_cocoa_beans_not_cocoa_powder||0)+" |",
   "| Chapter 2.3 fruit/vegetable pesticide commodity reviews indexed without automatic MRL applicability | "+(counts.chapter_2_3_pesticide_review?.source_only_no_finished_product_approval||0)+" |",
