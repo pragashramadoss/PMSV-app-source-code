@@ -86,7 +86,7 @@ test('Rice and unrelated standardized foods stay unmatched, no ingredient gate',
  assert.equal(h.resolve(),null);h.render();
  assert.match(h.nodes.nutritionStandardReferenceStatus.innerHTML,/Select the exact rice form to view IFCT nutrition/);
  assert.match(h.nodes.nutritionStandardIfctVariant.innerHTML,/A015|A013|A014/);
- assert.match(h.nodes.nutritionStandardReferenceTable.innerHTML,/optional formulation calculator/);
+ assert.match(h.nodes.nutritionStandardReferenceStatus.innerHTML,/optional formulation calculator/);
 });
 test('IFCT vitamins, minerals and amino acid protein basis display correctly',()=>{
  const h=harness({id:'01-01-3-khoa',name:'Khoa'});
