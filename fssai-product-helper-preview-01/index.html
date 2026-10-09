@@ -769,11 +769,11 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div id="nutritionLookupNotice" class="notice hidden"></div>
 <div class="card hidden" id="nutritionStandardReferenceCard">
 <div class="section-title"><h2>Standardized-product composition & nutrition</h2><span>ICMR-NIN IFCT 2017 + FSSAI standard</span></div>
-<div class="notice"><b>Nutrition reference first:</b> ICMR-NIN IFCT 2017 values are displayed below only for an exact analysed food identity. Where IFCT has no matching food (including Dahi), PMSV explicitly reports the gap instead of treating FSSAI legal minima as measured nutrition. No ingredient entry is needed to inspect the standard.</div>
+<p class="muted"><small>IFCT nutrition is shown only for an exact analysed food. FSSAI legal requirements remain available below, without entering ingredients.</small></p>
 <div id="nutritionStandardIfctVariant"></div>
 <div id="nutritionStandardReferenceStatus" class="notice"></div>
 <div id="nutritionStandardReferenceTable"></div>
-<details class="nutrition-fssai-details"><summary><b>FSSAI legal composition &amp; product-standard conditions</b> (expand)</summary><div id="nutritionStandardRegulatory"></div></details>
+<details class="nutrition-fssai-details" open><summary><b>FSSAI legal composition &amp; product-standard conditions</b></summary><div id="nutritionStandardRegulatory"></div></details>
 <div class="flow-actions"><button class="btn-secondary" type="button" id="nutritionGoToProductStandard">View full FSSAI product standard</button><button class="btn-secondary" type="button" id="nutritionGoToFormulation">Optional: calculate recipe nutrition</button></div>
 </div>
 <div class="card" id="nutritionFormulationControlsCard">
@@ -1230,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-ifct-rice-variants-v479';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-ifct-standard-presentation-v480';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -3213,8 +3213,10 @@ function renderStandardLookupNutritionReference(){
    const n=normIngredient(selection?.name||productName);
    const dahi=['dahi','plain dahi','curd','plain curd'].includes(n);
    status.className='notice';
-   status.innerHTML=dahi?'<b>Layer 2 — No direct IFCT 2017 Dahi/Curd entry.</b> This food is not individually analysed in IFCT 2017. The database is still loading for other foods.': '<b>ICMR-NIN IFCT nutrition database is still loading.</b>';
-   table.innerHTML=dahi?'<div class="notice">Data status: unavailable (not zero). Dahi cannot borrow raw-milk nutrients. Source: '+source+'.</div>':'';
+   status.innerHTML=dahi
+     ?'<b>IFCT 2017: No direct IFCT 2017 Dahi/Curd entry.</b> There is no analysed curd value to display (unavailable, not zero). View the FSSAI legal requirements below; ingredient entry is optional. Source: '+source+'.'
+     :'<b>ICMR-NIN IFCT nutrition database is still loading.</b>';
+   table.innerHTML='';
    return;
  }
  const match=standardLookupNutritionProfile();
@@ -3225,9 +3227,9 @@ function renderStandardLookupNutritionReference(){
    const rice=selection?.isRice&&!selection.riceCode;
    const chhana=selection?.isCombined&&selection.choice==='chhana';
    status.className='notice';
-   status.innerHTML='<b>Layer 2 — '+(dahi?'No direct IFCT 2017 Dahi/Curd entry.':combined?'Confirm Paneer or Chhana to find the correct IFCT reference.':rice?'Select the exact rice form to view IFCT nutrition.':chhana?'No direct IFCT 2017 Chhana entry.':'No exact verified IFCT nutrition entry for '+esc(productName)+'.')+'</b><br>'
-     +'The FSSAI legal composition above is available without entering ingredients. PMSV will not substitute a related food, use legal minima as measured nutrients, or invent missing values.';
-   table.innerHTML='<div class="notice"><b>Reference unavailable — not zero.</b> To obtain a recipe-specific estimate, use the optional formulation calculator. The estimate is not a direct IFCT measurement. Source: '+source+'.</div>';
+   status.innerHTML='<b>IFCT 2017 — '+(dahi?'No direct IFCT 2017 Dahi/Curd entry.':combined?'Confirm Paneer or Chhana to find the correct IFCT reference.':rice?'Select the exact rice form to view IFCT nutrition.':chhana?'No direct IFCT 2017 Chhana entry.':'No exact verified IFCT nutrition entry for '+esc(productName)+'.')+'</b><br>'
+     +'Nutrition reference unavailable (not zero). View the applicable FSSAI legal composition below. Do not treat legal minima or a related food as measured nutrition. To estimate this recipe, use the optional formulation calculator. Source: '+source+'.';
+   table.innerHTML='';
    return;
  }
  const profile=match.profile;
