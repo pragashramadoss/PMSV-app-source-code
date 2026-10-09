@@ -21,6 +21,9 @@ on:
       - 'tests/fssai-chapter-2-7-contaminant-lock.test.cjs'
       - 'tests/fssai-chapter-2-5-meat-egg-residue-review.test.cjs'
       - 'tests/fssai-chapter-2-4-commodity-residue-review.test.cjs'
+      - 'tests/fssai-alcoholic-beverage-toxins.test.cjs'
+      - 'tests/fssai-processed-meat-saffrole.test.cjs'
+      - 'tests/fssai-chapter-2-10-beverage-saffrole.test.cjs'
       - 'scripts/verify-fssai-regulatory-routes.cjs'
       - 'scripts/audit-fssai-product-readiness.cjs'
       - '.github/workflows/verify-fssai-standard-nutrition.yml'
@@ -54,4 +57,4 @@ jobs:
             audit-output/fssai-contaminant-review-queue.md
           if-no-files-found: warn
       - name: Check helper JavaScript syntax and exact IFCT reference behavior
-        run: node --test tests/standardized-ifct-lookup-v477.test.cjs tests/fssai-nutrition-v476.test.cjs tests/nutrition-modules.test.cjs tests/fssai-dairy-composition-v481.test.cjs tests/fssai-standard-key-scope-v482.test.cjs tests/fssai-ragi-grain-v483.test.cjs tests/fssai-catalogue-audit-v485.test.cjs tests/fssai-chapter-2-3-numeric-baselines.test.cjs tests/fssai-chapter-2-4-numeric-baselines.test.cjs tests/fssai-source-pinned-ui-evidence.test.cjs tests/fssai-product-additive-restrictions.test.cjs tests/fssai-contaminants-direct-microbiology.test.cjs tests/fssai-chapter-2-7-contaminant-lock.test.cjs tests/fssai-chapter-2-5-meat-egg-residue-review.test.cjs tests/fssai-chapter-2-4-commodity-residue-review.test.cjs tests/fssai-pulse-grain-v488.test.cjs
+        run: node --test tests/standardized-ifct-lookup-v477.test.cjs tests/fssai-nutrition-v476.test.cjs tests/nutrition-modules.test.cjs tests/fssai-dairy-composition-v481.test.cjs tests/fssai-standard-key-scope-v482.test.cjs tests/fssai-ragi-grain-v483.test.cjs tests/fssai-catalogue-audit-v485.test.cjs tests/fssai-chapter-2-3-numeric-baselines.test.cjs tests/fssai-chapter-2-4-numeric-baselines.test.cjs tests/fssai-source-pinned-ui-evidence.test.cjs tests/fssai-product-additive-restrictions.test.cjs tests/fssai-contaminants-direct-microbiology.test.cjs tests/fssai-chapter-2-7-contaminant-lock.test.cjs tests/fssai-chapter-2-5-meat-egg-residue-review.test.cjs tests/fssai-chapter-2-4-commodity-residue-review.test.cjs tests/fssai-alcoholic-beverage-toxins.test.cjs tests/fssai-processed-meat-saffrole.test.cjs tests/fssai-chapter-2-10-beverage-saffrole.test.cjs tests/fssai-pulse-grain-v488.test.cjs
