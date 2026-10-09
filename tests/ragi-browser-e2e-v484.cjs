@@ -69,8 +69,8 @@ const child=spawn('python3',['-m','http.server','18777','--bind','127.0.0.1','--
   await page.locator('#confirmProprietaryStandard').click();
   await page.waitForTimeout(450);
   const confirmation=await page.evaluate(()=>document.getElementById('proprietaryStandardSuggestion')?.innerText||'');
-  assert.match(confirmation,/Finger Millet|Ragi/i);
-  assert.ok(!confirmation.includes('Ragi Flour'),'Confirmation silently switched to flour');
+  assert.match(confirmation,/Sorghum|Jowar/i);
+  assert.ok(!confirmation.includes('Jowar Flour'),'Confirmation silently switched to flour');
   console.log('PASS: all millet grains, flour variants, live dropdown and Jowar confirmation');
  }finally{await browser.close();}
 })().catch(e=>{console.error('BROWSER TEST FAILURE:',e.stack||e);process.exitCode=1;}).finally(()=>{child.kill('SIGTERM');});
