@@ -29,3 +29,23 @@ test("non-equivalent oils and variant mutation never inherit",()=>{
  assert.deepEqual(run({...p,fssr:"2.2.1999"}),[]);
  const tampered=structuredClone(db);tampered.metal_article_rules_v9.Nickel.find(x=>x.article===f.hydrogenated_interesterified_nickel.article).limit=9;ctx.contaminantsDb=tampered;assert.deepEqual(run(p),[]);ctx.contaminantsDb=db;
 });
+
+test("FSSAI other edible oils grouped Lead covers only exact three named oils, both processing forms source-pinned",()=>{
+ const m=db.chapter_2_2_other_named_oils_lead_v9;
+ assert.equal(m.verified_products.length,3);
+ assert.equal(m.limit,0.1);
+ assert.equal(m.pesticide_mrl_auto_apply,false);
+ const other=p=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx))
+  .filter(x=>x.source_basis?.includes("verified other edible vegetable oil identity")).map(x=>[x.contaminant,x.limit,x.unit]);
+ for(const x of m.verified_products){
+  const p=ps.find(z=>z.id===x.catalog_id);assert.ok(p);
+  assert.equal(p.name,x.product_name);assert.equal(p.fssr,x.fssr);
+  assert.deepEqual(other(p),[["Lead",0.1,"mg/kg"]]);
+  assert.deepEqual(other({...p,name:"Cocoa butter"}),[]);
+ }
+ const p=ps.find(x=>x.id===m.verified_products[0].catalog_id);
+ const broken=structuredClone(db);
+ broken.metal_article_rules_v9.Lead.find(x=>x.article===m.article_crude).limit=9;
+ ctx.contaminantsDb=broken;assert.deepEqual(other(p),[]);
+ ctx.contaminantsDb=db;
+});
