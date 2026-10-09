@@ -277,6 +277,54 @@ const output=path.join(root,"audit-output");
 fs.mkdirSync(output,{recursive:true});
 const outputFile=path.join(output,"fssai-product-readiness-audit.json");
 fs.writeFileSync(outputFile,JSON.stringify(report,null,2)+"\n");
+const pendingContaminantProducts=products
+ .filter(p=>p.contaminant_evidence_index.status!=="some_exact_product_evidence_not_full_coverage");
+const chapterFromFssr=p=>{
+ const v=String(p.fssr||"");
+ return (v.match(/^(\\d+\\.\\d+)(?:\\.|$)/)||[])[1] || "special";
+};
+const queueOrder=["2.7","2.5","2.4","2.3","2.1","2.2","2.6","2.8","2.9","3.1","3.2","3.3","special"];
+const byChapter=new Map();
+for(const p of pendingContaminantProducts){
+ const code=chapterFromFssr(p);
+ if(!byChapter.has(code))byChapter.set(code,[]);
+ byChapter.get(code).push(p);
+}
+const queueLines=[
+ "# PMSV FSSAI contaminants: unresolved product-evidence review queue",
+ "",
+ "Snapshot: "+date+". Official FSSAI/FoSCoS references only. Current loaded product catalogue: "+products.length+".",
+ "",
+ "An unresolved record here does NOT establish that the food is exempt or that no commodity-family contaminant limit applies. It means no exact product/commodity evidence was established by the conservative automated identity index. Before clearing, examine FSSAI Version IX, the applicable operative amendments, exact commodity article, packaging/processing form, and other residues.",
+ "",
+ "Universal all-food methylmercury is not counted as proof of product-specific coverage.",
+ "",
+ "Priority note: FSSR Chapter 2.7 chocolate and confectionery contains distinct Cocoa Powder, Cocoa Mass and Chocolate identities. Never borrow Cocoa Powder contaminant limits for Cocoa Mass or Chocolate unless their current official article and scope substantiate it.",
+ "",
+ "| FSSR chapter | Identities awaiting exact-catalogue evidence review |",
+ "|---|---:|",
+ ...[...byChapter.entries()].sort((a,b)=>{
+   const ai=queueOrder.indexOf(a[0]),bi=queueOrder.indexOf(b[0]);
+   return (ai<0?999:ai)-(bi<0?999:bi);
+ }).map(([k,rows])=>"| "+k+" | "+rows.length+" |"),
+ "",
+];
+for(const [code,rows] of [...byChapter.entries()].sort((a,b)=>{
+ const ai=queueOrder.indexOf(a[0]),bi=queueOrder.indexOf(b[0]);
+ return (ai<0?999:ai)-(bi<0?999:bi);
+})){
+ queueLines.push("## FSSR "+code+" — "+rows.length+" identities","",
+ "| Product identity | Product code | Existing evidence status |",
+ "|---|---|---|",
+ ...rows.sort((a,b)=>a.name.localeCompare(b.name))
+  .map(p=>"| "+String(p.name||"").replaceAll("|","/")+" | "+p.id+" | "+(p.contaminant_evidence_index.status==="only_family_fssr_evidence_needs_identity_review"?"FSSR-family only":"No exact index record; inspect runtime commodity rules")+" |"),
+ "");
+}
+const queuePath=path.join(output,"fssai-contaminant-review-queue.md");
+fs.writeFileSync(queuePath,queueLines.join("\\n")+"\\n");
+assert.equal(pendingContaminantProducts.length,
+  (counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+
+  (counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0));
 const summary = [
   "## PMSV FSSAI product evidence — 09 October 2026",
   "",
@@ -300,8 +348,8 @@ const summary = [
   "| Microbiology absent from lightweight search index (not necessarily exempt) | "+(counts.microbiology.not_recorded_in_search_index||0)+" |",
   "| All product-specific compliance outcomes independently verified | 0 claimed |",
   "",
-  "Download the full 533-row JSON artifact from this workflow run. A chapter key resolving or an FCS classification is **not** proof of regulatory conformity."
+  "Download the full 533-row JSON artifact and chapter-prioritized contaminant review queue from this workflow run. A chapter key resolving or an FCS classification is **not** proof of regulatory conformity."
 ].join("\n");
 console.log(summary);
 if(process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary+"\n");
-console.log("PASS: saved "+products.length+" product-by-product evidence statuses in "+outputFile);
+console.log("PASS: saved "+products.length+" product-by-product evidence statuses in "+outputFile);\nconsole.log("PASS: created prioritized contaminant review queue for "+pendingContaminantProducts.length+" products in "+queuePath);
