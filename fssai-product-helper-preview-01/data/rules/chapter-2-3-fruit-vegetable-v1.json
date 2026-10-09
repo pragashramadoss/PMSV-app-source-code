@@ -736,7 +736,7 @@
     {
       "key": "2.3.8",
       "name": "Thermally Processed Tomato Juice",
-      "status": "official_clause_identified_partial_core",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
       "definition": "Unfermented tomato juice mechanically obtained from sound, fresh and fully ripe tomatoes and heat-processed to prevent spoilage; may be reconstituted from concentrate.",
       "permitted_ingredients": [
         "common salt",
@@ -751,26 +751,297 @@
         "added colours",
         "artificial flavours"
       ],
-      "verification_note": "Partial extract only. Full numeric composition table and all cross-regulation requirements require further official verification before compliance assessment.",
-      "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf"
+      "verification_note": "Official FSSAI 2023 compendium numeric baseline transcribed. Do not assert full current legal applicability without checking subsequent effective amendments, applicable product variants, Appendix A/B/C, contaminants, packaging, labelling, fortification and claims.",
+      "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+      "composition": [
+        {
+          "parameter": "Mineral impurities (dry weight, after subtracting common salt)",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by mass of salt-corrected dry matter"
+        },
+        {
+          "parameter": "Head space in can",
+          "operator": "<=",
+          "value": 7,
+          "unit": "mm",
+          "applies_when": "canned"
+        },
+        {
+          "parameter": "Total soluble solids (exclusive of salt)",
+          "operator": ">=",
+          "value": 5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Sodium chloride",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total titratable acidity as citric acid",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Volatile acidity as acetic acid",
+          "operator": "<=",
+          "value": 0.4,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "pH",
+          "operator": "<=",
+          "value": 4.5,
+          "unit": "pH"
+        },
+        {
+          "parameter": "Sugar content as invert sugar",
+          "operator": "<=",
+          "value": 42,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Container fill (water-capacity basis)",
+          "operator": ">=",
+          "value": 90,
+          "unit": "%",
+          "applies_when": "packed in rigid containers"
+        }
+      ],
+      "quality_rules": [
+        "Vacuum in the can must be negative.",
+        "Glass container water-capacity calculation: source clause notes a 20 mL reduction; validate packaging conditions before any automatic decision.",
+        "No added colours or artificial flavours."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          19,
+          20
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      },
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
+      "full_compliance_assessment_enabled": false
     },
     {
       "key": "2.3.9",
       "name": "Thermally Processed Fruit Nectars",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 compendium numeric baseline transcribed. Do not assert full current legal applicability without checking subsequent effective amendments, applicable product variants, Appendix A/B/C, contaminants, packaging, labelling, fortification and claims.",
+      "composition": [
+        {
+          "parameter": "Acidity as citric acid",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "%"
+        }
+      ],
+      "variant_composition": [
+        {
+          "variant": "Orange nectar",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 40,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Grapefruit nectar",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 20,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Pineapple nectar",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 40,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Mango nectar",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 20,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Guava nectar",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 20,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Peach nectar",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 20,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Pear nectar",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 20,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Apricot nectar",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 20,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Non-pulpy black currant nectar",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 20,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Other fruit nectar",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 20,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Other high-acidity/pulpy/strong-flavour nectar",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 20,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Mixed fruit nectar",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 20,
+              "unit": "%"
+            }
+          ]
+        }
+      ],
+      "quality_rules": [
+        "Lemon/lime juice may be added as acidifying agents only to an extent that does not impair characteristic fruit flavour.",
+        "Variant-specific fruit juice minimum must not be applied without matching the actual nectar fruit variant."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          20,
+          21,
+          22
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.10",
       "name": "Thermally Processed Fruit Beverages / Fruit Drink/ Ready to Serve Fruit Beverages",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 compendium numeric baseline transcribed. Do not assert full current legal applicability without checking subsequent effective amendments, applicable product variants, Appendix A/B/C, contaminants, packaging, labelling, fortification and claims.",
+      "variant_composition": [
+        {
+          "variant": "Lime or lemon ready-to-serve beverage",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 5,
+              "unit": "% m/m"
+            }
+          ]
+        },
+        {
+          "variant": "Other fruit beverages or fruit drinks",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 10,
+              "unit": "% m/m"
+            }
+          ]
+        }
+      ],
+      "quality_rules": [
+        "Choose the correct fruit variant before testing a juice-content minimum; do not default to the 5% limit."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          22
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.13",
@@ -820,20 +1091,62 @@
     {
       "key": "2.3.23",
       "name": "Synthetic Syrup for use in Dispensers for Carbonated Water",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 compendium numeric baseline transcribed. Do not assert full current legal applicability without checking subsequent effective amendments, applicable product variants, Appendix A/B/C, contaminants, packaging, labelling, fortification and claims.",
+      "composition": [
+        {
+          "parameter": "Total soluble solids",
+          "operator": ">=",
+          "value": 30,
+          "unit": "% m/m"
+        }
+      ],
+      "quality_rules": [
+        "The suitably reconstituted product must comply with applicable carbonated-water requirements except carbon dioxide content."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          31
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.24",
       "name": "Synthetic Syrup or Sharbat",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 compendium numeric baseline transcribed. Do not assert full current legal applicability without checking subsequent effective amendments, applicable product variants, Appendix A/B/C, contaminants, packaging, labelling, fortification and claims.",
+      "composition": [
+        {
+          "parameter": "Total soluble solids",
+          "operator": ">=",
+          "value": 65,
+          "unit": "% by mass"
+        }
+      ],
+      "quality_rules": [
+        "Free from artificial sweetening agents, burnt/objectionable taints, extraneous matter and crystallisation; any added colours, preservatives and flavours must separately be permitted."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          31
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.30",
@@ -991,11 +1304,41 @@
     {
       "key": "2.3.19",
       "name": "Fruit Bar/Toffee",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 compendium numeric baseline transcribed. Do not assert full current legal applicability without checking subsequent effective amendments, applicable product variants, Appendix A/B/C, contaminants, packaging, labelling, fortification and claims.",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Total soluble solids",
+          "operator": ">=",
+          "value": 75,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Fruit content",
+          "operator": ">=",
+          "value": 25,
+          "unit": "% m/m"
+        }
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          28
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.49",
@@ -1081,11 +1424,35 @@
     {
       "key": "2.3.15",
       "name": "Soup Powders",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 compendium numeric baseline transcribed. Do not assert full current legal applicability without checking subsequent effective amendments, applicable product variants, Appendix A/B/C, contaminants, packaging, labelling, fortification and claims.",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Total soluble solids on dilution to ready-to-serve basis",
+          "operator": ">=",
+          "value": 5,
+          "unit": "% m/m"
+        }
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          26
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.27",
