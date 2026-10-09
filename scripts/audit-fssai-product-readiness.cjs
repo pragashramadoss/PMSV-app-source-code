@@ -115,6 +115,12 @@ const products = index.products.map(p => {
     ) || (
       Array.isArray(target.record.relative_composition) && target.record.relative_composition.some(x=>Number.isFinite(x.value))
     );
+    if(target.record.source_review?.review_status === "source_scope_transcribed_cross_regulations_pending") {
+      assert.equal(target.record.full_compliance_assessment_enabled,false,"Scope-only standard cannot enable compliance: "+p.id);
+      assert.equal(numericCompositionPresent,false,"Scope-only standard unexpectedly has universal numeric composition: "+p.id);
+      numericBaselineStatus = "official_scope_reviewed_no_universal_composition_limits_in_clause";
+      action.push("Verify any underlying food-specific composition requirements; absence of clause-wide numeric composition is not an exemption");
+    }
     if(target.record.numeric_evidence) {
       assert.ok(numericCompositionPresent,"Numeric source evidence without numeric standard: "+p.id);
       assert.equal(target.record.numeric_evidence.compliance_assessment_enabled,false,"Numeric baseline cannot enable compliance: "+p.id);
@@ -198,6 +204,7 @@ const summary = [
   "| Special FoSCoS/FSSAI identity/category routes | 58 |",
   "| Chapter entries explicitly identity-only partial | "+(counts.chapter_evidence.identity_only_partial||0)+" |",
   "| Source-transcribed numeric baselines with current amendment review pending | "+(counts.numeric_baseline_status.official_source_baseline_current_amendments_pending||0)+" |",
+  "| Official-scope-reviewed identities with no universal numeric composition prescribed by cited clause | "+(counts.numeric_baseline_status.official_scope_reviewed_no_universal_composition_limits_in_clause||0)+" |",
   "| Appendix B conditional, variant-dependent routes | "+(counts.microbiology.conditional_appendix_b_variant_required||0)+" |",
   "| Appendix B exact/conditional/no-direct mappings cross-checked against Table profiles | "+appendixBRoutes.size+" |",
   "| Microbiology absent from lightweight search index (not necessarily exempt) | "+(counts.microbiology.not_recorded_in_search_index||0)+" |",
