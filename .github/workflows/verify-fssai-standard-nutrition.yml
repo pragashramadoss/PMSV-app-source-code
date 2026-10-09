@@ -46,7 +46,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: fssai-product-readiness-audit
-          path: audit-output/fssai-product-readiness-audit.json
+          path: |
+            audit-output/fssai-product-readiness-audit.json
+            audit-output/fssai-contaminant-review-queue.md
           if-no-files-found: warn
       - name: Check helper JavaScript syntax and exact IFCT reference behavior
         run: node --test tests/standardized-ifct-lookup-v477.test.cjs tests/fssai-nutrition-v476.test.cjs tests/nutrition-modules.test.cjs tests/fssai-dairy-composition-v481.test.cjs tests/fssai-standard-key-scope-v482.test.cjs tests/fssai-ragi-grain-v483.test.cjs tests/fssai-catalogue-audit-v485.test.cjs tests/fssai-chapter-2-3-numeric-baselines.test.cjs tests/fssai-chapter-2-4-numeric-baselines.test.cjs tests/fssai-source-pinned-ui-evidence.test.cjs tests/fssai-product-additive-restrictions.test.cjs tests/fssai-contaminants-direct-microbiology.test.cjs tests/fssai-pulse-grain-v488.test.cjs
