@@ -259,6 +259,20 @@ for(const route of vegMetal.identities){
 }
 for(const rule of vegMetal.limits)assert.ok((contaminants.metal_article_rules_v9[rule.metal]||[]).some(x=>
  x.article===vegMetal.official_article&&Number(x.limit)===Number(rule.limit)&&x.unit===rule.unit));
+const bisulphiteRoutes=contaminants.special_exact_metabisulphite_metal_articles_v9;
+assert.ok(bisulphiteRoutes&&official(bisulphiteRoutes.official_source_url));
+assert.equal(bisulphiteRoutes.verified_additive_identities.length,2);
+assert.equal(bisulphiteRoutes.complete_contaminant_coverage,false);
+assert.equal(bisulphiteRoutes.finished_food_additive_permission_verified,false);
+const bisulphiteById=new Map(bisulphiteRoutes.verified_additive_identities.map(x=>[x.catalog_id,x]));
+assert.equal(bisulphiteById.size,2);
+for(const r of bisulphiteRoutes.verified_additive_identities){
+ const p=index.products.find(x=>x.id===r.catalog_id);
+ assert.ok(p&&p.name===r.product_name&&r.exact_ins_identity_verified===true);
+ assert.equal(r.contaminants.length,2);
+ for(const c of r.contaminants)assert.ok((contaminants.metal_article_rules_v9[c.metal]||[]).some(x=>
+  x.article===r.official_article&&Number(x.limit)===Number(c.limit)&&x.unit===c.unit));
+}
 const namedCropMappings=contaminants.explicit_crop_contaminant_article_mappings_v9||[];
 const namedCropById=new Map(namedCropMappings.map(x=>[x.catalog_id,x]));
 assert.equal(namedCropMappings.length,3,"Expected three exact named crop-toxin mappings");
@@ -478,6 +492,7 @@ function contaminantEvidenceForProduct(p){
  const oilMetalEvidence=nickelOilById.get(p.id)||seedOilById.get(p.id)||null;
  const vegMetalEvidence=vegMetalById.get(p.id)||null;
  const freshEggEvidence=(freshEggs.catalog_id===p.id)?freshEggs:null;
+ const bisulphiteEvidence=bisulphiteById.get(p.id)||null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
@@ -499,6 +514,7 @@ function contaminantEvidenceForProduct(p){
  if(oilMetalEvidence)explicitKinds.push("verified_exact_oil_metal_article");
  if(vegMetalEvidence)explicitKinds.push("verified_fresh_vegetable_chromium_nickel_articles");
  if(freshEggEvidence)explicitKinds.push("verified_exact_fresh_eggs_pesticide_commodity_article_review_only");
+ if(bisulphiteEvidence)explicitKinds.push("verified_exact_bisulphite_ins_additive_substance_metal_articles");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
    "no_exact_catalog_evidence_in_this_inventory";
@@ -510,6 +526,10 @@ function contaminantEvidenceForProduct(p){
      source_url:alcoholic.official_source_url,full_compliance_verified:false,
      pesticide_mrls_auto_applied:false,other_contaminants_assessed:false
    }:null,
+   exact_bisulphite_additive_metal_articles:bisulphiteEvidence?{
+     substance_name:bisulphiteEvidence.product_name,metal_limits:bisulphiteEvidence.contaminants,
+     official_source:bisulphiteRoutes.official_source_url,
+     finished_food_additive_use_allowed:false,full_compliance_verified:false}:null,
    exact_fresh_eggs_pesticide_commodity:freshEggEvidence?{
      official_article:"Eggs",mrl_rows:9,scope:"Shell free basis",
      source_url:freshEggs.official_source_url,auto_apply:false,full_compliance_verified:false}:null,
@@ -769,6 +789,10 @@ const products = index.products.map(p => {
       tally("chapter_2_3_non_equivalent_articles","raw_cocoa_beans_not_cocoa_powder");
     action.push("Review Chapter 2.3 specific fruit, vegetable, nut or processed-product matrix, raw-ingredient commodity MRL, processing factor and sample basis; no finished-product pesticide MRL automatically established");
   }
+  if(contaminantEvidence.exact_bisulphite_additive_metal_articles){
+    tally("special_ins_additive_identity_metal","exact_substance_lead_selenium");
+    action.push("INS metabisulphite pure-substance Lead/Selenium Version IX articles verified; separate Appendix A category, additive permission, dose and product formulation requirements remain unassessed.");
+  }
   if(contaminantEvidence.exact_fresh_eggs_pesticide_commodity){
     tally("chapter_2_5_eggs_exact_article","shell_free_pesticide_reference_only");
     action.push("Fresh Eggs exact FSSAI Eggs pesticide commodity (9 rows) confirmed, all shell-free. These MRLs are reference-only; verify specific pesticide residue definitions and amendments before compliance decision.");
@@ -968,6 +992,7 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| Exact INS 223/224 metabisulphite substance metal impurity articles | "+(counts.special_ins_additive_identity_metal?.exact_substance_lead_selenium||0)+" |",
   "| Fresh Eggs with exact nine shell-free FSSAI commodity pesticide source rows, review only | "+(counts.chapter_2_5_eggs_exact_article?.shell_free_pesticide_reference_only||0)+" |",
   "| Exact fresh/minimally processed vegetable identities with source-backed Chromium and Nickel | "+(counts.chapter_2_3_fresh_vegetables?.source_backed_chromium_nickel_only||0)+" |",
   "| Exact Chapter 2.2 oil identities with grouped source-backed metal limits | "+((counts.chapter_2_2_exact_oil_metal_articles?.hydrogenated_interesterified_nickel||0)+(counts.chapter_2_2_exact_oil_metal_articles?.named_edible_seed_oil_lead_arsenic||0))+" |",
