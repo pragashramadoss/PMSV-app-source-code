@@ -84,7 +84,8 @@ test('Dahi never borrows milk or yoghurt values',()=>{
 test('Rice and unrelated standardized foods stay unmatched, no ingredient gate',()=>{
  const h=harness({id:'06-06-1-rice',name:'Rice'});
  assert.equal(h.resolve(),null);h.render();
- assert.match(h.nodes.nutritionStandardReferenceStatus.innerHTML,/No exact verified IFCT nutrition entry/);
+ assert.match(h.nodes.nutritionStandardReferenceStatus.innerHTML,/Select the exact rice form to view IFCT nutrition/);
+ assert.match(h.nodes.nutritionStandardIfctVariant.innerHTML,/A015|A013|A014/);
  assert.match(h.nodes.nutritionStandardReferenceTable.innerHTML,/optional formulation calculator/);
 });
 test('IFCT vitamins, minerals and amino acid protein basis display correctly',()=>{
