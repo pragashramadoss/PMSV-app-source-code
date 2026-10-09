@@ -100,6 +100,7 @@ const products = index.products.map(p => {
   let routeKind, rule, chapterStatus = "not_a_chapter_route";
   let numericCompositionPresent = false;
   let numericBaselineStatus = "not_recorded";
+  let productAdditiveRestriction = null;
   let sourceUrls = [];
   const action = [];
   if(p.chapter_rule_link_status === "file_and_key_verified") {
@@ -107,6 +108,25 @@ const products = index.products.map(p => {
     const target = chapterRecord(p);
     sourceUrls = target.sourceUrls;
     rule = {file:target.file, key:target.key, record_status:target.record.status || "not_recorded"};
+    const productBan=target.record.permitted_additives_policy;
+    if(productBan?.permitted === false){
+      assert.equal(target.record.full_compliance_assessment_enabled,false,"Additive ban must not imply full compliance: "+p.id);
+      productAdditiveRestriction={
+        scope:"all_added_food_additives_prohibited_in_named_product_standard",
+        source_regulation_key:target.key,
+        source_text:productBan.source_rule || "No additives allowed",
+        current_amendments_verified:false
+      };
+      action.push("Product-specific no-additives clause overrides any apparent generic Appendix A category permission; check effective amendments");
+    }else if(Array.isArray(target.record.prohibited_additive_classes)&&target.record.prohibited_additive_classes.length){
+      productAdditiveRestriction={
+        scope:"named_additive_classes_only",
+        source_regulation_key:target.key,
+        classes:target.record.prohibited_additive_classes,
+        current_amendments_verified:false
+      };
+      action.push("Check product-standard prohibitions on named additive classes; do not infer a blanket ban");
+    }
     numericCompositionPresent = (
       Array.isArray(target.record.composition) && target.record.composition.some(x=>Number.isFinite(x.value))
     ) || (
@@ -148,6 +168,7 @@ const products = index.products.map(p => {
   if(micro.startsWith("appendix_b_no_direct")) action.push("Check other relevant microbiology requirements; no direct Appendix B table mapping is not an exemption");
   if(p.appendix_fcs_status !== "mapped_current_v3") action.push("Reconcile Appendix A category classification or special exclusion before additive assessment");
   if(p.appendix_fcs_status === "mapped_current_v3") action.push("Evaluate additives at exact category/ingredient, amount, technological function and applicable notes");
+  if(productAdditiveRestriction)tally("product_additive_restrictions",productAdditiveRestriction.scope);
   tally("route", routeKind);
   tally("chapter_evidence", chapterStatus);
   tally("microbiology", micro);
@@ -166,6 +187,7 @@ const products = index.products.map(p => {
     microbiology_candidates_count:(p.microbiology_candidates || []).length,
     appendix_a_category:p.appendix_fcs || null,
     appendix_a_category_status:p.appendix_fcs_status,
+    product_standard_additive_restriction:productAdditiveRestriction,
     official_source_urls:sourceUrls,
     compliance_decision:"not_established_by_route_evidence",
     cross_layer_validation:{
@@ -206,6 +228,8 @@ const summary = [
   "| Source-transcribed numeric baselines with current amendment review pending | "+(counts.numeric_baseline_status.official_source_baseline_current_amendments_pending||0)+" |",
   "| Official-scope-reviewed identities with no universal numeric composition prescribed by cited clause | "+(counts.numeric_baseline_status.official_scope_reviewed_no_universal_composition_limits_in_clause||0)+" |",
   "| Appendix B conditional, variant-dependent routes | "+(counts.microbiology.conditional_appendix_b_variant_required||0)+" |",
+  "| Named product-standard complete additive bans flagged | "+(counts.product_additive_restrictions?.all_added_food_additives_prohibited_in_named_product_standard||0)+" |",
+  "| Named limited additive-class restrictions flagged | "+(counts.product_additive_restrictions?.named_additive_classes_only||0)+" |",
   "| Appendix B exact/conditional/no-direct mappings cross-checked against Table profiles | "+appendixBRoutes.size+" |",
   "| Microbiology absent from lightweight search index (not necessarily exempt) | "+(counts.microbiology.not_recorded_in_search_index||0)+" |",
   "| All product-specific compliance outcomes independently verified | 0 claimed |",
