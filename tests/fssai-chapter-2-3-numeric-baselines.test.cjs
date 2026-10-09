@@ -442,3 +442,36 @@ test("Chapter 2.3 98-product review-only scope blocks exact-name pesticide auto 
  assert.deepEqual(rows({id:"tomato-juice",name:"Tomato",fssr:"2.3.8"}),[]);
  assert.ok(rows({id:"unscoped-synthetic-tomato",name:"Tomato",fssr:"2.10.99"}).length>0);
 });
+
+
+test("FSSAI 2.3.9 ready-to-drink fruit nectar has exact Version IX Lead 0.05 mg/kg, not a broad fruit-drink alias",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const source=db.metal_article_rules_v9.Lead.find(x=>x.article==="Fruit Juices (including nectars; ready to drink)");
+ assert.ok(source);
+ assert.equal(source.limit,0.05);
+ assert.equal(source.unit,"mg/kg");
+ const nectar=index.products.find(x=>x.id==="fruit-nectars"),drink=index.products.find(x=>x.id==="fruit-drink-rts");
+ assert.equal(nectar.fssr,"2.3.9");
+ assert.equal(drink.fssr,"2.3.10");
+ const aliases=db.explicit_metal_alias_mappings_v9.filter(x=>x.product_id===nectar.id);
+ assert.equal(aliases.length,1);
+ const mapping=aliases[0];
+ assert.equal(mapping.fssr,nectar.fssr);
+ assert.deepEqual(mapping.verified_alias_basis.map(x=>[x.metal,x.article,x.limit,x.unit]),[["Lead",source.article,0.05,"mg/kg"]]);
+ assert.ok(mapping.verified_alias_basis[0].source_standard_url.startsWith("https://fssai.gov.in/"));
+ assert.equal(mapping.verified_alias_basis[0].complete_contaminant_review,false);
+ assert.equal(mapping.verified_alias_basis[0].amendments_reconciled,false);
+ assert.ok(!db.explicit_metal_alias_mappings_v9.some(x=>x.product_id===drink.id&&x.verified_alias_basis.some(y=>y.article===source.article)));
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const at=html.indexOf("function productBaselineContaminantRules(p){");
+ const end=html.indexOf("\nfunction ",at+20);
+ assert.ok(at>=0&&end>at);
+ const vm=require("node:vm");
+ const ctx=vm.createContext({contaminantsDb:db,normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+  chapterRuleDbs:[],ruleDbStandards:()=>[],exactFinishedProductContaminantLock:()=>null,exactRawMeatMetalLock:()=>null,isVerifiedFermentedMilkProduct:()=>false});
+ vm.runInContext(html.slice(at,end),ctx);
+ const run=p=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx));
+ const verified=r=>r.contaminant==="Lead"&&r.article===source.article&&r.limit===0.05;
+ assert.equal(run(nectar).filter(verified).length,1);
+ assert.equal(run(drink).filter(verified).length,0);
+});
