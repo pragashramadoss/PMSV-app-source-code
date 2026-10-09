@@ -26968,5 +26968,80 @@
     "amendments_fully_reconciled": false,
     "automatic_pesticide_mrl_approval": false,
     "composite_food_inheritance": false
+  },
+  "chapter_2_4_verified_raw_cereal_aflatoxin_v9": {
+    "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "source_version": "FSSAI CTR Version IX (03.02.2026)",
+    "official_article": "Cereal and cereal products",
+    "verified_raw_cereal_identities": [
+      {
+        "catalog_id": "06-06-1-wheat",
+        "product_name": "Wheat",
+        "fssr": "2.4.6",
+        "raw_grain_identity_verified": true
+      },
+      {
+        "catalog_id": "06-06-1-maize",
+        "product_name": "Maize",
+        "fssr": "2.4.6",
+        "raw_grain_identity_verified": true
+      },
+      {
+        "catalog_id": "06-06-1-rice",
+        "product_name": "Rice",
+        "fssr": "2.4.6",
+        "raw_grain_identity_verified": true
+      },
+      {
+        "catalog_id": "06-06-1-oats",
+        "product_name": "Oats",
+        "fssr": "2.4.6",
+        "raw_grain_identity_verified": true
+      },
+      {
+        "catalog_id": "06-06-1-basmati-rice",
+        "product_name": "Basmati Rice",
+        "fssr": "2.4.6",
+        "raw_grain_identity_verified": true
+      },
+      {
+        "catalog_id": "06-06-1-millets",
+        "product_name": "Millets",
+        "fssr": "2.4.6(23)",
+        "raw_grain_identity_verified": true
+      }
+    ],
+    "rules": [
+      {
+        "crop_contaminant_key": "total_aflatoxins",
+        "contaminant": "Total Aflatoxins",
+        "limit": 15,
+        "unit": "µg/kg"
+      },
+      {
+        "crop_contaminant_key": "aflatoxin_b1",
+        "contaminant": "Aflatoxin B1",
+        "limit": 10,
+        "unit": "µg/kg"
+      }
+    ],
+    "excluded_processed_ids": [
+      "06-06-2-wheat-flour-atta-and-resultant-wheat-flour-resultant-atta",
+      "06-06-2-maida-refined-wheat-flour",
+      "06-06-2-whole-maize-corn-flour",
+      "06-06-2-ragi-flour",
+      "06-06-2-jowar-flour-sorghum-flour",
+      "06-06-2-rice-flour-for-preparation-of-fortified-rice-kernel-frk",
+      "06-06-3-corn-flakes",
+      "06-06-3-oat-products",
+      "06-06-3-breakfast-cereal",
+      "06-06-2-mixed-millet-flour",
+      "06-06-1-pulses",
+      "06-06-1-quinoa"
+    ],
+    "complete_contaminant_coverage": false,
+    "amendments_fully_reconciled": false,
+    "automatic_pesticide_mrl_approval": false,
+    "processed_cereal_inheritance": false
   }
 }

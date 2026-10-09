@@ -755,3 +755,43 @@ test("exact named nut and arecanut Version IX mappings suppress stale generic le
  assert.ok(other);
  assert.ok(profile(other)?.rules?.length>0,"Unrelated jam profile must be unaffected");
 });
+
+
+test("six exact Chapter 2.4 raw cereals have gated FSSAI aflatoxins without processed form inheritance",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const cfg=db.chapter_2_4_verified_raw_cereal_aflatoxin_v9;
+ assert.equal(cfg.verified_raw_cereal_identities.length,6);
+ assert.equal(cfg.complete_contaminant_coverage,false);
+ assert.equal(cfg.processed_cereal_inheritance,false);
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const at=html.indexOf("function productBaselineContaminantRules(p){");
+ const end=html.indexOf("\nfunction ",at+12);
+ const vm=require("node:vm"),ctx=vm.createContext({contaminantsDb:db,
+  normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+  chapterRuleDbs:[{}],ruleDbStandards:()=>[{key:"2.4.6",applies_to:["wheat","maize","rice","pulses","millets","other food grains"]}],
+  exactFinishedProductContaminantLock:()=>null,exactRawMeatMetalLock:()=>null,isVerifiedFermentedMilkProduct:()=>false});
+ vm.runInContext(html.slice(at,end),ctx);
+ const run=p=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx));
+ for(const entry of cfg.verified_raw_cereal_identities){
+  const p=index.products.find(x=>x.id===entry.catalog_id);
+  assert.ok(p,entry.catalog_id);
+  assert.equal(p.name,entry.product_name);
+  assert.equal(p.fssr,entry.fssr);
+  const found=run(p).filter(x=>x.source_basis?.includes("verified exact raw-cereal product identity"));
+  assert.deepEqual(found.map(x=>[x.contaminant,x.limit,x.unit]),[["Total Aflatoxins",15,"µg/kg"],["Aflatoxin B1",10,"µg/kg"]]);
+ }
+ for(const id of cfg.excluded_processed_ids){
+  const p=index.products.find(x=>x.id===id);
+  assert.ok(p,id);
+  assert.equal(run(p).some(x=>x.source_basis?.includes("verified exact raw-cereal product identity")),false,id);
+ }
+ const altered=structuredClone(db);
+ altered.crop_contaminants.total_aflatoxins.rules.find(x=>x.article==="Cereal and cereal products").limit=900;
+ ctx.contaminantsDb=altered;
+ const rice=index.products.find(x=>x.id==="06-06-1-rice");
+ const found=run(rice).filter(x=>x.source_basis?.includes("verified exact raw-cereal product identity"));
+ assert.equal(found.some(x=>x.contaminant==="Total Aflatoxins"),false);
+ assert.equal(found.some(x=>x.contaminant==="Aflatoxin B1"),true);
+ const audit=fs.readFileSync(path.resolve(dataRoot,"../../scripts/audit-fssai-product-readiness.cjs"),"utf8");
+ assert.match(audit,/chapter_2_4_verified_raw_cereal_aflatoxin/);
+});

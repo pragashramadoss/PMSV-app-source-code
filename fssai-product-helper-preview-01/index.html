@@ -8427,6 +8427,25 @@ function productBaselineContaminantRules(p){
      condition:'Exact finished soup or sauce only; do not apply by fuzzy ingredient or keyword matching to soup powder, paste or an unrelated product. Complete contaminant review and operative amendments remain separate.'
    });
 
+ // 5d) FSSAI Version IX cereal aflatoxins: checked only for the exact
+ // Chapter 2.4 raw-grain identities below. Flour, flakes and composite foods
+ // must not inherit by the wheat/rice/maize/millet ingredient name.
+ const verifiedCereals=contaminantsDb?.chapter_2_4_verified_raw_cereal_aflatoxin_v9;
+ const verifiedCereal=(verifiedCereals?.verified_raw_cereal_identities||[])
+   .find(x=>x.catalog_id===id && x.fssr===p.fssr && x.raw_grain_identity_verified===true);
+ if(verifiedCereal && !(verifiedCereals.excluded_processed_ids||[]).includes(id)){
+   for(const rule of verifiedCereals.rules||[]){
+     const group=contaminantsDb?.crop_contaminants?.[rule.crop_contaminant_key];
+     const exact=(group?.rules||[]).find(x=>x.article===verifiedCereals.official_article &&
+       Number(x.limit)===Number(rule.limit));
+     if(!exact)continue;
+     pushRule({contaminant:rule.contaminant,article:verifiedCereals.official_article,
+       limit:rule.limit,unit:rule.unit,
+       source_basis:'FSSAI CTR Version IX · Section 2.2.1 · verified exact raw-cereal product identity',
+       condition:'Exact raw grain '+verifiedCereal.product_name+' only. This mapping does not automatically extend to flour, cereal flakes, instant cereals, bran, other processed forms, pesticide MRLs or all other contaminants.'});
+   }
+ }
+
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
@@ -8439,11 +8458,7 @@ function productBaselineContaminantRules(p){
    const lead=leadRows.find(r=>normIngredient(r.article||'')===normIngredient('Cereal grains, except buckwheat, canihua and quinoa'));
    if(lead&&!['buckwheat','canihua','quinoa'].includes(n))pushRule({contaminant:'Lead',...lead});
 
-   const totalAflatoxin=contaminantsDb?.crop_contaminants?.total_aflatoxins?.rules?.find(r=>normIngredient(r.article||'')===normIngredient('Cereal and cereal products'));
-   if(totalAflatoxin)pushRule({contaminant:'Total Aflatoxins',unit:String(totalAflatoxin.unit||'µg/kg'),source_basis:'Section 2.2.1 · Crop contaminants',...totalAflatoxin});
-
-   const b1=contaminantsDb?.crop_contaminants?.aflatoxin_b1?.rules?.find(r=>normIngredient(r.article||'')===normIngredient('Cereal and cereal products'));
-   if(b1)pushRule({contaminant:'Aflatoxin B1',unit:String(b1.unit||'µg/kg'),source_basis:'Section 2.2.1 · Crop contaminants',...b1});
+   // Aflatoxins use the exact raw-cereal registry above, never the broad FSSR family.
  }
 
  // 7) FSSR 2.1.13 explicitly defines Dahi/Yoghurt and related fermented milks as milk products.

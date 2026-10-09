@@ -187,6 +187,28 @@ for(const route of namedNutCrop.verified_product_identities){
  namedNutById.set(route.catalog_id,route);
 }
 for(const id of namedNutCrop.excluded_similar_identity_ids)assert.ok(!namedNutById.has(id));
+const namedRawCereal=contaminants.chapter_2_4_verified_raw_cereal_aflatoxin_v9;
+assert.equal(namedRawCereal?.verified_raw_cereal_identities?.length,6);
+assert.equal(namedRawCereal?.official_article,"Cereal and cereal products");
+assert.equal(namedRawCereal?.complete_contaminant_coverage,false);
+assert.equal(namedRawCereal?.amendments_fully_reconciled,false);
+assert.equal(namedRawCereal?.automatic_pesticide_mrl_approval,false);
+assert.equal(namedRawCereal?.processed_cereal_inheritance,false);
+assert.ok(official(namedRawCereal.official_source_url));
+const namedRawCerealById=new Map();
+for(const route of namedRawCereal.verified_raw_cereal_identities){
+ const p=index.products.find(x=>x.id===route.catalog_id);
+ assert.ok(p && p.name===route.product_name && p.fssr===route.fssr,"Cereal identity drift: "+route.catalog_id);
+ assert.equal(route.raw_grain_identity_verified,true);
+ assert.ok(!namedRawCerealById.has(route.catalog_id));
+ assert.ok(!namedRawCereal.excluded_processed_ids.includes(route.catalog_id));
+ for(const rule of namedRawCereal.rules){
+  const group=contaminants.crop_contaminants[rule.crop_contaminant_key];
+  assert.ok(group?.rules?.some(x=>x.article===namedRawCereal.official_article&&Number(x.limit)===Number(rule.limit)),
+   "Official raw cereal aflatoxin article changed: "+route.catalog_id);
+ }
+ namedRawCerealById.set(route.catalog_id,route);
+}
 const namedSoupSauceSaffrole=contaminants.chapter_2_3_exact_soup_sauce_saffrole_v9;
 const officialSoupSauceSaffrole=(contaminants.naturally_occurring_toxic_substances?.saffrole||[])
  .find(x=>x.article===namedSoupSauceSaffrole?.official_article);
@@ -235,6 +257,7 @@ function contaminantEvidenceForProduct(p){
  const cropToxin=namedCropById.get(p.id)||null;
  const groundnutCrop=exactGroundnutCrop.catalog_id===p.id ? exactGroundnutCrop:null;
  const namedNutCropEvidence=namedNutById.get(p.id)||null;
+ const namedRawCerealEvidence=namedRawCerealById.get(p.id)||null;
  const soupSauceSaffrole=namedSoupSauceIds.get(p.id)||null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
@@ -245,6 +268,7 @@ function contaminantEvidenceForProduct(p){
  if(cropToxin)explicitKinds.push("exact_named_crop_toxin_article");
  if(groundnutCrop)explicitKinds.push("verified_groundnut_crop_toxin_identical_category_limits");
  if(namedNutCropEvidence)explicitKinds.push("verified_exact_nut_arecanut_crop_toxin_article");
+ if(namedRawCerealEvidence)explicitKinds.push("verified_exact_raw_cereal_crop_toxin_article");
  if(soupSauceSaffrole)explicitKinds.push("verified_soup_sauce_saffrole_official_article");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
@@ -286,6 +310,12 @@ function contaminantEvidenceForProduct(p){
         official_source_url:fruitVegById.get(p.id).source_url,
         auto_apply:false,
         full_finished_product_applicability_verified:false} : null,
+   chapter_2_4_exact_raw_cereal_aflatoxin:namedRawCerealEvidence
+     ?{fssr:namedRawCerealEvidence.fssr,product_name:namedRawCerealEvidence.product_name,
+       article:namedRawCereal.official_article,
+       crop_limits:namedRawCereal.rules.map(x=>({contaminant:x.contaminant,limit:x.limit,unit:x.unit})),
+       source:namedRawCereal.official_source_url,
+       full_compliance_verified:false,processed_form_inheritance:false,pesticide_mrls_auto_applied:false}:null,
    chapter_2_4_pesticide_commodity_review:cerealById.get(p.id)
      ? {scope:cerealById.get(p.id).scope,
         review_status:cerealById.get(p.id).scope_review_status,
@@ -477,6 +507,10 @@ const products = index.products.map(p => {
     tally("chapter_2_3_verified_groundnut_crop_limits","identity_and_same_limits_across_source_articles");
     action.push("Groundnut kernel: verify other contaminants, pesticide MRLs, processing use and operative amendments separately; aflatoxin identity alone does not establish product compliance");
   }
+  if(contaminantEvidence.chapter_2_4_exact_raw_cereal_aflatoxin){
+    tally("chapter_2_4_verified_raw_cereal_aflatoxin","exact_raw_grain_partial_source_evidence");
+    action.push("Exact raw-cereal aflatoxin Version IX article is partial evidence only; verify other metal and toxin limits, variants, other processed forms, pesticide MRLs and operative amendments");
+  }
   if(contaminantEvidence.chapter_2_4_pesticide_commodity_review){
     tally("chapter_2_4_pesticide_review","reference_only_by_exact_catalog_id");
     action.push("Check Chapter 2.4 raw versus milled, oilseed-flour and composite food form before deciding individual official MRL/crop contaminant applicability; candidates are reference-only");
@@ -629,6 +663,7 @@ const summary = [
   "| Chapter 2.4 processed Pearl Barley OTA/DON article form held for verification | "+(counts.chapter_2_4_crop_toxin_form_pending?.pearl_barley_article_form_unverified||0)+" |",
   "| Chapter 2.4 cereal and flour commodity candidates indexed without automatic MRL applicability | "+(counts.chapter_2_4_pesticide_review?.reference_only_by_exact_catalog_id||0)+" |",
   "| Chapter 2.4 Wheat / Wheat Bran exact Version IX Ochratoxin A and DON mappings | "+(counts.chapter_2_4_exact_named_crop_toxins?.version_ix_wheat_and_bran||0)+" |",
+  "| Chapter 2.4 exact raw cereal identities with partial Version IX aflatoxin evidence | "+(counts.chapter_2_4_verified_raw_cereal_aflatoxin?.exact_raw_grain_partial_source_evidence||0)+" |",
   "| Chapter 2.5 product identities with official commodity pesticide candidates (not auto-applied) | "+(counts.chapter_2_5_pesticide_candidates?.source_rows_available_applicability_pending||0)+" |",
   "| Raw goat/rabbit metal article locks preventing species transfer | "+(counts.chapter_2_5_goat_rabbit_metal_locks?.species_identity_not_transferable||0)+" |",
   "| Direct FSSAI chapter microbiology criteria indexed | "+(counts.direct_chapter_microbiology?.exact_clause_microbiology_rows||0)+" |",
