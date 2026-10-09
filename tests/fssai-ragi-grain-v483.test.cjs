@@ -28,8 +28,8 @@ function runner(){
  return {
   alias:s=>vm.runInContext('pmsvStandardLookupAlias('+JSON.stringify(s)+')',ctx),
   suggested:s=>vm.runInContext('proprietaryStandardCandidates('+JSON.stringify(s)+')[0].p.id',ctx),
-  confidence:s=>vm.runInContext('proprietaryStandardCandidates('+JSON.stringify(s)+')[0].score',ctx),
-  direct:s=>vm.runInContext('productCatalog().map(p=>({p,score:pmsvStandardLookupAlias('+JSON.stringify(s)+')?.productId===p.id?200000:pmsvDirectScore(p,'+JSON.stringify(s)+')})).sort((a,b)=>b.score-a.score)[0].p.id',ctx),
+  confidence:s=>vm.runInContext('proprietaryStandardCandidates('+JSON.stringify(s)+')[0]?.score??null',ctx),
+  direct:s=>vm.runInContext('pmsvRankedStandardCandidates(productCatalog(),'+JSON.stringify(s)+',pmsvDirectScore)[0]?.p.id??null',ctx),
   product:x=>{p=catalog.find(y=>y.id===x);assert.ok(p,'Missing product '+x);},
   clauses:()=>Array.from(vm.runInContext('currentChapterStandards().map(x=>x.standard.key)',ctx))
  };
@@ -67,7 +67,9 @@ test('millet grain FSSR applies both general grain rule and exact 2.4.6(23), but
 });
 test('Ragi mapping and confirmation preserve the exact finger millet identity',()=>{
  const h=runner();
- assert.equal(h.alias('ragi').variant,'Finger Millet (Ragi or Mandua)');
+ assert.equal(h.alias('ragi').variant,'Ragi');
+ assert.equal(h.alias('jowar').displayName,'Jowar');
+ assert.equal(h.alias('jowar flour').displayName,'Jowar Flour (Sorghum Flour)');
  assert.match(page,/if\(exactAlias\?\.variant\)sessionStorage\.setItem\(ASSESSMENT_VARIANT_KEY,exactAlias\.variant\)/);
  assert.match(page,/const bestDisplayName=matchingAlias/);
 });
@@ -100,9 +102,8 @@ test('Unverified millet-flour forms do not silently resolve to millets grain or 
  const h=runner();
  for(const name of ['kodo flour','teff flour','buckwheat flour']){
    assert.equal(h.alias(name),null,'Unsupported flour alias must fail closed');
-   // The candidate list can still contain a first item but its score must
-   // be zero, so the UI shows "No reliable match" and does not auto-select.
-   assert.equal(h.confidence(name),0,name+' must not trigger an automatic product suggestion');
+   assert.equal(h.confidence(name),null,name+' must not trigger an automatic product suggestion');
+   assert.equal(h.direct(name),null,name+' must not generate an unrelated processed-form suggestion');
  }
 });
 test('Existing wheat, rice and actual flour routes remain intact',()=>{
