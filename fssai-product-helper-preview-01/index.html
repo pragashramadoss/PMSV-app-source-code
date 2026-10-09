@@ -8619,6 +8619,18 @@ function productBaselineContaminantRules(p){
      condition:'Only '+p.name+' ('+p.fcs+'); verify vegetable subtype, other metal articles, pesticide residues and amendments.'});
  }
  
+ // Exact INS 223/224 additive substances, not finished-food additive permissions.
+ const bisulphites=contaminantsDb?.special_exact_metabisulphite_metal_articles_v9;
+ const bisulphite=(bisulphites?.verified_additive_identities||[]).find(x=>
+   x.catalog_id===id && x.product_name===p.name && x.exact_ins_identity_verified===true);
+ if(bisulphite)for(const item of bisulphite.contaminants||[]){
+   const exact=exactMetalRule(item.metal,bisulphite.official_article);
+   if(!exact||Number(exact.limit)!==Number(item.limit)||exact.unit!==item.unit)continue;
+   pushRule({contaminant:item.metal,...exact,
+     source_basis:'FSSAI Version IX §2.1 · exact INS additive identity/purity metal',
+     condition:'Only '+p.name+' additive substance. Does not establish finished-food use permission, permitted additive dosage or other contaminant compliance.'});
+ }
+ 
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
