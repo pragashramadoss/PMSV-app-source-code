@@ -47,9 +47,9 @@ test("pickle variants show no-medium fail-closed state and exact medium requirem
  assert.match(x,/none is automatically selected or approved/);
 });
 test("UI renderer is wired into both product-standard and nutrition views",()=>{
- const invocations=html.match(/sourcePinnedStandardSupplementHtml\(standard\)/g)||[];
+ const invocations=html.match(/sourcePinnedStandardSupplementHtml\(standard,product\?\.id\)/g)||[];
  assert.equal(invocations.length,2);
- assert.match(html,/html\+=sourcePinnedStandardSupplementHtml\(standard\)/);
+ assert.match(html,/html\+=sourcePinnedStandardSupplementHtml\(standard,product\?\.id\)/);
  assert.match(html,/blocks\.push\(sourcePinnedSupplement\)/);
 });
 test("untrusted standard text cannot inject HTML",()=>{
@@ -57,4 +57,33 @@ test("untrusted standard text cannot inject HTML",()=>{
  const x=render(fake);
  assert.ok(!x.includes("<img "));
  assert.ok(x.includes("&lt;img"));
+});
+
+test("exact fungi identity does not display numeric limits of different fungi preparations",()=>{
+ const fungi=standards.get("2.3.62");
+ const frozen=render(fungi,"04-04-2-quick-frozen-fungi");
+ assert.match(frozen,/Quick frozen fungi/);
+ assert.match(frozen,/-18/);
+ assert.doesNotMatch(frozen,/Dried Shii-ta-ke fungi/);
+ assert.doesNotMatch(frozen,/Pickled fungi/);
+ assert.doesNotMatch(frozen,/Salted fungi \(semi-processed\)/);
+ const extracts=render(fungi,"04-04-2-fungi-extract-and-fungi-concentrate");
+ assert.match(extracts,/Fungi extract/);
+ assert.match(extracts,/Fungi concentrate/);
+ assert.doesNotMatch(extracts,/Quick frozen fungi/);
+ const wrong=render(fungi,"not-a-loaded-product");
+ assert.match(wrong,/No exact product-specific variant mapping/);
+ assert.doesNotMatch(wrong,/Quick frozen fungi/);
+});
+test("selected ginger paste shows only ginger limits and does not borrow chilli sauce",()=>{
+ const sauces=standards.get("2.3.28");
+ const h=render(sauces,"04-04-2-ginger-paste");
+ assert.match(h,/Ginger paste/);
+ assert.doesNotMatch(h,/Fruit or vegetable sauces/);
+ assert.doesNotMatch(h,/Chilli sauce/);
+});
+test("date paste highlights its absolute no-additives clause",()=>{
+ const x=render(standards.get("2.3.56"),"04-04-1-date-paste");
+ assert.match(x,/No food additives allowed/);
+ assert.match(x,/not a full compliance verdict/);
 });
