@@ -345,6 +345,106 @@
       ]
     },
     {
+      "key": "2.4.6(22)",
+      "name": "Pulses — Whole, Dehusked and Split",
+      "status": "structured_core",
+      "definition": "FSSAI 2.4.6(22) covers whole or shelled (de-husked) or split pulses, including mixtures of listed pulses. The rule excludes toxic or noxious seeds and added colouring matter.",
+      "applies_to_product_names": [
+        "Pulses"
+      ],
+      "named_pulse_families": [
+        "Lentil (Masur)",
+        "Black gram (Urd)",
+        "Green gram (Moong)",
+        "Bengal gram (Chana, Chick pea, Kabuli Chana, Chhole, Hara Chana)",
+        "Red gram (Arhar)",
+        "Horse gram (Kulthi)",
+        "Field bean (Sem)",
+        "Dry peas (Matra)",
+        "Soybean",
+        "Rajmah, double/broad/black beans",
+        "Lobia (black-eyed beans)",
+        "Moth bean (Matki)"
+      ],
+      "variants": [
+        "Pulses with seed coat",
+        "Pulses without seed coat"
+      ],
+      "variant_requirements": [
+        {
+          "parameter": "Moisture",
+          "condition": "Maximum; choose whether the pulse retains its seed coat",
+          "unit": "% by mass",
+          "values": {
+            "Pulses with seed coat": 14,
+            "Pulses without seed coat": 12
+          }
+        }
+      ],
+      "general_limits": [
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass",
+          "condition": "Of which mineral matter ≤0.25% and animal-origin impurities ≤0.10%"
+        },
+        {
+          "parameter": "Mineral matter within extraneous matter",
+          "operator": "<=",
+          "value": 0.25,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Animal-origin impurities within extraneous matter",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Seeds with serious defects",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Seeds with slight defects",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% by mass",
+          "condition": "Of which broken pulses ≤3%"
+        },
+        {
+          "parameter": "Broken pulses within slight defects",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Other edible pulses or grains",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Discoloured seeds",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Uric acid",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/kg"
+        }
+      ],
+      "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf",
+      "source_page_range": "Current Chapter 2.4 Version 4 (07.05.2025), PDF pages 15–17, clause 2.4.6(22)",
+      "source_verified_on": "2026-10-09",
+      "applicability_note": "Only listed pulse identities and genuine whole/dehusked/split forms; not automatically applicable to besan, sattu or pulse flours."
+    },
+    {
       "key": "2.4.6(23)",
       "name": "Millets — Whole or Dehulled Grains",
       "status": "structured_core",
