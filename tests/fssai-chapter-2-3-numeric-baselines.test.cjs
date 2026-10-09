@@ -508,3 +508,51 @@ test("vegetable juice exact Lead article must remain distinct from fruit drinks 
  assert.equal(juice[0].limit,1);
  assert.equal(evaluate(index.products.find(x=>x.id==="fruit-drink-rts")).some(x=>x.article===row.article),false);
 });
+
+
+test("Chapter 2.3 conditional metal rows remain official reference only",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const byId=new Map(db.chapter_2_3_commodity_mrl_review_v1.map(x=>[x.catalog_id,x]));
+ const checks={
+  "04-04-2-dehydrated-vegetables":[["Lead",5],["Lead",10]],
+  "04-04-1-thermally-processed-fruit-salad-cocktail-mix":[["Lead",1]],
+  "04-04-2-sterilized-fungi":[["Lead",1],["Tin",250]]
+ };
+ for(const [id,rows] of Object.entries(checks)){
+  const candidates=byId.get(id).conditional_metal_article_candidates;
+  assert.deepEqual(candidates.map(x=>[x.contaminant,x.limit]),rows,id);
+  for(const x of candidates){
+   assert.equal(x.auto_apply,false,id);
+   assert.equal(x.full_product_compliance,false,id);
+   assert.ok(x.official_source_url.startsWith("https://fssai.gov.in/"));
+   assert.ok(x.required_qualification.length>25,id);
+   const matching=db.metal_article_rules_v9[x.contaminant].find(a=>a.article===x.official_article);
+   assert.equal(matching.limit,x.limit,id);
+   assert.equal(matching.unit,x.unit,id);
+  }
+ }
+ const cocoa=byId.get("04-04-2-cocoa-beans");
+ assert.deepEqual(cocoa.excluded_non_equivalent_finished_product_articles,["Cocoa powder"]);
+ assert.deepEqual(cocoa.cross_product_metal_articles_reference_only.map(x=>[x.contaminant,x.limit,x.auto_apply]),[["Lead",5,false],["Copper",70,false]]);
+});
+test("Conditional source references are visible, do not affect unrelated products, and enter 533-product audit",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const from=html.indexOf("function exactFruitVegCommodityReview(p){");
+ const to=html.indexOf("\nfunction exactCerealCommodityReview(",from);
+ assert.ok(from>=0&&to>from);
+ const vm=require("node:vm"),ctx=vm.createContext({contaminantsDb:db,esc:x=>String(x??"")});
+ vm.runInContext(html.slice(from,to),ctx);
+ const render=id=>vm.runInContext("productFruitVegCommodityMrlReviewHtml("+JSON.stringify(index.products.find(p=>p.id===id))+")",ctx);
+ const dried=render("04-04-2-dehydrated-vegetables");
+ assert.match(dried,/Conditional FSSAI metal references/);
+ assert.match(dried,/NOT APPLIED/);
+ assert.match(dried,/Dehydrated onions/);
+ const cocoa=render("04-04-2-cocoa-beans");
+ assert.match(cocoa,/Non-equivalent contaminant article/);
+ assert.match(cocoa,/not Cocoa powder/);
+ assert.doesNotMatch(render("fruit-juices"),/Conditional FSSAI metal references/);
+ const audit=fs.readFileSync(path.resolve(dataRoot,"../../scripts/audit-fssai-product-readiness.cjs"),"utf8");
+ assert.match(audit,/chapter_2_3_conditional_metal_products/);
+ assert.match(audit,/raw_cocoa_beans_not_cocoa_powder/);
+});
