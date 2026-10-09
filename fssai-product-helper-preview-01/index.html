@@ -1230,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-grain-form-browser-v487';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-grain-and-pulses-v488';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -1287,13 +1287,46 @@ function pmsvMilletIdentity(raw){
  const label=flourId.includes('ragi')?'Ragi Flour':flourId.includes('jowar')?'Jowar Flour (Sorghum Flour)':'Bajra Flour (Pearl Millet Flour)';
  return {productId:flourId,variant:'',displayName:label,routeLabel:'FSSAI '+clause+' — '+label,exactIdentity:true};
 }
+/* Exact pulse-name aliases from FSSAI 2.4.6(22).
+ * Pulses are whole/dehusked/split food identities, not flours. Retain
+ * the official FoSCoS "Pulses" category and preserve the named variety.
+ * Soybean is deliberately omitted: it has its own 2.4.19 catalogue identity.
+ */
+const PMSV_PULSE_VARIETIES_V488=[
+ {name:'Masur (Lentil)',names:['masur','masoor','lentil','red lentil','masur dal','masoor dal']},
+ {name:'Urd (Black Gram)',names:['urd','urad','black gram','urad dal','urad dhal','urd dal']},
+ {name:'Moong (Green Gram)',names:['moong','mung','green gram','green moong','moong dal','mung dal']},
+ {name:'Chana (Bengal Gram)',names:['chana','bengal gram','chickpea','chick pea','kabuli chana','chhole','chole','hara chana','chana dal']},
+ {name:'Arhar (Red Gram)',names:['arhar','toor','tur','pigeon pea','red gram','toor dal','tur dal','arhar dal']},
+ {name:'Kulthi (Horse Gram)',names:['kulthi','horse gram']},
+ {name:'Sem (Field Bean)',names:['field bean','sem']},
+ {name:'Matra (Dried Peas)',names:['matra','dry peas','dried peas']},
+ {name:'Rajmah (Common Bean)',names:['rajmah','rajma','kidney beans','double beans','broad beans']},
+ {name:'Lobia (Black-Eyed Bean)',names:['lobia','black eyed beans','black eyed peas']},
+ {name:'Matki (Moth Bean)',names:['matki','moth bean','moth beans']},
+ {name:'Mixed Pulses',names:['mixed pulses','mix of pulses']}
+];
+function pmsvPulseIdentity(raw){
+ const q=pmsvDirectNorm(raw);
+ if(!q)return null;
+ // Whole, shelled or split forms are covered by 2.4.6(22), but flour,
+ // sattu, protein powder, paste, oil or extract is not a pulse grain.
+ if(/\\b(?:flour|powder|atta|sattu|paste|oil|extract|protein|starch|meal)\\b/.test(q))return null;
+ const bare=q.replace(/^(?:whole|dehusked|de husked|split|shelled) /,'').replace(/ (?:whole|split|grain|grains|pulses)$/,'').trim();
+ const item=PMSV_PULSE_VARIETIES_V488.find(x=>x.names.some(n=>pmsvDirectNorm(n)===bare));
+ if(!item)return null;
+ // Never override a standalone official standardized Soybean product.
+ return {productId:'06-06-1-pulses',variant:item.name,displayName:item.name,
+   routeLabel:'FSSAI 2.4.6(22) — Pulses (whole / dehusked / split) · '+item.name,
+   exactIdentity:true};
+}
 function pmsvStandardLookupAlias(raw){
  const q=pmsvDirectNorm(raw);
  if(['dahi','plain dahi','curd','plain curd'].includes(q)){
    return {productId:'01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi',variant:'Dahi',
      displayName:'Dahi',routeLabel:'FSSR 2.1.13 — Fermented Milk / Dahi',exactIdentity:true};
  }
- return pmsvMilletIdentity(raw);
+ return pmsvMilletIdentity(raw)||pmsvPulseIdentity(raw);
 }
 // A name fragment is not evidence that a processed form meets an unprocessed
 // food identity. Prevent direct substring scoring from suggesting flour/oil/etc
