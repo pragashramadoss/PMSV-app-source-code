@@ -65,9 +65,43 @@ test('millet grain FSSR applies both general grain rule and exact 2.4.6(23), but
  assert.deepEqual(h.clauses(),['2.4.34']);
 });
 test('Ragi mapping and confirmation preserve the exact finger millet identity',()=>{
- assert.match(page,/variant:'Finger Millet \(Ragi\)'/);
+ const h=runner();
+ assert.equal(h.alias('ragi').variant,'Finger Millet (Ragi or Mandua)');
  assert.match(page,/if\(exactAlias\?\.variant\)sessionStorage\.setItem\(ASSESSMENT_VARIANT_KEY,exactAlias\.variant\)/);
  assert.match(page,/const bestDisplayName=matchingAlias/);
+});
+test('Jowar, Bajra and all 15 official millet grain identities stay distinct from flour',()=>{
+ const h=runner();
+ const entries=[
+  'Amaranthus','Barnyard Millet','Brown Top Millet','Buckwheat','Crab Finger Millet',
+  'Finger Millet','Fonio','Foxtail Millet',"Job's Tears",'Kodo Millet',
+  'Little Millet','Pearl Millet','Proso Millet','Sorghum','Teff'
+ ];
+ for(const term of entries){
+   const a=h.alias(term);
+   assert.ok(a,'Missing millet form: '+term);
+   assert.equal(a.productId,'06-06-1-millets','Whole millet was misclassified: '+term);
+   assert.equal(h.suggested(term),'06-06-1-millets',term);
+   assert.equal(h.direct(term),'06-06-1-millets',term);
+ }
+ for(const [name,id] of [
+   ['jowar','06-06-1-millets'],['sorghum','06-06-1-millets'],
+   ['bajra','06-06-1-millets'],['bajra flour','06-06-2-bajra-flour-pearl-millet-flour'],
+   ['jowar flour','06-06-2-jowar-flour-sorghum-flour'],
+   ['sorghum flour','06-06-2-jowar-flour-sorghum-flour'],
+   ['ragi flour','06-06-2-ragi-flour']
+ ]){
+   assert.equal(h.suggested(name),id,name);
+   assert.equal(h.direct(name),id,name);
+ }
+});
+test('Unverified millet-flour forms do not silently resolve to millets grain or another flour',()=>{
+ const h=runner();
+ for(const name of ['kodo flour','teff flour','buckwheat flour']){
+   assert.equal(h.alias(name),null,'Unsupported flour alias must fail closed');
+   assert.notEqual(h.suggested(name),'06-06-1-millets',name);
+   assert.notEqual(h.suggested(name),'06-06-2-ragi-flour',name);
+ }
 });
 test('Existing wheat, rice and actual flour routes remain intact',()=>{
  const h=runner();
