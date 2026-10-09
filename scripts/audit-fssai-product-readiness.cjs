@@ -90,6 +90,26 @@ for(const row of meatEggCommodityReviews){
  for(const article of row.candidate_commodity_articles)
    assert.ok(currentPesticideArticles.has(String(article).toLowerCase()),"Missing official FSSAI pesticide commodity article "+article);
 }
+const fruitVegReviews=contaminants.chapter_2_3_commodity_mrl_review_v1||[];
+const fruitVegById=new Map(fruitVegReviews.map(x=>[x.catalog_id,x]));
+const chapter23Products=index.products.filter(p=>String(p.fssr||"").startsWith("2.3."));
+assert.equal(chapter23Products.length,98,"Chapter 2.3 catalogue count changed: reconcile review identities");
+assert.equal(fruitVegReviews.length,98,"Expected 98 Chapter 2.3 pesticide scope review records");
+assert.equal(fruitVegById.size,98,"Duplicate Chapter 2.3 review product ID");
+for(const product of chapter23Products)assert.ok(fruitVegById.has(product.id),"Missing Chapter 2.3 regulatory review: "+product.id);
+for(const row of fruitVegReviews){
+ const product=index.products.find(x=>x.id===row.catalog_id);
+ assert.ok(product&&String(product.fssr||"").startsWith("2.3."),"Non-Chapter 2.3 reference leaked: "+row.catalog_id);
+ assert.deepEqual(row.candidate_finished_product_pesticide_articles,[],row.catalog_id+" cannot approve unverified finished pesticide article");
+ assert.equal(row.auto_apply_raw_ingredient_mrl,false,row.catalog_id+" cannot automatically inherit precursor MRL");
+ assert.equal(row.full_product_regulatory_approval,false,row.catalog_id+" must not mark full regulatory compliance");
+ assert.ok(official(row.source_url),row.catalog_id+" source URL must remain official FSSAI");
+ const rowCount=(contaminants.residue_mrls?.pesticides||[]).reduce((n,pest)=>
+  n+(pest.rows||[]).filter(r=>(row.raw_ingredient_article_references_only||[]).some(a=>normalizeArticle(a)===normalizeArticle(r.food))).length,0);
+ assert.equal(row.raw_reference_rows_in_loaded_official_source,rowCount,row.catalog_id+" pesticide-reference source count mismatch");
+ for(const article of row.raw_ingredient_article_references_only||[])
+   assert.ok(currentPesticideArticles.has(article.toLowerCase()),row.catalog_id+" cites unknown official pesticide article "+article);
+}
 const cerealReviews=contaminants.chapter_2_4_commodity_mrl_review_v1||[];
 const cerealById=new Map(cerealReviews.map(x=>[x.catalog_id,x]));
 const chapter24Products=index.products.filter(p=>String(p.fssr||"").startsWith("2.4."));
@@ -168,12 +188,22 @@ function contaminantEvidenceForProduct(p){
      source:cropToxin.official_source_url,
      full_contaminant_coverage_verified:false
    }:null,
+   chapter_2_3_pesticide_commodity_review:fruitVegById.get(p.id)
+     ? {scope:fruitVegById.get(p.id).scope,
+        review_status:fruitVegById.get(p.id).review_status,
+        raw_ingredient_reference_articles:fruitVegById.get(p.id).raw_ingredient_article_references_only,
+        raw_reference_row_count:fruitVegById.get(p.id).raw_reference_rows_in_loaded_official_source,
+        qualifier_review:fruitVegById.get(p.id).qualifier_review,
+        official_source_url:fruitVegById.get(p.id).source_url,
+        auto_apply:false,
+        full_finished_product_applicability_verified:false} : null,
    chapter_2_4_pesticide_commodity_review:cerealById.get(p.id)
      ? {scope:cerealById.get(p.id).scope,
         review_status:cerealById.get(p.id).scope_review_status,
         candidate_articles:cerealById.get(p.id).candidate_commodity_articles,
         candidate_row_count:cerealById.get(p.id).candidate_rows_in_loaded_official_source,
         aflatoxin_reference_articles:cerealById.get(p.id).aflatoxin_reference_articles,
+        crop_contaminant_article_review_pending:cerealById.get(p.id).crop_contaminant_article_review_pending||[],
         source_qualifier:cerealById.get(p.id).qualifier_review,
         source_fssai_version:contaminants.source_version,
         auto_apply:false,
@@ -338,9 +368,17 @@ const products = index.products.map(p => {
     tally("chapter_2_4_exact_named_crop_toxins","version_ix_wheat_and_bran");
     action.push("Wheat or wheat bran exact official crop-toxin article is available; check finished-food evidence, amendments and other contaminants before compliance determination");
   }
+  if(contaminantEvidence.chapter_2_3_pesticide_commodity_review){
+    tally("chapter_2_3_pesticide_review","source_only_no_finished_product_approval");
+    action.push("Review Chapter 2.3 specific fruit, vegetable, nut or processed-product matrix, raw-ingredient commodity MRL, processing factor and sample basis; no finished-product pesticide MRL automatically established");
+  }
   if(contaminantEvidence.chapter_2_4_pesticide_commodity_review){
     tally("chapter_2_4_pesticide_review","reference_only_by_exact_catalog_id");
     action.push("Check Chapter 2.4 raw versus milled, oilseed-flour and composite food form before deciding individual official MRL/crop contaminant applicability; candidates are reference-only");
+  }
+  if((contaminantEvidence.chapter_2_4_pesticide_commodity_review?.crop_contaminant_article_review_pending||[]).length){
+    tally("chapter_2_4_crop_toxin_form_pending","pearl_barley_article_form_unverified");
+    action.push("Pearl barley is processed: verify whether Version IX 'barley' OTA/DON article legally covers pearled barley before applying those numbers");
   }
   if(contaminantEvidence.chapter_2_5_pesticide_commodity_review){
     tally("chapter_2_5_pesticide_candidates","source_rows_available_applicability_pending");
@@ -477,6 +515,8 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| Chapter 2.3 fruit/vegetable pesticide commodity reviews indexed without automatic MRL applicability | "+(counts.chapter_2_3_pesticide_review?.source_only_no_finished_product_approval||0)+" |",
+  "| Chapter 2.4 processed Pearl Barley OTA/DON article form held for verification | "+(counts.chapter_2_4_crop_toxin_form_pending?.pearl_barley_article_form_unverified||0)+" |",
   "| Chapter 2.4 cereal and flour commodity candidates indexed without automatic MRL applicability | "+(counts.chapter_2_4_pesticide_review?.reference_only_by_exact_catalog_id||0)+" |",
   "| Chapter 2.4 Wheat / Wheat Bran exact Version IX Ochratoxin A and DON mappings | "+(counts.chapter_2_4_exact_named_crop_toxins?.version_ix_wheat_and_bran||0)+" |",
   "| Chapter 2.5 product identities with official commodity pesticide candidates (not auto-applied) | "+(counts.chapter_2_5_pesticide_candidates?.source_rows_available_applicability_pending||0)+" |",

@@ -475,3 +475,13 @@ test("FSSAI 2.3.9 ready-to-drink fruit nectar has exact Version IX Lead 0.05 mg/
  assert.equal(run(nectar).filter(verified).length,1);
  assert.equal(run(drink).filter(verified).length,0);
 });
+
+
+test("533-product readiness audit wires exact Chapter 2.3 pesticide reviews without compliance approval",()=>{
+ const src=fs.readFileSync(path.resolve(dataRoot,"../../scripts/audit-fssai-product-readiness.cjs"),"utf8");
+ assert.match(src,/assert\.equal\(fruitVegReviews\.length,98/);
+ assert.match(src,/chapter_2_3_pesticide_commodity_review:fruitVegById\.get\(p\.id\)/);
+ assert.match(src,/tally\("chapter_2_3_pesticide_review","source_only_no_finished_product_approval"\)/);
+ assert.match(src,/full_finished_product_applicability_verified:false/);
+ assert.match(src,/chapter_2_4_crop_toxin_form_pending/);
+});

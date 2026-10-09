@@ -1227,20 +1227,6 @@
           "unit": "µg/kg",
           "article": "Cereal and cereal products",
           "source_basis": "Section 2.2.1 · Crop contaminants"
-        },
-        {
-          "contaminant": "Ochratoxin A",
-          "limit": 5,
-          "unit": "µg/kg",
-          "article": "Barley",
-          "source_basis": "Section 2.2.1 · Crop contaminants"
-        },
-        {
-          "contaminant": "Deoxynivalenol",
-          "limit": 1000,
-          "unit": "µg/kg",
-          "article": "Barley",
-          "source_basis": "Section 2.2.1 · Crop contaminants"
         }
       ]
     },
@@ -23348,21 +23334,39 @@
       "product_name": "Pearl Barley (Jau)",
       "fssr": "2.4.5",
       "rule_key": "2.4.5",
-      "scope": "raw_grain_or_pulse",
-      "candidate_commodity_articles": [
-        "Food grains",
-        "Other food grains"
-      ],
-      "candidate_rows_in_loaded_official_source": 18,
+      "scope": "pearled_cereal_grain_processing_form",
+      "candidate_commodity_articles": [],
+      "candidate_rows_in_loaded_official_source": 0,
       "aflatoxin_reference_articles": [
         "Cereal and cereal products"
       ],
-      "qualifier_review": "Confirm species, husk/paddy/processed form, and whether a pesticide MRL uses a raw grain, paddy, milled grain or other commodity definition.",
+      "qualifier_review": "Pearl barley (FSSR 2.4.5) is a processed/dehusked or pearled barley grain, not an unqualified raw barley article. The Version IX crop-contaminant articles list 'barley' but do not separately name 'pearl barley'. Confirm official barley-to-pearl-barley processing, commodity and analytical matrix interpretation before assigning Ochratoxin A or Deoxynivalenol; raw Food grains pesticide MRLs are not automatically transferred.",
       "source_basis": "FSSAI CTR Version IX (03.02.2026) · pesticide MRLs section 2.3.1 and crop contaminants section 2.2.1",
-      "scope_review_status": "official_commodity_rows_present_applicability_pending",
+      "scope_review_status": "identity_review_pending_no_safe_direct_pesticide_route",
       "auto_apply_commodity_mrl": false,
       "auto_apply_aflatoxin_category": false,
-      "full_product_regulatory_approval": false
+      "full_product_regulatory_approval": false,
+      "crop_contaminant_article_review_pending": [
+        {
+          "contaminant": "Ochratoxin A",
+          "official_grouped_article": "Wheat, wheat bran, rye, barley, coffee",
+          "limit": 5,
+          "unit": "µg/kg",
+          "scope_status": "barley_article_named_pearl_barley_finished_form_not_established",
+          "auto_apply": false
+        },
+        {
+          "contaminant": "Deoxynivalenol",
+          "official_grouped_article": "Wheat, wheat bran, barley",
+          "limit": 1000,
+          "unit": "µg/kg",
+          "scope_status": "barley_article_named_pearl_barley_finished_form_not_established",
+          "auto_apply": false
+        }
+      ],
+      "official_crop_contaminant_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "article_scope_review_date": "2026-10-09",
+      "article_scope_approval": false
     },
     {
       "catalog_id": "06-06-1-wheat",

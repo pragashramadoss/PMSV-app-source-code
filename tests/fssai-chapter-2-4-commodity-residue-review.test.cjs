@@ -186,3 +186,29 @@ test("Chapter 2.4 review-only status blocks direct exact-name pesticide approval
  const tea=getRows({id:"non-cereal-tea",name:"Tea",fssr:"2.10.0"});
  assert.ok(tea.length>0,"Non-Chapter 2.3/2.4 commodity behavior must remain unchanged");
 });
+
+
+test("pearl barley processing form must not auto-inherit raw barley Ochratoxin A or DON",()=>{
+ const p=chapter.find(x=>x.id==="06-06-1-pearl-barley-jau");
+ assert.ok(p);
+ const crop=db.profiles.find(x=>x.id==="pearl-barley");
+ assert.ok(crop);
+ assert.ok(crop.rules.some(x=>x.contaminant==="Lead"));
+ assert.ok(crop.rules.some(x=>x.contaminant==="Total Aflatoxins"));
+ assert.ok(!crop.rules.some(x=>["Ochratoxin A","Deoxynivalenol"].includes(x.contaminant)), "Raw barley crop limits need processed form verification");
+ const review=byId.get(p.id);
+ assert.equal(review.scope,"pearled_cereal_grain_processing_form");
+ assert.deepEqual(review.candidate_commodity_articles,[]);
+ assert.equal(review.candidate_rows_in_loaded_official_source,0);
+ assert.equal(review.scope_review_status,"identity_review_pending_no_safe_direct_pesticide_route");
+ assert.equal(review.crop_contaminant_article_review_pending.length,2);
+ assert.deepEqual(review.crop_contaminant_article_review_pending.map(x=>[x.contaminant,x.limit,x.unit]),[["Ochratoxin A",5,"µg/kg"],["Deoxynivalenol",1000,"µg/kg"]]);
+ for(const row of review.crop_contaminant_article_review_pending){
+  assert.equal(row.auto_apply,false);
+  assert.match(row.official_grouped_article,/barley/);
+  assert.ok(row.scope_status.includes("pearl_barley"));
+ }
+ const rendered=run("productCerealCommodityMrlReviewHtml",p);
+ assert.match(rendered,/REVIEW ONLY/);
+ assert.match(rendered,/No safe direct commodity-pesticide candidate/);
+});
