@@ -757,10 +757,10 @@ test("exact named nut and arecanut Version IX mappings suppress stale generic le
 });
 
 
-test("six exact Chapter 2.4 raw cereals have gated FSSAI aflatoxins without processed form inheritance",()=>{
+test("nine exact Chapter 2.4 raw cereals have gated FSSAI aflatoxins without processed form inheritance",()=>{
  const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
  const cfg=db.chapter_2_4_verified_raw_cereal_aflatoxin_v9;
- assert.equal(cfg.verified_raw_cereal_identities.length,6);
+ assert.equal(cfg.verified_raw_cereal_identities.length,9);
  assert.equal(cfg.complete_contaminant_coverage,false);
  assert.equal(cfg.processed_cereal_inheritance,false);
  const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");

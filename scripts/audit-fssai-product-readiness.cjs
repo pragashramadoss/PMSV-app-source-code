@@ -188,7 +188,7 @@ for(const route of namedNutCrop.verified_product_identities){
 }
 for(const id of namedNutCrop.excluded_similar_identity_ids)assert.ok(!namedNutById.has(id));
 const namedRawCereal=contaminants.chapter_2_4_verified_raw_cereal_aflatoxin_v9;
-assert.equal(namedRawCereal?.verified_raw_cereal_identities?.length,6);
+assert.equal(namedRawCereal?.verified_raw_cereal_identities?.length,9);
 assert.equal(namedRawCereal?.official_article,"Cereal and cereal products");
 assert.equal(namedRawCereal?.complete_contaminant_coverage,false);
 assert.equal(namedRawCereal?.amendments_fully_reconciled,false);
