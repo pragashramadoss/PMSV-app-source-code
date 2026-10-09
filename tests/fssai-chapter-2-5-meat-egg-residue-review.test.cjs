@@ -22,7 +22,7 @@ const funcs=[
 "function productBaselineContaminantRules(p){"
 ].map(slice).join("\n");
 function harness(p,overrides={}){
- const context=vm.createContext({esc,contaminantsDb:{...db,...overrides},normIngredient:s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),chapterRuleDbs:[],ruleDbStandards:()=>[]});
+ const context=vm.createContext({esc,contaminantsDb:{...db,...overrides},normIngredient:s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),chapterRuleDbs:[],ruleDbStandards:()=>[],isVerifiedFermentedMilkProduct:()=>false});
  vm.runInContext(funcs,context);
  const run=expression=>vm.runInContext(expression,context);
  const json=JSON.stringify(p);
