@@ -26623,7 +26623,22 @@
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
       "auto_apply_raw_ingredient_mrl": false,
       "full_product_regulatory_approval": false,
-      "assessment_as_of": "2026-10-09"
+      "assessment_as_of": "2026-10-09",
+      "conditional_metal_article_candidates": [
+        {
+          "contaminant": "Copper",
+          "official_article": "Tomato ketchup",
+          "limit": 50,
+          "unit": "mg/kg",
+          "source_condition": "On dried total solids basis.",
+          "required_qualification": "Confirmed finished product is Tomato Ketchup (not merely Tomato Sauce); evaluate Copper on dried total solids analytical basis.",
+          "scope_review_status": "ketchup_vs_sauce_subtype_required",
+          "auto_apply": false,
+          "full_product_compliance": false,
+          "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf"
+        }
+      ],
+      "conditional_metal_review_note": "FSSR 2.3.27 is a grouped Ketchup or Sauce identity, but the Copper article names Tomato ketchup only. Retain as conditional until exact product and dry-solids analysis are known."
     },
     {
       "catalog_id": "12-12-6-chilli-sauce",
@@ -26810,5 +26825,61 @@
     "automatic_pesticide_mrl_approval": false,
     "other_product_inheritance": false,
     "product_identity_verified": true
+  },
+  "chapter_2_3_exact_soup_sauce_saffrole_v9": {
+    "contaminant": "Saffrole",
+    "official_article": "Soups and sauces",
+    "limit": 10,
+    "unit": "ppm",
+    "source_section": "FSSAI Contaminants Regulations Version IX · 2.2.1(2) · Naturally occurring toxic substances",
+    "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "standard_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+    "verified_product_identities": [
+      {
+        "catalog_id": "12-12-5-thermally-processed-vegetable-soups",
+        "fssr": "2.3.5",
+        "exact_form": "finished_soup_or_sauce",
+        "product_identity_verified": true
+      },
+      {
+        "catalog_id": "12-12-6-tomato-ketchup-and-tomato-sauce",
+        "fssr": "2.3.27",
+        "exact_form": "finished_soup_or_sauce",
+        "product_identity_verified": true
+      },
+      {
+        "catalog_id": "12-12-6-chilli-sauce",
+        "fssr": "2.3.28",
+        "exact_form": "finished_soup_or_sauce",
+        "product_identity_verified": true
+      },
+      {
+        "catalog_id": "12-12-6-fruits-vegetable-sauces",
+        "fssr": "2.3.28",
+        "exact_form": "finished_soup_or_sauce",
+        "product_identity_verified": true
+      },
+      {
+        "catalog_id": "12-12-6-culinary-sauce",
+        "fssr": "2.3.28",
+        "exact_form": "finished_soup_or_sauce",
+        "product_identity_verified": true
+      },
+      {
+        "catalog_id": "12-12-9-soybean-sauce",
+        "fssr": "2.3.29",
+        "exact_form": "finished_soup_or_sauce",
+        "product_identity_verified": true
+      }
+    ],
+    "excluded_similar_identity_ids": [
+      "12-12-5-soup-powders",
+      "12-12-6-culinary-pastes",
+      "04-04-2-ginger-paste",
+      "12-12-2-harrisa-red-hot-pepper-paste"
+    ],
+    "complete_contaminant_coverage": false,
+    "amendments_fully_reconciled": false,
+    "automatic_pesticide_mrl_approval": false
   }
 }
