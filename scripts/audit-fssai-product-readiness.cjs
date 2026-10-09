@@ -128,6 +128,29 @@ for(const entry of cerealReviews){
  assert.equal(entry.candidate_rows_in_loaded_official_source,rowCount,entry.catalog_id+" MRL source count changed");
  for(const article of entry.candidate_commodity_articles||[])assert.ok(currentPesticideArticles.has(article.toLowerCase()),"Unknown FSSAI cereal MRL article: "+article);
 }
+const alcoholic=contaminants.chapter_14_2_verified_alcoholic_beverage_nots_v9;
+assert.ok(alcoholic && official(alcoholic.official_source_url),"Official FSSAI grouped alcoholic beverage article missing");
+assert.equal(alcoholic.article,"Alcoholic beverages");
+assert.equal(alcoholic.verified_finished_product_identities.length,27);
+assert.equal(alcoholic.rules.length,4);
+assert.equal(alcoholic.complete_contaminant_coverage,false);
+assert.equal(alcoholic.amendments_fully_reconciled,false);
+assert.equal(alcoholic.automatic_other_contaminants_or_pesticide_mrl_approval,false);
+const alcoholicById=new Map(alcoholic.verified_finished_product_identities.map(x=>[x.catalog_id,x]));
+assert.equal(alcoholicById.size,27,"Duplicate alcoholic beverage product identity");
+const officialAlcoholicFcs=index.products.filter(x=>String(x.fcs||"").startsWith("14.2."));
+assert.deepEqual(new Set(alcoholicById.keys()),new Set(officialAlcoholicFcs.map(x=>x.id)),"Alcoholic catalog scope changed");
+for(const item of alcoholic.verified_finished_product_identities){
+ const product=index.products.find(x=>x.id===item.catalog_id);
+ assert.ok(product && item.product_name===product.name && item.fcs===product.fcs,"Alcoholic beverage identity drift "+item.catalog_id);
+ assert.equal(item.finished_alcoholic_beverage_identity,true);
+}
+for(const r of alcoholic.rules){
+ assert.ok((contaminants.naturally_occurring_toxic_substances?.[r.key]||[]).some(x=>
+   x.article==="Alcoholic beverages" && Number(x.limit)===Number(r.limit) && x.unit===r.unit),
+ "FSSAI Version IX alcoholic article/limit drift: "+r.key);
+}
+for(const id of alcoholic.excluded_nearby_catalog_ids||[])assert.ok(!alcoholicById.has(id),"Nonalcoholic catalogue leakage "+id);
 const namedCropMappings=contaminants.explicit_crop_contaminant_article_mappings_v9||[];
 const namedCropById=new Map(namedCropMappings.map(x=>[x.catalog_id,x]));
 assert.equal(namedCropMappings.length,3,"Expected three exact named crop-toxin mappings");
@@ -338,6 +361,7 @@ function contaminantEvidenceForProduct(p){
  const rawPulsesEvidence=exactRawPulses.catalog_id===p.id?exactRawPulses:null;
  const beverageSaffroleEvidence=exactBeverageSaffroleById.get(p.id)||null;
  const soupSauceSaffrole=namedSoupSauceIds.get(p.id)||null;
+ const alcoholicEvidence=alcoholicById.get(p.id)||null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
@@ -352,11 +376,18 @@ function contaminantEvidenceForProduct(p){
  if(rawPulsesEvidence)explicitKinds.push("verified_exact_unprocessed_whole_raw_pulses_crop_article");
  if(beverageSaffroleEvidence)explicitKinds.push("verified_exact_finished_beverage_saffrole_article");
  if(soupSauceSaffrole)explicitKinds.push("verified_soup_sauce_saffrole_official_article");
+ if(alcoholicEvidence)explicitKinds.push("verified_exact_finished_alcoholic_beverage_nots_article");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
    "no_exact_catalog_evidence_in_this_inventory";
  return {
    status,
+   exact_alcoholic_beverage_toxic_substances:alcoholicEvidence?{
+     fcs:alcoholicEvidence.fcs,article:"Alcoholic beverages",
+     rules:alcoholic.rules.map(x=>({contaminant:x.contaminant,limit:x.limit,unit:x.unit})),
+     source_url:alcoholic.official_source_url,full_compliance_verified:false,
+     pesticide_mrls_auto_applied:false,other_contaminants_assessed:false
+   }:null,
    exact_named_crop_toxin_article:cropToxin?{
      fssr:"FSSAI CTR Version IX · 2.2.1",
      named_identity:cropToxin.standard_identity,
@@ -593,6 +624,10 @@ const products = index.products.map(p => {
       tally("chapter_2_3_non_equivalent_articles","raw_cocoa_beans_not_cocoa_powder");
     action.push("Review Chapter 2.3 specific fruit, vegetable, nut or processed-product matrix, raw-ingredient commodity MRL, processing factor and sample basis; no finished-product pesticide MRL automatically established");
   }
+  if(contaminantEvidence.exact_alcoholic_beverage_toxic_substances){
+    tally("alcoholic_beverage_nots","four_official_grouped_article_limits_identity_locked");
+    action.push("Exact FCS 14.2 alcoholic beverage: four source-backed Version IX naturally occurring toxic-substance rows only; review other contaminants, pesticide/veterinary residues, effective amendments and product form separately");
+  }
   if(contaminantEvidence.chapter_2_3_exact_soup_sauce_saffrole){
     tally("chapter_2_3_exact_soup_sauce_saffrole","named_finished_soup_or_sauce");
     action.push("Soup/sauce Saffrole article is a source-backed partial assessment; confirm other metals, process and any operative amendments before a full compliance decision");
@@ -764,6 +799,7 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| Exact FCS 14.2 alcoholic beverages with four verified Version IX naturally occurring toxin rows | "+(counts.alcoholic_beverage_nots?.four_official_grouped_article_limits_identity_locked||0)+" |",
   "| Chapter 2.3 exact finished soups/sauces with FSSAI Saffrole 10 ppm | "+(counts.chapter_2_3_exact_soup_sauce_saffrole?.named_finished_soup_or_sauce||0)+" |",
   "| Chapter 2.3 deshelled groundnut kernel identities with sourced aflatoxin ceiling | "+(counts.chapter_2_3_verified_groundnut_crop_limits?.identity_and_same_limits_across_source_articles||0)+" |",
   "| Chapter 2.3 verified exact nut/arecanut identities with partial aflatoxin source limits | "+(counts.chapter_2_3_verified_named_nut_arecanut_crop_limits?.exact_identity_partial_source_evidence||0)+" |",

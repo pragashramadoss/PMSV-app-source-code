@@ -8508,6 +8508,27 @@ function productBaselineContaminantRules(p){
    }
  }
 
+ // 5h) FSSAI Section 2.2.1(2): the grouped "Alcoholic beverages" article
+ // explicitly lists Agaric acid, Hydrocyanic acid, Hypericine and Saffrole.
+ // Route ONLY 27 independently confirmed finished-beverage catalogue identities;
+ // fail closed if the FSSAI source article, value, name or FCS identity changes.
+ const alc=contaminantsDb?.chapter_14_2_verified_alcoholic_beverage_nots_v9;
+ const alcoholicIdentity=(alc?.verified_finished_product_identities||[]).find(x=>
+   x.catalog_id===id && x.product_name===p.name && x.fcs===p.fcs &&
+   x.finished_alcoholic_beverage_identity===true && String(x.fcs).startsWith('14.2.'));
+ if(alcoholicIdentity && !(alc.excluded_nearby_catalog_ids||[]).includes(id)){
+   for(const item of alc.rules||[]){
+     const exact=(contaminantsDb?.naturally_occurring_toxic_substances?.[item.key]||[]).find(x=>
+       x.article==='Alcoholic beverages' && Number(x.limit)===Number(item.limit) &&
+       String(x.unit)===String(item.unit));
+     if(!exact)continue;
+     pushRule({contaminant:item.contaminant,article:'Alcoholic beverages',
+       limit:exact.limit,unit:exact.unit,
+       source_basis:'FSSAI CTR Version IX · Section 2.2.1(2) · exact finished alcoholic beverage category',
+       condition:'Exact '+p.name+' alcoholic beverage (FCS '+p.fcs+') only. Not a full contaminant review or pesticide MRL approval.'});
+   }
+ }
+ 
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
