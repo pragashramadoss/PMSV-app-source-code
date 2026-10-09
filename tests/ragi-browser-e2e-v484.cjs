@@ -36,7 +36,21 @@ const child=spawn('python3',['-m','http.server','18777','--bind','127.0.0.1','--
     ['Finger Millet','06-06-1-millets'],
     ['finger millet flour','06-06-2-ragi-flour'],
     ['mandua','06-06-1-millets'],
-    ['Ragi','06-06-1-millets']
+    ['Ragi','06-06-1-millets'],
+    ['jowar','06-06-1-millets'],
+    ['sorghum','06-06-1-millets'],
+    ['sorghum grain','06-06-1-millets'],
+    ['Jowar Flour','06-06-2-jowar-flour-sorghum-flour'],
+    ['jowar','06-06-1-millets'],
+    ['Sorghum Flour','06-06-2-jowar-flour-sorghum-flour'],
+    ['bajra','06-06-1-millets'],
+    ['pearl millet','06-06-1-millets'],
+    ['Bajra Flour','06-06-2-bajra-flour-pearl-millet-flour'],
+    ['foxtail millet','06-06-1-millets'],
+    ['kodo','06-06-1-millets'],
+    ['little millet','06-06-1-millets'],
+    ['barnyard millet','06-06-1-millets'],
+    ['teff','06-06-1-millets']
   ];
   for(const [query,want] of checks){
     await input.fill(query);
@@ -46,14 +60,17 @@ const child=spawn('python3',['-m','http.server','18777','--bind','127.0.0.1','--
     assert.equal(got,want,'Wrong standardized product after full browser event sequence');
   }
   // Find action and confirmation should retain the same grain identity.
+  await input.fill('jowar');
+  await page.waitForTimeout(750);
+  assert.equal(await selected(),'06-06-1-millets','Jowar did not remain grain after changing from other millet products');
   await page.locator('#findNearestStandard').click();
   await page.waitForTimeout(700);
-  assert.equal(await selected(),'06-06-1-millets','Find button changed Ragi to flour');
+  assert.equal(await selected(),'06-06-1-millets','Find button changed Jowar to flour');
   await page.locator('#confirmProprietaryStandard').click();
   await page.waitForTimeout(450);
   const confirmation=await page.evaluate(()=>document.getElementById('proprietaryStandardSuggestion')?.innerText||'');
   assert.match(confirmation,/Finger Millet|Ragi/i);
   assert.ok(!confirmation.includes('Ragi Flour'),'Confirmation silently switched to flour');
-  console.log('PASS: Ragi grain/browser routing and confirmation');
+  console.log('PASS: all millet grains, flour variants, live dropdown and Jowar confirmation');
  }finally{await browser.close();}
 })().catch(e=>{console.error('BROWSER TEST FAILURE:',e.stack||e);process.exitCode=1;}).finally(()=>{child.kill('SIGTERM');});
