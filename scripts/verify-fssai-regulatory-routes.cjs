@@ -55,7 +55,7 @@ function verifyChapterRule(p){
  if(!chapterCache.has(full))chapterCache.set(full,JSON.parse(fs.readFileSync(full,"utf8")));
  const data=chapterCache.get(full);
  const records=Array.isArray(data.standards)?data.standards:[];
- const exists=records.some(x=>x.key===key) || (!!data.standards && !Array.isArray(data.standards) && Object.hasOwn(data.standards,key));
+ const exists=records.some(x=>x.key===key) || (!!data.standards && !Array.isArray(data.standards) && Object.hasOwn(data.standards,key)) || (Array.isArray(data.identity_purity_standards)&&data.identity_purity_standards.some(x=>x.key===key)) || (Array.isArray(data.other_substances)&&data.other_substances.some(x=>x.key===key));
  if(!exists)chapterKeyGaps.push({id:p.id,key,file:rel});
  chapterKeyChecks++;
 }
