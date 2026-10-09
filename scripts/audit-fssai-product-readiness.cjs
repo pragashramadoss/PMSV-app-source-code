@@ -130,11 +130,21 @@ for(const entry of cerealReviews){
 }
 const namedCropMappings=contaminants.explicit_crop_contaminant_article_mappings_v9||[];
 const namedCropById=new Map(namedCropMappings.map(x=>[x.catalog_id,x]));
-assert.equal(namedCropMappings.length,2,"Expected two exact named crop-toxin mappings");
-assert.equal(namedCropById.size,2,"Duplicate crop toxin identity");
+assert.equal(namedCropMappings.length,3,"Expected three exact named crop-toxin mappings");
+assert.equal(namedCropById.size,3,"Duplicate crop toxin identity");
 for(const row of namedCropMappings){
  const id=row.catalog_id;
- assert.ok(["06-06-1-wheat","06-06-2-wheat-bran"].includes(id),"Unexpected crop toxin identity "+id);
+ assert.ok(["06-06-1-wheat","06-06-2-wheat-bran","coffee"].includes(id),"Unexpected crop toxin identity "+id);
+ if(id==="coffee"){
+  assert.equal(row.standard_fssr,"2.10.2","Coffee route must remain Chapter 2.10.2");
+  assert.equal(index.products.find(p=>p.id==="coffee")?.fssr,row.standard_fssr);
+  assert.equal(row.contaminants.length,1);
+  assert.equal(row.contaminants[0].crop_contaminant_key,"ochratoxin_a");
+  assert.equal(row.contaminants[0].official_article,"Wheat, wheat bran, rye, barley, coffee");
+  assert.equal(row.mixture_inheritance_allowed,false);
+  assert.equal(row.pesticide_mrl_auto_apply,false);
+  assert.ok(official(row.official_standard_source));
+ }
  assert.equal(row.exact_catalog_identity_verified,true);
  assert.equal(row.complete_contaminant_coverage,false);
  assert.equal(row.amendments_fully_reconciled,false);
@@ -538,8 +548,8 @@ const products = index.products.map(p => {
     action.push("Confirm exact finished-product eligibility for the matching FSSR-family contaminant article");
   tally("contaminant_evidence",contaminantEvidence.status);
   if(contaminantEvidence.exact_named_crop_toxin_article){
-    tally("chapter_2_4_exact_named_crop_toxins","version_ix_wheat_and_bran");
-    action.push("Wheat or wheat bran exact official crop-toxin article is available; check finished-food evidence, amendments and other contaminants before compliance determination");
+    tally("chapter_2_4_exact_named_crop_toxins","version_ix_wheat_bran_coffee");
+    action.push("Exact FSSAI Version IX grouped crop-toxin article matched to the named Wheat, Wheat Bran or Coffee identity; no transfer to processed composites. Check amendments and other contaminants.");
   }
   if(contaminantEvidence.chapter_2_3_pesticide_commodity_review){
     tally("chapter_2_3_pesticide_review","source_only_no_finished_product_approval");
@@ -726,7 +736,7 @@ const summary = [
   "| Chapter 2.4 cereal and flour commodity candidates indexed without automatic MRL applicability | "+(counts.chapter_2_4_pesticide_review?.reference_only_by_exact_catalog_id||0)+" |",
   "| Chapter 2.4 exact raw Soybean seed with partial official oilseed aflatoxin evidence | "+(counts.chapter_2_4_exact_soybean_oilseed_toxins?.raw_seed_source_backed_partial||0)+" |",
   "| Chapter 2.3 exact finished beverages with sourced 10 ppm Saffrole | "+(counts.chapter_2_3_exact_finished_beverage_saffrole?.finished_juice_or_drink||0)+" |",
-  "| Chapter 2.4 Wheat / Wheat Bran exact Version IX Ochratoxin A and DON mappings | "+(counts.chapter_2_4_exact_named_crop_toxins?.version_ix_wheat_and_bran||0)+" |",
+  "| Chapter 2.4 Wheat / Wheat Bran and Chapter 2.10 Coffee with exact Version IX crop-toxin articles | "+(counts.chapter_2_4_exact_named_crop_toxins?.version_ix_wheat_bran_coffee||0)+" |",
   "| Chapter 2.4 exact raw cereal identities with partial Version IX aflatoxin evidence | "+(counts.chapter_2_4_verified_raw_cereal_aflatoxin?.exact_raw_grain_partial_source_evidence||0)+" |",
   "| Chapter 2.5 product identities with official commodity pesticide candidates (not auto-applied) | "+(counts.chapter_2_5_pesticide_candidates?.source_rows_available_applicability_pending||0)+" |",
   "| Raw goat/rabbit metal article locks preventing species transfer | "+(counts.chapter_2_5_goat_rabbit_metal_locks?.species_identity_not_transferable||0)+" |",

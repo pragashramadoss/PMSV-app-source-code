@@ -8313,7 +8313,7 @@ function productBaselineContaminantRules(p){
          contaminant:label,article:item.official_article,limit:item.limit,
          unit:item.unit||group.unit||'µg/kg',
          source_basis:'Section 2.2.1 · Version IX · exact product named within grouped official crop-contaminant article',
-         condition:'Exact '+mapping.standard_identity+' identity. Do not carry this row over to flour, bran, pearl barley or processed composites without an independently verified article match.'
+         condition:'Exact '+mapping.standard_identity+' identity only. Do not transfer to differently processed forms, unverified subtypes, coffee-chicory mixtures or composites without an independently verified article match.'
        });
      });
    });

@@ -90,10 +90,11 @@ test("live Results UI renders source-only cereal panels separately from actual p
  assert.doesNotMatch(rendered,/FSSAI commodity MRL reference/);
 });
 
-test("official Version IX Ochratoxin A and DON exact grouped articles apply only to Wheat and Wheat Bran",()=>{
+test("official Version IX Ochratoxin A and DON exact grouped articles map Wheat, Wheat Bran, and Coffee independently",()=>{
  const mappings=db.explicit_crop_contaminant_article_mappings_v9;
- assert.equal(mappings.length,2);
- assert.deepEqual(new Set(mappings.map(x=>x.catalog_id)),new Set(["06-06-1-wheat","06-06-2-wheat-bran"]));
+ assert.equal(mappings.length,3);
+ assert.deepEqual(new Set(mappings.map(x=>x.catalog_id)),new Set(["06-06-1-wheat","06-06-2-wheat-bran","coffee"]));
+ assert.equal(db.crop_contaminants.ochratoxin_a.rules[0].article,"Wheat, wheat bran, rye, barley, coffee");
  const snippet=s("function productBaselineContaminantRules(p){");
  const internal=vm.createContext({
    contaminantsDb:db,chapterRuleDbs:[],ruleDbStandards:()=>[],
@@ -112,9 +113,15 @@ test("official Version IX Ochratoxin A and DON exact grouped articles apply only
    const entries=named(productName);
    assert.deepEqual(entries,[{contaminant:"Ochratoxin A",limit:5,unit:"µg/kg"},{contaminant:"Deoxynivalenol",limit:1000,unit:"µg/kg"}],productName);
  }
- for(const productName of ["Wheat Flour (Atta)","Durum Wheat","Pearl Barley","Maida","Jowar Flour"]){
+ assert.deepEqual(named("Coffee"),[{contaminant:"Ochratoxin A",limit:5,unit:"µg/kg"}]);
+ for(const productName of ["Wheat Flour (Atta)","Durum Wheat","Pearl Barley","Maida","Jowar Flour","Chicory","Coffee-Chicory Mixture"]){
    assert.deepEqual(named(productName),[],productName+" cannot borrow exact named article");
  }
+ const changed=structuredClone(db);
+ changed.crop_contaminants.ochratoxin_a.rules[0].limit=50;
+ internal.contaminantsDb=changed;
+ assert.deepEqual(named("Coffee"),[],"Coffee mapping must fail closed after crop master changes");
+ internal.contaminantsDb=db;
  for(const row of mappings){
    assert.equal(row.exact_catalog_identity_verified,true);
    assert.equal(row.complete_contaminant_coverage,false);
