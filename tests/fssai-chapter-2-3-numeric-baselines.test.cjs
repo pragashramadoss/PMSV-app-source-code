@@ -602,3 +602,70 @@ test("Groundnut kernel FSSR 2.3.47 uses identical nut and oilseed aflatoxin limi
  assert.match(audit,/chapter_2_3_verified_groundnut_crop_limits/);
  assert.match(audit,/verified_groundnut_crop_toxin_identical_category_limits/);
 });
+
+
+test("six exact finished soup or sauce identities inherit sourced saffrole without matching soup powder or paste",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const saff=db.chapter_2_3_exact_soup_sauce_saffrole_v9;
+ assert.equal(saff.official_article,"Soups and sauces");
+ assert.equal(saff.limit,10);
+ assert.equal(saff.unit,"ppm");
+ assert.equal(saff.complete_contaminant_coverage,false);
+ assert.equal(saff.amendments_fully_reconciled,false);
+ assert.equal(saff.verified_product_identities.length,6);
+ assert.equal(db.naturally_occurring_toxic_substances.saffrole.find(x=>x.article===saff.official_article).limit,10);
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const at=html.indexOf("function productBaselineContaminantRules(p){"),end=html.indexOf("\nfunction ",at+12);
+ const vm=require("node:vm"),ctx=vm.createContext({contaminantsDb:db,
+   normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+   chapterRuleDbs:[],ruleDbStandards:()=>[],exactFinishedProductContaminantLock:()=>null,
+   exactRawMeatMetalLock:()=>null,isVerifiedFermentedMilkProduct:()=>false});
+ vm.runInContext(html.slice(at,end),ctx);
+ const rules=p=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx));
+ for(const row of saff.verified_product_identities){
+   const p=index.products.find(x=>x.id===row.catalog_id);
+   assert.ok(p,row.catalog_id);
+   assert.equal(p.fssr,row.fssr);
+   const found=rules(p).filter(x=>x.contaminant==="Saffrole"&&x.article===saff.official_article);
+   assert.equal(found.length,1,p.name);
+   assert.equal(found[0].limit,10,p.name);
+   assert.equal(found[0].unit,"ppm");
+ }
+ for(const id of saff.excluded_similar_identity_ids){
+   const p=index.products.find(x=>x.id===id);
+   assert.ok(p,id);
+   assert.equal(rules(p).some(x=>x.contaminant==="Saffrole"&&x.article===saff.official_article),false,id);
+ }
+ const modified=structuredClone(db);
+ modified.naturally_occurring_toxic_substances.saffrole.find(x=>x.article==="Soups and sauces").limit=100;
+ ctx.contaminantsDb=modified;
+ const soup=index.products.find(x=>x.id==="12-12-5-thermally-processed-vegetable-soups");
+ assert.equal(rules(soup).some(x=>x.contaminant==="Saffrole"),false,"Source number change must fail closed");
+ const audit=fs.readFileSync(path.resolve(dataRoot,"../../scripts/audit-fssai-product-readiness.cjs"),"utf8");
+ assert.match(audit,/chapter_2_3_exact_soup_sauce_saffrole/);
+});
+test("Tomato Ketchup 50 mg per kg copper dry-solids limit is conditional, not applied to Tomato Sauce",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const record=db.chapter_2_3_commodity_mrl_review_v1.find(x=>x.catalog_id==="12-12-6-tomato-ketchup-and-tomato-sauce");
+ assert.equal(record.conditional_metal_article_candidates.length,1);
+ const metal=record.conditional_metal_article_candidates[0];
+ assert.equal(metal.contaminant,"Copper");
+ assert.equal(metal.official_article,"Tomato ketchup");
+ assert.equal(metal.limit,50);
+ assert.equal(metal.unit,"mg/kg");
+ assert.match(metal.source_condition,/dried total solids/i);
+ assert.equal(metal.auto_apply,false);
+ assert.equal(metal.full_product_compliance,false);
+ const exact=db.metal_article_rules_v9.Copper.find(x=>x.article==="Tomato ketchup");
+ assert.equal(exact.limit,metal.limit);
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const start=html.indexOf("function exactFruitVegCommodityReview(p){");
+ const stop=html.indexOf("\nfunction exactCerealCommodityReview(",start);
+ const vm=require("node:vm"),context=vm.createContext({contaminantsDb:db,esc:x=>String(x??"")});
+ vm.runInContext(html.slice(start,stop),context);
+ const p=index.products.find(x=>x.id==="12-12-6-tomato-ketchup-and-tomato-sauce");
+ const out=vm.runInContext("productFruitVegCommodityMrlReviewHtml("+JSON.stringify(p)+")",context);
+ assert.match(out,/NOT APPLIED/);
+ assert.match(out,/Tomato ketchup/);
+ assert.match(out,/dried total solids/i);
+});
