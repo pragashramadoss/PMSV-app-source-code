@@ -485,3 +485,26 @@ test("533-product readiness audit wires exact Chapter 2.3 pesticide reviews with
  assert.match(src,/full_finished_product_applicability_verified:false/);
  assert.match(src,/chapter_2_4_crop_toxin_form_pending/);
 });
+
+
+test("vegetable juice exact Lead article must remain distinct from fruit drinks and concentrates",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const row=db.metal_article_rules_v9.Lead.find(x=>x.article==="Fruit and vegetable juice (including tomato juice, but not including lime juice and lemon juice)");
+ assert.equal(row.limit,1);
+ const route=db.explicit_metal_alias_mappings_v9.find(x=>x.product_id==="vegetable-juices");
+ assert.equal(route.fssr,"2.3.7");
+ assert.deepEqual(route.verified_alias_basis.map(x=>[x.metal,x.article,x.limit,x.unit]),[["Lead",row.article,1,"mg/kg"]]);
+ assert.equal(route.verified_alias_basis[0].complete_contaminant_review,false);
+ for(const id of ["fruit-juices","fruit-nectars","fruit-drink-rts","vegetable-juice-preserved-industrial","concentrated-vegetable-juice-industrial"]){
+  assert.ok(!db.explicit_metal_alias_mappings_v9.some(x=>x.product_id===id&&x.verified_alias_basis.some(y=>y.article===row.article)),id);
+ }
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const start=html.indexOf("function productBaselineContaminantRules(p){"),end=html.indexOf("\nfunction ",start+10);
+ const vm=require("node:vm"),ctx=vm.createContext({contaminantsDb:db,normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),chapterRuleDbs:[],ruleDbStandards:()=>[],exactFinishedProductContaminantLock:()=>null,exactRawMeatMetalLock:()=>null,isVerifiedFermentedMilkProduct:()=>false});
+ vm.runInContext(html.slice(start,end),ctx);
+ const evaluate=p=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx));
+ const juice=evaluate(index.products.find(x=>x.id==="vegetable-juices")).filter(x=>x.contaminant==="Lead"&&x.article===row.article);
+ assert.equal(juice.length,1);
+ assert.equal(juice[0].limit,1);
+ assert.equal(evaluate(index.products.find(x=>x.id==="fruit-drink-rts")).some(x=>x.article===row.article),false);
+});
