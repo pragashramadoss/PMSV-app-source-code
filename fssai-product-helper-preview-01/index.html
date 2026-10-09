@@ -6937,7 +6937,7 @@ function renderLegacyProductScopePages(){
      }else if(product||profile){
        html+='<div class="card"><div class="notice"><b>No exact chapter ingredient structure matched this product.</b> Appendix A remains product/FCS-scoped where mapped; PMSV does not interpret the absence of an encoded ingredient list as permission or as a reason to request a formulation.</div></div>';
      }
-     html+=productAppendixABaselineHtml(fcs);
+     html+=productAppendixABaselineHtml(fcs,exactProductStandardAdditiveRestriction());
      html+='<div class="card"><div class="flow-actions"><button class="btn-secondary" type="button" id="openScopedFormulation">Optional: assess a formulation →</button></div></div>';
      ingredientDynamic.innerHTML=html;
      setTimeout(()=>document.getElementById('openScopedFormulation')?.addEventListener('click',()=>openTab('formulation',{updateHash:true,save:true})),0);
@@ -6946,7 +6946,18 @@ function renderLegacyProductScopePages(){
 }
 
 
-function productAppendixABaselineHtml(fcs){
+function productAppendixABaselineHtml(fcs,restriction=null){
+ if(restriction?.banned){
+   return '<div class="card"><div class="notice"><b>PRODUCT STANDARD OVERRIDES APPENDIX A — NO ADDED FOOD ADDITIVES.</b><br>'
+     +'FSSAI '+esc(restriction.key)+' prohibits added food additives in the selected standardized product. '
+     +'General Appendix A category entries must not be presented as permissions for this product. '
+     +'This is a specific restriction, not a full legal compliance approval. Review any effective amendments.</div></div>';
+ }
+ const classReview=restriction?.classes?.length
+   ? '<div class="notice"><b>Product-specific additive classes require review:</b> FSSAI '+esc(restriction.key)
+     +' prohibits '+restriction.classes.map(esc).join(' and ')+'. '
+     +'The category entries below are reference-only and must not be treated as finished-product additive approval until the technological function has been checked.</div>'
+   : '';
  if(!fcs)return '<div class="notice"><b>Appendix A:</b> No safe FCS mapping is loaded for this product, so PMSV will not infer additive permissions.</div>';
  const resolved=appendixEntriesForFcs(fcs);
  if(!resolved||resolved.status==='not_loaded')return '<div class="notice"><b>Appendix A · FCS '+esc(fcs)+':</b> Permission table is not loaded yet.</div>';
@@ -6961,8 +6972,9 @@ function productAppendixABaselineHtml(fcs){
    const memberText=members.length?'<br><small>'+members.map(m=>esc(m.name)+(m.ins?' (INS '+esc(m.ins)+')':'')).join('; ')+'</small>':'';
    return '<tr><td><b>'+esc(x.name)+'</b>'+memberText+'</td><td>'+esc(ins)+'</td><td><b>'+esc(x.limit||'—')+'</b>'+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.applied_from||resolved.resolvedFcs||fcs)+'</td></tr>';
  }).join('');
- return '<div class="card"><div class="section-title"><h2>Appendix A additives — FCS '+esc(fcs)+'</h2><span>Product/category-level view · no formulation required</span></div>'
-   +'<div class="notice oknote"><b>'+resolved.entries.length+' applicable direct/inherited Appendix A permission row'+(resolved.entries.length===1?'':'s')+' loaded for this FCS.</b> These are permissions, not ingredients that must be present.</div>'
+ return '<div class="card"><div class="section-title"><h2>Appendix A additives — FCS '+esc(fcs)+'</h2><span>'+(classReview?'Reference only · product restrictions override':'Product/category-level view · no formulation required')+'</span></div>'
+   +classReview
+   +'<div class="notice '+(classReview?'':'oknote')+'"><b>'+resolved.entries.length+' direct/inherited Appendix A '+(classReview?'reference':'permission')+' row'+(resolved.entries.length===1?'':'s')+' loaded for FCS '+esc(fcs)+'.</b> '+(classReview?'Specific product-standard restrictions must be cleared before any additive permission.':'These are permissions, not ingredients that must be present.')+'</div>'
    +(resolved.incomplete?'<div class="notice"><b>Coverage note:</b> '+esc(resolved.completenessNote||'One or more hierarchy levels remain incomplete; PMSV does not convert missing rows into permission.')+'</div>':'')
    +'<div class="tablewrap"><table><thead><tr><th>Additive / group</th><th>INS</th><th>Maximum / condition</th><th>Applied from FCS</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
 }
