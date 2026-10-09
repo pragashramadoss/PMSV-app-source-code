@@ -108,6 +108,23 @@ for(const entry of cerealReviews){
  assert.equal(entry.candidate_rows_in_loaded_official_source,rowCount,entry.catalog_id+" MRL source count changed");
  for(const article of entry.candidate_commodity_articles||[])assert.ok(currentPesticideArticles.has(article.toLowerCase()),"Unknown FSSAI cereal MRL article: "+article);
 }
+const namedCropMappings=contaminants.explicit_crop_contaminant_article_mappings_v9||[];
+const namedCropById=new Map(namedCropMappings.map(x=>[x.catalog_id,x]));
+assert.equal(namedCropMappings.length,2,"Expected two exact named crop-toxin mappings");
+assert.equal(namedCropById.size,2,"Duplicate crop toxin identity");
+for(const row of namedCropMappings){
+ const id=row.catalog_id;
+ assert.ok(["06-06-1-wheat","06-06-2-wheat-bran"].includes(id),"Unexpected crop toxin identity "+id);
+ assert.equal(row.exact_catalog_identity_verified,true);
+ assert.equal(row.complete_contaminant_coverage,false);
+ assert.equal(row.amendments_fully_reconciled,false);
+ assert.ok(official(row.official_source_url),"Nonofficial exact crop toxin mapping source: "+id);
+ for(const rule of row.contaminants||[]){
+  const group=contaminants.crop_contaminants[rule.crop_contaminant_key];
+  assert.ok(group?.rules?.some(z=>z.article===rule.official_article&&Number(z.limit)===Number(rule.limit)),
+    "Official crop toxin article or limit not found: "+id+" "+rule.crop_contaminant_key);
+ }
+}
 const rawMeatMetalLocks=new Map();
 for(const row of contaminants.chapter_2_5_locked_fresh_meat_routes_v9||[]){
  for(const id of row.catalog_ids||[]){
@@ -131,17 +148,26 @@ function contaminantEvidenceForProduct(p){
    assert.equal(profiles.length,0,"Locked product accidentally gained a direct contaminant profile: "+p.id);
    assert.ok(!explicitAliases && !direct && !exactArticle && !spiceAflatoxin,"Locked product accidentally gained exact evidence; re-review before unlocking: "+p.id);
  }
+ const cropToxin=namedCropById.get(p.id)||null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
  if(direct)explicitKinds.push("exact_product_clause");
  if(exactArticle)explicitKinds.push("exact_named_article");
  if(spiceAflatoxin)explicitKinds.push("verified_spice_crop_identity");
+ if(cropToxin)explicitKinds.push("exact_named_crop_toxin_article");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
    "no_exact_catalog_evidence_in_this_inventory";
  return {
    status,
+   exact_named_crop_toxin_article:cropToxin?{
+     fssr:"FSSAI CTR Version IX · 2.2.1",
+     named_identity:cropToxin.standard_identity,
+     contaminant_keys:cropToxin.contaminants.map(x=>x.crop_contaminant_key),
+     source:cropToxin.official_source_url,
+     full_contaminant_coverage_verified:false
+   }:null,
    chapter_2_4_pesticide_commodity_review:cerealById.get(p.id)
      ? {scope:cerealById.get(p.id).scope,
         review_status:cerealById.get(p.id).scope_review_status,
@@ -308,6 +334,10 @@ const products = index.products.map(p => {
   if(contaminantEvidence.status==="only_family_fssr_evidence_needs_identity_review")
     action.push("Confirm exact finished-product eligibility for the matching FSSR-family contaminant article");
   tally("contaminant_evidence",contaminantEvidence.status);
+  if(contaminantEvidence.exact_named_crop_toxin_article){
+    tally("chapter_2_4_exact_named_crop_toxins","version_ix_wheat_and_bran");
+    action.push("Wheat or wheat bran exact official crop-toxin article is available; check finished-food evidence, amendments and other contaminants before compliance determination");
+  }
   if(contaminantEvidence.chapter_2_4_pesticide_commodity_review){
     tally("chapter_2_4_pesticide_review","reference_only_by_exact_catalog_id");
     action.push("Check Chapter 2.4 raw versus milled, oilseed-flour and composite food form before deciding individual official MRL/crop contaminant applicability; candidates are reference-only");
@@ -448,6 +478,7 @@ const summary = [
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
   "| Chapter 2.4 cereal and flour commodity candidates indexed without automatic MRL applicability | "+(counts.chapter_2_4_pesticide_review?.reference_only_by_exact_catalog_id||0)+" |",
+  "| Chapter 2.4 Wheat / Wheat Bran exact Version IX Ochratoxin A and DON mappings | "+(counts.chapter_2_4_exact_named_crop_toxins?.version_ix_wheat_and_bran||0)+" |",
   "| Chapter 2.5 product identities with official commodity pesticide candidates (not auto-applied) | "+(counts.chapter_2_5_pesticide_candidates?.source_rows_available_applicability_pending||0)+" |",
   "| Raw goat/rabbit metal article locks preventing species transfer | "+(counts.chapter_2_5_goat_rabbit_metal_locks?.species_identity_not_transferable||0)+" |",
   "| Direct FSSAI chapter microbiology criteria indexed | "+(counts.direct_chapter_microbiology?.exact_clause_microbiology_rows||0)+" |",
