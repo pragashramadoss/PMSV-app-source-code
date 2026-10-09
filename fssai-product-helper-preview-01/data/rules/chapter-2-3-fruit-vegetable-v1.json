@@ -761,13 +761,6 @@
           "unit": "% by mass of salt-corrected dry matter"
         },
         {
-          "parameter": "Head space in can",
-          "operator": "<=",
-          "value": 7,
-          "unit": "mm",
-          "applies_when": "canned"
-        },
-        {
           "parameter": "Total soluble solids (exclusive of salt)",
           "operator": ">=",
           "value": 5,
@@ -802,17 +795,9 @@
           "operator": "<=",
           "value": 42,
           "unit": "% by mass"
-        },
-        {
-          "parameter": "Container fill (water-capacity basis)",
-          "operator": ">=",
-          "value": 90,
-          "unit": "%",
-          "applies_when": "packed in rigid containers"
         }
       ],
       "quality_rules": [
-        "Vacuum in the can must be negative.",
         "Glass container water-capacity calculation: source clause notes a 20 mL reduction; validate packaging conditions before any automatic decision.",
         "No added colours or artificial flavours."
       ],
@@ -828,7 +813,28 @@
         "compliance_assessment_enabled": false
       },
       "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
-      "full_compliance_assessment_enabled": false
+      "full_compliance_assessment_enabled": false,
+      "packaging_requirements": [
+        {
+          "parameter": "Head space in can",
+          "operator": "<=",
+          "value": 7,
+          "unit": "mm",
+          "applies_when": "canned product only"
+        },
+        {
+          "parameter": "Container fill on water capacity",
+          "operator": ">=",
+          "value": 90,
+          "unit": "%",
+          "applies_when": "applicable container under this standard"
+        },
+        {
+          "parameter": "Vacuum in can",
+          "required": "negative",
+          "applies_when": "canned product only"
+        }
+      ]
     },
     {
       "key": "2.3.9",
