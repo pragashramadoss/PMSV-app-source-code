@@ -1230,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-dairy-composition-v481';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-atomic-fssr-keys-v482';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -2362,15 +2362,12 @@ function currentSelectedProductName(){
 function standardRuleKeyTokens(value){
  const raw=String(value||'').trim();
  if(!raw)return [];
- const out=new Set();
- const clean=raw.replace(/\s+\(/g,'(').replace(/\)\s+/g,') ').trim();
- if(/^\d+(?:\.\d+)*(?:\([^)]*\))?(?:[a-z])?$/i.test(clean))out.add(clean);
- const matches=raw.match(/\d+(?:\.\d+)+(?:\s*\([^)]*\))?(?:[a-z])?/gi)||[];
- matches.forEach(x=>{
-   const k=x.replace(/\s+/g,'').trim();
-   if(k)out.add(k);
- });
- return [...out];
+ // FSSAI 2.4.6 is a general food-grains rule, whereas 2.4.6-24(a)
+ // is a different, product-specific FRK rice-flour rule. Treat the
+ // entire identifier as atomic: NEVER generate 2.4.6 from 2.4.6-24(a).
+ const pattern=/\d+(?:\.\d+)+(?:\s*\([^)]*\))?(?:\s*-\s*\d+(?:\s*\([^)]*\))?)?[a-z]?/gi;
+ const matches=raw.match(pattern)||[];
+ return [...new Set(matches.map(x=>x.replace(/\s+/g,'').trim()).filter(Boolean))];
 }
 function currentChapterRuleKeys(){
  const product=selectedProductForFortification();
