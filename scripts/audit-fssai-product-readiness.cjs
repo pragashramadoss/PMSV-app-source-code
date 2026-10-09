@@ -185,6 +185,26 @@ for(const row of finishedBeverage.verified_finished_product_identities){
  assert.ok(String(row.fssr).startsWith("2.10."));
  assert.ok(!finishedBeverage.excluded_nearby_catalog_ids.includes(row.catalog_id));
 }
+const pureCereals=contaminants.chapter_2_4_verified_pure_cereal_products_aflatoxin_v9;
+assert.ok(pureCereals&&official(pureCereals.official_source_url));
+assert.equal(pureCereals.official_article,"Cereal and cereal products");
+assert.equal(pureCereals.verified_product_identities.length,15);
+assert.equal(pureCereals.rules.length,2);
+assert.equal(pureCereals.complete_contaminant_coverage,false);
+assert.equal(pureCereals.automatic_pesticide_mrl_approval,false);
+const pureCerealsById=new Map(pureCereals.verified_product_identities.map(x=>[x.catalog_id,x]));
+assert.equal(pureCerealsById.size,15);
+for(const route of pureCereals.verified_product_identities){
+ const p=index.products.find(x=>x.id===route.catalog_id);
+ assert.ok(p&&p.name===route.product_name&&p.fssr===route.fssr&&String(p.fssr).startsWith("2.4."));
+ assert.equal(route.exact_cereal_product_identity_verified,true);
+ assert.ok(!pureCereals.excluded_non_equivalent_ids.includes(route.catalog_id));
+}
+for(const rule of pureCereals.rules){
+ const group=contaminants.crop_contaminants[rule.key];
+ assert.ok(group?.rules?.some(x=>x.article===pureCereals.official_article&&Number(x.limit)===Number(rule.limit)));
+ assert.equal(group.unit,rule.unit);
+}
 const namedCropMappings=contaminants.explicit_crop_contaminant_article_mappings_v9||[];
 const namedCropById=new Map(namedCropMappings.map(x=>[x.catalog_id,x]));
 assert.equal(namedCropMappings.length,3,"Expected three exact named crop-toxin mappings");
@@ -400,6 +420,7 @@ function contaminantEvidenceForProduct(p){
  const alcoholicEvidence=alcoholicById.get(p.id)||null;
  const processedMeatEvidence=processedMeatById.get(p.id)||null;
  const finishedBeverageEvidence=finishedBeverageById.get(p.id)||null;
+ const pureCerealEvidence=pureCerealsById.get(p.id)||null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
@@ -417,6 +438,7 @@ function contaminantEvidenceForProduct(p){
  if(alcoholicEvidence)explicitKinds.push("verified_exact_finished_alcoholic_beverage_nots_article");
  if(processedMeatEvidence)explicitKinds.push("verified_finished_processed_meat_saffrole_article");
  if(finishedBeverageEvidence)explicitKinds.push("verified_finished_chapter_2_10_non_alcoholic_beverage_saffrole");
+ if(pureCerealEvidence)explicitKinds.push("verified_pure_cereal_product_aflatoxin_article");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
    "no_exact_catalog_evidence_in_this_inventory";
@@ -428,6 +450,10 @@ function contaminantEvidenceForProduct(p){
      source_url:alcoholic.official_source_url,full_compliance_verified:false,
      pesticide_mrls_auto_applied:false,other_contaminants_assessed:false
    }:null,
+   exact_pure_cereal_product_aflatoxins:pureCerealEvidence?{
+     source:pureCereals.official_source_url,article:pureCereals.official_article,
+     rules:pureCereals.rules.map(x=>({contaminant:x.contaminant,limit:x.limit,unit:x.unit})),
+     full_compliance_verified:false,pesticide_mrls_auto_applied:false}:null,
    exact_chapter_2_10_finished_beverage_saffrole:finishedBeverageEvidence?{
      source:finishedBeverage.official_source_url,article:finishedBeverage.official_article,
      limit:finishedBeverage.limit,unit:finishedBeverage.unit,full_compliance_verified:false,
@@ -673,6 +699,10 @@ const products = index.products.map(p => {
       tally("chapter_2_3_non_equivalent_articles","raw_cocoa_beans_not_cocoa_powder");
     action.push("Review Chapter 2.3 specific fruit, vegetable, nut or processed-product matrix, raw-ingredient commodity MRL, processing factor and sample basis; no finished-product pesticide MRL automatically established");
   }
+  if(contaminantEvidence.exact_pure_cereal_product_aflatoxins){
+    tally("chapter_2_4_pure_cereal_product_aflatoxins","exact_cereal_product_partial");
+    action.push("Source-backed FSSAI cereal and cereal-products Total Aflatoxins 15 µg/kg and Aflatoxin B1 10 µg/kg; other contaminants, processing and pesticide MRLs separately required.");
+  }
   if(contaminantEvidence.exact_chapter_2_10_finished_beverage_saffrole){
     tally("chapter_2_10_nots","source_backed_finished_non_alcoholic_saffrole");
     action.push("Named Chapter 2.10 finished beverage: Saffrole 10 ppm only. Verify other contaminants, effective amendments, processing and residue scopes separately.");
@@ -856,6 +886,7 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| Exact pure cereal products with two official grouped aflatoxin limits | "+(counts.chapter_2_4_pure_cereal_product_aflatoxins?.exact_cereal_product_partial||0)+" |",
   "| Finished Chapter 2.10 non-alcoholic beverages with Saffrole source evidence | "+(counts.chapter_2_10_nots?.source_backed_finished_non_alcoholic_saffrole||0)+" |",
   "| Processed meat identities with grouped FSSAI Saffrole partial evidence | "+(counts.processed_meat_nots?.exact_grouped_meat_saffrole_partial||0)+" |",
   "| Exact FCS 14.2 alcoholic beverages with four verified Version IX naturally occurring toxin rows | "+(counts.alcoholic_beverage_nots?.four_official_grouped_article_limits_identity_locked||0)+" |",

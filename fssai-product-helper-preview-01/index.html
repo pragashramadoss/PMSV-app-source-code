@@ -8555,6 +8555,24 @@ function productBaselineContaminantRules(p){
      condition:'Exact '+p.name+' beverage identity only; other contaminants, additives, processing and operative amendments remain separate.'});
  }
  
+ // FSSAI Version IX grouped "Cereal and cereal products" toxin article:
+ // independently identified pure cereal flours/products only, never fuzzy
+ // inferred from grains or allowed to transfer to legume, soy or cassava forms.
+ const cerealProducts=contaminantsDb?.chapter_2_4_verified_pure_cereal_products_aflatoxin_v9;
+ const confirmedCereal=(cerealProducts?.verified_product_identities||[]).find(x=>
+   x.catalog_id===id && x.product_name===p.name && x.fssr===p.fssr && x.exact_cereal_product_identity_verified===true);
+ if(confirmedCereal && !(cerealProducts.excluded_non_equivalent_ids||[]).includes(id)){
+   for(const item of cerealProducts.rules||[]){
+     const group=contaminantsDb?.crop_contaminants?.[item.key];
+     const official=(group?.rules||[]).find(x=>x.article===cerealProducts.official_article &&
+       Number(x.limit)===Number(item.limit)&&String(group.unit)===String(item.unit));
+     if(!official)continue;
+     pushRule({contaminant:item.contaminant,article:official.article,limit:item.limit,unit:item.unit,
+       source_basis:'FSSAI CTR Version IX §2.2.1 · verified exact cereal product',
+       condition:'Only '+p.name+' as cereal product under '+p.fssr+'. Not a transfer from raw grain; no pesticide MRL approval or complete conformity.'});
+   }
+ }
+ 
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
