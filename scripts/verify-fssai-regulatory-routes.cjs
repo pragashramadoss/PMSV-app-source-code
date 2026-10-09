@@ -41,6 +41,23 @@ assert.equal(chapter.length,475);
 assert.equal(special.length,58);
 assert.equal(chapter.length+special.length,533);
 const count={};
+const chapterCache = new Map();
+let chapterKeyChecks=0;
+function verifyChapterRule(p){
+ const rel=p.rule_file||p.chapter_rule_file;
+ const key=p.rule_key||p.chapter_rule_key;
+ assert.ok(rel&&key,"Missing chapter file/key "+p.id);
+ const cleaned=rel.replace(/^\.\//,"");
+ const full=path.resolve(root,"fssai-product-helper-preview-01",cleaned);
+ assert.ok(full.startsWith(path.join(root,"fssai-product-helper-preview-01","data","rules")+path.sep),"Invalid chapter file location "+p.id);
+ assert.ok(fs.existsSync(full),"Missing chapter rule file "+p.id+": "+rel);
+ if(!chapterCache.has(full))chapterCache.set(full,JSON.parse(fs.readFileSync(full,"utf8")));
+ const data=chapterCache.get(full);
+ const records=Array.isArray(data.standards)?data.standards:[];
+ assert.ok(records.some(x=>x.key===key),"Chapter key missing in referenced file "+p.id+": "+key);
+ chapterKeyChecks++;
+}
+
 for(const p of products){
  const q=indexed.get(p.id);
  const v=profile.get(p.profile_id);
@@ -50,6 +67,7 @@ for(const p of products){
   assert.notEqual(p.regulatory_route_link_status,"file_and_key_verified","Ambiguous route "+p.id);
   assert.ok(p.rule_file||p.chapter_rule_file,"Missing chapter rule file "+p.id);
   assert.ok(p.rule_key||p.chapter_rule_key,"Missing chapter rule key "+p.id);
+  verifyChapterRule(p);
   continue;
  }
  assert.equal(p.regulatory_route_link_status,"file_and_key_verified","Route not verified "+p.id);
@@ -67,6 +85,7 @@ const raw=fs.readFileSync(path.join(dbDir,"product-master-v1.json"));
 const blob=crypto.createHash("sha1").update("blob "+raw.length+"\0").update(raw).digest("hex");
 assert.equal(idx.generated_from_blob,blob,"Search index not synced to master blob");
 console.log("PASS: 533 records; 475 chapter links; 58 special routes; 0 without routes.");
+console.log("PASS: "+chapterKeyChecks+" chapter file/key references resolve to real standard entries.");
 console.log("PASS: 58 special routes have unique keys, official-source URLs, no compliance pass enabled.");
 console.log("NOTE: Official-source URL shape does not prove source content or legal applicability.");
 console.log("NOTE: Category mapping is not full compliance validation. Chromium browser test separate.");
