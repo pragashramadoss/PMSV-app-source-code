@@ -8647,6 +8647,20 @@ function productBaselineContaminantRules(p){
    }
  }
  
+ // Guar Gum INS 412 (FSSR Chapter 3, 3.2.11(10)), official Version IX
+ // metal article spells "Gaur gum". This is an exact grade/identity alias,
+ // NOT an Appendix A finished-food usage approval.
+ const guar=contaminantsDb?.special_guar_gum_exact_metal_article_v9;
+ if(guar&&guar.catalog_id===id&&guar.product_name===p.name&&guar.fcs===p.fcs&&
+    guar.exact_ins_product_identity_verified===true)
+ for(const rule of guar.metals||[]){
+   const exact=exactMetalRule(rule.metal,guar.official_article_spelling);
+   if(!exact||Number(exact.limit)!==Number(rule.limit)||exact.unit!==rule.unit)continue;
+   pushRule({contaminant:rule.metal,...exact,
+     source_basis:'FSSAI CTR Version IX §2.1 · exact INS 412 Guar Gum substance alias',
+     condition:'Exact Guar Gum INS 412 additive only; official article spells Gaur gum. Additive usage level, Appendix A and finished-food contaminant compliance are separate.'});
+ }
+ 
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
