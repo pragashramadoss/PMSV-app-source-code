@@ -2349,11 +2349,53 @@
     {
       "key": "2.3.63",
       "name": "COCONUT MILK POWDER",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official 2023 compendium baseline only. Variant/process confirmation and effective amendment and cross-regulatory checks are required before any compliance decision.",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Fat on dry basis",
+          "operator": ">=",
+          "value": 60,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Free fatty acids of extracted fat as lauric acid",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Bulk density",
+          "operator": "range",
+          "min": 0.3,
+          "max": 0.45,
+          "unit": "g/ml"
+        }
+      ],
+      "quality_rules": [
+        "No added colouring or flavouring matter.",
+        "Sodium caseinate and maltodextrin appear as conditionally allowed ingredients in the exact product standard; allergen and label duties still apply."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          104,
+          105
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.3A",
@@ -2805,29 +2847,654 @@
     {
       "key": "2.3.62",
       "name": "EDIBLE FUNGI PRODUCTS",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "product_identity_and_official_clause_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI named product or defined variant. Full numeric/regulatory checks remain locked pending detailed transcription."
+      "verification_note": "Official 2023 compendium baseline only. Variant/process confirmation and effective amendment and cross-regulatory checks are required before any compliance decision.",
+      "variant_resolution_required": true,
+      "variant_composition": [
+        {
+          "variant": "Quick frozen fungi",
+          "catalog_product_ids": [
+            "04-04-2-quick-frozen-fungi"
+          ],
+          "composition": [
+            {
+              "parameter": "Mineral impurities",
+              "operator": "<=",
+              "value": 0.2,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Organic impurities of vegetable origin",
+              "operator": "<=",
+              "value": 0.02,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Maggot damaged fungi",
+              "operator": "<=",
+              "value": 1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Seriously maggot damaged fungi",
+              "operator": "<=",
+              "value": 0.5,
+              "unit": "% m/m"
+            }
+          ],
+          "process_requirements": [
+            {
+              "parameter": "Product thermal-centre temperature after thermal stabilization",
+              "operator": "<=",
+              "value": -18,
+              "unit": "°C",
+              "condition": "After quick freezing",
+              "auto_evaluate": false
+            }
+          ]
+        },
+        {
+          "variant": "Dried fungi — freeze-dried (other than Shii-ta-ke)",
+          "catalog_product_ids": [
+            "04-04-2-dried-fungi"
+          ],
+          "composition": [
+            {
+              "parameter": "Water content",
+              "operator": "<=",
+              "value": 6,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Mineral impurities",
+              "operator": "<=",
+              "value": 2,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Organic impurities of vegetable origin",
+              "operator": "<=",
+              "value": 0.02,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Maggot damaged fungi",
+              "operator": "<=",
+              "value": 1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Seriously maggot damaged fungi",
+              "operator": "<=",
+              "value": 0.5,
+              "unit": "% m/m"
+            }
+          ]
+        },
+        {
+          "variant": "Dried fungi — other than freeze-dried (other than Shii-ta-ke)",
+          "catalog_product_ids": [
+            "04-04-2-dried-fungi"
+          ],
+          "composition": [
+            {
+              "parameter": "Water content",
+              "operator": "<=",
+              "value": 12,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Mineral impurities",
+              "operator": "<=",
+              "value": 2,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Organic impurities of vegetable origin",
+              "operator": "<=",
+              "value": 0.02,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Maggot damaged fungi",
+              "operator": "<=",
+              "value": 1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Seriously maggot damaged fungi",
+              "operator": "<=",
+              "value": 0.5,
+              "unit": "% m/m"
+            }
+          ]
+        },
+        {
+          "variant": "Dried Shii-ta-ke fungi",
+          "catalog_product_ids": [
+            "04-04-2-dried-fungi"
+          ],
+          "composition": [
+            {
+              "parameter": "Water content",
+              "operator": "<=",
+              "value": 13,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Mineral impurities",
+              "operator": "<=",
+              "value": 2,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Organic impurities of vegetable origin",
+              "operator": "<=",
+              "value": 1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Maggot damaged fungi",
+              "operator": "<=",
+              "value": 1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Seriously maggot damaged fungi",
+              "operator": "<=",
+              "value": 0.5,
+              "unit": "% m/m"
+            }
+          ]
+        },
+        {
+          "variant": "Fungi grits",
+          "catalog_product_ids": [
+            "04-04-2-fungi-grits-and-fungi-powder"
+          ],
+          "composition": [
+            {
+              "parameter": "Water content",
+              "operator": "<=",
+              "value": 13,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Mineral impurities",
+              "operator": "<=",
+              "value": 2,
+              "unit": "% m/m"
+            }
+          ]
+        },
+        {
+          "variant": "Fungi powder",
+          "catalog_product_ids": [
+            "04-04-2-fungi-grits-and-fungi-powder"
+          ],
+          "composition": [
+            {
+              "parameter": "Water content",
+              "operator": "<=",
+              "value": 9,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Mineral impurities",
+              "operator": "<=",
+              "value": 2,
+              "unit": "% m/m"
+            }
+          ],
+          "process_requirements": [
+            {
+              "parameter": "Grinding size",
+              "required": "Passes a 200 micrometre sieve",
+              "auto_evaluate": false
+            }
+          ]
+        },
+        {
+          "variant": "Fungi extract",
+          "catalog_product_ids": [
+            "04-04-2-fungi-extract-and-fungi-concentrate"
+          ],
+          "composition": [
+            {
+              "parameter": "Saltless extract",
+              "operator": ">=",
+              "value": 7,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Salt (sodium chloride)",
+              "operator": "<=",
+              "value": 20,
+              "unit": "% m/m"
+            }
+          ],
+          "other_criteria": [
+            "No mineral impurities",
+            "No organic impurities of vegetable origin"
+          ]
+        },
+        {
+          "variant": "Fungi concentrate",
+          "catalog_product_ids": [
+            "04-04-2-fungi-extract-and-fungi-concentrate"
+          ],
+          "composition": [
+            {
+              "parameter": "Saltless extract",
+              "operator": ">=",
+              "value": 24,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Salt (sodium chloride)",
+              "operator": "<=",
+              "value": 20,
+              "unit": "% m/m"
+            }
+          ],
+          "other_criteria": [
+            "No mineral impurities",
+            "No organic impurities of vegetable origin"
+          ]
+        },
+        {
+          "variant": "Dried fungi concentrate",
+          "catalog_product_ids": [
+            "04-04-2-dried-fungi-concentrate"
+          ],
+          "composition": [
+            {
+              "parameter": "Water content",
+              "operator": "<=",
+              "value": 9,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Salt (sodium chloride)",
+              "operator": "<=",
+              "value": 5,
+              "unit": "% m/m"
+            }
+          ],
+          "other_criteria": [
+            "No mineral impurities",
+            "No organic impurities of vegetable origin"
+          ]
+        },
+        {
+          "variant": "Fungi in olive or vegetable oil",
+          "catalog_product_ids": [
+            "04-04-2-fungi-in-olive-oil-and-other-vegetable-oils"
+          ],
+          "composition": [
+            {
+              "parameter": "Salt (sodium chloride)",
+              "operator": "<=",
+              "value": 1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Mineral impurities",
+              "operator": "<=",
+              "value": 0.1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Organic impurities of vegetable origin",
+              "operator": "<=",
+              "value": 0.02,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Maggot damaged fungi",
+              "operator": "<=",
+              "value": 1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Seriously maggot damaged fungi",
+              "operator": "<=",
+              "value": 0.5,
+              "unit": "% m/m"
+            }
+          ]
+        },
+        {
+          "variant": "Salted fungi (semi-processed)",
+          "catalog_product_ids": [
+            "04-04-2-salted-fungi-semi-processed-products"
+          ],
+          "composition": [
+            {
+              "parameter": "Salt (sodium chloride)",
+              "operator": "range",
+              "min": 15,
+              "max": 18,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Mineral impurities",
+              "operator": "<=",
+              "value": 0.3,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Organic impurities of vegetable origin",
+              "operator": "<=",
+              "value": 0.05,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Maggot damaged fungi",
+              "operator": "<=",
+              "value": 1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Seriously maggot damaged fungi",
+              "operator": "<=",
+              "value": 0.5,
+              "unit": "% m/m"
+            }
+          ]
+        },
+        {
+          "variant": "Sterilized fungi",
+          "catalog_product_ids": [
+            "04-04-2-sterilized-fungi"
+          ],
+          "composition": [
+            {
+              "parameter": "Salt (sodium chloride)",
+              "operator": "<=",
+              "value": 2,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Mineral impurities",
+              "operator": "<=",
+              "value": 0.2,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Organic impurities of vegetable origin",
+              "operator": "<=",
+              "value": 0.02,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Maggot damaged fungi",
+              "operator": "<=",
+              "value": 1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Seriously maggot damaged fungi",
+              "operator": "<=",
+              "value": 0.5,
+              "unit": "% m/m"
+            }
+          ]
+        },
+        {
+          "variant": "Pickled fungi",
+          "catalog_product_ids": [
+            "04-04-2-pickled-fungi"
+          ],
+          "composition": [
+            {
+              "parameter": "Salt (sodium chloride)",
+              "operator": "<=",
+              "value": 2.5,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Sugars",
+              "operator": "<=",
+              "value": 2.5,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Vinegar expressed as acetic acid",
+              "operator": "<=",
+              "value": 2,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Mineral impurities",
+              "operator": "<=",
+              "value": 0.1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Organic impurities of vegetable origin",
+              "operator": "<=",
+              "value": 0.02,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Maggot damaged fungi",
+              "operator": "<=",
+              "value": 1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Seriously maggot damaged fungi",
+              "operator": "<=",
+              "value": 0.5,
+              "unit": "% m/m"
+            }
+          ]
+        },
+        {
+          "variant": "Fermented fungi",
+          "catalog_product_ids": [
+            "04-04-2-fermented-fungi"
+          ],
+          "composition": [
+            {
+              "parameter": "Naturally occurring lactic acid",
+              "operator": ">=",
+              "value": 1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Salt (sodium chloride)",
+              "operator": "range",
+              "min": 3,
+              "max": 6,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Mineral impurities",
+              "operator": "<=",
+              "value": 0.2,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Organic impurities of vegetable origin",
+              "operator": "<=",
+              "value": 0.1,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Maggot damaged fungi",
+              "operator": "<=",
+              "value": 4,
+              "unit": "% m/m"
+            }
+          ]
+        }
+      ],
+      "quality_rules": [
+        "Select exactly one matching fungi-processing variant before using composition requirements; never combine limits of dried, pickled, fermented, frozen, salted, oil-packed, sterilized or extract preparations.",
+        "For dried fungi, the freeze-dried and species (Shii-ta-ke) variants differ in maximum water content and organic impurities.",
+        "Source clause specifies processing-method, species (common and scientific) and mixed-species label declarations; see applicable updated labelling rules.",
+        "Maggot-damage conditions depend on severity and on processing style; defects and packing quality require direct review."
+      ],
+      "conditional_requirements": [
+        {
+          "parameter": "Dried fungi additional defect subclasses",
+          "condition": "Crushed fungi max 6%; carbonized fungi max 2%; damaged fungi max 20%; distinguish from maggot-damage limits",
+          "auto_evaluate": false
+        }
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.64",
       "name": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "product_identity_and_official_clause_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI named product or defined variant. Full numeric/regulatory checks remain locked pending detailed transcription."
+      "verification_note": "Official 2023 compendium baseline only. Variant/process confirmation and effective amendment and cross-regulatory checks are required before any compliance decision.",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Alcoholic acidity as H2SO4 with 90% alcohol",
+          "operator": "<=",
+          "value": 0.18,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Acid-insoluble ash in dilute HCl",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Protein on dry basis",
+          "operator": ">=",
+          "value": 9,
+          "unit": "% m/m"
+        }
+      ],
+      "conditional_requirements": [
+        {
+          "parameter": "Uric acid",
+          "source_text": "100 mg/kg",
+          "evaluation_status": "source_table_has_value_without_explicit_limit_operator",
+          "auto_evaluate": false
+        }
+      ],
+      "quality_rules": [
+        "Water chestnut flour is from Trapa bispinosa/quadrispinosa, not regular wheat flour or cassava flour.",
+        "Free from added colour/flavour and extraneous contaminants; numerical uric acid clause preserved without inventing a less-than operator."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          105,
+          106
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.65",
       "name": "Colouring foods",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "product_identity_and_official_clause_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI named product or defined variant. Full numeric/regulatory checks remain locked pending detailed transcription."
+      "verification_note": "Official 2023 compendium baseline only. Variant/process confirmation and effective amendment and cross-regulatory checks are required before any compliance decision.",
+      "variant_resolution_required": true,
+      "variant_composition": [
+        {
+          "variant": "Liquid colouring foods",
+          "catalog_product_ids": [
+            "99-99-1-colouring-foods"
+          ],
+          "composition": [
+            {
+              "parameter": "Total solids",
+              "operator": ">=",
+              "value": 45,
+              "unit": "g/100 g"
+            },
+            {
+              "parameter": "Marker pigment",
+              "operator": ">=",
+              "value": 0.5,
+              "unit": "%"
+            },
+            {
+              "parameter": "Added nutritive sugars",
+              "operator": "<=",
+              "value": 20,
+              "unit": "% by weight of final liquid product"
+            }
+          ],
+          "source_qualification": "Nutritive sugars allowance is limited to liquid version; separate non-nutritive composition and ingredient permissions still apply."
+        },
+        {
+          "variant": "Powder colouring foods",
+          "catalog_product_ids": [
+            "99-99-1-colouring-foods"
+          ],
+          "composition": [
+            {
+              "parameter": "Total solids",
+              "operator": ">=",
+              "value": 90,
+              "unit": "g/100 g"
+            },
+            {
+              "parameter": "Marker pigment",
+              "operator": ">=",
+              "value": 1,
+              "unit": "%"
+            }
+          ],
+          "source_qualification": "Maltodextrin may be used for stability; 20% nutritive sugar limit is stated for liquids only, not universally applied to powders."
+        }
+      ],
+      "quality_rules": [
+        "Colouring foods are obtained by aqueous extraction of regularly consumed fruits, vegetables, spices or herbs, without selective pigment extraction.",
+        "Do not substitute Appendix A food-colour additive permissions for the colouring-food ingredient standard."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          106
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     }
   ]
 }
