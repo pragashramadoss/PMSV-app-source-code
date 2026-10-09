@@ -21,7 +21,7 @@ test("source-pinned ketchup appears with conditional packaging and no compliance
  assert.match(x,/Official FSSAI source-baseline evidence/);
  assert.match(x,/Official Chapter PDF/);
  assert.match(x,/Rigid-container fill/);
- assert.match(x,/Only rigid containers/);
+ assert.match(x,/Only when packed in rigid containers/);
  assert.match(x,/not a full compliance verdict/);
  assert.doesNotMatch(x,/Compliance passed|Compliant: yes/i);
 });
