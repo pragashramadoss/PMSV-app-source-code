@@ -78,12 +78,14 @@ test('Dahi shows exact absence of IFCT data and FSSAI rules remain separately vi
  assert.match(p.node('nutritionStandardRegulatory').innerHTML,/FSSAI legal composition/);
  assert.match(p.node('nutritionStandardReferenceStatus').innerHTML,/No direct IFCT 2017 Dahi\/Curd entry/);
  assert.doesNotMatch(p.node('nutritionStandardReferenceTable').innerHTML,/72.897|305.449|3.260/);
- assert.match(p.node('nutritionStandardReferenceTable').innerHTML,/unavailable — not zero/);
+ assert.match(p.node('nutritionStandardReferenceStatus').innerHTML,/unavailable \(not zero\)/);
+ assert.equal(p.node('nutritionStandardReferenceTable').innerHTML,'');
 });
 test('Dahi unavailability is visible even before the local IFCT JSON finishes loading',()=>{
  const p=testPage(products.dahi,false);p.run();
  assert.match(p.node('nutritionStandardReferenceStatus').innerHTML,/No direct IFCT 2017 Dahi\/Curd entry/);
- assert.match(p.node('nutritionStandardReferenceTable').innerHTML,/Data status: unavailable/);
+ assert.match(p.node('nutritionStandardReferenceStatus').innerHTML,/unavailable, not zero/);
+ assert.equal(p.node('nutritionStandardReferenceTable').innerHTML,'');
 });
 test('Paneer versus Chhana must be explicitly selected, never borrowed from a shared FSSAI clause',()=>{
  const p=testPage(products.paneer);p.run();
@@ -132,12 +134,13 @@ test('Related dairy category does not inherit nutrient values from whole milk',(
 test('Standard reference is independent of ingredients, optional recipe calculator stays linked',()=>{
  const p=testPage(products.dahi);p.run();
  assert.match(html,/id="nutritionGoToFormulation"/);
- assert.match(p.node('nutritionStandardReferenceTable').innerHTML,/nin.res.in\/ebooks\/IFCT2017/);
+ assert.match(p.node('nutritionStandardReferenceStatus').innerHTML,/nin.res.in\/ebooks\/IFCT2017/);
  assert.ok(!resolver.includes('formulationIngredients'));
 });
 test('IFCT status/table stay above the collapsible FSSAI legal composition in real UI',()=>{
  const a=html.indexOf('id="nutritionStandardReferenceStatus"'),b=html.indexOf('id="nutritionStandardReferenceTable"'),
   d=html.indexOf('class="nutrition-fssai-details"'),e=html.indexOf('id="nutritionStandardRegulatory"');
  assert.ok(a>0&&b>a&&d>b&&e>d);
- assert.match(html,/<details class="nutrition-fssai-details"><summary>/);
+ assert.match(html,/<details class="nutrition-fssai-details" open><summary>/);
+ assert.doesNotMatch(html, /The FSSAI legal composition above is available/);
 });
