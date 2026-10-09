@@ -1230,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-ifct-standard-presentation-v480';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-dairy-composition-v481';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -3038,8 +3038,65 @@ function standardLookupNutritionProfile(){
  }
  return null;
 }
+/* FSSAI Chapter 2.1 exact dairy scope: standalone from IFCT and formulation. */
+function exactDairyCompositionHtml(product){
+ const n=s=>normIngredient(String(s||''));
+ const id=String(product?.id||'');
+ const dahi=id==='01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi'
+   &&String(product?.fssr||'')==='2.1.13'
+   &&(n(product?.lookup_display_name)==='dahi'||n(product?.chapter_rule_variant)==='dahi');
+ const butter=id==='02-02-2-butter'&&String(product?.fssr||'')==='2.1.9';
+ if(!dahi&&!butter)return null;
+ const key=dahi?'2.1.13':'2.1.9';
+ const db=(chapterRuleDbs||[]).find(x=>String(x?.chapter||'')==='2.1');
+ const get=k=>ruleDbStandards(db).find(x=>String(x?.key||'')===k);
+ const standard=get(key);
+ if(!standard)return '<div class="notice"><b>FSSAI Regulation '+esc(key)+':</b> official Chapter 2.1 standard data is not loaded. This is a data-loading issue, not an IFCT nutrition or ingredient-entry requirement.</div>';
+ const source=db?.official_sources?.[0]?.url||'';
+ const sourceLink=String(source).startsWith('https://')?'<a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter 2.1</a>':'FSSAI Chapter 2.1';
+ const table=(heads,rows)=>'<div class="tablewrap"><table><thead><tr>'+heads.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr></thead><tbody>'
+   +rows.map(row=>'<tr>'+row.map(v=>'<td>'+esc(String(v??'Not specified'))+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
+ let html='<div class="notice oknote" data-pmsv-exact-dairy="'+key+'"><b>FSSAI legal composition — Regulation '+key+'</b><br>Product identity and legal limits, not IFCT nutritional composition. '+sourceLink+'.</div>';
+ if(dahi){
+   const rules=standard.composition_rules||[];
+   html+=table(['Fermented milk requirement','Minimum','Conditions'],
+     rules.filter(x=>!x.product).map(x=>[x.parameter,String(x.operator||'')+' '+x.value+' '+(x.unit||''),x.condition||'General fermented-milk rule']));
+   const special=rules.find(x=>n(x.product)==='dahi'&&n(x.parameter).includes('milk fat'));
+   if(special)html+='<div class="notice"><b>Plain Dahi milk fat / milk solids-not-fat:</b> '+esc(special.requirement||'')
+     +'<br><small>'+esc(special.condition||'')+'</small></div>';
+   const mixed=(get('2.1.2')?.composition||[]).find(x=>n(x.variant)==='mixed milk');
+   if(mixed&&mixed.milk_fat_min_pct!=null&&mixed.snf_min_pct!=null){
+     html+=table(['Input milk class','Milk fat min.','Milk solids-not-fat min.'],
+       [['Mixed milk — when Dahi milk class is not indicated',mixed.milk_fat_min_pct+'% m/m',mixed.snf_min_pct+'% m/m']]);
+     html+='<small>Mixed milk limits from FSSAI 2.1.2, conditional on the class declaration specified in 2.1.13.</small>';
+   }
+   const culture=(standard.named_fermented_milk_cultures||[]).find(x=>n(x.product)==='dahi');
+   if(culture)html+='<div class="notice"><b>Dahi starter culture:</b> '+esc(culture.culture||'')+'</div>';
+   if((standard.starter_culture_requirements||[]).length)
+     html+='<details><summary><b>Microorganism requirements (conditional)</b></summary>'
+       +table(['Parameter','FSSAI criterion','Condition'],standard.starter_culture_requirements.map(x=>[x.parameter,String(x.operator||'')+' '+x.value+' '+(x.unit||''),x.condition||'']))
+       +'</details>';
+   html+='<small>Yoghurt / flavoured-Dahi fat grades, Chakka and Shrikhand requirements are not assigned to plain Dahi.</small>';
+   return html;
+ }
+ const entries=(standard.composition||[]).filter(x=>['table butter','white butter cooking butter'].includes(n(x.variant)));
+ html+=table(['Butter product class','Milk fat minimum','Moisture maximum','Milk solids-not-fat maximum','Salt maximum'],
+   entries.map(x=>[x.variant,
+     x.milk_fat_min_pct!=null?x.milk_fat_min_pct+'% m/m':'Not specified for this class',
+     x.moisture_max_pct!=null?x.moisture_max_pct+'% m/m':'Not specified for this class',
+     x.msnf_max_pct!=null?x.msnf_max_pct+'% m/m':'Not specified for this class',
+     x.common_salt_max_pct!=null?x.common_salt_max_pct+'% m/m':'Not specified for this class']));
+ if(standard.definition)html+='<div class="notice"><b>Butter definition:</b> '+esc(standard.definition)+'</div>';
+ if((standard.cross_checks||[]).length)html+='<div class="notice"><b>Additional rules:</b><br>'+standard.cross_checks.map(x=>'• '+esc(x)).join('<br>')+'</div>';
+ if((standard.permitted_ingredients||[]).length)html+='<details><summary><b>Permitted ingredients and conditions</b></summary>'
+   +standard.permitted_ingredients.map(x=>'<div class="item">'+esc(x)+'</div>').join('')+'</details>';
+ html+='<small>Both butter classes are listed for reference, not automatically treated as one finished-product specification.</small>';
+ return html;
+}
 function standardLookupRegulatoryCompositionHtml(){
  const product=currentAssessmentCatalogProduct();
+ const exactDairy=exactDairyCompositionHtml(product);
+ if(exactDairy!==null)return exactDairy;
  const profile=currentProductProfile();
  const standards=currentChapterStandards();
  if(!product||!standards.length){
@@ -9129,13 +9186,13 @@ async function loadFpc18Db(){
 
 async function loadChapterRuleDbs(){
  try{
-   const results=await Promise.all(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=442',{cache:'reload'}).then(async res=>{
+   const results=await Promise.allSettled(CHAPTER_RULE_URLS.map(url=>fetch(url+'?v=442',{cache:'reload'}).then(async res=>{
      if(!res.ok)throw new Error(url+' HTTP '+res.status);
      return res.json();
    })));
-   chapterRuleDbs=results.filter(Boolean);
+   chapterRuleDbs=results.filter(x=>x.status==='fulfilled'&&x.value).map(x=>x.value);
  }catch(e){
-   chapterRuleDbs=[];
+   chapterRuleDbs=Array.isArray(chapterRuleDbs)?chapterRuleDbs:[];
  }
  renderIngredientAutocomplete();
  renderFormula();
