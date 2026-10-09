@@ -1230,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-ragi-grain-v483';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-millet-all-grain-guard-v484';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -1244,30 +1244,70 @@ function pmsvDirectNorm(value){
    .trim()
    .replace(/\s+/g,' ');
 }
+/* Verified product-identity aliases from FoSCoS standardized products and
+ * FSSAI Chapter 2.4 clause 2.4.6(23). An unmilled grain cannot be inferred
+ * to be flour merely because a flour product is present in the catalogue.
+ */
+const PMSV_MILLET_VARIETIES_V484=[
+ {name:'Amaranthus (Chaulai or Rajgira)',names:['amaranthus','chaulai','rajgira','rajgira grain']},
+ {name:'Barnyard Millet (Sanwa or Jhangora)',names:['barnyard millet','samakechawal','sama ke chawal','sanwa','jhangora']},
+ {name:'Brown Top Millet (Korale)',names:['brown top millet','browntop millet','korale']},
+ {name:'Buckwheat (Kuttu)',names:['buckwheat','kuttu']},
+ {name:'Crab Finger Millet (Sikiya)',names:['crab finger millet','sikiya']},
+ {name:'Finger Millet (Ragi or Mandua)',names:['finger millet','ragi','mandua','nachni']},
+ {name:'Fonio (Acha)',names:['fonio','acha']},
+ {name:'Foxtail Millet (Kangni or Kakun)',names:['foxtail millet','kangni','kakun']},
+ {name:"Job's Tears (Adlay)",names:['jobs tears','adlay']},
+ {name:'Kodo Millet (Kodo)',names:['kodo millet','kodo']},
+ {name:'Little Millet (Kutki)',names:['little millet','kutki']},
+ {name:'Pearl Millet (Bajra)',names:['pearl millet','bajra']},
+ {name:'Proso Millet (Cheena)',names:['proso millet','cheena']},
+ {name:'Sorghum (Jowar)',names:['sorghum','jowar']},
+ {name:'Teff (Lovegrass)',names:['teff','lovegrass']}
+];
+function pmsvMilletIdentity(raw){
+ const q=pmsvDirectNorm(raw);
+ if(!q)return null;
+ const isFlour=/(?:^| )(?:flour|powder|atta)$/.test(q);
+ const isGrain=/(?:^| )(?:grain|grains)$/.test(q);
+ const bare=q.replace(/^(?:whole|dehulled|de husked) /,'').replace(/ (?:grain|grains|flour|powder|atta)$/,'').trim();
+ const item=PMSV_MILLET_VARIETIES_V484.find(x=>x.names.some(n=>pmsvDirectNorm(n)===bare));
+ if(!item)return null;
+ const names=item.names.map(pmsvDirectNorm);
+ const grainIdentity={productId:'06-06-1-millets',variant:item.name,displayName:item.name,routeLabel:'FSSAI 2.4.6(23) — Whole or Dehulled Millets',exactIdentity:true};
+ if(!isFlour)return grainIdentity;
+ // Only these three flour identities are explicitly available in FoSCoS.
+ const flourId=names.includes('ragi')?'06-06-2-ragi-flour':
+               names.includes('jowar')?'06-06-2-jowar-flour-sorghum-flour':
+               names.includes('bajra')?'06-06-2-bajra-flour-pearl-millet-flour':'';
+ if(!flourId)return null; // fail closed; do not treat an unlisted flour as grain.
+ const clause=flourId.includes('ragi')?'2.4.34':flourId.includes('jowar')?'2.4.18':'2.4.17';
+ const label=flourId.includes('ragi')?'Ragi Flour':flourId.includes('jowar')?'Jowar Flour (Sorghum Flour)':'Bajra Flour (Pearl Millet Flour)';
+ return {productId:flourId,variant:'',displayName:label,routeLabel:'FSSAI '+clause+' — '+label,exactIdentity:true};
+}
 function pmsvStandardLookupAlias(raw){
  const q=pmsvDirectNorm(raw);
- if(q==='dahi'||q==='plain dahi'||q==='curd'||q==='plain curd'){
-   return {
-     productId:'01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi',
-     variant:'Dahi',
-     displayName:'Dahi',
-     routeLabel:'Dahi · FSSR 2.1.13 (Fermented Milk / Dahi route)',
-     exactIdentity:true
-   };
+ if(['dahi','plain dahi','curd','plain curd'].includes(q)){
+   return {productId:'01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi',variant:'Dahi',
+     displayName:'Dahi',routeLabel:'FSSR 2.1.13 — Fermented Milk / Dahi',exactIdentity:true};
  }
- if(['ragi','finger millet','mandua','finger millet grain','ragi grain','whole ragi','whole finger millet','whole finger millet grain'].includes(q)){
-   return {productId:'06-06-1-millets',variant:'Finger Millet (Ragi)',displayName:'Finger Millet (Ragi grain)',routeLabel:'FSSAI 2.4.6(23) — Whole or Dehulled Millets',exactIdentity:true};
- }
- if(['ragi flour','finger millet flour','mandua flour','ragi powder','finger millet powder'].includes(q)){
-   return {productId:'06-06-2-ragi-flour',variant:'',displayName:'Ragi Flour',routeLabel:'FSSAI 2.4.34 — Ragi Flour',exactIdentity:true};
- }
- return null;
+ return pmsvMilletIdentity(raw);
+}
+// A name fragment is not evidence that a processed form meets an unprocessed
+// food identity. Prevent direct substring scoring from suggesting flour/oil/etc
+// when the user supplied only the base crop or generic product name.
+function pmsvProductFormConflict(productName,searchText){
+ const p=new Set(pmsvDirectNorm(productName).split(' ').filter(Boolean));
+ const q=new Set(pmsvDirectNorm(searchText).split(' ').filter(Boolean));
+ const forms=['flour','powder','starch','meal','grits','semolina','oil','butter','paste','extract','concentrate','flakes','juice','sattu'];
+ return forms.some(form=>p.has(form)&&!q.has(form));
 }
 function pmsvDirectScore(product,raw){
  const q=pmsvDirectNorm(raw);
  const n=pmsvDirectNorm(product?.name||'');
  if(!q||!n)return 0;
  if(q===n)return 100000;
+ if(pmsvProductFormConflict(n,q))return 0;
  let score=0;
  if(n.includes(q)||q.includes(n))score+=12000;
  const qt=q.split(' ').filter(Boolean);
@@ -5265,6 +5305,7 @@ function proprietaryStandardScore(product,raw){
  const n=normIngredient(product?.name||'');
  if(!q||!n)return 0;
  if(n===q)return 100000;
+ if(pmsvProductFormConflict(n,q))return 0;
  let score=0;
  if(n.includes(q)||q.includes(n))score+=12000;
  const qt=proprietarySearchTokens(q);
@@ -5363,12 +5404,12 @@ function nearestStandardEngineAudit(){
    else failed.push({name:p.name,expected:p.id,actual:best?.id||''});
  });
  const aliasTests=[
-   {name:'Dahi',expected:'01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi'},
-   {name:'Ragi',expected:'06-06-1-millets'},
-   {name:'Finger Millet',expected:'06-06-1-millets'},
-   {name:'Mandua',expected:'06-06-1-millets'},
-   {name:'Ragi Flour',expected:'06-06-2-ragi-flour'},
-   {name:'Finger Millet Flour',expected:'06-06-2-ragi-flour'}
+    {name:'Dahi',expected:'01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi'},
+    ...PMSV_MILLET_VARIETIES_V484.flatMap(v=>v.names.slice(0,2).map(name=>({name,expected:'06-06-1-millets'}))),
+    {name:'Jowar Flour',expected:'06-06-2-jowar-flour-sorghum-flour'},
+    {name:'Sorghum Flour',expected:'06-06-2-jowar-flour-sorghum-flour'},
+    {name:'Ragi Flour',expected:'06-06-2-ragi-flour'},
+    {name:'Bajra Flour',expected:'06-06-2-bajra-flour-pearl-millet-flour'}
  ];
  aliasTests.forEach(test=>{
    const best=proprietaryStandardCandidates(test.name)[0]?.p;
