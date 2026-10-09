@@ -8362,7 +8362,7 @@ function productBaselineContaminantRules(p){
  // 5b) Exact deshelled groundnut kernel: separate official nut/oilseed subtypes
  // have identical Version IX aflatoxin limits. Do not infer any pesticide MRL.
  const kernel=contaminantsDb?.chapter_2_3_verified_groundnut_aflatoxin_v9;
- if(kernel?.catalog_id===id && kernel.product_identity_verified!==false){
+ if(kernel?.catalog_id===id && kernel.product_identity_verified===true){
    for(const rule of kernel.rules||[]){
      const sourceRules=contaminantsDb?.crop_contaminants?.[rule.crop_contaminant_key]?.rules||[];
      const articles=rule.official_articles||[];
