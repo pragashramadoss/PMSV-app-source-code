@@ -190,7 +190,7 @@ test('existing label and vitamin calculations preserve null while accepting expl
     nutritionDb:{profiles:[{names:['Sample'],source_authority:'ICMR-NIN',active_for_calculation:true,verified_fields:['energy_kcal','sodium_mg'],per_100g:{energy_kcal:null,sodium_mg:null},ifct_table2_water_soluble_vitamins_per_100g:{test:null}}],ifct_table2_water_soluble_vitamins:{fields:{test:{unit:'mg'}}}},
     formulationIngredients:[{name:'Sample',qty:100,unit:'g'}],
     normIngredient:s => s.toLowerCase(),totalFormulaKg:() => 0.1,qtyToKg:q => q / 1000,formulaDensity:() => 1,
-    document:{getElementById:() => ({value:'250'})}
+    fmt:(n,d)=>Number(n).toFixed(d), document:{getElementById:() => ({value:'250'})}
   };
   vm.createContext(sandbox); vm.runInContext(html.slice(start, end), sandbox);
   assert.equal(sandbox.calculateNutrition().per100g.energy_kcal, null);
@@ -209,7 +209,7 @@ test('nutrition page renders all nine groups and clears stale composition after 
   const sandbox = {
     nutritionDb:merged,window:{PMSVNutritionModules:api},
     formulationIngredients:[{name:'Sample',qty:100,unit:'g'}],
-    nutritionProfileFor:() => profile('A001'),qtyToKg:q => q / 1000,formulaDensity:() => 1,nutritionServingMl:() => 250,
+    nutritionProfileFor:() => profile('A001'),qtyToKg:q => q / 1000,formulaDensity:() => 1,nutritionServingMl:() => 250,nutritionFinishedMassG:mass=>mass,
     isNutritionNumber:api.finiteValue,esc:s => String(s).replaceAll('&','&amp;').replaceAll('<','&lt;'),fmt:(n,d) => n.toFixed(d),
     document:{getElementById:id => nodes[id]}
   };
@@ -233,7 +233,7 @@ test('index loader shows the verified version or a supplement warning while reta
   for (const missing of [false,true]) {
     const mock = mockFetch((file,raw,status) => ({raw,status:missing && file === manifest.modules[0].file ? 404 : status}));
     const status = {};
-    const sandbox = {window:{PMSVNutritionModules:{load:() => api.load({fetchImpl:mock.fetchImpl})}},nutritionDb:null,document:{getElementById:() => status},renderNutrition:() => {},esc:String};
+    const sandbox = {window:{PMSVNutritionModules:{load:() => api.load({fetchImpl:mock.fetchImpl})}},nutritionDb:null,document:{getElementById:() => status},renderNutrition:() => {},renderProprietaryIngredientAutocomplete:()=>{},esc:String};
     vm.createContext(sandbox);vm.runInContext(script,sandbox);
     await sandbox.loadNutritionDb();
     assert.equal(sandbox.nutritionDb.profiles.length,535);
@@ -260,7 +260,7 @@ test('complete application startup initializes enzyme state and reaches nutritio
     document:{querySelectorAll:() => [],querySelector:() => null,getElementById:id => nodes[id] || null,addEventListener(){}},
     window:{addEventListener(){},PMSVNutritionModules:{load:() => api.load({fetchImpl})}},
     location:{hash:'',pathname:'/',search:''},history:{replaceState(){}},sessionStorage:storage,localStorage:storage,
-    performance:{getEntriesByType:() => [{type:'navigate'}]},fetch:fetchImpl,setTimeout:() => 0,console
+    performance:{getEntriesByType:() => [{type:'navigate'}]},fetch:fetchImpl,setTimeout:() => 0,setInterval:() => 0,clearInterval:()=>{},console
   };
   vm.createContext(sandbox);
   assert.doesNotThrow(() => vm.runInContext(script,sandbox));
