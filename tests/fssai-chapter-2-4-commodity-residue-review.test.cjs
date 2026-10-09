@@ -122,3 +122,41 @@ test("official Version IX Ochratoxin A and DON exact grouped articles apply only
    assert.match(row.official_source_url,/^https:\/\/fssai\.gov\.in\//);
  }
 });
+
+
+test("eleven non-equivalent Chapter 2.4 products do not borrow milled-grain pesticide MRLs",()=>{
+ const expected=["06-06-2-wheat-protein-products-including-wheat-gluten","06-06-2-besan","06-06-2-roasted-bengal-gram-flour-chana-sattu","06-06-2-sago-flour","06-06-2-custard-powder","06-06-2-maize-starch","06-06-2-arrowroot","06-06-2-tapioca-sago","06-06-2-palm-sago-starch","06-06-2-cassava-or-tapioca-product-gari","06-06-2-edible-cassava-or-tapioca-flour"];
+ assert.equal(new Set(expected).size,11);
+ for(const id of expected){
+  const row=byId.get(id);
+  assert.ok(row,id);
+  assert.deepEqual(row.candidate_commodity_articles,[],id);
+  assert.equal(row.candidate_rows_in_loaded_official_source,0,id);
+  assert.equal(row.scope_review_status,"identity_review_pending_no_safe_direct_pesticide_route",id);
+  assert.equal(row.auto_apply_commodity_mrl,false,id);
+  assert.ok(row.article_scope_correction?.official_source_url.startsWith("https://fssai.gov.in/"),id);
+  assert.match(row.qualifier_review,/not|cannot|do not|needs|must/i,id);
+  const p=chapter.find(p=>p.id===id);
+  const rendered=run("productCerealCommodityMrlReviewHtml",p);
+  assert.match(rendered,/No safe direct commodity-pesticide candidate has been assigned/,id);
+  assert.doesNotMatch(rendered,/official commodity MRL reference/,id);
+ }
+});
+test("cassava/sago correct pesticide scope does not suppress directly verified hydrocyanic-acid rule",()=>{
+ const ids=["06-06-2-sago-flour","06-06-2-tapioca-sago","06-06-2-palm-sago-starch","06-06-2-cassava-or-tapioca-product-gari","06-06-2-edible-cassava-or-tapioca-flour"];
+ const direct=db.profiles.find(p=>p.id==="sago-cassava-tapioca");
+ assert.ok(direct);
+ for(const id of ids){
+  assert.ok(direct.catalog_ids.includes(id),id);
+  assert.ok(direct.rules.some(r=>r.contaminant==="Hydrocyanic acid"&&r.limit===10),id);
+  assert.deepEqual(byId.get(id).aflatoxin_reference_articles,[],id);
+ }
+});
+test("pulse flour crop-contaminant candidates do not silently become cereal candidates",()=>{
+ for(const id of ["06-06-2-besan","06-06-2-roasted-bengal-gram-flour-chana-sattu"]){
+  const row=byId.get(id);
+  assert.ok(row.aflatoxin_reference_articles.includes("Pulses"));
+  assert.ok(!row.aflatoxin_reference_articles.includes("Cereal and cereal products"));
+ }
+ assert.match(html,/Chapter 2\.4 — FSSAI commodity residue review/);
+});

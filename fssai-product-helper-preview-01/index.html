@@ -7703,7 +7703,7 @@ function productCerealCommodityMrlReviewHtml(p){
  const url=String(contaminantsDb?.official_sources?.[0]?.url||'');
  const source=/^https:\/\/(?:www\.)?fssai\.gov\.in\//i.test(url)
   ?' <a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX PDF</a>':'';
- let html='<div class="card"><div class="section-title"><h3>Cereals & flour — FSSAI commodity residue review</h3><span>REVIEW ONLY · NOT APPLIED</span></div>'
+ let html='<div class="card"><div class="section-title"><h3>Chapter 2.4 — FSSAI commodity residue review</h3><span>REVIEW ONLY · NOT APPLIED</span></div>'
   +'<div class="notice"><b>Exact product:</b> '+esc(p.name)+'<br><b>Processing form:</b> '+esc(review.scope)
   +'<br>'+esc(review.qualifier_review)+' No MRL, crop-contaminant limit, or applicability is automatically approved by this candidate list.'
   +source+'</div>';
