@@ -1507,20 +1507,92 @@
     {
       "key": "2.3.47(4)",
       "name": "Dates",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "FSSAI official 2023 numeric baseline; keep compliance fail-closed until exact product/variant and operative amendments, Appendix A/B/C, contaminants and labelling are independently checked.",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 30,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acid-insoluble ash",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Blemished or damaged units",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        }
+      ],
+      "quality_rules": [
+        "Dates must be free from added colouring matter, insect infestation, mould, rodent contamination and evidence of fermentation."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          66
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.47(5)",
       "name": "Dry fruits and Nuts",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "FSSAI official 2023 numeric baseline; keep compliance fail-closed until exact product/variant and operative amendments, Appendix A/B/C, contaminants and labelling are independently checked.",
+      "composition": [
+        {
+          "parameter": "Extraneous vegetable matter",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Damaged or discoloured units",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acidity of extracted fat expressed as oleic acid",
+          "operator": "<=",
+          "value": 1.25,
+          "unit": "% by mass"
+        }
+      ],
+      "quality_rules": [
+        "Generic dry fruits and nuts are not a substitute for named almond, walnut, cashew, pistachio or raisin standards where those apply."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          67
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.47(6)",
@@ -2282,20 +2354,215 @@
     {
       "key": "2.3.51",
       "name": "Coconut Milk (Non-Dairy)",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "FSSAI official 2023 numeric baseline; keep compliance fail-closed until exact product/variant and operative amendments, Appendix A/B/C, contaminants and labelling are independently checked.",
+      "variant_resolution_required": true,
+      "variant_composition": [
+        {
+          "variant": "Light coconut milk",
+          "composition": [
+            {
+              "parameter": "Moisture",
+              "operator": "<=",
+              "value": 93.4,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "Total solids",
+              "operator": "range",
+              "min": 6.6,
+              "max": 12.6,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "Solids-not-fat",
+              "operator": ">=",
+              "value": 1.6,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "Fat",
+              "operator": ">=",
+              "value": 5,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "pH",
+              "operator": ">=",
+              "value": 5.9,
+              "unit": "pH"
+            }
+          ]
+        },
+        {
+          "variant": "Coconut milk",
+          "composition": [
+            {
+              "parameter": "Moisture",
+              "operator": "<=",
+              "value": 87.3,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "Total solids",
+              "operator": "range",
+              "min": 12.7,
+              "max": 25.3,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "Solids-not-fat",
+              "operator": ">=",
+              "value": 2.7,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "Fat",
+              "operator": ">=",
+              "value": 10,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "pH",
+              "operator": ">=",
+              "value": 5.9,
+              "unit": "pH"
+            }
+          ]
+        }
+      ],
+      "packaging_requirements": [
+        {
+          "parameter": "Container fill on water capacity",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% v/v",
+          "condition": "Applies to relevant rigid or hermetically sealed container; packaging assessment only, not product composition"
+        }
+      ],
+      "quality_rules": [
+        "Identify light coconut milk versus coconut milk before applying fat/solids standards.",
+        "The standard names coconut water, maltodextrin and sodium caseinate as potentially added ingredients; allergen and current label requirements need evaluation."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          78
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.52",
       "name": "Coconut cream (Non-Dairy)",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "FSSAI official 2023 numeric baseline; keep compliance fail-closed until exact product/variant and operative amendments, Appendix A/B/C, contaminants and labelling are independently checked.",
+      "variant_resolution_required": true,
+      "variant_composition": [
+        {
+          "variant": "Coconut cream",
+          "composition": [
+            {
+              "parameter": "Moisture",
+              "operator": "<=",
+              "value": 74.6,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "Total solids",
+              "operator": "range",
+              "min": 25.4,
+              "max": 37.3,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "Solids-not-fat",
+              "operator": ">=",
+              "value": 5.4,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "Fat",
+              "operator": ">=",
+              "value": 20,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "pH",
+              "operator": ">=",
+              "value": 5.9,
+              "unit": "pH"
+            }
+          ]
+        },
+        {
+          "variant": "Coconut cream concentrate",
+          "composition": [
+            {
+              "parameter": "Moisture",
+              "operator": "<=",
+              "value": 62.6,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "Total solids",
+              "operator": ">=",
+              "value": 37.4,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "Solids-not-fat",
+              "operator": ">=",
+              "value": 8.4,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "Fat",
+              "operator": ">=",
+              "value": 29,
+              "unit": "% w/w"
+            },
+            {
+              "parameter": "pH",
+              "operator": ">=",
+              "value": 5.9,
+              "unit": "pH"
+            }
+          ]
+        }
+      ],
+      "packaging_requirements": [
+        {
+          "parameter": "Container fill on water capacity",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% v/v",
+          "condition": "Applies to relevant rigid or hermetically sealed container; packaging assessment only, not product composition"
+        }
+      ],
+      "quality_rules": [
+        "Coconut cream/concentrate cannot inherit light coconut milk or coconut milk standards.",
+        "Sodium caseinate appears as a possible ingredient; check applicable allergen and labelling requirements."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          80
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.56",
@@ -2713,11 +2980,74 @@
     {
       "key": "2.3.46",
       "name": "Vinegar",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "FSSAI official 2023 numeric baseline; keep compliance fail-closed until exact product/variant and operative amendments, Appendix A/B/C, contaminants and labelling are independently checked.",
+      "variant_resolution_required": true,
+      "variant_composition": [
+        {
+          "variant": "Brewed vinegar",
+          "composition": [
+            {
+              "parameter": "Acidity as acetic acid",
+              "operator": ">=",
+              "value": 3.75,
+              "unit": "% m/v"
+            },
+            {
+              "parameter": "Total solids",
+              "operator": ">=",
+              "value": 1.5,
+              "unit": "% m/v"
+            },
+            {
+              "parameter": "Total ash",
+              "operator": ">=",
+              "value": 0.18,
+              "unit": "%"
+            }
+          ]
+        },
+        {
+          "variant": "Synthetic vinegar",
+          "composition": [
+            {
+              "parameter": "Acidity as acetic acid",
+              "operator": ">=",
+              "value": 3.75,
+              "unit": "% m/v"
+            }
+          ],
+          "source_qualification": "Must carry distinct name 'SYNTHETIC - PREPARED FROM ACETIC ACID'."
+        }
+      ],
+      "packaging_requirements": [
+        {
+          "parameter": "Container fill on water capacity",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% v/v",
+          "condition": "Applies to relevant rigid or hermetically sealed container; packaging assessment only, not product composition"
+        }
+      ],
+      "quality_rules": [
+        "Brewed vinegar is produced by alcoholic and acetic acid fermentation; it shall not be fortified with acetic acid.",
+        "No sulphuric or other mineral acid; no colouring matter except permitted caramel.",
+        "Brewed vinegar solids and ash limits must not be borrowed for synthetic vinegar."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          63,
+          64
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.5",
@@ -2829,20 +3159,125 @@
     {
       "key": "2.3.58",
       "name": "Harrisa (Red Hot Pepper Paste)",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "product_identity_and_official_clause_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI named product or defined variant. Full numeric/regulatory checks remain locked pending detailed transcription."
+      "verification_note": "FSSAI official 2023 numeric baseline; keep compliance fail-closed until exact product/variant and operative amendments, Appendix A/B/C, contaminants and labelling are independently checked.",
+      "composition": [
+        {
+          "parameter": "Total acidity as citric acid",
+          "operator": "<=",
+          "value": 3.6,
+          "unit": "% by weight of total dry residue"
+        },
+        {
+          "parameter": "Dry extract excluding salt",
+          "operator": ">=",
+          "value": 14,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Added salt",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% on dry weight basis"
+        },
+        {
+          "parameter": "Acid-insoluble ash",
+          "operator": "<=",
+          "value": 0.15,
+          "unit": "% of dry extract"
+        }
+      ],
+      "permitted_additives_policy": {
+        "permitted": false,
+        "source_rule": "No additives are allowed in the product covered by this Standard.",
+        "automatic_compliance_pass": false
+      },
+      "packaging_requirements": [
+        {
+          "parameter": "Container fill on water capacity",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% v/v",
+          "condition": "Applies to relevant rigid or hermetically sealed container; packaging assessment only, not product composition"
+        }
+      ],
+      "quality_rules": [
+        "Harissa under clause 2.3.58 is a thermally treated preserved pulp of Capsicum annuum with fresh garlic, coriander, caraway and salt.",
+        "No food additives are allowed in this standard. Do not infer Appendix A generic permissions.",
+        "Seeds and crusts must be removed using a 2 mm sieve."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          90
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.60",
       "name": "Quick Frozen Fried Potatoes",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "product_identity_and_official_clause_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI named product or defined variant. Full numeric/regulatory checks remain locked pending detailed transcription."
+      "verification_note": "FSSAI official 2023 numeric baseline; keep compliance fail-closed until exact product/variant and operative amendments, Appendix A/B/C, contaminants and labelling are independently checked.",
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 78,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Free fatty acids of extracted oil as oleic acid",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Frying defects — dark brown to black pieces",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% m/m"
+        }
+      ],
+      "conditional_requirements": [
+        {
+          "parameter": "Cross-sectional dimension",
+          "operator": ">=",
+          "value": 4,
+          "unit": "mm",
+          "condition": "Potato strips cut on all four sides, measured frozen; styles require separate confirmation",
+          "auto_evaluate": false
+        },
+        {
+          "parameter": "Style/length non-conforming tolerance",
+          "source_text": "10% by length where specific lengths are not indicated",
+          "auto_evaluate": false
+        }
+      ],
+      "quality_rules": [
+        "Quick frozen fried potatoes are not the same product as fresh, dehydrated or raw frozen potatoes.",
+        "Strip-style classifications (shoestring, medium, thick, extra large) need their specified dimensions and label declarations."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          92,
+          93
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.62",
