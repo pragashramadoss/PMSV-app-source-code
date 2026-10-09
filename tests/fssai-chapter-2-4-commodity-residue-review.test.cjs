@@ -89,3 +89,36 @@ test("live Results UI renders source-only cereal panels separately from actual p
  assert.match(rendered,/No safe direct commodity-pesticide candidate has been assigned/);
  assert.doesNotMatch(rendered,/FSSAI commodity MRL reference/);
 });
+
+test("official Version IX Ochratoxin A and DON exact grouped articles apply only to Wheat and Wheat Bran",()=>{
+ const mappings=db.explicit_crop_contaminant_article_mappings_v9;
+ assert.equal(mappings.length,2);
+ assert.deepEqual(new Set(mappings.map(x=>x.catalog_id)),new Set(["06-06-1-wheat","06-06-2-wheat-bran"]));
+ const snippet=s("function productBaselineContaminantRules(p){");
+ const internal=vm.createContext({
+   contaminantsDb:db,chapterRuleDbs:[],ruleDbStandards:()=>[],
+   exactFinishedProductContaminantLock:()=>null,
+   exactRawMeatMetalLock:()=>null,
+   normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+   isVerifiedFermentedMilkProduct:()=>false
+ });
+ vm.runInContext(snippet,internal);
+ const list=fragment=>{
+   const {product}=get(fragment);
+   return vm.runInContext("productBaselineContaminantRules("+JSON.stringify(product)+")",internal);
+ };
+ const named=x=>Array.from(list(x),r=>({contaminant:r.contaminant,limit:r.limit,unit:r.unit})).filter(r=>["Ochratoxin A","Deoxynivalenol"].includes(r.contaminant));
+ for(const productName of ["Wheat","Wheat bran"]){
+   const entries=named(productName);
+   assert.deepEqual(entries,[{contaminant:"Ochratoxin A",limit:5,unit:"µg/kg"},{contaminant:"Deoxynivalenol",limit:1000,unit:"µg/kg"}],productName);
+ }
+ for(const productName of ["Wheat Flour (Atta)","Durum Wheat","Pearl Barley","Maida","Jowar Flour"]){
+   assert.deepEqual(named(productName),[],productName+" cannot borrow exact named article");
+ }
+ for(const row of mappings){
+   assert.equal(row.exact_catalog_identity_verified,true);
+   assert.equal(row.complete_contaminant_coverage,false);
+   assert.equal(row.amendments_fully_reconciled,false);
+   assert.match(row.official_source_url,/^https:\/\/fssai\.gov\.in\//);
+ }
+});
