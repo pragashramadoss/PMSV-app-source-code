@@ -8,10 +8,10 @@ const dataRoot = path.resolve(__dirname,"../fssai-product-helper-preview-01/data
 const chapter = JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/chapter-2-3-fruit-vegetable-v1.json"),"utf8"));
 const index = JSON.parse(fs.readFileSync(path.join(dataRoot,"standard-search-index-v1.json"),"utf8"));
 const records=new Map(chapter.standards.map(row=>[row.key,row]));
-const keys=["2.3.8","2.3.9","2.3.10","2.3.11","2.3.12","2.3.13","2.3.14","2.3.15","2.3.17","2.3.18","2.3.19","2.3.21","2.3.22","2.3.23","2.3.24","2.3.25","2.3.26","2.3.27","2.3.28","2.3.29","2.3.30","2.3.42","2.3.43","2.3.47(7)","2.3.47(8)","2.3.49","2.3.54","2.3.55","2.3.56","2.3.62","2.3.63","2.3.64","2.3.65","2.3.47(4)","2.3.47(5)","2.3.46","2.3.51","2.3.52","2.3.58","2.3.60"];
+const keys=["2.3.8","2.3.9","2.3.10","2.3.11","2.3.12","2.3.13","2.3.14","2.3.15","2.3.17","2.3.18","2.3.19","2.3.21","2.3.22","2.3.23","2.3.24","2.3.25","2.3.26","2.3.27","2.3.28","2.3.29","2.3.30","2.3.42","2.3.43","2.3.47(7)","2.3.47(8)","2.3.49","2.3.54","2.3.55","2.3.56","2.3.62","2.3.63","2.3.64","2.3.65","2.3.47(4)","2.3.47(5)","2.3.46","2.3.51","2.3.52","2.3.58","2.3.60","2.3.47(1)","2.3.47(2)","2.3.47(3)","2.3.47(6)","2.3.53","2.3.44","2.3.3A","2.3.5"];
 const get = key => {const r=records.get(key);assert.ok(r, "Missing "+key);return r;};
 const metric=(key,parameter)=>get(key).composition.find(r=>r.parameter===parameter);
-test("forty known partial standards now have source-pinned numeric baselines",()=>{
+test("forty-eight known partial standards now have source-pinned numeric baselines",()=>{
  for(const key of keys){
   const r=get(key);
   assert.equal(r.full_compliance_assessment_enabled,false,key);
@@ -303,4 +303,73 @@ test("quick-frozen fried potatoes retain fry limits and frozen strip qualifier",
  assert.deepEqual(x.composition.map(z=>z.value),[78,1.5,0.5]);
  assert.equal(x.conditional_requirements[0].value,4);
  assert.equal(x.conditional_requirements[0].auto_evaluate,false);
+});
+
+test("groundnut, raisin and pistachio clauses do not inherit other nuts thresholds",()=>{
+ assert.deepEqual(get("2.3.47(1)").composition.map(v=>v.value),[7,5]);
+ assert.deepEqual(get("2.3.47(2)").composition.map(v=>v.value),[15,2,15]);
+ assert.deepEqual(get("2.3.47(3)").composition.map(v=>v.value),[7,2,1]);
+ assert.deepEqual(get("2.3.47(1)").prohibited_additive_classes,["Added colouring matter","Preservatives"]);
+ assert.equal(get("2.3.47(1)").permitted_additives_policy,undefined,"Groundnut does not have a blanket ban on every additive");
+});
+test("almonds have independent limits, including 45% minimum oil and 10% total defect tolerance",()=>{
+ const x=get("2.3.47(6)");
+ assert.equal(metric("2.3.47(6)","Oil content").operator,">=");
+ assert.equal(metric("2.3.47(6)","Oil content").value,45);
+ assert.equal(metric("2.3.47(6)","Total tolerance of specified defective kernels").value,10);
+ assert.equal(metric("2.3.47(6)","Acid insoluble ash"),undefined);
+ assert.equal(metric("2.3.47(6)","Acid-insoluble ash").value,0.1);
+});
+test("preservative-dependent apricot moisture and grouped defect ceiling remain guarded",()=>{
+ const x=get("2.3.53");
+ assert.equal(x.variant_resolution_required,true);
+ assert.deepEqual(x.variant_composition.map(v=>v.composition[0].value),[20,25]);
+ assert.equal(x.composition?.length||0,0);
+ assert.equal(x.conditional_requirements[0].value,15);
+ assert.ok(x.conditional_requirements.every(v=>v.auto_evaluate===false));
+});
+test("table olive brine process and drained-weight style are two distinct applicability axes",()=>{
+ const x=get("2.3.44");
+ assert.equal(x.variant_resolution_required,true);
+ assert.deepEqual(x.variant_composition.slice(0,2).map(v=>v.composition[0].value),[6,5]);
+ assert.equal(x.variant_composition[2].composition[0].value,4.3);
+ assert.deepEqual(x.conditional_requirements.map(v=>v.value),[50,40]);
+ assert.ok(x.conditional_requirements.every(v=>v.auto_evaluate===false));
+ assert.equal(x.packaging_requirements[0].value,90);
+});
+test("canned tomatoes keep conditional pack-media requirements distinct from drained weight",()=>{
+ const x=get("2.3.3A");
+ assert.equal(metric("2.3.3A","Drained weight").value,56);
+ assert.equal(x.composition.length,1);
+ assert.deepEqual(x.conditional_requirements.slice(0,4).map(v=>v.value),[3,0.045,0.08,4.5]);
+ assert.ok(x.conditional_requirements.every(v=>v.auto_evaluate===false));
+ assert.equal(x.packaging_requirements[0].value,7);
+ assert.equal(x.packaging_requirements[2].value,90);
+});
+test("tomato soup must not use general vegetable-soup lower solids limit",()=>{
+ const x=get("2.3.5");
+ assert.equal(x.variant_resolution_required,true);
+ assert.equal(x.composition?.length||0,0);
+ assert.deepEqual(x.variant_composition.map(v=>v.composition[0].value),[7,5]);
+});
+test("all 84 former identity-only route entries now have an official-source baseline or explicit no-universal-limit review",()=>{
+ const cereals=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/chapter-2-4-cereals-v1.json"),"utf8"));
+ const all=new Map([...chapter.standards,...cereals.standards].map(x=>[x.key,x]));
+ const partial=index.products.filter(p=>p.chapter_rule_scope==="identity_only_partial");
+ assert.equal(partial.length,84);
+ let numeric=0,scope=0;
+ for(const p of partial){
+  const s=all.get(p.rule_key);
+  assert.ok(s,p.id+" no chapter rule");
+  assert.equal(s.full_compliance_assessment_enabled,false,p.id);
+  if(s.numeric_evidence){
+   assert.equal(s.numeric_evidence.compliance_assessment_enabled,false,p.id);
+   numeric++;
+  }else{
+   assert.ok(s.source_review?.scope,p.id+" lacks numeric baseline and scope review");
+   scope++;
+  }
+ }
+ assert.equal(numeric,80);
+ assert.equal(scope,4);
 });
