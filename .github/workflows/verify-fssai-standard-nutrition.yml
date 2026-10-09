@@ -1,0 +1,29 @@
+name: Verify PMSV FSSAI standard nutrition
+on:
+  push:
+    branches:
+      - gh-pages
+    paths:
+      - 'fssai-product-helper-preview-01/**'
+      - 'tests/standardized-ifct-lookup-v477.test.cjs'
+      - 'tests/fssai-nutrition-v476.test.cjs'
+      - 'tests/nutrition-modules.test.cjs'
+      - '.github/workflows/verify-fssai-standard-nutrition.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check helper JavaScript syntax and exact IFCT reference behavior
+        run: node --test tests/standardized-ifct-lookup-v477.test.cjs tests/fssai-nutrition-v476.test.cjs tests/nutrition-modules.test.cjs
