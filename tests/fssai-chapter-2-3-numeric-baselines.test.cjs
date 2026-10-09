@@ -733,3 +733,25 @@ test("Pulses retain their own toxin article and do not inherit cereal grain lead
  assert.equal(rows.some(x=>x.article==="Cereal and cereal products"),false);
  assert.equal(rows.some(x=>x.article==="Cereal grains, except buckwheat, canihua and quinoa"),false);
 });
+
+
+test("exact named nut and arecanut Version IX mappings suppress stale generic legacy rows",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const at=html.indexOf("function contaminantProfileForProduct(p){");
+ const end=html.indexOf("\nfunction contaminantIngredientRulesForName(",at+12);
+ assert.ok(at>0&&end>at);
+ const vm=require("node:vm");
+ const ctx=vm.createContext({contaminantsDb:db,
+  exactFinishedProductContaminantLock:()=>null,exactRawMeatMetalLock:()=>null});
+ vm.runInContext(html.slice(at,end),ctx);
+ const profile=p=>vm.runInContext("contaminantProfileForProduct("+JSON.stringify(p)+")",ctx);
+ for(const cfg of db.chapter_2_3_exact_nut_arecanut_aflatoxin_v9.verified_product_identities){
+  const p=index.products.find(x=>x.id===cfg.catalog_id);
+  assert.ok(p);
+  assert.equal(profile(p),null, cfg.product_name+" legacy hard-coded aflatoxins must not bypass source checks");
+ }
+ const other=index.products.find(x=>x.id==="04-04-1-groundnut-kernel-deshelled");
+ assert.ok(other);
+ assert.ok(profile(other)?.rules?.length>0,"Groundnut profile must be unaffected");
+});

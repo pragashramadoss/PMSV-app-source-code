@@ -7770,6 +7770,17 @@ function contaminantProfileForProduct(p){
    if(Array.isArray(profile.match_fssr)&&profile.match_fssr.includes(p.fssr||''))return true;
    return false;
  })||null;
+ // A legacy profile labelled simply "Nuts" precedes Version IX named
+ // use-form articles. Suppress its two aflatoxin rows for five exact
+ // re-reconciled identities: otherwise duplicate results appear and, if
+ // the current source numbers drift, an old hard-coded row bypasses the gate.
+ const verifiedNutIdentity=(contaminantsDb?.chapter_2_3_exact_nut_arecanut_aflatoxin_v9?.verified_product_identities||[])
+   .some(x=>x.catalog_id===p.id && x.fssr===p.fssr);
+ if(verifiedNutIdentity && matched){
+   const keep=(matched.rules||[]).filter(r=>
+     !['total aflatoxins','aflatoxin b1'].includes(String(r.contaminant||'').trim().toLowerCase()));
+   return keep.length?{...matched,rules:keep}:null;
+ }
  if(!matched||!rawGoatRabbitLeadLock)return matched;
  // Chapter 2.5 goat/rabbit lock is Lead-specific. Preserve independently
  // sourced other metals if future exact species evidence becomes available.
