@@ -1230,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-millet-all-grain-guard-v484';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-millet-catalog-safety-v485';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -1257,7 +1257,7 @@ const PMSV_MILLET_VARIETIES_V484=[
  {name:'Finger Millet (Ragi or Mandua)',names:['finger millet','ragi','mandua','nachni']},
  {name:'Fonio (Acha)',names:['fonio','acha']},
  {name:'Foxtail Millet (Kangni or Kakun)',names:['foxtail millet','kangni','kakun']},
- {name:"Job's Tears (Adlay)",names:['jobs tears','adlay']},
+ {name:"Job's Tears (Adlay)",names:['job s tears','jobs tears','adlay']},
  {name:'Kodo Millet (Kodo)',names:['kodo millet','kodo']},
  {name:'Little Millet (Kutki)',names:['little millet','kutki']},
  {name:'Pearl Millet (Bajra)',names:['pearl millet','bajra']},
@@ -1300,7 +1300,14 @@ function pmsvProductFormConflict(productName,searchText){
  const p=new Set(pmsvDirectNorm(productName).split(' ').filter(Boolean));
  const q=new Set(pmsvDirectNorm(searchText).split(' ').filter(Boolean));
  const forms=['flour','powder','starch','meal','grits','semolina','oil','butter','paste','extract','concentrate','flakes','juice','sattu'];
- return forms.some(form=>p.has(form)&&!q.has(form));
+ const pForms=forms.filter(x=>p.has(x)), qForms=forms.filter(x=>q.has(x));
+ if(pForms.some(x=>!q.has(x)))return true; // grain cannot inherit flour, juice, oil, etc.
+ if(qForms.some(x=>!p.has(x)))return true; // "groundnut oil" cannot suggest "groundnut flour"
+ // Do not match merely because two unrelated products are both named "... flour".
+ // At least one non-form food identity word must agree.
+ const stop=new Set([...forms,'of','and','with','or','for','the','food','foods','product','products','based','other','including','whole','raw','refined','edible','grain','grains']);
+ const pCore=[...p].filter(x=>!stop.has(x)),qCore=[...q].filter(x=>!stop.has(x));
+ return qCore.length>0&&pCore.length>0&&!qCore.some(x=>pCore.includes(x));
 }
 function pmsvDirectScore(product,raw){
  const q=pmsvDirectNorm(raw);
