@@ -8359,6 +8359,25 @@ function productBaselineContaminantRules(p){
    });
  }
 
+ // 5b) Exact deshelled groundnut kernel: separate official nut/oilseed subtypes
+ // have identical Version IX aflatoxin limits. Do not infer any pesticide MRL.
+ const kernel=contaminantsDb?.chapter_2_3_verified_groundnut_aflatoxin_v9;
+ if(kernel?.catalog_id===id && kernel.product_identity_verified!==false){
+   for(const rule of kernel.rules||[]){
+     const sourceRules=contaminantsDb?.crop_contaminants?.[rule.crop_contaminant_key]?.rules||[];
+     const articles=rule.official_articles||[];
+     if(articles.length!==4 || !articles.every(article=>sourceRules.some(r=>
+       r.article===article && Number(r.limit)===Number(rule.limit))))continue;
+     pushRule({
+       contaminant:rule.contaminant,
+       article:'Nut and oilseed commodity articles (all listed use categories agree)',
+       limit:rule.limit,unit:rule.unit,
+       source_basis:'FSSAI CTR Version IX · Section 2.2.1 · four exact nut/oilseed article checks; FSSR 2.3.47(1)',
+       condition:'Deshelled groundnut kernel identity only. Source categories: '+articles.join('; ')+'. Does not establish pesticide MRLs, complete compliance or applicability to groundnut oil or composites.'
+     });
+   }
+ }
+ 
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
