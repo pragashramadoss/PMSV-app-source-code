@@ -105,3 +105,28 @@ test("INS 223/224 exact metabisulphite source metals remain substance-specific, 
   ctx.contaminantsDb=db;
  }
 });
+
+test("Guar Gum INS 412 routes only its exact Gaur gum source metal article and never additive use approval",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json"),"utf8"));
+ const m=db.special_guar_gum_exact_metal_article_v9;
+ const p=index.products.find(x=>x.id===m.catalog_id);assert.ok(p);
+ assert.equal(p.name,m.product_name);
+ assert.equal(m.identity_ins,"412");
+ assert.equal(m.identity_clause,"3.2.11(10)");
+ assert.equal(m.official_article_spelling,"Gaur gum");
+ assert.equal(m.finished_food_additive_use_approved,false);
+ const at=html.indexOf("function productBaselineContaminantRules(p){"),stop=html.indexOf("\nfunction ",at+25);
+ assert.ok(at>=0&&stop>at);
+ const ctx=vm.createContext({contaminantsDb:db,chapterRuleDbs:[],ruleDbStandards:()=>[],
+  exactFinishedProductContaminantLock:()=>null,exactRawMeatMetalLock:()=>null,
+  normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+  isVerifiedFermentedMilkProduct:()=>false});
+ vm.runInContext(html.slice(at,stop),ctx);
+ const run=x=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(x)+")",ctx))
+  .filter(r=>r.source_basis?.includes("exact INS 412 Guar Gum substance alias")).map(r=>[r.contaminant,r.limit,r.unit]);
+ assert.deepEqual(run(p),[["Arsenic",3,"mg/kg"],["Lead",2,"mg/kg"]]);
+ assert.deepEqual(run({...p,name:"Compound stabilizer blend"}),[]);
+ assert.deepEqual(run({...p,fcs:"14.1"}),[]);
+ const changed=structuredClone(db);changed.metal_article_rules_v9.Arsenic.find(r=>r.article==="Gaur gum").limit=30;
+ ctx.contaminantsDb=changed;assert.deepEqual(run(p),[["Lead",2,"mg/kg"]]);ctx.contaminantsDb=db;
+});
