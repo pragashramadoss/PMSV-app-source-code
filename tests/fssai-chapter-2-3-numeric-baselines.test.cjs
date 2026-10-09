@@ -8,10 +8,10 @@ const dataRoot = path.resolve(__dirname,"../fssai-product-helper-preview-01/data
 const chapter = JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/chapter-2-3-fruit-vegetable-v1.json"),"utf8"));
 const index = JSON.parse(fs.readFileSync(path.join(dataRoot,"standard-search-index-v1.json"),"utf8"));
 const records=new Map(chapter.standards.map(row=>[row.key,row]));
-const keys=["2.3.8","2.3.9","2.3.10","2.3.11","2.3.12","2.3.13","2.3.14","2.3.15","2.3.17","2.3.18","2.3.19","2.3.21","2.3.22","2.3.23","2.3.24","2.3.25","2.3.26","2.3.27","2.3.28","2.3.29","2.3.30","2.3.42","2.3.43"];
+const keys=["2.3.8","2.3.9","2.3.10","2.3.11","2.3.12","2.3.13","2.3.14","2.3.15","2.3.17","2.3.18","2.3.19","2.3.21","2.3.22","2.3.23","2.3.24","2.3.25","2.3.26","2.3.27","2.3.28","2.3.29","2.3.30","2.3.42","2.3.43","2.3.47(7)","2.3.47(8)","2.3.49","2.3.54","2.3.55","2.3.56"];
 const get = key => {const r=records.get(key);assert.ok(r, "Missing "+key);return r;};
 const metric=(key,parameter)=>get(key).composition.find(r=>r.parameter===parameter);
-test("twenty-three known partial standards now have source-pinned numeric baselines",()=>{
+test("twenty-nine known partial standards now have source-pinned numeric baselines",()=>{
  for(const key of keys){
   const r=get(key);
   assert.equal(r.full_compliance_assessment_enabled,false,key);
@@ -198,4 +198,35 @@ test("pickle brine, citrus, vinegar and oil rules are medium gated",()=>{
  assert.equal(byMedium.other.auto_evaluate,false);
  const ids=index.products.filter(x=>x.rule_key==="2.3.43");
  assert.equal(ids.length,3,"The three fruit, vegetable and mixed pickles use the same preserving-medium-gated standard");
+});
+
+test("cashew limits preserve whole-versus-pieces FFA gates and sub-defect limits",()=>{
+ const x=get("2.3.47(7)");
+ assert.deepEqual(x.variant_composition.map(v=>v.composition[0].value),[1.25,2]);
+ assert.equal(x.variant_resolution_required,true);
+ assert.equal(metric("2.3.47(7)","Moisture content").value,5);
+ assert.equal(metric("2.3.47(7)","Peroxide value").value,10);
+ assert.equal(metric("2.3.47(7)","Total tolerances").value,5);
+ assert.equal(metric("2.3.47(7)","Foreign matter").value,0.05);
+});
+test("walnut composition and unit-specific damaged-unit limits are independent of cashew",()=>{
+ const x=get("2.3.47(8)");
+ assert.deepEqual(x.composition.map(v=>v.value),[5,0.1,1,0.1,4,1.25]);
+ assert.equal(x.variant_composition,undefined);
+ assert.equal(x.full_compliance_assessment_enabled,false);
+});
+test("seedless tamarind and cocoa beans have their own numerically defined matrices",()=>{
+ assert.deepEqual(get("2.3.49").composition.map(v=>v.value),[20,5,6,1,9,0.5]);
+ assert.deepEqual(get("2.3.54").composition.map(v=>v.value),[8,4,8,2,4]);
+ assert.match(get("2.3.54").composition[1].unit,/by count/);
+});
+test("arecanut and date paste are not interchangeable and date paste prohibits additives",()=>{
+ assert.deepEqual(get("2.3.55").composition.map(v=>v.value),[7,12,3]);
+ assert.deepEqual(get("2.3.56").composition.map(v=>v.value),[20,1.2,0.1]);
+ const date=get("2.3.56");
+ assert.equal(date.permitted_additives_policy.permitted,false);
+ assert.equal(date.permitted_additives_policy.automatic_compliance_pass,false);
+ assert.match(date.permitted_additives_policy.source_rule,/No additives are allowed/);
+ assert.ok(date.quality_rules.some(x=>/No food additives allowed/i.test(x)));
+ assert.equal(date.full_compliance_assessment_enabled,false);
 });
