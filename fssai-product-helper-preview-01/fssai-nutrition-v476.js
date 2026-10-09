@@ -42,3 +42,11 @@ const api={FACTORS,energy,adjustForYield,calculate,proteinFromNitrogen};
 root.PMSVFssaiNutrition=api;
 if(typeof module==='object'&&module.exports)module.exports=api;
 })(typeof globalThis==='object'?globalThis:this);
+
+/* Product-standard composition guard, loaded separately from the deterministic nutrition engine. */
+if(typeof document!=='undefined'){
+ const pmsvCompositionScript=document.createElement('script');
+ pmsvCompositionScript.src='./fssai-composition-v27.js?v=27';
+ pmsvCompositionScript.defer=true;
+ document.head.appendChild(pmsvCompositionScript);
+}
