@@ -4956,7 +4956,13 @@ function renderMasterComplianceSummary(){
          : 'No usable product-standard ingredient structure or Appendix A FCS mapping is currently loaded for this product.',
      'ingredients'));
 
-   if(contaminantsDb&&product){
+   const strictProductLock=exactFinishedProductContaminantLock(product);
+   if(strictProductLock){
+     rows.push(masterComplianceRow('Contaminants / residues','incomplete',
+       'FSSAI '+(product.fssr||'')+' finished-product article is intentionally LOCKED against automatic metal/commodity matching: '+strictProductLock.reason
+       +' This is not a contaminant exemption. Review official Version IX, commodity/ingredient MRLs, all-food rules and applicable operative amendments.',
+       'contaminants'));
+   }else if(contaminantsDb&&product){
      const cp=contaminantProfileForProduct(product);
      const exactCount=Array.isArray(cp?.rules)?cp.rules.length:0;
      const baselineCount=productBaselineContaminantRules(product).length;
@@ -5030,6 +5036,12 @@ function renderMasterComplianceSummary(){
 
  if(!contaminantsDb||!product){
    rows.push(masterComplianceRow('Contaminants / residues','incomplete','Select a product and load the current contaminant master.','contaminants'));
+ }else if(exactFinishedProductContaminantLock(product)){
+   const locked=exactFinishedProductContaminantLock(product);
+   rows.push(masterComplianceRow('Contaminants / residues','incomplete',
+     'No exact approved finished-product contaminant article has been mapped for '+product.name+'. '+locked.reason
+     +' Ingredient and universal rules require their own review; the product cannot receive a full contaminant PASS.',
+     'contaminants'));
  }else{
    const cp=contaminantProfileForProduct(product);
    const pending=[];
@@ -7638,8 +7650,17 @@ async function loadMicrobiologyDb(){
 function selectedCatalogProductForContaminants(){
  return currentAssessmentCatalogProduct();
 }
+/* Explicit versioned FSSAI product locks outrank future broad FSSR/category matches.
+   A lock applies to automatic finished-product metal/crop article mapping only;
+   it does not establish an exemption from all-food, ingredient or residue duties. */
+function exactFinishedProductContaminantLock(p){
+ if(!p||!contaminantsDb)return null;
+ const rows=contaminantsDb.chapter_2_7_locked_contaminant_routes_v9||[];
+ return rows.find(row=>row.catalog_id===p.id && row.status==='locked_no_exact_current_article')||null;
+}
 function contaminantProfileForProduct(p){
  if(!p||!contaminantsDb||!Array.isArray(contaminantsDb.profiles))return null;
+ if(exactFinishedProductContaminantLock(p))return null;
  return contaminantsDb.profiles.find(profile=>{
    if(Array.isArray(profile.catalog_ids)&&profile.catalog_ids.includes(p.id))return true;
    if(Array.isArray(profile.match_fssr)&&profile.match_fssr.includes(p.fssr||''))return true;
@@ -8122,6 +8143,7 @@ function prohibitedVeterinaryRowsForProduct(p){
 }
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
+ if(exactFinishedProductContaminantLock(p))return [];
  const n=normIngredient(p.name||'');
  const id=p.id||p.profile_id||'';
  if(!n&&!id)return [];
