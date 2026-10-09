@@ -669,3 +669,67 @@ test("Tomato Ketchup 50 mg per kg copper dry-solids limit is conditional, not ap
  assert.match(out,/Tomato ketchup/);
  assert.match(out,/dried total solids/i);
 });
+
+
+test("five named Chapter 2.3 nut/arecanut identities map aflatoxins only on exact FSSAI articles",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const cfg=db.chapter_2_3_exact_nut_arecanut_aflatoxin_v9;
+ assert.equal(cfg.verified_product_identities.length,5);
+ assert.equal(cfg.complete_contaminant_coverage,false);
+ assert.equal(cfg.amendments_fully_reconciled,false);
+ assert.equal(cfg.automatic_pesticide_mrl_approval,false);
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const at=html.indexOf("function productBaselineContaminantRules(p){"),end=html.indexOf("\\nfunction ",at+12);
+ const vm=require("node:vm");
+ const ctx=vm.createContext({contaminantsDb:db,
+  normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+  chapterRuleDbs:[],ruleDbStandards:()=>[],exactFinishedProductContaminantLock:()=>null,
+  exactRawMeatMetalLock:()=>null,isVerifiedFermentedMilkProduct:()=>false});
+ vm.runInContext(html.slice(at,end),ctx);
+ const run=p=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx));
+ for(const config of cfg.verified_product_identities){
+  const p=index.products.find(x=>x.id===config.catalog_id);
+  assert.ok(p,config.catalog_id);
+  assert.equal(p.name,config.product_name);
+  assert.equal(p.fssr,config.fssr);
+  for(const rule of cfg.rules){
+   const source=db.crop_contaminants[rule.crop_contaminant_key].rules;
+   for(const article of config.official_articles)
+    assert.ok(source.some(x=>x.article===article&&x.limit===rule.limit),article);
+   const hits=run(p).filter(x=>x.contaminant===rule.contaminant&&x.source_basis?.includes("verified exact Chapter 2.3 nut/arecanut identity"));
+   assert.equal(hits.length,1,p.name+" "+rule.contaminant);
+   assert.equal(hits[0].limit,rule.limit);
+   assert.equal(hits[0].unit,rule.unit);
+  }
+ }
+ for(const id of cfg.excluded_similar_identity_ids){
+  const p=index.products.find(x=>x.id===id);
+  assert.ok(p,id);
+  assert.equal(run(p).some(x=>x.source_basis?.includes("verified exact Chapter 2.3 nut/arecanut identity")),false,id);
+ }
+ const altered=structuredClone(db);
+ altered.crop_contaminants.total_aflatoxins.rules.find(x=>x.article==="Nuts, ready to eat").limit=999;
+ ctx.contaminantsDb=altered;
+ const pistachio=index.products.find(x=>x.id==="04-04-1-pistachio-nuts");
+ assert.equal(run(pistachio).some(x=>x.contaminant==="Total Aflatoxins"&&x.source_basis?.includes("verified exact Chapter 2.3")),false);
+ assert.equal(run(pistachio).some(x=>x.contaminant==="Aflatoxin B1"&&x.source_basis?.includes("verified exact Chapter 2.3")),true);
+ const audit=fs.readFileSync(path.resolve(dataRoot,"../../scripts/audit-fssai-product-readiness.cjs"),"utf8");
+ assert.match(audit,/chapter_2_3_verified_named_nut_arecanut_crop_limits/);
+});
+
+test("Pulses retain their own toxin article and do not inherit cereal grain lead or toxin article",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const at=html.indexOf("function productBaselineContaminantRules(p){"),end=html.indexOf("\\nfunction ",at+12);
+ const vm=require("node:vm"),ctx=vm.createContext({contaminantsDb:db,
+   normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+   chapterRuleDbs:[{}],ruleDbStandards:()=>[{key:"2.4.6",applies_to:["wheat","maize","rice","pulses","millets","other food grains"]}],
+   exactFinishedProductContaminantLock:()=>null,exactRawMeatMetalLock:()=>null,isVerifiedFermentedMilkProduct:()=>false});
+ vm.runInContext(html.slice(at,end),ctx);
+ const p=index.products.find(x=>x.id==="06-06-1-pulses");
+ assert.ok(p);assert.equal(p.fssr,"2.4.6(22)");
+ const rows=Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx));
+ assert.equal(rows.filter(x=>x.article==="Pulses").length,2);
+ assert.equal(rows.some(x=>x.article==="Cereal and cereal products"),false);
+ assert.equal(rows.some(x=>x.article==="Cereal grains, except buckwheat, canihua and quinoa"),false);
+});

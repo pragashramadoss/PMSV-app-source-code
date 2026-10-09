@@ -163,6 +163,30 @@ for(const rule of exactGroundnutCrop.rules){
    "Groundnut source category lacks matching crop limit: "+article);
  }
 }
+const namedNutCrop=contaminants.chapter_2_3_exact_nut_arecanut_aflatoxin_v9;
+assert.equal(namedNutCrop?.verified_product_identities?.length,5);
+assert.equal(namedNutCrop?.complete_contaminant_coverage,false);
+assert.equal(namedNutCrop?.amendments_fully_reconciled,false);
+assert.equal(namedNutCrop?.automatic_pesticide_mrl_approval,false);
+assert.ok(official(namedNutCrop.official_source_url));
+assert.ok(official(namedNutCrop.official_standard_url));
+assert.equal(namedNutCrop.rules.length,2);
+const namedNutById=new Map();
+for(const route of namedNutCrop.verified_product_identities){
+ const product=index.products.find(p=>p.id===route.catalog_id);
+ assert.ok(product && product.fssr===route.fssr && product.name===route.product_name,"Nut identity drift: "+route.catalog_id);
+ assert.equal(route.product_identity_verified,true);
+ assert.ok(!namedNutById.has(route.catalog_id),"Duplicate named nut identity "+route.catalog_id);
+ assert.ok(!namedNutCrop.excluded_similar_identity_ids.includes(route.catalog_id));
+ assert.equal(route.official_articles.length,route.kind==="arecanut"?1:2);
+ for(const r of namedNutCrop.rules){
+  const sourceRules=contaminants.crop_contaminants[r.crop_contaminant_key]?.rules||[];
+  for(const article of route.official_articles)assert.ok(sourceRules.some(x=>x.article===article && Number(x.limit)===Number(r.limit)),
+   "Official nut/arecanut crop article missing or different limit: "+route.catalog_id+" / "+article);
+ }
+ namedNutById.set(route.catalog_id,route);
+}
+for(const id of namedNutCrop.excluded_similar_identity_ids)assert.ok(!namedNutById.has(id));
 const namedSoupSauceSaffrole=contaminants.chapter_2_3_exact_soup_sauce_saffrole_v9;
 const officialSoupSauceSaffrole=(contaminants.naturally_occurring_toxic_substances?.saffrole||[])
  .find(x=>x.article===namedSoupSauceSaffrole?.official_article);
@@ -210,6 +234,7 @@ function contaminantEvidenceForProduct(p){
  }
  const cropToxin=namedCropById.get(p.id)||null;
  const groundnutCrop=exactGroundnutCrop.catalog_id===p.id ? exactGroundnutCrop:null;
+ const namedNutCropEvidence=namedNutById.get(p.id)||null;
  const soupSauceSaffrole=namedSoupSauceIds.get(p.id)||null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
@@ -219,6 +244,7 @@ function contaminantEvidenceForProduct(p){
  if(spiceAflatoxin)explicitKinds.push("verified_spice_crop_identity");
  if(cropToxin)explicitKinds.push("exact_named_crop_toxin_article");
  if(groundnutCrop)explicitKinds.push("verified_groundnut_crop_toxin_identical_category_limits");
+ if(namedNutCropEvidence)explicitKinds.push("verified_exact_nut_arecanut_crop_toxin_article");
  if(soupSauceSaffrole)explicitKinds.push("verified_soup_sauce_saffrole_official_article");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
@@ -241,6 +267,13 @@ function contaminantEvidenceForProduct(p){
      ?{fssr:groundnutCrop.fssr,product_name:groundnutCrop.product_name,
        crop_limits:groundnutCrop.rules.map(x=>({contaminant:x.contaminant,limit:x.limit,unit:x.unit,articles:x.official_articles})),
        source:groundnutCrop.official_crop_contaminant_source,
+       full_compliance_verified:false,pesticide_mrls_auto_applied:false}:null,
+   chapter_2_3_exact_nut_arecanut_crop_limits:namedNutCropEvidence
+     ?{fssr:namedNutCropEvidence.fssr,product_name:namedNutCropEvidence.product_name,
+       kind:namedNutCropEvidence.kind,
+       crop_limits:namedNutCrop.rules.map(x=>({contaminant:x.contaminant,limit:x.limit,unit:x.unit,
+         articles:namedNutCropEvidence.official_articles})),
+       source:namedNutCrop.official_source_url,
        full_compliance_verified:false,pesticide_mrls_auto_applied:false}:null,
    chapter_2_3_pesticide_commodity_review:fruitVegById.get(p.id)
      ? {scope:fruitVegById.get(p.id).scope,
@@ -436,6 +469,10 @@ const products = index.products.map(p => {
     tally("chapter_2_3_exact_soup_sauce_saffrole","named_finished_soup_or_sauce");
     action.push("Soup/sauce Saffrole article is a source-backed partial assessment; confirm other metals, process and any operative amendments before a full compliance decision");
   }
+  if(contaminantEvidence.chapter_2_3_exact_nut_arecanut_crop_limits){
+    tally("chapter_2_3_verified_named_nut_arecanut_crop_limits","exact_identity_partial_source_evidence");
+    action.push("Exact Chapter 2.3 nut/arecanut aflatoxin source evidence is partial; confirm finished-product use, all other contaminants, pesticide MRLs and amendments");
+  }
   if(contaminantEvidence.chapter_2_3_exact_groundnut_crop_limits){
     tally("chapter_2_3_verified_groundnut_crop_limits","identity_and_same_limits_across_source_articles");
     action.push("Groundnut kernel: verify other contaminants, pesticide MRLs, processing use and operative amendments separately; aflatoxin identity alone does not establish product compliance");
@@ -585,6 +622,7 @@ const summary = [
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
   "| Chapter 2.3 exact finished soups/sauces with FSSAI Saffrole 10 ppm | "+(counts.chapter_2_3_exact_soup_sauce_saffrole?.named_finished_soup_or_sauce||0)+" |",
   "| Chapter 2.3 deshelled groundnut kernel identities with sourced aflatoxin ceiling | "+(counts.chapter_2_3_verified_groundnut_crop_limits?.identity_and_same_limits_across_source_articles||0)+" |",
+  "| Chapter 2.3 verified exact nut/arecanut identities with partial aflatoxin source limits | "+(counts.chapter_2_3_verified_named_nut_arecanut_crop_limits?.exact_identity_partial_source_evidence||0)+" |",
   "| Chapter 2.3 conditional metal article products requiring subtype or packaging evidence | "+(counts.chapter_2_3_conditional_metal_products?.subtype_or_package_required||0)+" |",
   "| Chapter 2.3 cocoa bean/cocoa powder non-equivalence guards | "+(counts.chapter_2_3_non_equivalent_articles?.raw_cocoa_beans_not_cocoa_powder||0)+" |",
   "| Chapter 2.3 fruit/vegetable pesticide commodity reviews indexed without automatic MRL applicability | "+(counts.chapter_2_3_pesticide_review?.source_only_no_finished_product_approval||0)+" |",

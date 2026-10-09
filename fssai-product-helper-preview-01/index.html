@@ -8378,6 +8378,27 @@ function productBaselineContaminantRules(p){
    }
  }
  
+ // 5bb) Exact named Chapter 2.3 nut kernels or arecanut. Both official nut
+ // processing/ready-to-eat categories have identical aflatoxin limits; arecanut
+ // has its own explicitly named official article. No composite or oil transfer.
+ const namedNuts=contaminantsDb?.chapter_2_3_exact_nut_arecanut_aflatoxin_v9;
+ const namedNut=(namedNuts?.verified_product_identities||[]).find(x=>
+   x.catalog_id===id && x.fssr===p.fssr && x.product_identity_verified===true);
+ if(namedNut && !(namedNuts.excluded_similar_identity_ids||[]).includes(id)){
+   for(const rule of namedNuts.rules||[]){
+     const officialRules=contaminantsDb?.crop_contaminants?.[rule.crop_contaminant_key]?.rules||[];
+     const articles=namedNut.official_articles||[];
+     if(!articles.length || !articles.every(article=>officialRules.some(r=>
+       r.article===article && Number(r.limit)===Number(rule.limit))))continue;
+     pushRule({
+       contaminant:rule.contaminant,article:articles.join(' / '),limit:rule.limit,
+       unit:rule.unit,
+       source_basis:'FSSAI CTR Version IX · Section 2.2.1 · verified exact Chapter 2.3 nut/arecanut identity',
+       condition:'Exact '+namedNut.product_name+' only; '+articles.join('; ')+'. The official article does not automatically extend to a mixture, nut butter, edible oil, confectionery, processed composite or pesticide MRL approval.'
+     });
+   }
+ }
+
  // 5c) Version IX naturally occurring toxic substance Saffrole: only exact
  // finished soup or sauce identities in the official Chapter 2.3 list.
  const saffrole=contaminantsDb?.chapter_2_3_exact_soup_sauce_saffrole_v9;
@@ -8399,7 +8420,9 @@ function productBaselineContaminantRules(p){
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
  const grainNames=(grainStandard?.applies_to||[]).map(normIngredient);
- const exactFoodGrain=grainNames.includes(n);
+ // Pulses have a separately named FSSAI toxin article and must not inherit
+ // the cereal-grain metal or aflatoxin mapping from FSSR 2.4.6.
+ const exactFoodGrain=grainNames.includes(n) && n!=='pulses';
  if(exactFoodGrain){
    const leadRows=contaminantsDb?.metal_article_rules_v9?.Lead||[];
    const lead=leadRows.find(r=>normIngredient(r.article||'')===normIngredient('Cereal grains, except buckwheat, canihua and quinoa'));
