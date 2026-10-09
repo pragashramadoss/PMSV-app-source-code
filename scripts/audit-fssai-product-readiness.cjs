@@ -76,7 +76,10 @@ for (const [group, source] of Object.entries(appendixB.product_mappings)) {
         type==="conditional" ? (mapping.options || []).map(option=>option.profile_key) : [];
       if(type==="exact")assert.equal(p.microbiology_profile_key,mapping.profile_key,"Appendix B profile/index mismatch: "+p.id);
       if(type==="conditional")assert.ok(profileKeys.length>0,"Conditional Appendix B route missing options: "+p.id);
-      for (const key of profileKeys)assert.ok(key && profiles.has(key),"Appendix B mapping lacks real official Table profile: "+p.id+" ["+key+"]");
+      for (const key of profileKeys)if(key)assert.ok(profiles.has(key),"Appendix B mapping lacks real official Table profile: "+p.id+" ["+key+"]");
+      if(type==="conditional")for(const option of mapping.options || []) {
+        if(!option.profile_key)assert.ok(option.condition && (option.message || option.reason),"Fail-closed Appendix B variant must explain why no profile applies: "+p.id);
+      }
       appendixBRoutes.set(p.id,{table:group,type,profile_keys:profileKeys});
     }
   }
