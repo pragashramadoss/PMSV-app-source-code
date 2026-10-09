@@ -55,5 +55,10 @@ Promise.all([fetch('./data/standard-search-index-v1.json',{cache:'no-store'}).th
  const special=products.filter(p=>p.regulatory_route_link_status==='file_and_key_verified').length;
  $('stats').innerHTML='<div class="surface stat"><b>'+products.length+'</b>Loaded</div><div class="surface stat"><b>'+chapter+'</b>Chapter rules</div><div class="surface stat"><b>'+special+'</b>Special routes</div>';
  search();
+ const selectedId=new URLSearchParams(window.location.search).get('product');
+ if(selectedId){
+   const match=products.find(p=>p.id===selectedId);
+   if(match){$('search').value=match.name;search();display(match);}
+ }
 }).catch(e=>{$('details').textContent='Could not load route data: '+e.message});
 </script></body></html>
