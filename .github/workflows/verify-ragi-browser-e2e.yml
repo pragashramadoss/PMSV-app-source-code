@@ -1,0 +1,30 @@
+name: Verify PMSV Ragi routing in Chromium
+
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'fssai-product-helper-preview-01/data/**'
+      - 'tests/ragi-browser-e2e-v484.cjs'
+      - '.github/workflows/verify-ragi-browser-e2e.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-real-step2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser automation for test run only
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Test real Step 2 input, dropdown, Find and Confirm
+        run: node tests/ragi-browser-e2e-v484.cjs
