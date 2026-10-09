@@ -212,3 +212,20 @@ test("pearl barley processing form must not auto-inherit raw barley Ochratoxin A
  assert.match(rendered,/REVIEW ONLY/);
  assert.match(rendered,/No safe direct commodity-pesticide candidate/);
 });
+
+
+test("Pearl Barley shows source-linked OTA/DON values as not applied in the rendered review",()=>{
+ const p=chapter.find(x=>x.id==="06-06-1-pearl-barley-jau");
+ const rendered=run("productCerealCommodityMrlReviewHtml",p);
+ assert.match(rendered,/Grouped crop-contaminant article/);
+ assert.match(rendered,/NOT VERIFIED/);
+ assert.match(rendered,/NOT APPLIED/);
+ assert.match(rendered,/Ochratoxin A/);
+ assert.match(rendered,/Deoxynivalenol/);
+ assert.match(rendered,/Wheat, wheat bran, rye, barley, coffee/);
+ assert.match(rendered,/1000 µg\/kg/);
+ assert.match(rendered,/5 µg\/kg/);
+ assert.match(rendered,/Official FSSAI Version IX PDF/);
+ const rice=run("productCerealCommodityMrlReviewHtml",chapter.find(x=>x.id==="06-06-1-rice"));
+ assert.doesNotMatch(rice,/Grouped crop-contaminant article/);
+});

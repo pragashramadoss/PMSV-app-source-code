@@ -7740,6 +7740,14 @@ function productCerealCommodityMrlReviewHtml(p){
    +rows.map(x=>'<tr><td>'+esc(x.pesticide)+'</td><td>'+esc(String(x.mrl))+' '+esc(x.unit||'mg/kg')+'</td><td>'+esc(x.condition||'Confirm commodity basis and residue definition')+'</td></tr>').join('')
    +'</tbody></table></div></details>';
  }
+ const pendingCrop=review.crop_contaminant_article_review_pending||[];
+ if(pendingCrop.length){
+  html+='<div class="notice"><b>Grouped crop-contaminant article — processed-product applicability NOT VERIFIED:</b> '
+   +'The following are official reference figures, not limits approved for the selected processed form. Confirm the exact FSSAI commodity article and processing/sampling basis first.</div>'
+   +'<div class="tablewrap"><table><thead><tr><th>Contaminant</th><th>Official source article</th><th>Reference only — NOT APPLIED</th></tr></thead><tbody>'
+   +pendingCrop.map(x=>'<tr><td>'+esc(x.contaminant)+'</td><td>'+esc(x.official_grouped_article)+'</td><td>'+esc(String(x.limit))+' '+esc(x.unit)+' · '+esc(x.scope_status)+'</td></tr>').join('')
+   +'</tbody></table></div>';
+ }
  const aflatoxin=review.aflatoxin_reference_articles||[];
  if(aflatoxin.length)html+='<div class="notice"><b>Potential crop-contaminant articles requiring form/processing verification:</b> '+aflatoxin.map(esc).join('; ')+'. Do not use these references as an automatically validated final product limit.</div>';
  return html+'</div>';
