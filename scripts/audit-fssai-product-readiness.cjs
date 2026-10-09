@@ -226,6 +226,20 @@ for(const item of [...nickelOilById.values(),...seedOilById.values()]){
  assert.ok(!oilMetals.excluded_nearby_catalog_ids.includes(item.catalog_id));
 }
 for(const id of oilMetals.excluded_nearby_catalog_ids)assert.ok(!nickelOilById.has(id)&&!seedOilById.has(id));
+const vegMetal=contaminants.chapter_2_3_fresh_vegetables_exact_metal_v9;
+assert.ok(vegMetal&&official(vegMetal.official_source_url));
+assert.equal(vegMetal.official_article,"Vegetables");
+assert.equal(vegMetal.identities.length,3);
+assert.equal(vegMetal.full_contaminant_coverage,false);
+assert.equal(vegMetal.pesticide_mrl_auto_apply,false);
+const vegMetalById=new Map(vegMetal.identities.map(x=>[x.catalog_id,x]));
+assert.equal(vegMetalById.size,3);
+for(const route of vegMetal.identities){
+ const product=index.products.find(x=>x.id===route.catalog_id);
+ assert.ok(product&&route.product_name===product.name&&route.fcs===product.fcs&&product.fcs.startsWith("04.2.1."));
+}
+for(const rule of vegMetal.limits)assert.ok((contaminants.metal_article_rules_v9[rule.metal]||[]).some(x=>
+ x.article===vegMetal.official_article&&Number(x.limit)===Number(rule.limit)&&x.unit===rule.unit));
 const namedCropMappings=contaminants.explicit_crop_contaminant_article_mappings_v9||[];
 const namedCropById=new Map(namedCropMappings.map(x=>[x.catalog_id,x]));
 assert.equal(namedCropMappings.length,3,"Expected three exact named crop-toxin mappings");
@@ -443,6 +457,7 @@ function contaminantEvidenceForProduct(p){
  const finishedBeverageEvidence=finishedBeverageById.get(p.id)||null;
  const pureCerealEvidence=pureCerealsById.get(p.id)||null;
  const oilMetalEvidence=nickelOilById.get(p.id)||seedOilById.get(p.id)||null;
+ const vegMetalEvidence=vegMetalById.get(p.id)||null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
@@ -462,6 +477,7 @@ function contaminantEvidenceForProduct(p){
  if(finishedBeverageEvidence)explicitKinds.push("verified_finished_chapter_2_10_non_alcoholic_beverage_saffrole");
  if(pureCerealEvidence)explicitKinds.push("verified_pure_cereal_product_aflatoxin_article");
  if(oilMetalEvidence)explicitKinds.push("verified_exact_oil_metal_article");
+ if(vegMetalEvidence)explicitKinds.push("verified_fresh_vegetable_chromium_nickel_articles");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
    "no_exact_catalog_evidence_in_this_inventory";
@@ -473,6 +489,9 @@ function contaminantEvidenceForProduct(p){
      source_url:alcoholic.official_source_url,full_compliance_verified:false,
      pesticide_mrls_auto_applied:false,other_contaminants_assessed:false
    }:null,
+   exact_fresh_vegetable_metals:vegMetalEvidence?{
+     source_url:vegMetal.official_source_url,article:vegMetal.official_article,
+     metals:vegMetal.limits,full_compliance_verified:false,pesticide_mrls_auto_applied:false}:null,
    exact_oil_metal_articles:oilMetalEvidence?{
      source:oilMetals.official_source_url,
      kind:nickelOilById.has(p.id)?"hydrogenated_interesterified_nickel":"named_edible_seed_oil_lead_arsenic",
@@ -726,6 +745,10 @@ const products = index.products.map(p => {
       tally("chapter_2_3_non_equivalent_articles","raw_cocoa_beans_not_cocoa_powder");
     action.push("Review Chapter 2.3 specific fruit, vegetable, nut or processed-product matrix, raw-ingredient commodity MRL, processing factor and sample basis; no finished-product pesticide MRL automatically established");
   }
+  if(contaminantEvidence.exact_fresh_vegetable_metals){
+    tally("chapter_2_3_fresh_vegetables","source_backed_chromium_nickel_only");
+    action.push("FSSAI Vegetables Chromium/Nickel 1 mg/kg partial evidence; check commodity subtype, other metals, pesticides and amendment scopes.");
+  }
   if(contaminantEvidence.exact_oil_metal_articles){
     tally("chapter_2_2_exact_oil_metal_articles",contaminantEvidence.exact_oil_metal_articles.kind);
     action.push("Named Chapter 2.2 oil/fat identity has direct grouped Version IX metal article only; confirm other contaminants, effective amendments, all specific product limits and pesticides.");
@@ -917,6 +940,7 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| Exact fresh/minimally processed vegetable identities with source-backed Chromium and Nickel | "+(counts.chapter_2_3_fresh_vegetables?.source_backed_chromium_nickel_only||0)+" |",
   "| Exact Chapter 2.2 oil identities with grouped source-backed metal limits | "+((counts.chapter_2_2_exact_oil_metal_articles?.hydrogenated_interesterified_nickel||0)+(counts.chapter_2_2_exact_oil_metal_articles?.named_edible_seed_oil_lead_arsenic||0))+" |",
   "| Exact pure cereal products with two official grouped aflatoxin limits | "+(counts.chapter_2_4_pure_cereal_product_aflatoxins?.exact_cereal_product_partial||0)+" |",
   "| Finished Chapter 2.10 non-alcoholic beverages with Saffrole source evidence | "+(counts.chapter_2_10_nots?.source_backed_finished_non_alcoholic_saffrole||0)+" |",
