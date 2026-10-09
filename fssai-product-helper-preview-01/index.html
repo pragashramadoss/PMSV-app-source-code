@@ -3203,7 +3203,7 @@ function sourcePinnedStandardSupplementHtml(st,selectedCatalogId){
  const formatRequirement=r=>{
    if(r.operator==='range')return String(r.min)+'–'+String(r.max)+' '+String(r.unit||'');
    if(r.operator!==undefined&&r.value!==undefined)return String(r.operator)+' '+String(r.value)+' '+String(r.unit||'');
-   return String(r.text||r.requirement||r.source_text||'Regulatory condition; manual review required');
+   return String(r.required||r.text||r.requirement||r.source_text||'Regulatory condition; manual review required');
  };
  const rows=(heading,items)=>{
    if(!Array.isArray(items)||!items.length)return '';
@@ -3250,6 +3250,17 @@ function sourcePinnedStandardSupplementHtml(st,selectedCatalogId){
      if(v.verification_note)html+='<div class="notice">'+esc(v.verification_note)+'</div>';
      html+='</details>';
    }
+ }
+ const additivePolicy=st?.permitted_additives_policy;
+ if(additivePolicy?.permitted===false){
+   html+='<div class="notice"><b>Product-specific FSSAI restriction — no additives permitted under this named standard.</b> '
+      +esc(additivePolicy.source_rule||'No additives allowed.')+
+      ' This restriction is a product-standard requirement; generic Appendix A classification must not override it. Current amendment verification remains pending.</div>';
+ }
+ if(Array.isArray(st.prohibited_additive_classes)&&st.prohibited_additive_classes.length){
+   html+='<div class="notice"><b>Product-standard restrictions:</b> '
+      +st.prohibited_additive_classes.map(esc).join('; ')
+      +'. Only the listed classes are prohibited here; do not infer a blanket ban on other additive classes.</div>';
  }
  html+=rows('Relative/comparative composition — reference measurement required',st.relative_composition);
  html+=rows('Conditional requirements — not automatic',st.conditional_requirements);
