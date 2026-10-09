@@ -37,7 +37,6 @@ const lockById = new Map(chapter27Locks.map(x=>[x.catalog_id,x]));
 assert.equal(chapter27Locks.length,6,"Expected six reviewed Chapter 2.7 contaminant locks");
 assert.equal(lockById.size,6,"Duplicate Chapter 2.7 lock identity");
 const version9Source=contaminants.official_sources?.[0]?.url || "";
-assert.ok(official(version9Source),"Missing official FSSAI current contaminant compendium source");
 
 const bySpecialKey = new Map(special.routes.map(r => [r.key, r]));
 const chapterCache = new Map();
@@ -52,6 +51,7 @@ const official = url => {
     return protocol === "https:" && (hostname === "fssai.gov.in" || hostname.endsWith(".fssai.gov.in"));
   } catch { return false; }
 };
+assert.ok(official(version9Source),"Missing official FSSAI current contaminant compendium source");
 function chapterRecord(p) {
   const file = p.rule_file || p.chapter_rule_file;
   const key = p.rule_key || p.chapter_rule_key;
