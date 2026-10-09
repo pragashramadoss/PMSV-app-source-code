@@ -25586,7 +25586,7 @@
       "product_name": "Thermally Processed Fruit Salad/Cocktail/Mix",
       "fssr": "2.3.2",
       "rule_key": "2.3.2",
-      "scope": "juice_or_beverage_processing_matrix",
+      "scope": "thermal_canned_or_frozen_processing_matrix",
       "candidate_finished_product_pesticide_articles": [],
       "raw_ingredient_article_references_only": [],
       "raw_reference_rows_in_loaded_official_source": 0,
@@ -25596,7 +25596,22 @@
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
       "auto_apply_raw_ingredient_mrl": false,
       "full_product_regulatory_approval": false,
-      "assessment_as_of": "2026-10-09"
+      "assessment_as_of": "2026-10-09",
+      "conditional_metal_article_candidates": [
+        {
+          "contaminant": "Lead",
+          "official_article": "Canned fruit cocktail",
+          "limit": 1,
+          "unit": "mg/kg",
+          "source_condition": "",
+          "required_qualification": "Require exact canned fruit cocktail product, not other thermal fruit mixes or non-canned packs.",
+          "scope_review_status": "subtype_or_package_evidence_required",
+          "auto_apply": false,
+          "full_product_compliance": false,
+          "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf"
+        }
+      ],
+      "conditional_metal_review_note": "The FSSR 2.3.2 category includes more than the narrower canned fruit cocktail article."
     },
     {
       "catalog_id": "04-04-1-jams-fruit-jellies-and-marmalades",
@@ -26014,7 +26029,34 @@
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
       "auto_apply_raw_ingredient_mrl": false,
       "full_product_regulatory_approval": false,
-      "assessment_as_of": "2026-10-09"
+      "assessment_as_of": "2026-10-09",
+      "conditional_metal_article_candidates": [
+        {
+          "contaminant": "Lead",
+          "official_article": "Canned fish, canned meats, edible gelatin, meat extracts and hydrolysed protein, dried or dehydrated vegetables (other than onions)",
+          "limit": 5,
+          "unit": "mg/kg",
+          "source_condition": "",
+          "required_qualification": "Applicable dried/dehydrated vegetables other than onions only; confirm vegetable species and finished form.",
+          "scope_review_status": "subtype_or_package_evidence_required",
+          "auto_apply": false,
+          "full_product_compliance": false,
+          "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf"
+        },
+        {
+          "contaminant": "Lead",
+          "official_article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "limit": 10,
+          "unit": "mg/kg",
+          "source_condition": "On dry matter basis.",
+          "required_qualification": "Dehydrated onions only; source limit is expressed on dry matter basis.",
+          "scope_review_status": "subtype_or_package_evidence_required",
+          "auto_apply": false,
+          "full_product_compliance": false,
+          "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf"
+        }
+      ],
+      "conditional_metal_review_note": "The general Dehydrated Vegetables identity cannot select onion versus non-onion Lead articles."
     },
     {
       "catalog_id": "04-04-2-dried-fungi",
@@ -26237,7 +26279,34 @@
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
       "auto_apply_raw_ingredient_mrl": false,
       "full_product_regulatory_approval": false,
-      "assessment_as_of": "2026-10-09"
+      "assessment_as_of": "2026-10-09",
+      "conditional_metal_article_candidates": [
+        {
+          "contaminant": "Lead",
+          "official_article": "Canned mushrooms",
+          "limit": 1,
+          "unit": "mg/kg",
+          "source_condition": "",
+          "required_qualification": "Require exact canned mushrooms product with matching packaging and ingredient identity.",
+          "scope_review_status": "subtype_or_package_evidence_required",
+          "auto_apply": false,
+          "full_product_compliance": false,
+          "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf"
+        },
+        {
+          "contaminant": "Tin",
+          "official_article": "Canned mushrooms",
+          "limit": 250,
+          "unit": "mg/kg",
+          "source_condition": "",
+          "required_qualification": "Require canned mushrooms product and verify container material and sample basis.",
+          "scope_review_status": "subtype_or_package_evidence_required",
+          "auto_apply": false,
+          "full_product_compliance": false,
+          "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf"
+        }
+      ],
+      "conditional_metal_review_note": "Sterilized fungi may use non-canned formats; canned mushroom rows are not automatic."
     },
     {
       "catalog_id": "04-04-2-thermally-processed-tomato-puree-and-paste",
@@ -26324,7 +26393,29 @@
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
       "auto_apply_raw_ingredient_mrl": false,
       "full_product_regulatory_approval": false,
-      "assessment_as_of": "2026-10-09"
+      "assessment_as_of": "2026-10-09",
+      "excluded_non_equivalent_finished_product_articles": [
+        "Cocoa powder"
+      ],
+      "exclusion_reason": "Cocoa beans (FSSAI 2.3.54) are not Cocoa powder. The Cocoa powder Lead and Copper articles have fat-free analytical bases and must not be borrowed for raw beans.",
+      "cross_product_metal_articles_reference_only": [
+        {
+          "contaminant": "Lead",
+          "article": "Cocoa powder",
+          "limit": 5,
+          "unit": "mg/kg",
+          "analytical_basis": "On dry fat-free substance basis.",
+          "auto_apply": false
+        },
+        {
+          "contaminant": "Copper",
+          "article": "Cocoa powder",
+          "limit": 70,
+          "unit": "mg/kg",
+          "analytical_basis": "On fat free substance basis.",
+          "auto_apply": false
+        }
+      ]
     },
     {
       "catalog_id": "04-04-2-pickled-fungi",
