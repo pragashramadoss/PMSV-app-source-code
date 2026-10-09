@@ -1311,7 +1311,7 @@ function pmsvPulseIdentity(raw){
  if(!q)return null;
  // Whole, shelled or split forms are covered by 2.4.6(22), but flour,
  // sattu, protein powder, paste, oil or extract is not a pulse grain.
- if(/\\b(?:flour|powder|atta|sattu|paste|oil|extract|protein|starch|meal)\\b/.test(q))return null;
+ if(/\b(?:flour|powder|atta|sattu|paste|oil|extract|protein|starch|meal)\b/.test(q))return null;
  const bare=q.replace(/^(?:whole|dehusked|de husked|split|shelled) /,'').replace(/ (?:whole|split|grain|grains|pulses)$/,'').trim();
  const item=PMSV_PULSE_VARIETIES_V488.find(x=>x.names.some(n=>pmsvDirectNorm(n)===bare));
  if(!item)return null;
