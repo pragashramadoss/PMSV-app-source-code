@@ -1230,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-atomic-fssr-keys-v482';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-ragi-grain-v483';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -1254,6 +1254,12 @@ function pmsvStandardLookupAlias(raw){
      routeLabel:'Dahi · FSSR 2.1.13 (Fermented Milk / Dahi route)',
      exactIdentity:true
    };
+ }
+ if(['ragi','finger millet','mandua','finger millet grain','ragi grain','whole ragi','whole finger millet','whole finger millet grain'].includes(q)){
+   return {productId:'06-06-1-millets',variant:'Finger Millet (Ragi)',displayName:'Finger Millet (Ragi grain)',routeLabel:'FSSAI 2.4.6(23) — Whole or Dehulled Millets',exactIdentity:true};
+ }
+ if(['ragi flour','finger millet flour','mandua flour','ragi powder','finger millet powder'].includes(q)){
+   return {productId:'06-06-2-ragi-flour',variant:'',displayName:'Ragi Flour',routeLabel:'FSSAI 2.4.34 — Ragi Flour',exactIdentity:true};
  }
  return null;
 }
@@ -1357,7 +1363,7 @@ async function pmsvDirectProductNameNearestStandard(value){
    select.disabled=false;
    confirm.disabled=!select.value;
    if(best.score>0){
-     if(alias&&String(best.p?.id||'')===alias.productId){
+     if(alias&&String(best.p?.id||'')===alias.productId&&alias.variant){
        try{sessionStorage.setItem(ASSESSMENT_VARIANT_KEY,alias.variant);}catch(e){}
      }else{
        try{sessionStorage.removeItem(ASSESSMENT_VARIANT_KEY);}catch(e){}
@@ -1379,7 +1385,7 @@ async function pmsvDirectProductNameNearestStandard(value){
      note.innerHTML='<b>Nearest FSSAI standard suggested:</b> '
        +displayName.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))
        +' · <span class="clause">'+standardText.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))+'</span>'
-       +(alias&&String(p.id||'')===alias.productId?'<br><small>Plain Dahi is routed to the Dahi sub-route under the Fermented Milk standard; it is not treated as Flavoured Dahi/Yoghurt.</small>':'<br><small>Matched immediately from the finished-product name. Confirm this selection or choose another applicable standard/category.</small>');
+       +(alias&&String(p.id||'')===alias.productId?'<br><small>'+esc(alias.routeLabel)+' — verify the actual finished-product form before assessment.</small>':'<br><small>Matched immediately from the finished-product name. Confirm this selection or choose another applicable standard/category.</small>');
    }else{
      note.className='notice';
      note.innerHTML='<b>No reliable automatic match was found.</b> Choose the closest applicable FSSAI standard or FoSCoS category manually.';
@@ -5249,8 +5255,10 @@ function hasRealFssrStandard(product){
 function proprietaryCandidateLabel(product,{suggested=false}={}){
  const fpc=fpc18CategoryForProduct(product);
  const prefix=suggested?'Suggested — ':'';
- if(fpc)return prefix+String(product?.name||fpc.name)+' · FoSCoS '+fpc.code+' · FSSR N.A.';
- return prefix+String(product?.name||'FSSAI product')+(hasRealFssrStandard(product)?' · '+String(product.fssr):' · FSSR N.A.');
+ const alias=pmsvStandardLookupAlias(document.getElementById('proprietaryProductName')?.value||'');
+ const displayName=alias&&String(product?.id||'')===alias.productId?alias.displayName:String(product?.name||'FSSAI product');
+ if(fpc&&!hasRealFssrStandard(product))return prefix+displayName+' · FoSCoS '+fpc.code+' · FSSR N.A.';
+ return prefix+displayName+(hasRealFssrStandard(product)?' · '+String(product.fssr):' · FSSR N.A.');
 }
 function proprietaryStandardScore(product,raw){
  const q=normIngredient(raw);
@@ -5354,7 +5362,14 @@ function nearestStandardEngineAudit(){
    if(best?.id===p.id)passed++;
    else failed.push({name:p.name,expected:p.id,actual:best?.id||''});
  });
- const aliasTests=[{name:'Dahi',expected:'01-01-2-fermented-milk'}];
+ const aliasTests=[
+   {name:'Dahi',expected:'01-01-7-yoghurt-including-flavoured-yoghurt-and-flavoured-dahi'},
+   {name:'Ragi',expected:'06-06-1-millets'},
+   {name:'Finger Millet',expected:'06-06-1-millets'},
+   {name:'Mandua',expected:'06-06-1-millets'},
+   {name:'Ragi Flour',expected:'06-06-2-ragi-flour'},
+   {name:'Finger Millet Flour',expected:'06-06-2-ragi-flour'}
+ ];
  aliasTests.forEach(test=>{
    const best=proprietaryStandardCandidates(test.name)[0]?.p;
    if(best?.id===test.expected)passed++;
@@ -5421,6 +5436,8 @@ function renderProprietaryStandardSuggestion(){
  }
  const best=ranked[0];
  const confident=best.score>0;
+ const matchingAlias=pmsvStandardLookupAlias(raw);
+ const bestDisplayName=matchingAlias&&String(best.p?.id||'')===matchingAlias.productId?matchingAlias.displayName:best.p?.name;
  select.innerHTML='<option value="">'+(confident?'Select a standard/category':'No reliable automatic match — choose manually')+'</option>'
    +ranked.map((x,i)=>'<option value="'+esc(x.p.id)+'"'+(confident&&i===0?' selected':'')+'>'+esc(proprietaryCandidateLabel(x.p,{suggested:confident&&i===0}))+'</option>').join('');
  select.disabled=false;
@@ -5435,14 +5452,14 @@ function renderProprietaryStandardSuggestion(){
        : 'Matched automatically from the entered formulation. Entering an optional finished-product name can improve the ranking for multi-ingredient products.')
    +(usingFastIndex?' <b>Fast standard index active.</b> Full product details will enrich automatically when the main catalogue finishes loading.':'');
  const fpc=fpc18CategoryForProduct(best.p);
- if(confident&&fpc){
+ if(confident&&fpc&&!hasRealFssrStandard(best.p)){
    note.className='notice oknote';
-   note.innerHTML='<b>Nearest FoSCoS regulatory category suggested:</b> '+esc(best.p.name)
+   note.innerHTML='<b>Nearest FoSCoS regulatory category suggested:</b> '+esc(bestDisplayName)
      +' · <span class="clause">'+esc(fpc.code)+'</span> · <b>FSSR standard: N.A.</b>'
      +'<br><small>'+basisText+' Confirm it or choose another applicable standard/category.</small>';
  }else if(confident){
    note.className='notice oknote';
-   note.innerHTML='<b>Nearest FSSAI standard suggested:</b> '+esc(best.p.name)
+   note.innerHTML='<b>Nearest FSSAI standard suggested:</b> '+esc(bestDisplayName)
      +(hasRealFssrStandard(best.p)?' · <span class="clause">'+esc(best.p.fssr)+'</span>':' · <b>FSSR standard: N.A.</b>')
      +'<br><small>'+basisText+' Confirm this selection or choose another applicable standard/category.</small>';
  }else{
@@ -5511,7 +5528,17 @@ function confirmProprietaryStandard(){
    return;
  }
  const profile=profileForCatalogProduct(p);
- setAssessmentProductFromCatalog({...p,profile_id:profile?.id||p.profile_id||p.id},{confirmed:true});
+ const typed=document.getElementById('proprietaryProductName')?.value||'';
+ const alias=pmsvStandardLookupAlias(typed);
+ const exactAlias=alias&&alias.productId===p.id?alias:null;
+ try{
+   if(exactAlias?.variant)sessionStorage.setItem(ASSESSMENT_VARIANT_KEY,exactAlias.variant);
+   else sessionStorage.removeItem(ASSESSMENT_VARIANT_KEY);
+ }catch(e){}
+ setAssessmentProductFromCatalog({
+   ...p,profile_id:profile?.id||p.profile_id||p.id,
+   ...(exactAlias?{lookup_display_name:exactAlias.displayName,chapter_rule_variant:exactAlias.variant}:{})
+ },{confirmed:true});
  applyProprietaryStandardFcs(p);
  applyProductGate();
  renderFormula();
@@ -5519,13 +5546,13 @@ function confirmProprietaryStandard(){
  if(note){
    const fpc=fpc18CategoryForProduct(p);
    note.className='notice oknote';
-   if(fpc){
-     note.innerHTML='<b>Confirmed FoSCoS regulatory category:</b> '+esc(p.name)
+   if(fpc&&!hasRealFssrStandard(p)){
+     note.innerHTML='<b>Confirmed FoSCoS regulatory category:</b> '+esc(exactAlias?.displayName||p.name)
        +' · <span class="clause">'+esc(fpc.code)+'</span> · <b>FSSR standard: N.A.</b>'
        +(fpc.mapped_fssr_categories?.length?'<br><b>Suggested horizontal FSSR category:</b> '+fpc.mapped_fssr_categories.map(esc).join(', '):'')
        +'<br><small>The FCS suggestion remains editable. If you change it manually, PMSV will use your selected FCS for the subsequent Appendix A check.</small>';
    }else{
-     note.innerHTML='<b>Confirmed FSSAI standard/product:</b> '+esc(p.name)
+     note.innerHTML='<b>Confirmed FSSAI standard/product:</b> '+esc(exactAlias?.displayName||p.name)
        +(hasRealFssrStandard(p)?' · <span class="clause">'+esc(p.fssr)+'</span>':' · <b>FSSR standard: N.A.</b>')
        +(appendixFcsForRecord(p)?'<br><b>Suggested Appendix A FCS:</b> '+esc(appendixFcsForRecord(p)):'')
        +'<br><small>The FCS suggestion remains editable. If you change it manually, PMSV will use your selected FCS.</small>';
