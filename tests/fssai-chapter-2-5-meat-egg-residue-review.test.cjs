@@ -127,3 +127,30 @@ test("goat/rabbit Lead-specific lock preserves other verified contaminant rules"
  assert.equal(v.baseline.some(r=>r.contaminant==="Lead"),false);
  assert.equal(v.baseline.some(r=>r.contaminant==="Arsenic"),true);
 });
+
+test("Fresh Eggs nine official pesticide rows are exact shell-free commodity evidence, NOT auto-approved",()=>{
+ const m=db.chapter_2_5_exact_fresh_egg_source_article_v9;
+ const product=products.find(p=>p.id===m.catalog_id);
+ assert.ok(product);
+ assert.equal(product.name,m.product_name);
+ assert.equal(product.fssr,m.fssr);
+ assert.equal(m.official_commodity_article,"Eggs");
+ assert.equal(m.article_rows_count,9);
+ assert.equal(m.automatic_pesticide_mrl_approval,false);
+ assert.equal(m.complete_contaminant_coverage,false);
+ const official=db.residue_mrls.pesticides.flatMap(p=>(p.rows||[]).filter(r=>r.food==="Eggs"));
+ assert.equal(official.length,9);
+ assert.ok(official.every(r=>r.condition==="Shell free basis"&&r.unit==="mg/kg"));
+ const shown=harness(product);
+ assert.match(shown.html,/Verified source commodity identity/);
+ assert.match(shown.html,/REVIEW ONLY/);
+ assert.match(shown.html,/not an automatic residue MRL approval/);
+ for(const id of m.excluded_ids){
+   const item=products.find(p=>p.id===id);assert.ok(item);
+   assert.doesNotMatch(harness(item).html,/Verified source commodity identity/);
+ }
+ assert.doesNotMatch(harness({...product,name:"Egg powder"}).html,/Verified source commodity identity/);
+ const changed=structuredClone(db);
+ changed.chapter_2_5_exact_fresh_egg_source_article_v9={...m,automatic_pesticide_mrl_approval:true};
+ assert.doesNotMatch(harness(product,changed).html,/Verified source commodity identity/);
+});
