@@ -94,3 +94,29 @@ test("actual interface and master compliance cannot claim a pass for blocked pro
  assert.match(html,/productAdditiveRestriction\?'evidence'/);
  assert.match(html,/product-standard no-additives|product standard prohibits/i);
 });
+
+test("Ingredients & Limits suppresses Appendix A permission table for Date Paste and Harissa",()=>{
+ const source=extract("function productAppendixABaselineHtml(fcs,restriction=null){");
+ const ctx=vm.createContext({
+   esc:x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])),
+   appendixEntriesForFcs:()=>({status:"loaded",entries:[{name:"Citric acid",ins:"330",limit:"GMP",applied_from:"4.1"}],resolvedFcs:"4.1"}),
+   appendixCoreDb:{annexure_1_groups:{}}
+ });
+ vm.runInContext(source,ctx);
+ const render=(restriction)=>vm.runInContext("productAppendixABaselineHtml('4.1',"+JSON.stringify(restriction)+")",ctx);
+ for(const key of ["2.3.56","2.3.58"]){
+   const htmlOut=render({banned:true,key,classes:[]});
+   assert.match(htmlOut,/PRODUCT STANDARD OVERRIDES APPENDIX A/);
+   assert.match(htmlOut,/NO ADDED FOOD ADDITIVES/);
+   assert.doesNotMatch(htmlOut,/Citric acid|GMP|applicable direct/);
+ }
+ const limited=render({banned:false,key:"2.3.47(1)",classes:["Added colouring matter","Preservatives"]});
+ assert.match(limited,/reference-only/);
+ assert.match(limited,/Product-specific additive classes require review/);
+ assert.match(limited,/reference row/);
+ assert.doesNotMatch(limited,/applicable direct\/inherited Appendix A permission row/);
+ const normal=render(null);
+ assert.match(normal,/Citric acid/);
+ assert.doesNotMatch(normal,/Product-specific additive classes require review/);
+ assert.match(html,/html\+=productAppendixABaselineHtml\(fcs,exactProductStandardAdditiveRestriction\(\)\)/);
+});
