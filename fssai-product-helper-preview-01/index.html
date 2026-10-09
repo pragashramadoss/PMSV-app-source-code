@@ -7678,6 +7678,14 @@ function productMeatEggCommodityMrlReviewHtml(p){
    +'<div class="notice"><b>Do not assume these rows apply automatically.</b> '+esc(review.qualifier_review)
    +' Verify animal source, product treatment, edible tissue and the stated residue basis before selecting an individual MRL. This review does not establish full contaminant or residue compliance.'
    +link+'</div>';
+ const egg=contaminantsDb?.chapter_2_5_exact_fresh_egg_source_article_v9;
+ const verifiedRawEgg=egg?.catalog_id===p.id&&egg.product_name===p.name&&egg.fssr===p.fssr&&
+   egg.exact_raw_egg_commodity_identity_verified===true&&egg.automatic_pesticide_mrl_approval===false;
+ if(verifiedRawEgg){
+   html+='<div class="notice"><b>Verified source commodity identity — Fresh Eggs:</b> '
+     +'The official FSSAI "Eggs" article has '+egg.article_rows_count+' pesticide references, all on a shell-free basis. '
+     +'This is source-backed partial evidence, not an automatic residue MRL approval or product compliance PASS.</div>';
+ }
  const groups=review.candidate_commodity_articles||[];
  for(const article of groups){
    const rows=(contaminantsDb?.residue_mrls?.pesticides||[]).flatMap(pesticide=>
