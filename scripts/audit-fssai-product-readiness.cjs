@@ -281,7 +281,7 @@ const pendingContaminantProducts=products
  .filter(p=>p.contaminant_evidence_index.status!=="some_exact_product_evidence_not_full_coverage");
 const chapterFromFssr=p=>{
  const v=String(p.fssr||"");
- return (v.match(/^(\\d+\\.\\d+)(?:\\.|$)/)||[])[1] || "special";
+ return (v.match(/^(\d+\.\d+)(?:\.|$)/)||[])[1] || "special";
 };
 const queueOrder=["2.7","2.5","2.4","2.3","2.1","2.2","2.6","2.8","2.9","3.1","3.2","3.3","special"];
 const byChapter=new Map();
@@ -321,7 +321,7 @@ for(const [code,rows] of [...byChapter.entries()].sort((a,b)=>{
  "");
 }
 const queuePath=path.join(output,"fssai-contaminant-review-queue.md");
-fs.writeFileSync(queuePath,queueLines.join("\\n")+"\\n");
+fs.writeFileSync(queuePath,queueLines.join("\n")+"\n");
 assert.equal(pendingContaminantProducts.length,
   (counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+
   (counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0));
@@ -352,4 +352,5 @@ const summary = [
 ].join("\n");
 console.log(summary);
 if(process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary+"\n");
-console.log("PASS: saved "+products.length+" product-by-product evidence statuses in "+outputFile);\nconsole.log("PASS: created prioritized contaminant review queue for "+pendingContaminantProducts.length+" products in "+queuePath);
+console.log("PASS: saved "+products.length+" product-by-product evidence statuses in "+outputFile);
+console.log("PASS: created prioritized contaminant review queue for "+pendingContaminantProducts.length+" products in "+queuePath);
