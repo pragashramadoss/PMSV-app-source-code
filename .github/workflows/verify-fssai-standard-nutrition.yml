@@ -13,6 +13,7 @@ on:
       - 'tests/fssai-ragi-grain-v483.test.cjs'
       - 'tests/fssai-pulse-grain-v488.test.cjs'
       - 'tests/fssai-catalogue-audit-v485.test.cjs'
+      - 'scripts/verify-fssai-regulatory-routes.cjs'
       - '.github/workflows/verify-fssai-standard-nutrition.yml'
   workflow_dispatch:
 
@@ -30,5 +31,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Verify all official FSSAI regulatory route links
+        run: node scripts/verify-fssai-regulatory-routes.cjs
       - name: Check helper JavaScript syntax and exact IFCT reference behavior
         run: node --test tests/standardized-ifct-lookup-v477.test.cjs tests/fssai-nutrition-v476.test.cjs tests/nutrition-modules.test.cjs tests/fssai-dairy-composition-v481.test.cjs tests/fssai-standard-key-scope-v482.test.cjs tests/fssai-ragi-grain-v483.test.cjs tests/fssai-catalogue-audit-v485.test.cjs tests/fssai-pulse-grain-v488.test.cjs
