@@ -8598,6 +8598,19 @@ function productBaselineContaminantRules(p){
    }
  }
  
+ // Exact three fresh FoSCoS vegetable identities; FSSAI Version IX Chromium
+ // and Nickel "Vegetables" 1 mg/kg. No fruit or processed-food inheritance.
+ const veg=contaminantsDb?.chapter_2_3_fresh_vegetables_exact_metal_v9;
+ const vegIdentity=(veg?.identities||[]).find(x=>
+   x.catalog_id===id&&x.product_name===p.name&&x.fcs===p.fcs);
+ if(vegIdentity)for(const r of veg.limits||[]){
+   const exact=exactMetalRule(r.metal,veg.official_article);
+   if(!exact||Number(exact.limit)!==Number(r.limit)||exact.unit!==r.unit)continue;
+   pushRule({contaminant:r.metal,...exact,
+     source_basis:'FSSAI CTR Version IX · exact FoSCoS fresh vegetable grouped metal',
+     condition:'Only '+p.name+' ('+p.fcs+'); verify vegetable subtype, other metal articles, pesticide residues and amendments.'});
+ }
+ 
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
