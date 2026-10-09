@@ -14,6 +14,7 @@ on:
       - 'tests/fssai-pulse-grain-v488.test.cjs'
       - 'tests/fssai-catalogue-audit-v485.test.cjs'
       - 'scripts/verify-fssai-regulatory-routes.cjs'
+      - 'scripts/audit-fssai-product-readiness.cjs'
       - '.github/workflows/verify-fssai-standard-nutrition.yml'
   workflow_dispatch:
 
@@ -33,5 +34,14 @@ jobs:
           node-version: '22'
       - name: Verify all official FSSAI regulatory route links
         run: node scripts/verify-fssai-regulatory-routes.cjs
+      - name: Generate all 533 regulatory evidence readiness records
+        run: node scripts/audit-fssai-product-readiness.cjs
+      - name: Upload per-product compliance evidence audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fssai-product-readiness-audit
+          path: audit-output/fssai-product-readiness-audit.json
+          if-no-files-found: warn
       - name: Check helper JavaScript syntax and exact IFCT reference behavior
         run: node --test tests/standardized-ifct-lookup-v477.test.cjs tests/fssai-nutrition-v476.test.cjs tests/nutrition-modules.test.cjs tests/fssai-dairy-composition-v481.test.cjs tests/fssai-standard-key-scope-v482.test.cjs tests/fssai-ragi-grain-v483.test.cjs tests/fssai-catalogue-audit-v485.test.cjs tests/fssai-pulse-grain-v488.test.cjs
