@@ -8248,6 +8248,27 @@ function productBaselineContaminantRules(p){
    });
  });
 
+ // 2b) Only exact named product identities may split a grouped official
+ //     crop-contaminant article into its named members. Wheat is not wheat flour.
+ (contaminantsDb?.explicit_crop_contaminant_article_mappings_v9||[])
+   .filter(m=>m.catalog_id===id && m.exact_catalog_identity_verified===true)
+   .forEach(mapping=>{
+     (mapping.contaminants||[]).forEach(item=>{
+       const group=contaminantsDb?.crop_contaminants?.[item.crop_contaminant_key];
+       const official=(group?.rules||[]).find(r=>
+         r.article===item.official_article && Number(r.limit)===Number(item.limit));
+       if(!official)return;
+       const label={ochratoxin_a:'Ochratoxin A',deoxynivalenol:'Deoxynivalenol'}[item.crop_contaminant_key]
+         ||String(item.crop_contaminant_key||'Crop contaminant').replaceAll('_',' ');
+       pushRule({
+         contaminant:label,article:item.official_article,limit:item.limit,
+         unit:item.unit||group.unit||'µg/kg',
+         source_basis:'Section 2.2.1 · Version IX · exact product named within grouped official crop-contaminant article',
+         condition:'Exact '+mapping.standard_identity+' identity. Do not carry this row over to flour, bran, pearl barley or processed composites without an independently verified article match.'
+       });
+     });
+   });
+
  // 3) Verified product-to-metal aliases stored in the contaminant master.
  // These are explicit FSSAI identity mappings, not fuzzy product-name matches.
  (contaminantsDb?.explicit_metal_alias_mappings_v9||[])
