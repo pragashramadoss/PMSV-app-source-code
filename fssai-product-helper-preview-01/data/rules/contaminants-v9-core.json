@@ -263,7 +263,9 @@
     "chapter_2_5_commodity_review_policy": "Exact official pesticide commodity rows are candidate references only; do not auto transfer commodity MRLs to any FoSCoS meat/egg product without verified edible matrix, processing, species and residue-basis applicability.",
     "chapter_2_4_commodity_scope_reviewed": 77,
     "chapter_2_4_commodity_review_policy": "All 77 catalogue Chapter 2.4 identities examined for official Version IX commodity pesticide/article candidates, with no auto-application; raw, milled, oilseed and composite matrices kept separate.",
-    "chapter_2_4_commodity_review_source": "FSSAI Compendium CTR Version IX (03.02.2026), official URL in official_sources"
+    "chapter_2_4_commodity_review_source": "FSSAI Compendium CTR Version IX (03.02.2026), official URL in official_sources",
+    "chapter_2_4_exact_grouped_crop_contaminant_identity_mappings": 2,
+    "chapter_2_4_wheat_bran_verification_note": "Only Wheat and Wheat Bran exact local product identities mapped to Ochratoxin A / Deoxynivalenol grouped FSSAI article. Wheat Flour, Maida, Pearl Barley, Durum Wheat, and other grain forms are not auto included."
   },
   "all_food_rules": [
     {
@@ -24800,6 +24802,58 @@
       "auto_apply_commodity_mrl": false,
       "auto_apply_aflatoxin_category": false,
       "full_product_regulatory_approval": false
+    }
+  ],
+  "explicit_crop_contaminant_article_mappings_v9": [
+    {
+      "catalog_id": "06-06-1-wheat",
+      "standard_identity": "Wheat",
+      "status": "official_named_article_in_grouped_crop_contaminant_table",
+      "contaminants": [
+        {
+          "crop_contaminant_key": "ochratoxin_a",
+          "official_article": "Wheat, wheat bran, rye, barley",
+          "limit": 5,
+          "unit": "µg/kg"
+        },
+        {
+          "crop_contaminant_key": "deoxynivalenol",
+          "official_article": "Wheat, wheat bran, barley",
+          "limit": 1000,
+          "unit": "µg/kg"
+        }
+      ],
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_pdf_page": 15,
+      "source_regulation": "FSSAI CTR Version IX (03.02.2026) · Section 2.2.1",
+      "exact_catalog_identity_verified": true,
+      "complete_contaminant_coverage": false,
+      "amendments_fully_reconciled": false
+    },
+    {
+      "catalog_id": "06-06-2-wheat-bran",
+      "standard_identity": "Wheat bran",
+      "status": "official_named_article_in_grouped_crop_contaminant_table",
+      "contaminants": [
+        {
+          "crop_contaminant_key": "ochratoxin_a",
+          "official_article": "Wheat, wheat bran, rye, barley",
+          "limit": 5,
+          "unit": "µg/kg"
+        },
+        {
+          "crop_contaminant_key": "deoxynivalenol",
+          "official_article": "Wheat, wheat bran, barley",
+          "limit": 1000,
+          "unit": "µg/kg"
+        }
+      ],
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_pdf_page": 15,
+      "source_regulation": "FSSAI CTR Version IX (03.02.2026) · Section 2.2.1",
+      "exact_catalog_identity_verified": true,
+      "complete_contaminant_coverage": false,
+      "amendments_fully_reconciled": false
     }
   ]
 }
