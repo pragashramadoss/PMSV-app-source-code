@@ -7695,12 +7695,17 @@ function productMeatEggCommodityMrlReviewHtml(p){
 function contaminantProfileForProduct(p){
  if(!p||!contaminantsDb||!Array.isArray(contaminantsDb.profiles))return null;
  if(exactFinishedProductContaminantLock(p))return null;
- if(exactRawMeatMetalLock(p))return null;
- return contaminantsDb.profiles.find(profile=>{
+ const rawGoatRabbitLeadLock=exactRawMeatMetalLock(p);
+ const matched=contaminantsDb.profiles.find(profile=>{
    if(Array.isArray(profile.catalog_ids)&&profile.catalog_ids.includes(p.id))return true;
    if(Array.isArray(profile.match_fssr)&&profile.match_fssr.includes(p.fssr||''))return true;
    return false;
  })||null;
+ if(!matched||!rawGoatRabbitLeadLock)return matched;
+ // Chapter 2.5 goat/rabbit lock is Lead-specific. Preserve independently
+ // sourced other metals if future exact species evidence becomes available.
+ const safeRules=(matched.rules||[]).filter(r=>String(r.contaminant||'').trim().toLowerCase()!=='lead');
+ return safeRules.length?{...matched,rules:safeRules}:null;
 }
 function contaminantIngredientRulesForName(name){
  if(!contaminantsDb||!Array.isArray(contaminantsDb.ingredient_triggers))return [];
@@ -8179,7 +8184,7 @@ function prohibitedVeterinaryRowsForProduct(p){
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  if(exactFinishedProductContaminantLock(p))return [];
- if(exactRawMeatMetalLock(p))return [];
+ const rawGoatRabbitLeadLock=exactRawMeatMetalLock(p);
  const n=normIngredient(p.name||'');
  const id=p.id||p.profile_id||'';
  if(!n&&!id)return [];
@@ -8295,6 +8300,7 @@ function productBaselineContaminantRules(p){
 
  const seen=new Set();
  return out.filter(r=>{
+   if(rawGoatRabbitLeadLock&&String(r.contaminant||'').trim().toLowerCase()==='lead')return false;
    const key=[r.contaminant,r.limit,r.unit,r.article].join('|');
    if(seen.has(key))return false;
    seen.add(key);return true;
