@@ -4963,12 +4963,15 @@ function renderMasterComplianceSummary(){
      const pesticideCount=exactPesticideMrlRowsForProduct(product).length;
      const conditionalCount=conditionalMetalRowsForProduct(product).length;
      const universalCount=Array.isArray(contaminantsDb.all_food_rules)?contaminantsDb.all_food_rules.filter(x=>x.auto_apply===true).length:0;
-     const totalMapped=exactCount+baselineCount+pesticideCount+conditionalCount+universalCount;
-     rows.push(masterComplianceRow('Contaminants / residues',totalMapped?'pass':'incomplete',
-       totalMapped
-         ? totalMapped+' product-level/commodity contaminant, residue or all-food rule row'+(totalMapped===1?' is':'s are')+' available. Ingredient-triggered contaminant rules are intentionally excluded in lookup mode.'
-         : 'No exact product/commodity contaminant route is currently mapped; PMSV does not invent a fallback.',
-       'contaminants'));
+     // Universal methylmercury is evidence, not proof of a product-specific
+     // contaminant mapping. Pending conditional rows are not automatically active.
+     const productSpecificCount=exactCount+baselineCount+pesticideCount;
+     const universalNote=universalCount?' The '+universalCount+' all-food rule'+(universalCount===1?' is':'s are')+' shown separately; these do not establish product-specific coverage.':'';
+     const state=productSpecificCount?'evidence':'incomplete';
+     const detail=productSpecificCount
+       ? productSpecificCount+' exact product/commodity contaminant or pesticide record'+(productSpecificCount===1?' is':'s are')+' available for reference; this is not proof that all applicable contaminants have been identified.'+(conditionalCount?' '+conditionalCount+' conditional metal route'+(conditionalCount===1?' requires':'s require')+' a qualifier.':'')+universalNote
+       : 'PRODUCT-SPECIFIC MAPPING GAP: no exact product/commodity contaminant or pesticide record is available.'+(conditionalCount?' '+conditionalCount+' conditional route'+(conditionalCount===1?' requires':'s require')+' more inputs.':'')+universalNote+' PMSV must not treat universal-only evidence as complete coverage.';
+     rows.push(masterComplianceRow('Contaminants / residues',state,detail,'contaminants'));
    }else{
      rows.push(masterComplianceRow('Contaminants / residues','incomplete','Current contaminant master or selected product is unavailable.','contaminants'));
    }
