@@ -172,7 +172,7 @@ test("Chapter 2.4 review-only status blocks direct exact-name pesticide approval
  vm.runInContext(pesticide,c);
  const getRows=p=>Array.from(vm.runInContext("exactPesticideMrlRowsForProduct("+JSON.stringify(p)+")",c));
  for(const name of ["Rice","Wheat","Maize","Durum Wheat","Pearl Barley"]){
-  const p=chapter.find(x=>x.name===name);
+  const p=chapter.find(x=>x.name===name||(name==="Pearl Barley"&&x.name==="Pearl Barley (Jau)"));
   assert.ok(p,"Missing "+name);
   assert.deepEqual(getRows(p),[],name+" must be REVIEW ONLY");
   assert.ok(byId.get(p.id),name+" must retain its official source-reference panel");
