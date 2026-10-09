@@ -78,7 +78,21 @@ jobs:
           git fetch origin gh-pages
           git switch -C gh-pages origin/gh-pages
 
-          find . -mindepth 1 -maxdepth 1 ! -name '.git' ! -name '.github' ! -name '.preview-trigger' -exec rm -rf {} +
+          # Replace only the standalone main-app preview artifacts. Preserve
+          # GitHub-maintained tools (FSSAI Helper, audits, tests, evidence)
+          # which are NOT generated from the WordPress production plugin.
+          # Fail closed if the generated preview would overwrite these tools.
+          for item in /tmp/pmsv-preview/*; do
+            [ -e "$item" ] || continue
+            name="${item##*/}"
+            case "$name" in
+              fssai-*|audits|tests)
+                echo "Refusing to overwrite GitHub-managed tool directory: $name" >&2
+                exit 1 ;;
+              *)
+                rm -rf -- "./$name" ;;
+            esac
+          done
           cp -R /tmp/pmsv-preview/. .
 
           git add -A
