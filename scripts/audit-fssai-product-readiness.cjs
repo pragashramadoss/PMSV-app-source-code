@@ -90,6 +90,24 @@ for(const row of meatEggCommodityReviews){
  for(const article of row.candidate_commodity_articles)
    assert.ok(currentPesticideArticles.has(String(article).toLowerCase()),"Missing official FSSAI pesticide commodity article "+article);
 }
+const cerealReviews=contaminants.chapter_2_4_commodity_mrl_review_v1||[];
+const cerealById=new Map(cerealReviews.map(x=>[x.catalog_id,x]));
+const chapter24Products=index.products.filter(p=>String(p.fssr||"").startsWith("2.4."));
+assert.equal(cerealReviews.length,77,"Expected all 77 Chapter 2.4 review entries");
+assert.equal(cerealById.size,77,"Duplicate cereal product review");
+assert.equal(chapter24Products.length,77,"Chapter 2.4 catalogue count changed: inspect missing/new product identities");
+for(const product of chapter24Products)assert.ok(cerealById.has(product.id),"Missing exact Chapter 2.4 review: "+product.id);
+for(const entry of cerealReviews){
+ const product=index.products.find(p=>p.id===entry.catalog_id);
+ assert.ok(product&&String(product.fssr||"").startsWith("2.4."),"Cross-category cereal review leaked: "+entry.catalog_id);
+ assert.equal(entry.auto_apply_commodity_mrl,false,entry.catalog_id+" pesticide review must remain not applied");
+ assert.equal(entry.auto_apply_aflatoxin_category,false,entry.catalog_id+" mycotoxin review must remain conditional");
+ assert.equal(entry.full_product_regulatory_approval,false,entry.catalog_id+" product approval not established");
+ const rowCount=(contaminants.residue_mrls?.pesticides||[]).reduce((n,pesticide)=>
+    n+(pesticide.rows||[]).filter(x=>(entry.candidate_commodity_articles||[]).some(article=>String(x.food||"").trim().toLowerCase()===article.toLowerCase())).length,0);
+ assert.equal(entry.candidate_rows_in_loaded_official_source,rowCount,entry.catalog_id+" MRL source count changed");
+ for(const article of entry.candidate_commodity_articles||[])assert.ok(currentPesticideArticles.has(article.toLowerCase()),"Unknown FSSAI cereal MRL article: "+article);
+}
 const rawMeatMetalLocks=new Map();
 for(const row of contaminants.chapter_2_5_locked_fresh_meat_routes_v9||[]){
  for(const id of row.catalog_ids||[]){
@@ -124,6 +142,16 @@ function contaminantEvidenceForProduct(p){
    "no_exact_catalog_evidence_in_this_inventory";
  return {
    status,
+   chapter_2_4_pesticide_commodity_review:cerealById.get(p.id)
+     ? {scope:cerealById.get(p.id).scope,
+        review_status:cerealById.get(p.id).scope_review_status,
+        candidate_articles:cerealById.get(p.id).candidate_commodity_articles,
+        candidate_row_count:cerealById.get(p.id).candidate_rows_in_loaded_official_source,
+        aflatoxin_reference_articles:cerealById.get(p.id).aflatoxin_reference_articles,
+        source_qualifier:cerealById.get(p.id).qualifier_review,
+        source_fssai_version:contaminants.source_version,
+        auto_apply:false,
+        full_finished_product_applicability_verified:false} : null,
    chapter_2_5_pesticide_commodity_review:meatEggCommodityById.get(p.id)
      ? {scope:meatEggCommodityById.get(p.id).scope,
         review_status:meatEggCommodityById.get(p.id).scope_review_status,
@@ -280,6 +308,10 @@ const products = index.products.map(p => {
   if(contaminantEvidence.status==="only_family_fssr_evidence_needs_identity_review")
     action.push("Confirm exact finished-product eligibility for the matching FSSR-family contaminant article");
   tally("contaminant_evidence",contaminantEvidence.status);
+  if(contaminantEvidence.chapter_2_4_pesticide_commodity_review){
+    tally("chapter_2_4_pesticide_review","reference_only_by_exact_catalog_id");
+    action.push("Check Chapter 2.4 raw versus milled, oilseed-flour and composite food form before deciding individual official MRL/crop contaminant applicability; candidates are reference-only");
+  }
   if(contaminantEvidence.chapter_2_5_pesticide_commodity_review){
     tally("chapter_2_5_pesticide_candidates","source_rows_available_applicability_pending");
     action.push("Review Chapter 2.5 pesticide commodity candidates for exact animal tissue, processing and residue basis; the candidate rows are not applied automatically");
@@ -415,6 +447,7 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| Chapter 2.4 cereal and flour commodity candidates indexed without automatic MRL applicability | "+(counts.chapter_2_4_pesticide_review?.reference_only_by_exact_catalog_id||0)+" |",
   "| Chapter 2.5 product identities with official commodity pesticide candidates (not auto-applied) | "+(counts.chapter_2_5_pesticide_candidates?.source_rows_available_applicability_pending||0)+" |",
   "| Raw goat/rabbit metal article locks preventing species transfer | "+(counts.chapter_2_5_goat_rabbit_metal_locks?.species_identity_not_transferable||0)+" |",
   "| Direct FSSAI chapter microbiology criteria indexed | "+(counts.direct_chapter_microbiology?.exact_clause_microbiology_rows||0)+" |",
