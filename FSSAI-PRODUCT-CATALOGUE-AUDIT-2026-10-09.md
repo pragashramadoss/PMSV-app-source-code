@@ -6,9 +6,9 @@
 
 - Product identities: **533**
 - Exact catalogue/index/profile identity count: **533**
-- Chapter-rule links with verified local file + key: **474**
-- Unverified chapter-rule links: **59**
-- Rule-file and key integrity check: **474/474 PASS** (including alternate legacy schema fields)
+- Chapter-rule links with verified local file + key: **475**
+- Unverified chapter-rule links: **58**
+- Rule-file and key integrity check: **475/475 PASS** (including alternate legacy schema fields)
 - Index points to current product-master blob: **PASS**
 - Complete independently reconciled latest FoSCoS catalogue: **NOT VERIFIED**
 - End-to-end Chromium verification for this new reconciliation: **NOT RUN**
@@ -20,7 +20,7 @@
 |---|---:|
 | 99 | 26 |
 | 18 | 12 |
-| 04 | 9 |
+| 04 | 8 |
 | 102 | 8 |
 | 05 | 3 |
 | 11 | 1 |

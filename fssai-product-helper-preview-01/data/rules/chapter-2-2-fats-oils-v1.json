@@ -866,6 +866,66 @@
         "processing_aids": "Appendix C Table 2 catalyst permissions for Hydrogenated vegetable oil require the corresponding exact product identity."
       },
       "validation_state": "product identities and current standard route mapped from official FSSAI Chapter 2.2; detailed composition remains source-linked"
+    },
+    {
+      "key": "2.2.4(11)",
+      "name": "Peanut Butter",
+      "status": "structured_core",
+      "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats_oils%20and%20fat%20emulsions.pdf",
+      "permitted_ingredients": [
+        "roasted groundnut kernels",
+        "sugar",
+        "salt",
+        "liquid glucose",
+        "jaggery",
+        "honey",
+        "edible oils and fats permitted in regulations"
+      ],
+      "composition": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Fat",
+          "operator": ">=",
+          "value": 40,
+          "unit": "% dry basis"
+        },
+        {
+          "parameter": "Protein",
+          "operator": ">=",
+          "value": 25,
+          "unit": "% dry basis"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% dry basis"
+        },
+        {
+          "parameter": "Acid value of extracted fat",
+          "operator": "<=",
+          "value": 4,
+          "unit": "acid value"
+        },
+        {
+          "parameter": "Salt as NaCl",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% by weight"
+        }
+      ],
+      "quality_rules": [
+        "Test for argemone oil shall be negative."
+      ],
+      "additives": "Appendix A, as applicable",
+      "microbiology": "Appendix B, as applicable",
+      "full_compliance_assessment_enabled": false,
+      "verification_note": "Official FSSAI Chapter 2.2 Version 5 clause and numeric quality factors. Cross-regulation checks are separate and not fully verified."
     }
   ],
   "structured_core_standards": 12
