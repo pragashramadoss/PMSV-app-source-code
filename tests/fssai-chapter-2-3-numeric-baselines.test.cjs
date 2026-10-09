@@ -556,3 +556,49 @@ test("Conditional source references are visible, do not affect unrelated product
  assert.match(audit,/chapter_2_3_conditional_metal_products/);
  assert.match(audit,/raw_cocoa_beans_not_cocoa_powder/);
 });
+
+
+test("Groundnut kernel FSSR 2.3.47 uses identical nut and oilseed aflatoxin limits without leaking to oil",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const map=db.chapter_2_3_verified_groundnut_aflatoxin_v9;
+ const id="04-04-1-groundnut-kernel-deshelled";
+ assert.equal(map.catalog_id,id);
+ assert.equal(map.fssr,"2.3.47(1)");
+ assert.equal(map.product_identity_verified,true);
+ assert.equal(map.complete_contaminant_coverage,false);
+ assert.equal(map.automatic_pesticide_mrl_approval,false);
+ assert.equal(map.amendments_fully_reconciled,false);
+ assert.deepEqual(map.rules.map(x=>[x.contaminant,x.limit,x.unit]),[["Total Aflatoxins",15,"µg/kg"],["Aflatoxin B1",10,"µg/kg"]]);
+ for(const rule of map.rules){
+  assert.equal(rule.official_articles.length,4);
+  const official=db.crop_contaminants[rule.crop_contaminant_key].rules;
+  for(const article of rule.official_articles)
+   assert.ok(official.some(x=>x.article===article&&x.limit===rule.limit),article);
+ }
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const at=html.indexOf("function productBaselineContaminantRules(p){"),end=html.indexOf("\nfunction ",at+12);
+ assert.ok(at>0&&end>at);
+ const vm=require("node:vm"),ctx=vm.createContext({
+  contaminantsDb:db,normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+  chapterRuleDbs:[],ruleDbStandards:()=>[],exactFinishedProductContaminantLock:()=>null,
+  exactRawMeatMetalLock:()=>null,isVerifiedFermentedMilkProduct:()=>false
+ });
+ vm.runInContext(html.slice(at,end),ctx);
+ const exec=p=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx));
+ const target=index.products.find(x=>x.id===id);
+ assert.ok(target);
+ const found=exec(target).filter(x=>x.source_basis?.includes("four exact nut/oilseed article checks"));
+ assert.deepEqual(found.map(x=>[x.contaminant,x.limit,x.unit]),[["Total Aflatoxins",15,"µg/kg"],["Aflatoxin B1",10,"µg/kg"]]);
+ const other=exec(index.products.find(x=>x.id==="04-04-1-dry-fruits-and-nuts"));
+ assert.equal(other.some(x=>x.source_basis?.includes("four exact nut/oilseed article checks")),false);
+ const altered=structuredClone(db);
+ altered.chapter_2_3_verified_groundnut_aflatoxin_v9.product_identity_verified=false;
+ ctx.contaminantsDb=altered;
+ assert.equal(exec(target).some(x=>x.source_basis?.includes("four exact nut/oilseed article checks")),false);
+ altered.chapter_2_3_verified_groundnut_aflatoxin_v9.product_identity_verified=true;
+ altered.crop_contaminants.total_aflatoxins.rules.find(x=>x.article==="Oilseeds, ready to eat").limit=999;
+ assert.equal(exec(target).some(x=>x.contaminant==="Total Aflatoxins"&&x.source_basis?.includes("four exact nut/oilseed article checks")),false);
+ const audit=fs.readFileSync(path.resolve(dataRoot,"../../scripts/audit-fssai-product-readiness.cjs"),"utf8");
+ assert.match(audit,/chapter_2_3_verified_groundnut_crop_limits/);
+ assert.match(audit,/verified_groundnut_crop_toxin_identical_category_limits/);
+});
