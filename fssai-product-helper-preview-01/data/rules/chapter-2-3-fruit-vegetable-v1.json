@@ -1052,20 +1052,83 @@
     {
       "key": "2.3.13",
       "name": "Thermally Processed Concentrated Fruit Juice Pulp/ Puree",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 clause transcription. Product identity, manufacturing process, later operative amendments, additives, microbiology, contaminants, packaging, labelling and claims must be verified before compliance determination.",
+      "relative_composition": [
+        {
+          "parameter": "Total soluble solids compared with original fruit/vegetable juice/pulp/puree",
+          "operator": ">=",
+          "value": 2,
+          "unit": "× prescribed original soluble-solids content",
+          "reference_standard_keys": [
+            "2.3.6",
+            "2.3.7"
+          ],
+          "requires_original_product_measurement": true,
+          "auto_evaluate": false
+        }
+      ],
+      "packaging_requirements": [
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity",
+          "condition": "Only when packed in rigid containers; do not use as composition/ingredient metric"
+        }
+      ],
+      "reference_material_measurement_required": true,
+      "quality_rules": [
+        "Must be thermally processed concentrate; do not substitute the preservatives-for-industrial-use route 2.3.17.",
+        "Check identity and original juice/pulp/puree baseline before applying the twice-solids requirement."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          23,
+          24
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.16",
       "name": "Fruit Juice with Preservatives for Industrial Use only",
-      "status": "official_clause_identity_verified_partial_core",
+      "status": "official_clause_scope_reviewed_no_universal_numeric_composition",
       "coverage_scope": "identity_and_clause_mapping_only",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official clause 2.3.16 has no universal numerical finished-food composition table; rigid-container fill is separately recorded and remains conditional. Other regulations and product identity still require review.",
+      "packaging_requirements": [
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity",
+          "condition": "Only when packed in rigid containers; do not use as composition/ingredient metric"
+        }
+      ],
+      "source_review": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          25
+        ],
+        "reviewed_on": "2026-10-09",
+        "scope": "2.3.16 identity, permitted additives, Appendix B and rigid container fill; no clause-wide numeric composition standard prescribed in this section; verify underlying juice/pulp/puree and amendments",
+        "review_status": "source_scope_transcribed_cross_regulations_pending"
+      },
+      "quality_rules": [
+        "Industrial use only; not automatically a direct-consumption finished food approval.",
+        "FSSAI Appendix A/B and other relevant regulatory requirements still apply.",
+        "Absence of a clause-wide numeric composition entry here does not establish a compliance exemption."
+      ]
     },
     {
       "key": "2.3.17",
@@ -1344,11 +1407,75 @@
     {
       "key": "2.3.30",
       "name": "Carbonated Fruit Beverages or Fruit Drinks",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 clause transcription. Product identity, manufacturing process, later operative amendments, additives, microbiology, contaminants, packaging, labelling and claims must be verified before compliance determination.",
+      "variant_composition": [
+        {
+          "variant": "Carbonated fruit beverage/drink with lime or lemon",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 5,
+              "unit": "% by mass"
+            }
+          ],
+          "fruit_category": "lime_or_lemon",
+          "product_name_category": "carbonated_fruit_beverage_or_fruit_drink"
+        },
+        {
+          "variant": "Carbonated fruit beverage/drink with other fruits",
+          "composition": [
+            {
+              "parameter": "Fruit juice content",
+              "operator": ">=",
+              "value": 10,
+              "unit": "% by mass"
+            }
+          ],
+          "fruit_category": "other_fruits",
+          "product_name_category": "carbonated_fruit_beverage_or_fruit_drink"
+        }
+      ],
+      "conditional_requirements": [
+        {
+          "parameter": "Alternative category: carbonated beverage with fruit juice",
+          "condition": "Fruit juice below 10% but at least 5%; lime or lemon below 5% but at least 2.5%",
+          "required_name": "carbonated beverages with fruit juice",
+          "fruit_juice_content_declaration": true,
+          "total_soluble_solids_requirement_not_applicable": true,
+          "auto_evaluate": false
+        }
+      ],
+      "packaging_requirements": [
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity",
+          "condition": "Only when packed in rigid containers; do not use as composition/ingredient metric"
+        }
+      ],
+      "variant_resolution_required": true,
+      "quality_rules": [
+        "The alternative 2.3.30(3A) designation is NOT the same as the main carbonated fruit beverage/fruit drink minimum.",
+        "Fruit juice amount must be declared on label for alternative category 3A.",
+        "No generic TSS minimum must be asserted for category 3A; legacy item (i) is omitted."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          34,
+          35
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.47(1)",
@@ -1452,38 +1579,225 @@
     {
       "key": "2.3.25",
       "name": "Murabba",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 clause transcription. Product identity, manufacturing process, later operative amendments, additives, microbiology, contaminants, packaging, labelling and claims must be verified before compliance determination.",
+      "composition": [
+        {
+          "parameter": "Total soluble solids",
+          "operator": ">=",
+          "value": 65,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Fruit contents",
+          "operator": ">=",
+          "value": 55,
+          "unit": "% by mass"
+        }
+      ],
+      "packaging_requirements": [
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity",
+          "condition": "Only when packed in rigid containers; do not use as composition/ingredient metric"
+        }
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          31
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.26",
       "name": "Candied, Crystallised And Glazed Fruit / Vegetable / Rhizome / Fruit Peel",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 clause transcription. Product identity, manufacturing process, later operative amendments, additives, microbiology, contaminants, packaging, labelling and claims must be verified before compliance determination.",
+      "composition": [
+        {
+          "parameter": "Total sugar",
+          "operator": ">=",
+          "value": 70,
+          "unit": "% w/w"
+        },
+        {
+          "parameter": "Reducing sugar as percentage of total sugar",
+          "operator": ">=",
+          "value": 25,
+          "unit": "% of total sugar; not percentage of total product mass"
+        }
+      ],
+      "quality_rules": [
+        "Applies to candied, crystallised and glazed fruits, vegetables, rhizomes and peel described in clause 2.3.26."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          31,
+          32
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.11",
       "name": "Thermally processed Mango Pulp/ Puree and Sweetened mango Pulp/ Puree",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 clause transcription. Product identity, manufacturing process, later operative amendments, additives, microbiology, contaminants, packaging, labelling and claims must be verified before compliance determination.",
+      "variant_composition": [
+        {
+          "variant": "Sweetened mango pulp or puree",
+          "composition": [
+            {
+              "parameter": "Total soluble solids",
+              "operator": ">=",
+              "value": 15,
+              "unit": "% by mass"
+            }
+          ],
+          "applies_when": "Mango pulp/puree containing nutritive sweeteners above 15 g/kg; other requirements still apply"
+        },
+        {
+          "variant": "Unsweetened natural mango pulp or puree",
+          "composition": [
+            {
+              "parameter": "Total soluble solids",
+              "operator": ">=",
+              "value": 12,
+              "unit": "% by mass"
+            }
+          ],
+          "applies_when": "Mango pulp/puree in the unsweetened category"
+        }
+      ],
+      "conditional_requirements": [
+        {
+          "parameter": "Added nutritive sweeteners",
+          "operator": "<=",
+          "value": 50,
+          "unit": "g/kg",
+          "condition": "Where nutritive sweeteners are used",
+          "auto_evaluate": false
+        },
+        {
+          "parameter": "Sweetened product description threshold",
+          "operator": ">",
+          "value": 15,
+          "unit": "g/kg",
+          "consequence": "Describe as sweetened mango pulp/puree where nutritive sweeteners exceed 15 g/kg",
+          "auto_evaluate": false
+        },
+        {
+          "parameter": "Acidity as citric acid",
+          "operator": ">=",
+          "value": 0.3,
+          "unit": "%",
+          "condition": "Only sweetened canned mango pulp; not universal to all mango pulps",
+          "auto_evaluate": false
+        }
+      ],
+      "packaging_requirements": [
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity",
+          "condition": "Only when packed in rigid containers; do not use as composition/ingredient metric"
+        }
+      ],
+      "variant_resolution_required": true,
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          22
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.12",
       "name": "Thermally Processed Fruit Pulp/ Puree and Sweetened Fruit Pulp/Puree other than Mango",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 clause transcription. Product identity, manufacturing process, later operative amendments, additives, microbiology, contaminants, packaging, labelling and claims must be verified before compliance determination.",
+      "composition": [
+        {
+          "parameter": "Total soluble solids excluding added sugar",
+          "operator": ">=",
+          "value": 6,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acidity as citric acid",
+          "operator": ">=",
+          "value": 0.3,
+          "unit": "% by mass"
+        }
+      ],
+      "conditional_requirements": [
+        {
+          "parameter": "Added nutritive sweeteners",
+          "operator": "<=",
+          "value": 50,
+          "unit": "g/kg",
+          "condition": "If added",
+          "auto_evaluate": false
+        },
+        {
+          "parameter": "Sweetened product description threshold",
+          "operator": ">",
+          "value": 15,
+          "unit": "g/kg",
+          "consequence": "Describe as sweetened fruit pulp/puree where added nutritive sweeteners exceed 15 g/kg",
+          "auto_evaluate": false
+        }
+      ],
+      "packaging_requirements": [
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity",
+          "condition": "Only when packed in rigid containers; do not use as composition/ingredient metric"
+        }
+      ],
+      "quality_rules": [
+        "Applies to fruit pulp/puree other than mango; mango has its own standard 2.3.11."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          23
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.18",
@@ -1709,11 +2023,119 @@
     {
       "key": "2.3.28",
       "name": "Ginger paste",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 clause transcription. Product identity, manufacturing process, later operative amendments, additives, microbiology, contaminants, packaging, labelling and claims must be verified before compliance determination.",
+      "variant_composition": [
+        {
+          "variant": "Chilli sauce",
+          "composition": [
+            {
+              "parameter": "Total soluble solids (salt-free basis)",
+              "operator": ">=",
+              "value": 8,
+              "unit": "% by mass"
+            },
+            {
+              "parameter": "Acidity as acetic acid",
+              "operator": ">=",
+              "value": 1,
+              "unit": "% by mass"
+            }
+          ],
+          "catalog_product_ids": [
+            "12-12-6-chilli-sauce"
+          ]
+        },
+        {
+          "variant": "Fruit or vegetable sauces",
+          "composition": [
+            {
+              "parameter": "Total soluble solids (salt-free basis)",
+              "operator": ">=",
+              "value": 15,
+              "unit": "% by mass"
+            },
+            {
+              "parameter": "Acidity as acetic acid",
+              "operator": ">=",
+              "value": 1.2,
+              "unit": "% by mass"
+            }
+          ],
+          "catalog_product_ids": [
+            "12-12-6-fruits-vegetable-sauces"
+          ]
+        },
+        {
+          "variant": "Culinary pastes or sauces",
+          "composition": [
+            {
+              "parameter": "Total soluble solids (salt-free basis)",
+              "operator": ">=",
+              "value": 8,
+              "unit": "% by mass"
+            },
+            {
+              "parameter": "Acidity as acetic acid",
+              "operator": ">=",
+              "value": 1,
+              "unit": "% by mass"
+            }
+          ],
+          "catalog_product_ids": [
+            "12-12-6-culinary-sauce",
+            "12-12-6-culinary-pastes"
+          ]
+        },
+        {
+          "variant": "Ginger paste",
+          "composition": [
+            {
+              "parameter": "Total soluble solids (salt-free basis)",
+              "operator": ">=",
+              "value": 3,
+              "unit": "% by mass"
+            },
+            {
+              "parameter": "Acidity as acetic acid",
+              "operator": ">=",
+              "value": 1,
+              "unit": "% by mass"
+            }
+          ],
+          "catalog_product_ids": [
+            "04-04-2-ginger-paste"
+          ]
+        }
+      ],
+      "variant_resolution_required": true,
+      "packaging_requirements": [
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity",
+          "condition": "Only when packed in rigid containers; do not use as composition/ingredient metric"
+        }
+      ],
+      "quality_rules": [
+        "Caramel may be used where permitted, but no other added natural or synthetic colouring permitted by this product standard.",
+        "Do not use one sauce minimum for another category."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          32,
+          33
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.15",
@@ -1751,20 +2173,100 @@
     {
       "key": "2.3.27",
       "name": "Tomato Ketchup and Tomato Sauce",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 clause transcription. Product identity, manufacturing process, later operative amendments, additives, microbiology, contaminants, packaging, labelling and claims must be verified before compliance determination.",
+      "composition": [
+        {
+          "parameter": "Total soluble solids (salt-free basis)",
+          "operator": ">=",
+          "value": 25,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acidity as acetic acid",
+          "operator": ">=",
+          "value": 0.2,
+          "unit": "% by mass"
+        }
+      ],
+      "packaging_requirements": [
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity",
+          "condition": "Only when packed in rigid containers; do not use as composition/ingredient metric"
+        }
+      ],
+      "quality_rules": [
+        "Only tomato ketchup/sauce, not other vegetable or culinary sauces covered in 2.3.28."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          32
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.29",
       "name": "SOYBEAN SAUCE",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Official FSSAI 2023 clause transcription. Product identity, manufacturing process, later operative amendments, additives, microbiology, contaminants, packaging, labelling and claims must be verified before compliance determination.",
+      "composition": [
+        {
+          "parameter": "Total soluble solids (salt-free basis)",
+          "operator": ">=",
+          "value": 15,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Acidity as acetic acid",
+          "operator": ">=",
+          "value": 0.6,
+          "unit": "% by mass"
+        },
+        {
+          "parameter": "Total nitrogen",
+          "operator": ">=",
+          "value": 1,
+          "unit": "% by mass"
+        }
+      ],
+      "packaging_requirements": [
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% of water capacity",
+          "condition": "Only when packed in rigid containers; do not use as composition/ingredient metric"
+        }
+      ],
+      "quality_rules": [
+        "This standard requires fermented soybeans with trypsin inhibitors completely inactivated.",
+        "Do not substitute generic culinary-sauce or vinegar parameters."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          33,
+          34
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.46",
