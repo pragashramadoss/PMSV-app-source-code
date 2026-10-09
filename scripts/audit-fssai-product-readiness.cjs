@@ -112,6 +112,8 @@ const products = index.products.map(p => {
     ) || (
       Array.isArray(target.record.variant_composition) &&
       target.record.variant_composition.some(v=>Array.isArray(v.composition)&&v.composition.some(x=>Number.isFinite(x.value)))
+    ) || (
+      Array.isArray(target.record.relative_composition) && target.record.relative_composition.some(x=>Number.isFinite(x.value))
     );
     if(target.record.numeric_evidence) {
       assert.ok(numericCompositionPresent,"Numeric source evidence without numeric standard: "+p.id);
