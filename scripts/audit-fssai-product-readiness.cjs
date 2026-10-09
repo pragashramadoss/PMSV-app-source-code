@@ -32,6 +32,13 @@ const spiceAflatoxinIds = new Set((contaminants.spice_crop_contaminant_identity_
 const exactContaminantArticles = new Set(Object.values(contaminants.metal_article_rules_v9 || {})
   .flatMap(rows=>(rows || []).map(row=>normalizeArticle(row.article))));
 const familyContaminantProfiles = (contaminants.profiles || []).filter(p=>Array.isArray(p.match_fssr) && p.match_fssr.length);
+const chapter27Locks = (contaminants.chapter_2_7_locked_contaminant_routes_v9 || []);
+const lockById = new Map(chapter27Locks.map(x=>[x.catalog_id,x]));
+assert.equal(chapter27Locks.length,6,"Expected six reviewed Chapter 2.7 contaminant locks");
+assert.equal(lockById.size,6,"Duplicate Chapter 2.7 lock identity");
+const version9Source=contaminants.official_sources?.[0]?.url || "";
+assert.ok(official(version9Source),"Missing official FSSAI current contaminant compendium source");
+
 const bySpecialKey = new Map(special.routes.map(r => [r.key, r]));
 const chapterCache = new Map();
 const counts = {};
@@ -74,6 +81,13 @@ function contaminantEvidenceForProduct(p){
  const spiceAflatoxin=spiceAflatoxinIds.has(p.id);
  const fssrFamilies=familyContaminantProfiles.filter(profile=>(profile.match_fssr || []).includes(p.fssr))
    .map(profile=>({id:profile.id,rule_rows:(profile.rules || []).length}));
+ const finishedArticleLock=lockById.get(p.id) || null;
+ if(finishedArticleLock){
+   assert.equal(finishedArticleLock.status,"locked_no_exact_current_article",p.id);
+   assert.ok(String(p.fssr||"").startsWith("2.7."),"Non-chocolate product in Chapter 2.7 lock: "+p.id);
+   assert.equal(profiles.length,0,"Locked product accidentally gained a direct contaminant profile: "+p.id);
+   assert.ok(!explicitAliases && !direct && !exactArticle && !spiceAflatoxin,"Locked product accidentally gained exact evidence; re-review before unlocking: "+p.id);
+ }
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
@@ -85,6 +99,16 @@ function contaminantEvidenceForProduct(p){
    "no_exact_catalog_evidence_in_this_inventory";
  return {
    status,
+   finished_product_article_review:finishedArticleLock?{
+     status:"reviewed_no_exact_current_version_ix_article_fail_closed",
+     lock_reason:finishedArticleLock.reason,
+     source_fssai_version:contaminants.source_version,
+     source_url:version9Source,
+     source_amendments_url:"https://fssai.gov.in/food-law/regulations/amendments/contaminants-toxins",
+     reviewed_against_effective_snapshot:date,
+     current_or_future_amendment_check_required:true,
+     automatic_product_level_metal_limits_allowed:false
+   }:null,
    exact_evidence_kinds:explicitKinds,
    direct_profile_ids:profiles.map(x=>x.id),
    direct_profile_rule_rows:profiles.reduce((n,x)=>n+x.rows,0),
@@ -212,6 +236,10 @@ const products = index.products.map(p => {
     if(route.compliance_status === "complete" || route.compliance_pass_enabled === true) throw new Error("Special route incorrectly asserts compliance: " + p.id);
   }
   const contaminantEvidence=contaminantEvidenceForProduct(p);
+  if(contaminantEvidence.finished_product_article_review){
+    tally("chapter_2_7_finished_article_locks","reviewed_fail_closed");
+    action.push("Chapter 2.7 finished-product contaminant article reviewed: no exact Version IX match verified; preserve fail-closed mapping and review current effective amendments, ingredient duties and any Foods not specified applicability");
+  }
   if(contaminantEvidence.status==="no_exact_catalog_evidence_in_this_inventory")
     action.push("Map exact FSSAI contaminant/commodity articles; universal all-food rows do not demonstrate product-specific coverage");
   if(contaminantEvidence.status==="only_family_fssr_evidence_needs_identity_review")
@@ -317,7 +345,7 @@ for(const [code,rows] of [...byChapter.entries()].sort((a,b)=>{
  "| Product identity | Product code | Existing evidence status |",
  "|---|---|---|",
  ...rows.sort((a,b)=>a.name.localeCompare(b.name))
-  .map(p=>"| "+String(p.name||"").replaceAll("|","/")+" | "+p.id+" | "+(p.contaminant_evidence_index.status==="only_family_fssr_evidence_needs_identity_review"?"FSSR-family only":"No exact index record; inspect runtime commodity rules")+" |"),
+  .map(p=>"| "+String(p.name||"").replaceAll("|","/")+" | "+p.id+" | "+(p.contaminant_evidence_index.finished_product_article_review?"**REVIEWED / LOCKED**: no exact Version IX finished-product article; see full JSON for lock evidence":p.contaminant_evidence_index.status==="only_family_fssr_evidence_needs_identity_review"?"FSSR-family only":"No exact index record; inspect runtime commodity rules")+" |"),
  "");
 }
 const queuePath=path.join(output,"fssai-contaminant-review-queue.md");
@@ -343,6 +371,7 @@ const summary = [
   "| Exact contaminant evidence of at least one kind (not full coverage) | "+(counts.contaminant_evidence?.some_exact_product_evidence_not_full_coverage||0)+" |",
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
+  "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
   "| Direct FSSAI chapter microbiology criteria indexed | "+(counts.direct_chapter_microbiology?.exact_clause_microbiology_rows||0)+" |",
   "| Appendix B exact/conditional/no-direct mappings cross-checked against Table profiles | "+appendixBRoutes.size+" |",
   "| Microbiology absent from lightweight search index (not necessarily exempt) | "+(counts.microbiology.not_recorded_in_search_index||0)+" |",
