@@ -90,6 +90,23 @@ for(const row of meatEggCommodityReviews){
  for(const article of row.candidate_commodity_articles)
    assert.ok(currentPesticideArticles.has(String(article).toLowerCase()),"Missing official FSSAI pesticide commodity article "+article);
 }
+const processedMeat=contaminants.chapter_2_5_verified_processed_meat_saffrole_v9;
+assert.ok(processedMeat&&official(processedMeat.official_source_url));
+assert.equal(processedMeat.official_article,"Meat preparations and meat products, including poultry and game");
+assert.equal(processedMeat.limit,10);assert.equal(processedMeat.unit,"ppm");
+assert.equal(processedMeat.complete_contaminant_coverage,false);
+assert.equal(processedMeat.pesticide_mrl_auto_apply,false);
+const processedMeatById=new Map(processedMeat.verified_finished_product_identities.map(x=>[x.catalog_id,x]));
+assert.equal(processedMeatById.size,19);
+assert.deepEqual(new Set(processedMeatById.keys()),new Set(meatEggCommodityReviews.filter(x=>
+ x.scope==="processed_meat"&&!x.catalog_id.endsWith("animal-casings")).map(x=>x.catalog_id)));
+assert.ok((contaminants.naturally_occurring_toxic_substances.saffrole||[]).some(x=>
+ x.article===processedMeat.official_article&&Number(x.limit)===10&&x.unit==="ppm"));
+for(const row of processedMeat.verified_finished_product_identities){
+ const p=index.products.find(x=>x.id===row.catalog_id);
+ assert.ok(p&&p.name===row.product_name&&p.fssr===row.fssr&&row.verified===true);
+ assert.ok(!processedMeat.excluded_related_catalog_ids.includes(row.catalog_id));
+}
 const fruitVegReviews=contaminants.chapter_2_3_commodity_mrl_review_v1||[];
 const fruitVegById=new Map(fruitVegReviews.map(x=>[x.catalog_id,x]));
 const chapter23Products=index.products.filter(p=>String(p.fssr||"").startsWith("2.3."));
@@ -362,6 +379,7 @@ function contaminantEvidenceForProduct(p){
  const beverageSaffroleEvidence=exactBeverageSaffroleById.get(p.id)||null;
  const soupSauceSaffrole=namedSoupSauceIds.get(p.id)||null;
  const alcoholicEvidence=alcoholicById.get(p.id)||null;
+ const processedMeatEvidence=processedMeatById.get(p.id)||null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
@@ -377,6 +395,7 @@ function contaminantEvidenceForProduct(p){
  if(beverageSaffroleEvidence)explicitKinds.push("verified_exact_finished_beverage_saffrole_article");
  if(soupSauceSaffrole)explicitKinds.push("verified_soup_sauce_saffrole_official_article");
  if(alcoholicEvidence)explicitKinds.push("verified_exact_finished_alcoholic_beverage_nots_article");
+ if(processedMeatEvidence)explicitKinds.push("verified_finished_processed_meat_saffrole_article");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
    "no_exact_catalog_evidence_in_this_inventory";
@@ -388,6 +407,10 @@ function contaminantEvidenceForProduct(p){
      source_url:alcoholic.official_source_url,full_compliance_verified:false,
      pesticide_mrls_auto_applied:false,other_contaminants_assessed:false
    }:null,
+   exact_processed_meat_saffrole:processedMeatEvidence?{
+     source:processedMeat.official_source_url,article:processedMeat.official_article,
+     limit:processedMeat.limit,unit:processedMeat.unit,full_compliance_verified:false,
+     pesticide_mrls_auto_applied:false}:null,
    exact_named_crop_toxin_article:cropToxin?{
      fssr:"FSSAI CTR Version IX · 2.2.1",
      named_identity:cropToxin.standard_identity,
@@ -624,6 +647,10 @@ const products = index.products.map(p => {
       tally("chapter_2_3_non_equivalent_articles","raw_cocoa_beans_not_cocoa_powder");
     action.push("Review Chapter 2.3 specific fruit, vegetable, nut or processed-product matrix, raw-ingredient commodity MRL, processing factor and sample basis; no finished-product pesticide MRL automatically established");
   }
+  if(contaminantEvidence.exact_processed_meat_saffrole){
+    tally("processed_meat_nots","exact_grouped_meat_saffrole_partial");
+    action.push("FSSAI grouped processed meat Saffrole 10 ppm only; separate verification required for metals, other toxins, pesticide/veterinary residues, species and amendments.");
+  }
   if(contaminantEvidence.exact_alcoholic_beverage_toxic_substances){
     tally("alcoholic_beverage_nots","four_official_grouped_article_limits_identity_locked");
     action.push("Exact FCS 14.2 alcoholic beverage: four source-backed Version IX naturally occurring toxic-substance rows only; review other contaminants, pesticide/veterinary residues, effective amendments and product form separately");
@@ -799,6 +826,7 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| Processed meat identities with grouped FSSAI Saffrole partial evidence | "+(counts.processed_meat_nots?.exact_grouped_meat_saffrole_partial||0)+" |",
   "| Exact FCS 14.2 alcoholic beverages with four verified Version IX naturally occurring toxin rows | "+(counts.alcoholic_beverage_nots?.four_official_grouped_article_limits_identity_locked||0)+" |",
   "| Chapter 2.3 exact finished soups/sauces with FSSAI Saffrole 10 ppm | "+(counts.chapter_2_3_exact_soup_sauce_saffrole?.named_finished_soup_or_sauce||0)+" |",
   "| Chapter 2.3 deshelled groundnut kernel identities with sourced aflatoxin ceiling | "+(counts.chapter_2_3_verified_groundnut_crop_limits?.identity_and_same_limits_across_source_articles||0)+" |",

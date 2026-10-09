@@ -8529,6 +8529,19 @@ function productBaselineContaminantRules(p){
    }
  }
  
+ // Version IX §2.2.1(2), exact finished meat-product Saffrole 10 ppm.
+ // Whitelist must agree with catalogue ID, name, FSSR and current source row.
+ const finishedMeat=contaminantsDb?.chapter_2_5_verified_processed_meat_saffrole_v9;
+ const confirmedMeat=(finishedMeat?.verified_finished_product_identities||[]).find(x=>
+   x.catalog_id===id&&x.product_name===p.name&&x.fssr===p.fssr&&x.verified===true);
+ if(confirmedMeat&&!(finishedMeat.excluded_related_catalog_ids||[]).includes(id)){
+   const official=(contaminantsDb?.naturally_occurring_toxic_substances?.saffrole||[]).find(x=>
+     x.article===finishedMeat.official_article&&Number(x.limit)===Number(finishedMeat.limit)&&x.unit===finishedMeat.unit);
+   if(official)pushRule({contaminant:'Saffrole',article:official.article,limit:official.limit,unit:official.unit,
+     source_basis:'FSSAI CTR Version IX §2.2.1(2) · verified finished processed meat',
+     condition:'Only '+p.name+' under '+p.fssr+'. Not raw meat, egg, casings, pesticide MRL or complete conformity.'});
+ }
+ 
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
