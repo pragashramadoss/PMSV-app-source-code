@@ -14,6 +14,8 @@ const ctx=vm.createContext({});
 vm.runInContext(script,ctx);
 const score=(product,raw)=>vm.runInContext('pmsvDirectScore('+JSON.stringify(product)+','+JSON.stringify(raw)+')',ctx);
 const alias=raw=>vm.runInContext('pmsvStandardLookupAlias('+JSON.stringify(raw)+')',ctx);
+ctx.products=items;
+const ranked=raw=>vm.runInContext('pmsvRankedStandardCandidates(products,'+JSON.stringify(raw)+',pmsvDirectScore)',ctx);
 const grouped=new Map();
 for(const p of items){
  const k=norm(p.name);
@@ -67,5 +69,50 @@ test('grain and flour routing checks cover entire verified millet list rather th
  for(const [q,id] of [['jowar flour','06-06-2-jowar-flour-sorghum-flour'],
    ['bajra flour','06-06-2-bajra-flour-pearl-millet-flour'],['ragi flour','06-06-2-ragi-flour']]){
    assert.equal(alias(q)?.productId,id,q);
+ }
+});
+
+test('every uniquely named FoSCoS catalogue item ranks itself first across all 533 products',()=>{
+ const unique=[...grouped.values()].filter(g=>g.length===1).map(g=>g[0]);
+ let passed=0;
+ for(const p of unique){
+   const rows=ranked(p.name);
+   assert.ok(rows.length,'No catalogue match for '+p.name);
+   assert.equal(rows[0]?.p?.id,p.id,'Wrong top product for '+p.name);
+   assert.ok(rows.every(x=>x.score>0),'Unrelated zero-score catalogue row leaked into dropdown');
+   passed++;
+ }
+ assert.equal(passed,519);
+});
+test('every grain-only alias yields exactly one grain identity and flour-only queries stay flour',()=>{
+ for(const crop of ['Jowar','Sorghum','Ragi','Bajra','Finger Millet','Foxtail Millet','Kodo Millet','Barnyard Millet','Teff']){
+   const rows=ranked(crop);
+   assert.equal(rows.length,1,'Ambiguous or unrelated dropdown for whole grain '+crop);
+   assert.equal(rows[0].p.id,'06-06-1-millets',crop);
+   assert.doesNotMatch(rows[0].p.name,/flour|powder/i);
+ }
+ for(const [q,id] of [['Jowar Flour','06-06-2-jowar-flour-sorghum-flour'],
+   ['Sorghum Flour','06-06-2-jowar-flour-sorghum-flour'],
+   ['Ragi Flour','06-06-2-ragi-flour'],
+   ['Bajra Flour','06-06-2-bajra-flour-pearl-millet-flour']]){
+   const rows=ranked(q);
+   assert.equal(rows.length,1,'Flour query must match exactly one standardized food');
+   assert.equal(rows[0].p.id,id,q);
+ }
+ assert.equal(alias('jowar').displayName,'Jowar');
+ assert.equal(alias('ragi').displayName,'Ragi');
+});
+test('unverified processed-food forms show no false regulatory match',()=>{
+ for(const food of ['kodo flour','teff flour','buckwheat flour','jowar paste','ragi oil']){
+   assert.deepEqual(ranked(food),[],'Unsupported form must fail closed: '+food);
+ }
+});
+test('all four duplicate-name groups require an explicit food-category choice',()=>{
+ const groups=[...grouped.values()].filter(x=>x.length>1);
+ assert.equal(groups.length,4);
+ for(const g of groups){
+   const rows=ranked(g[0].name);
+   assert.ok(rows.length>=2,'Duplicate name not returned for manual selection: '+g[0].name);
+   assert.equal(vm.runInContext('pmsvAmbiguousExactNames(productsRanked,'+JSON.stringify(g[0].name)+')',vm.createContext({...ctx,productsRanked:rows})),true);
  }
 });
