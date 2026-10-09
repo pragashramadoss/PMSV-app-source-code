@@ -1230,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-grain-pulse-audit-v489';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-regulatory-special-routes-v490';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -1457,7 +1457,7 @@ async function pmsvDirectProductNameNearestStandard(value){
      const aliasLabel=alias&&String(p.id||'')===alias.productId?alias.displayName:String(p.name||'FSSAI product');
      const label=(index===0&&!ambiguous&&best.score>0?'Suggested — ':'')
        +aliasLabel
-       +(standard&&!/^(?:n\.?\s*a\.?|na|n\/a|—|-)$/i.test(standard)?' · '+standard:' · FSSR N.A.');
+       +(standard&&!/^(?:n\.?\s*a\.?|na|n\/a|—|-)$/i.test(standard)?' · '+standard:p.regulatory_route_link_status==='file_and_key_verified'?' · Official special regulatory route (FCS '+String(p.fcs||p.category||'')+')':' · FSSR N.A.');
      select.add(new Option(label+(ambiguous?' · FCS '+String(p.fcs||p.category||'') :''),String(p.id||''),false,index===0&&!ambiguous&&best.score>0));
    });
    select.disabled=false;
@@ -5124,6 +5124,14 @@ function showSelectedCatalogProduct(p){
   +(p.appendix_fcs_status==='foscos_special_category_outside_appendix_a_fcs'?'<div class="notice"><b>Appendix A route:</b> '+esc(p.appendix_fcs_note||'This FoSCoS special category is outside Appendix A FCS 1–16; PMSV does not infer an additive FCS.')+'</div>':'')
   +(profile?.chapter_rule_route_note?'<div class="notice '+(profile.chapter_rule_route_status==='specific_variant_table_pending'?'':'oknote')+'"><b>Chapter routing:</b> '+esc(profile.chapter_rule_route_note)+(Array.isArray(profile.linked_rule_keys)&&profile.linked_rule_keys.length?'<br><small>Linked rule key(s): '+profile.linked_rule_keys.map(esc).join(' + ')+'</small>':'')+'</div>':'')
   +(profile&&!detailed?'<div class="notice"><b>'+(chapterLoaded?'Chapter profile loaded':'Base profile ready')+':</b> '+(chapterLoaded?'The product has been mapped to its applicable FSSAI chapter standard and structured chapter-rule data is loaded. Machine validation of every product-specific clause and linked Appendix rule is still being completed before full formulation compliance is enabled.':'Product identity, Appendix FCS/FSSR mapping and general FSSAI regulatory layers are loaded. Product-specific definition, composition, permitted ingredients and numerical limits are still being ingested, so PMSV will not issue a full formulation-compliance conclusion yet.')+'</div>':'');
+ if(p.regulatory_route_link_status==='file_and_key_verified'){
+   details.innerHTML+='<div class="notice"><b>Official FSSAI/FoSCoS special regulatory route identified.</b> '
+     +esc(p.regulatory_route_kind||'Category / ingredient identity')
+     +' · FCS '+esc(p.fcs||'special')
+     +' · No standalone Chapter 2 FSSR clause implied. '
+     +'<a target="_blank" rel="noopener noreferrer" href="./route-coverage-test.html?product='+encodeURIComponent(String(p.id||''))+'">View exact route and official sources</a>'
+     +'<br><small>Product/category identity is linked; additive permissions, numerical limits and final compliance remain independent checks.</small></div>';
+ }
  actions.innerHTML='<button class="btn" type="button" id="viewSelectedProduct">View standard & applicable requirements →</button><button class="btn-secondary" type="button" id="startSelectedProduct">Use this product with formulation →</button>';
  const activate=()=>{
    selectedProductId=profile?.id||p.id;
@@ -5165,7 +5173,7 @@ function renderProductSearch(){
    const detailed=profile&&profile.status==='rule_profile_ready';
    const chapterLoaded=profile&&profile.status==='chapter_profile_ready';
    const appendixFcs=appendixFcsForRecord(p);
-   return '<div class="item" style="margin-bottom:8px"><b>'+esc(p.name)+'</b><small>'+(p.category?'FoSCoS '+esc(p.category)+' · '+esc(p.subcategory||'—')+' · ':'')+'Appendix A FCS '+esc(appendixFcs||'not mapped')+(p.fssr?'<br>FSSR: '+esc(p.fssr):'')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FSSAI standard loaded · FoSCoS hierarchy mapping pending</span>':'')+(!appendixFcs?'<br><span class="status-warn">'+esc(appendixFcsStatusLabel(p)||'Appendix A mapping pending')+'</span>':'')+'<br>'+(detailed?'<span class="status-good">Detailed profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base profile loaded</span>':'<span class="status-good">Catalogue standard available for lookup</span>')+'</small><div style="margin-top:8px"><button class="btn-secondary" type="button" data-show-catalog-product="'+esc(p.id)+'">Select</button></div></div>';
+   return '<div class="item" style="margin-bottom:8px"><b>'+esc(p.name)+'</b><small>'+(p.category?'FoSCoS '+esc(p.category)+' · '+esc(p.subcategory||'—')+' · ':'')+'Appendix A FCS '+esc(appendixFcs||'not mapped')+(p.fssr?'<br>FSSR: '+esc(p.fssr):'')+(p.regulatory_route_link_status==='file_and_key_verified'?'<br><span class="status-good">Official special regulatory route linked · '+esc(p.regulatory_route_kind||'FSSAI category')+'</span>':'')+(p.foscos_mapping_status==='pending_official_mapping'?'<br><span class="status-warn">FSSAI standard loaded · FoSCoS hierarchy mapping pending</span>':'')+(!appendixFcs?'<br><span class="status-warn">'+esc(appendixFcsStatusLabel(p)||'Appendix A mapping pending')+'</span>':'')+'<br>'+(detailed?'<span class="status-good">Detailed profile complete</span>':chapterLoaded?'<span class="status-good">FSSAI chapter profile loaded</span>':profile?'<span class="status-warn">Base profile loaded</span>':'<span class="status-good">Catalogue standard available for lookup</span>')+'</small><div style="margin-top:8px"><button class="btn-secondary" type="button" data-show-catalog-product="'+esc(p.id)+'">Select</button></div></div>';
  }).join('');
  box.querySelectorAll('[data-show-catalog-product]').forEach(btn=>btn.addEventListener('click',()=>{
    const p=findCatalogProductById(btn.dataset.showCatalogProduct);
@@ -7059,7 +7067,8 @@ function renderStandardLookupDashboard(){
    return;
  }
  const name=p?.name||profile?.display_name||profile?.name||'Selected product';
- const fssr=p?.fssr||profile?.fssr||profile?.rule_key||'Not shown';
+ const specialRoute=p?.regulatory_route_link_status==='file_and_key_verified'||profile?.regulatory_route_link_status==='file_and_key_verified';
+ const fssr=p?.fssr||profile?.fssr||profile?.rule_key||(specialRoute?'Special regulatory route — not a standalone Chapter 2 FSSR':'Not shown');
  const fcs=appendixFcsForRecord(p)||appendixFcsForRecord(profile)||'Not mapped';
  box.classList.remove('hidden');
  box.innerHTML='<div class="card" style="margin:0;background:#f7fbff"><div class="section-title"><h2>Standard lookup mode — '+esc(name)+'</h2><span>No formulation required</span></div>'
@@ -7078,6 +7087,7 @@ function renderStandardLookupDashboard(){
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="claims">Claims rules</button>'
    +'<button class="btn-secondary" type="button" data-standard-lookup-tab="summary">Standard lookup summary</button>'
    +'</div>'
+   +(specialRoute?'<div class="notice"><b>Official special regulatory category / ingredient route.</b> See the verified FoSCoS route, source and limits before considering any compliance claim. <a target="_blank" rel="noopener noreferrer" href="./route-coverage-test.html?product='+encodeURIComponent(String(p?.id||profile?.id||''))+'">Inspect regulatory route ↗</a></div>':'')
    +standardLookupRuntimeAuditHtml()
    +standardLookupDataCoverageHtml()
    +'<div class="notice" style="margin-top:10px"><b>Formulation-dependent only:</b> recipe/brand nutrition calculation, ingredient-triggered allergens/warnings, ingredient-specific contaminant triggers and quantitative formulation compliance are intentionally not evaluated in Standard Lookup mode. Exact ICMR-NIN IFCT reference nutrition is shown separately when the selected standardized product has an exact IFCT food identity. They do not block viewing the standardized product.</div></div>';
