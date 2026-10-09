@@ -11,8 +11,8 @@ const extract=(a,b)=>{
  assert.ok(first>=0&&last>first,'Missing function '+a);
  return page.slice(first,last);
 };
-const pmsvDirectNorm=extract('function pmsvDirectNorm(','function pmsvDirectScore(');
-const proprietaryScores=extract('function proprietaryStandardScore(','function selectedProprietaryStandardProduct(');
+const pmsvDirectNorm=extract('function pmsvDirectNorm(','async function pmsvDirectLoadStandardIndex(){');
+const proprietaryScores=extract('function proprietarySearchTokens(','function selectedProprietaryStandardProduct(');
 const clauseMatch=extract('function currentSelectedProductName(){','function currentGuardedFormulationStandards(){');
 const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
 function runner(){
