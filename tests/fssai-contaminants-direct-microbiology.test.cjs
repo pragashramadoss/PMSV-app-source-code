@@ -77,3 +77,31 @@ test("master contaminant lookup does not pass with universal-only methylmercury"
  assert.match(scoped,/universal-only evidence as complete coverage/);
  assert.doesNotMatch(scoped,/const totalMapped=exactCount\+baselineCount\+pesticideCount\+conditionalCount\+universalCount/);
 });
+
+test("INS 223/224 exact metabisulphite source metals remain substance-specific, not finished-food permission",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json"),"utf8"));
+ const family=db.special_exact_metabisulphite_metal_articles_v9;
+ assert.equal(family.verified_additive_identities.length,2);
+ assert.equal(family.finished_food_additive_permission_verified,false);
+ const at=html.indexOf("function productBaselineContaminantRules(p){");
+ const stop=html.indexOf("\nfunction ",at+25);
+ assert.ok(at>=0&&stop>at);
+ const ctx=vm.createContext({contaminantsDb:db,chapterRuleDbs:[],ruleDbStandards:()=>[],
+  exactFinishedProductContaminantLock:()=>null,exactRawMeatMetalLock:()=>null,
+  normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+  isVerifiedFermentedMilkProduct:()=>false});
+ vm.runInContext(html.slice(at,stop),ctx);
+ const run=p=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx))
+  .filter(x=>x.source_basis?.includes("exact INS additive identity/purity metal")).map(x=>[x.contaminant,x.limit,x.unit]);
+ for(const row of family.verified_additive_identities){
+  const p=index.products.find(x=>x.id===row.catalog_id);assert.ok(p);
+  assert.equal(p.name,row.product_name);
+  assert.deepEqual(run(p),[["Lead",2,"mg/kg"],["Selenium",5,"mg/kg"]]);
+  assert.deepEqual(run({...p,name:"generic additive blend"}),[]);
+  const changed=structuredClone(db);
+  changed.metal_article_rules_v9.Lead.find(x=>x.article===row.official_article).limit=22;
+  ctx.contaminantsDb=changed;
+  assert.deepEqual(run(p),[["Selenium",5,"mg/kg"]]);
+  ctx.contaminantsDb=db;
+ }
+});
