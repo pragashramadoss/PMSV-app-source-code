@@ -4980,6 +4980,8 @@ function renderMasterComplianceSummary(){
      rows.push(masterComplianceRow('Microbiology','incomplete','Select a standardized product first.','micro'));
    }else if(['carbonated-water','carbonated-caffeinated-beverage','non-carbonated-caffeinated-beverage'].includes(product.id)||product.microbiology_status==='mapped_appendix_b_v2'){
      rows.push(masterComplianceRow('Microbiology','pass','A direct product-standard or exact Appendix B route is mapped and can be inspected without formulation ingredients.','micro'));
+   }else if(chapterSpecificMicrobiologyForProduct(product).length){
+     rows.push(masterComplianceRow('Microbiology','evidence','Exact FSSAI '+product.rule_key+' product-standard microbiology is available without entering ingredients. Current amendments, any additional Appendix B route and laboratory results remain separate review items.','micro'));
    }else{
      rows.push(masterComplianceRow('Microbiology','evidence','No single exact microbiology route is auto-assigned. Review the product/process category; no formulation ingredient list is required for that review.','micro'));
    }
@@ -5049,6 +5051,8 @@ function renderMasterComplianceSummary(){
    rows.push(masterComplianceRow('Microbiology','pass','Direct Chapter 2.10 microbiological criteria are mapped. Product test results remain QA evidence.','micro'));
  }else if(product.microbiology_status==='mapped_appendix_b_v2'){
    rows.push(masterComplianceRow('Microbiology','pass','An exact Appendix B Version 2 microbiology profile is mapped. Product test results remain QA evidence.','micro'));
+ }else if(chapterSpecificMicrobiologyForProduct(product).length){
+   rows.push(masterComplianceRow('Microbiology','evidence','The exact FSSAI '+product.rule_key+' chapter microbiology criteria are stored. Other current regulatory applicability and test evidence remain outstanding.','micro'));
  }else{
    rows.push(masterComplianceRow('Microbiology','incomplete','The selected product has no single fully resolved microbiology route; review its Appendix B/direct-standard status and any required variant.','micro'));
  }
@@ -7507,6 +7511,39 @@ function microbiologyProfileHtml(resolved,product=null,variantOption=null){
    +(methodRows?'<div class="section-title" style="margin-top:16px"><h2>Reference test methods</h2><span>'+esc(title)+'</span></div><div class="tablewrap"><table><thead><tr><th>Parameter</th><th>Method</th></tr></thead><tbody>'+methodRows+'</tbody></table></div>':'')
    +(notes.length?'<div class="notice"><b>Product-specific source notes:</b><br>'+[...new Set(notes)].map(esc).join('<br>')+'</div>':'');
 }
+/* Exact FSSAI chapter criteria are separate from the Appendix B category tables. */
+function chapterSpecificMicrobiologyForProduct(p){
+ if(!p)return [];
+ const key=String(p.rule_key||p.fssr||'').trim();
+ if(!key)return [];
+ return currentChapterStandards().filter(({standard})=>
+    String(standard?.key||'').trim()===key &&
+    Array.isArray(standard.chapter_specific_microbiology) &&
+    standard.chapter_specific_microbiology.length &&
+    standard.numeric_evidence?.compliance_assessment_enabled===false
+  ).map(({standard})=>standard);
+}
+function chapterSpecificMicrobiologyHtml(p){
+ const standards=chapterSpecificMicrobiologyForProduct(p);
+ if(!standards.length)return '';
+ let html='';
+ for(const standard of standards){
+   const source=String(standard.numeric_evidence?.source_url||'');
+   const sourceLink=/^https:\/\/(?:www\.)?fssai\.gov\.in\//i.test(source)
+     ?' <a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI chapter source</a>':'';
+   html+='<div class="notice"><b>Direct product-standard microbiological criteria — FSSAI '+esc(standard.key)+'.</b> '
+     +'These exact chapter rows are separate from Appendix B; current amendments and other applicability still require review.'
+     +sourceLink+'</div>';
+   html+='<div class="tablewrap"><table><thead><tr><th>Microbiological parameter</th><th>Regulatory requirement</th><th>Source</th></tr></thead><tbody>'
+     +standard.chapter_specific_microbiology.map(rule=>{
+       const text=rule.operator==='absent'
+         ?'Absent in '+esc(rule.sample_size||'')+' '+esc(rule.sample_unit||'')
+         :esc(String(rule.operator||''))+' '+esc(rule.value)+' '+esc(rule.unit||'');
+       return '<tr><td><b>'+esc(rule.parameter||'Criterion')+'</b></td><td>'+text+'</td><td>FSSAI '+esc(standard.key)+'</td></tr>';
+     }).join('')+'</tbody></table></div>';
+ }
+ return html;
+}
 function renderProductMicrobiology(){
  const el=document.getElementById('microbiologyResults');
  if(!el)return;
@@ -7526,17 +7563,24 @@ function renderProductMicrobiology(){
     +'<div class="notice"><b>Appendix B check:</b> Table 7 is not substituted for this product because its current Chapter 2.10 route supplies the microbiological requirements directly.</div>';
    return;
  }
+ const chapterSpecific=chapterSpecificMicrobiologyHtml(p);
+ // Exact chapter rules remain visible without an Appendix B match. They do not
+ // become a substitute for later effective amendments or other safety checks.
+ if(chapterSpecific && !['mapped_appendix_b_v2','conditional_appendix_b_variant_required'].includes(p.microbiology_status)){
+   el.innerHTML=chapterSpecific+'<div class="notice"><b>Additional microbiology review remains open.</b> Confirm whether another current FSSAI Appendix B or process-specific row applies. No full microbiological compliance verdict is issued.</div>';
+   return;
+ }
  if(!microbiologyDb){
-   el.innerHTML='<div class="notice">Appendix B database is loading or unavailable. PMSV will not substitute fallback microbiological limits.</div>';
+   el.innerHTML=chapterSpecific+'<div class="notice">Appendix B database is loading or unavailable. PMSV will not substitute fallback microbiological limits.</div>';
    return;
  }
  if(p.microbiology_status==='mapped_appendix_b_v2'){
-   el.innerHTML=microbiologyProfileHtml(microbiologyProfileByKey(p.microbiology_profile_key),p);
+   el.innerHTML=chapterSpecific+microbiologyProfileHtml(microbiologyProfileByKey(p.microbiology_profile_key),p);
    return;
  }
  if(p.microbiology_status==='conditional_appendix_b_variant_required'){
    const opts=Array.isArray(p.microbiology_candidates)?p.microbiology_candidates:[];
-   el.innerHTML='<div class="notice"><b>Actual product form/process required before Appendix B can be applied.</b><br>'+esc(p.microbiology_note||'More than one Appendix B category may apply.')+'</div>'
+   el.innerHTML=chapterSpecific+'<div class="notice"><b>Actual product form/process required before Appendix B can be applied.</b><br>'+esc(p.microbiology_note||'More than one Appendix B category may apply.')+'</div>'
     +'<div class="field"><label>Select the actual regulated form / process</label><select id="microbiologyVariantChoice"><option value="">Select actual form/process…</option>'+opts.map((x,i)=>'<option value="'+i+'">'+esc(x.condition)+'</option>').join('')+'</select><small>PMSV will not choose between these categories automatically.</small></div>'
     +'<div id="microbiologyResolvedVariant" style="margin-top:12px"></div>';
    const sel=document.getElementById('microbiologyVariantChoice');
