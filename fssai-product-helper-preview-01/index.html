@@ -3062,7 +3062,7 @@ function exactDairyCompositionHtml(product){
    html+=table(['Fermented milk requirement','Minimum','Conditions'],
      rules.filter(x=>!x.product).map(x=>[x.parameter,String(x.operator||'')+' '+x.value+' '+(x.unit||''),x.condition||'General fermented-milk rule']));
    const special=rules.find(x=>n(x.product)==='dahi'&&n(x.parameter).includes('milk fat'));
-   if(special)html+='<div class="notice"><b>Plain Dahi milk fat / milk solids-not-fat:</b> '+esc(special.requirement||'')
+   if(special)html+='<div class="notice"><b>Plain Dahi — Milk fat and milk solids-not-fat:</b> '+esc(special.requirement||'')
      +'<br><small>'+esc(special.condition||'')+'</small></div>';
    const mixed=(get('2.1.2')?.composition||[]).find(x=>n(x.variant)==='mixed milk');
    if(mixed&&mixed.milk_fat_min_pct!=null&&mixed.snf_min_pct!=null){
