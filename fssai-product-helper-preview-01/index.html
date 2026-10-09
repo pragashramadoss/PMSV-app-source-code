@@ -768,11 +768,12 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <section id="nutrition" class="view hidden">
 <div id="nutritionLookupNotice" class="notice hidden"></div>
 <div class="card hidden" id="nutritionStandardReferenceCard">
-<div class="section-title"><h2>Standardized-product composition & nutrition</h2><span>FSSAI standard + ICMR-NIN IFCT 2017</span></div>
-<div id="nutritionStandardRegulatory"></div>
+<div class="section-title"><h2>Standardized-product composition & nutrition</h2><span>ICMR-NIN IFCT 2017 + FSSAI standard</span></div>
+<div class="notice"><b>Nutrition reference first:</b> ICMR-NIN IFCT 2017 values are displayed below only for an exact analysed food identity. Where IFCT has no matching food (including Dahi), PMSV explicitly reports the gap instead of treating FSSAI legal minima as measured nutrition. No ingredient entry is needed to inspect the standard.</div>
 <div id="nutritionStandardIfctVariant"></div>
 <div id="nutritionStandardReferenceStatus" class="notice"></div>
 <div id="nutritionStandardReferenceTable"></div>
+<details class="nutrition-fssai-details"><summary><b>FSSAI legal composition &amp; product-standard conditions</b> (expand)</summary><div id="nutritionStandardRegulatory"></div></details>
 <div class="flow-actions"><button class="btn-secondary" type="button" id="nutritionGoToProductStandard">View full FSSAI product standard</button><button class="btn-secondary" type="button" id="nutritionGoToFormulation">Optional: calculate recipe nutrition</button></div>
 </div>
 <div class="card" id="nutritionFormulationControlsCard">
@@ -1229,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-ifct-standard-lookup-v477';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-ifct-status-first-v478';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -3177,23 +3178,33 @@ function renderStandardLookupNutritionReference(){
       +'<small>This changes only the IFCT reference, not the FSSAI regulatory identity. IFCT L003 measures Paneer, not Chhana.</small></div>'
      :'';
  }
+ const ifctUrl='https://www.nin.res.in/ebooks/IFCT2017_16122024.pdf';
+ const source='<br><small>Official source: <a href="'+ifctUrl+'" target="_blank" rel="noopener noreferrer">ICMR-NIN IFCT 2017</a>.</small>';
+ // Dahi is not analysed in IFCT 2017. Its honest nutrition-data status
+ // must be visible immediately, even if the optional modular DB is still loading.
+ if(isDahi){
+   status.className='notice';
+   status.innerHTML='<b>ICMR-NIN IFCT 2017 — Dahi/Curd nutrition: NO DIRECT ANALYSED ENTRY.</b><br>'
+     +'IFCT 2017 has milk, paneer and khoa entries, but no directly measured Dahi entry. '
+     +'<b>Energy, carbohydrates, fat, protein and micronutrients for Dahi cannot be filled from IFCT 2017.</b> '
+     +'Do not substitute unfermented cow/buffalo milk nutrient values, or turn FSSAI minimum composition limits into nutrition figures. '
+     +'FSSAI Chapter 2.1.13 legal composition appears separately below. '
+     +'For finished Dahi nutrient values use product-specific laboratory evidence, or a clearly labelled formulation-and-yield estimate.'+source;
+   table.innerHTML='<div class="notice"><b>Data status: unavailable in IFCT 2017 for Dahi.</b> '
+     +'No ingredient entry is required to view the FSSAI standard; ingredient entry is only for optional estimated recipe nutrition. '
+     +'PMSV does not invent or substitute missing government-source values.</div>';
+   return;
+ }
  if(!nutritionDb){
    status.className='notice';
-   status.innerHTML='<b>ICMR-NIN IFCT 2017 is still loading.</b> No ingredients are needed for this lookup.';
+   status.innerHTML='<b>ICMR-NIN IFCT 2017 nutrition database has not loaded.</b> No ingredients are needed for the standard lookup; check the data loader if this persists.';
    table.innerHTML='';
    return;
  }
  const match=standardLookupNutritionProfile();
- const ifctUrl='https://www.nin.res.in/ebooks/IFCT2017_16122024.pdf';
- const source='<br><small>Official source: <a href="'+ifctUrl+'" target="_blank" rel="noopener noreferrer">ICMR-NIN IFCT 2017</a>.</small>';
  if(!match){
    status.className='notice';
-   if(isDahi){
-     status.innerHTML='<b>Layer 2 — Dahi/Curd has no directly analysed entry in IFCT 2017.</b><br>'
-       +'The FSSAI 2.1.13 limits above describe legal composition; they are <b>not</b> nutrition values per 100 g. '
-       +'Do not substitute cow or buffalo milk values, or calculate from the minimum milk-protein rule. '
-       +'A formulation-based estimate is optional and must be labelled an estimate.'+source;
-   }else if(isCombinedPaneer){
+   if(isCombinedPaneer){
      status.innerHTML='<b>Layer 2 — '+(pmsvStandardIfctPaneerChoice==='chhana'?'Chhana has no direct IFCT 2017 entry.':'Choose Paneer or Chhana above to select the correct IFCT identity.')+'</b><br>'
        +'The composite FSSAI standard cannot automatically be treated as IFCT Paneer L003. '
        +'No formulation ingredients are required to inspect the standard.'+source;
