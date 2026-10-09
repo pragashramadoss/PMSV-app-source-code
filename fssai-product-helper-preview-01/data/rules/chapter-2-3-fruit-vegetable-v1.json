@@ -1561,20 +1561,168 @@
     {
       "key": "2.3.43",
       "name": "Pickles (made from Fruits)",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Source-pinned 2023 FSSAI numerical baseline. No full compliance verdict without correct product/medium selection and legal cross-checks against later amendments and applicable Appendices.",
+      "variant_resolution_required": true,
+      "variant_composition": [
+        {
+          "variant": "Pickles in citrus juice",
+          "composition": [
+            {
+              "parameter": "Drained weight",
+              "operator": ">=",
+              "value": 60,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Acidity as citric acid",
+              "operator": ">=",
+              "value": 1.2,
+              "unit": "% m/m"
+            }
+          ],
+          "medium": "citrus_juice"
+        },
+        {
+          "variant": "Pickles in brine",
+          "composition": [
+            {
+              "parameter": "Drained weight",
+              "operator": ">=",
+              "value": 60,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Sodium chloride content",
+              "operator": ">=",
+              "value": 12,
+              "unit": "% m/m"
+            }
+          ],
+          "medium": "brine"
+        },
+        {
+          "variant": "Pickles in oil",
+          "composition": [
+            {
+              "parameter": "Drained weight",
+              "operator": ">=",
+              "value": 60,
+              "unit": "% m/m"
+            }
+          ],
+          "medium": "oil",
+          "additional_non_numeric_requirement": "Fruit and vegetable pieces practically remain submerged in oil"
+        },
+        {
+          "variant": "Pickles in vinegar",
+          "composition": [
+            {
+              "parameter": "Drained weight",
+              "operator": ">=",
+              "value": 60,
+              "unit": "% m/m"
+            },
+            {
+              "parameter": "Acidity as acetic acid",
+              "operator": ">=",
+              "value": 2,
+              "unit": "% m/m"
+            }
+          ],
+          "medium": "vinegar"
+        },
+        {
+          "variant": "Pickles without a listed preserving medium",
+          "composition": [],
+          "medium": "other",
+          "auto_evaluate": false,
+          "verification_note": "The clause prescribes product-specific designation but no blanket brine/oil/vinegar numeric limits for this variant. Other rules still apply."
+        }
+      ],
+      "quality_rules": [
+        "Pickles must show no signs of fermentation as stated by this product standard.",
+        "Pickles must be free from copper, mineral acid, alum and synthetic colours.",
+        "Do not auto-apply all preserving-medium requirements to a product; confirm actual medium and label identity.",
+        "Appendix A additive permissions and Appendix B microbiology remain separate assessments."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          54,
+          55
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.42",
       "name": "Mango Chutney",
-      "status": "official_clause_identity_verified_partial_core",
-      "coverage_scope": "identity_and_clause_mapping_only",
+      "status": "official_numeric_baseline_partial_cross_layer_pending",
+      "coverage_scope": "numeric_baseline_requires_variant_and_current_regulation_verification",
       "full_compliance_assessment_enabled": false,
       "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
-      "verification_note": "Official FSSAI clause/variant matches this FoSCoS identity. Numerical specification limits, food-specific additive permissions, microbiology and contaminants are NOT fully structured by this identity-only record."
+      "verification_note": "Source-pinned 2023 FSSAI numerical baseline. No full compliance verdict without correct product/medium selection and legal cross-checks against later amendments and applicable Appendices.",
+      "composition": [
+        {
+          "parameter": "Total soluble solids",
+          "operator": ">=",
+          "value": 50,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Fruit content",
+          "operator": ">=",
+          "value": 40,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "pH",
+          "operator": "<=",
+          "value": 4.6,
+          "unit": "pH"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% m/m"
+        },
+        {
+          "parameter": "Ash insoluble in hydrochloric acid",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% m/m"
+        }
+      ],
+      "packaging_requirements": [
+        {
+          "parameter": "Rigid-container fill",
+          "operator": ">=",
+          "value": 90,
+          "unit": "% water capacity",
+          "condition": "Only rigid containers"
+        }
+      ],
+      "quality_rules": [
+        "Product must be Mango Chutney, not generic fruit/vegetable chutney or sauces."
+      ],
+      "numeric_evidence": {
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_version": "FSSAI Chapter 2.3 compendium Version 1 (01.09.2023)",
+        "source_pdf_pages": [
+          54
+        ],
+        "reviewed_on": "2026-10-09",
+        "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
+        "compliance_assessment_enabled": false
+      }
     },
     {
       "key": "2.3.25",
