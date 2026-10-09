@@ -335,7 +335,7 @@ assert.equal(rawPulsesIndex?.name,exactRawPulses.product_name);
 assert.equal(rawPulsesIndex?.fssr,exactRawPulses.existing_catalogue_fssr);
 const rawPulsesStandard=read("rules/chapter-2-4-cereals-v1.json").standards.find(x=>x.key===exactRawPulses.specific_source_clause);
 assert.ok(rawPulsesStandard);
-assert.equal(rawPulsesStandard.status,"source_exact_specific_clause_pending_catalogue_link");
+assert.equal(rawPulsesStandard.status,"source_exact_specific_clause_linked_parent_fssr");
 assert.deepEqual(rawPulsesStandard.general_limits.map(x=>x.value),[3,0.5]);
 assert.ok(official(rawPulsesStandard.official_source_url));
 for(const item of exactRawPulses.rules){
