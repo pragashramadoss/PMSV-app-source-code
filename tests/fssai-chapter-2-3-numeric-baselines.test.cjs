@@ -751,7 +751,7 @@ test("exact named nut and arecanut Version IX mappings suppress stale generic le
   assert.ok(p);
   assert.equal(profile(p),null, cfg.product_name+" legacy hard-coded aflatoxins must not bypass source checks");
  }
- const other=index.products.find(x=>x.id==="04-04-1-groundnut-kernel-deshelled");
+ const other=index.products.find(x=>x.id==="04-04-1-jams-fruit-jellies-and-marmalades");
  assert.ok(other);
- assert.ok(profile(other)?.rules?.length>0,"Groundnut profile must be unaffected");
+ assert.ok(profile(other)?.rules?.length>0,"Unrelated jam profile must be unaffected");
 });
