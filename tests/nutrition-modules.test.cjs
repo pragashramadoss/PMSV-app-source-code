@@ -199,7 +199,7 @@ test('existing label and vitamin calculations preserve null while accepting expl
   const sample = sandbox.nutritionDb.profiles[0];
   sample.per_100g.energy_kcal = 0; sample.per_100g.sodium_mg = 0;
   sample.ifct_table2_water_soluble_vitamins_per_100g.test = 0;
-  assert.equal(sandbox.calculateNutrition().per100g.energy_kcal, 0);
+  assert.equal(sandbox.calculateNutrition().per100g.energy_kcal, null); // source energy alone cannot produce a FSSAI calculated energy without complete macros
   assert.equal(sandbox.calculateIfctTable2Micronutrients().rows.test.per100g, 0);
 });
 
@@ -209,7 +209,7 @@ test('nutrition page renders all nine groups and clears stale composition after 
   const sandbox = {
     nutritionDb:merged,window:{PMSVNutritionModules:api},
     formulationIngredients:[{name:'Sample',qty:100,unit:'g'}],
-    nutritionProfileFor:() => profile('A001'),qtyToKg:q => q / 1000,formulaDensity:() => 1,nutritionServingMl:() => 250,nutritionFinishedMassG:mass=>mass,
+    nutritionProfileFor:() => profile('A001'),qtyToKg:q => q / 1000,formulaDensity:() => 1,nutritionServingMl:() => 250,nutritionFinishedMassG:mass=>mass,selectedProductForFortification:()=>null,currentProductProfile:()=>null,
     isNutritionNumber:api.finiteValue,esc:s => String(s).replaceAll('&','&amp;').replaceAll('<','&lt;'),fmt:(n,d) => n.toFixed(d),
     document:{getElementById:id => nodes[id]}
   };
@@ -233,7 +233,7 @@ test('index loader shows the verified version or a supplement warning while reta
   for (const missing of [false,true]) {
     const mock = mockFetch((file,raw,status) => ({raw,status:missing && file === manifest.modules[0].file ? 404 : status}));
     const status = {};
-    const sandbox = {window:{PMSVNutritionModules:{load:() => api.load({fetchImpl:mock.fetchImpl})}},nutritionDb:null,document:{getElementById:() => status},renderNutrition:() => {},renderProprietaryIngredientAutocomplete:()=>{},esc:String};
+    const sandbox = {window:{PMSVNutritionModules:{load:() => api.load({fetchImpl:mock.fetchImpl})}},nutritionDb:null,document:{getElementById:() => status},renderNutrition:() => {},renderProprietaryIngredientAutocomplete:()=>{},renderProprietaryFormula:()=>{},esc:String};
     vm.createContext(sandbox);vm.runInContext(script,sandbox);
     await sandbox.loadNutritionDb();
     assert.equal(sandbox.nutritionDb.profiles.length,535);
