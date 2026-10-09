@@ -27,6 +27,7 @@ const child=spawn('python3',['-m','http.server','18777','--bind','127.0.0.1','--
     chosen:document.getElementById('proprietaryStandardSelect')?.value,
     suggestion:document.getElementById('proprietaryStandardSuggestion')?.innerText.slice(0,280),
     option:document.querySelector('#proprietaryStandardSelect option:checked')?.textContent,
+    options:[...document.querySelectorAll('#proprietaryStandardSelect option')].map(x=>x.textContent),
     build:document.getElementById('buildBadge')?.textContent
   }));
   const checks=[
@@ -38,11 +39,15 @@ const child=spawn('python3',['-m','http.server','18777','--bind','127.0.0.1','--
     ['mandua','06-06-1-millets'],
     ['Ragi','06-06-1-millets'],
     ['jowar','06-06-1-millets'],
+    ['JOWAR','06-06-1-millets'],
+    ['whole jowar','06-06-1-millets'],
     ['sorghum','06-06-1-millets'],
     ['sorghum grain','06-06-1-millets'],
     ['Jowar Flour','06-06-2-jowar-flour-sorghum-flour'],
     ['jowar','06-06-1-millets'],
     ['Sorghum Flour','06-06-2-jowar-flour-sorghum-flour'],
+    ['bajra','06-06-1-millets'],
+    ['Bajra Flour','06-06-2-bajra-flour-pearl-millet-flour'],
     ['bajra','06-06-1-millets'],
     ['pearl millet','06-06-1-millets'],
     ['Bajra Flour','06-06-2-bajra-flour-pearl-millet-flour'],
@@ -56,8 +61,27 @@ const child=spawn('python3',['-m','http.server','18777','--bind','127.0.0.1','--
     await input.fill(query);
     await page.waitForTimeout(450); // allow deferred input handlers to run
     const got=await selected();
-    console.log('QUERY',JSON.stringify(query),'EXPECTED',want,'ACTUAL',got,'UI',JSON.stringify(await snapshot()));
+    const state=await snapshot();
+    console.log('QUERY',JSON.stringify(query),'EXPECTED',want,'ACTUAL',got,'UI',JSON.stringify(state));
     assert.equal(got,want,'Wrong standardized product after full browser event sequence');
+    assert.equal(state.options.length,2,'A named grain or flour must show exactly one eligible product and placeholder');
+    const chosen=state.options[1];
+    if(want==='06-06-1-millets'){
+      assert.ok(!/flour|powder/i.test(chosen),'Flour was shown for unmilled grain '+query);
+      if(/^jowar$/i.test(query))assert.match(chosen,/Jowar · 2\.4\.6\(23\)/);
+      if(/^ragi$/i.test(query))assert.match(chosen,/Ragi · 2\.4\.6\(23\)/);
+    }else{
+      assert.match(chosen,/flour/i,'Flour search did not show flour');
+    }
+  }
+  // Unsupported flour variants do not inherit a whole-grain standard.
+  for(const unsupported of ['kodo flour','teff flour','buckwheat flour']){
+    await input.fill(unsupported);
+    await page.waitForTimeout(500);
+    const state=await snapshot();
+    assert.equal(state.chosen,'','An unsupported flour must not become a grain or another flour');
+    assert.equal(state.options.length,1,'Unrelated products must not remain in the suggestions');
+    assert.match(state.suggestion,/No reliable/i);
   }
   // Find action and confirmation should retain the same grain identity.
   await input.fill('jowar');
@@ -69,7 +93,7 @@ const child=spawn('python3',['-m','http.server','18777','--bind','127.0.0.1','--
   await page.locator('#confirmProprietaryStandard').click();
   await page.waitForTimeout(450);
   const confirmation=await page.evaluate(()=>document.getElementById('proprietaryStandardSuggestion')?.innerText||'');
-  assert.match(confirmation,/Sorghum|Jowar/i);
+  assert.match(confirmation,/Confirmed FSSAI standard\/product: Jowar/i);
   assert.ok(!confirmation.includes('Jowar Flour'),'Confirmation silently switched to flour');
   console.log('PASS: all millet grains, flour variants, live dropdown and Jowar confirmation');
  }finally{await browser.close();}
