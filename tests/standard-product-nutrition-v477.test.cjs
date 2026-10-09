@@ -28,7 +28,7 @@ function harness(initial){
   modular_ifct:{tables:{5:{title:'Minerals',fields:{CA:{label:'Calcium',unit:'mg'},HG:{label:'Mercury',unit:'µg'}}},8:{title:'Amino Acids',fields:{HIS:{label:'Histidine',unit:'g'}}}}}
  };
  const nodes={};
- for(const id of ['nutritionStandardReferenceCard','nutritionStandardRegulatory','nutritionStandardReferenceStatus','nutritionStandardReferenceTable'])nodes[id]={id,innerHTML:'',className:'',classList:{toggle(){}}};
+ for(const id of ['nutritionStandardReferenceCard','nutritionStandardRegulatory','nutritionStandardReferenceStatus','nutritionStandardReferenceTable','nutritionStandardIfctVariant'])nodes[id]={id,innerHTML:'',className:'',classList:{toggle(){}}};
  const listeners={};const storage=new Map();
  const context={
    document:{getElementById:id=>nodes[id]||null,addEventListener:(type,fn)=>{listeners[type]=fn;}},
@@ -69,7 +69,7 @@ test('Khoa maps to ICMR-NIN L004 automatically without ingredients',()=>{
 test('Paneer requires exact selection from Chhana and Paneer — not ingredients',()=>{
  const h=harness({id:'01-01-6-chhana-and-paneer',name:'Chhana and Paneer'});
  assert.equal(h.resolve(),null);
- h.render();assert.match(h.nodes.nutritionStandardReferenceTable.innerHTML,/Select Paneer or Chhana/);
+ h.render();assert.match(h.nodes.nutritionStandardIfctVariant.innerHTML,/Select Paneer or Chhana/);
  h.select('paneer');assert.equal(h.resolve().profile.ifct_code,'L003');
  assert.match(h.nodes.nutritionStandardReferenceStatus.innerHTML,/L003/);
  h.select('chhana');assert.equal(h.resolve(),null);
