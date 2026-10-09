@@ -2648,16 +2648,45 @@ function findAppendixAdditive(name){
  if(gmpHit)return {name:gmpHit[1],ins:gmpHit[0],limit:'GMP',condition:'General Appendix A GMP Table provision.',source:'General GMP Table'};
  return null;
 }
+/* A product standard can narrow Appendix A. Never infer permission from FCS alone. */
+function exactProductStandardAdditiveRestriction(){
+ const product=selectedProductForFortification();
+ if(!product)return null;
+ const key=String(product.rule_key||product.fssr||'').trim();
+ if(!key)return null;
+ const match=currentChapterStandards().find(({standard})=>String(standard?.key||'').trim()===key);
+ if(!match)return null;
+ const record=match.standard;
+ const banned=record?.permitted_additives_policy?.permitted===false;
+ const classes=Array.isArray(record?.prohibited_additive_classes)?record.prohibited_additive_classes:[];
+ return banned||classes.length?{key,banned,classes,source_rule:record.permitted_additives_policy?.source_rule||''}:null;
+}
 function qualifyIngredient(item){
  const productName=currentSelectedProductName();
  const caffeinated=caffeinatedPrototypeScopeActive();
  const product=selectedProductForFortification();
  const fcs=appendixFcsForRecord(product);
  const known=findKnownIngredient(item.name);
+ const additive=findAppendixAdditive(item.name);
+ const productRestriction=exactProductStandardAdditiveRestriction();
+ const additiveIntent=item.basis==='additive'||(!known&&!!additive);
+ if(productRestriction&&additiveIntent){
+   if(productRestriction.banned){
+     return {name:item.name,kind:'additive',status:'blocked',route:'blocked',qualification:
+       'Product-specific FSSAI '+productRestriction.key+' prohibits food additives. General Appendix A category permission cannot override this product standard.',
+       clause:'FSSAI '+productRestriction.key+' · no food additives permitted',impact:'BLOCKED for this standardized product. Check the effective regulation and reformulate or reassess product identity; proprietary classification does not make the addition automatically permitted.',
+       product_standard_additive_ban:true};
+   }
+   if(productRestriction.classes.length){
+     return {name:item.name,kind:'additive',status:'review',route:'unresolved',qualification:
+       'This FSSAI product standard explicitly prohibits '+productRestriction.classes.join(' and ')+'. PMSV cannot automatically classify this additive by technological function from the name alone.',
+       clause:'FSSAI '+productRestriction.key+' · restricted additive classes',
+       impact:'Review exact technological function and the named prohibition before any additive permission can be concluded. General Appendix A availability is not sufficient.'};
+   }
+ }
  if(known){
    return {...known,name:item.name,status:'qualified',impact:'Fits the loaded '+productName+' ingredient rule, subject to its applicable limit/condition.'};
  }
- const additive=findAppendixAdditive(item.name);
  if(additive){
    const clause='Appendix A'+(additive.applied_from?' · FCS '+additive.applied_from:(fcs?' · FCS '+fcs:''));
    return {name:item.name,kind:'additive',status:'qualified',qualification:'Food additive matched to the loaded Appendix A permission set for '+productName+'.',clause,route:'standard',impact:'Does not by itself change the product route when used within the applicable Appendix A level, condition and product standard.',appendix:additive};
@@ -3873,6 +3902,7 @@ function numericLimitMgKg(text){
  return m?Number(m[1]):null;
 }
 function checkUsageAgainstRule(item,q){
+ if(q?.route==='blocked'||q?.status==='blocked')return {unit:'product-specific FSSAI additive prohibition',value:null,limit:null,pass:false,blockedByProductStandard:true};
  const u=usageForIngredient(item);
  if(q.appendix){
    const lim=numericLimitMgKg(q.appendix.limit);
@@ -4046,8 +4076,8 @@ function renderFormula(){
        const livePass=usageCheck&&usageCheck.pass===true;
        const livePending=usageCheck&&usageCheck.pass===null;
        const isWater=normIngredient(x.name)==='water';
-       const ingredientStatus=isWater?'Required ingredient':q.status==='qualified'?'Allowed ingredient':q.status==='review'?'Review required':'Not verified';
-       const quantityStatus=liveFail?'Above FSSAI limit':livePass?'Within FSSAI limit':livePending?(usageCheck&&usageCheck.specialBasis&&!(usageCheck.basisKg>0)?'Cannot determine yet — add fat/oil ingredient':usageCheck&&usageCheck.specialBasis?'Fat/oil basis check pending':'Quantity check required'):'No specific numerical maximum in loaded standard';
+       const ingredientStatus=q.status==='blocked'?'BLOCKED — product standard':isWater?'Required ingredient':q.status==='qualified'?'Allowed ingredient':q.status==='review'?'Review required':'Not verified';
+       const quantityStatus=usageCheck?.blockedByProductStandard?'Prohibited by product standard':liveFail?'Above FSSAI limit':livePass?'Within FSSAI limit':livePending?(usageCheck&&usageCheck.specialBasis&&!(usageCheck.basisKg>0)?'Cannot determine yet — add fat/oil ingredient':usageCheck&&usageCheck.specialBasis?'Fat/oil basis check pending':'Quantity check required'):'No specific numerical maximum in loaded standard';
        const cls=liveFail?'status-bad':livePass?'status-good':livePending?'status-warn':q.status==='qualified'?'status-good':q.status==='review'?'status-warn':'status-bad';
        const basisNames=usageCheck&&usageCheck.specialBasis&&usageCheck.basisItems?usageCheck.basisItems.map(z=>z.name).join(', '):'';
        const detail=usageCheck?('<br><small>'+(usageCheck.value==null?'':fmt(usageCheck.value,3)+' '+usageCheck.unit+' · ')+(usageCheck.limit!=null?'FSSAI limit '+fmt(usageCheck.limit,3)+' mg/kg':'')+(usageCheck.specialBasis&&usageCheck.basisKg>0?'<br>Calculated against '+fmt(usageCheck.basisKg,6)+' kg total fat/oil: '+esc(basisNames):usageCheck.specialBasis?'<br>FSSAI limit is based on fat/oil quantity, not total product weight. No fat/oil ingredient is currently detected.':'')+'</small>'):'';
@@ -4068,7 +4098,7 @@ function renderFormula(){
    const x=formulationIngredients[i];
    const u=usageForIngredient(x);
    const chk=checkUsageAgainstRule(x,q);
-   const usage='<b>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+'</b><br><small>'+fmt(u.percent,4)+'% w/w · '+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small>'+(chk?'<br><small class="'+(chk.pass===false?'status-bad':chk.pass===true?'status-good':'status-warn')+'"><b>Quantity:</b> '+(chk.pass===false?'Above FSSAI limit':chk.pass===true?'Within FSSAI limit':chk.specialBasis&&!(chk.basisKg>0)?'Cannot determine — no fat/oil ingredient entered':chk.specialBasis?'Fat/oil basis check required':'Quantity check required')+(chk.specialBasis&&chk.basisKg>0?'<br>'+fmt(chk.value,3)+' mg/kg fat/oil · limit '+fmt(chk.limit,3)+' mg/kg':'')+'</small>':'<br><small><b>Quantity:</b> No specific numerical maximum in loaded standard</small>');
+   const usage='<b>'+fmt(Number(x.qty),6)+' '+esc(x.unit||'kg')+'</b><br><small>'+fmt(u.percent,4)+'% w/w · '+fmt(u.mgkg,2)+' mg/kg'+(finalVolumeL()>0?' · '+fmt(u.mgL,2)+' mg/L':'')+'</small>'+(chk?'<br><small class="'+(chk.pass===false?'status-bad':chk.pass===true?'status-good':'status-warn')+'"><b>Quantity:</b> '+(chk.blockedByProductStandard?'Prohibited by product standard':chk.pass===false?'Above FSSAI limit':chk.pass===true?'Within FSSAI limit':chk.specialBasis&&!(chk.basisKg>0)?'Cannot determine — no fat/oil ingredient entered':chk.specialBasis?'Fat/oil basis check required':'Quantity check required')+(chk.specialBasis&&chk.basisKg>0?'<br>'+fmt(chk.value,3)+' mg/kg fat/oil · limit '+fmt(chk.limit,3)+' mg/kg':'')+'</small>':'<br><small><b>Quantity:</b> No specific numerical maximum in loaded standard</small>');
    return '<tr><td><b>'+esc(q.name)+'</b></td><td>'+usage+'</td><td>'+esc(q.qualification)+(q.appendix?'<br><small>Appendix A limit: <b>'+esc(q.appendix.limit)+'</b></small>':'')+'</td><td><span class="clause">'+esc(q.clause)+'</span></td><td>'+esc(q.impact)+'</td></tr>';
  }).join('') || '<tr><td colspan="5">'+(selectedProduct||selectedProfile?'Standard Lookup mode — no formulation is required. Product-standard ingredient provisions and Appendix A permissions are shown below.':(selectedName?'<b>Standard lookup mode.</b> Product-level labelling requirements are available; formulation-triggered declarations are not evaluated.':'Enter formulation ingredients first.'))+'</td></tr>';
 
@@ -4088,7 +4118,8 @@ function renderFormula(){
      finalAssessment.innerHTML='<b>Formulation captured.</b><br>'+formulationIngredients.length+' ingredient'+(formulationIngredients.length===1?'':'s')+' entered. No product route has been assigned yet.<br><small>Continue to Step 2 below to confirm the nearest FSSAI standard/category. PMSV will then classify the same formulation as Standardized Product or Proprietary Food without asking you to re-enter ingredients.</small>';
    }else{
      finalAssessment.classList.remove('hidden');
-     const route=hasUnresolved
+     const productBannedAdditive=qs.some(q=>q.status==='blocked');
+     const route=productBannedAdditive?selectedName+' — prohibited food additive under product standard':hasUnresolved
        ? selectedName+' — ingredient / non-specified-food approval review required'
        : hasProp
          ? selectedName+' — product-specific / Proprietary Food route review required'
@@ -4100,7 +4131,8 @@ function renderFormula(){
          : 'INGREDIENT-STAGE CHECKS PASS';
      const complianceClass=hasUsageFail?'status-bad':(hasUsagePending||hasUnresolved||hasProp)?'status-warn':'status-good';
      let reason='';
-     if(hasUsageFail)reason='At least one entered ingredient exceeds a loaded quantitative FSSAI limit.';
+     if(productBannedAdditive)reason='A named product standard prohibits added food additives; Appendix A classification cannot override this prohibition.';
+     else if(hasUsageFail)reason='At least one entered ingredient exceeds a loaded quantitative FSSAI limit.';
      else if(hasUsagePending)reason='At least one quantitative requirement cannot yet be calculated from the ingredients entered.';
      else if(hasUnresolved)reason='At least one ingredient does not yet have an exact permission for this selected product/FCS.';
      else if(hasProp)reason='The ingredient list requires product-route review before any final compliance conclusion.';
@@ -4114,6 +4146,7 @@ function renderFormula(){
    if(!qs.length)summary.innerHTML=selectedProduct||selectedProfile
      ? '<b>Standard lookup mode.</b> No formulation is entered, but the selected product standard and product/category-level regulatory layers are shown below. Ingredient-specific qualification will appear only after ingredients are entered.'
      : '<b>No formulation or standardized product selected.</b> Enter a formulation or confirm a product first.';
+   else if(qs.some(q=>q.status==='blocked'))summary.innerHTML='<b>Ingredient-stage BLOCKED.</b> The selected product standard prohibits the identified added food additive; Appendix A cannot override that rule.';
    else if(hasUsageFail)summary.innerHTML='<b>Ingredient-stage check failed.</b> At least one loaded quantitative FSSAI limit is exceeded.';
    else if(hasUsagePending)summary.innerHTML='<b>Ingredient-stage quantity check is incomplete.</b> At least one special-basis requirement cannot yet be calculated.';
    else if(hasUnresolved)summary.innerHTML='<b>Ingredient qualification is unresolved for '+esc(selectedName)+'.</b> At least one ingredient has no exact product/FCS permission. Do not call the formulation compliant or proprietary until that ingredient is resolved.';
@@ -4911,10 +4944,16 @@ function renderMasterComplianceSummary(){
    const standards=lookupStandards;
    const appendix=fcs?appendixEntriesForFcs(fcs):null;
    const appendixAvailable=!!appendix&&['loaded','no_additives','component_carry_over','special_regulation','no_additives_pending'].includes(appendix.status);
-   rows.push(masterComplianceRow('Ingredients & Appendix A',appendixAvailable||standards.length?'pass':'incomplete',
-     standards.length||appendixAvailable
-       ? 'Product-standard ingredient provisions and/or Appendix A FCS '+(fcs||'route')+' are available without entering a formulation.'
-       : 'No usable product-standard ingredient structure or Appendix A FCS mapping is currently loaded for this product.',
+   const productAdditiveRestriction=exactProductStandardAdditiveRestriction();
+   rows.push(masterComplianceRow('Ingredients & Appendix A',
+     productAdditiveRestriction?'evidence':appendixAvailable||standards.length?'pass':'incomplete',
+     productAdditiveRestriction
+       ? productAdditiveRestriction.banned
+         ? 'FSSAI '+productAdditiveRestriction.key+' prohibits added food additives. Appendix A FCS '+(fcs||'not mapped')+' does not override that prohibition; no formulation has been assessed.'
+         : 'FSSAI '+productAdditiveRestriction.key+' restricts '+productAdditiveRestriction.classes.join(' and ')+'. The intended technological function must be checked before claiming permission.'
+       : standards.length||appendixAvailable
+         ? 'Product-standard ingredient provisions and/or Appendix A FCS '+(fcs||'route')+' are available without entering a formulation.'
+         : 'No usable product-standard ingredient structure or Appendix A FCS mapping is currently loaded for this product.',
      'ingredients'));
 
    if(contaminantsDb&&product){
@@ -4975,10 +5014,11 @@ function renderMasterComplianceSummary(){
  }else{
    const qs=formulationIngredients.map(qualifyIngredient);
    const live=formulationIngredients.map((x,i)=>checkUsageAgainstRule(x,qs[i]));
-   const failed=live.some(x=>x&&x.pass===false);
+   const banned=qs.some(q=>q.status==='blocked'||q.route==='blocked');
+   const failed=live.some(x=>x&&x.pass===false)||banned;
    const pending=live.some(x=>x&&x.pass===null);
    const unresolved=qs.some(q=>q.route==='unresolved'||q.route==='proprietary'||q.status==='review'||q.status==='unresolved');
-   if(failed)rows.push(masterComplianceRow('Ingredients & limits','fail','At least one entered ingredient exceeds a loaded quantitative FSSAI limit.','formulation'));
+   if(failed)rows.push(masterComplianceRow('Ingredients & limits','fail',banned?'A food additive is prohibited by the exact product standard; Appendix A category permissions do not override the ban.':'At least one entered ingredient exceeds a loaded quantitative FSSAI limit.','formulation'));
    else if(pending||unresolved)rows.push(masterComplianceRow('Ingredients & limits','incomplete','At least one ingredient permission, product route or quantitative condition remains unresolved.','formulation'));
    else rows.push(masterComplianceRow('Ingredients & limits','pass','Entered ingredients match the selected product/FCS permissions and no loaded quantitative limit is exceeded.','formulation'));
  }
