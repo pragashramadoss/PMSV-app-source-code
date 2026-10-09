@@ -3196,6 +3196,60 @@ function exactDairyCompositionHtml(product){
  html+='<small>Both butter classes are listed for reference, not automatically treated as one finished-product specification.</small>';
  return html;
 }
+/* FSSAI source-pinned Chapter 2.3/2.4 baselines; variant and process gates stay fail-closed. */
+function sourcePinnedStandardSupplementHtml(st){
+ const evidence=st?.numeric_evidence||st?.source_review;
+ if(!evidence)return '';
+ const formatRequirement=r=>{
+   if(r.operator==='range')return String(r.min)+'–'+String(r.max)+' '+String(r.unit||'');
+   if(r.operator!==undefined&&r.value!==undefined)return String(r.operator)+' '+String(r.value)+' '+String(r.unit||'');
+   return String(r.text||r.requirement||r.source_text||'Regulatory condition; manual review required');
+ };
+ const rows=(heading,items)=>{
+   if(!Array.isArray(items)||!items.length)return '';
+   return '<div class="notice"><b>'+esc(heading)+'</b></div>'
+    +'<div class="tablewrap"><table><thead><tr><th>Parameter</th><th>Source requirement</th><th>Applicability / lock</th></tr></thead><tbody>'
+    +items.map(r=>{
+      const lock=r.auto_evaluate===false?'Manual review; not auto-applied. ':'';
+      const condition=r.condition||r.applies_when||r.consequence||r.evaluation_status||r.requirement_status||'Confirm actual finished-product applicability';
+      return '<tr><td>'+esc(r.parameter||'Requirement')+'</td><td>'+esc(formatRequirement(r))+'</td><td>'+esc(lock+condition)+'</td></tr>';
+    }).join('')+'</tbody></table></div>';
+ };
+ let html='<div class="notice"><b>Official FSSAI source-baseline evidence (not a full compliance verdict).</b> ';
+ if(st.numeric_evidence){
+   html+='Numeric requirements are shown for reference; current amendment, variant, processing and other regulatory checks remain pending.';
+ }else{
+   html+='The reviewed clause does not prescribe one universal numerical composition limit. Do not interpret this as an exemption from other rules.';
+ }
+ const source=String(evidence.source_url||'');
+ if(/^https:\/\/(?:www\.)?fssai\.gov\.in\//i.test(source))html+=' <a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Official Chapter PDF</a>.';
+ html+='</div>';
+ const variants=Array.isArray(st.variant_composition)?st.variant_composition:[];
+ if(variants.length){
+   html+='<div class="notice"><b>Choose the actual regulated variant before applying any figures.</b> '+variants.length+' variants below are displayed as separate references; none is automatically selected or approved.</div>';
+   for(const v of variants){
+     html+='<details><summary><b>'+esc(v.variant||'Variant')+'</b> · Reference only</summary>';
+     if(Array.isArray(v.composition)&&v.composition.length)html+=rows('Variant-specific composition',v.composition);
+     if(Array.isArray(v.sieve_rules)&&v.sieve_rules.length){
+       html+=rows('Variant-specific sieve requirements',v.sieve_rules.map(x=>({
+         parameter:'Through '+String(x.sieve_mm)+' mm sieve',operator:x.operator,value:x.percent,unit:'% by mass',condition:'Only selected particle-size grade'
+       })));
+     }
+     if(!v.composition?.length&&!v.sieve_rules?.length)html+='<div class="notice">No blanket composition figure is supplied for this variant; verify its own rules.</div>';
+     if(v.additional_non_numeric_requirement)html+='<div class="notice">'+esc(v.additional_non_numeric_requirement)+'</div>';
+     if(v.verification_note)html+='<div class="notice">'+esc(v.verification_note)+'</div>';
+     html+='</details>';
+   }
+ }
+ html+=rows('Relative/comparative composition — reference measurement required',st.relative_composition);
+ html+=rows('Conditional requirements — not automatic',st.conditional_requirements);
+ html+=rows('Conditional packaging standards',st.packaging_requirements);
+ html+=rows('Product-specific residual solvent limits',st.residual_solvent_limits);
+ if(Array.isArray(st.quality_rules)&&st.quality_rules.length)
+   html+='<div class="notice"><b>Additional identity/quality conditions:</b><ul>'
+       +st.quality_rules.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';
+ return html;
+}
 function standardLookupRegulatoryCompositionHtml(){
  const product=currentAssessmentCatalogProduct();
  const exactDairy=exactDairyCompositionHtml(product);
@@ -3291,6 +3345,9 @@ function standardLookupRegulatoryCompositionHtml(){
        +'</tbody></table></div>'
      );
    }
+
+   const sourcePinnedSupplement=sourcePinnedStandardSupplementHtml(standard);
+   if(sourcePinnedSupplement)blocks.push(sourcePinnedSupplement);
 
    const standardRules=Array.isArray(standard?.rules)?standard.rules:[];
    const applicableRules=standardRules.filter(r=>{
@@ -6763,12 +6820,13 @@ function renderLegacyProductScopePages(){
              html+='<div class="notice"><b>Regulatory notes:</b><br>'+standard.regulatory_notes.map(x=>'• '+esc(x)).join('<br>')+'</div>';
            }
          }
+         html+=sourcePinnedStandardSupplementHtml(standard);
          if(!ruleDbAllowsGuardedFormulation(db)&&db?.final_compliance_lock)html+='<div class="notice"><b>Formulation lock for this rule family:</b> '+esc(db.final_compliance_lock)+'</div>';
          if(rows.length){
            html+='<div class="tablewrap"><table><thead><tr><th>Section</th><th>Parameter / rule</th><th>Requirement</th></tr></thead><tbody>'
              +rows.map(r=>'<tr><td>'+esc(r.section)+'</td><td><b>'+esc(r.parameter)+'</b></td><td>'+esc(r.requirement)+(r.condition?'<br><small>'+esc(r.condition)+'</small>':'')+'</td></tr>').join('')
              +'</tbody></table></div>';
-         }else if(!(Array.isArray(standard.variants)&&standard.variants.length&&Array.isArray(standard.variant_requirements)&&standard.variant_requirements.length)){
+         }else if(!(Array.isArray(standard.variants)&&standard.variants.length&&Array.isArray(standard.variant_requirements)&&standard.variant_requirements.length) && !Array.isArray(standard.variant_composition) && !Array.isArray(standard.relative_composition)){
            html+='<div class="notice"><b>No machine-readable numerical composition row is loaded for this exact standard.</b> The product mapping remains available, but PMSV will not invent missing limits.</div>';
          }
          const nutrientRows=Array.isArray(standard.nutrient_requirements)?standard.nutrient_requirements:[];
