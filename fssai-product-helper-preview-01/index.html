@@ -7693,6 +7693,27 @@ function productMeatEggCommodityMrlReviewHtml(p){
  return html+'</div>';
 }
 /* Chapter 2.4 residue articles are review candidates, not finished-food approvals. */
+/* Chapter 2.3: raw ingredient commodity evidence is review-only and is not a finished-product MRL. */
+function exactFruitVegCommodityReview(p){
+ if(!p||!contaminantsDb)return null;
+ return (contaminantsDb.chapter_2_3_commodity_mrl_review_v1||[]).find(r=>r.catalog_id===p.id)||null;
+}
+function productFruitVegCommodityMrlReviewHtml(p){
+ const review=exactFruitVegCommodityReview(p);
+ if(!review)return '';
+ const source=String(review.source_url||'');
+ const official=/^https:\/\/(?:www\.)?fssai\.gov\.in\//i.test(source);
+ const link=official?'<a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX PDF</a>':'';
+ let html='<div class="card"><div class="section-title"><h3>Chapter 2.3 — pesticide commodity applicability review</h3><span>REVIEW ONLY · NOT APPLIED</span></div>'
+  +'<div class="notice"><b>Exact finished product:</b> '+esc(p.name)+'<br><b>Product processing scope:</b> '+esc(review.scope)+'<br>'
+  +esc(review.qualifier_review)+' No pesticide MRL is automatically assigned or approved by this chapter review. '+link+'</div>';
+ const articles=review.raw_ingredient_article_references_only||[];
+ if(articles.length){
+   html+='<div class="notice"><b>Raw-ingredient source articles for manual review only:</b> '+articles.map(esc).join('; ')
+    +' ('+esc(String(review.raw_reference_rows_in_loaded_official_source))+' loaded source rows). These refer to precursor commodities, not confirmed finished-product MRLs. Evaluate documented processing factors and exact commodity scope before applying any value.</div>';
+ }else html+='<div class="notice">No safe direct finished-product pesticide commodity article has been verified in the loaded source. Review actual raw materials and processing without borrowing generic fruit, vegetable or spice MRLs.</div>';
+ return html+'</div>';
+}
 function exactCerealCommodityReview(p){
  if(!p||!contaminantsDb)return null;
  return (contaminantsDb.chapter_2_4_commodity_mrl_review_v1||[]).find(row=>row.catalog_id===p.id)||null;
@@ -8522,6 +8543,7 @@ function renderProductContaminants(){
  const pesticideMrls=exactPesticideMrlRowsForProduct(p);
  const meatEggCommodityReview=productMeatEggCommodityMrlReviewHtml(p);
  const cerealCommodityReview=productCerealCommodityMrlReviewHtml(p);
+ const fruitVegCommodityReview=productFruitVegCommodityMrlReviewHtml(p);
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
  const pesticideRows=pesticideMrls.map(x=>'<tr><td><b>'+esc(x.pesticide)+'</b></td><td><b>'+esc(x.mrl)+' '+esc(x.unit)+'</b></td><td>'+esc(x.food)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source)+'</td></tr>').join('');
  const prohibitedVet=prohibitedVeterinaryRowsForProduct(p);
@@ -8540,6 +8562,7 @@ function renderProductContaminants(){
    +productContaminantGateNotices(p)
    +meatEggCommodityReview
    +cerealCommodityReview
+   +fruitVegCommodityReview
    +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant / toxin</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="notice">No exact metal/toxin row is auto-applicable for this product under the current stored product gates.</div>')
    +conditionalMetalHtml
    +(pesticideRows?'<div class="card" style="margin-top:12px;background:#fafcff"><div class="section-title"><h3 style="margin:0">Pesticide residue MRLs — '+esc(p.name)+'</h3><span>Verified FSSAI commodity scope · no formulation required</span></div><div class="notice oknote"><b>'+pesticideMrls.length+' applicable pesticide MRL row'+(pesticideMrls.length===1?'':'s')+' found.</b> '+(milkProductContaminantScope(p)?'FSSR 2.1.13 defines this finished food as a fermented <b>milk product</b>, so the current FSSAI commodity rows explicitly written for <b>Milk and Milk products</b> are applied.':'The commodity name exactly matches the selected standardized product.')+'</div><div class="tablewrap"><table><thead><tr><th>Pesticide</th><th>MRL</th><th>Commodity / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+pesticideRows+'</tbody></table></div></div>':'<div class="notice"><b>Pesticide residues:</b> no verified commodity-scope MRL rows are stored for '+esc(p.name)+'. PMSV will not infer an unrelated commodity mapping.</div>')

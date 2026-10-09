@@ -373,3 +373,50 @@ test("all 84 former identity-only route entries now have an official-source base
  assert.equal(numeric,80);
  assert.equal(scope,4);
 });
+
+
+test("all 98 Chapter 2.3 product identities have source-scoped fail-closed pesticide reviews",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const chapterProducts=index.products.filter(p=>String(p.fssr||"").startsWith("2.3."));
+ const rows=db.chapter_2_3_commodity_mrl_review_v1;
+ assert.equal(chapterProducts.length,98);
+ assert.equal(rows.length,98);
+ assert.deepEqual(new Set(rows.map(r=>r.catalog_id)),new Set(chapterProducts.map(p=>p.id)));
+ const articles=new Map();
+ for(const pesticide of db.residue_mrls.pesticides)for(const row of pesticide.rows||[]){
+  const key=String(row.food).toLowerCase().trim();
+  articles.set(key,(articles.get(key)||0)+1);
+ }
+ for(const row of rows){
+  assert.deepEqual(row.candidate_finished_product_pesticide_articles,[],row.catalog_id);
+  assert.equal(row.auto_apply_raw_ingredient_mrl,false,row.catalog_id);
+  assert.equal(row.full_product_regulatory_approval,false,row.catalog_id);
+  assert.ok(row.scope.length>15&&row.qualifier_review.length>100,row.catalog_id);
+  assert.equal(row.raw_reference_rows_in_loaded_official_source,row.raw_ingredient_article_references_only.reduce((n,a)=>n+(articles.get(a.toLowerCase())||0),0),row.catalog_id);
+  assert.ok(row.source_url.startsWith("https://fssai.gov.in/"));
+ }
+ assert.equal(db.coverage.chapter_2_3_finished_product_mrls_autovalidated,0);
+});
+test("tomato, coconut, mango, groundnut and potato Chapter 2.3 raw-ingredient reviews never auto-apply source numbers",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const byId=new Map(db.chapter_2_3_commodity_mrl_review_v1.map(r=>[r.catalog_id,r]));
+ const expected={
+ "tomato-juice":"Tomato",
+ "04-04-2-canned-tomatoes":"Tomato",
+ "04-04-2-thermally-processed-tomato-puree-and-paste":"Tomato",
+ "04-04-1-mango-chutney":"Mango",
+ "04-04-1-coconut-milk-powder":"Coconut",
+ "04-04-1-groundnut-kernel-deshelled":"Groundnut",
+ "04-04-2-quick-frozen-fried-potatoes":"Potato",
+ "12-12-6-chilli-sauce":"Chilli"
+ };
+ for(const [id,article] of Object.entries(expected)){
+  assert.ok(byId.get(id).raw_ingredient_article_references_only.includes(article),id);
+  assert.equal(byId.get(id).auto_apply_raw_ingredient_mrl,false,id);
+ }
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ assert.match(html,/function exactFruitVegCommodityReview\(p\)/);
+ assert.match(html,/const fruitVegCommodityReview=productFruitVegCommodityMrlReviewHtml\(p\)/);
+ assert.match(html,/\+fruitVegCommodityReview/);
+ assert.match(html,/These refer to precursor commodities, not confirmed finished-product MRLs/);
+});
