@@ -27061,5 +27061,106 @@
     "amendments_fully_reconciled": false,
     "automatic_pesticide_mrl_approval": false,
     "processed_cereal_inheritance": false
+  },
+  "chapter_2_4_exact_raw_soybean_oilseed_aflatoxin_v9": {
+    "catalog_id": "06-06-1-soybean",
+    "product_name": "Soybean",
+    "fssr": "2.4.19",
+    "identity_basis": "FSSAI Chapter 2.4.19 mature clean dried Glycine max seed; source commodity is oilseed, not extracted oil or derivative",
+    "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf",
+    "official_contaminants_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "official_articles": [
+      "Oilseeds for further processing",
+      "Oilseeds, ready to eat"
+    ],
+    "rules": [
+      {
+        "crop_contaminant_key": "total_aflatoxins",
+        "contaminant": "Total Aflatoxins",
+        "limit": 15,
+        "unit": "µg/kg"
+      },
+      {
+        "crop_contaminant_key": "aflatoxin_b1",
+        "contaminant": "Aflatoxin B1",
+        "limit": 10,
+        "unit": "µg/kg"
+      }
+    ],
+    "excluded_derivative_product_ids": [
+      "06-06-2-solvent-extract-soya-flour",
+      "06-06-8-tofu",
+      "06-06-8-soybean-beverages-and-related-products",
+      "06-06-8-soybean-curd-and-related-products",
+      "06-06-8-fermented-soybean-curd",
+      "12-12-9-soybean-sauce",
+      "02-02-1-partially-hydrogenated-soybean-oil"
+    ],
+    "exact_identity_verified": true,
+    "full_contaminant_coverage": false,
+    "current_amendments_fully_reconciled": false,
+    "auto_apply_commodity_pesticide_mrl": false,
+    "cross_product_inheritance": false
+  },
+  "chapter_2_3_exact_finished_beverage_saffrole_v9": {
+    "official_article": "Non-alcoholic beverages",
+    "contaminant": "Saffrole",
+    "limit": 10,
+    "unit": "ppm",
+    "source_regulation": "FSSAI CTR Version IX (03.02.2026) · 2.2.1(2) naturally occurring toxic substances",
+    "official_contaminants_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+    "verified_finished_product_identities": [
+      {
+        "catalog_id": "fruit-juices",
+        "product_name": "FRUIT JUICES",
+        "fssr": "2.3.6",
+        "finished_non_alcoholic_beverage_identity": true
+      },
+      {
+        "catalog_id": "vegetable-juices",
+        "product_name": "VEGETABLE JUICES",
+        "fssr": "2.3.7",
+        "finished_non_alcoholic_beverage_identity": true
+      },
+      {
+        "catalog_id": "tomato-juice",
+        "product_name": "Thermally Processed Tomato Juice",
+        "fssr": "2.3.8",
+        "finished_non_alcoholic_beverage_identity": true
+      },
+      {
+        "catalog_id": "fruit-nectars",
+        "product_name": "Thermally Processed Fruit Nectars",
+        "fssr": "2.3.9",
+        "finished_non_alcoholic_beverage_identity": true
+      },
+      {
+        "catalog_id": "fruit-drink-rts",
+        "product_name": "Thermally Processed Fruit Beverages / Fruit Drink/ Ready to Serve Fruit Beverages",
+        "fssr": "2.3.10",
+        "finished_non_alcoholic_beverage_identity": true
+      },
+      {
+        "catalog_id": "carbonated-fruit-beverages",
+        "product_name": "Carbonated Fruit Beverages or Fruit Drinks",
+        "fssr": "2.3.30",
+        "finished_non_alcoholic_beverage_identity": true
+      }
+    ],
+    "excluded_concentrate_powder_and_other_ids": [
+      "fruit-juice-preserved-industrial",
+      "vegetable-juice-preserved-industrial",
+      "concentrated-fruit-juice-industrial",
+      "concentrated-vegetable-juice-industrial",
+      "fruit-beverage-mix",
+      "04-04-1-concentrated-fruit-pulp-puree-with-preservatives-for-industrial-use-only",
+      "12-12-5-soup-powders",
+      "12-12-6-tomato-ketchup-and-tomato-sauce"
+    ],
+    "complete_contaminant_coverage": false,
+    "current_amendments_fully_reconciled": false,
+    "cross_product_inheritance": false,
+    "automatic_pesticide_mrl_approval": false
   }
 }

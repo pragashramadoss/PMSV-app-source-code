@@ -8446,6 +8446,40 @@ function productBaselineContaminantRules(p){
    }
  }
 
+ // 5e) Raw Soybean FSSR 2.4.19 is an oilseed, not soybean oil or any
+ // fermented/extracted soy derivative. Both original Version IX oilseed form
+ // articles must independently agree, otherwise fail closed.
+ const soy=contaminantsDb?.chapter_2_4_exact_raw_soybean_oilseed_aflatoxin_v9;
+ if(soy?.catalog_id===id && soy?.fssr===p.fssr && soy.exact_identity_verified===true
+   && !(soy.excluded_derivative_product_ids||[]).includes(id)){
+   for(const item of soy.rules||[]){
+     const group=contaminantsDb?.crop_contaminants?.[item.crop_contaminant_key];
+     const articles=soy.official_articles||[];
+     if(articles.length!==2 || !articles.every(article=>(group?.rules||[]).some(x=>
+       x.article===article && Number(x.limit)===Number(item.limit) &&
+       String(group.unit)===String(item.unit))))continue;
+     pushRule({contaminant:item.contaminant,article:articles.join(' / '),
+       limit:item.limit,unit:item.unit,
+       source_basis:'FSSAI CTR Version IX · Section 2.2.1 · exact raw soybean oilseed identity',
+       condition:'Only mature dried soybean seed under FSSR 2.4.19. This does not cover soybean oil, soybean flour, tofu, sauce, other processed soy foods, pesticide-residue MRLs or all other contaminants.'});
+   }
+ }
+
+ // 5f) Section 2.2.1(2): exact finished non-alcoholic juice/drink
+ // identities, excluding concentrates, powders and industrial-use inputs.
+ const beverage=contaminantsDb?.chapter_2_3_exact_finished_beverage_saffrole_v9;
+ const namedBeverage=(beverage?.verified_finished_product_identities||[]).find(x=>
+   x.catalog_id===id && x.fssr===p.fssr && x.finished_non_alcoholic_beverage_identity===true);
+ const officialBeverageSaffrole=(contaminantsDb?.naturally_occurring_toxic_substances?.saffrole||[])
+   .find(x=>x.article===beverage?.official_article &&
+     Number(x.limit)===Number(beverage?.limit) && x.unit===beverage?.unit);
+ if(namedBeverage && officialBeverageSaffrole &&
+   !(beverage.excluded_concentrate_powder_and_other_ids||[]).includes(id))
+   pushRule({contaminant:'Saffrole',article:beverage.official_article,
+     limit:officialBeverageSaffrole.limit,unit:officialBeverageSaffrole.unit,
+     source_basis:'FSSAI CTR Version IX · Section 2.2.1(2) · exact finished non-alcoholic beverage',
+     condition:'Only '+namedBeverage.product_name+' in finished beverage form. Do not transfer to concentrate, syrup, fruit powder, juice ingredient, industrial-use product or other FSSR category. Full product compliance remains unassessed.'});
+
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');

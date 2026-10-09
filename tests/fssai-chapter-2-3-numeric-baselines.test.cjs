@@ -795,3 +795,70 @@ test("nine exact Chapter 2.4 raw cereals have gated FSSAI aflatoxins without pro
  const audit=fs.readFileSync(path.resolve(dataRoot,"../../scripts/audit-fssai-product-readiness.cjs"),"utf8");
  assert.match(audit,/chapter_2_4_verified_raw_cereal_aflatoxin/);
 });
+
+
+test("exact Chapter 2.4 raw Soybean uses identical source oilseed aflatoxin limits without inherited derivative rules",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const m=db.chapter_2_4_exact_raw_soybean_oilseed_aflatoxin_v9;
+ assert.equal(m.catalog_id,"06-06-1-soybean");
+ assert.equal(m.exact_identity_verified,true);
+ assert.equal(m.cross_product_inheritance,false);
+ assert.equal(m.full_contaminant_coverage,false);
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const at=html.indexOf("function productBaselineContaminantRules(p){"),end=html.indexOf("\nfunction ",at+12);
+ const vm=require("node:vm"),ctx=vm.createContext({contaminantsDb:db,
+  normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+  chapterRuleDbs:[],ruleDbStandards:()=>[],exactFinishedProductContaminantLock:()=>null,
+  exactRawMeatMetalLock:()=>null,isVerifiedFermentedMilkProduct:()=>false});
+ vm.runInContext(html.slice(at,end),ctx);
+ const run=p=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx));
+ const p=index.products.find(x=>x.id===m.catalog_id);
+ assert.equal(p.name,m.product_name);assert.equal(p.fssr,m.fssr);
+ assert.deepEqual(run(p).filter(x=>x.source_basis?.includes("exact raw soybean oilseed identity"))
+   .map(x=>[x.contaminant,x.limit,x.unit]),[["Total Aflatoxins",15,"µg/kg"],["Aflatoxin B1",10,"µg/kg"]]);
+ for(const id of m.excluded_derivative_product_ids){
+  const derivative=index.products.find(x=>x.id===id);assert.ok(derivative,id);
+  assert.equal(run(derivative).some(x=>x.source_basis?.includes("exact raw soybean oilseed identity")),false,id);
+ }
+ const changed=structuredClone(db);
+ changed.crop_contaminants.aflatoxin_b1.rules.find(x=>x.article==="Oilseeds, ready to eat").limit=999;
+ ctx.contaminantsDb=changed;
+ assert.equal(run(p).some(x=>x.contaminant==="Aflatoxin B1"&&x.source_basis?.includes("exact raw soybean oilseed identity")),false);
+ assert.equal(run(p).some(x=>x.contaminant==="Total Aflatoxins"&&x.source_basis?.includes("exact raw soybean oilseed identity")),true);
+ const audit=fs.readFileSync(path.resolve(dataRoot,"../../scripts/audit-fssai-product-readiness.cjs"),"utf8");
+ assert.match(audit,/chapter_2_4_exact_soybean_oilseed_toxins/);
+});
+
+test("six exact finished non-alcoholic beverages use sourced Saffrole and exclude industrial/concentrated forms",()=>{
+ const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
+ const m=db.chapter_2_3_exact_finished_beverage_saffrole_v9;
+ assert.equal(m.verified_finished_product_identities.length,6);
+ assert.equal(m.official_article,"Non-alcoholic beverages");
+ assert.equal(m.limit,10);assert.equal(m.unit,"ppm");
+ assert.equal(m.complete_contaminant_coverage,false);
+ const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
+ const at=html.indexOf("function productBaselineContaminantRules(p){"),end=html.indexOf("\nfunction ",at+12);
+ const vm=require("node:vm"),ctx=vm.createContext({contaminantsDb:db,
+  normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),
+  chapterRuleDbs:[],ruleDbStandards:()=>[],exactFinishedProductContaminantLock:()=>null,
+  exactRawMeatMetalLock:()=>null,isVerifiedFermentedMilkProduct:()=>false});
+ vm.runInContext(html.slice(at,end),ctx);
+ const run=p=>Array.from(vm.runInContext("productBaselineContaminantRules("+JSON.stringify(p)+")",ctx));
+ for(const row of m.verified_finished_product_identities){
+  const p=index.products.find(x=>x.id===row.catalog_id);assert.ok(p,row.catalog_id);
+  assert.equal(p.fssr,row.fssr);assert.equal(p.name,row.product_name);
+  const found=run(p).filter(x=>x.source_basis?.includes("exact finished non-alcoholic beverage"));
+  assert.equal(found.length,1,p.name);
+  assert.deepEqual([found[0].contaminant,found[0].article,found[0].limit,found[0].unit],["Saffrole","Non-alcoholic beverages",10,"ppm"]);
+ }
+ for(const id of m.excluded_concentrate_powder_and_other_ids){
+  const p=index.products.find(x=>x.id===id);assert.ok(p,id);
+  assert.equal(run(p).some(x=>x.source_basis?.includes("exact finished non-alcoholic beverage")),false,id);
+ }
+ const changed=structuredClone(db);
+ changed.naturally_occurring_toxic_substances.saffrole.find(x=>x.article==="Non-alcoholic beverages").limit=20;
+ ctx.contaminantsDb=changed;
+ assert.equal(run(index.products.find(x=>x.id==="fruit-drink-rts")).some(x=>x.source_basis?.includes("exact finished non-alcoholic beverage")),false);
+ const audit=fs.readFileSync(path.resolve(dataRoot,"../../scripts/audit-fssai-product-readiness.cjs"),"utf8");
+ assert.match(audit,/chapter_2_3_exact_finished_beverage_saffrole/);
+});
