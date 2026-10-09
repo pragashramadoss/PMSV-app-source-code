@@ -115,13 +115,17 @@ test("official Version IX Ochratoxin A and DON exact grouped articles map Wheat,
    assert.deepEqual(entries,[{contaminant:"Ochratoxin A",limit:5,unit:"µg/kg"},{contaminant:"Deoxynivalenol",limit:1000,unit:"µg/kg"}],productName);
  }
  assert.deepEqual(named("Coffee"),[{contaminant:"Ochratoxin A",limit:5,unit:"µg/kg"}]);
- for(const productName of ["Wheat Flour (Atta)","Durum Wheat","Pearl Barley","Maida","Jowar Flour","Chicory","Coffee-Chicory Mixture"]){
+ for(const productName of ["Wheat Flour (Atta)","Durum Wheat","Pearl Barley","Maida","Jowar Flour","Chicory","Coffee-Chicory Mixture","Barley Water","Wholemeal barley powder or barley flour or choker yukt jau ka churan"]){
    assert.deepEqual(named(productName),[],productName+" cannot borrow exact named article");
  }
  const changed=structuredClone(db);
  changed.crop_contaminants.ochratoxin_a.rules[0].limit=50;
  internal.contaminantsDb=changed;
  assert.deepEqual(named("Coffee"),[],"Coffee mapping must fail closed after crop master changes");
+ const renamed=structuredClone(db);
+ renamed.crop_contaminants.ochratoxin_a.rules[0].article="Wheat, wheat bran, rye, barley";
+ internal.contaminantsDb=renamed;
+ assert.deepEqual(named("Coffee"),[],"Coffee mapping must fail closed if coffee disappears from the grouped official article");
  internal.contaminantsDb=db;
  for(const row of mappings){
    assert.equal(row.exact_catalog_identity_verified,true);
