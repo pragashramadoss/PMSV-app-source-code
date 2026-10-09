@@ -71,9 +71,9 @@ test('all real inline scripts compile without a syntax error',()=>{
 test('Dahi shows FSSAI composition but never borrows milk or estimates nutrients',()=>{
  const page=testPage(products.dahi);page.run();
  assert.match(page.node('nutritionStandardRegulatory').innerHTML,/FSSAI legal composition/);
- assert.match(page.node('nutritionStandardReferenceStatus').innerHTML,/Dahi\/Curd has no directly analysed entry/);
+ assert.match(page.node('nutritionStandardReferenceStatus').innerHTML,/Dahi\/Curd nutrition: NO DIRECT ANALYSED ENTRY/);
  assert.doesNotMatch(page.node('nutritionStandardReferenceTable').innerHTML,/72.897|305.449|3.26/);
- assert.match(page.node('nutritionStandardReferenceStatus').innerHTML,/not.*nutrition values/);
+ assert.match(page.node('nutritionStandardReferenceStatus').innerHTML,/Do not substitute/);
 });
 test('a composite Paneer-and-Chhana FSSAI standard requires actual finished-food selection',()=>{
  const page=testPage(products.paneer);page.run();
@@ -116,4 +116,21 @@ test('separate formulation calculations remain optional and the official source 
  assert.match(page.node('nutritionStandardReferenceStatus').innerHTML,/optional/);
  assert.match(page.node('nutritionStandardReferenceStatus').innerHTML,/nin.res.in\/ebooks\/IFCT2017/);
  assert.match(html,/id="nutritionGoToFormulation"/);
+});
+
+test('nutrition IFCT result is above collapsible FSSAI composition in the real page',()=>{
+ const a=html.indexOf('id="nutritionStandardReferenceStatus"');
+ const b=html.indexOf('id="nutritionStandardReferenceTable"');
+ const d=html.indexOf('class="nutrition-fssai-details"');
+ const e=html.indexOf('id="nutritionStandardRegulatory"');
+ assert.ok(a>0&&b>a&&d>b&&e>d,'IFCT reference must precede the FSSAI composition detail');
+ assert.match(html,/<details class="nutrition-fssai-details"><summary>/);
+});
+test('Dahi no-data status is visible even when IFCT nutrition database has not loaded',()=>{
+ const page=testPage(products.dahi);
+ vm.runInContext('nutritionDb=null',page.ctx);
+ page.run();
+ assert.match(page.node('nutritionStandardReferenceStatus').innerHTML,/NO DIRECT ANALYSED ENTRY/);
+ assert.match(page.node('nutritionStandardReferenceTable').innerHTML,/Data status: unavailable/);
+ assert.match(page.node('nutritionStandardRegulatory').innerHTML,/FSSAI legal composition/);
 });
