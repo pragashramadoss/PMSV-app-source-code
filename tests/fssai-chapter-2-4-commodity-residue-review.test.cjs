@@ -276,3 +276,23 @@ test("unprocessed raw pulses source 2.4.6(16) has exact aflatoxins and quality l
  assert.match(audit,/pending_master_and_search_index_reconciliation/);
  assert.match(audit,/chapter_2_4_unprocessed_whole_raw_pulses/);
 });
+
+
+test("raw-pulses source checked aflatoxins replace only legacy toxin rows, retaining valid Pulses Lead",()=>{
+ const p=catalog.find(x=>x.id==="06-06-1-unprocessed-whole-raw-pulses-not-for-direct-human-consumption");
+ const normal=catalog.find(x=>x.id==="06-06-1-pulses");
+ const src=s("function contaminantProfileForProduct(p){");
+ const internal=vm.createContext({contaminantsDb:db,
+  exactFinishedProductContaminantLock:()=>null,exactRawMeatMetalLock:()=>null});
+ vm.runInContext(src,internal);
+ const profile=q=>vm.runInContext("contaminantProfileForProduct("+JSON.stringify(q)+")",internal);
+ const raw=profile(p);
+ assert.ok(raw);
+ assert.deepEqual(Array.from(raw.rules,r=>r.contaminant),["Lead"]);
+ assert.deepEqual(Array.from(profile(normal).rules,r=>r.contaminant),["Lead","Total Aflatoxins","Aflatoxin B1"]);
+ const changed=structuredClone(db);
+ changed.crop_contaminants.total_aflatoxins.rules.find(x=>x.article==="Pulses").limit=900;
+ internal.contaminantsDb=changed;
+ assert.deepEqual(Array.from(profile(p).rules,r=>r.contaminant),["Lead"],
+  "Source drift must not restore stale legacy raw-pulse crop-toxin values");
+});

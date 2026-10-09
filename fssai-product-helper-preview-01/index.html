@@ -7781,6 +7781,15 @@ function contaminantProfileForProduct(p){
      !['total aflatoxins','aflatoxin b1'].includes(String(r.contaminant||'').trim().toLowerCase()));
    return keep.length?{...matched,rules:keep}:null;
  }
+ // Retain exact Pulses Lead while keeping only the Version IX source-checked
+ // raw-pulses aflatoxins. Otherwise a stale legacy profile could bypass an
+ // updated or removed source article when the source-check gate fails closed.
+ const rawPulseCfg=contaminantsDb?.chapter_2_4_exact_unprocessed_raw_pulses_v9;
+ if(rawPulseCfg?.catalog_id===p.id && p.fssr===rawPulseCfg.existing_catalogue_fssr && matched){
+   const nonToxins=(matched.rules||[]).filter(r=>
+     !['total aflatoxins','aflatoxin b1'].includes(String(r.contaminant||'').trim().toLowerCase()));
+   return nonToxins.length?{...matched,rules:nonToxins}:null;
+ }
  if(!matched||!rawGoatRabbitLeadLock)return matched;
  // Chapter 2.5 goat/rabbit lock is Lead-specific. Preserve independently
  // sourced other metals if future exact species evidence becomes available.
