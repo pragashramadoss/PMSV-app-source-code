@@ -55,6 +55,39 @@ function sourcesForSpecial(route) {
   assert.ok(urls.length && urls.every(official), "Missing/nonofficial special route evidence: " + route.key);
   return urls;
 }
+
+const appendixB = read("rules/appendix-b-v2-core.json");
+const indexById = new Map(index.products.map(p => [p.id,p]));
+const appendixBRoutes = new Map();
+for (const [group, source] of Object.entries(appendixB.product_mappings)) {
+  const buckets = Array.isArray(source) ? {[group]:source} : source;
+  const table = appendixB.tables[group] || appendixB.tables.fish;
+  const profiles = new Set((table.categories || []).map(p=>p.id));
+  for(const type of ["exact","conditional","no_direct_table_mapping"]) {
+    for (const mapping of (buckets[type] || [])) {
+      assert.ok(mapping.catalog_id && indexById.has(mapping.catalog_id),"Appendix B references absent product: "+mapping.catalog_id);
+      assert.ok(!appendixBRoutes.has(mapping.catalog_id),"Duplicate Appendix B mapping: "+mapping.catalog_id);
+      const p=indexById.get(mapping.catalog_id);
+      const expected = type==="exact" ? "mapped_appendix_b_v2" :
+        type==="conditional" ? "conditional_appendix_b_variant_required" : null;
+      if(expected)assert.equal(p.microbiology_status,expected,"Appendix B status/index mismatch: "+p.id);
+      else assert.ok((p.microbiology_status||"").startsWith("appendix_b_no_direct"),"Appendix B no-direct status/index mismatch: "+p.id);
+      const profileKeys = type==="exact" ? [mapping.profile_key] :
+        type==="conditional" ? (mapping.options || []).map(option=>option.profile_key) : [];
+      if(type==="exact")assert.equal(p.microbiology_profile_key,mapping.profile_key,"Appendix B profile/index mismatch: "+p.id);
+      if(type==="conditional")assert.ok(profileKeys.length>0,"Conditional Appendix B route missing options: "+p.id);
+      for (const key of profileKeys)assert.ok(key && profiles.has(key),"Appendix B mapping lacks real official Table profile: "+p.id+" ["+key+"]");
+      appendixBRoutes.set(p.id,{table:group,type,profile_keys:profileKeys});
+    }
+  }
+}
+for (const p of index.products) {
+  const state=p.microbiology_status||"";
+  if(["mapped_appendix_b_v2","conditional_appendix_b_variant_required","appendix_b_no_direct_table_mapping","appendix_b_no_direct_fish_table_mapping"].includes(state)){
+    assert.ok(appendixBRoutes.has(p.id),"Indexed Appendix B route missing from official module: "+p.id);
+  }
+}
+
 assert.equal(index.products.length, 533);
 assert.equal(new Set(index.products.map(p=>p.id)).size, 533);
 assert.equal(special.routes.length, 58);
@@ -101,6 +134,7 @@ const products = index.products.map(p => {
     route:routeKind, rule, chapter_evidence:chapterStatus,
     numeric_composition_values_present:numericCompositionPresent,
     microbiology_index_status:micro,
+    appendix_b_evidence_route:appendixBRoutes.get(p.id) || null,
     microbiology_profile_key:p.microbiology_profile_key || null,
     microbiology_candidates_count:(p.microbiology_candidates || []).length,
     appendix_a_category:p.appendix_fcs || null,
@@ -125,7 +159,7 @@ const report = {
   schema_version:"1.0", as_of:date, branch:"gh-pages",
   disclaimer:"Evidence inventory only: 533/533 LOCAL routes, not all current FoSCoS products and not full compliance verification. No per-product legal PASS is produced.",
   official_source_policy:"FSSAI/FoSCoS exclusively; separate nutrition source is ICMR-NIN IFCT.",
-  summary:{loaded:products.length,counts,items_requiring_full_compliance_review:products.length},
+  summary:{loaded:products.length,counts,appendix_b_explicit_mappings_cross_checked:appendixBRoutes.size,items_requiring_full_compliance_review:products.length},
   products
 };
 const output=path.join(root,"audit-output");
@@ -143,6 +177,7 @@ const summary = [
   "| Special FoSCoS/FSSAI identity/category routes | 58 |",
   "| Chapter entries explicitly identity-only partial | "+(counts.chapter_evidence.identity_only_partial||0)+" |",
   "| Appendix B conditional, variant-dependent routes | "+(counts.microbiology.conditional_appendix_b_variant_required||0)+" |",
+  "| Appendix B exact/conditional/no-direct mappings cross-checked against Table profiles | "+appendixBRoutes.size+" |",
   "| Microbiology absent from lightweight search index (not necessarily exempt) | "+(counts.microbiology.not_recorded_in_search_index||0)+" |",
   "| All product-specific compliance outcomes independently verified | 0 claimed |",
   "",
