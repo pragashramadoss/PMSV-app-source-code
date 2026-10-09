@@ -13,7 +13,7 @@
 
 ## Newly resolved 38 special regulatory routes
 
-- **8 fruits/vegetables:** seven fresh-produce FCS routes plus one additional fresh or seed route according to catalogue IDs; both dried edible seed identities are linked to FSSAI's 15 March 2024 interim licensing order, not an invented numerical standard.
+- **8 fruits/vegetables:** six fresh-produce FCS routes (untreated, surface-treated, or minimally processed fruit/vegetables) plus two edible-dried-seed identities linked to FSSAI's 15 March 2024 interim licensing order—not a fabricated numerical standard.
 - **3 traditional mouth fresheners:** FoSCoS FCS 5.2.4.1–5.2.4.3, with ingredient-specific checks retained.
 - **1 polyols category:** FoSCoS FCS 11.6, explicitly no blanket use permission.
 - **26 additive, enzyme, flavouring, functional-ingredient classes:** FoSCoS 99.1/99.2/99.3/99.7; named Chapter 3 identity/purity keys added where verified, not used as finished-product permission.
@@ -24,7 +24,7 @@
 - FSSAI's March 2024 edible-dried-seed order says a specific product standard had *not* then been notified. PMSV keeps that separate from the general manufacturing FoSCoS licensing route.
 - FSSAI Appendix A provides different additive permissions according to exact food-category codes; a substance being listed or having an identity standard does not constitute a blanket use approval.
 - This is not a proof of completeness against an exhaustive current live official FoSCoS export.
-- A current Chromium end-to-end browser test has **not yet been run** for this new route mapping.
+- A current Chromium end-to-end browser test has **not yet been run** for this new route mapping. A standalone Node.js test was added at `scripts/verify-fssai-regulatory-routes.cjs` but could not be executed in the available environment; in-memory integrity checks were performed.
 
 ## Official sources
 
