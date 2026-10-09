@@ -99,6 +99,7 @@ assert.equal(bySpecialKey.size, 58);
 const products = index.products.map(p => {
   let routeKind, rule, chapterStatus = "not_a_chapter_route";
   let numericCompositionPresent = false;
+  let numericBaselineStatus = "not_recorded";
   let sourceUrls = [];
   const action = [];
   if(p.chapter_rule_link_status === "file_and_key_verified") {
@@ -106,10 +107,23 @@ const products = index.products.map(p => {
     const target = chapterRecord(p);
     sourceUrls = target.sourceUrls;
     rule = {file:target.file, key:target.key, record_status:target.record.status || "not_recorded"};
-    numericCompositionPresent = Array.isArray(target.record.composition) && target.record.composition.some(x=>typeof x.value==="number");
+    numericCompositionPresent = (
+      Array.isArray(target.record.composition) && target.record.composition.some(x=>Number.isFinite(x.value))
+    ) || (
+      Array.isArray(target.record.variant_composition) &&
+      target.record.variant_composition.some(v=>Array.isArray(v.composition)&&v.composition.some(x=>Number.isFinite(x.value)))
+    );
+    if(target.record.numeric_evidence) {
+      assert.ok(numericCompositionPresent,"Numeric source evidence without numeric standard: "+p.id);
+      assert.equal(target.record.numeric_evidence.compliance_assessment_enabled,false,"Numeric baseline cannot enable compliance: "+p.id);
+      numericBaselineStatus = "official_source_baseline_current_amendments_pending";
+      action.push("Review later FSSAI amendments and select exact variant before applying numeric baseline");
+    } else if(numericCompositionPresent) numericBaselineStatus = "numeric_data_present_not_independently_reviewed_by_this_audit";
     const explicitlyPartial = p.chapter_rule_scope === "identity_only_partial";
     chapterStatus = explicitlyPartial ? "identity_only_partial" : p.chapter_rule_scope === "official_clause_and_numeric_standard_pending_cross_layer" ? "cross_layer_validation_pending" : "direct_file_and_key_found_not_full_assessment";
-    if(explicitlyPartial) action.push("Complete and independently validate product-specific numeric/composition standard beyond identity");
+    if(explicitlyPartial) action.push(numericBaselineStatus === "official_source_baseline_current_amendments_pending" ?
+      "Complete current amendment, process/variant and cross-regulation verification; 2023 numeric baseline already transcribed" :
+      "Complete and independently validate product-specific numeric/composition standard beyond identity");
     if(p.chapter_rule_scope === "official_clause_and_numeric_standard_pending_cross_layer") action.push("Validate remaining cross-regulatory applicability");
   } else {
     routeKind = "special_regulation";
@@ -130,12 +144,14 @@ const products = index.products.map(p => {
   tally("chapter_evidence", chapterStatus);
   tally("microbiology", micro);
   tally("appendix_a_category", p.appendix_fcs_status);
+  if(numericBaselineStatus !== "not_recorded")tally("numeric_baseline_status",numericBaselineStatus);
   if(numericCompositionPresent) tally("composition_evidence", "has_some_numeric_values");
   else tally("composition_evidence", "no_numeric_composition_in_linked_standard_record");
   return {
     id:p.id, name:p.name, category:p.category, fcs:p.fcs, fssr:p.fssr,
     route:routeKind, rule, chapter_evidence:chapterStatus,
     numeric_composition_values_present:numericCompositionPresent,
+    numeric_baseline_status:numericBaselineStatus,
     microbiology_index_status:micro,
     appendix_b_evidence_route:appendixBRoutes.get(p.id) || null,
     microbiology_profile_key:p.microbiology_profile_key || null,
@@ -179,6 +195,7 @@ const summary = [
   "| Chapter keys resolve to local rule entries | 475 |",
   "| Special FoSCoS/FSSAI identity/category routes | 58 |",
   "| Chapter entries explicitly identity-only partial | "+(counts.chapter_evidence.identity_only_partial||0)+" |",
+  "| Source-transcribed numeric baselines with current amendment review pending | "+(counts.numeric_baseline_status.official_source_baseline_current_amendments_pending||0)+" |",
   "| Appendix B conditional, variant-dependent routes | "+(counts.microbiology.conditional_appendix_b_variant_required||0)+" |",
   "| Appendix B exact/conditional/no-direct mappings cross-checked against Table profiles | "+appendixBRoutes.size+" |",
   "| Microbiology absent from lightweight search index (not necessarily exempt) | "+(counts.microbiology.not_recorded_in_search_index||0)+" |",
