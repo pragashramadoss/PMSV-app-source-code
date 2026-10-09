@@ -7,7 +7,7 @@ const root=path.resolve(__dirname,"..");
 const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
 const rules=JSON.parse(fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/data/rules/chapter-2-3-fruit-vegetable-v1.json"),"utf8"));
 const standards=new Map(rules.standards.map(x=>[x.key,x]));
-const start=html.indexOf("function sourcePinnedStandardSupplementHtml(st)");
+const start=html.indexOf("function sourcePinnedStandardSupplementHtml(st,selectedCatalogId)");
 const end=html.indexOf("function standardLookupRegulatoryCompositionHtml(){",start);
 assert.ok(start>0&&end>start,"UI evidence renderer is missing");
 const snippet=html.slice(start,end);
