@@ -770,6 +770,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="card hidden" id="nutritionStandardReferenceCard">
 <div class="section-title"><h2>Standardized-product composition & nutrition</h2><span>FSSAI standard + ICMR-NIN IFCT 2017</span></div>
 <div id="nutritionStandardRegulatory"></div>
+<div id="nutritionStandardIfctVariant"></div>
 <div id="nutritionStandardReferenceStatus" class="notice"></div>
 <div id="nutritionStandardReferenceTable"></div>
 <div class="flow-actions"><button class="btn-secondary" type="button" id="nutritionGoToProductStandard">View full FSSAI product standard</button><button class="btn-secondary" type="button" id="nutritionGoToFormulation">Optional: calculate recipe nutrition</button></div>
@@ -1228,7 +1229,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-08-dahi-contaminants-v26';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-ifct-standard-lookup-v477';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -2964,20 +2965,36 @@ function nutritionProfileFor(name){
  const n=normIngredient(name);
  return nutritionDb.profiles.find(p=>p.active_for_calculation===true&&p.source_authority==='ICMR-NIN'&&Array.isArray(p.names)&&p.names.some(x=>normIngredient(x)===n))||null;
 }
+let pmsvStandardIfctPaneerChoice='';
 function standardLookupNutritionProfile(){
- if(!nutritionDb)return null;
+ if(!nutritionDb||!Array.isArray(nutritionDb.profiles))return null;
  const product=currentAssessmentCatalogProduct();
  if(!product)return null;
-
- // Only exact, regulatorily safe mappings are allowed here. No fuzzy food substitution.
+ const identity=normIngredient(product.lookup_display_name||product.name||'');
+ // No direct IFCT 2017 analysed record for Dahi/Curd: never substitute whole milk.
+ if(['dahi','plain dahi','curd','plain curd'].includes(identity))return null;
+ const exactCode=code=>nutritionDb.profiles.find(p=>p.ifct_code===code&&p.active_for_calculation===true&&p.source_authority==='ICMR-NIN')||null;
+ // The combined FSSAI Chhana-and-Paneer standard does NOT uniquely identify Paneer.
+ // Show Paneer IFCT L003 only after the user explicitly confirms that finished food.
+ if(String(product.id||'')==='01-01-6-chhana-and-paneer'){
+   if(pmsvStandardIfctPaneerChoice!=='paneer')return null;
+   const paneer=exactCode('L003');
+   return paneer?{profile:paneer,basis:'Confirmed Paneer variant · IFCT L003 (not a Chhana measurement)'}:null;
+ }
  const direct=nutritionProfileFor(product.name||'');
- if(direct)return {profile:direct,basis:'Exact IFCT name match'};
-
+ if(direct)return {profile:direct,basis:'Exact IFCT food-name match'};
  const verifiedAliases={
-   // Exact identity mappings where the product and IFCT food are the same food,
-   // but the naming/order differs. Do not add processing-form or varietal guesses here.
-   '01-01-1-cow-milk':'Milk, whole, Cow',
-   '01-01-1-buffalo-milk':'Milk, whole, Buffalo',
+   '01-01-1-cow-milk':'L002',
+   '01-01-1-buffalo-milk':'L001',
+   '01-01-3-khoa':'L004'
+ };
+ const code=verifiedAliases[String(product.id||'')];
+ if(code){
+   const p=exactCode(code);
+   if(p)return {profile:p,basis:'Verified exact product identity · IFCT '+code};
+ }
+ // Preserve legacy audited aliases for exact comparable foods; no fuzzy nearest match.
+ const oldAliases={
    '06-06-2-maida-refined-wheat-flour':'Wheat flour, refined',
    '04-04-1-almond-kernels':'Almond',
    '04-04-1-walnut-kernels':'Walnut',
@@ -2985,12 +3002,9 @@ function standardLookupNutritionProfile(){
    '12-12-2-nutmeg-jaiphal':'Nutmeg',
    '12-12-2-asafoetida-hing-or-hingra':'Asafoetida'
  };
- const alias=verifiedAliases[String(product.id||'')];
- if(alias){
-   const p=nutritionProfileFor(alias);
-   if(p)return {profile:p,basis:'Verified product-to-IFCT identity mapping'};
- }
- return null;
+ const alias=oldAliases[String(product.id||'')];
+ const p=alias?nutritionProfileFor(alias):null;
+ return p?{profile:p,basis:'Audited exact product-to-IFCT food identity'}:null;
 }
 function standardLookupRegulatoryCompositionHtml(){
  const product=currentAssessmentCatalogProduct();
@@ -3137,67 +3151,102 @@ function standardLookupRegulatoryCompositionHtml(){
 function renderStandardLookupNutritionReference(){
  const card=document.getElementById('nutritionStandardReferenceCard');
  const regulatory=document.getElementById('nutritionStandardRegulatory');
+ const variant=document.getElementById('nutritionStandardIfctVariant');
  const status=document.getElementById('nutritionStandardReferenceStatus');
  const table=document.getElementById('nutritionStandardReferenceTable');
  if(!card||!status||!table)return;
-
  const lookup=standardLookupModeActive();
  card.classList.toggle('hidden',!lookup);
  if(!lookup){
    if(regulatory)regulatory.innerHTML='';
+   if(variant)variant.innerHTML='';
    table.innerHTML='';
    return;
  }
-
  if(regulatory)regulatory.innerHTML=standardLookupRegulatoryCompositionHtml();
  const product=currentAssessmentCatalogProduct();
  const productName=product?.lookup_display_name||product?.name||currentProductProfile()?.name||'Selected standardized product';
+ const isDahi=['dahi','plain dahi','curd','plain curd'].includes(normIngredient(productName));
+ const isCombinedPaneer=String(product?.id||'')==='01-01-6-chhana-and-paneer';
+ if(variant){
+   variant.innerHTML=isCombinedPaneer
+     ?'<div class="notice"><label for="nutritionIfctPaneerChoice"><b>Choose actual finished dairy product for IFCT reference</b></label>'
+      +'<select id="nutritionIfctPaneerChoice"><option value="">Choose Paneer or Chhana (do not assume)</option>'
+      +'<option value="paneer"'+(pmsvStandardIfctPaneerChoice==='paneer'?' selected':'')+'>Paneer</option>'
+      +'<option value="chhana"'+(pmsvStandardIfctPaneerChoice==='chhana'?' selected':'')+'>Chhana</option></select>'
+      +'<small>This changes only the IFCT reference, not the FSSAI regulatory identity. IFCT L003 measures Paneer, not Chhana.</small></div>'
+     :'';
+ }
  if(!nutritionDb){
    status.className='notice';
-   status.innerHTML='<b>ICMR-NIN nutrition database is still loading.</b>';
+   status.innerHTML='<b>ICMR-NIN IFCT 2017 is still loading.</b> No ingredients are needed for this lookup.';
    table.innerHTML='';
    return;
  }
-
  const match=standardLookupNutritionProfile();
+ const ifctUrl='https://www.nin.res.in/ebooks/IFCT2017_16122024.pdf';
+ const source='<br><small>Official source: <a href="'+ifctUrl+'" target="_blank" rel="noopener noreferrer">ICMR-NIN IFCT 2017</a>.</small>';
  if(!match){
    status.className='notice';
-   status.innerHTML='<b>Layer 2 — no exact ICMR-NIN IFCT 2017 nutrition profile is available for '+esc(productName)+'.</b><br>'
-     +'No ingredient entry is required to establish or inspect this standardized product. PMSV will <b>not estimate nutrition from a related food, a different processing form/variety, or another database</b>. '
-     +'The applicable FSSAI legal composition/identity conditions are shown above; enter a formulation only if you want a recipe-specific nutrition calculation.';
-   table.innerHTML='<div class="notice oknote"><b>Standardized product ≠ one fixed nutrition label.</b><br>'
-     +'The FSSAI standard controls legal identity and composition. Actual energy, carbohydrate, sugars, fat, protein, sodium and other declared nutrition values may vary within that standard depending on the finished recipe and processing. '
-     +'PMSV therefore shows an IFCT reference only for an exact official food identity and otherwise leaves the nutrition value unestimated.</div>';
+   if(isDahi){
+     status.innerHTML='<b>Layer 2 — Dahi/Curd has no directly analysed entry in IFCT 2017.</b><br>'
+       +'The FSSAI 2.1.13 limits above describe legal composition; they are <b>not</b> nutrition values per 100 g. '
+       +'Do not substitute cow or buffalo milk values, or calculate from the minimum milk-protein rule. '
+       +'A formulation-based estimate is optional and must be labelled an estimate.'+source;
+   }else if(isCombinedPaneer){
+     status.innerHTML='<b>Layer 2 — '+(pmsvStandardIfctPaneerChoice==='chhana'?'Chhana has no direct IFCT 2017 entry.':'Choose Paneer or Chhana above to select the correct IFCT identity.')+'</b><br>'
+       +'The composite FSSAI standard cannot automatically be treated as IFCT Paneer L003. '
+       +'No formulation ingredients are required to inspect the standard.'+source;
+   }else{
+     status.innerHTML='<b>Layer 2 — no verified exact IFCT 2017 nutrition match is mapped for '+esc(productName)+'.</b><br>'
+       +'This does not necessarily mean the food is absent from IFCT: a regulatorily safe product-to-IFCT identity must first be established. '
+       +'FSSAI composition is available without ingredients; do not borrow nutrients from another food.'+source;
+   }
+   table.innerHTML='<div class="notice"><b>No official nutrient measurements are displayed for this identity.</b> '
+     +'For recipe-specific estimated nutrition, use the separate optional formulation workflow. FSSAI limits are never substituted for measurements.</div>';
    return;
  }
-
  const profile=match.profile;
- const verified=new Set(Array.isArray(profile.verified_fields)?profile.verified_fields:[]);
- const defs=[
-   ['energy_kcal','Energy','kcal'],
-   ['protein_g','Protein','g'],
-   ['carbohydrate_g','Carbohydrate','g'],
-   ['total_sugars_g','Total sugars','g'],
-   ['total_fat_g','Total fat','g'],
-   ['saturated_fat_g','Saturated fat','g'],
-   ['trans_fat_g','Trans fat','g'],
-   ['cholesterol_mg','Cholesterol','mg'],
-   ['sodium_mg','Sodium','mg'],
-   ['dietary_fibre_g','Dietary fibre','g']
+ const number=v=>typeof v==='number'&&Number.isFinite(v)&&v>=0;
+ const coreDefs=[
+   ['energy_kcal','Energy','kcal'],['protein_g','Protein','g'],
+   ['carbohydrate_g','Carbohydrate','g'],['total_sugars_g','Total sugars','g'],
+   ['total_fat_g','Total fat','g'],['saturated_fat_g','Saturated fat','g'],
+   ['trans_fat_g','Trans fat','g'],['cholesterol_mg','Cholesterol','mg'],
+   ['sodium_mg','Sodium','mg'],['dietary_fibre_g','Dietary fibre','g']
  ];
- const data=profile.per_100g||{};
- const rows=defs
-   .filter(([key])=>verified.has(key)&&isNutritionNumber(data[key]))
-   .map(([key,label,unit])=>'<tr><td><b>'+esc(label)+'</b></td><td>'+fmt(data[key],3)+' '+esc(unit)+'</td></tr>')
-   .join('');
-
+ const verified=new Set(Array.isArray(profile.verified_fields)?profile.verified_fields:[]);
+ const core=coreDefs.filter(([key])=>verified.has(key)&&number(profile.per_100g?.[key]))
+   .map(([key,label,unit])=>'<tr><th>'+esc(label)+'</th><td>'+fmt(profile.per_100g[key],3)+'</td><td>'+esc(unit)+'</td></tr>').join('');
+ const nutrientTable=(caption,body)=>body
+   ?'<details open><summary><b>'+esc(caption)+'</b></summary><div class="tablewrap"><table><thead><tr><th>Nutrient</th><th>IFCT value</th><th>Unit</th></tr></thead><tbody>'+body+'</tbody></table></div></details>'
+   :'';
+ const extra=(label,values,fields,allowed)=>Object.entries(fields||{}).filter(([key])=>
+   allowed.includes(key)&&number(values?.[key])).map(([key,def])=>
+   '<tr><th>'+esc(key.replaceAll('_',' '))+'</th><td>'+fmt(values[key],4)+'</td><td>'+esc(def.unit||'')+'</td></tr>').join('');
+ const table2=extra('Table 2',profile.ifct_table2_water_soluble_vitamins_per_100g,nutritionDb.ifct_table2_water_soluble_vitamins?.fields,Array.isArray(profile.ifct_table2_verified_fields)?profile.ifct_table2_verified_fields:[]);
+ const table3=extra('Table 3',profile.ifct_table3_fat_soluble_vitamins_per_100g,nutritionDb.ifct_table3_fat_soluble_vitamins?.fields,Array.isArray(profile.ifct_table3_verified_fields)?profile.ifct_table3_verified_fields:[]);
+ // Modules 4–11 are direct per-100-g values except Table 8 amino-acid references.
+ // Table 8 and Table 12 use different denominators and must never be merged here.
+ let modules='';
+ const defs=nutritionDb.modular_ifct?.tables||{};
+ for(const numberTable of [4,5,6,7,9,10,11]){
+   const definition=defs[numberTable], record=profile.ifct_tables?.[numberTable];
+   if(!definition||definition.reference_only||definition.basis!=='per_100g_edible_portion'||!record)continue;
+   const rows=Object.entries(definition.fields||{}).filter(([key])=>number(record.values?.[key]))
+     .map(([key,field])=>'<tr><th>'+esc(field.label||key)+'</th><td>'+fmt(record.values[key],4)+'</td><td>'+esc(field.unit||'')+'</td></tr>').join('');
+   if(rows)modules+=nutrientTable('IFCT Table '+numberTable+' · '+definition.title,rows);
+ }
  status.className='notice oknote';
- status.innerHTML='<b>Layer 2 — exact ICMR-NIN IFCT reference found:</b> '+esc(profile.display_name||profile.names?.[0]||productName)
-   +(profile.ifct_code?' · <span class="clause">'+esc(profile.ifct_code)+'</span>':'')
-   +'<br><small>'+esc(match.basis)+'. These are official reference values per 100 g of the IFCT food, not a calculated nutrition label for every commercial formulation sold under the FSSAI standard. PMSV uses only literal IFCT matches or a small explicit verified-identity map; it never selects the nearest food by similarity.</small>';
- table.innerHTML=rows
-   ? '<div class="tablewrap"><table><thead><tr><th>Nutrient</th><th>ICMR-NIN IFCT reference per 100 g</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
-   : '<div class="notice">The exact IFCT food identity is loaded, but no verified core nutrition fields are available for display in this runtime.</div>';
+ status.innerHTML='<b>Layer 2 — exact ICMR-NIN IFCT 2017 nutrient reference:</b> '+esc(profile.display_name||productName)
+   +' · <span class="clause">'+esc(profile.ifct_code||'')+'</span><br>'
+   +'<small>'+esc(match.basis)+'. All values are per 100 g edible portion of the exact IFCT food, '
+   +'not a laboratory-tested label for a specific commercial finished product. A standard product needs no ingredients to show these values.</small>'+source;
+ table.innerHTML=nutrientTable('Proximate and verified label-reference fields · per 100 g',core)
+   +nutrientTable('IFCT Table 2 · water-soluble vitamins · per 100 g',table2)
+   +nutrientTable('IFCT Table 3 · fat-soluble vitamins · per 100 g',table3)
+   +modules
+   +(core||table2||table3||modules?'':'<div class="notice">Exact IFCT food identified, but verified numerical fields are unavailable in this database.</div>');
 }
 function nutritionServingMl(){
  const n=Number(document.getElementById('nutritionServingMl')?.value||document.getElementById('labelServingMl')?.value||250);
@@ -9250,6 +9299,11 @@ document.getElementById('evaluatePackaging')?.addEventListener('click',evaluateP
 document.getElementById('fortificationRoute')?.addEventListener('change',renderFortification);
 document.getElementById('evaluateFortification')?.addEventListener('click',evaluateFortification);
 document.getElementById('refreshComplianceSummary')?.addEventListener('click',renderMasterComplianceSummary);
+document.addEventListener('change',event=>{
+ if(event.target?.id!=='nutritionIfctPaneerChoice')return;
+ pmsvStandardIfctPaneerChoice=String(event.target.value||'');
+ renderStandardLookupNutritionReference();
+});
 document.getElementById('nutritionGoToProductStandard')?.addEventListener('click',()=>{
  openTab('standard',{updateHash:true,save:true});
  window.scrollTo({top:0,behavior:'smooth'});
