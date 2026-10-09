@@ -73,6 +73,31 @@ function chapterRecord(p) {
   assert.ok(sourceUrls.length > 0 && sourceUrls.every(official), "Non-official chapter source link: " + p.id);
   return {key, file, record, sourceUrls};
 }
+const meatEggCommodityReviews = contaminants.chapter_2_5_commodity_mrl_review_v1 || [];
+const meatEggCommodityById = new Map(meatEggCommodityReviews.map(row=>[row.catalog_id,row]));
+assert.equal(meatEggCommodityReviews.length,37,"Expected 37 Chapter 2.5 meat/egg commodity review records");
+assert.equal(meatEggCommodityById.size,37,"Duplicate Chapter 2.5 review identity");
+const currentPesticideArticles=new Set(
+  (contaminants.residue_mrls?.pesticides||[])
+  .flatMap(p=>(p.rows||[]).map(r=>String(r.food||"").trim().toLowerCase()))
+);
+for(const row of meatEggCommodityReviews){
+ const indexed=index.products.find(p=>p.id===row.catalog_id);
+ assert.ok(indexed && String(indexed.fssr||"").startsWith("2.5"),"Non-Chapter 2.5 MRL candidate: "+row.catalog_id);
+ assert.equal(row.auto_apply_commodity_mrl,false,"Unsafe unqualified pesticide candidate activation "+row.catalog_id);
+ assert.equal(row.full_product_regulatory_approval,false,"Premature contaminant compliance approval "+row.catalog_id);
+ assert.ok(row.candidate_commodity_articles.length>0,row.catalog_id);
+ for(const article of row.candidate_commodity_articles)
+   assert.ok(currentPesticideArticles.has(String(article).toLowerCase()),"Missing official FSSAI pesticide commodity article "+article);
+}
+const rawMeatMetalLocks=new Map();
+for(const row of contaminants.chapter_2_5_locked_fresh_meat_routes_v9||[]){
+ for(const id of row.catalog_ids||[]){
+   assert.ok(!rawMeatMetalLocks.has(id),"Duplicate raw goat/rabbit metal lock "+id);
+   rawMeatMetalLocks.set(id,row);
+ }
+}
+assert.equal(rawMeatMetalLocks.size,4,"Expected four raw/frozen goat/rabbit metal locks");
 function contaminantEvidenceForProduct(p){
  const profiles=directContaminantProfiles.get(p.id) || [];
  const explicitAliases=contaminantAliases.get(p.id);
@@ -99,6 +124,16 @@ function contaminantEvidenceForProduct(p){
    "no_exact_catalog_evidence_in_this_inventory";
  return {
    status,
+   chapter_2_5_pesticide_commodity_review:meatEggCommodityById.get(p.id)
+     ? {scope:meatEggCommodityById.get(p.id).scope,
+        review_status:meatEggCommodityById.get(p.id).scope_review_status,
+        source_fssai_version:contaminants.source_version,
+        candidate_articles:meatEggCommodityById.get(p.id).candidate_commodity_articles,
+        source_qualifier:meatEggCommodityById.get(p.id).qualifier_review,
+        auto_apply:false,
+        exact_finished_product_applicability_verified:false} : null,
+   raw_goat_rabbit_metal_article_lock:rawMeatMetalLocks.has(p.id)
+     ? {contaminant:"Lead",status:"locked_pending_exact_finished_article",reason:rawMeatMetalLocks.get(p.id).reason} : null,
    finished_product_article_review:finishedArticleLock?{
      status:"reviewed_no_exact_current_version_ix_article_fail_closed",
      lock_reason:finishedArticleLock.reason,
@@ -245,6 +280,14 @@ const products = index.products.map(p => {
   if(contaminantEvidence.status==="only_family_fssr_evidence_needs_identity_review")
     action.push("Confirm exact finished-product eligibility for the matching FSSR-family contaminant article");
   tally("contaminant_evidence",contaminantEvidence.status);
+  if(contaminantEvidence.chapter_2_5_pesticide_commodity_review){
+    tally("chapter_2_5_pesticide_candidates","source_rows_available_applicability_pending");
+    action.push("Review Chapter 2.5 pesticide commodity candidates for exact animal tissue, processing and residue basis; the candidate rows are not applied automatically");
+  }
+  if(contaminantEvidence.raw_goat_rabbit_metal_article_lock){
+    tally("chapter_2_5_goat_rabbit_metal_locks","species_identity_not_transferable");
+    action.push("Do not transfer cattle/sheep/pig/poultry Lead article onto goat or rabbit without a verified official article and applicable amendments");
+  }
   if(chapterMicrobiologyRows.length){
     assert.equal(routeKind,"chapter_rule");
     assert.ok(sourceUrls.every(official),"Direct chapter microbiology source must be official: "+p.id);
@@ -372,6 +415,8 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| Chapter 2.5 product identities with official commodity pesticide candidates (not auto-applied) | "+(counts.chapter_2_5_pesticide_candidates?.source_rows_available_applicability_pending||0)+" |",
+  "| Raw goat/rabbit metal article locks preventing species transfer | "+(counts.chapter_2_5_goat_rabbit_metal_locks?.species_identity_not_transferable||0)+" |",
   "| Direct FSSAI chapter microbiology criteria indexed | "+(counts.direct_chapter_microbiology?.exact_clause_microbiology_rows||0)+" |",
   "| Appendix B exact/conditional/no-direct mappings cross-checked against Table profiles | "+appendixBRoutes.size+" |",
   "| Microbiology absent from lightweight search index (not necessarily exempt) | "+(counts.microbiology.not_recorded_in_search_index||0)+" |",
