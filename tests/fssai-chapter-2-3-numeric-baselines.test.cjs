@@ -836,6 +836,8 @@ test("six exact finished non-alcoholic beverages use sourced Saffrole and exclud
  assert.equal(m.official_article,"Non-alcoholic beverages");
  assert.equal(m.limit,10);assert.equal(m.unit,"ppm");
  assert.equal(m.complete_contaminant_coverage,false);
+ const concentratedAndDiluted=["ginger-cocktail","squash","crush","fruit-syrup-sharbat","cordial","barley-water","synthetic-syrup-dispenser","synthetic-syrup-sharbat"];
+ for(const id of concentratedAndDiluted)assert.ok(m.excluded_concentrate_powder_and_other_ids.includes(id),"Dilution-dependent entry must be explicitly excluded: "+id);
  const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
  const at=html.indexOf("function productBaselineContaminantRules(p){"),end=html.indexOf("\nfunction ",at+12);
  const vm=require("node:vm"),ctx=vm.createContext({contaminantsDb:db,
