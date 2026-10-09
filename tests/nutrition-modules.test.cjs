@@ -190,7 +190,7 @@ test('existing label and vitamin calculations preserve null while accepting expl
     nutritionDb:{profiles:[{names:['Sample'],source_authority:'ICMR-NIN',active_for_calculation:true,verified_fields:['energy_kcal','sodium_mg'],per_100g:{energy_kcal:null,sodium_mg:null},ifct_table2_water_soluble_vitamins_per_100g:{test:null}}],ifct_table2_water_soluble_vitamins:{fields:{test:{unit:'mg'}}}},
     formulationIngredients:[{name:'Sample',qty:100,unit:'g'}],
     normIngredient:s => s.toLowerCase(),totalFormulaKg:() => 0.1,qtyToKg:q => q / 1000,formulaDensity:() => 1,
-    fmt:(n,d)=>Number(n).toFixed(d), document:{getElementById:() => ({value:'250'})}
+    fmt:(n,d)=>Number(n).toFixed(d), document:{getElementById:() => ({value:'250'}),addEventListener:()=>{}}
   };
   vm.createContext(sandbox); vm.runInContext(html.slice(start, end), sandbox);
   assert.equal(sandbox.calculateNutrition().per100g.energy_kcal, null);
