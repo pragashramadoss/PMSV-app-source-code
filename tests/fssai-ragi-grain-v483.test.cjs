@@ -28,6 +28,7 @@ function runner(){
  return {
   alias:s=>vm.runInContext('pmsvStandardLookupAlias('+JSON.stringify(s)+')',ctx),
   suggested:s=>vm.runInContext('proprietaryStandardCandidates('+JSON.stringify(s)+')[0].p.id',ctx),
+  confidence:s=>vm.runInContext('proprietaryStandardCandidates('+JSON.stringify(s)+')[0].score',ctx),
   direct:s=>vm.runInContext('productCatalog().map(p=>({p,score:pmsvStandardLookupAlias('+JSON.stringify(s)+')?.productId===p.id?200000:pmsvDirectScore(p,'+JSON.stringify(s)+')})).sort((a,b)=>b.score-a.score)[0].p.id',ctx),
   product:x=>{p=catalog.find(y=>y.id===x);assert.ok(p,'Missing product '+x);},
   clauses:()=>Array.from(vm.runInContext('currentChapterStandards().map(x=>x.standard.key)',ctx))
@@ -99,8 +100,9 @@ test('Unverified millet-flour forms do not silently resolve to millets grain or 
  const h=runner();
  for(const name of ['kodo flour','teff flour','buckwheat flour']){
    assert.equal(h.alias(name),null,'Unsupported flour alias must fail closed');
-   assert.notEqual(h.suggested(name),'06-06-1-millets',name);
-   assert.notEqual(h.suggested(name),'06-06-2-ragi-flour',name);
+   // The candidate list can still contain a first item but its score must
+   // be zero, so the UI shows "No reliable match" and does not auto-select.
+   assert.equal(h.confidence(name),0,name+' must not trigger an automatic product suggestion');
  }
 });
 test('Existing wheat, rice and actual flour routes remain intact',()=>{
