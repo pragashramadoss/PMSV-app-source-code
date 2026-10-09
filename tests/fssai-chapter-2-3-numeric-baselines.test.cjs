@@ -8,10 +8,10 @@ const dataRoot = path.resolve(__dirname,"../fssai-product-helper-preview-01/data
 const chapter = JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/chapter-2-3-fruit-vegetable-v1.json"),"utf8"));
 const index = JSON.parse(fs.readFileSync(path.join(dataRoot,"standard-search-index-v1.json"),"utf8"));
 const records=new Map(chapter.standards.map(row=>[row.key,row]));
-const keys=["2.3.8","2.3.9","2.3.10","2.3.11","2.3.12","2.3.13","2.3.14","2.3.15","2.3.17","2.3.18","2.3.19","2.3.21","2.3.22","2.3.23","2.3.24","2.3.25","2.3.26","2.3.27","2.3.28","2.3.29","2.3.30"];
+const keys=["2.3.8","2.3.9","2.3.10","2.3.11","2.3.12","2.3.13","2.3.14","2.3.15","2.3.17","2.3.18","2.3.19","2.3.21","2.3.22","2.3.23","2.3.24","2.3.25","2.3.26","2.3.27","2.3.28","2.3.29","2.3.30","2.3.42","2.3.43"];
 const get = key => {const r=records.get(key);assert.ok(r, "Missing "+key);return r;};
 const metric=(key,parameter)=>get(key).composition.find(r=>r.parameter===parameter);
-test("twenty-one known partial standards now have source-pinned numeric baselines",()=>{
+test("twenty-three known partial standards now have source-pinned numeric baselines",()=>{
  for(const key of keys){
   const r=get(key);
   assert.equal(r.full_compliance_assessment_enabled,false,key);
@@ -172,4 +172,30 @@ test("rigid-container fill never becomes an unconditional finished food composit
   assert.match(r.packaging_requirements[0].condition,/rigid containers/i);
   assert.ok(!(r.composition||[]).some(x=>x.parameter==="Rigid-container fill"),key);
  }
+});
+
+test("mango chutney preserves five independent official numeric requirements",()=>{
+ const r=get("2.3.42");
+ assert.deepEqual(r.composition.map(x=>x.value),[50,40,4.6,5,0.5]);
+ assert.equal(r.composition[2].operator,"<=");
+ assert.equal(r.composition[2].unit,"pH");
+ assert.equal(r.packaging_requirements[0].value,90);
+ assert.match(r.packaging_requirements[0].condition,/rigid/i);
+});
+test("pickle brine, citrus, vinegar and oil rules are medium gated",()=>{
+ const r=get("2.3.43");
+ assert.equal(r.variant_resolution_required,true);
+ assert.equal(r.composition?.length||0,0);
+ assert.deepEqual(r.variant_composition.map(x=>x.variant),[
+ "Pickles in citrus juice","Pickles in brine","Pickles in oil","Pickles in vinegar","Pickles without a listed preserving medium"]);
+ const byMedium=Object.fromEntries(r.variant_composition.map(x=>[x.medium,x]));
+ assert.deepEqual(byMedium.citrus_juice.composition.map(x=>x.value),[60,1.2]);
+ assert.deepEqual(byMedium.brine.composition.map(x=>x.value),[60,12]);
+ assert.deepEqual(byMedium.oil.composition.map(x=>x.value),[60]);
+ assert.match(byMedium.oil.additional_non_numeric_requirement,/submerged/);
+ assert.deepEqual(byMedium.vinegar.composition.map(x=>x.value),[60,2]);
+ assert.deepEqual(byMedium.other.composition,[]);
+ assert.equal(byMedium.other.auto_evaluate,false);
+ const ids=index.products.filter(x=>x.rule_key==="2.3.43");
+ assert.equal(ids.length,3,"The three fruit, vegetable and mixed pickles use the same preserving-medium-gated standard");
 });
