@@ -273,6 +273,24 @@ for(const r of bisulphiteRoutes.verified_additive_identities){
  for(const c of r.contaminants)assert.ok((contaminants.metal_article_rules_v9[c.metal]||[]).some(x=>
   x.article===r.official_article&&Number(x.limit)===Number(c.limit)&&x.unit===c.unit));
 }
+const otherOil=contaminants.chapter_2_2_other_named_oils_lead_v9;
+assert.ok(otherOil && official(otherOil.official_source_url));
+assert.equal(otherOil.verified_products.length,3);
+assert.equal(otherOil.limit,0.1);
+assert.equal(otherOil.complete_contaminant_coverage,false);
+assert.equal(otherOil.pesticide_mrl_auto_apply,false);
+for(const article of [otherOil.article_crude,otherOil.article_edible]){
+ assert.ok(article.includes("other oils but excluding cocoa butter"));
+ assert.ok(contaminants.metal_article_rules_v9.Lead.some(r=>
+  r.article===article&&Number(r.limit)===Number(otherOil.limit)&&r.unit===otherOil.unit));
+}
+const otherOilById=new Map(otherOil.verified_products.map(x=>[x.catalog_id,x]));
+assert.equal(otherOilById.size,3);
+for(const route of otherOil.verified_products){
+ const product=index.products.find(p=>p.id===route.catalog_id);
+ assert.ok(product&&product.name===route.product_name&&product.fssr===route.fssr&&route.identity_checked);
+ assert.ok(!otherOil.product_exclusions.includes(route.catalog_id));
+}
 const namedCropMappings=contaminants.explicit_crop_contaminant_article_mappings_v9||[];
 const namedCropById=new Map(namedCropMappings.map(x=>[x.catalog_id,x]));
 assert.equal(namedCropMappings.length,3,"Expected three exact named crop-toxin mappings");
@@ -493,6 +511,7 @@ function contaminantEvidenceForProduct(p){
  const vegMetalEvidence=vegMetalById.get(p.id)||null;
  const freshEggEvidence=(freshEggs.catalog_id===p.id)?freshEggs:null;
  const bisulphiteEvidence=bisulphiteById.get(p.id)||null;
+ const otherOilEvidence=otherOilById.get(p.id)||null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
@@ -515,6 +534,7 @@ function contaminantEvidenceForProduct(p){
  if(vegMetalEvidence)explicitKinds.push("verified_fresh_vegetable_chromium_nickel_articles");
  if(freshEggEvidence)explicitKinds.push("verified_exact_fresh_eggs_pesticide_commodity_article_review_only");
  if(bisulphiteEvidence)explicitKinds.push("verified_exact_bisulphite_ins_additive_substance_metal_articles");
+ if(otherOilEvidence)explicitKinds.push("verified_other_edible_vegetable_oils_lead_articles");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
    "no_exact_catalog_evidence_in_this_inventory";
@@ -526,6 +546,10 @@ function contaminantEvidenceForProduct(p){
      source_url:alcoholic.official_source_url,full_compliance_verified:false,
      pesticide_mrls_auto_applied:false,other_contaminants_assessed:false
    }:null,
+   exact_other_edible_oil_lead:otherOilEvidence?{
+     official_source:otherOil.official_source_url,article:otherOil.article_edible,
+     limit:otherOil.limit,unit:otherOil.unit,full_compliance_verified:false,
+     pesticide_mrls_auto_applied:false}:null,
    exact_bisulphite_additive_metal_articles:bisulphiteEvidence?{
      substance_name:bisulphiteEvidence.product_name,metal_limits:bisulphiteEvidence.contaminants,
      official_source:bisulphiteRoutes.official_source_url,
@@ -789,6 +813,10 @@ const products = index.products.map(p => {
       tally("chapter_2_3_non_equivalent_articles","raw_cocoa_beans_not_cocoa_powder");
     action.push("Review Chapter 2.3 specific fruit, vegetable, nut or processed-product matrix, raw-ingredient commodity MRL, processing factor and sample basis; no finished-product pesticide MRL automatically established");
   }
+  if(contaminantEvidence.exact_other_edible_oil_lead){
+    tally("chapter_2_2_other_oil_lead","exact_oil_grouped_source_partial");
+    action.push("Version IX crude/edible grouped oil articles agree on Lead 0.1 mg/kg; confirm other metals, processing, pesticides and applicable amendments.");
+  }
   if(contaminantEvidence.exact_bisulphite_additive_metal_articles){
     tally("special_ins_additive_identity_metal","exact_substance_lead_selenium");
     action.push("INS metabisulphite pure-substance Lead/Selenium Version IX articles verified; separate Appendix A category, additive permission, dose and product formulation requirements remain unassessed.");
@@ -992,6 +1020,7 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| Named other edible oils with source-verified grouped Lead 0.1 mg/kg | "+(counts.chapter_2_2_other_oil_lead?.exact_oil_grouped_source_partial||0)+" |",
   "| Exact INS 223/224 metabisulphite substance metal impurity articles | "+(counts.special_ins_additive_identity_metal?.exact_substance_lead_selenium||0)+" |",
   "| Fresh Eggs with exact nine shell-free FSSAI commodity pesticide source rows, review only | "+(counts.chapter_2_5_eggs_exact_article?.shell_free_pesticide_reference_only||0)+" |",
   "| Exact fresh/minimally processed vegetable identities with source-backed Chromium and Nickel | "+(counts.chapter_2_3_fresh_vegetables?.source_backed_chromium_nickel_only||0)+" |",
