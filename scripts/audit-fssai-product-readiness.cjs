@@ -291,6 +291,21 @@ for(const route of otherOil.verified_products){
  assert.ok(product&&product.name===route.product_name&&product.fssr===route.fssr&&route.identity_checked);
  assert.ok(!otherOil.product_exclusions.includes(route.catalog_id));
 }
+const guar=contaminants.special_guar_gum_exact_metal_article_v9;
+assert.ok(guar&&official(guar.official_source_url)&&official(guar.official_identity_source_url));
+assert.equal(guar.catalog_id,"99-99-1-gelling-agent-or-thickener-or-stabilizer-guar-gum");
+assert.equal(guar.identity_ins,"412");
+assert.equal(guar.identity_clause,"3.2.11(10)");
+assert.equal(guar.official_article_spelling,"Gaur gum");
+assert.equal(guar.exact_ins_product_identity_verified,true);
+assert.equal(guar.complete_contaminant_coverage,false);
+assert.equal(guar.finished_food_additive_use_approved,false);
+const guarProduct=index.products.find(p=>p.id===guar.catalog_id);
+assert.ok(guarProduct&&guarProduct.name===guar.product_name&&guarProduct.fcs===guar.fcs);
+for(const m of guar.metals){
+ assert.ok(contaminants.metal_article_rules_v9[m.metal].some(x=>
+  x.article===guar.official_article_spelling&&Number(x.limit)===Number(m.limit)&&x.unit===m.unit));
+}
 const namedCropMappings=contaminants.explicit_crop_contaminant_article_mappings_v9||[];
 const namedCropById=new Map(namedCropMappings.map(x=>[x.catalog_id,x]));
 assert.equal(namedCropMappings.length,3,"Expected three exact named crop-toxin mappings");
@@ -512,6 +527,7 @@ function contaminantEvidenceForProduct(p){
  const freshEggEvidence=(freshEggs.catalog_id===p.id)?freshEggs:null;
  const bisulphiteEvidence=bisulphiteById.get(p.id)||null;
  const otherOilEvidence=otherOilById.get(p.id)||null;
+ const guarEvidence=guar.catalog_id===p.id?guar:null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
@@ -535,6 +551,7 @@ function contaminantEvidenceForProduct(p){
  if(freshEggEvidence)explicitKinds.push("verified_exact_fresh_eggs_pesticide_commodity_article_review_only");
  if(bisulphiteEvidence)explicitKinds.push("verified_exact_bisulphite_ins_additive_substance_metal_articles");
  if(otherOilEvidence)explicitKinds.push("verified_other_edible_vegetable_oils_lead_articles");
+ if(guarEvidence)explicitKinds.push("verified_ins_412_guar_gum_official_gaur_gum_metal_alias");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
    "no_exact_catalog_evidence_in_this_inventory";
@@ -546,6 +563,10 @@ function contaminantEvidenceForProduct(p){
      source_url:alcoholic.official_source_url,full_compliance_verified:false,
      pesticide_mrls_auto_applied:false,other_contaminants_assessed:false
    }:null,
+   exact_guar_gum_additive_metal_article:guarEvidence?{
+     source_url:guar.official_source_url,identity_ins:guar.identity_ins,
+     official_article:guar.official_article_spelling,metals:guar.metals,
+     full_compliance_verified:false,finished_food_use_approved:false}:null,
    exact_other_edible_oil_lead:otherOilEvidence?{
      official_source:otherOil.official_source_url,article:otherOil.article_edible,
      limit:otherOil.limit,unit:otherOil.unit,full_compliance_verified:false,
@@ -813,6 +834,10 @@ const products = index.products.map(p => {
       tally("chapter_2_3_non_equivalent_articles","raw_cocoa_beans_not_cocoa_powder");
     action.push("Review Chapter 2.3 specific fruit, vegetable, nut or processed-product matrix, raw-ingredient commodity MRL, processing factor and sample basis; no finished-product pesticide MRL automatically established");
   }
+  if(contaminantEvidence.exact_guar_gum_additive_metal_article){
+    tally("special_guar_gum_metal","exact_ins_412_official_alias");
+    action.push("INS 412 Chapter 3 Guar Gum matches official Section 2.1 Gaur gum Arsenic/Lead article. Identity/purity evidence only; verify Appendix A and formulation use separately.");
+  }
   if(contaminantEvidence.exact_other_edible_oil_lead){
     tally("chapter_2_2_other_oil_lead","exact_oil_grouped_source_partial");
     action.push("Version IX crude/edible grouped oil articles agree on Lead 0.1 mg/kg; confirm other metals, processing, pesticides and applicable amendments.");
@@ -1020,6 +1045,7 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| INS 412 Guar Gum linked to source-literal Gaur gum Arsenic and Lead | "+(counts.special_guar_gum_metal?.exact_ins_412_official_alias||0)+" |",
   "| Named other edible oils with source-verified grouped Lead 0.1 mg/kg | "+(counts.chapter_2_2_other_oil_lead?.exact_oil_grouped_source_partial||0)+" |",
   "| Exact INS 223/224 metabisulphite substance metal impurity articles | "+(counts.special_ins_additive_identity_metal?.exact_substance_lead_selenium||0)+" |",
   "| Fresh Eggs with exact nine shell-free FSSAI commodity pesticide source rows, review only | "+(counts.chapter_2_5_eggs_exact_article?.shell_free_pesticide_reference_only||0)+" |",
