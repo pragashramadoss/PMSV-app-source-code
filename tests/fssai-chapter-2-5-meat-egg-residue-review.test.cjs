@@ -107,3 +107,23 @@ test("contaminant UI and master summary show evidence without a full compliance 
  assert.match(html,/const strictProductLock=exactFinishedProductContaminantLock\(product\)\|\|exactRawMeatMetalLock\(product\)/);
  assert.match(html,/exactFinishedProductContaminantLock\(product\)\|\|exactRawMeatMetalLock\(product\)/);
 });
+
+test("goat/rabbit Lead-specific lock preserves other verified contaminant rules",()=>{
+ const p=clauses.find(x=>x.id==="08-08-1-fresh-or-chilled-chevon-or-goat-meat");
+ assert.ok(p);
+ const metalArticle={article:p.name,limit:0.12,unit:"mg/kg"};
+ const mixedProfile={id:"candidate-exact-other-metal",catalog_ids:[p.id],rules:[
+    {contaminant:"Lead",limit:0.1,unit:"mg/kg",article:p.name},
+    {contaminant:"Arsenic",limit:0.12,unit:"mg/kg",article:p.name}
+ ]};
+ const v=harness(p,{profiles:[mixedProfile,...db.profiles],metal_article_rules_v9:{
+    ...db.metal_article_rules_v9,
+    Lead:[...(db.metal_article_rules_v9.Lead||[]),{...metalArticle}],
+    Arsenic:[...(db.metal_article_rules_v9.Arsenic||[]),{...metalArticle}]
+ }});
+ assert.ok(v.lock);
+ assert.ok(v.profile,"Verified independent arsenic profile must survive Lead-only lock");
+ assert.deepEqual(Array.from(v.profile.rules,x=>x.contaminant),["Arsenic"]);
+ assert.equal(v.baseline.some(r=>r.contaminant==="Lead"),false);
+ assert.equal(v.baseline.some(r=>r.contaminant==="Arsenic"),true);
+});
