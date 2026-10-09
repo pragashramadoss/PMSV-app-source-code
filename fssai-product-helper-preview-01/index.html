@@ -8631,6 +8631,22 @@ function productBaselineContaminantRules(p){
      condition:'Only '+p.name+' additive substance. Does not establish finished-food use permission, permitted additive dosage or other contaminant compliance.'});
  }
  
+ // Version IX Lead Vegetable Oils, crude/edible grouped "other oils except
+ // cocoa butter". Both source form categories must independently agree.
+ const otherOils=contaminantsDb?.chapter_2_2_other_named_oils_lead_v9;
+ const oilIdentity=(otherOils?.verified_products||[]).find(x=>
+  x.catalog_id===id && x.product_name===p.name && x.fssr===p.fssr && x.identity_checked===true);
+ if(oilIdentity && !(otherOils.product_exclusions||[]).includes(id)){
+   const crude=exactMetalRule('Lead',otherOils.article_crude);
+   const edible=exactMetalRule('Lead',otherOils.article_edible);
+   if(crude&&edible&&Number(crude.limit)===Number(otherOils.limit)&&
+      Number(edible.limit)===Number(otherOils.limit)&&crude.unit===otherOils.unit&&edible.unit===otherOils.unit){
+     pushRule({contaminant:'Lead',article:otherOils.article_edible,limit:otherOils.limit,unit:otherOils.unit,
+       source_basis:'FSSAI CTR Version IX §2.1 · verified other edible vegetable oil identity',
+       condition:'Only '+p.name+' as a named edible oil. Both crude and edible official grouped articles agree. Not cocoa butter, oilseed flour, or all other contaminants.'});
+   }
+ }
+ 
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
