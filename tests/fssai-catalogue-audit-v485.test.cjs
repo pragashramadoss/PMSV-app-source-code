@@ -45,9 +45,14 @@ test('4 repeated-name groups are recognized as ambiguous identities and not clai
  assert.equal(duplicates.length,4);
  assert.equal(duplicates.reduce((acc,[,g])=>acc+g.length,0),14);
 });
-test('chapter-rule link gaps are explicitly present and cannot be reported as 100% verified',()=>{
- assert.equal(items.filter(p=>p.chapter_rule_link_status==='file_and_key_verified').length,390);
- assert.equal(items.filter(p=>p.chapter_rule_link_status!=='file_and_key_verified').length,143);
+test('all 533 local products have either an official chapter-standard link or an official special-regulation route',()=>{
+ const chapter=items.filter(p=>p.chapter_rule_link_status==='file_and_key_verified');
+ const special=items.filter(p=>p.regulatory_route_link_status==='file_and_key_verified');
+ const unresolved=items.filter(p=>p.chapter_rule_link_status!=='file_and_key_verified'&&p.regulatory_route_link_status!=='file_and_key_verified');
+ assert.equal(chapter.length,475);
+ assert.equal(special.length,58);
+ assert.equal(unresolved.length,0);
+ assert.equal(chapter.filter(p=>p.regulatory_route_link_status==='file_and_key_verified').length,0);
  assert.equal(master.coverage?.foscos_full_standardized_product_snapshot,'pending_ingestion');
 });
 test('generic crop names cannot inherit processed-form clauses across all loaded categories',()=>{
