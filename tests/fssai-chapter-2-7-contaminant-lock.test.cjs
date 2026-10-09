@@ -16,11 +16,12 @@ function excerpt(start){
 }
 const snippets=[
  excerpt("function exactFinishedProductContaminantLock(p){"),
+ excerpt("function exactRawMeatMetalLock(p){"),
  excerpt("function contaminantProfileForProduct(p){"),
  excerpt("function productBaselineContaminantRules(p){")
 ];
 function buildContext(overrides={}){
- const ctx=vm.createContext({contaminantsDb:{...db,...overrides},normIngredient:v=>String(v||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),chapterRuleDbs:[],ruleDbStandards:()=>[]});
+ const ctx=vm.createContext({contaminantsDb:{...db,...overrides},normIngredient:v=>String(v||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim(),chapterRuleDbs:[],ruleDbStandards:()=>[],isVerifiedFermentedMilkProduct:()=>false});
  vm.runInContext(snippets.join("\n"),ctx);
  return {
    lock:p=>vm.runInContext("exactFinishedProductContaminantLock("+JSON.stringify(p)+")",ctx),
@@ -75,7 +76,7 @@ test("lookup mode and formulation mode cannot PASS the locked finished-product r
  const to=html.indexOf("\nfunction ",from+30);
  const body=html.slice(from,to);
  assert.match(body,/const strictProductLock=exactFinishedProductContaminantLock\(product\)/);
- assert.match(body,/exactFinishedProductContaminantLock\(product\)\)\{/);
+ assert.match(body,/exactFinishedProductContaminantLock\(product\)\|\|exactRawMeatMetalLock\(product\)\)\{/);
  assert.match(body,/masterComplianceRow\('Contaminants \/ residues','incomplete'/);
  assert.match(body,/This is not a contaminant exemption/);
  assert.match(body,/the product cannot receive a full contaminant PASS/);
