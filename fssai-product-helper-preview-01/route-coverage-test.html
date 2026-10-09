@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PMSV FSSAI — Regulatory Route Verification</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#172f28;background:#f5f8f6}
+*{box-sizing:border-box}body{max-width:940px;margin:25px auto;padding:0 18px}h1{font-size:1.6rem;margin:0 0 8px}
+p{line-height:1.55}.muted{color:#52665f}.surface{background:#fff;border:1px solid #d6e2dc;border-radius:14px;padding:17px;margin:16px 0}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.stat b{display:block;font-size:1.7rem}
+input{font:inherit;padding:13px;border:1px solid #99b2a7;border-radius:8px;width:100%;min-height:44px}
+.result{border-bottom:1px solid #e1e9e5;padding:12px 0;cursor:pointer}.result:focus{outline:2px solid #237b5f}.result:last-child{border:0}
+.result small{display:block;color:#52665f;margin-top:4px}.selected{border-left:4px solid #237b5f;padding:12px;background:#f0f8f4}
+code{background:#e5f0ea;padding:2px 4px;border-radius:4px;overflow-wrap:anywhere}
+a{color:#146a53;overflow-wrap:anywhere}#details{word-break:break-word}
+@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}.stat b{font-size:1.35rem}}
+</style></head><body>
+<h1>PMSV FSSAI — Regulatory Route Test</h1>
+<p class="muted">Read-only GitHub Pages catalogue diagnostic. A verified regulatory route is not a completed food-compliance assessment. WordPress is not involved.</p>
+<div class="stats" id="stats"><div class="surface stat"><b>—</b>Loaded</div><div class="surface stat"><b>—</b>Chapter rules</div><div class="surface stat"><b>—</b>Special routes</div></div>
+<div class="surface"><label for="search"><strong>Search any food product or ingredient</strong></label><input id="search" type="search" placeholder="e.g. Jowar, Agar, Guar Gum, Untreated fresh fruit" autocomplete="off"><div id="results" aria-live="polite"></div></div>
+<div class="surface" id="details" aria-live="polite"><em>Select a product to inspect its exact recorded regulatory route.</em></div>
+<p class="muted">Data sources: <a href="https://fcstraining.fssai.gov.in/standard-product" rel="noopener" target="_blank">official FoSCoS catalogue</a>; <a href="https://fssai.gov.in/food-law/regulations/compendium/food-products-standards" rel="noopener" target="_blank">official FSSAI regulation compendium</a>.</p>
+<script>
+"use strict";
+const $=x=>document.getElementById(x);
+const E=s=>{const d=document.createElement('div');d.textContent=String(s??'');return d.innerHTML;};
+const L=x=>x&&String(x).startsWith('https://')?' <a href="'+encodeURI(x).replaceAll('"','&quot;')+'" target="_blank" rel="noopener">Official source ↗</a>':'';
+let products=[],routes=new Map();
+function display(p){
+ const mapped=p.regulatory_route_link_status==='file_and_key_verified';
+ const r=mapped?routes.get(p.regulatory_route_key):null;
+ const chapter=p.chapter_rule_link_status==='file_and_key_verified';
+ let text='<h2>'+E(p.name)+'</h2><p><strong>FoSCoS category:</strong> <code>'+E(p.fcs||'—')+'</code></p>';
+ if(chapter){text+='<p><strong>Chapter product-standard key:</strong> <code>'+E(p.rule_key||p.chapter_rule_key)+'</code></p><p><strong>Local rule file:</strong> <code>'+E(p.rule_file||p.chapter_rule_file)+'</code></p>';}
+ else if(r){text+='<p><strong>Official special route:</strong> '+E(r.route_kind)+'</p><p><strong>Route file/key:</strong> <code>'+E(p.regulatory_route_key)+'</code></p><p><strong>FSSAI Chapter 3 identity standard:</strong> '+E(r.identity_clause||'Not a standalone identity standard')+'</p><p><strong>INS:</strong> '+E(r.identity_ins||'Not applicable / determined at ingredient level')+'</p><p><strong>Important:</strong> '+E(r.warning||'Route is a classification only, not a compliance result.')+'</p>';for(const source of r.official_sources||[r.official_source])text+='<p>'+L(source)+'</p>';}
+ else{text+='<p>Not mapped.</p>';}
+ text+='<p><strong>Finished-product compliance:</strong> Not established from route mapping alone.</p>';
+ $('details').innerHTML=text;
+}
+function search(){
+ const q=$('search').value.toLowerCase().trim();
+ const rows=q?products.filter(p=>(p.name+' '+p.fcs+' '+p.id).toLowerCase().includes(q)).slice(0,40):[];
+ $('results').replaceChildren();
+ rows.forEach(p=>{
+  const div=document.createElement('div');div.className='result';div.tabIndex=0;div.setAttribute('role','button');
+  div.innerHTML='<strong>'+E(p.name)+'</strong><small>'+E(p.fcs||'—')+' · '+(p.chapter_rule_link_status==='file_and_key_verified'?'FSSAI chapter rule':p.regulatory_route_link_status==='file_and_key_verified'?'Special regulatory route':'Unmapped')+'</small>';
+  div.onclick=()=>display(p);div.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();display(p)}};
+  $('results').append(div);
+ });
+ if(q&&!rows.length)$('results').textContent='No matching local catalogue entry.';
+}
+$('search').addEventListener('input',search);
+Promise.all([fetch('./data/standard-search-index-v1.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()}),fetch('./data/rules/special-regulatory-routes-v1.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()})]).then(([idx,db])=>{
+ products=idx.products;routes=new Map(db.routes.map(x=>[x.key,x]));
+ const chapter=products.filter(p=>p.chapter_rule_link_status==='file_and_key_verified').length;
+ const special=products.filter(p=>p.regulatory_route_link_status==='file_and_key_verified').length;
+ $('stats').innerHTML='<div class="surface stat"><b>'+products.length+'</b>Loaded</div><div class="surface stat"><b>'+chapter+'</b>Chapter rules</div><div class="surface stat"><b>'+special+'</b>Special routes</div>';
+ search();
+}).catch(e=>{$('details').textContent='Could not load route data: '+e.message});
+</script></body></html>

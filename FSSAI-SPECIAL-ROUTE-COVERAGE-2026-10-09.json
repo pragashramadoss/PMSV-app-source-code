@@ -6,20 +6,170 @@
   "special_route_definition": "Official food category or listed regulatory recipe link verified; not synonymous with product-specific chapter standard or full compliance assessment",
   "catalogue_loaded": 533,
   "chapter_rule_links_verified": 475,
-  "special_regulation_routes_verified": 20,
-  "combined_regulatory_routes_mapped": 495,
-  "unresolved_any_route": 38,
+  "special_regulation_routes_verified": 58,
+  "combined_regulatory_routes_mapped": 533,
+  "unresolved_any_route": 0,
   "complete_live_foscos_snapshot_reconciled": false,
   "regression_checks": {
     "identity_counts_533": "passed",
     "special_routes_file_and_key_20": "passed",
     "no_fake_fssr_assigned": "passed",
     "complete_compliance": "not_verified",
-    "chromium_e2e": "not_run"
+    "chromium_e2e": "not_run",
+    "master_index_profile_533": "passed",
+    "all_58_special_route_keys_resolved": "passed",
+    "no_route_missing": "passed",
+    "browser_e2e": "not_run",
+    "full_compliance": "not_verified"
   },
   "special_route_products": [
     {
+      "id": "04-04-1-untreated-fresh-fruit",
+      "name": "Untreated fresh fruit",
+      "key": "route-04-04-1-untreated-fresh-fruit",
+      "kind": "fresh_produce_fcs_appendix_a",
+      "category_code": "04.1.1.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "04-04-1-surface-treated-fresh-fruit",
+      "name": "Surface-treated fresh fruit",
+      "key": "route-04-04-1-surface-treated-fresh-fruit",
+      "kind": "fresh_produce_fcs_appendix_a",
+      "category_code": "04.1.1.2",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "04-04-1-peeled-or-cut-minimally-processed-fruit",
+      "name": "Peeled or cut, minimally processed fruit",
+      "key": "route-04-04-1-peeled-or-cut-minimally-processed-fruit",
+      "kind": "fresh_produce_fcs_appendix_a",
+      "category_code": "04.1.1.3",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "04-04-1-edible-dried-seeds-obtained-from-fruits",
+      "name": "Edible Dried Seeds obtained from Fruits",
+      "key": "route-04-04-1-edible-dried-seeds-obtained-from-fruits",
+      "kind": "specific_fssai_foscos_licensing_order",
+      "category_code": "04.1.2.2",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "04-04-2-untreated-fresh-vegetables",
+      "name": "Untreated fresh vegetables",
+      "key": "route-04-04-2-untreated-fresh-vegetables",
+      "kind": "fresh_produce_fcs_appendix_a",
+      "category_code": "04.2.1.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "04-04-2-surface-treated-fresh-vegetables",
+      "name": "Surface-treated fresh vegetables",
+      "key": "route-04-04-2-surface-treated-fresh-vegetables",
+      "kind": "fresh_produce_fcs_appendix_a",
+      "category_code": "04.2.1.2",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "04-04-2-peeled-cut-or-shredded-minimally-processed-vegetables",
+      "name": "Peeled, cut or shredded minimally processed vegetables",
+      "key": "route-04-04-2-peeled-cut-or-shredded-minimally-processed-vegetables",
+      "kind": "fresh_produce_fcs_appendix_a",
+      "category_code": "04.2.1.3",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "04-04-2-edible-dried-seeds-obtained-from-vegetables",
+      "name": "Edible Dried Seeds obtained from Vegetables",
+      "key": "route-04-04-2-edible-dried-seeds-obtained-from-vegetables",
+      "kind": "specific_fssai_foscos_licensing_order",
+      "category_code": "04.2.2.2",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
+      "name": "Dried fruits/vegetables/nut based mouth fresheners",
+      "key": "route-05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
+      "kind": "traditional_mouth_freshener_fcs",
+      "category_code": "05.2.4.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "05-05-2-spice-based-mouth-fresheners",
+      "name": "Spice based mouth fresheners",
+      "key": "route-05-05-2-spice-based-mouth-fresheners",
+      "kind": "traditional_mouth_freshener_fcs",
+      "category_code": "05.2.4.2",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2",
+      "name": "Other traditional mouth fresheners not covered under 5.2.4.1 and 5.2.4.2",
+      "key": "route-05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2",
+      "kind": "traditional_mouth_freshener_fcs",
+      "category_code": "05.2.4.3",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
+      "name": "Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized",
+      "key": "route-11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
+      "kind": "table_top_sweetener_polyol_fcs",
+      "category_code": "11.6",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
       "id": "18-18-1-khoa-based-sweets",
+      "name": "Khoa Based Sweets",
       "key": "food-category-18.1.1.1",
       "kind": "indian_sweets_snacks_category",
       "category_code": "18.1.1.1",
@@ -27,10 +177,13 @@
       "additive_categories": [
         "1.7"
       ],
-      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf"
+      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "18-18-1-chhana-based-sweets",
+      "name": "Chhana based Sweets",
       "key": "food-category-18.1.1.2",
       "kind": "indian_sweets_snacks_category",
       "category_code": "18.1.1.2",
@@ -38,10 +191,13 @@
       "additive_categories": [
         "1.7"
       ],
-      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf"
+      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "18-18-1-fermented-milk-products-based-indian-sweets",
+      "name": "Fermented milk products based Indian Sweets",
       "key": "food-category-18.1.1.3",
       "kind": "indian_sweets_snacks_category",
       "category_code": "18.1.1.3",
@@ -49,10 +205,13 @@
       "additive_categories": [
         "1.7"
       ],
-      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf"
+      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "18-18-1-other-composite-milk-products-based-indian-sweets",
+      "name": "Other composite milk products based Indian Sweets",
       "key": "food-category-18.1.1.4",
       "kind": "indian_sweets_snacks_category",
       "category_code": "18.1.1.4",
@@ -60,10 +219,13 @@
       "additive_categories": [
         "1.7"
       ],
-      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf"
+      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "18-18-1-cereal-based-sweets",
+      "name": "Cereal based Sweets",
       "key": "food-category-18.1.2.1",
       "kind": "indian_sweets_snacks_category",
       "category_code": "18.1.2.1",
@@ -71,10 +233,13 @@
       "additive_categories": [
         "6.5"
       ],
-      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf"
+      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "18-18-1-pulses-based-sweets",
+      "name": "Pulses based Sweets",
       "key": "food-category-18.1.2.2",
       "kind": "indian_sweets_snacks_category",
       "category_code": "18.1.2.2",
@@ -82,10 +247,13 @@
       "additive_categories": [
         "6.5"
       ],
-      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf"
+      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "18-18-1-starch-based-sweets",
+      "name": "Starch based Sweets",
       "key": "food-category-18.1.2.3",
       "kind": "indian_sweets_snacks_category",
       "category_code": "18.1.2.3",
@@ -93,10 +261,13 @@
       "additive_categories": [
         "6.5"
       ],
-      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf"
+      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "18-18-1-dry-fruit-and-nuts-based-sweets",
+      "name": "Dry Fruit and nuts based Sweets",
       "key": "food-category-18.1.3",
       "kind": "indian_sweets_snacks_category",
       "category_code": "18.1.3",
@@ -104,10 +275,13 @@
       "additive_categories": [
         "15.2"
       ],
-      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf"
+      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "18-18-1-indian-confections",
+      "name": "Indian Confections",
       "key": "food-category-18.1.4",
       "kind": "indian_sweets_snacks_category",
       "category_code": "18.1.4",
@@ -116,10 +290,13 @@
         "5.2.3",
         "15.1"
       ],
-      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf"
+      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "18-18-1-fruit-and-vegetables-based-sweets",
+      "name": "Fruit and Vegetables based Sweets",
       "key": "food-category-18.1.5",
       "kind": "indian_sweets_snacks_category",
       "category_code": "18.1.5",
@@ -128,10 +305,13 @@
         "4.1.2.9",
         "4.2.2.6"
       ],
-      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf"
+      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "18-18-2-cereal-or-pulses-flour-starch-based-snacks-and-savouries",
+      "name": "Cereal or pulses flour/ Starch based snacks & savouries",
       "key": "food-category-18.2.1",
       "kind": "indian_sweets_snacks_category",
       "category_code": "18.2.1",
@@ -141,10 +321,13 @@
         "6.3",
         "6.7"
       ],
-      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf"
+      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "18-18-2-fruit-and-vegetable-based-snacks-and-savouries",
+      "name": "Fruit and vegetable based snacks & savouries",
       "key": "food-category-18.2.2",
       "kind": "indian_sweets_snacks_category",
       "category_code": "18.2.2",
@@ -152,315 +335,425 @@
       "additive_categories": [
         "15.1"
       ],
-      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf"
-    },
-    {
-      "id": "102-102-1-12-1-lajadi-kashaya-parched-rice-tea",
-      "key": "ayurveda-aahara-category-a-12.1",
-      "kind": "ayurveda_aahara_category_a_recipe",
-      "category_code": null,
-      "recipe_number": "12.1",
-      "additive_categories": [],
-      "source": "https://fcstraining.fssai.gov.in/standard-product"
-    },
-    {
-      "id": "102-102-1-13-1-krishara-khichdi",
-      "key": "ayurveda-aahara-category-a-13.1",
-      "kind": "ayurveda_aahara_category_a_recipe",
-      "category_code": null,
-      "recipe_number": "13.1",
-      "additive_categories": [],
-      "source": "https://fcstraining.fssai.gov.in/standard-product"
-    },
-    {
-      "id": "102-102-1-14-1-golaka-dugdha-condensed-milk-without-sugar",
-      "key": "ayurveda-aahara-category-a-14.1",
-      "kind": "ayurveda_aahara_category_a_recipe",
-      "category_code": null,
-      "recipe_number": "14.1",
-      "additive_categories": [],
-      "source": "https://fcstraining.fssai.gov.in/standard-product"
-    },
-    {
-      "id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
-      "key": "ayurveda-aahara-category-a-14.3",
-      "kind": "ayurveda_aahara_category_a_recipe",
-      "category_code": null,
-      "recipe_number": "14.3",
-      "additive_categories": [],
-      "source": "https://fcstraining.fssai.gov.in/standard-product"
-    },
-    {
-      "id": "102-102-1-14-4-yava-ksheera-barley-milk",
-      "key": "ayurveda-aahara-category-a-14.4",
-      "kind": "ayurveda_aahara_category_a_recipe",
-      "category_code": null,
-      "recipe_number": "14.4",
-      "additive_categories": [],
-      "source": "https://fcstraining.fssai.gov.in/standard-product"
-    },
-    {
-      "id": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
-      "key": "ayurveda-aahara-category-a-14.6",
-      "kind": "ayurveda_aahara_category_a_recipe",
-      "category_code": null,
-      "recipe_number": "14.6",
-      "additive_categories": [],
-      "source": "https://fcstraining.fssai.gov.in/standard-product"
-    },
-    {
-      "id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
-      "key": "ayurveda-aahara-category-a-14.7",
-      "kind": "ayurveda_aahara_category_a_recipe",
-      "category_code": null,
-      "recipe_number": "14.7",
-      "additive_categories": [],
-      "source": "https://fcstraining.fssai.gov.in/standard-product"
-    },
-    {
-      "id": "102-102-1-15-1-kulmasha-barley-savory-discs",
-      "key": "ayurveda-aahara-category-a-15.1",
-      "kind": "ayurveda_aahara_category_a_recipe",
-      "category_code": null,
-      "recipe_number": "15.1",
-      "additive_categories": [],
-      "source": "https://fcstraining.fssai.gov.in/standard-product"
-    }
-  ],
-  "unresolved": [
-    {
-      "id": "04-04-1-untreated-fresh-fruit",
-      "name": "Untreated fresh fruit",
-      "category": "04",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
-    },
-    {
-      "id": "04-04-1-surface-treated-fresh-fruit",
-      "name": "Surface-treated fresh fruit",
-      "category": "04",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
-    },
-    {
-      "id": "04-04-1-peeled-or-cut-minimally-processed-fruit",
-      "name": "Peeled or cut, minimally processed fruit",
-      "category": "04",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
-    },
-    {
-      "id": "04-04-1-edible-dried-seeds-obtained-from-fruits",
-      "name": "Edible Dried Seeds obtained from Fruits",
-      "category": "04",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
-    },
-    {
-      "id": "04-04-2-untreated-fresh-vegetables",
-      "name": "Untreated fresh vegetables",
-      "category": "04",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
-    },
-    {
-      "id": "04-04-2-surface-treated-fresh-vegetables",
-      "name": "Surface-treated fresh vegetables",
-      "category": "04",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
-    },
-    {
-      "id": "04-04-2-peeled-cut-or-shredded-minimally-processed-vegetables",
-      "name": "Peeled, cut or shredded minimally processed vegetables",
-      "category": "04",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
-    },
-    {
-      "id": "04-04-2-edible-dried-seeds-obtained-from-vegetables",
-      "name": "Edible Dried Seeds obtained from Vegetables",
-      "category": "04",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
-    },
-    {
-      "id": "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
-      "name": "Dried fruits/vegetables/nut based mouth fresheners",
-      "category": "05",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
-    },
-    {
-      "id": "05-05-2-spice-based-mouth-fresheners",
-      "name": "Spice based mouth fresheners",
-      "category": "05",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
-    },
-    {
-      "id": "05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2",
-      "name": "Other traditional mouth fresheners not covered under 5.2.4.1 and 5.2.4.2",
-      "category": "05",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
-    },
-    {
-      "id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
-      "name": "Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized",
-      "category": "11",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "source": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-mixture-preparations-premix-of-food-additives",
       "name": "Mixture/preparations/premix of food additives",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-mixture-preparations-premix-of-food-additives",
+      "kind": "food_additive_fcs_99_1_group",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-sodium-meta-bisulphite-ins-223",
       "name": "Sodium Meta Bisulphite INS 223",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-sodium-meta-bisulphite-ins-223",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-potassium-meta-bisulphite-ins-224",
       "name": "Potassium Meta Bisulphite INS 224",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-potassium-meta-bisulphite-ins-224",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-sajji-khar",
       "name": "Sajji Khar",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-sajji-khar",
+      "kind": "food_additive_fcs_99_1_group",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-acidity-regulators-ammonium-hydrogen-carbonate",
       "name": "Acidity Regulators Ammonium hydrogen carbonate",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-acidity-regulators-ammonium-hydrogen-carbonate",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-acidity-regulators-trisodium-citrate",
       "name": "Acidity Regulators Trisodium Citrate",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-acidity-regulators-trisodium-citrate",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-acidity-regulators-fumaric-acid",
       "name": "Acidity Regulators Fumaric Acid",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-acidity-regulators-fumaric-acid",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-acidity-regulators-l-tartaric-acid",
       "name": "Acidity Regulators L(+/-)tartaric Acid",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-acidity-regulators-l-tartaric-acid",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-agar",
       "name": "Gelling Agent or Thickener or Stabilizer Agar",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-gelling-agent-or-thickener-or-stabilizer-agar",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-arabic-or-acacia-gum",
       "name": "Gelling Agent or Thickener or Stabilizer Gum Arabic or Acacia Gum",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-arabic-or-acacia-gum",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-tragacanth-gum",
       "name": "Gelling Agent or Thickener or Stabilizer Tragacanth Gum",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-gelling-agent-or-thickener-or-stabilizer-tragacanth-gum",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-ghatti",
       "name": "Gelling Agent or Thickener or Stabilizer Gum Ghatti",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-ghatti",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-calcium-alginate",
       "name": "Gelling Agent or Thickener or Stabilizer Calcium Alginate",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-gelling-agent-or-thickener-or-stabilizer-calcium-alginate",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-alginic-acid",
       "name": "Gelling Agent or Thickener or Stabilizer Alginic Acid",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-gelling-agent-or-thickener-or-stabilizer-alginic-acid",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-guar-gum",
       "name": "Gelling Agent or Thickener or Stabilizer Guar Gum",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-gelling-agent-or-thickener-or-stabilizer-guar-gum",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-karaya",
       "name": "Gelling Agent or Thickener or Stabilizer Gum Karaya",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-gelling-agent-or-thickener-or-stabilizer-gum-karaya",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-pectin",
       "name": "Gelling Agent or Thickener or Stabilizer Pectin",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-gelling-agent-or-thickener-or-stabilizer-pectin",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-gelling-agent-or-thickener-or-stabilizer-carrageenan",
       "name": "Gelling Agent or Thickener or Stabilizer Carrageenan",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-gelling-agent-or-thickener-or-stabilizer-carrageenan",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-antioxidants-butylated-hydroxyanisole",
       "name": "Antioxidants Butylated Hydroxyanisole",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-antioxidants-butylated-hydroxyanisole",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-antioxidants-dodecyl-gallate",
       "name": "Antioxidants Dodecyl Gallate",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-antioxidants-dodecyl-gallate",
+      "kind": "food_additive_identity_purity",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-",
       "name": "Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-",
+      "kind": "food_additive_fcs_99_1_group",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
       "name": "Additives VA-VF of Nutraceutical Regulations excluding those already standardised",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
+      "kind": "food_additive_fcs_99_1_group",
+      "category_code": "99.1",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
       "name": "Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
+      "kind": "enzyme_preparation_fcs_99_2",
+      "category_code": "99.2",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-3-mixture-preparations-premix-of-flavouring-substances",
       "name": "Mixture/preparations/premix of flavouring substances",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-3-mixture-preparations-premix-of-flavouring-substances",
+      "kind": "flavouring_preparation_fcs_99_3",
+      "category_code": "99.3",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
       "name": "Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
+      "kind": "nutraceutical_functional_ingredients_fcs_99_7",
+      "category_code": "99.7",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     },
     {
       "id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
       "name": "Mixtures/preparations/premix of functional ingredients",
-      "category": "99",
-      "reason": "Exact product-specific or special regulatory route remains unresolved"
+      "key": "route-99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "kind": "nutraceutical_functional_ingredients_fcs_99_7",
+      "category_code": "99.7",
+      "recipe_number": null,
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "102-102-1-12-1-lajadi-kashaya-parched-rice-tea",
+      "name": "12.1 - Lajadi Kashaya (Parched Rice Tea)",
+      "key": "ayurveda-aahara-category-a-12.1",
+      "kind": "ayurveda_aahara_category_a_recipe",
+      "category_code": "",
+      "recipe_number": "12.1",
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "102-102-1-13-1-krishara-khichdi",
+      "name": "13.1 - Krishara (Khichdi)",
+      "key": "ayurveda-aahara-category-a-13.1",
+      "kind": "ayurveda_aahara_category_a_recipe",
+      "category_code": "",
+      "recipe_number": "13.1",
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "102-102-1-14-1-golaka-dugdha-condensed-milk-without-sugar",
+      "name": "14.1 - Golaka Dugdha (Condensed Milk without Sugar)",
+      "key": "ayurveda-aahara-category-a-14.1",
+      "kind": "ayurveda_aahara_category_a_recipe",
+      "category_code": "",
+      "recipe_number": "14.1",
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
+      "name": "14.3 - Narikela Ksheerika (Milky Coconut Delight)",
+      "key": "ayurveda-aahara-category-a-14.3",
+      "kind": "ayurveda_aahara_category_a_recipe",
+      "category_code": "",
+      "recipe_number": "14.3",
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "102-102-1-14-4-yava-ksheera-barley-milk",
+      "name": "14.4 - Yava Ksheera (Barley Milk)",
+      "key": "ayurveda-aahara-category-a-14.4",
+      "kind": "ayurveda_aahara_category_a_recipe",
+      "category_code": "",
+      "recipe_number": "14.4",
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
+      "name": "14.6 - Sugandhit Ksheera (Aroma infused milk)",
+      "key": "ayurveda-aahara-category-a-14.6",
+      "kind": "ayurveda_aahara_category_a_recipe",
+      "category_code": "",
+      "recipe_number": "14.6",
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+      "name": "14.7 - Ksheerapaka (Mystic Milk Quartet)",
+      "key": "ayurveda-aahara-category-a-14.7",
+      "kind": "ayurveda_aahara_category_a_recipe",
+      "category_code": "",
+      "recipe_number": "14.7",
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
+    },
+    {
+      "id": "102-102-1-15-1-kulmasha-barley-savory-discs",
+      "name": "15.1 - Kulmasha (Barley Savory Discs)",
+      "key": "ayurveda-aahara-category-a-15.1",
+      "kind": "ayurveda_aahara_category_a_recipe",
+      "category_code": "",
+      "recipe_number": "15.1",
+      "additive_categories": [],
+      "source": "https://fcstraining.fssai.gov.in/standard-product",
+      "regulatory_route_verified": true,
+      "full_compliance_verified": false
     }
   ],
+  "unresolved": [],
   "official_sources": {
     "indian_sweets_snacks_direction": "https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf",
     "ayurveda_2025": "https://fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf",
     "ayurveda_2026_update_listing": "https://www.fssai.gov.in/food-law/advisories?division=Science%20and%20Standards",
     "official_foscos": "https://fcstraining.fssai.gov.in/standard-product"
-  }
+  },
+  "route_coverage_note": "All 533 locally loaded product identities have an official FSSAI/FoSCoS chapter or category/identity route. No proof of completeness against all current FoSCoS products, and no blanket numeric/regulatory compliance pass."
 }
