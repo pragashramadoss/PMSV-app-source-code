@@ -1230,7 +1230,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-09-millet-catalog-safety-v485';
+const PRODUCT_HELPER_UI_BUILD='2026-10-09-jowar-grain-match-v486';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -1274,7 +1274,9 @@ function pmsvMilletIdentity(raw){
  const item=PMSV_MILLET_VARIETIES_V484.find(x=>x.names.some(n=>pmsvDirectNorm(n)===bare));
  if(!item)return null;
  const names=item.names.map(pmsvDirectNorm);
- const grainIdentity={productId:'06-06-1-millets',variant:item.name,displayName:item.name,routeLabel:'FSSAI 2.4.6(23) — Whole or Dehulled Millets',exactIdentity:true};
+ const displayName=({ragi:'Ragi',jowar:'Jowar',sorghum:'Sorghum',bajra:'Bajra',mandua:'Mandua',nachni:'Nachni',rajgira:'Rajgira',kuttu:'Kuttu',kangni:'Kangni',kutki:'Kutki'})[bare]||item.name;
+ const grainIdentity={productId:'06-06-1-millets',variant:displayName,displayName,
+   routeLabel:'FSSAI 2.4.6(23) — Whole or Dehulled Millets ('+item.name+')',exactIdentity:true};
  if(!isFlour)return grainIdentity;
  // Only these three flour identities are explicitly available in FoSCoS.
  const flourId=names.includes('ragi')?'06-06-2-ragi-flour':
@@ -1308,6 +1310,24 @@ function pmsvProductFormConflict(productName,searchText){
  const stop=new Set([...forms,'of','and','with','or','for','the','food','foods','product','products','based','other','including','whole','raw','refined','edible','grain','grains']);
  const pCore=[...p].filter(x=>!stop.has(x)),qCore=[...q].filter(x=>!stop.has(x));
  return qCore.length>0&&pCore.length>0&&!qCore.some(x=>pCore.includes(x));
+}
+/* Never include a zero-score unrelated item in the dropdown.
+ * A verified grain/flour alias has one exact category identity. */
+function pmsvRankedStandardCandidates(products,raw,scoreFn){
+ if(!pmsvDirectNorm(raw)||!Array.isArray(products))return [];
+ const alias=pmsvStandardLookupAlias(raw);
+ if(alias){
+   const p=products.find(x=>String(x?.id||'')===alias.productId);
+   return p?[{p,score:200000}]:[];
+ }
+ return products.map(p=>({p,score:scoreFn(p,raw)})).filter(x=>x.score>0)
+   .sort((a,b)=>b.score-a.score||String(a.p?.name||'').localeCompare(String(b.p?.name||'')));
+}
+function pmsvAmbiguousExactNames(rows,raw){
+ if(!rows||rows.length<2)return false;
+ const n=pmsvDirectNorm(raw);
+ return n===pmsvDirectNorm(rows[0].p?.name)&&n===pmsvDirectNorm(rows[1].p?.name)
+   &&rows[0].score===100000&&rows[1].score===100000;
 }
 function pmsvDirectScore(product,raw){
  const q=pmsvDirectNorm(raw);
@@ -1382,34 +1402,34 @@ async function pmsvDirectProductNameNearestStandard(value){
      : [];
    const products=full.length?full:(Array.isArray(db?.products)?db.products:[]);
    const alias=pmsvStandardLookupAlias(raw);
-   const ranked=products
-     .map(p=>({p,score:alias&&String(p.id||'')===alias.productId?200000:pmsvDirectScore(p,raw)}))
-     .sort((a,b)=>b.score-a.score||String(a.p?.name||'').localeCompare(String(b.p?.name||'')));
+   const ranked=pmsvRankedStandardCandidates(products,raw,pmsvDirectScore);
 
    if(!ranked.length){
-     select.innerHTML='<option value="">No loaded FSSAI/FoSCoS products</option>';
-     note.innerHTML='<b>No product catalogue is available for nearest-standard matching.</b>';
+     select.innerHTML='<option value="">No safe standard match — specify the actual food form</option>';
+     select.disabled=true;confirm.disabled=true;note.className='notice';
+     note.innerHTML='<b>No reliable FSSAI product match.</b> Try a more precise food name. PMSV will not suggest a different processed form.';
      return;
    }
 
    const best=ranked[0];
+   const ambiguous=pmsvAmbiguousExactNames(ranked,raw);
    if(alias&&best.p&&String(best.p.id||'')===alias.productId){
      best.p={...best.p,lookup_display_name:alias.displayName,chapter_rule_variant:alias.variant,alias_route_label:alias.routeLabel};
    }
    select.innerHTML='';
-   select.add(new Option(best.score>0?'Select a standard/category':'No reliable automatic match — choose manually',''));
+   select.add(new Option(ambiguous?'Multiple exact products — select food category':'Select a standard/category',''));
    ranked.forEach((row,index)=>{
      const p=row.p||{};
      const standard=String(p.fssr||'').trim();
      const aliasLabel=alias&&String(p.id||'')===alias.productId?alias.displayName:String(p.name||'FSSAI product');
-     const label=(index===0&&best.score>0?'Suggested — ':'')
+     const label=(index===0&&!ambiguous&&best.score>0?'Suggested — ':'')
        +aliasLabel
        +(standard&&!/^(?:n\.?\s*a\.?|na|n\/a|—|-)$/i.test(standard)?' · '+standard:' · FSSR N.A.');
-     select.add(new Option(label,String(p.id||''),false,index===0&&best.score>0));
+     select.add(new Option(label+(ambiguous?' · FCS '+String(p.fcs||p.category||'') :''),String(p.id||''),false,index===0&&!ambiguous&&best.score>0));
    });
    select.disabled=false;
    confirm.disabled=!select.value;
-   if(best.score>0){
+   if(best.score>0&&!ambiguous){
      if(alias&&String(best.p?.id||'')===alias.productId&&alias.variant){
        try{sessionStorage.setItem(ASSESSMENT_VARIANT_KEY,alias.variant);}catch(e){}
      }else{
@@ -1423,7 +1443,7 @@ async function pmsvDirectProductNameNearestStandard(value){
      }catch(e){}
    }
 
-   if(best.score>0){
+   if(best.score>0&&!ambiguous){
      const p=best.p||{};
      const standard=String(p.fssr||'').trim();
      const standardText=standard&&!/^(?:n\.?\s*a\.?|na|n\/a|—|-)$/i.test(standard)?standard:'FSSR N.A.';
@@ -1435,7 +1455,7 @@ async function pmsvDirectProductNameNearestStandard(value){
        +(alias&&String(p.id||'')===alias.productId?'<br><small>'+esc(alias.routeLabel)+' — verify the actual finished-product form before assessment.</small>':'<br><small>Matched immediately from the finished-product name. Confirm this selection or choose another applicable standard/category.</small>');
    }else{
      note.className='notice';
-     note.innerHTML='<b>No reliable automatic match was found.</b> Choose the closest applicable FSSAI standard or FoSCoS category manually.';
+     note.innerHTML=ambiguous?'<b>Multiple exact food identities have this name.</b> Select the correct category before confirming.':'<b>No reliable automatic match.</b> Use the precise food identity.';
    }
 
    try{
@@ -5327,10 +5347,7 @@ function proprietaryStandardScore(product,raw){
  return score;
 }
 function proprietaryStandardCandidates(raw){
- const alias=pmsvStandardLookupAlias(raw);
- const rows=productCatalog().map(p=>({p,score:alias&&String(p.id||'')===alias.productId?200000:proprietaryStandardScore(p,raw)}));
- rows.sort((x,y)=>y.score-x.score||String(x.p.name||'').localeCompare(String(y.p.name||'')));
- return rows;
+ return pmsvRankedStandardCandidates(productCatalog(),raw,proprietaryStandardScore);
 }
 function selectedProprietaryStandardProduct(){
  const id=document.getElementById('proprietaryStandardSelect')?.value||'';
@@ -5384,8 +5401,9 @@ function proprietaryStandardCandidatesFromBasis(basis){
    });
    return {p,score};
  });
- rows.sort((x,y)=>y.score-x.score||String(x.p.name||'').localeCompare(String(y.p.name||'')));
- return rows;
+ const matches=rows.filter(x=>x.score>0);
+ matches.sort((x,y)=>y.score-x.score||String(x.p.name||'').localeCompare(String(y.p.name||'')));
+ return matches;
 }
 function nearestStandardEngineAudit(){
  const catalog=productCatalog();
@@ -5437,8 +5455,11 @@ function mirrorNearestStandardPreview(note){
  preview.className=note?.className||'notice';
  preview.classList.remove('hidden');
  const selected=selectedProprietaryStandardProduct();
+ const typed=document.getElementById('proprietaryProductName')?.value||'';
+ const alias=pmsvStandardLookupAlias(typed);
+ const visibleName=alias&&selected?.id===alias.productId?alias.displayName:selected?.name;
  preview.innerHTML=(note?.innerHTML||'')
-   +(selected?'<div class="notice oknote" style="margin-top:8px"><b>Current nearest-standard selection:</b> '+esc(selected.name)+(hasRealFssrStandard(selected)?' · <span class="clause">'+esc(selected.fssr)+'</span>':' · FSSR N.A.')+'</div>':'')
+   +(selected?'<div class="notice oknote" style="margin-top:8px"><b>Current nearest-standard selection:</b> '+esc(visibleName)+(hasRealFssrStandard(selected)?' · <span class="clause">'+esc(selected.fssr)+'</span>':' · FSSR N.A.')+'</div>':'')
    +'<div class="flow-actions"><button class="btn-secondary" type="button" id="jumpToNearestStandard">Review / confirm standard →</button></div>';
  document.getElementById('jumpToNearestStandard')?.addEventListener('click',()=>{
    document.getElementById('formulationRouteCard')?.scrollIntoView({behavior:'smooth',block:'start'});
@@ -5474,20 +5495,19 @@ function renderProprietaryStandardSuggestion(){
  }
  const ranked=proprietaryStandardCandidatesFromBasis(basis);
  if(!ranked.length){
-   select.innerHTML='<option value="">No FSSAI/FoSCoS products loaded</option>';
-   select.disabled=true;
-   confirm.disabled=true;
-   note.className='notice';
-   note.innerHTML='<b>No loaded product catalogue is available.</b>';
+   select.innerHTML='<option value="">No safe FSSAI match — specify product form</option>';
+   select.disabled=true;confirm.disabled=true;note.className='notice';
+   note.innerHTML='<b>No reliable standardized-product match.</b> Enter the exact food or its processed form; PMSV does not substitute unrelated products.';
    mirrorNearestStandardPreview(note);
    return;
  }
  const best=ranked[0];
- const confident=best.score>0;
  const matchingAlias=pmsvStandardLookupAlias(raw);
+ const ambiguous=!matchingAlias&&pmsvAmbiguousExactNames(ranked,raw);
+ const confident=best.score>0&&!ambiguous;
  const bestDisplayName=matchingAlias&&String(best.p?.id||'')===matchingAlias.productId?matchingAlias.displayName:best.p?.name;
- select.innerHTML='<option value="">'+(confident?'Select a standard/category':'No reliable automatic match — choose manually')+'</option>'
-   +ranked.map((x,i)=>'<option value="'+esc(x.p.id)+'"'+(confident&&i===0?' selected':'')+'>'+esc(proprietaryCandidateLabel(x.p,{suggested:confident&&i===0}))+'</option>').join('');
+ select.innerHTML='<option value="">'+(ambiguous?'Multiple exact products — select food category':'Select a standard/category')+'</option>'
+   +ranked.map((x,i)=>'<option value="'+esc(x.p.id)+'"'+(confident&&i===0?' selected':'')+'>'+esc(proprietaryCandidateLabel(x.p,{suggested:confident&&i===0})+(ambiguous?' · FCS '+String(x.p.fcs||x.p.category||''):''))+'</option>').join('');
  select.disabled=false;
  confirm.disabled=!select.value;
  const usingFastIndex=!productMasterDb&&!!standardSearchIndexDb;
@@ -5512,7 +5532,8 @@ function renderProprietaryStandardSuggestion(){
      +'<br><small>'+basisText+' Confirm this selection or choose another applicable standard/category.</small>';
  }else{
    note.className='notice';
-   note.innerHTML='<b>No reliable match was found from the '+esc(basis.label)+'.</b> Choose the closest applicable FSSAI standard or FoSCoS category manually.';
+   note.innerHTML=ambiguous?'<b>Several exact products share this name.</b> Select the intended food category before confirming.'
+   :'<b>No reliable match from '+esc(basis.label)+'.</b> Enter the exact product form.';
  }
  const audit=nearestStandardEngineAudit();
  if(audit.tested){
@@ -6488,7 +6509,10 @@ document.getElementById('proprietaryStandardSelect')?.addEventListener('change',
  try{sessionStorage.removeItem(CONFIRMED_STANDARD_KEY);}catch(e){}
  document.getElementById('confirmProprietaryStandard').disabled=!event.currentTarget.value;
  const p=selectedProprietaryStandardProduct();
- if(!p||String(p.id||'')!=='01-01-2-fermented-milk'){
+ const alias=pmsvStandardLookupAlias(document.getElementById('proprietaryProductName')?.value||'');
+ if(alias?.productId===p?.id&&alias.variant){
+   try{sessionStorage.setItem(ASSESSMENT_VARIANT_KEY,alias.variant);}catch(e){}
+ }else{
    try{sessionStorage.removeItem(ASSESSMENT_VARIANT_KEY);}catch(e){}
  }
  if(p){
@@ -6498,7 +6522,7 @@ document.getElementById('proprietaryStandardSelect')?.addEventListener('change',
  const note=document.getElementById('proprietaryStandardSuggestion');
  if(note&&p){
    note.className='notice';
-   note.innerHTML='<b>Selected but not confirmed:</b> '+esc(p.name)+(p.fssr?' · <span class="clause">'+esc(p.fssr)+'</span>':'')+'<br><small>Tap Confirm selected standard before determining the regulatory route.</small>';
+   note.innerHTML='<b>Selected but not confirmed:</b> '+esc(alias?.productId===p.id?alias.displayName:p.name)+(p.fssr?' · <span class="clause">'+esc(p.fssr)+'</span>':'')+'<br><small>Tap Confirm selected standard before determining the regulatory route.</small>';
  }
  resetProprietaryOutcome();
  renderProprietaryFormula();
