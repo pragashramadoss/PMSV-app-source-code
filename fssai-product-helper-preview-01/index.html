@@ -8573,6 +8573,31 @@ function productBaselineContaminantRules(p){
    }
  }
  
+ // Version IX metal articles for exact Chapter 2.2 hydrogenated/interesterified
+ // oils and named edible seed oils. Never transfer a seed-oil article to butter,
+ // spreads, oilseed flour or unspecified processing forms.
+ const verifiedOil=contaminantsDb?.chapter_2_2_verified_oil_metal_articles_v9;
+ if(!(verifiedOil?.excluded_nearby_catalog_ids||[]).includes(id)){
+   const nickelFamily=verifiedOil?.hydrogenated_interesterified_nickel;
+   const nickelOil=(nickelFamily?.verified_identities||[]).find(x=>
+     x.catalog_id===id && x.product_name===p.name && x.fssr===p.fssr && x.identity_verified===true);
+   if(nickelOil){
+     const exact=exactMetalRule('Nickel',nickelFamily.article);
+     if(exact && Number(exact.limit)===Number(nickelFamily.limit)&&exact.unit===nickelFamily.unit)
+       pushRule({contaminant:'Nickel',...exact,source_basis:'FSSAI CTR Version IX §2.1 · verified hydrogenated/interesterified oil identity',
+         condition:'Only '+p.name+' under '+p.fssr+'; no full contaminant or pesticide MRL approval.'});
+   }
+   const edible=verifiedOil?.named_edible_seed_oils;
+   const seedOil=(edible?.verified_identities||[]).find(x=>
+     x.catalog_id===id && x.product_name===p.name && x.fssr===p.fssr && x.identity_verified===true);
+   if(seedOil)for(const rule of edible.rules||[]){
+     const exact=exactMetalRule(rule.metal,rule.article);
+     if(!exact||Number(exact.limit)!==Number(rule.limit)||exact.unit!==rule.unit)continue;
+     pushRule({contaminant:rule.metal,...exact,source_basis:'FSSAI CTR Version IX §2.1 · verified edible seed oil article',
+       condition:'Only '+p.name+' edible seed oil. Not a crude oil, cocoa butter, other seed oil, oilseed flour or complete conformity.'});
+   }
+ }
+ 
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');

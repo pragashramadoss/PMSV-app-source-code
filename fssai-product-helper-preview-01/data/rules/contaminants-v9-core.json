@@ -27786,5 +27786,113 @@
     "complete_contaminant_coverage": false,
     "amendments_fully_reconciled": false,
     "application_note": "15 exact pure cereal flours and grain products qualify as cereal products under the FSSAI grouped crop toxin article. Do not infer unrelated grains, pulse/oilseed flours, mixed composite products or pesticide MRLs."
+  },
+  "chapter_2_2_verified_oil_metal_articles_v9": {
+    "source_regulation": "FSSAI CTR Version IX (03.02.2026) §2.1 Metal Contaminants",
+    "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "hydrogenated_interesterified_nickel": {
+      "article": "All hydrogenated, partially hydrogenated, interesterified vegetable oils and fats such as vanaspati, table margarine, bakery and industrial margarine, bakery shortening, fat spread and partially hydrogenated soyabean oil",
+      "metal": "Nickel",
+      "limit": 1.5,
+      "unit": "mg/kg",
+      "verified_identities": [
+        {
+          "catalog_id": "02-02-2-fat-spread",
+          "product_name": "Fat spread",
+          "fssr": "2.2.5(3)",
+          "identity_verified": true
+        },
+        {
+          "catalog_id": "02-02-1-interesterified-vegetable-fat-oil",
+          "product_name": "Interesterified vegetable fat/Oil",
+          "fssr": "2.2.2",
+          "identity_verified": true
+        },
+        {
+          "catalog_id": "02-02-1-vanaspati",
+          "product_name": "Vanaspati",
+          "fssr": "2.2.6(1)",
+          "identity_verified": true
+        },
+        {
+          "catalog_id": "02-02-1-bakery-shortening",
+          "product_name": "Bakery shortening",
+          "fssr": "2.2.6(2)",
+          "identity_verified": true
+        },
+        {
+          "catalog_id": "02-02-1-partially-hydrogenated-and-winterised-soyabean-oil",
+          "product_name": "Partially hydrogenated and winterised soyabean oil",
+          "fssr": "2.2.3(1)",
+          "identity_verified": true
+        },
+        {
+          "catalog_id": "02-02-1-partially-hydrogenated-soyabean-oil",
+          "product_name": "Partially hydrogenated soyabean oil",
+          "fssr": "2.2.3(2)",
+          "identity_verified": true
+        },
+        {
+          "catalog_id": "02-02-1-partially-hydrogenated-soybean-oil",
+          "product_name": "Partially Hydrogenated Soybean Oil",
+          "fssr": "2.2.3(2)",
+          "identity_verified": true
+        },
+        {
+          "catalog_id": "02-02-1-partially-hydrogenated-and-winterised-soybean-oil",
+          "product_name": "Partially Hydrogenated and Winterised Soybean Oil",
+          "fssr": "2.2.3(1)",
+          "identity_verified": true
+        }
+      ]
+    },
+    "named_edible_seed_oils": {
+      "verified_identities": [
+        {
+          "catalog_id": "02-02-1-refined-grapeseed-oil",
+          "product_name": "Refined Grapeseed Oil",
+          "fssr": "2.2.1(16)(xxxiv)",
+          "identity_verified": true
+        },
+        {
+          "catalog_id": "02-02-1-refined-rapeseed-or-mustard-oil-low-erucic-acid",
+          "product_name": "Refined Rapeseed or Mustard Oil-Low Erucic Acid",
+          "fssr": "2.2.1(16)(xxxv)",
+          "identity_verified": true
+        },
+        {
+          "catalog_id": "02-02-1-refined-safflower-seed-oil-and-safflower-seed-oil-high-oleic-acid-imported-or-dome",
+          "product_name": "Refined Safflower seed oil and safflower seed oil (High oleic Acid Imported or Domestic)",
+          "fssr": "2.2.1(16)(xxxvi)",
+          "identity_verified": true
+        }
+      ],
+      "rules": [
+        {
+          "metal": "Lead",
+          "article": "Vegetable Oils, edible (oils of arachis (Groundnut), babasu, coconut, cotton seed, grape seed, maize, mustard seed, palm kernel, palm, rape seed, safflower seed, sesame seed, soya bean, and sunflower seed, and palm olein, stearin and superolein and other oils but excluding cocoa butter)",
+          "limit": 0.1,
+          "unit": "mg/kg"
+        },
+        {
+          "metal": "Arsenic",
+          "article": "Vegetable oils, edible (oils of arachis (Groundnut), babasu, coconut, cotton seed, grape seed, maize, mustard seed, palm kernel, palm, rapeseed, safflower seed, sesame seed, soya bean, and sunflower seed, and palm olein, stearin and superolein)",
+          "limit": 0.1,
+          "unit": "mg/kg"
+        }
+      ]
+    },
+    "excluded_nearby_catalog_ids": [
+      "02-02-1-moringa-oil",
+      "02-02-1-refined-moringa-oil",
+      "02-02-1-refined-palm-kernel-olein",
+      "04-04-2-peanut-butter",
+      "02-02-2-table-margarine",
+      "02-02-2-bakery-and-industrial-margarine"
+    ],
+    "amendments_fully_reconciled": false,
+    "complete_contaminant_coverage": false,
+    "automatic_pesticide_mrl_approval": false,
+    "application_note": "Only named FSSR Chapter 2.2 matching variants; nickel applies specified hydrogenated/interesterified group, lead/arsenic to edible grapeseed, rapeseed/mustard and safflower oils. Moringa and non-identical oils held back."
   }
 }

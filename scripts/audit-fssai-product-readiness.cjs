@@ -205,6 +205,27 @@ for(const rule of pureCereals.rules){
  assert.ok(group?.rules?.some(x=>x.article===pureCereals.official_article&&Number(x.limit)===Number(rule.limit)));
  assert.equal(group.unit,rule.unit);
 }
+const oilMetals=contaminants.chapter_2_2_verified_oil_metal_articles_v9;
+assert.ok(oilMetals&&official(oilMetals.official_source_url));
+assert.equal(oilMetals.complete_contaminant_coverage,false);
+assert.equal(oilMetals.automatic_pesticide_mrl_approval,false);
+const nickelOilById=new Map(oilMetals.hydrogenated_interesterified_nickel.verified_identities.map(x=>[x.catalog_id,x]));
+const seedOilById=new Map(oilMetals.named_edible_seed_oils.verified_identities.map(x=>[x.catalog_id,x]));
+assert.equal(nickelOilById.size,8);assert.equal(seedOilById.size,3);
+for(const [metal,group] of [["Nickel",oilMetals.hydrogenated_interesterified_nickel]]){
+ assert.ok(contaminants.metal_article_rules_v9[metal].some(x=>
+   x.article===group.article&&Number(x.limit)===Number(group.limit)&&x.unit===group.unit));
+}
+for(const rule of oilMetals.named_edible_seed_oils.rules){
+ assert.ok(contaminants.metal_article_rules_v9[rule.metal].some(x=>
+   x.article===rule.article&&Number(x.limit)===Number(rule.limit)&&x.unit===rule.unit));
+}
+for(const item of [...nickelOilById.values(),...seedOilById.values()]){
+ const p=index.products.find(x=>x.id===item.catalog_id);
+ assert.ok(p&&p.name===item.product_name&&p.fssr===item.fssr&&item.identity_verified===true);
+ assert.ok(!oilMetals.excluded_nearby_catalog_ids.includes(item.catalog_id));
+}
+for(const id of oilMetals.excluded_nearby_catalog_ids)assert.ok(!nickelOilById.has(id)&&!seedOilById.has(id));
 const namedCropMappings=contaminants.explicit_crop_contaminant_article_mappings_v9||[];
 const namedCropById=new Map(namedCropMappings.map(x=>[x.catalog_id,x]));
 assert.equal(namedCropMappings.length,3,"Expected three exact named crop-toxin mappings");
@@ -421,6 +442,7 @@ function contaminantEvidenceForProduct(p){
  const processedMeatEvidence=processedMeatById.get(p.id)||null;
  const finishedBeverageEvidence=finishedBeverageById.get(p.id)||null;
  const pureCerealEvidence=pureCerealsById.get(p.id)||null;
+ const oilMetalEvidence=nickelOilById.get(p.id)||seedOilById.get(p.id)||null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
@@ -439,6 +461,7 @@ function contaminantEvidenceForProduct(p){
  if(processedMeatEvidence)explicitKinds.push("verified_finished_processed_meat_saffrole_article");
  if(finishedBeverageEvidence)explicitKinds.push("verified_finished_chapter_2_10_non_alcoholic_beverage_saffrole");
  if(pureCerealEvidence)explicitKinds.push("verified_pure_cereal_product_aflatoxin_article");
+ if(oilMetalEvidence)explicitKinds.push("verified_exact_oil_metal_article");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
    "no_exact_catalog_evidence_in_this_inventory";
@@ -450,6 +473,10 @@ function contaminantEvidenceForProduct(p){
      source_url:alcoholic.official_source_url,full_compliance_verified:false,
      pesticide_mrls_auto_applied:false,other_contaminants_assessed:false
    }:null,
+   exact_oil_metal_articles:oilMetalEvidence?{
+     source:oilMetals.official_source_url,
+     kind:nickelOilById.has(p.id)?"hydrogenated_interesterified_nickel":"named_edible_seed_oil_lead_arsenic",
+     full_compliance_verified:false,pesticide_mrls_auto_applied:false}:null,
    exact_pure_cereal_product_aflatoxins:pureCerealEvidence?{
      source:pureCereals.official_source_url,article:pureCereals.official_article,
      rules:pureCereals.rules.map(x=>({contaminant:x.contaminant,limit:x.limit,unit:x.unit})),
@@ -699,6 +726,10 @@ const products = index.products.map(p => {
       tally("chapter_2_3_non_equivalent_articles","raw_cocoa_beans_not_cocoa_powder");
     action.push("Review Chapter 2.3 specific fruit, vegetable, nut or processed-product matrix, raw-ingredient commodity MRL, processing factor and sample basis; no finished-product pesticide MRL automatically established");
   }
+  if(contaminantEvidence.exact_oil_metal_articles){
+    tally("chapter_2_2_exact_oil_metal_articles",contaminantEvidence.exact_oil_metal_articles.kind);
+    action.push("Named Chapter 2.2 oil/fat identity has direct grouped Version IX metal article only; confirm other contaminants, effective amendments, all specific product limits and pesticides.");
+  }
   if(contaminantEvidence.exact_pure_cereal_product_aflatoxins){
     tally("chapter_2_4_pure_cereal_product_aflatoxins","exact_cereal_product_partial");
     action.push("Source-backed FSSAI cereal and cereal-products Total Aflatoxins 15 µg/kg and Aflatoxin B1 10 µg/kg; other contaminants, processing and pesticide MRLs separately required.");
@@ -886,6 +917,7 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| Exact Chapter 2.2 oil identities with grouped source-backed metal limits | "+((counts.chapter_2_2_exact_oil_metal_articles?.hydrogenated_interesterified_nickel||0)+(counts.chapter_2_2_exact_oil_metal_articles?.named_edible_seed_oil_lead_arsenic||0))+" |",
   "| Exact pure cereal products with two official grouped aflatoxin limits | "+(counts.chapter_2_4_pure_cereal_product_aflatoxins?.exact_cereal_product_partial||0)+" |",
   "| Finished Chapter 2.10 non-alcoholic beverages with Saffrole source evidence | "+(counts.chapter_2_10_nots?.source_backed_finished_non_alcoholic_saffrole||0)+" |",
   "| Processed meat identities with grouped FSSAI Saffrole partial evidence | "+(counts.processed_meat_nots?.exact_grouped_meat_saffrole_partial||0)+" |",
