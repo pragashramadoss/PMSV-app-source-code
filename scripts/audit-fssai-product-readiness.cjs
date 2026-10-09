@@ -193,6 +193,8 @@ function contaminantEvidenceForProduct(p){
         review_status:fruitVegById.get(p.id).review_status,
         raw_ingredient_reference_articles:fruitVegById.get(p.id).raw_ingredient_article_references_only,
         raw_reference_row_count:fruitVegById.get(p.id).raw_reference_rows_in_loaded_official_source,
+        conditional_metal_article_candidates:fruitVegById.get(p.id).conditional_metal_article_candidates||[],
+        excluded_non_equivalent_finished_product_articles:fruitVegById.get(p.id).excluded_non_equivalent_finished_product_articles||[],
         qualifier_review:fruitVegById.get(p.id).qualifier_review,
         official_source_url:fruitVegById.get(p.id).source_url,
         auto_apply:false,
@@ -370,6 +372,10 @@ const products = index.products.map(p => {
   }
   if(contaminantEvidence.chapter_2_3_pesticide_commodity_review){
     tally("chapter_2_3_pesticide_review","source_only_no_finished_product_approval");
+    if(contaminantEvidence.chapter_2_3_pesticide_commodity_review.conditional_metal_article_candidates.length)
+      tally("chapter_2_3_conditional_metal_products","subtype_or_package_required");
+    if(contaminantEvidence.chapter_2_3_pesticide_commodity_review.excluded_non_equivalent_finished_product_articles.length)
+      tally("chapter_2_3_non_equivalent_articles","raw_cocoa_beans_not_cocoa_powder");
     action.push("Review Chapter 2.3 specific fruit, vegetable, nut or processed-product matrix, raw-ingredient commodity MRL, processing factor and sample basis; no finished-product pesticide MRL automatically established");
   }
   if(contaminantEvidence.chapter_2_4_pesticide_commodity_review){
@@ -515,6 +521,8 @@ const summary = [
   "| FSSR-family contaminant evidence only, exact product review pending | "+(counts.contaminant_evidence?.only_family_fssr_evidence_needs_identity_review||0)+" |",
   "| No exact contaminant catalogue evidence in this inventory (not necessarily no rules) | "+(counts.contaminant_evidence?.no_exact_catalog_evidence_in_this_inventory||0)+" |",
   "| Chapter 2.7 finished products explicitly reviewed and locked against false article inheritance | "+(counts.chapter_2_7_finished_article_locks?.reviewed_fail_closed||0)+" |",
+  "| Chapter 2.3 conditional metal article products requiring subtype or packaging evidence | "+(counts.chapter_2_3_conditional_metal_products?.subtype_or_package_required||0)+" |",
+  "| Chapter 2.3 cocoa bean/cocoa powder non-equivalence guards | "+(counts.chapter_2_3_non_equivalent_articles?.raw_cocoa_beans_not_cocoa_powder||0)+" |",
   "| Chapter 2.3 fruit/vegetable pesticide commodity reviews indexed without automatic MRL applicability | "+(counts.chapter_2_3_pesticide_review?.source_only_no_finished_product_approval||0)+" |",
   "| Chapter 2.4 processed Pearl Barley OTA/DON article form held for verification | "+(counts.chapter_2_4_crop_toxin_form_pending?.pearl_barley_article_form_unverified||0)+" |",
   "| Chapter 2.4 cereal and flour commodity candidates indexed without automatic MRL applicability | "+(counts.chapter_2_4_pesticide_review?.reference_only_by_exact_catalog_id||0)+" |",
