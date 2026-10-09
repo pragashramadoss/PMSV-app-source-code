@@ -8542,6 +8542,19 @@ function productBaselineContaminantRules(p){
      condition:'Only '+p.name+' under '+p.fssr+'. Not raw meat, egg, casings, pesticide MRL or complete conformity.'});
  }
  
+ // Named finished Chapter 2.10 non-alcoholic beverage identities only;
+ // exclude dry tea/coffee products, alcohol, concentrates and unrelated water.
+ const finishedBeverage=contaminantsDb?.chapter_2_10_verified_finished_beverage_saffrole_v9;
+ const verifiedFinishedBeverage=(finishedBeverage?.verified_finished_product_identities||[]).find(x=>
+   x.catalog_id===id && x.product_name===p.name && x.fssr===p.fssr && x.verified_finished_non_alcoholic===true);
+ if(verifiedFinishedBeverage && !(finishedBeverage.excluded_nearby_catalog_ids||[]).includes(id)){
+   const exact=(contaminantsDb?.naturally_occurring_toxic_substances?.saffrole||[]).find(x=>
+     x.article===finishedBeverage.official_article&&Number(x.limit)===Number(finishedBeverage.limit)&&x.unit===finishedBeverage.unit);
+   if(exact)pushRule({contaminant:'Saffrole',article:exact.article,limit:exact.limit,unit:exact.unit,
+     source_basis:'FSSAI Version IX §2.2.1(2) · verified finished Chapter 2.10 nonalcoholic beverage',
+     condition:'Exact '+p.name+' beverage identity only; other contaminants, additives, processing and operative amendments remain separate.'});
+ }
+ 
  // 6) Standard-family mapping only where the loaded FSSAI standard explicitly names the selected product.
  // Food Grains 2.4.6 explicitly applies to wheat, maize, rice, pulses, millets and other food grains.
  const grainStandard=(chapterRuleDbs||[]).flatMap(db=>ruleDbStandards(db)).find(st=>String(st?.key||'')==='2.4.6');
