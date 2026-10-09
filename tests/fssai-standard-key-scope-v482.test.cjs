@@ -12,6 +12,7 @@ const section=(start,end)=>{
 };
 const matching=section('function currentSelectedProductName(){','function currentGuardedFormulationStandards(){');
 const rows=section('function chapterRuleDisplayRows(standard){','function chapterStandardIngredientSections(standard){');
+const sourcePinned=section('function sourcePinnedStandardSupplementHtml(st){','function standardLookupRegulatoryCompositionHtml(){');
 const rendering=section('function standardLookupRegulatoryCompositionHtml(){','function renderStandardLookupNutritionReference(){');
 const norm=x=>String(x||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
 const products={
@@ -35,7 +36,7 @@ function make(selected=products.wheat){
   exactDairyCompositionHtml:()=>null,
   esc:x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))
  });
- vm.runInContext(matching+'\n'+rows+'\n'+rendering,ctx);
+ vm.runInContext(matching+'\n'+rows+'\n'+sourcePinned+'\n'+rendering,ctx);
  return {
   select:next=>{p=next;},
   codes:()=>Array.from(vm.runInContext('currentChapterStandards().map(x=>x.standard.key)',ctx)),
