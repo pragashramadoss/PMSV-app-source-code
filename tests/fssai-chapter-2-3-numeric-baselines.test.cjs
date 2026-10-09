@@ -8,10 +8,10 @@ const dataRoot = path.resolve(__dirname,"../fssai-product-helper-preview-01/data
 const chapter = JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/chapter-2-3-fruit-vegetable-v1.json"),"utf8"));
 const index = JSON.parse(fs.readFileSync(path.join(dataRoot,"standard-search-index-v1.json"),"utf8"));
 const records=new Map(chapter.standards.map(row=>[row.key,row]));
-const keys=["2.3.8","2.3.9","2.3.10","2.3.11","2.3.12","2.3.13","2.3.14","2.3.15","2.3.17","2.3.18","2.3.19","2.3.21","2.3.22","2.3.23","2.3.24","2.3.25","2.3.26","2.3.27","2.3.28","2.3.29","2.3.30","2.3.42","2.3.43","2.3.47(7)","2.3.47(8)","2.3.49","2.3.54","2.3.55","2.3.56"];
+const keys=["2.3.8","2.3.9","2.3.10","2.3.11","2.3.12","2.3.13","2.3.14","2.3.15","2.3.17","2.3.18","2.3.19","2.3.21","2.3.22","2.3.23","2.3.24","2.3.25","2.3.26","2.3.27","2.3.28","2.3.29","2.3.30","2.3.42","2.3.43","2.3.47(7)","2.3.47(8)","2.3.49","2.3.54","2.3.55","2.3.56","2.3.62","2.3.63","2.3.64","2.3.65"];
 const get = key => {const r=records.get(key);assert.ok(r, "Missing "+key);return r;};
 const metric=(key,parameter)=>get(key).composition.find(r=>r.parameter===parameter);
-test("twenty-nine known partial standards now have source-pinned numeric baselines",()=>{
+test("thirty-three known partial standards now have source-pinned numeric baselines",()=>{
  for(const key of keys){
   const r=get(key);
   assert.equal(r.full_compliance_assessment_enabled,false,key);
@@ -23,8 +23,9 @@ test("twenty-nine known partial standards now have source-pinned numeric baselin
     r.variant_composition?.some(x=>x.composition.some(c=>Number.isFinite(c.value)))||
     r.relative_composition?.some(x=>Number.isFinite(x.value)),key);
   for(const x of [...(r.composition||[]),...(r.variant_composition||[]).flatMap(v=>v.composition),...(r.relative_composition||[])]){
-    assert.ok(Number.isFinite(x.value),key+" "+x.parameter);
-    assert.ok([">=","<="].includes(x.operator),key+" "+x.parameter);
+    if(x.operator==="range")assert.ok(Number.isFinite(x.min)&&Number.isFinite(x.max)&&x.min<=x.max,key+" "+x.parameter);
+    else assert.ok(Number.isFinite(x.value),key+" "+x.parameter);
+    assert.ok([">=","<=","range"].includes(x.operator),key+" "+x.parameter);
     assert.ok(x.unit,key+" "+x.parameter);
   }
  }
@@ -229,4 +230,39 @@ test("arecanut and date paste are not interchangeable and date paste prohibits a
  assert.match(date.permitted_additives_policy.source_rule,/No additives are allowed/);
  assert.ok(date.quality_rules.some(x=>/No food additives allowed/i.test(x)));
  assert.equal(date.full_compliance_assessment_enabled,false);
+});
+
+test("all 10 FoSCoS fungi identities map to their own Chapter 2.3.62 variant ranges",()=>{
+ const x=get("2.3.62"),related=index.products.filter(p=>p.rule_key==="2.3.62");
+ assert.equal(related.length,10);
+ assert.equal(x.variant_resolution_required,true);
+ assert.equal(x.composition?.length||0,0);
+ const covered=new Set(x.variant_composition.flatMap(v=>v.catalog_product_ids||[]));
+ assert.deepEqual(covered,new Set(related.map(p=>p.id)));
+ assert.equal(x.variant_composition.length,14);
+ const forId=id=>x.variant_composition.filter(v=>v.catalog_product_ids?.includes(id));
+ assert.equal(forId("04-04-2-quick-frozen-fungi").length,1);
+ assert.equal(forId("04-04-2-dried-fungi").length,3);
+ assert.equal(forId("04-04-2-fungi-grits-and-fungi-powder").length,2);
+ assert.equal(forId("04-04-2-fungi-extract-and-fungi-concentrate").length,2);
+ assert.equal(forId("04-04-2-pickled-fungi").length,1);
+ const quick=forId("04-04-2-quick-frozen-fungi")[0];
+ assert.equal(quick.process_requirements[0].value,-18);
+ assert.equal(quick.process_requirements[0].auto_evaluate,false);
+ assert.deepEqual(forId("04-04-2-dried-fungi").map(v=>v.composition[0].value),[6,12,13]);
+ assert.deepEqual(forId("04-04-2-fungi-grits-and-fungi-powder").map(v=>v.composition[0].value),[13,9]);
+ assert.deepEqual(forId("04-04-2-fungi-extract-and-fungi-concentrate").map(v=>v.composition[0].value),[7,24]);
+ const salted=forId("04-04-2-salted-fungi-semi-processed-products")[0];
+ assert.deepEqual([salted.composition[0].min,salted.composition[0].max],[15,18]);
+ const fermented=forId("04-04-2-fermented-fungi")[0];
+ assert.deepEqual([fermented.composition[1].min,fermented.composition[1].max],[3,6]);
+});
+test("coconut milk powder, singhara flour, and liquid/powder colouring foods are distinct",()=>{
+ assert.deepEqual(get("2.3.63").composition.map(v=>v.value??[v.min,v.max]),[2.5,60,0.2,[0.3,0.45]]);
+ assert.deepEqual(get("2.3.64").composition.map(v=>v.value),[12,0.18,0.5,9]);
+ const uric=get("2.3.64").conditional_requirements[0];
+ assert.equal(uric.auto_evaluate,false);
+ assert.equal(uric.source_text,"100 mg/kg");
+ assert.deepEqual(get("2.3.65").variant_composition.map(v=>v.composition.map(c=>c.value)),[[45,0.5,20],[90,1]]);
+ assert.equal(get("2.3.65").variant_resolution_required,true);
 });
