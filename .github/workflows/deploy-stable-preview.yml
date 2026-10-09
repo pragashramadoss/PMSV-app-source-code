@@ -81,19 +81,18 @@ jobs:
           # Replace only the standalone main-app preview artifacts. Preserve
           # GitHub-maintained tools (FSSAI Helper, audits, tests, evidence)
           # which are NOT generated from the WordPress production plugin.
-          # Fail closed if the generated preview would overwrite these tools.
-          for item in /tmp/pmsv-preview/*; do
+          # Never copy those paths from WordPress preview into GitHub-maintained tool directories.
+          for item in /tmp/pmsv-preview/* /tmp/pmsv-preview/.[!.]*; do
             [ -e "$item" ] || continue
             name="${item##*/}"
             case "$name" in
-              fssai-*|audits|tests)
-                echo "Refusing to overwrite GitHub-managed tool directory: $name" >&2
-                exit 1 ;;
+              .git|.github|.preview-trigger|fssai-*|audits|tests)
+                echo "Keeping GitHub-maintained path unchanged: $name" ;;
               *)
-                rm -rf -- "./$name" ;;
+                rm -rf -- "./$name"
+                cp -R -- "$item" "./$name" ;;
             esac
           done
-          cp -R /tmp/pmsv-preview/. .
 
           git add -A
           if ! git diff --cached --quiet; then
