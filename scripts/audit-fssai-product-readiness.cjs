@@ -21,6 +21,7 @@ const spiceOleoresinSource = read("rules/spice-oleoresin-2-9-32-residual-solvent
 const goatMuscleSource = read("rules/goat-muscle-veterinary-v9-exact-evidence-v1.json");
 const fourCompositeSources=read("rules/fssai-4-exact-composite-soup-source-evidence-v1.json");
 const coconutHexaneSource=read("rules/solvent-extracted-coconut-flour-hexane-exact-v1.json");
+const crossFamilyNOTS=read("rules/fssai-25-beverage-confectionery-fungi-v9-source-evidence-2026-10-10.json");
 /* Exact FSSAI Chapter 2.16 source evidence. This is a standard-product
  * THC and cross-cutting CBD assessment, not a Version IX contaminant article,
  * an exemption from other contaminants or a complete compliance verdict. */
@@ -894,6 +895,77 @@ for(const x of fourCompositeSources.excluded_ids){
  assert.ok(!fourCompositeById.has(x),"Non-equivalent product inherited composite rule: "+x);
 }
 
+// Direct Version IX named-category NOTS evidence for eight beverages and
+// two finished confectionery standards. The remaining fifteen reviewed products
+// have qualified candidates only, never an exact evidence promotion.
+assert.equal(crossFamilyNOTS.verified_identity_article_matches,10);
+assert.equal(crossFamilyNOTS.conditionally_reviewed_not_promoted,15);
+assert.equal(crossFamilyNOTS.total_reviewed,25);
+assert.equal(crossFamilyNOTS.full_product_compliance_passes,0);
+assert.equal(crossFamilyNOTS.official_contaminants_source,version9Source);
+const crossFamilyById=new Map();
+for(const row of crossFamilyNOTS.matched){
+  const product=index.products.find(p=>p.id===row.catalog_id);
+  assert.ok(product&&product.name===row.product_name&&product.fssr===row.fssr
+    &&product.fcs===row.fcs&&product.rule_key===row.standard_source_clause,
+    "Wrong official NOTS product identity: "+row.catalog_id);
+  assert.equal(row.source_row_verified,true);
+  assert.equal(row.finished_food_compliance_pass,false);
+  assert.equal(row.complete_contaminant_panel_verified,false);
+  assert.equal(row.auto_apply_numeric_finished_food_limit,false);
+  assert.equal(row.official_contaminants_source,version9Source);
+  assert.ok(official(row.official_standard_source));
+  assert.equal(row.official_version_ix_pdf_page_one_based,15);
+  const {record,sourceUrls}=chapterRecord(product);
+  assert.equal(record.key,product.fssr);
+  assert.ok(sourceUrls.some(x=>x.replace("://www.","://")===row.official_standard_source.replace("://www.","://")),
+    "NOTS source does not match product's chapter: "+row.catalog_id);
+  const expected=row.source_group==="saffrole"
+    ?{article:"Non-alcoholic beverages",contaminant:"Saffrole",limit:10,unit:"ppm"}
+    :row.source_group==="hydrocyanic_acid"
+      ?{article:"Confectionery",contaminant:"Hydrocyanic acid",limit:5,unit:"ppm"}
+      :null;
+  assert.ok(expected,"Unexpected NOTS substance "+row.source_group);
+  assert.equal(row.article,expected.article);
+  assert.equal(row.contaminant,expected.contaminant);
+  assert.equal(row.limit,expected.limit);
+  assert.equal(row.unit,expected.unit);
+  assert.equal((contaminants.naturally_occurring_toxic_substances?.[row.source_group]||[])
+    .filter(v=>v.article===expected.article&&v.limit===expected.limit&&v.unit===expected.unit).length,1,
+    "Version IX named NOTS row changed: "+row.catalog_id);
+  if(row.source_group==="saffrole"){
+    assert.ok(["2.3.21","2.3.22","2.3.23","2.3.24"].includes(product.fssr));
+    assert.ok(product.fcs.startsWith("14.1.4."));
+    assert.equal(row.finished_or_reconstituted_form_must_be_confirmed,true);
+  }else{
+    assert.ok(["2.7.3","2.7.4"].includes(product.fssr));
+    assert.ok(product.fcs==="05.1.3"||product.fcs==="05.3");
+    assert.ok(lockById.has(product.id),
+      "Previously locked confectionery requires explicit verified NOTS source: "+product.id);
+  }
+  assert.ok(!crossFamilyById.has(row.catalog_id));
+  crossFamilyById.set(row.catalog_id,row);
+}
+assert.equal(crossFamilyById.size,10);
+const conditionalFamilyIds=new Set();
+for(const row of crossFamilyNOTS.conditional_review_only){
+  const product=index.products.find(p=>p.id===row.catalog_id);
+  assert.ok(product&&product.name===row.product_name&&product.fssr===row.fssr
+    &&product.fcs===row.fcs,"Wrong review-only NOTS identity: "+row.catalog_id);
+  assert.equal(row.source_document,version9Source);
+  assert.equal(row.source_match_to_specific_finished_product_confirmed,false);
+  assert.equal(row.auto_apply_numeric_limit,false);
+  assert.equal(row.compliance_pass,false);
+  assert.ok(!crossFamilyById.has(row.catalog_id));
+  assert.ok(!conditionalFamilyIds.has(row.catalog_id));
+  conditionalFamilyIds.add(row.catalog_id);
+}
+assert.equal(conditionalFamilyIds.size,15);
+for(const id of crossFamilyNOTS.excluded_inheritance){
+  assert.ok(index.products.some(p=>p.id===id));
+  assert.ok(!crossFamilyById.has(id),"Excluded article inherited incorrectly: "+id);
+}
+
 // A named product-standard residual solvent limit is partial chemical source
 // evidence, not a crop pesticide MRL or universal food purity approval.
 const coconutProduct=index.products.find(p=>p.id===coconutHexaneSource.catalog_id);
@@ -955,6 +1027,7 @@ function contaminantEvidenceForProduct(p){
  const guarEvidence=guar.catalog_id===p.id?guar:null;
  const hempEvidence=hempEvidenceById.get(p.id)||null;
  const exactCompositeSource=fourCompositeById.get(p.id)||null;
+ const crossFamilyNOTSArticle=crossFamilyById.get(p.id)||null;
  const exactCoconutHexane=p.id===coconutHexaneSource.catalog_id?coconutHexaneSource:null;
  const goatMuscleVetEvidence=goatMuscleSource.product_ids.includes(p.id)?(()=>{
    const i=goatMuscleSource.product_ids.indexOf(p.id);
@@ -1352,6 +1425,7 @@ function contaminantEvidenceForProduct(p){
  if(spiceOleoresinResidues)explicitKinds.push("official_fssr_2_9_32_exact_residual_extraction_solvents_partial");
  if(goatMuscleVetEvidence)explicitKinds.push("official_v9_exact_goat_muscle_veterinary_drug_mrl_partial");
  if(exactCompositeSource)explicitKinds.push("official_v9_exact_composite_aflatoxin_b1_or_finished_soup_saffrole_partial");
+ if(crossFamilyNOTSArticle)explicitKinds.push("official_v9_identity_locked_non_alcoholic_beverage_or_confectionery_nots_partial");
  if(exactCoconutHexane)explicitKinds.push("official_fssr_2_4_13_4_exact_coconut_flour_hexane_residual_partial");
  // Only a conditional, user-confirmed subtype source: the combined FoSCoS
  // identity must remain pending even though two powder variants have FSSAI
@@ -1382,6 +1456,12 @@ function contaminantEvidenceForProduct(p){
    exact_spice_oleoresin_solvent_residues:spiceOleoresinResidues,
    exact_goat_muscle_veterinary_drugs:goatMuscleVetEvidence,
    exact_composite_food_or_soup_source_v9:exactCompositeSource,
+   exact_beverage_or_confectionery_nots_v9:crossFamilyNOTSArticle?{
+     source:version9Source,product_id:p.id,standard:p.fssr,article:crossFamilyNOTSArticle.article,
+     contaminant:crossFamilyNOTSArticle.contaminant,reference_limit:crossFamilyNOTSArticle.limit,
+     unit:crossFamilyNOTSArticle.unit,subtype_or_dilution_review_required:crossFamilyNOTSArticle.finished_or_reconstituted_form_must_be_confirmed,
+     other_contaminants_and_residues_verified:false,auto_apply_numeric_finished_food_limit:false,
+     full_compliance_pass:false}:null,
    exact_coconut_flour_residual_hexane:exactCoconutHexane,
    exact_named_milk_products_mrl_article:exactMilkProduct?{source:version9Source,article:namedMilkEvidence.article,pesticide:namedMilkEvidence.pesticide,mrl:namedMilkEvidence.mrl,unit:namedMilkEvidence.unit,cheese_auto_applied:false,compliance_pass:false}:null,
    exact_infant_food_metals:exactInfantFood?{source:version9Source,rows:infantMetalEvidence.verified_rows,lead_not_auto_assigned:true,compliance_pass:false}:null,
