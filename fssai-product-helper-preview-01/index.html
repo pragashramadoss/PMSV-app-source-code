@@ -8481,29 +8481,23 @@ function productBaselineContaminantRules(p){
      });
    });
 
- // 3) Verified product-to-metal aliases stored in the contaminant master.
- // These are explicit FSSAI identity mappings, not fuzzy product-name matches.
+ // 3) Verified product-to-metal aliases: NEVER use an old static fallback
+ // when the current loaded official Version IX article is missing or drifts.
  (contaminantsDb?.explicit_metal_alias_mappings_v9||[])
-   .filter(m=>m.product_id===id)
+   .filter(m=>m.product_id===id
+      &&(!m.product_name||normIngredient(m.product_name)===n)
+      &&(!m.fssr||m.fssr===p.fssr))
    .forEach(mapping=>{
      (mapping.verified_alias_basis||[]).forEach(basis=>{
        const exact=exactMetalRule(basis.metal,basis.article);
-       if(exact){
-         pushRule({
-           contaminant:basis.metal,
-           ...exact,
-           source_basis:String(exact.source_basis||'Section 2.1 · Metal contaminants')+' · verified PMSV product/article mapping'
-         });
-       }else{
-         pushRule({
-           contaminant:String(basis.metal||'Metal contaminant'),
-           article:String(basis.article||p.name||''),
-           limit:basis.limit,
-           unit:String(basis.unit||''),
-           condition:String(basis.condition||basis.mapping_basis||''),
-           source_basis:'FSSAI Version IX · verified product/article identity mapping'
-         });
-       }
+       if(!exact || exact.row_type!=='exact'
+          || !Number.isFinite(Number(basis.limit))
+          || Number(exact.limit)!==Number(basis.limit)
+          || String(exact.unit||'').trim().toLowerCase()!==String(basis.unit||'').trim().toLowerCase())return;
+       pushRule({
+         contaminant:basis.metal,...exact,
+         source_basis:String(exact.source_basis||'Section 2.1 · Metal contaminants')+' · verified PMSV product/article mapping'
+       });
      });
    });
 
