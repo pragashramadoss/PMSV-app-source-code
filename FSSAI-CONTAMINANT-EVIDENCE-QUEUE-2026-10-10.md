@@ -7,8 +7,8 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 287 |
-| No exact product-identity contaminant evidence established by current index | 246 |
+| Some exact product evidence, partial only | 289 |
+| No exact product-identity contaminant evidence established by current index | 244 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 
 ## Unresolved by standard family
@@ -225,7 +225,7 @@ For each item: verify the precise finished-product identity, current official FS
 | Surface-treated fresh fruit | `04-04-1-surface-treated-fresh-fruit` | FoSCoS/special |
 | Untreated fresh fruit | `04-04-1-untreated-fresh-fruit` | FoSCoS/special |
 
-### FSSR 2.4 (25)
+### FSSR 2.4 (23)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -236,8 +236,6 @@ For each item: verify the precise finished-product identity, current official FS
 | Breakfast Cereal | `06-06-3-breakfast-cereal` | 2.4.35 |
 | Chia Seeds | `06-06-1-chia-seeds` | 2.4.6 |
 | Custard powder | `06-06-2-custard-powder` | 2.4.9 |
-| Fermented Soybean Curd | `06-06-8-fermented-soybean-curd` | 2.4.39(1) |
-| Fermented Soybean Curd (made with S. thermophillus + L. bulgaricus) | `06-06-8-fermented-soybean-curd-made-with-s-thermophillus-l-bulgaricus` | 2.4.39 |
 | Fruit/Vegetable, Cereal Flakes | `06-06-3-fruit-vegetable-cereal-flakes` | 2.4.35 |
 | Macaroni Products (Instant noodle) | `06-06-4-macaroni-products-instant-noodle` | 2.4.10 |
 | Macaroni Products (Pasta Products) | `06-06-4-macaroni-products-pasta-products` | 2.4.10 |
@@ -351,6 +349,8 @@ For each item: verify the precise finished-product identity, current official FS
 - **Non-fermented soybean products — 2.4.30:** Five exact FoSCoS product identities (soybean beverages, soybean curd, compressed soybean curd, dehydrated soybean curd film, tofu) are explicitly described within Chapter 2.4.30 Version 4. Official Version IX Section 2.2.1 confirms **Aflatoxin B1 10 µg/kg** for both the ready-to-eat oilseed and food-product-containing-article categories; this shared B1 limit is partially evidenced for these exact products only. **Total Aflatoxins, metals, pesticide residues and other requirements are NOT automatically verified.** Product source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
 
 - **Six exact Chapter 2.4 oilseed-derived flours/proteins:** Solvent Extract Soya Flour, Solvent Extracted Groundnut Flour, Solvent Extracted Sesame Flour, Solvent Extracted Cotton seed Flour, Expeller Pressed Edible Groundnut Flour, and Soy Protein Products are defined by their respective Chapter 2.4 clauses. Version IX Section 2.2.1 specifies **Aflatoxin B1 10 µg/kg** consistently for oilseeds for further processing, oilseeds ready to eat, and foods containing listed oilseed articles. Only these six exact identities are advanced to **partial** source-verified evidence. **Total Aflatoxins, heavy metals, pesticide residues and complete compliance remain unverified.** FSSAI source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
+
+- **Fermented Soybean Curd — 2.4.39(1), and Lactobacillus-culture variant — 2.4.39:** Chapter 2.4 Version 4 explicitly requires an aqueous extract of soybean for both. The FSSAI Version IX B1 table confirms the same **10 µg/kg** for ready-to-eat oilseeds and food products containing listed oilseeds. The mapping is *partial*; other contaminant and residue requirements remain unresolved. Source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
 
 ## Official reference entry point
 
