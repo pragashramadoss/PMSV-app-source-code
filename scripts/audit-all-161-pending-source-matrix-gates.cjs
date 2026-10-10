@@ -12,9 +12,9 @@ const m=read("fssai-product-helper-preview-01/data/rules/contaminants-v9-unresol
 const catalog=read("fssai-product-helper-preview-01/data/standard-search-index-v1.json").products;
 const byId=new Map(catalog.map(x=>[x.id,x]));
 assert.equal(catalog.length,533);
-assert.equal(m.records.length,156);assert.equal(m.count,156);assert.equal(m.pending,156);
-assert.equal(m.verified_evidence_added,108);assert.equal(m.full_compliance_achieved,0);
-assert.equal(new Set(m.records.map(x=>x.catalog_id)).size,156);
+assert.equal(m.records.length,146);assert.equal(m.count,146);assert.equal(m.pending,146);
+assert.equal(m.verified_evidence_added,118);assert.equal(m.full_compliance_achieved,0);
+assert.equal(new Set(m.records.map(x=>x.catalog_id)).size,146);
 const groups={chapter_2_3:0,previous_81:0,final_17:0},families={},checkpoints=[];
 const currentDate="2026-10-10";
 for(const item of m.records){
@@ -102,14 +102,14 @@ for(const item of m.records){
   unresolved_exact_fssr_clash:!!mismatch
  });
 }
-assert.deepEqual(groups,{chapter_2_3:61,previous_81:78,final_17:17});
-assert.equal(Object.values(families).reduce((a,b)=>a+b,0),156);
+assert.deepEqual(groups,{chapter_2_3:53,previous_81:78,final_17:15});
+assert.equal(Object.values(families).reduce((a,b)=>a+b,0),146);
 assert.equal(checkpoints.filter(x=>x.conditional_commodity_reference).length,3);
 assert.equal(checkpoints.filter(x=>x.unresolved_exact_fssr_clash).length,1);
 const result={
  schema_version:"1.0",as_of:currentDate,products_total:533,
- partial_exact_evidence:377,pending_exact_source_evidence:156,
- documented_detailed_source_identity_applicability_reviews:156,
+ partial_exact_evidence:387,pending_exact_source_evidence:146,
+ documented_detailed_source_identity_applicability_reviews:146,
  disposition_buckets:groups,regulatory_families:families,
  source_qualifications_not_numeric_approvals:true,
  exact_regulatory_route_mismatches_requiring_resolution:1,
@@ -120,5 +120,5 @@ const result={
 };
 const out=path.join(root,"audit-output");
 fs.mkdirSync(out,{recursive:true});
-fs.writeFileSync(path.join(out,"fssai-156-detailed-source-applicability-reconciliation.json"),JSON.stringify(result,null,2)+"\n");
-console.log("PASS: all 156 pending products have exclusive detailed identity+matrix gates (61+78+17); 3 conditional numeric commodity references NOT APPLIED; one cross-chapter product discrepancy flagged; 0 compliance approvals.");
+fs.writeFileSync(path.join(out,"fssai-146-detailed-source-applicability-reconciliation.json"),JSON.stringify(result,null,2)+"\n");
+console.log("PASS: all 146 pending products have exclusive detailed identity+matrix gates (53+78+15); ten new source-verified partial NOTS identities excluded; conditional references NOT APPLIED; zero compliance approvals.");
