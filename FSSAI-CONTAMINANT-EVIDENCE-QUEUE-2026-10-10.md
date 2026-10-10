@@ -7,13 +7,13 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 289 |
-| No exact product-identity contaminant evidence established by current index | 244 |
+| Some exact product evidence, partial only | 294 |
+| No exact product-identity contaminant evidence established by current index | 239 |
 | Products with complete contaminant compliance independently established | 0 claimed |
-| Source-article applicability triage records annotated (NOT resolved) | 244 |
-| Conditional official-source article references recorded (NOT automatically applied) | 117 |
+| Source-article applicability triage records annotated (NOT resolved) | 239 |
+| Conditional official-source article references recorded (NOT automatically applied) | 112 |
 
-Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The 244-item queue is **not** reduced by these candidates.
+Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The 239-item queue is **not** reduced by these candidates.
 
 ## Unresolved by standard family
 
@@ -22,7 +22,7 @@ Selected Version IX named-article candidates are documented in `fssai-product-he
 | 2.1 | 67 |
 | 2.3 | 66 |
 | special | 45 |
-| 2.4 | 23 |
+| 2.4 | 18 |
 | 2.8 | 11 |
 | 2.5 | 9 |
 | 2.7 | 6 |
@@ -229,7 +229,7 @@ For each item: verify the precise finished-product identity, current official FS
 | Surface-treated fresh fruit | `04-04-1-surface-treated-fresh-fruit` | FoSCoS/special |
 | Untreated fresh fruit | `04-04-1-untreated-fresh-fruit` | FoSCoS/special |
 
-### FSSR 2.4 (23)
+### FSSR 2.4 (18)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -244,13 +244,8 @@ For each item: verify the precise finished-product identity, current official FS
 | Macaroni Products (Instant noodle) | `06-06-4-macaroni-products-instant-noodle` | 2.4.10 |
 | Macaroni Products (Pasta Products) | `06-06-4-macaroni-products-pasta-products` | 2.4.10 |
 | MAIZE STARCH | `06-06-2-maize-starch` | 2.4.7 |
-| Malt Based Foods(Malt Food) | `06-06-7-malt-based-foods-malt-food` | 2.4.11(2) |
-| Malt Extract | `06-06-7-malt-extract` | 2.4.11(3) |
-| Malted Milk Food | `06-06-7-malted-milk-food` | 2.4.11(1) |
 | Papad | `06-06-7-papad` | 2.4.40 |
 | Papad | `15-15-1-papad` | 2.4.40 |
-| Protein rich refined wheat flour (Protein prachur maida) | `06-06-2-protein-rich-refined-wheat-flour-protein-prachur-maida` | 2.4.2(3) |
-| Protein rich wheat flour (Protein prachur atta) | `06-06-2-protein-rich-wheat-flour-protein-prachur-atta` | 2.4.1(3) |
 | Quinoa | `06-06-1-quinoa` | 2.4.6 |
 | Solvent Extracted Coconut Flour | `06-06-2-solvent-extracted-coconut-flour` | 2.4.13(4) |
 | Wafer Biscuit | `07-07-2-wafer-biscuit` | 2.4.15(1) |
@@ -355,6 +350,8 @@ For each item: verify the precise finished-product identity, current official FS
 - **Six exact Chapter 2.4 oilseed-derived flours/proteins:** Solvent Extract Soya Flour, Solvent Extracted Groundnut Flour, Solvent Extracted Sesame Flour, Solvent Extracted Cotton seed Flour, Expeller Pressed Edible Groundnut Flour, and Soy Protein Products are defined by their respective Chapter 2.4 clauses. Version IX Section 2.2.1 specifies **Aflatoxin B1 10 µg/kg** consistently for oilseeds for further processing, oilseeds ready to eat, and foods containing listed oilseed articles. Only these six exact identities are advanced to **partial** source-verified evidence. **Total Aflatoxins, heavy metals, pesticide residues and complete compliance remain unverified.** FSSAI source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
 
 - **Fermented Soybean Curd — 2.4.39(1), and Lactobacillus-culture variant — 2.4.39:** Chapter 2.4 Version 4 explicitly requires an aqueous extract of soybean for both. The FSSAI Version IX B1 table confirms the same **10 µg/kg** for ready-to-eat oilseeds and food products containing listed oilseeds. The mapping is *partial*; other contaminant and residue requirements remain unresolved. Source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
+
+- **Five exact wheat/malt identities verified 10 October 2026:** Protein rich wheat flour (2.4.1(3)), protein rich refined wheat flour (2.4.2(3)), Malted Milk Food (2.4.11(1)), Malt Based Foods (2.4.11(2)) and Malt Extract (2.4.11(3)). Their exact FSSAI Chapter 2.4 definitions guarantee cereal flour, malted cereal and/or grain legumes. Version IX 2.2.1 specifies **Aflatoxin B1 10 µg/kg** under each of Cereal and cereal products, Pulses and Food products containing the listed articles. PMSV requires the exact clause and loaded official chapter record plus all three current source rows. Only this single **partial** B1 value was mapped; the **Total Aflatoxins** category is unresolved because the relevant source rows differ (15 versus 20 µg/kg). Other contaminants, metals, MRLs and amendments remain separately pending. Source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf and official Version IX linked below.
 
 ## Official reference entry point
 
