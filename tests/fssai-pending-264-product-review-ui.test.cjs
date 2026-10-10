@@ -106,3 +106,14 @@ test("Every pending identity now has source-linked and explicitly conditional Ve
  assert.equal(dairyAnalogue.version_ix_named_article_scope_review.review_disposition,"dairy_analogue_is_not_automatically_milk");
  assert.deepEqual(dairyAnalogue.version_ix_named_article_scope_review.source_article_candidates_review_only,[]);
 });
+
+test("Published pending family summary reconciles exactly to all 244 catalogue IDs",()=>{
+ const head=queue.split("## Unresolved by standard family")[1].split("## Exact unresolved identities")[0];
+ const table=new Map([...head.matchAll(/^\| (2\.\d+|3\.3|special) \| (\d+) \|$/gm)].map(x=>[x[1],Number(x[2])]));
+ const counts={};
+ for(const r of manifest.records)counts[r.regulatory_family]=(counts[r.regulatory_family]||0)+1;
+ assert.equal(table.size,Object.keys(counts).length);
+ for(const [prefix,count] of Object.entries(counts))
+   assert.equal(table.get(prefix),count,"Mismatched named family "+prefix);
+ assert.equal([...table.values()].reduce((a,b)=>a+b,0),244);
+});
