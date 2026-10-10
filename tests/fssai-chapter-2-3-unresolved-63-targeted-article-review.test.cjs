@@ -23,13 +23,13 @@ function permittedOnlyAsReview(r){
   v.legal_compliance_pass===false && r.unconditional_compliance_pass===false &&
   r.auto_apply_numeric_limit===false);
 }
-test("All 63 exact unresolved Chapter 2.3 identities have individual source and matrix review, preserving the historical 164 review baseline",()=>{
+test("61 remaining of the original 63 Chapter 2.3 identities have individual source and matrix review, preserving the historical 164 review baseline",()=>{
  assert.equal(catalogue.length,533);
- assert.equal(pending.pending,161);
- assert.equal(pending.count,161);
- assert.equal(pending.verified_evidence_added,103);
+ assert.equal(pending.pending,157);
+ assert.equal(pending.count,157);
+ assert.equal(pending.verified_evidence_added,107);
  assert.equal(pending.full_compliance_achieved,0);
- assert.equal(rows.length,63);
+ assert.equal(rows.length,61);
  assert.equal(pending.chapter_2_3_targeted_evidence_summary_2026_10_10.reviewed,63);
  assert.equal(pending.chapter_2_3_targeted_evidence_summary_2026_10_10.remaining_unresolved,164);
  assert.equal(pending.chapter_2_3_targeted_evidence_summary_2026_10_10.numeric_limits_applied,0);
