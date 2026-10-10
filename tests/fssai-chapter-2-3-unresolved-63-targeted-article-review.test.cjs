@@ -25,11 +25,11 @@ function permittedOnlyAsReview(r){
 }
 test("61 remaining of the original 63 Chapter 2.3 identities have individual source and matrix review, preserving the historical 164 review baseline",()=>{
  assert.equal(catalogue.length,533);
- assert.equal(pending.pending,146);
- assert.equal(pending.count,146);
- assert.equal(pending.verified_evidence_added,118);
+ assert.equal(pending.pending,136);
+ assert.equal(pending.count,136);
+ assert.equal(pending.verified_evidence_added,128);
  assert.equal(pending.full_compliance_achieved,0);
- assert.equal(rows.length,53);
+ assert.equal(rows.length,48);
  assert.equal(pending.chapter_2_3_targeted_evidence_summary_2026_10_10.reviewed,63);
  assert.equal(pending.chapter_2_3_targeted_evidence_summary_2026_10_10.remaining_unresolved,164);
  assert.equal(pending.chapter_2_3_targeted_evidence_summary_2026_10_10.numeric_limits_applied,0);
@@ -50,7 +50,9 @@ test("61 remaining of the original 63 Chapter 2.3 identities have individual sou
  // The original 63-product snapshot includes two products now promoted by
  // source-gated exact article evidence; preserve the original audit numbers.
  historic.fermented_bean_or_protein_derivative--;
- historic.diluted_beverage_vs_syrup-=8;
+ historic.diluted_beverage_vs_syrup-=9;
+ delete historic.diluted_beverage_vs_syrup;
+ historic.industrial_juice_concentrate_vs_puree-=4;
  historic.reconstituted_dry_soup--;
  delete historic.reconstituted_dry_soup;
  assert.deepEqual(buckets,historic);
