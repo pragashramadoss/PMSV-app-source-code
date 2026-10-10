@@ -10,6 +10,7 @@ const contaminant=read("fssai-product-helper-preview-01/data/rules/contaminants-
 const routes=read("fssai-product-helper-preview-01/data/rules/special-regulatory-routes-v1.json");
 const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
 const mp=new Map(master.products.map(x=>[x.id,x])),unresolved=new Set(pending.records.map(x=>x.catalog_id));
+const next10=read("fssai-product-helper-preview-01/data/rules/fssai-next10-exact-source-candidate-2026-10-10.json");
 test("Exactly ten distinct official product/commodity source matches reduced its dated baseline to 136; live count 126 with 533 identities retained",()=>{
  assert.equal(master.products.length,533);
  assert.equal(data.rows.length,10);assert.equal(data.negative_controls.length,30);
@@ -41,7 +42,12 @@ test("Exactly ten distinct official product/commodity source matches reduced its
  const controls=new Set();
  for(const rec of data.negative_controls){
   const p=mp.get(rec.catalog_id);assert.ok(p&&p.name===rec.product_name);
-  assert.ok(unresolved.has(rec.catalog_id),"Non-promoted control removed: "+rec.catalog_id);
+  if(!unresolved.has(rec.catalog_id)){
+   const promoted=next10.matched.find(x=>x.catalog_id===rec.catalog_id);
+   assert.ok(promoted,"Historical negative control lost without independent exact-source reference: "+rec.catalog_id);
+   assert.equal(promoted.finished_product_numeric_pass,false);
+   assert.equal(promoted.source_article_fully_applicable_to_all_forms_or_recipes,false);
+ }
   assert.equal(rec.source_matched_exact_product_article,false);
   assert.equal(rec.auto_apply_numeric_limit,false);
   assert.equal(rec.finished_product_compliance_pass,false);
