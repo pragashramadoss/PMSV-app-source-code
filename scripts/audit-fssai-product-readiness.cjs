@@ -1192,6 +1192,29 @@ for(const row of pending136FullReview.records){
  history136.set(p.id,row);
 }
 assert.equal(history136.size,136);
+// Exact non-inheritance guards for ALL five currently unresolved Chapter 2.11
+// catalogue products, grounded in their own product-standard clauses.
+const otherFoodGuard=pending136FullReview.chapter_2_11_all_five_exact_identity_negative_article_safeguards;
+assert.equal(otherFoodGuard.count,5);
+assert.equal(otherFoodGuard.numeric_source_limits_automatically_applied,0);
+assert.equal(otherFoodGuard.legal_product_compliance_approvals,0);
+assert.ok(official(otherFoodGuard.official_chapter_source));
+assert.equal(otherFoodGuard.catalogue_ids.length,5);
+assert.equal(new Set(otherFoodGuard.catalogue_ids).size,5);
+for(const id of otherFoodGuard.catalogue_ids){
+ const p=index.products.find(x=>x.id===id);
+ const row=history136.get(id);
+ assert.ok(p&&row&&row.regulatory_family==="2.11");
+ const gate=row.official_chapter_2_11_negative_source_gate;
+ assert.ok(gate&&gate.catalog_id===id&&gate.regulation===p.fssr);
+ assert.equal(gate.official_chapter_pdf,otherFoodGuard.official_chapter_source);
+ assert.equal(gate.source_numeric_sample_limit_auto_applied,false);
+ assert.equal(gate.full_chemical_contaminant_panel_verified,false);
+ assert.equal(gate.legal_compliance_pass,false);
+ assert.ok(gate.regulatory_identity_and_exclusion.length>100);
+ assert.ok(gate.prohibited_source_inheritance.length>45);
+ assert.ok(row.additional_high_risk_noninheritance_checks.includes(gate.regulatory_identity_and_exclusion));
+}
 for(const p of next10ById.values())assert.ok(history136.has(p.catalog_id));
 for(const id of next10ExactSource.negative_example_ids){
  assert.ok(index.products.some(x=>x.id===id));
