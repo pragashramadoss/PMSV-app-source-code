@@ -867,10 +867,33 @@ function contaminantEvidenceForProduct(p){
      pesticide_mrl_auto_applied:false,lead_cadmium_auto_assigned:false,
      current_future_amendments_checked:false};
  })();
+ const exactYellowPeaPowderB1Evidence=(()=>{
+   if(p.id!=='04-04-2-yellow-pea-powder'||p.name!=='YELLOW PEA POWDER'||p.fssr!=='2.4.36'
+     ||contaminants.source_version!=='Version IX (03.02.2026)')return null;
+   const {record,sourceUrls}=chapterRecord(p),identity=record.source_verified_identity;
+   if(record.key!=='2.4.36'||record.name!=='Yellow Pea Powder'
+     ||identity?.source_clause!=='2.4.36'||identity?.botanical_identity!=='Pisum sativum L.'
+     ||identity.no_foreign_ingredient!==true||identity.role!=='exact_pea_pulse_flour_for_source_checked_b1_only'
+     ||identity.complete_contaminant_compliance!==false
+     ||identity.total_aflatoxins_assigned!==false||identity.metal_limits_assigned!==false
+     ||identity.source_compendium_version!=='Version 4 (07.05.2025)'
+     ||!official(identity.official_source_url)||!sourceUrls.includes(identity.official_source_url))return null;
+   const group=contaminants.crop_contaminants?.aflatoxin_b1;
+   const articles=['Pulses','Food product containing any of the above mentioned food articles'];
+   if(group?.unit!=='µg/kg'||!articles.every(article=>(group.rules||[]).filter(x=>
+     normalizeArticle(x.article)===normalizeArticle(article)
+     &&Number(x.limit)===10&&String(x.unit||group.unit)==='µg/kg').length===1))return null;
+   return {catalog_id:p.id,product_name:p.name,fssr:p.fssr,botanical_identity:identity.botanical_identity,
+     official_standard_source:identity.official_source_url,official_contaminants_source:version9Source,
+     contaminant:'Aflatoxin B1',limit:10,unit:'µg/kg',articles,
+     no_complete_contaminant_assessment:true,auto_assign_total_aflatoxins:false,
+     auto_assign_pulse_flour_metals:false,auto_assign_pesticide_mrls:false};
+ })();
  const explicitKinds=[];
  if(peanutButterCompositeEvidence)explicitKinds.push("official_v9_exact_peanut_butter_composite_aflatoxins_partial");
  if(sharedCerealAflatoxinB1Evidence)explicitKinds.push("official_v9_harmonised_cereal_composite_b1_partial");
  if(cerealMaltB1Evidence)explicitKinds.push("fssai_v9_exact_cereal_malt_b1_partial_evidence");
+ if(exactYellowPeaPowderB1Evidence)explicitKinds.push("fssai_v9_exact_yellow_pea_powder_b1_partial_evidence");
  if(bengalGramAflatoxinB1Evidence)explicitKinds.push("official_v9_exact_bengal_gram_pulse_composite_b1_partial");
  if(soyDerivativeB1Evidence)explicitKinds.push("official_v9_soy_derivative_oilseed_composite_b1_partial");
  if(nonFermentedSoybeanB1Evidence)explicitKinds.push("official_v9_exact_nonfermented_soybean_b1_partial");
@@ -930,6 +953,7 @@ function contaminantEvidenceForProduct(p){
    exact_harmonised_cereal_aflatoxin_b1:sharedCerealAflatoxinB1Evidence,
    exact_bengal_gram_pulse_composite_b1:bengalGramAflatoxinB1Evidence,
    exact_cereal_malt_b1_partial_evidence:cerealMaltB1Evidence,
+   exact_yellow_pea_powder_b1:exactYellowPeaPowderB1Evidence,
    exact_soy_derivative_oilseed_composite_b1:soyDerivativeB1Evidence,
    exact_nonfermented_soybean_b1:nonFermentedSoybeanB1Evidence,
    exact_oilseed_flour_protein_b1:oilseedFlourProteinB1Evidence,
