@@ -10,7 +10,7 @@ const html=fs.readFileSync(path.join(root,base+"index.html"),"utf8");
 const aud=fs.readFileSync(path.join(root,"scripts/audit-fssai-product-readiness.cjs"),"utf8");
 const data=db.chapter_2_4_nonfermented_soybean_total_aflatoxin_conditional_v9;
 const start=html.indexOf("function sourcePinnedSoybeanTotalAflatoxinReview(p){");
-const end=html.indexOf("\\nfunction productBaselineContaminantRules(p){",start);
+const end=html.indexOf("\nfunction productBaselineContaminantRules(p){",start);
 assert.ok(start>0&&end>start,"Missing source-pinned conditional panel function");
 const ctx=vm.createContext({contaminantsDb:db});
 vm.runInContext(html.slice(start,end),ctx);
