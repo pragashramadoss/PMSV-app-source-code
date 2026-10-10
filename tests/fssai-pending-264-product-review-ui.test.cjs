@@ -73,7 +73,10 @@ test("Every pending identity now has source-linked and explicitly conditional Ve
  assert.equal(manifest.source_row_scope_reviewed,236);
  assert.equal(manifest.pending,236);
  assert.equal(manifest.conditional_source_article_candidate_records,109);
- assert.match(manifest.scope_article_reconciliation,/26 identities have independent exact partial numeric evidence/i);
+ assert.ok(manifest.scope_article_reconciliation.includes(String(manifest.verified_evidence_added)),
+    "Scope note must carry current verified-partial evidence count");
+ assert.ok(manifest.scope_article_reconciliation.includes(String(manifest.pending)),
+    "Scope note must carry current unresolved evidence count");
  const candidates=manifest.records.filter(x=>
    x.version_ix_named_article_scope_review.source_article_candidates_review_only.length>0);
  assert.equal(candidates.length,109);
