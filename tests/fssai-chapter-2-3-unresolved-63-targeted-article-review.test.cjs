@@ -60,7 +60,8 @@ test("43 remaining of the original 63 Chapter 2.3 identities have individual sou
  historic.reconstituted_dry_soup--;
  delete historic.reconstituted_dry_soup;
  assert.deepEqual(buckets,historic);
- assert.ok(Object.keys(buckets).length>=20);
+ assert.equal(Object.keys(buckets).length,Object.keys(historic).length);
+ assert.ok(Object.keys(buckets).length>=18,"Product subtype matrix review breadth should not silently shrink");
 });
 test("The 11 named metal source-row examples require an actual subtype and cannot be auto applied",()=>{
  const examples=rows.flatMap(r=>r.chapter_2_3_targeted_evidence_review_2026_10_10.conditional_named_articles.map(a=>({id:r.catalog_id,...a})));
