@@ -77,3 +77,29 @@ test("Non-Section 2.1 profile rules remain unaffected; no blanket numeric fallba
  assert.equal(checked({id:"anything"},{contaminant:"Histamine",limit:200,source_basis:"Section 2.5.2 · Histamine"}),true);
  assert.equal(checked({id:"anything"},{contaminant:"Lead",limit:5,unit:"mg/kg",article:"Unknown product",source_basis:"Section 2.1 · Lead"}),false);
 });
+
+// A nominal article/value match is not enough: the source row itself must be
+// classified as an exact named product article, never a catch-all/default or
+// flagged literal anomaly that requires official regulatory interpretation.
+test("Generic metal fallback and anomaly rows cannot prove an exact product profile",()=>{
+ const candidate=(metal,row)=>({
+   contaminant:metal,limit:row.limit,unit:row.unit,article:row.article,
+   source_basis:"Section 2.1 · "+metal+" · Version IX (03.02.2026)"
+ });
+ const leadDefault=db.metal_article_rules_v9.Lead.find(r=>r.row_type==="default");
+ assert.ok(leadDefault,"Expected separately stored foods-not-specified fallback");
+ assert.equal(checked({id:"11-11-6-sucralose"},candidate("Lead",leadDefault)),false);
+ const allFoods=db.metal_article_rules_v9["Methyl Mercury"].find(r=>r.row_type==="all_foods");
+ assert.ok(allFoods,"Expected separate all-foods row");
+ assert.equal(checked({id:"11-11-6-sucralose"},candidate("Methyl Mercury",allFoods)),false);
+ const anomalies=db.metal_article_rules_v9.Arsenic.filter(r=>r.row_type==="exact_source_literal_anomaly");
+ assert.ok(anomalies.length>=2,"Expected literal anomaly safeguards");
+ for(const row of anomalies){
+   assert.equal(checked({id:"09-09-2-frozen-shrimp"},candidate("Arsenic",row)),false,row.article);
+ }
+ const exactSucralose=db.profiles.find(p=>p.id==="exact-metal-11-11-6-sucralose").rules.find(r=>r.contaminant==="Lead");
+ assert.equal(checked({id:"11-11-6-sucralose"},exactSucralose),true,"Verified exact metal row still works");
+ assert.match(helper,/sameLimit=row=>row\\.row_type==='exact'/);
+ assert.match(helper,/if\\(r\\.row_type==='exact' &&normIngredient\\(r\\.article\\|\\|''\\)===n\\)/,
+   "Direct name matching must exclude generic/default/anomalous metal rows too");
+});
