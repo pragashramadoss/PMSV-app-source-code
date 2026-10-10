@@ -199,6 +199,37 @@ assert.equal(freshEggs.excluded_ids.length,4);
 for(const id of freshEggs.excluded_ids){
  assert.ok(meatEggCommodityReviews.some(x=>x.catalog_id===id&&x.scope==="processed_egg"));
 }
+
+// Three finished dried-fruit identities match the named FSSAI Version IX
+// Malathion 'Dried fruits' 8 mg/kg commodity. This is partial residue source
+// evidence only, NOT an approved panel/compliance result.
+const driedFruitMalathion=contaminants.chapter_2_3_dried_fruit_exact_malathion_v9;
+assert.ok(driedFruitMalathion&&official(driedFruitMalathion.official_source_url)&&official(driedFruitMalathion.chapter_2_3_standard_url));
+assert.equal(driedFruitMalathion.source_version,contaminants.source_version);
+assert.equal(driedFruitMalathion.commodity_article,"Dried fruits");
+assert.equal(driedFruitMalathion.limit,8);
+assert.equal(driedFruitMalathion.unit,"mg/kg");
+assert.match(driedFruitMalathion.pesticide_name,/^Malathion.*malathion and malaoxon/);
+assert.equal(driedFruitMalathion.automatic_compliance_pass,false);
+assert.equal(driedFruitMalathion.full_contaminant_coverage,false);
+assert.equal(driedFruitMalathion.verified_product_identities.length,3);
+const malathionSourceRows=(contaminants.residue_mrls?.pesticides||[])
+ .filter(x=>x.name===driedFruitMalathion.pesticide_name)
+ .flatMap(x=>(x.rows||[]).filter(z=>z.food===driedFruitMalathion.commodity_article&&Number(z.mrl)===8&&z.unit==="mg/kg"));
+assert.equal(malathionSourceRows.length,1,"Current official dried-fruit Malathion source row drift");
+const driedFruitById=new Map(driedFruitMalathion.verified_product_identities.map(x=>[x.catalog_id,x]));
+assert.equal(driedFruitById.size,3);
+for(const row of driedFruitMalathion.verified_product_identities){
+ const product=index.products.find(x=>x.id===row.catalog_id);
+ assert.ok(product&&product.name===row.product_name&&product.fssr===row.fssr&&row.dried_fruit_identity_verified===true);
+ const standard=chapterRecord(product);
+ assert.equal(standard.record.key,row.fssr);
+ assert.equal(standard.record.name,row.product_name);
+ assert.ok(standard.sourceUrls.some(x=>x===driedFruitMalathion.chapter_2_3_standard_url));
+ assert.ok(!driedFruitMalathion.excluded_catalog_ids.includes(row.catalog_id));
+}
+for(const id of driedFruitMalathion.excluded_catalog_ids)assert.ok(!driedFruitById.has(id));
+
 const fruitVegReviews=contaminants.chapter_2_3_commodity_mrl_review_v1||[];
 const fruitVegById=new Map(fruitVegReviews.map(x=>[x.catalog_id,x]));
 const chapter23Products=index.products.filter(p=>String(p.fssr||"").startsWith("2.3."));
@@ -654,6 +685,7 @@ function contaminantEvidenceForProduct(p){
  const pureCerealEvidence=pureCerealsById.get(p.id)||null;
  const oilMetalEvidence=nickelOilById.get(p.id)||seedOilById.get(p.id)||null;
  const vegMetalEvidence=vegMetalById.get(p.id)||null;
+ const driedFruitEvidence=driedFruitById.get(p.id)||null;
  const freshEggEvidence=(freshEggs.catalog_id===p.id)?freshEggs:null;
  const bisulphiteEvidence=bisulphiteById.get(p.id)||null;
  const otherOilEvidence=otherOilById.get(p.id)||null;
@@ -993,6 +1025,7 @@ function contaminantEvidenceForProduct(p){
  if(pureCerealEvidence)explicitKinds.push("verified_pure_cereal_product_aflatoxin_article");
  if(oilMetalEvidence)explicitKinds.push("verified_exact_oil_metal_article");
  if(vegMetalEvidence)explicitKinds.push("verified_fresh_vegetable_chromium_nickel_articles");
+ if(driedFruitEvidence)explicitKinds.push("official_v9_exact_dried_fruit_malathion_commodity_partial");
  if(freshEggEvidence)explicitKinds.push("verified_exact_fresh_eggs_pesticide_commodity_article_review_only");
  if(bisulphiteEvidence)explicitKinds.push("verified_exact_bisulphite_ins_additive_substance_metal_articles");
  if(otherOilEvidence)explicitKinds.push("verified_other_edible_vegetable_oils_lead_articles");
@@ -1061,6 +1094,12 @@ function contaminantEvidenceForProduct(p){
      substance_name:bisulphiteEvidence.product_name,metal_limits:bisulphiteEvidence.contaminants,
      official_source:bisulphiteRoutes.official_source_url,
      finished_food_additive_use_allowed:false,full_compliance_verified:false}:null,
+   exact_dried_fruit_malathion: driedFruitEvidence?{
+    source_url:driedFruitMalathion.official_source_url, standard_source:driedFruitMalathion.chapter_2_3_standard_url,
+    commodity_article:driedFruitMalathion.commodity_article, pesticide_name:driedFruitMalathion.pesticide_name,
+    mrl:driedFruitMalathion.limit, unit:driedFruitMalathion.unit,
+    full_compliance_verified:false,other_pesticide_rows_approved:false,
+    freshness_amendments_fully_reconciled:false}:null,
    exact_fresh_eggs_pesticide_commodity:freshEggEvidence?{
      official_article:"Eggs",mrl_rows:9,scope:"Shell free basis",
      source_url:freshEggs.official_source_url,auto_apply:false,full_compliance_verified:false}:null,
@@ -1353,6 +1392,10 @@ const products = index.products.map(p => {
   if(contaminantEvidence.exact_bisulphite_additive_metal_articles){
     tally("special_ins_additive_identity_metal","exact_substance_lead_selenium");
     action.push("INS metabisulphite pure-substance Lead/Selenium Version IX articles verified; separate Appendix A category, additive permission, dose and product formulation requirements remain unassessed.");
+  }
+  if(contaminantEvidence.exact_dried_fruit_malathion){
+    tally("chapter_2_3_exact_dried_fruit_malathion","single_source_commodity_article_partial");
+    action.push("FSSAI Version IX Malathion (including malaoxon) Dried fruits article: 8 mg/kg matches exact dried fruit product identity. Other pesticide MRLs, pesticide residue definitions, contaminant metals and amendments require independent review; no PASS.");
   }
   if(contaminantEvidence.exact_fresh_eggs_pesticide_commodity){
     tally("chapter_2_5_eggs_exact_article","shell_free_pesticide_reference_only");

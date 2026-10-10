@@ -7712,6 +7712,26 @@ function productMeatEggCommodityMrlReviewHtml(p){
 }
 /* Chapter 2.4 residue articles are review candidates, not finished-food approvals. */
 /* Chapter 2.3: raw ingredient commodity evidence is review-only and is not a finished-product MRL. */
+/* Version IX Malathion MRL has a separate exact 'Dried fruits' commodity row.
+ * This is a source-checked finished dried-fruit identity reference only;
+ * it cannot certify a product or transfer the fresh fruit 4 mg/kg row. */
+function sourcePinnedDriedFruitMalathion(p){
+ const m=contaminantsDb?.chapter_2_3_dried_fruit_exact_malathion_v9;
+ if(!m||!p||contaminantsDb.source_version!==m.source_version||m.commodity_article!=='Dried fruits'
+    ||m.automatic_compliance_pass!==false||m.full_contaminant_coverage!==false
+    ||m.copy_fresh_fruit_4mgkg_prohibited!==true)return null;
+ const identity=(m.verified_product_identities||[]).find(x=>x.catalog_id===p.id&&x.product_name===p.name
+   &&x.fssr===p.fssr&&x.dried_fruit_identity_verified===true);
+ if(!identity||(m.excluded_catalog_ids||[]).includes(p.id))return null;
+ const source=(contaminantsDb?.residue_mrls?.pesticides||[]).filter(x=>x.name===m.pesticide_name)
+    .flatMap(x=>(x.rows||[]).filter(r=>r.food==='Dried fruits'&&Number(r.mrl)===Number(m.limit)
+       &&String(r.unit||'')===m.unit));
+ if(source.length!==1||Number(m.limit)!==8||m.unit!=='mg/kg'
+   ||!/^Malathion.*malathion and malaoxon/.test(m.pesticide_name)
+   ||!/^https:\/\/(?:www\.)?fssai\.gov\.in\//.test(m.official_source_url))return null;
+ return {article:m.commodity_article,pesticide:m.pesticide_name,limit:m.limit,unit:m.unit,
+   source_url:m.official_source_url,verified_partial_only:true,compliance_approved:false};
+}
 function exactFruitVegCommodityReview(p){
  if(!p||!contaminantsDb)return null;
  return (contaminantsDb.chapter_2_3_commodity_mrl_review_v1||[]).find(r=>r.catalog_id===p.id)||null;
@@ -7719,6 +7739,7 @@ function exactFruitVegCommodityReview(p){
 function productFruitVegCommodityMrlReviewHtml(p){
  const review=exactFruitVegCommodityReview(p);
  if(!review)return '';
+ const driedFruitExact=sourcePinnedDriedFruitMalathion(p);
  const source=String(review.source_url||'');
  const official=/^https:\/\/(?:www\.)?fssai\.gov\.in\//i.test(source);
  const link=official?'<a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX PDF</a>':'';
@@ -7741,11 +7762,16 @@ function productFruitVegCommodityMrlReviewHtml(p){
  }
  if(review.excluded_non_equivalent_finished_product_articles?.length)
   html+='<div class="notice"><b>Non-equivalent contaminant article — NOT APPLIED:</b> '+esc(review.exclusion_reason)+'</div>';
+ if(driedFruitExact)html+='<div class="notice oknote"><b>Source-verified dried-fruit Malathion article (partial evidence only):</b> '
+  +esc(driedFruitExact.article)+' — <b>'+esc(String(driedFruitExact.limit))+' '+esc(driedFruitExact.unit)+'</b>. '
+  +'The residue definition includes malathion and malaoxon expressed as malathion. '
+  +'This is an exact commodity-reference match to the selected dried fruit, <b>NOT</b> a complete pesticide panel or regulatory compliance PASS. '
+  +'<a href="'+esc(driedFruitExact.source_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX</a>.</div>';
  const articles=review.raw_ingredient_article_references_only||[];
  if(articles.length){
    html+='<div class="notice"><b>Raw-ingredient source articles for manual review only:</b> '+articles.map(esc).join('; ')
     +' ('+esc(String(review.raw_reference_rows_in_loaded_official_source))+' loaded source rows). These refer to precursor commodities, not confirmed finished-product MRLs. Evaluate documented processing factors and exact commodity scope before applying any value.</div>';
- }else html+='<div class="notice">No safe direct finished-product pesticide commodity article has been verified in the loaded source. Review actual raw materials and processing without borrowing generic fruit, vegetable or spice MRLs.</div>';
+ }else if(!driedFruitExact) html+='<div class="notice">No safe direct finished-product pesticide commodity article has been verified in the loaded source. Review actual raw materials and processing without borrowing generic fruit, vegetable or spice MRLs.</div>';
  return html+'</div>';
 }
 function exactCerealCommodityReview(p){
@@ -9771,7 +9797,7 @@ function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=433',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=434',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
@@ -9783,10 +9809,10 @@ async function loadContaminantsDb(){
    contaminantsFutureAmendmentDb=await future.json();
  }catch(e){contaminantsFutureAmendmentDb=null;}
  try{
-   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-crudeoil5',{cache:'reload'});
+   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-driedfruit6',{cache:'reload'});
    if(!review.ok)throw new Error('HTTP '+review.status);
    const data=await review.json();
-   if(data.count!==235||!Array.isArray(data.records)||data.records.length!==235)throw new Error('Unresolved review count mismatch');
+   if(data.count!==232||!Array.isArray(data.records)||data.records.length!==232)throw new Error('Unresolved review count mismatch');
    contaminantsPendingReviewDb=data;
  }catch(e){contaminantsPendingReviewDb=null;}
  try{

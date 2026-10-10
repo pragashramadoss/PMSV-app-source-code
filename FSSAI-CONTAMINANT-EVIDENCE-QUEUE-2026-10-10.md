@@ -7,20 +7,20 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 298 |
-| No exact product-identity contaminant evidence established by current index | 235 |
+| Some exact product evidence, partial only | 301 |
+| No exact product-identity contaminant evidence established by current index | 232 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Original source-article applicability triage records (2026-10-10 baseline) | 236 |
 | Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 104 |
 
-Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The original 236-item queue was **not** reduced by conditional candidates. A separate exact FSSR 2.2.9 crude-vegetable-oil lead mapping has since reduced the queue to 235. On 10 October, a further source/identity check removed 42 misleading conditional article candidates across 38 products without falsely reducing the unresolved count. See `FSSAI-V9-CANDIDATE-SCOPE-CORRECTIONS-2026-10-10.md`.
+Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The original 236-item queue was **not** reduced by conditional candidates. A separate exact FSSR 2.2.9 crude-vegetable-oil lead mapping reduced the queue to 235; subsequent three exact dried-fruit Malathion commodity source matches reduced it further to 232. On 10 October, a further source/identity check removed 42 misleading conditional article candidates across 38 products without falsely reducing the unresolved count. See `FSSAI-V9-CANDIDATE-SCOPE-CORRECTIONS-2026-10-10.md`.
 
 ## Unresolved by standard family
 
 | FSSR prefix | Product identities requiring exact review |
 |---|---:|
 | 2.1 | 67 |
-| 2.3 | 66 |
+| 2.3 | 63 |
 | special | 45 |
 | 2.4 | 15 |
 | 2.8 | 11 |
@@ -108,7 +108,7 @@ For each item: verify the precise finished-product identity, current official FS
 | Whey Powder | `01-01-8-whey-powder` | 2.1.12 |
 | Whey Protein Concentrate | `01-01-8-whey-protein-concentrate` | 2.1.22 |
 
-### FSSR 2.3 (66)
+### FSSR 2.3 (63)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -128,10 +128,8 @@ For each item: verify the precise finished-product identity, current official FS
 | Cut vanilla | `04-04-1-cut-vanilla` | 2.3.50 |
 | Date Paste | `04-04-1-date-paste` | 2.3.56 |
 | Dates | `04-04-1-dates` | 2.3.47(4) |
-| Dehydrated Fruits | `04-04-1-dehydrated-fruits` | 2.3.35 |
 | Dehydrated Vegetables | `04-04-2-dehydrated-vegetables` | 2.3.36 |
 | Desiccated Coconut | `04-04-1-desiccated-coconut` | 2.3.45 |
-| Dried Apricots | `04-04-1-dried-apricots` | 2.3.53 |
 | Dried fungi | `04-04-2-dried-fungi` | 2.3.62 |
 | Dried Fungi Concentrate | `04-04-2-dried-fungi-concentrate` | 2.3.62 |
 | Dry fruits and Nuts | `04-04-1-dry-fruits-and-nuts` | 2.3.47(5) |
@@ -159,7 +157,6 @@ For each item: verify the precise finished-product identity, current official FS
 | Pickles made from vegetables or other edible plant material including mushrooms | `04-04-2-pickles-made-from-vegetables-or-other-edible-plant-material-including-mushrooms` | 2.3.43 |
 | Quick Frozen Fried Potatoes | `04-04-2-quick-frozen-fried-potatoes` | 2.3.60 |
 | Quick Frozen Fungi | `04-04-2-quick-frozen-fungi` | 2.3.62 |
-| Raisins | `04-04-1-raisins` | 2.3.47(2) |
 | Salted fungi (semi processed products) | `04-04-2-salted-fungi-semi-processed-products` | 2.3.62 |
 | Seedless Tamarind | `04-04-1-seedless-tamarind` | 2.3.49 |
 | Soup Powders | `12-12-5-soup-powders` | 2.3.15 |
@@ -367,3 +364,9 @@ Version IX numeric limits remain subject to the future amendment dated 25 May 20
 ## Newly verified partial evidence: FSSR 2.2.9 crude vegetable oils
 
 `100-100-solvent-extracted-crude-vegetable-oils-not-for-direct-human-consumption` moved to partial exact evidence on 10 October 2026. FSSAI Version IX §2.1.1 Lead: **Vegetable Oils, crude — 0.1 mg/kg**, excluding cocoa butter; FSSR 2.2.9 separately identifies the solvent-extracted crude vegetable oil class. **No Arsenic limit is automatically inherited**, because its official source-oil list is narrower. Other metals, pesticide MRLs, refining requirements and amendments still require assessment. This is not a compliance PASS. Official sources: https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf and https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats_oils%20and%20fat%20emulsions.pdf.
+
+## New exact partial pesticide evidence — dried fruits
+
+FSSAI CTR Version IX §2.3.1 entry Malathion (combined residues of malathion and malaoxon expressed as malathion) has a separate finished **Dried fruits** commodity limit of **8 mg/kg**, distinguished from **Fruits 4 mg/kg**. Source: https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf (PDF page 30, one-based).
+
+Three exact dried fruit products have an independently matched Chapter 2.3 identity: **Dehydrated Fruits (2.3.35)**, **Dried Apricots (2.3.53)** and **Raisins (2.3.47(2))**. This moves those three to **partial exact pesticide commodity evidence only**. Dates, dry fruits-and-nuts mixed categories, fruit bars and dehydrated vegetables are not automatically included. No claim about other pesticide residues, processing factors, operative amendments, metals, toxins, or lab test compliance is made.
