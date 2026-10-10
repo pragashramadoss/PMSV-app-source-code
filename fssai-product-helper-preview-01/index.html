@@ -8967,6 +8967,32 @@ function productBaselineContaminantRules(p){
     });
  }
  
+ // 5bg) FSSAI Chapter 2.4.30 lists specific non-fermented soybean
+ // foods. Their identity requires soybean or soy derivatives; the Version
+ // IX oilseed and composite-food Aflatoxin B1 articles both state 10 µg/kg.
+ // Do not assume that any total-aflatoxin, pesticide or metal article
+ // follows automatically from this partial identity-specific source check.
+ const confirmedSoybeanProducts=[
+  ['06-06-8-soybean-beverages-and-related-products','Soybean Beverages and Related Products','2.4.30'],
+  ['06-06-8-soybean-curd-and-related-products','Soybean Curd and Related Products','2.4.30'],
+  ['06-06-8-compressed-soybean-curd','Compressed Soybean Curd','2.4.30'],
+  ['06-06-8-dehydrated-soybean-curd-film','Dehydrated Soybean Curd Film','2.4.30'],
+  ['06-06-8-tofu','Tofu','2.4.30']
+ ];
+ if(confirmedSoybeanProducts.some(([cid,name,clause])=>id===cid&&p.name===name&&p.fssr===clause)
+     && /Version IX.*03\.02\.2026/.test(String(contaminantsDb?.source_version||''))){
+   const b1=contaminantsDb?.crop_contaminants?.aflatoxin_b1;
+   const articles=['Oilseeds, ready to eat','Food product containing any of the above mentioned food articles'];
+   const verified=b1?.unit==='µg/kg'&&articles.every(article=>
+     (b1.rules||[]).filter(r=>normIngredient(r.article||'')===normIngredient(article)
+       &&Number(r.limit)===10&&String(r.unit||b1.unit)==='µg/kg').length===1);
+   if(verified)pushRule({
+     contaminant:'Aflatoxin B1',article:articles.join(' / '),limit:10,unit:'µg/kg',
+     source_basis:'FSSAI CTR Version IX · Section 2.2.1 · non-fermented soybean finished product, source-matched shared B1 categories',
+     condition:'Only exact FSSAI 2.4.30 non-fermented soybean product identity. Official oilseed and composite-food Aflatoxin B1 rows both give 10 µg/kg. Total Aflatoxins, other mycotoxins, metals, pesticide and veterinary residues remain under separate review. No complete compliance PASS.'
+   });
+ }
+
  // 5c) Version IX naturally occurring toxic substance Saffrole: only exact
  // finished soup or sauce identities in the official Chapter 2.3 list.
  const saffrole=contaminantsDb?.chapter_2_3_exact_soup_sauce_saffrole_v9;
