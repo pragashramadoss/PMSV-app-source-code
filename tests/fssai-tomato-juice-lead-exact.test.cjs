@@ -62,6 +62,38 @@ test("Other finished beverages, industrial ingredients and tomato puree do not i
   assert.equal(check(p,rule),false,"Inappropriate 1 mg/kg inheritance: "+other);
  }
 });
+test("Copper 5 mg/kg and Arsenic 0.2 mg/kg use separately verified tomato-juice articles",()=>{
+ const article="Juice of orange, grape, apple, tomato, pineapple and lemon";
+ const group=aliases[0];
+ for(const [metal,value] of [["Copper",5],["Arsenic",0.2]]){
+  const official=db.metal_article_rules_v9[metal].filter(x=>
+    x.article===article&&x.row_type==="exact"&&x.unit==="mg/kg");
+  assert.equal(official.length,1);
+  assert.equal(official[0].limit,value);
+  const basis=group.verified_alias_basis.filter(x=>x.metal===metal);
+  assert.equal(basis.length,1);
+  assert.equal(basis[0].article,article);
+  assert.equal(basis[0].limit,value);
+  assert.equal(basis[0].unit,"mg/kg");
+  const rule=profile.rules.find(x=>x.contaminant===metal);
+  assert.ok(rule);
+  assert.equal(check(product,rule),true);
+  for(const other of ["fruit-nectars","fruit-juices","fruit-drink-rts",
+      "04-04-2-thermally-processed-tomato-puree-and-paste"]){
+    assert.equal(check(catalogue.find(x=>x.id===other),rule),false,
+      "No tomato juice "+metal+" inheritance for "+other);
+  }
+  assert.equal(check(product,{...rule,limit:value+1}),false);
+  assert.equal(check(product,{...rule,unit:"mg/L"}),false);
+  assert.equal(check(product,{...rule,article:"Foods not specified"}),false);
+  const tampered=JSON.parse(JSON.stringify(db));
+  tampered.metal_article_rules_v9[metal]=tampered.metal_article_rules_v9[metal].filter(x=>x.article!==article);
+  ctx.contaminantsDb=tampered;
+  assert.equal(check(product,rule),false);
+  ctx.contaminantsDb=db;
+ }
+});
+
 test("Tampered article, value, units or missing official metal source are rejected",()=>{
  const rule=profile.rules.find(x=>x.contaminant==="Lead");
  assert.equal(check(product,{...rule,limit:0.05}),false);
