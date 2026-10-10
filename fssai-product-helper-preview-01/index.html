@@ -8375,6 +8375,20 @@ function sourcePinnedDirectStandardLimit(p,group,rule){
    && normIngredient(st.name)===normIngredient(group.product_name)
    && String(db?.chapter||'')===(matchKey.match(/^\d+\.\d+/)||[])[0]));
  const unit=x=>String(x||'').trim().toLowerCase();
+ // Chapter 2.16(3) applies across exactly identified hemp seed, seed oil and
+ // flour, rather than appearing in each product's own composition table.
+ // Only an explicit, source-pinned cross-cutting key can enter this path.
+ if(rule.source_cross_cutting_key){
+   const parent=(matchKey.match(/^\d+\.\d+/)||[])[0];
+   return trustedChapters.some(db=>String(db.chapter||'')===parent
+     &&(db.cross_cutting_limits||[]).some(entry=>
+       entry.key===rule.source_cross_cutting_key
+       &&normIngredient(entry.parameter)===normIngredient(rule.contaminant)
+       &&entry.operator==='<='
+       &&Number.isFinite(Number(entry.value))
+       &&Number(entry.value)===Number(rule.limit)
+       &&unit(entry.unit)===unit(rule.unit)));
+ }
  return matchingStandards.some(st=>[...(st.composition||[]),...(st.physical_chemical||[]),...(st.toxic_substances||[])].some(entry=>
    normIngredient(entry.parameter)===normIngredient(rule.contaminant)
    && entry.operator==='<='
