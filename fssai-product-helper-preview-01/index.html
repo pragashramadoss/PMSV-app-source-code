@@ -9143,7 +9143,8 @@ function renderProductContaminants(){
  const profile=contaminantProfileForProduct(p);
  const universal=Array.isArray(contaminantsDb.all_food_rules)?contaminantsDb.all_food_rules.filter(x=>x.auto_apply===true):[];
  const rawProfileRules=profile&&Array.isArray(profile.rules)?profile.rules:[];
- const withheldProfileMetalRules=rawProfileRules.filter(rule=>!sourcePinnedVersionIxProfileMetalRule(p,rule));
+ const withheldProfileMetalRules=rawProfileRules.filter(rule=>/^section 2\.1(?:\s|·|$)/i.test(String(rule.source_basis||''))&&!sourcePinnedVersionIxProfileMetalRule(p,rule));
+ const withheldProfileToxinRules=rawProfileRules.filter(rule=>/^section 2\.2\.1(?:\s|·|$)/i.test(String(rule.source_basis||''))&&!sourcePinnedVersionIxProfileMetalRule(p,rule));
  const exact=rawProfileRules.filter(rule=>sourcePinnedVersionIxProfileMetalRule(p,rule));
  const withheldProfileCropRules=exact.filter(rule=>!sourcePinnedVersionIxProfileCropRule(p,rule));
  const cropGatedExact=exact.filter(rule=>sourcePinnedVersionIxProfileCropRule(p,rule));
@@ -9199,6 +9200,7 @@ function renderProductContaminants(){
    +productContaminantGateNotices(p)
    +(withheldProfileMetalRules.length?'<div class="notice"><b>Version IX metal source-check required — numeric limit withheld:</b> '+withheldProfileMetalRules.map(rule=>esc(rule.contaminant)+' ('+esc(rule.article)+')').join('; ')+'. No copied profile value is used unless its exact official metal article or reviewed grouped commodity identity, value and unit still match the current loaded FSSAI source table.</div>':'')
    +(withheldProfileCropRules.length?'<div class="notice"><b>Version IX spice aflatoxin source-check required — numeric value withheld:</b> '+withheldProfileCropRules.map(rule=>esc(rule.contaminant)).join('; ')+'. A spice limit is shown only when the exact named product mapping and the loaded official Section 2.2.1 article, value and unit agree.</div>':'')
+   +(withheldProfileToxinRules.length?'<div class="notice"><b>Version IX toxin source-check required — numeric limit withheld:</b> '+withheldProfileToxinRules.map(rule=>esc(rule.contaminant)+' ('+esc(rule.article)+')').join('; ')+'. A copied toxin limit is withheld unless its exact FSSAI source article, tested units, product identity mapping and limit still agree.</div>':'')
    +meatEggCommodityReview
    +cerealCommodityReview
    +fruitVegCommodityReview
