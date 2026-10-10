@@ -838,9 +838,39 @@ function contaminantEvidenceForProduct(p){
      articles,full_contaminant_coverage:false,total_aflatoxins_auto_assigned:false,
      pesticide_mrls_auto_applied:false,amendments_fully_reconciled:false};
  })();
+ const cerealMaltB1Evidence=(()=>{
+   const candidates=[
+    ['06-06-2-protein-rich-wheat-flour-protein-prachur-atta','Protein rich wheat flour (Protein prachur atta)','2.4.1(3)','wheat_flour_required'],
+    ['06-06-2-protein-rich-refined-wheat-flour-protein-prachur-maida','Protein rich refined wheat flour (Protein prachur maida)','2.4.2(3)','refined_wheat_flour_required'],
+    ['06-06-7-malted-milk-food','Malted Milk Food','2.4.11(1)','malted_cereal_required'],
+    ['06-06-7-malt-based-foods-malt-food','Malt Based Foods(Malt Food)','2.4.11(2)','malted_cereal_or_grain_legume_required'],
+    ['06-06-7-malt-extract','Malt Extract','2.4.11(3)','malted_cereal_required']
+   ];
+   const item=candidates.find(x=>p.id===x[0]&&p.name===x[1]&&p.fssr===x[2]);
+   if(!item||contaminants.source_version!=='Version IX (03.02.2026)')return null;
+   const {record,sourceUrls}=chapterRecord(p),meta=record.source_verified_identity;
+   if(record.key!==p.fssr || meta?.source_clause!==p.fssr
+     ||meta.principal_material_kind!==item[3]
+     ||meta.source_compendium_version!=='Version 4 (07.05.2025)'
+     ||meta.role!=='fixed_cereal_or_pulse_based_identity_for_partial_b1_source_article_only'
+     ||meta.full_contaminant_compliance!==false||meta.total_aflatoxins_auto_assigned!==false
+     ||!official(meta.official_source_url)||!sourceUrls.includes(meta.official_source_url))return null;
+   const g=contaminants.crop_contaminants?.aflatoxin_b1;
+   const articles=['Cereal and cereal products','Pulses','Food product containing any of the above mentioned food articles'];
+   if(g?.unit!=='µg/kg'||!articles.every(article=>(g.rules||[]).filter(row=>
+      normalizeArticle(row.article)===normalizeArticle(article)
+      &&Number(row.limit)===10&&String(row.unit||g.unit)==='µg/kg').length===1))return null;
+   return {catalog_id:p.id,product_name:p.name,fssr:p.fssr,
+     standard_source_url:meta.official_source_url,contaminants_source_url:version9Source,
+     exact_source_articles:articles,contaminant:'Aflatoxin B1',limit:10,unit:'µg/kg',
+     complete_contaminant_coverage:false,total_aflatoxins_auto_assigned:false,
+     pesticide_mrl_auto_applied:false,lead_cadmium_auto_assigned:false,
+     current_future_amendments_checked:false};
+ })();
  const explicitKinds=[];
  if(peanutButterCompositeEvidence)explicitKinds.push("official_v9_exact_peanut_butter_composite_aflatoxins_partial");
  if(sharedCerealAflatoxinB1Evidence)explicitKinds.push("official_v9_harmonised_cereal_composite_b1_partial");
+ if(cerealMaltB1Evidence)explicitKinds.push("fssai_v9_exact_cereal_malt_b1_partial_evidence");
  if(bengalGramAflatoxinB1Evidence)explicitKinds.push("official_v9_exact_bengal_gram_pulse_composite_b1_partial");
  if(soyDerivativeB1Evidence)explicitKinds.push("official_v9_soy_derivative_oilseed_composite_b1_partial");
  if(nonFermentedSoybeanB1Evidence)explicitKinds.push("official_v9_exact_nonfermented_soybean_b1_partial");
@@ -899,6 +929,7 @@ function contaminantEvidenceForProduct(p){
    exact_peanut_butter_composite_aflatoxins:peanutButterCompositeEvidence,
    exact_harmonised_cereal_aflatoxin_b1:sharedCerealAflatoxinB1Evidence,
    exact_bengal_gram_pulse_composite_b1:bengalGramAflatoxinB1Evidence,
+   exact_cereal_malt_b1_partial_evidence:cerealMaltB1Evidence,
    exact_soy_derivative_oilseed_composite_b1:soyDerivativeB1Evidence,
    exact_nonfermented_soybean_b1:nonFermentedSoybeanB1Evidence,
    exact_oilseed_flour_protein_b1:oilseedFlourProteinB1Evidence,
