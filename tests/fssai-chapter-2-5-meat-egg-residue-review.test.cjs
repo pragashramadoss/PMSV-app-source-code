@@ -111,7 +111,7 @@ test("contaminant UI and master summary show evidence without a full compliance 
 test("goat/rabbit Lead-specific lock preserves other verified contaminant rules",()=>{
  const p=clauses.find(x=>x.id==="08-08-1-fresh-or-chilled-chevon-or-goat-meat");
  assert.ok(p);
- const metalArticle={article:p.name,limit:0.12,unit:"mg/kg"};
+ const metalArticle={article:p.name,limit:0.12,unit:"mg/kg",row_type:"exact"};
  const mixedProfile={id:"candidate-exact-other-metal",catalog_ids:[p.id],rules:[
     {contaminant:"Lead",limit:0.1,unit:"mg/kg",article:p.name},
     {contaminant:"Arsenic",limit:0.12,unit:"mg/kg",article:p.name}
