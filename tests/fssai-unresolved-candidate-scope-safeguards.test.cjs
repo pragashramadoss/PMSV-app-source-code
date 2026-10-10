@@ -48,7 +48,21 @@ test("Sugar, infant and juice candidate scopes do not conflate finished forms",(
  const sugars=["Bura Sugar","Cane jaggery or cane gur","Cube Sugar","Dried Glucose Syrup","Golden Syrup","Gur or Jaggery","Icing Sugar","Khandsari Sugar","Misri","Plantation White Sugar"];
  for(const name of sugars){const rows=byName(name);assert.equal(rows.length,1,name);assert.ok(candidate(rows[0]).every(x=>!x.startsWith("Anhydrous dextrose")),name);}
  const juice=["Concentrated Fruit Juice with Preservatives for industrial use only","Concentrated Vegetable Juice with Preservatives for industrial use only","Fruit Juice with Preservatives for Industrial Use only","Thermally Processed Concentrated Vegetable Juice Pulp/ Puree","Vegetable Juice with Preservatives for Industrial Use only"];
- for(const name of juice){const rows=byName(name);assert.equal(rows.length,1,name);assert.ok(candidate(rows[0]).every(x=>x!=="Fruit Juices (including nectars; ready to drink)"),name);}
+ const promoted=read("fssai-product-helper-preview-01/data/rules/fssai-batch40-exact-commodity-and-conditional-scope-v1.json");
+ for(const name of juice){
+  const rows=byName(name);
+  if(rows.length===1){
+   assert.ok(candidate(rows[0]).every(x=>x!=="Fruit Juices (including nectars; ready to drink)"),name);
+  }else{
+   assert.equal(rows.length,0,name);
+   const proof=promoted.rows.filter(x=>x.product_name===name&&x.source_family==="juice");
+   assert.equal(proof.length,1,"Juice moved from pending requires its exact FSSAI commodity reference "+name);
+   assert.equal(proof[0].finished_product_numeric_limit_auto_applied,false);
+   assert.equal(proof[0].legal_compliance_pass,false);
+   assert.equal(proof[0].source_article_applicability_to_supplied_finished_matrix_unconditionally_established,false);
+   assert.ok(proof[0].official_FSSAI_article_references.every(x=>x.article!=="Fruit Juices (including nectars; ready to drink)"));
+  }
+ }
  for(const row of data.records.filter(x=>x.regulatory_family==="special")) assert.ok(candidate(row).every(x=>x!=="Infant formula (ready to use)"),row.product_name);
  for(const name of ["Arrowroot","Chia Seeds"]){const rows=byName(name);assert.equal(rows.length,1,name);assert.ok(candidate(rows[0]).every(x=>x!=="Cereal and cereal products"),name);}
 });
