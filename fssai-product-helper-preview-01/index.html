@@ -1227,6 +1227,7 @@ let fourCompositeSourcesDb=null;
 let crossFamilyNOTSDb=null;
 let batch40SourceDb=null;
 let next10SourceDb=null;
+let full136ReviewDb=null;
 let coconutFlourHexaneDb=null;
 let fungiAgaricConditionalDb=null;
 let contaminantsFutureAmendmentDb=null;
@@ -1240,7 +1241,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-10-full136-source-v493';
+const PRODUCT_HELPER_UI_BUILD='2026-10-10-full136-identity-review-v494';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10019,6 +10020,43 @@ function sourcePinnedNext10PartialHtml(p){
   +'<p>This is a product/category article reference, not a sample result. Verify analytical matrix, ingredients, subtype, applicable amendments, residue processing factors and other contaminant limits before use.</p>'
   +'<p><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX regulatory source</a></p></div>';
 }
+function sourceSpecificPendingRiskReviewHtml(p){
+ if(!p||!contaminantsPendingReviewDb)return '';
+ const pending=(contaminantsPendingReviewDb.records||[]).find(x=>x.catalog_id===p.id);
+ if(!pending)return '';
+ const doc=full136ReviewDb;
+ const row=doc?.records?.find(x=>x.catalog_id===p.id);
+ const source='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf';
+ const intact=!!doc&&doc.products_individually_reconciled===136
+  &&doc.source_pinned_partial_matches_new===10&&doc.retained_pending_source_gaps===126
+  &&doc.full_contaminant_compliance_passes===0
+  &&doc.regulatory_source===source
+  &&contaminantsPendingReviewDb.count===126&&contaminantsPendingReviewDb.pending===126
+  &&contaminantsDb?.official_sources?.[0]?.url===source
+  &&row&&row.product_name===p.name&&row.fssr===p.fssr&&row.fcs===p.fcs
+  &&row.evidence_disposition==='no_first_exact_named_article_yet'
+  &&row.official_ctr===source&&row.separate_source_verification_required===true
+  &&row.confirm_operational_2026_amendments===true
+  &&row.confirm_ingredients_species_form_and_packaging===true
+  &&row.pesticide_residue_definition_processing_factor_not_completed===true
+  &&row.other_applicable_metal_mycotoxin_and_nots_panel_not_complete===true
+  &&row.numeric_limit_auto_applied_to_product===false
+  &&row.laboratory_sample_pass===false
+  &&row.finished_product_compliance_pass===false
+  &&row.legally_cleared_or_exempt===false
+  &&row.per_product_matrix_or_recipe_step?.length>20
+  &&row.per_product_prohibited_inheritance?.length>20;
+ if(!intact)return '<div class="notice"><b>Specific FSSAI source applicability review unavailable.</b> Exact product/matrix match requires re-verification. No numeric or compliance PASS may be inferred.</div>';
+ const extra=(row.additional_high_risk_noninheritance_checks||[])
+   .slice(0,2).map(x=>'<p>'+esc(x)+'</p>').join('');
+ return '<div class="card"><div class="section-title"><h3>Unresolved source applicability — '+esc(p.name)+'</h3><span>Requires verification · NO PASS</span></div>'
+  +'<p><b>Regulatory scope:</b> '+esc(row.priority_family_risk)+'</p>'
+  +'<p><b>Required identity/matrix check:</b> '+esc(row.per_product_matrix_or_recipe_step)+'</p>'
+  +'<p><b>Limits that must not be inherited:</b> '+esc(row.per_product_prohibited_inheritance)+'</p>'
+  +extra
+  +'<p>Other contaminant, pesticide MRL, sample preparation and effective amendment checks are incomplete. <b>Not an exemption or noncompliance finding.</b></p>'
+  +'<p><a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Review official FSSAI Version IX</a></p></div>';
+}
 function sourcePinnedCompositeOrSoupPartialHtml(p){
  if(!p||!contaminantsDb)return '';
  const knownIds=[
@@ -10279,6 +10317,7 @@ function renderProductContaminants(){
    +sourcePinnedBeverageConfectioneryNotsHtml(p)
    +sourcePinnedBatch40PartialHtml(p)
    +sourcePinnedNext10PartialHtml(p)
+   +sourceSpecificPendingRiskReviewHtml(p)
    +sourcePinnedCoconutFlourHexaneHtml(p)
    +exactEggStandardChemicalCriteriaHtml(p)
    +(hempChapter216.relevant&&!hempChapter216.verified?'<div class="notice"><b>Hemp Chapter 2.16 source review required:</b> THC and CBD numeric limits are withheld because the exact product identity, Chapter 2.16 source table, or cross-cutting CBD clause did not match the official recorded values.</div>':'')
@@ -10402,6 +10441,16 @@ async function loadContaminantsDb(){
       throw new Error('New FSSAI source-match evidence integrity mismatch');
    next10SourceDb=data;
  }catch(e){next10SourceDb=null;}
+ try{
+   const response=await fetch('./data/rules/fssai-full-136-identity-applicability-review-2026-10-10.json?v=20261010-review126',{cache:'reload'});
+   if(!response.ok)throw new Error('PMSV FSSAI product-specific review register not loaded');
+   const data=await response.json();
+   if(data.products_individually_reconciled!==136||data.records?.length!==136
+     ||data.retained_pending_source_gaps!==126||data.source_pinned_partial_matches_new!==10
+     ||data.full_contaminant_compliance_passes!==0||data.unchanged_product_count!==533)
+      throw new Error('136-identity review source integrity mismatch');
+   full136ReviewDb=data;
+ }catch(e){full136ReviewDb=null;}
  try{
    const result=await fetch('./data/rules/chapter-2-3-fungi-agaric-conditional-v1.json?v=1',{cache:'reload'});
    if(!result.ok)throw new Error('HTTP '+result.status);
