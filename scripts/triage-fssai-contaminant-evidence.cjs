@@ -63,7 +63,7 @@ const summary={catalogue_size:rows.length,exact_partial:rows.length-pending.leng
  without_verified_exact_source_article:pending.length,unclassified_identity:0,
  legal_full_compliance_pass_claims:0,automatic_generic_limit_inference:false,
  scope_triage_recorded_for_all_loaded_products:true,
- disclaimer:"Scope triage documents required regulatory checks. It does NOT verify 276 unresolved limits, establish an exemption or grant a compliance pass.",
+ disclaimer:"Scope triage documents required regulatory checks. It does NOT verify "+pending.length+" unresolved product identity reviews, establish an exemption or grant a compliance pass.",
  official_source_url:source};
 fs.mkdirSync(out,{recursive:true});
 fs.writeFileSync(path.join(out,"fssai-contaminant-evidence-disposition-533.json"),JSON.stringify({summary,rows},null,2)+"\n");
