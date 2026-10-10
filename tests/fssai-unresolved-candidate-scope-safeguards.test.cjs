@@ -6,9 +6,9 @@ const data=read("fssai-product-helper-preview-01/data/rules/contaminants-v9-unre
 const index=read("fssai-product-helper-preview-01/data/standard-search-index-v1.json").products;
 const byName=n=>data.records.filter(p=>p.product_name===n);
 const candidate=p=>(p.version_ix_named_article_scope_review?.source_article_candidates_review_only||[]).map(x=>x.official_article);
-test("All 136 unresolved identities remain unapproved and catalogue-linked after candidate scope review",()=>{
- assert.equal(index.length,533);assert.equal(data.records.length,136);assert.equal(data.pending,136);
- assert.equal(new Set(data.records.map(x=>x.catalog_id)).size,136);
+test("All 126 unresolved identities remain unapproved and catalogue-linked after candidate scope review",()=>{
+ assert.equal(index.length,533);assert.equal(data.records.length,126);assert.equal(data.pending,126);
+ assert.equal(new Set(data.records.map(x=>x.catalog_id)).size,126);
  const ids=new Set(index.map(x=>x.id));
  for(const row of data.records){
   assert.ok(ids.has(row.catalog_id),row.catalog_id);
