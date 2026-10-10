@@ -1072,6 +1072,9 @@ const outputFile=path.join(output,"fssai-product-readiness-audit.json");
 fs.writeFileSync(outputFile,JSON.stringify(report,null,2)+"\n");
 const pendingContaminantProducts=products
  .filter(p=>p.contaminant_evidence_index.status!=="some_exact_product_evidence_not_full_coverage");
+// Machine-readable review queue in Actions logs supports safe, identity-by-identity
+// follow-up when artifact ZIP access is unavailable. This is NOT a compliance list.
+console.log("PMSV_UNVERIFIED_IDENTITIES_JSON="+JSON.stringify(pendingContaminantProducts.map(p=>({id:p.id,name:p.name,fssr:p.fssr,fcs:p.fcs}))));
 const chapterFromFssr=p=>{
  const v=String(p.fssr||"");
  return (v.match(/^(\d+\.\d+)(?:\.|$)/)||[])[1] || "special";
