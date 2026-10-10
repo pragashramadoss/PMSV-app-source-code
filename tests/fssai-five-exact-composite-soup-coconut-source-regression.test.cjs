@@ -87,7 +87,7 @@ test("Helper display source integrity gates block stale identity, source values 
  assert.match(composite(byId.get(four.matched[0].catalog_id)),/withheld/i);
  context.coconutFlourHexaneDb.max=100;
  assert.match(flour(byId.get(coconut.catalog_id)),/withheld/i);
- assert.match(html,/contaminants-v9-unresolved-264-review-v1\.json\?v=20261010-five-source-156/);
+ assert.match(html,/contaminants-v9-unresolved-264-review-v1\.json\?v=20261010-nots-146/);
 });
 test("Generated product readiness audit identifies five partial exact source rows without issuing a finished food compliance PASS",()=>{
  const report=read("audit-output/fssai-product-readiness-audit.json");
