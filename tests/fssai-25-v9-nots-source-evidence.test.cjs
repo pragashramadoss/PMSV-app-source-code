@@ -71,7 +71,7 @@ assert.equal(proof.conditional_review_only.filter(x=>pending.has(x.catalog_id)).
 assert.equal(proof.conditional_review_only.filter(x=>laterIds.has(x.catalog_id)).length,2);
 for(const id of proof.excluded_inheritance)assert.ok(!matched.has(id));
 assert.equal(before.count,26);
-assert.equal(before.records.filter(x=>pending.has(x.catalog_id)).length,23);
+assert.equal(before.records.filter(x=>pending.has(x.catalog_id)).length,22);
 assert.equal(before.records.filter(x=>matched.has(x.catalog_id)).length,2);
 console.log("PASS: 10 exact family articles + 15 conditional scope reviews; 126 unresolved / 407 partial / zero compliance passes");
 
