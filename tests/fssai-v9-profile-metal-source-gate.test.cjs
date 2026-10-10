@@ -103,3 +103,21 @@ test("Generic metal fallback and anomaly rows cannot prove an exact product prof
  assert.match(helper,/if\(r\.row_type==='exact' &&normIngredient\(r\.article\|\|''\)===n\)/,
    "Direct name matching must exclude generic/default/anomalous metal rows too");
 });
+
+test("Metal limits require an explicitly mapped catalog identity even when source article, number and units are valid",()=>{
+ const sucralose=db.profiles.find(g=>g.id==="exact-metal-11-11-6-sucralose");
+ const sourceRule=sucralose.rules.find(r=>r.contaminant==="Lead");
+ assert.ok(sourceRule);
+ assert.equal(checked({id:"11-11-6-sucralose"},sourceRule),true);
+ for(const other of ["05-05-1-chocolate","11-11-6-acesulfame-potassium","06-06-1-rice","unknown-product"]){
+   assert.equal(checked({id:other},sourceRule),false,
+     "A confirmed Sucralose official article must not become "+other+"'s limit");
+ }
+ const cocoa=db.profiles.find(g=>g.id==="cocoa-powder");
+ const cocoaLead=cocoa.rules.find(r=>r.contaminant==="Lead");
+ assert.ok(cocoaLead);
+ assert.equal(checked({id:"05-05-1-cocoa-powder"},cocoaLead),true);
+ assert.equal(checked({id:"05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake"},cocoaLead),false,
+   "Cocoa mass cannot inherit Cocoa Powder lead merely by using the same numerical source row");
+ assert.match(helper,/explicitlyMapped\.length&&\!explicitlyMapped\.some\(group=>group\.catalog_ids\.includes\(p\.id\)\)/);
+});
