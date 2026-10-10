@@ -66,7 +66,7 @@ test("Neither juice, tomato puree nor industrial vegetable puree inherits the fr
   const rule=positive.rules.find(x=>x.contaminant===metal);
   for(const id of ["fruit-juices","fruit-nectars","fruit-drink-rts","tomato-juice",
      "04-04-2-thermally-processed-tomato-puree-and-paste",
-     "04-04-2-concentrated-vegetable-pulp-puree"]){
+     "concentrated-vegetable-pulp-puree"]){
    const other=index.find(x=>x.id===id);
    assert.ok(other,"Missing negative control "+id);
    assert.equal(check(other,rule),false,"Wrong identity inherited "+metal+": "+id);
