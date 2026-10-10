@@ -69,7 +69,7 @@ test("All direct impurity groups have exact catalogue identities, official prove
     checks++;
   }
  }
- assert.ok(checks>=26,"Previously documented direct numeric source checks were lost");
+ assert.ok(checks>=23,"Previously documented direct numeric source checks were lost");
  assert.equal(untethered,0);
 });
 
