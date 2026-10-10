@@ -89,9 +89,37 @@ function pmsv_wp_test_push() {
     if($code<200||$code>=300)return pmsv_wp_reply(['error'=>'Push provider did not accept the test notification.'],502);
     return pmsv_wp_reply(['accepted'=>true]);
 }
+function pmsv_wp_daily_digest($news, $now=null) {
+    $now=($now??new DateTimeImmutable('now'))->setTimezone(new DateTimeZone('Asia/Kolkata'));
+    $day=$now->format('Y-m-d');
+    $eligible=array_values(array_filter($news,fn($n)=>
+        ($n['published']??'')===$day &&
+        in_array($n['tab']??'',['general','fssai','quality','excellence','certifications'],true) &&
+        trim((string)($n['title']??''))!==''
+    ));
+    usort($eligible,fn($a,$b)=>strcmp($b['firstSeen']??'',$a['firstSeen']??'')?:strcmp($a['title'],$b['title']));
+    $headlines=[];$seenTitles=[];$seenUrls=[];$cutoff=0;
+    foreach($eligible as $n) {
+        $cutoff=max($cutoff,(int)((strtotime($n['firstSeen']??'')?:0)*1000));
+        $title=trim(preg_replace('/\s+/u',' ',wp_strip_all_tags($n['title'])));
+        $key=strtolower($title);$url=$n['url']??'';
+        if(isset($seenTitles[$key])||($url!==''&&isset($seenUrls[$url])))continue;
+        $seenTitles[$key]=true;if($url!=='')$seenUrls[$url]=true;
+        if(count($headlines)<3)$headlines[]=$title;
+    }
+    $body=$headlines?implode("\n",array_map(fn($i,$h)=>($i+1).'. '.$h,array_keys($headlines),$headlines)):
+        'No verified headlines published today are available yet.';
+    return ['title'=>'PMSV — '.$now->format('j M Y').' News','body'=>$body,
+        'url'=>pmsv_wp_base().'/','tag'=>'pmsv-news','date'=>$day,'headlines'=>$headlines,
+        'count'=>count($headlines),'cutoff'=>$cutoff,
+        'ttl'=>max(1,$now->modify('tomorrow')->setTime(0,0)->getTimestamp()-$now->getTimestamp())];
+}
+
 function pmsv_wp_dispatch() {
-    global $wpdb;$t=pmsv_wp_table('devices');$news=pmsv_wp_table('news');$latest=$wpdb->get_var("SELECT MAX(first_seen) FROM $news");
-    $cutoff=(int)round((strtotime($latest?:'')?:0)*1000);$now=(int)floor(microtime(true)*1000);
+    global $wpdb;$t=pmsv_wp_table('devices');
+    $digest=pmsv_wp_daily_digest(pmsv_wp_archive());
+    if(!$digest['count'])return ['accepted'=>0,'failed'=>0,'remaining'=>0,'reason'=>'No headlines published today'];
+    $cutoff=$digest['cutoff'];$now=(int)floor(microtime(true)*1000);
     $rows=$wpdb->get_results($wpdb->prepare("SELECT id,endpoint,seen_at FROM $t WHERE seen_at < %d AND retry_at <= %d LIMIT 20",$cutoff,$now),ARRAY_A);
     if($wpdb->last_error)throw new RuntimeException('Push read failed');
     $accepted=0;$failed=0;$keys=$rows?pmsv_wp_keys():null;
@@ -99,7 +127,7 @@ function pmsv_wp_dispatch() {
         $claim=$wpdb->query($wpdb->prepare("UPDATE $t SET seen_at=%d,retry_at=%d WHERE id=%s AND seen_at=%d AND retry_at<=%d",$cutoff,$now+3600000,$row['id'],$row['seen_at'],$now));if(!$claim)continue;
         try{
             if(!pmsv_wp_endpoint($row['endpoint']))throw new RuntimeException('Invalid endpoint');
-            $r=wp_safe_remote_post($row['endpoint'],['timeout'=>10,'redirection'=>0,'headers'=>['Authorization'=>pmsv_wp_vapid($row['endpoint'],$keys),'TTL'=>'86400','Urgency'=>'normal','Content-Length'=>'0'],'body'=>'']);
+            $r=wp_safe_remote_post($row['endpoint'],['timeout'=>10,'redirection'=>0,'headers'=>['Authorization'=>pmsv_wp_vapid($row['endpoint'],$keys),'TTL'=>(string)$digest['ttl'],'Urgency'=>'normal','Content-Length'=>'0'],'body'=>'']);
             $code=is_wp_error($r)?0:wp_remote_retrieve_response_code($r);
             if(in_array($code,[404,410],true)){$wpdb->delete($t,['id'=>$row['id']]);continue;}
             if($code<200||$code>=300)throw new RuntimeException('Provider declined');
