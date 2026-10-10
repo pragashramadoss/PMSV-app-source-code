@@ -8497,6 +8497,24 @@ function sourcePinnedVersionIxProfileCropRule(p,rule){
  return sourcePinnedSpiceAflatoxinRule(p,rule);
 }
 
+/* Whole dry Bean is a named FoSCoS 06.1 foodgrain under 2.4.6.
+ * FSSAI Section 2.2.1 gives the raw Pulses crop-article limits. These
+ * numbers require the EXACT loaded Version IX row, product ID and unit.
+ * They must not be inherited by green beans, soybeans or bean flour. */
+function sourcePinnedWholeDryBeanCropRule(p,key,limit,unit){
+ if(!p||p.id!=='06-06-1-bean'||p.fssr!=='2.4.6'||p.fcs!=='06.1'
+   ||normIngredient(p.name)!=='bean'||!contaminantsDb)return false;
+ if(contaminantsDb.source_version!=='Version IX (03.02.2026)'
+    ||!(contaminantsDb.official_sources||[]).some(s=>s.url==='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf'))return false;
+ const expected={total_aflatoxins:15,aflatoxin_b1:10};
+ if(!Object.prototype.hasOwnProperty.call(expected,key)
+    ||limit!==expected[key]||unit!=='µg/kg')return false;
+ const group=contaminantsDb.crop_contaminants?.[key];
+ if(group?.unit!=='µg/kg')return false;
+ const matching=(group.rules||[]).filter(r=>r.article==='Pulses');
+ return matching.length===1 &&matching[0].limit===limit;
+}
+
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  if(exactFinishedProductContaminantLock(p))return [];
@@ -8554,6 +8572,19 @@ function productBaselineContaminantRules(p){
        });
      });
    });
+
+ // 2c) Bean: FSSR 2.4.6 whole dry pulse, exact current FSSAI
+ // Section 2.2.1 crop article. Other beans and ingredients do not inherit.
+ if(id==='06-06-1-bean'){
+   [['total_aflatoxins','Total Aflatoxins',15],['aflatoxin_b1','Aflatoxin B1',10]]
+    .forEach(([key,contaminant,limit])=>{
+      if(sourcePinnedWholeDryBeanCropRule(p,key,limit,'µg/kg'))pushRule({
+        contaminant,limit,unit:'µg/kg',article:'Pulses',
+        source_basis:'Section 2.2.1 · Version IX (03.02.2026) · raw dry bean pulse identity',
+        condition:'FSSR 2.4.6 whole dry Bean (FoSCoS 06.1) only. Do not inherit by fresh beans, soybean, bean flour or mixed foods. Other contaminant and pesticide requirements require separate review.'
+      });
+    });
+ }
 
  // 3) Verified product-to-metal aliases: NEVER use an old static fallback
  // when the current loaded official Version IX article is missing or drifts.
