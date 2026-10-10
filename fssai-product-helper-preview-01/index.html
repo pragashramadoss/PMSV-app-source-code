@@ -9444,7 +9444,7 @@ async function loadContaminantsDb(){
    const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=1',{cache:'reload'});
    if(!review.ok)throw new Error('HTTP '+review.status);
    const data=await review.json();
-   if(data.count!==263||!Array.isArray(data.records)||data.records.length!==263)throw new Error('Unresolved review count mismatch');
+   if(data.count!==261||!Array.isArray(data.records)||data.records.length!==261)throw new Error('Unresolved review count mismatch');
    contaminantsPendingReviewDb=data;
  }catch(e){contaminantsPendingReviewDb=null;}
  renderProductContaminants();
