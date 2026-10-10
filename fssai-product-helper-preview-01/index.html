@@ -8334,7 +8334,7 @@ function sourcePinnedDirectStandardLimit(p,group,rule){
    && normIngredient(st.name)===normIngredient(group.product_name)
    && String(db?.chapter||'')===matchKey.split('.')[0]+'.'+matchKey.split('.')[1]));
  const unit=x=>String(x||'').trim().toLowerCase();
- return matchingStandards.some(st=>(st.composition||[]).some(entry=>
+ return matchingStandards.some(st=>[...(st.composition||[]),...(st.physical_chemical||[]),...(st.toxic_substances||[])].some(entry=>
    normIngredient(entry.parameter)===normIngredient(rule.contaminant)
    && entry.operator==='<='
    && Number.isFinite(Number(entry.value))
