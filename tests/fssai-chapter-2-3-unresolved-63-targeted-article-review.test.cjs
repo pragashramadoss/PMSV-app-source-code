@@ -25,9 +25,9 @@ function permittedOnlyAsReview(r){
 }
 test("61 remaining of the original 63 Chapter 2.3 identities have individual source and matrix review, preserving the historical 164 review baseline",()=>{
  assert.equal(catalogue.length,533);
- assert.equal(pending.pending,157);
- assert.equal(pending.count,157);
- assert.equal(pending.verified_evidence_added,107);
+ assert.equal(pending.pending,156);
+ assert.equal(pending.count,156);
+ assert.equal(pending.verified_evidence_added,108);
  assert.equal(pending.full_compliance_achieved,0);
  assert.equal(rows.length,61);
  assert.equal(pending.chapter_2_3_targeted_evidence_summary_2026_10_10.reviewed,63);
