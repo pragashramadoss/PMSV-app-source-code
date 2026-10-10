@@ -8230,6 +8230,15 @@ function productContaminantGateNotices(p){
  addLocked(contaminantsDb.chapter_2_7_locked_contaminant_routes_v9,r=>r.catalog_id===id);
  addLocked(contaminantsDb.chapter_2_5_locked_fresh_meat_routes_v9,r=>Array.isArray(r.catalog_ids)&&r.catalog_ids.includes(id));
 
+ const directMappings=(contaminantsDb.direct_product_standard_contaminant_rules_v1||[])
+   .filter(group=>group.catalog_id===id);
+ for(const group of directMappings){
+   const mismatch=(group.rules||[]).filter(rule=>!sourcePinnedDirectStandardLimit(p,group,rule));
+   if(mismatch.length)conditional.push({
+     scope:'Direct product-standard impurity table — source check required',
+     reason:'Numeric limit withheld for '+mismatch.map(x=>x.contaminant).join(', ')+'. The exact loaded product-standard table, identity, value and unit must agree. No generic fallback applies.'
+   });
+ }
  const seenConditional=new Set();
  const conditionalRows=conditional.filter(r=>{
    const key=[r.scope||r.contaminant||'',r.requires_input||'',r.reason||''].join('|');
@@ -8310,6 +8319,29 @@ function prohibitedVeterinaryRowsForProduct(p){
    source:'Section 2.3.2 · Antibiotic and other pharmacologically active substances'
  }));
 }
+/* Numeric impurity values transcribed from Chapter 2 product standards need an
+ * independent, current, exact table match.  Do not infer ppm = mg/L or use
+ * other product identities / mixed finished-food formulations as a fallback. */
+function sourcePinnedDirectStandardLimit(p,group,rule){
+ if(!p||!group||!rule||!standardSearchIndexDb||!Array.isArray(chapterRuleDbs))return false;
+ const identity=(standardSearchIndexDb.products||[]).find(x=>x.id===group.catalog_id);
+ if(!identity||p.id!==identity.id||identity.fssr!==group.fssr
+     ||normIngredient(identity.name)!==normIngredient(group.product_name))return false;
+ const matchKey=String(identity.rule_key||'').trim();
+ if(!matchKey||matchKey!==String(group.fssr||'').trim())return false;
+ const matchingStandards=chapterRuleDbs.flatMap(db=>ruleDbStandards(db).filter(st=>
+   String(st?.key||'').trim()===matchKey
+   && normIngredient(st.name)===normIngredient(group.product_name)
+   && String(db?.chapter||'')===matchKey.split('.')[0]+'.'+matchKey.split('.')[1]));
+ const unit=x=>String(x||'').trim().toLowerCase();
+ return matchingStandards.some(st=>(st.composition||[]).some(entry=>
+   normIngredient(entry.parameter)===normIngredient(rule.contaminant)
+   && entry.operator==='<='
+   && Number.isFinite(Number(entry.value))
+   && Number(entry.value)===Number(rule.limit)
+   && unit(entry.unit)===unit(rule.unit)));
+}
+
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  if(exactFinishedProductContaminantLock(p))return [];
@@ -8393,10 +8425,15 @@ function productBaselineContaminantRules(p){
      });
    });
 
- // 4) Direct numeric contaminant/impurity limits written inside an exact product standard.
+ // 4) Direct product-standard impurity values: the loaded exact chapter table,
+ // catalogue identity and numeric value must all agree before any limit is shown.
+ // A stale copied limit must fail closed; the corresponding source-gate notice
+ // remains visible rather than substituting a generic contaminant article.
  (contaminantsDb?.direct_product_standard_contaminant_rules_v1||[])
    .filter(x=>x.catalog_id===id)
-   .forEach(group=>(group.rules||[]).forEach(r=>pushRule({...r})));
+   .forEach(group=>(group.rules||[]).forEach(r=>{
+     if(sourcePinnedDirectStandardLimit(p,group,r))pushRule({...r});
+   }));
 
  // 5) Verified spice identity mappings to the current Spices/Spice Mix crop-contaminant article.
  const spice=(contaminantsDb?.spice_crop_contaminant_identity_mappings_v9||[]).find(x=>x.catalog_id===id);
@@ -10014,6 +10051,8 @@ async function loadChapterRuleDbs(){
  renderFormula();
  if(productMasterDb)renderProductMaster();
  renderSelectedProductRegulatoryStack();
+ // Unblock source-pinned direct impurity limits as soon as chapter standards load.
+ renderProductContaminants();
 }
 
 async function loadNutritionDb(){
