@@ -1221,6 +1221,8 @@ let standardSearchIndexDb=null;
 let appendixCoreDb=null;
 let contaminantsDb=null;
 let contaminantsPendingReviewDb=null;
+let spiceOleoresinResiduesDb=null;
+let goatMuscleVeterinaryResiduesDb=null;
 let fungiAgaricConditionalDb=null;
 let contaminantsFutureAmendmentDb=null;
 let appendixCDb=null;
@@ -9818,6 +9820,45 @@ function syncContaminantQualifierVisibility(p){
    }
  }
 }
+function exactSupplementalResidueReviewHtml(p){
+ if(!p)return '';
+ const standardSource='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt_Spices_Condiments%20and%20related%20products.pdf';
+ const ctrSource='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf';
+ if(p.id==='12-12-2-spice-oleoresins'){
+   const db=spiceOleoresinResiduesDb;
+   const correct={acetone:30,ethyl_acetate:50,n_hexane:25,isopropyl_alcohol:30,methyl_alcohol:50,
+     diethyl_ether:2,butan_1_ol:2,butan_2_ol:2,propan_1_ol:1,methyl_tert_butyl_ether:2,
+     carbon_dioxide:'GMP',water:'GMP',ethyl_alcohol:'GMP'};
+   const matched=!!db&&p.name===db.product_name&&p.fssr===db.fssr&&db.catalog_id===p.id
+      &&db.official_source_url===standardSource&&db.source_clause==='2.9.32(3)'
+      &&db.complete_compliance_claim===false&&db.all_contaminants_toxins_and_pesticides_verified===false
+      &&Object.keys(db.residual_solvents_ppm||{}).length===13
+      &&Object.entries(correct).every(([k,v])=>db.residual_solvents_ppm[k]===v);
+   if(!matched)return '<div class="notice"><b>Spice Oleoresin residual-solvent evidence unavailable or altered.</b> Withhold numerical rows pending source recheck.</div>';
+   return '<div class="card"><div class="section-title"><h3>Official Spice Oleoresin extraction solvent residues — FSSR 2.9.32(3)</h3><span>Partial source evidence, not compliance PASS</span></div>'
+      +'<p>Maximum residual solvent limits in the <b>finished Spice Oleoresins</b> standard. Evaluate only solvents actually used; GMP is not 0 ppm. No laboratory results or other contaminants/MRLs are assessed.</p>'
+      +'<div class="tablewrap"><table><thead><tr><th>Food-grade extraction solvent</th><th>Maximum / requirement</th></tr></thead><tbody>'
+      +Object.entries(db.residual_solvents_ppm).map(([k,v])=>'<tr><td>'+esc(k.replaceAll('_',' '))+'</td><td>'+esc(String(v))+(v==='GMP'?'':' ppm')+'</td></tr>').join('')+'</tbody></table></div>'
+      +'<p><a href="'+esc(standardSource)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter 2.9 source</a></p></div>';
+ }
+ if(p.id==='08-08-1-fresh-or-chilled-chevon-or-goat-meat'||p.id==='08-08-2-frozen-chevon-or-goat-meat'){
+   const db=goatMuscleVeterinaryResiduesDb;
+   const expected={Monensin:0.01,Neomycin:0.5,'Febantel/Fenbendazole/Oxyfendazole':0.1};
+   const i=db?.product_ids?.indexOf(p.id)??-1;
+   const matched=!!db&&i>=0&&p.name===db.products[i]&&p.fssr===db.product_standard
+      &&db.official_source_url===ctrSource&&db.species==='Goat'&&db.tissue==='Muscle'
+      &&db.all_veterinary_drugs_metals_pesticides_amendments_verified===false
+      &&db.reference_rows?.length===3
+      &&db.reference_rows.every(x=>expected[x.drug]===x.max&&x.unit==='mg/kg'&&x.commodity==='Goat — Muscle');
+   if(!matched)return '<div class="notice"><b>Goat–Muscle veterinary source integrity mismatch.</b> Withhold exact numeric rows.</div>';
+   return '<div class="card"><div class="section-title"><h3>Goat–Muscle veterinary MRL source evidence</h3><span>Partial only · No laboratory PASS</span></div>'
+      +'<p>Exact goat skeletal-muscle reference for '+esc(p.name)+'. Do not use for rabbit, sheep, offal or combined products. Other drugs, metals, pesticides, effective amendments and testing remain open.</p>'
+      +'<div class="tablewrap"><table><thead><tr><th>Veterinary substance</th><th>Maximum</th><th>Exact tissue</th></tr></thead><tbody>'
+      +db.reference_rows.map(x=>'<tr><td>'+esc(x.drug)+'</td><td>'+esc(x.max)+' mg/kg</td><td>Goat — Muscle</td></tr>').join('')+'</tbody></table></div>'
+      +'<p><a href="'+esc(ctrSource)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX</a></p></div>';
+ }
+ return '';
+}
 function pendingContaminantReviewNotice(p){
  if(!p||!contaminantsPendingReviewDb)return '';
  const record=(contaminantsPendingReviewDb.records||[]).find(r=>r.catalog_id===(p.id||p.profile_id));
@@ -9825,6 +9866,14 @@ function pendingContaminantReviewNotice(p){
  if(record.product_name!==p.name||String(record.fssr)!==String(p.fssr))
    return '<div class="notice"><b>Regulatory review record identity mismatch.</b> No numeric value can be inferred from a review-only record. Reconcile this product with the FSSAI evidence catalogue.</div>';
  const needs=(record.review_requirements||[]).slice(0,5);
+ const family=record.next_family_subtype_review_2026_10_10;
+ const familyHtml=family&&family.catalog_id===p.id&&family.product_name===p.name&&family.fssr===p.fssr
+   &&family.named_article_applied_to_finished_product===false&&family.numeric_limit_auto_applied===false
+   ?'<details style="margin:9px 0"><summary><b>Detailed '+esc(family.regulatory_family)+' food identity/recipe review — NOT APPLIED</b></summary>'
+     +'<p>'+esc(family.first_required_verification)+'</p><p><b>Do not inherit:</b> '+esc(family.specific_prohibited_inheritance)+'</p>'
+     +'<small>Official source family: '+esc(family.official_source_article_family_to_verify)
+     +' · <a href="'+esc(family.source_regulatory_standard_url)+'" target="_blank" rel="noopener noreferrer">FSSAI / FoSCoS source</a>. Other contaminants, residues and amendments remain open.</small></details>'
+   :'';
  const scope=record.version_ix_named_article_scope_review;
  const articleCandidates=(scope?.source_article_candidates_review_only||[]).filter(x=>x.finished_product_limit_applied===false);
  const precision=record.precision_applicability_review_2026_10_10;
@@ -9848,6 +9897,7 @@ function pendingContaminantReviewNotice(p){
    +'<ul style="margin:7px 0;padding-left:20px">'+needs.map(s=>'<li>'+esc(s)+'</li>').join('')+'</ul>'
    +sourceReviewPanel
    +precisionHtml
+   +familyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
 }
 function renderProductContaminants(){
@@ -9943,6 +9993,7 @@ function renderProductContaminants(){
     : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
    +pendingContaminantReviewNotice(p)
+   +exactSupplementalResidueReviewHtml(p)
    +(hempChapter216.relevant&&!hempChapter216.verified?'<div class="notice"><b>Hemp Chapter 2.16 source review required:</b> THC and CBD numeric limits are withheld because the exact product identity, Chapter 2.16 source table, or cross-cutting CBD clause did not match the official recorded values.</div>':'')
    +(p.id==='mineral-water'?'<div class="notice"><b>Natural mineral water — arsenic source reconciliation:</b> FSSAI Chapter 2.10, clause 2.10.7, lists arsenic at 0.05 mg/L, but the separate FSSAI Contaminants Regulations Version IX Section 2.1 lists <b>0.01 mg/L</b> for natural mineral water. PMSV uses the stricter 0.01 mg/L contaminant requirement in this table; the less stringent product-standard value must never be substituted as an elemental-arsenic compliance pass. Both official references require ongoing amendment review.</div>':'')
    +(Date.now()>=Date.UTC(2026,10,30,18,30)
@@ -10001,12 +10052,26 @@ async function loadContaminantsDb(){
    contaminantsFutureAmendmentDb=await future.json();
  }catch(e){contaminantsFutureAmendmentDb=null;}
  try{
-   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-mango9',{cache:'reload'});
+   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-bigbatch161',{cache:'reload'});
    if(!review.ok)throw new Error('HTTP '+review.status);
    const data=await review.json();
-   if(data.count!==228||!Array.isArray(data.records)||data.records.length!==228)throw new Error('Unresolved review count mismatch');
+   const ids=new Set((data.records||[]).map(r=>r.catalog_id));
+   if(!Number.isInteger(data.count)||data.count<0||!Array.isArray(data.records)
+      ||data.records.length!==data.count||data.pending!==data.count
+      ||data.verified_evidence_added+269+data.pending!==533
+      ||ids.size!==data.count||data.full_compliance_achieved!==0)
+      throw new Error('Unresolved review file identity/count/evidence reconciliation mismatch');
    contaminantsPendingReviewDb=data;
  }catch(e){contaminantsPendingReviewDb=null;}
+ try{
+   const [a,b]=await Promise.all([
+     fetch('./data/rules/spice-oleoresin-2-9-32-residual-solvents-evidence-v1.json?v=20261010-103',{cache:'reload'}),
+     fetch('./data/rules/goat-muscle-veterinary-v9-exact-evidence-v1.json?v=20261010-103',{cache:'reload'})
+   ]);
+   if(!a.ok||!b.ok)throw new Error('Exact residue supplement unavailable');
+   spiceOleoresinResiduesDb=await a.json();
+   goatMuscleVeterinaryResiduesDb=await b.json();
+ }catch(e){spiceOleoresinResiduesDb=null;goatMuscleVeterinaryResiduesDb=null;}
  try{
    const result=await fetch('./data/rules/chapter-2-3-fungi-agaric-conditional-v1.json?v=1',{cache:'reload'});
    if(!result.ok)throw new Error('HTTP '+result.status);
