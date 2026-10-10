@@ -38,7 +38,15 @@ test("Version IX elemental Lead and Arsenic stay separate from the Chapter 2.8 h
  assert.ok(baseline.some(x=>x.contaminant==="Arsenic"&&x.limit===3&&x.unit==="mg/kg"));
  assert.equal(db.direct_product_standard_contaminant_rules_v1.find(x=>x.catalog_id===id).rules.some(x=>x.contaminant==="Lead"),false);
  assert.equal(db.direct_product_standard_contaminant_rules_v1.find(x=>x.catalog_id===id).rules.some(x=>x.contaminant==="Arsenic"),false);
- assert.equal(db.direct_product_standard_contaminant_rules_v1.some(x=>x.catalog_id==="11-11-6-calcium-saccharin-food-grade"),false);
+ const calcium=db.direct_product_standard_contaminant_rules_v1.find(x=>x.catalog_id==="11-11-6-calcium-saccharin-food-grade");
+ assert.ok(calcium,"Calcium saccharin now has a separate 2.8.12 impurity requirement");
+ assert.equal(calcium.fssr,"2.8.12");
+ assert.equal(calcium.rules.length,1);
+ assert.equal(calcium.rules[0].contaminant,"Toluene sulfonamides");
+ assert.equal(calcium.rules[0].limit,25);
+ assert.equal(calcium.rules[0].unit,"ppm");
+ assert.equal(calcium.rules.some(x=>x.contaminant==="Lead"||x.contaminant==="Arsenic"),false,
+  "A product-standard impurity is not evidence of elemental-metal limits");
 });
 test("Sucralose direct impurity matches current source on render and fails closed under tampering",()=>{
  const at=ui.indexOf("function sourcePinnedDirectStandardLimit(p,group,rule){");
