@@ -8,9 +8,9 @@ const catalogue=read("fssai-product-helper-preview-01/data/standard-search-index
 const chapter=read("fssai-product-helper-preview-01/data/rules/chapter-2-5-meat-eggs-v1.json");
 const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
 const byId=new Map(catalogue.map(p=>[p.id,p]));
-test("All 157 current identities have exactly one of the three separately-audited source scope reviews",()=>{
- assert.equal(manifest.pending,157);assert.equal(manifest.records.length,157);
- assert.equal(manifest.verified_evidence_added,107);assert.equal(manifest.full_compliance_achieved,0);
+test("All 156 current identities have exactly one of the three separately-audited source scope reviews",()=>{
+ assert.equal(manifest.pending,156);assert.equal(manifest.records.length,156);
+ assert.equal(manifest.verified_evidence_added,108);assert.equal(manifest.full_compliance_achieved,0);
  assert.equal(manifest.last_unresolved_families_source_scope_review_summary_2026_10_10.reviewed,17);
  const groups={chapter_2_3:0,previous_81:0,final_17:0};
  for(const row of manifest.records){
@@ -25,15 +25,15 @@ test("All 157 current identities have exactly one of the three separately-audite
   assert.equal(row.unconditional_compliance_pass,false);
   assert.equal(row.auto_apply_numeric_limit,false);
  }
- assert.deepEqual(groups,{chapter_2_3:61,previous_81:79,final_17:17});
+ assert.deepEqual(groups,{chapter_2_3:61,previous_81:78,final_17:17});
 });
-test("The standalone machine-readable source-matrix reconciliation regenerates 157 exact identities without compliance results",()=>{
+test("The standalone machine-readable source-matrix reconciliation regenerates 156 exact identities without compliance results",()=>{
  cp.execFileSync(process.execPath,["scripts/audit-all-161-pending-source-matrix-gates.cjs"],{cwd:root,stdio:"pipe"});
- const doc=read("audit-output/fssai-157-detailed-source-applicability-reconciliation.json");
- assert.equal(doc.products_total,533);assert.equal(doc.partial_exact_evidence,376);
- assert.equal(doc.pending_exact_source_evidence,157);
- assert.equal(doc.checkpoints.length,157);
- assert.deepEqual(doc.disposition_buckets,{chapter_2_3:61,previous_81:79,final_17:17});
+ const doc=read("audit-output/fssai-156-detailed-source-applicability-reconciliation.json");
+ assert.equal(doc.products_total,533);assert.equal(doc.partial_exact_evidence,377);
+ assert.equal(doc.pending_exact_source_evidence,156);
+ assert.equal(doc.checkpoints.length,156);
+ assert.deepEqual(doc.disposition_buckets,{chapter_2_3:61,previous_81:78,final_17:17});
  assert.equal(doc.conditional_source_references_not_applied,3);
  assert.equal(doc.exact_regulatory_route_mismatches_requiring_resolution,1);
  assert.equal(doc.legal_compliance_passes_claimed,0);
@@ -88,7 +88,7 @@ test("Frozen and liquid egg standards show exact chemical quality maxima, not pe
  assert.match(view(byId.get("10-10-2-frozen-egg-products")),/Withhold numbers/);
  assert.match(view(byId.get("10-10-2-liquid-egg-products")),/10 mg\/kg/);
 });
-test("Current 157-item review loader uses immutable identity/count conservation, not historical 228 condition",()=>{
+test("Current 156-item review loader uses immutable identity/count conservation, not historical 228 condition",()=>{
  assert.ok(html.includes("data.verified_evidence_added+269+data.pending!==533"));
  assert.ok(html.includes("ids.size!==data.count"));
  assert.ok(!html.includes("data.count!==228"));
