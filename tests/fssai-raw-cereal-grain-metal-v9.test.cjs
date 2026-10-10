@@ -16,7 +16,10 @@ const profileFor=id=>source.profiles.find(p=>p.id==="exact-raw-cereal-grain-meta
 const candidates=[
  {id:"06-06-1-maize",name:"Maize",fssr:"2.4.6",cadmium:true},
  {id:"06-06-1-oats",name:"Oats",fssr:"2.4.6",cadmium:true},
- {id:"06-06-1-rice",name:"Rice",fssr:"2.4.6",cadmium:false}
+ {id:"06-06-1-rice",name:"Rice",fssr:"2.4.6",cadmium:false},
+ {id:"06-06-1-millets",name:"Millets",fssr:"2.4.6(23)",cadmium:true},
+ {id:"06-06-1-triticale",name:"Triticale",fssr:"2.4.6",cadmium:false},
+ {id:"06-06-1-basmati-rice",name:"Basmati Rice",fssr:"2.4.6",cadmium:false}
 ];
 const rawLead="Cereal grains, except buckwheat, canihua and quinoa";
 const rawCadmium="Cereal grains, except buckwheat, canihua and Quinoa (excluding wheat and rice; and bran and germ)";
@@ -33,7 +36,7 @@ test("FSSAI Version IX source master retains exact lead and cadmium grain articl
  const polished=source.metal_article_rules_v9.Cadmium.find(x=>x.article==="Rice, polished");
  assert.ok(polished);assert.equal(polished.limit,0.4);assert.equal(polished.unit,"mg/kg");
 });
-test("Only raw Maize/Oats gain two exact metal articles; generic Rice gains Lead only",()=>{
+test("Maize Oats and Millets have source-pinned cadmium; Rice Basmati Rice and Triticale retain Lead only",()=>{
  for(const c of candidates){
   const p=catalogue.find(x=>x.id===c.id);
   assert.ok(p,c.name);assert.equal(p.name,c.name);assert.equal(p.fssr,c.fssr);
@@ -45,7 +48,7 @@ test("Only raw Maize/Oats gain two exact metal articles; generic Rice gains Lead
   assert.equal(group.rules.length,c.cadmium?2:1);
   for(const rule of group.rules){
    assert.match(rule.source_basis,/Section 2\.1/);
-   assert.match(rule.condition,/food-grain identity/);
+   assert.match(rule.condition,/grain identity/);
    assert.match(rule.condition,/Not .* flour/i);
    assert.notEqual(rule.article,"Foods not specified");
    if(rule.contaminant==="Lead"){
@@ -78,7 +81,8 @@ test("UI source gate rejects switched identity, official-source drift, unit drif
   if(c.cadmium){
    const cd=g.rules.find(x=>x.contaminant==="Cadmium");
    assert.equal(verified({id:c.id},cd),true);
-   assert.equal(verified({id:"06-06-1-rice"},cd),false,"Rice must never inherit nonrice cadmium");
+   for(const barred of ["06-06-1-rice","06-06-1-basmati-rice","06-06-1-triticale"])
+    assert.equal(verified({id:barred},cd),false,"No unreviewed cadmium transfer to "+barred);
   }
  }
  const copy=JSON.parse(JSON.stringify(source));
