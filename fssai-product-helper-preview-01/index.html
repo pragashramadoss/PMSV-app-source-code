@@ -8835,6 +8835,66 @@ function namedMilkCommodityReviewHtml(p){
   '<a href="'+esc(x.source_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX</a>.</div>';
 }
 
+
+/* Twenty additional exact milk-product identities match an official pesticide
+ * commodity ARTICLE, not an automatically applicable numeric finished-product
+ * MRL. Milk-fat forms require separate fat-basis analysis. */
+function sourcePinnedAdditionalMilkCommodity(p){
+ const m=contaminantsDb?.chapter_2_1_additional_milk_commodity_evidence_v9;
+ if(!p||!m||!standardSearchIndexDb||m.source_version!==contaminantsDb.source_version
+  ||m.official_source_url!==contaminantsDb.official_sources?.[0]?.url
+  ||m.article!=='Milk and Milk products'||m.reference_pesticide!=='Acetamiprid'
+  ||m.reference_mrl!=='0.02'||m.unit!=='mg/kg'
+  ||m.source_match_only!==true||m.auto_assign_numeric_pesticide_mrl!==false
+  ||m.full_compliance_verified!==false)return null;
+ const q=standardSearchIndexDb.products.find(x=>x.id===p.id);
+ const proof=(m.exact_products||[]).find(x=>x.catalog_id===p.id&&x.product_name===p.name
+  &&x.fssr===p.fssr&&x.fcs===p.fcs&&x.exact_identity_verified===true);
+ if(!q||!proof||q.name!==p.name||q.fssr!==p.fssr||q.fcs!==p.fcs
+  ||!/^2\.1\./.test(p.fssr)||/analogue|frozen dessert|ice cream|colostrum|stuffed fried|lactose/i.test(p.name))return null;
+ const rows=(contaminantsDb.residue_mrls?.pesticides||[]).filter(x=>x.name===m.reference_pesticide)
+  .flatMap(x=>(x.rows||[]).filter(z=>z.food===m.article&&z.mrl===m.reference_mrl&&z.unit===m.unit));
+ if(rows.length!==1)return null;
+ return {article:m.article,reference_pesticide:m.reference_pesticide,
+  reference_mrl:m.reference_mrl,unit:m.unit,official_source_url:m.official_source_url,
+  fat_basis_unverified:m.fat_based_residue_caveat_required===true,
+  auto_apply:false,compliance_pass:false};
+}
+function additionalMilkCommodityReviewHtml(p){
+ const x=sourcePinnedAdditionalMilkCommodity(p);
+ if(!x)return '';
+ return '<div class="notice"><b>Exact Chapter 2.1 milk-product identity — partial pesticide commodity evidence:</b> '+
+  esc(x.article)+'; source match '+esc(x.reference_pesticide)+' '+esc(x.reference_mrl)+' '+esc(x.unit)+
+  '. <b>REVIEW ONLY — numeric MRL NOT applied.</b> Test fat basis and processing of concentrated, dried, fat-rich and formulated products; other pesticides, amendments and contaminant categories remain unverified. No full compliance PASS. '+
+  '<a href="'+esc(x.official_source_url)+'" target="_blank" rel="noopener noreferrer">FSSAI Version IX</a>.</div>';
+}
+/* Two unambiguous plant-source standards: maize starch from Zea mays and
+ * wheat gluten/proteins from wheat. Only their shared B1 10 µg/kg source
+ * remains valid across the cereal and composite-food articles. */
+function sourcePinnedMaizeWheatB1(p){
+ const m=contaminantsDb?.chapter_2_4_maize_wheat_b1_exact_v9;
+ if(!p||!m||!standardSearchIndexDb||m.source_version!==contaminantsDb.source_version
+  ||m.official_contaminants_url!==contaminantsDb.official_sources?.[0]?.url
+  ||m.contaminant!=='Aflatoxin B1'||m.limit!==10||m.unit!=='µg/kg'
+  ||m.total_aflatoxins_not_auto_assigned!==true||m.full_contaminant_coverage!==false
+  ||m.source_articles?.length!==2)return null;
+ const q=standardSearchIndexDb.products.find(x=>x.id===p.id);
+ const proof=(m.exact_products||[]).find(x=>x.catalog_id===p.id&&x.product_name===p.name
+  &&x.fssr===p.fssr&&x.fcs===p.fcs&&x.exact_identity_verified===true);
+ if(!q||!proof||q.name!==p.name||q.fssr!==p.fssr||q.fcs!==p.fcs
+  ||!['2.4.7','2.4.22'].includes(p.fssr)
+  ||!['06-06-2-maize-starch','06-06-2-wheat-protein-products-including-wheat-gluten'].includes(p.id))return null;
+ const group=contaminantsDb.crop_contaminants?.aflatoxin_b1;
+ if(group?.unit!==m.unit)return null;
+ for(const article of ['Cereal and cereal products','Food product containing any of the above mentioned food articles']){
+  if(!m.source_articles.includes(article))return null;
+  if((group.rules||[]).filter(r=>r.article===article&&r.limit===10).length!==1)return null;
+ }
+ return {contaminant:'Aflatoxin B1',article:'Cereal and cereal products',limit:10,unit:'µg/kg',
+  source_basis:'FSSAI CTR Version IX §2.2.1 · exact maize/wheat-derived cereal article',
+  condition:'Independent cereal/composite source articles agree at 10 µg/kg. No total-aflatoxins inference or pesticide/full compliance PASS.'};
+}
+
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  // Chapter 2.7 metal/profile locks remain intact. Allow only the separately
@@ -8866,6 +8926,7 @@ function productBaselineContaminantRules(p){
  const id=p.id||p.profile_id||'';
  if(!n&&!id)return [];
  const out=[];
+ if(typeof sourcePinnedMaizeWheatB1==='function'){const r=sourcePinnedMaizeWheatB1(p);if(r)out.push(r);}
  if(typeof sourcePinnedInfantFoodMetalRules==='function')out.push(...sourcePinnedInfantFoodMetalRules(p));
 
  const pushRule=(rule)=>{if(rule)out.push(rule);};
@@ -9810,6 +9871,7 @@ function renderProductContaminants(){
  const cerealCommodityReview=productCerealCommodityMrlReviewHtml(p);
  const fruitVegCommodityReview=productFruitVegCommodityMrlReviewHtml(p);
  const namedMilkCommodityReview=namedMilkCommodityReviewHtml(p);
+ const additionalMilkCommodityReview=additionalMilkCommodityReviewHtml(p);
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
  const pesticideRows=pesticideMrls.map(x=>'<tr><td><b>'+esc(x.pesticide)+'</b></td><td><b>'+esc(x.mrl)+' '+esc(x.unit)+'</b></td><td>'+esc(x.food)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source)+'</td></tr>').join('');
  const milkPowderAflatoxinNotice=p.id==='01-01-5-milk-powders-and-cream-powder'&&!milkPowderAflatoxinM1
@@ -9854,6 +9916,7 @@ function renderProductContaminants(){
    +cerealCommodityReview
    +fruitVegCommodityReview
    +namedMilkCommodityReview
+   +additionalMilkCommodityReview
    +soybeanTotalHtml
    +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant / toxin</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="notice">No exact metal/toxin row is auto-applicable for this product under the current stored product gates.</div>')
    +conditionalMetalHtml
