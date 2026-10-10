@@ -807,6 +807,34 @@ assert.equal(b1Source.unit,"µg/kg");
 for(const article of maizeWheat.source_articles)
  assert.equal((b1Source.rules||[]).filter(x=>x.article===article&&x.limit===10).length,1);
 
+
+/* Three exact FoSCoS fresh-fruit forms: commodity pesticide article reference
+ * only, not a finished-food MRL approval; processed/dried fruit excluded. */
+const freshFruitEvidence=contaminants.chapter_special_fresh_fruits_pesticide_article_v9;
+assert.ok(freshFruitEvidence);
+assert.equal(freshFruitEvidence.source_version,contaminants.source_version);
+assert.equal(freshFruitEvidence.official_source_url,version9Source);
+assert.equal(freshFruitEvidence.article,"Fruits");
+assert.equal(freshFruitEvidence.source_pesticide,"2,4-Dichlorophenoxy Acetic Acid");
+assert.equal(freshFruitEvidence.source_mrl,"2");
+assert.equal(freshFruitEvidence.unit,"mg/kg");
+assert.equal(freshFruitEvidence.finished_food_mrl_auto_applied,false);
+assert.equal(freshFruitEvidence.full_compliance_verified,false);
+assert.equal(freshFruitEvidence.identity_rows.length,3);
+const freshFruitRows=(contaminants.residue_mrls.pesticides||[])
+ .filter(x=>x.name===freshFruitEvidence.source_pesticide)
+ .flatMap(x=>(x.rows||[]).filter(r=>r.food==="Fruits"&&r.mrl==="2"&&r.unit==="mg/kg"));
+assert.equal(freshFruitRows.length,1,"Official FSSAI fresh Fruits source drift");
+const freshFruitById=new Map(freshFruitEvidence.identity_rows.map(x=>[x.catalog_id,x]));
+assert.equal(freshFruitById.size,3);
+for(const x of freshFruitById.values()){
+ const p=index.products.find(z=>z.id===x.catalog_id);
+ assert.ok(p&&p.name===x.product_name&&p.fssr===x.fssr&&p.fcs===x.fcs
+  &&x.identity_verified===true&&x.source_commodity_article==="Fruits");
+ assert.ok(["04.1.1.1","04.1.1.2","04.1.1.3"].includes(p.fcs));
+ assert.equal(x.processing_qualification_required,p.fcs==="04.1.1.3");
+}
+
 function contaminantEvidenceForProduct(p){
  const profiles=directContaminantProfiles.get(p.id) || [];
  const explicitAliases=contaminantAliases.get(p.id);
@@ -1150,11 +1178,13 @@ function contaminantEvidenceForProduct(p){
  const exactInfantFood=verifiedInfantIds.get(p.id)||null;
  const additionalMilkArticle=additionalMilkById.get(p.id)||null;
  const maizeWheatArticle=maizeWheatById.get(p.id)||null;
+ const freshFruitPartial=freshFruitById.get(p.id)||null;
  const explicitKinds=[];
  if(exactMilkProduct)explicitKinds.push('official_v9_named_cheese_or_fermented_milk_pesticide_commodity_partial');
  if(exactInfantFood)explicitKinds.push('official_v9_named_infant_food_arsenic_cadmium_partial');
  if(additionalMilkArticle)explicitKinds.push('official_v9_named_dairy_commodity_article_partial_2026_10_10');
  if(maizeWheatArticle)explicitKinds.push('official_v9_maize_wheat_cereal_composite_b1_partial_2026_10_10');
+ if(freshFruitPartial)explicitKinds.push('official_v9_fresh_fruit_fcs_exact_source_pesticide_commodity_partial');
  if(peanutButterCompositeEvidence)explicitKinds.push("official_v9_exact_peanut_butter_composite_aflatoxins_partial");
  if(sharedCerealAflatoxinB1Evidence)explicitKinds.push("official_v9_harmonised_cereal_composite_b1_partial");
  if(exactBreadB1Evidence)explicitKinds.push("official_v9_exact_bread_wheat_cereal_composite_b1_partial");
@@ -1223,6 +1253,7 @@ function contaminantEvidenceForProduct(p){
    exact_infant_food_metals:exactInfantFood?{source:version9Source,rows:infantMetalEvidence.verified_rows,lead_not_auto_assigned:true,compliance_pass:false}:null,
    exact_additional_dairy_commodity_article:additionalMilkArticle?{source:version9Source,article:additionalMilk.article,pesticide:additionalMilk.reference_pesticide,reference_mrl:additionalMilk.reference_mrl,unit:additionalMilk.unit,auto_apply:false,complete_panel:false}:null,
    exact_maize_wheat_b1_article:maizeWheatArticle?{source:version9Source,contaminant:'Aflatoxin B1',limit:10,unit:'µg/kg',source_articles:maizeWheat.source_articles,total_aflatoxins_auto_assigned:false,full_compliance:false}:null,
+   exact_fresh_fruit_source_pesticide_commodity:freshFruitPartial?{source:version9Source,article:freshFruitEvidence.article,reference_pesticide:freshFruitEvidence.source_pesticide,source_mrl:freshFruitEvidence.source_mrl,unit:freshFruitEvidence.unit,numeric_applied:false,processing_factors_verified:false,full_compliance:false}:null,
    exact_peanut_butter_composite_aflatoxins:peanutButterCompositeEvidence,
    exact_harmonised_cereal_aflatoxin_b1:sharedCerealAflatoxinB1Evidence,
    exact_bread_cereal_composite_b1_partial:exactBreadB1Evidence,
