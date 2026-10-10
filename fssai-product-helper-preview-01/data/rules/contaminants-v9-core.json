@@ -28,7 +28,8 @@
       "Fourteen explicit lock/conditional-only records prevent sugar, saccharin and bee-product cross-mapping.",
       "Honey remains linked to its 12 misuse-detection MRPL rows; Royal Jelly and Bees Wax do not inherit them.",
       "Calcium Saccharin does not inherit Saccharin sodium Arsenic/Lead rows.",
-      "Sugar Lead conditions continue to require the Build 181 sulphated-ash input gate."
+      "Sugar Lead conditions continue to require the Build 181 sulphated-ash input gate.",
+      "10 October 2026: exact raw food-grain Lead profiles added for Maize, Oats and Rice; Cadmium only for Maize and Oats under Version IX cereal-grain exclusions. Not flour, polished-rice Cadmium or full finished-product compliance."
     ],
     "fail_closed_rule": "Only exact loaded product/FSSR matches and explicit all-food rules are auto-applied. 'Foods not specified' values are reference defaults only and are not auto-applied until PMSV has confirmed that no more specific current FSSAI row applies.",
     "sections_loaded": [
@@ -5148,6 +5149,78 @@
           "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026); Chapter 2.3.9 ready-to-drink fruit nectars",
           "verification": "official_fssai_v9_exact_finished_fruit_nectar_identity",
           "condition": "FSSAI 2.3.9 is intended for direct consumption. Only finished ready-to-drink fruit nectar; not fruit drink/RTS, concentrated or industrial juices, vegetable juice, juice ingredients, or other beverages. Other applicable requirements remain for review."
+        }
+      ]
+    },
+    {
+      "id": "exact-raw-cereal-grain-metals-06-06-1-maize",
+      "label": "Maize — raw cereal-grain metals",
+      "catalog_ids": [
+        "06-06-1-maize"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "article": "Cereal grains, except buckwheat, canihua and quinoa",
+          "limit": 0.2,
+          "unit": "mg/kg",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_exact_raw_grain_grouped_metal_article",
+          "condition": "Maize means the unprocessed, whole/raw food-grain identity in FoSCoS category 06.1. Not Maize flour, bran, germ, starch, extracted ingredients or compound foods. Pesticide MRLs, other contaminants and amendments require independent checks."
+        },
+        {
+          "contaminant": "Cadmium",
+          "article": "Cereal grains, except buckwheat, canihua and Quinoa (excluding wheat and rice; and bran and germ)",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_exact_raw_nonwheat_nonrice_grain_grouped_metal_article",
+          "condition": "Maize means the unprocessed, whole/raw food-grain identity in FoSCoS category 06.1. Not Maize flour, bran, germ, starch, extracted ingredients or compound foods. Pesticide MRLs, other contaminants and amendments require independent checks. Excludes wheat, rice, buckwheat, canihua and quinoa; polished rice has a separate cadmium article."
+        }
+      ]
+    },
+    {
+      "id": "exact-raw-cereal-grain-metals-06-06-1-oats",
+      "label": "Oats — raw cereal-grain metals",
+      "catalog_ids": [
+        "06-06-1-oats"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "article": "Cereal grains, except buckwheat, canihua and quinoa",
+          "limit": 0.2,
+          "unit": "mg/kg",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_exact_raw_grain_grouped_metal_article",
+          "condition": "Oats means the unprocessed, whole/raw food-grain identity in FoSCoS category 06.1. Not Oats flour, bran, germ, starch, extracted ingredients or compound foods. Pesticide MRLs, other contaminants and amendments require independent checks."
+        },
+        {
+          "contaminant": "Cadmium",
+          "article": "Cereal grains, except buckwheat, canihua and Quinoa (excluding wheat and rice; and bran and germ)",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "source_basis": "Section 2.1 · Metal Contaminants · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_exact_raw_nonwheat_nonrice_grain_grouped_metal_article",
+          "condition": "Oats means the unprocessed, whole/raw food-grain identity in FoSCoS category 06.1. Not Oats flour, bran, germ, starch, extracted ingredients or compound foods. Pesticide MRLs, other contaminants and amendments require independent checks. Excludes wheat, rice, buckwheat, canihua and quinoa; polished rice has a separate cadmium article."
+        }
+      ]
+    },
+    {
+      "id": "exact-raw-cereal-grain-metals-06-06-1-rice",
+      "label": "Rice — raw cereal-grain metals",
+      "catalog_ids": [
+        "06-06-1-rice"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "article": "Cereal grains, except buckwheat, canihua and quinoa",
+          "limit": 0.2,
+          "unit": "mg/kg",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_exact_raw_grain_grouped_metal_article",
+          "condition": "Rice means the unprocessed, whole/raw food-grain identity in FoSCoS category 06.1. Not Rice flour, bran, germ, starch, extracted ingredients or compound foods. Pesticide MRLs, other contaminants and amendments require independent checks."
         }
       ]
     }
