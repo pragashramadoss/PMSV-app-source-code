@@ -792,7 +792,15 @@ const products = index.products.map(p => {
       action.push("Verify any underlying food-specific composition requirements; absence of clause-wide numeric composition is not an exemption");
     }
     if(target.record.numeric_evidence) {
-      assert.ok(numericCompositionPresent,"Numeric source evidence without numeric standard: "+p.id);
+      // Some Chapter 2.4 grain standards publish direct quality limits in
+      // general_limits rather than a composition array. Those are still
+      // numeric official-standard evidence; no full compliance is implied.
+      const numericSourcePresent=numericCompositionPresent || (
+        Array.isArray(target.record.general_limits) &&
+        target.record.general_limits.some(x=>Number.isFinite(x.value) &&
+          ["<=",">=","range"].includes(x.operator))
+      );
+      assert.ok(numericSourcePresent,"Numeric source evidence without numeric standard: "+p.id);
       assert.equal(target.record.numeric_evidence.compliance_assessment_enabled,false,"Numeric baseline cannot enable compliance: "+p.id);
       numericBaselineStatus = "official_source_baseline_current_amendments_pending";
       action.push("Review later FSSAI amendments and select exact variant before applying numeric baseline");
