@@ -19,7 +19,7 @@ test("Three exact fresh fruit FoSCoS commodities match the current official Frui
  assert.equal(x.source_mrl,"2");assert.equal(x.unit,"mg/kg");
  assert.equal(x.identity_rows.length,3);assert.equal(x.finished_food_mrl_auto_applied,false);
  assert.equal(x.full_compliance_verified,false);assert.equal(x.processing_factor_assessed,false);
- assert.equal(pending.pending,146);assert.equal(pending.verified_evidence_added,118);
+ assert.equal(pending.pending,136);assert.equal(pending.verified_evidence_added,128);
  const names=x.identity_rows.map(r=>r.product_name);
  assert.deepEqual(names,["Untreated fresh fruit","Surface-treated fresh fruit","Peeled or cut, minimally processed fruit"]);
  for(const item of x.identity_rows){
@@ -51,8 +51,8 @@ test("Source PDF URL or changed current Fruits MRL row fails closed",()=>{
  ctx.contaminantsDb=changed;assert.equal(evidence(p),null);
  ctx.contaminantsDb=db;assert.ok(evidence(p));
 });
-test("All 146 pending identities have individualized non-numeric form, matrix and amendment review gates",()=>{
- assert.equal(pending.records.length,146);
+test("All 136 pending identities have individualized non-numeric form, matrix and amendment review gates",()=>{
+ assert.equal(pending.records.length,136);
  assert.equal(pending.precision_applicability_review_summary_2026_10_10.pending_individual_reviews,164);
  assert.equal(pending.full_compliance_achieved,0);
  const byId=new Map(catalogue.map(x=>[x.id,x]));
