@@ -8379,10 +8379,17 @@ function sourcePinnedDirectStandardLimit(p,group,rule){
  // flour, rather than appearing in each product's own composition table.
  // Only an explicit, source-pinned cross-cutting key can enter this path.
  if(rule.source_cross_cutting_key){
+   // Only the official 2.16(3) CBD rule is currently verified for these
+   // three exact identities; the 2.16(2)(iv) beverage THC limit must never
+   // be imported into seed, seed oil or seed flour.
+   if(rule.source_cross_cutting_key!=='2.16(3)'
+      ||!['fssai-2-16-hemp-seed','fssai-2-16-hemp-seed-oil','fssai-2-16-hemp-seed-flour'].includes(p.id)
+      ||normIngredient(rule.contaminant)!==normIngredient('Cannabidiol (CBD)'))return false;
    const parent=(matchKey.match(/^\d+\.\d+/)||[])[0];
    return trustedChapters.some(db=>String(db.chapter||'')===parent
      &&(db.cross_cutting_limits||[]).some(entry=>
        entry.key===rule.source_cross_cutting_key
+       &&entry.scope==='Any food consisting of hemp seed or seed products'
        &&normIngredient(entry.parameter)===normIngredient(rule.contaminant)
        &&entry.operator==='<='
        &&Number.isFinite(Number(entry.value))
