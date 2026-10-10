@@ -8633,6 +8633,8 @@ function sourcePinnedSpiceAflatoxinRule(p,rule){
  const mapping=(contaminantsDb.spice_crop_contaminant_identity_mappings_v9||[])
    .find(m=>m.catalog_id===p.id && normIngredient(m.product_name)===normIngredient(p.name));
  if(!mapping)return false;
+ if(mapping.fssr && String(mapping.fssr)!==String(p.fssr))return false;
+ if(mapping.fcs && String(mapping.fcs)!==String(p.fcs))return false;
  const kinds={'Total Aflatoxins':['total_aflatoxins','total_aflatoxins_limit'],
    'Aflatoxin B1':['aflatoxin_b1','aflatoxin_b1_limit']};
  const kind=kinds[rule.contaminant];
@@ -9820,7 +9822,7 @@ function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=436',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=437',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
@@ -9832,10 +9834,10 @@ async function loadContaminantsDb(){
    contaminantsFutureAmendmentDb=await future.json();
  }catch(e){contaminantsFutureAmendmentDb=null;}
  try{
-   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-driedfruit6',{cache:'reload'});
+   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-mango9',{cache:'reload'});
    if(!review.ok)throw new Error('HTTP '+review.status);
    const data=await review.json();
-   if(data.count!==232||!Array.isArray(data.records)||data.records.length!==232)throw new Error('Unresolved review count mismatch');
+   if(data.count!==228||!Array.isArray(data.records)||data.records.length!==228)throw new Error('Unresolved review count mismatch');
    contaminantsPendingReviewDb=data;
  }catch(e){contaminantsPendingReviewDb=null;}
  try{

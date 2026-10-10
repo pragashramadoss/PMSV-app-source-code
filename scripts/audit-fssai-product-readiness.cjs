@@ -648,6 +648,28 @@ for(const route of namedSoupSauceSaffrole.verified_product_identities){
 }
 for(const id of namedSoupSauceSaffrole.excluded_similar_identity_ids)
  assert.ok(!namedSoupSauceIds.has(id),"Excluded soup powder or paste mapped to saffrole");
+
+const exactDriedMangoSpices=[
+ ["12-12-2-dried-mango-powder-amchur","Dried Mango Powder (Amchur)","2.9.24"],
+ ["12-12-2-dried-mango-slices","Dried Mango Slices","2.9.23"]
+];
+for(const [id,name,fssr] of exactDriedMangoSpices){
+ const p=index.products.find(x=>x.id===id);
+ assert.ok(p&&p.name===name&&p.fssr===fssr&&p.fcs==="12.2.1","Invalid exact dried mango spice identity "+id);
+ const chapter=chapterRecord(p);assert.equal(chapter.record.key,fssr);assert.equal(chapter.record.name,name);
+ const matches=contaminants.spice_crop_contaminant_identity_mappings_v9.filter(x=>x.catalog_id===id);
+ assert.equal(matches.length,1,"Duplicate/missing spice article mapping "+id);
+ const m=matches[0];
+ assert.equal(m.product_name,name);assert.equal(m.fssr,fssr);assert.equal(m.fcs,"12.2.1");
+ assert.equal(m.article,"Spices/Spice Mix");assert.equal(m.unit,"µg/kg");
+ assert.equal(m.total_aflatoxins_limit,30);assert.equal(m.aflatoxin_b1_limit,15);
+ assert.ok(official(m.identity_source_url)&&chapter.sourceUrls.includes(m.identity_source_url));
+ assert.equal(m.full_compliance_verified,false);assert.equal(m.all_residue_mrls_verified,false);
+ for(const [key,limit] of [["total_aflatoxins",30],["aflatoxin_b1",15]]){
+  const group=contaminants.crop_contaminants[key];assert.equal(group.unit,"µg/kg");
+  assert.equal(group.rules.filter(z=>z.article==="Spices/Spice Mix"&&Number(z.limit)===limit).length,1);
+ }
+}
 const rawMeatMetalLocks=new Map();
 for(const row of contaminants.chapter_2_5_locked_fresh_meat_routes_v9||[]){
  for(const id of row.catalog_ids||[]){

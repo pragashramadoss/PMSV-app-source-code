@@ -15,11 +15,11 @@ function queueItems(){
  }
  return items;
 }
-test("All 230 unresolved exact-evidence cases have unique real catalogue identities",()=>{
+test("All 228 unresolved exact-evidence cases have unique real catalogue identities",()=>{
  const items=queueItems(),ids=new Set(items.map(x=>x.id));
  assert.equal(index.length,533);
- assert.equal(items.length,230,"Queue count drift: regenerate dated queue rather than quietly deleting items");
- assert.equal(ids.size,230,"Duplicate unresolved identities must be reviewed");
+ assert.equal(items.length,228,"Queue count drift: regenerate dated queue rather than quietly deleting items");
+ assert.equal(ids.size,228,"Duplicate unresolved identities must be reviewed");
  const byId=new Map(index.map(x=>[x.id,x]));
  for(const x of items){
   const product=byId.get(x.id);
