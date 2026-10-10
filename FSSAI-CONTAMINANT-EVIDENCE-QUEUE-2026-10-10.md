@@ -7,8 +7,8 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 387 |
-| No exact product-identity contaminant evidence established by current index | 146 |
+| Some exact product evidence, partial only | 397 |
+| No exact product-identity contaminant evidence established by current index | 136 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Original source-article applicability triage records (2026-10-10 baseline) | 236 |
 | Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 43 |
@@ -101,15 +101,15 @@ A fifth exact identity now has source-backed **partial** chemical-residue eviden
 
 | FSSR prefix | Product identities requiring exact review |
 |---|---:|
-| 2.3 | 53 |
-| special | 34 |
+| 2.3 | 48 |
+| special | 30 |
 | 2.1 | 14 |
 | 2.4 | 12 |
 | 2.8 | 11 |
 | 2.5 | 7 |
 | 2.11 | 5 |
 | 2.7 | 2 |
-| 2.9 | 3 |
+| 2.9 | 2 |
 | 2.10 | 3 |
 | 2.2 | 1 |
 | 3.3 | 1 |
@@ -143,7 +143,7 @@ All entries below have an individually stored precision-applicability gate; conf
 |---|---|---|
 | Fat spread | `02-02-2-fat-spread` | 2.2.5(3) |
 
-### FSSR 2.3 (53)
+### FSSR 2.3 (48)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -153,8 +153,6 @@ All entries below have an individually stored precision-applicability gate; conf
 | Coconut Milk (Non-Dairy) | `04-04-1-coconut-milk-non-dairy` | 2.3.51 |
 | COCONUT MILK POWDER | `04-04-1-coconut-milk-powder` | 2.3.63 |
 | Colouring foods | `99-99-1-colouring-foods` | 2.3.65 |
-| Concentrated Fruit Juice with Preservatives for industrial use only | `concentrated-fruit-juice-industrial` | 2.3.17 |
-| Concentrated Vegetable Juice with Preservatives for industrial use only | `concentrated-vegetable-juice-industrial` | 2.3.17 |
 | Concentrated Vegetable Pulp/Puree with Preservatives for industrial use only | `04-04-2-concentrated-vegetable-pulp-puree-with-preservatives-for-industrial-use-only` | 2.3.17 |
 | Culinary Pastes | `12-12-6-culinary-pastes` | 2.3.28 |
 | Cut vanilla | `04-04-1-cut-vanilla` | 2.3.50 |
@@ -170,9 +168,7 @@ All entries below have an individually stored precision-applicability gate; conf
 | Frozen Fruits/Fruit Products | `04-04-1-frozen-fruits-fruit-products` | 2.3.37 |
 | Frozen Vegetables | `04-04-2-frozen-vegetables` | 2.3.38 |
 | Fruit Bar/Toffee | `04-04-1-fruit-bar-toffee` | 2.3.19 |
-| Fruit Based Beverage Mix/Powdered Fruit Based Beverage | `fruit-beverage-mix` | 2.3.40 |
 | Fruit Cheese | `04-04-1-fruit-cheese` | 2.3.33 |
-| Fruit Juice with Preservatives for Industrial Use only | `fruit-juice-preserved-industrial` | 2.3.16 |
 | Fruits and Vegetable Chutney | `04-04-1-fruits-and-vegetable-chutney` | 2.3.41 |
 | Fungi extract and Fungi Concentrate | `04-04-2-fungi-extract-and-fungi-concentrate` | 2.3.62 |
 | Fungi Grits and Fungi Powder | `04-04-2-fungi-grits-and-fungi-powder` | 2.3.62 |
@@ -196,7 +192,6 @@ All entries below have an individually stored precision-applicability gate; conf
 | Thermally Processed Vegetables | `04-04-2-thermally-processed-vegetables` | 2.3.3 |
 | Vanilla pods | `04-04-1-vanilla-pods` | 2.3.50 |
 | Vanilla powder | `04-04-1-vanilla-powder` | 2.3.50(1)(c) |
-| Vegetable Juice with Preservatives for Industrial Use only | `vegetable-juice-preserved-industrial` | 2.3.16 |
 | Vegetable Protein Products | `12-12-10-vegetable-protein-products` | 2.3.59 |
 | Vegetable Pulp/Puree with Preservatives for Industrial Use only | `04-04-2-vegetable-pulp-puree-with-preservatives-for-industrial-use-only` | 2.3.16 |
 | WATER CHESTNUT FLOUR (SINGHARE KA ATTA) | `06-06-2-water-chestnut-flour-singhare-ka-atta` | 2.3.64 |
@@ -253,11 +248,10 @@ All entries below have an individually stored precision-applicability gate; conf
 | Plantation White Sugar | `11-11-1-plantation-white-sugar` | 2.8.1(1) |
 | Royal Jelly | `100-100-royal-jelly` | 2.8.3(3) |
 
-### FSSR 2.9 (3)
+### FSSR 2.9 (2)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
-| Asafoetida (Hing or Hingra) | `12-12-2-asafoetida-hing-or-hingra` | 2.9.29 |
 | Salt Substitutes | `12-12-1-salt-substitutes` | 2.9.30(6) |
 | Seasoning | `12-12-2-seasoning` | 2.9.31 |
 
@@ -285,7 +279,7 @@ All entries below have an individually stored precision-applicability gate; conf
 |---|---|---|
 | Trehalose | `99-99-1-trehalose` | 3.3.4 |
 
-### FSSR special (34)
+### FSSR special (30)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -301,22 +295,18 @@ All entries below have an individually stored precision-applicability gate; conf
 | Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations | `99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-` | FSS (FPS&FA) Regulations |
 | Additives VA-VF of Nutraceutical Regulations excluding those already standardised | `99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised` | Special FoSCoS route |
 | Cereal or pulses flour/ Starch based snacks & savouries | `18-18-2-cereal-or-pulses-flour-starch-based-snacks-and-savouries` | Special FoSCoS route |
-| Chhana based Sweets | `18-18-1-chhana-based-sweets` | Special FoSCoS route |
 | Dried fruits/vegetables/nut based mouth fresheners | `05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners` | Special FoSCoS route |
 | Dry Fruit and nuts based Sweets | `18-18-1-dry-fruit-and-nuts-based-sweets` | Special FoSCoS route |
 | Edible Dried Seeds obtained from Fruits | `04-04-1-edible-dried-seeds-obtained-from-fruits` | Special FoSCoS route |
 | Edible Dried Seeds obtained from Vegetables | `04-04-2-edible-dried-seeds-obtained-from-vegetables` | Special FoSCoS route |
-| Fermented milk products based Indian Sweets | `18-18-1-fermented-milk-products-based-indian-sweets` | Special FoSCoS route |
 | Formulated supplements for children | `formulated-supplements-children` | Special FoSCoS route |
 | Fruit and vegetable based snacks & savouries | `18-18-2-fruit-and-vegetable-based-snacks-and-savouries` | Special FoSCoS route |
 | Fruit and Vegetables based Sweets | `18-18-1-fruit-and-vegetables-based-sweets` | Special FoSCoS route |
 | Indian Confections | `18-18-1-indian-confections` | Special FoSCoS route |
 | Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations | `99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica` | Special FoSCoS route |
-| Khoa Based Sweets | `18-18-1-khoa-based-sweets` | Special FoSCoS route |
 | Mixture/preparations/premix of flavouring substances | `99-99-3-mixture-preparations-premix-of-flavouring-substances` | Special FoSCoS route |
 | Mixture/preparations/premix of food additives | `99-99-1-mixture-preparations-premix-of-food-additives` | Food Safety and Standards Regulations |
 | Mixtures/preparations/premix of functional ingredients | `99-99-7-mixtures-preparations-premix-of-functional-ingredients` | Special FoSCoS route |
-| Other composite milk products based Indian Sweets | `18-18-1-other-composite-milk-products-based-indian-sweets` | Special FoSCoS route |
 | Other traditional mouth fresheners not covered under 5.2.4.1 and 5.2.4.2 | `05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2` | Special FoSCoS route |
 | Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations | `99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc` | Special FoSCoS route |
 | Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized | `11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th` | FSS (FPS&FA) Regulations |
@@ -399,3 +389,21 @@ Fifteen further identities were reviewed **without promotion**: 10 edible-fungi 
 **Files:** `fssai-product-helper-preview-01/data/rules/fssai-25-beverage-confectionery-fungi-v9-source-evidence-2026-10-10.json` and `tests/fssai-25-v9-nots-source-evidence.test.cjs`; the 533-product audit and live 146-item review manifest were updated. The earlier 156/161 references in historical sections are dated snapshots, not live counts.
 
 **Official sources:** [FSSAI CTR Version IX, §2.2.1 (PDF p.15)](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf); [FSSAI Chapter 2.3 (pp.29–32)](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf); [FSSAI Chapter 2.7 (pp.4–6)](https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf). Effective amendments, process form, complete metals/toxins/pesticides and test reports remain open. WordPress unchanged.
+
+
+## Batch 40 — exact FSSAI source-article qualifications and fail-closed reviews (10 October 2026)
+
+**Current authoritative PMSV catalogue snapshot: 533 identities, 397 with some partial exact article evidence, 136 still awaiting a first source match, 0 complete legal/laboratory compliance approvals.** The previous 146/156/161 counts remain historical dated snapshots.
+
+Ten *distinct* identities now have official FSSAI Version IX source-category evidence, not a product-wide PASS:
+
+- Four FoSCoS Indian Sweets 18.1.1.1–18.1.1.4 (Khoa, Chhana, Fermented-milk and Other composite milk-product sweets). FSSAI Indian Sweets Annexure I defines milk ingredients for all four; Version IX §2.3.1 includes **Acetamiprid — Milk and Milk products — 0.02 mg/kg**. This is **milk-source commodity evidence only**, not a ready-to-apply finished-sweet MRL. Recipes, fat basis, processing/concentration factor, pesticide panel and current amendments are not completed.
+- Four FSSR 2.3.16–2.3.17 industrial fruit/vegetable juices and concentrated fruit/vegetable juices. Version IX §2.1.1 lists **Lead — Fruit and vegetable juice (excluding lime/lemon juice) — 1 mg/kg**, separately from **Fruit juices including ready-to-drink nectar — 0.05 mg/kg**. This is a **named industrial-juice source family** rather than an approval to use 1 mg/kg on every concentrate. Juice species, concentration, permitted industrial form, product subtype and the applicable overlapping juice article must be established before any sample limit is assigned.
+- FSSR 2.9.29 **Asafoetida (Hing/Hingra)**, FoSCoS 12.2.1, matched against the Version IX **Spices/Spice Mix** crop-contaminant references (Total Aflatoxins **30 µg/kg**, Aflatoxin B1 **15 µg/kg**). The Hing/Hingra/compounded variants, carrier powder and other residues remain unresolved.
+- FSSR 2.3.40 **Fruit Based Beverage Mix / Powdered Fruit Based Beverage**, FoSCoS 14.1.4.3, matched against **Saffrole — Non-alcoholic beverages — 10 ppm**. The dry powder is not assigned this number automatically; beverage-as-prepared status and reconstitution must be confirmed.
+
+Thirty additional catalogue identities have explicit subtype, ash-test-method, manufacturing, packaging or analytical-sample-basis controls, **all kept in the 136 unresolved queue**. In particular, the existing exclusion of processed egg products from the fresh eggs shell-free MRL article is preserved. No previously recorded partial article has been deleted. This is a 40-identity review, with **10 source-backed partial promotions and 30 negative applicability gates**.
+
+Sources: [FSSAI Version IX, metals p.4, crop toxins p.14 and pesticide MRL p.16](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf); [FSSAI Indian sweets Annexure I](https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf); [FSSAI Chapter 2.3](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf); [FSSAI Chapter 2.9](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt_Spices_Condiments%20and%20related%20products.pdf).
+
+Machine evidence: `fssai-product-helper-preview-01/data/rules/fssai-batch40-exact-commodity-and-conditional-scope-v1.json`. Full finished-food compliance and current amendment assessment remain incomplete. WordPress unchanged.
