@@ -9020,6 +9020,29 @@ function productBaselineContaminantRules(p){
     });
  }
 
+ // 5bi) Fermented soybean curd (both 2.4.39 catalogue variants) is
+ // sourced from soybean aqueous extract under the official standard.
+ // Both current ready-to-eat oilseed and composite-food B1 articles give
+ // 10 µg/kg; no other contaminant/compliance conclusion is inferred.
+ const fermentedSoybeanCurdB1=[
+  ['06-06-8-fermented-soybean-curd','Fermented Soybean Curd','2.4.39(1)'],
+  ['06-06-8-fermented-soybean-curd-made-with-s-thermophillus-l-bulgaricus',
+   'Fermented Soybean Curd (made with S. thermophillus + L. bulgaricus)','2.4.39']
+ ];
+ if(fermentedSoybeanCurdB1.some(([cid,name,clause])=>id===cid&&p.name===name&&p.fssr===clause)
+   &&/Version IX.*03\.02\.2026/.test(String(contaminantsDb?.source_version||''))){
+   const group=contaminantsDb?.crop_contaminants?.aflatoxin_b1;
+   const articles=['Oilseeds, ready to eat','Food product containing any of the above mentioned food articles'];
+   const checked=group?.unit==='µg/kg'&&articles.every(article=>
+     (group.rules||[]).filter(r=>normIngredient(r.article||'')===normIngredient(article)
+       &&Number(r.limit)===10&&String(r.unit||group.unit)==='µg/kg').length===1);
+   if(checked)pushRule({
+     contaminant:'Aflatoxin B1',article:articles.join(' / '),limit:10,unit:'µg/kg',
+     source_basis:'FSSAI CTR Version IX · Section 2.2.1 · exact fermented soybean curd identity and shared oilseed/composite B1',
+     condition:'Exact FSSAI Chapter 2.4.39 soybean aqueous-extract curd variant only. Both relevant source categories give Aflatoxin B1 10 µg/kg. Total Aflatoxins, metals, pesticide residues and other legal tests require separate assessment. No full compliance PASS.'
+   });
+ }
+
  // 5c) Version IX naturally occurring toxic substance Saffrole: only exact
  // finished soup or sauce identities in the official Chapter 2.3 list.
  const saffrole=contaminantsDb?.chapter_2_3_exact_soup_sauce_saffrole_v9;
