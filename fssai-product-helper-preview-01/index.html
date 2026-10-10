@@ -1224,6 +1224,7 @@ let contaminantsPendingReviewDb=null;
 let spiceOleoresinResiduesDb=null;
 let goatMuscleVeterinaryResiduesDb=null;
 let fourCompositeSourcesDb=null;
+let coconutFlourHexaneDb=null;
 let fungiAgaricConditionalDb=null;
 let contaminantsFutureAmendmentDb=null;
 let appendixCDb=null;
@@ -9821,6 +9822,20 @@ function syncContaminantQualifierVisibility(p){
    }
  }
 }
+function sourcePinnedCoconutFlourHexaneHtml(p){
+ if(!p||p.id!=='06-06-2-solvent-extracted-coconut-flour')return '';
+ const d=coconutFlourHexaneDb;
+ const url='https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf';
+ const matched=!!d&&p.id===d.catalog_id&&p.name===d.product_name&&p.fssr===d.fssr
+  &&p.fcs===d.fcs&&d.official_source_url===url
+  &&d.chemical_residue==='Food-grade hexane'&&d.max===10&&d.unit==='ppm'
+  &&d.compliance_approval===false&&d.automatic_cross_product_inheritance===false
+  &&d.other_contaminants_pesticides_amendments_verified===false;
+ if(!matched)return '<div class="notice"><b>Coconut flour hexane evidence unavailable or altered.</b> Numerical reference withheld.</div>';
+ return '<div class="card"><div class="section-title"><h3>FSSAI FSSR 2.4.13(4) extraction-residue requirement</h3><span>Partial official source only · No PASS</span></div>'
+  +'<p><b>Food-grade hexane ≤10 ppm</b>, specific to solvent-extracted coconut flour. Confirm extraction process and laboratory results before assessing compliance. Not applicable to ordinary desiccated coconut, coconut milk/cream or other starch products. Other contaminants, pesticide MRLs and amendments remain open.</p>'
+  +'<p><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter 2.4 source</a></p></div>';
+}
 function sourcePinnedCompositeOrSoupPartialHtml(p){
  if(!p||!contaminantsDb)return '';
  const knownIds=[
@@ -10078,6 +10093,7 @@ function renderProductContaminants(){
    +pendingContaminantReviewNotice(p)
    +exactSupplementalResidueReviewHtml(p)
    +sourcePinnedCompositeOrSoupPartialHtml(p)
+   +sourcePinnedCoconutFlourHexaneHtml(p)
    +exactEggStandardChemicalCriteriaHtml(p)
    +(hempChapter216.relevant&&!hempChapter216.verified?'<div class="notice"><b>Hemp Chapter 2.16 source review required:</b> THC and CBD numeric limits are withheld because the exact product identity, Chapter 2.16 source table, or cross-cutting CBD clause did not match the official recorded values.</div>':'')
    +(p.id==='mineral-water'?'<div class="notice"><b>Natural mineral water — arsenic source reconciliation:</b> FSSAI Chapter 2.10, clause 2.10.7, lists arsenic at 0.05 mg/L, but the separate FSSAI Contaminants Regulations Version IX Section 2.1 lists <b>0.01 mg/L</b> for natural mineral water. PMSV uses the stricter 0.01 mg/L contaminant requirement in this table; the less stringent product-standard value must never be substituted as an elemental-arsenic compliance pass. Both official references require ongoing amendment review.</div>':'')
@@ -10137,7 +10153,7 @@ async function loadContaminantsDb(){
    contaminantsFutureAmendmentDb=await future.json();
  }catch(e){contaminantsFutureAmendmentDb=null;}
  try{
-   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-four-composite-157',{cache:'reload'});
+   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-five-source-156',{cache:'reload'});
    if(!review.ok)throw new Error('HTTP '+review.status);
    const data=await review.json();
    const ids=new Set((data.records||[]).map(r=>r.catalog_id));
@@ -10165,6 +10181,11 @@ async function loadContaminantsDb(){
      throw new Error('Exact composite and soup source integrity mismatch');
    fourCompositeSourcesDb=d;
  }catch(e){fourCompositeSourcesDb=null;}
+ try{
+   const response=await fetch('./data/rules/solvent-extracted-coconut-flour-hexane-exact-v1.json?v=20261010-coconut',{cache:'reload'});
+   if(!response.ok)throw new Error('Coconut extraction source unavailable');
+   coconutFlourHexaneDb=await response.json();
+ }catch(e){coconutFlourHexaneDb=null;}
  try{
    const result=await fetch('./data/rules/chapter-2-3-fungi-agaric-conditional-v1.json?v=1',{cache:'reload'});
    if(!result.ok)throw new Error('HTTP '+result.status);
