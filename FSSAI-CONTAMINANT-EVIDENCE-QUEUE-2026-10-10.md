@@ -7,8 +7,8 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 397 |
-| No exact product-identity contaminant evidence established by current index | 136 |
+| Some exact product evidence, partial only | 407 |
+| No exact product-identity contaminant evidence established by current index | 126 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Original source-article applicability triage records (2026-10-10 baseline) | 236 |
 | Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 43 |
@@ -101,16 +101,16 @@ A fifth exact identity now has source-backed **partial** chemical-residue eviden
 
 | FSSR prefix | Product identities requiring exact review |
 |---|---:|
-| 2.3 | 48 |
-| special | 30 |
-| 2.1 | 14 |
+| 2.3 | 43 |
+| special | 28 |
+| 2.1 | 12 |
 | 2.4 | 12 |
 | 2.8 | 11 |
 | 2.5 | 7 |
 | 2.11 | 5 |
 | 2.7 | 2 |
 | 2.9 | 2 |
-| 2.10 | 3 |
+| 2.10 | 2 |
 | 2.2 | 1 |
 | 3.3 | 1 |
 
@@ -118,7 +118,7 @@ A fifth exact identity now has source-backed **partial** chemical-residue eviden
 
 All entries below have an individually stored precision-applicability gate; confirm form, recipe, source text, packaging/processing and operative amendments before moving a limit into an assessment. Unresolved is not an exemption.
 
-### FSSR 2.1 (14)
+### FSSR 2.1 (12)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -133,8 +133,6 @@ All entries below have an individually stored precision-applicability gate; conf
 | Analogue in the dairy context | `02-02-4-analogue-in-the-dairy-context` | 2.1.1 |
 | Cow or Buffalo Colostrum and Colostrum Products | `100-100-cow-or-buffalo-colostrum-and-colostrum-products` | 2.1.23 |
 | Edible Lactose | `11-11-1-edible-lactose` | 2.1.20 |
-| Frozen Desserts or Confections with Added Vegetable Oil/ Fat or Vegetable Protein, or both | `01-01-7-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o` | 2.1.15 |
-| Frozen Desserts or Confections with Added Vegetable Oil/ Fat or Vegetable Protein, or both | `02-02-4-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o` | 2.1.15 |
 | Ice Cream, Kulfi, Chocolate Ice Cream, Softy Ice-Cream, Milk Ice, Milk Lolly and Dried Ice Cream Mix | `01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-` | 2.1.14 |
 
 ### FSSR 2.2 (1)
@@ -143,7 +141,7 @@ All entries below have an individually stored precision-applicability gate; conf
 |---|---|---|
 | Fat spread | `02-02-2-fat-spread` | 2.2.5(3) |
 
-### FSSR 2.3 (48)
+### FSSR 2.3 (43)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -155,9 +153,7 @@ All entries below have an individually stored precision-applicability gate; conf
 | Colouring foods | `99-99-1-colouring-foods` | 2.3.65 |
 | Concentrated Vegetable Pulp/Puree with Preservatives for industrial use only | `04-04-2-concentrated-vegetable-pulp-puree-with-preservatives-for-industrial-use-only` | 2.3.17 |
 | Culinary Pastes | `12-12-6-culinary-pastes` | 2.3.28 |
-| Cut vanilla | `04-04-1-cut-vanilla` | 2.3.50 |
 | Date Paste | `04-04-1-date-paste` | 2.3.56 |
-| Dates | `04-04-1-dates` | 2.3.47(4) |
 | Dehydrated Vegetables | `04-04-2-dehydrated-vegetables` | 2.3.36 |
 | Desiccated Coconut | `04-04-1-desiccated-coconut` | 2.3.45 |
 | Dried fungi | `04-04-2-dried-fungi` | 2.3.62 |
@@ -174,7 +170,6 @@ All entries below have an individually stored precision-applicability gate; conf
 | Fungi Grits and Fungi Powder | `04-04-2-fungi-grits-and-fungi-powder` | 2.3.62 |
 | Fungi in olive oil and other vegetable oils | `04-04-2-fungi-in-olive-oil-and-other-vegetable-oils` | 2.3.62 |
 | Ginger paste | `04-04-2-ginger-paste` | 2.3.28 |
-| Harrisa (Red Hot Pepper Paste) | `12-12-2-harrisa-red-hot-pepper-paste` | 2.3.58 |
 | Murabba | `04-04-1-murabba` | 2.3.25 |
 | Pickled Fungi | `04-04-2-pickled-fungi` | 2.3.62 |
 | Pickles (made from Fruits) | `04-04-1-pickles-made-from-fruits` | 2.3.43 |
@@ -190,8 +185,6 @@ All entries below have an individually stored precision-applicability gate; conf
 | Thermally Processed Fruit Salad/Cocktail/Mix | `04-04-1-thermally-processed-fruit-salad-cocktail-mix` | 2.3.2 |
 | Thermally Processed Fruits | `04-04-1-thermally-processed-fruits` | 2.3.1 |
 | Thermally Processed Vegetables | `04-04-2-thermally-processed-vegetables` | 2.3.3 |
-| Vanilla pods | `04-04-1-vanilla-pods` | 2.3.50 |
-| Vanilla powder | `04-04-1-vanilla-powder` | 2.3.50(1)(c) |
 | Vegetable Protein Products | `12-12-10-vegetable-protein-products` | 2.3.59 |
 | Vegetable Pulp/Puree with Preservatives for Industrial Use only | `04-04-2-vegetable-pulp-puree-with-preservatives-for-industrial-use-only` | 2.3.16 |
 | WATER CHESTNUT FLOUR (SINGHARE KA ATTA) | `06-06-2-water-chestnut-flour-singhare-ka-atta` | 2.3.64 |
@@ -255,13 +248,12 @@ All entries below have an individually stored precision-applicability gate; conf
 | Salt Substitutes | `12-12-1-salt-substitutes` | 2.9.30(6) |
 | Seasoning | `12-12-2-seasoning` | 2.9.31 |
 
-### FSSR 2.10 (3)
+### FSSR 2.10 (2)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
 | Coffee-Chicory Mixture | `coffee-chicory-mixture` | 2.10.4 |
 | Drinking Water (Purified) sold through vending machine | `purified-vending-water` | 2.10.9 |
-| Instant Tea in Solid Form | `instant-tea-solid` | 2.10.1(4) |
 
 ### FSSR 2.11 (5)
 
@@ -279,7 +271,7 @@ All entries below have an individually stored precision-applicability gate; conf
 |---|---|---|
 | Trehalose | `99-99-1-trehalose` | 3.3.4 |
 
-### FSSR special (30)
+### FSSR special (28)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -304,14 +296,12 @@ All entries below have an individually stored precision-applicability gate; conf
 | Fruit and Vegetables based Sweets | `18-18-1-fruit-and-vegetables-based-sweets` | Special FoSCoS route |
 | Indian Confections | `18-18-1-indian-confections` | Special FoSCoS route |
 | Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations | `99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica` | Special FoSCoS route |
-| Mixture/preparations/premix of flavouring substances | `99-99-3-mixture-preparations-premix-of-flavouring-substances` | Special FoSCoS route |
 | Mixture/preparations/premix of food additives | `99-99-1-mixture-preparations-premix-of-food-additives` | Food Safety and Standards Regulations |
 | Mixtures/preparations/premix of functional ingredients | `99-99-7-mixtures-preparations-premix-of-functional-ingredients` | Special FoSCoS route |
 | Other traditional mouth fresheners not covered under 5.2.4.1 and 5.2.4.2 | `05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2` | Special FoSCoS route |
 | Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations | `99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc` | Special FoSCoS route |
 | Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized | `11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th` | FSS (FPS&FA) Regulations |
 | Sajji Khar | `99-99-1-sajji-khar` | Special FoSCoS route |
-| Spice based mouth fresheners | `05-05-2-spice-based-mouth-fresheners` | Special FoSCoS route |
 | Starch based Sweets | `18-18-1-starch-based-sweets` | Special FoSCoS route |
 
 
@@ -407,3 +397,26 @@ Thirty additional catalogue identities have explicit subtype, ash-test-method, m
 Sources: [FSSAI Version IX, metals p.4, crop toxins p.14 and pesticide MRL p.16](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf); [FSSAI Indian sweets Annexure I](https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf); [FSSAI Chapter 2.3](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf); [FSSAI Chapter 2.9](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt_Spices_Condiments%20and%20related%20products.pdf).
 
 Machine evidence: `fssai-product-helper-preview-01/data/rules/fssai-batch40-exact-commodity-and-conditional-scope-v1.json`. Full finished-food compliance and current amendment assessment remain incomplete. WordPress unchanged.
+
+
+## Full 136-product source-applicability reconciliation — 10 new partial article anchors (10 October 2026)
+
+**Authoritative live inventory now: 533 total, 407 with partial official article/source evidence, 126 remaining without their first exact article. Product-wide compliance PASSES remain ZERO.**
+
+This larger review **individually rechecked the identities, regulatory route, matrix/form processing exclusions and negative article-inheritance gates of all 136 products** outstanding at the start. The machine-readable inventory is `fssai-product-helper-preview-01/data/rules/fssai-full-136-identity-applicability-review-2026-10-10.json`. This is not a finished verification of all pesticides, metals, microbiology, analytical samples or amendments.
+
+Ten identities newly obtain **official FSSAI Version IX named regulatory source evidence** (still partial, not a numeric compliance verdict):
+
+1. **Dates (FSSR 2.3.47(4)):** FSSAI Chapter 2.3 expressly defines Dates as dried Phoenix dactylifera fruits. The Version IX **Malathion including malaoxon — Dried fruits — 8 mg/kg** commodity MRL is a source match. Pitted/unpitted, treated with sugar/glucose/flour/oil, edible portion and processing-factor/sample-basis checks remain open.
+2. **Vanilla pods, Cut vanilla and Vanilla powder (3 FoSCoS identities, FSSR 2.3.50):** Source-article candidate **Lead — Dehydrated onions, dried herbs and spices, flavourings etc. — 10 mg/kg on dry matter basis**. The Chapter 2.3 standard expressly describes dry/wooded whole pods, cut pods and vanilla powder. Confirm commodity dried-spice status and dry-matter analytical basis; do not use the 10 mg/kg number for a liquid vanilla flavour or an unqualified botanical form.
+3. **Harissa (Red Hot Pepper Paste, FSSR 2.3.58):** The official recipe includes Capsicum annuum red peppers, coriander and caraway; this supports only a conditional *composite food containing spice* **Aflatoxin B1 — 10 µg/kg** named category source reference, not a blanket threshold on the finished paste or fresh chillies.
+4. **Spice-based mouth freshener (FoSCoS 05.2.4.2):** Conditional **Aflatoxin B1 — Food containing the listed commodity articles — 10 µg/kg** source reference. The particular spice ingredients, ingredient share, finished product matrix and amendment still require identification.
+5. **Two Frozen Desserts/Confections (FSSR 2.1.15, FoSCoS 01.7 and 02.4):** Source article **Lead — Ice-cream, iced lollies and similar frozen confections — 1 mg/kg**. This is candidate evidence for the actually frozen confection; **dried frozen dessert mix is explicitly excluded from numerical auto-application** until verified separately.
+6. **Instant Tea in Solid Form (FSSR 2.10.1(4)):** Source candidate **Lead — Tea — 5 mg/kg on dry matter basis**. Instant tea is extracted tea solids, not tea leaf: source classification, analytical form and dry-matter conversion remain required.
+7. **Flavouring Substances Mixtures/Premix (FoSCoS 99.3):** Source **Lead — Flavourings in dry herbs/spices/flavourings grouped article — 10 mg/kg on dry matter basis**. Confirm powder versus liquid solvent/carrier and constituent recipe before use.
+
+**Historical source references remain auditable**; previously recorded 40-/25-/26-product reviews have not been removed. No outside non-FSSAI regulatory source or nutrition source was introduced.
+
+Relevant primary sources: [FSSAI Version IX (03.02.2026)](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf); [FSSAI Chapter 2.3 (04.11.2024)](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf); [FSSAI Chapter 2.1 Dairy](https://fssai.gov.in/upload/uploadfiles/files/2_%20Chapter%202_1%20%28Dairy%20products%20and%20analogues%29.pdf); [FSSAI Chapter 2.10 Beverages](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf); [FoSCoS official product categories](https://fcstraining.fssai.gov.in/standard-product).
+
+The live `gh-pages` manifest now has 126 pending identities. All 136 historical review records are kept separately. WordPress remains unchanged.
