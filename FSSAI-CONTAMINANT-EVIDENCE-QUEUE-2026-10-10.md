@@ -7,8 +7,8 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 376 |
-| No exact product-identity contaminant evidence established by current index | 157 |
+| Some exact product evidence, partial only | 377 |
+| No exact product-identity contaminant evidence established by current index | 156 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Original source-article applicability triage records (2026-10-10 baseline) | 236 |
 | Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 43 |
@@ -91,6 +91,12 @@ Sources: [FSSAI Version IX (03.02.2026), Aflatoxin B1 and NOTS tables, PDF pages
 
 Recorded in `fssai-product-helper-preview-01/data/rules/fssai-4-exact-composite-soup-source-evidence-v1.json`. A failed source-row, product name, FoSCoS category, FSSR identity, or unit check must restore evidence to unresolved; merely changing the text does not authorize a new contaminant PASS. Previous 161-item review records are retained only as historic snapshots and do not establish 161 *currently* unresolved.
 
+## FSSR 2.4.13(4) solvent-extracted coconut flour chemical residue (10 October 2026)
+
+A fifth exact identity now has source-backed **partial** chemical-residue evidence. FSSAI Chapter 2.4 Version 4 (07.05.2025) explicitly lists **food-grade hexane ≤10 ppm** for `Solvent Extracted Coconut Flour`, FSSR **2.4.13(4)**. This value is NOT a pesticide commodity MRL and must not transfer to desiccated coconut, coconut milk/cream or any other flour. It is linked exclusively to catalogue ID `06-06-2-solvent-extracted-coconut-flour`; full heavy-metals, mycotoxins, pesticide MRLs, method/results and amendments remain unchecked. Official [FSSAI Chapter 2.4, PDF p.54](https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf). The source-locked record is `solvent-extracted-coconut-flour-hexane-exact-v1.json`.
+
+**Current total: 377 products with some partial exact source evidence; 156 still awaiting their first exact contaminant/residue article. No full-compliance PASS claimed.** The earlier 157/161 review documents above are retained as historical snapshots, not current counts.
+
 ## Unresolved by standard family
 
 | FSSR prefix | Product identities requiring exact review |
@@ -98,7 +104,7 @@ Recorded in `fssai-product-helper-preview-01/data/rules/fssai-4-exact-composite-
 | 2.3 | 61 |
 | special | 34 |
 | 2.1 | 14 |
-| 2.4 | 13 |
+| 2.4 | 12 |
 | 2.8 | 11 |
 | 2.5 | 7 |
 | 2.11 | 5 |
@@ -203,7 +209,7 @@ All entries below have an individually stored precision-applicability gate; conf
 | Vegetable Pulp/Puree with Preservatives for Industrial Use only | `04-04-2-vegetable-pulp-puree-with-preservatives-for-industrial-use-only` | 2.3.16 |
 | WATER CHESTNUT FLOUR (SINGHARE KA ATTA) | `06-06-2-water-chestnut-flour-singhare-ka-atta` | 2.3.64 |
 
-### FSSR 2.4 (13)
+### FSSR 2.4 (12)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -218,7 +224,6 @@ All entries below have an individually stored precision-applicability gate; conf
 | Papad | `06-06-7-papad` | 2.4.40 |
 | Papad | `15-15-1-papad` | 2.4.40 |
 | Quinoa | `06-06-1-quinoa` | 2.4.6 |
-| Solvent Extracted Coconut Flour | `06-06-2-solvent-extracted-coconut-flour` | 2.4.13(4) |
 | Wafer Biscuit | `07-07-2-wafer-biscuit` | 2.4.15(1) |
 
 ### FSSR 2.5 (7)
