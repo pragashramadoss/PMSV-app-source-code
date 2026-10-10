@@ -17,7 +17,7 @@
     "note": "Version IX is used as the current consolidated basis. The final 2026 amendment notified on 25 May 2026 is not applied before its stated 1 December 2026 commencement."
   },
   "coverage": {
-    "stage": "phase_52_chapter_2_5_direct_meat_metal_routes_started",
+    "stage": "phase_53_dry_bean_foscos_6_1_source_pinned_lead_cadmium_partial",
     "section": "2.1 Metal Contaminants",
     "exact_product_profiles": 152,
     "universal_rules": 1,
@@ -5018,6 +5018,33 @@
         }
       ],
       "verification": "FSSR 2.1.13 exact standardized-product mapping; Lead row verified against current Version IX"
+    },
+    {
+      "id": "exact-raw-bean-pulse-metal-06-06-1-bean",
+      "label": "Bean (dry pulse / whole foodgrain only)",
+      "catalog_ids": [
+        "06-06-1-bean"
+      ],
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "article": "Pulses",
+          "limit": 0.2,
+          "unit": "mg/kg",
+          "source_basis": "Section 2.1 · Lead · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_exact_raw_pulse_category_and_whole_bean_identity",
+          "condition": "FoSCoS 06.1, FSSR 2.4.6 raw whole/broken bean as dry foodgrain. Excludes fresh green beans, soybean, bean flour, extracts and compound foods. Verify other contaminants, pesticide MRLs and amendments separately."
+        },
+        {
+          "contaminant": "Cadmium",
+          "article": "Pulses, excluding soybean dry",
+          "limit": 0.1,
+          "unit": "mg/kg",
+          "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
+          "verification": "official_fssai_v9_exact_raw_pulse_category_and_whole_bean_identity",
+          "condition": "FoSCoS 06.1, FSSR 2.4.6 raw whole/broken bean as dry foodgrain. Excludes fresh green beans, soybean, bean flour, extracts and compound foods. Verify other contaminants, pesticide MRLs and amendments separately."
+        }
+      ]
     }
   ],
   "conditional_rules": [
