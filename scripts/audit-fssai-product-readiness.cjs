@@ -23,6 +23,8 @@ const fourCompositeSources=read("rules/fssai-4-exact-composite-soup-source-evide
 const coconutHexaneSource=read("rules/solvent-extracted-coconut-flour-hexane-exact-v1.json");
 const crossFamilyNOTS=read("rules/fssai-25-beverage-confectionery-fungi-v9-source-evidence-2026-10-10.json");
 const batch40Source=read("rules/fssai-batch40-exact-commodity-and-conditional-scope-v1.json");
+const pending136FullReview=read("rules/fssai-full-136-identity-applicability-review-2026-10-10.json");
+const next10ExactSource=read("rules/fssai-next10-exact-source-candidate-2026-10-10.json");
 /* Exact FSSAI Chapter 2.16 source evidence. This is a standard-product
  * THC and cross-cutting CBD assessment, not a Version IX contaminant article,
  * an exemption from other contaminants or a complete compliance verdict. */
@@ -1052,6 +1054,112 @@ for(const row of batch40Source.negative_controls){
 assert.equal(batch40ById.size,10);
 assert.equal(reviewOnlyIds.size,30);
 
+// The 136-source review is a true per-catalogue snapshot: no generically
+// fabricated "no limit" or compliance result. Ten new reference rows must
+// exist in the loaded CURRENT Version IX source table at the correct values.
+assert.equal(pending136FullReview.products_individually_reconciled,136);
+assert.equal(pending136FullReview.previous_partial,397);
+assert.equal(pending136FullReview.updated_partial,407);
+assert.equal(pending136FullReview.source_pinned_partial_matches_new,10);
+assert.equal(pending136FullReview.retained_pending_source_gaps,126);
+assert.equal(pending136FullReview.full_contaminant_compliance_passes,0);
+assert.equal(pending136FullReview.regulatory_source,version9Source);
+assert.equal(pending136FullReview.records.length,136);
+assert.equal(next10ExactSource.baseline_all,533);
+assert.equal(next10ExactSource.baseline_pending,136);
+assert.equal(next10ExactSource.additional_partial_source_matches,10);
+assert.equal(next10ExactSource.new_partial,407);
+assert.equal(next10ExactSource.new_pending,126);
+assert.equal(next10ExactSource.complete_product_compliance_passes,0);
+assert.equal(next10ExactSource.numeric_limits_auto_applied,0);
+assert.equal(next10ExactSource.official_ctr_source,version9Source);
+const next10ById=new Map();
+for(const row of next10ExactSource.matched){
+ const p=index.products.find(x=>x.id===row.catalog_id);
+ assert.ok(p&&p.name===row.product_name&&p.fssr===row.fssr&&p.fcs===row.fcs,
+  "Next10 changed catalogue identity: "+row.catalog_id);
+ assert.equal(row.official_ctr_source,version9Source);
+ assert.equal(row.exact_catalogue_article_relationship_verified,true);
+ assert.equal(row.source_article_fully_applicable_to_all_forms_or_recipes,false);
+ assert.equal(row.ready_to_compare_sample_result,false);
+ assert.equal(row.pesticide_panel_or_full_metal_panel_completed,false);
+ assert.equal(row.current_amendments_fully_reconciled,false);
+ assert.equal(row.finished_product_numeric_pass,false);
+ assert.equal(row.claim_that_no_other_limit_applies,false);
+ assert.ok(official(row.official_standard_source));
+ assert.ok(row.specific_processing_or_recipe_disqualification.length>100);
+ const {article_group:k,official_named_article:article,source_reference_limit:limit}=row;
+ const metalRows=contaminants.metal_article_rules_v9?.Lead||[];
+ const namedMetal=(expected,value)=>metalRows.filter(x=>x.row_type==="exact"
+   &&normalizeArticle(x.article)===normalizeArticle(expected)&&Number(x.limit)===value).length===1;
+ if(k==="dried_dates_malathion"){
+  assert.equal(p.fssr,"2.3.47(4)");assert.equal(row.parameter,"Malathion (sum of malathion and malaoxon)");
+  assert.equal(article,"Dried fruits");assert.equal(limit,8);assert.equal(row.source_reference_unit,"mg/kg");
+  assert.equal((contaminants.residue_mrls?.pesticides||[])
+   .filter(x=>x.name===driedFruitMalathion.pesticide_name)
+   .flatMap(x=>x.rows||[]).filter(x=>x.food==="Dried fruits"&&Number(x.mrl)===8&&x.unit==="mg/kg").length,1);
+ }else if(k==="vanilla_dried_spice_lead"||k==="flavouring_premix_lead_dry_basis"){
+  assert.equal(row.parameter,"Lead");assert.equal(limit,10);
+  assert.equal(row.source_reference_unit,"mg/kg on dry matter basis");
+  assert.ok(article.startsWith("Dehydrated onions, dried herbs and spices"));
+  assert.ok(article.includes("flavourings"));
+  assert.ok(metalRows.some(x=>x.row_type==="exact"&&Number(x.limit)===10
+    &&normalizeArticle(x.article).startsWith("dehydrated onions dried herbs and spices")
+    &&normalizeArticle(x.article).includes("flavourings")),
+    "Lead 10 mg/kg dry basis named dried-spice/flavouring official article changed");
+  if(k==="vanilla_dried_spice_lead")assert.ok(p.fssr.startsWith("2.3.50"));
+  else {assert.equal(p.fcs,"99.3");assert.ok(special.routes.some(x=>x.product_id===p.id
+    &&x.route_kind==="flavouring_preparation_fcs_99_3"));}
+ }else if(k==="harissa_spice_composite_b1"||k==="spice_mouth_freshener_composite_b1"){
+  assert.equal(row.parameter,"Aflatoxin B1");assert.equal(limit,10);
+  assert.equal(row.source_reference_unit,"µg/kg");
+  assert.equal(article,"Food product containing any of the above mentioned food articles");
+  assert.equal((contaminants.crop_contaminants?.aflatoxin_b1?.rules||[])
+   .filter(x=>x.article===article&&Number(x.limit)===10).length,1);
+  assert.ok((contaminants.crop_contaminants?.aflatoxin_b1?.rules||[])
+   .some(x=>x.article==="Spices/Spice Mix"&&Number(x.limit)===15));
+  if(k==="harissa_spice_composite_b1")assert.equal(p.fssr,"2.3.58");
+  else {assert.equal(p.fcs,"05.2.4.2");assert.ok(special.routes.some(x=>x.product_id===p.id));}
+ }else if(k==="finished_frozen_confection_lead"){
+  assert.equal(p.fssr,"2.1.15");assert.equal(row.parameter,"Lead");
+  assert.equal(article,"Ice-cream, iced lollies and similar frozen confections");
+  assert.equal(limit,1);assert.equal(row.source_reference_unit,"mg/kg");
+  assert.ok(namedMetal(article,1));
+ }else if(k==="instant_tea_lead_dry_basis"){
+  assert.equal(p.fssr,"2.10.1(4)");assert.equal(row.parameter,"Lead");
+  assert.equal(article,"Tea");assert.equal(limit,5);
+  assert.equal(row.source_reference_unit,"mg/kg on dry matter basis");
+  assert.ok(namedMetal("Tea",5));
+ }else throw Error("Unknown new regulatory article type "+k);
+ if(p.rule_key) {const x=chapterRecord(p);assert.ok(x.record&&x.record.key===p.rule_key);}
+ assert.ok(!next10ById.has(p.id),"Duplicate identity "+p.id);
+ next10ById.set(p.id,row);
+}
+assert.equal(next10ById.size,10);
+const history136=new Map();
+for(const row of pending136FullReview.records){
+ const p=index.products.find(x=>x.id===row.catalog_id);
+ assert.ok(p&&p.name===row.product_name&&p.fssr===row.fssr&&p.fcs===row.fcs);
+ assert.equal(row.official_ctr,version9Source);
+ assert.equal(row.separate_source_verification_required,true);
+ assert.equal(row.confirm_operational_2026_amendments,true);
+ assert.equal(row.numeric_limit_auto_applied_to_product,false);
+ assert.equal(row.finished_product_compliance_pass,false);
+ assert.equal(row.legally_cleared_or_exempt,false);
+ assert.ok(row.per_product_matrix_or_recipe_step.length>20);
+ assert.ok(row.per_product_prohibited_inheritance.length>20);
+ assert.equal(row.evidence_disposition,next10ById.has(p.id)
+  ?"partial_named_article_identity_source_only":"no_first_exact_named_article_yet");
+ assert.ok(!history136.has(p.id));
+ history136.set(p.id,row);
+}
+assert.equal(history136.size,136);
+for(const p of next10ById.values())assert.ok(history136.has(p.catalog_id));
+for(const id of next10ExactSource.negative_example_ids){
+ assert.ok(index.products.some(x=>x.id===id));
+ assert.ok(!next10ById.has(id),"Ineligible product inherited source: "+id);
+}
+
 // A named product-standard residual solvent limit is partial chemical source
 // evidence, not a crop pesticide MRL or universal food purity approval.
 const coconutProduct=index.products.find(p=>p.id===coconutHexaneSource.catalog_id);
@@ -1115,6 +1223,7 @@ function contaminantEvidenceForProduct(p){
  const exactCompositeSource=fourCompositeById.get(p.id)||null;
  const crossFamilyNOTSArticle=crossFamilyById.get(p.id)||null;
  const batch40Article=batch40ById.get(p.id)||null;
+ const next10SourceArticle=next10ById.get(p.id)||null;
  const exactCoconutHexane=p.id===coconutHexaneSource.catalog_id?coconutHexaneSource:null;
  const goatMuscleVetEvidence=goatMuscleSource.product_ids.includes(p.id)?(()=>{
    const i=goatMuscleSource.product_ids.indexOf(p.id);
@@ -1514,6 +1623,7 @@ function contaminantEvidenceForProduct(p){
  if(exactCompositeSource)explicitKinds.push("official_v9_exact_composite_aflatoxin_b1_or_finished_soup_saffrole_partial");
  if(crossFamilyNOTSArticle)explicitKinds.push("official_v9_identity_locked_non_alcoholic_beverage_or_confectionery_nots_partial");
  if(batch40Article)explicitKinds.push("official_v9_identity_locked_milk_sweet_juice_spice_or_beverage_source_partial");
+ if(next10SourceArticle)explicitKinds.push("official_v9_partial_named_article_dried_dates_vanilla_spices_frozen_tea_flavourings");
  if(exactCoconutHexane)explicitKinds.push("official_fssr_2_4_13_4_exact_coconut_flour_hexane_residual_partial");
  // Only a conditional, user-confirmed subtype source: the combined FoSCoS
  // identity must remain pending even though two powder variants have FSSAI
@@ -1544,6 +1654,14 @@ function contaminantEvidenceForProduct(p){
    exact_spice_oleoresin_solvent_residues:spiceOleoresinResidues,
    exact_goat_muscle_veterinary_drugs:goatMuscleVetEvidence,
    exact_composite_food_or_soup_source_v9:exactCompositeSource,
+   exact_next10_source_article_v9:next10SourceArticle?{
+     source:version9Source,article:next10SourceArticle.official_named_article,
+     parameter:next10SourceArticle.parameter,
+     source_limit:next10SourceArticle.source_reference_limit,
+     source_unit:next10SourceArticle.source_reference_unit,
+     incomplete_sample_matrix_and_processing:true,
+     automatic_numeric_compliance_pass:false,
+     amendments_fully_reconciled:false,full_product_compliance_verified:false}:null,
    exact_batch40_source_evidence_v9:batch40Article?{
      source:version9Source,identity_source:batch40Article.identity_source,
      evidence_family:batch40Article.source_family,reference_rows:batch40Article.official_FSSAI_article_references,
