@@ -17,6 +17,39 @@ const read = name => JSON.parse(fs.readFileSync(path.join(dataDir, name), "utf8"
 const index = read("standard-search-index-v1.json");
 const special = read("rules/special-regulatory-routes-v1.json");
 const contaminants = read("rules/contaminants-v9-core.json");
+/* Exact FSSAI Chapter 2.16 source evidence. This is a standard-product
+ * THC and cross-cutting CBD assessment, not a Version IX contaminant article,
+ * an exemption from other contaminants or a complete compliance verdict. */
+const hempChapter216=read("rules/chapter-2-16-hemp-v1.json");
+const hempOfficialSource="https://fssai.gov.in/upload/uploadfiles/files/17_%20Chapter%202_16%20(Hemp%20seeds%20and%20seed%20products).pdf";
+assert.equal(hempChapter216.chapter,"2.16");
+assert.ok(hempChapter216.official_sources.some(x=>x.url===hempOfficialSource));
+const hempCBD=hempChapter216.cross_cutting_limits.filter(x=>
+ x.key==="2.16(3)"&&x.scope==="Any food consisting of hemp seed or seed products"
+ &&x.parameter==="Cannabidiol (CBD)"&&x.operator==="<="&&x.value===75&&x.unit==="mg/kg");
+assert.equal(hempCBD.length,1,"Missing exact Chapter 2.16(3) CBD source");
+const hempIdentities=[
+ ["fssai-2-16-hemp-seed","Hemp seed","2.16(2)(i)",5],
+ ["fssai-2-16-hemp-seed-oil","Hemp seed oil","2.16(2)(ii)",10],
+ ["fssai-2-16-hemp-seed-flour","Hemp seed flour","2.16(2)(iii)",5]
+];
+const hempEvidenceById=new Map();
+for(const [id,name,key,totalTHC] of hempIdentities){
+ const product=index.products.find(x=>x.id===id);
+ assert.ok(product&&product.name===name&&product.fssr==="2.16"&&product.rule_key===key,
+   "Hemp identity/standard routing mismatch: "+id);
+ const standards=hempChapter216.standards.filter(x=>x.key===key&&x.name===name);
+ assert.equal(standards.length,1,"Missing exact source hemp standard: "+id);
+ const rows=(standards[0].composition||[]).filter(x=>x.parameter==="Total THC");
+ assert.equal(rows.length,1,"Missing or duplicated hemp total THC: "+id);
+ assert.equal(rows[0].operator,"<=");assert.equal(rows[0].value,totalTHC);
+ assert.equal(rows[0].unit,"mg/kg");
+ hempEvidenceById.set(id,{source:hempOfficialSource,source_key:key,thc:totalTHC,cbd:75,
+    verification:"official_fssai_chapter_2_16_exact_product_and_cross_cutting_clause",
+    other_contaminants_verified:false,full_compliance_verified:false,
+    other_food_and_beverage_thc_limits_auto_applied:false});
+}
+
 const normalizeArticle = x => String(x || "").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
 const directContaminantProfiles = new Map();
 for(const profile of contaminants.profiles || []){
@@ -528,6 +561,7 @@ function contaminantEvidenceForProduct(p){
  const bisulphiteEvidence=bisulphiteById.get(p.id)||null;
  const otherOilEvidence=otherOilById.get(p.id)||null;
  const guarEvidence=guar.catalog_id===p.id?guar:null;
+ const hempEvidence=hempEvidenceById.get(p.id)||null;
  const explicitKinds=[];
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
@@ -552,11 +586,13 @@ function contaminantEvidenceForProduct(p){
  if(bisulphiteEvidence)explicitKinds.push("verified_exact_bisulphite_ins_additive_substance_metal_articles");
  if(otherOilEvidence)explicitKinds.push("verified_other_edible_vegetable_oils_lead_articles");
  if(guarEvidence)explicitKinds.push("verified_ins_412_guar_gum_official_gaur_gum_metal_alias");
+ if(hempEvidence)explicitKinds.push("official_chapter_2_16_exact_thc_and_cross_cutting_cbd");
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
    "no_exact_catalog_evidence_in_this_inventory";
  return {
    status,
+   exact_hemp_chapter_2_16_thc_cbd:hempEvidence,
    exact_alcoholic_beverage_toxic_substances:alcoholicEvidence?{
      fcs:alcoholicEvidence.fcs,article:"Alcoholic beverages",
      rules:alcoholic.rules.map(x=>({contaminant:x.contaminant,limit:x.limit,unit:x.unit})),
