@@ -22189,6 +22189,25 @@
       ],
       "source_basis": "FSSAI Chapter 2.8 Version 1 (01.09.2023)",
       "policy": "Direct numeric impurity limits from the standardized-product clause; no conversion of 'Heavy metals' into a specific metal."
+    },
+    {
+      "catalog_id": "99-99-1-bees-wax",
+      "product_name": "Bees Wax",
+      "fssr": "2.8.3(2)",
+      "rules": [
+        {
+          "contaminant": "Lead",
+          "limit": 2,
+          "unit": "mg/kg",
+          "article": "Bees Wax (INS 901)",
+          "source_basis": "FSSAI 2.8.3(2) Bees Wax product-standard purity requirement",
+          "verification": "official_fssai_direct_product_standard",
+          "source_note": "Lead maximum is for Bees Wax as supplied and tested under its product standard; not a Version IX article for Honey/Royal Jelly or a food containing Bees Wax."
+        }
+      ],
+      "source_basis": "FSSAI Chapter 2.8 Version 1 (01.09.2023), page 8, clause 2.8.3(2), Bees Wax table, serial 10",
+      "official_source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20(Sweetening%20agents%20including%20Honey).pdf",
+      "policy": "Exact Bees Wax identity and direct product-standard purity only. No inheritance by Honey, Royal Jelly or composite food; all other applicable contaminant and residue duties remain unassessed."
     }
   ],
   "sulphated_ash_conditional_lead_rules_v9": [
@@ -22415,8 +22434,8 @@
       "product_name": "Bees Wax",
       "fssr": "2.8.3(2)",
       "status": "locked_no_exact_current_article",
-      "lock_scope": "automatic contaminant mapping",
-      "reason": "Bees Wax is a separate standardized bee product. Honey antibiotic MRPLs are not inherited."
+      "lock_scope": "Version IX standalone article and Honey MRPL inheritance",
+      "reason": "Bees Wax receives Lead 2.0 mg/kg separately from FSSAI Chapter 2.8.3(2), its direct product-standard purity table. No exact Bees Wax-specific Version IX article is assumed, and Honey antibiotic MRPLs are not inherited. Other contaminants and residues remain for review."
     }
   ],
   "chapter_2_7_locked_contaminant_routes_v9": [
