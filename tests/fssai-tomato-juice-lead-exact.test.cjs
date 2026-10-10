@@ -16,6 +16,7 @@ const id="tomato-juice",product=catalogue.find(p=>p.id===id);
 const article="Fruit and vegetable juice (including tomato juice, but not including lime juice and lemon juice)";
 const sourceUrl="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf";
 const chapterUrl="https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf";
+const chapterOfficialUrl="https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf";
 const aliases=db.explicit_metal_alias_mappings_v9.filter(x=>x.product_id===id);
 const profile=db.profiles.find(x=>x.id==="alias-metal-tomato-juice");
 const origin=db.metal_article_rules_v9.Lead.find(x=>x.article===article);
@@ -30,7 +31,7 @@ const check=ctx.sourcePinnedVersionIxProfileMetalRule;
 test("Thermally processed tomato juice 2.3.8 has source-backed Lead 1 mg/kg only for its named article",()=>{
  assert.equal(product.name,"Thermally Processed Tomato Juice");
  assert.equal(product.fssr,"2.3.8");
- assert.ok((chapter.official_sources||[]).some(x=>x.url===chapterUrl));
+ assert.ok((chapter.official_sources||[]).some(x=>x.url===chapterOfficialUrl));
  assert.ok(chapter.standards.some(x=>x.key==="2.3.8"));
  assert.ok(db.official_sources.some(x=>x.url===sourceUrl));
  assert.equal(origin.row_type,"exact");
