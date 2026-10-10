@@ -35,7 +35,7 @@ test("Both water fluoride rules stay identical to official Chapter 2.10 source a
   assert.equal(group.product_name,product.name);
   assert.equal(group.official_source_url,source);
   assert.match(group.source_basis,new RegExp(key.replaceAll(".","\\.")));
-  assert.equal(group.rules.length,1);
+  assert.equal(group.rules.length,id==="packaged-drinking-water"?2:1);
   const r=group.rules[0];
   assert.equal(r.contaminant,"Fluoride");
   assert.equal(r.limit,fromStandard.value);
@@ -91,4 +91,41 @@ test("Helper UI source-pin checks both exact water clauses and withholds edited 
   s.key!==product.fssr?s:{...s,physical_chemical:s.physical_chemical.map(v=>
    v.parameter!=="Fluoride"?v:{...v,value:2})})}];
  assert.equal(ctx.sourcePinnedDirectStandardLimit(product,group,group.rules[0]),false,"Modified official source table must fail closed");
+});
+
+test("Packaged Drinking Water bromates come from exact FSSAI 2.10.8 Table 3, not an inherited article",()=>{
+ const id="packaged-drinking-water",product=index.products.find(x=>x.id===id);
+ const chapterStandard=chapter.standards.find(x=>x.key==="2.10.8");
+ const expected=(chapterStandard.physical_chemical||[]).filter(x=>x.parameter==="Bromates as BrO3");
+ assert.equal(expected.length,1);
+ assert.equal(expected[0].operator,"<=");
+ assert.equal(expected[0].value,0.01);
+ assert.equal(expected[0].unit,"mg/L");
+ const group=db.direct_product_standard_contaminant_rules_v1.find(x=>x.catalog_id===id);
+ const bromate=group.rules.filter(x=>x.contaminant==="Bromates as BrO3");
+ assert.equal(bromate.length,1);
+ assert.equal(bromate[0].limit,expected[0].value);
+ assert.equal(bromate[0].unit,expected[0].unit);
+ assert.equal(bromate[0].verification,"official_fssai_direct_product_standard");
+ assert.equal(bromate[0].article,chapterStandard.name);
+ const other=db.direct_product_standard_contaminant_rules_v1.filter(x=>x.catalog_id!==id);
+ assert.equal(other.some(x=>x.rules?.some(r=>r.contaminant==="Bromates as BrO3")),false,"Bromates cannot be transferred to other products");
+ const vm=require("node:vm");
+ const at=helper.indexOf("function sourcePinnedDirectStandardLimit(p,group,rule){");
+ const end=helper.indexOf("function productBaselineContaminantRules(p){",at);
+ assert.ok(at>=0&&end>at);
+ const ctx={
+  standardSearchIndexDb:index,chapterRuleDbs:[chapter],
+  ruleDbStandards:db=>db.standards||[],
+  normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim()
+ };
+ vm.runInNewContext(helper.slice(at,end),ctx);
+ assert.equal(ctx.sourcePinnedDirectStandardLimit(product,group,bromate[0]),true);
+ assert.equal(ctx.sourcePinnedDirectStandardLimit(product,group,{...bromate[0],limit:0.1}),false,"10× source drift must fail closed");
+ assert.equal(ctx.sourcePinnedDirectStandardLimit(product,group,{...bromate[0],unit:"mg/kg"}),false,"No arbitrary mg/kg conversion");
+ assert.equal(ctx.sourcePinnedDirectStandardLimit({...product,id:"mineral-water"},group,bromate[0]),false);
+ ctx.chapterRuleDbs=[{...chapter,standards:chapter.standards.map(st=>st.key!=="2.10.8"?st:{
+  ...st,physical_chemical:st.physical_chemical.map(v=>v.parameter==="Bromates as BrO3"?{...v,value:0.1}:v)
+ })}];
+ assert.equal(ctx.sourcePinnedDirectStandardLimit(product,group,bromate[0]),false,"Changed chapter table must fail closed");
 });
