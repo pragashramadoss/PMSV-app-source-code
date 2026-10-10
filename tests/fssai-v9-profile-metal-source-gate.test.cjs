@@ -99,7 +99,7 @@ test("Generic metal fallback and anomaly rows cannot prove an exact product prof
  }
  const exactSucralose=db.profiles.find(p=>p.id==="exact-metal-11-11-6-sucralose").rules.find(r=>r.contaminant==="Lead");
  assert.equal(checked({id:"11-11-6-sucralose"},exactSucralose),true,"Verified exact metal row still works");
- assert.match(helper,/sameLimit=row=>row\\.row_type==='exact'/);
- assert.match(helper,/if\\(r\\.row_type==='exact' &&normIngredient\\(r\\.article\\|\\|''\\)===n\\)/,
+ assert.match(helper,/sameLimit=row=>row\.row_type==='exact'/);
+ assert.match(helper,/if\(r\.row_type==='exact' &&normIngredient\(r\.article\|\|''\)===n\)/,
    "Direct name matching must exclude generic/default/anomalous metal rows too");
 });
