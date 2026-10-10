@@ -28132,5 +28132,63 @@
     "amendments_fully_reconciled": false,
     "finished_food_additive_use_approved": false,
     "application_note": "Exact guar gum additive identity; FSSAI Version IX contaminant article spells Gaur gum. Preserve official literal; no additive use permissions or finished-food metal compliance inference."
+  },
+  "water_product_standard_pesticide_limits_v1": {
+    "schema_version": "1.0",
+    "source_version": "Version 4 (01.08.2025)",
+    "official_source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf",
+    "verification": "direct_product_standard_source_gate_required",
+    "inference_to_other_beverages": false,
+    "notes": "Source-pinned separate water product-standard pesticide limits. A change to the official Chapter 2.10 product-standard pesticide table must fail closed. Distinct from the FSSAI CTR commodity pesticide rows and finished-food compliance approvals.",
+    "routes": [
+      {
+        "catalog_id": "mineral-water",
+        "product_name": "Mineral water",
+        "fssr": "2.10.7",
+        "source_chapter_key": "2.10.7",
+        "source_table": "Pesticide residue characteristics under Mineral Water, page 20",
+        "rules": [
+          {
+            "parameter": "Individual pesticide residue",
+            "limit": 0.0001,
+            "unit": "mg/L",
+            "condition": "Individual pesticide residues measured separately",
+            "source_basis": "FSSAI Chapter 2.10 2.10.7 · Pesticide residue characteristics under Mineral Water, page 20"
+          },
+          {
+            "parameter": "Total pesticide residue",
+            "limit": 0.0005,
+            "unit": "mg/L",
+            "condition": "Total pesticide residues summed according to applicable test method",
+            "source_basis": "FSSAI Chapter 2.10 2.10.7 · Pesticide residue characteristics under Mineral Water, page 20"
+          }
+        ],
+        "scope": "Finished standardized water only; not a commodity-specific pesticide MRL and not an ingredient or food containing water."
+      },
+      {
+        "catalog_id": "packaged-drinking-water",
+        "product_name": "Packaged Drinking Water (other than Mineral Water)",
+        "fssr": "2.10.8",
+        "source_chapter_key": "2.10.8",
+        "source_table": "Table 6 — Parameters concerning pesticide residues, page 24",
+        "rules": [
+          {
+            "parameter": "Individual pesticide residue",
+            "limit": 0.0001,
+            "unit": "mg/L",
+            "condition": "Individual pesticide residues measured separately",
+            "source_basis": "FSSAI Chapter 2.10 2.10.8 · Table 6 — Parameters concerning pesticide residues, page 24"
+          },
+          {
+            "parameter": "Total pesticide residue",
+            "limit": 0.0005,
+            "unit": "mg/L",
+            "condition": "Total pesticide residues summed according to applicable test method",
+            "source_basis": "FSSAI Chapter 2.10 2.10.8 · Table 6 — Parameters concerning pesticide residues, page 24"
+          }
+        ],
+        "scope": "Finished standardized water only; not a commodity-specific pesticide MRL and not an ingredient or food containing water."
+      }
+    ]
   }
 }
