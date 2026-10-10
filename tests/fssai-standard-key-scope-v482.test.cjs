@@ -17,8 +17,8 @@ const rendering=section('function standardLookupRegulatoryCompositionHtml(){','f
 const norm=x=>String(x||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
 const products={
  wheat:{id:'06-06-1-wheat',name:'Wheat',fssr:'2.4.6',rule_key:'2.4.6'},
- rice:{id:'06-06-1-rice',name:'Rice',fssr:'2.4.6',rule_key:'2.4.6'},
- durum:{id:'06-06-1-durum-wheat',name:'Durum Wheat',fssr:'2.4.6',rule_key:'2.4.6'},
+ rice:{id:'06-06-1-rice',name:'Rice',fssr:'2.4.6',rule_key:'2.4.6(24)'},
+ durum:{id:'06-06-1-durum-wheat',name:'Durum Wheat',fssr:'2.4.6',rule_key:'2.4.6(19)'},
  basmati:{id:'06-06-1-basmati-rice',name:'Basmati Rice',fssr:'2.4.6',rule_key:'2.4.6'},
  frk:{id:'06-06-2-rice-flour-for-preparation-of-fortified-rice-kernel-frk',name:'Rice Flour for preparation of Fortified Rice Kernel (FRK)',fssr:'2.4.6-24(a)',rule_key:'2.4.6-24(a)'},
  atta:{id:'06-06-2-wheat-flour-atta-and-resultant-wheat-flour-resultant-atta',name:'Wheat Flour (Atta) and Resultant Wheat Flour (Resultant Atta)',fssr:'2.4.1',rule_key:'2.4.1'},
@@ -61,10 +61,14 @@ test('Wheat shows only its general Food Grains chapter, not rice or FRK',()=>{
  assert.doesNotMatch(view,/2\.4\.6-24\(a\)/);
  assert.doesNotMatch(view,/2\.4\.6\(24\)/);
 });
-test('Durum wheat shows only general grain rules and no rice-flour standards',()=>{
+test('Durum wheat shows general grain and specific 2.4.6(19), but no rice-flour standards',()=>{
  const h=make(products.durum);
- assert.deepEqual(h.codes(),['2.4.6']);
- assert.doesNotMatch(h.render(),/Rice Flour/);
+ assert.deepEqual(h.codes(),['2.4.6','2.4.6(19)']);
+ const view=h.render();
+ assert.match(view,/2\.4\.6\(19\)/);
+ assert.match(view,/Beta carotene/);
+ assert.doesNotMatch(view,/Rice Flour/);
+ assert.doesNotMatch(view,/2\.4\.6-24\(a\)/);
 });
 test('Rice retains Food Grains and its exact named rice overlay, not FRK',()=>{
  const h=make(products.rice);
