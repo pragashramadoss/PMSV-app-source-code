@@ -8378,6 +8378,30 @@ function sourcePinnedWaterPesticideEvidence(p){
  return ok?{relevant:true,verified:true,rows:selected.rules,source:cfg.official_source_url}:no;
 }
 
+/* Version IX Section 2.1 profile rows must match the active local official
+ * metal-article master. Grouped articles are allowed only for explicitly
+ * reviewed named identities. Older copied values never bypass the source. */
+function sourcePinnedVersionIxProfileMetalRule(p,rule){
+ if(!p||!rule||!contaminantsDb)return false;
+ if(!/^section 2\.1(?:\s|·|$)/i.test(String(rule.source_basis||'')))return true;
+ const rows=contaminantsDb.metal_article_rules_v9?.[rule.contaminant];
+ if(!Array.isArray(rows)||!rows.length)return false;
+ const sameLimit=row=>Number.isFinite(Number(row.limit))
+   &&Number(row.limit)===Number(rule.limit)
+   &&String(row.unit||'').trim().toLowerCase()===String(rule.unit||'').trim().toLowerCase();
+ if(rows.some(row=>normIngredient(row.article)===normIngredient(rule.article)&&sameLimit(row)))return true;
+ const groupedLead='Canned fish, canned meats, edible gelatin, meat extracts and hydrolysed protein, dried or dehydrated vegetables (other than onions)';
+ const groupedArsenic='Dehydrated onions, edible gelatin, liquid pectin';
+ const aliases={
+   '99-99-1-gelatin':{Lead:['Edible gelatin',groupedLead],Arsenic:['Edible gelatin',groupedArsenic]},
+   '99-99-1-gelatin-from-fish-processing-waste':{Lead:['Edible gelatin',groupedLead],Arsenic:['Edible gelatin',groupedArsenic]},
+   '09-09-4-canned-fishery-products':{Lead:['Canned fish',groupedLead]}
+ };
+ const allowed=aliases[p.id]?.[rule.contaminant];
+ return !!allowed &&normIngredient(allowed[0])===normIngredient(rule.article)
+   &&rows.some(row=>normIngredient(row.article)===normIngredient(allowed[1])&&sameLimit(row));
+}
+
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  if(exactFinishedProductContaminantLock(p))return [];
@@ -8951,7 +8975,9 @@ function renderProductContaminants(){
  }
  const profile=contaminantProfileForProduct(p);
  const universal=Array.isArray(contaminantsDb.all_food_rules)?contaminantsDb.all_food_rules.filter(x=>x.auto_apply===true):[];
- const exact=profile&&Array.isArray(profile.rules)?profile.rules:[];
+ const rawProfileRules=profile&&Array.isArray(profile.rules)?profile.rules:[];
+ const withheldProfileMetalRules=rawProfileRules.filter(rule=>!sourcePinnedVersionIxProfileMetalRule(p,rule));
+ const exact=rawProfileRules.filter(rule=>sourcePinnedVersionIxProfileMetalRule(p,rule));
  const baseline=productBaselineContaminantRules(p);
  const conditionalMetals=conditionalMetalRowsForProduct(p);
  const packagingTin=selectedPackagingTinRule(p);
@@ -8995,6 +9021,7 @@ function renderProductContaminants(){
     : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
    +productContaminantGateNotices(p)
+   +(withheldProfileMetalRules.length?'<div class="notice"><b>Version IX metal source-check required — numeric limit withheld:</b> '+withheldProfileMetalRules.map(rule=>esc(rule.contaminant)+' ('+esc(rule.article)+')').join('; ')+'. No copied profile value is used unless its exact official metal article or reviewed grouped commodity identity, value and unit still match the current loaded FSSAI source table.</div>':'')
    +meatEggCommodityReview
    +cerealCommodityReview
    +fruitVegCommodityReview
