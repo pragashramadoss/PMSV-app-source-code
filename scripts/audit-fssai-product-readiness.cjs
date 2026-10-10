@@ -1088,6 +1088,44 @@ for(const row of next10ExactSource.matched){
  assert.equal(row.claim_that_no_other_limit_applies,false);
  assert.ok(official(row.official_standard_source));
  assert.ok(row.specific_processing_or_recipe_disqualification.length>100);
+ assert.equal(next10ExactSource.additional_source_references_verified,8);
+ assert.equal(next10ExactSource.additional_source_references_are_only_conditional,true);
+ assert.equal(next10ExactSource.full_finished_food_compliance_granted,0);
+ const extras=row.additional_named_source_rows||[];
+ const byType={
+  vanilla_dried_spice_lead:{name:"Arsenic",value:5,
+   article:"Dried herbs, finings and clearing agents, solid pectin all grades, spices",unit:"mg/kg"},
+  harissa_spice_composite_b1:{name:"Total Aflatoxins",value:20,
+   article:"Food product containing any of the above mentioned food articles",unit:"µg/kg"},
+  spice_mouth_freshener_composite_b1:{name:"Total Aflatoxins",value:20,
+   article:"Food product containing any of the above mentioned food articles",unit:"µg/kg"},
+  finished_frozen_confection_lead:{name:"Arsenic",value:0.5,
+   article:"Ice-cream, iced lollies and similar frozen confections",unit:"mg/kg"},
+  instant_tea_lead_dry_basis:{name:"Copper",value:150,article:"Tea",unit:"mg/kg"}
+ };
+ const e=byType[row.article_group];
+ assert.equal(extras.length,e?1:0,"Wrong number of additional source rows "+row.catalog_id);
+ for(const q of extras){
+  assert.equal(q.metal,e.name);
+  assert.equal(q.official_article,e.article);
+  assert.equal(q.reference_limit,e.value);
+  assert.equal(q.unit,e.unit);
+  assert.equal(q.official_ctr_source,version9Source);
+  assert.equal(q.auto_apply_numeric,false);
+  assert.equal(q.finished_food_compliance_pass,false);
+  assert.equal(q.current_amendments_reconciled,false);
+  assert.ok(q.basis.length>40&&q.pdf_page_one_based>=7&&q.pdf_page_one_based<=14);
+  if(q.metal==="Total Aflatoxins"){
+   assert.equal((contaminants.crop_contaminants?.total_aflatoxins?.rules||[])
+    .filter(x=>x.article===q.official_article&&Number(x.limit)===q.reference_limit).length,1,
+    "Current FSSAI total-aflatoxin composite article changed: "+row.catalog_id);
+  }else{
+   assert.equal((contaminants.metal_article_rules_v9?.[q.metal]||[])
+    .filter(x=>x.row_type==="exact"&&normalizeArticle(x.article)===normalizeArticle(q.official_article)
+      &&Number(x.limit)===q.reference_limit).length,1,
+    "Additional official metal article mismatch: "+row.catalog_id);
+  }
+ }
  const {article_group:k,official_named_article:article,source_reference_limit:limit}=row;
  const metalRows=contaminants.metal_article_rules_v9?.Lead||[];
  const namedMetal=(expected,value)=>metalRows.filter(x=>x.row_type==="exact"
@@ -1659,6 +1697,7 @@ function contaminantEvidenceForProduct(p){
      parameter:next10SourceArticle.parameter,
      source_limit:next10SourceArticle.source_reference_limit,
      source_unit:next10SourceArticle.source_reference_unit,
+     additional_source_rows:next10SourceArticle.additional_named_source_rows,
      incomplete_sample_matrix_and_processing:true,
      automatic_numeric_compliance_pass:false,
      amendments_fully_reconciled:false,full_product_compliance_verified:false}:null,
