@@ -27,11 +27,21 @@ test("Royal Jelly and stereoisomer-specific tartaric acid no longer inherit misl
    assert.deepEqual(candidate(byName(name)[0]),[],name);
  }
 });
-test("Known non-milk dairy identities cannot inherit milks article automatically even as candidate",()=>{
- const names=["Anhydrous milk fat","Butter","Butter oil","Cow or Buffalo Colostrum and Colostrum Products","Cream","Dairy Permeate Powders","Dairy Whitener","Edible Casein Products","Edible Lactose","Fermented/cultured/sour cream","Malai","Milk fat","Milk Protein Concentrate"];
+test("Dairy fat/derived-product pesticide source matches never imply a generic liquid-milk Lead article",()=>{
+ const names=["Cow or Buffalo Colostrum and Colostrum Products","Edible Lactose"];
  for(const name of names){
   const rows=byName(name);assert.equal(rows.length,1,name);
   assert.ok(!candidate(rows[0]).some(x=>x.startsWith("Milks (")),name);
+ }
+ const db=read("fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json");
+ const source=db.chapter_2_1_additional_milk_commodity_evidence_v9;
+ assert.equal(source.exact_products.length,20);
+ assert.equal(source.article,"Milk and Milk products");
+ assert.equal(source.auto_assign_numeric_pesticide_mrl,false);
+ assert.equal(source.fat_based_residue_caveat_required,true);
+ for(const name of ["Anhydrous milk fat","Butter","Butter oil","Cream","Dairy Permeate Powders","Dairy Whitener","Edible Casein Products","Fermented/cultured/sour cream","Malai","Milk fat","Milk Protein Concentrate"]){
+  assert.equal(byName(name).length,0,name);
+  assert.equal(source.exact_products.filter(x=>x.product_name===name).length,1,name);
  }
 });
 test("Sugar, infant and juice candidate scopes do not conflate finished forms",()=>{
