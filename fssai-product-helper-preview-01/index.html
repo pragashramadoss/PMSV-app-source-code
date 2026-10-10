@@ -8412,8 +8412,58 @@ function sourcePinnedWaterPesticideEvidence(p){
 /* Version IX Section 2.1 profile rows must match the active local official
  * metal-article master. Grouped articles are allowed only for explicitly
  * reviewed named identities. Older copied values never bypass the source. */
+/* Product-profile toxin entries are never independent numeric sources.
+ * Check each copied Section 2.2.1 row against the loaded official
+ * Version IX crop/toxic-substances/PCB master. For generic Nuts both
+ * documented categories must agree; named Wheat/Wheat bran need an
+ * explicit reviewed identity split from the official grouped article. */
+function sourcePinnedVersionIxProfileCropAndNotsRule(p,rule){
+ if(!p||!rule||!contaminantsDb)return false;
+ if(!/^section 2\.2\.1(?:\s|·|$)/i.test(String(rule.source_basis||'')))return true;
+ if(contaminantsDb.source_version!=='Version IX (03.02.2026)'
+   ||!(contaminantsDb.official_sources||[]).some(src=>
+     src.url==='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf'))return false;
+ const keys={'Total Aflatoxins':'total_aflatoxins','Aflatoxin B1':'aflatoxin_b1',
+   'Aflatoxin M1':'aflatoxin_m1','Ochratoxin A':'ochratoxin_a','Deoxynivalenol':'deoxynivalenol'};
+ const key=keys[rule.contaminant];
+ if(key){
+   const source=contaminantsDb.crop_contaminants?.[key];
+   if(!source||String(source.unit)!==String(rule.unit))return false;
+   const rows=source.rules||[];
+   const matching=row=>Number.isFinite(Number(row.limit))&&Number(row.limit)===Number(rule.limit);
+   if(rule.article==='Nuts'){
+     // Do not invent a generic 'Nuts' source row or choose one processing variant.
+     return ['Nuts for further processing','Nuts, ready to eat'].every(a=>
+       rows.some(row=>row.article===a&&matching(row)));
+   }
+   if((key==='ochratoxin_a'||key==='deoxynivalenol')
+       &&(rule.article==='Wheat'||rule.article==='Wheat bran')){
+     return (contaminantsDb.explicit_crop_contaminant_article_mappings_v9||[]).some(mapping=>
+       mapping.catalog_id===p.id&&mapping.exact_catalog_identity_verified===true
+       &&normIngredient(mapping.standard_identity)===normIngredient(rule.article)
+       &&(mapping.contaminants||[]).some(item=>
+         item.crop_contaminant_key===key &&item.limit===rule.limit
+         &&item.unit===rule.unit
+         &&rows.some(row=>row.article===item.official_article&&matching(row))));
+   }
+   return rows.some(row=>row.article===rule.article&&matching(row));
+ }
+ const other=rule.contaminant==='Saffrole'
+   ?contaminantsDb.naturally_occurring_toxic_substances?.saffrole
+   :rule.contaminant==='Hydrocyanic acid'
+     ?contaminantsDb.naturally_occurring_toxic_substances?.hydrocyanic_acid
+     :rule.contaminant==='Benzo(a)pyrene'
+       ?contaminantsDb.fish_pcb_pah?.rules?.filter(r=>r.contaminant==='Benzo(a)pyrene')
+       :null;
+ if(!Array.isArray(other))return false;
+ return other.some(row=>row.article===rule.article
+   &&Number.isFinite(Number(row.limit))&&Number(row.limit)===Number(rule.limit)
+   &&row.unit===rule.unit);
+}
+
 function sourcePinnedVersionIxProfileMetalRule(p,rule){
  if(!p||!rule||!contaminantsDb)return false;
+ if(/^section 2\.2\.1(?:\s|·|$)/i.test(String(rule.source_basis||'')))return sourcePinnedVersionIxProfileCropAndNotsRule(p,rule);
  if(!/^section 2\.1(?:\s|·|$)/i.test(String(rule.source_basis||'')))return true;
  const rows=contaminantsDb.metal_article_rules_v9?.[rule.contaminant];
  if(!Array.isArray(rows)||!rows.length)return false;
