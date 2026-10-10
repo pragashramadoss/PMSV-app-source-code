@@ -715,11 +715,46 @@ function contaminantEvidenceForProduct(p){
      total_aflatoxins_auto_assigned:false,automatic_mrls:false,
      amendments_checked_completely:false};
  })();
+ const nonFermentedSoybeanB1Evidence=(()=>{
+   const subjects=[
+     ['06-06-8-soybean-beverages-and-related-products','Soybean Beverages and Related Products'],
+     ['06-06-8-soybean-curd-and-related-products','Soybean Curd and Related Products'],
+     ['06-06-8-compressed-soybean-curd','Compressed Soybean Curd'],
+     ['06-06-8-dehydrated-soybean-curd-film','Dehydrated Soybean Curd Film'],
+     ['06-06-8-tofu','Tofu']
+   ];
+   if(p.fssr!=='2.4.30'||!subjects.some(([id,name])=>id===p.id&&name===p.name))return null;
+   if(!/Version IX.*03\.02\.2026/.test(String(contaminants.source_version||'')))return null;
+   const {record,sourceUrls}=chapterRecord(p), identity=record.source_verified_identity;
+   if(record.key!=='2.4.30'||record.name!=='Non-Fermented Soybean Products'
+     ||identity?.source_clause!=='2.4.30'
+     ||identity.source_compendium!=='Version 4 (07.05.2025)'
+     ||identity.complete_contaminant_compliance!==false
+     ||identity.identity_verified_only!==true
+     ||identity.allow_cross_product_auto_inheritance!==false
+     ||!official(identity.official_source_url)
+     ||!sourceUrls.includes(identity.official_source_url))return null;
+   const allowed=(identity.approved_exact_catalogue_identities||[]).filter(x=>
+      x.catalog_id===p.id&&x.product_name===p.name&&x.fssr===p.fssr);
+   if(allowed.length!==1 || identity.approved_exact_catalogue_identities.length!==5)return null;
+   const group=contaminants.crop_contaminants?.aflatoxin_b1;
+   const articles=['Oilseeds, ready to eat','Food product containing any of the above mentioned food articles'];
+   if(group?.unit!=='µg/kg'||!articles.every(article=>
+     (group.rules||[]).filter(row=>normalizeArticle(row.article)===normalizeArticle(article)
+       &&Number(row.limit)===10&&String(row.unit||group.unit)==='µg/kg').length===1))return null;
+   return {catalog_id:p.id,product_name:p.name,clause:p.fssr,
+     chapter_source_url:identity.official_source_url,source_url:version9Source,
+     contaminant:'Aflatoxin B1',limit:10,unit:'µg/kg',
+     official_articles:articles,exact_finished_product_identity:true,
+     complete_contaminant_compliance:false,total_aflatoxins_auto_assigned:false,
+     pesticide_mrl_auto_approval:false,current_amendments_fully_reconciled:false};
+ })();
  const explicitKinds=[];
  if(peanutButterCompositeEvidence)explicitKinds.push("official_v9_exact_peanut_butter_composite_aflatoxins_partial");
  if(sharedCerealAflatoxinB1Evidence)explicitKinds.push("official_v9_harmonised_cereal_composite_b1_partial");
  if(bengalGramAflatoxinB1Evidence)explicitKinds.push("official_v9_exact_bengal_gram_pulse_composite_b1_partial");
  if(soyDerivativeB1Evidence)explicitKinds.push("official_v9_soy_derivative_oilseed_composite_b1_partial");
+ if(nonFermentedSoybeanB1Evidence)explicitKinds.push("official_v9_exact_nonfermented_soybean_b1_partial");
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
  if(direct)explicitKinds.push("exact_product_clause");
@@ -774,6 +809,7 @@ function contaminantEvidenceForProduct(p){
    exact_harmonised_cereal_aflatoxin_b1:sharedCerealAflatoxinB1Evidence,
    exact_bengal_gram_pulse_composite_b1:bengalGramAflatoxinB1Evidence,
    exact_soy_derivative_oilseed_composite_b1:soyDerivativeB1Evidence,
+   exact_nonfermented_soybean_b1:nonFermentedSoybeanB1Evidence,
    conditional_milk_powder_aflatoxin_m1_review:milkPowderAflatoxinM1Review,
    exact_hemp_chapter_2_16_thc_cbd:hempEvidence,
    exact_alcoholic_beverage_toxic_substances:alcoholicEvidence?{
