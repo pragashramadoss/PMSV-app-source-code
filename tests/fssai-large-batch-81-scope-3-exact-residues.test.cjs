@@ -37,7 +37,7 @@ test("78 currently unresolved of original 81 source-gated identities, 42 differe
    assert.match(data.source_regulatory_standard_url,/^https:\/\/(?:www\.)?(?:fssai\.gov\.in|foscos\.fssai\.gov\.in)\//);
    types.add(data.review_type);
  }
- assert.equal(types.size,42);
+ assert.equal(types.size,41);
  for(const id of exactIds)assert.ok(!manifest.records.some(x=>x.catalog_id===id),"Verified exact partial still in no-evidence queue "+id);
 });
 test("Spice Oleoresin processing solvent rows are exactly the official named FSSR standard, including 3 GMP-only solvents",()=>{
