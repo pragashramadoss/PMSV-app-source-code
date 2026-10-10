@@ -6,13 +6,13 @@ const manifest=JSON.parse(read("fssai-product-helper-preview-01/data/rules/conta
 const html=read("fssai-product-helper-preview-01/index.html"),queue=read("FSSAI-CONTAMINANT-EVIDENCE-QUEUE-2026-10-10.md");
 const byId=new Map(index.map(x=>[x.id,x]));
 const queued=new Set([...queue.matchAll(/^\| [^|]+\| `([^`]+)` \|/gm)].map(m=>m[1]));
-test("All 244 pending identities have accurate individual FSSAI review records with no exemption or PASS",()=>{
- assert.equal(queued.size,244);
- assert.equal(manifest.count,244);
- assert.equal(manifest.records.length,244);
+test("All 239 pending identities have accurate individual FSSAI review records with no exemption or PASS",()=>{
+ assert.equal(queued.size,239);
+ assert.equal(manifest.count,239);
+ assert.equal(manifest.records.length,239);
  assert.deepEqual(new Set(manifest.records.map(x=>x.catalog_id)),queued);
  assert.equal(manifest.full_compliance_achieved,0);
- assert.equal(manifest.verified_evidence_added,20);
+ assert.equal(manifest.verified_evidence_added,25);
  for(const item of manifest.records){
   const product=byId.get(item.catalog_id);
   assert.ok(product,item.catalog_id);
@@ -45,7 +45,7 @@ test("Risk-sensitive FSSAI product distinctions are individually documented",()=
 });
 test("Product Contaminants displays evidence gaps and cannot turn review notes into numeric limits",()=>{
  assert.match(html,/let contaminantsPendingReviewDb=null/);
- assert.match(html,/contaminants-v9-unresolved-264-review-v1\.json\?v=20261010-scope2/);
+ assert.match(html,/contaminants-v9-unresolved-264-review-v1\.json\?v=20261010-scope3/);
  assert.match(html,/el\.innerHTML=profileMsg\s*\+pendingContaminantReviewNotice\(p\)/);
  const start=html.indexOf("function pendingContaminantReviewNotice(p){");
  const end=html.indexOf("function renderProductContaminants(){",start);
@@ -70,13 +70,13 @@ test("Product Contaminants displays evidence gaps and cannot turn review notes i
 });
 
 test("Every pending identity now has source-linked and explicitly conditional Version IX named-article review",()=>{
- assert.equal(manifest.source_row_scope_reviewed,244);
- assert.equal(manifest.pending,244);
- assert.equal(manifest.conditional_source_article_candidate_records,117);
- assert.match(manifest.scope_article_reconciliation,/no new exact-product numeric applicability verified/i);
+ assert.equal(manifest.source_row_scope_reviewed,239);
+ assert.equal(manifest.pending,239);
+ assert.equal(manifest.conditional_source_article_candidate_records,112);
+ assert.match(manifest.scope_article_reconciliation,/five cereal\/malt identities are now separately counted/i);
  const candidates=manifest.records.filter(x=>
    x.version_ix_named_article_scope_review.source_article_candidates_review_only.length>0);
- assert.equal(candidates.length,117);
+ assert.equal(candidates.length,112);
  for(const row of manifest.records){
   const review=row.version_ix_named_article_scope_review;
   assert.ok(review,row.catalog_id);
@@ -107,7 +107,7 @@ test("Every pending identity now has source-linked and explicitly conditional Ve
  assert.deepEqual(dairyAnalogue.version_ix_named_article_scope_review.source_article_candidates_review_only,[]);
 });
 
-test("Published pending family summary reconciles exactly to all 244 catalogue IDs",()=>{
+test("Published pending family summary reconciles exactly to all 239 catalogue IDs",()=>{
  const head=queue.split("## Unresolved by standard family")[1].split("## Exact unresolved identities")[0];
  const table=new Map([...head.matchAll(/^\| (2\.\d+|3\.3|special) \| (\d+) \|$/gm)].map(x=>[x[1],Number(x[2])]));
  const counts={};
@@ -115,5 +115,5 @@ test("Published pending family summary reconciles exactly to all 244 catalogue I
  assert.equal(table.size,Object.keys(counts).length);
  for(const [prefix,count] of Object.entries(counts))
    assert.equal(table.get(prefix),count,"Mismatched named family "+prefix);
- assert.equal([...table.values()].reduce((a,b)=>a+b,0),244);
+ assert.equal([...table.values()].reduce((a,b)=>a+b,0),239);
 });
