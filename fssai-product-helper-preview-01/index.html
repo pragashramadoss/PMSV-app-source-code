@@ -1220,6 +1220,7 @@ let productMasterDb=null;
 let standardSearchIndexDb=null;
 let appendixCoreDb=null;
 let contaminantsDb=null;
+let contaminantsFutureAmendmentDb=null;
 let appendixCDb=null;
 let microbiologyDb=null;
 let labelDb=null;
@@ -9109,6 +9110,7 @@ function renderProductContaminants(){
    +(Date.now()>=Date.UTC(2026,10,30,18,30)
       &&(withheld2026Changeover.length||ctrMay2026AffectedProduct(p))
       ?'<div class="notice"><b>FSSAI 2026 contaminants amendment — revalidation required.</b> The 25 May 2026 notification has a 1 December 2026 commencement date. '+withheld2026Changeover.length+' potentially superseded Version IX numeric row(s) have been withheld. Revised pulse-flour metals, fish-oil arsenic, oil/oilseed aflatoxins, saffrole scope and seafood antibiotic residues have not yet been fully transcribed and verified against the official Gazette. This is NOT a compliance pass. Refer to the <a href="https://fssai.gov.in/food-law/regulations/amendments/contaminants-toxins" target="_blank" rel="noopener">official FSSAI amendment index</a>.</div>':'')
+   +futureFssaiAmendmentWatchHtml(p)
    +productContaminantGateNotices(p)
    +(withheldProfileMetalRules.length?'<div class="notice"><b>Version IX metal source-check required — numeric limit withheld:</b> '+withheldProfileMetalRules.map(rule=>esc(rule.contaminant)+' ('+esc(rule.article)+')').join('; ')+'. No copied profile value is used unless its exact official metal article or reviewed grouped commodity identity, value and unit still match the current loaded FSSAI source table.</div>':'')
    +(withheldProfileCropRules.length?'<div class="notice"><b>Version IX spice aflatoxin source-check required — numeric value withheld:</b> '+withheldProfileCropRules.map(rule=>esc(rule.contaminant)).join('; ')+'. A spice limit is shown only when the exact named product mapping and the loaded official Section 2.2.1 article, value and unit agree.</div>':'')
@@ -9122,6 +9124,25 @@ function renderProductContaminants(){
    +(prohibitedVetRows?'<div class="card" style="margin-top:12px;background:#fffaf0"><div class="section-title"><h3 style="margin:0">Prohibited veterinary / pharmacologically active substances</h3><span>Milk and milk products · Section 2.3.2</span></div><div class="notice"><b>These substances are not permitted to be used at any stage of production of milk and milk products.</b> PMSV shows the current FSSAI extraneous maximum residue level (EMRL) used for enforcement/testing.</div><div class="tablewrap"><table><thead><tr><th>Substance</th><th>Requirement / EMRL</th><th>Scope</th><th>Regulatory basis</th></tr></thead><tbody>'+prohibitedVetRows+'</tbody></table></div></div>':'')
    +'<div class="countline">'+rules.length+' metal/toxin/all-food rule'+(rules.length===1?'':'s')+' + '+conditionalMetals.length+' conditional subtype metal row'+(conditionalMetals.length===1?'':'s')+' + '+pesticideMrls.length+' pesticide MRL row'+(pesticideMrls.length===1?'':'s')+' + '+prohibitedVet.length+' prohibited veterinary-substance row'+(prohibitedVet.length===1?'':'s')+' shown · “Foods not specified” and generic canned-food fallbacks remain disabled.</div>';
 }
+/* Prospective FSSAI Gazette register, NOT an active numeric-limit module.
+ * Exact identity watch flags prompt human revalidation; they do not establish
+ * the legal applicability of any future requirement or permit a PASS. */
+function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
+ const m=contaminantsFutureAmendmentDb;
+ const official='https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf';
+ if(!p?.id||!m||m.source?.url!==official||m.effective_date!=='2026-12-01'
+    ||m.runtime_policy?.all_changes_auto_apply!==false)return '';
+ const hits=(m.changes||[]).filter(group=>Array.isArray(group.catalog_ids)&&group.catalog_ids.includes(p.id));
+ if(!hits.length)return '';
+ const effective=Number.isFinite(nowMs)&&nowMs>=Date.UTC(2026,10,30,18,30);
+ const stage=effective?'Effective 1 December 2026 — source reconciliation required'
+   :'Not yet effective — comes into force 1 December 2026';
+ return '<div class="notice"><b>Official FSSAI 2026 amendment watch:</b> '+stage+'. '
+   +(effective?'Revised scope must be confirmed before using affected numeric limits.'
+     :'Prospective provisions are kept separate from current Version IX numeric requirements.')
+   +'<div style="margin-top:6px">'+hits.map(g=>'<div><b>'+esc(g.id.replaceAll('_',' '))+':</b> '+esc(g.change)+' <small>'+esc(g.review_scope)+'</small></div>').join('')+'</div>'
+   +'<small><a href="'+official+'" target="_blank" rel="noopener noreferrer">Read the official FSSAI Gazette</a>. Watch-list inclusion does not itself prove product applicability or establish full compliance.</small></div>';
+}
 async function loadContaminantsDb(){
  try{
    const res=await fetch('./data/rules/contaminants-v9-core.json?v=432',{cache:'reload'});
@@ -9130,6 +9151,11 @@ async function loadContaminantsDb(){
  }catch(e){
    contaminantsDb=null;
  }
+ try{
+   const future=await fetch('./data/rules/contaminants-2026-deferred-amendment-v1.json?v=1',{cache:'reload'});
+   if(!future.ok)throw new Error('HTTP '+future.status);
+   contaminantsFutureAmendmentDb=await future.json();
+ }catch(e){contaminantsFutureAmendmentDb=null;}
  renderProductContaminants();
  refreshStandardLookupAudit();
 }
