@@ -7,8 +7,8 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 372 |
-| No exact product-identity contaminant evidence established by current index | 161 |
+| Some exact product evidence, partial only | 376 |
+| No exact product-identity contaminant evidence established by current index | 157 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Original source-article applicability triage records (2026-10-10 baseline) | 236 |
 | Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 43 |
@@ -76,12 +76,27 @@ Catalogue identity `06-06-3-fruit-vegetable-cereal-flakes` currently links to Ch
 
 Run `node scripts/audit-all-161-pending-source-matrix-gates.cjs` after the ordinary readiness/triage audit. It rejects missing, duplicated, cross-product or auto-applied source reviews, enforces **63 + 81 + 17 = 161**, checks three review-only commodity candidates and records the exact cereal-flakes discrepancy. Output: `audit-output/fssai-161-detailed-source-applicability-reconciliation.json` in GitHub Actions artifacts. All 161 records retain `no_compliance_pass` status.
 
+## Additional exact FSSAI article evidence — 4 identities (10 October 2026)
+
+**Current baseline: 533 total / 376 with some exact partial regulatory contaminant evidence / 157 needing exact source evidence / 0 complete-compliance approvals.** Four newly matched exact product/class identities were removed from the no-exact-source queue after verification against the official FSSAI Version IX source article. They are **not** fully verified, have **no legal compliance PASS**, and no numerical residue limit is auto-applied to a sample.
+
+| Exact PMSV product | Named Version IX source article | Contaminant / source limit | Important unfinished applicability |
+|---|---|---|---|
+| Fermented Soybean Paste — FSSR 2.3.57 | Food product containing any of the above-mentioned oilseed/cereal/pulse articles | Aflatoxin B1 **10 µg/kg** | Soybean is required by the official standard, including both fermented paste variants; not the raw oilseed finished-product matrix. Ingredients, fermentation and operative amendments remain open. |
+| Cereal based Sweets — FoSCoS 18.1.2.1 | Food product containing any of the above-mentioned cereal articles | Aflatoxin B1 **10 µg/kg** | Category and mandatory cereal basis verified; finished recipe, other toxin and MRL provisions remain open. |
+| Pulses based Sweets — FoSCoS 18.1.2.2 | Food product containing any of the above-mentioned pulses articles | Aflatoxin B1 **10 µg/kg** | Category/pulse-based identity verified; no raw-pulse blanket residue inheritance. |
+| Soup Powders — FSSR 2.3.15 | Soups and sauces | Saffrole **10 ppm** | Product is a dry soup base; dry powder versus ready-to-serve dilution basis needs independent determination before applying any sample value. |
+
+Sources: [FSSAI Version IX (03.02.2026), Aflatoxin B1 and NOTS tables, PDF pages 14–15](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf); [FSSAI Chapter 2.3, Fermented Soybean Paste p. 88 and Soup Powders p. 26](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf); [FSSAI special Indian Sweets and Snacks categories 18.1.2.1–18.1.2.2](https://www.fssai.gov.in/upload/advisories/2021/07/60f6a6554438dDirection_Indian_Sweets_Snacks_20_07_2021.pdf).
+
+Recorded in `fssai-product-helper-preview-01/data/rules/fssai-4-exact-composite-soup-source-evidence-v1.json`. A failed source-row, product name, FoSCoS category, FSSR identity, or unit check must restore evidence to unresolved; merely changing the text does not authorize a new contaminant PASS. Previous 161-item review records are retained only as historic snapshots and do not establish 161 *currently* unresolved.
+
 ## Unresolved by standard family
 
 | FSSR prefix | Product identities requiring exact review |
 |---|---:|
-| 2.3 | 63 |
-| special | 36 |
+| 2.3 | 61 |
+| special | 34 |
 | 2.1 | 14 |
 | 2.4 | 13 |
 | 2.8 | 11 |
@@ -122,7 +137,7 @@ All entries below have an individually stored precision-applicability gate; conf
 |---|---|---|
 | Fat spread | `02-02-2-fat-spread` | 2.2.5(3) |
 
-### FSSR 2.3 (63)
+### FSSR 2.3 (61)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -148,7 +163,6 @@ All entries below have an individually stored precision-applicability gate; conf
 | Dried Fungi Concentrate | `04-04-2-dried-fungi-concentrate` | 2.3.62 |
 | Dry fruits and Nuts | `04-04-1-dry-fruits-and-nuts` | 2.3.47(5) |
 | Fermented Fungi | `04-04-2-fermented-fungi` | 2.3.62 |
-| Fermented Soybean Paste | `06-06-8-fermented-soybean-paste` | 2.3.57 |
 | Frozen Curried Vegetables/Ready-to-Eat Vegetables | `04-04-2-frozen-curried-vegetables-ready-to-eat-vegetables` | 2.3.39 |
 | Frozen Fruits/Fruit Products | `04-04-1-frozen-fruits-fruit-products` | 2.3.37 |
 | Frozen Vegetables | `04-04-2-frozen-vegetables` | 2.3.38 |
@@ -173,7 +187,6 @@ All entries below have an individually stored precision-applicability gate; conf
 | Quick Frozen Fungi | `04-04-2-quick-frozen-fungi` | 2.3.62 |
 | Salted fungi (semi processed products) | `04-04-2-salted-fungi-semi-processed-products` | 2.3.62 |
 | Seedless Tamarind | `04-04-1-seedless-tamarind` | 2.3.49 |
-| Soup Powders | `12-12-5-soup-powders` | 2.3.15 |
 | Squash | `squash` | 2.3.21 |
 | Sterilized Fungi | `04-04-2-sterilized-fungi` | 2.3.62 |
 | Synthetic Syrup for use in Dispensers for Carbonated Water | `synthetic-syrup-dispenser` | 2.3.23 |
@@ -277,7 +290,7 @@ All entries below have an individually stored precision-applicability gate; conf
 |---|---|---|
 | Trehalose | `99-99-1-trehalose` | 3.3.4 |
 
-### FSSR special (36)
+### FSSR special (34)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -292,7 +305,6 @@ All entries below have an individually stored precision-applicability gate; conf
 | Acidity Regulators L(+/-)tartaric Acid | `99-99-1-acidity-regulators-l-tartaric-acid` | Special FoSCoS route |
 | Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations | `99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-` | FSS (FPS&FA) Regulations |
 | Additives VA-VF of Nutraceutical Regulations excluding those already standardised | `99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised` | Special FoSCoS route |
-| Cereal based Sweets | `18-18-1-cereal-based-sweets` | Special FoSCoS route |
 | Cereal or pulses flour/ Starch based snacks & savouries | `18-18-2-cereal-or-pulses-flour-starch-based-snacks-and-savouries` | Special FoSCoS route |
 | Chhana based Sweets | `18-18-1-chhana-based-sweets` | Special FoSCoS route |
 | Dried fruits/vegetables/nut based mouth fresheners | `05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners` | Special FoSCoS route |
@@ -313,7 +325,6 @@ All entries below have an individually stored precision-applicability gate; conf
 | Other traditional mouth fresheners not covered under 5.2.4.1 and 5.2.4.2 | `05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2` | Special FoSCoS route |
 | Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations | `99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc` | Special FoSCoS route |
 | Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized | `11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th` | FSS (FPS&FA) Regulations |
-| Pulses based Sweets | `18-18-1-pulses-based-sweets` | Special FoSCoS route |
 | Sajji Khar | `99-99-1-sajji-khar` | Special FoSCoS route |
 | Spice based mouth fresheners | `05-05-2-spice-based-mouth-fresheners` | Special FoSCoS route |
 | Starch based Sweets | `18-18-1-starch-based-sweets` | Special FoSCoS route |
