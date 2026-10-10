@@ -8360,7 +8360,16 @@ function sourcePinnedDirectStandardLimit(p,group,rule){
      ||normIngredient(identity.name)!==normIngredient(group.product_name))return false;
  const matchKey=String(identity.rule_key||'').trim();
  if(!matchKey||matchKey!==String(group.fssr||'').trim())return false;
- const matchingStandards=chapterRuleDbs.flatMap(db=>ruleDbStandards(db).filter(st=>
+ // Require the actual loaded chapter module to carry its official FSSAI
+ // source URL. An unrelated chapter or a tampered provenance URL cannot
+ // validate a copied numeric impurity, even when name/clause/value agree.
+ const trustedChapters=chapterRuleDbs.filter(db=>{
+   const sources=Array.isArray(db?.official_sources)?db.official_sources:[];
+   const official=sources.some(src=>/^https:\/\/(?:www\.)?fssai\.gov\.in\//.test(String(src.url||'')));
+   return official && (!group.official_source_url ||
+      sources.some(src=>src.url===group.official_source_url));
+ });
+ const matchingStandards=trustedChapters.flatMap(db=>ruleDbStandards(db).filter(st=>
    String(st?.key||'').trim()===matchKey
    && normIngredient(st.name)===normIngredient(group.product_name)
    && String(db?.chapter||'')===matchKey.split('.')[0]+'.'+matchKey.split('.')[1]));
