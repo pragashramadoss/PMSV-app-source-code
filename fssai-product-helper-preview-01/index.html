@@ -1223,6 +1223,7 @@ let contaminantsDb=null;
 let contaminantsPendingReviewDb=null;
 let spiceOleoresinResiduesDb=null;
 let goatMuscleVeterinaryResiduesDb=null;
+let fourCompositeSourcesDb=null;
 let fungiAgaricConditionalDb=null;
 let contaminantsFutureAmendmentDb=null;
 let appendixCDb=null;
@@ -9820,6 +9821,43 @@ function syncContaminantQualifierVisibility(p){
    }
  }
 }
+function sourcePinnedCompositeOrSoupPartialHtml(p){
+ if(!p||!contaminantsDb)return '';
+ const knownIds=[
+  '06-06-8-fermented-soybean-paste','18-18-1-cereal-based-sweets',
+  '18-18-1-pulses-based-sweets','12-12-5-soup-powders'
+ ];
+ if(!knownIds.includes(p.id))return '';
+ const src=fourCompositeSourcesDb;
+ const rec=src?.matched?.find(x=>x.catalog_id===p.id);
+ const v9='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf';
+ const gate=!!src&&src.matched_product_count===4&&src.allowed_auto_pass_count===0
+   &&src.official_source===v9&&contaminantsDb.official_sources?.[0]?.url===v9
+   &&rec&&rec.catalog_id===p.id&&rec.product_name===p.name
+   &&rec.fssr===p.fssr&&rec.fcs===p.fcs&&rec.full_compliance_claim===false
+   &&rec.finished_product_numeric_limit_auto_applied===false
+   &&rec.other_contaminants_and_pesticides_verified===false;
+ let sourceOK=false;
+ if(gate&&rec.source_group==='aflatoxin_b1'){
+   const g=contaminantsDb.crop_contaminants?.aflatoxin_b1;
+   sourceOK=rec.contaminant==='Aflatoxin B1'&&rec.limit===10&&rec.unit==='µg/kg'
+     &&rec.article==='Food product containing any of the above mentioned food articles'
+     &&g?.unit==='µg/kg'&&(g.rules||[]).filter(x=>x.article===rec.article
+       &&Number(x.limit)===10&&String(x.unit||g.unit)==='µg/kg').length===1;
+ }else if(gate&&rec.source_group==='saffrole'){
+   sourceOK=rec.contaminant==='Saffrole'&&rec.article==='Soups and sauces'
+     &&rec.limit===10&&rec.unit==='ppm'
+     &&(contaminantsDb.naturally_occurring_toxic_substances?.saffrole||[])
+       .filter(x=>x.article===rec.article&&Number(x.limit)===10&&x.unit==='ppm').length===1;
+ }
+ if(!sourceOK)return '<div class="notice"><b>Exact composite food / soup contaminant evidence unavailable or altered.</b> Numeric reference withheld. Verify current FSSAI Version IX source and catalogue identity before evaluation.</div>';
+ return '<div class="card"><div class="section-title"><h3>Exact official contaminant article — partial source evidence only</h3><span>NOT APPLIED · no compliance PASS</span></div>'
+   +'<p><b>'+esc(rec.contaminant)+'</b>: FSSAI Version IX article <b>'+esc(rec.article)+'</b>; source-row reference <b>'+esc(String(rec.limit))+' '+esc(rec.unit)+'</b>.</p>'
+   +'<p><b>Matrix/identity check:</b> '+esc(rec.applicability_note)+'</p>'
+   +'<p><b>Not a finished-product laboratory result.</b> Other metals, toxins, all pesticide MRLs, additives, processing factors and effective amendments must still be assessed.</p>'
+   +'<small><a href="'+esc(rec.official_standard_source)+'" target="_blank" rel="noopener noreferrer">Official product-standard/category source</a> · '
+   +'<a href="'+esc(rec.official_contaminants_source)+'" target="_blank" rel="noopener noreferrer">FSSAI Version IX source table</a></small></div>';
+}
 function exactSupplementalResidueReviewHtml(p){
  if(!p)return '';
  const standardSource='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt_Spices_Condiments%20and%20related%20products.pdf';
@@ -10039,6 +10077,7 @@ function renderProductContaminants(){
  el.innerHTML=profileMsg
    +pendingContaminantReviewNotice(p)
    +exactSupplementalResidueReviewHtml(p)
+   +sourcePinnedCompositeOrSoupPartialHtml(p)
    +exactEggStandardChemicalCriteriaHtml(p)
    +(hempChapter216.relevant&&!hempChapter216.verified?'<div class="notice"><b>Hemp Chapter 2.16 source review required:</b> THC and CBD numeric limits are withheld because the exact product identity, Chapter 2.16 source table, or cross-cutting CBD clause did not match the official recorded values.</div>':'')
    +(p.id==='mineral-water'?'<div class="notice"><b>Natural mineral water — arsenic source reconciliation:</b> FSSAI Chapter 2.10, clause 2.10.7, lists arsenic at 0.05 mg/L, but the separate FSSAI Contaminants Regulations Version IX Section 2.1 lists <b>0.01 mg/L</b> for natural mineral water. PMSV uses the stricter 0.01 mg/L contaminant requirement in this table; the less stringent product-standard value must never be substituted as an elemental-arsenic compliance pass. Both official references require ongoing amendment review.</div>':'')
@@ -10098,7 +10137,7 @@ async function loadContaminantsDb(){
    contaminantsFutureAmendmentDb=await future.json();
  }catch(e){contaminantsFutureAmendmentDb=null;}
  try{
-   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-bigbatch161',{cache:'reload'});
+   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-four-composite-157',{cache:'reload'});
    if(!review.ok)throw new Error('HTTP '+review.status);
    const data=await review.json();
    const ids=new Set((data.records||[]).map(r=>r.catalog_id));
@@ -10118,6 +10157,14 @@ async function loadContaminantsDb(){
    spiceOleoresinResiduesDb=await a.json();
    goatMuscleVeterinaryResiduesDb=await b.json();
  }catch(e){spiceOleoresinResiduesDb=null;goatMuscleVeterinaryResiduesDb=null;}
+ try{
+   const res=await fetch('./data/rules/fssai-4-exact-composite-soup-source-evidence-v1.json?v=20261010-four-composite',{cache:'reload'});
+   if(!res.ok)throw new Error('Exact composite and soup source file unavailable');
+   const d=await res.json();
+   if(d.matched_product_count!==4||d.matched?.length!==4||d.allowed_auto_pass_count!==0)
+     throw new Error('Exact composite and soup source integrity mismatch');
+   fourCompositeSourcesDb=d;
+ }catch(e){fourCompositeSourcesDb=null;}
  try{
    const result=await fetch('./data/rules/chapter-2-3-fungi-agaric-conditional-v1.json?v=1',{cache:'reload'});
    if(!result.ok)throw new Error('HTTP '+result.status);
