@@ -8716,6 +8716,39 @@ function sourcePinnedMilkPowderAflatoxinM1Rule(p){
    verification:'official_fssai_v9_exact_selected_milk_powder_subtype'};
 }
 
+
+/* FSSAI Version IX: 2.4.30 soybean TOTAL aflatoxins are a source-verified
+ * conditional composite-food ARTICLE, NOT an automatically approved
+ * finished-product limit. B1 shared 10 ug/kg is already handled separately. */
+function sourcePinnedSoybeanTotalAflatoxinReview(p){
+ const m=contaminantsDb?.chapter_2_4_nonfermented_soybean_total_aflatoxin_conditional_v9;
+ const record=(m?.records||[]).find(x=>x.catalog_id===p?.id);
+ if(!record)return {relevant:false,verified:false};
+ const withheld={relevant:true,verified:false};
+ if(!p||p.name!==record.product_name||p.fssr!=='2.4.30'||record.fssr!==p.fssr
+   ||record.identity_verified!==true||record.not_auto_applied!==true
+   ||m.not_auto_applied!==true||m.full_compliance_verified!==false
+   ||m.records.length!==5||new Set(m.records.map(x=>x.catalog_id)).size!==5
+   ||m.source_section!=='2.2.1'
+   ||m.source_standard_url!=='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf'
+   ||m.source_contaminants_url!=='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf'
+   ||!/Version IX.*03\\.02\\.2026/.test(String(contaminantsDb?.source_version||'')))return withheld;
+ const g=contaminantsDb?.crop_contaminants?.total_aflatoxins;
+ if(g?.unit!=='µg/kg'||m.unit!=='µg/kg')return withheld;
+ const composite=(g.rules||[]).filter(x=>
+   x.article===m.applicable_article_for_review
+   &&Number(x.limit)===m.conditional_total_aflatoxin_composite_food_limit
+   &&Number(x.limit)===20&&String(x.unit||g.unit)==='µg/kg');
+ const oilseed=(g.rules||[]).filter(x=>
+   x.article===m.comparison_raw_oilseed_article
+   &&Number(x.limit)===m.comparison_raw_oilseed_total_aflatoxin_limit
+   &&Number(x.limit)===15&&String(x.unit||g.unit)==='µg/kg');
+ if(composite.length!==1||oilseed.length!==1)return withheld;
+ return {relevant:true,verified:true,conditional_limit:20,raw_oilseed_comparison:15,
+   unit:'µg/kg',article:composite[0].article,source:m.source_contaminants_url,
+   note:record.condition,not_auto_applied:true,full_compliance_verified:false};
+}
+
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  if(exactFinishedProductContaminantLock(p))return [];
@@ -9482,6 +9515,7 @@ function renderProductContaminants(){
  const cropGatedExact=exact.filter(rule=>sourcePinnedVersionIxProfileCropRule(p,rule));
  const hempChapter216=sourcePinnedHempChapter216Rules(p);
  const baseline=productBaselineContaminantRules(p);
+ const soybeanTotalReview=sourcePinnedSoybeanTotalAflatoxinReview(p);
  const conditionalMetals=conditionalMetalRowsForProduct(p);
  const packagingTin=selectedPackagingTinRule(p);
  const variantTin=selectedVariantTinRule(p);
@@ -9523,6 +9557,10 @@ function renderProductContaminants(){
      +conditionalMetals.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit||'')+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis||'FSSAI Version IX')+'</td></tr>').join('')
      +'</tbody></table></div></div>'
    : '';
+ const soybeanTotalHtml=!soybeanTotalReview.relevant?''
+  : soybeanTotalReview.verified
+   ? '<div class="card" style="margin-top:12px"><div class="section-title"><h3>Non-fermented soybean — conditional total-aflatoxins source article</h3><span>Partial evidence only · not auto-applied</span></div><div class="notice"><b>FSSAI Version IX Section 2.2.1:</b> for a finished food verified to qualify under the composite-food article, the listed total-aflatoxins limit is <b>20 µg/kg</b>. The raw oilseed article lists <b>15 µg/kg</b> and must not be inherited by tofu, soybean beverages, curd or film. Product matrix, processing form, ingredients and operative amendments require confirmation before deciding finished-product applicability. The existing separately verified Aflatoxin B1 10 µg/kg reference is unchanged. <b>No contaminant compliance PASS.</b></div><div><small>Applicable article to evaluate: '+esc(soybeanTotalReview.article)+'. '+esc(soybeanTotalReview.note)+' · <a href="'+esc(soybeanTotalReview.source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI source</a>.</small></div></div>'
+   : '<div class="notice"><b>2.4.30 total-aflatoxins source check failed:</b> conditional numeric reference withheld due to a changed source row, unit, catalogue identity, or version. Aflatoxin B1 is evaluated independently; no compliance PASS.</div>';
  const profileMsg=profile
   ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+cropGatedExact.length+' verified product-specific rule'+(cropGatedExact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
   : baseline.length
@@ -9544,6 +9582,7 @@ function renderProductContaminants(){
    +meatEggCommodityReview
    +cerealCommodityReview
    +fruitVegCommodityReview
+   +soybeanTotalHtml
    +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant / toxin</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="notice">No exact metal/toxin row is auto-applicable for this product under the current stored product gates.</div>')
    +conditionalMetalHtml
    +waterPesticideHtml

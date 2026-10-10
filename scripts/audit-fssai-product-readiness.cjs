@@ -387,6 +387,34 @@ for(const m of guar.metals){
  assert.ok(contaminants.metal_article_rules_v9[m.metal].some(x=>
   x.article===guar.official_article_spelling&&Number(x.limit)===Number(m.limit)&&x.unit===m.unit));
 }
+// Exact 2.4.30 soybean identities: shared B1 already in the runtime; Total
+// Aflatoxins 20 vs oilseed 15 is CONDITIONAL REFERENCE ONLY, not a PASS.
+const soyReview=contaminants.chapter_2_4_nonfermented_soybean_total_aflatoxin_conditional_v9;
+assert.ok(soyReview&&soyReview.not_auto_applied===true&&soyReview.full_compliance_verified===false);
+assert.equal(soyReview.records.length,5);
+assert.equal(new Set(soyReview.records.map(x=>x.catalog_id)).size,5);
+assert.equal(soyReview.source_section,"2.2.1");
+assert.equal(soyReview.source_pdf_page_one_based,14);
+assert.ok(official(soyReview.source_standard_url));
+assert.ok(official(soyReview.source_contaminants_url));
+assert.equal(soyReview.conditional_total_aflatoxin_composite_food_limit,20);
+assert.equal(soyReview.comparison_raw_oilseed_total_aflatoxin_limit,15);
+for(const [key,article,limit] of [
+ ["total_aflatoxins",soyReview.applicable_article_for_review,20],
+ ["total_aflatoxins",soyReview.comparison_raw_oilseed_article,15]
+]){
+ const group=contaminants.crop_contaminants[key];
+ assert.equal(group.unit,"µg/kg");
+ assert.equal(group.rules.filter(x=>x.article===article&&Number(x.limit)===limit).length,1);
+}
+const soyReviewById=new Map();
+for(const r of soyReview.records){
+ const p=index.products.find(x=>x.id===r.catalog_id);
+ assert.ok(p&&p.name===r.product_name&&p.fssr==="2.4.30"&&r.fssr===p.fssr,
+  "Soybean exact source identity mismatch: "+r.catalog_id);
+ assert.equal(r.identity_verified,true);assert.equal(r.not_auto_applied,true);
+ soyReviewById.set(r.catalog_id,r);
+}
 const namedCropMappings=contaminants.explicit_crop_contaminant_article_mappings_v9||[];
 const namedCropById=new Map(namedCropMappings.map(x=>[x.catalog_id,x]));
 assert.equal(namedCropMappings.length,3,"Expected three exact named crop-toxin mappings");
@@ -1142,6 +1170,11 @@ const products = index.products.map(p => {
     if(route.compliance_status === "complete" || route.compliance_pass_enabled === true) throw new Error("Special route incorrectly asserts compliance: " + p.id);
   }
   const contaminantEvidence=contaminantEvidenceForProduct(p);
+  const soybeanConditionalReview=soyReviewById.get(p.id)||null;
+  if(soybeanConditionalReview){
+    tally("chapter_2_4_soybean_total_aflatoxin_review","source_verified_conditional_not_auto_applied");
+    action.push("2.4.30 soybean finished-food total aflatoxins: official composite-food 20 µg/kg versus oilseed 15 µg/kg. Determine exact finished-food article applicability and amendments; numerical total is not auto-applied. Shared B1 is separately mapped; this is not a full compliance assessment.");
+  }
   if(contaminantEvidence.finished_product_article_review){
     tally("chapter_2_7_finished_article_locks","reviewed_fail_closed");
     action.push("Chapter 2.7 finished-product contaminant article reviewed: no exact Version IX match verified; preserve fail-closed mapping and review current effective amendments, ingredient duties and any Foods not specified applicability");
@@ -1278,6 +1311,13 @@ const products = index.products.map(p => {
     microbiology_index_status:micro,
     direct_chapter_microbiology_criteria:chapterMicrobiologyRows,
     contaminant_evidence_index:contaminantEvidence,
+    soybean_conditional_total_aflatoxin_review:soybeanConditionalReview?{
+      status:"source_verified_conditional_article_no_auto_application",
+      source:soyReview.source_contaminants_url,article:soyReview.applicable_article_for_review,
+      candidate_total_aflatoxins_limit:20,unit:"µg/kg",
+      raw_oilseed_total_comparison:15,auto_applied:false,
+      finished_product_compliance_verified:false
+    }:null,
     appendix_b_evidence_route:appendixBRoutes.get(p.id) || null,
     microbiology_profile_key:p.microbiology_profile_key || null,
     microbiology_candidates_count:(p.microbiology_candidates || []).length,
@@ -1400,6 +1440,7 @@ const summary = [
   "| Chapter 2.4 processed Pearl Barley OTA/DON article form held for verification | "+(counts.chapter_2_4_crop_toxin_form_pending?.pearl_barley_article_form_unverified||0)+" |",
   "| Chapter 2.4 cereal and flour commodity candidates indexed without automatic MRL applicability | "+(counts.chapter_2_4_pesticide_review?.reference_only_by_exact_catalog_id||0)+" |",
   "| Chapter 2.4 exact raw Soybean seed with partial official oilseed aflatoxin evidence | "+(counts.chapter_2_4_exact_soybean_oilseed_toxins?.raw_seed_source_backed_partial||0)+" |",
+  "| Chapter 2.4 non-fermented soybean identities with conditional total-aflatoxins source review (not auto-applied) | "+(counts.chapter_2_4_soybean_total_aflatoxin_review?.source_verified_conditional_not_auto_applied||0)+" |",
   "| Chapter 2.4 Unprocessed raw Pulses aflatoxins + linked specific 2.4.6(16) quality clause | "+(counts.chapter_2_4_unprocessed_whole_raw_pulses?.partial_exact_source_contaminant_and_quality_clause||0)+" |",
   "| Chapter 2.3 exact finished beverages with sourced 10 ppm Saffrole | "+(counts.chapter_2_3_exact_finished_beverage_saffrole?.finished_juice_or_drink||0)+" |",
   "| Chapter 2.4 Wheat / Wheat Bran and Chapter 2.10 Coffee with exact Version IX crop-toxin articles | "+(counts.chapter_2_4_exact_named_crop_toxins?.version_ix_wheat_bran_coffee||0)+" |",
