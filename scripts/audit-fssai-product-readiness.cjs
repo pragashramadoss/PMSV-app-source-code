@@ -635,11 +635,33 @@ function contaminantEvidenceForProduct(p){
  if(otherOilEvidence)explicitKinds.push("verified_other_edible_vegetable_oils_lead_articles");
  if(guarEvidence)explicitKinds.push("verified_ins_412_guar_gum_official_gaur_gum_metal_alias");
  if(hempEvidence)explicitKinds.push("official_chapter_2_16_exact_thc_and_cross_cutting_cbd");
+ // Only a conditional, user-confirmed subtype source: the combined FoSCoS
+ // identity must remain pending even though two powder variants have FSSAI
+ // Aflatoxin M1 articles. Cream and partly skimmed are not inferred.
+ const milkPowderAflatoxinM1Review=p.id==="01-01-5-milk-powders-and-cream-powder"?(()=>{
+   assert.equal(p.fssr,"2.1.10");
+   const group=contaminants.crop_contaminants?.aflatoxin_m1;
+   assert.ok(group&&group.unit==="µg/kg","FSSAI Aflatoxin M1 source missing for milk powder review");
+   const variants=[["Whole milk powder",4],["Skimmed milk powder",6]];
+   for(const [article,limit] of variants){
+     assert.equal((group.rules||[]).filter(row=>
+       normalizeArticle(row.article)===normalizeArticle(article)
+       &&Number(row.limit)===limit &&String(row.unit||group.unit)==="µg/kg").length,1,
+       "Changed official Aflatoxin M1 powder variant "+article);
+   }
+   return {status:"conditional_exact_subtype_required_not_product_evidence",
+     product_standard:"2.1.10",contaminant:"Aflatoxin M1",
+     verified_variant_articles:variants.map(([article,limit])=>({article,limit,unit:"µg/kg"})),
+     source:version9Source,automatic_combined_product_limit_allowed:false,
+     partly_skimmed_and_cream_powder_auto_inheritance:false,
+     complete_contaminant_coverage_verified:false};
+ })():null;
  const status=explicitKinds.length?"some_exact_product_evidence_not_full_coverage":
    fssrFamilies.length?"only_family_fssr_evidence_needs_identity_review":
    "no_exact_catalog_evidence_in_this_inventory";
  return {
    status,
+   conditional_milk_powder_aflatoxin_m1_review:milkPowderAflatoxinM1Review,
    exact_hemp_chapter_2_16_thc_cbd:hempEvidence,
    exact_alcoholic_beverage_toxic_substances:alcoholicEvidence?{
      fcs:alcoholicEvidence.fcs,article:"Alcoholic beverages",
@@ -909,6 +931,10 @@ const products = index.products.map(p => {
   if(contaminantEvidence.finished_product_article_review){
     tally("chapter_2_7_finished_article_locks","reviewed_fail_closed");
     action.push("Chapter 2.7 finished-product contaminant article reviewed: no exact Version IX match verified; preserve fail-closed mapping and review current effective amendments, ingredient duties and any Foods not specified applicability");
+  }
+  if(contaminantEvidence.conditional_milk_powder_aflatoxin_m1_review){
+    tally("milk_powder_aflatoxin_m1","conditional_exact_subtype_only");
+    action.push("Aflatoxin M1: FSSAI Version IX separately lists Whole Milk Powder 4 µg/kg and Skimmed Milk Powder 6 µg/kg. Require exact user-confirmed subtype; do not infer Partly Skimmed Milk Powder or Cream Powder; combined identity remains unresolved.");
   }
   if(contaminantEvidence.status==="no_exact_catalog_evidence_in_this_inventory")
     action.push("Map exact FSSAI contaminant/commodity articles; universal all-food rows do not demonstrate product-specific coverage");
