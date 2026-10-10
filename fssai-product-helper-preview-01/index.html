@@ -1225,6 +1225,7 @@ let spiceOleoresinResiduesDb=null;
 let goatMuscleVeterinaryResiduesDb=null;
 let fourCompositeSourcesDb=null;
 let crossFamilyNOTSDb=null;
+let batch40SourceDb=null;
 let coconutFlourHexaneDb=null;
 let fungiAgaricConditionalDb=null;
 let contaminantsFutureAmendmentDb=null;
@@ -1238,7 +1239,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-10-v9-nots-25-v491';
+const PRODUCT_HELPER_UI_BUILD='2026-10-10-batch40-v492';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -9877,6 +9878,73 @@ function sourcePinnedBeverageConfectioneryNotsHtml(p){
   +'<p>'+esc(caveat)+' Other contaminants, pesticide residues, analysis and amendments remain open.</p>'
   +'<p><a href="'+esc(sourceUrl)+'" target="_blank" rel="noopener noreferrer">Official FSSAI §2.2.1 NOTS table (PDF p.15)</a>. <b>Reference only; NOT APPLIED to sample.</b></p></div>';
 }
+function sourcePinnedBatch40PartialHtml(p){
+ if(!p||!contaminantsDb)return '';
+ const eligible=[
+  '18-18-1-khoa-based-sweets','18-18-1-chhana-based-sweets',
+  '18-18-1-fermented-milk-products-based-indian-sweets',
+  '18-18-1-other-composite-milk-products-based-indian-sweets',
+  'fruit-juice-preserved-industrial','vegetable-juice-preserved-industrial',
+  'concentrated-fruit-juice-industrial','concentrated-vegetable-juice-industrial',
+  '12-12-2-asafoetida-hing-or-hingra','fruit-beverage-mix'
+ ];
+ if(!eligible.includes(p.id))return '';
+ const db=batch40SourceDb, row=db?.rows?.find(x=>x.catalog_id===p.id);
+ const source='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf';
+ let ok=!!db&&db.batch_reviewed===40&&db.exact_identity_article_partial_promotions===10
+  &&db.conditional_scope_reconciliations_not_promoted===30
+  &&db.total_catalogue===533&&db.complete_legal_compliance_passes===0&&db.source===source
+  &&contaminantsDb.official_sources?.[0]?.url===source
+  &&row&&row.product_name===p.name&&row.fssr===p.fssr&&row.fcs===p.fcs
+  &&row.version_ix_source===source&&row.exact_catalogue_identity_matched===true
+  &&row.version_ix_source_article_confirmed===true
+  &&row.source_article_applicability_to_supplied_finished_matrix_unconditionally_established===false
+  &&row.finished_product_numeric_limit_auto_applied===false
+  &&row.finished_food_laboratory_result_compared===false
+  &&row.full_pesticide_contaminant_or_amendment_coverage===false
+  &&row.legal_compliance_pass===false&&row.processing_and_applicability_remaining?.length>30;
+ const expected={
+  milk:[['Acetamiprid','Milk and Milk products',0.02,'mg/kg']],
+  juice:[['Lead','Fruit and vegetable juice (including tomato juice, but not including lime juice and lemon juice)',1,'mg/kg']],
+  spice:[['Total Aflatoxins','Spices/Spice Mix',30,'µg/kg'],['Aflatoxin B1','Spices/Spice Mix',15,'µg/kg']],
+  bev:[['Saffrole','Non-alcoholic beverages',10,'ppm']]
+ };
+ const expectedRows=expected[row?.source_family]||[];
+ if(!expectedRows.length||expectedRows.length!==row?.official_FSSAI_article_references?.length)ok=false;
+ if(ok){
+  for(const [name,article,value,unit] of expectedRows){
+   const q=row.official_FSSAI_article_references.find(x=>x.group===name&&x.article===article&&x.value===value&&x.unit===unit);
+   if(!q){ok=false;break;}
+   if(row.source_family==='milk'){
+    if(!row.fcs.startsWith('18.1.1.')||p.fssr!==''||!(contaminantsDb.residue_mrls?.pesticides||[])
+      .filter(x=>x.name==='Acetamiprid').flatMap(x=>x.rows||[])
+      .some(x=>x.food===article&&x.mrl==='0.02'&&x.unit==='mg/kg')){ok=false;break;}
+   }else if(row.source_family==='juice'){
+    const norm=x=>String(x||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+    if(!['2.3.16','2.3.17'].includes(p.fssr)||!(contaminantsDb.metal_article_rules_v9?.Lead||[])
+      .some(x=>x.row_type==='exact'&&norm(x.article)===norm(article)
+        &&Number(x.limit)===value&&x.unit===unit)){ok=false;break;}
+   }else if(row.source_family==='spice'){
+    const key=name==='Total Aflatoxins'?'total_aflatoxins':'aflatoxin_b1';
+    const group=contaminantsDb.crop_contaminants?.[key];
+    if(p.fssr!=='2.9.29'||p.fcs!=='12.2.1'||!(group?.rules||[])
+      .some(x=>x.article===article&&Number(x.limit)===value
+        &&String(x.unit||group.unit)===unit)){ok=false;break;}
+   }else if(row.source_family==='bev'){
+    if(p.fssr!=='2.3.40'||p.fcs!=='14.1.4.3'
+      ||!(contaminantsDb.naturally_occurring_toxic_substances?.saffrole||[])
+        .some(x=>x.article===article&&x.limit===value&&x.unit===unit)){ok=false;break;}
+   }
+  }
+ }
+ if(!ok)return '<div class="notice"><b>Batch 40 source integrity mismatch:</b> Official article, source identity or sample scope could not be verified. Numeric reference withheld; no compliance PASS.</div>';
+ const refs=expectedRows.map(x=>esc(x[0])+' — '+esc(x[1])+' — '+esc(x[2])+' '+esc(x[3])).join('; ');
+ return '<div class="card"><div class="section-title"><h3>FSSAI Version IX — partial source-article evidence</h3><span>Not a product-compliance PASS</span></div>'
+  +'<p><b>Source category reference:</b> '+refs+'.</p>'
+  +'<p><b>NOT APPLIED to finished-product sample.</b> '+esc(row.processing_and_applicability_remaining)+'</p>'
+  +'<p>Contaminant and pesticide panels, relevant amendments, analytical basis and sample results remain unverified.</p>'
+  +'<p><a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX article table</a></p></div>';
+}
 function sourcePinnedCompositeOrSoupPartialHtml(p){
  if(!p||!contaminantsDb)return '';
  const knownIds=[
@@ -10135,6 +10203,7 @@ function renderProductContaminants(){
    +exactSupplementalResidueReviewHtml(p)
    +sourcePinnedCompositeOrSoupPartialHtml(p)
    +sourcePinnedBeverageConfectioneryNotsHtml(p)
+   +sourcePinnedBatch40PartialHtml(p)
    +sourcePinnedCoconutFlourHexaneHtml(p)
    +exactEggStandardChemicalCriteriaHtml(p)
    +(hempChapter216.relevant&&!hempChapter216.verified?'<div class="notice"><b>Hemp Chapter 2.16 source review required:</b> THC and CBD numeric limits are withheld because the exact product identity, Chapter 2.16 source table, or cross-cutting CBD clause did not match the official recorded values.</div>':'')
@@ -10195,7 +10264,7 @@ async function loadContaminantsDb(){
    contaminantsFutureAmendmentDb=await future.json();
  }catch(e){contaminantsFutureAmendmentDb=null;}
  try{
-   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-nots-146',{cache:'reload'});
+   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-batch40-136',{cache:'reload'});
    if(!review.ok)throw new Error('HTTP '+review.status);
    const data=await review.json();
    const ids=new Set((data.records||[]).map(r=>r.catalog_id));
@@ -10238,6 +10307,16 @@ async function loadContaminantsDb(){
       throw new Error('Cross-family NOTS identity/source integrity mismatch');
    crossFamilyNOTSDb=data;
  }catch(e){crossFamilyNOTSDb=null;}
+ try{
+   const response=await fetch('./data/rules/fssai-batch40-exact-commodity-and-conditional-scope-v1.json?v=20261010-batch40-136',{cache:'reload'});
+   if(!response.ok)throw new Error('Batch 40 regulatory article reference unavailable');
+   const data=await response.json();
+   if(data.total_catalogue!==533||data.batch_reviewed!==40
+     ||data.rows?.length!==10||data.negative_controls?.length!==30
+     ||data.complete_legal_compliance_passes!==0||data.new_pending!==136)
+     throw new Error('Batch40 source/identity reconciliation failure');
+   batch40SourceDb=data;
+ }catch(e){batch40SourceDb=null;}
  try{
    const result=await fetch('./data/rules/chapter-2-3-fungi-agaric-conditional-v1.json?v=1',{cache:'reload'});
    if(!result.ok)throw new Error('HTTP '+result.status);
