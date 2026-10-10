@@ -77,3 +77,12 @@ test("Milk-powder condition is rendered alongside Lead and limits are not automa
  assert.match(html,/milkPowderAflatoxinNotice/);
  assert.match(html,/Exact milk-powder subtype for Lead and Aflatoxin M1/);
 });
+
+test("Milk powder stays unresolved in audit unless an exact subtype is confirmed",()=>{
+ const audit=fs.readFileSync(path.join(root,"scripts/audit-fssai-product-readiness.cjs"),"utf8");
+ assert.match(audit,/conditional_milk_powder_aflatoxin_m1_review:milkPowderAflatoxinM1Review/);
+ assert.match(audit,/conditional_exact_subtype_required_not_product_evidence/);
+ assert.match(audit,/automatic_combined_product_limit_allowed:false/);
+ assert.match(audit,/complete_contaminant_coverage_verified:false/);
+ assert.match(audit,/Skimmed Milk Powder 6 µg\/kg/);
+});
