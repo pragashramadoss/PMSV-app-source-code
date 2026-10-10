@@ -64,3 +64,25 @@ test("Whole Bean evidence cannot be inherited by soybean, bean flour or unrelate
  assert.equal(profile.rules.some(x=>x.contaminant==="Total Aflatoxins"||x.contaminant==="Aflatoxin B1"),false,
    "Crop toxin source applicability requires its own verified product mapping");
 });
+
+test("Whole Bean pulse aflatoxins are source-pinned to Version IX 15/10 micrograms per kg",()=>{
+ const gate=ctx.sourcePinnedWholeDryBeanCropRule;
+ assert.equal(typeof gate,"function");
+ assert.equal(gate(bean,"total_aflatoxins",15,"µg/kg"),true);
+ assert.equal(gate(bean,"aflatoxin_b1",10,"µg/kg"),true);
+ for(const wrong of ["06-06-1-soybean","06-06-2-besan","04-04-2-yellow-pea-powder"]){
+   const other=catalog.find(x=>x.id===wrong);
+   assert.ok(other);
+   assert.equal(gate(other,"total_aflatoxins",15,"µg/kg"),false);
+ }
+ assert.equal(gate(bean,"total_aflatoxins",20,"µg/kg"),false);
+ assert.equal(gate(bean,"aflatoxin_b1",10,"mg/kg"),false);
+ assert.equal(gate(bean,"aflatoxin_m1",0.5,"µg/kg"),false);
+ const copy=JSON.parse(JSON.stringify(db));
+ copy.crop_contaminants.total_aflatoxins.rules=copy.crop_contaminants.total_aflatoxins.rules.filter(x=>x.article!=="Pulses");
+ ctx.contaminantsDb=copy;
+ assert.equal(gate(bean,"total_aflatoxins",15,"µg/kg"),false);
+ ctx.contaminantsDb=db;
+ assert.ok(ui.includes("sourcePinnedWholeDryBeanCropRule(p,key,limit,'µg/kg')"));
+ assert.ok(ui.includes("contaminant,limit,unit:'µg/kg',article:'Pulses'"));
+});
