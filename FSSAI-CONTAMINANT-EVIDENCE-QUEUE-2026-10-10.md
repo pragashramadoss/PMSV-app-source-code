@@ -7,8 +7,8 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 272 |
-| No exact product-identity contaminant evidence established by current index | 261 |
+| Some exact product evidence, partial only | 274 |
+| No exact product-identity contaminant evidence established by current index | 259 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 
 ## Unresolved by standard family
@@ -225,13 +225,12 @@ For each item: verify the precise finished-product identity, current official FS
 | Surface-treated fresh fruit | `04-04-1-surface-treated-fresh-fruit` | FoSCoS/special |
 | Untreated fresh fruit | `04-04-1-untreated-fresh-fruit` | FoSCoS/special |
 
-### FSSR 2.4 (40)
+### FSSR 2.4 (38)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
 | Any other foodgrains | `06-06-1-any-other-foodgrains` | 2.4.6 |
 | Arrowroot | `06-06-2-arrowroot` | 2.4.14 |
-| Besan | `06-06-2-besan` | 2.4.4 |
 | Biscuit | `07-07-2-biscuit` | 2.4.15(1) |
 | Bread and Bread-Type Products | `07-07-1-bread-and-bread-type-products` | 2.4.15(2) |
 | Breakfast Cereal | `06-06-3-breakfast-cereal` | 2.4.35 |
@@ -254,7 +253,6 @@ For each item: verify the precise finished-product identity, current official FS
 | Protein rich refined wheat flour (Protein prachur maida) | `06-06-2-protein-rich-refined-wheat-flour-protein-prachur-maida` | 2.4.2(3) |
 | Protein rich wheat flour (Protein prachur atta) | `06-06-2-protein-rich-wheat-flour-protein-prachur-atta` | 2.4.1(3) |
 | Quinoa | `06-06-1-quinoa` | 2.4.6 |
-| Roasted Bengal Gram Flour (Chana Sattu) | `06-06-2-roasted-bengal-gram-flour-chana-sattu` | 2.4.33 |
 | Solvent Extract Soya Flour | `06-06-2-solvent-extract-soya-flour` | 2.4.13(1) |
 | Solvent Extracted Coconut Flour | `06-06-2-solvent-extracted-coconut-flour` | 2.4.13(4) |
 | Solvent Extracted Cotton seed Flour | `06-06-2-solvent-extracted-cotton-seed-flour` | 2.4.13(5) |
@@ -358,6 +356,8 @@ For each item: verify the precise finished-product identity, current official FS
 - **Peanut Butter — FSSR 2.2.4(11):** The official Version IX Section 2.2.1 composite food product containing oilseed article establishes **Total Aflatoxins 20 µg/kg** and **Aflatoxin B1 10 µg/kg** for a food containing groundnut kernels. The exact product-standard requirement of roasted groundnut kernels and current source values are checked independently. This establishes **only partial exact-product contaminant evidence**; other metals, residues, toxins and amendments are not cleared. This is not a complete compliance PASS or a statement of exemption.
 
 - **Oat Products — FSSR 2.4.12** and **Multigrain flour (atta) — FSSR 2.4.37:** Both exact standards require oat or wheat cereal material. FSSAI Section 2.2.1 sets **Aflatoxin B1 10 µg/kg** for the cereal-product and composite-food categories alike. The source-gated limit is therefore partial, not a whole-product PASS. **Total Aflatoxins is not assigned** because the source categories differ (15 versus 20 µg/kg), pending product subtype or composition evidence. All other contaminants and residues remain to be checked.
+
+- **Besan — 2.4.4** and **Roasted Bengal Gram Flour (Chana Sattu) — 2.4.33:** FSSAI Chapter 2.4 Version 4 (07 May 2025) confirms both standardized foods are based on Bengal gram (*Cicer arietinum*). Current Contaminants Version IX Section 2.2.1 specifies **Aflatoxin B1 10 µg/kg** for both Pulses and a food product containing the listed pulses. The two exact identity mappings supply partial evidence only; differing Total Aflatoxins categories, metal/residue requirements and other provisions are not cleared. Official Chapter source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
 
 ## Official reference entry point
 
