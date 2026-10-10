@@ -11,9 +11,9 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | No exact product-identity contaminant evidence established by current index | 236 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Source-article applicability triage records annotated (NOT resolved) | 236 |
-| Unresolved identities with conditional official-source article references recorded (NOT automatically applied) | 109 |
+| Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 104 |
 
-Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The 236-item queue is **not** reduced by these candidates.
+Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The 236-item queue is **not** reduced by these candidates. On 10 October, a further source/identity check removed 42 misleading conditional article candidates across 38 products without falsely reducing the unresolved count. See `FSSAI-V9-CANDIDATE-SCOPE-CORRECTIONS-2026-10-10.md`.
 
 ## Unresolved by standard family
 
