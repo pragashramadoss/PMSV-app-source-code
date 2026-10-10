@@ -46,3 +46,11 @@ test("ingredient article references do not claim finished-formulation compliance
  assert.match(html,/not automatically the applicable limits for the finished formulation/);
  assert.match(html,/processing, commodity scope and amendments need review/);
 });
+
+test("legacy formulation numeric limits cannot bypass checked FSSAI ingredient references",()=>{
+ assert.doesNotMatch(html,/legacy\.concat\(current\)/);
+ assert.match(html,/unmatchedLegacy\.forEach\(rule=>/);
+ assert.match(html,/Numeric limit withheld\. The previous formulation reference is not verified/);
+ assert.match(html,/Ingredient-article limit \(reference\)/);
+ assert.match(html,/current\.forEach\(rule=>/);
+});

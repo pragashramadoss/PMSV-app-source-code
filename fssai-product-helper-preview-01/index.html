@@ -4180,22 +4180,29 @@ function renderFormula(){
    const seen=new Set();
    qs.forEach((q,i)=>{
      const item=formulationIngredients[i]||{name:q.name};
-     const legacy=(q.contaminants||[]).map(rule=>({
-       contaminant:rule.name,limit:rule.limit,unit:'',article:rule.basis,source_basis:rule.source
-     }));
      const current=contaminantIngredientRulesForName(item.name);
-     legacy.concat(current).forEach(rule=>{
+     // Legacy formulation cross-references must never bypass the official
+     // contaminant source master or introduce an unchecked numeric limit.
+     const unmatchedLegacy=(q.contaminants||[]).filter(rule=>
+       !current.some(verified=>normIngredient(verified.contaminant)===normIngredient(rule.name)));
+     current.forEach(rule=>{
        const shownLimit=String(rule.limit)+(rule.unit?' '+rule.unit:'');
        const key=normIngredient([rule.contaminant,shownLimit,rule.article].join('|'));
        if(seen.has(key))return;
        seen.add(key);
        rows.push('<tr><td><b>'+esc(rule.contaminant)+'</b></td><td><b>'+esc(shownLimit)+'</b></td><td>Triggered by ingredient: <b>'+esc(item.name)+'</b><br><small>'+esc(rule.article||'Exact FSSAI ingredient/article match')+'</small></td><td>'+esc(rule.source_basis||'FSSAI Contaminants, Toxins and Residues Regulations · Version IX')+'</td></tr>');
      });
+     unmatchedLegacy.forEach(rule=>{
+       const key='unverified-legacy-'+normIngredient([rule.name,item.name].join('|'));
+       if(seen.has(key))return;
+       seen.add(key);
+       rows.push('<tr><td><b>'+esc(rule.name||'Ingredient contaminant')+'</b> — legacy reference to review</td><td>—</td><td>Ingredient: <b>'+esc(item.name)+'</b></td><td>Numeric limit withheld. The previous formulation reference is not verified against the current official article, processing matrix and amendments.</td></tr>');
+     });
    });
    const customNeedsReview=qs.filter((q,i)=>q.kind==='extra' && !(q.contaminants||[]).length && contaminantIngredientRulesForName(formulationIngredients[i]?.name||q.name).length===0);
    const reviewRows=customNeedsReview.map(q=>'<tr><td><b>Ingredient-specific contaminant review</b></td><td>—</td><td>Extra ingredient: <b>'+esc(q.name)+'</b></td><td>The exact ingredient must be checked against the applicable current FSSAI contaminant tables before final compliance.</td></tr>');
    if(rows.length||reviewRows.length){
-     triggered.innerHTML='<h3 style="margin:12px 0 9px">Ingredient-level FSSAI contaminant references</h3><p class="notice">Source-checked limits for named ingredient articles only. These are not automatically the applicable limits for the finished formulation; processing, commodity scope and amendments need review.</p><div class="tablewrap"><table><thead><tr><th>Requirement</th><th>FSSAI limit</th><th>Why it appears</th><th>Source / action</th></tr></thead><tbody>'+rows.concat(reviewRows).join('')+'</tbody></table></div>';
+     triggered.innerHTML='<h3 style="margin:12px 0 9px">Ingredient-level FSSAI contaminant references</h3><p class="notice">Source-checked limits for named ingredient articles only. These are not automatically the applicable limits for the finished formulation; processing, commodity scope and amendments need review.</p><div class="tablewrap"><table><thead><tr><th>Requirement</th><th>Ingredient-article limit (reference)</th><th>Why it appears</th><th>Source / action</th></tr></thead><tbody>'+rows.concat(reviewRows).join('')+'</tbody></table></div>';
    }else{
      triggered.innerHTML='<div class="notice">No exact ingredient-triggered contaminant rule is loaded for the current ingredient list. PMSV does not infer a commodity family from a similar ingredient name.</div>';
    }
