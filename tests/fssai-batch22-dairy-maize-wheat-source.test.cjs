@@ -13,8 +13,8 @@ const cereal=p=>vm.runInContext("sourcePinnedMaizeWheatB1("+JSON.stringify(p)+")
 test("20 named Chapter 2.1 dairy article identities have source-pinned commodity evidence, never direct MRL approval",()=>{
  const m=db.chapter_2_1_additional_milk_commodity_evidence_v9;
  assert.equal(m.exact_products.length,20);assert.equal(m.auto_assign_numeric_pesticide_mrl,false);
- assert.equal(m.full_compliance_verified,false);assert.equal(manifest.pending,136);
- assert.equal(manifest.verified_evidence_added,128);
+ assert.equal(m.full_compliance_verified,false);assert.equal(manifest.pending,126);
+ assert.equal(manifest.verified_evidence_added,138);
  for(const record of m.exact_products){
   const p=idx.find(x=>x.id===record.catalog_id);assert.ok(p,record.catalog_id);
   const r=milk(p);assert.ok(r,p.id);assert.equal(r.reference_pesticide,"Acetamiprid");
