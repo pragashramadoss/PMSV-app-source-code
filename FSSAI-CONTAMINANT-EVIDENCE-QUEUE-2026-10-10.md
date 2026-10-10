@@ -7,8 +7,8 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 377 |
-| No exact product-identity contaminant evidence established by current index | 156 |
+| Some exact product evidence, partial only | 387 |
+| No exact product-identity contaminant evidence established by current index | 146 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Original source-article applicability triage records (2026-10-10 baseline) | 236 |
 | Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 43 |
@@ -101,14 +101,14 @@ A fifth exact identity now has source-backed **partial** chemical-residue eviden
 
 | FSSR prefix | Product identities requiring exact review |
 |---|---:|
-| 2.3 | 61 |
+| 2.3 | 53 |
 | special | 34 |
 | 2.1 | 14 |
 | 2.4 | 12 |
 | 2.8 | 11 |
 | 2.5 | 7 |
 | 2.11 | 5 |
-| 2.7 | 4 |
+| 2.7 | 2 |
 | 2.9 | 3 |
 | 2.10 | 3 |
 | 2.2 | 1 |
@@ -143,11 +143,10 @@ All entries below have an individually stored precision-applicability gate; conf
 |---|---|---|
 | Fat spread | `02-02-2-fat-spread` | 2.2.5(3) |
 
-### FSSR 2.3 (61)
+### FSSR 2.3 (53)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
-| Barley Water | `barley-water` | 2.3.21 |
 | Candied, Crystallised And Glazed Fruit / Vegetable / Rhizome / Fruit Peel | `04-04-1-candied-crystallised-and-glazed-fruit-vegetable-rhizome-fruit-peel` | 2.3.26 |
 | Cocoa Beans | `04-04-2-cocoa-beans` | 2.3.54 |
 | Coconut cream (Non-Dairy) | `04-04-1-coconut-cream-non-dairy` | 2.3.52 |
@@ -157,8 +156,6 @@ All entries below have an individually stored precision-applicability gate; conf
 | Concentrated Fruit Juice with Preservatives for industrial use only | `concentrated-fruit-juice-industrial` | 2.3.17 |
 | Concentrated Vegetable Juice with Preservatives for industrial use only | `concentrated-vegetable-juice-industrial` | 2.3.17 |
 | Concentrated Vegetable Pulp/Puree with Preservatives for industrial use only | `04-04-2-concentrated-vegetable-pulp-puree-with-preservatives-for-industrial-use-only` | 2.3.17 |
-| Cordial | `cordial` | 2.3.21 |
-| Crush | `crush` | 2.3.21 |
 | Culinary Pastes | `12-12-6-culinary-pastes` | 2.3.28 |
 | Cut vanilla | `04-04-1-cut-vanilla` | 2.3.50 |
 | Date Paste | `04-04-1-date-paste` | 2.3.56 |
@@ -176,12 +173,10 @@ All entries below have an individually stored precision-applicability gate; conf
 | Fruit Based Beverage Mix/Powdered Fruit Based Beverage | `fruit-beverage-mix` | 2.3.40 |
 | Fruit Cheese | `04-04-1-fruit-cheese` | 2.3.33 |
 | Fruit Juice with Preservatives for Industrial Use only | `fruit-juice-preserved-industrial` | 2.3.16 |
-| Fruit Syrup/ Fruit Sharbats | `fruit-syrup-sharbat` | 2.3.21 |
 | Fruits and Vegetable Chutney | `04-04-1-fruits-and-vegetable-chutney` | 2.3.41 |
 | Fungi extract and Fungi Concentrate | `04-04-2-fungi-extract-and-fungi-concentrate` | 2.3.62 |
 | Fungi Grits and Fungi Powder | `04-04-2-fungi-grits-and-fungi-powder` | 2.3.62 |
 | Fungi in olive oil and other vegetable oils | `04-04-2-fungi-in-olive-oil-and-other-vegetable-oils` | 2.3.62 |
-| Ginger Cocktail | `ginger-cocktail` | 2.3.22 |
 | Ginger paste | `04-04-2-ginger-paste` | 2.3.28 |
 | Harrisa (Red Hot Pepper Paste) | `12-12-2-harrisa-red-hot-pepper-paste` | 2.3.58 |
 | Murabba | `04-04-1-murabba` | 2.3.25 |
@@ -193,10 +188,7 @@ All entries below have an individually stored precision-applicability gate; conf
 | Quick Frozen Fungi | `04-04-2-quick-frozen-fungi` | 2.3.62 |
 | Salted fungi (semi processed products) | `04-04-2-salted-fungi-semi-processed-products` | 2.3.62 |
 | Seedless Tamarind | `04-04-1-seedless-tamarind` | 2.3.49 |
-| Squash | `squash` | 2.3.21 |
 | Sterilized Fungi | `04-04-2-sterilized-fungi` | 2.3.62 |
-| Synthetic Syrup for use in Dispensers for Carbonated Water | `synthetic-syrup-dispenser` | 2.3.23 |
-| Synthetic Syrup or Sharbat | `synthetic-syrup-sharbat` | 2.3.24 |
 | Thermally Processed Concentrated Vegetable Juice Pulp/ Puree | `concentrated-vegetable-pulp-puree` | 2.3.13 |
 | Thermally processed Curried Vegetables/Ready to Eat Vegetables | `04-04-2-thermally-processed-curried-vegetables-ready-to-eat-vegetables` | 2.3.4 |
 | Thermally Processed Fruit Salad/Cocktail/Mix | `04-04-1-thermally-processed-fruit-salad-cocktail-mix` | 2.3.2 |
@@ -238,12 +230,10 @@ All entries below have an individually stored precision-applicability gate; conf
 | Liquid Egg Products | `10-10-2-liquid-egg-products` | 2.5.3(4) |
 | Pickled Eggs | `10-10-3-pickled-eggs` | 2.5.3(5) |
 
-### FSSR 2.7 (4)
+### FSSR 2.7 (2)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
-| Chewing gum and bubble gum | `05-05-3-chewing-gum-and-bubble-gum` | 2.7.3 |
-| Chocolate | `05-05-1-chocolate` | 2.7.4 |
 | Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake | `05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake` | 2.7.8 |
 | Dry Mixtures of Cocoa and Sugars | `05-05-1-dry-mixtures-of-cocoa-and-sugars` | 2.7.6 |
 
@@ -394,3 +384,18 @@ A further **26 identity-linked source gates** have been committed in `fssai-prod
 Official Version IX §2.1.1 lead source rows checked by article and unit: sugar/syrup with **sulphated ash >1%: 5 mg/kg** (PDF page 2); edible molasses/solid glucose/starch conversion product with **sulphated ash >1%: 5 mg/kg** (PDF page 4); dehydrated onions/dried herbs and spices/curry powder/mix masalas, **10 mg/kg on dry-matter basis** (PDF page 3); packaged drinking water other than mineral water, **0.01 mg/L** (PDF page 5). The water row is a deliberate *negative gate* for water sold through vending machines where packaged-water status is unestablished. Also considered the distinct refined white sugar **≤0.03% sulphated ash: 0.5 mg/kg** (PDF page 2); no product was assigned that row without demonstrated ash and identity. Source: [FSSAI Version IX](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf).
 
 **Disposition:** All 26 remain pending; this is an applicability qualification batch, not 26 new exact evidence matches. Lead numerical candidates remain conditional. No source article was applied to a finished-product sample, no product passed contaminants/pesticides as a whole, and the live total remains **533 identities / 377 partial source matches / 156 unresolved**. Product forms excluded from borrowed articles include cocoa mass versus cocoa powder, chocolate versus cocoa powder, carob versus cocoa, coffee-chicory mixture versus coffee alone, and salt substitutes versus food-grade salt. Next promotion requires exact identity, matrix/analytical basis and effective amendment evidence. WordPress unchanged.
+
+
+## Next exact named NOTS article batch — 25 products reviewed (10 October 2026)
+
+**Current live total: 533 products; 387 with partial source-backed contaminant evidence; 146 without their first exact matched article. Zero complete compliance assessments.**
+
+Eight product identities under FSSR §§2.3.21–2.3.24 (Ginger Cocktail, Squash, Crush, Fruit Syrup/Sharbat, Cordial, Barley Water, Synthetic Syrup for Dispensers, Synthetic Syrup or Sharbat) are source-checked against the FSSAI Contaminants Version IX §2.2.1 Naturally Occurring Toxic Substances named **Saffrole — Non-alcoholic beverages — 10 ppm** article. Any syrup/concentrate's dilution, as-prepared sample and final product status remain to be established. These 8 have exact beverage-category **partial source evidence** only; **10 ppm is not automatically applied** to an undiluted syrup or a laboratory result.
+
+Two additional exact finished-confectionery identities, **Chocolate — FSSR 2.7.4** and **Chewing gum and bubble gum — FSSR 2.7.3**, are source-checked against the same Version IX table's **Hydrocyanic acid — Confectionery — 5 ppm** article. These are named category references for finished confectionery, not cocoa mass, cocoa powder, gum base or an unconditional contaminant assessment. The previous Chapter 2.7 lead-profile inheritance locks stay in place.
+
+Fifteen further identities were reviewed **without promotion**: 10 edible-fungi processing forms (the **Agaric acid — Food containing mushrooms — 100 ppm** source article needs actual mushroom-species/form qualification); 3 ice cream/frozen dessert family products (the **Lead — Ice-cream, iced lollies and similar frozen confections — 1 mg/kg** article must not transfer to a dry mix or vegetable-fat analogue without proper identity and form); 1 fat spread (nickel limit depends on fat processing), and 1 Coffee-Chicory Mixture (not automatically coffee alone for Ochratoxin A). These are review-only and still counted in the pending 146.
+
+**Files:** `fssai-product-helper-preview-01/data/rules/fssai-25-beverage-confectionery-fungi-v9-source-evidence-2026-10-10.json` and `tests/fssai-25-v9-nots-source-evidence.test.cjs`; the 533-product audit and live 146-item review manifest were updated. The earlier 156/161 references in historical sections are dated snapshots, not live counts.
+
+**Official sources:** [FSSAI CTR Version IX, §2.2.1 (PDF p.15)](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf); [FSSAI Chapter 2.3 (pp.29–32)](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf); [FSSAI Chapter 2.7 (pp.4–6)](https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf). Effective amendments, process form, complete metals/toxins/pesticides and test reports remain open. WordPress unchanged.
