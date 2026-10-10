@@ -20,6 +20,7 @@ const contaminants = read("rules/contaminants-v9-core.json");
 const spiceOleoresinSource = read("rules/spice-oleoresin-2-9-32-residual-solvents-evidence-v1.json");
 const goatMuscleSource = read("rules/goat-muscle-veterinary-v9-exact-evidence-v1.json");
 const fourCompositeSources=read("rules/fssai-4-exact-composite-soup-source-evidence-v1.json");
+const coconutHexaneSource=read("rules/solvent-extracted-coconut-flour-hexane-exact-v1.json");
 /* Exact FSSAI Chapter 2.16 source evidence. This is a standard-product
  * THC and cross-cutting CBD assessment, not a Version IX contaminant article,
  * an exemption from other contaminants or a complete compliance verdict. */
@@ -893,6 +894,29 @@ for(const x of fourCompositeSources.excluded_ids){
  assert.ok(!fourCompositeById.has(x),"Non-equivalent product inherited composite rule: "+x);
 }
 
+// A named product-standard residual solvent limit is partial chemical source
+// evidence, not a crop pesticide MRL or universal food purity approval.
+const coconutProduct=index.products.find(p=>p.id===coconutHexaneSource.catalog_id);
+assert.ok(coconutProduct&&coconutProduct.name===coconutHexaneSource.product_name
+ &&coconutProduct.fssr===coconutHexaneSource.fssr
+ &&coconutProduct.fcs===coconutHexaneSource.fcs);
+assert.ok(official(coconutHexaneSource.official_source_url));
+assert.equal(coconutHexaneSource.max,10);
+assert.equal(coconutHexaneSource.unit,"ppm");
+assert.equal(coconutHexaneSource.chemical_residue,"Food-grade hexane");
+assert.equal(coconutHexaneSource.compliance_approval,false);
+assert.equal(coconutHexaneSource.automatic_cross_product_inheritance,false);
+const coconutStandard=chapterRecord(coconutProduct);
+assert.equal(coconutStandard.record.key,"2.4.13(4)");
+assert.equal(coconutStandard.record.name,"Solvent Extracted Coconut Flour");
+assert.ok(coconutStandard.sourceUrls.includes(coconutHexaneSource.official_source_url));
+assert.equal(coconutStandard.record.residual_solvent_limits?.filter(x=>
+ x.parameter===coconutHexaneSource.chemical_residue && x.operator==="<="
+ &&Number(x.value)===10 && x.unit==="ppm").length,1);
+for(const name of coconutHexaneSource.excluded_non_equivalent_foods){
+ assert.ok(index.products.some(p=>p.name===name),"Missing unrelated coconut or starch lookalike "+name);
+}
+
 function contaminantEvidenceForProduct(p){
  const profiles=directContaminantProfiles.get(p.id) || [];
  const explicitAliases=contaminantAliases.get(p.id);
@@ -931,6 +955,7 @@ function contaminantEvidenceForProduct(p){
  const guarEvidence=guar.catalog_id===p.id?guar:null;
  const hempEvidence=hempEvidenceById.get(p.id)||null;
  const exactCompositeSource=fourCompositeById.get(p.id)||null;
+ const exactCoconutHexane=p.id===coconutHexaneSource.catalog_id?coconutHexaneSource:null;
  const goatMuscleVetEvidence=goatMuscleSource.product_ids.includes(p.id)?(()=>{
    const i=goatMuscleSource.product_ids.indexOf(p.id);
    if(p.name!==goatMuscleSource.products[i]||p.fssr!=='2.5.2(9)'||p.rule_key!==p.fssr||
@@ -1327,6 +1352,7 @@ function contaminantEvidenceForProduct(p){
  if(spiceOleoresinResidues)explicitKinds.push("official_fssr_2_9_32_exact_residual_extraction_solvents_partial");
  if(goatMuscleVetEvidence)explicitKinds.push("official_v9_exact_goat_muscle_veterinary_drug_mrl_partial");
  if(exactCompositeSource)explicitKinds.push("official_v9_exact_composite_aflatoxin_b1_or_finished_soup_saffrole_partial");
+ if(exactCoconutHexane)explicitKinds.push("official_fssr_2_4_13_4_exact_coconut_flour_hexane_residual_partial");
  // Only a conditional, user-confirmed subtype source: the combined FoSCoS
  // identity must remain pending even though two powder variants have FSSAI
  // Aflatoxin M1 articles. Cream and partly skimmed are not inferred.
@@ -1356,6 +1382,7 @@ function contaminantEvidenceForProduct(p){
    exact_spice_oleoresin_solvent_residues:spiceOleoresinResidues,
    exact_goat_muscle_veterinary_drugs:goatMuscleVetEvidence,
    exact_composite_food_or_soup_source_v9:exactCompositeSource,
+   exact_coconut_flour_residual_hexane:exactCoconutHexane,
    exact_named_milk_products_mrl_article:exactMilkProduct?{source:version9Source,article:namedMilkEvidence.article,pesticide:namedMilkEvidence.pesticide,mrl:namedMilkEvidence.mrl,unit:namedMilkEvidence.unit,cheese_auto_applied:false,compliance_pass:false}:null,
    exact_infant_food_metals:exactInfantFood?{source:version9Source,rows:infantMetalEvidence.verified_rows,lead_not_auto_assigned:true,compliance_pass:false}:null,
    exact_additional_dairy_commodity_article:additionalMilkArticle?{source:version9Source,article:additionalMilk.article,pesticide:additionalMilk.reference_pesticide,reference_mrl:additionalMilk.reference_mrl,unit:additionalMilk.unit,auto_apply:false,complete_panel:false}:null,
@@ -1659,6 +1686,10 @@ const products = index.products.map(p => {
   if(soybeanConditionalReview){
     tally("chapter_2_4_soybean_total_aflatoxin_review","source_verified_conditional_not_auto_applied");
     action.push("2.4.30 soybean finished-food total aflatoxins: official composite-food 20 µg/kg versus oilseed 15 µg/kg. Determine exact finished-food article applicability and amendments; numerical total is not auto-applied. Shared B1 is separately mapped; this is not a full compliance assessment.");
+  }
+  if(contaminantEvidence.exact_coconut_flour_residual_hexane){
+    tally("coconut_flour_hexane","exact_fssr_2_4_13_4_residual_solvent_partial");
+    action.push("FSSR 2.4.13(4) solvent-extracted coconut flour: exact food-grade hexane maximum 10 ppm. Check extraction process, method/result, other chemical and pesticide contamination. This is not an automatic compliance PASS.");
   }
   if(contaminantEvidence.exact_composite_food_or_soup_source_v9){
     tally("composite_b1_and_soup_saffrole","official_v9_exact_named_product_family_partial");
