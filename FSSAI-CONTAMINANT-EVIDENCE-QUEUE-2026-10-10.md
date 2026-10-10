@@ -7,8 +7,8 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 366 |
-| No exact product-identity contaminant evidence established by current index | 167 |
+| Some exact product evidence, partial only | 369 |
+| No exact product-identity contaminant evidence established by current index | 164 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Original source-article applicability triage records (2026-10-10 baseline) | 236 |
 | Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 43 |
@@ -23,12 +23,16 @@ The latest 533-product audit has added **27 named cheeses** (FSSR 2.1.17), **6 f
 
 Twenty exact named **Chapter 2.1 dairy/condensed/powder/fat product identities** are cross-checked against the current official FSSAI Version IX Section 2.3.1 **Milk and Milk products** pesticide commodity, with **Acetamiprid 0.02 mg/kg** as an independent source-integrity reference. These are **commodity-reference matches, not automatic MRL applications**. Fat-based residue conditions, concentration/processing factors, other pesticides, other contaminants and current amendments remain open. Eight dairy analogues, frozen dessert/ice cream mixed standards, edible lactose, colostrum and composite non-standard dairy sweets are excluded from this mapping. Two guaranteed maize/wheat-source FSSR products — **Maize Starch 2.4.7** and **Wheat Protein Products including Wheat Gluten 2.4.22** — now have separately checked FSSAI **Aflatoxin B1 10 µg/kg** evidence, independently matched against the cereal and composite-food rows. **Total aflatoxins are not inferred**, and no complete contaminants/pesticide PASS is asserted. Official FSSAI sources: https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf ; https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf ; https://fssai.gov.in/upload/uploadfiles/files/2_%20Chapter%202_1%20(Dairy%20products%20and%20analogues).pdf.
 
+## Next precision applicability review — 167 products assessed (10 October 2026)
+
+**Three exact fresh-fruit FoSCoS identities** (untreated fresh fruit, surface-treated fresh fruit and peeled/cut minimally processed fruit) were cross-checked to the official Section 2.3.1 **Fruits** pesticide commodity article; the **2,4-Dichlorophenoxy Acetic Acid 2 mg/kg** row is a **source integrity anchor only**, never an auto-applied MRL. Crop species, external treatment, edible basis, peeling/cutting, processing factors, analytical residue definition and operative amendments require separate evaluation. The **164 remaining exact identities** now carry individually stored identity-linked applicability checklists (matrix, processing, ingredient, packaging, and source family); **no numeric contaminant or pesticide limit is assigned by those checklists**. The checklists cover every remaining catalogue ID, including composite and special FoSCoS foods. Nothing in this register constitutes finished-product compliance clearance. Official source: https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf.
+
 ## Unresolved by standard family
 
 | FSSR prefix | Product identities requiring exact review |
 |---|---:|
 | 2.3 | 63 |
-| special | 39 |
+| special | 36 |
 | 2.1 | 14 |
 | 2.4 | 13 |
 | 2.8 | 11 |
@@ -42,7 +46,7 @@ Twenty exact named **Chapter 2.1 dairy/condensed/powder/fat product identities**
 
 ## Exact unresolved identities
 
-Each item still requires exact finished-food, composition/processing, packaging, residue, and legally operative-amendment verification. Not having exact article evidence does not mean exemption.
+All entries below have an individually stored precision-applicability gate; confirm form, recipe, source text, packaging/processing and operative amendments before moving a limit into an assessment. Unresolved is not an exemption.
 
 ### FSSR 2.1 (14)
 
@@ -227,7 +231,7 @@ Each item still requires exact finished-food, composition/processing, packaging,
 |---|---|---|
 | Trehalose | `99-99-1-trehalose` | 3.3.4 |
 
-### FSSR special (39)
+### FSSR special (36)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -261,15 +265,13 @@ Each item still requires exact finished-food, composition/processing, packaging,
 | Mixtures/preparations/premix of functional ingredients | `99-99-7-mixtures-preparations-premix-of-functional-ingredients` | Special FoSCoS route |
 | Other composite milk products based Indian Sweets | `18-18-1-other-composite-milk-products-based-indian-sweets` | Special FoSCoS route |
 | Other traditional mouth fresheners not covered under 5.2.4.1 and 5.2.4.2 | `05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2` | Special FoSCoS route |
-| Peeled or cut, minimally processed fruit | `04-04-1-peeled-or-cut-minimally-processed-fruit` | Special FoSCoS route |
 | Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations | `99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc` | Special FoSCoS route |
 | Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized | `11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th` | FSS (FPS&FA) Regulations |
 | Pulses based Sweets | `18-18-1-pulses-based-sweets` | Special FoSCoS route |
 | Sajji Khar | `99-99-1-sajji-khar` | Special FoSCoS route |
 | Spice based mouth fresheners | `05-05-2-spice-based-mouth-fresheners` | Special FoSCoS route |
 | Starch based Sweets | `18-18-1-starch-based-sweets` | Special FoSCoS route |
-| Surface-treated fresh fruit | `04-04-1-surface-treated-fresh-fruit` | Special FoSCoS route |
-| Untreated fresh fruit | `04-04-1-untreated-fresh-fruit` | Special FoSCoS route |
+
 
 ## Verified partial evidence removed from the unresolved list
 
