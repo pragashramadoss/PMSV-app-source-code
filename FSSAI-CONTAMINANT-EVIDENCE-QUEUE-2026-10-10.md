@@ -2,13 +2,13 @@
 
 > **Status: unresolved evidence, not an exemption, noncompliance finding or zero-limit conclusion.**
 
-Source: GitHub Actions verification run [38032990695](https://github.com/pragashramadoss/PMSV-app-source-code/actions/runs/38032990695) from the latest 533-product identity inventory. Re-run after new commits; this queue is a dated baseline, not a continuously refreshed list.
+Original baseline: GitHub Actions verification run [38032990695](https://github.com/pragashramadoss/PMSV-app-source-code/actions/runs/38032990695) from the latest 533-product identity inventory. Re-run after new commits; this queue is a dated baseline, not a continuously refreshed list.
 
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 269 |
-| No exact product-identity contaminant evidence established by current index | 264 |
+| Some exact product evidence, partial only | 270 |
+| No exact product-identity contaminant evidence established by current index | 263 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 
 ## Unresolved by standard family
@@ -25,7 +25,7 @@ Source: GitHub Actions verification run [38032990695](https://github.com/pragash
 | 2.9 | 6 |
 | 2.11 | 5 |
 | 2.10 | 3 |
-| 2.2 | 3 |
+| 2.2 | 2 |
 | 3.3 | 1 |
 
 ## Exact unresolved identities
@@ -342,12 +342,11 @@ For each item: verify the precise finished-product identity, current official FS
 | Drinking Water (Purified) sold through vending machine | `purified-vending-water` | 2.10.9 |
 | Instant Tea in Solid Form | `instant-tea-solid` | 2.10.1(4) |
 
-### FSSR 2.2 (3)
+### FSSR 2.2 (2)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
 | Fat spread | `02-02-2-fat-spread` | 2.2.5(3) |
-| Peanut Butter | `04-04-2-peanut-butter` | 2.2.4(11) |
 | Solvent Extracted Crude Vegetable Oils (not for direct human consumption) | `100-100-solvent-extracted-crude-vegetable-oils-not-for-direct-human-consumption` | 2.2.9 |
 
 ### FSSR 3.3 (1)
@@ -355,6 +354,10 @@ For each item: verify the precise finished-product identity, current official FS
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
 | Trehalose | `99-99-1-trehalose` | 3.3.4 |
+
+## Verified partial evidence removed from the unresolved list
+
+- **Peanut Butter — FSSR 2.2.4(11):** The official Version IX Section 2.2.1 composite food product containing oilseed article establishes **Total Aflatoxins 20 µg/kg** and **Aflatoxin B1 10 µg/kg** for a food containing groundnut kernels. The exact product-standard requirement of roasted groundnut kernels and current source values are checked independently. This establishes **only partial exact-product contaminant evidence**; other metals, residues, toxins and amendments are not cleared. This is not a complete compliance PASS or a statement of exemption.
 
 ## Official reference entry point
 
