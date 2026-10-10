@@ -80,6 +80,29 @@ test("Version IX source entries for dates, B1 composites and metal article categ
   }else throw Error("Unexpected source group "+r.article_group);
  }
 });
+test("Eight additional arsenic, copper and total-aflatoxin source rows remain official and cannot automatically PASS",()=>{
+ const rows=evidence.matched.flatMap(x=>(x.additional_named_source_rows||[]).map(y=>({...y,catalog_id:x.catalog_id})));
+ assert.equal(evidence.additional_source_references_verified,8);
+ assert.equal(evidence.additional_source_references_are_only_conditional,true);
+ assert.equal(evidence.full_finished_food_compliance_granted,0);
+ assert.equal(rows.length,8);
+ const expected={Arsenic:new Set([5,0.5]),Copper:new Set([150]),"Total Aflatoxins":new Set([20])};
+ const norm=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+ for(const row of rows){
+  assert.ok(expected[row.metal]&&expected[row.metal].has(row.reference_limit),row.catalog_id);
+  assert.equal(row.official_ctr_source,evidence.official_ctr_source);
+  assert.equal(row.auto_apply_numeric,false);assert.equal(row.finished_food_compliance_pass,false);
+  assert.equal(row.current_amendments_reconciled,false);
+  if(row.metal==="Total Aflatoxins"){
+   assert.equal(row.official_article,"Food product containing any of the above mentioned food articles");
+   assert.ok(core.crop_contaminants.total_aflatoxins.rules.some(x=>x.article===row.official_article&&Number(x.limit)===20));
+  }else assert.ok((core.metal_article_rules_v9[row.metal]||[]).some(x=>
+   x.row_type==="exact"&&norm(x.article)===norm(row.official_article)
+     &&Number(x.limit)===row.reference_limit));
+ }
+ assert.deepEqual(rows.reduce((x,r)=>(x[r.metal]=(x[r.metal]||0)+1,x),{}),
+  {Arsenic:5,"Total Aflatoxins":2,Copper:1});
+});
 test("Generated 533-product audit includes exact ten partial source records and zero inferred legal approvals",()=>{
  const audit=read("audit-output/fssai-product-readiness-audit.json");
  assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,407);
@@ -100,6 +123,7 @@ test("PMSV Helper shows new exact-source partial articles only for eligible iden
  const show=id=>vm.runInContext("sourcePinnedNext10PartialHtml("+JSON.stringify(byId.get(id))+")",ctx);
  for(const x of evidence.matched){
   const output=show(x.catalog_id);
+  if(x.additional_named_source_rows.length)assert.ok(output.includes("Additional official source reference"),x.catalog_id);
   assert.ok(output.includes("NOT APPLIED"),"Missing NOT APPLIED caveat "+x.catalog_id);
   assert.ok(output.includes("NO FINISHED-PRODUCT COMPLIANCE PASS"),"Missing pass prohibition "+x.catalog_id);
   assert.ok(output.includes(x.parameter),"Missing parameter "+x.catalog_id);
@@ -118,5 +142,17 @@ test("PMSV Helper shows new exact-source partial articles only for eligible iden
  ctx.contaminantsDb.residue_mrls.pesticides.find(x=>/^Malathion/.test(x.name)).rows
   .find(x=>x.food==="Dried fruits").mrl="80";
  assert.match(show(dates.id),/withheld/);
+ ctx.contaminantsDb=structuredClone(core);
+ ctx.next10SourceDb=structuredClone(saved);
+ const frozen=evidence.matched.find(x=>x.article_group==="finished_frozen_confection_lead");
+ ctx.next10SourceDb.matched.find(x=>x.catalog_id===frozen.catalog_id).additional_named_source_rows[0].reference_limit=8;
+ assert.match(show(frozen.catalog_id),/withheld/);
+ ctx.next10SourceDb=structuredClone(saved);
+ const vanilla2=evidence.matched.find(x=>x.article_group==="vanilla_dried_spice_lead");
+ const source=ctx.contaminantsDb.metal_article_rules_v9.Arsenic
+  .find(x=>x.article===vanilla2.additional_named_source_rows[0].official_article);
+ assert.ok(source);
+ source.limit=500;
+ assert.match(show(vanilla2.catalog_id),/withheld/);
  assert.match(html,/contaminants-v9-unresolved-264-review-v1\.json\?v=20261010-full136-126/);
 });
