@@ -58,8 +58,34 @@ test("Bees Wax has no Honey/Royal Jelly inheritance and retains CTR fail-closed 
  assert.match(lock.reason,/Honey antibiotic MRPLs are not inherited/);
 });
 
-test("Finished product rules are selected by exact catalogue ID in helper UI",()=>{
- assert.match(helper,/direct_product_standard_contaminant_rules_v1\|\|\[\]/);
- assert.match(helper,/\.filter\(x=>x\.catalog_id===id\)/);
- assert.match(helper,/\.forEach\(group=>\(group\.rules\|\|\[\]\)\.forEach\(r=>pushRule\(\{\.\.\.r\}\)\)\)/);
+test("UI requires exact identity and current chapter source table for numeric impurity values",()=>{
+ const vm=require("node:vm");
+ const label="function sourcePinnedDirectStandardLimit(p,group,rule){";
+ const at=helper.indexOf(label);
+ const end=helper.indexOf("function productBaselineContaminantRules(p){",at);
+ assert.ok(at>=0&&end>at,"Source gate must exist in the product UI");
+ assert.match(helper,/if\(sourcePinnedDirectStandardLimit\(p,group,r\)\)pushRule/);
+ assert.match(helper,/Numeric limit withheld for/);
+ const ctx={
+  standardSearchIndexDb:{products:catalogue},
+  chapterRuleDbs:[chapter],
+  ruleDbStandards:db=>db.standards||[],
+  normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim()
+ };
+ vm.runInNewContext(helper.slice(at,end),ctx);
+ const identity=catalogue.find(p=>p.id===id);
+ const group=contaminants.direct_product_standard_contaminant_rules_v1.find(x=>x.catalog_id===id);
+ const original=group.rules[0];
+ const check=(product=identity,mapping=group,rule=original)=>ctx.sourcePinnedDirectStandardLimit(product,mapping,rule);
+ assert.equal(check(),true,"Source-pinned Bees Wax lead should appear after loading Chapter 2.8");
+ assert.equal(check(identity,group,{...original,limit:3}),false,"Altered numeric limit must be withheld");
+ assert.equal(check(identity,group,{...original,unit:"µg/kg"}),false,"Altered units must be withheld");
+ assert.equal(check(identity,{...group,fssr:"2.8.3(3)"}),false,"Other product clause must not be inherited");
+ assert.equal(check({...identity,id:"100-100-royal-jelly"}),false,"Other finished product must not inherit Bees Wax lead");
+ ctx.chapterRuleDbs=[];
+ assert.equal(check(),false,"Missing chapter source must fail closed");
+ ctx.chapterRuleDbs=[{...chapter,standards:chapter.standards.map(st=>
+  st.key!=="2.8.3(2)"?st:{...st,composition:st.composition.map(r=>
+   r.parameter!=="Lead"?r:{...r,value:3})})}];
+ assert.equal(check(),false,"Changed source table value must fail closed");
 });
