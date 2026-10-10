@@ -7,13 +7,13 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 296 |
-| No exact product-identity contaminant evidence established by current index | 237 |
+| Some exact product evidence, partial only | 297 |
+| No exact product-identity contaminant evidence established by current index | 236 |
 | Products with complete contaminant compliance independently established | 0 claimed |
-| Source-article applicability triage records annotated (NOT resolved) | 237 |
-| Unresolved identities with conditional official-source article references recorded (NOT automatically applied) | 110 |
+| Source-article applicability triage records annotated (NOT resolved) | 236 |
+| Unresolved identities with conditional official-source article references recorded (NOT automatically applied) | 109 |
 
-Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The 237-item queue is **not** reduced by these candidates.
+Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The 236-item queue is **not** reduced by these candidates.
 
 ## Unresolved by standard family
 
@@ -22,7 +22,7 @@ Selected Version IX named-article candidates are documented in `fssai-product-he
 | 2.1 | 67 |
 | 2.3 | 66 |
 | special | 45 |
-| 2.4 | 16 |
+| 2.4 | 15 |
 | 2.8 | 11 |
 | 2.5 | 9 |
 | 2.7 | 6 |
@@ -229,14 +229,13 @@ For each item: verify the precise finished-product identity, current official FS
 | Surface-treated fresh fruit | `04-04-1-surface-treated-fresh-fruit` | FoSCoS/special |
 | Untreated fresh fruit | `04-04-1-untreated-fresh-fruit` | FoSCoS/special |
 
-### FSSR 2.4 (16)
+### FSSR 2.4 (15)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
 | Any other foodgrains | `06-06-1-any-other-foodgrains` | 2.4.6 |
 | Arrowroot | `06-06-2-arrowroot` | 2.4.14 |
 | Biscuit | `07-07-2-biscuit` | 2.4.15(1) |
-| Breakfast Cereal | `06-06-3-breakfast-cereal` | 2.4.35 |
 | Chia Seeds | `06-06-1-chia-seeds` | 2.4.6 |
 | Custard powder | `06-06-2-custard-powder` | 2.4.9 |
 | Fruit/Vegetable, Cereal Flakes | `06-06-3-fruit-vegetable-cereal-flakes` | 2.4.35 |
@@ -354,6 +353,8 @@ For each item: verify the precise finished-product identity, current official FS
 - **Yellow Pea Powder FSSR 2.4.36:** Verified official Chapter 2.4 identity is powder made only by grinding dehusked yellow pea (*Pisum sativum*). Version IX Section 2.2.1 lists **Aflatoxin B1 10 µg/kg** for both Pulses and the food-product-containing category. Only this shared B1 numeric value is mapped, subject to runtime source-record checks. Total Aflatoxins differs by category (15 versus 20 µg/kg); metal, pesticide and amendment assessments remain open. In particular, deferred December 2026 pulse-flour metal article expansions must not be treated as current rules. Sources: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf and Version IX linked below.
 
 - **Bread and Bread-Type Products (FSSR 2.4.15(2)):** Official Chapter 2.4 Version 4 establishes mandatory **atta and/or maida** in bread and rusks. Current Version IX Section 2.2.1 gives **Aflatoxin B1 = 10 µg/kg** under both cereal/cereal-products and foods containing such articles, permitting a single narrowly scoped partial mapping with exact official-source gating. **Total Aflatoxins (15 vs 20 µg/kg categories) remains unassigned**, and metals, residues, other contaminants and amendments are not approved. Clause source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf ; CTR source linked below.
+
+- **Breakfast Cereal (FSSR 2.4.35):** Current official Chapter 2.4 Version 4 requires a breakfast cereal prepared from grain-based materials, with cereals/pseudocereals/grains first collectively in the ingredient list. Version IX Section 2.2.1 establishes **Aflatoxin B1 10 µg/kg** for both cereal/cereal-product and food-containing cereal articles. PMSV has a fail-closed exact product and source-row gate for this single partial toxin limit. Total Aflatoxins (15 versus 20 µg/kg articles) and all metals, residues, other toxins and amendments remain unapproved. Official FSSR source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
 
 ## Official reference entry point
 
