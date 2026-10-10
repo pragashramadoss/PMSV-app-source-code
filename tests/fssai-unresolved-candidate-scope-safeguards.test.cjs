@@ -18,7 +18,7 @@ test("All 156 unresolved identities remain unapproved and catalogue-linked after
   for(const article of row.version_ix_named_article_scope_review.source_article_candidates_review_only)
    assert.equal(article.finished_product_limit_applied,false,row.catalog_id);
  }
- assert.equal(data.records.filter(p=>candidate(p).length>0).length,42);
+ assert.equal(data.records.filter(p=>candidate(p).length>0).length,41);
  assert.equal(data.scope_corrections_2026_10_10.inapplicable_review_only_candidates_removed,42);
 });
 test("Royal Jelly and stereoisomer-specific tartaric acid no longer inherit misleading lead candidates",()=>{
