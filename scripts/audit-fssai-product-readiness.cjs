@@ -83,7 +83,7 @@ for(const condition of contaminants.product_subtype_conditional_metal_rules_v9||
  if(condition.product_name)assert.equal(normalizeArticle(condition.product_name),normalizeArticle(identity.name));
  if(condition.fssr)assert.equal(condition.fssr,identity.fssr,"Conditional metal FSSR mismatch "+identity.id);
  if(condition.official_source_url)assert.equal(condition.official_source_url,version9Source,"Unrecognized current FSSAI source "+identity.id);
- assert.ok(/^section 2\\.1(?:\\s|·|$)/i.test(String(condition.source_basis||"")),"Wrong metal source clause "+identity.id);
+ assert.ok(/^section 2\.1(?:\s|·|$)/i.test(String(condition.source_basis||"")),"Wrong metal source clause "+identity.id);
  const sourceRows=(contaminants.metal_article_rules_v9?.[condition.contaminant]||[]).filter(row=>
    row.row_type==="exact"&&normalizeArticle(row.article)===normalizeArticle(condition.article)
    &&Number.isFinite(Number(row.limit))&&Number(row.limit)===Number(condition.limit)
