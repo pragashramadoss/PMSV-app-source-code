@@ -9473,9 +9473,22 @@ function pendingContaminantReviewNotice(p){
  if(record.product_name!==p.name||String(record.fssr)!==String(p.fssr))
    return '<div class="notice"><b>Regulatory review record identity mismatch.</b> No numeric value can be inferred from a review-only record. Reconcile this product with the FSSAI evidence catalogue.</div>';
  const needs=(record.review_requirements||[]).slice(0,5);
+ const scope=record.version_ix_named_article_scope_review;
+ const articleCandidates=(scope?.source_article_candidates_review_only||[]).filter(x=>x.finished_product_limit_applied===false);
+ const sourceReviewPanel=scope?
+  '<details style="margin:10px 0"><summary><b>Version IX named-article review — NOT APPLIED as finished-product limits</b></summary>'
+  +'<p>'+esc(scope.basis_note||'Exact product form and applicability are not established.')+'</p>'
+  +(articleCandidates.length
+    ?'<ul style="margin:6px 0;padding-left:20px">'+articleCandidates.map(x=>
+      '<li><b>'+esc(x.parameter)+' — '+esc(x.official_article)+'</b>: source-row reference '
+      +esc(x.limit)+' '+esc(x.unit)+'; <b>NOT APPLIED</b>. '+esc(x.condition_for_applicability)+'</li>').join('')+'</ul>'
+    :'<p>No unconditional named finished-product limit established in this selected article-scope review.</p>')
+  +'<p>Other metals, crop contaminants, pesticide MRLs, processing factors and operative amendments remain subject to independent verification.</p></details>'
+  :'';
  return '<div class="notice"><b>Exact finished-product contaminant evidence still incomplete — '+esc(p.name)+'.</b> '
    +'This identity has an outstanding official-source applicability review; it is not an exemption or an approved compliance result.'
    +'<ul style="margin:7px 0;padding-left:20px">'+needs.map(s=>'<li>'+esc(s)+'</li>').join('')+'</ul>'
+   +sourceReviewPanel
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
 }
 function renderProductContaminants(){
@@ -9623,7 +9636,7 @@ async function loadContaminantsDb(){
    contaminantsFutureAmendmentDb=await future.json();
  }catch(e){contaminantsFutureAmendmentDb=null;}
  try{
-   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=1',{cache:'reload'});
+   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-scope2',{cache:'reload'});
    if(!review.ok)throw new Error('HTTP '+review.status);
    const data=await review.json();
    if(data.count!==244||!Array.isArray(data.records)||data.records.length!==244)throw new Error('Unresolved review count mismatch');
