@@ -54,7 +54,7 @@ test("The 11 named metal source-row examples require an actual subtype and canno
  assert.equal(examples.length,11);
  assert.equal(pending.chapter_2_3_targeted_evidence_summary_2026_10_10.conditional_source_article_candidates_not_applied,11);
  const ids=new Set(examples.map(x=>x.id));
- assert.equal(ids.size,6);
+ assert.equal(ids.size,7);
  for(const x of examples){
   assert.equal(x.review_only,true,x.id);
   assert.equal(x.automatic_finished_product_limit,false,x.id);
