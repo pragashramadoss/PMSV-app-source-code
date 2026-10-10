@@ -8954,6 +8954,35 @@ function productBaselineContaminantRules(p){
    });
  }
 
+ // 5bea) FSSR 2.4.36 Yellow Pea Powder is exclusively dehusked
+ // Pisum sativum pea milled to flour, per current official Chapter 2.4.
+ // The current FSSAI Pulses and composite-food B1 rows both read 10 µg/kg.
+ // No pulse-flour metal article transfer (the 2026 amendment is deferred).
+ if(id==='04-04-2-yellow-pea-powder'&&p.name==='YELLOW PEA POWDER'&&p.fssr==='2.4.36'
+    && String(contaminantsDb?.source_version||'')==='Version IX (03.02.2026)'){
+   const ch=(chapterRuleDbs||[]).find(db=>(db.standards||[]).some(st=>st.key==='2.4.36'));
+   const record=(ch?.standards||[]).find(st=>st.key==='2.4.36');
+   const identity=record?.source_verified_identity;
+   const matched=record?.name==='Yellow Pea Powder'
+     &&identity?.source_clause==='2.4.36'
+     &&identity?.botanical_identity==='Pisum sativum L.'
+     &&identity?.no_foreign_ingredient===true
+     &&identity?.official_source_url==='https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf'
+     &&identity?.source_compendium_version==='Version 4 (07.05.2025)'
+     &&identity?.role==='exact_pea_pulse_flour_for_source_checked_b1_only'
+     &&identity?.complete_contaminant_compliance===false;
+   const g=contaminantsDb?.crop_contaminants?.aflatoxin_b1;
+   const articles=['Pulses','Food product containing any of the above mentioned food articles'];
+   const b1Verified=g?.unit==='µg/kg'&&articles.every(article=>(g.rules||[]).filter(x=>
+     normIngredient(x.article||'')===normIngredient(article)
+     &&Number(x.limit)===10&&String(x.unit||g.unit)==='µg/kg').length===1);
+   if(matched&&b1Verified)pushRule({
+     contaminant:'Aflatoxin B1',article:articles.join(' / '),limit:10,unit:'µg/kg',
+     source_basis:'FSSAI CTR Version IX · Section 2.2.1 · exact Yellow Pea Powder FSSR 2.4.36 pea-based food',
+     condition:'Only dehusked Yellow Pea Powder (Pisum sativum L.), FSSR 2.4.36. Exact Pulses and containing-pulse B1 articles agree at 10 µg/kg; Total Aflatoxins differs and is not assigned. Current pulse-flour lead/cadmium, pesticide MRL and other contaminant obligations are NOT auto-approved. No compliance PASS.'
+   });
+ }
+
  // 5be) FSSAI 2.4.4 Besan and 2.4.33 Chana Sattu are made exclusively
  // from Bengal gram (Cicer arietinum), as verified in Chapter 2.4.
  // Version IX Section 2.2.1 gives 10 µg/kg Aflatoxin B1 for BOTH
