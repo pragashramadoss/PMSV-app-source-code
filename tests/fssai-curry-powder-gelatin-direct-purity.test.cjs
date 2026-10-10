@@ -92,5 +92,11 @@ test("Chapter-source drift, altered units and neighboring finished foods all fai
   ctx.chapterRuleDbs=([spice,other]).filter(db=>db!==c.chapter);
   assert.equal(check(identity,group,rule),false,c.id+" missing chapter source");
   ctx.chapterRuleDbs=[spice,other];
+  assert.equal(check(identity,{...group,official_source_url:"https://untrusted.example/fssai.pdf"},rule),false,
+   c.id+" tampered group source URL");
+  ctx.chapterRuleDbs=([spice,other]).map(db=>db===c.chapter
+   ?{...db,official_sources:[{url:"https://untrusted.example/standards.pdf"}]}:db);
+  assert.equal(check(identity,group,rule),false,c.id+" untrusted loaded chapter provenance");
+  ctx.chapterRuleDbs=[spice,other];
  }
 });
