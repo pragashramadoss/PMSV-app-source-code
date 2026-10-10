@@ -706,6 +706,50 @@ for(const proof of confectioneryHCN.verified_product_identities){
  assert.ok(lockById.has(proof.catalog_id),"Metal inheritance lock accidentally removed: "+proof.catalog_id);
 }
 for(const id of confectioneryHCN.excluded_nearby_catalog_ids||[])assert.ok(!confectioneryHCNById.has(id));
+
+/* Additional 39 partial commodity/article identities; no complete MRL/purity
+ * assessment and no general infant-versus-ready-formula lead inheritance. */
+const namedMilkEvidence=contaminants.chapter_2_1_verified_milk_products_mrl_v9;
+const infantMetalEvidence=contaminants.chapter_13_verified_infant_food_metals_v9;
+assert.ok(namedMilkEvidence&&infantMetalEvidence);
+for(const x of [namedMilkEvidence,infantMetalEvidence]){
+ assert.equal(x.source_version,contaminants.source_version);
+ assert.equal(x.official_source_url,version9Source);
+ assert.equal(x.full_compliance_verified,false);
+}
+assert.equal(namedMilkEvidence.verified_product_identities.length,33);
+assert.equal(namedMilkEvidence.cheese_count,27);
+assert.equal(namedMilkEvidence.fermented_count,6);
+assert.equal(namedMilkEvidence.auto_apply_cheese,false);
+assert.equal((contaminants.residue_mrls.pesticides||[])
+ .filter(x=>x.name==="Acetamiprid")
+ .flatMap(x=>x.rows.filter(r=>r.food==="Milk and Milk products"
+   &&r.mrl==="0.02"&&r.unit==="mg/kg")).length,1);
+const verifiedMilkIds=new Map(namedMilkEvidence.verified_product_identities.map(x=>[x.catalog_id,x]));
+const verifiedInfantIds=new Map(infantMetalEvidence.verified_product_identities.map(x=>[x.catalog_id,x]));
+assert.equal(verifiedMilkIds.size,33);
+assert.equal(verifiedInfantIds.size,6);
+for(const x of verifiedMilkIds.values()){
+ const p=index.products.find(z=>z.id===x.catalog_id);
+ assert.ok(p&&p.name===x.product_name&&p.fssr===x.fssr&&p.fcs===x.fcs
+  &&x.exact_catalogue_identity_verified===true,"Milk-product identity changed "+x.catalog_id);
+ assert.ok((p.fssr==="2.1.17"&&p.fcs.startsWith("01.6."))
+   ||(p.fssr==="2.1.13"&&p.fcs.startsWith("01.")),p.id);
+}
+assert.equal(infantMetalEvidence.verified_product_identities.length,6);
+assert.equal(infantMetalEvidence.lead_0_2_not_auto_assigned,true);
+assert.equal(infantMetalEvidence.ready_formula_lead_0_02_not_auto_assigned,true);
+for(const x of verifiedInfantIds.values()){
+ const p=index.products.find(z=>z.id===x.catalog_id);
+ assert.ok(p&&p.name===x.product_name&&p.fssr===x.fssr&&p.fcs===x.fcs
+  &&p.fcs.startsWith("13.")&&x.exact_catalogue_identity_verified===true);
+}
+for(const x of infantMetalEvidence.verified_rows){
+ assert.ok(["Arsenic","Cadmium"].includes(x.metal));
+ assert.equal((contaminants.metal_article_rules_v9[x.metal]||[]).filter(r=>
+   r.row_type==="exact"&&r.article===x.article&&r.limit===x.limit&&r.unit===x.unit).length,1);
+}
+
 function contaminantEvidenceForProduct(p){
  const profiles=directContaminantProfiles.get(p.id) || [];
  const explicitAliases=contaminantAliases.get(p.id);
@@ -1045,7 +1089,11 @@ function contaminantEvidenceForProduct(p){
      source_articles:articles,total_aflatoxins_auto_assigned:false,
      pesticide_mrl_auto_approved:false,complete_contaminant_compliance:false};
  })();
+ const exactMilkProduct=verifiedMilkIds.get(p.id)||null;
+ const exactInfantFood=verifiedInfantIds.get(p.id)||null;
  const explicitKinds=[];
+ if(exactMilkProduct)explicitKinds.push('official_v9_named_cheese_or_fermented_milk_pesticide_commodity_partial');
+ if(exactInfantFood)explicitKinds.push('official_v9_named_infant_food_arsenic_cadmium_partial');
  if(peanutButterCompositeEvidence)explicitKinds.push("official_v9_exact_peanut_butter_composite_aflatoxins_partial");
  if(sharedCerealAflatoxinB1Evidence)explicitKinds.push("official_v9_harmonised_cereal_composite_b1_partial");
  if(exactBreadB1Evidence)explicitKinds.push("official_v9_exact_bread_wheat_cereal_composite_b1_partial");
@@ -1110,6 +1158,8 @@ function contaminantEvidenceForProduct(p){
    "no_exact_catalog_evidence_in_this_inventory";
  return {
    status,
+   exact_named_milk_products_mrl_article:exactMilkProduct?{source:version9Source,article:namedMilkEvidence.article,pesticide:namedMilkEvidence.pesticide,mrl:namedMilkEvidence.mrl,unit:namedMilkEvidence.unit,cheese_auto_applied:false,compliance_pass:false}:null,
+   exact_infant_food_metals:exactInfantFood?{source:version9Source,rows:infantMetalEvidence.verified_rows,lead_not_auto_assigned:true,compliance_pass:false}:null,
    exact_peanut_butter_composite_aflatoxins:peanutButterCompositeEvidence,
    exact_harmonised_cereal_aflatoxin_b1:sharedCerealAflatoxinB1Evidence,
    exact_bread_cereal_composite_b1_partial:exactBreadB1Evidence,
