@@ -100,5 +100,12 @@ test("Numeric tampering, cross-product swaps, missing chapter and altered source
  ctx.chapterRuleDbs=[{...chapter,cross_cutting_limits:chapter.cross_cutting_limits.map(x=>
   x.key==="2.16(3)"?{...x,value:76}:x)}];
  assert.equal(verify(p,g,cbd),false,"Cross-cutting source drift must withhold CBD");
+ ctx.chapterRuleDbs=[{...chapter,cross_cutting_limits:chapter.cross_cutting_limits.map(x=>
+  x.key==="2.16(3)"?{...x,scope:"Only hemp beverages"}:x)}];
+ assert.equal(verify(p,g,cbd),false,"A changed official scope must withhold CBD");
  ctx.chapterRuleDbs=[chapter];
+ assert.equal(verify(p,g,{...cbd,source_cross_cutting_key:"2.16(2)(iv)",contaminant:"Total THC",limit:0.2}),false,
+   "Hemp beverage 0.2 mg/kg must not transfer to whole seed");
+ assert.equal(verify(p,g,{...cbd,source_cross_cutting_key:"2.16(2)(v)",contaminant:"Total THC",limit:5}),false,
+   "Finished hemp-containing food rule cannot replace exact seed THC standard");
 });
