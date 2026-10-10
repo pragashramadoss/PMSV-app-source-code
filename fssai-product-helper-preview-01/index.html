@@ -8900,6 +8900,30 @@ function productBaselineContaminantRules(p){
    });
  }
 
+ // 5be) FSSAI 2.4.4 Besan and 2.4.33 Chana Sattu are made exclusively
+ // from Bengal gram (Cicer arietinum), as verified in Chapter 2.4.
+ // Version IX Section 2.2.1 gives 10 µg/kg Aflatoxin B1 for BOTH
+ // Pulses and foods containing listed pulses; choose only this agreed
+ // numerical limit, not either differing Total Aflatoxins category.
+ const gramProducts=[
+  ['06-06-2-besan','Besan','2.4.4'],
+  ['06-06-2-roasted-bengal-gram-flour-chana-sattu','Roasted Bengal Gram Flour (Chana Sattu)','2.4.33']
+ ];
+ if(gramProducts.some(([pid,name,clause])=>id===pid&&p.name===name&&p.fssr===clause) &&
+    /Version IX.*03\.02\.2026/.test(String(contaminantsDb?.source_version||''))){
+   const group=contaminantsDb?.crop_contaminants?.aflatoxin_b1;
+   const expected=['Pulses','Food product containing any of the above mentioned food articles'];
+   const exact=group?.unit==='µg/kg'&&expected.every(article=>
+      (group.rules||[]).filter(r=>normIngredient(r.article||'')===normIngredient(article)
+         &&Number(r.limit)===10&&String(r.unit||group.unit)==='µg/kg').length===1);
+   if(exact)pushRule({
+     contaminant:'Aflatoxin B1',limit:10,unit:'µg/kg',
+     article:'Pulses / Food product containing any of the above mentioned food articles',
+     source_basis:'FSSAI CTR Version IX · Section 2.2.1 · identical pulse and composite B1 limits; exact Chapter 2.4 Bengal gram identity',
+     condition:'FSSAI Chapter '+p.fssr+' specifies Bengal gram (Cicer arietinum). Both current Pulses and listed-pulse composite categories give the same Aflatoxin B1 maximum. Total Aflatoxins category, metals, pesticide residues, processing factors and other provisions remain unverified; this is not a compliance PASS.'
+   });
+ }
+ 
  // 5c) Version IX naturally occurring toxic substance Saffrole: only exact
  // finished soup or sauce identities in the official Chapter 2.3 list.
  const saffrole=contaminantsDb?.chapter_2_3_exact_soup_sauce_saffrole_v9;
