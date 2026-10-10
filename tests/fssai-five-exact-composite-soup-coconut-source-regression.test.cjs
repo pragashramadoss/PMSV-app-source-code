@@ -14,14 +14,14 @@ const special=read(base+"rules/special-regulatory-routes-v1.json");
 const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
 const byId=new Map(products.map(x=>[x.id,x]));
 const ids=[...four.matched.map(x=>x.catalog_id),coconut.catalog_id];
-test("Exactly five source-backed new partial identities moved from 161 unresolved to 156, with 533 preserved and no compliance PASS",()=>{
+test("Exactly five source-backed new partial identities moved from 161 unresolved to 156 historically, now 146, with 533 preserved and no compliance PASS",()=>{
  assert.equal(products.length,533);
- assert.equal(manifest.pending,156);assert.equal(manifest.count,156);
- assert.equal(manifest.verified_evidence_added,108);
- assert.equal(manifest.records.length,156);
+ assert.equal(manifest.pending,146);assert.equal(manifest.count,146);
+ assert.equal(manifest.verified_evidence_added,118);
+ assert.equal(manifest.records.length,146);
  assert.equal(manifest.full_compliance_achieved,0);
  assert.equal(new Set(ids).size,5);
- assert.equal(manifest.current_snapshot_summary_2026_10_10.exact_partial_evidence,377);
+ assert.equal(manifest.current_snapshot_summary_2026_10_10.exact_partial_evidence,387);
  for(const id of ids)assert.ok(!manifest.records.some(x=>x.catalog_id===id),"Partial source not reconciled: "+id);
 });
 test("Four exact FSSAI composite B1 and finished soup Saffrole articles source-locked by product/FCSR/category and version",()=>{
@@ -91,7 +91,7 @@ test("Helper display source integrity gates block stale identity, source values 
 });
 test("Generated product readiness audit identifies five partial exact source rows without issuing a finished food compliance PASS",()=>{
  const report=read("audit-output/fssai-product-readiness-audit.json");
- assert.equal(report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,377);
+ assert.equal(report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,387);
  for(const id of ids){
   const x=report.products.find(y=>y.id===id);
   assert.ok(x,id);
