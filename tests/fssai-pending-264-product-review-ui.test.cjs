@@ -45,7 +45,7 @@ test("Risk-sensitive FSSAI product distinctions are individually documented",()=
 });
 test("Product Contaminants displays evidence gaps and cannot turn review notes into numeric limits",()=>{
  assert.match(html,/let contaminantsPendingReviewDb=null/);
- assert.match(html,/contaminants-v9-unresolved-264-review-v1\\.json\\?v=20261010-mango9/);
+ assert.match(html,/contaminants-v9-unresolved-264-review-v1\.json\?v=20261010-mango9/);
  assert.match(html,/el\.innerHTML=profileMsg\s*\+pendingContaminantReviewNotice\(p\)/);
  const start=html.indexOf("function pendingContaminantReviewNotice(p){");
  const end=html.indexOf("function renderProductContaminants(){",start);
