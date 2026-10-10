@@ -7,8 +7,8 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 281 |
-| No exact product-identity contaminant evidence established by current index | 252 |
+| Some exact product evidence, partial only | 287 |
+| No exact product-identity contaminant evidence established by current index | 246 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 
 ## Unresolved by standard family
@@ -225,7 +225,7 @@ For each item: verify the precise finished-product identity, current official FS
 | Surface-treated fresh fruit | `04-04-1-surface-treated-fresh-fruit` | FoSCoS/special |
 | Untreated fresh fruit | `04-04-1-untreated-fresh-fruit` | FoSCoS/special |
 
-### FSSR 2.4 (31)
+### FSSR 2.4 (25)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -236,7 +236,6 @@ For each item: verify the precise finished-product identity, current official FS
 | Breakfast Cereal | `06-06-3-breakfast-cereal` | 2.4.35 |
 | Chia Seeds | `06-06-1-chia-seeds` | 2.4.6 |
 | Custard powder | `06-06-2-custard-powder` | 2.4.9 |
-| Expeller Pressed Edible Groundnut Flour | `06-06-2-expeller-pressed-edible-groundnut-flour` | 2.4.16(2) |
 | Fermented Soybean Curd | `06-06-8-fermented-soybean-curd` | 2.4.39(1) |
 | Fermented Soybean Curd (made with S. thermophillus + L. bulgaricus) | `06-06-8-fermented-soybean-curd-made-with-s-thermophillus-l-bulgaricus` | 2.4.39 |
 | Fruit/Vegetable, Cereal Flakes | `06-06-3-fruit-vegetable-cereal-flakes` | 2.4.35 |
@@ -251,12 +250,7 @@ For each item: verify the precise finished-product identity, current official FS
 | Protein rich refined wheat flour (Protein prachur maida) | `06-06-2-protein-rich-refined-wheat-flour-protein-prachur-maida` | 2.4.2(3) |
 | Protein rich wheat flour (Protein prachur atta) | `06-06-2-protein-rich-wheat-flour-protein-prachur-atta` | 2.4.1(3) |
 | Quinoa | `06-06-1-quinoa` | 2.4.6 |
-| Solvent Extract Soya Flour | `06-06-2-solvent-extract-soya-flour` | 2.4.13(1) |
 | Solvent Extracted Coconut Flour | `06-06-2-solvent-extracted-coconut-flour` | 2.4.13(4) |
-| Solvent Extracted Cotton seed Flour | `06-06-2-solvent-extracted-cotton-seed-flour` | 2.4.13(5) |
-| Solvent Extracted Groundnut Flour | `06-06-2-solvent-extracted-groundnut-flour` | 2.4.13(2) |
-| Solvent Extracted Sesame Flour | `06-06-2-solvent-extracted-sesame-flour` | 2.4.13(3) |
-| Soy Protein Products | `06-06-8-soy-protein-products` | 2.4.20 |
 | Wafer Biscuit | `07-07-2-wafer-biscuit` | 2.4.15(1) |
 | Wheat Protein Products including Wheat Gluten | `06-06-2-wheat-protein-products-including-wheat-gluten` | 2.4.22 |
 | YELLOW PEA POWDER | `04-04-2-yellow-pea-powder` | 2.4.36 |
@@ -355,6 +349,8 @@ For each item: verify the precise finished-product identity, current official FS
 - **Tempe — 2.4.26** and **Textured Soy Protein — 2.4.27:** The official Chapter 2.4 Version 4 (07 May 2025) identifies mandatory soybean or defatted soy flour/grits. Current Contaminants Version IX Section 2.2.1 specifies **Aflatoxin B1 10 µg/kg** in both the ready-to-eat oilseed article and the food-product-containing-listed-oilseed article. Source-gated partial toxin evidence only; Total Aflatoxins, heavy metals, pesticide residues, processing factors and other provisions are not cleared. Standard: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
 
 - **Non-fermented soybean products — 2.4.30:** Five exact FoSCoS product identities (soybean beverages, soybean curd, compressed soybean curd, dehydrated soybean curd film, tofu) are explicitly described within Chapter 2.4.30 Version 4. Official Version IX Section 2.2.1 confirms **Aflatoxin B1 10 µg/kg** for both the ready-to-eat oilseed and food-product-containing-article categories; this shared B1 limit is partially evidenced for these exact products only. **Total Aflatoxins, metals, pesticide residues and other requirements are NOT automatically verified.** Product source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
+
+- **Six exact Chapter 2.4 oilseed-derived flours/proteins:** Solvent Extract Soya Flour, Solvent Extracted Groundnut Flour, Solvent Extracted Sesame Flour, Solvent Extracted Cotton seed Flour, Expeller Pressed Edible Groundnut Flour, and Soy Protein Products are defined by their respective Chapter 2.4 clauses. Version IX Section 2.2.1 specifies **Aflatoxin B1 10 µg/kg** consistently for oilseeds for further processing, oilseeds ready to eat, and foods containing listed oilseed articles. Only these six exact identities are advanced to **partial** source-verified evidence. **Total Aflatoxins, heavy metals, pesticide residues and complete compliance remain unverified.** FSSAI source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
 
 ## Official reference entry point
 
