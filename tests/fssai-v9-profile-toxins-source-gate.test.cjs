@@ -70,3 +70,10 @@ test("Official fish and naturally occurring toxin source tampering cannot bypass
    ctx.contaminantsDb=db;
  }
 });
+
+test("Missing toxin evidence produces a distinct fail-closed UI warning, not a metal label",()=>{
+ assert.match(ui,/withheldProfileToxinRules=rawProfileRules\.filter/);
+ assert.match(ui,/Version IX toxin source-check required/);
+ assert.match(ui,/Version IX metal source-check required/);
+ assert.match(ui,/const exact=rawProfileRules\.filter\(rule=>sourcePinnedVersionIxProfileMetalRule\(p,rule\)\);/);
+});
