@@ -8432,6 +8432,37 @@ function sourcePinnedVersionIxProfileMetalRule(p,rule){
    &&rows.some(row=>normIngredient(row.article)===normIngredient(allowed[1])&&sameLimit(row));
 }
 
+/* The FSSAI CTR amendment indexed on 25 May 2026 commences on
+ * 1 December 2026 (India time). This is an expiry REVIEW GATE, not a
+ * transcription or application of future limits. Before that date the
+ * verified Version IX source rows remain eligible. On/after commencement,
+ * affected old rows are withheld pending exact Gazette reconciliation.
+ * Official index: https://fssai.gov.in/food-law/regulations/amendments/contaminants-toxins
+ */
+function ctrMay2026AffectedProduct(p){
+ const name=normIngredient(p?.name||'');
+ return /(?:pulse|lentil|dal|pea|bean|gram|besan)/.test(name)&&/(?:flour|powder|besan)/.test(name)
+   || /(?:fish oil)/.test(name)
+   || /(?:oilseed|groundnut|peanut|sesame|soybean|mustard|rapeseed|sunflower|edible oil|vegetable oil)/.test(name)
+   || /(?:fish|shrimp|prawn|seafood)/.test(name);
+}
+function ctrMay2026AffectedRule(p,rule,nowMs=Date.now()){
+ const commencement=Date.UTC(2026,10,30,18,30); // 2026-12-01 00:00 IST
+ if(!Number.isFinite(nowMs)||nowMs<commencement||!p||!rule)return false;
+ const name=normIngredient(p.name||'');
+ const article=normIngredient(rule.article||'');
+ const contaminant=normIngredient(rule.contaminant||'');
+ if(contaminant==='saffrole')return true;
+ if((contaminant==='total aflatoxins'||contaminant==='aflatoxin b1')
+    &&/(?:oilseed|oilseeds|oil|groundnut|peanut|sesame|soybean|sunflower|mustard|rapeseed)/.test(name+' '+article))return true;
+ if((contaminant==='lead'||contaminant==='cadmium')
+    &&/(?:pulse|lentil|dal|pea|bean|gram|besan)/.test(name)
+    &&/(?:flour|powder|besan)/.test(name))return true;
+ if((contaminant==='arsenic'||contaminant==='inorganic arsenic')
+    &&/(?:fish oil)/.test(name))return true;
+ return false;
+}
+
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  if(exactFinishedProductContaminantLock(p))return [];
@@ -9012,8 +9043,10 @@ function renderProductContaminants(){
  const sugarAshLeadRule=selectedSulphatedAshLeadRule(p);
  const otherContaminants=genericOtherContaminantRulesForProduct(p);
  const rawRules=[...exact,...baseline,...otherContaminants,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
+ const withheld2026Changeover=rawRules.filter(r=>ctrMay2026AffectedRule(p,r));
  const ruleSeen=new Set();
  const rules=rawRules.filter(r=>{
+   if(ctrMay2026AffectedRule(p,r))return false;
    const key=[r.contaminant,r.limit,r.unit,r.article].join('|');
    if(ruleSeen.has(key))return false;
    ruleSeen.add(key);return true;
@@ -9044,6 +9077,9 @@ function renderProductContaminants(){
     ? '<div class="notice oknote"><b>Product-level FSSAI contaminant mapping:</b> '+baseline.length+' directly applicable rule'+(baseline.length===1?'':'s')+' resolved for '+esc(p.name)+' from exact product articles, verified product/article aliases, direct product-standard limits, verified commodity-family mappings or other structured FSSAI evidence. Exact pesticide-residue MRLs are shown separately when the commodity name matches exactly.</div>'
     : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
+   +(Date.now()>=Date.UTC(2026,10,30,18,30)
+      &&(withheld2026Changeover.length||ctrMay2026AffectedProduct(p))
+      ?'<div class="notice"><b>FSSAI 2026 contaminants amendment — revalidation required.</b> The 25 May 2026 notification has a 1 December 2026 commencement date. '+withheld2026Changeover.length+' potentially superseded Version IX numeric row(s) have been withheld. Revised pulse-flour metals, fish-oil arsenic, oil/oilseed aflatoxins, saffrole scope and seafood antibiotic residues have not yet been fully transcribed and verified against the official Gazette. This is NOT a compliance pass. Refer to the <a href="https://fssai.gov.in/food-law/regulations/amendments/contaminants-toxins" target="_blank" rel="noopener">official FSSAI amendment index</a>.</div>':'')
    +productContaminantGateNotices(p)
    +(withheldProfileMetalRules.length?'<div class="notice"><b>Version IX metal source-check required — numeric limit withheld:</b> '+withheldProfileMetalRules.map(rule=>esc(rule.contaminant)+' ('+esc(rule.article)+')').join('; ')+'. No copied profile value is used unless its exact official metal article or reviewed grouped commodity identity, value and unit still match the current loaded FSSAI source table.</div>':'')
    +meatEggCommodityReview
