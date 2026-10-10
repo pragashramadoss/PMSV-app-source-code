@@ -12,16 +12,16 @@ const goat=read(base+"rules/goat-muscle-veterinary-v9-exact-evidence-v1.json");
 const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
 const byId=new Map(catalog.map(x=>[x.id,x]));
 const exactIds=[oleoresin.catalog_id,...goat.product_ids];
-test("81 individually source-gated unresolved identities, 42 differentiated types, no numeric product PASS",()=>{
+test("79 currently unresolved of original 81 source-gated identities, 42 differentiated types, no numeric product PASS",()=>{
  assert.equal(catalog.length,533);
- assert.equal(manifest.records.length,161);
- assert.equal(manifest.count,161);assert.equal(manifest.pending,161);
- assert.equal(manifest.verified_evidence_added,103);assert.equal(manifest.full_compliance_achieved,0);
- assert.equal(manifest.current_snapshot_summary_2026_10_10.exact_partial_evidence,372);
+ assert.equal(manifest.records.length,157);
+ assert.equal(manifest.count,157);assert.equal(manifest.pending,157);
+ assert.equal(manifest.verified_evidence_added,107);assert.equal(manifest.full_compliance_achieved,0);
+ assert.equal(manifest.current_snapshot_summary_2026_10_10.exact_partial_evidence,376);
  const wanted={special:36,"2.1":14,"2.4":13,"2.8":11,"2.5":7};
  assert.deepEqual(manifest.next_family_subtype_review_summary_2026_10_10.by_family,wanted);
  const focus=manifest.records.filter(x=>x.next_family_subtype_review_2026_10_10);
- assert.equal(focus.length,81);
+ assert.equal(focus.length,79);
  const types=new Set();
  for(const record of focus){
    const data=record.next_family_subtype_review_2026_10_10,product=byId.get(record.catalog_id);
@@ -96,5 +96,5 @@ test("Audited official partial status agrees for all three promoted catalog iden
  }
  assert.equal(status.get(oleoresin.catalog_id).exact_spice_oleoresin_solvent_residues.complete_contaminants_review,false);
  for(const id of goat.product_ids)assert.equal(status.get(id).exact_goat_muscle_veterinary_drugs.complete_veterinary_and_pesticide_panel,false);
- assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,372);
+ assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,376);
 });
