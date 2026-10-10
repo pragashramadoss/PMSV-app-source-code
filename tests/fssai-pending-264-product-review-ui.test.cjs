@@ -70,13 +70,13 @@ test("Product Contaminants displays evidence gaps and cannot turn review notes i
 });
 
 test("Every pending identity now has source-linked and explicitly conditional Version IX named-article review",()=>{
- assert.equal(manifest.source_row_scope_reviewed,238);
- assert.equal(manifest.pending,238);
- assert.equal(manifest.conditional_source_article_candidate_records,111);
+ assert.equal(manifest.source_row_scope_reviewed,237);
+ assert.equal(manifest.pending,237);
+ assert.equal(manifest.conditional_source_article_candidate_records,110);
  assert.match(manifest.scope_article_reconciliation,/26 identities have independent exact partial numeric evidence/i);
  const candidates=manifest.records.filter(x=>
    x.version_ix_named_article_scope_review.source_article_candidates_review_only.length>0);
- assert.equal(candidates.length,111);
+ assert.equal(candidates.length,110);
  for(const row of manifest.records){
   const review=row.version_ix_named_article_scope_review;
   assert.ok(review,row.catalog_id);
@@ -107,7 +107,7 @@ test("Every pending identity now has source-linked and explicitly conditional Ve
  assert.deepEqual(dairyAnalogue.version_ix_named_article_scope_review.source_article_candidates_review_only,[]);
 });
 
-test("Published pending family summary reconciles exactly to all 238 catalogue IDs",()=>{
+test("Published pending family summary reconciles exactly to all 237 catalogue IDs",()=>{
  const head=queue.split("## Unresolved by standard family")[1].split("## Exact unresolved identities")[0];
  const table=new Map([...head.matchAll(/^\| (2\.\d+|3\.3|special) \| (\d+) \|$/gm)].map(x=>[x[1],Number(x[2])]));
  const counts={};
@@ -115,5 +115,5 @@ test("Published pending family summary reconciles exactly to all 238 catalogue I
  assert.equal(table.size,Object.keys(counts).length);
  for(const [prefix,count] of Object.entries(counts))
    assert.equal(table.get(prefix),count,"Mismatched named family "+prefix);
- assert.equal([...table.values()].reduce((a,b)=>a+b,0),238);
+ assert.equal([...table.values()].reduce((a,b)=>a+b,0),237);
 });
