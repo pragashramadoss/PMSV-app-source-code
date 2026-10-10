@@ -8014,29 +8014,40 @@ function syncMetalSubtypeInput(p){
  sel.value=subtypes.includes(current)?current:'';
  if(sel.dataset)sel.dataset.catalogId=currentProductId;
 }
-function selectedMetalSubtypeRule(p){
+/* A confirmed finished-product subtype may carry MULTIPLE separately sourced
+ * metal requirements (e.g. dehydrated onion Lead and Arsenic). Return all of
+ * them only if every current official Version IX article, number and unit
+ * agrees. Reject duplicate metal names and partially verified subtype sets. */
+function selectedMetalSubtypeRules(p){
  const rules=metalSubtypeRulesForProduct(p);
  const sel=document.getElementById('contaminantMetalSubtype');
  const subtype=sel?.value||'';
- if(!subtype||!sel||sel.dataset?.catalogId!==p?.id||!standardSearchIndexDb)return null;
- if(contaminantsDb?.source_version!=='Version IX (03.02.2026)')return null;
+ if(!subtype||!sel||sel.dataset?.catalogId!==p?.id||!standardSearchIndexDb)return [];
+ if(contaminantsDb?.source_version!=='Version IX (03.02.2026)')return [];
  const identity=(standardSearchIndexDb.products||[]).find(x=>x.id===p.id);
- if(!identity||identity.fssr!==p.fssr||normIngredient(identity.name)!==normIngredient(p.name))return null;
+ if(!identity||identity.fssr!==p.fssr||normIngredient(identity.name)!==normIngredient(p.name))return [];
  const selected=rules.filter(x=>x.subtype===subtype);
- if(selected.length!==1)return null;
- const rule=selected[0];
- if((rule.product_name&&normIngredient(identity.name)!==normIngredient(rule.product_name))
-    ||(rule.fssr&&identity.fssr!==rule.fssr)
-    ||rule.auto_apply!==false
-    ||!/^Section 2\.1\b/i.test(String(rule.source_basis||'')))return null;
- const articleRows=(contaminantsDb.metal_article_rules_v9?.[rule.contaminant]||[]).filter(row=>
-   normIngredient(row.article)===normIngredient(rule.article)
-   &&Number(row.limit)===Number(rule.limit)
-   &&String(row.unit||'').trim().toLowerCase()===String(rule.unit||'').trim().toLowerCase());
- if(articleRows.length!==1)return null;
- if(rule.source_condition!==undefined && String(articleRows[0].condition||'').trim()!==String(rule.source_condition||'').trim())return null;
- if(rule.official_source_url&&rule.official_source_url!==contaminantsDb.official_sources?.[0]?.url)return null;
- return rule;
+ if(!selected.length||new Set(selected.map(x=>x.contaminant)).size!==selected.length)return [];
+ for(const rule of selected){
+   if((rule.product_name&&normIngredient(identity.name)!==normIngredient(rule.product_name))
+     ||(rule.fssr&&identity.fssr!==rule.fssr)
+     ||rule.auto_apply!==false
+     ||!/^Section 2\.1\b/i.test(String(rule.source_basis||'')))return [];
+   const articleRows=(contaminantsDb.metal_article_rules_v9?.[rule.contaminant]||[]).filter(row=>
+     row.row_type==='exact'
+     &&normIngredient(row.article)===normIngredient(rule.article)
+     &&Number(row.limit)===Number(rule.limit)
+     &&String(row.unit||'').trim().toLowerCase()===String(rule.unit||'').trim().toLowerCase());
+   if(articleRows.length!==1)return [];
+   if(rule.source_condition!==undefined &&String(articleRows[0].condition||'').trim()!==String(rule.source_condition||'').trim())return [];
+   if(rule.official_source_url&&rule.official_source_url!==contaminantsDb.official_sources?.[0]?.url)return [];
+ }
+ return selected;
+}
+// Backwards-compatible single-row accessor for legacy Rice/Coffee/Ketchup tests.
+function selectedMetalSubtypeRule(p){
+ const rows=selectedMetalSubtypeRules(p);
+ return rows.length===1?rows[0]:null;
 }
 function renderMetalSubtypeStatus(p){
  const el=document.getElementById('metalSubtypeStatus');
@@ -8054,10 +8065,12 @@ function renderMetalSubtypeStatus(p){
    el.innerHTML='<b>Exact subtype required.</b> PMSV will not apply a subtype-specific metal limit to '+esc(p.name)+' until a verified subtype is selected.';
    return;
  }
- const matched=selectedMetalSubtypeRule(p);
- if(matched){
+ const matched=selectedMetalSubtypeRules(p);
+ if(matched.length){
    el.className='notice oknote';
-   el.innerHTML='<b>Exact subtype and source matched:</b> '+esc(subtype)+' → '+esc(matched.contaminant)+' <b>'+esc(String(matched.limit))+' '+esc(matched.unit)+'</b> under '+esc(matched.article)+'.';
+   el.innerHTML='<b>Exact subtype and source matched:</b> '+esc(subtype)+' → '
+     +matched.map(r=>esc(r.contaminant)+' <b>'+esc(String(r.limit))+' '+esc(r.unit)+'</b>'
+       +(r.source_condition?' ('+esc(r.source_condition)+')':'')+' under '+esc(r.article)).join('; ')+'.';
    return;
  }
  el.className='notice';
@@ -9230,10 +9243,10 @@ function renderProductContaminants(){
  const variantTin=selectedVariantTinRule(p);
  const productPackageTin=variantTin?null:selectedProductPackageTinRule(p);
  const dehydratedMilkLead=selectedDehydratedMilkLeadRule(p);
- const metalSubtypeRule=selectedMetalSubtypeRule(p);
+ const metalSubtypeRules=selectedMetalSubtypeRules(p);
  const sugarAshLeadRule=selectedSulphatedAshLeadRule(p);
  const otherContaminants=genericOtherContaminantRulesForProduct(p);
- const rawRules=[...cropGatedExact,...baseline,...(hempChapter216.verified?hempChapter216.rules:[]),...otherContaminants,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
+ const rawRules=[...cropGatedExact,...baseline,...(hempChapter216.verified?hempChapter216.rules:[]),...otherContaminants,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...metalSubtypeRules,...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
  const withheld2026Changeover=rawRules.filter(r=>ctrMay2026AffectedRule(p,r));
  const ruleSeen=new Set();
  const rules=rawRules.filter(r=>{
