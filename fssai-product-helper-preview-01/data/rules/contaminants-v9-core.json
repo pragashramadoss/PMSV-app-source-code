@@ -21925,6 +21925,24 @@
       "subtype_basis": "FSSR 2.3.27 combines Tomato Ketchup and Tomato Sauce; Version IX separately names Tomato ketchup, so a user-confirmed subtype is mandatory.",
       "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
       "verification": "official_fssai_v9_exact_ketchup_article_user_confirmed_finished_subtype"
+    },
+    {
+      "catalog_id": "02-02-2-fat-spread",
+      "product_name": "Fat spread",
+      "fssr": "2.2.5(3)",
+      "subtype": "Vegetable fat spread made with hydrogenated/interesterified vegetable fat",
+      "contaminant": "Nickel",
+      "limit": 1.5,
+      "unit": "mg/kg",
+      "article": "All hydrogenated, partially hydrogenated, interesterified vegetable oils and fats such as vanaspati, table margarine, bakery and industrial margarine, bakery shortening, fat spread and partially hydrogenated margarine, bakery shortening, fat spread and partially hydrogenated soyabean oil",
+      "source_condition": "",
+      "requires_input": "product.exact_subtype",
+      "auto_apply": false,
+      "condition": "Only the selected vegetable-fat spread that is manufactured from hydrogenated, partially hydrogenated, or interesterified vegetable oils/fats. Do not apply to unspecified, milk-fat, or mixed-fat spreads; confirm fat source and process independently.",
+      "source_basis": "Section 2.1 · Nickel · Version IX (03.02.2026)",
+      "subtype_basis": "FSSR 2.2.5(3) separately defines Milk fat spread, Mixed fat spread and Vegetable fat spread; the official Section 2.1 nickel article is limited by its hydrogenated/interesterified vegetable-oil/fat basis.",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "verification": "official_fssai_v9_exact_fat_spread_vegetable_fat_processing_user_confirmed"
     }
   ],
   "spice_crop_contaminant_identity_mappings_v9": [
@@ -28222,12 +28240,6 @@
       "unit": "mg/kg",
       "verified_identities": [
         {
-          "catalog_id": "02-02-2-fat-spread",
-          "product_name": "Fat spread",
-          "fssr": "2.2.5(3)",
-          "identity_verified": true
-        },
-        {
           "catalog_id": "02-02-1-interesterified-vegetable-fat-oil",
           "product_name": "Interesterified vegetable fat/Oil",
           "fssr": "2.2.2",
@@ -28268,6 +28280,14 @@
           "product_name": "Partially Hydrogenated and Winterised Soybean Oil",
           "fssr": "2.2.3(1)",
           "identity_verified": true
+        }
+      ],
+      "conditionally_reviewed_identities": [
+        {
+          "catalog_id": "02-02-2-fat-spread",
+          "product_name": "Fat spread",
+          "fssr": "2.2.5(3)",
+          "reason": "FSSR 2.2.5(3) includes milk fat, mixed fat, and vegetable fat spreads; the official CTR Section 2.1 Nickel 1.5 mg/kg is restricted to the named hydrogenated/interesterified vegetable oil/fat matrix."
         }
       ]
     },
@@ -28318,7 +28338,7 @@
     "amendments_fully_reconciled": false,
     "complete_contaminant_coverage": false,
     "automatic_pesticide_mrl_approval": false,
-    "application_note": "Only named FSSR Chapter 2.2 matching variants; nickel applies specified hydrogenated/interesterified group, lead/arsenic to edible grapeseed, rapeseed/mustard and safflower oils. Moringa and non-identical oils held back."
+    "application_note": "Source-pinned automatic nickel now covers seven exact hydrogenated/interesterified oil identities. FSSR 2.2.5(3) Fat spread is conditional only: vegetable-fat matrix and hydrogenated/interesterified processing must be confirmed in the subtype input. No milk/mixed/unspecified fat spread inheritance. Lead/Arsenic named oils and pesticide limitations remain separate."
   },
   "chapter_2_3_fresh_vegetables_exact_metal_v9": {
     "source_version": "Version IX (03.02.2026)",
