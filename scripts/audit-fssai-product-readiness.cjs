@@ -774,7 +774,7 @@ assert.equal(additionalMilkById.size,20);
 for(const x of additionalMilkById.values()){
  const p=index.products.find(z=>z.id===x.catalog_id);
  assert.ok(p&&p.name===x.product_name&&p.fssr===x.fssr&&p.fcs===x.fcs
-  &&x.exact_identity_verified===true&&/^2\\.1\\./.test(p.fssr));
+  &&x.exact_identity_verified===true&&/^2\.1\./.test(p.fssr));
  assert.ok(!/analogue|frozen dessert|ice cream|colostrum|stuffed fried|lactose/i.test(p.name));
  const officialStandard=chapterRecord(p);
  assert.equal(officialStandard.record.key,p.fssr);
@@ -799,7 +799,7 @@ for(const x of maizeWheatById.values()){
  const chapter=chapterRecord(p);
  assert.equal(chapter.record.key,p.fssr);
  assert.ok(chapter.sourceUrls.includes(maizeWheat.official_standard_url));
- if(p.fssr==="2.4.7")assert.match(chapter.record.definition,/Zea mays L\\./);
+ if(p.fssr==="2.4.7")assert.match(chapter.record.definition,/Zea mays L\./);
  if(p.fssr==="2.4.22")assert.ok(chapter.record.variants.some(x=>/wheat gluten/i.test(x.name)));
 }
 const b1Source=contaminants.crop_contaminants.aflatoxin_b1;
