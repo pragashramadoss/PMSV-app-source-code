@@ -610,11 +610,11 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
     <small>PMSV loads only verified FoSCoS variants relevant to the selected product. Some variants also require an exact package format before a Tin row applies.</small>
   </div>
   <div class="field hidden" id="contaminantMilkLeadSubtypeField">
-    <label>Exact milk-powder subtype for Lead</label>
+    <label>Exact milk-powder subtype for Lead and Aflatoxin M1</label>
     <select id="contaminantMilkLeadSubtype">
       <option value="">Not applicable / not specified</option>
     </select>
-    <small>Enabled only for the combined FoSCoS Milk Powders and Cream Powder product. Cream Powder is deliberately not offered because this Lead rule is for milks.</small>
+    <small>Enabled only for the combined FoSCoS Milk Powders and Cream Powder product. Cream Powder is not a verified milk-powder subtype. Aflatoxin M1 limits apply only to confirmed Whole Milk Powder or Skimmed Milk Powder.</small>
   </div>
   <div class="field hidden" id="contaminantMetalSubtypeField">
     <label>Exact product subtype for metal rule</label>
@@ -8669,6 +8669,31 @@ function sourcePinnedHempChapter216Rules(p){
  ],official_source_url:source};
 }
 
+/* Exact FSSAI Version IX Section 2.2.1 Aflatoxin M1 thresholds:
+ * Whole Milk Powder 4 µg/kg; Skimmed Milk Powder 6 µg/kg.
+ * Do not inherit by partially skimmed powder, Cream Powder or dairy whitener. */
+function sourcePinnedMilkPowderAflatoxinM1Rule(p){
+ if(!p||p.id!=='01-01-5-milk-powders-and-cream-powder'||p.fssr!=='2.1.10'||!contaminantsDb
+   ||contaminantsDb.source_version!=='Version IX (03.02.2026)')return null;
+ const official='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf';
+ if(!(contaminantsDb.official_sources||[]).some(x=>x.url===official))return null;
+ const subtype=document.getElementById('contaminantMilkLeadSubtype')?.value||'';
+ const exact={'Whole Milk Powder':{article:'Whole milk powder',limit:4},
+              'Skimmed Milk Powder':{article:'Skimmed milk powder',limit:6}}[subtype];
+ if(!exact||!dehydratedMilkSubtypeConfigsForProduct(p).some(x=>x.subtype===subtype))return null;
+ const group=contaminantsDb.crop_contaminants?.aflatoxin_m1;
+ if(!group||String(group.unit||'')!=='µg/kg')return null;
+ const rows=(group.rules||[]).filter(x=>
+   normIngredient(x.article)===normIngredient(exact.article)
+   &&Number.isFinite(Number(x.limit))&&Number(x.limit)===exact.limit
+   &&String(x.unit||group.unit)==='µg/kg');
+ if(rows.length!==1)return null;
+ return {contaminant:'Aflatoxin M1',article:exact.article,limit:exact.limit,unit:'µg/kg',
+   source_basis:'FSSAI CTR Version IX · Section 2.2.1 · Aflatoxin M1',
+   condition:'Exact '+subtype+' only; no transfer to Cream Powder, Partly Skimmed Milk Powder, dairy whitener or composite foods.',
+   verification:'official_fssai_v9_exact_selected_milk_powder_subtype'};
+}
+
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  if(exactFinishedProductContaminantLock(p))return [];
@@ -9259,10 +9284,11 @@ function renderProductContaminants(){
  const variantTin=selectedVariantTinRule(p);
  const productPackageTin=variantTin?null:selectedProductPackageTinRule(p);
  const dehydratedMilkLead=selectedDehydratedMilkLeadRule(p);
+ const milkPowderAflatoxinM1=sourcePinnedMilkPowderAflatoxinM1Rule(p);
  const metalSubtypeRules=selectedMetalSubtypeRules(p);
  const sugarAshLeadRule=selectedSulphatedAshLeadRule(p);
  const otherContaminants=genericOtherContaminantRulesForProduct(p);
- const rawRules=[...cropGatedExact,...baseline,...(hempChapter216.verified?hempChapter216.rules:[]),...otherContaminants,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...metalSubtypeRules,...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
+ const rawRules=[...cropGatedExact,...baseline,...(hempChapter216.verified?hempChapter216.rules:[]),...otherContaminants,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(milkPowderAflatoxinM1?[milkPowderAflatoxinM1]:[]),...metalSubtypeRules,...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
  const withheld2026Changeover=rawRules.filter(r=>ctrMay2026AffectedRule(p,r));
  const ruleSeen=new Set();
  const rules=rawRules.filter(r=>{
@@ -9278,6 +9304,9 @@ function renderProductContaminants(){
  const fruitVegCommodityReview=productFruitVegCommodityMrlReviewHtml(p);
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
  const pesticideRows=pesticideMrls.map(x=>'<tr><td><b>'+esc(x.pesticide)+'</b></td><td><b>'+esc(x.mrl)+' '+esc(x.unit)+'</b></td><td>'+esc(x.food)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source)+'</td></tr>').join('');
+ const milkPowderAflatoxinNotice=p.id==='01-01-5-milk-powders-and-cream-powder'&&!milkPowderAflatoxinM1
+   ? '<div class="notice"><b>Milk-powder Aflatoxin M1 subtype verification required.</b> FSSAI Version IX gives separate limits for Whole Milk Powder and Skimmed Milk Powder. Select the exact variant; Cream Powder and Partly Skimmed Milk Powder have no limit auto-assigned.</div>'
+   : '';
  const waterPesticideHtml=!waterPesticides.relevant?''
    : waterPesticides.verified
      ? '<div class="card"><div class="section-title"><h3>FSSAI Chapter 2.10 water pesticide requirements — '+esc(p.name)+'</h3><span>Exact finished-product standard</span></div><div class="notice oknote">These are <b>individual</b> and <b>total</b> pesticide-residue limits for the confirmed finished-water product; they are different from named commodity pesticide MRLs, and do not establish complete compliance.</div><div class="tablewrap"><table><thead><tr><th>Parameter</th><th>Maximum</th><th>Standard / basis</th></tr></thead><tbody>'
@@ -9307,6 +9336,7 @@ function renderProductContaminants(){
    +(withheldProfileMetalRules.length?'<div class="notice"><b>Version IX metal source-check required — numeric limit withheld:</b> '+withheldProfileMetalRules.map(rule=>esc(rule.contaminant)+' ('+esc(rule.article)+')').join('; ')+'. No copied profile value is used unless its exact official metal article or reviewed grouped commodity identity, value and unit still match the current loaded FSSAI source table.</div>':'')
    +(withheldProfileCropRules.length?'<div class="notice"><b>Version IX spice aflatoxin source-check required — numeric value withheld:</b> '+withheldProfileCropRules.map(rule=>esc(rule.contaminant)).join('; ')+'. A spice limit is shown only when the exact named product mapping and the loaded official Section 2.2.1 article, value and unit agree.</div>':'')
    +(withheldProfileToxinRules.length?'<div class="notice"><b>Version IX toxin source-check required — numeric limit withheld:</b> '+withheldProfileToxinRules.map(rule=>esc(rule.contaminant)+' ('+esc(rule.article)+')').join('; ')+'. A copied toxin limit is withheld unless its exact FSSAI source article, tested units, product identity mapping and limit still agree.</div>':'')
+   +milkPowderAflatoxinNotice
    +meatEggCommodityReview
    +cerealCommodityReview
    +fruitVegCommodityReview
