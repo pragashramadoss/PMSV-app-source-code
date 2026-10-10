@@ -8463,6 +8463,32 @@ function ctrMay2026AffectedRule(p,rule,nowMs=Date.now()){
  return false;
 }
 
+/* Spice aflatoxin numbers must agree with the loaded Version IX Section 2.2.1
+ * table AND a named, reviewed spice identity. Generic spices cannot inherit a
+ * 30/15 µg/kg row merely through a similar food-category label. */
+function sourcePinnedSpiceAflatoxinRule(p,rule){
+ if(!p||!rule||!contaminantsDb)return false;
+ const mapping=(contaminantsDb.spice_crop_contaminant_identity_mappings_v9||[])
+   .find(m=>m.catalog_id===p.id && normIngredient(m.product_name)===normIngredient(p.name));
+ if(!mapping)return false;
+ const kinds={'Total Aflatoxins':['total_aflatoxins','total_aflatoxins_limit'],
+   'Aflatoxin B1':['aflatoxin_b1','aflatoxin_b1_limit']};
+ const kind=kinds[rule.contaminant];
+ if(!kind||normIngredient(rule.article)!==normIngredient(mapping.article)
+    ||!Number.isFinite(Number(rule.limit))
+    ||Number(rule.limit)!==Number(mapping[kind[1]])
+    ||String(rule.unit||'')!==String(mapping.unit||''))return false;
+ const group=contaminantsDb.crop_contaminants?.[kind[0]];
+ if(!group||String(group.unit||'')!==String(rule.unit||''))return false;
+ return (group.rules||[]).some(row=>normIngredient(row.article)===normIngredient(mapping.article)
+   &&Number.isFinite(Number(row.limit))&&Number(row.limit)===Number(rule.limit));
+}
+function sourcePinnedVersionIxProfileCropRule(p,rule){
+ if(!rule||normIngredient(rule.article)!=='spices spice mix'
+    ||!['Total Aflatoxins','Aflatoxin B1'].includes(rule.contaminant))return true;
+ return sourcePinnedSpiceAflatoxinRule(p,rule);
+}
+
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  if(exactFinishedProductContaminantLock(p))return [];
@@ -8553,22 +8579,18 @@ function productBaselineContaminantRules(p){
  // 5) Verified spice identity mappings to the current Spices/Spice Mix crop-contaminant article.
  const spice=(contaminantsDb?.spice_crop_contaminant_identity_mappings_v9||[]).find(x=>x.catalog_id===id);
  if(spice){
-   pushRule({
-     contaminant:'Total Aflatoxins',
-     article:String(spice.article||'Spices/Spice Mix'),
-     limit:spice.total_aflatoxins_limit,
-     unit:String(spice.unit||'µg/kg'),
-     source_basis:String(spice.source_basis||'Section 2.2.1 · Crop contaminants'),
-     condition:'Verified exact spice identity mapping'
-   });
-   pushRule({
-     contaminant:'Aflatoxin B1',
-     article:String(spice.article||'Spices/Spice Mix'),
-     limit:spice.aflatoxin_b1_limit,
-     unit:String(spice.unit||'µg/kg'),
-     source_basis:String(spice.source_basis||'Section 2.2.1 · Crop contaminants'),
-     condition:'Verified exact spice identity mapping'
-   });
+   for(const [contaminant,limit] of [
+     ['Total Aflatoxins',spice.total_aflatoxins_limit],
+     ['Aflatoxin B1',spice.aflatoxin_b1_limit]
+   ]){
+     const candidate={
+       contaminant,article:String(spice.article||''),limit,
+       unit:String(spice.unit||''),
+       source_basis:String(spice.source_basis||'Section 2.2.1 · Crop contaminants'),
+       condition:'Verified exact spice identity mapping; Version IX official article, unit and numeric value checked at runtime'
+     };
+     if(sourcePinnedSpiceAflatoxinRule(p,candidate))pushRule(candidate);
+   }
  }
 
  // 5b) Exact deshelled groundnut kernel: separate official nut/oilseed subtypes
@@ -9033,6 +9055,8 @@ function renderProductContaminants(){
  const rawProfileRules=profile&&Array.isArray(profile.rules)?profile.rules:[];
  const withheldProfileMetalRules=rawProfileRules.filter(rule=>!sourcePinnedVersionIxProfileMetalRule(p,rule));
  const exact=rawProfileRules.filter(rule=>sourcePinnedVersionIxProfileMetalRule(p,rule));
+ const withheldProfileCropRules=exact.filter(rule=>!sourcePinnedVersionIxProfileCropRule(p,rule));
+ const cropGatedExact=exact.filter(rule=>sourcePinnedVersionIxProfileCropRule(p,rule));
  const baseline=productBaselineContaminantRules(p);
  const conditionalMetals=conditionalMetalRowsForProduct(p);
  const packagingTin=selectedPackagingTinRule(p);
@@ -9042,7 +9066,7 @@ function renderProductContaminants(){
  const metalSubtypeRule=selectedMetalSubtypeRule(p);
  const sugarAshLeadRule=selectedSulphatedAshLeadRule(p);
  const otherContaminants=genericOtherContaminantRulesForProduct(p);
- const rawRules=[...exact,...baseline,...otherContaminants,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
+ const rawRules=[...cropGatedExact,...baseline,...otherContaminants,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
  const withheld2026Changeover=rawRules.filter(r=>ctrMay2026AffectedRule(p,r));
  const ruleSeen=new Set();
  const rules=rawRules.filter(r=>{
@@ -9072,7 +9096,7 @@ function renderProductContaminants(){
      +'</tbody></table></div></div>'
    : '';
  const profileMsg=profile
-  ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+exact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
+  ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+cropGatedExact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
   : baseline.length
     ? '<div class="notice oknote"><b>Product-level FSSAI contaminant mapping:</b> '+baseline.length+' directly applicable rule'+(baseline.length===1?'':'s')+' resolved for '+esc(p.name)+' from exact product articles, verified product/article aliases, direct product-standard limits, verified commodity-family mappings or other structured FSSAI evidence. Exact pesticide-residue MRLs are shown separately when the commodity name matches exactly.</div>'
     : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
@@ -9083,6 +9107,7 @@ function renderProductContaminants(){
       ?'<div class="notice"><b>FSSAI 2026 contaminants amendment — revalidation required.</b> The 25 May 2026 notification has a 1 December 2026 commencement date. '+withheld2026Changeover.length+' potentially superseded Version IX numeric row(s) have been withheld. Revised pulse-flour metals, fish-oil arsenic, oil/oilseed aflatoxins, saffrole scope and seafood antibiotic residues have not yet been fully transcribed and verified against the official Gazette. This is NOT a compliance pass. Refer to the <a href="https://fssai.gov.in/food-law/regulations/amendments/contaminants-toxins" target="_blank" rel="noopener">official FSSAI amendment index</a>.</div>':'')
    +productContaminantGateNotices(p)
    +(withheldProfileMetalRules.length?'<div class="notice"><b>Version IX metal source-check required — numeric limit withheld:</b> '+withheldProfileMetalRules.map(rule=>esc(rule.contaminant)+' ('+esc(rule.article)+')').join('; ')+'. No copied profile value is used unless its exact official metal article or reviewed grouped commodity identity, value and unit still match the current loaded FSSAI source table.</div>':'')
+   +(withheldProfileCropRules.length?'<div class="notice"><b>Version IX spice aflatoxin source-check required — numeric value withheld:</b> '+withheldProfileCropRules.map(rule=>esc(rule.contaminant)).join('; ')+'. A spice limit is shown only when the exact named product mapping and the loaded official Section 2.2.1 article, value and unit agree.</div>':'')
    +meatEggCommodityReview
    +cerealCommodityReview
    +fruitVegCommodityReview
