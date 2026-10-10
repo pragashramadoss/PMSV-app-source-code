@@ -8417,7 +8417,10 @@ function sourcePinnedVersionIxProfileMetalRule(p,rule){
  if(!/^section 2\.1(?:\s|·|$)/i.test(String(rule.source_basis||'')))return true;
  const rows=contaminantsDb.metal_article_rules_v9?.[rule.contaminant];
  if(!Array.isArray(rows)||!rows.length)return false;
- const sameLimit=row=>Number.isFinite(Number(row.limit))
+ // Only an exact named FSSAI Section 2.1 row can support a product-specific
+ // numeric profile. 'Foods not specified', 'All foods', and literal-anomaly
+ // transcriptions are not exact-product evidence and must stay fail-closed.
+ const sameLimit=row=>row.row_type==='exact' &&Number.isFinite(Number(row.limit))
    &&Number(row.limit)===Number(rule.limit)
    &&String(row.unit||'').trim().toLowerCase()===String(rule.unit||'').trim().toLowerCase();
  if(rows.some(row=>normIngredient(row.article)===normIngredient(rule.article)&&sameLimit(row)))return true;
@@ -8510,10 +8513,11 @@ function productBaselineContaminantRules(p){
    return rows.find(r=>normIngredient(r.article||'')===target)||null;
  };
 
- // 1) Exact current metal-article matches for any standardized product name.
+ // 1) Only exact named metal-article rows can match a standardized product.
+ // Generic defaults and anomalous FSSAI literal transcriptions remain review-only.
  Object.entries(contaminantsDb?.metal_article_rules_v9||{}).forEach(([contaminant,rows])=>{
    (rows||[]).forEach(r=>{
-     if(normIngredient(r.article||'')===n)pushRule({contaminant,...r});
+     if(r.row_type==='exact' &&normIngredient(r.article||'')===n)pushRule({contaminant,...r});
    });
  });
 
