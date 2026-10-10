@@ -34,7 +34,6 @@ test("Risk-sensitive FSSAI product distinctions are individually documented",()=
    ["06-06-4-macaroni-products-instant-noodle",/legume or tuber/i],
    ["05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",/Cocoa Powder lead 5 mg\/kg/],
    ["02-02-2-fat-spread",/Nickel rule/i],
-   ["04-04-2-peanut-butter",/groundnut-kernel aflatoxin/i],
    ["100-100-royal-jelly",/Bees Wax 2 mg\/kg/],
    ["coffee-chicory-mixture",/coffee-only OTA/i],
    ["10-10-2-egg-powder",/shell-free/i],
@@ -42,6 +41,7 @@ test("Risk-sensitive FSSAI product distinctions are individually documented",()=
  ]){
   assert.match(requirements(id),pattern,id);
  }
+ assert.equal(requirements("04-04-2-peanut-butter"),"","Peanut Butter has moved from missing-exact to partial verified composite aflatoxin evidence");
 });
 test("Product Contaminants displays evidence gaps and cannot turn review notes into numeric limits",()=>{
  assert.match(html,/let contaminantsPendingReviewDb=null/);
