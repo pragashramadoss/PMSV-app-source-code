@@ -10012,10 +10012,43 @@ function sourcePinnedNext10PartialHtml(p){
     &&rec.source_reference_limit===5&&rec.source_reference_unit==='mg/kg on dry matter basis'
     &&leadRows.some(x=>x.row_type==='exact'&&norm(x.article)==='tea'&&Number(x.limit)===5);
  }else ok=false;
+ const more=rec?.additional_named_source_rows||[];
+ const extraExpected={
+  vanilla_dried_spice_lead:['Arsenic','Dried herbs, finings and clearing agents, solid pectin all grades, spices',5,'mg/kg'],
+  harissa_spice_composite_b1:['Total Aflatoxins','Food product containing any of the above mentioned food articles',20,'µg/kg'],
+  spice_mouth_freshener_composite_b1:['Total Aflatoxins','Food product containing any of the above mentioned food articles',20,'µg/kg'],
+  finished_frozen_confection_lead:['Arsenic','Ice-cream, iced lollies and similar frozen confections',0.5,'mg/kg'],
+  instant_tea_lead_dry_basis:['Copper','Tea',150,'mg/kg']
+ };
+ const expectExtra=extraExpected[group]||null;
+ if(!Array.isArray(more)||more.length!==(expectExtra?1:0))ok=false;
+ if(ok&&expectExtra){
+  const q=more[0];
+  ok=q.metal===expectExtra[0]&&q.official_article===expectExtra[1]
+   &&q.reference_limit===expectExtra[2]&&q.unit===expectExtra[3]
+   &&q.official_ctr_source===url&&q.auto_apply_numeric===false
+   &&q.finished_food_compliance_pass===false&&q.current_amendments_reconciled===false
+   &&q.basis?.length>40&&q.pdf_page_one_based>=7&&q.pdf_page_one_based<=14;
+  if(ok&&q.metal==='Total Aflatoxins'){
+   ok=(contaminantsDb.crop_contaminants?.total_aflatoxins?.rules||[])
+      .some(x=>x.article===q.official_article&&Number(x.limit)===q.reference_limit);
+  }else if(ok){
+   ok=(contaminantsDb.metal_article_rules_v9?.[q.metal]||[])
+      .some(x=>x.row_type==='exact'&&norm(x.article)===norm(q.official_article)
+       &&Number(x.limit)===q.reference_limit);
+  }
+ }
  if(!ok)return '<div class="notice"><b>FSSAI source evidence withheld.</b> Product identity, current Version IX article or recorded value failed integrity verification; no numeric assessment or compliance PASS.</div>';
+ const extraText=more.length
+   ?'<p><b>Additional official source reference (conditional, NOT APPLIED):</b> '
+     +esc(more[0].metal)+' — '+esc(more[0].official_article)+' — '
+     +esc(more[0].reference_limit)+' '+esc(more[0].unit)+'. '
+     +esc(more[0].basis)+'</p>'
+   :'';
  return '<div class="card"><div class="section-title"><h3>FSSAI Version IX — source-linked partial article</h3><span>Source candidate · NOT APPLIED</span></div>'
   +'<p><b>'+esc(rec.parameter)+'</b> — '+esc(rec.official_named_article)
   +' — source reference '+esc(rec.source_reference_limit)+' '+esc(rec.source_reference_unit)+'.</p>'
+  +extraText
   +'<p><b>NO FINISHED-PRODUCT COMPLIANCE PASS.</b> '+esc(rec.specific_processing_or_recipe_disqualification)+'</p>'
   +'<p>This is a product/category article reference, not a sample result. Verify analytical matrix, ingredients, subtype, applicable amendments, residue processing factors and other contaminant limits before use.</p>'
   +'<p><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX regulatory source</a></p></div>';
