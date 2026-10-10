@@ -113,3 +113,28 @@ test("six Chapter 2.4 grain identities resolve to exact source-verified subclaus
  const durum=get("2.4.6(19)");assert.equal(durum.general_limits.length,13);
  const raw=get("2.4.6(16)");assert.equal(index.find(x=>x.id==="06-06-1-unprocessed-whole-raw-pulses-not-for-direct-human-consumption")?.rule_key,raw.key);
 });
+
+
+test("residual Any other foodgrains uses exact 2.4.6(15) source limits without covering named grains or unrelated seeds",()=>{
+ const catalog=JSON.parse(fs.readFileSync(path.join(__dirname,"../fssai-product-helper-preview-01/data/standard-search-index-v1.json"),"utf8")).products;
+ const p=catalog.find(x=>x.id==="06-06-1-any-other-foodgrains");
+ assert.equal(p.fssr,"2.4.6");assert.equal(p.rule_key,"2.4.6(15)");
+ assert.equal(p.chapter_rule_route_status,"specific_subclause_verified_from_fssai");
+ assert.deepEqual(p.linked_rule_keys,["2.4.6"]);
+ const st=get("2.4.6(15)");
+ assert.equal(st.full_compliance_assessment_enabled,false);
+ assert.equal(st.numeric_evidence.compliance_assessment_enabled,false);
+ assert.equal(st.official_source_url,"https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf");
+ assert.deepEqual(st.numeric_evidence.source_pdf_pages,[10]);
+ assert.deepEqual(st.general_limits.map(x=>[x.parameter,x.value,x.operator]),[
+  ["Moisture",16,"<="],["Foreign matter (extraneous matter)",1,"<="],
+  ["Mineral matter within foreign matter",0.25,"<="],["Animal-origin impurities within foreign matter",0.1,"<="],
+  ["Other edible grains",6,"<="],["Weevilled grains",10,"<="],["Damaged grains",5,"<="],
+  ["Uric acid",100,"<="],["Total foreign matter, other edible grains and damaged grains",12,"<="]
+ ]);
+ for(const id of ["06-06-1-chia-seeds","06-06-1-triticale","06-06-1-wheat","06-06-1-maize","06-06-1-rice","06-06-1-quinoa","06-06-1-oats","06-06-1-durum-wheat"]){
+  const r=catalog.find(x=>x.id===id);
+  assert.ok(r,id);
+  assert.notEqual(r.rule_key,"2.4.6(15)","Unsafe residual grain standard inheritance for "+id);
+ }
+});
