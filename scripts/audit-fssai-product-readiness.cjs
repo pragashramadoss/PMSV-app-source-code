@@ -17,6 +17,7 @@ const read = name => JSON.parse(fs.readFileSync(path.join(dataDir, name), "utf8"
 const index = read("standard-search-index-v1.json");
 const special = read("rules/special-regulatory-routes-v1.json");
 const contaminants = read("rules/contaminants-v9-core.json");
+const spiceOleoresinSource = read("rules/spice-oleoresin-2-9-32-residual-solvents-evidence-v1.json");
 /* Exact FSSAI Chapter 2.16 source evidence. This is a standard-product
  * THC and cross-cutting CBD assessment, not a Version IX contaminant article,
  * an exemption from other contaminants or a complete compliance verdict. */
@@ -872,6 +873,29 @@ function contaminantEvidenceForProduct(p){
  const crudeOilEvidence=crudeOilLead.catalog_id===p.id&&crudeOilLead.product_name===p.name&&crudeOilLead.fssr===p.fssr?crudeOilLead:null;
  const guarEvidence=guar.catalog_id===p.id?guar:null;
  const hempEvidence=hempEvidenceById.get(p.id)||null;
+ const spiceOleoresinResidues=p.id==='12-12-2-spice-oleoresins'?(()=>{
+   if(p.name!==spiceOleoresinSource.product_name||p.fssr!==spiceOleoresinSource.fssr||
+      p.id!==spiceOleoresinSource.catalog_id||p.rule_key!==spiceOleoresinSource.fssr||
+      spiceOleoresinSource.source_clause!=='2.9.32(3)'||
+      spiceOleoresinSource.complete_compliance_claim!==false||
+      spiceOleoresinSource.all_contaminants_toxins_and_pesticides_verified!==false||
+      !official(spiceOleoresinSource.official_source_url))return null;
+   const {record,sourceUrls}=chapterRecord(p);
+   if(record.key!==p.fssr||record.name!=='Spice Oleoresins'||
+      !sourceUrls.some(x=>x.replace('://www.', '://')===spiceOleoresinSource.official_source_url.replace('://www.','://')))return null;
+   const solvents=spiceOleoresinSource.residual_solvents_ppm;
+   const sourceLimits=record.solvent_residual_limits_ppm;
+   if(Object.keys(sourceLimits||{}).length!==13||Object.keys(solvents||{}).length!==13)return null;
+   for(const [name,limit] of Object.entries(solvents)){
+      if(sourceLimits[name]!==limit||!((typeof limit==='number'&&limit>0)||limit==='GMP'))return null;
+   }
+   if(Object.values(solvents).filter(x=>typeof x==='number').length!==10||
+      Object.values(solvents).filter(x=>x==='GMP').length!==3)return null;
+   return {source:spiceOleoresinSource.official_source_url,source_clause:'2.9.32(3)',
+      catalog_id:p.id,product_name:p.name,fssr:p.fssr,residual_solvents_ppm:solvents,
+      note:'Residual extraction solvent limits are directly in the named FSSR product standard; other metals, mycotoxins and pesticides remain unverified.',
+      no_automatic_lab_pass:true,complete_contaminants_review:false};
+ })():null;
  const peanutButterCompositeEvidence=p.id==='04-04-2-peanut-butter'?(()=>{
    if(p.name!=='Peanut Butter'||p.fssr!=='2.2.4(11)'||
       !/Version IX.*03\.02\.2026/.test(String(contaminants.source_version||'')))return null;
@@ -1223,6 +1247,7 @@ function contaminantEvidenceForProduct(p){
  if(crudeOilEvidence)explicitKinds.push("verified_exact_fssr_2_2_9_crude_vegetable_oil_lead");
  if(guarEvidence)explicitKinds.push("verified_ins_412_guar_gum_official_gaur_gum_metal_alias");
  if(hempEvidence)explicitKinds.push("official_chapter_2_16_exact_thc_and_cross_cutting_cbd");
+ if(spiceOleoresinResidues)explicitKinds.push("official_fssr_2_9_32_exact_residual_extraction_solvents_partial");
  // Only a conditional, user-confirmed subtype source: the combined FoSCoS
  // identity must remain pending even though two powder variants have FSSAI
  // Aflatoxin M1 articles. Cream and partly skimmed are not inferred.
@@ -1249,6 +1274,7 @@ function contaminantEvidenceForProduct(p){
    "no_exact_catalog_evidence_in_this_inventory";
  return {
    status,
+   exact_spice_oleoresin_solvent_residues:spiceOleoresinResidues,
    exact_named_milk_products_mrl_article:exactMilkProduct?{source:version9Source,article:namedMilkEvidence.article,pesticide:namedMilkEvidence.pesticide,mrl:namedMilkEvidence.mrl,unit:namedMilkEvidence.unit,cheese_auto_applied:false,compliance_pass:false}:null,
    exact_infant_food_metals:exactInfantFood?{source:version9Source,rows:infantMetalEvidence.verified_rows,lead_not_auto_assigned:true,compliance_pass:false}:null,
    exact_additional_dairy_commodity_article:additionalMilkArticle?{source:version9Source,article:additionalMilk.article,pesticide:additionalMilk.reference_pesticide,reference_mrl:additionalMilk.reference_mrl,unit:additionalMilk.unit,auto_apply:false,complete_panel:false}:null,
@@ -1552,6 +1578,10 @@ const products = index.products.map(p => {
   if(soybeanConditionalReview){
     tally("chapter_2_4_soybean_total_aflatoxin_review","source_verified_conditional_not_auto_applied");
     action.push("2.4.30 soybean finished-food total aflatoxins: official composite-food 20 µg/kg versus oilseed 15 µg/kg. Determine exact finished-food article applicability and amendments; numerical total is not auto-applied. Shared B1 is separately mapped; this is not a full compliance assessment.");
+  }
+  if(contaminantEvidence.exact_spice_oleoresin_solvent_residues){
+    tally("spice_oleoresin_residual_solvents","exact_fssr_2_9_32_partial_only");
+    action.push("Official FSSR 2.9.32(3) lists 10 numerical residual solvent maxima and 3 GMP-only solvents. Evaluate solvent(s) actually used, laboratory methods/results, metal/mycotoxin/pesticide applicability separately; no complete compliance PASS.");
   }
   if(contaminantEvidence.finished_product_article_review){
     tally("chapter_2_7_finished_article_locks","reviewed_fail_closed");
