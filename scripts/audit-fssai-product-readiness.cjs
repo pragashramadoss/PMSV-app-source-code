@@ -70,6 +70,45 @@ const lockById = new Map(chapter27Locks.map(x=>[x.catalog_id,x]));
 assert.equal(chapter27Locks.length,6,"Expected six reviewed Chapter 2.7 contaminant locks");
 assert.equal(lockById.size,6,"Duplicate Chapter 2.7 lock identity");
 const version9Source=contaminants.official_sources?.[0]?.url || "";
+// Section 2.1 subtype conditions are regulatory candidates, NOT automatic
+// product limits. Independently reconcile all numbers to the loaded official
+// Version IX table before including a condition in the per-product audit.
+const checkedSubtypeMetalRows=new Map();
+for(const condition of contaminants.product_subtype_conditional_metal_rules_v9||[]){
+ const identity=index.products.find(x=>x.id===condition.catalog_id);
+ assert.ok(identity,"Missing conditional metal catalogue identity "+condition.catalog_id);
+ assert.equal(condition.auto_apply,false,"Subtype metal may not auto-apply "+identity.id);
+ assert.equal(condition.requires_input,"product.exact_subtype","Missing user-confirmed subtype "+identity.id);
+ assert.ok(condition.subtype&&condition.contaminant&&condition.article,"Incomplete conditional metal article "+identity.id);
+ if(condition.product_name)assert.equal(normalizeArticle(condition.product_name),normalizeArticle(identity.name));
+ if(condition.fssr)assert.equal(condition.fssr,identity.fssr,"Conditional metal FSSR mismatch "+identity.id);
+ if(condition.official_source_url)assert.equal(condition.official_source_url,version9Source,"Unrecognized current FSSAI source "+identity.id);
+ assert.ok(/^section 2\\.1(?:\\s|·|$)/i.test(String(condition.source_basis||"")),"Wrong metal source clause "+identity.id);
+ const sourceRows=(contaminants.metal_article_rules_v9?.[condition.contaminant]||[]).filter(row=>
+   row.row_type==="exact"&&normalizeArticle(row.article)===normalizeArticle(condition.article)
+   &&Number.isFinite(Number(row.limit))&&Number(row.limit)===Number(condition.limit)
+   &&String(row.unit||"").trim().toLowerCase()===String(condition.unit||"").trim().toLowerCase()
+   &&(condition.source_condition===undefined||String(row.condition||"").trim()===String(condition.source_condition).trim()));
+ assert.equal(sourceRows.length,1,"Wrong/ambiguous source limit, unit or analytical basis for "+identity.id+" "+condition.subtype+" "+condition.contaminant);
+ if(!checkedSubtypeMetalRows.has(identity.id))checkedSubtypeMetalRows.set(identity.id,[]);
+ checkedSubtypeMetalRows.get(identity.id).push({
+   subtype:condition.subtype,contaminant:condition.contaminant,article:condition.article,
+   value:condition.limit,unit:condition.unit,analytical_basis:condition.source_condition||null,
+   requires_user_confirmation:true,auto_apply:false,full_contaminant_coverage_verified:false,
+   official_source_url:version9Source
+ });
+}
+assert.ok([...checkedSubtypeMetalRows.values()].reduce((n,rows)=>n+rows.length,0)>=11,
+ "Unexpected reduction in official source-checked conditional metal rows");
+for(const [id,rows] of checkedSubtypeMetalRows){
+ const seen=new Set();
+ for(const row of rows){
+  const key=row.subtype+"|"+row.contaminant;
+  assert.ok(!seen.has(key),"Duplicate subtype/metal specification "+id+" "+key);
+  seen.add(key);
+ }
+}
+
 
 const bySpecialKey = new Map(special.routes.map(r => [r.key, r]));
 const chapterCache = new Map();
@@ -730,6 +769,7 @@ function contaminantEvidenceForProduct(p){
      current_or_future_amendment_check_required:true,
      automatic_product_level_metal_limits_allowed:false
    }:null,
+   conditional_metal_source_checked_review_only:checkedSubtypeMetalRows.get(p.id)||[],
    exact_evidence_kinds:explicitKinds,
    direct_profile_ids:profiles.map(x=>x.id),
    direct_profile_rule_rows:profiles.reduce((n,x)=>n+x.rows,0),
