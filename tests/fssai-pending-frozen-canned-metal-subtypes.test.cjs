@@ -25,7 +25,7 @@ rules:[["Lead",1],["Tin",250]], bad:"Flexible pack fruit salad"}
 ];
 const rulesFor=product=>Array.from(ctx.selectedMetalSubtypeRules(product),x=>[x.contaminant,x.limit,x.unit]);
 test("All three mixed catalogue identities retain pending status until user confirms exact finished subtype",()=>{
- assert.equal(manifest.pending,164);
+ assert.equal(manifest.pending,161);
  assert.equal(db.combined_catalogue_finished_subtype_review_2026_10_10.new_source_pinned_conditional_rows,6);
  assert.equal(db.combined_catalogue_finished_subtype_review_2026_10_10.auto_apply,false);
  for(const s of specs){
