@@ -35,8 +35,8 @@ for(const row of proof.matched){
  assert.ok(!matched.has(row.catalog_id));
  matched.add(row.catalog_id);
  const expected=row.source_group==="saffrole"
-  ? {article:"Non-alcoholic beverages",limit:10,unit:"ppm",fssr:/^2\\.3\\./,fcs:/^14\\.1\\.4\\./}
-  : {article:"Confectionery",limit:5,unit:"ppm",fssr:/^2\\.7\\./,fcs:/^(05\\.1\\.3|05\\.3)$/};
+  ? {article:"Non-alcoholic beverages",limit:10,unit:"ppm",fssr:/^2\.3\./,fcs:/^14\.1\.4\./}
+  : {article:"Confectionery",limit:5,unit:"ppm",fssr:/^2\.7\./,fcs:/^(05\.1\.3|05\.3)$/};
  assert.equal(row.article,expected.article);
  assert.equal(row.limit,expected.limit);
  assert.equal(row.unit,expected.unit);
