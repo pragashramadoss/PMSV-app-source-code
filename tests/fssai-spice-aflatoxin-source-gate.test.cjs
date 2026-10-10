@@ -66,6 +66,12 @@ test("Profile and baseline numbers are BOTH routed through the same source verif
  const p=products.find(x=>x.id===mapping.catalog_id);
  assert.equal(ctx.sourcePinnedVersionIxProfileCropRule(p,selected(mapping,keys[0])),true);
  assert.equal(ctx.sourcePinnedVersionIxProfileCropRule(p,{...selected(mapping,keys[0]),limit:31}),false);
+ assert.equal(ctx.sourcePinnedVersionIxProfileCropRule(p,{...selected(mapping,keys[0]),article:"Nuts, ready to eat"}),false,
+   "Changed article label must not disable source verification for a mapped spice");
+ assert.equal(ctx.sourcePinnedVersionIxProfileCropRule(p,{...selected(mapping,keys[1]),article:"Tampered article"}),false);
+ assert.equal(ctx.sourcePinnedVersionIxProfileCropRule({id:"fake",name:"Unknown"},
+   {contaminant:"Aflatoxin B1",article:"Spices/Spice Mix",limit:15,unit:"µg/kg"}),false,
+   "Unmapped spice-article claims must be withheld");
  assert.equal(ctx.sourcePinnedVersionIxProfileCropRule(p,{contaminant:"Lead",article:"Spices/Spice Mix",limit:10,unit:"mg/kg"}),true,
    "Non-aflatoxin rules retain their separate source-validation gates");
 });
