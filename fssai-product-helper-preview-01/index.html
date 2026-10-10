@@ -1226,6 +1226,7 @@ let goatMuscleVeterinaryResiduesDb=null;
 let fourCompositeSourcesDb=null;
 let crossFamilyNOTSDb=null;
 let batch40SourceDb=null;
+let next10SourceDb=null;
 let coconutFlourHexaneDb=null;
 let fungiAgaricConditionalDb=null;
 let contaminantsFutureAmendmentDb=null;
@@ -1239,7 +1240,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-10-batch40-v492';
+const PRODUCT_HELPER_UI_BUILD='2026-10-10-full136-source-v493';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -9945,6 +9946,79 @@ function sourcePinnedBatch40PartialHtml(p){
   +'<p>Contaminant and pesticide panels, relevant amendments, analytical basis and sample results remain unverified.</p>'
   +'<p><a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX article table</a></p></div>';
 }
+function sourcePinnedNext10PartialHtml(p){
+ if(!p||!contaminantsDb)return '';
+ const eligible=[
+ '04-04-1-dates','04-04-1-vanilla-pods','04-04-1-cut-vanilla',
+ '04-04-1-vanilla-powder','12-12-2-harrisa-red-hot-pepper-paste',
+ '05-05-2-spice-based-mouth-fresheners',
+ '01-01-7-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o',
+ '02-02-4-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o',
+ 'instant-tea-solid','99-99-3-mixture-preparations-premix-of-flavouring-substances'
+ ];
+ if(!eligible.includes(p.id))return '';
+ const db=next10SourceDb;
+ const rec=db?.matched?.find(x=>x.catalog_id===p.id);
+ const url='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf';
+ let ok=!!db&&db.baseline_all===533&&db.baseline_pending===136
+  &&db.additional_partial_source_matches===10&&db.matched?.length===10
+  &&db.new_partial===407&&db.new_pending===126
+  &&db.complete_product_compliance_passes===0&&db.numeric_limits_auto_applied===0
+  &&db.official_ctr_source===url&&contaminantsDb.official_sources?.[0]?.url===url
+  &&rec&&rec.product_name===p.name&&rec.fssr===p.fssr&&rec.fcs===p.fcs
+  &&rec.official_ctr_source===url&&rec.exact_catalogue_article_relationship_verified===true
+  &&rec.source_article_fully_applicable_to_all_forms_or_recipes===false
+  &&rec.ready_to_compare_sample_result===false
+  &&rec.pesticide_panel_or_full_metal_panel_completed===false
+  &&rec.current_amendments_fully_reconciled===false
+  &&rec.finished_product_numeric_pass===false
+  &&rec.claim_that_no_other_limit_applies===false
+  &&rec.specific_processing_or_recipe_disqualification?.length>100;
+ const norm=x=>String(x||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+ const group=rec?.article_group;
+ const leadRows=contaminantsDb.metal_article_rules_v9?.Lead||[];
+ if(ok&&group==='dried_dates_malathion'){
+  ok=p.fssr==='2.3.47(4)'&&rec.official_named_article==='Dried fruits'
+    &&rec.source_reference_limit===8&&rec.source_reference_unit==='mg/kg'
+    &&rec.parameter==='Malathion (sum of malathion and malaoxon)'
+    &&(contaminantsDb.residue_mrls?.pesticides||[]).filter(x=>/^Malathion/.test(x.name))
+     .flatMap(x=>x.rows||[]).some(x=>x.food==='Dried fruits'&&Number(x.mrl)===8&&x.unit==='mg/kg');
+ }else if(ok&&(group==='vanilla_dried_spice_lead'||group==='flavouring_premix_lead_dry_basis')){
+  ok=rec.parameter==='Lead'&&rec.source_reference_limit===10
+    &&rec.source_reference_unit==='mg/kg on dry matter basis'
+    &&rec.official_named_article.startsWith('Dehydrated onions, dried herbs and spices')
+    &&rec.official_named_article.includes('flavourings')
+    &&leadRows.some(x=>x.row_type==='exact'&&Number(x.limit)===10
+      &&norm(x.article).startsWith('dehydrated onions dried herbs and spices')
+      &&norm(x.article).includes('flavourings'));
+  if(group==='vanilla_dried_spice_lead')ok=ok&&p.fssr.startsWith('2.3.50');
+  else ok=ok&&p.fcs==='99.3';
+ }else if(ok&&(group==='harissa_spice_composite_b1'||group==='spice_mouth_freshener_composite_b1')){
+  ok=rec.parameter==='Aflatoxin B1'&&rec.source_reference_limit===10
+    &&rec.source_reference_unit==='µg/kg'
+    &&rec.official_named_article==='Food product containing any of the above mentioned food articles'
+    &&(contaminantsDb.crop_contaminants?.aflatoxin_b1?.rules||[])
+      .some(x=>x.article===rec.official_named_article&&Number(x.limit)===10);
+  if(group==='harissa_spice_composite_b1')ok=ok&&p.fssr==='2.3.58';
+  else ok=ok&&p.fcs==='05.2.4.2';
+ }else if(ok&&group==='finished_frozen_confection_lead'){
+  ok=p.fssr==='2.1.15'&&rec.parameter==='Lead'
+    &&rec.official_named_article==='Ice-cream, iced lollies and similar frozen confections'
+    &&rec.source_reference_limit===1&&rec.source_reference_unit==='mg/kg'
+    &&leadRows.some(x=>x.row_type==='exact'&&norm(x.article)===norm(rec.official_named_article)&&Number(x.limit)===1);
+ }else if(ok&&group==='instant_tea_lead_dry_basis'){
+  ok=p.fssr==='2.10.1(4)'&&rec.parameter==='Lead'&&rec.official_named_article==='Tea'
+    &&rec.source_reference_limit===5&&rec.source_reference_unit==='mg/kg on dry matter basis'
+    &&leadRows.some(x=>x.row_type==='exact'&&norm(x.article)==='tea'&&Number(x.limit)===5);
+ }else ok=false;
+ if(!ok)return '<div class="notice"><b>FSSAI source evidence withheld.</b> Product identity, current Version IX article or recorded value failed integrity verification; no numeric assessment or compliance PASS.</div>';
+ return '<div class="card"><div class="section-title"><h3>FSSAI Version IX — source-linked partial article</h3><span>Source candidate · NOT APPLIED</span></div>'
+  +'<p><b>'+esc(rec.parameter)+'</b> — '+esc(rec.official_named_article)
+  +' — source reference '+esc(rec.source_reference_limit)+' '+esc(rec.source_reference_unit)+'.</p>'
+  +'<p><b>NO FINISHED-PRODUCT COMPLIANCE PASS.</b> '+esc(rec.specific_processing_or_recipe_disqualification)+'</p>'
+  +'<p>This is a product/category article reference, not a sample result. Verify analytical matrix, ingredients, subtype, applicable amendments, residue processing factors and other contaminant limits before use.</p>'
+  +'<p><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX regulatory source</a></p></div>';
+}
 function sourcePinnedCompositeOrSoupPartialHtml(p){
  if(!p||!contaminantsDb)return '';
  const knownIds=[
@@ -10204,6 +10278,7 @@ function renderProductContaminants(){
    +sourcePinnedCompositeOrSoupPartialHtml(p)
    +sourcePinnedBeverageConfectioneryNotsHtml(p)
    +sourcePinnedBatch40PartialHtml(p)
+   +sourcePinnedNext10PartialHtml(p)
    +sourcePinnedCoconutFlourHexaneHtml(p)
    +exactEggStandardChemicalCriteriaHtml(p)
    +(hempChapter216.relevant&&!hempChapter216.verified?'<div class="notice"><b>Hemp Chapter 2.16 source review required:</b> THC and CBD numeric limits are withheld because the exact product identity, Chapter 2.16 source table, or cross-cutting CBD clause did not match the official recorded values.</div>':'')
@@ -10264,7 +10339,7 @@ async function loadContaminantsDb(){
    contaminantsFutureAmendmentDb=await future.json();
  }catch(e){contaminantsFutureAmendmentDb=null;}
  try{
-   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-batch40-136',{cache:'reload'});
+   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-full136-126',{cache:'reload'});
    if(!review.ok)throw new Error('HTTP '+review.status);
    const data=await review.json();
    const ids=new Set((data.records||[]).map(r=>r.catalog_id));
@@ -10317,6 +10392,16 @@ async function loadContaminantsDb(){
      throw new Error('Batch40 source/identity reconciliation failure');
    batch40SourceDb=data;
  }catch(e){batch40SourceDb=null;}
+ try{
+   const response=await fetch('./data/rules/fssai-next10-exact-source-candidate-2026-10-10.json?v=20261010-full136-126',{cache:'reload'});
+   if(!response.ok)throw new Error('Next-ten FSSAI source references unavailable');
+   const data=await response.json();
+   if(data.baseline_all!==533||data.matched?.length!==10||data.new_pending!==126
+      ||data.new_partial!==407||data.numeric_limits_auto_applied!==0
+      ||data.complete_product_compliance_passes!==0)
+      throw new Error('New FSSAI source-match evidence integrity mismatch');
+   next10SourceDb=data;
+ }catch(e){next10SourceDb=null;}
  try{
    const result=await fetch('./data/rules/chapter-2-3-fungi-agaric-conditional-v1.json?v=1',{cache:'reload'});
    if(!result.ok)throw new Error('HTTP '+result.status);
