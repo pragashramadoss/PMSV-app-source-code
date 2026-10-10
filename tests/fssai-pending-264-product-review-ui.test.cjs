@@ -60,3 +60,41 @@ test("Product Contaminants displays evidence gaps and cannot turn review notes i
  assert.doesNotMatch(result,/compliance PASS|0\.2 mg\/kg as a limit/);
  assert.equal(ctx.pendingContaminantReviewNotice(byId.get("coffee")),"");
 });
+
+test("Every pending identity now has source-linked and explicitly conditional Version IX named-article review",()=>{
+ assert.equal(manifest.source_row_scope_reviewed,244);
+ assert.equal(manifest.pending,244);
+ assert.equal(manifest.conditional_source_article_candidate_records,117);
+ assert.match(manifest.scope_article_reconciliation,/no new exact-product numeric applicability verified/i);
+ const candidates=manifest.records.filter(x=>
+   x.version_ix_named_article_scope_review.source_article_candidates_review_only.length>0);
+ assert.equal(candidates.length,117);
+ for(const row of manifest.records){
+  const review=row.version_ix_named_article_scope_review;
+  assert.ok(review,row.catalog_id);
+  assert.equal(review.source,row.official_source,row.catalog_id);
+  assert.equal(review.review_date,"2026-10-10");
+  assert.equal(review.applies_numeric_limits_to_product,false,row.catalog_id);
+  assert.equal(review.exact_identity_source_evidence_claimed,false,row.catalog_id);
+  assert.equal(review.full_contaminant_and_residue_review_complete,false,row.catalog_id);
+  assert.equal(review.current_amendments_fully_reconciled,false,row.catalog_id);
+  assert.equal(row.auto_apply_numeric_limit,false,row.catalog_id);
+  assert.equal(row.unconditional_compliance_pass,false,row.catalog_id);
+  assert.ok(row.review_requirements.some(x=>x.includes("Version IX")||x.includes("Official Version IX")),row.catalog_id);
+  for(const candidate of review.source_article_candidates_review_only){
+    assert.equal(candidate.finished_product_limit_applied,false,row.catalog_id);
+    assert.equal(candidate.source_document,row.official_source,row.catalog_id);
+    assert.ok(candidate.condition_for_applicability.length>15,row.catalog_id);
+    assert.ok(candidate.source_pdf_page_one_based>0,row.catalog_id);
+  }
+ }
+ const quinoa=manifest.records.find(x=>x.product_name==="Quinoa");
+ assert.equal(quinoa.version_ix_named_article_scope_review.review_disposition,"quinoa_explicit_lead_exclusion");
+ assert.equal(quinoa.version_ix_named_article_scope_review.source_article_candidates_review_only.length,0);
+ const milkPowder=manifest.records.find(x=>x.catalog_id==="01-01-5-milk-powders-and-cream-powder");
+ assert.deepEqual(milkPowder.version_ix_named_article_scope_review.source_article_candidates_review_only
+   .filter(x=>x.parameter==="Aflatoxin M1").map(x=>x.limit),[4,6]);
+ const dairyAnalogue=manifest.records.find(x=>x.catalog_id==="01-01-3-analogue-in-the-dairy-context");
+ assert.equal(dairyAnalogue.version_ix_named_article_scope_review.review_disposition,"dairy_analogue_is_not_automatically_milk");
+ assert.deepEqual(dairyAnalogue.version_ix_named_article_scope_review.source_article_candidates_review_only,[]);
+});
