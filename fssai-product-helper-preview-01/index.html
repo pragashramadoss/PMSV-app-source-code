@@ -8565,6 +8565,50 @@ function sourcePinnedWholeDryBeanCropRule(p,key,limit,unit){
  return matching.length===1 &&matching[0].limit===limit;
 }
 
+/* FSSAI Chapter 2.16 (hemp): product-specific total THC and universally
+ * applicable CBD are separate from CTR Version IX. Only exact catalogue
+ * identities and the currently loaded official Chapter 2.16 source tables
+ * may authorize these numeric product-standard values. */
+function sourcePinnedHempChapter216Rules(p){
+ const expected={
+   'fssai-2-16-hemp-seed':{key:'2.16(2)(i)',name:'Hemp seed',thc:5},
+   'fssai-2-16-hemp-seed-oil':{key:'2.16(2)(ii)',name:'Hemp seed oil',thc:10},
+   'fssai-2-16-hemp-seed-flour':{key:'2.16(2)(iii)',name:'Hemp seed flour',thc:5}
+ };
+ const target=expected[p?.id];
+ if(!target)return {relevant:false,verified:false,rules:[]};
+ const withheld={relevant:true,verified:false,rules:[]};
+ if(!standardSearchIndexDb||!Array.isArray(chapterRuleDbs))return withheld;
+ const identity=(standardSearchIndexDb.products||[]).find(x=>x.id===p.id);
+ if(!identity||p.name!==target.name||identity.name!==target.name
+    ||identity.fssr!=='2.16'||p.fssr!=='2.16'
+    ||identity.rule_key!==target.key||p.rule_key!==target.key)return withheld;
+ const source='https://fssai.gov.in/upload/uploadfiles/files/17_%20Chapter%202_16%20(Hemp%20seeds%20and%20seed%20products).pdf';
+ const official=chapterRuleDbs.filter(db=>
+   db?.chapter==='2.16'&&(db?.official_sources||[]).some(x=>x.url===source));
+ if(official.length!==1)return withheld;
+ const db=official[0];
+ const standards=ruleDbStandards(db).filter(st=>st.key===target.key&&st.name===target.name);
+ if(standards.length!==1)return withheld;
+ const rows=(standards[0].composition||[]).filter(x=>x.parameter==='Total THC');
+ const cbdRows=(db.cross_cutting_limits||[]).filter(x=>x.key==='2.16(3)'
+    &&x.parameter==='Cannabidiol (CBD)'
+    &&x.scope==='Any food consisting of hemp seed or seed products');
+ const valid=(row,value)=>row?.operator==='<='
+   &&Number.isFinite(row.value)&&row.value===value&&row.unit==='mg/kg';
+ if(rows.length!==1||!valid(rows[0],target.thc)
+    ||cbdRows.length!==1||!valid(cbdRows[0],75))return withheld;
+ return {relevant:true,verified:true,rules:[
+   {contaminant:'Total THC',limit:target.thc,unit:'mg/kg',
+    article:target.name,source_basis:'FSSAI Chapter 2.16 · '+target.key+' · product-standard cannabinoid maximum',
+    condition:'Exact finished '+target.name+' only. Hemp-based beverages use a separate 0.2 mg/kg total THC requirement.'},
+   {contaminant:'Cannabidiol (CBD)',limit:75,unit:'mg/kg',
+    article:'Food for sale consisting of hemp seed or seed products',
+    source_basis:'FSSAI Chapter 2.16(3) · cross-cutting CBD maximum',
+    condition:'Applies to the confirmed hemp seed/seed product identity; does not authorize addition of isolated cannabinoids.'}
+ ],official_source_url:source};
+}
+
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  if(exactFinishedProductContaminantLock(p))return [];
@@ -9148,6 +9192,7 @@ function renderProductContaminants(){
  const exact=rawProfileRules.filter(rule=>sourcePinnedVersionIxProfileMetalRule(p,rule));
  const withheldProfileCropRules=exact.filter(rule=>!sourcePinnedVersionIxProfileCropRule(p,rule));
  const cropGatedExact=exact.filter(rule=>sourcePinnedVersionIxProfileCropRule(p,rule));
+ const hempChapter216=sourcePinnedHempChapter216Rules(p);
  const baseline=productBaselineContaminantRules(p);
  const conditionalMetals=conditionalMetalRowsForProduct(p);
  const packagingTin=selectedPackagingTinRule(p);
@@ -9157,7 +9202,7 @@ function renderProductContaminants(){
  const metalSubtypeRule=selectedMetalSubtypeRule(p);
  const sugarAshLeadRule=selectedSulphatedAshLeadRule(p);
  const otherContaminants=genericOtherContaminantRulesForProduct(p);
- const rawRules=[...cropGatedExact,...baseline,...otherContaminants,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
+ const rawRules=[...cropGatedExact,...baseline,...(hempChapter216.verified?hempChapter216.rules:[]),...otherContaminants,...(packagingTin?[packagingTin]:[]),...(variantTin?[variantTin]:[]),...(productPackageTin?[productPackageTin]:[]),...(dehydratedMilkLead?[dehydratedMilkLead]:[]),...(metalSubtypeRule?[metalSubtypeRule]:[]),...(sugarAshLeadRule?[sugarAshLeadRule]:[]),...universal];
  const withheld2026Changeover=rawRules.filter(r=>ctrMay2026AffectedRule(p,r));
  const ruleSeen=new Set();
  const rules=rawRules.filter(r=>{
@@ -9192,6 +9237,7 @@ function renderProductContaminants(){
     ? '<div class="notice oknote"><b>Product-level FSSAI contaminant mapping:</b> '+baseline.length+' directly applicable rule'+(baseline.length===1?'':'s')+' resolved for '+esc(p.name)+' from exact product articles, verified product/article aliases, direct product-standard limits, verified commodity-family mappings or other structured FSSAI evidence. Exact pesticide-residue MRLs are shown separately when the commodity name matches exactly.</div>'
     : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
+   +(hempChapter216.relevant&&!hempChapter216.verified?'<div class="notice"><b>Hemp Chapter 2.16 source review required:</b> THC and CBD numeric limits are withheld because the exact product identity, Chapter 2.16 source table, or cross-cutting CBD clause did not match the official recorded values.</div>':'')
    +(p.id==='mineral-water'?'<div class="notice"><b>Natural mineral water — arsenic source reconciliation:</b> FSSAI Chapter 2.10, clause 2.10.7, lists arsenic at 0.05 mg/L, but the separate FSSAI Contaminants Regulations Version IX Section 2.1 lists <b>0.01 mg/L</b> for natural mineral water. PMSV uses the stricter 0.01 mg/L contaminant requirement in this table; the less stringent product-standard value must never be substituted as an elemental-arsenic compliance pass. Both official references require ongoing amendment review.</div>':'')
    +(Date.now()>=Date.UTC(2026,10,30,18,30)
       &&(withheld2026Changeover.length||ctrMay2026AffectedProduct(p))
