@@ -18,7 +18,10 @@ const rows=db.profiles.flatMap(g=>(g.rules||[])
 const check=(id,rule)=>ctx.sourcePinnedVersionIxProfileMetalRule({id},rule);
 
 test("All copied Section 2.2.1 toxin profile rows match exact official Version IX source evidence",()=>{
- assert.equal(rows.length,77,"unexpected scope drift: reverify new crop profiles");
+ const distinctSourceRows=db.profiles.reduce((count,g)=>count+(g.rules||[])
+   .filter(r=>/^section 2\.2\.1(?:\s|·|$)/i.test(String(r.source_basis||""))).length,0);
+ assert.equal(distinctSourceRows,77,"unexpected source-row scope drift");
+ assert.equal(rows.length,82,"unexpected product-specific profile expansion");
  for(const {g,id,rule} of rows){
    assert.ok(master.some(p=>p.id===id),"Absent catalogue identity "+id);
    assert.equal(check(id,rule),true,
