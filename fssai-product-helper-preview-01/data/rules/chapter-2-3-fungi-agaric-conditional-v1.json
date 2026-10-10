@@ -1,0 +1,108 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-10-10",
+  "status": "conditional_species_review_only",
+  "source_standard": {
+    "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+    "clause": "2.3.62",
+    "scope": "Edible Fungi Products",
+    "notes": "The FSSAI standard covers multiple fungi species; the labelling section identifies mushrooms as an example for genus Agaricus. Fungi is not automatically the same identity as a confirmed mushroom species."
+  },
+  "source_contaminants": {
+    "url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "version": "Version IX (03.02.2026)",
+    "section": "2.2.1(2)",
+    "parameter": "Agaric acid",
+    "exact_article": "Food containing mushrooms",
+    "limit": 100,
+    "unit": "ppm"
+  },
+  "require_exact_species_confirmation": true,
+  "requires_input": "product.confirmed_edible_mushroom_species",
+  "assume_all_fungi_are_mushrooms": false,
+  "auto_apply": false,
+  "full_contaminant_compliance": false,
+  "exemption_if_not_confirmed": false,
+  "records": [
+    {
+      "catalog_id": "04-04-2-quick-frozen-fungi",
+      "product_name": "Quick Frozen Fungi",
+      "fssr": "2.3.62",
+      "conditional_contaminant": "Agaric acid",
+      "status": "species_identity_required_before_limit_selection",
+      "numeric_auto_apply": false
+    },
+    {
+      "catalog_id": "04-04-2-dried-fungi",
+      "product_name": "Dried fungi",
+      "fssr": "2.3.62",
+      "conditional_contaminant": "Agaric acid",
+      "status": "species_identity_required_before_limit_selection",
+      "numeric_auto_apply": false
+    },
+    {
+      "catalog_id": "04-04-2-fungi-grits-and-fungi-powder",
+      "product_name": "Fungi Grits and Fungi Powder",
+      "fssr": "2.3.62",
+      "conditional_contaminant": "Agaric acid",
+      "status": "species_identity_required_before_limit_selection",
+      "numeric_auto_apply": false
+    },
+    {
+      "catalog_id": "04-04-2-fungi-extract-and-fungi-concentrate",
+      "product_name": "Fungi extract and Fungi Concentrate",
+      "fssr": "2.3.62",
+      "conditional_contaminant": "Agaric acid",
+      "status": "species_identity_required_before_limit_selection",
+      "numeric_auto_apply": false
+    },
+    {
+      "catalog_id": "04-04-2-dried-fungi-concentrate",
+      "product_name": "Dried Fungi Concentrate",
+      "fssr": "2.3.62",
+      "conditional_contaminant": "Agaric acid",
+      "status": "species_identity_required_before_limit_selection",
+      "numeric_auto_apply": false
+    },
+    {
+      "catalog_id": "04-04-2-fungi-in-olive-oil-and-other-vegetable-oils",
+      "product_name": "Fungi in olive oil and other vegetable oils",
+      "fssr": "2.3.62",
+      "conditional_contaminant": "Agaric acid",
+      "status": "species_identity_required_before_limit_selection",
+      "numeric_auto_apply": false
+    },
+    {
+      "catalog_id": "04-04-2-salted-fungi-semi-processed-products",
+      "product_name": "Salted fungi (semi processed products)",
+      "fssr": "2.3.62",
+      "conditional_contaminant": "Agaric acid",
+      "status": "species_identity_required_before_limit_selection",
+      "numeric_auto_apply": false
+    },
+    {
+      "catalog_id": "04-04-2-sterilized-fungi",
+      "product_name": "Sterilized Fungi",
+      "fssr": "2.3.62",
+      "conditional_contaminant": "Agaric acid",
+      "status": "species_identity_required_before_limit_selection",
+      "numeric_auto_apply": false
+    },
+    {
+      "catalog_id": "04-04-2-pickled-fungi",
+      "product_name": "Pickled Fungi",
+      "fssr": "2.3.62",
+      "conditional_contaminant": "Agaric acid",
+      "status": "species_identity_required_before_limit_selection",
+      "numeric_auto_apply": false
+    },
+    {
+      "catalog_id": "04-04-2-fermented-fungi",
+      "product_name": "Fermented Fungi",
+      "fssr": "2.3.62",
+      "conditional_contaminant": "Agaric acid",
+      "status": "species_identity_required_before_limit_selection",
+      "numeric_auto_apply": false
+    }
+  ]
+}
