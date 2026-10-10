@@ -74,59 +74,6 @@ const lockById = new Map(chapter27Locks.map(x=>[x.catalog_id,x]));
 assert.equal(chapter27Locks.length,6,"Expected six reviewed Chapter 2.7 contaminant locks");
 assert.equal(lockById.size,6,"Duplicate Chapter 2.7 lock identity");
 const version9Source=contaminants.official_sources?.[0]?.url || "";
-// The following are exact identity/source article matches, not laboratory
-// compliance decisions or permission to transfer a raw-commodity MRL.
-assert.equal(fourCompositeSources.matched_product_count,4);
-assert.equal(fourCompositeSources.official_source,version9Source);
-assert.equal(fourCompositeSources.allowed_auto_pass_count,0);
-const fourCompositeById=new Map();
-for(const row of fourCompositeSources.matched){
- const p=index.products.find(x=>x.id===row.catalog_id);
- assert.ok(p&&p.name===row.product_name&&p.fssr===row.fssr&&p.fcs===row.fcs,
-    "Changed product ID for V9 composite/Saffrole source: "+row.catalog_id);
- assert.equal(row.official_contaminants_source,version9Source);
- assert.equal(row.finished_product_numeric_limit_auto_applied,false);
- assert.equal(row.raw_crop_limit_inherited,false);
- assert.equal(row.full_compliance_claim,false);
- assert.ok(official(row.official_standard_source));
- if(row.source_group==="aflatoxin_b1"){
-   const group=contaminants.crop_contaminants?.aflatoxin_b1;
-   assert.equal(row.contaminant,"Aflatoxin B1");
-   assert.equal(row.article,"Food product containing any of the above mentioned food articles");
-   assert.equal(row.limit,10);assert.equal(row.unit,"µg/kg");
-   assert.equal(group?.unit,"µg/kg");
-   assert.equal((group.rules||[]).filter(x=>x.article===row.article
-       &&Number(x.limit)===row.limit&&String(x.unit||group.unit)===row.unit).length,1);
-   if(row.fssr==="2.3.57"){
-     const {record}=chapterRecord(p);
-     assert.equal(record.key,"2.3.57");assert.equal(record.name,"Fermented Soybean Paste");
-     assert.ok(record.basic_ingredients?.includes("soybean"));
-     assert.equal(record.variants?.length,2);
-   }else{
-     const route=special.routes.find(x=>x.product_id===p.id);
-     assert.ok(route && route.category_code===p.fcs
-        &&route.route_kind==="indian_sweets_snacks_category"
-        &&route.official_source===row.official_standard_source);
-     assert.ok(["18.1.2.1","18.1.2.2"].includes(p.fcs));
-   }
- }else if(row.source_group==="saffrole"){
-   const {record}=chapterRecord(p);
-   assert.equal(p.id,"12-12-5-soup-powders");
-   assert.equal(p.fssr,"2.3.15");
-   assert.equal(record.key,p.fssr);assert.equal(record.name,"Soup Powders");
-   assert.ok((contaminants.naturally_occurring_toxic_substances?.saffrole||[]).some(x=>
-     x.article===row.article&&x.limit===10&&x.unit==="ppm"));
-   assert.equal(row.article,"Soups and sauces");
-   assert.ok(row.applicability_note.includes("Dry powder versus reconstituted"));
- }else throw new Error("Unexpected source type "+row.source_group);
- assert.ok(!fourCompositeById.has(row.catalog_id));
- fourCompositeById.set(row.catalog_id,row);
-}
-assert.equal(fourCompositeById.size,4);
-for(const x of fourCompositeSources.excluded_ids){
- assert.ok(index.products.some(p=>p.id===x));
- assert.ok(!fourCompositeById.has(x),"Non-equivalent product inherited composite rule: "+x);
-}
 
 // Section 2.1 subtype conditions are regulatory candidates, NOT automatic
 // product limits. Independently reconcile all numbers to the loaded official
@@ -890,6 +837,60 @@ for(const x of freshFruitById.values()){
   &&x.identity_verified===true&&x.source_commodity_article==="Fruits");
  assert.ok(["04.1.1.1","04.1.1.2","04.1.1.3"].includes(p.fcs));
  assert.equal(x.processing_qualification_required,p.fcs==="04.1.1.3");
+}
+
+// The following are exact identity/source article matches, not laboratory
+// compliance decisions or permission to transfer a raw-commodity MRL.
+assert.equal(fourCompositeSources.matched_product_count,4);
+assert.equal(fourCompositeSources.official_source,version9Source);
+assert.equal(fourCompositeSources.allowed_auto_pass_count,0);
+const fourCompositeById=new Map();
+for(const row of fourCompositeSources.matched){
+ const p=index.products.find(x=>x.id===row.catalog_id);
+ assert.ok(p&&p.name===row.product_name&&p.fssr===row.fssr&&p.fcs===row.fcs,
+    "Changed product ID for V9 composite/Saffrole source: "+row.catalog_id);
+ assert.equal(row.official_contaminants_source,version9Source);
+ assert.equal(row.finished_product_numeric_limit_auto_applied,false);
+ assert.equal(row.raw_crop_limit_inherited,false);
+ assert.equal(row.full_compliance_claim,false);
+ assert.ok(official(row.official_standard_source));
+ if(row.source_group==="aflatoxin_b1"){
+   const group=contaminants.crop_contaminants?.aflatoxin_b1;
+   assert.equal(row.contaminant,"Aflatoxin B1");
+   assert.equal(row.article,"Food product containing any of the above mentioned food articles");
+   assert.equal(row.limit,10);assert.equal(row.unit,"µg/kg");
+   assert.equal(group?.unit,"µg/kg");
+   assert.equal((group.rules||[]).filter(x=>x.article===row.article
+       &&Number(x.limit)===row.limit&&String(x.unit||group.unit)===row.unit).length,1);
+   if(row.fssr==="2.3.57"){
+     const {record}=chapterRecord(p);
+     assert.equal(record.key,"2.3.57");assert.equal(record.name,"Fermented Soybean Paste");
+     assert.ok(record.basic_ingredients?.includes("soybean"));
+     assert.equal(record.variants?.length,2);
+   }else{
+     const route=special.routes.find(x=>x.product_id===p.id);
+     assert.ok(route && route.category_code===p.fcs
+        &&route.route_kind==="indian_sweets_snacks_category"
+        &&route.official_source===row.official_standard_source);
+     assert.ok(["18.1.2.1","18.1.2.2"].includes(p.fcs));
+   }
+ }else if(row.source_group==="saffrole"){
+   const {record}=chapterRecord(p);
+   assert.equal(p.id,"12-12-5-soup-powders");
+   assert.equal(p.fssr,"2.3.15");
+   assert.equal(record.key,p.fssr);assert.equal(record.name,"Soup Powders");
+   assert.ok((contaminants.naturally_occurring_toxic_substances?.saffrole||[]).some(x=>
+     x.article===row.article&&x.limit===10&&x.unit==="ppm"));
+   assert.equal(row.article,"Soups and sauces");
+   assert.ok(row.applicability_note.includes("Dry powder versus reconstituted"));
+ }else throw new Error("Unexpected source type "+row.source_group);
+ assert.ok(!fourCompositeById.has(row.catalog_id));
+ fourCompositeById.set(row.catalog_id,row);
+}
+assert.equal(fourCompositeById.size,4);
+for(const x of fourCompositeSources.excluded_ids){
+ assert.ok(index.products.some(p=>p.id===x));
+ assert.ok(!fourCompositeById.has(x),"Non-equivalent product inherited composite rule: "+x);
 }
 
 function contaminantEvidenceForProduct(p){
