@@ -7724,9 +7724,16 @@ function productFruitVegCommodityMrlReviewHtml(p){
   +esc(review.qualifier_review)+' No pesticide MRL is automatically assigned or approved by this chapter review. '+link+'</div>';
  const metalCandidates=review.conditional_metal_article_candidates||[];
  if(metalCandidates.length){
-  html+='<div class="notice"><b>Conditional FSSAI metal references — NOT APPLIED:</b> Processing form, product subtype and/or container must be verified before applying any of these limits.</div>'
-   +'<div class="tablewrap"><table><thead><tr><th>Metal</th><th>Official commodity article</th><th>Reference value — NOT APPLIED</th><th>Required evidence</th></tr></thead><tbody>'
-   +metalCandidates.map(x=>'<tr><td>'+esc(x.contaminant)+'</td><td>'+esc(x.official_article)+'</td><td>'+esc(String(x.limit))+' '+esc(x.unit)+(x.source_condition?' · '+esc(x.source_condition):'')+'</td><td>'+esc(x.required_qualification)+'</td></tr>').join('')
+  const activeSubtypeMetal=selectedMetalSubtypeRule(p);
+  html+='<div class="notice"><b>Conditional FSSAI metal references:</b> These remain review-only unless an exact subtype is confirmed and the source validation succeeds. Other candidate articles do not become applicable merely because one subtype was selected.</div>'
+   +'<div class="tablewrap"><table><thead><tr><th>Metal</th><th>Official commodity article</th><th>Reference and application status</th><th>Required evidence</th></tr></thead><tbody>'
+   +metalCandidates.map(x=>{
+      const applied=!!activeSubtypeMetal && x.contaminant===activeSubtypeMetal.contaminant
+        && x.official_article===activeSubtypeMetal.article && Number(x.limit)===Number(activeSubtypeMetal.limit)
+        && x.unit===activeSubtypeMetal.unit && x.source_condition===activeSubtypeMetal.source_condition;
+      return '<tr><td>'+esc(x.contaminant)+'</td><td>'+esc(x.official_article)+'</td><td>'+esc(String(x.limit))+' '+esc(x.unit)+(x.source_condition?' · '+esc(x.source_condition):'')
+        +'<br><small>'+(applied?'APPLIED ONLY TO CONFIRMED SUBTYPE':'NOT APPLIED · REVIEW ONLY')+'</small></td><td>'+esc(x.required_qualification)+'</td></tr>';
+    }).join('')
    +'</tbody></table></div>';
  }
  if(review.excluded_non_equivalent_finished_product_articles?.length)
@@ -8026,6 +8033,7 @@ function selectedMetalSubtypeRule(p){
    &&Number(row.limit)===Number(rule.limit)
    &&String(row.unit||'').trim().toLowerCase()===String(rule.unit||'').trim().toLowerCase());
  if(articleRows.length!==1)return null;
+ if(rule.source_condition!==undefined && String(articleRows[0].condition||'').trim()!==String(rule.source_condition||'').trim())return null;
  if(rule.official_source_url&&rule.official_source_url!==contaminantsDb.official_sources?.[0]?.url)return null;
  return rule;
 }
