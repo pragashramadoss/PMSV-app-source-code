@@ -7,8 +7,8 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 369 |
-| No exact product-identity contaminant evidence established by current index | 164 |
+| Some exact product evidence, partial only | 372 |
+| No exact product-identity contaminant evidence established by current index | 161 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Original source-article applicability triage records (2026-10-10 baseline) | 236 |
 | Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 43 |
@@ -43,6 +43,15 @@ Critical negative controls: generic frozen fruit cannot inherit canned fruit coc
 
 **Evidence and tests:** `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` (field `chapter_2_3_targeted_evidence_review_2026_10_10`); `tests/fssai-chapter-2-3-unresolved-63-targeted-article-review.test.cjs`.
 
+## Next source-backed residue corrections — 3 identities (10 October 2026)
+
+The current `gh-pages` audit source checks establish **three additional exact-name product-standard or veterinary drug residue examples** as **partial evidence only**. This reduces the current review queue from 164 to **161**, with **372** products having at least one source-backed piece of evidence. This is not a complete contaminant / pesticide / veterinary drug compliance finding.
+
+- **Spice Oleoresins, FSSR 2.9.32(3):** official food-grade extraction solvent residual maxima: Acetone 30, ethyl acetate 50, n-hexane 25, isopropyl alcohol 30, methyl alcohol 50, diethyl ether 2, butan-1-ol 2, butan-2-ol 2, propan-1-ol 1 and methyl tert-butyl ether 2 (all ppm). Carbon dioxide, water and ethyl alcohol are GMP requirements, **not zero or numeric ppm limits**. Identity-gated to `12-12-2-spice-oleoresins`. Source [FSSAI Chapter 2.9, pp. 40–41](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt_Spices_Condiments%20and%20related%20products.pdf).
+- **Fresh/chilled and frozen Chevon / Goat Meat, FSSR 2.5.2(9):** checked separate current [FSSAI Version IX veterinary MRL](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf) **Goat—Muscle** rows: Monensin 0.01 mg/kg, Neomycin 0.5 mg/kg and Fenbendazole-related residue group 0.1 mg/kg. Does not apply as a pig/sheep/rabbit limit; does not cover all other veterinary drugs or prove test conformity. Identity-gated to the two named chevon rows.
+
+The **previous 164 unresolved records** are a dated historical review baseline. The new 81-identity detailed family review has no numeric application or claims of compliance by itself: special 36, dairy 14, cereals 13, sugars 11, other meat/eggs 7. The source-gated updates and remaining 161 live records are stored in `contaminants-v9-unresolved-264-review-v1.json`, with the supplements `spice-oleoresin-2-9-32-residual-solvents-evidence-v1.json` and `goat-muscle-veterinary-v9-exact-evidence-v1.json`.
+
 ## Unresolved by standard family
 
 | FSSR prefix | Product identities requiring exact review |
@@ -52,10 +61,10 @@ Critical negative controls: generic frozen fruit cannot inherit canned fruit coc
 | 2.1 | 14 |
 | 2.4 | 13 |
 | 2.8 | 11 |
-| 2.5 | 9 |
+| 2.5 | 7 |
 | 2.11 | 5 |
 | 2.7 | 4 |
-| 2.9 | 4 |
+| 2.9 | 3 |
 | 2.10 | 3 |
 | 2.2 | 1 |
 | 3.3 | 1 |
@@ -175,15 +184,13 @@ All entries below have an individually stored precision-applicability gate; conf
 | Solvent Extracted Coconut Flour | `06-06-2-solvent-extracted-coconut-flour` | 2.4.13(4) |
 | Wafer Biscuit | `07-07-2-wafer-biscuit` | 2.4.15(1) |
 
-### FSSR 2.5 (9)
+### FSSR 2.5 (7)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
 | Animal Casings | `08-08-4-animal-casings` | 2.5.2(14) |
 | Egg powder | `10-10-2-egg-powder` | 2.5.3(3) |
-| Fresh or Chilled Chevon or Goat Meat | `08-08-1-fresh-or-chilled-chevon-or-goat-meat` | 2.5.2(9) |
 | Fresh or Chilled Rabbit meat | `08-08-1-fresh-or-chilled-rabbit-meat` | 2.5.2(6) |
-| Frozen Chevon or Goat Meat | `08-08-2-frozen-chevon-or-goat-meat` | 2.5.2(9) |
 | Frozen Egg Products | `10-10-2-frozen-egg-products` | 2.5.3(2) |
 | Frozen Rabbit meat | `08-08-2-frozen-rabbit-meat` | 2.5.2(6) |
 | Liquid Egg Products | `10-10-2-liquid-egg-products` | 2.5.3(4) |
@@ -214,14 +221,13 @@ All entries below have an individually stored precision-applicability gate; conf
 | Plantation White Sugar | `11-11-1-plantation-white-sugar` | 2.8.1(1) |
 | Royal Jelly | `100-100-royal-jelly` | 2.8.3(3) |
 
-### FSSR 2.9 (4)
+### FSSR 2.9 (3)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
 | Asafoetida (Hing or Hingra) | `12-12-2-asafoetida-hing-or-hingra` | 2.9.29 |
 | Salt Substitutes | `12-12-1-salt-substitutes` | 2.9.30(6) |
 | Seasoning | `12-12-2-seasoning` | 2.9.31 |
-| SPICE OLEORESINS | `12-12-2-spice-oleoresins` | 2.9.32 |
 
 ### FSSR 2.10 (3)
 
