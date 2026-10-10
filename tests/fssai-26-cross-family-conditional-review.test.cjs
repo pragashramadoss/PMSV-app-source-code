@@ -11,7 +11,7 @@ assert.equal(data.remaining_pending_after_review,156);
 const pendingById=new Map(pending.records.map(x=>[x.catalog_id,x]));
 assert.equal(new Set(data.records.map(x=>x.catalog_id)).size,26);
 for(const row of data.records){
- assert.match(row.official_source,/^https:\\/\\/(?:www\\.)?fssai\\.gov\\.in\\//);
+ assert.ok(row.official_source.startsWith("https://fssai.gov.in/"));
  assert.equal(row.full_compliance_pass,false);
  assert.equal(row.exact_identity_source_evidence_claimed,false);
  assert.equal(row.numeric_limit_auto_applied,false);
