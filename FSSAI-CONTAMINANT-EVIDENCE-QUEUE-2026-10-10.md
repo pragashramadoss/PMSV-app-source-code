@@ -10,6 +10,10 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Some exact product evidence, partial only | 289 |
 | No exact product-identity contaminant evidence established by current index | 244 |
 | Products with complete contaminant compliance independently established | 0 claimed |
+| Source-article applicability triage records annotated (NOT resolved) | 244 |
+| Conditional official-source article references recorded (NOT automatically applied) | 117 |
+
+Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The 244-item queue is **not** reduced by these candidates.
 
 ## Unresolved by standard family
 
@@ -18,7 +22,7 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | 2.1 | 67 |
 | 2.3 | 66 |
 | special | 45 |
-| 2.4 | 40 |
+| 2.4 | 23 |
 | 2.8 | 11 |
 | 2.5 | 9 |
 | 2.7 | 6 |
