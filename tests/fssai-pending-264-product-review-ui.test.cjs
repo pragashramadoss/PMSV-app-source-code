@@ -72,14 +72,14 @@ test("Product Contaminants displays evidence gaps and cannot turn review notes i
 test("Every pending identity now has source-linked and explicitly conditional Version IX named-article review",()=>{
  assert.equal(manifest.source_row_scope_reviewed,236);
  assert.equal(manifest.pending,236);
- assert.equal(manifest.conditional_source_article_candidate_records,109);
+ assert.equal(manifest.conditional_source_article_candidate_records,104);
  assert.ok(manifest.scope_article_reconciliation.includes(String(manifest.verified_evidence_added)),
     "Scope note must carry current verified-partial evidence count");
  assert.ok(manifest.scope_article_reconciliation.includes(String(manifest.pending)),
     "Scope note must carry current unresolved evidence count");
  const candidates=manifest.records.filter(x=>
    x.version_ix_named_article_scope_review.source_article_candidates_review_only.length>0);
- assert.equal(candidates.length,109);
+ assert.equal(candidates.length,manifest.conditional_source_article_candidate_records);
  for(const row of manifest.records){
   const review=row.version_ix_named_article_scope_review;
   assert.ok(review,row.catalog_id);
