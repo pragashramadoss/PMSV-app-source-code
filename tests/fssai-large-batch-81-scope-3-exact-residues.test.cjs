@@ -14,10 +14,10 @@ const byId=new Map(catalog.map(x=>[x.id,x]));
 const exactIds=[oleoresin.catalog_id,...goat.product_ids];
 test("78 currently unresolved of original 81 source-gated identities, 42 differentiated types, no numeric product PASS",()=>{
  assert.equal(catalog.length,533);
- assert.equal(manifest.records.length,156);
- assert.equal(manifest.count,156);assert.equal(manifest.pending,156);
- assert.equal(manifest.verified_evidence_added,108);assert.equal(manifest.full_compliance_achieved,0);
- assert.equal(manifest.current_snapshot_summary_2026_10_10.exact_partial_evidence,377);
+ assert.equal(manifest.records.length,146);
+ assert.equal(manifest.count,146);assert.equal(manifest.pending,146);
+ assert.equal(manifest.verified_evidence_added,118);assert.equal(manifest.full_compliance_achieved,0);
+ assert.equal(manifest.current_snapshot_summary_2026_10_10.exact_partial_evidence,387);
  const wanted={special:36,"2.1":14,"2.4":13,"2.8":11,"2.5":7};
  assert.deepEqual(manifest.next_family_subtype_review_summary_2026_10_10.by_family,wanted);
  const focus=manifest.records.filter(x=>x.next_family_subtype_review_2026_10_10);
@@ -96,5 +96,5 @@ test("Audited official partial status agrees for all three promoted catalog iden
  }
  assert.equal(status.get(oleoresin.catalog_id).exact_spice_oleoresin_solvent_residues.complete_contaminants_review,false);
  for(const id of goat.product_ids)assert.equal(status.get(id).exact_goat_muscle_veterinary_drugs.complete_veterinary_and_pesticide_panel,false);
- assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,377);
+ assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,387);
 });
