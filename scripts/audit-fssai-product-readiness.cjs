@@ -635,8 +635,36 @@ function contaminantEvidenceForProduct(p){
      amendment_reconciliation_complete:false,
      requires_source_revalidation:true};
  })():null;
+ const sharedCerealAflatoxinB1Evidence=(()=>{
+   const approved=[
+     ['06-06-3-oat-products','Oat Products','2.4.12'],
+     ['06-06-2-multigrain-flour-atta','Multigrain flour (atta)','2.4.37']
+   ];
+   if(!approved.some(([id,name,clause])=>p.id===id&&p.name===name&&p.fssr===clause))return null;
+   if(!/Version IX.*03\.02\.2026/.test(String(contaminants.source_version||'')))return null;
+   const st=chapterRecord(p).record;
+   if(st.key!==p.fssr)return null;
+   const guaranteedCereal=p.id==='06-06-3-oat-products'
+     ? st.name==='Oat Products' && st.variants?.length===2
+       &&st.variants.some(x=>x.name==='Rolled/Flaked Oats')
+       &&st.variants.some(x=>x.name==='Products containing oats')
+     : st.name==='Multigrain Flour (Atta)' && st.formulation_rules?.some(x=>
+       x.parameter==='Whole wheat flour'&&Number(x.min)===50&&Number(x.max)===90);
+   if(!guaranteedCereal)return null;
+   const g=contaminants.crop_contaminants?.aflatoxin_b1;
+   if(g?.unit!=='µg/kg')return null;
+   const articles=['Cereal and cereal products','Food product containing any of the above mentioned food articles'];
+   if(!articles.every(article=>(g.rules||[]).filter(x=>
+       normalizeArticle(x.article)===normalizeArticle(article)
+       &&Number(x.limit)===10&&String(x.unit||g.unit)==='µg/kg').length===1))return null;
+   return {fssr:p.fssr,product_name:p.name,contaminant:'Aflatoxin B1',
+     value:10,unit:'µg/kg',official_articles:articles,source_url:version9Source,
+     total_aflatoxins_auto_assigned:false,other_contaminant_coverage_verified:false,
+     pesticide_mrl_auto_approval:false,complete_contaminant_compliance:false};
+ })();
  const explicitKinds=[];
  if(peanutButterCompositeEvidence)explicitKinds.push("official_v9_exact_peanut_butter_composite_aflatoxins_partial");
+ if(sharedCerealAflatoxinB1Evidence)explicitKinds.push("official_v9_harmonised_cereal_composite_b1_partial");
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
  if(direct)explicitKinds.push("exact_product_clause");
@@ -688,6 +716,7 @@ function contaminantEvidenceForProduct(p){
  return {
    status,
    exact_peanut_butter_composite_aflatoxins:peanutButterCompositeEvidence,
+   exact_harmonised_cereal_aflatoxin_b1:sharedCerealAflatoxinB1Evidence,
    conditional_milk_powder_aflatoxin_m1_review:milkPowderAflatoxinM1Review,
    exact_hemp_chapter_2_16_thc_cbd:hempEvidence,
    exact_alcoholic_beverage_toxic_substances:alcoholicEvidence?{
