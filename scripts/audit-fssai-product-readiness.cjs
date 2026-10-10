@@ -610,7 +610,33 @@ function contaminantEvidenceForProduct(p){
  const otherOilEvidence=otherOilById.get(p.id)||null;
  const guarEvidence=guar.catalog_id===p.id?guar:null;
  const hempEvidence=hempEvidenceById.get(p.id)||null;
+ const peanutButterCompositeEvidence=p.id==='04-04-2-peanut-butter'?(()=>{
+   if(p.name!=='Peanut Butter'||p.fssr!=='2.2.4(11)'||
+      !/Version IX.*03\.02\.2026/.test(String(contaminants.source_version||'')))return null;
+   const standard=chapterRecord(p).record;
+   if(standard.key!=='2.2.4(11)'||standard.name!=='Peanut Butter'||
+      !(standard.permitted_ingredients||[]).includes('roasted groundnut kernels'))return null;
+   const expected=[['total_aflatoxins','Total Aflatoxins',20],['aflatoxin_b1','Aflatoxin B1',10]];
+   const verified=[];
+   for(const [key,contaminant,limit] of expected){
+      const group=contaminants.crop_contaminants?.[key];
+      if(group?.unit!=='µg/kg')return null;
+      const matches=(group.rules||[]).filter(x=>
+        normalizeArticle(x.article)==='food product containing any of the above mentioned food articles'
+        &&Number(x.limit)===limit && String(x.unit||group.unit)==='µg/kg');
+      if(matches.length!==1)return null;
+      verified.push({contaminant,limit,unit:'µg/kg',article:matches[0].article});
+   }
+   return {fssr:p.fssr,product_name:p.name,
+     source_url:version9Source,source_standard:chapterRecord(p).sourceUrls,
+     official_crop_article:'Food product containing any of the above mentioned food articles',
+     rules:verified,full_contaminant_coverage:false,
+     pesticide_mrls_auto_approved:false,
+     amendment_reconciliation_complete:false,
+     requires_source_revalidation:true};
+ })():null;
  const explicitKinds=[];
+ if(peanutButterCompositeEvidence)explicitKinds.push("official_v9_exact_peanut_butter_composite_aflatoxins_partial");
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
  if(direct)explicitKinds.push("exact_product_clause");
@@ -661,6 +687,7 @@ function contaminantEvidenceForProduct(p){
    "no_exact_catalog_evidence_in_this_inventory";
  return {
    status,
+   exact_peanut_butter_composite_aflatoxins:peanutButterCompositeEvidence,
    conditional_milk_powder_aflatoxin_m1_review:milkPowderAflatoxinM1Review,
    exact_hemp_chapter_2_16_thc_cbd:hempEvidence,
    exact_alcoholic_beverage_toxic_substances:alcoholicEvidence?{
