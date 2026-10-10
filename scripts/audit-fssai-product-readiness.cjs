@@ -750,6 +750,63 @@ for(const x of infantMetalEvidence.verified_rows){
    r.row_type==="exact"&&r.article===x.article&&r.limit===x.limit&&r.unit===x.unit).length,1);
 }
 
+
+/* Official-source partial commodity reconciliation: twenty exact milk-product
+ * article references and two botanical-source cereal B1 records. */
+const additionalMilk=contaminants.chapter_2_1_additional_milk_commodity_evidence_v9;
+const maizeWheat=contaminants.chapter_2_4_maize_wheat_b1_exact_v9;
+assert.ok(additionalMilk&&maizeWheat);
+assert.equal(additionalMilk.source_version,contaminants.source_version);
+assert.equal(maizeWheat.source_version,contaminants.source_version);
+assert.equal(additionalMilk.official_source_url,version9Source);
+assert.equal(maizeWheat.official_contaminants_url,version9Source);
+assert.ok(official(additionalMilk.source_standard_url));
+assert.ok(official(maizeWheat.official_standard_url));
+assert.equal(additionalMilk.source_match_only,true);
+assert.equal(additionalMilk.auto_assign_numeric_pesticide_mrl,false);
+assert.equal(additionalMilk.full_compliance_verified,false);
+assert.equal(additionalMilk.exact_products.length,20);
+assert.equal((contaminants.residue_mrls.pesticides||[]).filter(x=>x.name===additionalMilk.reference_pesticide)
+ .flatMap(x=>(x.rows||[]).filter(z=>z.food===additionalMilk.article
+  &&z.mrl===additionalMilk.reference_mrl&&z.unit===additionalMilk.unit)).length,1);
+const additionalMilkById=new Map(additionalMilk.exact_products.map(x=>[x.catalog_id,x]));
+assert.equal(additionalMilkById.size,20);
+for(const x of additionalMilkById.values()){
+ const p=index.products.find(z=>z.id===x.catalog_id);
+ assert.ok(p&&p.name===x.product_name&&p.fssr===x.fssr&&p.fcs===x.fcs
+  &&x.exact_identity_verified===true&&/^2\\.1\\./.test(p.fssr));
+ assert.ok(!/analogue|frozen dessert|ice cream|colostrum|stuffed fried|lactose/i.test(p.name));
+ const officialStandard=chapterRecord(p);
+ assert.equal(officialStandard.record.key,p.fssr);
+ assert.ok(officialStandard.sourceUrls.some(x=>official(x)));
+}
+assert.equal(maizeWheat.exact_products.length,2);
+assert.equal(maizeWheat.contaminant,"Aflatoxin B1");
+assert.equal(maizeWheat.limit,10);
+assert.equal(maizeWheat.unit,"µg/kg");
+assert.equal(maizeWheat.total_aflatoxins_not_auto_assigned,true);
+assert.equal(maizeWheat.full_contaminant_coverage,false);
+const maizeWheatById=new Map(maizeWheat.exact_products.map(x=>[x.catalog_id,x]));
+assert.equal(maizeWheatById.size,2);
+const expectedCereal={
+ "06-06-2-maize-starch":"2.4.7",
+ "06-06-2-wheat-protein-products-including-wheat-gluten":"2.4.22"
+};
+for(const x of maizeWheatById.values()){
+ const p=index.products.find(z=>z.id===x.catalog_id);
+ assert.ok(p&&p.name===x.product_name&&p.fssr===x.fssr&&p.fcs===x.fcs
+  &&x.exact_identity_verified===true&&expectedCereal[p.id]===p.fssr);
+ const chapter=chapterRecord(p);
+ assert.equal(chapter.record.key,p.fssr);
+ assert.ok(chapter.sourceUrls.includes(maizeWheat.official_standard_url));
+ if(p.fssr==="2.4.7")assert.match(chapter.record.definition,/Zea mays L\\./);
+ if(p.fssr==="2.4.22")assert.ok(chapter.record.variants.some(x=>/wheat gluten/i.test(x.name)));
+}
+const b1Source=contaminants.crop_contaminants.aflatoxin_b1;
+assert.equal(b1Source.unit,"µg/kg");
+for(const article of maizeWheat.source_articles)
+ assert.equal((b1Source.rules||[]).filter(x=>x.article===article&&x.limit===10).length,1);
+
 function contaminantEvidenceForProduct(p){
  const profiles=directContaminantProfiles.get(p.id) || [];
  const explicitAliases=contaminantAliases.get(p.id);
@@ -1091,9 +1148,13 @@ function contaminantEvidenceForProduct(p){
  })();
  const exactMilkProduct=verifiedMilkIds.get(p.id)||null;
  const exactInfantFood=verifiedInfantIds.get(p.id)||null;
+ const additionalMilkArticle=additionalMilkById.get(p.id)||null;
+ const maizeWheatArticle=maizeWheatById.get(p.id)||null;
  const explicitKinds=[];
  if(exactMilkProduct)explicitKinds.push('official_v9_named_cheese_or_fermented_milk_pesticide_commodity_partial');
  if(exactInfantFood)explicitKinds.push('official_v9_named_infant_food_arsenic_cadmium_partial');
+ if(additionalMilkArticle)explicitKinds.push('official_v9_named_dairy_commodity_article_partial_2026_10_10');
+ if(maizeWheatArticle)explicitKinds.push('official_v9_maize_wheat_cereal_composite_b1_partial_2026_10_10');
  if(peanutButterCompositeEvidence)explicitKinds.push("official_v9_exact_peanut_butter_composite_aflatoxins_partial");
  if(sharedCerealAflatoxinB1Evidence)explicitKinds.push("official_v9_harmonised_cereal_composite_b1_partial");
  if(exactBreadB1Evidence)explicitKinds.push("official_v9_exact_bread_wheat_cereal_composite_b1_partial");
@@ -1160,6 +1221,8 @@ function contaminantEvidenceForProduct(p){
    status,
    exact_named_milk_products_mrl_article:exactMilkProduct?{source:version9Source,article:namedMilkEvidence.article,pesticide:namedMilkEvidence.pesticide,mrl:namedMilkEvidence.mrl,unit:namedMilkEvidence.unit,cheese_auto_applied:false,compliance_pass:false}:null,
    exact_infant_food_metals:exactInfantFood?{source:version9Source,rows:infantMetalEvidence.verified_rows,lead_not_auto_assigned:true,compliance_pass:false}:null,
+   exact_additional_dairy_commodity_article:additionalMilkArticle?{source:version9Source,article:additionalMilk.article,pesticide:additionalMilk.reference_pesticide,reference_mrl:additionalMilk.reference_mrl,unit:additionalMilk.unit,auto_apply:false,complete_panel:false}:null,
+   exact_maize_wheat_b1_article:maizeWheatArticle?{source:version9Source,contaminant:'Aflatoxin B1',limit:10,unit:'µg/kg',source_articles:maizeWheat.source_articles,total_aflatoxins_auto_assigned:false,full_compliance:false}:null,
    exact_peanut_butter_composite_aflatoxins:peanutButterCompositeEvidence,
    exact_harmonised_cereal_aflatoxin_b1:sharedCerealAflatoxinB1Evidence,
    exact_bread_cereal_composite_b1_partial:exactBreadB1Evidence,
