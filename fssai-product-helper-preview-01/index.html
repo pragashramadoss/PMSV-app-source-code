@@ -8945,6 +8945,28 @@ function productBaselineContaminantRules(p){
    });
  }
  
+ // 5bf) Two exact Chapter 2.4 soy derivatives contain soybean/defatted
+ // soy, an oilseed. The Version IX ready-to-eat oilseed and composite
+ // article BOTH specify 10 µg/kg Aflatoxin B1. Total Aflatoxins,
+ // pesticides, metals and other toxins are NOT auto-assigned.
+ const soyDerivativeB1=[
+  ['06-06-8-tempe','Tempe','2.4.26'],
+  ['06-06-8-textured-soy-protein-soy-bari-or-soy-chunks-or-soy-granules','Textured Soy Protein (Soy Bari or Soy Chunks or Soy Granules)','2.4.27']
+ ];
+ if(soyDerivativeB1.some(([pid,name,clause])=>id===pid&&p.name===name&&p.fssr===clause)
+   && /Version IX.*03\.02\.2026/.test(String(contaminantsDb?.source_version||''))){
+    const g=contaminantsDb?.crop_contaminants?.aflatoxin_b1;
+    const articles=['Oilseeds, ready to eat','Food product containing any of the above mentioned food articles'];
+    const consistent=g?.unit==='µg/kg'&&articles.every(article=>
+      (g.rules||[]).filter(x=>normIngredient(x.article||'')===normIngredient(article)
+       &&Number(x.limit)===10&&String(x.unit||g.unit)==='µg/kg').length===1);
+    if(consistent)pushRule({
+      contaminant:'Aflatoxin B1',article:articles.join(' / '),limit:10,unit:'µg/kg',
+      source_basis:'FSSAI CTR Version IX · Section 2.2.1 · exact soybean-derived product; harmonised oilseed and composite B1 source rows',
+      condition:'Exact FSSAI Chapter '+p.fssr+' soybean-derived identity. The cited oilseed and composite-food categories agree on Aflatoxin B1 10 µg/kg. Total Aflatoxins, processing changes, pesticide residues, heavy metals and other requirements must be assessed separately; not a finished-product compliance PASS.'
+    });
+ }
+ 
  // 5c) Version IX naturally occurring toxic substance Saffrole: only exact
  // finished soup or sauce identities in the official Chapter 2.3 list.
  const saffrole=contaminantsDb?.chapter_2_3_exact_soup_sauce_saffrole_v9;
