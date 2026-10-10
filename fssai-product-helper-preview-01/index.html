@@ -7724,7 +7724,7 @@ function productFruitVegCommodityMrlReviewHtml(p){
   +esc(review.qualifier_review)+' No pesticide MRL is automatically assigned or approved by this chapter review. '+link+'</div>';
  const metalCandidates=review.conditional_metal_article_candidates||[];
  if(metalCandidates.length){
-  const activeSubtypeMetal=selectedMetalSubtypeRule(p);
+  const activeSubtypeMetal=typeof selectedMetalSubtypeRule==='function'?selectedMetalSubtypeRule(p):null;
   html+='<div class="notice"><b>Conditional FSSAI metal references:</b> These remain review-only unless an exact subtype is confirmed and the source validation succeeds. Other candidate articles do not become applicable merely because one subtype was selected.</div>'
    +'<div class="tablewrap"><table><thead><tr><th>Metal</th><th>Official commodity article</th><th>Reference and application status</th><th>Required evidence</th></tr></thead><tbody>'
    +metalCandidates.map(x=>{
