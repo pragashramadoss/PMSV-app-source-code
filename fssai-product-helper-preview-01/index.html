@@ -8365,9 +8365,7 @@ function isVerifiedFermentedMilkProduct(p){
  return !!p&&String(p.fssr||'').trim()==='2.1.13';
 }
 function milkProductContaminantScope(p){
- if(!p)return false;
- if(isVerifiedFermentedMilkProduct(p))return true;
- return false;
+ return !!p&&isVerifiedFermentedMilkProduct(p)&&!!sourcePinnedNamedMilkProductMrl(p);
 }
 function genericOtherContaminantRulesForProduct(p){
  if(!p||!contaminantsDb)return [];
@@ -8777,6 +8775,66 @@ function sourcePinnedSoybeanTotalAflatoxinReview(p){
    note:record.condition,not_auto_applied:true,full_compliance_verified:false};
 }
 
+
+/* Exact named FSSAI milk-product commodity evidence, not blanket MRL approval
+ * for processed cheese. Audit category and source value on every use. */
+function sourcePinnedNamedMilkProductMrl(p){
+ const m=contaminantsDb?.chapter_2_1_verified_milk_products_mrl_v9;
+ if(!p||!m||!standardSearchIndexDb||m.source_version!==contaminantsDb.source_version
+  ||m.official_source_url!==contaminantsDb.official_sources?.[0]?.url
+  ||m.article!=='Milk and Milk products'||m.pesticide!=='Acetamiprid'
+  ||m.mrl!=='0.02'||m.unit!=='mg/kg'||m.auto_apply_cheese!==false
+  ||m.full_compliance_verified!==false)return null;
+ const q=standardSearchIndexDb.products.find(x=>x.id===p.id);
+ const proof=(m.verified_product_identities||[]).find(x=>x.catalog_id===p.id
+  &&x.product_name===p.name&&x.fssr===p.fssr&&x.fcs===p.fcs
+  &&x.exact_catalogue_identity_verified===true);
+ if(!q||!proof||q.name!==p.name||q.fssr!==p.fssr||q.fcs!==p.fcs
+  ||!((p.fssr==='2.1.17'&&p.fcs.startsWith('01.6.'))
+    ||(p.fssr==='2.1.13'&&p.fcs.startsWith('01.'))))return null;
+ const rows=(contaminantsDb.residue_mrls?.pesticides||[]).filter(x=>x.name===m.pesticide)
+  .flatMap(x=>(x.rows||[]).filter(r=>r.food===m.article&&r.mrl===m.mrl&&r.unit===m.unit));
+ if(rows.length!==1)return null;
+ return {article:m.article,pesticide:m.pesticide,mrl:m.mrl,unit:m.unit,
+   source_url:m.official_source_url,review_only:p.fssr==='2.1.17',compliance_pass:false};
+}
+/* Infant FCS 13.1 and 13.2: validate As and Cd separately. Lead limits for
+ * generic infant foods versus ready-use infant formula are NOT inherited. */
+function sourcePinnedInfantFoodMetalRules(p){
+ const m=contaminantsDb?.chapter_13_verified_infant_food_metals_v9;
+ if(!p||!m||!standardSearchIndexDb||m.source_version!==contaminantsDb.source_version
+  ||m.official_source_url!==contaminantsDb.official_sources?.[0]?.url
+  ||m.lead_0_2_not_auto_assigned!==true||m.ready_formula_lead_0_02_not_auto_assigned!==true
+  ||m.full_compliance_verified!==false)return [];
+ const q=standardSearchIndexDb.products.find(x=>x.id===p.id);
+ const proof=(m.verified_product_identities||[]).find(x=>x.catalog_id===p.id
+  &&x.product_name===p.name&&x.fssr===p.fssr&&x.fcs===p.fcs
+  &&x.exact_catalogue_identity_verified===true);
+ if(!q||!proof||q.name!==p.name||q.fssr!==p.fssr||q.fcs!==p.fcs
+  ||!p.fcs.startsWith('13.')||m.verified_rows?.length!==2)return [];
+ const rules=[];
+ for(const x of m.verified_rows){
+  if(!['Arsenic','Cadmium'].includes(x.metal)
+    ||x.article!=='Infant milk substitute and Infant foods'
+    ||x.unit!=='mg/kg'||rules.some(r=>r.contaminant===x.metal))return [];
+  const rows=(contaminantsDb.metal_article_rules_v9?.[x.metal]||[]).filter(r=>
+    r.row_type==='exact'&&r.article===x.article&&r.limit===x.limit&&r.unit===x.unit);
+  if(rows.length!==1)return [];
+  rules.push({contaminant:x.metal,article:x.article,limit:x.limit,unit:x.unit,
+   source_basis:'FSSAI CTR Version IX §2.1.1 · exact infant-food metal article',
+   condition:'Lead withheld; ready-to-use formula has a distinct lead article. Partial evidence only, not a compliance PASS.'});
+ }
+ return rules;
+}
+function namedMilkCommodityReviewHtml(p){
+ const x=sourcePinnedNamedMilkProductMrl(p);
+ if(!x||!x.review_only)return '';
+ return '<div class="notice"><b>Named cheese: partial official pesticide commodity evidence.</b> '+
+  esc(x.article)+' · source anchor '+esc(x.pesticide)+' '+esc(x.mrl)+' '+esc(x.unit)+
+  '. <b>NOT auto-applied to finished cheese.</b> Verify residue definition, processing and fat basis, other pesticides and amendments. No compliance PASS. '+
+  '<a href="'+esc(x.source_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX</a>.</div>';
+}
+
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  // Chapter 2.7 metal/profile locks remain intact. Allow only the separately
@@ -8808,6 +8866,7 @@ function productBaselineContaminantRules(p){
  const id=p.id||p.profile_id||'';
  if(!n&&!id)return [];
  const out=[];
+ out.push(...sourcePinnedInfantFoodMetalRules(p));
 
  const pushRule=(rule)=>{if(rule)out.push(rule);};
  const exactMetalRule=(metal,article)=>{
@@ -9750,6 +9809,7 @@ function renderProductContaminants(){
  const meatEggCommodityReview=productMeatEggCommodityMrlReviewHtml(p);
  const cerealCommodityReview=productCerealCommodityMrlReviewHtml(p);
  const fruitVegCommodityReview=productFruitVegCommodityMrlReviewHtml(p);
+ const namedMilkCommodityReview=namedMilkCommodityReviewHtml(p);
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
  const pesticideRows=pesticideMrls.map(x=>'<tr><td><b>'+esc(x.pesticide)+'</b></td><td><b>'+esc(x.mrl)+' '+esc(x.unit)+'</b></td><td>'+esc(x.food)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source)+'</td></tr>').join('');
  const milkPowderAflatoxinNotice=p.id==='01-01-5-milk-powders-and-cream-powder'&&!milkPowderAflatoxinM1
@@ -9793,6 +9853,7 @@ function renderProductContaminants(){
    +meatEggCommodityReview
    +cerealCommodityReview
    +fruitVegCommodityReview
+   +namedMilkCommodityReview
    +soybeanTotalHtml
    +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant / toxin</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="notice">No exact metal/toxin row is auto-applicable for this product under the current stored product gates.</div>')
    +conditionalMetalHtml
