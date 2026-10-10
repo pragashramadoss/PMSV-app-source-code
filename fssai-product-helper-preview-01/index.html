@@ -7986,6 +7986,9 @@ function renderPackagingTinStatus(p){
  el.innerHTML='<b>Packaging recorded, but no exact packaging-dependent Tin product mapping is loaded for '+esc(p.name)+'.</b> PMSV will not substitute the generic canned-food limit.';
 }
 
+/* Only a user-confirmed physical subtype may activate this source-pinned
+ * Section 2.1 metal article. A renamed product, stale numeric source or
+ * previous product's selection must fail closed. */
 function metalSubtypeRulesForProduct(p){
  if(!p||!contaminantsDb||!Array.isArray(contaminantsDb.product_subtype_conditional_metal_rules_v9))return [];
  return contaminantsDb.product_subtype_conditional_metal_rules_v9.filter(x=>x.catalog_id===p.id);
@@ -7994,18 +7997,37 @@ function syncMetalSubtypeInput(p){
  const sel=document.getElementById('contaminantMetalSubtype');
  if(!sel)return;
  const rules=metalSubtypeRulesForProduct(p);
- const current=sel.value;
+ const currentProductId=p?.id||'';
+ const previousProductId=sel.dataset?.catalogId||'';
+ const current=previousProductId===currentProductId?sel.value:'';
  const subtypes=[...new Set(rules.map(x=>x.subtype).filter(Boolean))];
  sel.innerHTML='<option value="">Not applicable / not specified</option>'+subtypes.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');
  sel.disabled=subtypes.length===0;
- if(subtypes.includes(current))sel.value=current;
- else sel.value='';
+ sel.value=subtypes.includes(current)?current:'';
+ if(sel.dataset)sel.dataset.catalogId=currentProductId;
 }
 function selectedMetalSubtypeRule(p){
  const rules=metalSubtypeRulesForProduct(p);
- const subtype=document.getElementById('contaminantMetalSubtype')?.value||'';
- if(!subtype)return null;
- return rules.find(x=>x.subtype===subtype)||null;
+ const sel=document.getElementById('contaminantMetalSubtype');
+ const subtype=sel?.value||'';
+ if(!subtype||!sel||sel.dataset?.catalogId!==p?.id||!standardSearchIndexDb)return null;
+ if(contaminantsDb?.source_version!=='Version IX (03.02.2026)')return null;
+ const identity=(standardSearchIndexDb.products||[]).find(x=>x.id===p.id);
+ if(!identity||identity.fssr!==p.fssr||normIngredient(identity.name)!==normIngredient(p.name))return null;
+ const selected=rules.filter(x=>x.subtype===subtype);
+ if(selected.length!==1)return null;
+ const rule=selected[0];
+ if((rule.product_name&&normIngredient(identity.name)!==normIngredient(rule.product_name))
+    ||(rule.fssr&&identity.fssr!==rule.fssr)
+    ||rule.auto_apply!==false
+    ||!/^Section 2\\.1\\b/i.test(String(rule.source_basis||'')))return null;
+ const articleRows=(contaminantsDb.metal_article_rules_v9?.[rule.contaminant]||[]).filter(row=>
+   normIngredient(row.article)===normIngredient(rule.article)
+   &&Number(row.limit)===Number(rule.limit)
+   &&String(row.unit||'').trim().toLowerCase()===String(rule.unit||'').trim().toLowerCase());
+ if(articleRows.length!==1)return null;
+ if(rule.official_source_url&&rule.official_source_url!==contaminantsDb.official_sources?.[0]?.url)return null;
+ return rule;
 }
 function renderMetalSubtypeStatus(p){
  const el=document.getElementById('metalSubtypeStatus');
@@ -8026,11 +8048,11 @@ function renderMetalSubtypeStatus(p){
  const matched=selectedMetalSubtypeRule(p);
  if(matched){
    el.className='notice oknote';
-   el.innerHTML='<b>Exact subtype matched:</b> '+esc(subtype)+' → '+esc(matched.contaminant)+' <b>'+esc(String(matched.limit))+' '+esc(matched.unit)+'</b> under '+esc(matched.article)+'.';
+   el.innerHTML='<b>Exact subtype and source matched:</b> '+esc(subtype)+' → '+esc(matched.contaminant)+' <b>'+esc(String(matched.limit))+' '+esc(matched.unit)+'</b> under '+esc(matched.article)+'.';
    return;
  }
  el.className='notice';
- el.innerHTML='<b>No metal rule matched this subtype.</b>';
+ el.innerHTML='<b>Numeric metal limit withheld:</b> selected subtype or the exact current FSSAI source article, unit, numeric value or product identity did not pass verification.';
 }
 function sulphatedAshRulesForProduct(p){
  if(!p||!contaminantsDb||!Array.isArray(contaminantsDb.sulphated_ash_conditional_lead_rules_v9))return [];
