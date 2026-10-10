@@ -7,11 +7,11 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 344 |
-| No exact product-identity contaminant evidence established by current index | 189 |
+| Some exact product evidence, partial only | 366 |
+| No exact product-identity contaminant evidence established by current index | 167 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Original source-article applicability triage records (2026-10-10 baseline) | 236 |
-| Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 104 |
+| Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 43 |
 
 Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The original 236-item queue was **not** reduced by conditional candidates. A separate exact FSSR 2.2.9 crude-vegetable-oil lead mapping reduced the queue to 235; subsequent three exact dried-fruit Malathion commodity source matches reduced it to 232; exact FoSCoS 05.2 confectionery hydrocyanic-acid source evidence for Lozenges and Soft Candy has now reduced it to 230. On 10 October, a further source/identity check removed 42 misleading conditional article candidates across 38 products without falsely reducing the unresolved count. See `FSSAI-V9-CANDIDATE-SCOPE-CORRECTIONS-2026-10-10.md`.
 
@@ -19,14 +19,18 @@ Selected Version IX named-article candidates are documented in `fssai-product-he
 
 The latest 533-product audit has added **27 named cheeses** (FSSR 2.1.17), **6 fermented-milk products** (FSSR 2.1.13) and **6 infant-food identities** (FoSCoS FCS 13.1/13.2) as **partial source-backed evidence, not full compliance**. For the named dairy identities, the official FSSAI Section 2.3.1 pesticide commodity article **Milk and Milk products** is source-pinned using the Acetamiprid **0.02 mg/kg** row. **No pesticide MRL is automatically assigned to processed cheese**: residue definition, fat basis, processing, other pesticide rows and operative amendments require review. Infant-food metals use independently checked Version IX **Arsenic 0.05 mg/kg** and **Cadmium 0.1 mg/kg** source rows; general infant-food lead **0.2 mg/kg** is withheld rather than overwriting the separate ready-to-use infant-formula **0.02 mg/kg** article. These 39 products remain unapproved for overall contaminant/MRL compliance. Official source: https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf.
 
+### Next large evidence batch — 22 source-matched identities (10 October 2026)
+
+Twenty exact named **Chapter 2.1 dairy/condensed/powder/fat product identities** are cross-checked against the current official FSSAI Version IX Section 2.3.1 **Milk and Milk products** pesticide commodity, with **Acetamiprid 0.02 mg/kg** as an independent source-integrity reference. These are **commodity-reference matches, not automatic MRL applications**. Fat-based residue conditions, concentration/processing factors, other pesticides, other contaminants and current amendments remain open. Eight dairy analogues, frozen dessert/ice cream mixed standards, edible lactose, colostrum and composite non-standard dairy sweets are excluded from this mapping. Two guaranteed maize/wheat-source FSSR products — **Maize Starch 2.4.7** and **Wheat Protein Products including Wheat Gluten 2.4.22** — now have separately checked FSSAI **Aflatoxin B1 10 µg/kg** evidence, independently matched against the cereal and composite-food rows. **Total aflatoxins are not inferred**, and no complete contaminants/pesticide PASS is asserted. Official FSSAI sources: https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf ; https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf ; https://fssai.gov.in/upload/uploadfiles/files/2_%20Chapter%202_1%20(Dairy%20products%20and%20analogues).pdf.
+
 ## Unresolved by standard family
 
 | FSSR prefix | Product identities requiring exact review |
 |---|---:|
 | 2.3 | 63 |
 | special | 39 |
-| 2.1 | 34 |
-| 2.4 | 15 |
+| 2.1 | 14 |
+| 2.4 | 13 |
 | 2.8 | 11 |
 | 2.5 | 9 |
 | 2.11 | 5 |
@@ -38,13 +42,12 @@ The latest 533-product audit has added **27 named cheeses** (FSSR 2.1.17), **6 f
 
 ## Exact unresolved identities
 
-For each remaining product, confirm exact finished form, ingredient composition, applicable source article, operative amendments, processing and packaging. An unresolved entry does not mean absence of limits.
+Each item still requires exact finished-food, composition/processing, packaging, residue, and legally operative-amendment verification. Not having exact article evidence does not mean exemption.
 
-### FSSR 2.1 (34)
+### FSSR 2.1 (14)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
-| 14.2 - Ksheerasara (Sweetened Condensed Milk) | `102-102-1-14-2-ksheerasara-sweetened-condensed-milk` | 2.1.5 |
 | 14.5 - Dugdha Kupika (Stuffed Fried Cottage Cheese Dumplings) | `102-102-1-14-5-dugdha-kupika-stuffed-fried-cottage-cheese-dumplings` | 2.1.17 |
 | Analogue in the dairy context | `01-01-3-analogue-in-the-dairy-context` | 2.1.1 |
 | Analogue in the dairy context | `01-01-4-analogue-in-the-dairy-context` | 2.1.1 |
@@ -54,30 +57,11 @@ For each remaining product, confirm exact finished form, ingredient composition,
 | Analogue in the dairy context | `02-02-2-analogue-in-the-dairy-context` | 2.1.1 |
 | Analogue in the dairy context | `02-02-3-analogue-in-the-dairy-context` | 2.1.1 |
 | Analogue in the dairy context | `02-02-4-analogue-in-the-dairy-context` | 2.1.1 |
-| Anhydrous milk fat | `02-02-1-anhydrous-milk-fat` | 2.1.8 |
-| Butter | `02-02-2-butter` | 2.1.9 |
-| Butter oil | `02-02-1-butter-oil` | 2.1.8 |
-| Chhana and Paneer | `01-01-6-chhana-and-paneer` | 2.1.16 |
 | Cow or Buffalo Colostrum and Colostrum Products | `100-100-cow-or-buffalo-colostrum-and-colostrum-products` | 2.1.23 |
-| Cream | `01-01-4-cream` | 2.1.7 |
-| Dairy Permeate Powders | `01-01-5-dairy-permeate-powders` | 2.1.24 |
-| Dairy Whitener | `01-01-5-dairy-whitener` | 2.1.11 |
-| Edible Casein Products | `01-01-5-edible-casein-products` | 2.1.18 |
 | Edible Lactose | `11-11-1-edible-lactose` | 2.1.20 |
-| Evaporated or Concentrated Milk | `01-01-3-evaporated-or-concentrated-milk` | 2.1.4 |
-| Fermented/cultured/sour cream | `01-01-4-fermented-cultured-sour-cream` | 2.1.7 |
-| Flavoured Milk | `01-01-1-flavoured-milk` | 2.1.3 |
 | Frozen Desserts or Confections with Added Vegetable Oil/ Fat or Vegetable Protein, or both | `01-01-7-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o` | 2.1.15 |
 | Frozen Desserts or Confections with Added Vegetable Oil/ Fat or Vegetable Protein, or both | `02-02-4-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o` | 2.1.15 |
 | Ice Cream, Kulfi, Chocolate Ice Cream, Softy Ice-Cream, Milk Ice, Milk Lolly and Dried Ice Cream Mix | `01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-` | 2.1.14 |
-| Khoa | `01-01-3-khoa` | 2.1.6 |
-| Malai | `01-01-4-malai` | 2.1.7 |
-| Milk fat | `02-02-1-milk-fat` | 2.1.8 |
-| Milk Powders and Cream Powder | `01-01-5-milk-powders-and-cream-powder` | 2.1.10 |
-| Milk Protein Concentrate | `01-01-3-milk-protein-concentrate` | 2.1.21 |
-| Sweetened Condensed Milk | `01-01-3-sweetened-condensed-milk` | 2.1.5 |
-| Whey Powder | `01-01-8-whey-powder` | 2.1.12 |
-| Whey Protein Concentrate | `01-01-8-whey-protein-concentrate` | 2.1.22 |
 
 ### FSSR 2.2 (1)
 
@@ -153,7 +137,7 @@ For each remaining product, confirm exact finished form, ingredient composition,
 | Vegetable Pulp/Puree with Preservatives for Industrial Use only | `04-04-2-vegetable-pulp-puree-with-preservatives-for-industrial-use-only` | 2.3.16 |
 | WATER CHESTNUT FLOUR (SINGHARE KA ATTA) | `06-06-2-water-chestnut-flour-singhare-ka-atta` | 2.3.64 |
 
-### FSSR 2.4 (15)
+### FSSR 2.4 (13)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -165,13 +149,11 @@ For each remaining product, confirm exact finished form, ingredient composition,
 | Fruit/Vegetable, Cereal Flakes | `06-06-3-fruit-vegetable-cereal-flakes` | 2.4.35 |
 | Macaroni Products (Instant noodle) | `06-06-4-macaroni-products-instant-noodle` | 2.4.10 |
 | Macaroni Products (Pasta Products) | `06-06-4-macaroni-products-pasta-products` | 2.4.10 |
-| MAIZE STARCH | `06-06-2-maize-starch` | 2.4.7 |
 | Papad | `06-06-7-papad` | 2.4.40 |
 | Papad | `15-15-1-papad` | 2.4.40 |
 | Quinoa | `06-06-1-quinoa` | 2.4.6 |
 | Solvent Extracted Coconut Flour | `06-06-2-solvent-extracted-coconut-flour` | 2.4.13(4) |
 | Wafer Biscuit | `07-07-2-wafer-biscuit` | 2.4.15(1) |
-| Wheat Protein Products including Wheat Gluten | `06-06-2-wheat-protein-products-including-wheat-gluten` | 2.4.22 |
 
 ### FSSR 2.5 (9)
 
@@ -288,7 +270,6 @@ For each remaining product, confirm exact finished form, ingredient composition,
 | Starch based Sweets | `18-18-1-starch-based-sweets` | Special FoSCoS route |
 | Surface-treated fresh fruit | `04-04-1-surface-treated-fresh-fruit` | Special FoSCoS route |
 | Untreated fresh fruit | `04-04-1-untreated-fresh-fruit` | Special FoSCoS route |
-
 
 ## Verified partial evidence removed from the unresolved list
 
