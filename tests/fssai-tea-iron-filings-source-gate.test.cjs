@@ -28,7 +28,7 @@ test("Only exact Tea and Kangra Tea source clauses permit iron filings 125 mg/kg
   const r=mapping.rules[0];assert.equal(r.contaminant,"Iron filings");
   assert.equal(r.limit,125);assert.equal(r.unit,"mg/kg");
   assert.equal(r.verification,"official_fssai_direct_product_standard");
-  assert.match(r.source_note,/not total nutrient iron/i);
+  assert.match(r.source_note,/distinct from total iron or nutritional iron/i);
   const st=chap.standards.find(s=>s.key===key);
   const source=st.composition.filter(x=>x.parameter==="Iron filings");
   assert.equal(source.length,1);assert.equal(source[0].operator,"<=");
