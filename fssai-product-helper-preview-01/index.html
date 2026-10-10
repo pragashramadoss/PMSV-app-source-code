@@ -8988,6 +8988,37 @@ function productBaselineContaminantRules(p){
    });
  }
 
+ // 5bea1) FSSR 2.4.35 Breakfast Cereal is a finished cereal product
+ // legally prepared from milled/whole grains; cereal, pseudo-cereal and
+ // grain ingredients are listed first. Version IX B1 cereal and composite
+ // articles agree at 10 µg/kg; differing Total Aflatoxins are withheld.
+ // Require official loaded chapter identity as well as two exact source rows.
+ if(id==='06-06-3-breakfast-cereal' && p.name==='Breakfast Cereal'&&p.fssr==='2.4.35'
+   &&String(contaminantsDb?.source_version||'')==='Version IX (03.02.2026)'){
+   const ch=(chapterRuleDbs||[]).find(d=>(d.standards||[]).some(r=>r.key==='2.4.35'));
+   const standard=(ch?.standards||[]).find(r=>r.key==='2.4.35');
+   const proof=standard?.official_finished_cereal_identity_source_v1;
+   const identityOk=standard?.name==='Breakfast Cereal'
+     &&proof?.clause==='2.4.35'
+     &&proof?.source_version==='Version 4 (07.05.2025)'
+     &&proof?.official_source_url==='https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf'
+     &&proof?.grain_basis_required===true
+     &&proof?.exact_finished_product_identity===true
+     &&proof?.complete_contaminant_coverage_verified===false
+     &&standard?.ingredient_rules?.some(r=>/Cereals\/pseudocereals\/grains taken together must appear as the first ingredient/i.test(r));
+   const g=contaminantsDb?.crop_contaminants?.aflatoxin_b1;
+   const articles=['Cereal and cereal products',
+     'Food product containing any of the above mentioned food articles'];
+   const currentSourceOk=g?.unit==='µg/kg'&&articles.every(article=>
+     (g.rules||[]).filter(r=>normIngredient(r.article||'')===normIngredient(article)
+       &&Number(r.limit)===10&&String(r.unit||g.unit)==='µg/kg').length===1);
+   if(identityOk&&currentSourceOk)pushRule({
+     contaminant:'Aflatoxin B1',article:articles.join(' / '),limit:10,unit:'µg/kg',
+     source_basis:'FSSAI CTR Version IX · Section 2.2.1 · exact FSSR 2.4.35 Breakfast Cereal product',
+     condition:'Only exact FSSR 2.4.35 Breakfast Cereal, where grain/pseudocereal/cereal basis is legally required. The cereal and composite B1 articles agree at 10 µg/kg; Total Aflatoxins 15 versus 20 µg/kg is NOT assigned. No unconditional metal, residue, mycotoxin or compliance PASS.'
+   });
+ }
+
  // 5bea) FSSR 2.4.36 Yellow Pea Powder is exclusively dehusked
  // Pisum sativum pea milled to flour, per current official Chapter 2.4.
  // The current FSSAI Pulses and composite-food B1 rows both read 10 µg/kg.
