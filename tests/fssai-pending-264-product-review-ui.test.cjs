@@ -45,7 +45,7 @@ test("Risk-sensitive FSSAI product distinctions are individually documented",()=
 });
 test("Product Contaminants displays evidence gaps and cannot turn review notes into numeric limits",()=>{
  assert.match(html,/let contaminantsPendingReviewDb=null/);
- assert.match(html,/contaminants-v9-unresolved-264-review-v1\.json\?v=1/);
+ assert.match(html,/contaminants-v9-unresolved-264-review-v1\.json\?v=20261010-scope2/);
  assert.match(html,/el\.innerHTML=profileMsg\s*\+pendingContaminantReviewNotice\(p\)/);
  const start=html.indexOf("function pendingContaminantReviewNotice(p){");
  const end=html.indexOf("function renderProductContaminants(){",start);
@@ -58,6 +58,14 @@ test("Product Contaminants displays evidence gaps and cannot turn review notes i
  assert.match(result,/explicitly excluded/i);
  assert.match(result,/not an exemption/);
  assert.doesNotMatch(result,/compliance PASS|0\.2 mg\/kg as a limit/);
+ const dairy=ctx.pendingContaminantReviewNotice(byId.get("01-01-5-milk-powders-and-cream-powder"));
+ assert.match(dairy,/Version IX named-article review/);
+ assert.match(dairy,/NOT APPLIED/);
+ assert.match(dairy,/Whole milk powder/);
+ assert.match(dairy,/Skimmed milk powder/);
+ assert.doesNotMatch(dairy,/Compliance (?:PASS|approved)|Full regulatory compliance achieved/);
+ const analogue=ctx.pendingContaminantReviewNotice(byId.get("01-01-3-analogue-in-the-dairy-context"));
+ assert.match(analogue,/cannot inherit/i);
  assert.equal(ctx.pendingContaminantReviewNotice(byId.get("coffee")),"");
 });
 
