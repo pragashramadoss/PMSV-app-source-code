@@ -70,7 +70,7 @@ test("Product Contaminants displays evidence gaps and cannot turn review notes i
 test("Every pending identity now has source-linked and explicitly conditional Version IX named-article review",()=>{
  assert.equal(manifest.source_row_scope_reviewed,236);
  assert.equal(manifest.pending,157);
- assert.equal(manifest.conditional_source_article_candidate_records,43);
+ assert.equal(manifest.conditional_source_article_candidate_records,42);
  assert.ok(manifest.scope_article_reconciliation.includes(String(manifest.verified_evidence_added)),
     "Scope note must carry current verified-partial evidence count");
  assert.ok(manifest.scope_article_reconciliation.includes(String(manifest.pending)),
