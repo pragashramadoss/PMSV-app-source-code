@@ -41,7 +41,7 @@ test("Both water fluoride rules stay identical to official Chapter 2.10 source a
   assert.equal(r.limit,fromStandard.value);
   assert.equal(r.unit,fromStandard.unit);
   assert.equal(r.verification,"official_fssai_direct_product_standard");
-  assert.match(r.source_basis,/physical\\/chemical water product-standard/);
+  assert.ok(r.source_basis.includes("physical/chemical water product-standard"));
  }
 });
 test("No fluoride inheritance to carbonated water, vending water or other beverage products",()=>{
@@ -59,7 +59,7 @@ test("No fluoride inheritance to carbonated water, vending water or other bevera
  }
 });
 test("Helper UI uses direct-standard rules gated on selected catalogue product ID",()=>{
- assert.match(helper,/direct_product_standard_contaminant_rules_v1\\|\\|\\[\\]/);
- assert.match(helper,/\\.filter\\(x=>x\\.catalog_id===id\\)/);
- assert.match(helper,/\\.forEach\\(group=>\\(group\\.rules\\|\\|\\[\\]\\)\\.forEach\\(r=>pushRule\\(\\{\\.\\.\\.r\\}\\)\\)\\)/);
+ assert.ok(helper.includes("direct_product_standard_contaminant_rules_v1||[]"));
+ assert.ok(helper.includes(".filter(x=>x.catalog_id===id)"));
+ assert.ok(helper.includes(".forEach(group=>(group.rules||[]).forEach(r=>pushRule({...r})))"));
 });
