@@ -8359,7 +8359,8 @@ function sourcePinnedDirectStandardLimit(p,group,rule){
  if(!identity||p.id!==identity.id||identity.fssr!==group.fssr
      ||normIngredient(identity.name)!==normIngredient(group.product_name))return false;
  const matchKey=String(identity.rule_key||'').trim();
- if(!matchKey||matchKey!==String(group.fssr||'').trim())return false;
+ const sourceKey=String(group.source_chapter_key||group.fssr||'').trim();
+ if(!matchKey||matchKey!==sourceKey)return false;
  // Require the actual loaded chapter module to carry its official FSSAI
  // source URL. An unrelated chapter or a tampered provenance URL cannot
  // validate a copied numeric impurity, even when name/clause/value agree.
@@ -8372,7 +8373,7 @@ function sourcePinnedDirectStandardLimit(p,group,rule){
  const matchingStandards=trustedChapters.flatMap(db=>ruleDbStandards(db).filter(st=>
    String(st?.key||'').trim()===matchKey
    && normIngredient(st.name)===normIngredient(group.product_name)
-   && String(db?.chapter||'')===matchKey.split('.')[0]+'.'+matchKey.split('.')[1]));
+   && String(db?.chapter||'')===(matchKey.match(/^\d+\.\d+/)||[])[0]));
  const unit=x=>String(x||'').trim().toLowerCase();
  return matchingStandards.some(st=>[...(st.composition||[]),...(st.physical_chemical||[]),...(st.toxic_substances||[])].some(entry=>
    normIngredient(entry.parameter)===normIngredient(rule.contaminant)
