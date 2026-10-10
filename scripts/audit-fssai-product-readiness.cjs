@@ -263,7 +263,15 @@ assert.equal(oilMetals.complete_contaminant_coverage,false);
 assert.equal(oilMetals.automatic_pesticide_mrl_approval,false);
 const nickelOilById=new Map(oilMetals.hydrogenated_interesterified_nickel.verified_identities.map(x=>[x.catalog_id,x]));
 const seedOilById=new Map(oilMetals.named_edible_seed_oils.verified_identities.map(x=>[x.catalog_id,x]));
-assert.equal(nickelOilById.size,8);assert.equal(seedOilById.size,3);
+assert.equal(nickelOilById.size,7);assert.equal(seedOilById.size,3);
+// A generic FSSR 2.2.5(3) Fat spread is not proof of hydrogenated or
+// interesterified vegetable fat: milk and mixed-fat spread variants exist.
+assert.equal(nickelOilById.has("02-02-2-fat-spread"),false);
+const fatSpreadNickelConditions=(contaminants.product_subtype_conditional_metal_rules_v9||[])
+ .filter(x=>x.catalog_id==="02-02-2-fat-spread"&&x.contaminant==="Nickel");
+assert.equal(fatSpreadNickelConditions.length,1);
+assert.equal(fatSpreadNickelConditions[0].auto_apply,false);
+assert.equal(fatSpreadNickelConditions[0].requires_input,"product.exact_subtype");
 for(const [metal,group] of [["Nickel",oilMetals.hydrogenated_interesterified_nickel]]){
  assert.ok(contaminants.metal_article_rules_v9[metal].some(x=>
    x.article===group.article&&Number(x.limit)===Number(group.limit)&&x.unit===group.unit));
