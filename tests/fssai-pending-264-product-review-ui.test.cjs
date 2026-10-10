@@ -29,7 +29,6 @@ test("All 167 pending identities have accurate individual FSSAI review records w
 test("Risk-sensitive FSSAI product distinctions are individually documented",()=>{
  const requirements=id=>manifest.records.find(p=>p.catalog_id===id)?.review_requirements.join(" | ")||"";
  for(const [id,pattern] of [
-   ["01-01-5-milk-powders-and-cream-powder",/4 µg\/kg.*6 µg\/kg/],
    ["06-06-1-quinoa",/explicitly excluded/i],
    ["06-06-4-macaroni-products-instant-noodle",/legume or tuber/i],
    ["05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",/Cocoa Powder lead 5 mg\/kg/],
@@ -59,11 +58,10 @@ test("Product Contaminants displays evidence gaps and cannot turn review notes i
  assert.match(result,/not an exemption/);
  assert.doesNotMatch(result,/compliance PASS|0\.2 mg\/kg as a limit/);
  const dairy=ctx.pendingContaminantReviewNotice(byId.get("01-01-5-milk-powders-and-cream-powder"));
- assert.match(dairy,/Version IX named-article review/);
- assert.match(dairy,/NOT APPLIED/);
- assert.match(dairy,/Whole milk powder/);
- assert.match(dairy,/Skimmed milk powder/);
- assert.doesNotMatch(dairy,/Compliance (?:PASS|approved)|Full regulatory compliance achieved/);
+ assert.equal(dairy,"","Partial dairy commodity evidence must leave the no-exact-source queue");
+ assert.match(html,/Milk-powder Aflatoxin M1 subtype verification required/);
+ assert.match(html,/sourcePinnedMilkPowderAflatoxinM1Rule\(p\)/);
+ assert.match(html,/numeric MRL NOT applied/);
  const analogue=ctx.pendingContaminantReviewNotice(byId.get("01-01-3-analogue-in-the-dairy-context"));
  assert.match(analogue,/cannot inherit/i);
  assert.equal(ctx.pendingContaminantReviewNotice(byId.get("coffee")),"");
@@ -103,8 +101,7 @@ test("Every pending identity now has source-linked and explicitly conditional Ve
  assert.equal(quinoa.version_ix_named_article_scope_review.review_disposition,"quinoa_explicit_lead_exclusion");
  assert.equal(quinoa.version_ix_named_article_scope_review.source_article_candidates_review_only.length,0);
  const milkPowder=manifest.records.find(x=>x.catalog_id==="01-01-5-milk-powders-and-cream-powder");
- assert.deepEqual(milkPowder.version_ix_named_article_scope_review.source_article_candidates_review_only
-   .filter(x=>x.parameter==="Aflatoxin M1").map(x=>x.limit),[4,6]);
+ assert.equal(milkPowder,undefined,"Milk powder retains separate conditional M1 checks, but now has partial dairy-commodity source evidence");
  const dairyAnalogue=manifest.records.find(x=>x.catalog_id==="01-01-3-analogue-in-the-dairy-context");
  assert.equal(dairyAnalogue.version_ix_named_article_scope_review.review_disposition,"dairy_analogue_is_not_automatically_milk");
  assert.deepEqual(dairyAnalogue.version_ix_named_article_scope_review.source_article_candidates_review_only,[]);
