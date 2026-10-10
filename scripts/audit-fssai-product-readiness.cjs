@@ -18,6 +18,7 @@ const index = read("standard-search-index-v1.json");
 const special = read("rules/special-regulatory-routes-v1.json");
 const contaminants = read("rules/contaminants-v9-core.json");
 const spiceOleoresinSource = read("rules/spice-oleoresin-2-9-32-residual-solvents-evidence-v1.json");
+const goatMuscleSource = read("rules/goat-muscle-veterinary-v9-exact-evidence-v1.json");
 /* Exact FSSAI Chapter 2.16 source evidence. This is a standard-product
  * THC and cross-cutting CBD assessment, not a Version IX contaminant article,
  * an exemption from other contaminants or a complete compliance verdict. */
@@ -873,6 +874,25 @@ function contaminantEvidenceForProduct(p){
  const crudeOilEvidence=crudeOilLead.catalog_id===p.id&&crudeOilLead.product_name===p.name&&crudeOilLead.fssr===p.fssr?crudeOilLead:null;
  const guarEvidence=guar.catalog_id===p.id?guar:null;
  const hempEvidence=hempEvidenceById.get(p.id)||null;
+ const goatMuscleVetEvidence=goatMuscleSource.product_ids.includes(p.id)?(()=>{
+   const i=goatMuscleSource.product_ids.indexOf(p.id);
+   if(p.name!==goatMuscleSource.products[i]||p.fssr!=='2.5.2(9)'||p.rule_key!==p.fssr||
+      goatMuscleSource.species!=='Goat'||goatMuscleSource.tissue!=='Muscle'||
+      goatMuscleSource.all_veterinary_drugs_metals_pesticides_amendments_verified!==false||
+      !official(goatMuscleSource.official_source_url))return null;
+   const st=chapterRecord(p).record;
+   if(st?.key!==p.fssr||st?.name!=='Fresh or Chilled or Frozen Chevon or Goat Meat')return null;
+   const expected={'Monensin':0.01,'Neomycin':0.5,'Febantel/Fenbendazole/Oxyfendazole':0.1};
+   if(goatMuscleSource.reference_rows.length!==3)return null;
+   for(const x of goatMuscleSource.reference_rows){
+      if(x.commodity!=='Goat — Muscle'||x.unit!=='mg/kg'||expected[x.drug]!==x.max||
+         x.pdf_page_one_based<45||x.pdf_page_one_based>47)return null;
+   }
+   return {source_url:goatMuscleSource.official_source_url,source_clause:goatMuscleSource.source_clause,
+     species:'Goat',tissue:'Muscle',fssr:p.fssr,reference_rows:goatMuscleSource.reference_rows,
+     auto_approve_finished_compliance:false,complete_veterinary_and_pesticide_panel:false,
+     wrong_species_inheritance_allowed:false};
+ })():null;
  const spiceOleoresinResidues=p.id==='12-12-2-spice-oleoresins'?(()=>{
    if(p.name!==spiceOleoresinSource.product_name||p.fssr!==spiceOleoresinSource.fssr||
       p.id!==spiceOleoresinSource.catalog_id||p.rule_key!==spiceOleoresinSource.fssr||
@@ -1248,6 +1268,7 @@ function contaminantEvidenceForProduct(p){
  if(guarEvidence)explicitKinds.push("verified_ins_412_guar_gum_official_gaur_gum_metal_alias");
  if(hempEvidence)explicitKinds.push("official_chapter_2_16_exact_thc_and_cross_cutting_cbd");
  if(spiceOleoresinResidues)explicitKinds.push("official_fssr_2_9_32_exact_residual_extraction_solvents_partial");
+ if(goatMuscleVetEvidence)explicitKinds.push("official_v9_exact_goat_muscle_veterinary_drug_mrl_partial");
  // Only a conditional, user-confirmed subtype source: the combined FoSCoS
  // identity must remain pending even though two powder variants have FSSAI
  // Aflatoxin M1 articles. Cream and partly skimmed are not inferred.
@@ -1275,6 +1296,7 @@ function contaminantEvidenceForProduct(p){
  return {
    status,
    exact_spice_oleoresin_solvent_residues:spiceOleoresinResidues,
+   exact_goat_muscle_veterinary_drugs:goatMuscleVetEvidence,
    exact_named_milk_products_mrl_article:exactMilkProduct?{source:version9Source,article:namedMilkEvidence.article,pesticide:namedMilkEvidence.pesticide,mrl:namedMilkEvidence.mrl,unit:namedMilkEvidence.unit,cheese_auto_applied:false,compliance_pass:false}:null,
    exact_infant_food_metals:exactInfantFood?{source:version9Source,rows:infantMetalEvidence.verified_rows,lead_not_auto_assigned:true,compliance_pass:false}:null,
    exact_additional_dairy_commodity_article:additionalMilkArticle?{source:version9Source,article:additionalMilk.article,pesticide:additionalMilk.reference_pesticide,reference_mrl:additionalMilk.reference_mrl,unit:additionalMilk.unit,auto_apply:false,complete_panel:false}:null,
@@ -1578,6 +1600,10 @@ const products = index.products.map(p => {
   if(soybeanConditionalReview){
     tally("chapter_2_4_soybean_total_aflatoxin_review","source_verified_conditional_not_auto_applied");
     action.push("2.4.30 soybean finished-food total aflatoxins: official composite-food 20 µg/kg versus oilseed 15 µg/kg. Determine exact finished-food article applicability and amendments; numerical total is not auto-applied. Shared B1 is separately mapped; this is not a full compliance assessment.");
+  }
+  if(contaminantEvidence.exact_goat_muscle_veterinary_drugs){
+    tally("goat_muscle_vet_drugs","exact_species_tissue_reference_partial");
+    action.push("Exact Goat–Muscle veterinary MRL source rows for Monensin, Neomycin and Febantel/Fenbendazole/Oxyfendazole confirmed. Check full veterinary-drug panel, species/tissue sampling, lab results and other regulatory contaminants. Rabbit and sheep must not inherit this evidence.");
   }
   if(contaminantEvidence.exact_spice_oleoresin_solvent_residues){
     tally("spice_oleoresin_residual_solvents","exact_fssr_2_9_32_partial_only");
