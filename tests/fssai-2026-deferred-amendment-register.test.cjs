@@ -61,3 +61,28 @@ test("February 2026 current metal table stays separate from prospective expanded
  assert.ok(!metal.Cadmium.some(x=>x.article==="Pulses and Pulse flours, excluding soybean dry"));
  assert.ok(!metal.Arsenic.some(x=>x.article==="Fish Oil"&&x.limit===0.1));
 });
+
+test("Future FSSAI Gazette notices are shown only for explicitly watched catalogue IDs",()=>{
+ const vm=require("node:vm");
+ const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
+ const a=html.indexOf("function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){");
+ const b=html.indexOf("async function loadContaminantsDb(){",a);
+ assert.ok(a>0&&b>a);
+ assert.ok(html.includes("futureFssaiAmendmentWatchHtml(p)"));
+ assert.ok(html.includes("contaminants-2026-deferred-amendment-v1.json?v=1"));
+ const ctx={contaminantsFutureAmendmentDb:watch,Date,esc:x=>String(x)};
+ vm.runInNewContext(html.slice(a,b),ctx);
+ const before=Date.parse("2026-10-10T00:00:00Z");
+ const after=Date.parse("2026-11-30T18:30:00Z");
+ const fish=products.find(x=>x.id==="02-02-1-fish-oil");
+ const prior=ctx.futureFssaiAmendmentWatchHtml(fish,before);
+ assert.match(prior,/Not yet effective/);
+ assert.match(prior,/Prospective provisions are kept separate/);
+ assert.match(prior,/www\.fssai\.gov\.in\/upload\/uploadfiles\/files\/272840\.pdf/);
+ const later=ctx.futureFssaiAmendmentWatchHtml(fish,after);
+ assert.match(later,/source reconciliation required/);
+ assert.match(later,/inclusion does not itself prove product applicability/);
+ assert.equal(ctx.futureFssaiAmendmentWatchHtml({id:"05-05-1-chocolate"},before),"");
+ ctx.contaminantsFutureAmendmentDb=null;
+ assert.equal(ctx.futureFssaiAmendmentWatchHtml(fish,before),"");
+});
