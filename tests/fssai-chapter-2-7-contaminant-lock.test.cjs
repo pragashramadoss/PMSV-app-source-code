@@ -50,7 +50,13 @@ test("six product locks override even injected fuzzy FSSR family or identical-na
   const p=index.products.find(x=>x.id===l.catalog_id);
   assert.equal(ctx.lock(p).catalog_id,l.catalog_id);
   assert.equal(ctx.profile(p),null,"unsafe direct or family profile admitted for "+p.id);
-  assert.deepEqual(Array.from(ctx.baseline(p)),[],"future broad metal article leaked to "+p.id);
+  const baseline=Array.from(ctx.baseline(p));
+  if(["05-05-2-lozenges","05-05-2-sugar-boiled-confectionery-soft-candy"].includes(p.id)){
+   assert.deepEqual(baseline.map(x=>[x.contaminant,x.article,x.limit,x.unit]),
+     [["Hydrocyanic acid","Confectionery",5,"ppm"]],"Only source-backed NOTS permitted for "+p.id);
+  }else assert.deepEqual(baseline,[],"future broad metal article leaked to "+p.id);
+  assert.equal(baseline.some(x=>["Lead","Copper","Arsenic","Tin"].includes(x.contaminant)),false);
+
  }
 });
 test("exact Cocoa Powder and Hard Candy records remain available",()=>{
@@ -80,4 +86,26 @@ test("lookup mode and formulation mode cannot PASS the locked finished-product r
  assert.match(body,/masterComplianceRow\('Contaminants \/ residues','incomplete'/);
  assert.match(body,/This is not a contaminant exemption/);
  assert.match(body,/the product cannot receive a full contaminant PASS/);
+});
+
+test("Source-verified 05.2 confectionery NOTS cannot remove the exact metal locks",()=>{
+ const ctx=buildContext();
+ for(const id of ["05-05-2-lozenges","05-05-2-sugar-boiled-confectionery-soft-candy"]){
+  const p=index.products.find(x=>x.id===id);
+  assert.ok(p);assert.ok(ctx.lock(p));
+  assert.equal(ctx.profile(p),null);
+  assert.deepEqual(Array.from(ctx.baseline(p)).map(x=>[x.contaminant,x.limit,x.unit]),[["Hydrocyanic acid",5,"ppm"]]);
+ }
+ const altered=db.chapter_2_7_exact_confectionery_hydrocyanic_v9;
+ const spoof=buildContext({chapter_2_7_exact_confectionery_hydrocyanic_v9:{...altered,limit:8}});
+ for(const id of ["05-05-2-lozenges","05-05-2-sugar-boiled-confectionery-soft-candy"]){
+   const p=index.products.find(x=>x.id===id);
+   assert.deepEqual(Array.from(spoof.baseline(p)),[],"Tampered source evidence must fail closed");
+ }
+ const sourceTampered=buildContext({naturally_occurring_toxic_substances:{...db.naturally_occurring_toxic_substances,
+   hydrocyanic_acid:db.naturally_occurring_toxic_substances.hydrocyanic_acid.map(x=>x.article==="Confectionery"?{...x,limit:10}:x)}});
+ for(const id of ["05-05-2-lozenges","05-05-2-sugar-boiled-confectionery-soft-candy"]){
+   const p=index.products.find(x=>x.id===id);
+   assert.deepEqual(Array.from(sourceTampered.baseline(p)),[],"Changed official table value must withhold rule");
+ }
 });

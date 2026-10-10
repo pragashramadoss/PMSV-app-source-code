@@ -7,13 +7,13 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 301 |
-| No exact product-identity contaminant evidence established by current index | 232 |
+| Some exact product evidence, partial only | 303 |
+| No exact product-identity contaminant evidence established by current index | 230 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Original source-article applicability triage records (2026-10-10 baseline) | 236 |
 | Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 104 |
 
-Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The original 236-item queue was **not** reduced by conditional candidates. A separate exact FSSR 2.2.9 crude-vegetable-oil lead mapping reduced the queue to 235; subsequent three exact dried-fruit Malathion commodity source matches reduced it further to 232. On 10 October, a further source/identity check removed 42 misleading conditional article candidates across 38 products without falsely reducing the unresolved count. See `FSSAI-V9-CANDIDATE-SCOPE-CORRECTIONS-2026-10-10.md`.
+Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The original 236-item queue was **not** reduced by conditional candidates. A separate exact FSSR 2.2.9 crude-vegetable-oil lead mapping reduced the queue to 235; subsequent three exact dried-fruit Malathion commodity source matches reduced it to 232; exact FoSCoS 05.2 confectionery hydrocyanic-acid source evidence for Lozenges and Soft Candy has now reduced it to 230. On 10 October, a further source/identity check removed 42 misleading conditional article candidates across 38 products without falsely reducing the unresolved count. See `FSSAI-V9-CANDIDATE-SCOPE-CORRECTIONS-2026-10-10.md`.
 
 ## Unresolved by standard family
 
@@ -25,7 +25,7 @@ Selected Version IX named-article candidates are documented in `fssai-product-he
 | 2.4 | 15 |
 | 2.8 | 11 |
 | 2.5 | 9 |
-| 2.7 | 6 |
+| 2.7 | 4 |
 | 2.9 | 6 |
 | 2.11 | 5 |
 | 2.10 | 3 |
@@ -276,7 +276,7 @@ For each item: verify the precise finished-product identity, current official FS
 | Liquid Egg Products | `10-10-2-liquid-egg-products` | 2.5.3(4) |
 | Pickled Eggs | `10-10-3-pickled-eggs` | 2.5.3(5) |
 
-### FSSR 2.7 (6)
+### FSSR 2.7 (4)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -284,8 +284,6 @@ For each item: verify the precise finished-product identity, current official FS
 | Chocolate | `05-05-1-chocolate` | 2.7.4 |
 | Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake | `05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake` | 2.7.8 |
 | Dry Mixtures of Cocoa and Sugars | `05-05-1-dry-mixtures-of-cocoa-and-sugars` | 2.7.6 |
-| Lozenges | `05-05-2-lozenges` | 2.7.2 |
-| Sugar boiled confectionery (Soft Candy) | `05-05-2-sugar-boiled-confectionery-soft-candy` | 2.7.1 |
 
 ### FSSR 2.9 (6)
 
@@ -370,3 +368,7 @@ Version IX numeric limits remain subject to the future amendment dated 25 May 20
 FSSAI CTR Version IX §2.3.1 entry Malathion (combined residues of malathion and malaoxon expressed as malathion) has a separate finished **Dried fruits** commodity limit of **8 mg/kg**, distinguished from **Fruits 4 mg/kg**. Source: https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf (PDF page 30, one-based).
 
 Three exact dried fruit products have an independently matched Chapter 2.3 identity: **Dehydrated Fruits (2.3.35)**, **Dried Apricots (2.3.53)** and **Raisins (2.3.47(2))**. This moves those three to **partial exact pesticide commodity evidence only**. Dates, dry fruits-and-nuts mixed categories, fruit bars and dehydrated vegetables are not automatically included. No claim about other pesticide residues, processing factors, operative amendments, metals, toxins, or lab test compliance is made.
+
+## Source-pinned confectionery NOTS partial evidence — 10 October 2026
+
+FoSCoS **Lozenges** (`05-05-2-lozenges`, 2.7.2, 05.2.1) and **Sugar boiled confectionery (Soft Candy)** (`05-05-2-sugar-boiled-confectionery-soft-candy`, 2.7.1, 05.2.2) now have limited, source-matched evidence for **Hydrocyanic acid — Confectionery — 5 ppm**, official FSSAI Version IX §2.2.1 Naturally Occurring Toxic Substances. This is a category NOTS rule, **not** permission to inherit Hard Boiled Sugar Confectionery/Cocoa Powder metal limits or claim finished-product compliance. The existing exact metal locks remain and every other contaminant, pesticide MRL, ingredient requirement and effective amendment remains unapproved. Sources: https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf and https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf.

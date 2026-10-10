@@ -656,6 +656,34 @@ for(const row of contaminants.chapter_2_5_locked_fresh_meat_routes_v9||[]){
  }
 }
 assert.equal(rawMeatMetalLocks.size,4,"Expected four raw/frozen goat/rabbit metal locks");
+// Source-pinned NOTS evidence for two exact FSSR 2.7 confectionery products.
+// Previous Chapter 2.7 fail-closed metal/profile locks are deliberately retained.
+const confectioneryHCN=contaminants.chapter_2_7_exact_confectionery_hydrocyanic_v9;
+assert.ok(confectioneryHCN && official(confectioneryHCN.official_source_url)
+ && official(confectioneryHCN.official_foscos_identity_source_url)
+ && official(confectioneryHCN.official_fssr_chapter_2_7_url));
+assert.equal(confectioneryHCN.source_version,contaminants.source_version);
+assert.equal(confectioneryHCN.article,"Confectionery");
+assert.equal(confectioneryHCN.contaminant,"Hydrocyanic acid");
+assert.equal(confectioneryHCN.limit,5);assert.equal(confectioneryHCN.unit,"ppm");
+assert.equal(confectioneryHCN.verified_product_identities.length,2);
+assert.equal(confectioneryHCN.complete_contaminant_coverage,false);
+assert.equal(confectioneryHCN.existing_finished_metal_locks_retained,true);
+assert.equal(confectioneryHCN.do_not_inherit_hard_candy_metals,true);
+assert.equal(confectioneryHCN.full_compliance_verified,false);
+const verifiedHCNSource=(contaminants.naturally_occurring_toxic_substances.hydrocyanic_acid||[])
+ .filter(x=>x.article===confectioneryHCN.article&&x.limit===confectioneryHCN.limit&&x.unit===confectioneryHCN.unit);
+assert.equal(verifiedHCNSource.length,1,"Official Confectionery hydrocyanic acid source row changed");
+const confectioneryHCNById=new Map(confectioneryHCN.verified_product_identities.map(x=>[x.catalog_id,x]));
+assert.equal(confectioneryHCNById.size,2);
+for(const proof of confectioneryHCN.verified_product_identities){
+ const product=index.products.find(x=>x.id===proof.catalog_id);
+ assert.ok(product&&product.name===proof.product_name&&product.fssr===proof.fssr&&product.fcs===proof.fcs);
+ assert.ok(product.fcs.startsWith("05.2."),"Not standard FoSCoS confectionery 05.2");
+ assert.equal(proof.exact_confectionery_identity_verified,true);
+ assert.ok(lockById.has(proof.catalog_id),"Metal inheritance lock accidentally removed: "+proof.catalog_id);
+}
+for(const id of confectioneryHCN.excluded_nearby_catalog_ids||[])assert.ok(!confectioneryHCNById.has(id));
 function contaminantEvidenceForProduct(p){
  const profiles=directContaminantProfiles.get(p.id) || [];
  const explicitAliases=contaminantAliases.get(p.id);
@@ -665,6 +693,7 @@ function contaminantEvidenceForProduct(p){
  const fssrFamilies=familyContaminantProfiles.filter(profile=>(profile.match_fssr || []).includes(p.fssr))
    .map(profile=>({id:profile.id,rule_rows:(profile.rules || []).length}));
  const finishedArticleLock=lockById.get(p.id) || null;
+ const exactConfectioneryHCN=confectioneryHCNById.get(p.id)||null;
  if(finishedArticleLock){
    assert.equal(finishedArticleLock.status,"locked_no_exact_current_article",p.id);
    assert.ok(String(p.fssr||"").startsWith("2.7."),"Non-chocolate product in Chapter 2.7 lock: "+p.id);
@@ -1029,6 +1058,7 @@ function contaminantEvidenceForProduct(p){
  if(freshEggEvidence)explicitKinds.push("verified_exact_fresh_eggs_pesticide_commodity_article_review_only");
  if(bisulphiteEvidence)explicitKinds.push("verified_exact_bisulphite_ins_additive_substance_metal_articles");
  if(otherOilEvidence)explicitKinds.push("verified_other_edible_vegetable_oils_lead_articles");
+ if(exactConfectioneryHCN)explicitKinds.push("official_v9_exact_fcs_05_2_confectionery_hydrocyanic_acid_partial");
  if(crudeOilEvidence)explicitKinds.push("verified_exact_fssr_2_2_9_crude_vegetable_oil_lead");
  if(guarEvidence)explicitKinds.push("verified_ins_412_guar_gum_official_gaur_gum_metal_alias");
  if(hempEvidence)explicitKinds.push("official_chapter_2_16_exact_thc_and_cross_cutting_cbd");
@@ -1086,6 +1116,11 @@ function contaminantEvidenceForProduct(p){
       official_article:crudeOilEvidence.official_article,limit:crudeOilEvidence.limit,unit:crudeOilEvidence.unit,
       arsenic_auto_applied:false,refining_required:true,full_compliance_verified:false,
       pesticide_mrls_auto_applied:false}:null,
+   exact_confectionery_hydrocyanic_acid_nots:exactConfectioneryHCN?{
+      source:confectioneryHCN.official_source_url,identity_source:confectioneryHCN.official_foscos_identity_source_url,
+      source_article:"Confectionery",contaminant:"Hydrocyanic acid",limit:5,unit:"ppm",fcs:exactConfectioneryHCN.fcs,
+      product_metal_article_lock_retained:true,complete_contaminant_coverage:false,pesticide_mrls_auto_applied:false,
+      full_compliance_verified:false}:null,
    exact_other_edible_oil_lead:otherOilEvidence?{
      official_source:otherOil.official_source_url,article:otherOil.article_edible,
      limit:otherOil.limit,unit:otherOil.unit,full_compliance_verified:false,
@@ -1384,6 +1419,10 @@ const products = index.products.map(p => {
   if(contaminantEvidence.exact_solvent_crude_vegetable_oil_lead){
     tally("chapter_2_2_crude_oil_lead","source_verified_partial_only");
     action.push("FSSR 2.2.9 crude vegetable oil Lead 0.1 mg/kg source verified. Do not transfer to cocoa butter or automatically apply narrower Arsenic oil article. Verify other residues; refining required before consumption.");
+  }
+  if(contaminantEvidence.exact_confectionery_hydrocyanic_acid_nots){
+    tally("chapter_2_7_exact_confectionery_hcn","source_backed_partial");
+    action.push("Exact FSSAI FoSCoS 05.2 confectionery Hydrocyanic acid NOTS 5 ppm article checked against Version IX; separate Hard Candy metal inheritance lock remains, and all other contaminants/residues require assessment.");
   }
   if(contaminantEvidence.exact_other_edible_oil_lead){
     tally("chapter_2_2_other_oil_lead","exact_oil_grouped_source_partial");

@@ -8777,7 +8777,30 @@ function sourcePinnedSoybeanTotalAflatoxinReview(p){
 
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
- if(exactFinishedProductContaminantLock(p))return [];
+ // Chapter 2.7 metal/profile locks remain intact. Allow only the separately
+ // verified Hydrocyanic acid NOTS for these exact FoSCoS 05.2 products.
+ if(exactFinishedProductContaminantLock(p)){
+   const source=contaminantsDb.chapter_2_7_exact_confectionery_hydrocyanic_v9;
+   const item=(source?.verified_product_identities||[]).find(x=>x.catalog_id===p.id&&x.product_name===p.name
+      &&x.fssr===p.fssr&&x.fcs===p.fcs&&x.exact_confectionery_identity_verified===true);
+   const matches=(contaminantsDb.naturally_occurring_toxic_substances?.hydrocyanic_acid||[])
+      .filter(x=>x.article==='Confectionery'&&x.limit===5&&x.unit==='ppm');
+   if(item&&source?.source_version===contaminantsDb.source_version
+      &&source?.article==='Confectionery'&&source?.contaminant==='Hydrocyanic acid'
+      &&source?.limit===5&&source?.unit==='ppm'
+      &&source?.source_article_exact_fcs_category==='05.2'
+      &&source?.existing_finished_metal_locks_retained===true
+      &&source?.do_not_inherit_hard_candy_metals===true
+      &&source?.full_compliance_verified===false
+      &&source?.official_source_url===contaminantsDb.official_sources?.[0]?.url
+      &&matches.length===1
+      &&!source.excluded_nearby_catalog_ids?.includes(p.id)){
+     return [{contaminant:'Hydrocyanic acid',article:'Confectionery',limit:5,unit:'ppm',
+       source_basis:'FSSAI CTR Version IX §2.2.1 · source-verified FoSCoS 05.2 confectionery NOTS',
+       condition:'Only exact '+p.name+' FoSCoS confectionery product; Hydrocyanic acid NOTS only. No Hard Candy metal inheritance or full contaminant compliance.'}];
+   }
+   return [];
+ }
  const rawGoatRabbitLeadLock=exactRawMeatMetalLock(p);
  const n=normIngredient(p.name||'');
  const id=p.id||p.profile_id||'';
@@ -9797,7 +9820,7 @@ function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=435',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=436',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){

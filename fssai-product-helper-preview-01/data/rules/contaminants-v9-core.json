@@ -23471,8 +23471,8 @@
       "product_name": "Lozenges",
       "fssr": "2.7.2",
       "status": "locked_no_exact_current_article",
-      "lock_scope": "automatic product-level contaminant mapping",
-      "reason": "No exact Lozenges article is present in the current Version IX contaminant tables. Ingredient-level contaminant rules remain independent."
+      "lock_scope": "automatic product-level metal/crop and unverified family contaminant mapping",
+      "reason": "No exact Lozenges metal article is present in current Version IX. The separately verified category-level Confectionery hydrocyanic-acid NOTS article does not authorize inherited Hard Candy or Cocoa Powder metal limits; all other contaminants and residues require review."
     },
     {
       "catalog_id": "05-05-3-chewing-gum-and-bubble-gum",
@@ -29316,6 +29316,45 @@
     "new_source_pinned_conditional_rows": 6,
     "auto_apply": false,
     "no_new_exact_catalogue_evidence_claimed": true,
+    "full_compliance_verified": false
+  },
+  "chapter_2_7_exact_confectionery_hydrocyanic_v9": {
+    "source_version": "Version IX (03.02.2026)",
+    "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "official_foscos_identity_source_url": "https://fcstraining.fssai.gov.in/standard-product",
+    "official_fssr_chapter_2_7_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+    "article": "Confectionery",
+    "contaminant": "Hydrocyanic acid",
+    "limit": 5,
+    "unit": "ppm",
+    "verified_product_identities": [
+      {
+        "catalog_id": "05-05-2-lozenges",
+        "product_name": "Lozenges",
+        "fssr": "2.7.2",
+        "fcs": "05.2.1",
+        "exact_confectionery_identity_verified": true
+      },
+      {
+        "catalog_id": "05-05-2-sugar-boiled-confectionery-soft-candy",
+        "product_name": "Sugar boiled confectionery (Soft Candy)",
+        "fssr": "2.7.1",
+        "fcs": "05.2.2",
+        "exact_confectionery_identity_verified": true
+      }
+    ],
+    "excluded_nearby_catalog_ids": [
+      "05-05-1-chocolate",
+      "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "05-05-3-chewing-gum-and-bubble-gum"
+    ],
+    "source_article_exact_fcs_category": "05.2",
+    "do_not_inherit_hard_candy_metals": true,
+    "existing_finished_metal_locks_retained": true,
+    "other_toxins_and_pesticides_unverified": true,
+    "complete_contaminant_coverage": false,
+    "amendments_fully_reconciled": false,
     "full_compliance_verified": false
   }
 }
