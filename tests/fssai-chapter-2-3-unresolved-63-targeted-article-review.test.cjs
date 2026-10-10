@@ -23,13 +23,13 @@ function permittedOnlyAsReview(r){
   v.legal_compliance_pass===false && r.unconditional_compliance_pass===false &&
   r.auto_apply_numeric_limit===false);
 }
-test("61 remaining of the original 63 Chapter 2.3 identities have individual source and matrix review, preserving the historical 164 review baseline",()=>{
+test("43 remaining of the original 63 Chapter 2.3 identities have individual source and matrix review, preserving the historical 164 review baseline",()=>{
  assert.equal(catalogue.length,533);
- assert.equal(pending.pending,136);
- assert.equal(pending.count,136);
- assert.equal(pending.verified_evidence_added,128);
+ assert.equal(pending.pending,126);
+ assert.equal(pending.count,126);
+ assert.equal(pending.verified_evidence_added,138);
  assert.equal(pending.full_compliance_achieved,0);
- assert.equal(rows.length,48);
+ assert.equal(rows.length,43);
  assert.equal(pending.chapter_2_3_targeted_evidence_summary_2026_10_10.reviewed,63);
  assert.equal(pending.chapter_2_3_targeted_evidence_summary_2026_10_10.remaining_unresolved,164);
  assert.equal(pending.chapter_2_3_targeted_evidence_summary_2026_10_10.numeric_limits_applied,0);
@@ -53,6 +53,10 @@ test("61 remaining of the original 63 Chapter 2.3 identities have individual sou
  historic.diluted_beverage_vs_syrup-=9;
  delete historic.diluted_beverage_vs_syrup;
  historic.industrial_juice_concentrate_vs_puree-=4;
+ historic.vanilla_whole_cut_ground-=3;
+ delete historic.vanilla_whole_cut_ground;
+ historic.dried_fruit_nut_or_paste-=1;
+ historic.savory_multi_ingredient_paste-=1;
  historic.reconstituted_dry_soup--;
  delete historic.reconstituted_dry_soup;
  assert.deepEqual(buckets,historic);
