@@ -7,8 +7,8 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 270 |
-| No exact product-identity contaminant evidence established by current index | 263 |
+| Some exact product evidence, partial only | 272 |
+| No exact product-identity contaminant evidence established by current index | 261 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 
 ## Unresolved by standard family
@@ -18,7 +18,7 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | 2.1 | 67 |
 | 2.3 | 66 |
 | special | 45 |
-| 2.4 | 42 |
+| 2.4 | 40 |
 | 2.8 | 11 |
 | 2.5 | 9 |
 | 2.7 | 6 |
@@ -225,7 +225,7 @@ For each item: verify the precise finished-product identity, current official FS
 | Surface-treated fresh fruit | `04-04-1-surface-treated-fresh-fruit` | FoSCoS/special |
 | Untreated fresh fruit | `04-04-1-untreated-fresh-fruit` | FoSCoS/special |
 
-### FSSR 2.4 (42)
+### FSSR 2.4 (40)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -249,8 +249,6 @@ For each item: verify the precise finished-product identity, current official FS
 | Malt Based Foods(Malt Food) | `06-06-7-malt-based-foods-malt-food` | 2.4.11(2) |
 | Malt Extract | `06-06-7-malt-extract` | 2.4.11(3) |
 | Malted Milk Food | `06-06-7-malted-milk-food` | 2.4.11(1) |
-| Multigrain flour (atta) | `06-06-2-multigrain-flour-atta` | 2.4.37 |
-| Oat Products | `06-06-3-oat-products` | 2.4.12 |
 | Papad | `06-06-7-papad` | 2.4.40 |
 | Papad | `15-15-1-papad` | 2.4.40 |
 | Protein rich refined wheat flour (Protein prachur maida) | `06-06-2-protein-rich-refined-wheat-flour-protein-prachur-maida` | 2.4.2(3) |
@@ -358,6 +356,8 @@ For each item: verify the precise finished-product identity, current official FS
 ## Verified partial evidence removed from the unresolved list
 
 - **Peanut Butter — FSSR 2.2.4(11):** The official Version IX Section 2.2.1 composite food product containing oilseed article establishes **Total Aflatoxins 20 µg/kg** and **Aflatoxin B1 10 µg/kg** for a food containing groundnut kernels. The exact product-standard requirement of roasted groundnut kernels and current source values are checked independently. This establishes **only partial exact-product contaminant evidence**; other metals, residues, toxins and amendments are not cleared. This is not a complete compliance PASS or a statement of exemption.
+
+- **Oat Products — FSSR 2.4.12** and **Multigrain flour (atta) — FSSR 2.4.37:** Both exact standards require oat or wheat cereal material. FSSAI Section 2.2.1 sets **Aflatoxin B1 10 µg/kg** for the cereal-product and composite-food categories alike. The source-gated limit is therefore partial, not a whole-product PASS. **Total Aflatoxins is not assigned** because the source categories differ (15 versus 20 µg/kg), pending product subtype or composition evidence. All other contaminants and residues remain to be checked.
 
 ## Official reference entry point
 
