@@ -35,7 +35,9 @@ test("Both water fluoride rules stay identical to official Chapter 2.10 source a
   assert.equal(group.product_name,product.name);
   assert.equal(group.official_source_url,source);
   assert.match(group.source_basis,new RegExp(key.replaceAll(".","\\.")));
-  assert.equal(group.rules.length,id==="packaged-drinking-water"?2:1);
+  assert.equal(group.rules.filter(r=>r.contaminant==="Fluoride").length,1,"Exactly one fluoride rule per finished water identity");
+  assert.equal(group.rules.filter(r=>r.contaminant==="Nitrate as NO3").length,1,"Product-specific nitrate must remain source-pinned");
+  assert.equal(group.rules.filter(r=>r.contaminant==="Nitrite as NO2").length,1,"Product-specific nitrite must remain source-pinned");
   const r=group.rules[0];
   assert.equal(r.contaminant,"Fluoride");
   assert.equal(r.limit,fromStandard.value);
