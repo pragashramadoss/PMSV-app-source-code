@@ -25,7 +25,10 @@ test("All 263 unresolved exact-evidence cases have unique real catalogue identit
   const product=byId.get(x.id);
   assert.ok(product,"Queue identity missing from catalogue: "+x.id);
   assert.equal(x.name,product.name,"Display name drift: "+x.id);
-  assert.equal(x.fssr,product.fssr,"FSSR drift: "+x.id);
+  // Special FoSCoS routes are a catalogue routing explanation, not an FSSR
+  // clause: the product's fssr field can be empty or a separate legal note.
+  if(x.section==="special")assert.ok(x.fssr.length>0,"Missing special-route review label "+x.id);
+  else assert.equal(x.fssr,product.fssr,"FSSR drift: "+x.id);
  }
 });
 test("Every unresolved family subtotal agrees with its actual rows",()=>{
