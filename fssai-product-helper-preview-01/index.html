@@ -4195,7 +4195,7 @@ function renderFormula(){
    const customNeedsReview=qs.filter((q,i)=>q.kind==='extra' && !(q.contaminants||[]).length && contaminantIngredientRulesForName(formulationIngredients[i]?.name||q.name).length===0);
    const reviewRows=customNeedsReview.map(q=>'<tr><td><b>Ingredient-specific contaminant review</b></td><td>—</td><td>Extra ingredient: <b>'+esc(q.name)+'</b></td><td>The exact ingredient must be checked against the applicable current FSSAI contaminant tables before final compliance.</td></tr>');
    if(rows.length||reviewRows.length){
-     triggered.innerHTML='<h3 style="margin:12px 0 9px">Ingredient-dependent requirements generated from your formulation</h3><div class="tablewrap"><table><thead><tr><th>Requirement</th><th>FSSAI limit</th><th>Why it appears</th><th>Source / action</th></tr></thead><tbody>'+rows.concat(reviewRows).join('')+'</tbody></table></div>';
+     triggered.innerHTML='<h3 style="margin:12px 0 9px">Ingredient-level FSSAI contaminant references</h3><p class="notice">Source-checked limits for named ingredient articles only. These are not automatically the applicable limits for the finished formulation; processing, commodity scope and amendments need review.</p><div class="tablewrap"><table><thead><tr><th>Requirement</th><th>FSSAI limit</th><th>Why it appears</th><th>Source / action</th></tr></thead><tbody>'+rows.concat(reviewRows).join('')+'</tbody></table></div>';
    }else{
      triggered.innerHTML='<div class="notice">No exact ingredient-triggered contaminant rule is loaded for the current ingredient list. PMSV does not infer a commodity family from a similar ingredient name.</div>';
    }
@@ -7804,11 +7804,36 @@ function contaminantProfileForProduct(p){
  const safeRules=(matched.rules||[]).filter(r=>String(r.contaminant||'').trim().toLowerCase()!=='lead');
  return safeRules.length?{...matched,rules:safeRules}:null;
 }
+// Verify the ingredient's numeric reference against the currently loaded FSSAI
+// source master. Ingredient rules are references, NOT finished-food approvals.
 function contaminantIngredientRulesForName(name){
  if(!contaminantsDb||!Array.isArray(contaminantsDb.ingredient_triggers))return [];
  const n=normIngredient(name);
- const group=contaminantsDb.ingredient_triggers.find(x=>Array.isArray(x.aliases)&&x.aliases.some(a=>normIngredient(a)===n));
- return group&&Array.isArray(group.rules)?group.rules:[];
+ const group=contaminantsDb.ingredient_triggers.find(x=>
+   Array.isArray(x.aliases)&&x.aliases.some(a=>normIngredient(a)===n));
+ if(!group||!Array.isArray(group.rules))return [];
+ const cropKeys={'total aflatoxins':'total_aflatoxins',
+   'aflatoxin b1':'aflatoxin_b1','aflatoxin m1':'aflatoxin_m1',
+   'ochratoxin a':'ochratoxin_a','deoxynivalenol':'deoxynivalenol','patulin':'patulin'};
+ const toxinKeys={'agaric acid':'agaric_acid','hydrocyanic acid':'hydrocyanic_acid',
+   'hypericine':'hypericine','saffrole':'saffrole'};
+ return group.rules.filter(rule=>{
+   const label=normIngredient(rule.contaminant||'');
+   const cropKey=cropKeys[label],toxinKey=toxinKeys[label];
+   if(!cropKey&&!toxinKey)return false;
+   const crop=cropKey?contaminantsDb.crop_contaminants?.[cropKey]:null;
+   const official=cropKey?crop?.rules:contaminantsDb.naturally_occurring_toxic_substances?.[toxinKey];
+   if(!Array.isArray(official)||!official.length)return false;
+   return official.some(row=>{
+     if(Number(row.limit)!==Number(rule.limit) || !Number.isFinite(Number(row.limit)) ||
+       String(row.unit||crop?.unit||'')!==String(rule.unit||''))return false;
+     if(row.article===rule.article)return true;
+     // Wheat, bran, barley and rye occur inside exact grouped official articles.
+     if(cropKey!=='ochratoxin_a'&&cropKey!=='deoxynivalenol')return false;
+     return String(row.article||'').split(',').some(member=>
+       normIngredient(member)===n && normIngredient(rule.article)===n);
+   });
+ });
 }
 function contaminantPackagingState(){
  return {
