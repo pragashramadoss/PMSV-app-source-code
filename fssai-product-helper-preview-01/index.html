@@ -8342,6 +8342,42 @@ function sourcePinnedDirectStandardLimit(p,group,rule){
    && unit(entry.unit)===unit(rule.unit)));
 }
 
+/* Water product-standard pesticide limits are NOT CTR commodity MRLs.
+   The selected catalog identity, exact Chapter 2.10 rule and both stored
+   official numeric source-table rows must agree; otherwise fail closed. */
+function sourcePinnedWaterPesticideEvidence(p){
+ const cfg=contaminantsDb?.water_product_standard_pesticide_limits_v1;
+ const selected=(cfg?.routes||[]).find(x=>x.catalog_id===p?.id);
+ if(!selected)return {relevant:false,verified:false,rows:[]};
+ const no={relevant:true,verified:false,rows:[]};
+ if(!standardSearchIndexDb||!Array.isArray(chapterRuleDbs))return no;
+ const identity=(standardSearchIndexDb.products||[]).find(x=>x.id===selected.catalog_id);
+ if(!identity||identity.id!==p.id||identity.fssr!==selected.fssr
+     ||identity.rule_key!==selected.source_chapter_key
+     ||normIngredient(identity.name)!==normIngredient(selected.product_name))return no;
+ if((cfg.official_source_url||'')!=='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf')return no;
+ const sources=chapterRuleDbs.filter(db=>
+   db?.chapter==='2.10'
+   && db?.source_version===cfg.source_version
+   && (db?.official_sources||[]).some(src=>src.url===cfg.official_source_url));
+ const standards=sources.flatMap(db=>ruleDbStandards(db).filter(st=>
+   st.key===selected.fssr
+   && normIngredient(st.name)===normIngredient(selected.product_name)));
+ if(standards.length!==1||!Array.isArray(selected.rules)||selected.rules.length!==2)return no;
+ const sourceRows=standards[0].pesticide||[];
+ const expected=new Set(['Individual pesticide residue','Total pesticide residue']);
+ if(sourceRows.length!==2||sourceRows.some(r=>!expected.has(r.parameter))
+    ||selected.rules.some(r=>!expected.has(r.parameter)))return no;
+ const ok=selected.rules.every(rule=>{
+   const matching=sourceRows.filter(entry=>entry.parameter===rule.parameter);
+   return matching.length===1 && matching[0].operator==='<='
+      && Number.isFinite(Number(rule.limit))
+      && Number(rule.limit)===Number(matching[0].value)
+      && String(rule.unit).toLowerCase()===String(matching[0].unit).toLowerCase();
+ });
+ return ok?{relevant:true,verified:true,rows:selected.rules,source:cfg.official_source_url}:no;
+}
+
 function productBaselineContaminantRules(p){
  if(!p||!contaminantsDb)return [];
  if(exactFinishedProductContaminantLock(p))return [];
@@ -8933,11 +8969,18 @@ function renderProductContaminants(){
    ruleSeen.add(key);return true;
  });
  const pesticideMrls=exactPesticideMrlRowsForProduct(p);
+ const waterPesticides=sourcePinnedWaterPesticideEvidence(p);
  const meatEggCommodityReview=productMeatEggCommodityMrlReviewHtml(p);
  const cerealCommodityReview=productCerealCommodityMrlReviewHtml(p);
  const fruitVegCommodityReview=productFruitVegCommodityMrlReviewHtml(p);
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
  const pesticideRows=pesticideMrls.map(x=>'<tr><td><b>'+esc(x.pesticide)+'</b></td><td><b>'+esc(x.mrl)+' '+esc(x.unit)+'</b></td><td>'+esc(x.food)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source)+'</td></tr>').join('');
+ const waterPesticideHtml=!waterPesticides.relevant?''
+   : waterPesticides.verified
+     ? '<div class="card"><div class="section-title"><h3>FSSAI Chapter 2.10 water pesticide requirements — '+esc(p.name)+'</h3><span>Exact finished-product standard</span></div><div class="notice oknote">These are <b>individual</b> and <b>total</b> pesticide-residue limits for the confirmed finished-water product; they are different from named commodity pesticide MRLs, and do not establish complete compliance.</div><div class="tablewrap"><table><thead><tr><th>Parameter</th><th>Maximum</th><th>Standard / basis</th></tr></thead><tbody>'
+       +waterPesticides.rows.map(r=>'<tr><td>'+esc(r.parameter)+'</td><td><b>'+esc(String(r.limit))+' '+esc(r.unit)+'</b></td><td>'+esc(r.source_basis)+'</td></tr>').join('')
+       +'</tbody></table></div></div>'
+     : '<div class="notice"><b>Water pesticide limit review required.</b> Numerical values are withheld because the exact loaded FSSAI Chapter 2.10 source table, product identity, or units did not pass verification.</div>';
  const prohibitedVet=prohibitedVeterinaryRowsForProduct(p);
  const prohibitedVetRows=prohibitedVet.map(x=>'<tr><td><b>'+esc(x.substance)+'</b></td><td><b>Not permitted</b><br><small>EMRL '+esc(x.limit)+' '+esc(x.unit)+'</small></td><td>'+esc(x.scope)+'</td><td>'+esc(x.source)+'</td></tr>').join('');
  const conditionalMetalHtml=conditionalMetals.length
@@ -8957,7 +9000,8 @@ function renderProductContaminants(){
    +fruitVegCommodityReview
    +(rows?'<div class="tablewrap"><table><thead><tr><th>Contaminant / toxin</th><th>FSSAI limit / criterion</th><th>Article / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="notice">No exact metal/toxin row is auto-applicable for this product under the current stored product gates.</div>')
    +conditionalMetalHtml
-   +(pesticideRows?'<div class="card" style="margin-top:12px;background:#fafcff"><div class="section-title"><h3 style="margin:0">Pesticide residue MRLs — '+esc(p.name)+'</h3><span>Verified FSSAI commodity scope · no formulation required</span></div><div class="notice oknote"><b>'+pesticideMrls.length+' applicable pesticide MRL row'+(pesticideMrls.length===1?'':'s')+' found.</b> '+(milkProductContaminantScope(p)?'FSSR 2.1.13 defines this finished food as a fermented <b>milk product</b>, so the current FSSAI commodity rows explicitly written for <b>Milk and Milk products</b> are applied.':'The commodity name exactly matches the selected standardized product.')+'</div><div class="tablewrap"><table><thead><tr><th>Pesticide</th><th>MRL</th><th>Commodity / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+pesticideRows+'</tbody></table></div></div>':'<div class="notice"><b>Pesticide residues:</b> no verified commodity-scope MRL rows are stored for '+esc(p.name)+'. PMSV will not infer an unrelated commodity mapping.</div>')
+   +waterPesticideHtml
+   +(pesticideRows?'<div class="card" style="margin-top:12px;background:#fafcff"><div class="section-title"><h3 style="margin:0">Pesticide residue MRLs — '+esc(p.name)+'</h3><span>Verified FSSAI commodity scope · no formulation required</span></div><div class="notice oknote"><b>'+pesticideMrls.length+' applicable pesticide MRL row'+(pesticideMrls.length===1?'':'s')+' found.</b> '+(milkProductContaminantScope(p)?'FSSR 2.1.13 defines this finished food as a fermented <b>milk product</b>, so the current FSSAI commodity rows explicitly written for <b>Milk and Milk products</b> are applied.':'The commodity name exactly matches the selected standardized product.')+'</div><div class="tablewrap"><table><thead><tr><th>Pesticide</th><th>MRL</th><th>Commodity / condition</th><th>Regulatory basis</th></tr></thead><tbody>'+pesticideRows+'</tbody></table></div></div>':'<div class="notice"><b>Pesticide commodity MRLs:</b> no additional exact commodity-specific MRLs are stored for '+esc(p.name)+'. '+(waterPesticides.relevant?'The product-specific water pesticide requirements are presented separately above.':'PMSV will not infer an unrelated commodity mapping.')+'</div>')
    +(prohibitedVetRows?'<div class="card" style="margin-top:12px;background:#fffaf0"><div class="section-title"><h3 style="margin:0">Prohibited veterinary / pharmacologically active substances</h3><span>Milk and milk products · Section 2.3.2</span></div><div class="notice"><b>These substances are not permitted to be used at any stage of production of milk and milk products.</b> PMSV shows the current FSSAI extraneous maximum residue level (EMRL) used for enforcement/testing.</div><div class="tablewrap"><table><thead><tr><th>Substance</th><th>Requirement / EMRL</th><th>Scope</th><th>Regulatory basis</th></tr></thead><tbody>'+prohibitedVetRows+'</tbody></table></div></div>':'')
    +'<div class="countline">'+rules.length+' metal/toxin/all-food rule'+(rules.length===1?'':'s')+' + '+conditionalMetals.length+' conditional subtype metal row'+(conditionalMetals.length===1?'':'s')+' + '+pesticideMrls.length+' pesticide MRL row'+(pesticideMrls.length===1?'':'s')+' + '+prohibitedVet.length+' prohibited veterinary-substance row'+(prohibitedVet.length===1?'':'s')+' shown · “Foods not specified” and generic canned-food fallbacks remain disabled.</div>';
 }
