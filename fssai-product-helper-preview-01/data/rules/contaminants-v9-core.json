@@ -21775,38 +21775,38 @@
   ],
   "product_subtype_conditional_metal_rules_v9": [
     {
-        "catalog_id": "06-06-1-rice",
-        "product_name": "Rice",
-        "fssr": "2.4.6",
-        "subtype": "Polished rice",
-        "contaminant": "Cadmium",
-        "limit": 0.4,
-        "unit": "mg/kg",
-        "article": "Rice, polished",
-        "requires_input": "product.exact_subtype",
-        "auto_apply": false,
-        "condition": "Only for confirmed polished rice; not paddy, unpolished/brown rice, blended rice, rice flour or a rice-based composite.",
-        "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
-        "subtype_basis": "Source article is expressly 'Rice, polished'. FSSR 2.4.6 product name alone does not prove polishing; user must select exact polished subtype.",
-        "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
-        "verification": "official_fssai_v9_exact_article_user_confirmed_processing_state"
+      "catalog_id": "06-06-1-rice",
+      "product_name": "Rice",
+      "fssr": "2.4.6",
+      "subtype": "Polished rice",
+      "contaminant": "Cadmium",
+      "limit": 0.4,
+      "unit": "mg/kg",
+      "article": "Rice, polished",
+      "requires_input": "product.exact_subtype",
+      "auto_apply": false,
+      "condition": "Only for confirmed polished rice; not paddy, unpolished/brown rice, blended rice, rice flour or a rice-based composite.",
+      "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
+      "subtype_basis": "Source article is expressly 'Rice, polished'. FSSR 2.4.6 product name alone does not prove polishing; user must select exact polished subtype.",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "verification": "official_fssai_v9_exact_article_user_confirmed_processing_state"
     },
     {
-        "catalog_id": "06-06-1-basmati-rice",
-        "product_name": "Basmati Rice",
-        "fssr": "2.4.6",
-        "subtype": "Polished rice",
-        "contaminant": "Cadmium",
-        "limit": 0.4,
-        "unit": "mg/kg",
-        "article": "Rice, polished",
-        "requires_input": "product.exact_subtype",
-        "auto_apply": false,
-        "condition": "Only for confirmed polished rice; not paddy, unpolished/brown rice, blended rice, rice flour or a rice-based composite.",
-        "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
-        "subtype_basis": "Source article is expressly 'Rice, polished'. FSSR 2.4.6 product name alone does not prove polishing; user must select exact polished subtype.",
-        "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
-        "verification": "official_fssai_v9_exact_article_user_confirmed_processing_state"
+      "catalog_id": "06-06-1-basmati-rice",
+      "product_name": "Basmati Rice",
+      "fssr": "2.4.6",
+      "subtype": "Polished rice",
+      "contaminant": "Cadmium",
+      "limit": 0.4,
+      "unit": "mg/kg",
+      "article": "Rice, polished",
+      "requires_input": "product.exact_subtype",
+      "auto_apply": false,
+      "condition": "Only for confirmed polished rice; not paddy, unpolished/brown rice, blended rice, rice flour or a rice-based composite.",
+      "source_basis": "Section 2.1 · Cadmium · Version IX (03.02.2026)",
+      "subtype_basis": "Source article is expressly 'Rice, polished'. FSSR 2.4.6 product name alone does not prove polishing; user must select exact polished subtype.",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "verification": "official_fssai_v9_exact_article_user_confirmed_processing_state"
     },
     {
       "catalog_id": "coffee",
@@ -22308,6 +22308,44 @@
       "source_basis": "FSSAI Chapter 2.8 Version 1 (01.09.2023), Section 2.8.11, Sucralose",
       "official_source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20(Sweetening%20agents%20including%20Honey).pdf",
       "policy": "Source-pinned exact Sucralose finished ingredient/substance identity only. This is an additional specific heavy-metals-as-Pb purity requirement, not a replacement for separate CTR Arsenic or elemental Lead limits. No unrelated sweetener or formulated-product inheritance."
+    },
+    {
+      "catalog_id": "11-11-6-sodium-saccharin-food-grade",
+      "product_name": "Sodium Saccharin (Food Grade)",
+      "fssr": "2.8.8",
+      "rules": [
+        {
+          "contaminant": "Toluene sulfonamides",
+          "limit": 25,
+          "unit": "ppm",
+          "article": "Sodium Saccharin (Food Grade)",
+          "source_basis": "FSSAI 2.8.8 product-standard Table: Toluene sulfonamides maximum 25 ppm",
+          "verification": "official_fssai_direct_product_standard",
+          "source_note": "This is a specific food-grade saccharin product-standard impurity requirement, not a Section 2.1 elemental-metal limit and not permission for use in any finished food. Separate applicable contaminants, microbiology, additive and processing requirements remain to be checked."
+        }
+      ],
+      "source_basis": "FSSAI Chapter 2.8 Version 1 (01.09.2023), clause 2.8.8",
+      "official_source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20(Sweetening%20agents%20including%20Honey).pdf",
+      "policy": "Exact Sodium Saccharin (Food Grade) food-grade identity only. Numeric impurity shown only when the matching source chapter table retains 25 ppm. Never infer from another saccharin salt, sweetener, food product, or CTR elemental-metal article. Not complete compliance."
+    },
+    {
+      "catalog_id": "11-11-6-calcium-saccharin-food-grade",
+      "product_name": "Calcium Saccharin (Food Grade)",
+      "fssr": "2.8.12",
+      "rules": [
+        {
+          "contaminant": "Toluene sulfonamides",
+          "limit": 25,
+          "unit": "ppm",
+          "article": "Calcium Saccharin (Food Grade)",
+          "source_basis": "FSSAI 2.8.12 product-standard Table: Toluene sulfonamides maximum 25 ppm",
+          "verification": "official_fssai_direct_product_standard",
+          "source_note": "This is a specific food-grade saccharin product-standard impurity requirement, not a Section 2.1 elemental-metal limit and not permission for use in any finished food. Separate applicable contaminants, microbiology, additive and processing requirements remain to be checked."
+        }
+      ],
+      "source_basis": "FSSAI Chapter 2.8 Version 1 (01.09.2023), clause 2.8.12",
+      "official_source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20(Sweetening%20agents%20including%20Honey).pdf",
+      "policy": "Exact Calcium Saccharin (Food Grade) food-grade identity only. Numeric impurity shown only when the matching source chapter table retains 25 ppm. Never infer from another saccharin salt, sweetener, food product, or CTR elemental-metal article. Not complete compliance."
     }
   ],
   "sulphated_ash_conditional_lead_rules_v9": [
