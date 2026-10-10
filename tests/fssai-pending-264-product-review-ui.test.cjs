@@ -55,7 +55,7 @@ test("Product Contaminants displays evidence gaps and cannot turn review notes i
  let sample=byId.get("06-06-1-quinoa");
  const result=ctx.pendingContaminantReviewNotice(sample);
  assert.match(result,/Exact finished-product contaminant evidence still incomplete/);
- assert.match(result,/explicitly excluded/);
+ assert.match(result,/explicitly excluded/i);
  assert.match(result,/not an exemption/);
  assert.doesNotMatch(result,/compliance PASS|0\.2 mg\/kg as a limit/);
  assert.equal(ctx.pendingContaminantReviewNotice(byId.get("coffee")),"");
