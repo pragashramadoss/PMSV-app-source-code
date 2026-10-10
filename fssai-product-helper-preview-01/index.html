@@ -8875,6 +8875,31 @@ function productBaselineContaminantRules(p){
    }
  }
 
+ // 5bd) Conservative shared B1 limit: exact Oat Products and Multigrain
+ // Flour both necessarily contain cereals under their Chapter 2.4 standards.
+ // The unblended cereal and composite-food source B1 articles BOTH specify
+ // 10 µg/kg. Total Aflatoxins differs between those articles, so is withheld
+ // until precise finished-product formulation/category is confirmed.
+ const harmonisedCerealB1=[
+   ['06-06-3-oat-products','Oat Products','2.4.12'],
+   ['06-06-2-multigrain-flour-atta','Multigrain flour (atta)','2.4.37']
+ ];
+ if(harmonisedCerealB1.some(r=>r[0]===id&&r[1]===p.name&&r[2]===p.fssr) &&
+    /Version IX.*03\.02\.2026/.test(String(contaminantsDb?.source_version||''))){
+   const group=contaminantsDb?.crop_contaminants?.aflatoxin_b1;
+   const required=['Cereal and cereal products','Food product containing any of the above mentioned food articles'];
+   const verified=group?.unit==='µg/kg'&&required.every(article=>
+     (group.rules||[]).filter(r=>normIngredient(r.article||'')===normIngredient(article)
+       &&Number(r.limit)===10&&String(r.unit||group.unit)==='µg/kg').length===1);
+   if(verified)pushRule({
+     contaminant:'Aflatoxin B1',
+     article:'Cereal and cereal products / Food product containing any of the above mentioned food articles',
+     limit:10,unit:'µg/kg',
+     source_basis:'FSSAI CTR Version IX · Section 2.2.1 · identical cereal and composite food B1 limits; exact Chapter 2.4 identity',
+     condition:'Partial exact source evidence only. Both relevant official Aflatoxin B1 categories agree at 10 µg/kg; the total-aflatoxin category differs (15 versus 20 µg/kg) and is NOT assigned without additional finished formulation evidence. No pesticide, metal or other compliance PASS.'
+   });
+ }
+
  // 5c) Version IX naturally occurring toxic substance Saffrole: only exact
  // finished soup or sauce identities in the official Chapter 2.3 list.
  const saffrole=contaminantsDb?.chapter_2_3_exact_soup_sauce_saffrole_v9;
