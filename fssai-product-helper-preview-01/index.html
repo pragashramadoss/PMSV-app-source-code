@@ -8954,6 +8954,40 @@ function productBaselineContaminantRules(p){
    });
  }
 
+ // 5bea0) Bread & Bread-Type Products: mandatory atta/maida under FSSR
+ // 2.4.15(2). Both official B1 articles for cereal products and foods
+ // containing cereals are 10 µg/kg. This does not determine the total
+ // aflatoxin limit (15 vs 20), nor clear other contaminants or MRLs.
+ // Fail closed if the exact loaded FSSAI chapter definition is absent.
+ if(id==='07-07-1-bread-and-bread-type-products'
+   && p.name==='Bread and Bread-Type Products' && p.fssr==='2.4.15(2)'
+   && String(contaminantsDb?.source_version||'')==='Version IX (03.02.2026)'){
+   const sourceChapter=(chapterRuleDbs||[]).find(d=>(d.standards||[])
+     .some(st=>st.key==='2.4.15(2)'));
+   const st=(sourceChapter?.standards||[]).find(x=>x.key==='2.4.15(2)');
+   const proof=st?.official_finished_cereal_identity_source_v1;
+   const sourceOk=st?.name==='Bread and Bread-Type Products'
+     &&proof?.clause==='2.4.15(2)'
+     &&proof?.wheat_flour_mandatory===true
+     &&proof?.other_flour_substitution_alone_qualifies===false
+     &&proof?.exact_identity_verified===true
+     &&proof?.full_contaminant_coverage_verified===false
+     &&proof?.source_version==='Version 4 (07.05.2025)'
+     &&proof?.official_source_url==='https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf';
+   const b1=contaminantsDb?.crop_contaminants?.aflatoxin_b1;
+   const b1Articles=['Cereal and cereal products',
+     'Food product containing any of the above mentioned food articles'];
+   const b1Ok=b1?.unit==='µg/kg'&&b1Articles.every(article=>
+     (b1.rules||[]).filter(r=>normIngredient(r.article||'')===normIngredient(article)
+       &&Number(r.limit)===10&&String(r.unit||b1.unit)==='µg/kg').length===1);
+   if(sourceOk&&b1Ok)pushRule({
+     contaminant:'Aflatoxin B1',article:b1Articles.join(' / '),
+     limit:10,unit:'µg/kg',
+     source_basis:'FSSAI CTR Version IX · Section 2.2.1 · exact Bread and Bread-Type Products FSSR 2.4.15(2)',
+     condition:'Exact bread/rusk standard with mandatory atta and/or maida. Both source articles agree at 10 µg/kg B1. Total Aflatoxins differs (15 vs 20 µg/kg) and is withheld until final article is established. Not a metal, residue or full contaminant compliance PASS.'
+   });
+ }
+
  // 5bea) FSSR 2.4.36 Yellow Pea Powder is exclusively dehusked
  // Pisum sativum pea milled to flour, per current official Chapter 2.4.
  // The current FSSAI Pulses and composite-food B1 rows both read 10 µg/kg.
