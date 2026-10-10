@@ -749,12 +749,46 @@ function contaminantEvidenceForProduct(p){
      complete_contaminant_compliance:false,total_aflatoxins_auto_assigned:false,
      pesticide_mrl_auto_approval:false,current_amendments_fully_reconciled:false};
  })();
+ const oilseedFlourProteinB1Evidence=(()=>{
+   const allowed=[
+    ['06-06-2-solvent-extract-soya-flour','Solvent Extract Soya Flour','2.4.13(1)'],
+    ['06-06-2-solvent-extracted-groundnut-flour','Solvent Extracted Groundnut Flour','2.4.13(2)'],
+    ['06-06-2-solvent-extracted-sesame-flour','Solvent Extracted Sesame Flour','2.4.13(3)'],
+    ['06-06-2-solvent-extracted-cotton-seed-flour','Solvent Extracted Cotton seed Flour','2.4.13(5)'],
+    ['06-06-2-expeller-pressed-edible-groundnut-flour','Expeller Pressed Edible Groundnut Flour','2.4.16(2)'],
+    ['06-06-8-soy-protein-products','Soy Protein Products','2.4.20']
+   ];
+   if(!allowed.some(([id,name,clause])=>p.id===id&&p.name===name&&p.fssr===clause))return null;
+   if(!/Version IX.*03\.02\.2026/.test(String(contaminants.source_version||'')))return null;
+   const {record,sourceUrls}=chapterRecord(p);
+   const identity=record.source_verified_oilseed_identity;
+   if(record.key!==p.fssr||identity?.source_clause!==p.fssr
+      ||identity.exact_catalog_id!==p.id||identity.exact_catalogue_name!==p.name
+      ||identity.crop_category!=='oilseed'
+      ||identity.source_version!=='FSSAI Chapter 2.4 Version 4 (07.05.2025)'
+      ||identity.partial_b1_only!==true ||identity.complete_contaminant_coverage!==false
+      ||identity.allow_related_food_inheritance!==false
+      ||!official(identity.source_url)||!sourceUrls.includes(identity.source_url))return null;
+   const group=contaminants.crop_contaminants?.aflatoxin_b1;
+   const articles=['Oilseeds for further processing','Oilseeds, ready to eat',
+     'Food product containing any of the above mentioned food articles'];
+   if(group?.unit!=='µg/kg'||!articles.every(article=>
+      (group.rules||[]).filter(row=>normalizeArticle(row.article)===normalizeArticle(article)
+        &&Number(row.limit)===10&&String(row.unit||group.unit)==='µg/kg').length===1))return null;
+   return {catalog_id:p.id,product_name:p.name,clause:p.fssr,
+     mandatory_oilseed:identity.mandatory_oilseed,chapter_source:identity.source_url,
+     contaminants_source:version9Source,contaminant:'Aflatoxin B1',
+     limit:10,unit:'µg/kg',official_articles:articles,
+     complete_contaminant_coverage:false,total_aflatoxins_auto_assigned:false,
+     pesticide_mrl_approved:false,amendments_fully_reconciled:false};
+ })();
  const explicitKinds=[];
  if(peanutButterCompositeEvidence)explicitKinds.push("official_v9_exact_peanut_butter_composite_aflatoxins_partial");
  if(sharedCerealAflatoxinB1Evidence)explicitKinds.push("official_v9_harmonised_cereal_composite_b1_partial");
  if(bengalGramAflatoxinB1Evidence)explicitKinds.push("official_v9_exact_bengal_gram_pulse_composite_b1_partial");
  if(soyDerivativeB1Evidence)explicitKinds.push("official_v9_soy_derivative_oilseed_composite_b1_partial");
  if(nonFermentedSoybeanB1Evidence)explicitKinds.push("official_v9_exact_nonfermented_soybean_b1_partial");
+ if(oilseedFlourProteinB1Evidence)explicitKinds.push("official_v9_exact_oilseed_flour_protein_b1_partial");
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
  if(direct)explicitKinds.push("exact_product_clause");
@@ -810,6 +844,7 @@ function contaminantEvidenceForProduct(p){
    exact_bengal_gram_pulse_composite_b1:bengalGramAflatoxinB1Evidence,
    exact_soy_derivative_oilseed_composite_b1:soyDerivativeB1Evidence,
    exact_nonfermented_soybean_b1:nonFermentedSoybeanB1Evidence,
+   exact_oilseed_flour_protein_b1:oilseedFlourProteinB1Evidence,
    conditional_milk_powder_aflatoxin_m1_review:milkPowderAflatoxinM1Review,
    exact_hemp_chapter_2_16_thc_cbd:hempEvidence,
    exact_alcoholic_beverage_toxic_substances:alcoholicEvidence?{
