@@ -7,8 +7,10 @@ const data=JSON.parse(fs.readFileSync(path.join(root,"fssai-product-helper-previ
 const pending=JSON.parse(fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json"),"utf8"));
 assert.equal(data.count,26);
 assert.equal(data.records.length,26);
-assert.equal(data.remaining_pending_after_review,156);
+assert.equal(data.remaining_pending_after_review,156); // historical review snapshot
 const pendingById=new Map(pending.records.map(x=>[x.catalog_id,x]));
+const promoted=JSON.parse(fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/data/rules/fssai-25-beverage-confectionery-fungi-v9-source-evidence-2026-10-10.json"),"utf8"));
+const promotedIds=new Set(promoted.matched.map(x=>x.catalog_id));
 assert.equal(new Set(data.records.map(x=>x.catalog_id)).size,26);
 for(const row of data.records){
  assert.ok(row.official_source.startsWith("https://fssai.gov.in/"));
@@ -19,15 +21,20 @@ for(const row of data.records){
  assert.equal(row.evidence_status,"review_only_pending_exact_applicability");
  assert.ok(row.qualifier.length>15);
  const live=pendingById.get(row.catalog_id);
- assert.ok(live,"Pending identity missing: "+row.catalog_id);
- assert.equal(live.product_name,row.product_name);
- assert.equal(live.fssr,row.fssr);
+ if(!live){
+  assert.ok(promotedIds.has(row.catalog_id),"Product missing from both pending and verified: "+row.catalog_id);
+ }else{
+  assert.equal(live.product_name,row.product_name);
+  assert.equal(live.fssr,row.fssr);
+ }
  if(row.source_article_candidate){
   assert.equal(row.source_article_candidate.parameter,"Lead");
   assert.ok(row.source_article_candidate.limit>0);
   assert.ok(row.source_article_candidate.pdf_page>=2);
  }
 }
-assert.equal(pending.count,156);
-assert.equal(pending.pending,156);
-console.log("PASS 26 individual fail-closed conditional source-gate records; 156 remain unresolved.");
+assert.equal(pending.count,146);
+assert.equal(pending.pending,146);
+assert.equal(data.records.filter(x=>pendingById.has(x.catalog_id)).length,24);
+assert.equal(data.records.filter(x=>promotedIds.has(x.catalog_id)).length,2);
+console.log("PASS 26 original fail-closed source gates; 2 separately promoted with exact NOTS evidence; 146 remain unresolved.");
