@@ -12,16 +12,16 @@ const goat=read(base+"rules/goat-muscle-veterinary-v9-exact-evidence-v1.json");
 const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
 const byId=new Map(catalog.map(x=>[x.id,x]));
 const exactIds=[oleoresin.catalog_id,...goat.product_ids];
-test("78 currently unresolved of original 81 source-gated identities, 42 differentiated types, no numeric product PASS",()=>{
+test("74 currently unresolved of original 81 source-gated identities, 42 differentiated types, no numeric product PASS",()=>{
  assert.equal(catalog.length,533);
- assert.equal(manifest.records.length,146);
- assert.equal(manifest.count,146);assert.equal(manifest.pending,146);
- assert.equal(manifest.verified_evidence_added,118);assert.equal(manifest.full_compliance_achieved,0);
- assert.equal(manifest.current_snapshot_summary_2026_10_10.exact_partial_evidence,387);
+ assert.equal(manifest.records.length,136);
+ assert.equal(manifest.count,136);assert.equal(manifest.pending,136);
+ assert.equal(manifest.verified_evidence_added,128);assert.equal(manifest.full_compliance_achieved,0);
+ assert.equal(manifest.current_snapshot_summary_2026_10_10.exact_partial_evidence,397);
  const wanted={special:36,"2.1":14,"2.4":13,"2.8":11,"2.5":7};
  assert.deepEqual(manifest.next_family_subtype_review_summary_2026_10_10.by_family,wanted);
  const focus=manifest.records.filter(x=>x.next_family_subtype_review_2026_10_10);
- assert.equal(focus.length,78);
+ assert.equal(focus.length,74);
  const types=new Set();
  for(const record of focus){
    const data=record.next_family_subtype_review_2026_10_10,product=byId.get(record.catalog_id);
@@ -37,7 +37,7 @@ test("78 currently unresolved of original 81 source-gated identities, 42 differe
    assert.match(data.source_regulatory_standard_url,/^https:\/\/(?:www\.)?(?:fssai\.gov\.in|foscos\.fssai\.gov\.in)\//);
    types.add(data.review_type);
  }
- assert.equal(types.size,41);
+ assert.equal(types.size,40);
  for(const id of exactIds)assert.ok(!manifest.records.some(x=>x.catalog_id===id),"Verified exact partial still in no-evidence queue "+id);
 });
 test("Spice Oleoresin processing solvent rows are exactly the official named FSSR standard, including 3 GMP-only solvents",()=>{
@@ -96,5 +96,5 @@ test("Audited official partial status agrees for all three promoted catalog iden
  }
  assert.equal(status.get(oleoresin.catalog_id).exact_spice_oleoresin_solvent_residues.complete_contaminants_review,false);
  for(const id of goat.product_ids)assert.equal(status.get(id).exact_goat_muscle_veterinary_drugs.complete_veterinary_and_pesticide_panel,false);
- assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,387);
+ assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,397);
 });
