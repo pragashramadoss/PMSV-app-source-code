@@ -8,9 +8,9 @@ const catalogue=read("fssai-product-helper-preview-01/data/standard-search-index
 const chapter=read("fssai-product-helper-preview-01/data/rules/chapter-2-5-meat-eggs-v1.json");
 const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
 const byId=new Map(catalogue.map(p=>[p.id,p]));
-test("All 136 current identities have exactly one of the three separately-audited source scope reviews",()=>{
- assert.equal(manifest.pending,136);assert.equal(manifest.records.length,136);
- assert.equal(manifest.verified_evidence_added,128);assert.equal(manifest.full_compliance_achieved,0);
+test("All 126 current identities have exactly one of the three separately-audited source scope reviews",()=>{
+ assert.equal(manifest.pending,126);assert.equal(manifest.records.length,126);
+ assert.equal(manifest.verified_evidence_added,138);assert.equal(manifest.full_compliance_achieved,0);
  assert.equal(manifest.last_unresolved_families_source_scope_review_summary_2026_10_10.reviewed,17);
  const groups={chapter_2_3:0,previous_81:0,final_17:0};
  for(const row of manifest.records){
@@ -25,24 +25,27 @@ test("All 136 current identities have exactly one of the three separately-audite
   assert.equal(row.unconditional_compliance_pass,false);
   assert.equal(row.auto_apply_numeric_limit,false);
  }
- assert.deepEqual(groups,{chapter_2_3:48,previous_81:74,final_17:14});
+ assert.deepEqual(groups,{chapter_2_3:43,previous_81:70,final_17:13});
 });
-test("The standalone machine-readable source-matrix reconciliation regenerates 136 exact identities without compliance results",()=>{
+test("The standalone machine-readable source-matrix reconciliation regenerates 126 exact identities without compliance results",()=>{
  cp.execFileSync(process.execPath,["scripts/audit-all-161-pending-source-matrix-gates.cjs"],{cwd:root,stdio:"pipe"});
- const doc=read("audit-output/fssai-136-detailed-source-applicability-reconciliation.json");
- assert.equal(doc.products_total,533);assert.equal(doc.partial_exact_evidence,397);
- assert.equal(doc.pending_exact_source_evidence,136);
- assert.equal(doc.checkpoints.length,136);
- assert.deepEqual(doc.disposition_buckets,{chapter_2_3:48,previous_81:74,final_17:14});
- assert.equal(doc.conditional_source_references_not_applied,3);
+ const doc=read("audit-output/fssai-126-detailed-source-applicability-reconciliation.json");
+ assert.equal(doc.products_total,533);assert.equal(doc.partial_exact_evidence,407);
+ assert.equal(doc.pending_exact_source_evidence,126);
+ assert.equal(doc.checkpoints.length,126);
+ assert.deepEqual(doc.disposition_buckets,{chapter_2_3:43,previous_81:70,final_17:13});
+ assert.equal(doc.conditional_source_references_not_applied,2);
  assert.equal(doc.exact_regulatory_route_mismatches_requiring_resolution,1);
  assert.equal(doc.legal_compliance_passes_claimed,0);
  assert.ok(doc.checkpoints.every(p=>!p.applied_numeric_limit&&!p.product_compliance_pass&&!p.pesticide_mrl_panel_complete));
 });
-test("Dates and fresh/frozen rabbit meat show conditional pesticide source references only; no automatic product MRL",()=>{
- const ids=["04-04-1-dates","08-08-1-fresh-or-chilled-rabbit-meat","08-08-2-frozen-rabbit-meat"];
+test("Rabbit meat remains conditional; dates now has an exact dried-fruit source reference without automatic MRL PASS",()=>{
+ const ids=["08-08-1-fresh-or-chilled-rabbit-meat","08-08-2-frozen-rabbit-meat"];
  const refs=manifest.records.filter(x=>ids.includes(x.catalog_id));
- assert.equal(refs.length,3);
+ assert.equal(refs.length,2);
+ const dates=read("fssai-product-helper-preview-01/data/rules/fssai-next10-exact-source-candidate-2026-10-10.json").matched.find(x=>x.catalog_id==="04-04-1-dates");
+ assert.ok(dates&&dates.source_reference_limit===8&&dates.finished_product_numeric_pass===false);
+ assert.ok(!manifest.records.some(x=>x.catalog_id==="04-04-1-dates"));
  const a=html.indexOf("function pendingContaminantReviewNotice(p){"),b=html.indexOf("function renderProductContaminants(){",a);
  assert.ok(a>0&&b>a);
  const ctx=vm.createContext({contaminantsPendingReviewDb:manifest,esc:String});
@@ -88,7 +91,7 @@ test("Frozen and liquid egg standards show exact chemical quality maxima, not pe
  assert.match(view(byId.get("10-10-2-frozen-egg-products")),/Withhold numbers/);
  assert.match(view(byId.get("10-10-2-liquid-egg-products")),/10 mg\/kg/);
 });
-test("Current 136-item review loader uses immutable identity/count conservation, not historical 228 condition",()=>{
+test("Current 126-item review loader uses immutable identity/count conservation, not historical 228 condition",()=>{
  assert.ok(html.includes("data.verified_evidence_added+269+data.pending!==533"));
  assert.ok(html.includes("ids.size!==data.count"));
  assert.ok(!html.includes("data.count!==228"));
