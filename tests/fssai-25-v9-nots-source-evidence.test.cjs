@@ -63,3 +63,27 @@ assert.equal(before.count,26);
 assert.equal(before.records.filter(x=>pending.has(x.catalog_id)).length,24);
 assert.equal(before.records.filter(x=>matched.has(x.catalog_id)).length,2);
 console.log("PASS: 10 exact family articles + 15 conditional scope reviews; 146 unresolved / 387 partial / zero compliance passes");
+
+const vm=require("node:vm");
+const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
+const start=html.indexOf("function sourcePinnedBeverageConfectioneryNotsHtml(p){");
+const end=html.indexOf("function sourcePinnedCompositeOrSoupPartialHtml(p){",start);
+assert.ok(start>=0&&end>start,"Helper must contain new NOTS source-locked display");
+const ctx=vm.createContext({contaminantsDb:structuredClone(core),crossFamilyNOTSDb:structuredClone(proof),esc:x=>String(x)});
+vm.runInContext(html.slice(start,end),ctx);
+const display=id=>vm.runInContext("sourcePinnedBeverageConfectioneryNotsHtml("+JSON.stringify(index.get(id))+")",ctx);
+for(const row of proof.matched){
+  const shown=display(row.catalog_id);
+  assert.ok(shown.includes(row.contaminant),"Missing matched source parameter: "+row.catalog_id);
+  assert.ok(shown.includes("No compliance PASS"));
+  assert.ok(shown.includes("NOT APPLIED"));
+}
+for(const id of proof.excluded_inheritance)assert.equal(display(id),"","Inherited excluded NOTS identity "+id);
+const preserved=structuredClone(proof);
+ctx.crossFamilyNOTSDb.matched[0].limit=1000;
+assert.ok(display(proof.matched[0].catalog_id).includes("withheld"),"Modified source candidate must be blocked");
+ctx.crossFamilyNOTSDb=preserved;
+ctx.contaminantsDb.naturally_occurring_toxic_substances.saffrole.find(x=>x.article==="Non-alcoholic beverages").limit=1000;
+assert.ok(display(proof.matched[0].catalog_id).includes("withheld"),"Modified loaded official source table must be blocked");
+assert.ok(html.includes("contaminants-v9-unresolved-264-review-v1.json?v=20261010-nots-146"));
+console.log("PASS: Helper gates reject wrong identity, modified candidate and modified master NOTS source; no sample PASS");
