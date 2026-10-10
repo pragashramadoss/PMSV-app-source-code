@@ -58,8 +58,37 @@ test("No fluoride inheritance to carbonated water, vending water or other bevera
   assert.equal(prof.some(p=>p.rules?.some(r=>r.contaminant==="Fluoride")),false,"Duplicate fluoride in CTR profile");
  }
 });
-test("Helper UI uses direct-standard rules gated on selected catalogue product ID",()=>{
- assert.ok(helper.includes("direct_product_standard_contaminant_rules_v1||[]"));
- assert.ok(helper.includes(".filter(x=>x.catalog_id===id)"));
- assert.ok(helper.includes(".forEach(group=>(group.rules||[]).forEach(r=>pushRule({...r})))"));
+test("Helper UI source-pin checks both exact water clauses and withholds edited fluoride values",()=>{
+ const vm=require("node:vm");
+ const at=helper.indexOf("function sourcePinnedDirectStandardLimit(p,group,rule){");
+ const end=helper.indexOf("function productBaselineContaminantRules(p){",at);
+ assert.ok(at>=0&&end>at,"Source checking function required");
+ assert.ok(helper.includes("if(sourcePinnedDirectStandardLimit(p,group,r))pushRule({...r});"),"Direct limits must pass source check before display");
+ assert.ok(helper.includes("Numeric limit withheld for"),"Unverified direct limit must get a review notice");
+ const ctx={
+  standardSearchIndexDb:index,
+  chapterRuleDbs:[chapter],
+  ruleDbStandards:db=>db.standards||[],
+  normIngredient:x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim()
+ };
+ vm.runInNewContext(helper.slice(at,end),ctx);
+ for(const [id] of targets){
+  const product=index.products.find(x=>x.id===id);
+  const group=db.direct_product_standard_contaminant_rules_v1.find(x=>x.catalog_id===id);
+  const rule=group.rules[0];
+  const check=(p=product,g=group,r=rule)=>ctx.sourcePinnedDirectStandardLimit(p,g,r);
+  assert.equal(check(),true,id+" source-pinned fluoride should appear");
+  assert.equal(check(product,group,{...rule,limit:2}),false,"Tampered fluoride value must be withheld");
+  assert.equal(check(product,group,{...rule,unit:"mg/kg"}),false,"Tampered fluoride units must be withheld");
+  assert.equal(check(product,{...group,fssr:"2.10.6(1)"}),false,"Incorrect legal clause must be rejected");
+  assert.equal(check({...product,id:"carbonated-water"}),false,"Different product cannot inherit fluoride");
+ }
+ ctx.chapterRuleDbs=[];
+ const id=targets[0][0], product=index.products.find(x=>x.id===id);
+ const group=db.direct_product_standard_contaminant_rules_v1.find(x=>x.catalog_id===id);
+ assert.equal(ctx.sourcePinnedDirectStandardLimit(product,group,group.rules[0]),false,"Missing source table must fail closed");
+ ctx.chapterRuleDbs=[{...chapter,standards:chapter.standards.map(s=>
+  s.key!==product.fssr?s:{...s,physical_chemical:s.physical_chemical.map(v=>
+   v.parameter!=="Fluoride"?v:{...v,value:2})})}];
+ assert.equal(ctx.sourcePinnedDirectStandardLimit(product,group,group.rules[0]),false,"Modified official source table must fail closed");
 });
