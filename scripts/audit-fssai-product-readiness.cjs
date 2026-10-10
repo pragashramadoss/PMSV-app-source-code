@@ -662,9 +662,34 @@ function contaminantEvidenceForProduct(p){
      total_aflatoxins_auto_assigned:false,other_contaminant_coverage_verified:false,
      pesticide_mrl_auto_approval:false,complete_contaminant_compliance:false};
  })();
+ const bengalGramAflatoxinB1Evidence=(()=>{
+   const named=[
+     ['06-06-2-besan','Besan','2.4.4'],
+     ['06-06-2-roasted-bengal-gram-flour-chana-sattu','Roasted Bengal Gram Flour (Chana Sattu)','2.4.33']
+   ];
+   if(!named.some(([id,name,fssr])=>p.id===id&&p.name===name&&p.fssr===fssr))return null;
+   if(!/Version IX.*03\.02\.2026/.test(String(contaminants.source_version||'')))return null;
+   const {record,sourceUrls}=chapterRecord(p);
+   const identity=record.source_verified_identity;
+   if(record.key!==p.fssr || identity?.botanical_identity!=='Cicer arietinum'
+     ||identity.source_clause!==p.fssr || identity.full_compliance_verified!==false
+     ||identity.role!=='identity_basis_for_partial_crop_contaminant_article_not_total_compliance'
+     ||!official(identity.official_source_url) ||!sourceUrls.includes(identity.official_source_url))return null;
+   const group=contaminants.crop_contaminants?.aflatoxin_b1;
+   const articles=['Pulses','Food product containing any of the above mentioned food articles'];
+   if(group?.unit!=='µg/kg'||!articles.every(article=>
+      (group.rules||[]).filter(row=>normalizeArticle(row.article)===normalizeArticle(article)
+        &&Number(row.limit)===10&&String(row.unit||group.unit)==='µg/kg').length===1))return null;
+   return {catalog_id:p.id,product_name:p.name,fssr:p.fssr,source_standard_url:identity.official_source_url,
+     source_contaminants_url:version9Source,botanical_identity:identity.botanical_identity,
+     contaminant:'Aflatoxin B1',limit:10,unit:'µg/kg',applicable_articles:articles,
+     full_contaminant_compliance:false,automatic_pesticide_mrl_approval:false,
+     total_aflatoxins_auto_assigned:false,amendments_fully_reconciled:false};
+ })();
  const explicitKinds=[];
  if(peanutButterCompositeEvidence)explicitKinds.push("official_v9_exact_peanut_butter_composite_aflatoxins_partial");
  if(sharedCerealAflatoxinB1Evidence)explicitKinds.push("official_v9_harmonised_cereal_composite_b1_partial");
+ if(bengalGramAflatoxinB1Evidence)explicitKinds.push("official_v9_exact_bengal_gram_pulse_composite_b1_partial");
  if(profiles.length)explicitKinds.push("direct_catalog_profile");
  if(explicitAliases)explicitKinds.push("verified_metal_article_alias");
  if(direct)explicitKinds.push("exact_product_clause");
@@ -717,6 +742,7 @@ function contaminantEvidenceForProduct(p){
    status,
    exact_peanut_butter_composite_aflatoxins:peanutButterCompositeEvidence,
    exact_harmonised_cereal_aflatoxin_b1:sharedCerealAflatoxinB1Evidence,
+   exact_bengal_gram_pulse_composite_b1:bengalGramAflatoxinB1Evidence,
    conditional_milk_powder_aflatoxin_m1_review:milkPowderAflatoxinM1Review,
    exact_hemp_chapter_2_16_thc_cbd:hempEvidence,
    exact_alcoholic_beverage_toxic_substances:alcoholicEvidence?{
