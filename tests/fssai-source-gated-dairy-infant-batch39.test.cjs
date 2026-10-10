@@ -17,7 +17,7 @@ test("33 named cheese/fermented milk products have exact catalogue commodity ref
  assert.equal(proof.verified_product_identities.length,33);
  assert.equal(proof.cheese_count,27);assert.equal(proof.fermented_count,6);
  assert.equal(proof.auto_apply_cheese,false);assert.equal(proof.full_compliance_verified,false);
- assert.equal(pending.pending,157);assert.equal(pending.verified_evidence_added,107);
+ assert.equal(pending.pending,156);assert.equal(pending.verified_evidence_added,108);
  for(const r of proof.verified_product_identities){
   const p=idx.find(x=>x.id===r.catalog_id);assert.ok(p,r.catalog_id);
   const result=milk(p);assert.ok(result,p.name);assert.equal(result.compliance_pass,false);
