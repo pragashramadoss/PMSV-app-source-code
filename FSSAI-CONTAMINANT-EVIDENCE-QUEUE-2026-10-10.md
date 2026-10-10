@@ -7,13 +7,13 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 297 |
-| No exact product-identity contaminant evidence established by current index | 236 |
+| Some exact product evidence, partial only | 298 |
+| No exact product-identity contaminant evidence established by current index | 235 |
 | Products with complete contaminant compliance independently established | 0 claimed |
-| Source-article applicability triage records annotated (NOT resolved) | 236 |
+| Original source-article applicability triage records (2026-10-10 baseline) | 236 |
 | Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 104 |
 
-Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The 236-item queue is **not** reduced by these candidates. On 10 October, a further source/identity check removed 42 misleading conditional article candidates across 38 products without falsely reducing the unresolved count. See `FSSAI-V9-CANDIDATE-SCOPE-CORRECTIONS-2026-10-10.md`.
+Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The original 236-item queue was **not** reduced by conditional candidates. A separate exact FSSR 2.2.9 crude-vegetable-oil lead mapping has since reduced the queue to 235. On 10 October, a further source/identity check removed 42 misleading conditional article candidates across 38 products without falsely reducing the unresolved count. See `FSSAI-V9-CANDIDATE-SCOPE-CORRECTIONS-2026-10-10.md`.
 
 ## Unresolved by standard family
 
@@ -29,7 +29,7 @@ Selected Version IX named-article candidates are documented in `fssai-product-he
 | 2.9 | 6 |
 | 2.11 | 5 |
 | 2.10 | 3 |
-| 2.2 | 2 |
+| 2.2 | 1 |
 | 3.3 | 1 |
 
 ## Exact unresolved identities
@@ -319,12 +319,11 @@ For each item: verify the precise finished-product identity, current official FS
 | Drinking Water (Purified) sold through vending machine | `purified-vending-water` | 2.10.9 |
 | Instant Tea in Solid Form | `instant-tea-solid` | 2.10.1(4) |
 
-### FSSR 2.2 (2)
+### FSSR 2.2 (1)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
 | Fat spread | `02-02-2-fat-spread` | 2.2.5(3) |
-| Solvent Extracted Crude Vegetable Oils (not for direct human consumption) | `100-100-solvent-extracted-crude-vegetable-oils-not-for-direct-human-consumption` | 2.2.9 |
 
 ### FSSR 3.3 (1)
 
@@ -364,3 +363,7 @@ For each item: verify the precise finished-product identity, current official FS
 - [Official FoSCoS standardized product finder](https://fcstraining.fssai.gov.in/standard-product)
 
 Version IX numeric limits remain subject to the future amendment dated 25 May 2026 and its 01 December 2026 commencement gate. This document does not override the runtime fail-closed limits or establish an unconditional compliance pass.
+
+## Newly verified partial evidence: FSSR 2.2.9 crude vegetable oils
+
+`100-100-solvent-extracted-crude-vegetable-oils-not-for-direct-human-consumption` moved to partial exact evidence on 10 October 2026. FSSAI Version IX §2.1.1 Lead: **Vegetable Oils, crude — 0.1 mg/kg**, excluding cocoa butter; FSSR 2.2.9 separately identifies the solvent-extracted crude vegetable oil class. **No Arsenic limit is automatically inherited**, because its official source-oil list is narrower. Other metals, pesticide MRLs, refining requirements and amendments still require assessment. This is not a compliance PASS. Official sources: https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf and https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats_oils%20and%20fat%20emulsions.pdf.

@@ -9427,7 +9427,23 @@ function productBaselineContaminantRules(p){
    }
  }
  
- // Guar Gum INS 412 (FSSR Chapter 3, 3.2.11(10)), official Version IX
+
+ // Exact FSSR 2.2.9 crude vegetable-oil identity (not the refined oil).
+ // Source-confirmed Lead article is broader than the separate Arsenic article.
+ const solventCrude=contaminantsDb?.chapter_2_2_solvent_crude_vegetable_oil_lead_v9;
+ if(solventCrude&&solventCrude.catalog_id===id&&solventCrude.product_name===p.name&&
+    solventCrude.fssr===p.fssr&&solventCrude.match_only_exact_crude_vegetable_oil_identity===true&&
+    solventCrude.exclude_cocoa_butter===true&&solventCrude.arsenic_automatic_application===false&&
+    solventCrude.full_product_compliance_verified===false&&
+    contaminantsDb.source_version===solventCrude.source_version){
+   const lead=exactMetalRule('Lead',solventCrude.official_article);
+   if(lead?.row_type==='exact'&&Number(lead.limit)===Number(solventCrude.limit)&&lead.unit===solventCrude.unit)
+      pushRule({contaminant:'Lead',...lead,
+        source_basis:'FSSAI CTR Version IX §2.1 · verified FSSR 2.2.9 crude vegetable oil identity',
+        condition:'Solvent-extracted crude vegetable oil under FSSR 2.2.9 excluding cocoa butter; refining is required before human consumption. Arsenic source-oil matching, pesticides, other contaminants and amendments remain unverified.'});
+ }
+ 
+  // Guar Gum INS 412 (FSSR Chapter 3, 3.2.11(10)), official Version IX
  // metal article spells "Gaur gum". This is an exact grade/identity alias,
  // NOT an Appendix A finished-food usage approval.
  const guar=contaminantsDb?.special_guar_gum_exact_metal_article_v9;
@@ -9755,7 +9771,7 @@ function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
 }
 async function loadContaminantsDb(){
  try{
-   const res=await fetch('./data/rules/contaminants-v9-core.json?v=432',{cache:'reload'});
+   const res=await fetch('./data/rules/contaminants-v9-core.json?v=433',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
  }catch(e){
@@ -9767,10 +9783,10 @@ async function loadContaminantsDb(){
    contaminantsFutureAmendmentDb=await future.json();
  }catch(e){contaminantsFutureAmendmentDb=null;}
  try{
-   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-scope4',{cache:'reload'});
+   const review=await fetch('./data/rules/contaminants-v9-unresolved-264-review-v1.json?v=20261010-crudeoil5',{cache:'reload'});
    if(!review.ok)throw new Error('HTTP '+review.status);
    const data=await review.json();
-   if(data.count!==236||!Array.isArray(data.records)||data.records.length!==236)throw new Error('Unresolved review count mismatch');
+   if(data.count!==235||!Array.isArray(data.records)||data.records.length!==235)throw new Error('Unresolved review count mismatch');
    contaminantsPendingReviewDb=data;
  }catch(e){contaminantsPendingReviewDb=null;}
  try{

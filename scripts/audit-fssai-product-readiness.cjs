@@ -372,6 +372,27 @@ for(const route of otherOil.verified_products){
  assert.ok(product&&product.name===route.product_name&&product.fssr===route.fssr&&route.identity_checked);
  assert.ok(!otherOil.product_exclusions.includes(route.catalog_id));
 }
+
+const crudeOilLead=contaminants.chapter_2_2_solvent_crude_vegetable_oil_lead_v9;
+assert.ok(crudeOilLead&&official(crudeOilLead.official_product_standard_url)&&official(crudeOilLead.official_contaminant_source_url));
+assert.equal(crudeOilLead.catalog_id,"100-100-solvent-extracted-crude-vegetable-oils-not-for-direct-human-consumption");
+assert.equal(crudeOilLead.product_name,"Solvent Extracted Crude Vegetable Oils (not for direct human consumption)");
+assert.equal(crudeOilLead.fssr,"2.2.9");
+assert.equal(crudeOilLead.match_only_exact_crude_vegetable_oil_identity,true);
+assert.equal(crudeOilLead.arsenic_automatic_application,false);
+assert.equal(crudeOilLead.exclude_cocoa_butter,true);
+assert.equal(crudeOilLead.full_product_compliance_verified,false);
+const crudeIdentity=index.products.find(x=>x.id===crudeOilLead.catalog_id);
+assert.ok(crudeIdentity&&crudeIdentity.name===crudeOilLead.product_name&&crudeIdentity.fssr===crudeOilLead.fssr);
+assert.equal((contaminants.metal_article_rules_v9.Lead||[]).filter(x=>
+ x.row_type==="exact"&&x.article===crudeOilLead.official_article&&x.limit===0.1&&x.unit==="mg/kg").length,1);
+assert.ok((contaminants.metal_article_rules_v9.Arsenic||[]).some(x=>
+ x.row_type==="exact"&&x.article.startsWith("Vegetable oils, crude")&&x.limit===0.1&&x.unit==="mg/kg"&&!x.article.includes("other oils")));
+const crudeStandard=chapterRecord(crudeIdentity).record;
+assert.equal(crudeStandard.key,"2.2.9");assert.equal(crudeStandard.name,crudeOilLead.product_name);
+assert.ok(/food grade hexane/i.test(crudeStandard.definition));
+assert.ok((crudeStandard.process_rules||[]).some(x=>/not for direct human consumption/i.test(x)));
+
 const guar=contaminants.special_guar_gum_exact_metal_article_v9;
 assert.ok(guar&&official(guar.official_source_url)&&official(guar.official_identity_source_url));
 assert.equal(guar.catalog_id,"99-99-1-gelling-agent-or-thickener-or-stabilizer-guar-gum");
@@ -636,6 +657,7 @@ function contaminantEvidenceForProduct(p){
  const freshEggEvidence=(freshEggs.catalog_id===p.id)?freshEggs:null;
  const bisulphiteEvidence=bisulphiteById.get(p.id)||null;
  const otherOilEvidence=otherOilById.get(p.id)||null;
+ const crudeOilEvidence=crudeOilLead.catalog_id===p.id&&crudeOilLead.product_name===p.name&&crudeOilLead.fssr===p.fssr?crudeOilLead:null;
  const guarEvidence=guar.catalog_id===p.id?guar:null;
  const hempEvidence=hempEvidenceById.get(p.id)||null;
  const peanutButterCompositeEvidence=p.id==='04-04-2-peanut-butter'?(()=>{
@@ -974,6 +996,7 @@ function contaminantEvidenceForProduct(p){
  if(freshEggEvidence)explicitKinds.push("verified_exact_fresh_eggs_pesticide_commodity_article_review_only");
  if(bisulphiteEvidence)explicitKinds.push("verified_exact_bisulphite_ins_additive_substance_metal_articles");
  if(otherOilEvidence)explicitKinds.push("verified_other_edible_vegetable_oils_lead_articles");
+ if(crudeOilEvidence)explicitKinds.push("verified_exact_fssr_2_2_9_crude_vegetable_oil_lead");
  if(guarEvidence)explicitKinds.push("verified_ins_412_guar_gum_official_gaur_gum_metal_alias");
  if(hempEvidence)explicitKinds.push("official_chapter_2_16_exact_thc_and_cross_cutting_cbd");
  // Only a conditional, user-confirmed subtype source: the combined FoSCoS
@@ -1025,6 +1048,11 @@ function contaminantEvidenceForProduct(p){
      source_url:guar.official_source_url,identity_ins:guar.identity_ins,
      official_article:guar.official_article_spelling,metals:guar.metals,
      full_compliance_verified:false,finished_food_use_approved:false}:null,
+   exact_solvent_crude_vegetable_oil_lead:crudeOilEvidence?{
+      source_url:crudeOilEvidence.official_contaminant_source_url,standard_source:crudeOilEvidence.official_product_standard_url,
+      official_article:crudeOilEvidence.official_article,limit:crudeOilEvidence.limit,unit:crudeOilEvidence.unit,
+      arsenic_auto_applied:false,refining_required:true,full_compliance_verified:false,
+      pesticide_mrls_auto_applied:false}:null,
    exact_other_edible_oil_lead:otherOilEvidence?{
      official_source:otherOil.official_source_url,article:otherOil.article_edible,
      limit:otherOil.limit,unit:otherOil.unit,full_compliance_verified:false,
@@ -1313,6 +1341,10 @@ const products = index.products.map(p => {
   if(contaminantEvidence.exact_guar_gum_additive_metal_article){
     tally("special_guar_gum_metal","exact_ins_412_official_alias");
     action.push("INS 412 Chapter 3 Guar Gum matches official Section 2.1 Gaur gum Arsenic/Lead article. Identity/purity evidence only; verify Appendix A and formulation use separately.");
+  }
+  if(contaminantEvidence.exact_solvent_crude_vegetable_oil_lead){
+    tally("chapter_2_2_crude_oil_lead","source_verified_partial_only");
+    action.push("FSSR 2.2.9 crude vegetable oil Lead 0.1 mg/kg source verified. Do not transfer to cocoa butter or automatically apply narrower Arsenic oil article. Verify other residues; refining required before consumption.");
   }
   if(contaminantEvidence.exact_other_edible_oil_lead){
     tally("chapter_2_2_other_oil_lead","exact_oil_grouped_source_partial");
