@@ -11,7 +11,7 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | No exact product-identity contaminant evidence established by current index | 237 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Source-article applicability triage records annotated (NOT resolved) | 237 |
-| Conditional official-source article references recorded (NOT automatically applied) | 111 |
+| Unresolved identities with conditional official-source article references recorded (NOT automatically applied) | 110 |
 
 Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The 237-item queue is **not** reduced by these candidates.
 
