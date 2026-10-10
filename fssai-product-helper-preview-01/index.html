@@ -5062,7 +5062,7 @@ function renderMasterComplianceSummary(){
    const packageRows=Array.isArray(contaminantsDb.product_package_conditional_tin_rules_v9)?contaminantsDb.product_package_conditional_tin_rules_v9.filter(x=>x.catalog_id===product.id):[];
    if(packageRows.length&&!selectedProductPackageTinRule(product))pending.push('package-format Tin qualifier');
    if(pending.length)rows.push(masterComplianceRow('Contaminants / residues','incomplete','Regulatory mapping still needs: '+pending.join(', ')+'.','contaminants'));
-   else rows.push(masterComplianceRow('Contaminants / residues','pass','Exact loaded contaminant rules are mapped for the selected product/qualifiers. Laboratory results and COAs remain QA evidence.','contaminants'));
+   else rows.push(masterComplianceRow('Contaminants / residues','evidence','Available product/qualifier contaminant rules have been mapped for review only. Completeness against current FSSAI amendments, remaining commodities, laboratory results and COAs has not been verified; no product-level compliance PASS is established.','contaminants'));
  }
 
  if(!product){
