@@ -9,12 +9,20 @@ test("Version IX nickel article preserves even repeated original FSSAI text with
  assert.equal(f.hydrogenated_interesterified_nickel.article,"All hydrogenated, partially hydrogenated, interesterified vegetable oils and fats such as vanaspati, table margarine, bakery and industrial margarine, bakery shortening, fat spread and partially hydrogenated margarine, bakery shortening, fat spread and partially hydrogenated soyabean oil");
  assert.equal(db.metal_article_rules_v9.Nickel.find(x=>x.article.startsWith("All hydrogenated, partially hydrogenated"))?.article,f.hydrogenated_interesterified_nickel.article);
 });
-test("eight exact hydrogenated/interesterified FSSR products get source-pinned Nickel 1.5 mg/kg",()=>{
- assert.equal(f.hydrogenated_interesterified_nickel.verified_identities.length,8);
+test("seven exact hydrogenated/interesterified FSSR products get source-pinned Nickel 1.5 mg/kg",()=>{
+ assert.equal(f.hydrogenated_interesterified_nickel.verified_identities.length,7);
  for(const x of f.hydrogenated_interesterified_nickel.verified_identities){
    const p=ps.find(z=>z.id===x.catalog_id);assert.ok(p);assert.equal(p.name,x.product_name);assert.equal(p.fssr,x.fssr);
    assert.deepEqual(run(p),[["Nickel",1.5,"mg/kg"]],p.name);
  }
+});
+test("Fat spread requires confirmation; Milk fat spread and Mixed fat spread must not inherit Nickel",()=>{
+ const p=ps.find(x=>x.id==="02-02-2-fat-spread");assert.ok(p);
+ assert.deepEqual(run(p),[],"Unconfirmed Fat spread must not receive automatic Nickel");
+ assert.equal(f.hydrogenated_interesterified_nickel.verified_identities.some(x=>x.catalog_id===p.id),false);
+ const pending=db.product_subtype_conditional_metal_rules_v9.filter(x=>x.catalog_id===p.id&&x.contaminant==="Nickel");
+ assert.equal(pending.length,1);assert.equal(pending[0].auto_apply,false);
+ assert.match(pending[0].condition,/milk-fat, or mixed-fat spreads/);
 });
 test("three exact edible named seed oils get source-pinned Lead and Arsenic 0.1 mg/kg",()=>{
  assert.equal(f.named_edible_seed_oils.verified_identities.length,3);
