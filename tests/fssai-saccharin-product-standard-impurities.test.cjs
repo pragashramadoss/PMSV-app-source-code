@@ -46,7 +46,7 @@ test("Both saccharin salts have distinct exact FSSAI Chapter 2.8 impurity eviden
   assert.equal(r.unit,"ppm");
   assert.equal(r.verification,"official_fssai_direct_product_standard");
   assert.match(r.source_basis,new RegExp(clause.replaceAll(".","\\.")));
-  assert.match(r.source_note,/not a Section 2\\.1 elemental-metal limit/i);
+  assert.match(r.source_note,/not a Section 2\.1 elemental-metal limit/i);
   assert.equal(gate(p,g,r),true);
  }
 });
