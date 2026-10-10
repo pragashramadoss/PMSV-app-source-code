@@ -7739,7 +7739,7 @@ function exactFruitVegCommodityReview(p){
 function productFruitVegCommodityMrlReviewHtml(p){
  const review=exactFruitVegCommodityReview(p);
  if(!review)return '';
- const driedFruitExact=sourcePinnedDriedFruitMalathion(p);
+ const driedFruitExact=(typeof sourcePinnedDriedFruitMalathion==='function')?sourcePinnedDriedFruitMalathion(p):null;
  const source=String(review.source_url||'');
  const official=/^https:\/\/(?:www\.)?fssai\.gov\.in\//i.test(source);
  const link=official?'<a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX PDF</a>':'';
