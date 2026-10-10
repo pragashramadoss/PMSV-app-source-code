@@ -7715,6 +7715,40 @@ function productMeatEggCommodityMrlReviewHtml(p){
 /* Version IX Malathion MRL has a separate exact 'Dried fruits' commodity row.
  * This is a source-checked finished dried-fruit identity reference only;
  * it cannot certify a product or transfer the fresh fruit 4 mg/kg row. */
+
+/* Fresh-fruit commodity source anchor only. FoSCoS fresh fruit treatments do
+ * not imply an approved pesticide panel; never substitute dried-fruit MRL. */
+function sourcePinnedFreshFruitCommodityEvidence(p){
+ const m=contaminantsDb?.chapter_special_fresh_fruits_pesticide_article_v9;
+ if(!p||!m||!standardSearchIndexDb||m.source_version!==contaminantsDb.source_version
+  ||m.official_source_url!==contaminantsDb.official_sources?.[0]?.url
+  ||m.article!=='Fruits'||m.source_pesticide!=='2,4-Dichlorophenoxy Acetic Acid'
+  ||m.source_mrl!=='2'||m.unit!=='mg/kg'
+  ||m.finished_food_mrl_auto_applied!==false||m.full_compliance_verified!==false)return null;
+ const q=standardSearchIndexDb.products.find(x=>x.id===p.id);
+ const z=(m.identity_rows||[]).find(x=>x.catalog_id===p.id&&x.product_name===p.name
+  &&x.fssr===p.fssr&&x.fcs===p.fcs&&x.identity_verified===true
+  &&x.source_commodity_article===m.article);
+ if(!q||!z||q.name!==p.name||q.fssr!==p.fssr||q.fcs!==p.fcs
+  ||!['04.1.1.1','04.1.1.2','04.1.1.3'].includes(p.fcs))return null;
+ const source=(contaminantsDb.residue_mrls?.pesticides||[]).filter(x=>x.name===m.source_pesticide)
+  .flatMap(x=>(x.rows||[]).filter(r=>r.food===m.article&&r.mrl===m.source_mrl&&r.unit===m.unit));
+ if(source.length!==1)return null;
+ return {article:m.article,pesticide:m.source_pesticide,source_mrl:m.source_mrl,unit:m.unit,
+  source:m.official_source_url,processing_qualification_required:z.processing_qualification_required,
+  auto_apply:false,full_compliance_verified:false};
+}
+function freshFruitCommodityEvidenceReviewHtml(p){
+ const x=sourcePinnedFreshFruitCommodityEvidence(p);
+ if(!x)return '';
+ return '<div class="notice"><b>Fresh-fruit identity: partial FSSAI pesticide commodity source match.</b> '+
+  esc(x.article)+' · '+esc(x.pesticide)+' '+esc(x.source_mrl)+' '+esc(x.unit)+
+  ' is a <b>reference source row, NOT an automatically applied finished-product MRL.</b> '+
+  'The actual fruit/crop, surface treatment, peeling/cutting, edible basis, residue definition, processing factor and operative amendment must be checked. '+
+  'Dried fruit Malathion 8 mg/kg cannot be inherited. No full contaminant or residue compliance PASS. '+
+  '<a href="'+esc(x.source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX</a>.</div>';
+}
+
 function sourcePinnedDriedFruitMalathion(p){
  const m=contaminantsDb?.chapter_2_3_dried_fruit_exact_malathion_v9;
  if(!m||!p||contaminantsDb.source_version!==m.source_version||m.commodity_article!=='Dried fruits'
@@ -9793,6 +9827,12 @@ function pendingContaminantReviewNotice(p){
  const needs=(record.review_requirements||[]).slice(0,5);
  const scope=record.version_ix_named_article_scope_review;
  const articleCandidates=(scope?.source_article_candidates_review_only||[]).filter(x=>x.finished_product_limit_applied===false);
+ const precision=record.precision_applicability_review_2026_10_10;
+ const precisionHtml=precision&&precision.catalog_id===p.id&&precision.product_name===p.name&&precision.fssr===p.fssr&&precision.source_candidates_are_review_only===true&&precision.numeric_limits_automatically_applied===false
+  ?'<details style="margin:10px 0"><summary><b>Exact product identity and matrix gates — NOT APPLIED</b></summary><ul style="margin:6px 0;padding-left:20px">'+
+   (precision.required_qualification_checks||[]).map(x=>'<li>'+esc(x)+'</li>').join('')+
+   '</ul><p>No product-specific numerical compliance pass is established. Confirm processing, packaging, source rows and all effective amendments independently.</p></details>'
+  :'<div class="notice">Precision applicability review unavailable or identity has changed. Withhold unverified numerical limits.</div>';
  const sourceReviewPanel=scope?
   '<details style="margin:10px 0"><summary><b>Version IX named-article review — NOT APPLIED as finished-product limits</b></summary>'
   +'<p>'+esc(scope.basis_note||'Exact product form and applicability are not established.')+'</p>'
@@ -9807,6 +9847,7 @@ function pendingContaminantReviewNotice(p){
    +'This identity has an outstanding official-source applicability review; it is not an exemption or an approved compliance result.'
    +'<ul style="margin:7px 0;padding-left:20px">'+needs.map(s=>'<li>'+esc(s)+'</li>').join('')+'</ul>'
    +sourceReviewPanel
+   +precisionHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
 }
 function renderProductContaminants(){
@@ -9870,6 +9911,7 @@ function renderProductContaminants(){
  const meatEggCommodityReview=productMeatEggCommodityMrlReviewHtml(p);
  const cerealCommodityReview=productCerealCommodityMrlReviewHtml(p);
  const fruitVegCommodityReview=productFruitVegCommodityMrlReviewHtml(p);
+ const freshFruitCommodityEvidence=freshFruitCommodityEvidenceReviewHtml(p);
  const namedMilkCommodityReview=namedMilkCommodityReviewHtml(p);
  const additionalMilkCommodityReview=additionalMilkCommodityReviewHtml(p);
  const rows=rules.map(x=>'<tr><td><b>'+esc(x.contaminant)+'</b></td><td><b>'+esc(String(x.limit))+' '+esc(x.unit)+'</b></td><td>'+esc(x.article)+(x.condition?'<br><small>'+esc(x.condition)+'</small>':'')+'</td><td>'+esc(x.source_basis)+'</td></tr>').join('');
@@ -9915,6 +9957,7 @@ function renderProductContaminants(){
    +meatEggCommodityReview
    +cerealCommodityReview
    +fruitVegCommodityReview
+   +freshFruitCommodityEvidence
    +namedMilkCommodityReview
    +additionalMilkCommodityReview
    +soybeanTotalHtml
