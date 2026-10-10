@@ -1221,6 +1221,7 @@ let standardSearchIndexDb=null;
 let appendixCoreDb=null;
 let contaminantsDb=null;
 let contaminantsPendingReviewDb=null;
+let fungiAgaricConditionalDb=null;
 let contaminantsFutureAmendmentDb=null;
 let appendixCDb=null;
 let microbiologyDb=null;
@@ -8275,6 +8276,26 @@ function productContaminantGateNotices(p){
  addLocked(contaminantsDb.chapter_2_7_locked_contaminant_routes_v9,r=>r.catalog_id===id);
  addLocked(contaminantsDb.chapter_2_5_locked_fresh_meat_routes_v9,r=>Array.isArray(r.catalog_ids)&&r.catalog_ids.includes(id));
 
+ // Edible fungi under 2.3.62 may be mushrooms or another identified
+ // species. FSSAI's 100 ppm Agaric Acid article applies to foods containing
+ // mushrooms, not automatically to every item labelled "fungi".
+ const fungiReview=(fungiAgaricConditionalDb?.records||[]).find(r=>r.catalog_id===id);
+ if(fungiReview && p.fssr==='2.3.62'&&p.name===fungiReview.product_name){
+   const source=fungiAgaricConditionalDb.source_contaminants;
+   const v9=String(contaminantsDb.source_version||'');
+   const official=(contaminantsDb.naturally_occurring_toxic_substances?.agaric_acid||[])
+     .filter(r=>r.article===source.exact_article
+       &&Number(r.limit)===source.limit&&String(r.unit)===source.unit);
+   const matched=/Version IX.*03\\.02\\.2026/.test(v9)&&official.length===1
+     &&source.exact_article==='Food containing mushrooms'&&source.limit===100&&source.unit==='ppm';
+   conditional.push({
+     scope:'Agaric acid — mushroom species verification',
+     requires_input:'Confirmed edible mushroom genus/species',
+     reason:matched
+       ?'FSSAI Version IX Section 2.2.1 specifies Agaric acid 100 ppm for food containing mushrooms. Chapter 2.3.62 covers broader edible fungi; confirm the actual mushroom species before applying this limit. This is a conditional reference only, not a regulatory PASS.'
+       :'Current official Agaric acid source row is not verified; the numeric rule is withheld until source table, species and units are reconciled.'
+   });
+ }
  const directMappings=(contaminantsDb.direct_product_standard_contaminant_rules_v1||[])
    .filter(group=>group.catalog_id===id);
  for(const group of directMappings){
@@ -9471,6 +9492,14 @@ async function loadContaminantsDb(){
    if(data.count!==259||!Array.isArray(data.records)||data.records.length!==259)throw new Error('Unresolved review count mismatch');
    contaminantsPendingReviewDb=data;
  }catch(e){contaminantsPendingReviewDb=null;}
+ try{
+   const result=await fetch('./data/rules/chapter-2-3-fungi-agaric-conditional-v1.json?v=1',{cache:'reload'});
+   if(!result.ok)throw new Error('HTTP '+result.status);
+   const data=await result.json();
+   if(!Array.isArray(data.records)||data.records.length!==10||data.auto_apply!==false)
+     throw new Error('Fungi identity evidence not complete');
+   fungiAgaricConditionalDb=data;
+ }catch(e){fungiAgaricConditionalDb=null;}
  renderProductContaminants();
  refreshStandardLookupAudit();
 }
