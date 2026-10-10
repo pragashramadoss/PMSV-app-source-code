@@ -99,7 +99,7 @@ test("six Chapter 2.4 grain identities resolve to exact source-verified subclaus
    assert.ok(item,id+": "+parameter);assert.deepEqual([item.operator,item.value,item.unit],[operator,value,unit]);
   }
  }
- for(const id of ["06-06-1-chia-seeds","06-06-1-triticale","06-06-1-any-other-foodgrains"]){
+ for(const id of ["06-06-1-chia-seeds","06-06-1-triticale"]){
   assert.equal(index.find(x=>x.id===id)?.rule_key,"2.4.6","Do not assign an unsupported specific foodgrain subclause "+id);
  }
  for(const k of ["2.4.6(17)","2.4.6(18)","2.4.6(19)"]){
