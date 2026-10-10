@@ -27,6 +27,22 @@ Twenty exact named **Chapter 2.1 dairy/condensed/powder/fat product identities**
 
 **Three exact fresh-fruit FoSCoS identities** (untreated fresh fruit, surface-treated fresh fruit and peeled/cut minimally processed fruit) were cross-checked to the official Section 2.3.1 **Fruits** pesticide commodity article; the **2,4-Dichlorophenoxy Acetic Acid 2 mg/kg** row is a **source integrity anchor only**, never an auto-applied MRL. Crop species, external treatment, edible basis, peeling/cutting, processing factors, analytical residue definition and operative amendments require separate evaluation. The **164 remaining exact identities** now carry individually stored identity-linked applicability checklists (matrix, processing, ingredient, packaging, and source family); **no numeric contaminant or pesticide limit is assigned by those checklists**. The checklists cover every remaining catalogue ID, including composite and special FoSCoS foods. Nothing in this register constitutes finished-product compliance clearance. Official source: https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf.
 
+## Next targeted Chapter 2.3 evidence review — 63 identities (10 October 2026)
+
+**Scope disposition only — 63 reviewed; 0 newly cleared by this review.** The catalogue remains 533 products, 369 with some exact source-backed evidence, and 164 awaiting exact product-specific evidence. All 63 still appear in the unresolved queue. No new numerical finished-product compliance limit was applied. Complete contaminant/pesticide coverage is **not** claimed.
+
+The individual records now carry **22 separate product-form review buckets**, with independently identified raw versus dried/frozen/canned/sterilised/fermented/pickled/paste/concentrated/sweetened/composite distinctions. Every record specifies a positive matrix/processing/pack qualification and a separate warning against the nearest misleading FSSAI named article. The existing Helper's pending-evidence notice displays these product-specific checks.
+
+**Eleven conditional metal source-row examples** are recorded for seven identity families: canned mushrooms (sterilised fungi), dehydrated onions versus non-onion dehydrated vegetables, canned fruit cocktail, canned mango/pineapple, canned tomatoes, mango chutney and pickled cucumber. They include the official article, contaminant, value, unit and requisite subtype; **all are REVIEW ONLY** until the operator establishes actual subtype, packaging, sample basis and the operative regulation. Previous independent conditional mappings are preserved.
+
+Critical negative controls: generic frozen fruit cannot inherit canned fruit cocktail Lead 1 mg/kg; coconut cream/milk/powder cannot inherit milk/secondary milk contaminant articles; cocoa beans cannot inherit cocoa powder's dry fat-free substance limit; composite soups, curried vegetables and mixed pickles cannot inherit ingredient-only or cucumber-specific articles. Historical 2026-10-10 164-product checklist records are preserved, and this new detail does not reduce the evidence queue merely by listing a numerical candidate.
+
+**Official sources checked:**
+- [FSSAI Contaminants/Toxins/Residues Version IX (03.02.2026), §2.1.1](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf), particularly PDF pp. 2–5 and 10–11.
+- [FSSAI Food Product Standards, Chapter 2.3 Version 2 (04.11.2024)](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf), §§2.3.1–2.3.4, 2.3.16–2.3.17, 2.3.21, 2.3.43 and 2.3.62. Current amendments and exact crop-specific pesticide MRLs require independent follow-up.
+
+**Evidence and tests:** `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` (field `chapter_2_3_targeted_evidence_review_2026_10_10`); `tests/fssai-chapter-2-3-unresolved-63-targeted-article-review.test.cjs`.
+
 ## Unresolved by standard family
 
 | FSSR prefix | Product identities requiring exact review |
