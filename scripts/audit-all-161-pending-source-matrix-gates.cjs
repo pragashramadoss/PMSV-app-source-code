@@ -104,7 +104,7 @@ for(const item of m.records){
 }
 assert.deepEqual(groups,{chapter_2_3:43,previous_81:70,final_17:13});
 assert.equal(Object.values(families).reduce((a,b)=>a+b,0),126);
-assert.equal(checkpoints.filter(x=>x.conditional_commodity_reference).length,3);
+assert.equal(checkpoints.filter(x=>x.conditional_commodity_reference).length,2);
 assert.equal(checkpoints.filter(x=>x.unresolved_exact_fssr_clash).length,1);
 const result={
  schema_version:"1.0",as_of:currentDate,products_total:533,
@@ -113,7 +113,7 @@ const result={
  disposition_buckets:groups,regulatory_families:families,
  source_qualifications_not_numeric_approvals:true,
  exact_regulatory_route_mismatches_requiring_resolution:1,
- conditional_source_references_not_applied:3,
+ conditional_source_references_not_applied:2,
  legal_compliance_passes_claimed:0,
  warning:"Scope review evidence does not establish safety, source amendment completeness or laboratory compliance. Official source and ingredient recipe must be confirmed before applying numerical limits.",
  checkpoints
