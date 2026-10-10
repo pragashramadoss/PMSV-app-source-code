@@ -8,7 +8,7 @@ const byName=n=>data.records.filter(p=>p.product_name===n);
 const candidate=p=>(p.version_ix_named_article_scope_review?.source_article_candidates_review_only||[]).map(x=>x.official_article);
 test("All 235 unresolved identities remain unapproved and catalogue-linked after candidate scope review",()=>{
  assert.equal(index.length,533);assert.equal(data.records.length,235);assert.equal(data.pending,235);
- assert.equal(new Set(data.records.map(x=>x.catalog_id)).size,236);
+ assert.equal(new Set(data.records.map(x=>x.catalog_id)).size,235);
  const ids=new Set(index.map(x=>x.id));
  for(const row of data.records){
   assert.ok(ids.has(row.catalog_id),row.catalog_id);
