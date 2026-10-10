@@ -8020,7 +8020,7 @@ function selectedMetalSubtypeRule(p){
  if((rule.product_name&&normIngredient(identity.name)!==normIngredient(rule.product_name))
     ||(rule.fssr&&identity.fssr!==rule.fssr)
     ||rule.auto_apply!==false
-    ||!/^Section 2\\.1\\b/i.test(String(rule.source_basis||'')))return null;
+    ||!/^Section 2\.1\b/i.test(String(rule.source_basis||'')))return null;
  const articleRows=(contaminantsDb.metal_article_rules_v9?.[rule.contaminant]||[]).filter(row=>
    normIngredient(row.article)===normIngredient(rule.article)
    &&Number(row.limit)===Number(rule.limit)
