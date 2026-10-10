@@ -7,8 +7,8 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 274 |
-| No exact product-identity contaminant evidence established by current index | 259 |
+| Some exact product evidence, partial only | 276 |
+| No exact product-identity contaminant evidence established by current index | 257 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 
 ## Unresolved by standard family
@@ -225,7 +225,7 @@ For each item: verify the precise finished-product identity, current official FS
 | Surface-treated fresh fruit | `04-04-1-surface-treated-fresh-fruit` | FoSCoS/special |
 | Untreated fresh fruit | `04-04-1-untreated-fresh-fruit` | FoSCoS/special |
 
-### FSSR 2.4 (38)
+### FSSR 2.4 (36)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -261,8 +261,6 @@ For each item: verify the precise finished-product identity, current official FS
 | Soy Protein Products | `06-06-8-soy-protein-products` | 2.4.20 |
 | Soybean Beverages and Related Products | `06-06-8-soybean-beverages-and-related-products` | 2.4.30 |
 | Soybean Curd and Related Products | `06-06-8-soybean-curd-and-related-products` | 2.4.30 |
-| Tempe | `06-06-8-tempe` | 2.4.26 |
-| Textured Soy Protein (Soy Bari or Soy Chunks or Soy Granules) | `06-06-8-textured-soy-protein-soy-bari-or-soy-chunks-or-soy-granules` | 2.4.27 |
 | Tofu | `06-06-8-tofu` | 2.4.30 |
 | Wafer Biscuit | `07-07-2-wafer-biscuit` | 2.4.15(1) |
 | Wheat Protein Products including Wheat Gluten | `06-06-2-wheat-protein-products-including-wheat-gluten` | 2.4.22 |
@@ -358,6 +356,8 @@ For each item: verify the precise finished-product identity, current official FS
 - **Oat Products — FSSR 2.4.12** and **Multigrain flour (atta) — FSSR 2.4.37:** Both exact standards require oat or wheat cereal material. FSSAI Section 2.2.1 sets **Aflatoxin B1 10 µg/kg** for the cereal-product and composite-food categories alike. The source-gated limit is therefore partial, not a whole-product PASS. **Total Aflatoxins is not assigned** because the source categories differ (15 versus 20 µg/kg), pending product subtype or composition evidence. All other contaminants and residues remain to be checked.
 
 - **Besan — 2.4.4** and **Roasted Bengal Gram Flour (Chana Sattu) — 2.4.33:** FSSAI Chapter 2.4 Version 4 (07 May 2025) confirms both standardized foods are based on Bengal gram (*Cicer arietinum*). Current Contaminants Version IX Section 2.2.1 specifies **Aflatoxin B1 10 µg/kg** for both Pulses and a food product containing the listed pulses. The two exact identity mappings supply partial evidence only; differing Total Aflatoxins categories, metal/residue requirements and other provisions are not cleared. Official Chapter source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
+
+- **Tempe — 2.4.26** and **Textured Soy Protein — 2.4.27:** The official Chapter 2.4 Version 4 (07 May 2025) identifies mandatory soybean or defatted soy flour/grits. Current Contaminants Version IX Section 2.2.1 specifies **Aflatoxin B1 10 µg/kg** in both the ready-to-eat oilseed article and the food-product-containing-listed-oilseed article. Source-gated partial toxin evidence only; Total Aflatoxins, heavy metals, pesticide residues, processing factors and other provisions are not cleared. Standard: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
 
 ## Official reference entry point
 
