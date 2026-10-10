@@ -8286,7 +8286,7 @@ function productContaminantGateNotices(p){
    const official=(contaminantsDb.naturally_occurring_toxic_substances?.agaric_acid||[])
      .filter(r=>r.article===source.exact_article
        &&Number(r.limit)===source.limit&&String(r.unit)===source.unit);
-   const matched=/Version IX.*03\\.02\\.2026/.test(v9)&&official.length===1
+   const matched=/Version IX.*03\.02\.2026/.test(v9)&&official.length===1
      &&source.exact_article==='Food containing mushrooms'&&source.limit===100&&source.unit==='ppm';
    conditional.push({
      scope:'Agaric acid — mushroom species verification',
