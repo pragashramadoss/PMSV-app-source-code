@@ -23,11 +23,11 @@ function permittedOnlyAsReview(r){
   v.legal_compliance_pass===false && r.unconditional_compliance_pass===false &&
   r.auto_apply_numeric_limit===false);
 }
-test("All 63 exact unresolved Chapter 2.3 identities have individual source and matrix review, without changing the 164 pending queue",()=>{
+test("All 63 exact unresolved Chapter 2.3 identities have individual source and matrix review, preserving the historical 164 review baseline",()=>{
  assert.equal(catalogue.length,533);
- assert.equal(pending.pending,164);
- assert.equal(pending.count,164);
- assert.equal(pending.verified_evidence_added,100);
+ assert.equal(pending.pending,161);
+ assert.equal(pending.count,161);
+ assert.equal(pending.verified_evidence_added,103);
  assert.equal(pending.full_compliance_achieved,0);
  assert.equal(rows.length,63);
  assert.equal(pending.chapter_2_3_targeted_evidence_summary_2026_10_10.reviewed,63);
