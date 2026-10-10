@@ -8507,6 +8507,22 @@ function sourcePinnedVersionIxProfileCropAndNotsRule(p,rule){
 
 function sourcePinnedVersionIxProfileMetalRule(p,rule){
  if(!p||!rule||!contaminantsDb)return false;
+ // A matching official numerical article alone does not authorize use for
+ // another finished product. Confirm the rule also belongs to a directly
+ // mapped product profile when one exists. This is separate from verifying
+ // the numerical value/unit against the official Version IX source table.
+ const numbered=/^section 2\.(?:1|2\.1)(?:\s|·|$)/i.test(String(rule.source_basis||''));
+ if(numbered){
+   const sameProfileRow=row=>normIngredient(row.contaminant)===normIngredient(rule.contaminant)
+     &&normIngredient(row.article)===normIngredient(rule.article)
+     &&Number(row.limit)===Number(rule.limit)
+     &&String(row.unit||'').trim().toLowerCase()===String(rule.unit||'').trim().toLowerCase()
+     &&String(row.source_basis||'')===String(rule.source_basis||'');
+   const explicitlyMapped=(contaminantsDb.profiles||[]).filter(group=>
+     Array.isArray(group.catalog_ids)&&group.catalog_ids.length
+     &&(group.rules||[]).some(sameProfileRow));
+   if(explicitlyMapped.length&&!explicitlyMapped.some(group=>group.catalog_ids.includes(p.id)))return false;
+ }
  if(/^section 2\.2\.1(?:\s|·|$)/i.test(String(rule.source_basis||'')))return sourcePinnedVersionIxProfileCropAndNotsRule(p,rule);
  if(!/^section 2\.1(?:\s|·|$)/i.test(String(rule.source_basis||'')))return true;
  const rows=contaminantsDb.metal_article_rules_v9?.[rule.contaminant];
