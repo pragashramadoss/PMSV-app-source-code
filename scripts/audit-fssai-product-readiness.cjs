@@ -916,10 +916,35 @@ function contaminantEvidenceForProduct(p){
       total_aflatoxins_auto_assigned:false,pesticide_mrl_auto_approved:false,
       complete_contaminant_compliance:false};
  })();
+ const exactBreakfastCerealB1Evidence=(()=>{
+   if(p.id!=='06-06-3-breakfast-cereal'||p.name!=='Breakfast Cereal'||p.fssr!=='2.4.35'
+      ||String(contaminants.source_version||'')!=='Version IX (03.02.2026)')return null;
+   const chapter=chapterRecord(p),standard=chapter.record;
+   const proof=standard.official_finished_cereal_identity_source_v1;
+   if(standard.key!=='2.4.35'||standard.name!=='Breakfast Cereal'
+      ||proof?.clause!==p.fssr||proof?.grain_basis_required!==true
+      ||proof?.exact_finished_product_identity!==true
+      ||proof?.complete_contaminant_coverage_verified!==false
+      ||proof?.source_version!=='Version 4 (07.05.2025)'
+      ||!official(proof?.official_source_url)
+      ||!chapter.sourceUrls.includes(proof.official_source_url)
+      ||!(standard.ingredient_rules||[]).some(r=>/Cereals\/pseudocereals\/grains taken together must appear as the first ingredient/i.test(r)))return null;
+   const g=contaminants.crop_contaminants?.aflatoxin_b1;
+   const articles=['Cereal and cereal products',
+     'Food product containing any of the above mentioned food articles'];
+   if(g?.unit!=='µg/kg'||!articles.every(article=>(g.rules||[]).filter(r=>
+      normalizeArticle(r.article)===normalizeArticle(article)
+      &&Number(r.limit)===10&&String(r.unit||g.unit)==='µg/kg').length===1))return null;
+   return {product_name:p.name,fssr:p.fssr,source_standard:proof.official_source_url,
+     source_contaminants:version9Source,contaminant:'Aflatoxin B1',limit:10,unit:'µg/kg',
+     source_articles:articles,total_aflatoxins_auto_assigned:false,
+     pesticide_mrl_auto_approved:false,complete_contaminant_compliance:false};
+ })();
  const explicitKinds=[];
  if(peanutButterCompositeEvidence)explicitKinds.push("official_v9_exact_peanut_butter_composite_aflatoxins_partial");
  if(sharedCerealAflatoxinB1Evidence)explicitKinds.push("official_v9_harmonised_cereal_composite_b1_partial");
  if(exactBreadB1Evidence)explicitKinds.push("official_v9_exact_bread_wheat_cereal_composite_b1_partial");
+ if(exactBreakfastCerealB1Evidence)explicitKinds.push("official_v9_exact_breakfast_cereal_composite_b1_partial");
  if(cerealMaltB1Evidence)explicitKinds.push("fssai_v9_exact_cereal_malt_b1_partial_evidence");
  if(exactYellowPeaPowderB1Evidence)explicitKinds.push("fssai_v9_exact_yellow_pea_powder_b1_partial_evidence");
  if(bengalGramAflatoxinB1Evidence)explicitKinds.push("official_v9_exact_bengal_gram_pulse_composite_b1_partial");
@@ -980,6 +1005,7 @@ function contaminantEvidenceForProduct(p){
    exact_peanut_butter_composite_aflatoxins:peanutButterCompositeEvidence,
    exact_harmonised_cereal_aflatoxin_b1:sharedCerealAflatoxinB1Evidence,
    exact_bread_cereal_composite_b1_partial:exactBreadB1Evidence,
+   exact_breakfast_cereal_composite_b1_partial:exactBreakfastCerealB1Evidence,
    exact_bengal_gram_pulse_composite_b1:bengalGramAflatoxinB1Evidence,
    exact_cereal_malt_b1_partial_evidence:cerealMaltB1Evidence,
    exact_yellow_pea_powder_b1:exactYellowPeaPowderB1Evidence,
