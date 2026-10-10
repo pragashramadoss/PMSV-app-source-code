@@ -46,7 +46,13 @@ test("61 remaining of the original 63 Chapter 2.3 identities have individual sou
   if(/frozen/i.test(p.name)&&!/fungi/i.test(p.name))assert.match(v.review_bucket,/frozen_/i);
   buckets[v.review_bucket]=(buckets[v.review_bucket]||0)+1;
  }
- assert.deepEqual(buckets,pending.chapter_2_3_targeted_evidence_summary_2026_10_10.groups);
+ const historic={...pending.chapter_2_3_targeted_evidence_summary_2026_10_10.groups};
+ // The original 63-product snapshot includes two products now promoted by
+ // source-gated exact article evidence; preserve the original audit numbers.
+ historic.fermented_bean_or_protein_derivative--;
+ historic.reconstituted_dry_soup--;
+ delete historic.reconstituted_dry_soup;
+ assert.deepEqual(buckets,historic);
  assert.ok(Object.keys(buckets).length>=20);
 });
 test("The 11 named metal source-row examples require an actual subtype and cannot be auto applied",()=>{
