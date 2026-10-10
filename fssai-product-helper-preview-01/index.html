@@ -8365,7 +8365,7 @@ function isVerifiedFermentedMilkProduct(p){
  return !!p&&String(p.fssr||'').trim()==='2.1.13';
 }
 function milkProductContaminantScope(p){
- return !!p&&isVerifiedFermentedMilkProduct(p)&&!!sourcePinnedNamedMilkProductMrl(p);
+ return !!p&&isVerifiedFermentedMilkProduct(p)&&typeof sourcePinnedNamedMilkProductMrl==='function'&&!!sourcePinnedNamedMilkProductMrl(p);
 }
 function genericOtherContaminantRulesForProduct(p){
  if(!p||!contaminantsDb)return [];
@@ -8866,7 +8866,7 @@ function productBaselineContaminantRules(p){
  const id=p.id||p.profile_id||'';
  if(!n&&!id)return [];
  const out=[];
- out.push(...sourcePinnedInfantFoodMetalRules(p));
+ if(typeof sourcePinnedInfantFoodMetalRules==='function')out.push(...sourcePinnedInfantFoodMetalRules(p));
 
  const pushRule=(rule)=>{if(rule)out.push(rule);};
  const exactMetalRule=(metal,article)=>{
