@@ -26,7 +26,14 @@ const expected=[
  ["Arsenic",0.01,"toxic_substances","Table 4"],
  ["Lead",0.01,"toxic_substances","Table 4"],
  ["Chromium",0.05,"toxic_substances","Table 4"],
- ["Nickel",0.02,"toxic_substances","Table 4"]
+ ["Nickel",0.02,"toxic_substances","Table 4"],
+ ["Barium",0.7,"physical_chemical","Table 3"],
+ ["Iron",0.1,"physical_chemical","Table 3"],
+ ["Manganese",0.1,"physical_chemical","Table 3"],
+ ["Zinc",5,"physical_chemical","Table 3"],
+ ["Silver",0.01,"physical_chemical","Table 3"],
+ ["Aluminium",0.03,"physical_chemical","Table 3"],
+ ["Antimony",0.005,"physical_chemical","Table 3"]
 ];
 const begin=html.indexOf("function sourcePinnedDirectStandardLimit(p,group,rule){");
 const end=html.indexOf("function sourcePinnedWaterPesticideEvidence(p){",begin);
@@ -40,7 +47,7 @@ const ctx={
 vm.runInNewContext(html.slice(begin,end),ctx);
 const check=ctx.sourcePinnedDirectStandardLimit;
 
-test("All eight water metal rows exactly match one FSSAI Chapter 2.10 Table 3 or 4 source value",()=>{
+test("All fifteen water metal rows exactly match one FSSAI Chapter 2.10 Table 3 or 4 source value",()=>{
  assert.equal(p.name,"Packaged Drinking Water (other than Mineral Water)");
  assert.equal(p.fssr,"2.10.8");assert.equal(p.rule_key,"2.10.8");
  assert.equal(group.fssr,p.fssr);assert.equal(group.product_name,p.name);
@@ -63,7 +70,7 @@ test("All eight water metal rows exactly match one FSSAI Chapter 2.10 Table 3 or
    assert.equal(sourceRows[0].unit,"mg/L");
    assert.equal(check(p,group,r),true,analyte+" source gate");
  }
- assert.equal(expected.length,8);
+ assert.equal(expected.length,15);
 });
 
 test("Every metal rule fails closed for changed value, unit, parameter, document or provenance",()=>{
