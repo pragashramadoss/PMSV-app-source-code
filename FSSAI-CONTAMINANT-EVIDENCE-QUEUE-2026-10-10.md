@@ -7,36 +7,40 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 305 |
-| No exact product-identity contaminant evidence established by current index | 228 |
+| Some exact product evidence, partial only | 344 |
+| No exact product-identity contaminant evidence established by current index | 189 |
 | Products with complete contaminant compliance independently established | 0 claimed |
 | Original source-article applicability triage records (2026-10-10 baseline) | 236 |
 | Unresolved identities with conditional official-source article references recorded after source-scope correction (NOT automatically applied) | 104 |
 
 Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The original 236-item queue was **not** reduced by conditional candidates. A separate exact FSSR 2.2.9 crude-vegetable-oil lead mapping reduced the queue to 235; subsequent three exact dried-fruit Malathion commodity source matches reduced it to 232; exact FoSCoS 05.2 confectionery hydrocyanic-acid source evidence for Lozenges and Soft Candy has now reduced it to 230. On 10 October, a further source/identity check removed 42 misleading conditional article candidates across 38 products without falsely reducing the unresolved count. See `FSSAI-V9-CANDIDATE-SCOPE-CORRECTIONS-2026-10-10.md`.
 
+## New exact commodity/source evidence — 39 identities (10 October 2026)
+
+The latest 533-product audit has added **27 named cheeses** (FSSR 2.1.17), **6 fermented-milk products** (FSSR 2.1.13) and **6 infant-food identities** (FoSCoS FCS 13.1/13.2) as **partial source-backed evidence, not full compliance**. For the named dairy identities, the official FSSAI Section 2.3.1 pesticide commodity article **Milk and Milk products** is source-pinned using the Acetamiprid **0.02 mg/kg** row. **No pesticide MRL is automatically assigned to processed cheese**: residue definition, fat basis, processing, other pesticide rows and operative amendments require review. Infant-food metals use independently checked Version IX **Arsenic 0.05 mg/kg** and **Cadmium 0.1 mg/kg** source rows; general infant-food lead **0.2 mg/kg** is withheld rather than overwriting the separate ready-to-use infant-formula **0.02 mg/kg** article. These 39 products remain unapproved for overall contaminant/MRL compliance. Official source: https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf.
+
 ## Unresolved by standard family
 
 | FSSR prefix | Product identities requiring exact review |
 |---|---:|
-| 2.1 | 67 |
 | 2.3 | 63 |
-| special | 45 |
+| special | 39 |
+| 2.1 | 34 |
 | 2.4 | 15 |
 | 2.8 | 11 |
 | 2.5 | 9 |
+| 2.11 | 5 |
 | 2.7 | 4 |
 | 2.9 | 4 |
-| 2.11 | 5 |
 | 2.10 | 3 |
 | 2.2 | 1 |
 | 3.3 | 1 |
 
 ## Exact unresolved identities
 
-For each item: verify the precise finished-product identity, current official FSSAI Contaminants, Toxins and Residues text and operative amendments, commodity/preparation/packaging scope, and ingredient-specific clauses separately. Numeric values must never be inferred from a similarly named product or a universal 'Foods not specified' row.
+For each remaining product, confirm exact finished form, ingredient composition, applicable source article, operative amendments, processing and packaging. An unresolved entry does not mean absence of limits.
 
-### FSSR 2.1 (67)
+### FSSR 2.1 (34)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -51,62 +55,35 @@ For each item: verify the precise finished-product identity, current official FS
 | Analogue in the dairy context | `02-02-3-analogue-in-the-dairy-context` | 2.1.1 |
 | Analogue in the dairy context | `02-02-4-analogue-in-the-dairy-context` | 2.1.1 |
 | Anhydrous milk fat | `02-02-1-anhydrous-milk-fat` | 2.1.8 |
-| Brie Cheese | `01-01-6-brie-cheese` | 2.1.17 |
 | Butter | `02-02-2-butter` | 2.1.9 |
 | Butter oil | `02-02-1-butter-oil` | 2.1.8 |
-| Buttermilk (plain) | `01-01-1-buttermilk-plain` | 2.1.13 |
-| Camembert Cheese | `01-01-6-camembert-cheese` | 2.1.17 |
-| Chakka | `01-01-2-chakka` | 2.1.13 |
-| Cheddar Cheese | `01-01-6-cheddar-cheese` | 2.1.17 |
 | Chhana and Paneer | `01-01-6-chhana-and-paneer` | 2.1.16 |
-| Cottage Cheese and Creamed Cottage Cheese | `01-01-6-cottage-cheese-and-creamed-cottage-cheese` | 2.1.17 |
-| Coulommiers Cheese | `01-01-6-coulommiers-cheese` | 2.1.17 |
 | Cow or Buffalo Colostrum and Colostrum Products | `100-100-cow-or-buffalo-colostrum-and-colostrum-products` | 2.1.23 |
 | Cream | `01-01-4-cream` | 2.1.7 |
-| Cream Cheese (Rahmfrischkase) | `01-01-6-cream-cheese-rahmfrischkase` | 2.1.17 |
-| Creamed whey cheese | `01-01-6-creamed-whey-cheese` | 2.1.17 |
 | Dairy Permeate Powders | `01-01-5-dairy-permeate-powders` | 2.1.24 |
 | Dairy Whitener | `01-01-5-dairy-whitener` | 2.1.11 |
-| Danbo Cheese | `01-01-6-danbo-cheese` | 2.1.17 |
-| Drinks based on fermented milk | `01-01-1-drinks-based-on-fermented-milk` | 2.1.13 |
-| Edam Cheese | `01-01-6-edam-cheese` | 2.1.17 |
 | Edible Casein Products | `01-01-5-edible-casein-products` | 2.1.18 |
 | Edible Lactose | `11-11-1-edible-lactose` | 2.1.20 |
-| Emmental or Emmentaler cheese | `01-01-6-emmental-or-emmentaler-cheese` | 2.1.17 |
 | Evaporated or Concentrated Milk | `01-01-3-evaporated-or-concentrated-milk` | 2.1.4 |
-| Extra Hard Grating Cheese | `01-01-6-extra-hard-grating-cheese` | 2.1.17 |
-| Fermented Milk | `01-01-2-fermented-milk` | 2.1.13 |
 | Fermented/cultured/sour cream | `01-01-4-fermented-cultured-sour-cream` | 2.1.7 |
-| Flavoured fermented milk | `01-01-1-flavoured-fermented-milk` | 2.1.13 |
 | Flavoured Milk | `01-01-1-flavoured-milk` | 2.1.3 |
 | Frozen Desserts or Confections with Added Vegetable Oil/ Fat or Vegetable Protein, or both | `01-01-7-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o` | 2.1.15 |
 | Frozen Desserts or Confections with Added Vegetable Oil/ Fat or Vegetable Protein, or both | `02-02-4-frozen-desserts-or-confections-with-added-vegetable-oil-fat-or-vegetable-protein-o` | 2.1.15 |
-| Gouda Cheese | `01-01-6-gouda-cheese` | 2.1.17 |
-| Havarti Cheese | `01-01-6-havarti-cheese` | 2.1.17 |
 | Ice Cream, Kulfi, Chocolate Ice Cream, Softy Ice-Cream, Milk Ice, Milk Lolly and Dried Ice Cream Mix | `01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-` | 2.1.14 |
 | Khoa | `01-01-3-khoa` | 2.1.6 |
 | Malai | `01-01-4-malai` | 2.1.7 |
 | Milk fat | `02-02-1-milk-fat` | 2.1.8 |
 | Milk Powders and Cream Powder | `01-01-5-milk-powders-and-cream-powder` | 2.1.10 |
 | Milk Protein Concentrate | `01-01-3-milk-protein-concentrate` | 2.1.21 |
-| Mould Ripened Cheese | `01-01-6-mould-ripened-cheese` | 2.1.17 |
-| Mozzarella Cheese | `01-01-6-mozzarella-cheese` | 2.1.17 |
-| Processed Cheese | `01-01-6-processed-cheese` | 2.1.17 |
-| Processed Cheese Spread | `01-01-6-processed-cheese-spread` | 2.1.17 |
-| Provolone cheese | `01-01-6-provolone-cheese` | 2.1.17 |
-| Ripened Cheese | `01-01-6-ripened-cheese` | 2.1.17 |
-| Saint Paulin cheese | `01-01-6-saint-paulin-cheese` | 2.1.17 |
-| Samsoe cheese | `01-01-6-samsoe-cheese` | 2.1.17 |
-| Semi-hard cheese in brine | `01-01-6-semi-hard-cheese-in-brine` | 2.1.17 |
-| Shrikhand | `01-01-7-shrikhand` | 2.1.13 |
-| Skimmed whey cheese | `01-01-6-skimmed-whey-cheese` | 2.1.17 |
-| Soft cheese in brine | `01-01-6-soft-cheese-in-brine` | 2.1.17 |
 | Sweetened Condensed Milk | `01-01-3-sweetened-condensed-milk` | 2.1.5 |
-| Tilsiter cheese | `01-01-6-tilsiter-cheese` | 2.1.17 |
-| Unripened Cheese including fresh cheese | `01-01-6-unripened-cheese-including-fresh-cheese` | 2.1.17 |
-| Whey Cheese | `01-01-6-whey-cheese` | 2.1.17 |
 | Whey Powder | `01-01-8-whey-powder` | 2.1.12 |
 | Whey Protein Concentrate | `01-01-8-whey-protein-concentrate` | 2.1.22 |
+
+### FSSR 2.2 (1)
+
+| Product | Catalogue identity | Existing FSSR route |
+|---|---|---|
+| Fat spread | `02-02-2-fat-spread` | 2.2.5(3) |
 
 ### FSSR 2.3 (63)
 
@@ -176,56 +153,6 @@ For each item: verify the precise finished-product identity, current official FS
 | Vegetable Pulp/Puree with Preservatives for Industrial Use only | `04-04-2-vegetable-pulp-puree-with-preservatives-for-industrial-use-only` | 2.3.16 |
 | WATER CHESTNUT FLOUR (SINGHARE KA ATTA) | `06-06-2-water-chestnut-flour-singhare-ka-atta` | 2.3.64 |
 
-### FSSR special (45)
-
-| Product | Catalogue identity | Existing FSSR route |
-|---|---|---|
-| 12.1 - Lajadi Kashaya (Parched Rice Tea) | `102-102-1-12-1-lajadi-kashaya-parched-rice-tea` | FoSCoS/special |
-| 13.1 - Krishara (Khichdi) | `102-102-1-13-1-krishara-khichdi` | FoSCoS/special |
-| 14.1 - Golaka Dugdha (Condensed Milk without Sugar) | `102-102-1-14-1-golaka-dugdha-condensed-milk-without-sugar` | FoSCoS/special |
-| 14.3 - Narikela Ksheerika (Milky Coconut Delight) | `102-102-1-14-3-narikela-ksheerika-milky-coconut-delight` | FoSCoS/special |
-| 14.4 - Yava Ksheera (Barley Milk) | `102-102-1-14-4-yava-ksheera-barley-milk` | FoSCoS/special |
-| 14.6 - Sugandhit Ksheera (Aroma infused milk) | `102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk` | FoSCoS/special |
-| 14.7 - Ksheerapaka (Mystic Milk Quartet) | `102-102-1-14-7-ksheerapaka-mystic-milk-quartet` | FoSCoS/special |
-| 15.1 - Kulmasha (Barley Savory Discs) | `102-102-1-15-1-kulmasha-barley-savory-discs` | FoSCoS/special |
-| Acidity Regulators L(+/-)tartaric Acid | `99-99-1-acidity-regulators-l-tartaric-acid` | FoSCoS/special |
-| Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations | `99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-` | FSS (FPS&FA) Regulations |
-| Additives VA-VF of Nutraceutical Regulations excluding those already standardised | `99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised` | FoSCoS/special |
-| Cereal based Sweets | `18-18-1-cereal-based-sweets` | FoSCoS/special |
-| Cereal or pulses flour/ Starch based snacks & savouries | `18-18-2-cereal-or-pulses-flour-starch-based-snacks-and-savouries` | FoSCoS/special |
-| Chhana based Sweets | `18-18-1-chhana-based-sweets` | FoSCoS/special |
-| Dried fruits/vegetables/nut based mouth fresheners | `05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners` | FoSCoS/special |
-| Dry Fruit and nuts based Sweets | `18-18-1-dry-fruit-and-nuts-based-sweets` | FoSCoS/special |
-| Edible Dried Seeds obtained from Fruits | `04-04-1-edible-dried-seeds-obtained-from-fruits` | FoSCoS/special |
-| Edible Dried Seeds obtained from Vegetables | `04-04-2-edible-dried-seeds-obtained-from-vegetables` | FoSCoS/special |
-| Fermented milk products based Indian Sweets | `18-18-1-fermented-milk-products-based-indian-sweets` | FoSCoS/special |
-| Follow-up Formula | `13-13-1-follow-up-formula` | FoSCoS/special |
-| Food for Infants based on traditional food ingredients | `traditional-infant-food` | FoSCoS/special |
-| Food for special medical purpose intended for infants | `13-13-1-food-for-special-medical-purpose-intended-for-infants` | FoSCoS/special |
-| Foods for Infants with Inborn Errors of Metabolism (IEM) | `13-13-1-foods-for-infants-with-inborn-errors-of-metabolism-iem` | FoSCoS/special |
-| Formulated supplements for children | `formulated-supplements-children` | FoSCoS/special |
-| Fruit and vegetable based snacks & savouries | `18-18-2-fruit-and-vegetable-based-snacks-and-savouries` | FoSCoS/special |
-| Fruit and Vegetables based Sweets | `18-18-1-fruit-and-vegetables-based-sweets` | FoSCoS/special |
-| Indian Confections | `18-18-1-indian-confections` | FoSCoS/special |
-| Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations | `99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica` | FoSCoS/special |
-| Khoa Based Sweets | `18-18-1-khoa-based-sweets` | FoSCoS/special |
-| Milk-cereal based complementary food | `13-13-2-milk-cereal-based-complementary-food` | FoSCoS/special |
-| Mixture/preparations/premix of flavouring substances | `99-99-3-mixture-preparations-premix-of-flavouring-substances` | FoSCoS/special |
-| Mixture/preparations/premix of food additives | `99-99-1-mixture-preparations-premix-of-food-additives` | Food Safety and Standards Regulations |
-| Mixtures/preparations/premix of functional ingredients | `99-99-7-mixtures-preparations-premix-of-functional-ingredients` | FoSCoS/special |
-| Other composite milk products based Indian Sweets | `18-18-1-other-composite-milk-products-based-indian-sweets` | FoSCoS/special |
-| Other traditional mouth fresheners not covered under 5.2.4.1 and 5.2.4.2 | `05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2` | FoSCoS/special |
-| Peeled or cut, minimally processed fruit | `04-04-1-peeled-or-cut-minimally-processed-fruit` | FoSCoS/special |
-| Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations | `99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc` | FoSCoS/special |
-| Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized | `11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th` | FSS (FPS&FA) Regulations |
-| Processed cereal based complementary food | `13-13-2-processed-cereal-based-complementary-food` | FoSCoS/special |
-| Pulses based Sweets | `18-18-1-pulses-based-sweets` | FoSCoS/special |
-| Sajji Khar | `99-99-1-sajji-khar` | FoSCoS/special |
-| Spice based mouth fresheners | `05-05-2-spice-based-mouth-fresheners` | FoSCoS/special |
-| Starch based Sweets | `18-18-1-starch-based-sweets` | FoSCoS/special |
-| Surface-treated fresh fruit | `04-04-1-surface-treated-fresh-fruit` | FoSCoS/special |
-| Untreated fresh fruit | `04-04-1-untreated-fresh-fruit` | FoSCoS/special |
-
 ### FSSR 2.4 (15)
 
 | Product | Catalogue identity | Existing FSSR route |
@@ -245,22 +172,6 @@ For each item: verify the precise finished-product identity, current official FS
 | Solvent Extracted Coconut Flour | `06-06-2-solvent-extracted-coconut-flour` | 2.4.13(4) |
 | Wafer Biscuit | `07-07-2-wafer-biscuit` | 2.4.15(1) |
 | Wheat Protein Products including Wheat Gluten | `06-06-2-wheat-protein-products-including-wheat-gluten` | 2.4.22 |
-
-### FSSR 2.8 (11)
-
-| Product | Catalogue identity | Existing FSSR route |
-|---|---|---|
-| Bura Sugar | `11-11-1-bura-sugar` | 2.8.1(4) |
-| Cane jaggery or cane gur | `11-11-1-cane-jaggery-or-cane-gur` | 2.8.4(2) |
-| Cube Sugar | `11-11-1-cube-sugar` | 2.8.1(5) |
-| Dried Glucose Syrup | `11-11-1-dried-glucose-syrup` | 2.8.7 |
-| Golden Syrup | `11-11-3-golden-syrup` | 2.8.6 |
-| Gur or Jaggery | `11-11-1-gur-or-jaggery` | 2.8.4(1) |
-| Icing Sugar | `11-11-1-icing-sugar` | 2.8.1(6) |
-| Khandsari Sugar | `11-11-1-khandsari-sugar` | 2.8.1(3) |
-| Misri | `11-11-1-misri` | 2.8.2 |
-| Plantation White Sugar | `11-11-1-plantation-white-sugar` | 2.8.1(1) |
-| Royal Jelly | `100-100-royal-jelly` | 2.8.3(3) |
 
 ### FSSR 2.5 (9)
 
@@ -285,6 +196,22 @@ For each item: verify the precise finished-product identity, current official FS
 | Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake | `05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake` | 2.7.8 |
 | Dry Mixtures of Cocoa and Sugars | `05-05-1-dry-mixtures-of-cocoa-and-sugars` | 2.7.6 |
 
+### FSSR 2.8 (11)
+
+| Product | Catalogue identity | Existing FSSR route |
+|---|---|---|
+| Bura Sugar | `11-11-1-bura-sugar` | 2.8.1(4) |
+| Cane jaggery or cane gur | `11-11-1-cane-jaggery-or-cane-gur` | 2.8.4(2) |
+| Cube Sugar | `11-11-1-cube-sugar` | 2.8.1(5) |
+| Dried Glucose Syrup | `11-11-1-dried-glucose-syrup` | 2.8.7 |
+| Golden Syrup | `11-11-3-golden-syrup` | 2.8.6 |
+| Gur or Jaggery | `11-11-1-gur-or-jaggery` | 2.8.4(1) |
+| Icing Sugar | `11-11-1-icing-sugar` | 2.8.1(6) |
+| Khandsari Sugar | `11-11-1-khandsari-sugar` | 2.8.1(3) |
+| Misri | `11-11-1-misri` | 2.8.2 |
+| Plantation White Sugar | `11-11-1-plantation-white-sugar` | 2.8.1(1) |
+| Royal Jelly | `100-100-royal-jelly` | 2.8.3(3) |
+
 ### FSSR 2.9 (4)
 
 | Product | Catalogue identity | Existing FSSR route |
@@ -293,6 +220,14 @@ For each item: verify the precise finished-product identity, current official FS
 | Salt Substitutes | `12-12-1-salt-substitutes` | 2.9.30(6) |
 | Seasoning | `12-12-2-seasoning` | 2.9.31 |
 | SPICE OLEORESINS | `12-12-2-spice-oleoresins` | 2.9.32 |
+
+### FSSR 2.10 (3)
+
+| Product | Catalogue identity | Existing FSSR route |
+|---|---|---|
+| Coffee-Chicory Mixture | `coffee-chicory-mixture` | 2.10.4 |
+| Drinking Water (Purified) sold through vending machine | `purified-vending-water` | 2.10.9 |
+| Instant Tea in Solid Form | `instant-tea-solid` | 2.10.1(4) |
 
 ### FSSR 2.11 (5)
 
@@ -304,25 +239,56 @@ For each item: verify the precise finished-product identity, current official FS
 | Pan Masala | `100-100-pan-masala` | 2.11.5 |
 | SILVER LEAF (Chandi-ka-warq) | `100-100-silver-leaf-chandi-ka-warq` | 2.11.4 |
 
-### FSSR 2.10 (3)
-
-| Product | Catalogue identity | Existing FSSR route |
-|---|---|---|
-| Coffee-Chicory Mixture | `coffee-chicory-mixture` | 2.10.4 |
-| Drinking Water (Purified) sold through vending machine | `purified-vending-water` | 2.10.9 |
-| Instant Tea in Solid Form | `instant-tea-solid` | 2.10.1(4) |
-
-### FSSR 2.2 (1)
-
-| Product | Catalogue identity | Existing FSSR route |
-|---|---|---|
-| Fat spread | `02-02-2-fat-spread` | 2.2.5(3) |
-
 ### FSSR 3.3 (1)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
 | Trehalose | `99-99-1-trehalose` | 3.3.4 |
+
+### FSSR special (39)
+
+| Product | Catalogue identity | Existing FSSR route |
+|---|---|---|
+| 12.1 - Lajadi Kashaya (Parched Rice Tea) | `102-102-1-12-1-lajadi-kashaya-parched-rice-tea` | Special FoSCoS route |
+| 13.1 - Krishara (Khichdi) | `102-102-1-13-1-krishara-khichdi` | Special FoSCoS route |
+| 14.1 - Golaka Dugdha (Condensed Milk without Sugar) | `102-102-1-14-1-golaka-dugdha-condensed-milk-without-sugar` | Special FoSCoS route |
+| 14.3 - Narikela Ksheerika (Milky Coconut Delight) | `102-102-1-14-3-narikela-ksheerika-milky-coconut-delight` | Special FoSCoS route |
+| 14.4 - Yava Ksheera (Barley Milk) | `102-102-1-14-4-yava-ksheera-barley-milk` | Special FoSCoS route |
+| 14.6 - Sugandhit Ksheera (Aroma infused milk) | `102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk` | Special FoSCoS route |
+| 14.7 - Ksheerapaka (Mystic Milk Quartet) | `102-102-1-14-7-ksheerapaka-mystic-milk-quartet` | Special FoSCoS route |
+| 15.1 - Kulmasha (Barley Savory Discs) | `102-102-1-15-1-kulmasha-barley-savory-discs` | Special FoSCoS route |
+| Acidity Regulators L(+/-)tartaric Acid | `99-99-1-acidity-regulators-l-tartaric-acid` | Special FoSCoS route |
+| Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations | `99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-` | FSS (FPS&FA) Regulations |
+| Additives VA-VF of Nutraceutical Regulations excluding those already standardised | `99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised` | Special FoSCoS route |
+| Cereal based Sweets | `18-18-1-cereal-based-sweets` | Special FoSCoS route |
+| Cereal or pulses flour/ Starch based snacks & savouries | `18-18-2-cereal-or-pulses-flour-starch-based-snacks-and-savouries` | Special FoSCoS route |
+| Chhana based Sweets | `18-18-1-chhana-based-sweets` | Special FoSCoS route |
+| Dried fruits/vegetables/nut based mouth fresheners | `05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners` | Special FoSCoS route |
+| Dry Fruit and nuts based Sweets | `18-18-1-dry-fruit-and-nuts-based-sweets` | Special FoSCoS route |
+| Edible Dried Seeds obtained from Fruits | `04-04-1-edible-dried-seeds-obtained-from-fruits` | Special FoSCoS route |
+| Edible Dried Seeds obtained from Vegetables | `04-04-2-edible-dried-seeds-obtained-from-vegetables` | Special FoSCoS route |
+| Fermented milk products based Indian Sweets | `18-18-1-fermented-milk-products-based-indian-sweets` | Special FoSCoS route |
+| Formulated supplements for children | `formulated-supplements-children` | Special FoSCoS route |
+| Fruit and vegetable based snacks & savouries | `18-18-2-fruit-and-vegetable-based-snacks-and-savouries` | Special FoSCoS route |
+| Fruit and Vegetables based Sweets | `18-18-1-fruit-and-vegetables-based-sweets` | Special FoSCoS route |
+| Indian Confections | `18-18-1-indian-confections` | Special FoSCoS route |
+| Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations | `99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica` | Special FoSCoS route |
+| Khoa Based Sweets | `18-18-1-khoa-based-sweets` | Special FoSCoS route |
+| Mixture/preparations/premix of flavouring substances | `99-99-3-mixture-preparations-premix-of-flavouring-substances` | Special FoSCoS route |
+| Mixture/preparations/premix of food additives | `99-99-1-mixture-preparations-premix-of-food-additives` | Food Safety and Standards Regulations |
+| Mixtures/preparations/premix of functional ingredients | `99-99-7-mixtures-preparations-premix-of-functional-ingredients` | Special FoSCoS route |
+| Other composite milk products based Indian Sweets | `18-18-1-other-composite-milk-products-based-indian-sweets` | Special FoSCoS route |
+| Other traditional mouth fresheners not covered under 5.2.4.1 and 5.2.4.2 | `05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2` | Special FoSCoS route |
+| Peeled or cut, minimally processed fruit | `04-04-1-peeled-or-cut-minimally-processed-fruit` | Special FoSCoS route |
+| Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations | `99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc` | Special FoSCoS route |
+| Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized | `11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th` | FSS (FPS&FA) Regulations |
+| Pulses based Sweets | `18-18-1-pulses-based-sweets` | Special FoSCoS route |
+| Sajji Khar | `99-99-1-sajji-khar` | Special FoSCoS route |
+| Spice based mouth fresheners | `05-05-2-spice-based-mouth-fresheners` | Special FoSCoS route |
+| Starch based Sweets | `18-18-1-starch-based-sweets` | Special FoSCoS route |
+| Surface-treated fresh fruit | `04-04-1-surface-treated-fresh-fruit` | Special FoSCoS route |
+| Untreated fresh fruit | `04-04-1-untreated-fresh-fruit` | Special FoSCoS route |
+
 
 ## Verified partial evidence removed from the unresolved list
 
