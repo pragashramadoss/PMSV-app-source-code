@@ -7,13 +7,13 @@ Original baseline: GitHub Actions verification run [38032990695](https://github.
 | Measure | Value |
 |---|---:|
 | Local FoSCoS/FSSAI product identities | 533 |
-| Some exact product evidence, partial only | 294 |
-| No exact product-identity contaminant evidence established by current index | 239 |
+| Some exact product evidence, partial only | 295 |
+| No exact product-identity contaminant evidence established by current index | 238 |
 | Products with complete contaminant compliance independently established | 0 claimed |
-| Source-article applicability triage records annotated (NOT resolved) | 239 |
-| Conditional official-source article references recorded (NOT automatically applied) | 112 |
+| Source-article applicability triage records annotated (NOT resolved) | 238 |
+| Conditional official-source article references recorded (NOT automatically applied) | 111 |
 
-Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The 239-item queue is **not** reduced by these candidates.
+Selected Version IX named-article candidates are documented in `fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json` and displayed as review-only notes in the Helper. The 238-item queue is **not** reduced by these candidates.
 
 ## Unresolved by standard family
 
@@ -22,7 +22,7 @@ Selected Version IX named-article candidates are documented in `fssai-product-he
 | 2.1 | 67 |
 | 2.3 | 66 |
 | special | 45 |
-| 2.4 | 18 |
+| 2.4 | 17 |
 | 2.8 | 11 |
 | 2.5 | 9 |
 | 2.7 | 6 |
@@ -229,7 +229,7 @@ For each item: verify the precise finished-product identity, current official FS
 | Surface-treated fresh fruit | `04-04-1-surface-treated-fresh-fruit` | FoSCoS/special |
 | Untreated fresh fruit | `04-04-1-untreated-fresh-fruit` | FoSCoS/special |
 
-### FSSR 2.4 (18)
+### FSSR 2.4 (17)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -250,7 +250,6 @@ For each item: verify the precise finished-product identity, current official FS
 | Solvent Extracted Coconut Flour | `06-06-2-solvent-extracted-coconut-flour` | 2.4.13(4) |
 | Wafer Biscuit | `07-07-2-wafer-biscuit` | 2.4.15(1) |
 | Wheat Protein Products including Wheat Gluten | `06-06-2-wheat-protein-products-including-wheat-gluten` | 2.4.22 |
-| YELLOW PEA POWDER | `04-04-2-yellow-pea-powder` | 2.4.36 |
 
 ### FSSR 2.8 (11)
 
@@ -352,6 +351,8 @@ For each item: verify the precise finished-product identity, current official FS
 - **Fermented Soybean Curd — 2.4.39(1), and Lactobacillus-culture variant — 2.4.39:** Chapter 2.4 Version 4 explicitly requires an aqueous extract of soybean for both. The FSSAI Version IX B1 table confirms the same **10 µg/kg** for ready-to-eat oilseeds and food products containing listed oilseeds. The mapping is *partial*; other contaminant and residue requirements remain unresolved. Source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf .
 
 - **Five exact wheat/malt identities verified 10 October 2026:** Protein rich wheat flour (2.4.1(3)), protein rich refined wheat flour (2.4.2(3)), Malted Milk Food (2.4.11(1)), Malt Based Foods (2.4.11(2)) and Malt Extract (2.4.11(3)). Their exact FSSAI Chapter 2.4 definitions guarantee cereal flour, malted cereal and/or grain legumes. Version IX 2.2.1 specifies **Aflatoxin B1 10 µg/kg** under each of Cereal and cereal products, Pulses and Food products containing the listed articles. PMSV requires the exact clause and loaded official chapter record plus all three current source rows. Only this single **partial** B1 value was mapped; the **Total Aflatoxins** category is unresolved because the relevant source rows differ (15 versus 20 µg/kg). Other contaminants, metals, MRLs and amendments remain separately pending. Source: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf and official Version IX linked below.
+
+- **Yellow Pea Powder FSSR 2.4.36:** Verified official Chapter 2.4 identity is powder made only by grinding dehusked yellow pea (*Pisum sativum*). Version IX Section 2.2.1 lists **Aflatoxin B1 10 µg/kg** for both Pulses and the food-product-containing category. Only this shared B1 numeric value is mapped, subject to runtime source-record checks. Total Aflatoxins differs by category (15 versus 20 µg/kg); metal, pesticide and amendment assessments remain open. In particular, deferred December 2026 pulse-flour metal article expansions must not be treated as current rules. Sources: https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf and Version IX linked below.
 
 ## Official reference entry point
 
