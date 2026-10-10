@@ -10,13 +10,13 @@ const contaminant=read("fssai-product-helper-preview-01/data/rules/contaminants-
 const routes=read("fssai-product-helper-preview-01/data/rules/special-regulatory-routes-v1.json");
 const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
 const mp=new Map(master.products.map(x=>[x.id,x])),unresolved=new Set(pending.records.map(x=>x.catalog_id));
-test("Exactly ten distinct official product/commodity source matches reduce current pending to 136 with 533 identities retained",()=>{
+test("Exactly ten distinct official product/commodity source matches reduced its dated baseline to 136; live count 126 with 533 identities retained",()=>{
  assert.equal(master.products.length,533);
  assert.equal(data.rows.length,10);assert.equal(data.negative_controls.length,30);
  assert.equal(data.batch_reviewed,40);assert.equal(data.complete_legal_compliance_passes,0);
- assert.equal(pending.count,136);assert.equal(pending.records.length,136);
- assert.equal(pending.pending,136);assert.equal(pending.verified_evidence_added,128);
- assert.equal(pending.current_snapshot_summary_2026_10_10.exact_partial_evidence,397);
+ assert.equal(pending.count,126);assert.equal(pending.records.length,126);
+ assert.equal(pending.pending,126);assert.equal(pending.verified_evidence_added,138);
+ assert.equal(pending.current_snapshot_summary_2026_10_10.exact_partial_evidence,407);
  assert.equal(pending.full_compliance_achieved,0);
  const ids=new Set();
  for(const rec of data.rows){
@@ -83,7 +83,7 @@ test("Every exact article reference is pinned to loaded official Version IX row,
 });
 test("The 533-product audit counts all 10 source matches as partial, not contaminant or finished-food PASS",()=>{
  const audit=read("audit-output/fssai-product-readiness-audit.json");
- assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,397);
+ assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,407);
  for(const row of data.rows){
   const p=audit.products.find(x=>x.id===row.catalog_id);
   assert.ok(p,row.catalog_id);
