@@ -52,6 +52,30 @@ The current `gh-pages` audit source checks establish **three additional exact-na
 
 The **previous 164 unresolved records** are a dated historical review baseline. The new 81-identity detailed family review has no numeric application or claims of compliance by itself: special 36, dairy 14, cereals 13, sugars 11, other meat/eggs 7. The source-gated updates and remaining 161 live records are stored in `contaminants-v9-unresolved-264-review-v1.json`, with the supplements `spice-oleoresin-2-9-32-residual-solvents-evidence-v1.json` and `goat-muscle-veterinary-v9-exact-evidence-v1.json`.
 
+## Final unresolved-family review and source scope reconciliation (10 October 2026)
+
+**Latest status: 533 products; 372 with at least one exact source-backed partial contaminant/residue reference; 161 still pending. Zero complete compliance approvals. No change in unresolved count from this review.** The files now include an exclusive, detailed source/identity gate for *every one of the 161 pending products*: 63 Chapter 2.3 fruit/vegetable forms, 81 previously reviewed dairy/cereal/sugar/meat/special forms, and the final 17 beverage, chocolate/confectionery, spice/condiment, other food, fat spread and trehalose identities. Source reviews are NOT evidence that a finished product has passed every contaminant, pesticide, microbial or chemical test.
+
+### Exact Chapter 2.3 dried-dates source reference — conditional only
+
+FSSR **2.3.47(4)** defines Dates as dried `Phoenix dactylifera` fruit but allows treatment with sugar, glucose syrup, flour and vegetable oil. [Official Chapter 2.3, printed page 66](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf). Version IX §2.3.1, Malathion No. 114, lists **Dried fruits: 8 mg/kg**, with malathion plus malaoxon expressed as malathion. [Official Version IX PDF page 30](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf). The Dates identity remains pending because treatment, finished-matrix and processing conditions must be resolved. No 8 mg/kg finished-product compliance PASS is generated. **Date Paste** and **Dry fruits and Nuts** do not inherit it automatically.
+
+### Rabbit-meat product/tissue-source review — conditional only
+
+Chapter **2.5.2(6)** permits fresh/chilled/frozen rabbit meat as whole carcass, cuts **or edible offals**, not solely skeletal muscle. The FSSAI Version IX pesticide table has **Imidacloprid 0.1 mg/kg** under “Meat and Meat products,” but exact tissue/matrix applicability and the full applicable MRL/veterinary panel must be reconciled. Thus the fresh/chilled and frozen rabbit catalogue identities remain in the 161 queue; they do not inherit the Goat–Muscle veterinary limits. [FSSAI Chapter 2.5, printed page 14](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_5_Meat%20and%20Meat%20products%281%29.pdf); [FSSAI Version IX, PDF page 28](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf).
+
+### Separate egg-product chemical/preservative limits, not pesticide MRLs
+
+The Helper now displays separate, source-linked Chapter 2.5 requirements for **Frozen Egg Products (2.5.3(2))** and **Liquid Egg Products (2.5.3(4))**: extraneous matter at 100 mg/kg; beta-hydroxybutyric acid at 10 mg/kg; lactic acid at 1,000 mg/kg; succinic acid at 25 mg/kg. They remain **product-standard chemical quality/preservative limits**, not pesticide MRLs, and have no direct impact on the contaminant-evidence queue. The display validates product ID, FSSR, stored values and units before showing numbers.
+
+### FSSAI same-name standard mismatch requiring correction
+
+Catalogue identity `06-06-3-fruit-vegetable-cereal-flakes` currently links to Chapter **2.4.35 Breakfast Cereal**. However, the official same-name **Fruit/Vegetable, Cereal Flakes** standard is **2.3.20** (moisture ≤6%; acid-insoluble ash ≤0.5%; starch ≤25%). The Helper flags this as a **cross-chapter route discrepancy requiring confirmation**; it must not silently infer cereal-based contaminant clearance. Source: [Official Chapter 2.3, printed page 29](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf). A final FoSCoS category/recipe reconciliation is required before rerouting.
+
+### Machine-readable accountability
+
+Run `node scripts/audit-all-161-pending-source-matrix-gates.cjs` after the ordinary readiness/triage audit. It rejects missing, duplicated, cross-product or auto-applied source reviews, enforces **63 + 81 + 17 = 161**, checks three review-only commodity candidates and records the exact cereal-flakes discrepancy. Output: `audit-output/fssai-161-detailed-source-applicability-reconciliation.json` in GitHub Actions artifacts. All 161 records retain `no_compliance_pass` status.
+
 ## Unresolved by standard family
 
 | FSSR prefix | Product identities requiring exact review |
