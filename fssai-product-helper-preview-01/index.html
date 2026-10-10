@@ -8484,8 +8484,12 @@ function sourcePinnedSpiceAflatoxinRule(p,rule){
    &&Number.isFinite(Number(row.limit))&&Number(row.limit)===Number(rule.limit));
 }
 function sourcePinnedVersionIxProfileCropRule(p,rule){
- if(!rule||normIngredient(rule.article)!=='spices spice mix'
-    ||!['Total Aflatoxins','Aflatoxin B1'].includes(rule.contaminant))return true;
+ if(!rule||!['Total Aflatoxins','Aflatoxin B1'].includes(rule.contaminant))return true;
+ const mapped=(contaminantsDb?.spice_crop_contaminant_identity_mappings_v9||[])
+   .some(m=>m.catalog_id===p?.id);
+ const claimsSpiceArticle=normIngredient(rule.article)==='spices spice mix';
+ if(!mapped&&!claimsSpiceArticle)return true;
+ // A changed article string must NOT bypass verification for a mapped spice.
  return sourcePinnedSpiceAflatoxinRule(p,rule);
 }
 
@@ -9096,7 +9100,7 @@ function renderProductContaminants(){
      +'</tbody></table></div></div>'
    : '';
  const profileMsg=profile
-  ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+cropGatedExact.length+' verified product-specific rule'+(exact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
+  ? '<div class="notice oknote"><b>Exact FSSAI contaminant profile:</b> '+esc(profile.label)+' · '+cropGatedExact.length+' verified product-specific rule'+(cropGatedExact.length===1?'':'s')+' loaded. Universal “all foods” rules are added separately.</div>'
   : baseline.length
     ? '<div class="notice oknote"><b>Product-level FSSAI contaminant mapping:</b> '+baseline.length+' directly applicable rule'+(baseline.length===1?'':'s')+' resolved for '+esc(p.name)+' from exact product articles, verified product/article aliases, direct product-standard limits, verified commodity-family mappings or other structured FSSAI evidence. Exact pesticide-residue MRLs are shown separately when the commodity name matches exactly.</div>'
     : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
