@@ -6,13 +6,13 @@ const manifest=JSON.parse(read("fssai-product-helper-preview-01/data/rules/conta
 const html=read("fssai-product-helper-preview-01/index.html"),queue=read("FSSAI-CONTAMINANT-EVIDENCE-QUEUE-2026-10-10.md");
 const byId=new Map(index.map(x=>[x.id,x]));
 const queued=new Set([...queue.matchAll(/^\| [^|]+\| `([^`]+)` \|/gm)].map(m=>m[1]));
-test("All 237 pending identities have accurate individual FSSAI review records with no exemption or PASS",()=>{
- assert.equal(queued.size,237);
- assert.equal(manifest.count,237);
- assert.equal(manifest.records.length,237);
+test("All 236 pending identities have accurate individual FSSAI review records with no exemption or PASS",()=>{
+ assert.equal(queued.size,236);
+ assert.equal(manifest.count,236);
+ assert.equal(manifest.records.length,236);
  assert.deepEqual(new Set(manifest.records.map(x=>x.catalog_id)),queued);
  assert.equal(manifest.full_compliance_achieved,0);
- assert.equal(manifest.verified_evidence_added,27);
+ assert.equal(manifest.verified_evidence_added,28);
  for(const item of manifest.records){
   const product=byId.get(item.catalog_id);
   assert.ok(product,item.catalog_id);
@@ -70,13 +70,13 @@ test("Product Contaminants displays evidence gaps and cannot turn review notes i
 });
 
 test("Every pending identity now has source-linked and explicitly conditional Version IX named-article review",()=>{
- assert.equal(manifest.source_row_scope_reviewed,237);
- assert.equal(manifest.pending,237);
- assert.equal(manifest.conditional_source_article_candidate_records,110);
+ assert.equal(manifest.source_row_scope_reviewed,236);
+ assert.equal(manifest.pending,236);
+ assert.equal(manifest.conditional_source_article_candidate_records,109);
  assert.match(manifest.scope_article_reconciliation,/26 identities have independent exact partial numeric evidence/i);
  const candidates=manifest.records.filter(x=>
    x.version_ix_named_article_scope_review.source_article_candidates_review_only.length>0);
- assert.equal(candidates.length,110);
+ assert.equal(candidates.length,109);
  for(const row of manifest.records){
   const review=row.version_ix_named_article_scope_review;
   assert.ok(review,row.catalog_id);
@@ -107,7 +107,7 @@ test("Every pending identity now has source-linked and explicitly conditional Ve
  assert.deepEqual(dairyAnalogue.version_ix_named_article_scope_review.source_article_candidates_review_only,[]);
 });
 
-test("Published pending family summary reconciles exactly to all 237 catalogue IDs",()=>{
+test("Published pending family summary reconciles exactly to all 236 catalogue IDs",()=>{
  const head=queue.split("## Unresolved by standard family")[1].split("## Exact unresolved identities")[0];
  const table=new Map([...head.matchAll(/^\| (2\.\d+|3\.3|special) \| (\d+) \|$/gm)].map(x=>[x[1],Number(x[2])]));
  const counts={};
@@ -115,5 +115,5 @@ test("Published pending family summary reconciles exactly to all 237 catalogue I
  assert.equal(table.size,Object.keys(counts).length);
  for(const [prefix,count] of Object.entries(counts))
    assert.equal(table.get(prefix),count,"Mismatched named family "+prefix);
- assert.equal([...table.values()].reduce((a,b)=>a+b,0),237);
+ assert.equal([...table.values()].reduce((a,b)=>a+b,0),236);
 });
