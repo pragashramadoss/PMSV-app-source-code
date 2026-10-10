@@ -29,7 +29,7 @@ test("Dried mango exact FSSR 2.9 identities are classified as FoSCoS 12.2.1 spic
   assert.equal(matches[0].full_compliance_verified,false);
   assert.equal(pending.records.some(x=>x.catalog_id===id),false);
  }
- assert.equal(pending.pending,164);assert.equal(pending.verified_evidence_added,100);
+ assert.equal(pending.pending,161);assert.equal(pending.verified_evidence_added,103);
 });
 test("Two independent aflatoxin rows are source-verified and fail closed on altered numerical values or units",()=>{
  for(const [id] of records){
