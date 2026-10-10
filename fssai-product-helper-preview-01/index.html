@@ -8853,6 +8853,28 @@ function productBaselineContaminantRules(p){
    }
  }
 
+ // 5bc) Peanut Butter (FSSR 2.2.4(11)) contains roasted groundnut
+ // kernels by its legal product definition. The composite-food aflatoxin
+ // article is distinct from the unprocessed groundnut-kernel article.
+ // Require the exact current FSSAI Version IX source rows and fixed identity;
+ // this is PARTIAL toxin evidence, never a complete contaminants PASS.
+ if(id==='04-04-2-peanut-butter' && p.name==='Peanut Butter' && p.fssr==='2.2.4(11)'
+   && /Version IX.*03\.02\.2026/.test(String(contaminantsDb?.source_version||''))){
+   const compositeArticle='Food product containing any of the above mentioned food articles';
+   for(const [key,label,limit] of [['total_aflatoxins','Total Aflatoxins',20],['aflatoxin_b1','Aflatoxin B1',10]]){
+     const group=contaminantsDb?.crop_contaminants?.[key];
+     const matches=(group?.rules||[]).filter(row=>
+       normIngredient(row.article||'')===normIngredient(compositeArticle)
+       && Number(row.limit)===limit && String(row.unit||group.unit)==='µg/kg');
+     if(matches.length!==1||String(group.unit)!=='µg/kg')continue;
+     pushRule({
+       contaminant:label,article:matches[0].article,limit,unit:'µg/kg',
+       source_basis:'FSSAI CTR Version IX · Section 2.2.1 · product containing oilseed; Peanut Butter FSSR 2.2.4(11)',
+       condition:'Roasted groundnut kernels are a required ingredient of exact Peanut Butter. This source-pinned composite-food aflatoxin limit is not the limit for neat raw groundnut kernels, peanut oil, unspecified nut pastes, or other processed foods. Other metals, toxins, MRLs and relevant amendments still require independent assessment.'
+     });
+   }
+ }
+
  // 5c) Version IX naturally occurring toxic substance Saffrole: only exact
  // finished soup or sauce identities in the official Chapter 2.3 list.
  const saffrole=contaminantsDb?.chapter_2_3_exact_soup_sauce_saffrole_v9;
