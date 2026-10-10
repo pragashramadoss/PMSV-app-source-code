@@ -16,12 +16,12 @@ const byId=new Map(products.map(x=>[x.id,x]));
 const ids=[...four.matched.map(x=>x.catalog_id),coconut.catalog_id];
 test("Exactly five source-backed new partial identities moved from 161 unresolved to 156 historically, now 146, with 533 preserved and no compliance PASS",()=>{
  assert.equal(products.length,533);
- assert.equal(manifest.pending,136);assert.equal(manifest.count,136);
- assert.equal(manifest.verified_evidence_added,128);
- assert.equal(manifest.records.length,136);
+ assert.equal(manifest.pending,126);assert.equal(manifest.count,126);
+ assert.equal(manifest.verified_evidence_added,138);
+ assert.equal(manifest.records.length,126);
  assert.equal(manifest.full_compliance_achieved,0);
  assert.equal(new Set(ids).size,5);
- assert.equal(manifest.current_snapshot_summary_2026_10_10.exact_partial_evidence,397);
+ assert.equal(manifest.current_snapshot_summary_2026_10_10.exact_partial_evidence,407);
  for(const id of ids)assert.ok(!manifest.records.some(x=>x.catalog_id===id),"Partial source not reconciled: "+id);
 });
 test("Four exact FSSAI composite B1 and finished soup Saffrole articles source-locked by product/FCSR/category and version",()=>{
@@ -87,11 +87,11 @@ test("Helper display source integrity gates block stale identity, source values 
  assert.match(composite(byId.get(four.matched[0].catalog_id)),/withheld/i);
  context.coconutFlourHexaneDb.max=100;
  assert.match(flour(byId.get(coconut.catalog_id)),/withheld/i);
- assert.match(html,/contaminants-v9-unresolved-264-review-v1\.json\?v=20261010-batch40-136/);
+ assert.match(html,/contaminants-v9-unresolved-264-review-v1\.json\?v=20261010-full136-126/);
 });
 test("Generated product readiness audit identifies five partial exact source rows without issuing a finished food compliance PASS",()=>{
  const report=read("audit-output/fssai-product-readiness-audit.json");
- assert.equal(report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,397);
+ assert.equal(report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,407);
  for(const id of ids){
   const x=report.products.find(y=>y.id===id);
   assert.ok(x,id);
