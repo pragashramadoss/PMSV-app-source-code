@@ -9859,6 +9859,28 @@ function exactSupplementalResidueReviewHtml(p){
  }
  return '';
 }
+function exactEggStandardChemicalCriteriaHtml(p){
+ if(!p)return '';
+ const cfg={
+  '10-10-2-frozen-egg-products':['Frozen Egg Products','2.5.3(2)'],
+  '10-10-2-liquid-egg-products':['Liquid Egg Products','2.5.3(4)']
+ }[p.id];
+ if(!cfg)return '';
+ if(p.name!==cfg[0]||p.fssr!==cfg[1])return '<div class="notice">Egg product standard identity mismatch: chemical criteria withheld.</div>';
+ const db=chapterRuleDbs.find(x=>x?.chapter==='2.5');
+ const st=db?.standards?.find(x=>x.key===cfg[1]&&x.name===cfg[0]);
+ const expected=[['Extraneous matter',100,'mg/kg'],['Beta-hydroxybutyric acid',10,'mg/kg'],
+   ['Lactic acid',1000,'mg/kg'],['Succinic acid',25,'mg/kg']];
+ const matched=!!st&&Array.isArray(st.common_composition)&&expected.every(([name,max,unit])=>
+   st.common_composition.filter(x=>x.parameter===name&&x.operator==='<='&&Number(x.value)===max&&x.unit===unit).length===1);
+ if(!matched)return '<div class="notice"><b>FSSAI '+esc(cfg[1])+' egg chemical/preservative standard is unavailable or changed.</b> Withhold numbers until official-source verification.</div>';
+ const source='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_5_Meat%20and%20Meat%20products%281%29.pdf';
+ return '<div class="card"><div class="section-title"><h3>Official egg-product chemical quality and preservative limits</h3><span>Not pesticide MRLs or compliance PASS</span></div>'
+  +'<p>FSSR '+esc(cfg[1])+' for pasteurised '+esc(p.name)+'. These values are from the product-specific standard and are <b>not</b> FSSAI Version IX commodity pesticide MRLs or laboratory test results. Select the applicable white/yolk/whole subtype and check all other contaminants independently.</p>'
+  +'<div class="tablewrap"><table><thead><tr><th>Criterion</th><th>Maximum</th></tr></thead><tbody>'
+  +expected.map(([name,max,unit])=>'<tr><td>'+esc(name)+'</td><td>'+esc(String(max)+' '+unit)+'</td></tr>').join('')
+  +'</tbody></table></div><p><a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter 2.5 source</a></p></div>';
+}
 function pendingContaminantReviewNotice(p){
  if(!p||!contaminantsPendingReviewDb)return '';
  const record=(contaminantsPendingReviewDb.records||[]).find(r=>r.catalog_id===(p.id||p.profile_id));
@@ -9873,6 +9895,26 @@ function pendingContaminantReviewNotice(p){
      +'<p>'+esc(family.first_required_verification)+'</p><p><b>Do not inherit:</b> '+esc(family.specific_prohibited_inheritance)+'</p>'
      +'<small>Official source family: '+esc(family.official_source_article_family_to_verify)
      +' · <a href="'+esc(family.source_regulatory_standard_url)+'" target="_blank" rel="noopener noreferrer">FSSAI / FoSCoS source</a>. Other contaminants, residues and amendments remain open.</small></details>'
+   :'';
+ const tail=record.last_unresolved_families_source_scope_review_2026_10_10;
+ const tailHtml=tail&&tail.catalog_id===p.id&&tail.product_name===p.name&&tail.fssr===p.fssr
+     &&tail.auto_apply_numeric_limit===false&&tail.full_compliance_granted===false
+   ?'<details style="margin:9px 0"><summary><b>Further source-specific product safeguards — NOT APPLIED</b></summary>'
+    +'<p><b>Verify:</b> '+esc(tail.requires_check)+'</p><p><b>Excluded inference:</b> '+esc(tail.prohibited_lookalike_inheritance)+'</p>'
+    +'<small><a href="'+esc(tail.official_standard_source_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI standard</a>. Numeric limits not auto-applied; legal compliance not determined.</small></details>'
+   :'';
+ const candidate=record.specific_source_commodity_subtype_review_2026_10_10;
+ const candidateHtml=candidate&&candidate.review_only===true&&candidate.automatically_applied===false
+   ?'<details style="margin:9px 0"><summary><b>Official named commodity article — conditional, NOT APPLIED</b></summary>'
+     +'<p><b>'+esc(candidate.pesticide)+'</b> · '+esc(candidate.source_article)+' · '+esc(String(candidate.source_mrl))+' '+esc(candidate.unit)+' — <b>review only</b>.</p>'
+     +'<p>'+esc(candidate.condition)+'</p><small><a href="'+esc(candidate.official_ctr_url)+'" target="_blank" rel="noopener noreferrer">FSSAI Version IX</a></small></details>'
+   :'';
+ const discrepancy=record.cross_chapter_identical_product_name_discrepancy_2026_10_10;
+ const discrepancyHtml=discrepancy&&discrepancy.current_catalogue_fssr===p.fssr
+   ?'<div class="notice"><b>FSSAI named-standard routing discrepancy — review required.</b> Current catalogue: '+esc(discrepancy.current_catalogue_fssr)
+     +'; official same-name product standard: '+esc(discrepancy.source_exact_standard_fssr)
+     +'. '+esc(discrepancy.resolution_required)
+     +' <b>Do not infer cereal-based contaminant compliance before reconciliation.</b></div>'
    :'';
  const scope=record.version_ix_named_article_scope_review;
  const articleCandidates=(scope?.source_article_candidates_review_only||[]).filter(x=>x.finished_product_limit_applied===false);
@@ -9898,6 +9940,9 @@ function pendingContaminantReviewNotice(p){
    +sourceReviewPanel
    +precisionHtml
    +familyHtml
+   +tailHtml
+   +candidateHtml
+   +discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
 }
 function renderProductContaminants(){
@@ -9994,6 +10039,7 @@ function renderProductContaminants(){
  el.innerHTML=profileMsg
    +pendingContaminantReviewNotice(p)
    +exactSupplementalResidueReviewHtml(p)
+   +exactEggStandardChemicalCriteriaHtml(p)
    +(hempChapter216.relevant&&!hempChapter216.verified?'<div class="notice"><b>Hemp Chapter 2.16 source review required:</b> THC and CBD numeric limits are withheld because the exact product identity, Chapter 2.16 source table, or cross-cutting CBD clause did not match the official recorded values.</div>':'')
    +(p.id==='mineral-water'?'<div class="notice"><b>Natural mineral water — arsenic source reconciliation:</b> FSSAI Chapter 2.10, clause 2.10.7, lists arsenic at 0.05 mg/L, but the separate FSSAI Contaminants Regulations Version IX Section 2.1 lists <b>0.01 mg/L</b> for natural mineral water. PMSV uses the stricter 0.01 mg/L contaminant requirement in this table; the less stringent product-standard value must never be substituted as an elemental-arsenic compliance pass. Both official references require ongoing amendment review.</div>':'')
    +(Date.now()>=Date.UTC(2026,10,30,18,30)
