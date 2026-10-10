@@ -9,6 +9,8 @@ const live=load("fssai-product-helper-preview-01/data/rules/contaminants-v9-unre
 const master=load("fssai-product-helper-preview-01/data/standard-search-index-v1.json");
 const core=load("fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json");
 const before=load("fssai-product-helper-preview-01/data/rules/fssai-26-cross-family-condition-review-2026-10-10.json");
+const later=load("fssai-product-helper-preview-01/data/rules/fssai-next10-exact-source-candidate-2026-10-10.json");
+const laterIds=new Set(later.matched.map(x=>x.catalog_id));
 assert.equal(master.products.length,533);
 assert.equal(proof.matched.length,10);
 assert.equal(proof.conditional_review_only.length,15);
@@ -50,7 +52,14 @@ const conditional=new Set();
 for(const row of proof.conditional_review_only){
  const p=index.get(row.catalog_id);
  assert.ok(p&&p.name===row.product_name&&p.fssr===row.fssr&&p.fcs===row.fcs);
- assert.ok(pending.has(p.id),"Review-only product incorrectly promoted: "+p.id);
+ if(!pending.has(p.id)){
+  const matchedLater=later.matched.find(x=>x.catalog_id===p.id);
+  assert.ok(matchedLater&&matchedLater.article_group==="finished_frozen_confection_lead",
+    "Historical review-only product without current evidence: "+p.id);
+  assert.equal(matchedLater.finished_product_numeric_pass,false);
+  assert.equal(matchedLater.source_article_fully_applicable_to_all_forms_or_recipes,false);
+  assert.equal(matchedLater.current_amendments_fully_reconciled,false);
+}
  assert.equal(row.source_match_to_specific_finished_product_confirmed,false);
  assert.equal(row.compliance_pass,false);
  assert.equal(row.auto_apply_numeric_limit,false);
@@ -58,6 +67,8 @@ for(const row of proof.conditional_review_only){
  conditional.add(p.id);
 }
 assert.equal(conditional.size,15);
+assert.equal(proof.conditional_review_only.filter(x=>pending.has(x.catalog_id)).length,13);
+assert.equal(proof.conditional_review_only.filter(x=>laterIds.has(x.catalog_id)).length,2);
 for(const id of proof.excluded_inheritance)assert.ok(!matched.has(id));
 assert.equal(before.count,26);
 assert.equal(before.records.filter(x=>pending.has(x.catalog_id)).length,23);
