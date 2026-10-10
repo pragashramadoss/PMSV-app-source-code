@@ -58,3 +58,34 @@ test("Source version, identity or compliance-pass tampering cannot present unver
  ctx.contaminantsPendingReviewDb.records=ctx.contaminantsPendingReviewDb.records.filter(x=>x.catalog_id!==id);
  assert.equal(view(id),"");
 });
+
+test("Five Chapter 2.11 identities cannot inherit betelnut, cocoa powder or dextrose contaminants from optional/neighboring articles",()=>{
+ const j=review.chapter_2_11_all_five_exact_identity_negative_article_safeguards;
+ assert.equal(j.count,5);
+ assert.equal(j.source_specific_negative_scope_reviews.length,5);
+ assert.equal(j.numeric_source_limits_automatically_applied,0);
+ assert.equal(j.legal_product_compliance_approvals,0);
+ assert.ok(j.official_chapter_source.startsWith("https://fssai.gov.in/"));
+ const {view}=make();
+ const ids=["100-100-pan-masala","06-06-2-carob-powder","04-04-1-catechu-edible",
+  "99-99-7-dietary-fibre-dextrin-soluble-fibre","100-100-silver-leaf-chandi-ka-warq"];
+ assert.deepEqual(new Set(j.catalogue_ids),new Set(ids));
+ for(const id of ids){
+  assert.ok(pending.has(id));
+  const row=review.records.find(x=>x.catalog_id===id);
+  assert.ok(row);
+  const gate=row.official_chapter_2_11_negative_source_gate;
+  assert.ok(gate&&gate.regulation===row.fssr);
+  assert.equal(gate.source_numeric_sample_limit_auto_applied,false);
+  assert.equal(gate.full_chemical_contaminant_panel_verified,false);
+  assert.equal(gate.legal_compliance_pass,false);
+  assert.ok(row.additional_high_risk_noninheritance_checks.includes(gate.regulatory_identity_and_exclusion));
+  const output=view(id);
+  assert.ok(output.includes(gate.regulatory_identity_and_exclusion),id);
+  assert.ok(output.includes("NO PASS"),id);
+ }
+ const pan=review.records.find(x=>x.catalog_id==="100-100-pan-masala");
+ assert.match(pan.official_chapter_2_11_negative_source_gate.regulatory_identity_and_exclusion,/MAY contain betelnut/);
+ const carob=review.records.find(x=>x.catalog_id==="06-06-2-carob-powder");
+ assert.match(carob.official_chapter_2_11_negative_source_gate.prohibited_source_inheritance,/cocoa powder/);
+});
