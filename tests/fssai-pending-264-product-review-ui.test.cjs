@@ -6,13 +6,13 @@ const manifest=JSON.parse(read("fssai-product-helper-preview-01/data/rules/conta
 const html=read("fssai-product-helper-preview-01/index.html"),queue=read("FSSAI-CONTAMINANT-EVIDENCE-QUEUE-2026-10-10.md");
 const byId=new Map(index.map(x=>[x.id,x]));
 const queued=new Set([...queue.matchAll(/^\| [^|]+\| `([^`]+)` \|/gm)].map(m=>m[1]));
-test("All 238 pending identities have accurate individual FSSAI review records with no exemption or PASS",()=>{
- assert.equal(queued.size,238);
- assert.equal(manifest.count,238);
- assert.equal(manifest.records.length,238);
+test("All 237 pending identities have accurate individual FSSAI review records with no exemption or PASS",()=>{
+ assert.equal(queued.size,237);
+ assert.equal(manifest.count,237);
+ assert.equal(manifest.records.length,237);
  assert.deepEqual(new Set(manifest.records.map(x=>x.catalog_id)),queued);
  assert.equal(manifest.full_compliance_achieved,0);
- assert.equal(manifest.verified_evidence_added,26);
+ assert.equal(manifest.verified_evidence_added,27);
  for(const item of manifest.records){
   const product=byId.get(item.catalog_id);
   assert.ok(product,item.catalog_id);
