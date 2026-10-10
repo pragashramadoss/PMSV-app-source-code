@@ -63,7 +63,8 @@ const contaminantAliases = new Map((contaminants.explicit_metal_alias_mappings_v
 const contaminantDirectStandards = new Map((contaminants.direct_product_standard_contaminant_rules_v1 || []).map(row=>[row.catalog_id,row]));
 const spiceAflatoxinIds = new Set((contaminants.spice_crop_contaminant_identity_mappings_v9 || []).map(row=>row.catalog_id));
 const exactContaminantArticles = new Set(Object.values(contaminants.metal_article_rules_v9 || {})
-  .flatMap(rows=>(rows || []).map(row=>normalizeArticle(row.article))));
+  .flatMap(rows=>(rows || []).filter(row=>row.row_type==='exact')
+    .map(row=>normalizeArticle(row.article))));
 const familyContaminantProfiles = (contaminants.profiles || []).filter(p=>Array.isArray(p.match_fssr) && p.match_fssr.length);
 const chapter27Locks = (contaminants.chapter_2_7_locked_contaminant_routes_v9 || []);
 const lockById = new Map(chapter27Locks.map(x=>[x.catalog_id,x]));
