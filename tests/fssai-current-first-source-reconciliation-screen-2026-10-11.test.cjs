@@ -37,7 +37,7 @@ test("If the positive recipe evidence changes or fails loading, the historic gap
  const p=item(delta.records[0].catalog_id);
  const real=ctx.contaminantsDb;ctx.contaminantsDb=JSON.parse(JSON.stringify(core));
  ctx.contaminantsDb.crop_contaminants.total_aflatoxins.rules.find(r=>r.article==="Food product containing any of the above mentioned food articles").limit=200;
- assert.match(newHTML(p),/withheld/);assert.match(oldHTML(p),/First exact-source evidence needed/);
+ assert.match(newHTML(p),/withheld/);assert.match(oldHTML(p),/First-source research withheld/);
  ctx.contaminantsDb=real;
  const saved=ctx.pmsvAyurvedaCompositeB1Db;ctx.pmsvAyurvedaCompositeB1Db=null;
  assert.match(oldHTML(p),/First exact-source evidence needed/);
