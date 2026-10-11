@@ -11,7 +11,7 @@ const byId=new Map(catalogue.map(p=>[p.id,p]));
 const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
 const source=db.official_sources[0].url;
 const chapter="https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf";
-const rows=pending.records.filter(r=>r.regulatory_family==="2.3");
+const rows=pending.records.filter(r=>r.chapter_2_3_targeted_evidence_review_2026_10_10);
 function permittedOnlyAsReview(r){
  const v=r.chapter_2_3_targeted_evidence_review_2026_10_10;
  return !!(v && v.catalog_id===r.catalog_id && v.product_name===r.product_name &&

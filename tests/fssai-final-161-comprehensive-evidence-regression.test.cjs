@@ -46,7 +46,7 @@ test("The standalone machine-readable source-matrix reconciliation regenerates 1
  assert.ok(doc.checkpoints.every(p=>p.current_round_2026_10_11&&p.current_round_2026_10_11.source_qualifier_questions.length===5));
  assert.ok(doc.checkpoints.every(p=>p.current_round_2026_10_11.current_product_compliance_approved===false));
  assert.equal(doc.checkpoints.reduce((n,p)=>n+p.current_round_2026_10_11.named_numeric_source_article_references_review_only.length,0),15);
- assert.equal(doc.exact_regulatory_route_mismatches_requiring_resolution,1);
+ assert.equal(doc.exact_regulatory_route_mismatches_requiring_resolution,0);
  assert.equal(doc.legal_compliance_passes_claimed,0);
  assert.ok(doc.checkpoints.every(p=>!p.applied_numeric_limit&&!p.product_compliance_pass&&!p.pesticide_mrl_panel_complete));
 });
@@ -77,7 +77,7 @@ test("Rabbit meat remains conditional; dates now has an exact dried-fruit source
  }
  const cereal=byId.get("06-06-3-fruit-vegetable-cereal-flakes");
  assert.match(vm.runInContext("pendingContaminantReviewNotice("+JSON.stringify(cereal)+")",ctx),/2\.3\.20/);
- assert.match(vm.runInContext("pendingContaminantReviewNotice("+JSON.stringify(cereal)+")",ctx),/Do not infer cereal-based contaminant compliance/);
+ assert.match(vm.runInContext("pendingContaminantReviewNotice("+JSON.stringify(cereal)+")",ctx),/FSSAI 2.3.20 route corrected/);
 });
 test("Frozen and liquid egg standards show exact chemical quality maxima, not pesticide MRLs",()=>{
  const a=html.indexOf("function exactEggStandardChemicalCriteriaHtml(p){"),b=html.indexOf("function pendingContaminantReviewNotice(p){",a);

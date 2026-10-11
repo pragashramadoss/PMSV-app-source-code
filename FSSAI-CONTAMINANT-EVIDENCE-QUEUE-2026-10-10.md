@@ -68,9 +68,11 @@ Chapter **2.5.2(6)** permits fresh/chilled/frozen rabbit meat as whole carcass, 
 
 The Helper now displays separate, source-linked Chapter 2.5 requirements for **Frozen Egg Products (2.5.3(2))** and **Liquid Egg Products (2.5.3(4))**: extraneous matter at 100 mg/kg; beta-hydroxybutyric acid at 10 mg/kg; lactic acid at 1,000 mg/kg; succinic acid at 25 mg/kg. They remain **product-standard chemical quality/preservative limits**, not pesticide MRLs, and have no direct impact on the contaminant-evidence queue. The display validates product ID, FSSR, stored values and units before showing numbers.
 
-### FSSAI same-name standard mismatch requiring correction
+### FSSAI Chapter 2.3.20 route corrected (11 October 2026)
 
-Catalogue identity `06-06-3-fruit-vegetable-cereal-flakes` currently links to Chapter **2.4.35 Breakfast Cereal**. However, the official same-name **Fruit/Vegetable, Cereal Flakes** standard is **2.3.20** (moisture ≤6%; acid-insoluble ash ≤0.5%; starch ≤25%). The Helper flags this as a **cross-chapter route discrepancy requiring confirmation**; it must not silently infer cereal-based contaminant clearance. Source: [Official Chapter 2.3, printed page 29](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf). A final FoSCoS category/recipe reconciliation is required before rerouting.
+The catalogue identity `06-06-3-fruit-vegetable-cereal-flakes` is now matched to the exact officially named **Fruit/Vegetable, Cereal Flakes, FSSR 2.3.20**, rather than its former erroneous Chapter **2.4.35 Breakfast Cereal** mapping. The separate Breakfast Cereal product retains 2.4.35. The official standard's moisture ≤6%, acid-insoluble ash ≤0.5%, and starch ≤25% are **quality requirements**, not contaminant limits. FoSCoS category 06.3 requires separate Appendix A/B checks, and current metal, mycotoxin and pesticide applicability remains source-unresolved.
+
+Official Chapter 2.3: https://fssai.gov.in/upload/uploadfiles/files/4_%20Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf. The 407/126 evidence counts and zero completed contaminant compliance claims are unchanged.
 
 ### Machine-readable accountability
 
@@ -101,10 +103,10 @@ A fifth exact identity now has source-backed **partial** chemical-residue eviden
 
 | FSSR prefix | Product identities requiring exact review |
 |---|---:|
-| 2.3 | 43 |
+| 2.3 | 44 |
 | special | 28 |
 | 2.1 | 12 |
-| 2.4 | 12 |
+| 2.4 | 11 |
 | 2.8 | 11 |
 | 2.5 | 7 |
 | 2.11 | 5 |
@@ -141,10 +143,11 @@ All entries below have an individually stored precision-applicability gate; conf
 |---|---|---|
 | Fat spread | `02-02-2-fat-spread` | 2.2.5(3) |
 
-### FSSR 2.3 (43)
+### FSSR 2.3 (44)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
+| Fruit/Vegetable, Cereal Flakes | `06-06-3-fruit-vegetable-cereal-flakes` | 2.3.20 |
 | Candied, Crystallised And Glazed Fruit / Vegetable / Rhizome / Fruit Peel | `04-04-1-candied-crystallised-and-glazed-fruit-vegetable-rhizome-fruit-peel` | 2.3.26 |
 | Cocoa Beans | `04-04-2-cocoa-beans` | 2.3.54 |
 | Coconut cream (Non-Dairy) | `04-04-1-coconut-cream-non-dairy` | 2.3.52 |
@@ -189,7 +192,7 @@ All entries below have an individually stored precision-applicability gate; conf
 | Vegetable Pulp/Puree with Preservatives for Industrial Use only | `04-04-2-vegetable-pulp-puree-with-preservatives-for-industrial-use-only` | 2.3.16 |
 | WATER CHESTNUT FLOUR (SINGHARE KA ATTA) | `06-06-2-water-chestnut-flour-singhare-ka-atta` | 2.3.64 |
 
-### FSSR 2.4 (12)
+### FSSR 2.4 (11)
 
 | Product | Catalogue identity | Existing FSSR route |
 |---|---|---|
@@ -198,7 +201,6 @@ All entries below have an individually stored precision-applicability gate; conf
 | Biscuit | `07-07-2-biscuit` | 2.4.15(1) |
 | Chia Seeds | `06-06-1-chia-seeds` | 2.4.6 |
 | Custard powder | `06-06-2-custard-powder` | 2.4.9 |
-| Fruit/Vegetable, Cereal Flakes | `06-06-3-fruit-vegetable-cereal-flakes` | 2.4.35 |
 | Macaroni Products (Instant noodle) | `06-06-4-macaroni-products-instant-noodle` | 2.4.10 |
 | Macaroni Products (Pasta Products) | `06-06-4-macaroni-products-pasta-products` | 2.4.10 |
 | Papad | `06-06-7-papad` | 2.4.40 |
