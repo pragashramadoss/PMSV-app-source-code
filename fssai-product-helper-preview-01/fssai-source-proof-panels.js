@@ -174,3 +174,83 @@ sourcePinned121ResearchProofHtml=function(p){
  const base=pmsvOriginalSourcePinned121ResearchProofHtml(p);
  return base+pmsvCrossFormNonTransferHtml(p);
 };
+
+/* Final 28-product exact-source adjudication (2 independently source-proven
+ * rabbit veterinary-tissue matches; other 26 remain incomplete). The 415/118
+ * counts in preceding historical review datasets are previous checkpoints. */
+var pmsvFinalTwentyEightDb=null;
+var pmsvLoadBeforeFinalTwentyEight=pmsvLoadPositiveSourceProof;
+pmsvLoadPositiveSourceProof=async function(){
+ await pmsvLoadBeforeFinalTwentyEight();
+ try{
+  const r=await fetch('./data/rules/fssai-28-final-remainder-and-two-rabbit-veterinary-first-source-2026-10-11.json?v=20261011-final28',{cache:'reload'});
+  if(!r.ok)throw Error('Final 28-product review source unavailable');
+  const d=await r.json();
+  if(d.catalogue!==533||d.historic_first_source_partial!==415||d.historic_first_source_pending!==118||
+     d.prior_covered_recent_groups!==90||d.newly_reviewed!==28||
+     d.new_positive_first_source!==2||d.new_still_unresolved!==26||
+     d.updated_partial!==417||d.updated_pending!==116||
+     d.complete_regulatory_compliance_approvals!==0||d.official_sources_only!==true||
+     d.positive_records?.length!==2||d.pending_records?.length!==26||
+     d.source_version!==contaminantsDb?.source_version||
+     d.official_contaminants_source!==contaminantsDb?.official_sources?.[0]?.url||
+     new Set([...d.positive_records,...d.pending_records].map(x=>x.catalog_id)).size!==28)
+     throw Error('Current exact-source position out of sync');
+  pmsvFinalTwentyEightDb=d;
+ }catch(e){pmsvFinalTwentyEightDb=null;}
+};
+function pmsvFinalTwentyEightSourceValid(p){
+ const d=pmsvFinalTwentyEightDb,c=contaminantsDb;
+ if(!p||!d||!c||d.updated_partial!==417||d.updated_pending!==116||
+    d.new_positive_first_source!==2||d.new_still_unresolved!==26||
+    d.complete_regulatory_compliance_approvals!==0||
+    d.source_version!==c.source_version||d.official_contaminants_source!==c.official_sources?.[0]?.url)return false;
+ const r=[...d.positive_records,...d.pending_records].find(x=>x.catalog_id===p.id);
+ if(!r||r.product_name!==p.name||String(r.fssr||'')!==String(p.fssr||'')||
+    String(r.fcs||'')!==String(p.fcs||'')||
+    !sourcePriorityMetalDb?.unresolved_first_exact_catalog_ids?.includes(p.id))return false;
+ if(r.source_status==='PARTIAL_EXACT_VETERINARY_EDIBLE_TISSUE_ARTICLE'){
+  if(r.official_product_standard!==d.official_rabbit_source||r.official_product_clause!=='2.5.2(6)'||
+    r.veterinary_table_serial!==48||r.analyte!=='Xylazine'||r.limit!==0.01||
+    r.unit!=='mg/kg'||r.automatic_lot_compliance_pass!==false||
+    r.complete_source_panel!==false)return false;
+  const chapter=(Array.isArray(chapterRuleDbs)?chapterRuleDbs:[]).find(x=>x?.chapter==='2.5');
+  if(!chapter||chapter.official_sources?.[0]?.url!==r.official_product_standard||
+    !chapter.standards?.some(x=>x.key==='2.5.2(6)'&&/Rabbit/i.test(x.name)))return false;
+  const vet=c.antibiotic_and_pharmacological_substances?.veterinary_tolerance_limits;
+  const xylazine=vet?.rows?.find(x=>x.serial===48&&x.name==='Xylazine');
+  return !!xylazine&&vet.completeness==='complete'&&vet.auto_apply===false&&
+    xylazine.rows?.filter(x=>x.article===r.article&&Number(x.limit)===r.limit&&x.unit===r.unit).length===1;
+ }
+ return r.first_exact_contaminant_source_found===false&&r.numeric_limit_auto_applied===false&&
+  r.finished_lot_compliance_pass===false&&r.positive_proof_needed&&r.do_not_inherit;
+}
+function pmsvFinalTwentyEightEvidenceHtml(p){
+ if(!p||!pmsvFinalTwentyEightDb?.positive_records?.concat(pmsvFinalTwentyEightDb.pending_records||[]).some(x=>x.catalog_id===p.id))return '';
+ if(!pmsvFinalTwentyEightSourceValid(p))return '<div class="notice"><b>Final review source withheld.</b> Official article identity or source data failed verification; no limit or PASS assigned.</div>';
+ const d=pmsvFinalTwentyEightDb,positive=d.positive_records.find(x=>x.catalog_id===p.id);
+ const standard=positive?.official_product_standard||d.pending_records.find(x=>x.catalog_id===p.id).source_standard;
+ if(positive){
+  return '<details class="card" open style="margin-top:12px"><summary><b>Positive FSSAI first-source match — veterinary tissue</b></summary>'+
+  '<div class="notice"><b>PARTIAL SOURCE ONLY — NOT A COMPLIANCE PASS.</b> FSSR '+esc(positive.official_product_clause)+
+  ' establishes edible domestic rabbit meat (fresh/chilled/frozen). Version IX veterinary serial 48 names <b>'+esc(positive.analyte)+
+  '</b> '+esc(positive.limit)+' '+esc(positive.unit)+' for '+esc(positive.article)+
+  '. This named residue applies to edible rabbit tissue; the rabbit-specific Lead metal article remains unverified.</div>'+
+  '<p><b>Outstanding:</b> '+esc(positive.unverified)+'</p>'+
+  '<small><a href="'+esc(d.official_rabbit_source)+'" target="_blank" rel="noopener noreferrer">FSSAI Chapter 2.5</a> · '+
+  '<a href="'+esc(d.official_contaminants_source)+'" target="_blank" rel="noopener noreferrer">Version IX veterinary residue table</a></small></details>';
+ }
+ const r=d.pending_records.find(x=>x.catalog_id===p.id);
+ return '<details class="card" style="margin-top:12px"><summary><b>Current unresolved first-source evidence — '+esc(r.gate_type.replaceAll('_',' '))+
+  '</b></summary><div class="notice"><b>NO EXACT CONTAMINANT ARTICLE ASSIGNED.</b> '+esc(r.do_not_inherit)+'</div>'+
+  '<p><b>Positive proof needed:</b> '+esc(r.positive_proof_needed)+'</p>'+
+  '<small><a href="'+esc(standard)+'" target="_blank" rel="noopener noreferrer">FSSAI product-standard / FoSCoS source</a> · '+
+  '<a href="'+esc(d.official_contaminants_source)+'" target="_blank" rel="noopener noreferrer">Official Version IX</a></small></details>';
+}
+var pmsvBeforeFinalTwentyEightProofHtml=sourcePinned121ResearchProofHtml;
+sourcePinned121ResearchProofHtml=function(p){
+ if(pmsvFinalTwentyEightDb?.positive_records?.some(x=>x.catalog_id===p?.id)){
+  return pmsvFinalTwentyEightEvidenceHtml(p);
+ }
+ return pmsvBeforeFinalTwentyEightProofHtml(p)+pmsvFinalTwentyEightEvidenceHtml(p);
+};
