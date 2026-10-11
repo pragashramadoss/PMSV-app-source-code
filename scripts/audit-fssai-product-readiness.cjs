@@ -2356,8 +2356,12 @@ const products = index.products.map(p => {
      assert.equal(contaminantEvidence.status,"some_exact_product_evidence_not_full_coverage",
        "2.3.20 cereal flakes exact B1 source promotion absent");
      assert.ok(contaminantEvidence.exact_fruit_vegetable_cereal_flakes_composite_b1);
+   }else if(next2QualifiedById.has(p.id)){
+     assert.equal(contaminantEvidence.status,"some_exact_product_evidence_not_full_coverage",
+       "New source-specific dehydrated-vegetable Lead scope not linked: "+p.id);
+     assert.ok(contaminantEvidence.exact_finished_subtype_specific_v9_metal_partial);
    }else assert.notEqual(contaminantEvidence.status,"some_exact_product_evidence_not_full_coverage",
-     "Other 19 quality-only identities must remain pending contaminant exact evidence: "+p.id);
+     "Remaining 18 quality-only identities must stay pending contaminant first source: "+p.id);
    tally("chapter_fssr_2026_10_11_20_quality_only","exact_source_quality_not_ctr");
    action.push("Exact FSSR product-standard quality data is indexed with the source clause and variant/basis qualification. It is NOT a Version IX contaminant/pesticide first-source match or a compliance PASS.");
   }
