@@ -248,6 +248,10 @@ jobs:
         run: node --test tests/fssai-14-finished-matrix-source-gates-2026-10-11.test.cjs
       - name: Validate twenty fungi mushroom, fruit pulp, mango chutney and tomato product form gates
         run: node --test tests/fssai-20-fungi-fruit-tomato-branch-gates-2026-10-11.test.cjs
+      - name: Reconcile cross-family 34 product source-qualification controls
+        run: node scripts/audit-fssai-34-finished-form-conditionals-2026-10-11.cjs
+      - name: Verify 56 independently reviewed pending identities and their live fail-closed FSSAI scope panels
+        run: node --test tests/fssai-56-cross-form-nontransfer-live-panels-2026-10-11.test.cjs
       - name: Upload per-product compliance evidence audit
         if: always()
         uses: actions/upload-artifact@v4
