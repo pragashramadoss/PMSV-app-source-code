@@ -9429,14 +9429,15 @@
     {
       "catalog_id": "06-06-3-fruit-vegetable-cereal-flakes",
       "product_name": "Fruit/Vegetable, Cereal Flakes",
-      "fssr": "2.4.35",
-      "regulatory_family": "2.4",
+      "fssr": "2.3.20",
+      "regulatory_family": "2.3",
       "assessment_status": "exact_contaminant_evidence_not_yet_established",
       "catalogue_standard_route_verified": true,
       "auto_apply_numeric_limit": false,
       "unconditional_compliance_pass": false,
       "exemption_asserted": false,
       "review_requirements": [
+        "Exact finished product is Chapter 2.3.20 Fruit/Vegetable, Cereal Flakes; do NOT use Chapter 2.4.35 Breakfast Cereal cereal-first identity or microbiology rules.",
         "Exact raw grain, flour, pulse, tuber or composite identity",
         "Mycotoxin article, ingredients and processing",
         "Pesticide MRL and metal article scope",
@@ -9459,7 +9460,7 @@
             "limit": 15,
             "unit": "µg/kg",
             "source_pdf_page_one_based": 14,
-            "condition_for_applicability": "Only when exact commodity/product article classification supports this cereal category. Evaluate composite-food article independently.",
+            "condition_for_applicability": "DO NOT infer from cereal ingredients or FoSCoS code 06.3; verify finished FSSR 2.3.20 blended product and the current Version IX named article independently.",
             "source_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
             "finished_product_limit_applied": false
           },
@@ -9469,12 +9470,12 @@
             "limit": 10,
             "unit": "µg/kg",
             "source_pdf_page_one_based": 14,
-            "condition_for_applicability": "Only where exact product is within the named cereal/cereal-products article; do not infer from ingredients alone.",
+            "condition_for_applicability": "DO NOT infer from cereal ingredients or FoSCoS code 06.3; verify finished FSSR 2.3.20 blended product and the current Version IX named article independently.",
             "source_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
             "finished_product_limit_applied": false
           }
         ],
-        "basis_note": "Cereal ingredients do not automatically make biscuits, wheat protein, flour, breakfast cereal or snacks eligible for an unqualified numeric finished-food result.",
+        "basis_note": "This is FSSR 2.3.20 blended fruit/vegetable cereal flakes, NOT 2.4.35 Breakfast Cereal. Existing cereal and cereal-products mycotoxin articles remain candidate-only until finished matrix is checked.",
         "applies_numeric_limits_to_product": false,
         "full_contaminant_and_residue_review_complete": false,
         "current_amendments_fully_reconciled": false,
@@ -9555,6 +9556,19 @@
         ],
         "all_five_qualification_fields_completed": false,
         "no_numeric_ctr_article_promoted_from_new_fields": true
+      },
+      "official_standard_route_correction_2026_10_11": {
+        "old_wrong_fssr": "2.4.35",
+        "exact_named_fssr": "2.3.20",
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/4_%20Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "source_pdf_page_one_based": 28,
+        "official_named_product_verified": true,
+        "chapter_quality_numeric_limits_are_not_contaminants": true,
+        "provisional_fcs_for_additives_and_microbiology": "06.3",
+        "fcs_appendix_a_b_category_must_be_reconciled": true,
+        "finished_metal_or_mycotoxin_reference_confirmed": false,
+        "retained_exact_contaminant_evidence_unresolved": true,
+        "source_to_product_compliance_pass": false
       }
     },
     {

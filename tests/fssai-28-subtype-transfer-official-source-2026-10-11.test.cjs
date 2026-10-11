@@ -63,7 +63,7 @@ test("No review-only qualitative or product-standard criterion transfers to a nu
 });
 test("Officially different product standards and chemical ash bases never collapse into one profile",()=>{
  const flakes=rows.find(r=>r.catalog_id==="06-06-3-fruit-vegetable-cereal-flakes");
- assert.equal(flakes.fssr,"2.4.35");
+ assert.equal(flakes.fssr,"2.3.20");
  const f=flakes.exact_subtype_transfer_safeguard_2026_10_11;
  assert.match(f.verified_identity_or_standard,/2\.3\.20/);
  assert.match(f.prohibited_limit_transfer,/routing mismatch/);

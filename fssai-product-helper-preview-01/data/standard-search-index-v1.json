@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "generated_from": "product-master-v1.json",
-  "generated_from_blob": "2432fec2880d74df91b413df27b811625e108f4a",
+  "generated_from_blob": "8455b5b2dc61f906ad9121eb9da225f7b2f6d404",
   "purpose": "Fast nearest-standard search before the full product master finishes loading.",
   "product_count": 533,
   "products": [
@@ -6544,12 +6544,12 @@
       "subcategory": "06.3",
       "name": "Fruit/Vegetable, Cereal Flakes",
       "fcs": "06.3",
-      "fssr": "2.4.35",
+      "fssr": "2.3.20",
       "profile_status": "chapter_profile_ready",
       "catalog_source": "FoSCoS standardized-product list",
       "profile_id": "06-06-3-fruit-vegetable-cereal-flakes",
-      "rule_file": "./data/rules/chapter-2-4-cereals-v1.json",
-      "rule_key": "2.4.35",
+      "rule_file": "./data/rules/chapter-2-3-fruit-vegetable-v1.json",
+      "rule_key": "2.3.20",
       "appendix_fcs": "6.3",
       "appendix_fcs_status": "mapped_current_v3",
       "appendix_fcs_note": "",
@@ -6559,17 +6559,14 @@
       "microbiology_profile_key": "",
       "microbiology_candidates": [
         {
-          "condition": "Ready-to-eat cereal flakes",
-          "profile_key": "grain-03"
-        },
-        {
-          "condition": "Quick or regular cooking cereal flakes",
+          "condition": "Confirm fruit/vegetable cereal-flakes formulation, preservation/process and applicable Appendix B food category",
           "profile_key": "",
-          "message": "No direct Appendix B Table 9 ready-to-eat route is assigned for this cooking form."
+          "message": "No automatic ready-to-eat Breakfast Cereal/Table 9 profile. Check the precise Chapter 2.3.20 finished-product and FoSCoS Appendix B routing."
         }
       ],
-      "microbiology_note": "FSSAI Chapter 2.4.35 includes both ready-to-eat and quick/regular-cooking cereal forms. Appendix B Table 9 row 3 applies only when these cereal flakes are ready-to-eat.",
-      "microbiology_table_group": "food_grains"
+      "microbiology_note": "FSSR 2.3.20 says applicable Appendix B requirements apply; the mixed fruit/vegetable cereal-flakes name alone does not establish the ready-to-eat Breakfast Cereal micro profile under Chapter 2.4.35.",
+      "product_standard_source_2026_10_11": "https://fssai.gov.in/upload/uploadfiles/files/4_%20Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+      "numeric_product_quality_only_not_ctr": true
     },
     {
       "id": "06-06-3-breakfast-cereal",

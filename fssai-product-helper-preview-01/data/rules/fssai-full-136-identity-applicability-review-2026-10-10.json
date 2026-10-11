@@ -14,9 +14,9 @@
   "updated_partial": 407,
   "family_accountability": {
     "2.1": 14,
-    "2.3": 48,
+    "2.3": 49,
     "special": 30,
-    "2.4": 12,
+    "2.4": 11,
     "2.8": 11,
     "2.5": 7,
     "2.7": 2,
@@ -3037,14 +3037,14 @@
     {
       "catalog_id": "06-06-3-fruit-vegetable-cereal-flakes",
       "product_name": "Fruit/Vegetable, Cereal Flakes",
-      "fssr": "2.4.35",
+      "fssr": "2.3.20",
       "fcs": "06.3",
-      "regulatory_family": "2.4",
+      "regulatory_family": "2.3",
       "review_sequence": 98,
       "evidence_disposition": "no_first_exact_named_article_yet",
       "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
-      "scope_from_verified_product_identity": "2.4.35",
-      "priority_family_risk": "Cereal vs millet/pulse/tuber species and food form",
+      "scope_from_verified_product_identity": "2.3.20",
+      "priority_family_risk": "Fruit/vegetable puree and cereal blended flakes; distinct from breakfast cereal",
       "per_product_matrix_or_recipe_step": "Confirm actual fruit/vegetable/cereal flakes recipe and concentrations; whole/processed grains.",
       "per_product_prohibited_inheritance": "Mixed flakes cannot inherit single-crop MRLs automatically.",
       "relevant_fssai_article_candidates_not_applied": [
@@ -3062,7 +3062,8 @@
         }
       ],
       "additional_high_risk_noninheritance_checks": [
-        "Do not apply generic cereal-grain lead to explicitly excluded quinoa, or wheat/cereal aflatoxins to tapioca/tuber pasta and starch without verified grains and transformation."
+        "Do not apply generic cereal-grain lead to explicitly excluded quinoa, or wheat/cereal aflatoxins to tapioca/tuber pasta and starch without verified grains and transformation.",
+        "Official FSSR 2.3.20 numeric moisture, acid insoluble ash and starch values are quality limits; do not claim CTR/pesticide evidence or 2.4.35 grain-first identity."
       ],
       "separate_source_verification_required": true,
       "confirm_operational_2026_amendments": true,
@@ -3072,7 +3073,14 @@
       "numeric_limit_auto_applied_to_product": false,
       "laboratory_sample_pass": false,
       "finished_product_compliance_pass": false,
-      "legally_cleared_or_exempt": false
+      "legally_cleared_or_exempt": false,
+      "official_standard_route_correction_2026_10_11": {
+        "prior_fssr": "2.4.35",
+        "correct_fssr": "2.3.20",
+        "source_url": "https://fssai.gov.in/upload/uploadfiles/files/4_%20Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+        "quality_only": true,
+        "contaminants_unresolved": true
+      }
     },
     {
       "catalog_id": "06-06-4-macaroni-products-instant-noodle",
@@ -4362,5 +4370,6 @@
         "prohibited_inheritance": "Silver foil fineness and the generic direction to comply with CTR cannot substitute an exact specific elemental contaminant limit."
       }
     ]
-  }
+  },
+  "correction_2026_10_11": "One source-corroborated cross-chapter correction reassigns Fruit/Vegetable, Cereal Flakes 2.4.35 -> 2.3.20; current family tallies updated. Other 135 review records and 126 unresolved evidence identities unchanged."
 }
