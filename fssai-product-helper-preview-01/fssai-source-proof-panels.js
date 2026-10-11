@@ -222,8 +222,8 @@ function pmsvFinalTwentyEightSourceValid(p){
   return !!xylazine&&vet.completeness==='complete'&&vet.auto_apply===false&&
     xylazine.rows?.filter(x=>x.article===r.article&&Number(x.limit)===r.limit&&x.unit===r.unit).length===1;
  }
- return r.first_exact_contaminant_source_found===false&&r.numeric_limit_auto_applied===false&&
-  r.finished_lot_compliance_pass===false&&r.positive_proof_needed&&r.do_not_inherit;
+ return Boolean(r.first_exact_contaminant_source_found===false&&r.numeric_limit_auto_applied===false&&
+  r.finished_lot_compliance_pass===false&&r.positive_proof_needed&&r.do_not_inherit);
 }
 function pmsvFinalTwentyEightEvidenceHtml(p){
  if(!p||!pmsvFinalTwentyEightDb?.positive_records?.concat(pmsvFinalTwentyEightDb.pending_records||[]).some(x=>x.catalog_id===p.id))return '';
