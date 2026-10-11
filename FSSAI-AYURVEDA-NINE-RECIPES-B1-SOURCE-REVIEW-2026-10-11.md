@@ -1,0 +1,9 @@
+# PMSV FSSAI Helper — Nine Ayurveda Aahara first-source recipe checks (11 October 2026)
+
+**Official sources:** [FSSAI Ayurveda Aahara category A recipe Order (25 July 2025)](https://fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf) and [FSSAI Contaminants Version IX, Section 2.2.1, 3 February 2026](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf).
+
+Nine currently unresolved Category 102 recipes individually checked for mandatory ingredients, recipe alternatives, standard-FoSCoS identity and crop contaminant transfer risks. Four have mandatory cereal/pulse source relationships to **Aflatoxin B1 10 µg/kg** (the cereal, pulses and food-containing-these-articles table entries coincide): Lajadi Kashaya (parched rice); Krishara (rice and lentils); Yava Ksheera (barley); Kulmasha (barley or Mudga/Masha substitute). Five require additional identity, recipe-subtype or food-matrix checks.
+
+**No first exact product match is promoted yet**: confirm which table article legally applies to processed Ayurveda Aahara recipe, and verify processing/extraction, effective amendment and sample basis. In particular, total aflatoxins differ between the cereal row (**15 µg/kg**) and the composite-food row (**20 µg/kg**) and must not be chosen automatically. Dairy-liquid Aflatoxin M1 cannot simply be transferred to cooked/mixed milk recipes. The Dugdha Kupika method mentions rice flour but the initial ingredient table does not, so this is explicitly marked as a document reconciliation item.
+
+The 533-product ledger remains **410 partial / 123 pending / 0 full compliance PASS**. These nine records provide evidence-driven product-specific resolution steps without asserting legally verified numeric finished-product suitability. WordPress unchanged.
