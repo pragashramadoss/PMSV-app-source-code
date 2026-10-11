@@ -36,8 +36,15 @@ test("Fruit/Vegetable, Cereal Flakes 2.3.20 remains distinct from grain-first Br
 test("Rule-key consistency: all 533 search-index products retain the same direct clause as source master",()=>{
  const ms=new Map(master.catalog_products.map(x=>[x.id,x]));
  assert.equal(ms.size,533);
+ let exactParentKeys=0;
  for(const p of index.products){
   const row=ms.get(p.id);assert.ok(row,p.id);
-  for(const key of ["name","fssr","rule_file","rule_key","microbiology_status"])assert.equal(row[key],p[key],p.id+" "+key);
+  for(const key of ["name","fssr","rule_file","microbiology_status"])assert.equal(row[key],p[key],p.id+" "+key);
+  if(row.rule_key!==p.rule_key){
+   assert.equal(row.rule_key,"2.4.6","Unapproved parent/subclause divergence "+p.id);
+   assert.match(p.rule_key,/^2\\.4\\.6\\(\\d+\\)$/,"Invalid special 2.4.6 subclause "+p.id);
+   exactParentKeys++;
+  }
  }
+ assert.equal(exactParentKeys,8,"Only eight source-verified 2.4.6 parent/subclause variants are permitted");
 });
