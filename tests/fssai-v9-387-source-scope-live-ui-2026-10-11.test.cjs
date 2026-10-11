@@ -4,6 +4,7 @@ const root=path.resolve(__dirname,".."),base="fssai-product-helper-preview-01/";
 const load=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
 const first=load(base+"data/rules/fssai-v9-expanded-identity-nontransfer-2026-10-11.json");
 const second=load(base+"data/rules/fssai-v9-cross-metal-matrix-2026-10-11.json");
+const crossForm=load(base+"data/rules/fssai-v9-31-cross-form-metal-source-nontransfer-2026-10-11.json");
 const v9=load(base+"data/rules/contaminants-v9-core.json");
 const pending=load(base+"data/rules/fssai-v9-metal-fallback-precedence-2026-10-11.json");
 const index=load(base+"data/standard-search-index-v1.json").products;
@@ -11,15 +12,17 @@ const html=fs.readFileSync(path.join(root,base,"index.html"),"utf8");
 const start=html.indexOf("function sourcePinnedExpandedMetalScopeHtml(p){"),end=html.indexOf("function pendingContaminantReviewNotice(p){",start+30);
 assert.ok(start>0&&end>start,"source-specific metal article UI missing");
 const ctx=vm.createContext({
- expandedV9ScopeDb:structuredClone(first),crossMetalV9ScopeDb:structuredClone(second),
+ expandedV9ScopeDb:structuredClone(first),crossMetalV9ScopeDb:structuredClone(second),crossFormV9ScopeDb:structuredClone(crossForm),
  contaminantsDb:structuredClone(v9),sourcePriorityMetalDb:structuredClone(pending),
  esc:s=>String(s??"").replace(/[&<>"']/g,k=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[k]))
 });
 vm.runInContext(html.slice(start,end),ctx);
 const product=id=>index.find(x=>x.id===id),draw=p=>vm.runInContext("sourcePinnedExpandedMetalScopeHtml("+JSON.stringify(p)+")",ctx);
 test("Both expanded legal source matrices are loaded and used in the actual product screen",()=>{
+ assert.match(html,/let crossFormV9ScopeDb=null/);
  assert.match(html,/let expandedV9ScopeDb=null/);
  assert.match(html,/let crossMetalV9ScopeDb=null/);
+ assert.match(html,/crossFormV9ScopeDb=await res.json\(\)/);
  assert.match(html,/expandedV9ScopeDb=await res.json\(\)/);
  assert.match(html,/crossMetalV9ScopeDb=await res.json\(\)/);
  assert.match(html,/sourcePinnedExpandedMetalScopeHtml\(p\)/);
@@ -50,7 +53,7 @@ test("Product identity and historic-but-resolved product cannot gain expanded pr
 });
 test("Fail closed on changed source number, illegal product approval, missing source data and wrong catalogue total",()=>{
  const p=product("04-04-2-dried-fungi");
- const oldCore=ctx.contaminantsDb,oldMatrix=ctx.crossMetalV9ScopeDb,oldExpanded=ctx.expandedV9ScopeDb;
+ const oldCore=ctx.contaminantsDb,oldMatrix=ctx.crossMetalV9ScopeDb,oldExpanded=ctx.expandedV9ScopeDb,oldCrossForm=ctx.crossFormV9ScopeDb;
  const bad=structuredClone(v9);const r=bad.metal_article_rules_v9.Tin.find(x=>x.article==="Canned foods other than beverages");r.limit=2500;
  ctx.contaminantsDb=bad;assert.match(draw(p),/withheld/);ctx.contaminantsDb=oldCore;
  ctx.crossMetalV9ScopeDb=structuredClone(second);
@@ -59,6 +62,7 @@ test("Fail closed on changed source number, illegal product approval, missing so
  ctx.expandedV9ScopeDb=structuredClone(first);ctx.expandedV9ScopeDb.total=532;
  assert.match(draw(p),/withheld/);ctx.expandedV9ScopeDb=oldExpanded;
  ctx.crossMetalV9ScopeDb=null;assert.match(draw(p),/withheld/);ctx.crossMetalV9ScopeDb=oldMatrix;
+ ctx.crossFormV9ScopeDb=null;assert.match(draw(p),/withheld/);ctx.crossFormV9ScopeDb=oldCrossForm;
 });
 test("Selected example checks preserve cadmium quinoa exclusion, hard-boiled sweet specificity and canned packaging",()=>{
  for(const [id,metal] of [
