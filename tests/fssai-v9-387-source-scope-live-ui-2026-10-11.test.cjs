@@ -5,6 +5,7 @@ const load=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
 const first=load(base+"data/rules/fssai-v9-expanded-identity-nontransfer-2026-10-11.json");
 const second=load(base+"data/rules/fssai-v9-cross-metal-matrix-2026-10-11.json");
 const crossForm=load(base+"data/rules/fssai-v9-31-cross-form-metal-source-nontransfer-2026-10-11.json");
+const testingBases=load(base+"data/rules/fssai-v9-61-metal-article-testing-bases-2026-10-11.json");
 const v9=load(base+"data/rules/contaminants-v9-core.json");
 const pending=load(base+"data/rules/fssai-v9-metal-fallback-precedence-2026-10-11.json");
 const index=load(base+"data/standard-search-index-v1.json").products;
@@ -12,7 +13,7 @@ const html=fs.readFileSync(path.join(root,base,"index.html"),"utf8");
 const start=html.indexOf("function sourcePinnedExpandedMetalScopeHtml(p){"),end=html.indexOf("function pendingContaminantReviewNotice(p){",start+30);
 assert.ok(start>0&&end>start,"source-specific metal article UI missing");
 const ctx=vm.createContext({
- expandedV9ScopeDb:structuredClone(first),crossMetalV9ScopeDb:structuredClone(second),crossFormV9ScopeDb:structuredClone(crossForm),
+ expandedV9ScopeDb:structuredClone(first),crossMetalV9ScopeDb:structuredClone(second),crossFormV9ScopeDb:structuredClone(crossForm),metalMeasurementBasisDb:structuredClone(testingBases),
  contaminantsDb:structuredClone(v9),sourcePriorityMetalDb:structuredClone(pending),
  esc:s=>String(s??"").replace(/[&<>"']/g,k=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[k]))
 });
@@ -20,6 +21,7 @@ vm.runInContext(html.slice(start,end),ctx);
 const product=id=>index.find(x=>x.id===id),draw=p=>vm.runInContext("sourcePinnedExpandedMetalScopeHtml("+JSON.stringify(p)+")",ctx);
 test("Both expanded legal source matrices are loaded and used in the actual product screen",()=>{
  assert.match(html,/let crossFormV9ScopeDb=null/);
+ assert.match(html,/let metalMeasurementBasisDb=null/);
  assert.match(html,/let expandedV9ScopeDb=null/);
  assert.match(html,/let crossMetalV9ScopeDb=null/);
  assert.match(html,/crossFormV9ScopeDb=await res.json\(\)/);
