@@ -101,3 +101,21 @@ test("All eight analogue exemptions are classification only, not a waiver of con
   assert.match(a.prohibited_assumption,/milk-derived ingredient/);
  }
 });
+
+test("Purified vending-machine water 2.10.9 is not packaged drinking water and no IS:10500 limit is invented",()=>{
+ const rows=data.records.filter(r=>r.official_vending_purified_water_is10500_gate_2026_10_11);
+ assert.equal(rows.length,1);
+ const r=rows[0],q=r.official_vending_purified_water_is10500_gate_2026_10_11;
+ assert.equal(r.catalog_id,"purified-vending-water");
+ assert.equal(q.catalog_id,r.catalog_id);assert.equal(q.product_name,r.product_name);
+ assert.equal(q.fssr,"2.10.9");
+ assert.match(q.regulatory_identity,/OTHER THAN packaged drinking water and natural mineral water/);
+ assert.match(q.legal_composition_reference,/IS:10500/);
+ assert.match(q.excluded_wrong_routing,/0\.0001 mg\/L individually/);
+ assert.equal(q.treated_as_packaged_drinking_water,false);
+ assert.equal(q.packaged_water_pesticide_or_metal_limit_applied,false);
+ assert.equal(q.referenced_is10500_text_fully_source_verified,false);
+ assert.equal(q.any_is10500_numeric_limit_copied_into_fssai_database,false);
+ assert.equal(q.finished_water_compliance_pass,false);
+ assert.equal(data.official_vending_water_misclassification_gate_summary_2026_10_11.packaged_water_limits_inherited,0);
+});
