@@ -1223,6 +1223,7 @@ let contaminantsDb=null;
 let contaminantsPendingReviewDb=null;
 let sourcePriorityMetalDb=null;
 let ayurvedaRecipeReviewDb=null;
+let fungiExactQualityDb=null;
 let sugarSulphiteResiduesDb=null;
 let chapterQuality20Db=null;
 let sugarChromiumScopeDb=null;
@@ -1247,7 +1248,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-ayurveda-recipe-b1-v509';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-fungi-fssr-quality-v510';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10483,6 +10484,33 @@ function sourcePinnedChapterQualityHtml(p){
   +'<div class="tablewrap"><table><thead><tr><th>Quality/pack criterion</th><th>Source benchmark</th><th>Qualification</th></tr></thead><tbody>'
   +quality+medium+'</tbody></table></div><small>'+sources+'</small></details>';
 }
+function sourcePinnedFungiQualitySourceReviewHtml(p){
+ if(!p||!fungiExactQualityDb)return '';
+ const m=fungiExactQualityDb,row=(m.records||[]).find(x=>x.catalog_id===p.id);
+ if(!row)return '';
+ const withheld='<div class="notice"><b>FSSAI fungi source quality review withheld:</b> product identity, version or quality evidence mismatch. No source criterion applied.</div>';
+ if(m.verified_local_products!==10||m.quality_source_rows!==55||m.source_quality_only!==true
+    ||m.current_pending_first_exact_ctr!==123||m.current_partial_exact_ctr!==410
+    ||m.first_exact_contaminant_source_promotions!==0||m.full_compliance_passes!==0
+    ||m.official_chapter_source!=='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf'
+    ||row.product_name!==p.name||row.fssr!==p.fssr||row.fcs!==p.fcs||p.fssr!=='2.3.62'
+    ||row.first_exact_contaminant_article_matched!==false
+    ||row.finished_product_ctr_numeric_limit_auto_apply!==false||row.complete_regulatory_compliance_pass!==false)
+    return withheld;
+ const rows=m.records||[];
+ const fingerprint=val=>{let s=JSON.stringify(val),n=2166136261;for(let i=0;i<s.length;i++)n=Math.imul(n^s.charCodeAt(i),16777619)>>>0;return n.toString(16).padStart(8,'0')};
+ if(fingerprint(rows)!=='a50fa66c'||m.quality_rows_fnv32_fingerprint!=='a50fa66c')return withheld;
+ const renderValue=c=>c.operator==='range'?esc(c.min)+'–'+esc(c.max)+' '+esc(c.unit)
+   :c.operator==='absent'?'Absent':c.operator==='identity_target'?'Identity target: '+esc(c.value)+' '+esc(c.unit)
+   :esc(c.operator)+' '+esc(c.value)+' '+esc(c.unit);
+ const table=row.criteria.map(c=>'<tr><td>'+esc(c.parameter)+'</td><td>'+renderValue(c)
+  +'</td><td>'+esc(c.subtype)+'</td></tr>').join('');
+ return '<details style="margin:10px 0"><summary><b>FSSAI 2.3.62 Edible Fungi — '+row.criteria.length+' exact quality references (review, NOT compliance PASS)</b></summary>'
+  +'<p>Official FSSAI product-standard quality references for <b>'+esc(row.product_name)+'</b>. Confirm species, process variant, sampling and current amendments before evaluating measured results. These values are NOT contaminant MRLs.</p>'
+  +'<div class="tablewrap"><table><thead><tr><th>Quality criterion</th><th>Standard source value</th><th>Required subtype/condition</th></tr></thead><tbody>'+table+'</tbody></table></div>'
+  +'<p><b>Contaminant source gates — NOT APPLIED:</b> Agaric acid 100 ppm is the article for food containing mushrooms, not every unidentified fungus. Canned-mushroom tin 250 mg/kg and lead 1 mg/kg cannot be inherited from the word sterilized or airtight; confirm species, food identity, container and amendments first.</p>'
+  +'<small><a href="'+esc(m.official_chapter_source)+'" target="_blank" rel="noopener">FSSAI Chapter 2.3 official standard</a> · <a href="'+esc(m.official_contaminants_source)+'" target="_blank" rel="noopener">FSSAI Version IX contaminants</a> · 0 automatic lab or compliance approvals.</small></details>';
+}
 function sourcePinnedAyurvedaRecipeB1ReviewHtml(p){
  if(!p||!ayurvedaRecipeReviewDb||!contaminantsDb||!sourcePriorityMetalDb)return '';
  const m=ayurvedaRecipeReviewDb;
@@ -10945,6 +10973,7 @@ function renderProductContaminants(){
        ||(p.id==='06-06-3-fruit-vegetable-cereal-flakes' && baseline.some(x=>
          String(x.source_basis||'').includes('exact FSSR 2.3.20 Fruit/Vegetable Cereal Flakes'))))
         ?'':pendingContaminantReviewNotice(p))
+   +sourcePinnedFungiQualitySourceReviewHtml(p)
    +sourcePinnedAyurvedaRecipeB1ReviewHtml(p)
    +sourcePriorityMetalFallbackReviewHtml(p)
    +sourcePinnedSugarSulphitesHtml(p)
@@ -11055,6 +11084,11 @@ async function loadContaminantsDb(){
    const res=await fetch('./data/rules/contaminants-v9-core.json?v=437',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
+   try{
+     const result=await fetch('./data/rules/fssai-ten-edible-fungi-2-3-62-quality-and-ctr-gates-2026-10-11.json?v=20261011-fungi55',{cache:'reload'});
+     if(!result.ok)throw new Error('FSSAI FSSR 2.3.62 fungi source file not available');
+     fungiExactQualityDb=await result.json();
+   }catch(e){fungiExactQualityDb=null;}
    try{
      const r=await fetch('./data/rules/fssai-ayurveda-nine-recipe-b1-cross-article-source-review-2026-10-11.json?v=20261011-ayurveda9',{cache:'reload'});
      if(!r.ok)throw new Error('Official Ayurveda Aahara recipe source review unavailable');
