@@ -1244,7 +1244,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-nine-sugar-metal-review-v504';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-reconciled-b1-sugar-v505';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10783,7 +10783,10 @@ function renderProductContaminants(){
     ? '<div class="notice oknote"><b>Product-level FSSAI contaminant mapping:</b> '+baseline.length+' directly applicable rule'+(baseline.length===1?'':'s')+' resolved for '+esc(p.name)+' from exact product articles, verified product/article aliases, direct product-standard limits, verified commodity-family mappings or other structured FSSAI evidence. Exact pesticide-residue MRLs are shown separately when the commodity name matches exactly.</div>'
     : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
-   +(verifiedSugarSulphiteReference(p)?.scope==='finished_product_sulphite_residue_partial'?'':pendingContaminantReviewNotice(p))
+   +((verifiedSugarSulphiteReference(p)?.scope==='finished_product_sulphite_residue_partial'
+       ||(p.id==='06-06-3-fruit-vegetable-cereal-flakes' && baseline.some(x=>
+         String(x.source_basis||'').includes('exact FSSR 2.3.20 Fruit/Vegetable Cereal Flakes'))))
+        ?'':pendingContaminantReviewNotice(p))
    +sourcePinnedSugarSulphitesHtml(p)
    +sugarChromiumScopeHtml(p)
    +sourcePinnedChapterQualityHtml(p)
