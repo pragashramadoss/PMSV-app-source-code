@@ -10318,6 +10318,25 @@ function pendingContaminantReviewNotice(p){
    +' · <a href="'+esc(animalPesticides.source_ctr_ix)+'" target="_blank" rel="noopener noreferrer">Official FSSAI CTR IX</a>. '
    +'No processing-factor, edible tissue, actual sample, other residue or current amendment clearance.</small></details>'
   :'';
+ const meatEggQuality=record.chapter_2_5_variant_quality_provisions_2026_10_11;
+ const meatEggQualityValid=meatEggQuality&&meatEggQuality.catalog_id===p.id
+  &&meatEggQuality.product_name===p.name&&meatEggQuality.fssr===p.fssr
+  &&meatEggQuality.numeric_quality_criteria_not_ctr_mrl===true
+  &&meatEggQuality.any_lab_sample_compliance_pass===false
+  &&meatEggQuality.pesticide_processing_factor_validated===false;
+ const meatEggQualityHtml=meatEggQualityValid
+  ?'<details style="margin:9px 0"><summary><b>11 October rabbit/egg product-standard composition — VARIANT-SPECIFIC, NOT MRL</b></summary>'
+    +'<p>'+esc(meatEggQuality.legal_process_and_matrix_scope)+'</p>'
+    +(meatEggQuality.variants||[]).map(v=>'<details style="margin:6px 0"><summary><b>'+esc(v.name)
+      +' — source QUALITY criterion, NO LAB PASS</b></summary>'
+      +'<p>'+esc(v.sample_condition)+'</p><ul style="padding-left:22px;margin:6px 0">'
+      +(v.quality_criteria||[]).map(x=>'<li>'+esc(x.parameter)+' '
+        +(x.minimum!==undefined&&x.maximum!==undefined?esc(x.minimum)+' to '+esc(x.maximum):
+        x.minimum!==undefined?'minimum '+esc(x.minimum):'maximum '+esc(x.maximum))
+        +' '+esc(x.unit)+' · <b>NOT a pesticide MRL</b></li>').join('')+'</ul></details>').join('')
+    +'<small><a href="'+esc(meatEggQuality.official_source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter 2.5</a>'
+    +'. Confirm product variant, actual lab tests, CTR MRL applicability and operative amendments separately.</small></details>'
+  :'';
  const candidate=record.specific_source_commodity_subtype_review_2026_10_10;
  const candidateHtml=candidate&&candidate.review_only===true&&candidate.automatically_applied===false
    ?'<details style="margin:9px 0"><summary><b>Official named commodity article — conditional, NOT APPLIED</b></summary>'
@@ -10363,6 +10382,7 @@ function pendingContaminantReviewNotice(p){
    +qualitySourceHtml
    +analogueHtml
    +animalHtml
+   +meatEggQualityHtml
    +candidateHtml
    +discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
