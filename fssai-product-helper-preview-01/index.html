@@ -10213,6 +10213,7 @@ function verifiedSugarSulphiteReference(p){
    x.name==='SULFITES'&&x.limit===String(r.source_limit)+' mg/kg'))return null;
  if(r.scope==='finished_product_sulphite_residue_partial'){
    if(!['11.1.6','11.1.6.1'].includes(p.fcs)||r.source_fcs!=='11.1.6'||
+      (p.fcs==='11.1.6.1'&&appendixCoreDb.loaded_permission_sets?.['11.1.6.1']?.status!=='inherits_current_parent_rule')||
       r.source_limit!==50||!source.entries.some(x=>
        /Residue shall not exceed 50 mg\/kg in the end product/.test(x.condition)))return null;
  }
