@@ -1402,6 +1402,43 @@ function contaminantEvidenceForProduct(p){
      amendment_reconciliation_complete:false,
      requires_source_revalidation:true};
  })():null;
+ const fruitCerealFlakesB1=(()=>{
+  if(p.id!=='06-06-3-fruit-vegetable-cereal-flakes'
+     ||p.name!=='Fruit/Vegetable, Cereal Flakes'
+     ||p.fssr!=='2.3.20'||p.fcs!=='06.3')return null;
+  if(contaminants.source_version!=='Version IX (03.02.2026)')return null;
+  const st=chapterRecord(p).record;
+  const z=st.official_cereal_composite_b1_source_v1;
+  const required=['Cereal and cereal products','Food product containing any of the above mentioned food articles'];
+  if(st.key!=='2.3.20'||st.name!==p.name||!z||
+     z.fssr!=='2.3.20'||z.required_cereal_ingredient_in_clause!==true||
+     z.product_made_as_dehydrated_flakes!==true||
+     z.official_product_clause_source_url!=='https://fssai.gov.in/upload/uploadfiles/files/4_%20Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf'||
+     z.official_contaminants_source_url!==version9Source||
+     z.official_contaminants_source_version!==contaminants.source_version||
+     z.official_crop_contaminants_section!=='2.2.1'||
+     z.cereal_article!==required[0]||z.composite_food_article!==required[1]||
+     z.contaminant!=='Aflatoxin B1'||z.exact_source_limit!==10||z.unit!=='µg/kg'||
+     z.total_aflatoxins_cereal_limit!==15||z.total_aflatoxins_composite_limit!==20||
+     z.total_aflatoxins_cannot_auto_apply!==true||z.complete_product_compliance_pass!==false||
+     z.metal_pesticide_and_other_residue_compliance_not_verified!==true)return null;
+  const b=contaminants.crop_contaminants?.aflatoxin_b1;
+  const total=contaminants.crop_contaminants?.total_aflatoxins;
+  if(b?.unit!=='µg/kg'||total?.unit!=='µg/kg')return null;
+  if(!required.every(article=>(b.rules||[]).filter(x=>
+     normalizeArticle(x.article)===normalizeArticle(article)&&Number(x.limit)===10
+     &&String(x.unit||b.unit)==='µg/kg').length===1))return null;
+  for(const [article,limit] of [[required[0],15],[required[1],20]]){
+    if((total.rules||[]).filter(x=>normalizeArticle(x.article)===normalizeArticle(article)
+      &&Number(x.limit)===limit&&String(x.unit||total.unit)==='µg/kg').length!==1)return null;
+  }
+  return {source_url:version9Source,official_product_clause_source_url:z.official_product_clause_source_url,
+    product_id:p.id,product_name:p.name,fssr:p.fssr,fcs:p.fcs,
+    contaminant:'Aflatoxin B1',limit:10,unit:'µg/kg',
+    articles:required,required_cereal_in_legal_product_identity:true,
+    total_aflatoxins_limit_unresolved:true,metals_and_pesticides_unresolved:true,
+    full_contaminant_compliance:false};
+ })();
  const sharedCerealAflatoxinB1Evidence=(()=>{
    const approved=[
      ['06-06-3-oat-products','Oat Products','2.4.12'],
@@ -1692,6 +1729,7 @@ function contaminantEvidenceForProduct(p){
  if(freshFruitPartial)explicitKinds.push('official_v9_fresh_fruit_fcs_exact_source_pesticide_commodity_partial');
  if(peanutButterCompositeEvidence)explicitKinds.push("official_v9_exact_peanut_butter_composite_aflatoxins_partial");
  if(sharedCerealAflatoxinB1Evidence)explicitKinds.push("official_v9_harmonised_cereal_composite_b1_partial");
+ if(fruitCerealFlakesB1)explicitKinds.push("official_v9_exact_2_3_20_fruit_cereal_flakes_b1_partial");
  if(exactBreadB1Evidence)explicitKinds.push("official_v9_exact_bread_wheat_cereal_composite_b1_partial");
  if(exactBreakfastCerealB1Evidence)explicitKinds.push("official_v9_exact_breakfast_cereal_composite_b1_partial");
  if(cerealMaltB1Evidence)explicitKinds.push("fssai_v9_exact_cereal_malt_b1_partial_evidence");
@@ -1807,6 +1845,7 @@ function contaminantEvidenceForProduct(p){
    exact_fresh_fruit_source_pesticide_commodity:freshFruitPartial?{source:version9Source,article:freshFruitEvidence.article,reference_pesticide:freshFruitEvidence.source_pesticide,source_mrl:freshFruitEvidence.source_mrl,unit:freshFruitEvidence.unit,numeric_applied:false,processing_factors_verified:false,full_compliance:false}:null,
    exact_peanut_butter_composite_aflatoxins:peanutButterCompositeEvidence,
    exact_harmonised_cereal_aflatoxin_b1:sharedCerealAflatoxinB1Evidence,
+   exact_fruit_vegetable_cereal_flakes_composite_b1:fruitCerealFlakesB1,
    exact_bread_cereal_composite_b1_partial:exactBreadB1Evidence,
    exact_breakfast_cereal_composite_b1_partial:exactBreakfastCerealB1Evidence,
    exact_bengal_gram_pulse_composite_b1:bengalGramAflatoxinB1Evidence,
@@ -2148,8 +2187,12 @@ const products = index.products.map(p => {
   const contaminantEvidence=contaminantEvidenceForProduct(p);
   const sourcePinnedChapterQuality=chapterQuality20ById.get(p.id)||null;
   if(sourcePinnedChapterQuality){
-   assert.notEqual(contaminantEvidence.status,"some_exact_product_evidence_not_full_coverage",
-     "20 current quality-only identities must not be promoted to contaminant partial: "+p.id);
+   if(p.id==='06-06-3-fruit-vegetable-cereal-flakes'){
+     assert.equal(contaminantEvidence.status,"some_exact_product_evidence_not_full_coverage",
+       "2.3.20 cereal flakes exact B1 source promotion absent");
+     assert.ok(contaminantEvidence.exact_fruit_vegetable_cereal_flakes_composite_b1);
+   }else assert.notEqual(contaminantEvidence.status,"some_exact_product_evidence_not_full_coverage",
+     "Other 19 quality-only identities must remain pending contaminant exact evidence: "+p.id);
    tally("chapter_fssr_2026_10_11_20_quality_only","exact_source_quality_not_ctr");
    action.push("Exact FSSR product-standard quality data is indexed with the source clause and variant/basis qualification. It is NOT a Version IX contaminant/pesticide first-source match or a compliance PASS.");
   }
@@ -2161,6 +2204,10 @@ const products = index.products.map(p => {
     } else {
       action.push("Source-checked Appendix A Table 11 sugar additive permission/subtype check; NOT an exact CTR contaminant article or automatic chemical contaminant clearance.");
     }
+  }
+  if(contaminantEvidence.exact_fruit_vegetable_cereal_flakes_composite_b1){
+   tally("chapter_2_3_20_exact_cereal_composite_b1","verified_partial_10_ugkg");
+   action.push("FSSR 2.3.20 mandates cereals in fruit/vegetable flakes. Version IX B1 composite/cereal articles both 10 µg/kg; total aflatoxins 15 versus 20 µg/kg UNRESOLVED. No metal, MRL or finished-product PASS.");
   }
   const soybeanConditionalReview=soyReviewById.get(p.id)||null;
   if(soybeanConditionalReview){
