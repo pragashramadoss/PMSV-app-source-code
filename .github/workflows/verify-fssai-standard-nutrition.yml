@@ -234,6 +234,8 @@ jobs:
         run: node --test tests/fssai-next29-unmatched-source-dossiers-2026-10-11.test.cjs tests/fssai-next121-live-version-ix-source-row-lock-2026-10-11.test.cjs
       - name: Verify all 121 live first-source proof panels and 29 special product dossiers
         run: node --test tests/fssai-next121-29-live-source-proof-ui-2026-10-11.test.cjs
+      - name: Verify positive composite-food aflatoxin source for two finished Ayurveda Aahara recipes
+        run: node --test tests/fssai-ayurveda-two-positive-composite-aflatoxin-2026-10-11.test.cjs
       - name: Upload per-product compliance evidence audit
         if: always()
         uses: actions/upload-artifact@v4
