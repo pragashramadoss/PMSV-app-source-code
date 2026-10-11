@@ -1223,6 +1223,7 @@ let contaminantsDb=null;
 let contaminantsPendingReviewDb=null;
 let sourcePriorityMetalDb=null;
 let crossFormV9ScopeDb=null;
+let metalMeasurementBasisDb=null;
 let expandedV9ScopeDb=null;
 let crossMetalV9ScopeDb=null;
 let ayurvedaRecipeReviewDb=null;
@@ -1253,7 +1254,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-official-metal-source-scope-ui-v513';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-metal-testing-basis-v514';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10648,10 +10649,11 @@ function sourcePinnedExpandedMetalScopeHtml(p){
   ||!sourcePriorityMetalDb.unresolved_first_exact_catalog_ids.includes(p.id))return '';
  const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
  const withheld='<div class="notice"><b>Expanded metal article research withheld:</b> a matrix, product identity, or official FSSAI source row could not be authenticated. No candidate numeric reference has been applied.</div>';
- if(!crossFormV9ScopeDb||!expandedV9ScopeDb||!crossMetalV9ScopeDb||!contaminantsDb?.metal_article_rules_v9)return withheld;
- const a=expandedV9ScopeDb,b=crossMetalV9ScopeDb,c=crossFormV9ScopeDb;
+ if(!crossFormV9ScopeDb||!expandedV9ScopeDb||!crossMetalV9ScopeDb||!metalMeasurementBasisDb||!contaminantsDb?.metal_article_rules_v9)return withheld;
+ const a=expandedV9ScopeDb,b=crossMetalV9ScopeDb,c=crossFormV9ScopeDb,basis=metalMeasurementBasisDb;
  const fssai='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf';
  if(a.official_source!==fssai||b.official_fssai_source!==fssai||c.source!==fssai||
+ basis.official_source!==fssai||basis.number_of_pinned_source_articles!==61||basis.number_with_mandatory_measurement_basis!==7||basis.catalogue_count!==533||basis.pending!==121||basis.reference_only!==true||basis.full_compliance_passes!==0||
  a.total!==533||a.partial!==412||a.pending!==121||a.first_exact_promotions!==0||a.full_compliance_passes!==0||
  b.catalogue_count!==533||b.partial!==412||b.pending!==121||b.first_exact_promotions!==0||b.full_compliance_passes!==0||
  a.new_named_article_rows?.length!==13||b.source_rows?.length!==30||c.named_source_rows?.length!==18||c.scope_guards?.length!==31||
@@ -10660,12 +10662,20 @@ function sourcePinnedExpandedMetalScopeHtml(p){
  const refRows=[...c.named_source_rows,...a.new_named_article_rows,...b.source_rows];
  const byId=new Map(refRows.map(x=>[x.id,x]));
  if(byId.size!==61)return withheld;
- const validSources=refRows.every(r=>(
-    (contaminantsDb.metal_article_rules_v9[r.metal]||[])
-     .filter(x=>x.row_type==='exact'&&norm(x.article)===norm(r.article)
-       &&Number(x.limit)===Number(r.limit)&&x.unit===r.unit).length===1
-     &&(r.unit==='mg/kg'||r.unit==='mg/L')&&Number.isFinite(Number(r.limit))&&Number(r.limit)>0
- ));
+ const basisById=new Map((basis.source_rows||[]).map(r=>[r.id,r]));
+ if(basisById.size!==61)return withheld;
+ const validSources=refRows.every(r=>{
+  const pin=basisById.get(r.id);
+  if(!pin||pin.metal!==r.metal||norm(pin.article)!==norm(r.article)
+     ||pin.limit!==r.limit||pin.unit!==r.unit||typeof pin.condition!=='string'
+     ||pin.article_applies_to_pending_finished_product!==false
+     ||pin.numeric_limit_auto_apply!==false||pin.first_exact_product_evidence_promoted!==false||pin.compliance_pass!==false)return false;
+  const matching=(contaminantsDb.metal_article_rules_v9[r.metal]||[])
+   .filter(x=>x.row_type==='exact'&&norm(x.article)===norm(r.article)
+     &&Number(x.limit)===Number(r.limit)&&x.unit===r.unit&&String(x.condition||'')===pin.condition);
+  return matching.length===1&&(r.unit==='mg/kg'||r.unit==='mg/L')
+   &&Number.isFinite(Number(r.limit))&&Number(r.limit)>0;
+ })&&basis.source_rows.filter(r=>r.condition).length===7;
  if(!validSources)return withheld;
  const list=[
    ...a.scope_guards.filter(g=>g.catalog_id===p.id).map(g=>({
@@ -10685,11 +10695,12 @@ function sourcePinnedExpandedMetalScopeHtml(p){
  if(list.some(g=>g.name!==p.name||!g.sourceOnly||!byId.has(g.ref)||String(g.qualifier||'').length<50))return withheld;
  const unique=new Set();
  const entries=list.map(g=>{
-   const r=byId.get(g.ref),key=g.ref;
+   const r=byId.get(g.ref),key=g.ref,pin=basisById.get(g.ref);
    if(unique.has(key))return '';
    unique.add(key);
    return '<tr><td><b>'+esc(r.metal)+'</b></td><td>'
      +esc(r.article)+'<small>Source table: '+esc(r.limit)+' '+esc(r.unit)+' — <b>NOT APPLIED</b></small>'
+     +(pin.condition?'<small><b>Official required testing basis:</b> '+esc(pin.condition)+'</small>':'<small>Measurement basis: no further article-specific qualifier stated in this source row; verify the applicable test and legal requirements.</small>')
      +'</td><td>'+esc(g.qualifier)+'</td></tr>';
  }).join('');
  return '<details style="margin:10px 0"><summary><b>Verified FSSAI named-article screening: '+esc(unique.size)
@@ -11252,6 +11263,11 @@ async function loadContaminantsDb(){
      if(!res.ok)throw new Error('Cross-metal source qualifiers not available');
      crossMetalV9ScopeDb=await res.json();
    }catch(e){crossMetalV9ScopeDb=null;}
+   try{
+     const res=await fetch('./data/rules/fssai-v9-61-metal-article-testing-bases-2026-10-11.json?v=20261011-basis61',{cache:'reload'});
+     if(!res.ok)throw new Error('FSSAI source article measurement basis register unavailable');
+     metalMeasurementBasisDb=await res.json();
+   }catch(e){metalMeasurementBasisDb=null;}
  }catch(e){
    contaminantsDb=null;
  }

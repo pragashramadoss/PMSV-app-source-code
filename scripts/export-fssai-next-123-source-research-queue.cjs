@@ -16,6 +16,8 @@ const cross=load(base+"rules/fssai-v9-31-cross-form-metal-source-nontransfer-202
 const tin=load(base+"rules/fssai-v9-tin-conditional-source-matrix-2026-10-11.json");
 const expanded=load(base+"rules/fssai-v9-expanded-identity-nontransfer-2026-10-11.json");
 const crossMetal=load(base+"rules/fssai-v9-cross-metal-matrix-2026-10-11.json");
+const metalBasis=load(base+"rules/fssai-v9-61-metal-article-testing-bases-2026-10-11.json");
+const metalBasisById=new Map(metalBasis.source_rows.map(x=>[x.id,x]));
 const crossMetalRows=new Map(crossMetal.source_rows.map(r=>[r.id,r]));
 const expandedRows=new Map([...cross.named_source_rows,...expanded.new_named_article_rows].map(s=>[s.id,s]));
 const metalPriorityDb=load(base+"rules/fssai-v9-metal-fallback-precedence-2026-10-11.json");
@@ -134,11 +136,13 @@ const outputs=remaining.map((x,i)=>{
  }:null;
  const extended=expanded.scope_guards.filter(g=>g.catalog_id===x.id).map(g=>{const a=expandedRows.get(g.reference_id);
  assert.ok(a,"Unknown named row "+g.reference_id);
- return {source_reference_id:g.reference_id,named_official_source_article:a.article,source_limit_review_only:a.limit,unit:a.unit,
+ const pinned=metalBasisById.get(g.reference_id);assert.ok(pinned&&pinned.article===a.article&&pinned.unit===a.unit&&pinned.limit===a.limit,"Metal measurement basis missing");
+ return {source_reference_id:g.reference_id,named_official_source_article:a.article,source_limit_review_only:a.limit,unit:a.unit,source_testing_basis_review_only:pinned.condition,
  required_applicability_or_exclusion:g.required_qualifier,is_applied:false,first_exact_source_promoted:false,compliance_pass:false};});
  const crossMetalGates=crossMetal.scope_guards.filter(g=>g.catalog_id===x.id).map(g=>{
  const s=crossMetalRows.get(g.source_id);assert.ok(s&&s.metal===g.metal,x.id+" "+g.source_id);
- return {source_id:g.source_id,analyte:s.metal,article:s.article,limit_for_article_review_only:s.limit,unit:s.unit,
+ const pinned=metalBasisById.get(g.source_id);assert.ok(pinned&&pinned.article===s.article&&pinned.unit===s.unit&&pinned.limit===s.limit,"Cross-metal measurement basis missing");
+ return {source_id:g.source_id,analyte:s.metal,article:s.article,limit_for_article_review_only:s.limit,unit:s.unit,source_testing_basis_review_only:pinned.condition,
   required_qualifier:g.qualification,applies_to_finished_product:false,numeric_limit_applied:false,
   first_exact_source_promoted:false,compliance_pass:false};
  });
@@ -177,6 +181,9 @@ fs.writeFileSync(path.join(dir,"fssai-next-121-first-exact-source-research-queue
  expanded_source_rows:expanded.new_named_article_rows.length,
  expanded_nontransfer_cases:outputs.reduce((n,r)=>n+r.expanded_named_article_references_review_only.length,0),
  expanded_nontransfer_products:outputs.filter(r=>r.expanded_named_article_references_review_only.length>0).length,
+ metal_measurement_source_rows:metalBasis.number_of_pinned_source_articles,
+ metal_measurement_basis_qualified_rows:metalBasis.number_with_mandatory_measurement_basis,
+ measurement_basis_scope_review_references:outputs.reduce((count,x)=>count+[...x.expanded_named_article_references_review_only,...x.cross_metal_nontransfer_references_review_only].filter(y=>y.source_testing_basis_review_only).length,0),
  cross_metal_source_rows:crossMetal.source_row_count,
  cross_metal_scope_cases:outputs.reduce((n,x)=>n+x.cross_metal_nontransfer_references_review_only.length,0),
  cross_metal_scope_products:outputs.filter(x=>x.cross_metal_nontransfer_references_review_only.length>0).length,
