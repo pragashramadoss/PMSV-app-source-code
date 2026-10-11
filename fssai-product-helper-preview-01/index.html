@@ -10288,6 +10288,17 @@ function pendingContaminantReviewNotice(p){
    +' (PDF page '+esc(qualitySource.pdf_page_one_based)+'). '
    +'Real test results and applicable CTR contaminants remain separately unresolved.</small></details>'
   :'';
+ const analogue=record.official_fssai_dairy_analogue_definition_2026_10_11;
+ const analogueValid=analogue&&analogue.catalogue_id===p.id&&analogue.product_name===p.name&&analogue.fssr===p.fssr
+  &&analogue.no_numeric_ctr_source_inferred===true&&analogue.no_automatic_milk_mrl===true&&analogue.no_compliance_pass===true;
+ const analogueHtml=analogueValid
+  ?'<details style="margin:9px 0"><summary><b>11 October official 2.1.1 dairy analogue — NOT ordinary milk</b></summary>'
+   +'<p><b>FSSAI definition:</b> '+esc(analogue.legal_definition)+'</p>'
+   +'<p><b>Legal classification:</b> '+esc(analogue.legally_excluded_identity)+'</p>'
+   +'<p>'+esc(analogue.prohibited_assumption)+'</p>'
+   +'<small><a href="'+esc(analogue.official_chapter_source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter 2.1</a>'
+   +' (PDF pages 1 and 5). No complete contaminant compliance established.</small></details>'
+  :'';
  const candidate=record.specific_source_commodity_subtype_review_2026_10_10;
  const candidateHtml=candidate&&candidate.review_only===true&&candidate.automatically_applied===false
    ?'<details style="margin:9px 0"><summary><b>Official named commodity article — conditional, NOT APPLIED</b></summary>'
@@ -10331,6 +10342,7 @@ function pendingContaminantReviewNotice(p){
    +specialHtml
    +remainderHtml
    +qualitySourceHtml
+   +analogueHtml
    +candidateHtml
    +discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
