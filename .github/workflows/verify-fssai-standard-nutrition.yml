@@ -218,6 +218,8 @@ jobs:
         run: node --test tests/fssai-seven-official-product-quality-and-ctr-no-inheritance-2026-10-11.test.cjs
       - name: Check 49 official FSSR quality criteria in six pending products and 2025 colostrum IgG
         run: node --test tests/fssai-six-pending-chapter-quality-source-2026-10-11.test.cjs
+      - name: Validate eight FSSAI product quality panels across eleven forms and 61 source conditions
+        run: node --test tests/fssai-eight-pending-chapter-quality-subtypes-2026-10-11.test.cjs
       - name: Confirm 21 interactive finished-food subtype selections remain source-only and fail closed
         run: node --test tests/fssai-finished-food-interactive-subtype-source-gates-2026-10-11.test.cjs
       - name: Verify conditional finished-food FSSAI legal metal articles for nine unresolved FoSCoS products
