@@ -107,3 +107,70 @@ function sourcePinned121ResearchProofHtml(p){
    '<p><b>No safe named contaminant article has been identified.</b> Product/form-specific source research remains necessary.</p>')+
    '<small><a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">FSSAI Version IX primary source</a>. Operative amendments, true product article and analytical basis still require independent assessment.</small></details>';
 }
+
+/* October 11 large-batch cross-form exclusions: 56 current unresolved identities.
+ * Additional read-only scope panels; never infer an applicable limit or PASS. */
+var pmsvCrossFormNonTransferDb=null;
+var pmsvOriginalLoadPositiveSourceProof=pmsvLoadPositiveSourceProof;
+pmsvLoadPositiveSourceProof=async function(){
+ await pmsvOriginalLoadPositiveSourceProof();
+ try{
+  const response=await fetch('./data/rules/fssai-2026-10-11-cross-form-nontransfer-large-batch.json?v=20261011-large56',{cache:'reload'});
+  if(!response.ok)throw Error('Cross-form review unavailable');
+  const d=await response.json();
+  if(d.product_catalogue!==533||d.current_source_partial!==415||d.current_source_pending!==118||
+     d.historical_unresolved_queue!==121||d.previously_source_matched_products!==3||
+     d.first_source_promotions!==0||d.finished_food_compliance_passes!==0||
+     d.source_proof_kind!=='PRIMARY_SOURCE_CONFIRMED_BUT_FINISHED_PRODUCT_LINK_BLOCKED'||
+     d.scoped_out_prior_twenty_and_fourteen!==true||d.reviewed!==56||
+     d.groups?.length!==9||d.records?.length!==56||
+     d.source_url!==pmsvNext121ProofDb?.official_contaminants_url||
+     d.source_version!==contaminantsDb?.source_version||
+     new Set(d.records.map(x=>x.catalog_id)).size!==56||
+     d.groups.reduce((n,g)=>n+g.reviewed,0)!==56)
+     throw Error('Cross-form identity/source metadata inconsistent');
+  pmsvCrossFormNonTransferDb=d;
+ }catch(e){pmsvCrossFormNonTransferDb=null;}
+};
+function pmsvCrossFormSourceVerified(p){
+ const d=pmsvCrossFormNonTransferDb;
+ const base=pmsvNext121ProofDb;
+ const source=contaminantsDb;
+ if(!p||!d||!base||!source||d.source_url!==source.official_sources?.[0]?.url||
+   d.source_version!==source.source_version||d.current_source_partial!==415||
+   d.current_source_pending!==118||d.first_source_promotions!==0||
+   d.finished_food_compliance_passes!==0||d.records?.length!==56||
+   d.groups.reduce((n,g)=>n+g.reviewed,0)!==56)return false;
+ const old=base.records.find(x=>x.catalog_id===p.id);
+ const r=d.records.find(x=>x.catalog_id===p.id);
+ if(!old||!r||!sourcePriorityMetalDb?.unresolved_first_exact_catalog_ids?.includes(p.id)||
+    r.product_name!==p.name||String(r.fssr||'')!==String(p.fssr||'')||
+    String(r.fcs||'')!==String(p.fcs||'')||
+    r.exact_finished_article_source_verified!==false||r.automatic_numeric_limit!==false||
+    r.regulatory_sample_pass!==false||r.complete_regulatory_compliance!==false||
+    r.review_result!=='NAMED_REFERENCE_ONLY_NOT_AN_EXACT_FINISHED_PRODUCT_MATCH'||
+    !r.positive_matrix_proof_required||!r.why_reference_must_not_transfer)return false;
+ const refs=new Map(base.verified_source_rows.map(x=>[x.id,x]));
+ return r.source_reference_ids.every(id=>refs.has(id)&&pmsvProofSourceMatch(refs.get(id),source));
+}
+function pmsvCrossFormNonTransferHtml(p){
+ const d=pmsvCrossFormNonTransferDb;
+ if(!p||!d?.records?.some(x=>x.catalog_id===p.id))return '';
+ if(!pmsvCrossFormSourceVerified(p))return '<div class="notice"><b>Product-specific cross-form review withheld:</b> source or identity check failed; no numerical limit is assigned.</div>';
+ const r=d.records.find(x=>x.catalog_id===p.id);
+ const refs=new Map(pmsvNext121ProofDb.verified_source_rows.map(x=>[x.id,x]));
+ const articles=r.source_reference_ids.map(id=>refs.get(id));
+ const names=articles.length?'<ul>'+articles.map(x=>'<li>'+esc(x.analyte)+' — '+esc(x.article)+' <b>(reference only; not applied)</b></li>').join('')+'</ul>':
+  '<p>No validated named reference article established for the precise finished food.</p>';
+ return '<details class="card" style="margin-top:12px"><summary><b>Additional FSSAI product-form non-transfer check</b> — '+esc(r.review_label)+
+   '</summary><div class="notice"><b>FIRST EXACT-SOURCE STILL PENDING — NOT A COMPLIANCE PASS.</b> '+esc(r.why_reference_must_not_transfer)+'</div>'+
+   '<p><b>Verified official articles considered for scope:</b></p>'+names+
+   '<p><b>Positive finished-product evidence needed:</b> '+esc(r.positive_matrix_proof_required)+'</p>'+
+   '<small><a href="'+esc(d.source_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Contaminants Version IX</a> · '+
+   '<a href="https://foscos.fssai.gov.in/" target="_blank" rel="noopener noreferrer">Official FoSCoS</a></small></details>';
+}
+var pmsvOriginalSourcePinned121ResearchProofHtml=sourcePinned121ResearchProofHtml;
+sourcePinned121ResearchProofHtml=function(p){
+ const base=pmsvOriginalSourcePinned121ResearchProofHtml(p);
+ return base+pmsvCrossFormNonTransferHtml(p);
+};
