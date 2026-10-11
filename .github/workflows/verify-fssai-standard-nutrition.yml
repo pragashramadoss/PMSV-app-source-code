@@ -240,6 +240,8 @@ jobs:
         run: node --test tests/fssai-all153-candidate-article-applicability-2026-10-11.test.cjs
       - name: Reconcile 533 product first-source audit against two exact Ayurveda source matches
         run: node scripts/audit-fssai-current-first-source-reconciliation-2026-10-11.cjs && node --test tests/fssai-current-first-source-reconciliation-screen-2026-10-11.test.cjs
+      - name: Verify three FSSR canned-subtype source tables, 8 forms and 16 official metal references
+        run: node --test tests/fssai-three-canned-forms-official-source-proof-2026-10-11.test.cjs
       - name: Upload per-product compliance evidence audit
         if: always()
         uses: actions/upload-artifact@v4
