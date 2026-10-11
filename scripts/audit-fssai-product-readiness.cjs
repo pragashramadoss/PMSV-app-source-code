@@ -27,6 +27,7 @@ const pending136FullReview=read("rules/fssai-full-136-identity-applicability-rev
 const next10ExactSource=read("rules/fssai-next10-exact-source-candidate-2026-10-10.json");
 const appendixASugar=read("rules/fssai-sugar-sulphites-appendix-a-v3-2026-10-11.json");
 const appendixAV3=read("rules/appendix-a-v3-core.json");
+const chapterQuality20=read("rules/fssai-20-pending-exact-chapter-quality-2026-10-11.json");
 /* Exact FSSAI Chapter 2.16 source evidence. This is a standard-product
  * THC and cross-cutting CBD assessment, not a Version IX contaminant article,
  * an exemption from other contaminants or a complete compliance verdict. */
@@ -2015,6 +2016,53 @@ for (const p of index.products) {
   }
 }
 
+// New source-locked FSSR quality-only layer for 20 products still missing
+// their first exact CTR evidence. Never count moisture, ash, Brix, drained
+// weight or defect criteria as pesticide/metal/toxin source clearance.
+assert.equal(chapterQuality20.product_count,20);
+assert.equal(chapterQuality20.records.length,20);
+assert.equal(chapterQuality20.source_quality_rows,75);
+assert.equal(chapterQuality20.additional_fruit_salad_2024_source_criteria,13);
+assert.equal(chapterQuality20.prior_live_partial_exact_contaminant_evidence,409);
+assert.equal(chapterQuality20.prior_live_unresolved_contaminant_evidence,124);
+assert.equal(chapterQuality20.compliance_passes,0);
+assert.equal(chapterQuality20.automatic_contaminant_limits,0);
+const chapterQuality20ById=new Map();
+let quality20Rows=0;
+for(const item of chapterQuality20.records){
+ const p=index.products.find(x=>x.id===item.catalog_id);
+ assert.ok(p&&p.name===item.product_name&&p.fssr===item.fssr&&p.fcs===item.fcs,"Quality source identity drift: "+item.catalog_id);
+ assert.ok(!chapterQuality20ById.has(p.id),"Duplicate quality source "+p.id);
+ assert.equal(p.chapter_rule_link_status,"file_and_key_verified");
+ assert.ok(official(item.official_chapter_source));
+ assert.equal(item.compliance_assessment_enabled,false);
+ assert.equal(item.automatic_numeric_pass,false);
+ assert.equal(item.other_contaminants_pesticides_not_verified,true);
+ assert.equal(item.lab_sample_not_evaluated,true);
+ const std=chapterRecord(p).record;
+ assert.equal(std.key,p.fssr);
+ assert.equal(std.name,item.source_standard_name);
+ const salon=std.source_pinned_conditional_quality_v2_2024;
+ const sourceRules=salon?salon.qualified_quality_criteria:(std.composition||[]);
+ const sourceMedia=salon?salon.packing_media_cutout_strength:[];
+ const expectedSource=salon?salon.source_url:(std.numeric_evidence?.source_url||std.source_url||chapterRecord(p).sourceUrls[0]);
+ assert.equal(item.official_chapter_source,expectedSource,"Wrong chapter quality source "+p.id);
+ assert.equal(item.quality_criteria.length,sourceRules.filter(x=>typeof x.value==="number"&&["<=",">="].includes(x.operator)).length,p.id);
+ for(const row of item.quality_criteria){
+  assert.ok(sourceRules.some(x=>x.parameter===row.parameter&&x.operator===row.operator&&x.value===row.value&&x.unit===row.unit),
+    "Stale/changed product standard quality number "+p.id+" "+row.parameter);
+  assert.ok(row.condition||row.qualifier_required);
+ }
+ assert.equal(item.qualified_packing_media_brix.length,sourceMedia.length);
+ for(const row of item.qualified_packing_media_brix){
+  assert.ok(sourceMedia.some(x=>x.medium_family===row.medium_family&&x.classification===row.classification
+    &&x.cut_out_strength_min_brix===row.cut_out_strength_min_brix&&x.cut_out_strength_max_brix===row.cut_out_strength_max_brix));
+  assert.equal(row.automatically_applied,false);
+ }
+ quality20Rows+=item.quality_criteria.length+item.qualified_packing_media_brix.length;
+ chapterQuality20ById.set(p.id,item);
+}
+assert.equal(quality20Rows,75);
 assert.equal(index.products.length, 533);
 assert.equal(new Set(index.products.map(p=>p.id)).size, 533);
 assert.equal(special.routes.length, 58);
@@ -2098,6 +2146,13 @@ const products = index.products.map(p => {
     if(route.compliance_status === "complete" || route.compliance_pass_enabled === true) throw new Error("Special route incorrectly asserts compliance: " + p.id);
   }
   const contaminantEvidence=contaminantEvidenceForProduct(p);
+  const sourcePinnedChapterQuality=chapterQuality20ById.get(p.id)||null;
+  if(sourcePinnedChapterQuality){
+   assert.notEqual(contaminantEvidence.status,"some_exact_product_evidence_not_full_coverage",
+     "20 current quality-only identities must not be promoted to contaminant partial: "+p.id);
+   tally("chapter_fssr_2026_10_11_20_quality_only","exact_source_quality_not_ctr");
+   action.push("Exact FSSR product-standard quality data is indexed with the source clause and variant/basis qualification. It is NOT a Version IX contaminant/pesticide first-source match or a compliance PASS.");
+  }
   if(contaminantEvidence.chapter_11_appendix_a_sulphite_additive_permissions){
     const scope=contaminantEvidence.chapter_11_appendix_a_sulphite_additive_permissions.type;
     tally("appendix_a_table_11_sugar_sulphites",scope);
@@ -2279,6 +2334,14 @@ const products = index.products.map(p => {
     microbiology_index_status:micro,
     direct_chapter_microbiology_criteria:chapterMicrobiologyRows,
     contaminant_evidence_index:contaminantEvidence,
+    source_pinned_chapter_quality_review_2026_10_11:sourcePinnedChapterQuality?{
+      source_url:sourcePinnedChapterQuality.official_chapter_source,
+      product_standard:p.fssr,
+      quality_numeric_rows:sourcePinnedChapterQuality.quality_criteria.length,
+      qualified_packing_media_subtypes:sourcePinnedChapterQuality.qualified_packing_media_brix.length,
+      source_quality_only_not_ctr:true,lab_compliance_pass:false,
+      contaminant_status_unchanged:true
+    }:null,
     soybean_conditional_total_aflatoxin_review:soybeanConditionalReview?{
       status:"source_verified_conditional_article_no_auto_application",
       source:soyReview.source_contaminants_url,article:soyReview.applicable_article_for_review,
