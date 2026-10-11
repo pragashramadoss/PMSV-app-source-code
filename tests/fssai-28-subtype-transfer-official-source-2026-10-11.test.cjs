@@ -25,7 +25,7 @@ test("28 exact identity-linked transfer safeguards reconcile with unchanged 533/
   assert.equal(manifest.full_compliance_achieved,0);
   assert.equal(rows.length,28);
   assert.equal(new Set(rows.map(r=>r.catalog_id)).size,28);
-  assert.deepEqual(["2.4","2.8","2.11"].map(k=>bySource[k]?.length||0),[12,11,5]);
+  assert.deepEqual(["2.3","2.4","2.8","2.11"].map(k=>bySource[k]?.length||0),[1,11,11,5]);
   assert.equal(manifest.exact_subtype_transfer_safeguard_batch_2026_10_11.first_exact_ctr_evidence_added,0);
   assert.equal(manifest.exact_subtype_transfer_safeguard_batch_2026_10_11.compliance_passes,0);
 });
@@ -67,7 +67,7 @@ test("Officially different product standards and chemical ash bases never collap
  const f=flakes.exact_subtype_transfer_safeguard_2026_10_11;
  assert.match(f.verified_identity_or_standard,/2\.3\.20/);
  assert.match(f.prohibited_limit_transfer,/routing mismatch/);
- assert.match(notice(byId.get(flakes.catalog_id)),/FSSAI named-standard routing discrepancy/);
+ assert.match(notice(byId.get(flakes.catalog_id)),/FSSAI 2\.3\.20 route corrected/);
  const cube=rows.find(r=>r.catalog_id==="11-11-1-cube-sugar");
  const c=cube.exact_subtype_transfer_safeguard_2026_10_11;
  assert.match(c.verified_identity_or_standard,/TOTAL ash/);

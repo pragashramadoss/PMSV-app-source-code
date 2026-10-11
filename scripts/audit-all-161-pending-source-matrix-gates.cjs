@@ -108,7 +108,7 @@ for(const item of m.records){
   conditional_commodity_reference:special?{
    pesticide:special.pesticide,article:special.source_article,reference:special.source_mrl,
    unit:special.unit,applied:false}:null,
-  unresolved_exact_fssr_clash:!!mismatch
+  unresolved_exact_fssr_clash:!!mismatch&&!item.official_standard_route_correction_2026_10_11
  });
  const activeReview=reviewFields.filter(([field])=>!!item[field]);
  assert.equal(activeReview.length,1,"Exactly one current-round five-question matrix for "+p.id);
@@ -183,14 +183,14 @@ assert.equal(vending,1);
 assert.deepEqual(groups,{chapter_2_3:43,previous_81:70,final_17:13});
 assert.equal(Object.values(families).reduce((a,b)=>a+b,0),126);
 assert.equal(checkpoints.filter(x=>x.conditional_commodity_reference).length,2);
-assert.equal(checkpoints.filter(x=>x.unresolved_exact_fssr_clash).length,1);
+assert.equal(checkpoints.filter(x=>x.unresolved_exact_fssr_clash).length,0);
 const result={
  schema_version:"1.0",as_of:currentDate,products_total:533,
  partial_exact_evidence:407,pending_exact_source_evidence:126,
  documented_detailed_source_identity_applicability_reviews:126,
  disposition_buckets:groups,regulatory_families:families,
  source_qualifications_not_numeric_approvals:true,
- exact_regulatory_route_mismatches_requiring_resolution:1,
+ exact_regulatory_route_mismatches_requiring_resolution:0,
  historical_2026_10_10_conditional_commodity_references_not_applied:2,
  source_qualifier_questions_2026_10_11:questions,
  review_groups_2026_10_11:reviewCounts,
