@@ -1,0 +1,1047 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-10-11",
+  "source_policy": "Official FSSAI chapters only",
+  "catalogue_count": 533,
+  "partial_exact_ctr": 412,
+  "pending_first_exact_ctr": 121,
+  "full_compliance_passes": 0,
+  "source_reviewed_identity_count": 6,
+  "source_criteria_count": 49,
+  "identity_and_finished_form_confirmation_required": true,
+  "all_quality_values_not_contaminant_mrl": true,
+  "regulatory_amendments_and_sample_testing_still_required": true,
+  "records": [
+    {
+      "catalog_id": "11-11-1-edible-lactose",
+      "product_name": "Edible Lactose",
+      "fssr": "2.1.20",
+      "fcs": "11.1.4",
+      "source_rule_key": "2.1.20",
+      "source_rule_name": "Standards for Edible Lactose",
+      "source_chapter": "2.1",
+      "source_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
+      "official_fssai_only": true,
+      "source_snapshot": [
+        {
+          "variant": "Edible Lactose",
+          "moisture_max_pct": 6,
+          "lactose_db_min_pct": 99,
+          "sulphated_ash_max_pct": 0.3,
+          "ph_min": 4.5,
+          "ph_max": 7,
+          "scorched_particle_max": "Disc B"
+        }
+      ],
+      "quality_criteria": [
+        {
+          "subtype": "Edible Lactose",
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 6,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            0,
+            "moisture_max_pct"
+          ],
+          "source_expected": 6
+        },
+        {
+          "subtype": "Edible Lactose",
+          "parameter": "Lactose (dry basis)",
+          "operator": ">=",
+          "value": 99,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            0,
+            "lactose_db_min_pct"
+          ],
+          "source_expected": 99
+        },
+        {
+          "subtype": "Edible Lactose",
+          "parameter": "Sulphated ash",
+          "operator": "<=",
+          "value": 0.3,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            0,
+            "sulphated_ash_max_pct"
+          ],
+          "source_expected": 0.3
+        },
+        {
+          "subtype": "Edible Lactose",
+          "parameter": "pH — lower bound",
+          "operator": ">=",
+          "value": 4.5,
+          "unit": "pH",
+          "source_path": [
+            "composition",
+            0,
+            "ph_min"
+          ],
+          "source_expected": 4.5
+        },
+        {
+          "subtype": "Edible Lactose",
+          "parameter": "pH — upper bound",
+          "operator": "<=",
+          "value": 7,
+          "unit": "pH",
+          "source_path": [
+            "composition",
+            0,
+            "ph_max"
+          ],
+          "source_expected": 7
+        },
+        {
+          "subtype": "Edible Lactose",
+          "parameter": "Scorched particles",
+          "operator": "<=",
+          "value": "Disc B",
+          "unit": "grade",
+          "source_path": [
+            "composition",
+            0,
+            "scorched_particle_max"
+          ],
+          "source_expected": "Disc B"
+        }
+      ],
+      "source_scope": "FSSR_product_specific_quality_only_NOT_CTR",
+      "confirmed_subtype": false,
+      "auto_apply_to_contaminant_engine": false,
+      "full_lab_compliance_pass": false,
+      "contaminant_pesticide_first_source_promoted": false
+    },
+    {
+      "catalog_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+      "product_name": "Cow or Buffalo Colostrum and Colostrum Products",
+      "fssr": "2.1.23",
+      "fcs": "100",
+      "source_rule_key": "2.1.23",
+      "source_rule_name": "Cow or Buffalo Colostrum and Colostrum Products",
+      "source_chapter": "2.1",
+      "source_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
+      "official_fssai_only": true,
+      "source_snapshot": [
+        {
+          "variant": "Colostrum",
+          "moisture_max_pct": 80,
+          "protein_min_pct": 7,
+          "fat_min_pct": 4,
+          "lactoferrin_min_pct": 0.2,
+          "immunoglobulins_g_igg_min_pct": 1.8
+        },
+        {
+          "variant": "Colostrum Powder",
+          "moisture_max_pct": 4,
+          "protein_min_pct": 40,
+          "fat_min_pct": 17.5,
+          "total_ash_db_max_pct": 9,
+          "lactoferrin_min_pct": 1.2,
+          "scorched_particles_max": "Disc B (15 mg)",
+          "immunoglobulins_g_igg_min_pct": 8.5
+        }
+      ],
+      "quality_criteria": [
+        {
+          "subtype": "Colostrum",
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 80,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            0,
+            "moisture_max_pct"
+          ],
+          "source_expected": 80
+        },
+        {
+          "subtype": "Colostrum",
+          "parameter": "Protein",
+          "operator": ">=",
+          "value": 7,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            0,
+            "protein_min_pct"
+          ],
+          "source_expected": 7
+        },
+        {
+          "subtype": "Colostrum",
+          "parameter": "Fat",
+          "operator": ">=",
+          "value": 4,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            0,
+            "fat_min_pct"
+          ],
+          "source_expected": 4
+        },
+        {
+          "subtype": "Colostrum",
+          "parameter": "Lactoferrin",
+          "operator": ">=",
+          "value": 0.2,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            0,
+            "lactoferrin_min_pct"
+          ],
+          "source_expected": 0.2
+        },
+        {
+          "subtype": "Colostrum",
+          "parameter": "Immunoglobulins-G (IgG)",
+          "operator": ">=",
+          "value": 1.8,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            0,
+            "immunoglobulins_g_igg_min_pct"
+          ],
+          "source_expected": 1.8
+        },
+        {
+          "subtype": "Colostrum Powder",
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 4,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            1,
+            "moisture_max_pct"
+          ],
+          "source_expected": 4
+        },
+        {
+          "subtype": "Colostrum Powder",
+          "parameter": "Protein",
+          "operator": ">=",
+          "value": 40,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            1,
+            "protein_min_pct"
+          ],
+          "source_expected": 40
+        },
+        {
+          "subtype": "Colostrum Powder",
+          "parameter": "Fat",
+          "operator": ">=",
+          "value": 17.5,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            1,
+            "fat_min_pct"
+          ],
+          "source_expected": 17.5
+        },
+        {
+          "subtype": "Colostrum Powder",
+          "parameter": "Total ash (dry basis)",
+          "operator": "<=",
+          "value": 9,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            1,
+            "total_ash_db_max_pct"
+          ],
+          "source_expected": 9
+        },
+        {
+          "subtype": "Colostrum Powder",
+          "parameter": "Lactoferrin",
+          "operator": ">=",
+          "value": 1.2,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            1,
+            "lactoferrin_min_pct"
+          ],
+          "source_expected": 1.2
+        },
+        {
+          "subtype": "Colostrum Powder",
+          "parameter": "Scorched particles",
+          "operator": "<=",
+          "value": "Disc B (15 mg)",
+          "unit": "grade",
+          "source_path": [
+            "composition",
+            1,
+            "scorched_particles_max"
+          ],
+          "source_expected": "Disc B (15 mg)"
+        },
+        {
+          "subtype": "Colostrum Powder",
+          "parameter": "Immunoglobulins-G (IgG)",
+          "operator": ">=",
+          "value": 8.5,
+          "unit": "% by mass",
+          "source_path": [
+            "composition",
+            1,
+            "immunoglobulins_g_igg_min_pct"
+          ],
+          "source_expected": 8.5
+        }
+      ],
+      "source_scope": "FSSR_product_specific_quality_only_NOT_CTR",
+      "confirmed_subtype": false,
+      "auto_apply_to_contaminant_engine": false,
+      "full_lab_compliance_pass": false,
+      "contaminant_pesticide_first_source_promoted": false
+    },
+    {
+      "catalog_id": "06-06-2-custard-powder",
+      "product_name": "Custard powder",
+      "fssr": "2.4.9",
+      "fcs": "06.2.1",
+      "source_rule_key": "2.4.9",
+      "source_rule_name": "Custard Powder",
+      "source_chapter": "2.4",
+      "source_standard_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf",
+      "official_fssai_only": true,
+      "source_snapshot": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12.5,
+          "unit": "%"
+        },
+        {
+          "parameter": "Total ash excluding added common salt",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% on dry basis"
+        },
+        {
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% on dry basis"
+        }
+      ],
+      "quality_criteria": [
+        {
+          "subtype": "Custard powder",
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12.5,
+          "unit": "%",
+          "source_path": [
+            "composition",
+            0
+          ],
+          "source_expected": {
+            "parameter": "Moisture",
+            "operator": "<=",
+            "value": 12.5,
+            "unit": "%"
+          }
+        },
+        {
+          "subtype": "Custard powder",
+          "parameter": "Total ash excluding added common salt",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% on dry basis",
+          "source_path": [
+            "composition",
+            1
+          ],
+          "source_expected": {
+            "parameter": "Total ash excluding added common salt",
+            "operator": "<=",
+            "value": 0.5,
+            "unit": "% on dry basis"
+          }
+        },
+        {
+          "subtype": "Custard powder",
+          "parameter": "Acid insoluble ash",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% on dry basis",
+          "source_path": [
+            "composition",
+            2
+          ],
+          "source_expected": {
+            "parameter": "Acid insoluble ash",
+            "operator": "<=",
+            "value": 0.1,
+            "unit": "% on dry basis"
+          }
+        }
+      ],
+      "source_scope": "FSSR_product_specific_quality_only_NOT_CTR",
+      "confirmed_subtype": false,
+      "auto_apply_to_contaminant_engine": false,
+      "full_lab_compliance_pass": false,
+      "contaminant_pesticide_first_source_promoted": false
+    },
+    {
+      "catalog_id": "11-11-1-khandsari-sugar",
+      "product_name": "Khandsari Sugar",
+      "fssr": "2.8.1(3)",
+      "fcs": "11.1.3",
+      "source_rule_key": "2.8.1(3)",
+      "source_rule_name": "Khandsari Sugar",
+      "source_chapter": "2.8",
+      "source_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20(Sweetening%20agents%20including%20Honey).pdf",
+      "official_fssai_only": true,
+      "source_snapshot": [
+        {
+          "name": "Khandsari Sugar (Sulphur Sugar)",
+          "composition": [
+            {
+              "parameter": "Extraneous matter",
+              "operator": "<=",
+              "value": 0.25,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Moisture",
+              "operator": "<=",
+              "value": 1.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Ash insoluble in dilute HCl",
+              "operator": "<=",
+              "value": 0.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Sucrose",
+              "operator": ">=",
+              "value": 96.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Conductivity in 5% solution at 30°C",
+              "operator": "range",
+              "min": 100,
+              "max": 300,
+              "unit": "10^-6 mho/cm²"
+            },
+            {
+              "parameter": "Calcium oxide",
+              "operator": "<=",
+              "value": 100,
+              "unit": "mg/100 g"
+            }
+          ]
+        },
+        {
+          "name": "Khandsari Sugar (Desi)",
+          "composition": [
+            {
+              "parameter": "Extraneous matter",
+              "operator": "<=",
+              "value": 0.25,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Moisture",
+              "operator": "<=",
+              "value": 1.5,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Ash insoluble in dilute HCl",
+              "operator": "<=",
+              "value": 0.7,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Sucrose",
+              "operator": ">=",
+              "value": 93,
+              "unit": "% by weight"
+            },
+            {
+              "parameter": "Conductivity in 5% solution at 30°C",
+              "operator": "<=",
+              "value": 100,
+              "unit": "10^-6 mho/cm²"
+            },
+            {
+              "parameter": "Calcium oxide",
+              "operator": "<=",
+              "value": 50,
+              "unit": "mg/100 g"
+            }
+          ]
+        }
+      ],
+      "quality_criteria": [
+        {
+          "subtype": "Khandsari Sugar (Sulphur Sugar)",
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 0.25,
+          "unit": "% by weight",
+          "source_path": [
+            "variants",
+            0,
+            "composition",
+            0
+          ],
+          "source_expected": {
+            "parameter": "Extraneous matter",
+            "operator": "<=",
+            "value": 0.25,
+            "unit": "% by weight"
+          }
+        },
+        {
+          "subtype": "Khandsari Sugar (Sulphur Sugar)",
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight",
+          "source_path": [
+            "variants",
+            0,
+            "composition",
+            1
+          ],
+          "source_expected": {
+            "parameter": "Moisture",
+            "operator": "<=",
+            "value": 1.5,
+            "unit": "% by weight"
+          }
+        },
+        {
+          "subtype": "Khandsari Sugar (Sulphur Sugar)",
+          "parameter": "Ash insoluble in dilute HCl",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by weight",
+          "source_path": [
+            "variants",
+            0,
+            "composition",
+            2
+          ],
+          "source_expected": {
+            "parameter": "Ash insoluble in dilute HCl",
+            "operator": "<=",
+            "value": 0.5,
+            "unit": "% by weight"
+          }
+        },
+        {
+          "subtype": "Khandsari Sugar (Sulphur Sugar)",
+          "parameter": "Sucrose",
+          "operator": ">=",
+          "value": 96.5,
+          "unit": "% by weight",
+          "source_path": [
+            "variants",
+            0,
+            "composition",
+            3
+          ],
+          "source_expected": {
+            "parameter": "Sucrose",
+            "operator": ">=",
+            "value": 96.5,
+            "unit": "% by weight"
+          }
+        },
+        {
+          "subtype": "Khandsari Sugar (Sulphur Sugar)",
+          "parameter": "Conductivity in 5% solution at 30°C",
+          "operator": "range",
+          "value": [
+            100,
+            300
+          ],
+          "unit": "10^-6 mho/cm²",
+          "source_path": [
+            "variants",
+            0,
+            "composition",
+            4
+          ],
+          "source_expected": {
+            "parameter": "Conductivity in 5% solution at 30°C",
+            "operator": "range",
+            "min": 100,
+            "max": 300,
+            "unit": "10^-6 mho/cm²"
+          }
+        },
+        {
+          "subtype": "Khandsari Sugar (Sulphur Sugar)",
+          "parameter": "Calcium oxide",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/100 g",
+          "source_path": [
+            "variants",
+            0,
+            "composition",
+            5
+          ],
+          "source_expected": {
+            "parameter": "Calcium oxide",
+            "operator": "<=",
+            "value": 100,
+            "unit": "mg/100 g"
+          }
+        },
+        {
+          "subtype": "Khandsari Sugar (Desi)",
+          "parameter": "Extraneous matter",
+          "operator": "<=",
+          "value": 0.25,
+          "unit": "% by weight",
+          "source_path": [
+            "variants",
+            1,
+            "composition",
+            0
+          ],
+          "source_expected": {
+            "parameter": "Extraneous matter",
+            "operator": "<=",
+            "value": 0.25,
+            "unit": "% by weight"
+          }
+        },
+        {
+          "subtype": "Khandsari Sugar (Desi)",
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% by weight",
+          "source_path": [
+            "variants",
+            1,
+            "composition",
+            1
+          ],
+          "source_expected": {
+            "parameter": "Moisture",
+            "operator": "<=",
+            "value": 1.5,
+            "unit": "% by weight"
+          }
+        },
+        {
+          "subtype": "Khandsari Sugar (Desi)",
+          "parameter": "Ash insoluble in dilute HCl",
+          "operator": "<=",
+          "value": 0.7,
+          "unit": "% by weight",
+          "source_path": [
+            "variants",
+            1,
+            "composition",
+            2
+          ],
+          "source_expected": {
+            "parameter": "Ash insoluble in dilute HCl",
+            "operator": "<=",
+            "value": 0.7,
+            "unit": "% by weight"
+          }
+        },
+        {
+          "subtype": "Khandsari Sugar (Desi)",
+          "parameter": "Sucrose",
+          "operator": ">=",
+          "value": 93,
+          "unit": "% by weight",
+          "source_path": [
+            "variants",
+            1,
+            "composition",
+            3
+          ],
+          "source_expected": {
+            "parameter": "Sucrose",
+            "operator": ">=",
+            "value": 93,
+            "unit": "% by weight"
+          }
+        },
+        {
+          "subtype": "Khandsari Sugar (Desi)",
+          "parameter": "Conductivity in 5% solution at 30°C",
+          "operator": "<=",
+          "value": 100,
+          "unit": "10^-6 mho/cm²",
+          "source_path": [
+            "variants",
+            1,
+            "composition",
+            4
+          ],
+          "source_expected": {
+            "parameter": "Conductivity in 5% solution at 30°C",
+            "operator": "<=",
+            "value": 100,
+            "unit": "10^-6 mho/cm²"
+          }
+        },
+        {
+          "subtype": "Khandsari Sugar (Desi)",
+          "parameter": "Calcium oxide",
+          "operator": "<=",
+          "value": 50,
+          "unit": "mg/100 g",
+          "source_path": [
+            "variants",
+            1,
+            "composition",
+            5
+          ],
+          "source_expected": {
+            "parameter": "Calcium oxide",
+            "operator": "<=",
+            "value": 50,
+            "unit": "mg/100 g"
+          }
+        }
+      ],
+      "source_scope": "FSSR_product_specific_quality_only_NOT_CTR",
+      "confirmed_subtype": false,
+      "auto_apply_to_contaminant_engine": false,
+      "full_lab_compliance_pass": false,
+      "contaminant_pesticide_first_source_promoted": false
+    },
+    {
+      "catalog_id": "11-11-1-dried-glucose-syrup",
+      "product_name": "Dried Glucose Syrup",
+      "fssr": "2.8.7",
+      "fcs": "11.1.3.1",
+      "source_rule_key": "2.8.7",
+      "source_rule_name": "Dried Glucose Syrup",
+      "source_chapter": "2.8",
+      "source_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20(Sweetening%20agents%20including%20Honey).pdf",
+      "official_fssai_only": true,
+      "source_snapshot": [
+        {
+          "parameter": "Total solids",
+          "operator": ">=",
+          "value": 93,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Reducing sugar content",
+          "operator": ">=",
+          "value": 20,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Sulphated ash",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight"
+        }
+      ],
+      "quality_criteria": [
+        {
+          "subtype": "Dried Glucose Syrup",
+          "parameter": "Total solids",
+          "operator": ">=",
+          "value": 93,
+          "unit": "% by weight",
+          "source_path": [
+            "composition",
+            0
+          ],
+          "source_expected": {
+            "parameter": "Total solids",
+            "operator": ">=",
+            "value": 93,
+            "unit": "% by weight"
+          }
+        },
+        {
+          "subtype": "Dried Glucose Syrup",
+          "parameter": "Reducing sugar content",
+          "operator": ">=",
+          "value": 20,
+          "unit": "% by weight",
+          "source_path": [
+            "composition",
+            1
+          ],
+          "source_expected": {
+            "parameter": "Reducing sugar content",
+            "operator": ">=",
+            "value": 20,
+            "unit": "% by weight"
+          }
+        },
+        {
+          "subtype": "Dried Glucose Syrup",
+          "parameter": "Sulphated ash",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by weight",
+          "source_path": [
+            "composition",
+            2
+          ],
+          "source_expected": {
+            "parameter": "Sulphated ash",
+            "operator": "<=",
+            "value": 1,
+            "unit": "% by weight"
+          }
+        }
+      ],
+      "source_scope": "FSSR_product_specific_quality_only_NOT_CTR",
+      "confirmed_subtype": false,
+      "auto_apply_to_contaminant_engine": false,
+      "full_lab_compliance_pass": false,
+      "contaminant_pesticide_first_source_promoted": false
+    },
+    {
+      "catalog_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "fssr": "2.7.8",
+      "fcs": "05.1.1",
+      "source_rule_key": "2.7.8",
+      "source_rule_name": "Cocoa Mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "source_chapter": "2.7",
+      "source_standard_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+      "official_fssai_only": true,
+      "source_snapshot": [
+        {
+          "name": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "moisture_max_pct": 10,
+          "cocoa_shell_and_germ_max_pct_fat_free_dry_matter": 5,
+          "cocoa_shell_max_pct_alkali_free": 1.75,
+          "cocoa_butter_pct_range": [
+            47,
+            60
+          ],
+          "alkalinity_total_ash_as_k2o_max_pct_moisture_fat_free": 12,
+          "acid_insoluble_ash_max_pct_moisture_fat_free": 1,
+          "crude_fibre_max_pct_moisture_fat_free": 7
+        },
+        {
+          "name": "Cocoa Cake",
+          "moisture_max_pct": 10,
+          "cocoa_shell_and_germ_max_pct_fat_free_dry_matter": 5,
+          "cocoa_shell_max_pct_alkali_free": 4.5,
+          "alkalinity_total_ash_as_k2o_max_pct_moisture_fat_free": 12,
+          "acid_insoluble_ash_max_pct_moisture_fat_free": 1,
+          "crude_fibre_max_pct_moisture_fat_free": 7
+        }
+      ],
+      "quality_criteria": [
+        {
+          "subtype": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            0,
+            "moisture_max_pct"
+          ],
+          "source_expected": 10
+        },
+        {
+          "subtype": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "parameter": "Cocoa shell and germ (fat-free dry matter)",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            0,
+            "cocoa_shell_and_germ_max_pct_fat_free_dry_matter"
+          ],
+          "source_expected": 5
+        },
+        {
+          "subtype": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "parameter": "Cocoa shell (alkali-free)",
+          "operator": "<=",
+          "value": 1.75,
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            0,
+            "cocoa_shell_max_pct_alkali_free"
+          ],
+          "source_expected": 1.75
+        },
+        {
+          "subtype": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "parameter": "Cocoa butter",
+          "operator": "range",
+          "value": [
+            47,
+            60
+          ],
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            0,
+            "cocoa_butter_pct_range"
+          ],
+          "source_expected": [
+            47,
+            60
+          ]
+        },
+        {
+          "subtype": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "parameter": "Alkalinity of total ash as K2O (moisture- and fat-free)",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            0,
+            "alkalinity_total_ash_as_k2o_max_pct_moisture_fat_free"
+          ],
+          "source_expected": 12
+        },
+        {
+          "subtype": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "parameter": "Acid insoluble ash (moisture- and fat-free)",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            0,
+            "acid_insoluble_ash_max_pct_moisture_fat_free"
+          ],
+          "source_expected": 1
+        },
+        {
+          "subtype": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "parameter": "Crude fibre (moisture- and fat-free)",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            0,
+            "crude_fibre_max_pct_moisture_fat_free"
+          ],
+          "source_expected": 7
+        },
+        {
+          "subtype": "Cocoa Cake",
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 10,
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            1,
+            "moisture_max_pct"
+          ],
+          "source_expected": 10
+        },
+        {
+          "subtype": "Cocoa Cake",
+          "parameter": "Cocoa shell and germ (fat-free dry matter)",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            1,
+            "cocoa_shell_and_germ_max_pct_fat_free_dry_matter"
+          ],
+          "source_expected": 5
+        },
+        {
+          "subtype": "Cocoa Cake",
+          "parameter": "Cocoa shell (alkali-free)",
+          "operator": "<=",
+          "value": 4.5,
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            1,
+            "cocoa_shell_max_pct_alkali_free"
+          ],
+          "source_expected": 4.5
+        },
+        {
+          "subtype": "Cocoa Cake",
+          "parameter": "Alkalinity of total ash as K2O (moisture- and fat-free)",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            1,
+            "alkalinity_total_ash_as_k2o_max_pct_moisture_fat_free"
+          ],
+          "source_expected": 12
+        },
+        {
+          "subtype": "Cocoa Cake",
+          "parameter": "Acid insoluble ash (moisture- and fat-free)",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            1,
+            "acid_insoluble_ash_max_pct_moisture_fat_free"
+          ],
+          "source_expected": 1
+        },
+        {
+          "subtype": "Cocoa Cake",
+          "parameter": "Crude fibre (moisture- and fat-free)",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% by mass",
+          "source_path": [
+            "variants",
+            1,
+            "crude_fibre_max_pct_moisture_fat_free"
+          ],
+          "source_expected": 7
+        }
+      ],
+      "source_scope": "FSSR_product_specific_quality_only_NOT_CTR",
+      "confirmed_subtype": false,
+      "auto_apply_to_contaminant_engine": false,
+      "full_lab_compliance_pass": false,
+      "contaminant_pesticide_first_source_promoted": false
+    }
+  ]
+}
