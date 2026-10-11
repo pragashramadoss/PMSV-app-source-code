@@ -14358,6 +14358,65 @@
         "all_effective_amendments_reviewed": false,
         "ready_to_apply_numeric_limit": false,
         "legal_compliance_pass": false
+      },
+      "official_fssai_fat_spread_nickel_2026_10_11": {
+        "catalog_id": "02-02-2-fat-spread",
+        "product_name": "Fat spread",
+        "fssr": "2.2.5(3)",
+        "official_product_standard_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats_oils_and_fat_emulsions.pdf",
+        "official_ctr_ix_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "product_standard_pdf_pages_one_based": [
+          45,
+          46
+        ],
+        "ctr_ix_nickel_pdf_page_one_based": 13,
+        "exact_nickel_ctr_named_article": "All hydrogenated, partially hydrogenated, interesterified vegetable oils and fats such as vanaspati, table margarine, bakery/industrial margarine, bakery shortening, fat spread and partially hydrogenated soyabean oil",
+        "conditional_nickel_mg_per_kg": 1.5,
+        "nickel_condition": "Only the fat spread with hydrogenated, partially hydrogenated or interesterified vegetable fat matrices covered by the grouped nickel article; the broad FoSCoS/FSSR fat-spread name alone also includes milk-fat and unhydrogenated-refined-fat spreads.",
+        "official_standard_fat_spread_types": [
+          {
+            "name": "Milk fat spread",
+            "defining_fat": "exclusively milk fat",
+            "nickel_1_5_source_not_assumed": true
+          },
+          {
+            "name": "Mixed fat spread",
+            "defining_fat": "milk fat plus one or more hydrogenated, unhydrogenated refined vegetable oils or interesterified fats",
+            "nickel_1_5_source_not_assumed": true
+          },
+          {
+            "name": "Vegetable fat spread",
+            "defining_fat": "two or more hydrogenated, unhydrogenated refined vegetable oils or interesterified fats",
+            "nickel_1_5_source_not_assumed": true
+          }
+        ],
+        "source_qualified_product_quality_criteria": [
+          {
+            "parameter": "Finished fat content",
+            "minimum": 40,
+            "maximum": 80,
+            "unit": "% by weight",
+            "type": "FSSR quality not CTR nickel"
+          },
+          {
+            "parameter": "Moisture",
+            "minimum": 16,
+            "maximum": 56,
+            "unit": "% by weight",
+            "type": "FSSR quality not CTR nickel"
+          },
+          {
+            "parameter": "Trans fatty acids for vegetable or mixed fat spread",
+            "maximum": 2,
+            "unit": "% by weight effective since 01.01.2022",
+            "type": "FSSR quality not CTR nickel"
+          }
+        ],
+        "processing_hydrogenation_evidence_verified": false,
+        "actual_subtype_selected": false,
+        "complete_contaminant_panel_source_checked": false,
+        "auto_apply_nickel_numeric_mrl": false,
+        "all_legal_compliance_pass": false
       }
     },
     {
@@ -14964,5 +15023,13 @@
     "unresolved_unchanged": 126,
     "contamination_compliance_passes": 0,
     "all_numeric_entries_quality_not_pesticide_mrl": true
+  },
+  "fat_spread_nickel_review_summary_2026_10_11": {
+    "identities": 1,
+    "conditional_metal_source_rows": 1,
+    "non_automatic_named_limit_mgkg": 1.5,
+    "quality_parameters": 3,
+    "first_exact_unconditional_contaminant_matches_promoted": 0,
+    "products_still_pending": 126
   }
 }
