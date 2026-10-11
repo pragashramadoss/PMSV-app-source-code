@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+"use strict";
+const test=require("node:test"),assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
+const root=path.resolve(__dirname,".."),read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const m=read("fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json");
+const cat=read("fssai-product-helper-preview-01/data/standard-search-index-v1.json").products;
+const row=m.records.find(r=>r.catalog_id==="02-02-2-fat-spread"),p=cat.find(x=>x.id===row.catalog_id);
+const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
+const st=html.indexOf("function pendingContaminantReviewNotice(p){"),en=html.indexOf("function renderProductContaminants(){",st);
+const ctx=vm.createContext({contaminantsPendingReviewDb:m,esc:x=>String(x).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")});
+vm.runInContext(html.slice(st,en),ctx);
+const ui=p=>vm.runInContext("pendingContaminantReviewNotice("+JSON.stringify(p)+")",ctx);
+test("Exact FSSR 2.2.5(3) fat spread only conditionally matches Version IX Nickel hydrogenated fat 1.5 mg/kg",()=>{
+ assert.equal(m.pending,126);assert.equal(m.verified_evidence_added,138);assert.ok(p);
+ const q=row.official_fssai_fat_spread_nickel_2026_10_11;
+ assert.ok(q);
+ assert.equal(q.catalog_id,p.id);assert.equal(q.product_name,p.name);assert.equal(q.fssr,p.fssr);
+ assert.equal(q.conditional_nickel_mg_per_kg,1.5);
+ assert.equal(q.ctr_ix_nickel_pdf_page_one_based,13);
+ assert.match(q.exact_nickel_ctr_named_article,/All hydrogenated, partially hydrogenated, interesterified vegetable oils/);
+ assert.match(q.exact_nickel_ctr_named_article,/fat spread/);
+ assert.match(q.nickel_condition,/milk-fat and unhydrogenated-refined-fat/);
+ assert.equal(q.processing_hydrogenation_evidence_verified,false);
+ assert.equal(q.actual_subtype_selected,false);
+ assert.equal(q.auto_apply_nickel_numeric_mrl,false);
+ assert.equal(q.all_legal_compliance_pass,false);
+ assert.equal(row.auto_apply_numeric_limit,false);
+ assert.equal(row.unconditional_compliance_pass,false);
+ assert.equal(q.official_standard_fat_spread_types.length,3);
+ assert.deepEqual(q.official_standard_fat_spread_types.map(x=>x.name),["Milk fat spread","Mixed fat spread","Vegetable fat spread"]);
+ const shown=ui(p);
+ assert.match(shown,/Fat Spread Nickel 1\.5 mg\/kg — CONDITIONAL PROCESS ARTICLE, NOT APPLIED/);
+ assert.match(shown,/do not assume nickel value/);
+ assert.match(shown,/Actual oil processing, phase and contaminant testing unresolved/);
+ assert.doesNotMatch(ui({...p,name:"Butter"}),/Fat Spread Nickel/);
+});
+test("Fat 40-80%, moisture 16-56% and max trans fat 2% are source QUALITY, not nickel MRL",()=>{
+ const q=row.official_fssai_fat_spread_nickel_2026_10_11,x=q.source_qualified_product_quality_criteria;
+ assert.equal(x.length,3);
+ assert.deepEqual([x[0].minimum,x[0].maximum],[40,80]);
+ assert.deepEqual([x[1].minimum,x[1].maximum],[16,56]);
+ assert.equal(x[2].maximum,2);
+ assert.match(x[2].unit,/01\.01\.2022/);
+ for(const a of x)assert.equal(a.type,"FSSR quality not CTR nickel");
+ assert.equal(m.fat_spread_nickel_review_summary_2026_10_11.first_exact_unconditional_contaminant_matches_promoted,0);
+ assert.match(ui(p),/NOT a CTR nickel test/);
+});
