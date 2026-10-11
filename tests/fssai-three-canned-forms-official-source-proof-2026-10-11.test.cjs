@@ -68,3 +68,24 @@ test("Changed regulatory limits, product name, or Tin article fails closed, neve
  ctx.pmsvThreeCannedSubtypeDb.records[1].subtype_source_rows[0].tin_limit=1;
  assert.match(show(id),/withheld/);ctx.pmsvThreeCannedSubtypeDb=before;
 });
+
+test("A locally selected subtype shows only a conditional article and never grants an automatic PASS",()=>{
+ const id=data.records[0].catalog_id;
+ const p=byId.get(id);
+ ctx.selectedCatalogProductForContaminants=()=>p;
+ ctx.renderProductContaminants=()=>{ctx.renderTriggered=(ctx.renderTriggered||0)+1;};
+ assert.match(show(id),/Not yet confirmed/);
+ vm.runInContext('pmsvSetCannedSubtypeForCurrentProduct("canned_fruit_cocktail")',ctx);
+ const chosen=show(id);
+ assert.match(chosen,/Manufacturer-declared matching article only/);
+ assert.match(chosen,/NO COMPLIANCE PASS/);
+ assert.match(chosen,/Selection is not documentary verification/);
+ assert.ok(ctx.renderTriggered>=1);
+ const other=data.records[1].catalog_id;
+ assert.match(show(other),/Not yet confirmed/);
+ vm.runInContext('pmsvSetCannedSubtypeForCurrentProduct("__not_canned__")',ctx);
+ assert.match(show(id),/these canned-specific limits have not been assigned/);
+ assert.doesNotMatch(show(id),/Manufacturer-declared matching article only/);
+ vm.runInContext('pmsvSetCannedSubtypeForCurrentProduct("canned_mangoes")',ctx);
+ assert.match(show(id),/Non-canned form/);
+});

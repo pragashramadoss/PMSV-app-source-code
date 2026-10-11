@@ -1,6 +1,19 @@
 "use strict";
 // Positive *canned subtype route* evidence, not actual user product selection or PASS.
 var pmsvThreeCannedSubtypeDb=null;
+// Explicitly local and per product. A user's claim of a canned subtype is not lab verification.
+var pmsvDeclaredCannedSubtypeByProduct=Object.create(null);
+function pmsvSetCannedSubtypeForCurrentProduct(code){
+ if(typeof selectedCatalogProductForContaminants!=="function")return;
+ const p=selectedCatalogProductForContaminants();
+ const m=pmsvThreeCannedSubtypeDb?.records?.find(x=>x.catalog_id===p?.id);
+ if(!m)return;
+ const valid=new Set(["__unconfirmed__","__not_canned__",...m.subtype_source_rows.map(x=>x.selector)]);
+ if(!valid.has(code))return;
+ pmsvDeclaredCannedSubtypeByProduct[p.id]=code;
+ if(typeof renderProductContaminants==="function")renderProductContaminants();
+}
+
 async function pmsvLoadThreeCannedSubtypeProof(){
  try{
   const r=await fetch("./data/rules/fssai-three-canned-finished-subtype-source-proof-2026-10-11.json?v=20261011-3canned",{cache:"reload"});
@@ -51,12 +64,29 @@ function sourcePinnedThreeCannedVariantProofHtml(p){
        !pmsvCannedSubtypeSourceMatches(x,base))))return unavailable;
  const entry=d.records.find(x=>x.catalog_id===p.id);
  if(!entry||entry.product_name!==p.name||entry.fssr!==p.fssr||entry.fcs!==p.fcs)return unavailable;
+ const chosen=pmsvDeclaredCannedSubtypeByProduct[p.id]||"__unconfirmed__";
+ const recognized=new Set(["__unconfirmed__","__not_canned__",...entry.subtype_source_rows.map(x=>x.selector)]);
+ if(!recognized.has(chosen))return unavailable;
+ const specific=entry.subtype_source_rows.find(x=>x.selector===chosen)||null;
+ const opt=[
+  ['__unconfirmed__','Not yet confirmed — no applied limits'],
+  ['__not_canned__','Not canned: bottled, flexible or aseptically packed'],
+  ...entry.subtype_source_rows.map(x=>[x.selector,'Actual canned product: '+x.lead_article])
+ ].map(([v,label])=>'<option value="'+esc(v)+'"'+(v===chosen?' selected':'')+'>'+esc(label)+'</option>').join("");
+ const formHtml='<label><b>Confirm actual finished-product identity and pack (local only):</b></label>'+
+  '<select aria-label="Actual fruit or vegetable canned variant" onchange="pmsvSetCannedSubtypeForCurrentProduct(this.value)" style="max-width:100%;width:100%;margin-top:5px;padding:8px;border-radius:6px">'+opt+'</select>';
+ const selectedHtml=specific?'<div class="notice"><b>Manufacturer-declared matching article only:</b> '+esc(specific.lead_article)+
+   '; Lead <b>'+esc(specific.lead_limit)+' '+esc(specific.lead_unit)+'</b>, Tin <b>'+esc(specific.tin_limit)+' '+esc(specific.tin_unit)+
+   '</b>. Selection is not documentary verification; product, packaging, method, other requirements and batch analysis must still be verified. <b>NO COMPLIANCE PASS.</b></div>'
+  :chosen==="__not_canned__"?'<div class="notice"><b>Non-canned form:</b> these canned-specific limits have not been assigned. Assess the actual bottled, flexible or aseptic product independently.</div>'
+  :'<div class="notice"><b>No confirmed finished canned subtype.</b> Named source rows below remain research references only, not applied limits.</div>';
  const rows=entry.subtype_source_rows.map(x=>
    '<tr><td>'+esc(x.lead_article)+'</td><td><b>'+esc(x.lead_limit)+' '+esc(x.lead_unit)+'</b></td>'+
    '<td><b>'+esc(x.tin_limit)+' '+esc(x.tin_unit)+'</b></td><td>Canned finished food only. Species and actual sealed can must be confirmed. NOT APPLIED.</td></tr>').join("");
  return '<details class="card" style="margin-top:12px"><summary><b>Official FSSAI canned-form source articles</b> — '+entry.subtype_source_rows.length+
   ' qualified subtypes; NOT APPLIED</summary>'+
   '<div class="notice"><b>Positive named subtype sources, not a confirmed production lot.</b> The product standard permits a canned version, but also bottled, flexible and aseptic packs. The canned lead and tin limits below must not be auto-applied to those other packs or to an unverified fruit/vegetable variety.</div>'+
+  formHtml+selectedHtml+
   '<div class="tablewrap"><table><thead><tr><th>Exact canned form</th><th>Lead maximum</th><th>Tin maximum</th><th>Applicability gate</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
   '<p><b>Required before application:</b> identify species and recipe, verify actual canning/packaging, sample preparation, effective amendments and every other applicable limit. No completed contaminant or laboratory PASS.</p>'+
   '<small><a href="'+esc(chapter)+'" target="_blank" rel="noopener noreferrer">Official FSSR Chapter 2.3</a> · <a href="'+esc(ctr)+'" target="_blank" rel="noopener noreferrer">Official FSSAI CTR Version IX</a></small></details>';
