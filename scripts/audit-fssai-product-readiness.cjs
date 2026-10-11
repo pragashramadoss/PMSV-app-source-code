@@ -131,7 +131,7 @@ assert.equal(appendixASugar.conditional_additive_or_no_additives_only_count,9);
 assert.equal(appendixASugar.full_contaminant_compliance_passes,0);
 assert.equal(appendixASugar.auto_apply_lab_compliance_limit,false);
 assert.equal(appendixASugar.official_appendix_a_source,appendixAV3.official_source.url);
-assert.ok(official(appendixASugar.official_appendix_a_source));
+assert.match(appendixASugar.official_appendix_a_source,/^https:\/\/(?:www\.)?fssai\.gov\.in\//);
 const appendixASugarById=new Map();
 for(const item of appendixASugar.records){
  const p=index.products.find(x=>x.id===item.catalog_id);
