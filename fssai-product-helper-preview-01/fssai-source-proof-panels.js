@@ -351,3 +351,84 @@ var pmsvVet64OriginalProofHtml=sourcePinned121ResearchProofHtml;
 sourcePinned121ResearchProofHtml=function(p){
  return pmsvVet64OriginalProofHtml(p)+pmsvVet64ProofHtml(p);
 };
+
+/* 533-product current first-source status. The older 121/118 research queues
+ * remain immutable historical evidence; this new ledger is authoritative
+ * for CURRENT inventory totals (417 partial source / 116 pending).
+ * A source match never means the tested finished-food lot is compliant. */
+var pmsvCurrent533SourceLedger=null;
+var pmsvPreviousLoadCurrent533=pmsvLoadPositiveSourceProof;
+pmsvLoadPositiveSourceProof=async function(){
+ await pmsvPreviousLoadCurrent533();
+ try{
+  const response=await fetch('./data/rules/fssai-current-first-source-533-live-ledger-417-116-2026-10-11.json?v=20261011-ledger533',{cache:'reload'});
+  if(!response.ok)throw Error('Current first-source ledger unavailable');
+  const d=await response.json();
+  if(d.schema_version!=='1.0'||d.catalogue!==533||d.partial_exact!==417||
+    d.first_source_pending!==116||d.full_compliance_approvals!==0||
+    d.previous_archived_pending!==121||d.positive_delta_count!==5||
+    d.group_reviewed_current_pending_count!==116||
+    d.status_scope!=='CURRENT_FIRST_EXACT_SOURCE_LEDGER_NOT_FINISHED_FOOD_PASS'||
+    d.official_contaminants_source!==contaminantsDb?.official_sources?.[0]?.url||
+    d.source_version!==contaminantsDb?.source_version||d.records?.length!==533||
+    d.records.filter(x=>x.source_status==='PARTIAL_EXACT_SOURCE_MATCH').length!==417||
+    d.records.filter(x=>x.source_status==='FIRST_EXACT_SOURCE_PENDING').length!==116||
+    d.records.some(x=>x.product_compliance_approval!==false||
+      x.sample_lab_pass!==false||x.complete_contaminant_panel!==false||
+      x.regulatory_coverage!=='PARTIAL_OR_PENDING')||
+    new Set(d.records.map(x=>x.catalog_id)).size!==533)
+    throw Error('Invalid current first-source ledger');
+  const historic=new Map(pmsvNext121ProofDb?.records?.map(x=>[x.catalog_id,x])||[]);
+  if(historic.size!==121||d.records.filter(x=>historic.has(x.catalog_id)&&
+       x.source_status==='PARTIAL_EXACT_SOURCE_MATCH').length!==5||
+     d.records.filter(x=>historic.has(x.catalog_id)&&
+       x.source_status==='FIRST_EXACT_SOURCE_PENDING').length!==116)
+     throw Error('Historical/current first-source source count mismatch');
+  pmsvCurrent533SourceLedger=d;
+ }catch(error){pmsvCurrent533SourceLedger=null;}
+};
+function pmsvCurrent533SourceProofValid(p){
+ const d=pmsvCurrent533SourceLedger,c=contaminantsDb;
+ if(!p||!d||!c||d.catalogue!==533||d.partial_exact!==417||
+    d.first_source_pending!==116||d.full_compliance_approvals!==0||
+    d.positive_delta_count!==5||d.source_version!==c.source_version||
+    d.official_contaminants_source!==c.official_sources?.[0]?.url||
+    d.records?.length!==533)return false;
+ const rec=d.records.find(x=>x.catalog_id===p.id);
+ if(!rec||rec.product_name!==p.name||
+    String(rec.fssr||'')!==String(p.fssr||'')||
+    String(rec.fcs||'')!==String(p.fcs||'')||
+    rec.product_compliance_approval!==false||
+    rec.sample_lab_pass!==false||rec.complete_contaminant_panel!==false||
+    rec.regulatory_coverage!=='PARTIAL_OR_PENDING')return false;
+ if(rec.source_status==='FIRST_EXACT_SOURCE_PENDING')
+  return rec.missing_first_exact_evidence===true&&rec.regulatory_source_verified_delta===null;
+ if(rec.source_status==='PARTIAL_EXACT_SOURCE_MATCH')
+  return rec.missing_first_exact_evidence===false&&
+    (rec.evidence_origin==='historical independently audited 412'&&rec.regulatory_source_verified_delta===null||
+     rec.evidence_origin==='2026-10-11 positive delta'&&
+      typeof rec.regulatory_source_verified_delta?.evidence_class==='string'&&
+      rec.regulatory_source_verified_delta?.official===d.official_contaminants_source);
+ return false;
+}
+function pmsvCurrent533SourceStatusHtml(p){
+ if(!p)return '';
+ if(!pmsvCurrent533SourceLedger)return '<div class="notice"><b>Current first-source count unavailable.</b> Verification data not loaded. Do not infer any contaminant compliance result.</div>';
+ if(!pmsvCurrent533SourceProofValid(p))return '<div class="notice"><b>Current FSSAI first-source status withheld.</b> Product identity, source or regulatory version mismatch. No automatic compliance result.</div>';
+ const d=pmsvCurrent533SourceLedger,r=d.records.find(x=>x.catalog_id===p.id);
+ const pending=r.source_status==='FIRST_EXACT_SOURCE_PENDING';
+ const status=pending?'FIRST EXACT CONTAMINANT SOURCE STILL PENDING':'PARTIAL EXACT SOURCE EVIDENCE ONLY';
+ const body=pending?'The current evidence review has not established an exact applicable contaminant article for this finished product. Source candidates displayed elsewhere are not automatically applicable.':
+  'At least one exact applicable source article was verified. This does not show a complete contaminant panel, a tested sample, or finished-product compliance.';
+ return '<details class="card" style="margin-top:12px"><summary><b>Current FSSAI source-status ledger</b> — '+esc(status)+'</summary>'+
+  '<div class="notice"><b>NOT A COMPLIANCE PASS.</b> '+esc(body)+'</div>'+
+  '<p><b>Review source:</b> '+esc(r.review_group)+'.</p>'+
+  '<p><b>Catalogue reconciliation:</b> '+esc(d.catalogue)+' identities; '+esc(d.partial_exact)+
+  ' partial first-source matches; '+esc(d.first_source_pending)+' without a first exact match; '+esc(d.full_compliance_approvals)+
+  ' approved finished-product compliance outcomes.</p>'+
+  '<small><a href="'+esc(d.official_contaminants_source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX source</a></small></details>';
+}
+var pmsvOriginalCurrent533ProofHtml=sourcePinned121ResearchProofHtml;
+sourcePinned121ResearchProofHtml=function(p){
+ return pmsvCurrent533SourceStatusHtml(p)+pmsvOriginalCurrent533ProofHtml(p);
+};
