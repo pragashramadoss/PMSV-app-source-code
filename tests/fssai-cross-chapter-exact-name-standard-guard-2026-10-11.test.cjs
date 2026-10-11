@@ -42,7 +42,7 @@ test("Rule-key consistency: all 533 search-index products retain the same direct
   for(const key of ["name","fssr","rule_file","microbiology_status"])assert.equal(row[key],p[key],p.id+" "+key);
   if(row.rule_key!==p.rule_key){
    assert.equal(row.rule_key,"2.4.6","Unapproved parent/subclause divergence "+p.id);
-   assert.match(p.rule_key,/^2\\.4\\.6\\(\\d+\\)$/,"Invalid special 2.4.6 subclause "+p.id);
+   assert.match(p.rule_key,/^2\.4\.6\(\d+\)$/,"Invalid special 2.4.6 subclause "+p.id);
    exactParentKeys++;
   }
  }
