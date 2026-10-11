@@ -8,7 +8,7 @@ const db=read(base+"rules/contaminants-v9-core.json");
 const index=read(base+"standard-search-index-v1.json").products;
 const ledger=read("audit-output/fssai-live-first-source-ledger-533.json");
 const ix=new Map(index.map(x=>[x.id,x])),pending=new Set(ledger.pending_product_details.map(x=>x.id));
-assert.deepEqual([ledger.product_count,ledger.partial_first_source_evidence,ledger.unresolved_first_source_gaps],[533,410,123]);
+assert.deepEqual([ledger.product_count,ledger.partial_first_source_evidence,ledger.unresolved_first_source_gaps],[533,412,121]);
 assert.deepEqual([data.records.length,data.mandatory_commodity_b1_overlap_candidates,data.recipe_source_gaps_or_exclusions,data.automatic_product_article_promotions],[9,4,5,0]);
 assert.equal(data.official_sources_only,true);
 assert.equal(db.source_version,"Version IX (03.02.2026)");
@@ -30,9 +30,9 @@ for(const row of data.records){
  if(row.has_b1_recipe_candidate)assert.equal(row.reference_limit_ugkg,10);
  else assert.equal(row.reference_limit_ugkg,null);
 }
-const out={catalogue:533,first_exact_pending:123,partial_exact:410,reviewed_recipes:9,
+const out={catalogue:533,first_exact_pending:121,partial_exact:412,reviewed_recipes:9,
  mandated_composition_overlap_candidates:4,source_recipe_holds:5,final_compliance_passes:0,
  article_scope_interpretation_still_required:true,records:data.records};
 fs.mkdirSync(path.join(root,"audit-output"),{recursive:true});
 fs.writeFileSync(path.join(root,"audit-output/fssai-ayurveda-nine-recipe-source-review.json"),JSON.stringify(out,null,2)+"\n");
-console.log("PASS: 9 Ayurveda recipes, 4 mandatory cereal/pulse candidate overlaps, 5 safeguards, FSSAI crop-table B1 10 ug/kg pinned; first exact gaps remain 123; no approvals");
+console.log("PASS: 9 Ayurveda recipes, 4 mandatory cereal/pulse candidate overlaps, 5 safeguards, FSSAI crop-table B1 10 ug/kg pinned; first exact gaps remain 121; no approvals");

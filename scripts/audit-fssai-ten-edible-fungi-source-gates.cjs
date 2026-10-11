@@ -9,7 +9,7 @@ const fungi=load(base+"rules/chapter-2-3-fungi-agaric-conditional-v1.json");
 const contaminantCore=load(base+"rules/contaminants-v9-core.json");
 const current=load("audit-output/fssai-live-first-source-ledger-533.json");
 const map=new Map(ix.map(x=>[x.id,x])),pending=new Set(current.pending_product_details.map(x=>x.id));
-assert.deepEqual([current.product_count,current.partial_first_source_evidence,current.unresolved_first_source_gaps],[533,410,123]);
+assert.deepEqual([current.product_count,current.partial_first_source_evidence,current.unresolved_first_source_gaps],[533,412,121]);
 assert.equal(d.records.length,10);assert.equal(d.verified_local_products,10);
 assert.equal(d.records.reduce((n,x)=>n+x.criteria.length,0),d.quality_source_rows);
 assert.equal(new Set(d.records.map(x=>x.catalog_id)).size,10);

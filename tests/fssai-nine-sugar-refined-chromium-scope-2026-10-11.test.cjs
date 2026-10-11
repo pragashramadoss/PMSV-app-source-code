@@ -69,9 +69,9 @@ test("Any source numeric/identity/module drift blocks even conditional display",
  assert.equal(verify({...p,name:"Icing Sugar"}),null);
  assert.ok(verify(p));
 });
-test("Audit keeps 410 partial/123 unresolved with all nine sugar Chromium references unpromoted",()=>{
+test("Audit keeps 412 partial/121 unresolved with all nine sugar Chromium references unpromoted",()=>{
  const report=load("audit-output/fssai-product-readiness-audit.json");
- assert.equal(report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,410);
+ assert.equal(report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,412);
  assert.equal(report.summary.counts.chapter_2_8_nine_sugar_chromium_scope_review.cube_refined_input_conditional_not_applied,1);
  assert.equal(report.summary.counts.chapter_2_8_nine_sugar_chromium_scope_review.direct_transfer_excluded,8);
  for(const r of src.records){
@@ -82,8 +82,8 @@ test("Audit keeps 410 partial/123 unresolved with all nine sugar Chromium refere
   assert.equal(p.compliance_decision,"not_established_by_route_evidence");
  }
  const ledger=load("audit-output/fssai-live-first-source-ledger-533.json");
- assert.equal(ledger.partial_first_source_evidence,410);
- assert.equal(ledger.unresolved_first_source_gaps,123);
+ assert.equal(ledger.partial_first_source_evidence,412);
+ assert.equal(ledger.unresolved_first_source_gaps,121);
 });
 
 

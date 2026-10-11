@@ -81,10 +81,10 @@ test("Fail closed on changed source value, wrong source URL, missing chapter and
  assert.equal(verify({...p,name:"Cocoa Powder"}),null);
  assert.ok(verify(p));
 });
-test("Generated readiness audit keeps 410/123 ledger; 20 quality reviews with one separate B1 partial",()=>{
+test("Generated readiness audit keeps 412/121 ledger; 20 quality reviews with one separate B1 partial",()=>{
  const report=read("audit-output/fssai-product-readiness-audit.json");
  assert.equal(report.products.length,533);
- assert.equal(report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,410);
+ assert.equal(report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,412);
  assert.equal(report.summary.counts.chapter_fssr_2026_10_11_20_quality_only.exact_source_quality_not_ctr,20);
  for(const r of evidence.records){
   const p=report.products.find(x=>x.id===r.catalog_id);

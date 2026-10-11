@@ -83,7 +83,7 @@ test("Changed standard number/source/variant and changed Version IX lead value a
 test("Generated readiness audit does not confuse 8 quality/exclusion reviews with exact contaminants",()=>{
  const a=read("audit-output/fssai-product-readiness-audit.json");
  assert.equal(a.products.length,533);
- assert.equal(a.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,410);
+ assert.equal(a.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,412);
  assert.equal(a.summary.counts.chapter_2_4_2025_quality_review_and_commodity_guard.official_quality_only,6);
  assert.equal(a.summary.counts.chapter_2_4_2025_quality_review_and_commodity_guard.botanical_metal_or_aflatoxin_source_exclusion,2);
  for(const row of [...m.records,...m.grain_exclusion_records]){
@@ -95,6 +95,6 @@ test("Generated readiness audit does not confuse 8 quality/exclusion reviews wit
    assert.equal(arow.compliance_decision,"not_established_by_route_evidence");
  }
  const ledger=read("audit-output/fssai-live-first-source-ledger-533.json");
- assert.equal(ledger.partial_first_source_evidence,410);
- assert.equal(ledger.unresolved_first_source_gaps,123);
+ assert.equal(ledger.partial_first_source_evidence,412);
+ assert.equal(ledger.unresolved_first_source_gaps,121);
 });

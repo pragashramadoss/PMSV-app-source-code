@@ -5,7 +5,7 @@ const root=path.resolve(__dirname,".."),read=f=>JSON.parse(fs.readFileSync(path.
 const m=read(pre+"rules/fssai-11-fruit-pickles-pastes-chutney-quality-2026-10-11.json");
 const ix=read(pre+"standard-search-index-v1.json").products,by=new Map(ix.map(x=>[x.id,x]));
 const r=read("audit-output/fssai-live-first-source-ledger-533.json"),pending=new Set(r.pending_product_details.map(x=>x.id));
-assert.deepEqual([r.product_count,r.partial_first_source_evidence,r.unresolved_first_source_gaps],[533,410,123]);
+assert.deepEqual([r.product_count,r.partial_first_source_evidence,r.unresolved_first_source_gaps],[533,412,121]);
 assert.equal(m.records.length,11);assert.equal(m.records.reduce((s,x)=>s+x.criteria.length,0),m.source_specific_quality_rows);
 assert.equal(new Set(m.records.map(x=>x.catalog_id)).size,11);
 assert.equal(m.mango_chutney_2_3_42_cannot_transfer_to_chutney_2_3_41,true);
@@ -31,4 +31,4 @@ assert.equal(m.source_specific_quality_rows,48);
 assert.deepEqual([m.first_exact_contaminant_source_promotions,m.finished_product_numeric_contaminant_approvals,m.finished_product_laboratory_passes],[0,0,0]);
 fs.mkdirSync(path.join(root,"audit-output"),{recursive:true});
 fs.writeFileSync(path.join(root,"audit-output/fssai-11-fruit-pickle-sauce-source-quality.json"),JSON.stringify({products:11,quality_rows:m.source_specific_quality_rows,first_exact_contaminant_cleared:0,records:m.records},null,2)+"\n");
-console.log("PASS: 11 FSSAI Chapter 2.3 qualified products; 48 source quality rules; no contaminant promotions; 410 partial 123 unresolved");
+console.log("PASS: 11 FSSAI Chapter 2.3 qualified products; 48 source quality rules; no contaminant promotions; 412 partial 121 unresolved");

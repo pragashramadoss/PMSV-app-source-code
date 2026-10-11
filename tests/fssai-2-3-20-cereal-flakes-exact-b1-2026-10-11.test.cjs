@@ -74,15 +74,15 @@ test("Source change, missing article, mismatch in total-toxin source, changed nu
 test("Source-conservation audit promotes exactly one previous gap and never issues compliance PASS",()=>{
  const a=read("audit-output/fssai-product-readiness-audit.json"),x=a.products.find(x=>x.id===p.id);
  assert.ok(x);
- assert.equal(a.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,410);
+ assert.equal(a.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,412);
  assert.equal(x.contaminant_evidence_index.status,"some_exact_product_evidence_not_full_coverage");
  assert.equal(x.contaminant_evidence_index.exact_fruit_vegetable_cereal_flakes_composite_b1.limit,10);
  assert.equal(x.contaminant_evidence_index.exact_fruit_vegetable_cereal_flakes_composite_b1.total_aflatoxins_limit_unresolved,true);
  assert.equal(x.contaminant_evidence_index.exact_fruit_vegetable_cereal_flakes_composite_b1.full_contaminant_compliance,false);
  assert.equal(x.compliance_decision,"not_established_by_route_evidence");
  const ledger=read("audit-output/fssai-live-first-source-ledger-533.json");
- assert.equal(ledger.partial_first_source_evidence,410);
- assert.equal(ledger.unresolved_first_source_gaps,123);
+ assert.equal(ledger.partial_first_source_evidence,412);
+ assert.equal(ledger.unresolved_first_source_gaps,121);
  assert.equal(ledger.exact_fssr_2_3_20_flakes_b1_first_source_matches,1);
  assert.equal(ledger.legal_or_laboratory_compliance_passes,0);
 });
