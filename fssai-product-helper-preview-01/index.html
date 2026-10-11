@@ -10274,6 +10274,20 @@ function pendingContaminantReviewNotice(p){
     +' · <a href="'+esc(remainder.official_ctr_source)+'" target="_blank" rel="noopener noreferrer">FSSAI Version IX</a>. '
     +'Numeric product-specific source and all effective amendments still require separate verification.</small></details>'
   :'';
+ const qualitySource=record.verified_chapter_quality_only_2026_10_11;
+ const qualitySourceVerified=qualitySource&&qualitySource.catalog_id===p.id&&qualitySource.product_name===p.name
+  &&String(qualitySource.fssr)===String(p.fssr)&&qualitySource.finished_product_compliance_pass===false
+  &&qualitySource.new_exact_contaminant_match===false;
+ const qualitySourceHtml=qualitySourceVerified
+  ?'<details style="margin:9px 0"><summary><b>11 October verified FSSAI product-standard quality values — NOT CONTAMINANT MRLs</b></summary>'
+   +'<p>'+esc(qualitySource.quality_standard_title)+'</p>'
+   +'<ul style="padding-left:22px;margin:6px 0">'+(qualitySource.quality_criteria||[]).map(x=>
+     '<li>'+esc(x.parameter)+' '+esc(x.operator)+' '+esc(x.value)+' '+esc(x.unit)+' — <b>product-standard composition/purity only, NOT a CTR MRL</b></li>').join('')+'</ul>'
+   +'<p>'+esc(qualitySource.nontransferability)+'</p>'
+   +'<small><a href="'+esc(qualitySource.official_fssai_chapter_source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI chapter</a>'
+   +' (PDF page '+esc(qualitySource.pdf_page_one_based)+'). '
+   +'Real test results and applicable CTR contaminants remain separately unresolved.</small></details>'
+  :'';
  const candidate=record.specific_source_commodity_subtype_review_2026_10_10;
  const candidateHtml=candidate&&candidate.review_only===true&&candidate.automatically_applied===false
    ?'<details style="margin:9px 0"><summary><b>Official named commodity article — conditional, NOT APPLIED</b></summary>'
@@ -10316,6 +10330,7 @@ function pendingContaminantReviewNotice(p){
    +chapter23Html
    +specialHtml
    +remainderHtml
+   +qualitySourceHtml
    +candidateHtml
    +discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
