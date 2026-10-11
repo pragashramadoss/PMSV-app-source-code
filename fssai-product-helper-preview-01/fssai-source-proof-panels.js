@@ -413,7 +413,7 @@ function pmsvCurrent533SourceProofValid(p){
 }
 function pmsvCurrent533SourceStatusHtml(p){
  if(!p)return '';
- if(!pmsvCurrent533SourceLedger)return '<div class="notice"><b>Current first-source count unavailable.</b> Verification data not loaded. Do not infer any contaminant compliance result.</div>';
+ if(!pmsvCurrent533SourceLedger)return ''; // Existing historic panels continue until the current ledger authenticates.
  if(!pmsvCurrent533SourceProofValid(p))return '<div class="notice"><b>Current FSSAI first-source status withheld.</b> Product identity, source or regulatory version mismatch. No automatic compliance result.</div>';
  const d=pmsvCurrent533SourceLedger,r=d.records.find(x=>x.catalog_id===p.id);
  const pending=r.source_status==='FIRST_EXACT_SOURCE_PENDING';
