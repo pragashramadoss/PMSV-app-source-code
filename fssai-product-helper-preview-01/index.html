@@ -1221,6 +1221,7 @@ let standardSearchIndexDb=null;
 let appendixCoreDb=null;
 let contaminantsDb=null;
 let contaminantsPendingReviewDb=null;
+let sourcePriorityMetalDb=null;
 let sugarSulphiteResiduesDb=null;
 let chapterQuality20Db=null;
 let sugarChromiumScopeDb=null;
@@ -1245,7 +1246,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-dried-glucose-ash-source-v507';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-metal-source-priority-v508';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10481,6 +10482,34 @@ function sourcePinnedChapterQualityHtml(p){
   +'<div class="tablewrap"><table><thead><tr><th>Quality/pack criterion</th><th>Source benchmark</th><th>Qualification</th></tr></thead><tbody>'
   +quality+medium+'</tbody></table></div><small>'+sources+'</small></details>';
 }
+function sourcePriorityMetalFallbackReviewHtml(p){
+ if(!p||!sourcePriorityMetalDb||!contaminantsDb||!contaminantsPendingReviewDb)return '';
+ const m=sourcePriorityMetalDb;
+ if(!Array.isArray(m.unresolved_first_exact_catalog_ids)||m.unresolved_first_exact_catalog_ids.length!==123||!m.unresolved_first_exact_catalog_ids.includes(p.id))return '';
+ const record=(contaminantsPendingReviewDb.records||[]).find(x=>x.catalog_id===p.id);
+ if(!record||record.product_name!==p.name||String(record.fssr)!==String(p.fssr)||String(record.fcs)!==String(p.fcs))return '';
+ const withheld='<div class="notice"><b>Source article precedence review withheld due to source mismatch.</b> No fallback limit has been assigned; check the current official FSSAI source.</div>';
+ const rows=m.rows||[];
+ if(rows.length!==7||m.catalogue_count!==533||m.unresolved_first_exact_before!==123||
+    m.partial_exact_product_evidence_before!==410||m.no_full_compliance_passes!==true||
+    m.source!=='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf')return withheld;
+ const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+ const validated=rows.every(r=>((contaminantsDb.metal_article_rules_v9||{})[r.metal]||[])
+     .filter(x=>x.row_type===r.row_type&&norm(x.article)===norm(r.article)
+        &&Number(x.limit)===r.limit&&x.unit===r.unit).length===1
+       &&r.numeric_finished_product_compliance_auto_apply===false
+       &&r.counts_as_first_exact_product_article===false);
+ if(!validated)return withheld;
+ const defaults=rows.filter(r=>r.row_type==='default'),all=rows.find(r=>r.row_type==='all_foods');
+ if(defaults.length!==6||!all||all.metal!=='Methyl Mercury'||all.article!=='All foods'||all.limit!==0.25)return withheld;
+ const entries=defaults.map(r=>'<tr><td>'+esc(r.metal)+'</td><td>'+esc(r.limit)+' '+esc(r.unit)
+    +'</td><td><b>NOT APPLIED</b> — first rule out any specific named food/processing/packaging article.</td></tr>').join('');
+ return '<details style="margin:10px 0"><summary><b>Source article precedence: 6 metal fallbacks — REVIEW ONLY, NOT APPLIED</b></summary>'
+   +'<p>FSSAI <b>Foods not specified</b> rows below are conditional source references, not automatic product limits. The precise named food article, form and current amendments take priority. They do not clear this product\'s first-exact-source gap.</p>'
+   +'<div class="tablewrap"><table><thead><tr><th>Metal</th><th>Default benchmark</th><th>Needed before application</th></tr></thead><tbody>'+entries+'</tbody></table></div>'
+   +'<p><b>Methyl Mercury — All foods: '+esc(all.limit)+' '+esc(all.unit)+'</b>. This universal all-foods article is already handled separately and requires a speciated methyl-mercury measurement. It is distinct from total Mercury and is not a finished-product compliance PASS.</p>'
+   +'<small><a href="'+esc(m.source)+'" target="_blank" rel="noopener">Official FSSAI Version IX Section 2.1</a> · Numeric compliance assessment NOT established.</small></details>';
+}
 function pendingContaminantReviewNotice(p){
  if(!p||!contaminantsPendingReviewDb)return '';
  const record=(contaminantsPendingReviewDb.records||[]).find(r=>r.catalog_id===(p.id||p.profile_id));
@@ -10880,6 +10909,7 @@ function renderProductContaminants(){
        ||(p.id==='06-06-3-fruit-vegetable-cereal-flakes' && baseline.some(x=>
          String(x.source_basis||'').includes('exact FSSR 2.3.20 Fruit/Vegetable Cereal Flakes'))))
         ?'':pendingContaminantReviewNotice(p))
+   +sourcePriorityMetalFallbackReviewHtml(p)
    +sourcePinnedSugarSulphitesHtml(p)
    +sugarChromiumScopeHtml(p)
    +eightCerealQualityScopeHtml(p)
@@ -10988,6 +11018,11 @@ async function loadContaminantsDb(){
    const res=await fetch('./data/rules/contaminants-v9-core.json?v=437',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
+   try{
+     const priority=await fetch('./data/rules/fssai-v9-metal-fallback-precedence-2026-10-11.json?v=20261011-mp',{cache:'reload'});
+     if(!priority.ok)throw new Error('FSSAI metal source priority file unavailable');
+     sourcePriorityMetalDb=await priority.json();
+   }catch(e){sourcePriorityMetalDb=null;}
  }catch(e){
    contaminantsDb=null;
  }
