@@ -49,12 +49,12 @@ test("All 121 pending worklists retain exact conditions of their metal article r
 });
 test("Live Helper displays official measurement basis where applicable but never applies reference as finished-food compliance",()=>{
  assert.match(html,/let metalMeasurementBasisDb=null/);assert.match(html,/metalMeasurementBasisDb=await res.json\(\)/);
- for(const [id,part] of [["04-04-2-cocoa-beans","dry fat-free"],["04-04-1-coconut-milk-powder","concentration factor"],["99-99-1-colouring-foods","dry colouring"]]){
+ for(const [id,part] of [["06-06-2-carob-powder","dry fat-free"],["102-102-1-14-1-golaka-dugdha-condensed-milk-without-sugar","concentration factor"],["99-99-1-colouring-foods","dry colouring"]]){
   const h=show(id);assert.match(h,new RegExp(part,"i"),id);assert.match(h,/NOT APPLIED/);assert.match(h,/REVIEW ONLY/);
  }
 });
 test("Tampered source condition, missing basis register, fake approval, and water mg/L mutation all fail closed",()=>{
- const id="04-04-2-cocoa-beans",oldDb=ctx.contaminantsDb,oldPin=ctx.metalMeasurementBasisDb;
+ const id="06-06-2-carob-powder",oldDb=ctx.contaminantsDb,oldPin=ctx.metalMeasurementBasisDb;
  let h=show(id);assert.match(h,/dry fat-free/);
  ctx.contaminantsDb=structuredClone(db);ctx.contaminantsDb.metal_article_rules_v9.Lead.find(x=>x.article==="Cocoa powder").condition="On wet weight basis.";
  assert.match(show(id),/withheld/);ctx.contaminantsDb=oldDb;
