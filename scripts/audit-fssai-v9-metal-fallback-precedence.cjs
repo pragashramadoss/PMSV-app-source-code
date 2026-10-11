@@ -16,6 +16,14 @@ const pending=new Set(live.pending_product_details.map(x=>x.id));
 assert.equal(pending.size,123);
 assert.equal(m.unresolved_first_exact_catalog_id_count,123);
 assert.deepEqual(new Set(m.unresolved_first_exact_catalog_ids),pending,"Named source priority product gate must equal current 123 live first-exact gaps");
+assert.equal(m.unresolved_exact_product_identity_gates.length,123);
+const canonical=new Map(ix.map(p=>[p.id,p]));
+assert.deepEqual(new Set(m.unresolved_exact_product_identity_gates.map(x=>x.catalog_id)),pending);
+for(const gate of m.unresolved_exact_product_identity_gates){
+ const p=canonical.get(gate.catalog_id);
+ assert.ok(p&&gate.product_name===p.name&&gate.fssr===p.fssr&&gate.fcs===p.fcs,
+  "Exact FSSR/FoSCoS source-priority gate identity drift: "+gate.catalog_id);
+}
 for(const id of pending)assert.ok(ids.has(id));
 for(const row of m.rows){
  const all=core.metal_article_rules_v9[row.metal]||[];
