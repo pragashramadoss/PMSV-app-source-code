@@ -46,16 +46,20 @@ test("The 8 previously pending product identities remain separate from chemical 
    }
  }
 });
-test("Eight live product panels source reconcile and never issue a finished-food regulatory PASS",()=>{
+test("Two new jaggery panels render while six existing verified product panels are not duplicated",()=>{
  assert.match(html,/fssai-eight-pending-chapter-quality-subtypes-2026-10-11\.json/);
  assert.match(html,/eightPendingQualityDb=await res\.json/);
  assert.match(html,/\+sourcePinnedEightPendingQualityHtml\(p\)/);
  for(const row of manifest.records){
    const displayed=draw(product(row.catalog_id));
-   assert.match(displayed,/REVIEW ONLY \/ NOT CTR MRL/);
-   assert.match(displayed,/No PASS is issued/);
-   assert.match(displayed,/Official FSSAI Chapter/);
-   assert.doesNotMatch(displayed,/source withheld/);
+   if(row.fssr==="2.8.4(1)"||row.fssr==="2.8.4(2)"){
+     assert.match(displayed,/REVIEW ONLY \/ NOT CTR MRL/);
+     assert.match(displayed,/No PASS is issued/);
+     assert.match(displayed,/Official FSSAI Chapter/);
+     assert.doesNotMatch(displayed,/source withheld/);
+   } else {
+     assert.equal(displayed,"","Existing six chapter-quality panels must remain the only visible panel");
+   }
  }
  assert.equal(draw(product("05-05-1-chocolate")),"");
 });
@@ -72,15 +76,15 @@ test("2025 superseding IgG standard prevents older colostrum total-immunoglobuli
  const row=manifest.records.find(r=>r.fssr==="2.1.23"),p=product(row.catalog_id);
  assert.equal(row.forms[0].criteria.find(x=>x.source_field==="immunoglobulins_g_igg_min_pct").value,1.8);
  assert.equal(row.forms[1].criteria.find(x=>x.source_field==="immunoglobulins_g_igg_min_pct").value,8.5);
- assert.match(draw(p),/superseded 12\.5% total-immunoglobulin figure/);
+ assert.match(html,/superseded 12\.5% total-immunoglobulin figure/);
  const replacement=structuredClone(manifest);
  replacement.records.find(x=>x.fssr==="2.1.23").forms[1].criteria.find(x=>x.source_field==="immunoglobulins_g_igg_min_pct").value=12.5;
  context.eightPendingQualityDb=replacement;
- assert.match(draw(p),/source withheld/);
+ assert.match(draw(product("11-11-1-gur-or-jaggery")),/source withheld/);
  context.eightPendingQualityDb=original;
 });
 test("Manifest, source, subtype, source basis and cross-product corruption all fail closed",()=>{
- const target=product("11-11-1-edible-lactose");
+ const target=product("11-11-1-gur-or-jaggery");
  const changes=[
    x=>x.records.find(r=>r.fssr==="2.8.7").forms[0].criteria[0].value=999,
    x=>x.records.find(r=>r.fssr==="2.4.9").forms[0].criteria[0].unit="mg/kg",
