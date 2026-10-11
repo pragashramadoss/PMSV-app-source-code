@@ -19,7 +19,8 @@ test("21 exact research subtype options across 9 products provide a functioning 
  assert.equal(source.records.reduce((a,r)=>a+r.forms.length,0),21);
  assert.match(html,/id="pmsvFinishedFoodArticleSubtype"/);
  assert.match(html,/productContaminantResults'\)\?\.addEventListener\('change'/);
- assert.match(html,/if\(setPmsvFinishedFoodArticleResearchSubtype\(p.id,select.value\)\)renderProductContaminants\(\)/);
+ assert.match(html,/if\(setPmsvFinishedFoodArticleResearchSubtype\(p.id,select.value\)\)/);
+ assert.match(html,/if\(details\)details.open=true/);
  for(const row of source.records){
   const p=index.find(p=>p.id===row.catalog_id);assert.ok(p);
   const h=draw(p);assert.match(h,/Show all conditional form references/);
@@ -33,6 +34,7 @@ test("Selecting a subtype filters research references but never applies regulato
  assert.ok(choose(p,"canned_mangoes"));
  const h=draw(p);
  assert.match(h,/Research candidate selected — NOT confirmed as applicable/);
+ assert.match(h,/<details id="pmsvFinishedFoodSubtypeReviewDetails" open/);
  assert.match(h,/Canned mangoes/);
  assert.doesNotMatch(h,/<td><b>Canned pineapple<\/b>/);
  assert.match(h,/NOT APPLIED/);

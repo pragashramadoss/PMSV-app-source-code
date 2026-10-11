@@ -7455,7 +7455,11 @@ document.getElementById('productContaminantResults')?.addEventListener('change',
  if(select?.id!=='pmsvFinishedFoodArticleSubtype')return;
  const p=selectedCatalogProductForContaminants();
  if(!p||select.dataset.catalogId!==p.id)return;
- if(setPmsvFinishedFoodArticleResearchSubtype(p.id,select.value))renderProductContaminants();
+ if(setPmsvFinishedFoodArticleResearchSubtype(p.id,select.value)){
+   renderProductContaminants();
+   const details=document.getElementById('pmsvFinishedFoodSubtypeReviewDetails');
+   if(details)details.open=true;
+ }
 });
 document.getElementById('contaminantPackageFormat')?.addEventListener('change',renderProductContaminants);
 document.getElementById('contaminantContainerMaterial')?.addEventListener('change',renderProductContaminants);
@@ -10791,7 +10795,7 @@ function sourcePinnedFinishedFoodSubtypeReviewHtml(p){
     +' — '+esc(r.article)+(r.measurement_basis?'<small><b>Basis:</b> '+esc(r.measurement_basis)+'</small>':'')
     +'<small><b>NOT APPLIED</b> until exact finished-product match</small>').join('<hr>')
    +'</td><td>'+esc(x.required_confirmation)+'</td></tr>').join('');
- return '<details style="margin:10px 0"><summary><b>Specific FSSAI finished-food article candidates — '
+ return '<details id="pmsvFinishedFoodSubtypeReviewDetails"'+(selected?' open':'')+' style="margin:10px 0"><summary><b>Specific FSSAI finished-food article candidates — '
    +esc(row.forms.length)+' conditional form'+(row.forms.length===1?'':'s')+' (REVIEW ONLY)</b></summary>'
    +'<p>These are <b>real named Version IX articles</b>, but this broad FoSCoS product entry has not established that the tested food is the named finished subtype. <b>All numeric references are withheld from the compliance engine</b> until recipe, food standard, packing form, sample basis and effective amendments are established. No source promotion or overall laboratory PASS is claimed.</p>'
    +selector+selectionNote
