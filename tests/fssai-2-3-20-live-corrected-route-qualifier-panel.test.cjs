@@ -17,7 +17,7 @@ test("Flakes route correction shows exact FSSAI Chapter 2.3 standard and four cu
  assert.equal(record.exact_subtype_transfer_safeguard_2026_10_11.catalogue_fssr,p.fssr);
  const x=show(p);assert.match(x,/FSSAI 2.3.20 route corrected/);
  assert.match(x,/product quality only/);
- assert.match(x,/five required product\/analytical qualifiers/);
+ assert.match(x,/Five required source\/applicability verifications/);
  assert.match(x,/11 October exact subtype transfer safeguard/);
  assert.match(x,/Exact product identity and matrix gates/);
  assert.match(x,/Detailed 2.3 food identity\/recipe review/);
