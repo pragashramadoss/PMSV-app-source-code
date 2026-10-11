@@ -105,7 +105,7 @@ test("Eight additional arsenic, copper and total-aflatoxin source rows remain of
 });
 test("Generated 533-product audit includes exact ten partial source records and zero inferred legal approvals",()=>{
  const audit=read("audit-output/fssai-product-readiness-audit.json");
- assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,410);
+ assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,412);
  for(const x of evidence.matched){
   const row=audit.products.find(y=>y.id===x.catalog_id);assert.ok(row,x.catalog_id);
   assert.equal(row.contaminant_evidence_index.status,"some_exact_product_evidence_not_full_coverage");

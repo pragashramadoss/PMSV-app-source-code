@@ -89,7 +89,7 @@ test("Every exact article reference is pinned to loaded official Version IX row,
 });
 test("The 533-product audit counts all 10 source matches as partial, not contaminant or finished-food PASS",()=>{
  const audit=read("audit-output/fssai-product-readiness-audit.json");
- assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,410);
+ assert.equal(audit.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,412);
  for(const row of data.rows){
   const p=audit.products.find(x=>x.id===row.catalog_id);
   assert.ok(p,row.catalog_id);

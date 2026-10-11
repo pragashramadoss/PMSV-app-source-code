@@ -92,6 +92,10 @@ test("Generated readiness audit keeps 412/121 ledger; 20 quality reviews with on
   if(r.catalog_id==="06-06-3-fruit-vegetable-cereal-flakes"){
     assert.equal(p.contaminant_evidence_index.status,"some_exact_product_evidence_not_full_coverage");
     assert.equal(p.contaminant_evidence_index.exact_fruit_vegetable_cereal_flakes_composite_b1.limit,10);
+  }else if(r.catalog_id==="04-04-2-dehydrated-vegetables"){
+    assert.equal(p.contaminant_evidence_index.status,"some_exact_product_evidence_not_full_coverage",r.catalog_id);
+    assert.ok(p.contaminant_evidence_index.exact_finished_subtype_specific_v9_metal_partial);
+    assert.equal(p.contaminant_evidence_index.exact_finished_subtype_specific_v9_metal_partial.unconditional_numeric_limit_auto_applied,false);
   }else assert.notEqual(p.contaminant_evidence_index.status,"some_exact_product_evidence_not_full_coverage",r.catalog_id);
   assert.equal(p.source_pinned_chapter_quality_review_2026_10_11.quality_numeric_rows,r.quality_criteria.length);
   assert.equal(p.source_pinned_chapter_quality_review_2026_10_11.qualified_packing_media_subtypes,r.qualified_packing_media_brix.length);
