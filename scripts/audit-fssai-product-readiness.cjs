@@ -2139,6 +2139,24 @@ for(const item of nineSugarRefinedReview.records){
    assert.equal(actual.record.composition.find(x=>x.parameter==="Sucrose").value,99.7);
    assert.equal(actual.record.composition.find(x=>x.parameter==="Total ash").value,0.03);
  }else assert.notEqual(p.id,"11-11-1-cube-sugar");
+ if(p.id==="11-11-1-dried-glucose-syrup"){
+  const q=item.conditional_lead_5_mg_ash_exclusion;
+  assert.ok(q&&q.official_food_standard==="2.8.7");
+  assert.equal(q.official_ctr_source,version9Source);
+  assert.equal(q.official_product_source,item.source_standard_url);
+  assert.equal(q.sulphated_ash_fssr_max_pct,1);
+  assert.equal(q.conditional_ctr_article_min_pct_strictly_greater_than,1);
+  assert.equal(q.conditional_lead_limit_mgkg,5);
+  assert.equal(q.source_article_condition_mathematically_excluded_by_standard,true);
+  assert.equal(q.finished_product_lead_mrl_auto_assigned,false);
+  assert.equal(q.no_universal_lead_exemption_asserted,true);
+  assert.equal(q.lab_compliance_pass,false);
+  const ash=actual.record.composition.find(x=>x.parameter==="Sulphated ash");
+  assert.ok(ash&&ash.operator==="<="&&ash.value===1&&ash.unit==="% by weight");
+  const lead=(contaminants.metal_article_rules_v9?.Lead||[]).filter(x=>
+   x.article===q.conditional_ctr_named_article&&Number(x.limit)===5&&x.unit==="mg/kg");
+  assert.equal(lead.length,1,"Missing exact current CTR >1% starch-conversion article");
+ }
  nineSugarReviewById.set(p.id,item);
 }
 assert.equal(nineSugarReviewById.size,9);
@@ -2285,6 +2303,10 @@ const products = index.products.map(p => {
     action.push("FSSAI Chapter 2.4 official numerical quality criteria or Version IX exact commodity exclusion mapped by FoSCoS product identity; neither constitutes first verified finished-product contaminant source evidence, pesticide MRL, or legal PASS.");
   }
   const sugarChromiumReview=nineSugarReviewById.get(p.id)||null;
+  if(sugarChromiumReview?.conditional_lead_5_mg_ash_exclusion){
+    tally("chapter_2_8_dried_glucose_sulphated_ash_lead","5_mgkg_conditional_article_excluded_by_fssr_1pct_max");
+    action.push("Exact FSSR 2.8.7 sulphated ash <=1.0%; Version IX Lead 5 mg/kg article for starch conversion products requires sulphated ash >1.0%. Article CONDITION DOES NOT MATCH FSSR. No blanket lead exemption or compliance pass.");
+  }
   if(sugarChromiumReview){
     assert.notEqual(contaminantEvidence.status,"some_exact_product_evidence_not_full_coverage",
       "Unqualified sugar chromium may not promote exact finished-food source "+p.id);
@@ -2502,6 +2524,10 @@ const products = index.products.map(p => {
       candidate_article:"Refined sugar",candidate_limit:0.02,candidate_unit:"mg/kg",
       finished_product_numeric_auto_applied:false,first_exact_evidence_claimed:false,
       reason:sugarChromiumReview.distinct_subtype_review,
+      dried_glucose_conditional_lead_ash_exclusion:sugarChromiumReview.conditional_lead_5_mg_ash_exclusion?{
+        article_limit:5,unit:"mg/kg",fssr_sulphated_ash_max_pct:1,
+        named_article_requires_exceeding_pct:1,auto_apply:false,no_blanket_exemption:true
+      }:null,
       full_compliance_pass:false
     }:null,
     source_pinned_chapter_quality_review_2026_10_11:sourcePinnedChapterQuality?{
