@@ -10339,6 +10339,24 @@ function pendingContaminantReviewNotice(p){
     +'<small><a href="'+esc(meatEggQuality.official_source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter 2.5</a>'
     +'. Confirm product variant, actual lab tests, CTR MRL applicability and operative amendments separately.</small></details>'
   :'';
+ const fatSpread=record.official_fssai_fat_spread_nickel_2026_10_11;
+ const fatSpreadValid=fatSpread&&fatSpread.catalog_id===p.id&&fatSpread.product_name===p.name
+   &&fatSpread.fssr===p.fssr&&fatSpread.auto_apply_nickel_numeric_mrl===false
+   &&fatSpread.all_legal_compliance_pass===false&&fatSpread.processing_hydrogenation_evidence_verified===false;
+ const fatSpreadHtml=fatSpreadValid
+  ?'<details style="margin:9px 0"><summary><b>11 October Fat Spread Nickel 1.5 mg/kg — CONDITIONAL PROCESS ARTICLE, NOT APPLIED</b></summary>'
+   +'<p>'+esc(fatSpread.nickel_condition)+'</p>'
+   +'<ul style="padding-left:22px;margin:6px 0">'
+   +(fatSpread.official_standard_fat_spread_types||[]).map(x=>'<li>'+esc(x.name)+': '
+     +esc(x.defining_fat)+' — <b>do not assume nickel value</b></li>').join('')+'</ul>'
+   +'<p><b>Separate Chapter 2.2.5 quality benchmarks (not metal limits):</b></p><ul style="padding-left:22px">'
+   +(fatSpread.source_qualified_product_quality_criteria||[]).map(x=>'<li>'+esc(x.parameter)+' '
+     +(x.minimum!==undefined?esc(x.minimum)+' to ':'up to ')+esc(x.maximum)+' '+esc(x.unit)
+     +' — <b>NOT a CTR nickel test</b></li>').join('')+'</ul>'
+   +'<small><a href="'+esc(fatSpread.official_product_standard_source)+'" target="_blank" rel="noopener noreferrer">FSSAI fat spread standard</a>'
+   +' · <a href="'+esc(fatSpread.official_ctr_ix_source)+'" target="_blank" rel="noopener noreferrer">FSSAI Nickel named source</a>. '
+   +'Actual oil processing, phase and contaminant testing unresolved.</small></details>'
+  :'';
  const candidate=record.specific_source_commodity_subtype_review_2026_10_10;
  const candidateHtml=candidate&&candidate.review_only===true&&candidate.automatically_applied===false
    ?'<details style="margin:9px 0"><summary><b>Official named commodity article — conditional, NOT APPLIED</b></summary>'
@@ -10385,6 +10403,7 @@ function pendingContaminantReviewNotice(p){
    +analogueHtml
    +animalHtml
    +meatEggQualityHtml
+   +fatSpreadHtml
    +candidateHtml
    +discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
