@@ -17,6 +17,9 @@ const matched=read(base+"rules/fssai-next10-exact-source-candidate-2026-10-10.js
 const cross=read(base+"rules/fssai-25-beverage-confectionery-fungi-v9-source-evidence-2026-10-10.json");
 const batch40=read(base+"rules/fssai-batch40-exact-commodity-and-conditional-scope-v1.json");
 const sugars=read(base+"rules/fssai-sugar-sulphites-appendix-a-v3-2026-10-11.json");
+const next2=read(base+"rules/fssai-v9-two-subtype-exact-metal-articles-2026-10-11.json");
+const next2Ids=new Set(next2.records.map(x=>x.catalog_id));
+assert.equal(next2Ids.size,2);
 const newExactSugarIds=new Set(sugars.records.filter(x=>x.scope==="finished_product_sulphite_residue_partial").map(x=>x.catalog_id));
 assert.equal(newExactSugarIds.size,2);
 assert.equal(sugars.first_exact_finished_product_chemical_residue_evidence_count,2);
@@ -51,7 +54,14 @@ for(const p of ix){
    assert.equal(evidence.total_aflatoxins_limit_unresolved,true);
    assert.equal(evidence.full_contaminant_compliance,false);
  }
- const needsExact=oldQueue&&!newExactResidue&&!promotedFlakes;
+ const newQualifiedMetal=next2Ids.has(p.id);
+ if(newQualifiedMetal){
+  assert.ok(oldQueue,"Two source-verified promotion products must have been in historical pending queue: "+p.id);
+  const e=x.contaminant_evidence_index.exact_finished_subtype_specific_v9_metal_partial;
+  assert.ok(e&&e.branches.length===2&&e.unconditional_numeric_limit_auto_applied===false,p.id);
+  assert.equal(e.complete_contaminant_compliance,false);
+ }
+ const needsExact=oldQueue&&!newExactResidue&&!promotedFlakes&&!newQualifiedMetal;
  if(newExactResidue){
    const source=x.contaminant_evidence_index.exact_appendix_a_finished_product_sulphite_residue;
    assert.ok(source&&source.finished_product_residue_max_mgkg===50,p.id);
@@ -74,12 +84,12 @@ for(const p of ix){
    numeric_compliance_pass:false});
  }
 }
-assert.equal(countedPending,123);
-assert.equal(countedPartial,410);
-assert.equal(countedPending,q.count-newExactSugarIds.size-1);
+assert.equal(countedPending,121);
+assert.equal(countedPartial,412);
+assert.equal(countedPending,q.count-newExactSugarIds.size-1-next2Ids.size);
 assert.equal(countedPartial,report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage);
-assert.equal(countedPartial,q.current_snapshot_summary_2026_10_10.exact_partial_evidence+newExactSugarIds.size+1);
-assert.equal(countedPending,q.current_snapshot_summary_2026_10_10.pending-newExactSugarIds.size-1);
+assert.equal(countedPartial,q.current_snapshot_summary_2026_10_10.exact_partial_evidence+newExactSugarIds.size+1+next2Ids.size);
+assert.equal(countedPending,q.current_snapshot_summary_2026_10_10.pending-newExactSugarIds.size-1-next2Ids.size);
 const original136=new Map(review.records.map(x=>[x.catalog_id,x]));
 assert.equal(original136.size,136);
 assert.equal(review.source_pinned_partial_matches_new,10);
@@ -120,11 +130,12 @@ assert.equal(recent.size,30);
 const saved={
  date:"2026-10-11",product_count:533,partial_first_source_evidence:countedPartial,
  unresolved_first_source_gaps:countedPending,legal_or_laboratory_compliance_passes:0,
- source_collections_checked:5,recent_source_backed_partial_promotions_crosschecked:33,
+ source_collections_checked:6,recent_source_backed_partial_promotions_crosschecked:35,
  earlier_136_product_identity_reviews_preserved:review.records.length,
  historical_queue_2026_10_10:q.count,
  new_jaggery_sulphite_residue_first_source_matches:newExactSugarIds.size,
  exact_fssr_2_3_20_flakes_b1_first_source_matches:1,
+ first_exact_subtype_metal_partial_identities_2026_10_11:next2Ids.size,
  current_pending_by_family:Object.fromEntries(Object.entries(byFamily).sort((a,b)=>a[0].localeCompare(b[0]))),
  invariant:"All 533 exactly one of partial or unresolved; all approved-compliance claims remain prohibited",
  pending_product_details:pendingProducts
@@ -132,4 +143,4 @@ const saved={
 const dest=path.join(root,"audit-output","fssai-live-first-source-ledger-533.json");
 fs.mkdirSync(path.dirname(dest),{recursive:true});
 fs.writeFileSync(dest,JSON.stringify(saved,null,2)+"\n");
-console.log("PASS: live first source-ledger 533 = 410 partial + 123 unresolved; 33 first-source promotions cross-checked; archived 126-case queue retained; 0 compliance approvals");
+console.log("PASS: live first source-ledger 533 = 412 partial + 121 unresolved; 35 first-source promotions cross-checked; archived 126-case queue retained; 0 compliance approvals");

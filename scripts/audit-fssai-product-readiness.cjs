@@ -25,6 +25,7 @@ const crossFamilyNOTS=read("rules/fssai-25-beverage-confectionery-fungi-v9-sourc
 const batch40Source=read("rules/fssai-batch40-exact-commodity-and-conditional-scope-v1.json");
 const pending136FullReview=read("rules/fssai-full-136-identity-applicability-review-2026-10-10.json");
 const next10ExactSource=read("rules/fssai-next10-exact-source-candidate-2026-10-10.json");
+const next2QualifiedMetal=read("rules/fssai-v9-two-subtype-exact-metal-articles-2026-10-11.json");
 const appendixASugar=read("rules/fssai-sugar-sulphites-appendix-a-v3-2026-10-11.json");
 const appendixAV3=read("rules/appendix-a-v3-core.json");
 const chapterQuality20=read("rules/fssai-20-pending-exact-chapter-quality-2026-10-11.json");
@@ -1293,6 +1294,31 @@ for(const name of coconutHexaneSource.excluded_non_equivalent_foods){
  assert.ok(index.products.some(p=>p.name===name),"Missing unrelated coconut or starch lookalike "+name);
 }
 
+const next2QualifiedById=new Map();
+assert.equal(next2QualifiedMetal.source_version,contaminants.source_version);
+assert.equal(next2QualifiedMetal.records.length,2);
+assert.deepEqual([next2QualifiedMetal.expected_partial_count_after,next2QualifiedMetal.expected_first_exact_pending_after],[412,121]);
+for(const proof of next2QualifiedMetal.records){
+ const p=index.products.find(p=>p.id===proof.catalog_id);
+ assert.ok(p&&p.name===proof.product_name&&p.fssr===proof.fssr&&p.fcs===proof.fcs,proof.catalog_id);
+ assert.equal(proof.partially_identified_qualified_finished_forms,true);
+ assert.equal(proof.exact_subtype_select_required,true);
+ assert.equal(proof.unconditional_finished_product_limit_auto_apply,false);
+ assert.equal(proof.full_contaminant_panel_complete,false);
+ assert.equal(proof.lab_compliance_pass,false);
+ for(const r of proof.branches){
+  assert.ok(r.requires.length>=3&&r.numeric_auto_apply===false&&r.lab_result_pass===false);
+  for(const [metal,article,value] of [["Lead",r.lead_article,r.lead_limit],["Arsenic",r.arsenic_article,r.arsenic_limit]]){
+   if(article){
+    const group=contaminants.metal_article_rules_v9[metal]||[];
+    assert.equal(group.filter(x=>x.row_type==="exact"&&normalizeArticle(x.article)===normalizeArticle(article)
+     &&Number(x.limit)===value).length,1,"Current Version IX exact named "+metal+" article mismatch for "+p.id);
+   }
+  }
+ }
+ next2QualifiedById.set(p.id,proof);
+}
+assert.equal(next2QualifiedById.size,2);
 function contaminantEvidenceForProduct(p){
  const profiles=directContaminantProfiles.get(p.id) || [];
  const explicitAliases=contaminantAliases.get(p.id);
@@ -1723,7 +1749,9 @@ function contaminantEvidenceForProduct(p){
  const additionalMilkArticle=additionalMilkById.get(p.id)||null;
  const maizeWheatArticle=maizeWheatById.get(p.id)||null;
  const freshFruitPartial=freshFruitById.get(p.id)||null;
+ const qualifiedMetalSubtypes=next2QualifiedById.get(p.id)||null;
  const explicitKinds=[];
+ if(qualifiedMetalSubtypes)explicitKinds.push("official_v9_exact_finished_form_branch_partial_two_product_source_2026_10_11");
  if(exactMilkProduct)explicitKinds.push('official_v9_named_cheese_or_fermented_milk_pesticide_commodity_partial');
  if(exactInfantFood)explicitKinds.push('official_v9_named_infant_food_arsenic_cadmium_partial');
  if(additionalMilkArticle)explicitKinds.push('official_v9_named_dairy_commodity_article_partial_2026_10_10');
@@ -1802,6 +1830,14 @@ function contaminantEvidenceForProduct(p){
    "no_exact_catalog_evidence_in_this_inventory";
  return {
    status,
+   exact_finished_subtype_specific_v9_metal_partial:qualifiedMetalSubtypes?{
+     official_source:next2QualifiedMetal.official_ctr,
+     branches:qualifiedMetalSubtypes.branches,
+     specific_processing_or_botanical_subtype_required:true,
+     source_applicability_partial_not_finished_product_compliance:true,
+     unconditional_numeric_limit_auto_applied:false,
+     complete_contaminant_compliance:false
+   }:null,
    exact_appendix_a_finished_product_sulphite_residue:exactJaggeryFinishedResidue?{
      source_url:appendixASugar.official_appendix_a_source,source_table:"Appendix A Table 11",
      finished_product_residue_max_mgkg:50,subtype:exactJaggeryFinishedResidue.fcs,
