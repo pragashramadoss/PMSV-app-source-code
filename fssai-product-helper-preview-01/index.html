@@ -1211,6 +1211,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <div class="footer">Standalone evaluation prototype · not connected to live PMSV · no formulation data is uploaded or stored.</div>
 </main>
 <script src="./nutrition-modules.js?v=475"></script>
+<script src="./fssai-source-proof-panels.js?v=20261011-live121"></script>
 <script>
 // Initialize shared data state before selectors and renderers can read it.
 let regulatoryDb=null;
@@ -11443,6 +11444,7 @@ function renderProductContaminants(){
    +sourcePinnedAyurvedaRecipeB1ReviewHtml(p)
    +sourcePriorityMetalFallbackReviewHtml(p)
    +sourcePinnedExpandedMetalScopeHtml(p)
+   +sourcePinned121ResearchProofHtml(p)
    +sourcePinnedFinishedFoodSubtypeReviewHtml(p)
    +sourcePinnedSevenOfficialProductQualityHtml(p)
    +sourcePinnedEightPendingQualityHtml(p)
@@ -11504,6 +11506,7 @@ function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
    +'<small><a href="'+official+'" target="_blank" rel="noopener noreferrer">Read the official FSSAI Gazette</a>. Watch-list inclusion does not itself prove product applicability or establish full compliance.</small></div>';
 }
 async function loadContaminantsDb(){
+ await pmsvLoadPositiveSourceProof();
  try{
    const res=await fetch('./data/rules/fssai-eight-pending-chapter-quality-subtypes-2026-10-11.json?v=20261011-quality8',{cache:'reload'});
    if(!res.ok)throw new Error('Eight pending FSSAI chapter quality source data unavailable');

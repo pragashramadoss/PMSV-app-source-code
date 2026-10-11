@@ -232,6 +232,8 @@ jobs:
         run: node --test tests/fssai-next121-positive-subtype-proof-2026-10-11.test.cjs
       - name: Verify 29 unmatched product identity gates and 20 official Version IX reference articles
         run: node --test tests/fssai-next29-unmatched-source-dossiers-2026-10-11.test.cjs tests/fssai-next121-live-version-ix-source-row-lock-2026-10-11.test.cjs
+      - name: Verify all 121 live first-source proof panels and 29 special product dossiers
+        run: node --test tests/fssai-next121-29-live-source-proof-ui-2026-10-11.test.cjs
       - name: Upload per-product compliance evidence audit
         if: always()
         uses: actions/upload-artifact@v4
