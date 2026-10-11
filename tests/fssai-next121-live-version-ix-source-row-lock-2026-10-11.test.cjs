@@ -25,6 +25,7 @@ test("20 independently source-pinned Version IX articles agree with the locally 
   assert.equal(r.official_source,m.official_contaminants_url);
   assert.equal(r.automatic_finished_product_application,false);
   assert.equal(r.laboratory_compliance_pass,false);
+  if(r.id==="lead-milks"){const ref=core.metal_article_rules_v9.Lead.find(x=>x.article==="Milks");assert.equal(ref.condition,r.official_condition);}
   assert.equal(match(r).length,1,r.id+" source row mismatch");
  }
 });
