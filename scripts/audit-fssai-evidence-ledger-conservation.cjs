@@ -16,6 +16,11 @@ const review=read(base+"rules/fssai-full-136-identity-applicability-review-2026-
 const matched=read(base+"rules/fssai-next10-exact-source-candidate-2026-10-10.json");
 const cross=read(base+"rules/fssai-25-beverage-confectionery-fungi-v9-source-evidence-2026-10-10.json");
 const batch40=read(base+"rules/fssai-batch40-exact-commodity-and-conditional-scope-v1.json");
+const sugars=read(base+"rules/fssai-sugar-sulphites-appendix-a-v3-2026-10-11.json");
+const newExactSugarIds=new Set(sugars.records.filter(x=>x.scope==="finished_product_sulphite_residue_partial").map(x=>x.catalog_id));
+assert.equal(newExactSugarIds.size,2);
+assert.equal(sugars.first_exact_finished_product_chemical_residue_evidence_count,2);
+assert.equal(sugars.full_contaminant_compliance_passes,0);
 const ixIds=new Set(ix.map(p=>p.id));
 const qIds=new Set(q.records.map(p=>p.catalog_id));
 assert.equal(ix.length,533);assert.equal(ixIds.size,533);
@@ -35,7 +40,16 @@ for(const p of ix){
  assert.ok(x&&x.name===p.name&&x.fssr===p.fssr&&x.fcs===p.fcs,p.id);
  assert.equal(x.compliance_decision,"not_established_by_route_evidence");
  const hasEvidence=x.contaminant_evidence_index.status==="some_exact_product_evidence_not_full_coverage";
- const needsExact=qIds.has(p.id);
+ const oldQueue=qIds.has(p.id);
+ const newExactResidue=newExactSugarIds.has(p.id);
+ assert.ok(!newExactResidue||oldQueue,"Jaggery evidence must have started in historical unresolved queue: "+p.id);
+ const needsExact=oldQueue&&!newExactResidue;
+ if(newExactResidue){
+   const source=x.contaminant_evidence_index.exact_appendix_a_finished_product_sulphite_residue;
+   assert.ok(source&&source.finished_product_residue_max_mgkg===50,p.id);
+   assert.equal(source.compliance_pass,false);
+   assert.equal(x.contaminant_evidence_index.chapter_11_appendix_a_sulphite_additive_permissions.type,"finished_product_sulphite_residue_partial");
+ }
  assert.notEqual(hasEvidence,needsExact,"Exactly one of partial source / unresolved applies: "+p.id);
  if(hasEvidence)countedPartial++;
  else {
@@ -52,12 +66,12 @@ for(const p of ix){
    numeric_compliance_pass:false});
  }
 }
-assert.equal(countedPending,126);
-assert.equal(countedPartial,407);
-assert.equal(countedPending,q.count);
+assert.equal(countedPending,124);
+assert.equal(countedPartial,409);
+assert.equal(countedPending,q.count-newExactSugarIds.size);
 assert.equal(countedPartial,report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage);
-assert.equal(countedPartial,q.current_snapshot_summary_2026_10_10.exact_partial_evidence);
-assert.equal(countedPending,q.current_snapshot_summary_2026_10_10.pending);
+assert.equal(countedPartial,q.current_snapshot_summary_2026_10_10.exact_partial_evidence+newExactSugarIds.size);
+assert.equal(countedPending,q.current_snapshot_summary_2026_10_10.pending-newExactSugarIds.size);
 const original136=new Map(review.records.map(x=>[x.catalog_id,x]));
 assert.equal(original136.size,136);
 assert.equal(review.source_pinned_partial_matches_new,10);
@@ -96,10 +110,12 @@ for(const group of evidenceCollections){
 }
 assert.equal(recent.size,30);
 const saved={
- date:"2026-10-10",product_count:533,partial_first_source_evidence:countedPartial,
+ date:"2026-10-11",product_count:533,partial_first_source_evidence:countedPartial,
  unresolved_first_source_gaps:countedPending,legal_or_laboratory_compliance_passes:0,
- source_collections_checked:3,recent_source_backed_partial_promotions_crosschecked:30,
+ source_collections_checked:4,recent_source_backed_partial_promotions_crosschecked:32,
  earlier_136_product_identity_reviews_preserved:review.records.length,
+ historical_queue_2026_10_10:q.count,
+ new_jaggery_sulphite_residue_first_source_matches:newExactSugarIds.size,
  current_pending_by_family:Object.fromEntries(Object.entries(byFamily).sort((a,b)=>a[0].localeCompare(b[0]))),
  invariant:"All 533 exactly one of partial or unresolved; all approved-compliance claims remain prohibited",
  pending_product_details:pendingProducts
@@ -107,4 +123,4 @@ const saved={
 const dest=path.join(root,"audit-output","fssai-live-first-source-ledger-533.json");
 fs.mkdirSync(path.dirname(dest),{recursive:true});
 fs.writeFileSync(dest,JSON.stringify(saved,null,2)+"\n");
-console.log("PASS: first source-ledger 533 = 407 partial + 126 unresolved; 30 exact first-source promotions cross-checked; 136 source review histories retained; 0 compliance approvals");
+console.log("PASS: live first source-ledger 533 = 409 partial + 124 unresolved; 32 first-source promotions cross-checked; archived 126-case queue retained; 0 compliance approvals");
