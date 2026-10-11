@@ -10219,6 +10219,8 @@ function pendingContaminantReviewNotice(p){
    ?'<details style="margin:9px 0"><summary><b>11 October exact subtype transfer safeguard — NOT APPLIED</b></summary>'
     +'<p><b>Identity:</b> '+esc(subtype.verified_identity_or_standard)+'</p>'
     +'<p><b>Do not transfer:</b> '+esc(subtype.prohibited_limit_transfer)+'</p>'
+    +'<p><b>Five required source/applicability verifications — outstanding, NOT APPLIED:</b></p>'
+    +'<ol style="padding-left:22px;margin:6px 0">'+(subtype.five_required_product_specific_source_qualifiers||[]).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol>'
     +(qualityCriterion?'<p><b>Separate product-standard quality criterion (NOT a contaminant or pesticide MRL):</b> '
       +esc(qualityCriterion.parameter)+' '+esc(qualityCriterion.operator)+' '+esc(qualityCriterion.value)+' '+esc(qualityCriterion.unit)
       +'. This does not establish a tested sample result or legal PASS.</p>':'')
