@@ -10228,6 +10228,23 @@ function pendingContaminantReviewNotice(p){
     +(subtype.source_pdf_page_one_based?'Chapter PDF p. '+esc(subtype.source_pdf_page_one_based):'Further source-page verification outstanding')
     +'. No numeric CTR finished-product limit auto-applied.</small></details>'
    :'';
+ const chapter23=record.chapter_2_3_qualifier_matrix_2026_10_11;
+ const chapter23Valid=chapter23&&chapter23.catalog_id===p.id&&chapter23.product_name===p.name
+  &&chapter23.fssr===p.fssr&&chapter23.numeric_limit_applied===false&&chapter23.explicit_compliance_clearance===false;
+ const chapter23References=chapter23Valid?(chapter23.conditional_named_source_articles_previously_checked||[]):[];
+ const chapter23Html=chapter23Valid
+  ?'<details style="margin:9px 0"><summary><b>11 October Chapter 2.3 — five required product/analytical qualifiers (NOT APPLIED)</b></summary>'
+   +'<p>'+esc(chapter23.product_specific_identity_gate)+'</p>'
+   +'<ol style="padding-left:22px;margin:6px 0">'
+   +(chapter23.qualifier_fields_required_before_source_applicability_decision||[]).map(x=>'<li>'+esc(x)+'</li>').join('')
+   +'</ol><p><b>Prohibited transfer:</b> '+esc(chapter23.excluded_transfer)+'</p>'
+   +(chapter23References.length?'<p><b>Previously checked source rows (conditional only):</b></p><ul style="padding-left:22px">'
+     +chapter23References.map(x=>'<li>'+esc(x.metal)+' — '+esc(x.official_article)+' — '+esc(x.reference_limit)+' '+esc(x.unit)
+        +' · '+esc(x.condition)+'; <b>NOT APPLIED</b></li>').join('')+'</ul>':'')
+   +'<small><a href="'+esc(chapter23.chapter_source_url)+'" target="_blank" rel="noopener noreferrer">Official Chapter 2.3</a>'
+   +' · <a href="'+esc(chapter23.ctr_source_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX</a>. '
+   +'No sample or complete MRL compliance established.</small></details>'
+  :'';
  const candidate=record.specific_source_commodity_subtype_review_2026_10_10;
  const candidateHtml=candidate&&candidate.review_only===true&&candidate.automatically_applied===false
    ?'<details style="margin:9px 0"><summary><b>Official named commodity article — conditional, NOT APPLIED</b></summary>'
@@ -10267,6 +10284,7 @@ function pendingContaminantReviewNotice(p){
    +familyHtml
    +tailHtml
    +subtypeHtml
+   +chapter23Html
    +candidateHtml
    +discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
