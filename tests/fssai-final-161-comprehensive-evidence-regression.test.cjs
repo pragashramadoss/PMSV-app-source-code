@@ -34,7 +34,18 @@ test("The standalone machine-readable source-matrix reconciliation regenerates 1
  assert.equal(doc.pending_exact_source_evidence,126);
  assert.equal(doc.checkpoints.length,126);
  assert.deepEqual(doc.disposition_buckets,{chapter_2_3:43,previous_81:70,final_17:13});
- assert.equal(doc.conditional_source_references_not_applied,2);
+ assert.equal(doc.historical_2026_10_10_conditional_commodity_references_not_applied,2);
+ assert.equal(doc.source_qualifier_questions_2026_10_11,630);
+ assert.deepEqual(doc.review_groups_2026_10_11,{
+  cereals_sugars_other:28,fruit_vegetable:43,special_foscos:28,other_chapters:27
+ });
+ assert.equal(doc.conditional_numeric_ctr_articles_review_only_2026_10_11,15);
+ assert.equal(doc.separate_numeric_product_quality_values_2026_10_11,108);
+ assert.equal(doc.dairy_analogue_identity_exclusion_guards_2026_10_11,8);
+ assert.equal(doc.purified_vending_water_noninheritance_guards_2026_10_11,1);
+ assert.ok(doc.checkpoints.every(p=>p.current_round_2026_10_11&&p.current_round_2026_10_11.source_qualifier_questions.length===5));
+ assert.ok(doc.checkpoints.every(p=>p.current_round_2026_10_11.current_product_compliance_approved===false));
+ assert.equal(doc.checkpoints.reduce((n,p)=>n+p.current_round_2026_10_11.named_numeric_source_article_references_review_only.length,0),15);
  assert.equal(doc.exact_regulatory_route_mismatches_requiring_resolution,1);
  assert.equal(doc.legal_compliance_passes_claimed,0);
  assert.ok(doc.checkpoints.every(p=>!p.applied_numeric_limit&&!p.product_compliance_pass&&!p.pesticide_mrl_panel_complete));
