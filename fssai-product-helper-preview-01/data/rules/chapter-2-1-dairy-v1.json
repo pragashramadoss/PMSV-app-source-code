@@ -1167,8 +1167,8 @@
           "moisture_max_pct": 80,
           "protein_min_pct": 7,
           "fat_min_pct": 4,
-          "immunoglobulins_min_pct": 1.8,
-          "lactoferrin_min_pct": 0.2
+          "lactoferrin_min_pct": 0.2,
+          "immunoglobulins_g_igg_min_pct": 1.8
         },
         {
           "variant": "Colostrum Powder",
@@ -1176,14 +1176,27 @@
           "protein_min_pct": 40,
           "fat_min_pct": 17.5,
           "total_ash_db_max_pct": 9,
-          "immunoglobulins_min_pct": 12.5,
           "lactoferrin_min_pct": 1.2,
-          "scorched_particles_max": "Disc B (15 mg)"
+          "scorched_particles_max": "Disc B (15 mg)",
+          "immunoglobulins_g_igg_min_pct": 8.5
         }
       ],
       "additives": {
         "colostrum": "No food additives",
         "colostrum_powder": "Milk-powder stabilizers, emulsifiers and antioxidants from Appendix A within applicable limits"
+      },
+      "verified_2025_igg_amendment": {
+        "official_source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
+        "source_version": "Version 3 (07.05.2025)",
+        "source_clause": "2.1.23",
+        "effective_from": "2025-05-01",
+        "colostrum_igg_min_pct": 1.8,
+        "colostrum_powder_igg_min_pct": 8.5,
+        "require_igg_specific_test": true,
+        "legacy_total_immunoglobulins_powder_12_5_superseded": true,
+        "quality_only_not_contaminant_mrl": true,
+        "complete_compliance_pass": false,
+        "note": "2025 FSSAI amendment number 83 replaces the general immunoglobulins parameter by IgG in both colostrum and colostrum powder. Never evaluate an IgG requirement from a total-immunoglobulins laboratory result."
       }
     },
     {
