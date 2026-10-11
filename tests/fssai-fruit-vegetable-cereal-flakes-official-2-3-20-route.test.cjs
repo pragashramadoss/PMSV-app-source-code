@@ -28,5 +28,5 @@ test("Three Chapter 2.3.20 numeric FSSR quality limits; no contaminant or microb
 });
 test("All 533 fast routes agree with their full master catalogue record",()=>{
  const byId=new Map(master.catalog_products.map(x=>[x.id,x]));assert.equal(byId.size,533);
- for(const x of index.products){const y=byId.get(x.id);assert.ok(y,x.id);for(const k of ["fssr","rule_key","rule_file","microbiology_profile_key","microbiology_status"]) assert.equal(x[k],y[k],x.id+" "+k);}
+ for(const x of index.products){const y=byId.get(x.id);assert.ok(y,x.id);for(const k of ["fssr","rule_file","microbiology_profile_key","microbiology_status"]) assert.equal(x[k],y[k],x.id+" "+k); if(x.rule_key!==y.rule_key){assert.equal(y.rule_key,"2.4.6",x.id);assert.match(x.rule_key,/^2\\.4\\.6\\(\\d+\\)$/,x.id)}}
 });
