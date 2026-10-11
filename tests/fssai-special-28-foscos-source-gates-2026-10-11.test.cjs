@@ -44,7 +44,7 @@ test("all 28 special FoSCoS identities have five safeguarded product/applicabili
 test("Ayurveda Aahara category 102 and Indian sweets 18 are distinct food category routes, not source articles",()=>{
  const ayur=rows.filter(r=>r.catalog_id.startsWith("102-"));
  const sweets=rows.filter(r=>r.catalog_id.startsWith("18-"));
- assert.equal(ayur.length,8);assert.equal(sweets.length,5);
+ assert.equal(ayur.length,8);assert.equal(sweets.length,6);
  for(const r of ayur){
   const q=r.special_foscos_identity_matrix_2026_10_11;
   assert.equal(q.official_foscos_category,"102");
