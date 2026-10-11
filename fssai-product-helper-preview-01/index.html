@@ -10664,7 +10664,7 @@ function sourcePinnedExpandedMetalScopeHtml(p){
     (contaminantsDb.metal_article_rules_v9[r.metal]||[])
      .filter(x=>x.row_type==='exact'&&norm(x.article)===norm(r.article)
        &&Number(x.limit)===Number(r.limit)&&x.unit===r.unit).length===1
-     &&r.unit==='mg/kg'&&Number.isFinite(Number(r.limit))&&Number(r.limit)>0
+     &&(r.unit==='mg/kg'||r.unit==='mg/L')&&Number.isFinite(Number(r.limit))&&Number(r.limit)>0
  ));
  if(!validSources)return withheld;
  const list=[
