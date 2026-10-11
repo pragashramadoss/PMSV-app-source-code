@@ -6,6 +6,8 @@ const read=p=>JSON.parse(fs.readFileSync(path.join(base,p),"utf8"));
 const catalogue=read("standard-search-index-v1.json").products;
 const initial=read("rules/fssai-next121-positive-subtype-proof-2026-10-11.json");
 const delta=read("rules/fssai-2-ayurveda-composite-first-source-2026-10-11.json");
+const grain=read("rules/fssai-other-foodgrains-b1-first-source-2026-10-11.json");
+const chapter=read("rules/chapter-2-4-cereals-v1.json");
 const decisions=read("rules/fssai-153-source-article-applicability-adjudications-2026-10-11.json");
 const core=read("rules/contaminants-v9-core.json");
 const official="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf";
@@ -45,7 +47,33 @@ for(const x of delta.records){
   verified_article:x.source_product_article,named_rows:x.applicable_source_rows,
   sample_pass:false,complete_coverage:false});
 }
-assert.equal(promotes.size,2);
+// Third independently source-locked identity: the residual whole/broken
+// cereals, millets and pulses described in FSSR 2.4.6(15).
+const gp=index.get(grain.catalog_id),oldGrain=starting.get(grain.catalog_id);
+assert.ok(gp&&oldGrain&&gp.name===grain.product_name&&gp.fssr===grain.fssr&&gp.fcs===grain.fcs&&gp.rule_key===grain.clause);
+assert.equal(grain.official_contaminants_source,undefined); // explicit field name is source_contaminants
+assert.equal(grain.source_contaminants,official);
+assert.equal(grain.first_positive_source,true);assert.equal(grain.complete_compliance_pass,false);
+assert.equal(grain.partial_after,415);assert.equal(grain.pending_after,118);
+const grainGeneral=chapter.standards.find(x=>x.key==="2.4.6");
+const grainSpecific=chapter.standards.find(x=>x.key==="2.4.6(15)");
+assert.ok(grainGeneral.quality_rules.some(x=>x.includes("whole or broken kernels of cereals, millets and pulses")));
+assert.equal(grainSpecific.official_source_url,grain.source_standard);
+assert.equal(grain.matched_articles.length,2);
+for(const row of grain.matched_articles){
+ const group=core.crop_contaminants[row.source_group];
+ assert.ok(group&&group.unit==="µg/kg");assert.equal(row.unit,"µg/kg");
+ assert.equal(row.limit,row.source_group==="aflatoxin_b1"?10:15);
+ assert.equal(row.articles.length,2);
+ for(const article of ["Cereal and cereal products","Pulses"])
+  assert.equal(group.rules.filter(x=>x.article===article&&Number(x.limit)===row.limit).length,1);
+}
+assert.ok(!promotes.has(gp.id));promotes.add(gp.id);
+positive.push({catalog_id:gp.id,product_name:gp.name,fssr:gp.fssr,fcs:gp.fcs,
+ first_source_status:"PARTIAL_EXACT_GRAIN_FAMILY_AFLATOXIN_SOURCE",official_regulation:official,
+ official_product_standard:grain.source_standard,verified_article:"Cereals/millets or pulses",
+ named_rows:grain.matched_articles,sample_pass:false,complete_coverage:false});
+assert.equal(promotes.size,3);
 const remaining=[...starting.values()].filter(p=>!promotes.has(p.catalog_id)).map(p=>({
  catalog_id:p.catalog_id,product_name:p.product_name,fssr:p.fssr,fcs:p.fcs,
  status:"FIRST_EXACT_SOURCE_STILL_PENDING",conditional_reference_article_count:p.named_article_references_review_only.length,
@@ -55,23 +83,23 @@ const remaining=[...starting.values()].filter(p=>!promotes.has(p.catalog_id)).ma
  })),
  first_source_verified:false,full_compliance_pass:false
 }));
-assert.equal(remaining.length,119);
-assert.equal(new Set(remaining.map(r=>r.catalog_id)).size,119);
+assert.equal(remaining.length,118);
+assert.equal(new Set(remaining.map(r=>r.catalog_id)).size,118);
 assert.deepEqual(new Set([...promotes,...remaining.map(r=>r.catalog_id)]),new Set(starting.keys()));
 const counts={};
 for(const r of decisions.records)counts[r.legal_article_applicability]=(counts[r.legal_article_applicability]||0)+1;
 assert.deepEqual(counts,{DIRECT_FINISHED_ARTICLE_EXCLUDED:53,SUBTYPE_PROCESSING_PROOF_REQUIRED:96,CONFIRMED_NAMED_COMPOSITE_ARTICLE_POSITIVE:4});
 const result={
  schema_version:"1.0",as_of:"2026-10-11",source_policy:"Official FSSAI/FoSCoS sources exclusively",
- note:"This reconciles the original archived 412/121 snapshot against 2 later source-verified finished-food article matches; reference exclusions do not constitute first-source promotions.",
+ note:"This reconciles the original archived 412/121 snapshot against three source-verified product identities; reference exclusions never constitute first-source promotions.",
  original_catalogue:533,original_partial:412,original_first_source_pending:121,
- current_partial_first_source:414,current_first_source_pending:119,newly_promoted_source_only:2,
+ current_partial_first_source:415,current_first_source_pending:118,newly_promoted_source_only:3,
  full_finished_food_compliance_passes:0,source_article_link_decisions:153,
  article_link_status_counts:counts,positively_source_matched_products:positive,unresolved_first_source_products:remaining
 };
 const dir=path.join(root,"audit-output");fs.mkdirSync(dir,{recursive:true});
 const dest=path.join(dir,"fssai-current-first-source-533-reconciliation.json");
 fs.writeFileSync(dest,JSON.stringify(result,null,2)+"\n");
-console.log("PASS: 533 total; historical 412 partial/121 pending; current 414 partial/119 pending; 0 finished-food compliance approvals");
+console.log("PASS: 533 total; historical 412 partial/121 pending; current 415 partial/118 pending; 0 finished-food compliance approvals");
 console.log("PASS: 153 source-article decisions reconciled: 53 direct-article exclusions, 96 conditional, 4 positive links for 2 products");
 console.log("REPORT "+dest);
