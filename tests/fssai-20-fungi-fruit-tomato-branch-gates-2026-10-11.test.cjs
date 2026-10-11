@@ -10,7 +10,7 @@ ctx.pmsvTwentySourceDb=d;
 const show=id=>vm.runInContext("sourcePinnedTwentyArticleBranchesHtml("+JSON.stringify(byId.get(id))+")",ctx);
 test("Twenty FoSCoS identities, each exact Chapter 2.3 standard and no false first-source promotion",()=>{
  assert.equal(d.review_products,20);assert.equal(d.records.length,20);
- assert.equal(d.source_articles.length,11);assert.equal(d.positive_conditional_branches,24);
+ assert.equal(d.source_articles.length,11);assert.equal(d.positive_conditional_branches,25);
  assert.equal(d.catalogue,533);assert.equal(d.partial_evidence,415);assert.equal(d.pending_first_exact,118);
  assert.equal(d.no_new_unconditional_first_source_promotions,true);assert.equal(d.finished_compliance_passes,0);
  assert.match(code("index.html"),/fssai-20-fungi-fruit-tomato-article-branches\.js\?v=20261011-branch20/);
@@ -54,7 +54,7 @@ test("Date paste and fruit sweets do not inherit fruit pulp article without prod
  for(const id of ["04-04-1-date-paste","04-04-1-fruit-cheese","04-04-1-fruit-bar-toffee"]){
   const initial=show(id);assert.doesNotMatch(initial,/Copper: 5 mg\/kg/);
   ctx.pmsvTwentySubtypeChoices[id]="fruit_pulp_identity_checked";
-  assert.match(show(id),/Copper: 5 mg\/kg/);assert.match(show(id),/not verified/);
+  assert.match(show(id),/Copper: 5 mg\/kg/);assert.match(show(id),/NOT APPLIED/);
  }
 });
 test("Mutated numeric source rows or identity fail closed; no product outside twenty inherits source",()=>{

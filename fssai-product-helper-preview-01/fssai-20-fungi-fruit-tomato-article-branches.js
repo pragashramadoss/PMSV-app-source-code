@@ -8,7 +8,7 @@ async function pmsvLoadTwentySourceDb(){
   const d=await r.json();
   if(d.catalogue!==533||d.partial_evidence!==415||d.pending_first_exact!==118||
    d.review_products!==20||d.records?.length!==20||d.source_articles?.length!==11||
-   d.verified_distinct_article_rows!==11||d.positive_conditional_branches!==24||
+   d.verified_distinct_article_rows!==11||d.positive_conditional_branches!==25||
    d.no_new_unconditional_first_source_promotions!==true||d.finished_compliance_passes!==0)
    throw Error('Branch evidence metadata changed');
   pmsvTwentySourceDb=d;
@@ -25,7 +25,7 @@ function pmsvChooseTwentyBranch(x){
 function pmsvTwentyAllSourcesMatch(){
  const d=pmsvTwentySourceDb,c=contaminantsDb;
  if(!d||!c||d.review_products!==20||d.records?.length!==20||
-    d.positive_conditional_branches!==24||d.source_articles?.length!==11||
+    d.positive_conditional_branches!==25||d.source_articles?.length!==11||
     d.verified_distinct_article_rows!==11||d.catalogue!==533||
     d.partial_evidence!==415||d.pending_first_exact!==118||
     d.no_new_unconditional_first_source_promotions!==true||d.finished_compliance_passes!==0||
@@ -37,7 +37,8 @@ function pmsvTwentyAllSourcesMatch(){
   if(!a||a.filter(row=>row.article===x.article&&row.unit===x.unit&&Number(row.limit)===x.value).length!==1)return false;
  }
  const chapter=(Array.isArray(chapterRuleDbs)?chapterRuleDbs:[]).find(x=>x?.chapter==='2.3');
- if(!chapter||chapter.official_sources?.[0]?.url!==d.official_fssr)return false;
+ if(!chapter||chapter.official_sources?.[0]?.url!=='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf'||
+    d.official_fssr!=='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf')return false;
  if(new Set(d.records.map(x=>x.catalog_id)).size!==20)return false;
  return d.records.every(r=>{
   const st=chapter.standards.find(x=>x.key===r.rule_key);
