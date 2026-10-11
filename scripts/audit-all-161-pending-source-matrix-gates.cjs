@@ -9,6 +9,7 @@ const fs=require("node:fs"),path=require("node:path"),assert=require("node:asser
 const root=path.resolve(__dirname,"..");
 const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
 const m=read("fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json");
+const canonical=read("fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json");
 const catalog=read("fssai-product-helper-preview-01/data/standard-search-index-v1.json").products;
 const byId=new Map(catalog.map(x=>[x.id,x]));
 assert.equal(catalog.length,533);
@@ -24,7 +25,7 @@ const reviewFields=[
  ["remaining_cross_family_qualifier_matrix_2026_10_11","qualifier_fields_before_named_ctr_limit_may_be_checked","other_chapters"]
 ];
 const reviewCounts=Object.fromEntries(reviewFields.map(row=>[row[2],0]));
-let questions=0,conditionalRefs=0,qualityEntries=0,analogues=0,vending=0;
+let questions=0,conditionalRefs=0,qualityEntries=0,analogues=0,vending=0,sourceBranches=0,branchNamedRows=0;
 
 for(const item of m.records){
  const p=byId.get(item.catalog_id);
@@ -162,8 +163,35 @@ for(const item of m.records){
   assert.equal(vendingRecord.any_is10500_numeric_limit_copied_into_fssai_database,false);
   vending++;
  }
+ const branch=item.conditional_article_branch_matrix_2026_10_11;
+ if(branch){
+  sourceBranches++;
+  assert.equal(branch.catalog_id,p.id);assert.equal(branch.product_name,p.name);assert.equal(branch.fssr,p.fssr);
+  assert.equal(branch.exact_finished_product_eligibility_verified,false);
+  assert.equal(branch.any_numeric_finished_product_limit_applied,false);
+  assert.equal(branch.full_regulatory_compliance_pass,false);
+  assert.equal(branch.source_qualifying_questions.length,5);
+  assert.ok(branch.conditional_or_excluded_source_rows.length>0);
+  const article=s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+  for(const x of branch.conditional_or_excluded_source_rows){
+   const matching=(canonical.metal_article_rules_v9?.[x.metal]||[]).filter(y=>
+    y.row_type==="exact"&&article(y.article)===article(x.official_named_article)
+    &&Number(y.limit)===Number(x.official_reference_limit)&&y.unit===x.unit);
+   assert.equal(matching.length,1,p.id+" "+x.official_named_article+" official source drift");
+   assert.equal(x.automatically_assigned_as_finished_product_limit,false);
+   assert.equal(x.finished_product_compliance_approved,false);
+   branchNamedRows++;
+  }
+ }
  conditionalRefs+=numericCandidates.length;
  const checkpoint=checkpoints[checkpoints.length-1];
+ if(branch){
+  checkpoint.source_verified_conditional_named_articles_2026_10_11={
+   review_group:branch.branch_group,official_article_references_not_applied:branch.conditional_or_excluded_source_rows.length,
+   source_rows_match_current_v9:true,finished_product_source_applicability_qualified:false,
+   complete_contaminant_review:false,any_numeric_limit_applied:false,product_compliance_pass:false
+  };
+ }
  checkpoint.current_round_2026_10_11={
   review_group:kind2026,
   source_qualifier_questions:mandatory,
@@ -180,6 +208,10 @@ assert.equal(conditionalRefs,15);
 assert.equal(qualityEntries,108);
 assert.equal(analogues,8);
 assert.equal(vending,1);
+assert.equal(sourceBranches,46);
+assert.equal(branchNamedRows,82);
+assert.equal(m.conditional_article_branch_review_2026_10_11.products_reviewed,46);
+assert.equal(m.conditional_article_branch_review_2026_10_11.official_named_source_row_references,82);
 assert.deepEqual(groups,{chapter_2_3:43,previous_81:70,final_17:13});
 assert.equal(Object.values(families).reduce((a,b)=>a+b,0),126);
 assert.equal(checkpoints.filter(x=>x.conditional_commodity_reference).length,2);
@@ -198,6 +230,9 @@ const result={
  separate_numeric_product_quality_values_2026_10_11:qualityEntries,
  dairy_analogue_identity_exclusion_guards_2026_10_11:analogues,
  purified_vending_water_noninheritance_guards_2026_10_11:vending,
+ additional_product_conditional_named_article_reviews_2026_10_11:sourceBranches,
+ additional_official_named_metal_source_references_not_applied_2026_10_11:branchNamedRows,
+ source_article_values_checked_against_loaded_v9:true,
  legal_compliance_passes_claimed:0,
  warning:"Scope review evidence does not establish safety, source amendment completeness or laboratory compliance. Official source and ingredient recipe must be confirmed before applying numerical limits.",
  checkpoints
