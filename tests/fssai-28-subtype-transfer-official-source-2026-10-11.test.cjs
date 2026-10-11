@@ -114,3 +114,28 @@ test("dried glucose syrup sulfated ash at most 1 percent cannot satisfy a lead a
  assert.match(shown,/not automatically apply/);
  assert.match(shown,/not.*exemption/i);
 });
+
+test("all 28 subtype safeguards expose five exact source-qualification questions without silently clearing a product",()=>{
+ assert.equal(rows.length,28);
+ let seen=0;
+ for(const r of rows){
+  const q=r.exact_subtype_transfer_safeguard_2026_10_11,p=byId.get(r.catalog_id);
+  assert.equal(q.five_required_product_specific_source_qualifiers.length,5);
+  assert.equal(new Set(q.five_required_product_specific_source_qualifiers).size,5);
+  assert.ok(q.five_required_product_specific_source_qualifiers.every(s=>s.length>40),r.catalog_id);
+  assert.equal(q.all_five_qualification_fields_completed,false);
+  assert.equal(q.no_numeric_ctr_article_promoted_from_new_fields,true);
+  assert.equal(q.first_exact_ctr_source_claimed,false);
+  const out=notice(p);
+  assert.match(out,/Five required source\/applicability verifications — outstanding, NOT APPLIED/);
+  for(const phrase of q.five_required_product_specific_source_qualifiers)assert.ok(out.includes(esc(phrase)),r.catalog_id);
+  seen+=5;
+ }
+ assert.equal(seen,140);
+ const sugar=rows.find(r=>r.catalog_id==="11-11-1-cube-sugar");
+ assert.ok(sugar.exact_subtype_transfer_safeguard_2026_10_11.five_required_product_specific_source_qualifiers.some(s=>s.includes("total ash")&&s.includes("sulphated ash")));
+ const dried=rows.find(r=>r.catalog_id==="11-11-1-dried-glucose-syrup");
+ assert.ok(dried.exact_subtype_transfer_safeguard_2026_10_11.five_required_product_specific_source_qualifiers.some(s=>s.includes(">1.0%")));
+ const flakes=rows.find(r=>r.catalog_id==="06-06-3-fruit-vegetable-cereal-flakes");
+ assert.ok(flakes.exact_subtype_transfer_safeguard_2026_10_11.five_required_product_specific_source_qualifiers.some(s=>s.includes("2.3.20")&&s.includes("2.4.35")));
+});
