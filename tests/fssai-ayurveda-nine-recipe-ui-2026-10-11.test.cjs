@@ -40,8 +40,8 @@ test("Tampering review approval flags withholds source and no numeric PASS is po
  assert.match(html,/ayurvedaRecipeReviewDb=await r.json\(\)/);
 });
 test("Research worksheet holds all nine recipe qualifications, but zero product MRL applications",()=>{
- const q=read("audit-output/fssai-next-123-first-exact-source-research-queue.json");
- assert.deepEqual([q.ayurveda_recipe_reviews,q.ayurveda_recipe_b1_overlap_candidates,q.total,q.partial,q.pending],[9,4,533,410,123]);
+ const q=read("audit-output/fssai-next-121-first-exact-source-research-queue.json");
+ assert.deepEqual([q.ayurveda_recipe_reviews,q.ayurveda_recipe_b1_overlap_candidates,q.total,q.partial,q.pending],[9,4,533,412,121]);
  for(const r of q.records.filter(x=>x.ayurveda_recipe_ingredient_source_review_only)){
   assert.equal(r.ayurveda_recipe_ingredient_source_review_only.article_applied,false);
   assert.equal(r.ayurveda_recipe_ingredient_source_review_only.first_exact_product_source_cleared,false);

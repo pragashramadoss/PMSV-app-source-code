@@ -13,9 +13,9 @@ const ctx=vm.createContext({sourcePriorityMetalDb:structuredClone(m),contaminant
  esc:s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))});
 vm.runInContext(html.slice(begin,end),ctx);
 const p=id=>products.find(x=>x.id===id),draw=obj=>vm.runInContext("sourcePriorityMetalFallbackReviewHtml("+JSON.stringify(obj)+")",ctx);
-test("Exact 123 pending identities—not historic queue—are source review targets",()=>{
+test("Exact 121 pending identities—not historic queue—are source review targets",()=>{
  const historical=new Set(unresolved.map(x=>x.catalog_id)),active=new Set(m.unresolved_first_exact_catalog_ids);
- assert.equal(historical.size,126);assert.equal(active.size,123);assert.equal(m.unresolved_first_exact_catalog_id_count,123);
+ assert.equal(historical.size,126);assert.equal(active.size,121);assert.equal(m.unresolved_first_exact_catalog_id_count,121);
  for(const id of m.unresolved_first_exact_catalog_ids)assert.ok(historical.has(id));
  for(const id of m.historical_queue_products_with_new_partial_evidence)assert.ok(historical.has(id)&&!active.has(id),id);
  assert.deepEqual(new Set(m.historical_queue_products_with_new_partial_evidence),new Set(["11-11-1-cane-jaggery-or-cane-gur","11-11-1-gur-or-jaggery","06-06-3-fruit-vegetable-cereal-flakes"]));
@@ -61,11 +61,11 @@ test("UI loads source policy and never counts all-food or default rows as exact 
  assert.match(html,/sourcePriorityMetalDb=await priority.json\(\)/);
  assert.doesNotMatch(html.slice(begin,end),/sourceCompliancePass=true|certified|approveProduct\(/i);
 });
-test("Every one of 123 research worksheets has all seven rows but zero approved numeric rules",()=>{
- const research=read("audit-output/fssai-next-123-first-exact-source-research-queue.json");
- assert.deepEqual([research.total,research.partial,research.pending,research.full_compliance_passes],[533,410,123,0]);
- assert.deepEqual([research.metal_priority_source_rows,research.metal_default_precedence_reviews,research.all_foods_methyl_mercury_research_references],[7,738,123]);
- assert.equal(research.records.length,123);
+test("Every one of 121 research worksheets has all seven rows but zero approved numeric rules",()=>{
+ const research=read("audit-output/fssai-next-121-first-exact-source-research-queue.json");
+ assert.deepEqual([research.total,research.partial,research.pending,research.full_compliance_passes],[533,412,121,0]);
+ assert.deepEqual([research.metal_priority_source_rows,research.metal_default_precedence_reviews,research.all_foods_methyl_mercury_research_references],[7,726,121]);
+ assert.equal(research.records.length,121);
  for(const r of research.records){
   assert.ok(m.unresolved_first_exact_catalog_ids.includes(r.catalog_id));
   assert.equal(r.generic_metal_precedence_references_review_only.length,7);

@@ -44,9 +44,9 @@ test("Changed nominal quality numbers, source file fingerprint and approval flag
  assert.match(draw(p),/withheld/);
  c.contaminantsDb=originalCore;
 });
-test("123 research worksheets include 55 fungi quality records and do not mark fungi CTR verified",()=>{
- const q=read("audit-output/fssai-next-123-first-exact-source-research-queue.json");
- assert.deepEqual([q.total,q.partial,q.pending,q.fungi_quality_products,q.fungi_quality_source_rows,q.fungi_first_exact_contaminant_promotions],[533,410,123,10,55,0]);
+test("121 research worksheets include 55 fungi quality records and do not mark fungi CTR verified",()=>{
+ const q=read("audit-output/fssai-next-121-first-exact-source-research-queue.json");
+ assert.deepEqual([q.total,q.partial,q.pending,q.fungi_quality_products,q.fungi_quality_source_rows,q.fungi_first_exact_contaminant_promotions],[533,412,121,10,55,0]);
  const fungi=q.records.filter(x=>x.fungi_exact_quality_source_review_only);
  assert.equal(fungi.length,10);
  for(const r of fungi){
