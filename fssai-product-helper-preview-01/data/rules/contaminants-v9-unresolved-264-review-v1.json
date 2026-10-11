@@ -8373,14 +8373,42 @@
         "source_chapter": "2.8",
         "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20(Sweetening%20agents%20including%20Honey).pdf",
         "ctr_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
-        "source_pdf_page_one_based": null,
-        "verified_identity_or_standard": "2.8.7 glucose syrup dried form",
-        "prohibited_limit_transfer": "Do not equate dried glucose syrup with dextrose monohydrate or refined sugar.",
-        "required_next_evidence": "Confirm actual subtype, raw material, analytical matrix, FSSAI Version IX named article, full current amendments and complete pesticide/mycotoxin/metal panel.",
-        "verification_level": "scope_only_pending_specific_source_page_confirmation",
+        "source_pdf_page_one_based": 13,
+        "verified_identity_or_standard": "FSSR 2.8.7 DRIED GLUCOSE SYRUP: powder, total solids >=93% and reducing sugars >=20%; sulfated ash <=1.0% by weight.",
+        "prohibited_limit_transfer": "FSSAI Version IX Lead row 'solid glucose and starch conversion products with sulphated ash exceeding 1.0 percent' (5 mg/kg) cannot automatically apply to product meeting the Chapter 2.8.7 maximum of 1.0%; do not classify <=1.0% as >1.0%. This is NOT an exemption from all lead limits.",
+        "required_next_evidence": "Confirm actual sulfated ash and whether the product meets 2.8.7, identify other possibly applicable lead article or Foods not specified, then reconcile all metals, toxins, residues and amendments. A non-applicable one conditional article does not mean a zero limit.",
+        "verification_level": "official_standard_source_inspected_and_identity_guarded",
         "first_exact_ctr_source_claimed": false,
         "automatically_applied": false,
-        "compliance_approved": false
+        "compliance_approved": false,
+        "chapter_specific_quality_not_ctr_limit": {
+          "parameter": "Sulfated ash",
+          "value": 1,
+          "unit": "% by weight",
+          "operator": "<="
+        },
+        "contaminant_article_boundary_guard": {
+          "contaminant": "Lead",
+          "ctr_article": "Edible molasses, caramel liquid, solid glucose and starch conversion products with a sulphated ash content exceeding 1.0 per cent",
+          "ctr_limit": 5,
+          "ctr_unit": "mg/kg",
+          "ctr_pdf_page_one_based": 4,
+          "ctr_condition": {
+            "parameter": "sulphated ash",
+            "operator": ">",
+            "value": 1,
+            "unit": "%"
+          },
+          "standard_requirement": {
+            "parameter": "sulfated ash",
+            "operator": "<=",
+            "value": 1,
+            "unit": "%"
+          },
+          "applicability_disposition": "excluded_from_this_named_condition_if_product_meets_standard_not_a_general_lead_exemption",
+          "automatic_numeric_limit_assignment": false,
+          "finished_food_compliance_pass": false
+        }
       }
     },
     {
