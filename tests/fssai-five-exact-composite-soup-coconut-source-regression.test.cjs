@@ -91,7 +91,7 @@ test("Helper display source integrity gates block stale identity, source values 
 });
 test("Generated product readiness audit identifies five partial exact source rows without issuing a finished food compliance PASS",()=>{
  const report=read("audit-output/fssai-product-readiness-audit.json");
- assert.equal(report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,409);
+ assert.equal(report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,410);
  for(const id of ids){
   const x=report.products.find(y=>y.id===id);
   assert.ok(x,id);
