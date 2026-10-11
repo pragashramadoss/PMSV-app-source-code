@@ -1,0 +1,808 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-10-11",
+  "source_policy": "Official FSSAI only",
+  "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "official_fssr": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+  "source_version": "Version IX (03.02.2026)",
+  "catalogue": 533,
+  "partial_evidence": 415,
+  "pending_first_exact": 118,
+  "review_products": 20,
+  "positive_conditional_branches": 25,
+  "verified_distinct_article_rows": 11,
+  "verified_branch_article_links": 44,
+  "no_new_unconditional_first_source_promotions": true,
+  "finished_compliance_passes": 0,
+  "source_articles": [
+    {
+      "key": "agaric_mushroom",
+      "metal": "Agaric acid",
+      "article": "Food containing mushrooms",
+      "unit": "ppm",
+      "value": 100,
+      "matrix": "Only finished food positively confirmed to contain an identified mushroom species"
+    },
+    {
+      "key": "lead_canned_mushroom",
+      "metal": "Lead",
+      "article": "Canned mushrooms",
+      "unit": "mg/kg",
+      "value": 1,
+      "matrix": "Only finished canned mushroom form; airtight jar does not establish canned mushroom identity"
+    },
+    {
+      "key": "tin_canned_mushroom",
+      "metal": "Tin",
+      "article": "Canned mushrooms",
+      "unit": "mg/kg",
+      "value": 250,
+      "matrix": "Only finished canned mushroom form; do not infer tinplate material"
+    },
+    {
+      "key": "lead_mango_chutney",
+      "metal": "Lead",
+      "article": "Mango chutney",
+      "unit": "mg/kg",
+      "value": 1,
+      "matrix": "Mango chutney as the actual finished food, not generic vegetable chutney"
+    },
+    {
+      "key": "tin_mango_chutney",
+      "metal": "Tin",
+      "article": "Mango Chutney",
+      "unit": "mg/kg",
+      "value": 250,
+      "matrix": "Mango chutney as finished food; not fruit chutney without mango"
+    },
+    {
+      "key": "lead_tomato_concentrate",
+      "metal": "Lead",
+      "article": "Processed tomato concentrates",
+      "unit": "mg/kg",
+      "value": 1.5,
+      "matrix": "Confirmed tomato-only processed concentrate, not undifferentiated vegetable puree"
+    },
+    {
+      "key": "tin_tomato_concentrate",
+      "metal": "Tin",
+      "article": "Processed tomato concentrates",
+      "unit": "mg/kg",
+      "value": 250,
+      "matrix": "Confirmed processed tomato concentrate; distinguish tomato puree from concentrate"
+    },
+    {
+      "key": "copper_tomato_puree",
+      "metal": "Copper",
+      "article": "Tomato puree, paste, powder, and cocktails",
+      "unit": "mg/kg",
+      "value": 100,
+      "matrix": "On dried tomato solids basis only; confirm actual tomato-based puree, paste, powder or cocktail"
+    },
+    {
+      "key": "copper_fruit_pulp",
+      "metal": "Copper",
+      "article": "Pulp and pulp products of any fruit",
+      "unit": "mg/kg",
+      "value": 5,
+      "matrix": "Only finished product proven to retain the legal fruit-pulp product identity"
+    },
+    {
+      "key": "arsenic_fruit_pulp",
+      "metal": "Arsenic",
+      "article": "Pulp and pulp products of any fruit",
+      "unit": "mg/kg",
+      "value": 0.2,
+      "matrix": "Only finished fruit pulp or pulp product, not automatically any fruit-based confection"
+    },
+    {
+      "key": "tin_fruit_pulp",
+      "metal": "Tin",
+      "article": "Pulp and pulp products of any fruit",
+      "unit": "mg/kg",
+      "value": 250,
+      "matrix": "Fruit-pulp product article; packaging and sample preparation reviewed independently"
+    }
+  ],
+  "records": [
+    {
+      "catalog_id": "04-04-2-quick-frozen-fungi",
+      "name": "Quick Frozen Fungi",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.1",
+      "rule_key": "2.3.62",
+      "regulatory_case": "fungi",
+      "standard_name": "EDIBLE FUNGI PRODUCTS",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "mushroom_species_proven",
+          "label": "Verified edible mushroom species is present (declaration only)",
+          "article_keys": [
+            "agaric_mushroom"
+          ],
+          "requires": [
+            "scientific and common species on FSSR 2.3.62 label",
+            "finished article genuinely contains mushrooms",
+            "actual sampling basis, edition and current effective amendments"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Never treat all fungi as mushrooms or a sealed airtight package as canned mushroom."
+    },
+    {
+      "catalog_id": "04-04-2-dried-fungi",
+      "name": "Dried fungi",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.2",
+      "rule_key": "2.3.62",
+      "regulatory_case": "fungi",
+      "standard_name": "EDIBLE FUNGI PRODUCTS",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "mushroom_species_proven",
+          "label": "Verified edible mushroom species is present (declaration only)",
+          "article_keys": [
+            "agaric_mushroom"
+          ],
+          "requires": [
+            "scientific and common species on FSSR 2.3.62 label",
+            "finished article genuinely contains mushrooms",
+            "actual sampling basis, edition and current effective amendments"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Never treat all fungi as mushrooms or a sealed airtight package as canned mushroom."
+    },
+    {
+      "catalog_id": "04-04-2-fungi-grits-and-fungi-powder",
+      "name": "Fungi Grits and Fungi Powder",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.2",
+      "rule_key": "2.3.62",
+      "regulatory_case": "fungi",
+      "standard_name": "EDIBLE FUNGI PRODUCTS",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "mushroom_species_proven",
+          "label": "Verified edible mushroom species is present (declaration only)",
+          "article_keys": [
+            "agaric_mushroom"
+          ],
+          "requires": [
+            "scientific and common species on FSSR 2.3.62 label",
+            "finished article genuinely contains mushrooms",
+            "actual sampling basis, edition and current effective amendments"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Never treat all fungi as mushrooms or a sealed airtight package as canned mushroom."
+    },
+    {
+      "catalog_id": "04-04-2-fungi-extract-and-fungi-concentrate",
+      "name": "Fungi extract and Fungi Concentrate",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.2",
+      "rule_key": "2.3.62",
+      "regulatory_case": "fungi",
+      "standard_name": "EDIBLE FUNGI PRODUCTS",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "mushroom_species_proven",
+          "label": "Verified edible mushroom species is present (declaration only)",
+          "article_keys": [
+            "agaric_mushroom"
+          ],
+          "requires": [
+            "scientific and common species on FSSR 2.3.62 label",
+            "finished article genuinely contains mushrooms",
+            "actual sampling basis, edition and current effective amendments"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Never treat all fungi as mushrooms or a sealed airtight package as canned mushroom."
+    },
+    {
+      "catalog_id": "04-04-2-dried-fungi-concentrate",
+      "name": "Dried Fungi Concentrate",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.2",
+      "rule_key": "2.3.62",
+      "regulatory_case": "fungi",
+      "standard_name": "EDIBLE FUNGI PRODUCTS",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "mushroom_species_proven",
+          "label": "Verified edible mushroom species is present (declaration only)",
+          "article_keys": [
+            "agaric_mushroom"
+          ],
+          "requires": [
+            "scientific and common species on FSSR 2.3.62 label",
+            "finished article genuinely contains mushrooms",
+            "actual sampling basis, edition and current effective amendments"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Never treat all fungi as mushrooms or a sealed airtight package as canned mushroom."
+    },
+    {
+      "catalog_id": "04-04-2-fungi-in-olive-oil-and-other-vegetable-oils",
+      "name": "Fungi in olive oil and other vegetable oils",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.3",
+      "rule_key": "2.3.62",
+      "regulatory_case": "fungi",
+      "standard_name": "EDIBLE FUNGI PRODUCTS",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "mushroom_species_proven",
+          "label": "Verified edible mushroom species is present (declaration only)",
+          "article_keys": [
+            "agaric_mushroom"
+          ],
+          "requires": [
+            "scientific and common species on FSSR 2.3.62 label",
+            "finished article genuinely contains mushrooms",
+            "actual sampling basis, edition and current effective amendments"
+          ]
+        },
+        {
+          "id": "actually_canned_mushroom",
+          "label": "Confirmed canned mushroom finished pack (declaration only)",
+          "article_keys": [
+            "agaric_mushroom",
+            "lead_canned_mushroom",
+            "tin_canned_mushroom"
+          ],
+          "requires": [
+            "named edible mushroom species",
+            "actual canning process, finished metal can/container and legal canned mushroom identity",
+            "laboratory basis, current version, packaging migration and finished lot records"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Never treat all fungi as mushrooms or a sealed airtight package as canned mushroom."
+    },
+    {
+      "catalog_id": "04-04-2-salted-fungi-semi-processed-products",
+      "name": "Salted fungi (semi processed products)",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.3",
+      "rule_key": "2.3.62",
+      "regulatory_case": "fungi",
+      "standard_name": "EDIBLE FUNGI PRODUCTS",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "mushroom_species_proven",
+          "label": "Verified edible mushroom species is present (declaration only)",
+          "article_keys": [
+            "agaric_mushroom"
+          ],
+          "requires": [
+            "scientific and common species on FSSR 2.3.62 label",
+            "finished article genuinely contains mushrooms",
+            "actual sampling basis, edition and current effective amendments"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Never treat all fungi as mushrooms or a sealed airtight package as canned mushroom."
+    },
+    {
+      "catalog_id": "04-04-2-sterilized-fungi",
+      "name": "Sterilized Fungi",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.4",
+      "rule_key": "2.3.62",
+      "regulatory_case": "fungi",
+      "standard_name": "EDIBLE FUNGI PRODUCTS",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "mushroom_species_proven",
+          "label": "Verified edible mushroom species is present (declaration only)",
+          "article_keys": [
+            "agaric_mushroom"
+          ],
+          "requires": [
+            "scientific and common species on FSSR 2.3.62 label",
+            "finished article genuinely contains mushrooms",
+            "actual sampling basis, edition and current effective amendments"
+          ]
+        },
+        {
+          "id": "actually_canned_mushroom",
+          "label": "Confirmed canned mushroom finished pack (declaration only)",
+          "article_keys": [
+            "agaric_mushroom",
+            "lead_canned_mushroom",
+            "tin_canned_mushroom"
+          ],
+          "requires": [
+            "named edible mushroom species",
+            "actual canning process, finished metal can/container and legal canned mushroom identity",
+            "laboratory basis, current version, packaging migration and finished lot records"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Never treat all fungi as mushrooms or a sealed airtight package as canned mushroom."
+    },
+    {
+      "catalog_id": "04-04-2-pickled-fungi",
+      "name": "Pickled Fungi",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.7",
+      "rule_key": "2.3.62",
+      "regulatory_case": "fungi",
+      "standard_name": "EDIBLE FUNGI PRODUCTS",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "mushroom_species_proven",
+          "label": "Verified edible mushroom species is present (declaration only)",
+          "article_keys": [
+            "agaric_mushroom"
+          ],
+          "requires": [
+            "scientific and common species on FSSR 2.3.62 label",
+            "finished article genuinely contains mushrooms",
+            "actual sampling basis, edition and current effective amendments"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Never treat all fungi as mushrooms or a sealed airtight package as canned mushroom."
+    },
+    {
+      "catalog_id": "04-04-2-fermented-fungi",
+      "name": "Fermented Fungi",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.7",
+      "rule_key": "2.3.62",
+      "regulatory_case": "fungi",
+      "standard_name": "EDIBLE FUNGI PRODUCTS",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "mushroom_species_proven",
+          "label": "Verified edible mushroom species is present (declaration only)",
+          "article_keys": [
+            "agaric_mushroom"
+          ],
+          "requires": [
+            "scientific and common species on FSSR 2.3.62 label",
+            "finished article genuinely contains mushrooms",
+            "actual sampling basis, edition and current effective amendments"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Never treat all fungi as mushrooms or a sealed airtight package as canned mushroom."
+    },
+    {
+      "catalog_id": "04-04-2-pickles-made-from-combination-of-fruits-or-vegetables-or-other-edible-plant-materi",
+      "name": "Pickles made from combination of fruits or vegetables or other edible plant material including mushrooms (Mixed)",
+      "fssr": "2.3.43",
+      "fcs": "04.2.2.3",
+      "rule_key": "2.3.43",
+      "regulatory_case": "mushroom_optional_pickle",
+      "standard_name": "Pickles (made from Fruits)",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "pickle_has_mushroom",
+          "label": "Finished pickle demonstrably contains mushrooms (declaration only)",
+          "article_keys": [
+            "agaric_mushroom"
+          ],
+          "requires": [
+            "actual edible mushroom genus/species and percent in finished pickle",
+            "finished food contains mushrooms, not merely optional ingredient class",
+            "test actual finished pickle food article; canned mushroom metals are excluded"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "A mushroom-containing pickle is not automatically the canned mushrooms article."
+    },
+    {
+      "catalog_id": "04-04-2-pickles-made-from-vegetables-or-other-edible-plant-material-including-mushrooms",
+      "name": "Pickles made from vegetables or other edible plant material including mushrooms",
+      "fssr": "2.3.43",
+      "fcs": "04.2.2.3",
+      "rule_key": "2.3.43",
+      "regulatory_case": "mushroom_optional_pickle",
+      "standard_name": "Pickles (made from Fruits)",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "pickle_has_mushroom",
+          "label": "Finished pickle demonstrably contains mushrooms (declaration only)",
+          "article_keys": [
+            "agaric_mushroom"
+          ],
+          "requires": [
+            "actual edible mushroom genus/species and percent in finished pickle",
+            "finished food contains mushrooms, not merely optional ingredient class",
+            "test actual finished pickle food article; canned mushroom metals are excluded"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "A mushroom-containing pickle is not automatically the canned mushrooms article."
+    },
+    {
+      "catalog_id": "04-04-1-date-paste",
+      "name": "Date Paste",
+      "fssr": "2.3.56",
+      "fcs": "04.1.2.8",
+      "rule_key": "2.3.56",
+      "regulatory_case": "date_paste",
+      "standard_name": "Date Paste",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "fruit_pulp_identity_checked",
+          "label": "Actual finished fruit-pulp legal article confirmed (requires documentary review)",
+          "article_keys": [
+            "copper_fruit_pulp",
+            "arsenic_fruit_pulp",
+            "tin_fruit_pulp"
+          ],
+          "requires": [
+            "prove the as-sold cooked paste/cheese/toffee is legally a fruit-pulp product, not simply made using a fruit input",
+            "finished formulation and heat/solids/water content plus concentration factor",
+            "CTR legal article scope, method, sample preparation and other contaminants"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Dates made into paste are not automatically covered by the legal fruit-pulp grouping without article-scope confirmation."
+    },
+    {
+      "catalog_id": "04-04-1-fruit-cheese",
+      "name": "Fruit Cheese",
+      "fssr": "2.3.33",
+      "fcs": "04.1.2.5",
+      "rule_key": "2.3.33",
+      "regulatory_case": "fruit_derived_sweet",
+      "standard_name": "Fruit Cheese",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "fruit_pulp_identity_checked",
+          "label": "Actual finished fruit-pulp legal article confirmed (requires documentary review)",
+          "article_keys": [
+            "copper_fruit_pulp",
+            "arsenic_fruit_pulp",
+            "tin_fruit_pulp"
+          ],
+          "requires": [
+            "prove the as-sold cooked paste/cheese/toffee is legally a fruit-pulp product, not simply made using a fruit input",
+            "finished formulation and heat/solids/water content plus concentration factor",
+            "CTR legal article scope, method, sample preparation and other contaminants"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Fruit pulp ingredient does not automatically mean finished fruit sweet qualifies as fruit-pulp article."
+    },
+    {
+      "catalog_id": "04-04-1-fruit-bar-toffee",
+      "name": "Fruit Bar/Toffee",
+      "fssr": "2.3.19",
+      "fcs": "04.1.2.8",
+      "rule_key": "2.3.19",
+      "regulatory_case": "fruit_derived_sweet",
+      "standard_name": "Fruit Bar/Toffee",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "fruit_pulp_identity_checked",
+          "label": "Actual finished fruit-pulp legal article confirmed (requires documentary review)",
+          "article_keys": [
+            "copper_fruit_pulp",
+            "arsenic_fruit_pulp",
+            "tin_fruit_pulp"
+          ],
+          "requires": [
+            "prove the as-sold cooked paste/cheese/toffee is legally a fruit-pulp product, not simply made using a fruit input",
+            "finished formulation and heat/solids/water content plus concentration factor",
+            "CTR legal article scope, method, sample preparation and other contaminants"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Fruit pulp ingredient does not automatically mean finished fruit sweet qualifies as fruit-pulp article."
+    },
+    {
+      "catalog_id": "04-04-1-fruits-and-vegetable-chutney",
+      "name": "Fruits and Vegetable Chutney",
+      "fssr": "2.3.41",
+      "fcs": "04.1.2.6",
+      "rule_key": "2.3.41",
+      "regulatory_case": "chutney",
+      "standard_name": "Fruits and Vegetable Chutney",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "verified_mango_chutney",
+          "label": "Finished product is named Mango Chutney (declaration only)",
+          "article_keys": [
+            "lead_mango_chutney",
+            "tin_mango_chutney"
+          ],
+          "requires": [
+            "recipe and product name establish Mango Chutney rather than mixed chutney",
+            "confirm analytical finished-product basis and correct version",
+            "quality under FSSR 2.3.41 and packaging verified separately"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Fruits and Vegetable Chutney does not automatically mean Mango Chutney."
+    },
+    {
+      "catalog_id": "concentrated-vegetable-pulp-puree",
+      "name": "Thermally Processed Concentrated Vegetable Juice Pulp/ Puree",
+      "fssr": "2.3.13",
+      "fcs": "14.1.2.4",
+      "rule_key": "2.3.13",
+      "regulatory_case": "vegetable_puree",
+      "standard_name": "Thermally Processed Concentrated Fruit Juice Pulp/ Puree",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "verified_tomato_puree",
+          "label": "Actual finished Tomato puree/paste (declaration only)",
+          "article_keys": [
+            "copper_tomato_puree"
+          ],
+          "requires": [
+            "actual tomato-based puree/paste rather than unqualified vegetable product",
+            "copper on DRIED TOMATO SOLIDS basis, not as-sold mg/kg",
+            "finished product classification and sample test"
+          ]
+        },
+        {
+          "id": "verified_processed_tomato_concentrate",
+          "label": "Actual finished processed tomato concentrate (declaration only)",
+          "article_keys": [
+            "lead_tomato_concentrate",
+            "tin_tomato_concentrate",
+            "copper_tomato_puree"
+          ],
+          "requires": [
+            "positive tomato processed concentrate identity and tomato ingredient/solids test",
+            "Copper 100 mg/kg uses DRIED TOMATO SOLIDS basis; Lead and Tin use published mg/kg basis",
+            "actual concentration, packaging and analytical preparation and amendments"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "General vegetable puree does not automatically mean tomato puree or processed tomato concentrate."
+    },
+    {
+      "catalog_id": "04-04-2-concentrated-vegetable-pulp-puree-with-preservatives-for-industrial-use-only",
+      "name": "Concentrated Vegetable Pulp/Puree with Preservatives for industrial use only",
+      "fssr": "2.3.17",
+      "fcs": "04.2.2.6",
+      "rule_key": "2.3.17",
+      "regulatory_case": "vegetable_puree",
+      "standard_name": "Concentrated Fruit Juice with Preservatives for industrial use only",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "verified_tomato_puree",
+          "label": "Actual finished Tomato puree/paste (declaration only)",
+          "article_keys": [
+            "copper_tomato_puree"
+          ],
+          "requires": [
+            "actual tomato-based puree/paste rather than unqualified vegetable product",
+            "copper on DRIED TOMATO SOLIDS basis, not as-sold mg/kg",
+            "finished product classification and sample test"
+          ]
+        },
+        {
+          "id": "verified_processed_tomato_concentrate",
+          "label": "Actual finished processed tomato concentrate (declaration only)",
+          "article_keys": [
+            "lead_tomato_concentrate",
+            "tin_tomato_concentrate",
+            "copper_tomato_puree"
+          ],
+          "requires": [
+            "positive tomato processed concentrate identity and tomato ingredient/solids test",
+            "Copper 100 mg/kg uses DRIED TOMATO SOLIDS basis; Lead and Tin use published mg/kg basis",
+            "actual concentration, packaging and analytical preparation and amendments"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "General vegetable puree does not automatically mean tomato puree or processed tomato concentrate."
+    },
+    {
+      "catalog_id": "04-04-2-vegetable-pulp-puree-with-preservatives-for-industrial-use-only",
+      "name": "Vegetable Pulp/Puree with Preservatives for Industrial Use only",
+      "fssr": "2.3.16",
+      "fcs": "04.2.2.6",
+      "rule_key": "2.3.16",
+      "regulatory_case": "vegetable_puree",
+      "standard_name": "Fruit Juice with Preservatives for Industrial Use only",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "verified_tomato_puree",
+          "label": "Actual finished Tomato puree/paste (declaration only)",
+          "article_keys": [
+            "copper_tomato_puree"
+          ],
+          "requires": [
+            "actual tomato-based puree/paste rather than unqualified vegetable product",
+            "copper on DRIED TOMATO SOLIDS basis, not as-sold mg/kg",
+            "finished product classification and sample test"
+          ]
+        },
+        {
+          "id": "verified_processed_tomato_concentrate",
+          "label": "Actual finished processed tomato concentrate (declaration only)",
+          "article_keys": [
+            "lead_tomato_concentrate",
+            "tin_tomato_concentrate",
+            "copper_tomato_puree"
+          ],
+          "requires": [
+            "positive tomato processed concentrate identity and tomato ingredient/solids test",
+            "Copper 100 mg/kg uses DRIED TOMATO SOLIDS basis; Lead and Tin use published mg/kg basis",
+            "actual concentration, packaging and analytical preparation and amendments"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "General vegetable puree does not automatically mean tomato puree or processed tomato concentrate."
+    },
+    {
+      "catalog_id": "04-04-1-candied-crystallised-and-glazed-fruit-vegetable-rhizome-fruit-peel",
+      "name": "Candied, Crystallised And Glazed Fruit / Vegetable / Rhizome / Fruit Peel",
+      "fssr": "2.3.26",
+      "fcs": "04.1.2.7",
+      "rule_key": "2.3.26",
+      "regulatory_case": "fruit_derived_sweet",
+      "standard_name": "Candied, Crystallised And Glazed Fruit / Vegetable / Rhizome / Fruit Peel",
+      "official_chapter": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_version": "Version IX (03.02.2026)",
+      "branches": [
+        {
+          "id": "fruit_pulp_identity_checked",
+          "label": "Actual finished fruit-pulp legal article confirmed (requires documentary review)",
+          "article_keys": [
+            "copper_fruit_pulp",
+            "arsenic_fruit_pulp",
+            "tin_fruit_pulp"
+          ],
+          "requires": [
+            "prove the as-sold cooked paste/cheese/toffee is legally a fruit-pulp product, not simply made using a fruit input",
+            "finished formulation and heat/solids/water content plus concentration factor",
+            "CTR legal article scope, method, sample preparation and other contaminants"
+          ]
+        }
+      ],
+      "default": "unverified",
+      "unconditional_finished_article_promotion": false,
+      "numeric_auto_apply": false,
+      "no_sample_compliance_pass": true,
+      "prohibited_inheritance": "Fruit pulp ingredient does not automatically mean finished fruit sweet qualifies as fruit-pulp article."
+    }
+  ]
+}
