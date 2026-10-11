@@ -93,3 +93,24 @@ test("Safeguards disappear if underlying selected product identity or standard c
  assert.ok(untouched);
  assert.equal(notice(untouched),"");
 });
+
+test("dried glucose syrup sulfated ash at most 1 percent cannot satisfy a lead article requiring greater than 1 percent",()=>{
+ const r=rows.find(x=>x.catalog_id==="11-11-1-dried-glucose-syrup");
+ assert.ok(r);
+ const x=r.exact_subtype_transfer_safeguard_2026_10_11;
+ const b=x.contaminant_article_boundary_guard;
+ assert.ok(b);
+ assert.equal(x.source_pdf_page_one_based,13);
+ assert.deepEqual([b.standard_requirement.operator,b.standard_requirement.value],["<=",1]);
+ assert.deepEqual([b.ctr_condition.operator,b.ctr_condition.value],[">",1]);
+ assert.equal(b.ctr_limit,5);assert.equal(b.ctr_unit,"mg/kg");
+ assert.equal(b.auto_apply_numeric_limit_assignment,undefined);
+ assert.equal(b.automatic_numeric_limit_assignment,false);
+ assert.equal(b.finished_food_compliance_pass,false);
+ assert.match(b.applicability_disposition,/not_a_general_lead_exemption/);
+ const shown=notice(byId.get(r.catalog_id));
+ assert.match(shown,/Sulfated ash/);
+ assert.match(shown,/NOT a contaminant or pesticide MRL/);
+ assert.match(shown,/not automatically apply/);
+ assert.match(shown,/not.*exemption/i);
+});
