@@ -1,0 +1,406 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-10-11",
+  "source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "source_version": "Version IX (03.02.2026)",
+  "purpose": "Named CTR source threshold to FoSCoS article scope conflicts and qualification gates. Preserve first-exact gap status.",
+  "named_source_rows": [
+    {
+      "id": "CANNED_FRUIT_COCKTAIL",
+      "metal": "Lead",
+      "article": "Canned fruit cocktail",
+      "limit": 1,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 3
+    },
+    {
+      "id": "CANNED_TROPICAL_SALAD",
+      "metal": "Lead",
+      "article": "Canned tropical fruit salad",
+      "limit": 1,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 3
+    },
+    {
+      "id": "CANNED_MUSHROOMS",
+      "metal": "Lead",
+      "article": "Canned mushrooms",
+      "limit": 1,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 2
+    },
+    {
+      "id": "CANNED_MANGOES",
+      "metal": "Lead",
+      "article": "Canned mangoes",
+      "limit": 1,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 3
+    },
+    {
+      "id": "DEHYDRATED_VEGETABLES_NON_ONION",
+      "metal": "Lead",
+      "article": "Canned fish, canned meats, edible gelatin,meat extracts and hydrolysed protein, dried or dehydrated vegetables (other than onions)",
+      "limit": 5,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 3
+    },
+    {
+      "id": "DEHYDRATED_ONION",
+      "metal": "Lead",
+      "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+      "limit": 10,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 3
+    },
+    {
+      "id": "COCOA_POWDER_LEAD",
+      "metal": "Lead",
+      "article": "Cocoa powder",
+      "limit": 5,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 3
+    },
+    {
+      "id": "MILK_LEAD",
+      "metal": "Lead",
+      "article": "Milks (Concentration factor shall be applied to partially or wholly dehydrated milks)",
+      "limit": 0.02,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 5
+    },
+    {
+      "id": "MINARINE_LEAD",
+      "metal": "Lead",
+      "article": "Minarine (Low Fat Spread)",
+      "limit": 0.1,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 5
+    },
+    {
+      "id": "ICE_LOLLIES_LEAD",
+      "metal": "Lead",
+      "article": "Ice-cream, iced lollies and similar frozen confections",
+      "limit": 1,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 4
+    },
+    {
+      "id": "ICE_LOLLIES_ARSENIC",
+      "metal": "Arsenic",
+      "article": "Ice-cream, iced lollies and similar frozen confections",
+      "limit": 0.5,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 9
+    },
+    {
+      "id": "COCOA_POWDER_COPPER",
+      "metal": "Copper",
+      "article": "Cocoa powder",
+      "limit": 70,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 7
+    },
+    {
+      "id": "FRUIT_PULP_COPPER",
+      "metal": "Copper",
+      "article": "Pulp and pulp products of any fruit",
+      "limit": 5,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 7
+    },
+    {
+      "id": "FRUIT_PULP_ARSENIC",
+      "metal": "Arsenic",
+      "article": "Pulp and pulp products of any fruit",
+      "limit": 0.2,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 10
+    },
+    {
+      "id": "TOMATO_PUREE_COPPER",
+      "metal": "Copper",
+      "article": "Tomato puree, paste, powder, and cocktails",
+      "limit": 100,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 8
+    },
+    {
+      "id": "PICKLED_CUCUMBERS_LEAD",
+      "metal": "Lead",
+      "article": "Pickled cucumbers (Cucumber pickles)",
+      "limit": 1,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 5
+    },
+    {
+      "id": "MANGO_CHUTNEY_LEAD",
+      "metal": "Lead",
+      "article": "Mango chutney",
+      "limit": 1,
+      "unit": "mg/kg",
+      "pdf_page_one_based": 4
+    },
+    {
+      "id": "PACKAGED_WATER_LEAD",
+      "metal": "Lead",
+      "article": "Packaged drinking water (other than mineral water), expressed in mg/L",
+      "limit": 0.01,
+      "unit": "mg/L",
+      "pdf_page_one_based": 5
+    }
+  ],
+  "scope_guards": [
+    {
+      "catalog_id": "04-04-1-frozen-fruits-fruit-products",
+      "reference_id": "CANNED_FRUIT_COCKTAIL",
+      "required_qualifier": "Frozen fruit does not establish canned packaging, named canned species or processing.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-thermally-processed-fruit-salad-cocktail-mix",
+      "reference_id": "CANNED_TROPICAL_SALAD",
+      "required_qualifier": "Confirm can packaging and actual tropical-fruit salad formulation; thermally processed alone is insufficient.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-thermally-processed-fruit-salad-cocktail-mix",
+      "reference_id": "CANNED_FRUIT_COCKTAIL",
+      "required_qualifier": "Fruit cocktail row requires a canned fruit cocktail product; other thermally processed salads do not inherit it.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-thermally-processed-fruits",
+      "reference_id": "CANNED_MANGOES",
+      "required_qualifier": "Named mango commodity and can must both be confirmed before using the canned mangoes article.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-sterilized-fungi",
+      "reference_id": "CANNED_MUSHROOMS",
+      "required_qualifier": "Confirm mushroom species and canned retail form; sterilisation alone does not establish can.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-quick-frozen-fungi",
+      "reference_id": "CANNED_MUSHROOMS",
+      "required_qualifier": "Frozen mushrooms and other edible fungi cannot inherit a canned-mushroom article.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-dried-fungi",
+      "reference_id": "CANNED_MUSHROOMS",
+      "required_qualifier": "Dried fungi cannot inherit canned-mushroom Lead threshold.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-fungi-in-olive-oil-and-other-vegetable-oils",
+      "reference_id": "CANNED_MUSHROOMS",
+      "required_qualifier": "Oil-preserved fungi is not necessarily canned mushrooms; species/packaging/form must be established.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-dehydrated-vegetables",
+      "reference_id": "DEHYDRATED_VEGETABLES_NON_ONION",
+      "required_qualifier": "Must first determine onion versus non-onion ingredient; the 5 mg/kg reference expressly excludes onions.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-dehydrated-vegetables",
+      "reference_id": "DEHYDRATED_ONION",
+      "required_qualifier": "The separate dry-matter onion reference applies only to confirmed onion, not all dehydrated vegetables.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-thermally-processed-vegetables",
+      "reference_id": "DEHYDRATED_VEGETABLES_NON_ONION",
+      "required_qualifier": "Thermal processing is not dehydration; prevent source inheritance.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-ginger-paste",
+      "reference_id": "TOMATO_PUREE_COPPER",
+      "required_qualifier": "Ginger paste is not tomato purée and cannot take the tomato-solids Copper value.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "concentrated-vegetable-pulp-puree",
+      "reference_id": "TOMATO_PUREE_COPPER",
+      "required_qualifier": "Confirm 100-percent tomato ingredient identity and dried tomato solids basis before considering tomato purée article.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-concentrated-vegetable-pulp-puree-with-preservatives-for-industrial-use-only",
+      "reference_id": "TOMATO_PUREE_COPPER",
+      "required_qualifier": "Concentrated vegetable pulp and added preservatives do not prove tomato composition.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-fruit-cheese",
+      "reference_id": "FRUIT_PULP_COPPER",
+      "required_qualifier": "Confirm actual fruit pulp matrix and finished article classification; fruit cheese cannot inherit fruit pulp by name.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-fruit-bar-toffee",
+      "reference_id": "FRUIT_PULP_ARSENIC",
+      "required_qualifier": "A finished fruit toffee is not unqualified fruit pulp; recipe and processing basis must be established.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-pickles-made-from-fruits",
+      "reference_id": "MANGO_CHUTNEY_LEAD",
+      "required_qualifier": "Fruit pickle is not mango chutney; no finished-product transfer.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-pickles-made-from-vegetables-or-other-edible-plant-material-including-mushrooms",
+      "reference_id": "PICKLED_CUCUMBERS_LEAD",
+      "required_qualifier": "Vegetable and fungi pickles need exact cucumber identity before the cucumber-only article can be considered.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-pickles-made-from-combination-of-fruits-or-vegetables-or-other-edible-plant-materi",
+      "reference_id": "PICKLED_CUCUMBERS_LEAD",
+      "required_qualifier": "Mixed pickles cannot unconditionally inherit the named cucumber-pickle row.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-cocoa-beans",
+      "reference_id": "COCOA_POWDER_LEAD",
+      "required_qualifier": "Unprocessed cocoa beans are not cocoa powder or defatted cocoa substance.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "reference_id": "COCOA_POWDER_LEAD",
+      "required_qualifier": "Liquor/cake is not necessarily cocoa powder; do not inherit dry fat-free substance basis.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "reference_id": "COCOA_POWDER_COPPER",
+      "required_qualifier": "Copper cocoa-powder dry fat-free basis cannot be copied to cocoa mass or cake.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "reference_id": "COCOA_POWDER_LEAD",
+      "required_qualifier": "Cocoa plus sugar mixture is not the named cocoa powder commodity.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-coconut-milk-non-dairy",
+      "reference_id": "MILK_LEAD",
+      "required_qualifier": "Botanical coconut milk is not milk under the dairy-specific metal article.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-coconut-cream-non-dairy",
+      "reference_id": "MILK_LEAD",
+      "required_qualifier": "Coconut cream is non-dairy and cannot inherit bovine dairy concentration factor.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-coconut-milk-powder",
+      "reference_id": "MILK_LEAD",
+      "required_qualifier": "Coconut powder is plant-derived and is not dehydrated dairy milk.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "02-02-2-fat-spread",
+      "reference_id": "MINARINE_LEAD",
+      "required_qualifier": "Only positively established low-fat Minarine product identity may select that named row; fat spread is broader.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-",
+      "reference_id": "ICE_LOLLIES_LEAD",
+      "required_qualifier": "Article can be relevant to confirmed ice cream or iced lolly, but this FoSCoS identity also combines dried ice cream mix.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-",
+      "reference_id": "ICE_LOLLIES_ARSENIC",
+      "required_qualifier": "Confirm actual frozen finished product; do not transfer ice cream arsenic threshold to dried mix.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "purified-vending-water",
+      "reference_id": "PACKAGED_WATER_LEAD",
+      "required_qualifier": "Purified water dispensed through a vending machine must not automatically be treated as packaged drinking water.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-coconut-milk-powder",
+      "reference_id": "FRUIT_PULP_ARSENIC",
+      "required_qualifier": "Coconut milk powder is not fruit pulp; no generic pulp-to-powder transfer.",
+      "automatic_finished_product_limit": false,
+      "first_exact_source_promoted": false,
+      "compliance_pass": false
+    }
+  ],
+  "full_product_compliance_passes": 0,
+  "first_exact_promotions": 0,
+  "units_are_reference_not_finished_product_assigned": true
+}
