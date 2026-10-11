@@ -1221,6 +1221,7 @@ let standardSearchIndexDb=null;
 let appendixCoreDb=null;
 let contaminantsDb=null;
 let contaminantsPendingReviewDb=null;
+let sugarSulphiteResiduesDb=null;
 let spiceOleoresinResiduesDb=null;
 let goatMuscleVeterinaryResiduesDb=null;
 let fourCompositeSourcesDb=null;
@@ -10188,6 +10189,59 @@ function exactEggStandardChemicalCriteriaHtml(p){
   +expected.map(([name,max,unit])=>'<tr><td>'+esc(name)+'</td><td>'+esc(String(max)+' '+unit)+'</td></tr>').join('')
   +'</tbody></table></div><p><a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter 2.5 source</a></p></div>';
 }
+// FSSAI Appendix A Table 11 sugar chemicals: exact catalogue and current
+// official source integrity are required even to display a conditional number.
+// Only the explicit 11.1.6 Gur/Jaggery end-product residue is partial chemical
+// residue evidence; other sugar entries are additive permissions, NOT CTR MRLs.
+function verifiedSugarSulphiteReference(p){
+ if(!p||!sugarSulphiteResiduesDb||!appendixCoreDb)return null;
+ const db=sugarSulphiteResiduesDb;
+ const r=(db.records||[]).find(x=>x.catalog_id===p.id);
+ if(!r)return null;
+ if(r.catalog_id!==p.id||r.product_name!==p.name||
+    r.fssr!==p.fssr||r.fcs!==p.fcs)return null;
+ if(db.source_version!==appendixCoreDb.source_version||
+    db.official_appendix_a_source!==appendixCoreDb.official_source?.url||
+    r.official_source_url!==db.official_appendix_a_source||
+    db.auto_apply_lab_compliance_limit!==false||
+    r.automatic_numeric_pass!==false||r.sample_result_evaluated!==false)return null;
+ const source=appendixCoreDb.loaded_permission_sets?.[r.source_fcs];
+ if(!source||source.table!=='Table 11')return null;
+ if(r.source_limit===null){
+   if(r.scope!=='no_additives_permitted_only'||source.status!=='no_additives_permitted')return null;
+ }else if(r.unit!=='mg/kg'||!source.entries?.some(x=>
+   x.name==='SULFITES'&&x.limit===String(r.source_limit)+' mg/kg'))return null;
+ if(r.scope==='finished_product_sulphite_residue_partial'){
+   if(!['11.1.6','11.1.6.1'].includes(p.fcs)||r.source_fcs!=='11.1.6'||
+      r.source_limit!==50||!source.entries.some(x=>
+       /Residue shall not exceed 50 mg\/kg in the end product/.test(x.condition)))return null;
+ }
+ return r;
+}
+function sourcePinnedSugarSulphitesHtml(p){
+ if(!p||!sugarSulphiteResiduesDb)return '';
+ const known=(sugarSulphiteResiduesDb.records||[]).some(r=>r.catalog_id===p.id);
+ if(!known)return '';
+ const r=verifiedSugarSulphiteReference(p);
+ if(!r)return '<div class="notice"><b>FSSAI Appendix A sugar evidence WITHHELD.</b> The selected product identity, subdivision, current source table or residue condition did not match. No numeric value may be inferred.</div>';
+ const official='<a href="'+esc(r.official_source_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Appendix A Version 3, Table 11</a>';
+ if(r.scope==='finished_product_sulphite_residue_partial')
+   return '<div class="notice"><b>Verified finished-product sulphite residue reference — PARTIAL chemical evidence ONLY.</b> '
+     +'For '+esc(r.product_name)+' ('+esc(r.fcs)+'), FSSAI Appendix A states sulphite residue '
+     +'<b>must not exceed 50 mg/kg in the end product</b>. '
+     +(p.fcs==='11.1.6.1'?'The named Cane Jaggery child follows the parent 11.1.6 provision. ':'')
+     +'This is not a complete metal, pesticide or microbiology assessment, and no laboratory result was evaluated. '
+     +'Review product form and operative amendments. '+official+'.</div>';
+ if(r.scope==='no_additives_permitted_only')
+   return '<div class="notice"><b>Appendix A category restriction: no additives permitted.</b> '
+      +esc(r.product_name)+' — this is NOT proof of contaminant absence, product safety, or a lab PASS. '
+      +official+'.</div>';
+ return '<div class="notice"><b>Appendix A sulphites: ADDITIVE PERMISSION ONLY — NOT A CONTAMINANT MRL.</b> '
+   +esc(r.product_name)+' · '+esc(r.source_fcs)+' · source value <b>'+esc(String(r.source_limit))+' mg/kg</b>. '
+   +esc(r.category_and_subtype_qualification)+' '
+   +'This permission is conditional on the correct product type, food use and notes, and does not establish full compliance. '
+   +official+'.</div>';
+}
 function pendingContaminantReviewNotice(p){
  if(!p||!contaminantsPendingReviewDb)return '';
  const record=(contaminantsPendingReviewDb.records||[]).find(r=>r.catalog_id===(p.id||p.profile_id));
@@ -10583,7 +10637,8 @@ function renderProductContaminants(){
     ? '<div class="notice oknote"><b>Product-level FSSAI contaminant mapping:</b> '+baseline.length+' directly applicable rule'+(baseline.length===1?'':'s')+' resolved for '+esc(p.name)+' from exact product articles, verified product/article aliases, direct product-standard limits, verified commodity-family mappings or other structured FSSAI evidence. Exact pesticide-residue MRLs are shown separately when the commodity name matches exactly.</div>'
     : '<div class="notice"><b>No exact metal/toxin profile is loaded yet for '+esc(p.name)+'.</b> PMSV still shows exact commodity pesticide-residue MRLs and explicit “all foods” rules where available. It does not apply a “Foods not specified” fallback by assumption.</div>';
  el.innerHTML=profileMsg
-   +pendingContaminantReviewNotice(p)
+   +(verifiedSugarSulphiteReference(p)?.scope==='finished_product_sulphite_residue_partial'?'':pendingContaminantReviewNotice(p))
+   +sourcePinnedSugarSulphitesHtml(p)
    +exactSupplementalResidueReviewHtml(p)
    +sourcePinnedCompositeOrSoupPartialHtml(p)
    +sourcePinnedBeverageConfectioneryNotsHtml(p)
@@ -10637,6 +10692,18 @@ function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
    +'<small><a href="'+official+'" target="_blank" rel="noopener noreferrer">Read the official FSSAI Gazette</a>. Watch-list inclusion does not itself prove product applicability or establish full compliance.</small></div>';
 }
 async function loadContaminantsDb(){
+ try{
+   const res=await fetch('./data/rules/fssai-sugar-sulphites-appendix-a-v3-2026-10-11.json?v=20261011-11-sugar',{cache:'reload'});
+   if(!res.ok)throw new Error('Source-checked sugar residue module unavailable');
+   const d=await res.json();
+   if(!Array.isArray(d.records)||d.records.length!==11||
+      d.first_exact_finished_product_chemical_residue_evidence_count!==2||
+      d.conditional_additive_or_no_additives_only_count!==9||
+      d.full_contaminant_compliance_passes!==0||d.auto_apply_lab_compliance_limit!==false)
+     throw new Error('Sugar sulphite source gate mismatch');
+   sugarSulphiteResiduesDb=d;
+ }catch(e){sugarSulphiteResiduesDb=null;}
+
  try{
    const res=await fetch('./data/rules/contaminants-v9-core.json?v=437',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
