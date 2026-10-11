@@ -72,7 +72,128 @@
         "water and fruit juice",
         "fruit juice",
         "the preceding media with permitted sugars"
-      ]
+      ],
+      "source_pinned_conditional_quality_v2_2024": {
+        "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+        "source_title": "FSSAI Chapter 2.3 Fruit & Vegetable Products — Version 2 (04.11.2024)",
+        "fssr": "2.3.2",
+        "source_pdf_pages_one_based": [
+          2,
+          3,
+          4
+        ],
+        "reviewed_on": "2026-10-11",
+        "packing_media_cutout_strength": [
+          {
+            "medium_family": "fruit_juice_added_sugars",
+            "classification": "Extra light sweetened fruit juice",
+            "cut_out_strength_min_brix": 10,
+            "cut_out_strength_max_brix": 13.9,
+            "select_classification_before_evaluation": true,
+            "automatically_applied": false
+          },
+          {
+            "medium_family": "fruit_juice_added_sugars",
+            "classification": "Lightly sweetened fruit juice",
+            "cut_out_strength_min_brix": 14,
+            "cut_out_strength_max_brix": 17.9,
+            "select_classification_before_evaluation": true,
+            "automatically_applied": false
+          },
+          {
+            "medium_family": "fruit_juice_added_sugars",
+            "classification": "Heavily sweetened fruit juice",
+            "cut_out_strength_min_brix": 18,
+            "cut_out_strength_max_brix": 21.9,
+            "select_classification_before_evaluation": true,
+            "automatically_applied": false
+          },
+          {
+            "medium_family": "fruit_juice_added_sugars",
+            "classification": "Extra heavy sweetened fruit juice",
+            "cut_out_strength_min_brix": 22,
+            "cut_out_strength_max_brix": null,
+            "select_classification_before_evaluation": true,
+            "automatically_applied": false
+          },
+          {
+            "medium_family": "water_or_water_juice_added_sugars",
+            "classification": "Slightly sweetened water / extra light syrup",
+            "cut_out_strength_min_brix": 10,
+            "cut_out_strength_max_brix": 13.9,
+            "select_classification_before_evaluation": true,
+            "automatically_applied": false
+          },
+          {
+            "medium_family": "water_or_water_juice_added_sugars",
+            "classification": "Light syrup",
+            "cut_out_strength_min_brix": 14,
+            "cut_out_strength_max_brix": 17.9,
+            "select_classification_before_evaluation": true,
+            "automatically_applied": false
+          },
+          {
+            "medium_family": "water_or_water_juice_added_sugars",
+            "classification": "Heavy syrup",
+            "cut_out_strength_min_brix": 18,
+            "cut_out_strength_max_brix": 21.9,
+            "select_classification_before_evaluation": true,
+            "automatically_applied": false
+          },
+          {
+            "medium_family": "water_or_water_juice_added_sugars",
+            "classification": "Extra heavy syrup",
+            "cut_out_strength_min_brix": 22,
+            "cut_out_strength_max_brix": null,
+            "select_classification_before_evaluation": true,
+            "automatically_applied": false
+          }
+        ],
+        "qualified_quality_criteria": [
+          {
+            "parameter": "Blemished fruit pieces (canned tropical fruit salad)",
+            "operator": "<=",
+            "value": 2,
+            "unit": "pieces per 100 g drained fruit",
+            "condition": "Only product identity and processed form that meet canned tropical fruit salad; actual blemish test needed."
+          },
+          {
+            "parameter": "Peel defect (only for peeled fruits)",
+            "operator": "<=",
+            "value": 6.5,
+            "unit": "cm² per 500 g total contents",
+            "condition": "Only peeled-fruit variants and actual defect test."
+          },
+          {
+            "parameter": "Seed material and extraneous vegetative matter",
+            "operator": "<=",
+            "value": 2,
+            "unit": "g per 500 g total contents",
+            "condition": "Canned tropical fruit salad quality table; actual sample and form confirmation required."
+          },
+          {
+            "parameter": "Minimum container fill including packing medium",
+            "operator": ">=",
+            "value": 90,
+            "unit": "% of water capacity of container",
+            "condition": "Container water-capacity basis at 20°C; not the net-weight basis."
+          },
+          {
+            "parameter": "Minimum drained weight",
+            "operator": ">=",
+            "value": 50,
+            "unit": "% of mass of distilled water filling container at 20°C",
+            "condition": "Canned tropical fruit salad; not the generic packed-fruit percentage of net weight."
+          }
+        ],
+        "sugar_added_medium_minimum_brix": 10,
+        "not_a_ctr_contaminant_or_pesticide_limit": true,
+        "do_not_apply_without_medium_and_can_type": true,
+        "other_regulations_and_current_amendments_not_verified": true,
+        "sample_results_not_evaluated": true,
+        "full_compliance_pass": false,
+        "distinction": "Thermally processed fruit salad/cocktail is not automatically metal-equivalent to canned tropical fruit salad, canned fruit cocktail or generic thermally processed fruit."
+      }
     },
     {
       "key": "2.3.3",
