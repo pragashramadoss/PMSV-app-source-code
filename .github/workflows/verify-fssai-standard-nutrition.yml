@@ -101,6 +101,7 @@ on:
       - 'fssai-product-helper-preview-01/data/rules/fssai-v9-metal-fallback-precedence-2026-10-11.json'
       - 'scripts/audit-fssai-v9-metal-fallback-precedence.cjs'
       - 'tests/fssai-v9-metal-fallback-precedence-533-123-2026-10-11.test.cjs'
+      - 'tests/fssai-v9-metal-priority-helper-123-2026-10-11.test.cjs'
       - 'FSSAI-V9-METAL-FALLBACK-PRECEDENCE-533-123-2026-10-11.md'
       - 'scripts/triage-fssai-contaminant-evidence.cjs'
       - 'scripts/audit-all-161-pending-source-matrix-gates.cjs'
@@ -163,6 +164,8 @@ jobs:
         run: node scripts/audit-fssai-v9-metal-fallback-precedence.cjs
       - name: Export 123 unresolved product source-research worksheet
         run: node scripts/export-fssai-next-123-source-research-queue.cjs
+      - name: Verify all 123 product source-priority panels and research exports reject wrong article mappings
+        run: node --test tests/fssai-v9-metal-priority-helper-123-2026-10-11.test.cjs
       - name: Verify official Version IX default metal and universal Methyl Mercury rows
         run: node --test tests/fssai-v9-metal-fallback-precedence-533-123-2026-10-11.test.cjs
       - name: Verify 13 named FSSAI tin articles and 61 no-transfer conditions
