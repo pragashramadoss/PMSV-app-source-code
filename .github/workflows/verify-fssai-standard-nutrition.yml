@@ -230,6 +230,8 @@ jobs:
         run: node --test tests/fssai-next-123-actionable-worklist-2026-10-11.test.cjs
       - name: Validate 121 positive subtype/source evidence blockers and 20 official articles
         run: node --test tests/fssai-next121-positive-subtype-proof-2026-10-11.test.cjs
+      - name: Verify 29 unmatched product identity gates and 20 official Version IX reference articles
+        run: node --test tests/fssai-next29-unmatched-source-dossiers-2026-10-11.test.cjs tests/fssai-next121-live-version-ix-source-row-lock-2026-10-11.test.cjs
       - name: Upload per-product compliance evidence audit
         if: always()
         uses: actions/upload-artifact@v4
