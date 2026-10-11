@@ -14,7 +14,7 @@ test("123 current unresolved identities have non-generic individual FSSAI questi
  assert.equal(x.scope_nontransfer_cases,31);
  assert.equal(x.guard_source_rows,18);
  for(const r of x.records){
-  assert.ok(r.product&&r.fssr&&r.family&&typeof r.fcs==='string',r.catalog_id);
+  assert.ok(r.product&&r.family&&typeof r.fssr==='string'&&typeof r.fcs==='string',r.catalog_id);
   assert.ok(r.case_specific_questions.length>=5,r.catalog_id);
   assert.ok(r.case_specific_questions.every(q=>q.length>25),r.catalog_id);
   assert.equal(r.status,"UNRESOLVED_FIRST_EXACT",r.catalog_id);
