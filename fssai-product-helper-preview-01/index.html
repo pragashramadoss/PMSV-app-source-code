@@ -1243,7 +1243,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-20-quality-regression-enabled-v502';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-flakes-b1-source-v503';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -9170,6 +9170,47 @@ function productBaselineContaminantRules(p){
      source_basis:'FSSAI CTR Version IX · Section 2.2.1 · identical cereal and composite food B1 limits; exact Chapter 2.4 identity',
      condition:'Partial exact source evidence only. Both relevant official Aflatoxin B1 categories agree at 10 µg/kg; the total-aflatoxin category differs (15 versus 20 µg/kg) and is NOT assigned without additional finished formulation evidence. No pesticide, metal or other compliance PASS.'
    });
+ }
+
+ // 5bd2) Exact Chapter 2.3.20 Fruit/Vegetable, Cereal Flakes.
+ // The FSSR definition mandates blending cereals into the dehydrated
+ // finished flakes. Both Version IX cereal/composite B1 articles are 10 µg/kg.
+ // Total Aflatoxins 15 versus 20 µg/kg is NOT safely interchangeable.
+ if(id==='06-06-3-fruit-vegetable-cereal-flakes'
+  &&p.name==='Fruit/Vegetable, Cereal Flakes'&&p.fssr==='2.3.20'
+  &&p.fcs==='06.3'&&contaminantsDb?.source_version==='Version IX (03.02.2026)'){
+   const source=(chapterRuleDbs||[]).find(d=>(d.standards||[]).some(x=>x.key==='2.3.20'));
+   const chapter=(source?.standards||[]).find(x=>x.key==='2.3.20');
+   const proof=chapter?.official_cereal_composite_b1_source_v1;
+   const clauses=['Cereal and cereal products',
+    'Food product containing any of the above mentioned food articles'];
+   const versionUrl='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf';
+   const b1=contaminantsDb?.crop_contaminants?.aflatoxin_b1;
+   const total=contaminantsDb?.crop_contaminants?.total_aflatoxins;
+   const chapterOk=chapter?.name===p.name&&proof?.fssr==='2.3.20'
+     &&proof?.required_cereal_ingredient_in_clause===true
+     &&proof?.product_made_as_dehydrated_flakes===true
+     &&proof?.official_product_clause_source_url==='https://fssai.gov.in/upload/uploadfiles/files/4_%20Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf'
+     &&proof?.official_contaminants_source_url===versionUrl
+     &&proof?.official_contaminants_source_version===contaminantsDb.source_version
+     &&proof?.cereal_article===clauses[0]&&proof?.composite_food_article===clauses[1]
+     &&proof?.contaminant==='Aflatoxin B1'&&proof?.exact_source_limit===10&&proof?.unit==='µg/kg'
+     &&proof?.total_aflatoxins_cereal_limit===15&&proof?.total_aflatoxins_composite_limit===20
+     &&proof?.total_aflatoxins_cannot_auto_apply===true
+     &&proof?.complete_product_compliance_pass===false;
+   const b1Ok=b1?.unit==='µg/kg'&&clauses.every(a=>
+      (b1.rules||[]).filter(x=>normIngredient(x.article)===normIngredient(a)
+       &&Number(x.limit)===10&&String(x.unit||b1.unit)==='µg/kg').length===1);
+   const totalOk=total?.unit==='µg/kg'&&[[clauses[0],15],[clauses[1],20]].every(([a,v])=>
+      (total.rules||[]).filter(x=>normIngredient(x.article)===normIngredient(a)
+        &&Number(x.limit)===v&&String(x.unit||total.unit)==='µg/kg').length===1);
+   if(chapterOk&&b1Ok&&totalOk&&contaminantsDb?.official_sources?.[0]?.url===versionUrl)
+    pushRule({
+      contaminant:'Aflatoxin B1',article:clauses.join(' / '),
+      limit:10,unit:'µg/kg',
+      source_basis:'FSSAI Version IX §2.2.1 · exact FSSR 2.3.20 Fruit/Vegetable Cereal Flakes',
+      condition:'FSSR 2.3.20 mandates cereals in the finished fruit/vegetable flakes. Both official B1 articles agree at 10 µg/kg. Total Aflatoxins 15/20 µg/kg differ and are NOT assigned; no pesticide, metal, formulation or full-product compliance PASS.'
+    });
  }
 
  // 5bea0) Bread & Bread-Type Products: mandatory atta/maida under FSSR
