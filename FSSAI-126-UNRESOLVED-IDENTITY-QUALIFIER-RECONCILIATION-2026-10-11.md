@@ -197,7 +197,8 @@ Additional audits after the 126-row identity reconciliation established the foll
 | Verbatim official FSSAI numerical pesticide references for raw meat/egg commodities | **10** across 6 products | Shell-free egg basis, rabbit muscle/offal differences and actual processed-product applicability must be resolved first. |
 | Conditional Version IX Nickel row for **Fat spread** | **1** | 1.5 mg/kg applies to relevant hydrogenated/partially hydrogenated/interesterified vegetable-fat grouping only; FSSR also allows milk-fat or unhydrogenated-fat spreads. |
 | Conditional Version IX hydrocyanic acid NOTS row | **3** | 10 ppm named sago/cassava/tapioca/manihot flour **and their products**, only where the actual custard/pasta/instant-noodle recipe and process qualify. |
-| Additional exact Chapter 2.x **quality/composition** numeric entries | **86** | Twelve across lactose/salt substitutes/trehalose/dextrin/Pan Masala, 71 subtype-specific rabbit/egg, and three fat-spread. **None is a CTR pesticide or metal limit.** |
+| Conditional Version IX ochratoxin A source for **Coffee-Chicory Mixture** | **1** | 5 µg/kg is named for **coffee**, but no automatic finished-blend assignment or compliant sample claim is made. |
+| Additional exact Chapter 2.x **quality/composition** numeric entries | **108** | Twelve across lactose/salt substitutes/trehalose/dextrin/Pan Masala, 71 rabbit/egg subtype-specific, three fat-spread, and **22 coffee-chicory** form/decaf-specific. **None is a CTR pesticide or metal limit.** |
 | Dairy analogue finished-product identity exclusions | **8** | FSSR 2.1.1 legally excludes dairy analogues from milk-product identity; actual milk ingredients and other contaminant requirements remain separate obligations. |
 | New complete finished-product contaminant compliance passes | **0** | No missing laboratory result or legal article was guessed or replaced with a product-quality value. |
 
@@ -210,9 +211,13 @@ Additional audits after the 126-row identity reconciliation established the foll
 **Engineering safeguards:**
 
 - New evidence is identity-bound to exact catalogue IDs, product name and FSSR standard (fail-closed on mismatch). Review-only numeric candidates are never silently applied as actual finished-food results.
-- The additional source-gated regression suites for rabbit/egg pesticides and quality, fat-spread nickel, sago/tapioca hydrocyanic acid and the consolidated 126-product audit are wired into `.github/workflows/verify-fssai-standard-nutrition.yml`.
-- Summary invariants: **533 = 407 with partial evidence + 126 unresolved**, 630 pending qualifier questions, 14 numerically identified but **conditional** new source-reference rows, 86 independently classified composition/quality numeric entries, **zero compliance passes**.
+- The additional source-gated regression suites for rabbit/egg pesticides and quality, fat-spread nickel, sago/tapioca hydrocyanic acid, coffee-chicory caffeine direction and the consolidated 126-product audit are wired into `.github/workflows/verify-fssai-standard-nutrition.yml`.
+- Summary invariants: **533 = 407 with partial evidence + 126 unresolved**, 630 pending qualifier questions, 15 numerically identified but **conditional** new source-reference rows, 108 independently classified composition/quality numeric entries, **zero compliance passes**.
 - See official [FSSAI Version IX CTR](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf), [Chapter 2.4](https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf), [Chapter 2.5](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_5_Meat%20and%20Meat%20products(1).pdf) and [Chapter 2.2](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats_oils_and_fat_emulsions.pdf).
 
 All added checks are still **source/analytical prerequisites**, not finished-product chemical-compliance decisions. WordPress has not been changed.
 
+
+### Four coffee-chicory legal product forms (FSSR 2.10.4)
+
+The standard differentiates roasted-ground coffee-chicory (moisture ≤5%, caffeine ≥0.6%), instant (moisture ≤4%, caffeine ≥1.4%), decaffeinated roasted-ground (moisture ≤5%, caffeine ≤0.1%) and decaffeinated instant (moisture ≤4%, caffeine ≤0.3%). **All four require at least 51% coffee** on the specified mass/dry basis, but ash and caffeine limits depend on precise subtype. Four variants with 22 numerical composition values are recorded source-exactly; no OTA, lead or pesticide PASS is inferred. See [official Chapter 2.10, PDF pp.7–10](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf) and [FSSAI Version IX](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf).
