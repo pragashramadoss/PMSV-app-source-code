@@ -106,6 +106,10 @@ on:
       - 'scripts/audit-fssai-ayurveda-nine-recipe-source-gates.cjs'
       - 'tests/fssai-ayurveda-nine-recipe-b1-source-gates-2026-10-11.test.cjs'
       - 'tests/fssai-ayurveda-nine-recipe-ui-2026-10-11.test.cjs'
+      - 'scripts/audit-fssai-two-subtype-first-exact-source.cjs'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-v9-two-subtype-exact-metal-articles-2026-10-11.json'
+      - 'tests/fssai-two-subtype-first-exact-source-2026-10-11.test.cjs'
+      - 'tests/fssai-two-subtype-metal-ui-2026-10-11.test.cjs'
       - 'fssai-product-helper-preview-01/data/rules/fssai-ten-edible-fungi-2-3-62-quality-and-ctr-gates-2026-10-11.json'
       - 'scripts/audit-fssai-ten-edible-fungi-source-gates.cjs'
       - 'tests/fssai-ten-edible-fungi-quality-source-2026-10-11.test.cjs'
@@ -173,9 +177,11 @@ jobs:
         run: node scripts/triage-fssai-contaminant-evidence.cjs
       - name: Reconcile the remaining 126 exact product/source applicability reviews
         run: node scripts/audit-all-161-pending-source-matrix-gates.cjs
+      - name: Validate new source-pinned frozen confections and onion/non-onion Lead article identities
+        run: node scripts/audit-fssai-two-subtype-first-exact-source.cjs
       - name: Audit source evidence conservation across all 533 products
         run: node scripts/audit-fssai-evidence-ledger-conservation.cjs
-      - name: Generate 533 universal Methyl Mercury and 738 metal default source-priority audit decisions
+      - name: Generate 533 universal Methyl Mercury and 726 metal default source-priority audit decisions
         run: node scripts/audit-fssai-v9-metal-fallback-precedence.cjs
       - name: Verify nine official Ayurveda Aahara product recipes against crop-contaminant articles
         run: node scripts/audit-fssai-ayurveda-nine-recipe-source-gates.cjs
@@ -183,21 +189,23 @@ jobs:
         run: node scripts/audit-fssai-ten-edible-fungi-source-gates.cjs
       - name: Audit 11 official FSSAI chutney, pickles, pastes and pulp quality standards
         run: node scripts/audit-fssai-11-chapter-2-3-quality-routes.cjs
-      - name: Export 123 unresolved product source-research worksheet
+      - name: Export 121 unresolved product source-research worksheet
         run: node scripts/export-fssai-next-123-source-research-queue.cjs
+      - name: Verify two new exact conditional source articles, positive and negative subtype paths
+        run: node --test tests/fssai-two-subtype-first-exact-source-2026-10-11.test.cjs tests/fssai-two-subtype-metal-ui-2026-10-11.test.cjs
       - name: Verify 48 FSSAI Chapter 2.3 source quality rules and fail-closed Helper display
         run: node --test tests/fssai-11-chapter-2-3-source-quality-2026-10-11.test.cjs tests/fssai-11-chapter-2-3-source-quality-ui-2026-10-11.test.cjs
       - name: Verify fungi quality criteria and exact product UI source guards
         run: node --test tests/fssai-ten-edible-fungi-quality-source-2026-10-11.test.cjs tests/fssai-ten-edible-fungi-live-quality-ui-2026-10-11.test.cjs
       - name: Verify source-pinned nine Ayurveda Aahara product recipes and B1 overlap candidates
         run: node --test tests/fssai-ayurveda-nine-recipe-b1-source-gates-2026-10-11.test.cjs tests/fssai-ayurveda-nine-recipe-ui-2026-10-11.test.cjs
-      - name: Verify all 123 product source-priority panels and research exports reject wrong article mappings
+      - name: Verify all 121 product source-priority panels and research exports reject wrong article mappings
         run: node --test tests/fssai-v9-metal-priority-helper-123-2026-10-11.test.cjs
       - name: Verify official Version IX default metal and universal Methyl Mercury rows
         run: node --test tests/fssai-v9-metal-fallback-precedence-533-123-2026-10-11.test.cjs
       - name: Verify 13 named FSSAI tin articles and 61 no-transfer conditions
         run: node --test tests/fssai-v9-tin-conditional-123-source-matrix-2026-10-11.test.cjs
-      - name: Assert full 123-personalized-FSSAI-first-source worklists remain unresolved
+      - name: Assert full 121-personalized-FSSAI-first-source worklists remain unresolved
         run: node --test tests/fssai-next-123-actionable-worklist-2026-10-11.test.cjs
       - name: Upload per-product compliance evidence audit
         if: always()
@@ -211,9 +219,9 @@ jobs:
             audit-output/fssai-contaminant-evidence-disposition-summary.md
             audit-output/fssai-126-detailed-source-applicability-reconciliation.json
             audit-output/fssai-live-first-source-ledger-533.json
-            audit-output/fssai-next-123-first-exact-source-research-queue.csv
-            audit-output/fssai-next-123-first-exact-source-research-queue.json
-            audit-output/fssai-v9-all-533-methylmercury-and-123-fallback-source-review.json
+            audit-output/fssai-next-121-first-exact-source-research-queue.csv
+            audit-output/fssai-next-121-first-exact-source-research-queue.json
+            audit-output/fssai-v9-all-533-methylmercury-and-121-fallback-source-review.json
             audit-output/fssai-ayurveda-nine-recipe-source-review.json
             audit-output/fssai-ten-edible-fungi-quality-vs-ctr-review.json
             audit-output/fssai-11-fruit-pickle-sauce-source-quality.json

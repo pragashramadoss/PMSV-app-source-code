@@ -15,8 +15,8 @@ test("31 product/article nontransfer cases cover 26 unresolved real identities, 
  assert.equal(new Set(m.scope_guards.map(x=>x.catalog_id)).size,26);
  assert.equal(m.named_source_rows.length,18);
  assert.equal(ledger.product_count,533);
- assert.equal(ledger.partial_first_source_evidence,410);
- assert.equal(ledger.unresolved_first_source_gaps,123);
+ assert.equal(ledger.partial_first_source_evidence,412);
+ assert.equal(ledger.unresolved_first_source_gaps,121);
  assert.equal(ledger.legal_or_laboratory_compliance_passes,0);
  assert.equal(m.full_product_compliance_passes,0);
  assert.equal(m.first_exact_promotions,0);

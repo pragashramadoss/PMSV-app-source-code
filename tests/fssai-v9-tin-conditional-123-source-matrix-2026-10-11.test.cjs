@@ -13,7 +13,7 @@ test("13 official FSSAI Version IX Tin rows retain original numbers and analytic
  assert.equal(m.auto_numeric_application,false);assert.equal(m.first_exact_evidence_promotions,0);assert.equal(m.full_compliance_passes,0);
 });
 test("61 nontransfer guards cover 36 still unresolved exact catalogue identities, with no false pass",()=>{
- assert.deepEqual([ledger.product_count,ledger.partial_first_source_evidence,ledger.unresolved_first_source_gaps,ledger.legal_or_laboratory_compliance_passes],[533,410,123,0]);
+ assert.deepEqual([ledger.product_count,ledger.partial_first_source_evidence,ledger.unresolved_first_source_gaps,ledger.legal_or_laboratory_compliance_passes],[533,412,121,0]);
  assert.equal(m.scope_guards.length,61);assert.equal(m.conditional_source_cases,61);assert.equal(m.distinct_unresolved_products,36);
  assert.equal(new Set(m.scope_guards.map(r=>r.catalog_id)).size,36);
  assert.equal(new Set(m.scope_guards.map(r=>r.catalog_id+"::"+r.source_id)).size,61);

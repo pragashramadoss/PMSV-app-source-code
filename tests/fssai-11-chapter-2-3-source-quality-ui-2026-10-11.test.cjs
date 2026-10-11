@@ -28,7 +28,7 @@ test("No source flags, preservation methods or generic metal names create a cont
  assert.match(html,/fruitQuality11Db=await source.json\(\)/);
  assert.match(html,/sourcePinnedFruitPickleQuality11Html\(p\)/);
  assert.match(display(choose("04-04-1-fruits-and-vegetable-chutney")),/Mango Chutney contaminant article/);
- const q=read("audit-output/fssai-next-123-first-exact-source-research-queue.json");
+ const q=read("audit-output/fssai-next-121-first-exact-source-research-queue.json");
  assert.deepEqual([q.fruit_pickle_paste_quality_products,q.fruit_pickle_paste_quality_rules,q.fruit_pickle_paste_first_exact_ctr_promotions],[11,48,0]);
  for(const r of q.records.filter(x=>x.fruit_pickle_paste_quality_source_review_only)){
   assert.equal(r.fruit_pickle_paste_quality_source_review_only.first_exact_ctr_source_cleared,false);
