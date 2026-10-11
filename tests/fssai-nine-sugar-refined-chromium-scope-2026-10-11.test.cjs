@@ -85,3 +85,51 @@ test("Audit keeps 410 partial/123 unresolved with all nine sugar Chromium refere
  assert.equal(ledger.partial_first_source_evidence,410);
  assert.equal(ledger.unresolved_first_source_gaps,123);
 });
+
+
+test("Dried Glucose Syrup FSSR sulphated ash <=1% excludes conditional Lead 5 mg/kg article requiring >1%",()=>{
+ const row=src.records.find(x=>x.catalog_id==="11-11-1-dried-glucose-syrup");
+ const p=catalog.find(x=>x.id===row.catalog_id),q=row.conditional_lead_5_mg_ash_exclusion;
+ assert.ok(q);
+ assert.equal(q.sulphated_ash_fssr_max_pct,1);
+ assert.equal(q.conditional_ctr_article_min_pct_strictly_greater_than,1);
+ assert.equal(q.conditional_lead_limit_mgkg,5);
+ assert.equal(q.source_article_condition_mathematically_excluded_by_standard,true);
+ assert.equal(q.finished_product_lead_mrl_auto_assigned,false);
+ assert.equal(q.no_universal_lead_exemption_asserted,true);
+ const st=standards[0].standards.find(x=>x.key==="2.8.7");
+ assert.ok(st.composition.some(x=>x.parameter==="Sulphated ash"
+   &&x.operator==="<="&&x.value===1&&x.unit==="% by weight"));
+ assert.ok(contaminants.metal_article_rules_v9.Lead.some(x=>x.article===q.conditional_ctr_named_article
+   &&x.limit===5&&x.unit==="mg/kg"));
+ assert.ok(verify(p));
+ assert.match(show(p),/Lead 5 mg\/kg source article EXCLUDED by ash threshold/);
+ assert.match(show(p),/No automatic lead assignment or universal lead exemption/);
+});
+test("Wrong FSSR ash, changed Lead article source, or missing conditional exclusion fails closed",()=>{
+ const p=catalog.find(x=>x.id==="11-11-1-dried-glucose-syrup");
+ const original=ctx.chapterRuleDbs,metal=ctx.contaminantsDb,sugar=ctx.sugarChromiumScopeDb;
+ ctx.chapterRuleDbs=structuredClone(standards);
+ ctx.chapterRuleDbs[0].standards.find(x=>x.key==="2.8.7").composition.find(x=>x.parameter==="Sulphated ash").value=1.2;
+ assert.equal(verify(p),null);assert.match(show(p),/WITHHELD/);
+ ctx.chapterRuleDbs=original;
+ ctx.contaminantsDb=structuredClone(contaminants);
+ ctx.contaminantsDb.metal_article_rules_v9.Lead.find(x=>x.article===src.records.find(x=>x.catalog_id===p.id).conditional_lead_5_mg_ash_exclusion.conditional_ctr_named_article).limit=99;
+ assert.equal(verify(p),null);
+ ctx.contaminantsDb=metal;
+ ctx.sugarChromiumScopeDb=structuredClone(src);
+ delete ctx.sugarChromiumScopeDb.records.find(x=>x.catalog_id===p.id).conditional_lead_5_mg_ash_exclusion;
+ assert.equal(verify(p),null);
+ ctx.sugarChromiumScopeDb=sugar;
+ assert.ok(verify(p));
+});
+test("Dried glucose Lead threshold review is an exclusion, not a contaminant clearance",()=>{
+ const a=load("audit-output/fssai-product-readiness-audit.json");
+ const row=a.products.find(x=>x.id==="11-11-1-dried-glucose-syrup");
+ assert.equal(row.refined_sugar_chromium_scope_review.dried_glucose_conditional_lead_ash_exclusion.article_limit,5);
+ assert.equal(row.refined_sugar_chromium_scope_review.dried_glucose_conditional_lead_ash_exclusion.fssr_sulphated_ash_max_pct,1);
+ assert.equal(row.refined_sugar_chromium_scope_review.dried_glucose_conditional_lead_ash_exclusion.auto_apply,false);
+ assert.equal(a.summary.counts.chapter_2_8_dried_glucose_sulphated_ash_lead["5_mgkg_conditional_article_excluded_by_fssr_1pct_max"],1);
+ assert.notEqual(row.contaminant_evidence_index.status,"some_exact_product_evidence_not_full_coverage");
+ assert.equal(row.compliance_decision,"not_established_by_route_evidence");
+});
