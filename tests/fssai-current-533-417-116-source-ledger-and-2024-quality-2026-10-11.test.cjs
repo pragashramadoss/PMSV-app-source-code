@@ -64,7 +64,7 @@ test("current official FSSAI Chapter 2.3 2024 evidence reconciles BOTH colouring
   assert.ok(s);assert.equal(s.source_url,current);
   assert.equal(s.numeric_evidence.source_url,current);
   assert.equal(s.numeric_evidence.source_version,"Version 2 (04.11.2024)");
-  assert.equal(s.numeric_evidence.review_status,"current_2024_fssai_source_numeric_reconfirmed_no_ctr_promotion");
+  assert.equal(s.numeric_evidence.review_status,"current_2024_fssai_source_numeric_reconfirmed_current_amendments_not_reconciled_for_full_compliance");
   assert.equal(s.full_compliance_assessment_enabled,false);
  }
  const colour=chapter23.standards.find(x=>x.key==="2.3.65");
