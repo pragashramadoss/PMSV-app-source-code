@@ -1225,6 +1225,7 @@ let sourcePriorityMetalDb=null;
 let crossFormV9ScopeDb=null;
 let metalMeasurementBasisDb=null;
 let namedFoodSubtypesDb=null;
+let exactSevenQualityDb=null;
 let expandedV9ScopeDb=null;
 let crossMetalV9ScopeDb=null;
 let ayurvedaRecipeReviewDb=null;
@@ -1255,7 +1256,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-processed-food-subtype-review-v515';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-seven-official-quality-routes-v516';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10645,6 +10646,45 @@ function sourcePriorityMetalFallbackReviewHtml(p){
    +'<p><b>Methyl Mercury — All foods: '+esc(all.limit)+' '+esc(all.unit)+'</b>. This universal all-foods article is already handled separately and requires a speciated methyl-mercury measurement. It is distinct from total Mercury and is not a finished-product compliance PASS.</p>'
    +'<small><a href="'+esc(m.source)+'" target="_blank" rel="noopener">Official FSSAI Version IX Section 2.1</a> · Numeric compliance assessment NOT established.</small></details>';
 }
+function sourcePinnedSevenOfficialProductQualityHtml(p){
+ if(!p||!exactSevenQualityDb)return '';
+ const m=exactSevenQualityDb,row=(m.records||[]).find(r=>r.catalog_id===p.id);
+ if(!row)return '';
+ const withheld='<div class="notice"><b>Official FSSAI product-quality source withheld:</b> clause, product identity, analytical basis, or stored source values failed verification. No quality or contaminant PASS.</div>';
+ if(m.version!=='1.0'||m.source_policy!=='FSSAI_CHAPTER_2_8_2_9_2_11_ONLY'
+   ||m.catalogue_count!==533||m.partial_first_exact_ctr!==412||m.pending_first_exact_ctr!==121
+   ||m.full_contaminant_compliance_passes!==0||m.source_qualified_products!==7
+   ||m.source_qualified_quality_criteria!==34
+   ||m.criterion_is_not_finished_food_contaminant_mrl!==true
+   ||m.salt_substitute_conditional_magnesium_cation_fraction_verified!==true
+   ||row.product_name!==p.name||row.fssr!==p.fssr||row.fcs!==p.fcs
+   ||row.standards_are_quality_identity_not_ctr_mrl!==true
+   ||row.first_exact_ctr_source_promoted!==false||row.legal_compliance_pass!==false)return withheld;
+ const db=(chapterRuleDbs||[]).find(c=>String(c.chapter)===String(row.standard_key).split('.').slice(0,2).join('.'));
+ const st=db?.standards?.find(s=>String(s.key)===row.standard_key);
+ if(!db||!st||db.official_sources?.[0]?.url!==row.source||row.criteria?.length<1)return withheld;
+ const official=st.composition||st.composition_rules;
+ if(!Array.isArray(official)||official.length!==row.criteria.length)return withheld;
+ const validated=row.criteria.every((c,i)=>{
+  const {finished_product_contaminant_mrl,compliance_pass,...base}=c;
+  return finished_product_contaminant_mrl===false&&compliance_pass===false&&JSON.stringify(base)===JSON.stringify(official[i]);
+ });
+ if(!validated)return withheld;
+ const rows=row.criteria.map(c=>{
+  const value=c.operator==='range'
+    ?esc(c.min)+' to '+esc(c.max)+' '+esc(c.unit||'')
+    :esc(c.operator)+' '+esc(c.value)+' '+esc(c.unit||'');
+  const note=c.applies_to||c.source_note||'Exact FSSAI product-standard scope and analytical sample basis must be confirmed.';
+  return '<tr><td>'+esc(c.parameter)+'</td><td><b>'+value+'</b></td><td>'+esc(note)+'</td></tr>';
+ }).join('');
+ return '<details style="margin:10px 0"><summary><b>Exact FSSAI '+esc(row.standard_key)
+  +' — '+esc(row.criteria.length)+' official product quality/identity criteria (NOT contaminant MRLs)</b></summary>'
+  +'<p>These source-backed compositional requirements apply only to the confirmed standardized identity and relevant subtype. <b>They are not Contaminants Regulations MRLs</b>, and no laboratory PASS has been determined.</p>'
+  +'<div class="tablewrap"><table><thead><tr><th>Product standard parameter</th><th>Requirement</th><th>Condition / analytical basis</th></tr></thead><tbody>'
+  +rows+'</tbody></table></div>'
+  +'<small><a href="'+esc(row.source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI product-standard chapter</a>. Full contaminant and pesticide coverage remains unresolved.</small></details>';
+}
+
 function sourcePinnedFinishedFoodSubtypeReviewHtml(p){
  if(!p||!namedFoodSubtypesDb||!contaminantsDb)return '';
  const db=namedFoodSubtypesDb,row=(db.records||[]).find(x=>x.catalog_id===p.id);
@@ -11157,6 +11197,7 @@ function renderProductContaminants(){
    +sourcePriorityMetalFallbackReviewHtml(p)
    +sourcePinnedExpandedMetalScopeHtml(p)
    +sourcePinnedFinishedFoodSubtypeReviewHtml(p)
+   +sourcePinnedSevenOfficialProductQualityHtml(p)
    +sourcePinnedSugarSulphitesHtml(p)
    +sugarChromiumScopeHtml(p)
    +eightCerealQualityScopeHtml(p)
@@ -11315,6 +11356,11 @@ async function loadContaminantsDb(){
      if(!res.ok)throw new Error('Finished food exact-subtype source references unavailable');
      namedFoodSubtypesDb=await res.json();
    }catch(e){namedFoodSubtypesDb=null;}
+   try{
+     const res=await fetch('./data/rules/fssai-seven-official-product-quality-2026-10-11.json?v=20261011-quality7',{cache:'reload'});
+     if(!res.ok)throw new Error('Official 7 product quality source data unavailable');
+     exactSevenQualityDb=await res.json();
+   }catch(e){exactSevenQualityDb=null;}
  }catch(e){
    contaminantsDb=null;
  }

@@ -18,6 +18,8 @@ const expanded=load(base+"rules/fssai-v9-expanded-identity-nontransfer-2026-10-1
 const crossMetal=load(base+"rules/fssai-v9-cross-metal-matrix-2026-10-11.json");
 const metalBasis=load(base+"rules/fssai-v9-61-metal-article-testing-bases-2026-10-11.json");
 const foodSubtypes=load(base+"rules/fssai-v9-processed-food-exact-subtype-source-2026-10-11.json");
+const sevenQuality=load(base+"rules/fssai-seven-official-product-quality-2026-10-11.json");
+const qualityById=new Map(sevenQuality.records.map(r=>[r.catalog_id,r]));
 const foodSubtypesById=new Map(foodSubtypes.records.map(r=>[r.catalog_id,r]));
 const metalBasisById=new Map(metalBasis.source_rows.map(x=>[x.id,x]));
 const crossMetalRows=new Map(crossMetal.source_rows.map(r=>[r.id,r]));
@@ -159,6 +161,8 @@ const outputs=remaining.map((x,i)=>{
   named_source_articles_review_only:form.named_articles,
   auto_applied:false,first_exact_promoted:false,compliance_pass:false
  })):[];
+ const exactProductQuality=qualityById.get(x.id);
+ if(exactProductQuality)assert.ok(exactProductQuality.product_name===x.name&&exactProductQuality.fssr===x.fssr&&exactProductQuality.fcs===x.fcs);
  const extracted=[];
  for(const [key,value] of Object.entries(old)){
   if(/2026_10_11|2026_10_10/.test(key)&&typeof value==="object")harvest(value,extracted);
@@ -174,6 +178,7 @@ const outputs=remaining.map((x,i)=>{
   expanded_named_article_references_review_only:extended,
   cross_metal_nontransfer_references_review_only:crossMetalGates,
   finished_food_specific_named_subtypes_review_only:namedSubtypeReferences,
+  exact_fssai_product_quality_not_contaminant_mrl:exactProductQuality?{source:exactProductQuality.source,fssr:exactProductQuality.standard_key,criteria:exactProductQuality.criteria,first_exact_ctr_source_promoted:false,compliance_pass:false}:null,
   tin_named_article_references_review_only:tinArticleGates,
   generic_metal_precedence_references_review_only:metalArticlePriority,
   ayurveda_recipe_ingredient_source_review_only:recipeIngredientB1Review,
@@ -195,6 +200,8 @@ fs.writeFileSync(path.join(dir,"fssai-next-121-first-exact-source-research-queue
  expanded_source_rows:expanded.new_named_article_rows.length,
  expanded_nontransfer_cases:outputs.reduce((n,r)=>n+r.expanded_named_article_references_review_only.length,0),
  expanded_nontransfer_products:outputs.filter(r=>r.expanded_named_article_references_review_only.length>0).length,
+ exact_product_quality_routes:outputs.filter(x=>x.exact_fssai_product_quality_not_contaminant_mrl).length,
+ exact_product_quality_criteria:outputs.reduce((n,x)=>n+(x.exact_fssai_product_quality_not_contaminant_mrl?.criteria.length||0),0),
  finished_food_subtype_product_count:outputs.filter(x=>x.finished_food_specific_named_subtypes_review_only.length>0).length,
  finished_food_named_subtype_options:outputs.reduce((n,x)=>n+x.finished_food_specific_named_subtypes_review_only.length,0),
  finished_food_subtype_article_references:outputs.reduce((n,x)=>n+x.finished_food_specific_named_subtypes_review_only.reduce((j,f)=>j+f.named_source_articles_review_only.length,0),0),
