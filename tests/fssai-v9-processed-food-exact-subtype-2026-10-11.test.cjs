@@ -4,7 +4,7 @@ const root=path.resolve(__dirname,".."),pre="fssai-product-helper-preview-01/";
 const read=x=>JSON.parse(fs.readFileSync(path.join(root,x),"utf8")),m=read(pre+"data/rules/fssai-v9-processed-food-exact-subtype-source-2026-10-11.json"),v9=read(pre+"data/rules/contaminants-v9-core.json");
 const ix=read(pre+"data/standard-search-index-v1.json").products,ledger=read("audit-output/fssai-live-first-source-ledger-533.json"),research=read("audit-output/fssai-next-121-first-exact-source-research-queue.json");
 const html=fs.readFileSync(path.join(root,pre,"index.html"),"utf8");
-const begin=html.indexOf("function sourcePinnedFinishedFoodSubtypeReviewHtml(p){"),end=html.indexOf("function sourcePinnedExpandedMetalScopeHtml(p){",begin+25);
+const begin=html.indexOf("function pmsvFinishedFoodSubtypeManifestIntegrity(db){"),end=html.indexOf("function sourcePinnedExpandedMetalScopeHtml(p){",begin+25);
 assert.ok(begin>0&&end>begin,"Exact subtype live screen function missing");
 const ctx=vm.createContext({namedFoodSubtypesDb:structuredClone(m),contaminantsDb:structuredClone(v9),pmsvFinishedFoodArticleResearchState:{catalog_id:'',subtype_id:''},
  esc:s=>String(s??"").replace(/[&<>"']/g,k=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[k]))});
