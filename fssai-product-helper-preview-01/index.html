@@ -10210,6 +10210,24 @@ function pendingContaminantReviewNotice(p){
     +'<p><b>Verify:</b> '+esc(tail.requires_check)+'</p><p><b>Excluded inference:</b> '+esc(tail.prohibited_lookalike_inheritance)+'</p>'
     +'<small><a href="'+esc(tail.official_standard_source_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI standard</a>. Numeric limits not auto-applied; legal compliance not determined.</small></details>'
    :'';
+ const subtype=record.exact_subtype_transfer_safeguard_2026_10_11;
+ const subtypeVerified=subtype&&subtype.catalog_id===p.id&&subtype.product_name===p.name
+   &&String(subtype.catalogue_fssr)===String(p.fssr)&&subtype.first_exact_ctr_source_claimed===false
+   &&subtype.automatically_applied===false&&subtype.compliance_approved===false;
+ const qualityCriterion=subtypeVerified?subtype.chapter_specific_quality_not_ctr_limit:null;
+ const subtypeHtml=subtypeVerified
+   ?'<details style="margin:9px 0"><summary><b>11 October exact subtype transfer safeguard — NOT APPLIED</b></summary>'
+    +'<p><b>Identity:</b> '+esc(subtype.verified_identity_or_standard)+'</p>'
+    +'<p><b>Do not transfer:</b> '+esc(subtype.prohibited_limit_transfer)+'</p>'
+    +(qualityCriterion?'<p><b>Separate product-standard quality criterion (NOT a contaminant or pesticide MRL):</b> '
+      +esc(qualityCriterion.parameter)+' '+esc(qualityCriterion.operator)+' '+esc(qualityCriterion.value)+' '+esc(qualityCriterion.unit)
+      +'. This does not establish a tested sample result or legal PASS.</p>':'')
+    +'<p>'+esc(subtype.required_next_evidence)+'</p>'
+    +'<small><a href="'+esc(subtype.official_standard_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI chapter</a>'
+    +' · <a href="'+esc(subtype.ctr_source)+'" target="_blank" rel="noopener noreferrer">FSSAI Version IX</a>. '
+    +(subtype.source_pdf_page_one_based?'Chapter PDF p. '+esc(subtype.source_pdf_page_one_based):'Further source-page verification outstanding')
+    +'. No numeric CTR finished-product limit auto-applied.</small></details>'
+   :'';
  const candidate=record.specific_source_commodity_subtype_review_2026_10_10;
  const candidateHtml=candidate&&candidate.review_only===true&&candidate.automatically_applied===false
    ?'<details style="margin:9px 0"><summary><b>Official named commodity article — conditional, NOT APPLIED</b></summary>'
@@ -10248,6 +10266,7 @@ function pendingContaminantReviewNotice(p){
    +precisionHtml
    +familyHtml
    +tailHtml
+   +subtypeHtml
    +candidateHtml
    +discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
