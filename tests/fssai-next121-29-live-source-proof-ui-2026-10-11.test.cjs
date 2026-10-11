@@ -13,7 +13,7 @@ const byId=new Map(inventory.map(x=>[x.id,x])),display=p=>vm.runInContext("sourc
 test("121 actual FoSCoS products display new live source proof, while already evidenced products do not",()=>{
  assert.match(html,/fssai-source-proof-panels\.js\?v=20261011-live121/);
  assert.match(html,/await pmsvLoadPositiveSourceProof\(\)/);
- assert.match(html,/\+sourcePinned121ResearchProofHtml\(p\)/);
+ assert.match(html,/typeof sourcePinned121ResearchProofHtml==='function'/);
  for(const r of proof.records){
   const content=display(byId.get(r.catalog_id));
   assert.match(content,/First exact-source evidence needed/);
