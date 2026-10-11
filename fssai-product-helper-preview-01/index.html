@@ -1245,7 +1245,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-cereal-pasta-biscuit-papad-v506';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-dried-glucose-ash-source-v507';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10338,6 +10338,22 @@ function verifiedSugarChromiumSourceScope(p){
        &&st.name===row.source_standard_name
        &&(st.definition||null)===(row.source_record_definition||null)));
  if(found.length!==1)return null;
+ if(p.id==='11-11-1-dried-glucose-syrup'){
+   const q=row.conditional_lead_5_mg_ash_exclusion;
+   const ash=found[0].composition?.find(x=>x.parameter==='Sulphated ash');
+   if(!q||q.official_food_standard!=='2.8.7'
+     ||q.official_ctr_source!==db.official_2026_contaminants_url
+     ||q.official_product_source!==row.source_standard_url
+     ||q.sulphated_ash_fssr_max_pct!==1||q.conditional_ctr_article_min_pct_strictly_greater_than!==1
+     ||q.conditional_lead_limit_mgkg!==5
+     ||q.source_article_condition_mathematically_excluded_by_standard!==true
+     ||q.finished_product_lead_mrl_auto_assigned!==false
+     ||q.no_universal_lead_exemption_asserted!==true||q.lab_compliance_pass!==false
+     ||!ash||ash.operator!=='<='||ash.value!==1||ash.unit!=='% by weight')return null;
+   const lead=(contaminantsDb.metal_article_rules_v9?.Lead||[]).filter(x=>
+     x.article===q.conditional_ctr_named_article&&Number(x.limit)===5&&x.unit==='mg/kg');
+   if(lead.length!==1)return null;
+ }
  if(row.refined_sugar_input_possible){
    if(p.id!=='11-11-1-cube-sugar'||p.fssr!=='2.8.1(5)'
       ||row.source_record_definition!=='Cube or cuboid blocks manufactured from refined crystallised sugar.'
@@ -10356,6 +10372,9 @@ function sugarChromiumScopeHtml(p){
     +'<p><b>Official refined-sugar comparison:</b> Chromium '+esc(String(sugarChromiumScopeDb.chromium_limit))+' '+esc(sugarChromiumScopeDb.chromium_unit)
     +' for the source article Refined sugar. <b>This is not an approved finished-product Chromium MRL for '+esc(p.name)+'.</b></p>'
     +'<p>'+esc(row.distinct_subtype_review)+'</p>'
+    +(row.conditional_lead_5_mg_ash_exclusion?'<div class="notice"><b>Dried Glucose Syrup — Lead 5 mg/kg source article EXCLUDED by ash threshold.</b> '
+      +'FSSR 2.8.7 requires <b>sulphated ash ≤1.0%</b>; the separate Version IX starch-conversion article with Lead 5 mg/kg requires <b>sulphated ash exceeding 1.0%</b>. '
+      +'No automatic lead assignment or universal lead exemption. Check other applicable contaminant limits.</div>':'')
     +'<p>Confirm product composition, additive usage, refined-sugar article eligibility, analytical basis, operative amendments and laboratory results before any finished-food decision. Sulphated ash for conditional lead references is distinct from total ash. <b>Zero compliance PASS.</b></p>'
     +'<small>'+urls+'</small></details>';
 }
@@ -10936,7 +10955,8 @@ async function loadContaminantsDb(){
    if(db.product_count!==9||db.records?.length!==9
       ||db.refined_input_conditional_products!==1||db.disallowed_direct_inheritances!==8
       ||db.promoted_first_exact_finished_product_ctr_identities!==0
-      ||db.full_compliance_passes!==0||db.chromium_limit!==0.02
+      ||db.full_compliance_passes!==0
+      ||db.official_product_specific_sulphated_ash_exclusions_added!==1||db.chromium_limit!==0.02
       ||db.chromium_unit!=='mg/kg')throw new Error('Sugar metal source scope does not match signed inventory');
    sugarChromiumScopeDb=db;
  }catch(e){sugarChromiumScopeDb=null;}
