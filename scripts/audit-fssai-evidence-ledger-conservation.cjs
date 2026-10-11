@@ -43,7 +43,15 @@ for(const p of ix){
  const oldQueue=qIds.has(p.id);
  const newExactResidue=newExactSugarIds.has(p.id);
  assert.ok(!newExactResidue||oldQueue,"Jaggery evidence must have started in historical unresolved queue: "+p.id);
- const needsExact=oldQueue&&!newExactResidue;
+ const promotedFlakes=p.id==="06-06-3-fruit-vegetable-cereal-flakes";
+ if(promotedFlakes){
+   assert.ok(oldQueue,"Flakes promotion must start in historic 126 queue");
+   const evidence=x.contaminant_evidence_index.exact_fruit_vegetable_cereal_flakes_composite_b1;
+   assert.ok(evidence&&evidence.limit===10&&evidence.unit==="µg/kg");
+   assert.equal(evidence.total_aflatoxins_limit_unresolved,true);
+   assert.equal(evidence.full_contaminant_compliance,false);
+ }
+ const needsExact=oldQueue&&!newExactResidue&&!promotedFlakes;
  if(newExactResidue){
    const source=x.contaminant_evidence_index.exact_appendix_a_finished_product_sulphite_residue;
    assert.ok(source&&source.finished_product_residue_max_mgkg===50,p.id);
@@ -66,12 +74,12 @@ for(const p of ix){
    numeric_compliance_pass:false});
  }
 }
-assert.equal(countedPending,124);
-assert.equal(countedPartial,409);
-assert.equal(countedPending,q.count-newExactSugarIds.size);
+assert.equal(countedPending,123);
+assert.equal(countedPartial,410);
+assert.equal(countedPending,q.count-newExactSugarIds.size-1);
 assert.equal(countedPartial,report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage);
-assert.equal(countedPartial,q.current_snapshot_summary_2026_10_10.exact_partial_evidence+newExactSugarIds.size);
-assert.equal(countedPending,q.current_snapshot_summary_2026_10_10.pending-newExactSugarIds.size);
+assert.equal(countedPartial,q.current_snapshot_summary_2026_10_10.exact_partial_evidence+newExactSugarIds.size+1);
+assert.equal(countedPending,q.current_snapshot_summary_2026_10_10.pending-newExactSugarIds.size-1);
 const original136=new Map(review.records.map(x=>[x.catalog_id,x]));
 assert.equal(original136.size,136);
 assert.equal(review.source_pinned_partial_matches_new,10);
@@ -112,10 +120,11 @@ assert.equal(recent.size,30);
 const saved={
  date:"2026-10-11",product_count:533,partial_first_source_evidence:countedPartial,
  unresolved_first_source_gaps:countedPending,legal_or_laboratory_compliance_passes:0,
- source_collections_checked:4,recent_source_backed_partial_promotions_crosschecked:32,
+ source_collections_checked:5,recent_source_backed_partial_promotions_crosschecked:33,
  earlier_136_product_identity_reviews_preserved:review.records.length,
  historical_queue_2026_10_10:q.count,
  new_jaggery_sulphite_residue_first_source_matches:newExactSugarIds.size,
+ exact_fssr_2_3_20_flakes_b1_first_source_matches:1,
  current_pending_by_family:Object.fromEntries(Object.entries(byFamily).sort((a,b)=>a[0].localeCompare(b[0]))),
  invariant:"All 533 exactly one of partial or unresolved; all approved-compliance claims remain prohibited",
  pending_product_details:pendingProducts
@@ -123,4 +132,4 @@ const saved={
 const dest=path.join(root,"audit-output","fssai-live-first-source-ledger-533.json");
 fs.mkdirSync(path.dirname(dest),{recursive:true});
 fs.writeFileSync(dest,JSON.stringify(saved,null,2)+"\n");
-console.log("PASS: live first source-ledger 533 = 409 partial + 124 unresolved; 32 first-source promotions cross-checked; archived 126-case queue retained; 0 compliance approvals");
+console.log("PASS: live first source-ledger 533 = 410 partial + 123 unresolved; 33 first-source promotions cross-checked; archived 126-case queue retained; 0 compliance approvals");
