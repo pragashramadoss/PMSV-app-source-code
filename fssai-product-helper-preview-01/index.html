@@ -1223,6 +1223,7 @@ let contaminantsDb=null;
 let contaminantsPendingReviewDb=null;
 let sugarSulphiteResiduesDb=null;
 let chapterQuality20Db=null;
+let sugarChromiumScopeDb=null;
 let spiceOleoresinResiduesDb=null;
 let goatMuscleVeterinaryResiduesDb=null;
 let fourCompositeSourcesDb=null;
@@ -1243,7 +1244,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-flakes-b1-source-v503';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-nine-sugar-metal-review-v504';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10238,6 +10239,52 @@ function exactEggStandardChemicalCriteriaHtml(p){
 // official source integrity are required even to display a conditional number.
 // Only the explicit 11.1.6 Gur/Jaggery end-product residue is partial chemical
 // residue evidence; other sugar entries are additive permissions, NOT CTR MRLs.
+// Section 2.1 refined sugar Chromium is a conditional INPUT comparison for
+// Cube Sugar, NOT a finished Cube Sugar MRL. Eight distinct sugar products
+// must not inherit it. Every identity, chapter and Version IX source row
+// must reconcile before even showing a reference number.
+function verifiedSugarChromiumSourceScope(p){
+ if(!p||!sugarChromiumScopeDb||!contaminantsDb||!Array.isArray(chapterRuleDbs))return null;
+ const db=sugarChromiumScopeDb, row=(db.records||[]).find(x=>x.catalog_id===p.id);
+ if(!row||row.product_name!==p.name||row.fssr!==p.fssr||row.fcs!==p.fcs
+    ||row.refined_sugar_chromium_auto_apply!==false
+    ||row.matches_direct_refined_sugar_finished_identity!==false
+    ||row.current_first_exact_ctr_product_evidence!==false
+    ||db.promoted_first_exact_finished_product_ctr_identities!==0
+    ||db.official_2026_contaminants_url!==contaminantsDb?.official_sources?.[0]?.url
+    ||db.source_version!==contaminantsDb.source_version
+    ||db.chromium_article!=='Refined sugar'||db.chromium_limit!==0.02
+    ||db.chromium_unit!=='mg/kg')return null;
+ const article=(contaminantsDb.metal_article_rules_v9?.Chromium||[]).filter(x=>
+   x.article==='Refined sugar'&&x.row_type==='exact'
+   &&Number(x.limit)===0.02&&x.unit==='mg/kg');
+ if(article.length!==1)return null;
+ const found=chapterRuleDbs.filter(x=>(x.official_sources||[]).some(y=>y.url===row.source_standard_url))
+   .flatMap(x=>(x.standards||[]).filter(st=>st.key===p.fssr
+       &&st.name===row.source_standard_name
+       &&(st.definition||null)===(row.source_record_definition||null)));
+ if(found.length!==1)return null;
+ if(row.refined_sugar_input_possible){
+   if(p.id!=='11-11-1-cube-sugar'||p.fssr!=='2.8.1(5)'
+      ||row.source_record_definition!=='Cube or cuboid blocks manufactured from refined crystallised sugar.'
+      ||found[0].composition?.find(x=>x.parameter==='Sucrose')?.value!==99.7
+      ||found[0].composition?.find(x=>x.parameter==='Total ash')?.value!==0.03)return null;
+ }else if(p.id==='11-11-1-cube-sugar')return null;
+ return row;
+}
+function sugarChromiumScopeHtml(p){
+ if(!sugarChromiumScopeDb||!p||(sugarChromiumScopeDb.records||[]).every(x=>x.catalog_id!==p.id))return '';
+ const row=verifiedSugarChromiumSourceScope(p);
+ if(!row)return '<div class="notice"><b>Sugar Chromium source reference WITHHELD.</b> Product identity, chapter source or official refined-sugar metal row failed to reconcile. No chromium limit is automatically assigned.</div>';
+ const urls='<a href="'+esc(row.source_standard_url)+'" target="_blank" rel="noopener noreferrer">FSSAI product standard</a>'
+     +' · <a href="'+esc(sugarChromiumScopeDb.official_2026_contaminants_url)+'" target="_blank" rel="noopener noreferrer">Official CTR Version IX</a>';
+ return '<details style="margin:9px 0"><summary><b>Sugar subtype & Chromium source scope — NOT AUTOMATICALLY APPLIED</b></summary>'
+    +'<p><b>Official refined-sugar comparison:</b> Chromium '+esc(String(sugarChromiumScopeDb.chromium_limit))+' '+esc(sugarChromiumScopeDb.chromium_unit)
+    +' for the source article Refined sugar. <b>This is not an approved finished-product Chromium MRL for '+esc(p.name)+'.</b></p>'
+    +'<p>'+esc(row.distinct_subtype_review)+'</p>'
+    +'<p>Confirm product composition, additive usage, refined-sugar article eligibility, analytical basis, operative amendments and laboratory results before any finished-food decision. Sulphated ash for conditional lead references is distinct from total ash. <b>Zero compliance PASS.</b></p>'
+    +'<small>'+urls+'</small></details>';
+}
 function verifiedSugarSulphiteReference(p){
  if(!p||!sugarSulphiteResiduesDb||!appendixCoreDb)return null;
  const db=sugarSulphiteResiduesDb;
@@ -10738,6 +10785,7 @@ function renderProductContaminants(){
  el.innerHTML=profileMsg
    +(verifiedSugarSulphiteReference(p)?.scope==='finished_product_sulphite_residue_partial'?'':pendingContaminantReviewNotice(p))
    +sourcePinnedSugarSulphitesHtml(p)
+   +sugarChromiumScopeHtml(p)
    +sourcePinnedChapterQualityHtml(p)
    +exactSupplementalResidueReviewHtml(p)
    +sourcePinnedCompositeOrSoupPartialHtml(p)
@@ -10792,6 +10840,18 @@ function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
    +'<small><a href="'+official+'" target="_blank" rel="noopener noreferrer">Read the official FSSAI Gazette</a>. Watch-list inclusion does not itself prove product applicability or establish full compliance.</small></div>';
 }
 async function loadContaminantsDb(){
+ try{
+   const res=await fetch('./data/rules/fssai-nine-sugar-refined-chromium-scope-2026-10-11.json?v=20261011-cr9',{cache:'reload'});
+   if(!res.ok)throw new Error('Nine-product official sugar-metal source-scope review missing');
+   const db=await res.json();
+   if(db.product_count!==9||db.records?.length!==9
+      ||db.refined_input_conditional_products!==1||db.disallowed_direct_inheritances!==8
+      ||db.promoted_first_exact_finished_product_ctr_identities!==0
+      ||db.full_compliance_passes!==0||db.chromium_limit!==0.02
+      ||db.chromium_unit!=='mg/kg')throw new Error('Sugar metal source scope does not match signed inventory');
+   sugarChromiumScopeDb=db;
+ }catch(e){sugarChromiumScopeDb=null;}
+
  try{
    const res=await fetch('./data/rules/fssai-20-pending-exact-chapter-quality-2026-10-11.json?v=20261011-q75',{cache:'reload'});
    if(!res.ok)throw new Error('FSSR chapter quality source review unavailable');
