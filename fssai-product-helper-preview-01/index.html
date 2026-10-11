@@ -1213,6 +1213,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <script src="./nutrition-modules.js?v=475"></script>
 <script src="./fssai-source-proof-panels.js?v=20261011-live121"></script>
 <script src="./fssai-ayurveda-composite-first-source.js?v=20261011-plus2"></script>
+<script src="./fssai-article-adjudications.js?v=20261011-decisions153"></script>
 <script>
 // Initialize shared data state before selectors and renderers can read it.
 let regulatoryDb=null;
@@ -11445,6 +11446,7 @@ function renderProductContaminants(){
    +sourcePinnedAyurvedaRecipeB1ReviewHtml(p)
    +sourcePriorityMetalFallbackReviewHtml(p)
    +sourcePinnedExpandedMetalScopeHtml(p)
+   +(typeof sourcePinnedLegalArticleAdjudicationHtml==='function'?sourcePinnedLegalArticleAdjudicationHtml(p):'')
    +(typeof sourcePinnedAyurvedaCompositeB1Html==='function'?sourcePinnedAyurvedaCompositeB1Html(p):'')
    +(typeof sourcePinned121ResearchProofHtml==='function'?sourcePinned121ResearchProofHtml(p):'')
    +sourcePinnedFinishedFoodSubtypeReviewHtml(p)
@@ -11508,6 +11510,7 @@ function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
    +'<small><a href="'+official+'" target="_blank" rel="noopener noreferrer">Read the official FSSAI Gazette</a>. Watch-list inclusion does not itself prove product applicability or establish full compliance.</small></div>';
 }
 async function loadContaminantsDb(){
+ if(typeof pmsvLoadArticleAdjudications==='function')await pmsvLoadArticleAdjudications();
  if(typeof pmsvLoadAyurvedaCompositeB1==='function')await pmsvLoadAyurvedaCompositeB1();
  if(typeof pmsvLoadPositiveSourceProof==='function')await pmsvLoadPositiveSourceProof();
  try{

@@ -236,6 +236,8 @@ jobs:
         run: node --test tests/fssai-next121-29-live-source-proof-ui-2026-10-11.test.cjs
       - name: Verify positive composite-food aflatoxin source for two finished Ayurveda Aahara recipes
         run: node --test tests/fssai-ayurveda-two-positive-composite-aflatoxin-2026-10-11.test.cjs
+      - name: Verify 153 official FSSAI named article decisions and positive two-product source proof
+        run: node --test tests/fssai-all153-candidate-article-applicability-2026-10-11.test.cjs
       - name: Upload per-product compliance evidence audit
         if: always()
         uses: actions/upload-artifact@v4
