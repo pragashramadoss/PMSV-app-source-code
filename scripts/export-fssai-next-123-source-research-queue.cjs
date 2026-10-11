@@ -22,9 +22,9 @@ const indexed=new Map(products.map(p=>[p.id,p]));
 const historic=new Map(source.map(p=>[p.catalog_id,p]));
 const examined=new Map(audit.map(p=>[p.id,p]));
 const remaining=ledger.pending_product_details;
-assert.deepEqual([ledger.product_count,ledger.partial_first_source_evidence,ledger.unresolved_first_source_gaps,ledger.legal_or_laboratory_compliance_passes],[533,410,123,0]);
-assert.equal(remaining.length,123);
-assert.equal(new Set(remaining.map(x=>x.id)).size,123);
+assert.deepEqual([ledger.product_count,ledger.partial_first_source_evidence,ledger.unresolved_first_source_gaps,ledger.legal_or_laboratory_compliance_passes],[533,412,121,0]);
+assert.equal(remaining.length,121);
+assert.equal(new Set(remaining.map(x=>x.id)).size,121);
 assert.equal(indexed.size,533);
 const fallback={
  "2.1":["Confirm whether the product contains dairy milk or is an analogue/non-dairy food","Confirm exact standardized finished form and processing state","Establish fat basis, concentration factor and reconstitution state","Find exact named metal/toxin/pesticide article, not ingredient-only milk row","Review effective amendments and sample analytical/residue definitions"],
@@ -155,10 +155,11 @@ const cols=["priority","catalog_id","product","fssr","fcs","family","status","ca
 const csv=[cols.join(","),...outputs.map(r=>cols.map(k=>esc(Array.isArray(r[k])?r[k].map(v=>typeof v==="string"?v:JSON.stringify(v)).join(" | "):r[k])).join(","))].join("\n")+"\n";
 const dir=path.join(root,"audit-output");
 fs.mkdirSync(dir,{recursive:true});
-fs.writeFileSync(path.join(dir,"fssai-next-123-first-exact-source-research-queue.csv"),csv);
-fs.writeFileSync(path.join(dir,"fssai-next-123-first-exact-source-research-queue.json"),
- JSON.stringify({snapshot:"2026-10-11",source:"generated-live-533-ledger",total:533,pending:123,partial:410,full_compliance_passes:0,
- guard_source_rows:cross.named_source_rows.length,scope_nontransfer_cases:cross.scope_guards.length,
+fs.writeFileSync(path.join(dir,"fssai-next-121-first-exact-source-research-queue.csv"),csv);
+fs.writeFileSync(path.join(dir,"fssai-next-121-first-exact-source-research-queue.json"),
+ JSON.stringify({snapshot:"2026-10-11",source:"generated-live-533-ledger",total:533,pending:121,partial:412,full_compliance_passes:0,
+ guard_source_rows:cross.named_source_rows.length,scope_nontransfer_cases:outputs.reduce((n,x)=>n+x.named_article_references_review_only.length,0),
+ historical_scope_nontransfer_cases:cross.scope_guards.length,
  products_with_scope_nontransfer_cases:outputs.filter(x=>x.named_article_references_review_only.length>0).length,
  fruit_pickle_paste_quality_products:outputs.filter(x=>x.fruit_pickle_paste_quality_source_review_only!==null).length,
  fruit_pickle_paste_quality_rules:outputs.reduce((n,x)=>n+(x.fruit_pickle_paste_quality_source_review_only?.numerical_and_qualitative_criteria||0),0),
@@ -175,4 +176,4 @@ fs.writeFileSync(path.join(dir,"fssai-next-123-first-exact-source-research-queue
  tin_conditional_source_cases:tin.scope_guards.length,
  tin_products_with_conditional_source_cases:outputs.filter(x=>x.tin_named_article_references_review_only.length>0).length,
  records:outputs},null,2)+"\n");
-console.log("Generated 123 individual FSSAI source-verification worklists including 11 fruit/pickle/paste quality reviews with 48 source checks, 10 FSSAI fungi product-quality reviews, 55 criteria, 9 Ayurveda recipe reviews, 4 B1 recipe overlap candidates; 738 fallback priority and 123 universal-only checks; "+cross.scope_guards.length+" earlier metal and "+tin.scope_guards.length+" Tin nontransfer cases; 0 numeric approvals");
+console.log("Generated 121 individual FSSAI source-verification worklists including 11 fruit/pickle/paste quality reviews with 48 source checks, 10 FSSAI fungi product-quality reviews, 55 criteria, 9 Ayurveda recipe reviews, 4 B1 recipe overlap candidates; 726 fallback priority and 121 universal-only checks; "+cross.scope_guards.length+" earlier metal and "+tin.scope_guards.length+" Tin nontransfer cases; 0 numeric approvals");
