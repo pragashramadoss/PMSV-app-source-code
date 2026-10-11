@@ -28,6 +28,7 @@ const next10ExactSource=read("rules/fssai-next10-exact-source-candidate-2026-10-
 const appendixASugar=read("rules/fssai-sugar-sulphites-appendix-a-v3-2026-10-11.json");
 const appendixAV3=read("rules/appendix-a-v3-core.json");
 const chapterQuality20=read("rules/fssai-20-pending-exact-chapter-quality-2026-10-11.json");
+const nineSugarRefinedReview=read("rules/fssai-nine-sugar-refined-chromium-scope-2026-10-11.json");
 /* Exact FSSAI Chapter 2.16 source evidence. This is a standard-product
  * THC and cross-cutting CBD assessment, not a Version IX contaminant article,
  * an exemption from other contaminants or a complete compliance verdict. */
@@ -2102,6 +2103,44 @@ for(const item of chapterQuality20.records){
  chapterQuality20ById.set(p.id,item);
 }
 assert.equal(quality20Rows,75);
+// Nine sugar identities checked against refined sugar Chromium only;
+ // no finished-product numerical application without final-form/source qualification.
+assert.equal(nineSugarRefinedReview.product_count,9);
+assert.equal(nineSugarRefinedReview.records.length,9);
+assert.equal(nineSugarRefinedReview.refined_input_conditional_products,1);
+assert.equal(nineSugarRefinedReview.disallowed_direct_inheritances,8);
+assert.equal(nineSugarRefinedReview.promoted_first_exact_finished_product_ctr_identities,0);
+assert.equal(nineSugarRefinedReview.full_compliance_passes,0);
+assert.equal(nineSugarRefinedReview.official_2026_contaminants_url,version9Source);
+assert.equal(nineSugarRefinedReview.source_version,contaminants.source_version);
+assert.equal(nineSugarRefinedReview.chromium_article,"Refined sugar");
+assert.equal(nineSugarRefinedReview.chromium_limit,0.02);
+assert.equal(nineSugarRefinedReview.chromium_unit,"mg/kg");
+const refinedChromiumRows=contaminants.metal_article_rules_v9.Chromium||[];
+assert.equal(refinedChromiumRows.filter(r=>r.article==="Refined sugar"
+ &&Number(r.limit)===0.02&&r.unit==="mg/kg"&&r.row_type==="exact").length,1);
+const nineSugarReviewById=new Map();
+for(const item of nineSugarRefinedReview.records){
+ const p=index.products.find(x=>x.id===item.catalog_id);
+ assert.ok(p&&p.name===item.product_name&&p.fssr===item.fssr&&p.fcs===item.fcs,item.catalog_id);
+ assert.equal(p.chapter_rule_link_status,"file_and_key_verified",p.id);
+ assert.ok(!nineSugarReviewById.has(p.id));
+ const actual=chapterRecord(p);
+ assert.equal(actual.record.name,item.source_standard_name,p.id);
+ assert.equal(actual.record.definition||null,item.source_record_definition||null,p.id);
+ assert.ok(actual.sourceUrls.includes(item.source_standard_url),p.id);
+ assert.equal(item.refined_sugar_chromium_auto_apply,false);
+ assert.equal(item.matches_direct_refined_sugar_finished_identity,false);
+ assert.equal(item.current_first_exact_ctr_product_evidence,false);
+ if(item.refined_sugar_input_possible){
+   assert.equal(p.id,"11-11-1-cube-sugar");
+   assert.equal(item.source_record_definition,"Cube or cuboid blocks manufactured from refined crystallised sugar.");
+   assert.equal(actual.record.composition.find(x=>x.parameter==="Sucrose").value,99.7);
+   assert.equal(actual.record.composition.find(x=>x.parameter==="Total ash").value,0.03);
+ }else assert.notEqual(p.id,"11-11-1-cube-sugar");
+ nineSugarReviewById.set(p.id,item);
+}
+assert.equal(nineSugarReviewById.size,9);
 assert.equal(index.products.length, 533);
 assert.equal(new Set(index.products.map(p=>p.id)).size, 533);
 assert.equal(special.routes.length, 58);
@@ -2185,6 +2224,14 @@ const products = index.products.map(p => {
     if(route.compliance_status === "complete" || route.compliance_pass_enabled === true) throw new Error("Special route incorrectly asserts compliance: " + p.id);
   }
   const contaminantEvidence=contaminantEvidenceForProduct(p);
+  const sugarChromiumReview=nineSugarReviewById.get(p.id)||null;
+  if(sugarChromiumReview){
+    assert.notEqual(contaminantEvidence.status,"some_exact_product_evidence_not_full_coverage",
+      "Unqualified sugar chromium may not promote exact finished-food source "+p.id);
+    tally("chapter_2_8_nine_sugar_chromium_scope_review",
+      sugarChromiumReview.refined_sugar_input_possible?"cube_refined_input_conditional_not_applied":"direct_transfer_excluded");
+    action.push("Official Version IX Chromium 0.02 mg/kg article applies to refined sugar. For Cube Sugar, FSSR 2.8.1(5) establishes refined-crystal input, but allowed additives and final article require confirmation; this is a conditional raw/input commodity reference ONLY. Eight alternative sugars cannot inherit chromium limit. No finished-food MRL or PASS.");
+  }
   const sourcePinnedChapterQuality=chapterQuality20ById.get(p.id)||null;
   if(sourcePinnedChapterQuality){
    if(p.id==='06-06-3-fruit-vegetable-cereal-flakes'){
@@ -2381,6 +2428,15 @@ const products = index.products.map(p => {
     microbiology_index_status:micro,
     direct_chapter_microbiology_criteria:chapterMicrobiologyRows,
     contaminant_evidence_index:contaminantEvidence,
+    refined_sugar_chromium_scope_review:sugarChromiumReview?{
+      source_url:nineSugarRefinedReview.official_2026_contaminants_url,
+      source_chapter_url:sugarChromiumReview.source_standard_url,
+      refined_input_candidate:sugarChromiumReview.refined_sugar_input_possible,
+      candidate_article:"Refined sugar",candidate_limit:0.02,candidate_unit:"mg/kg",
+      finished_product_numeric_auto_applied:false,first_exact_evidence_claimed:false,
+      reason:sugarChromiumReview.distinct_subtype_review,
+      full_compliance_pass:false
+    }:null,
     source_pinned_chapter_quality_review_2026_10_11:sourcePinnedChapterQuality?{
       source_url:sourcePinnedChapterQuality.official_chapter_source,
       product_standard:p.fssr,
