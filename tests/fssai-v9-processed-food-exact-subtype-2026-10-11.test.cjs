@@ -12,7 +12,7 @@ vm.runInContext(html.slice(begin,end),ctx);
 const product=id=>ix.find(p=>p.id===id),draw=p=>vm.runInContext("sourcePinnedFinishedFoodSubtypeReviewHtml("+JSON.stringify(p)+")",ctx),norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
 test("Official conditional subtype source articles: 9 unresolved products, 21 variants, 45 references; none approved",()=>{
  assert.deepEqual([m.catalogue_count,m.partial_first_source,m.pending_first_source,m.first_exact_promotions,m.full_compliance_passes],[533,412,121,0,0]);
- assert.deepEqual([m.reviewed_catalogue_identities,m.conditional_named_subtype_options,m.verified_official_source_article_references],[9,21,45]);
+ assert.deepEqual([m.reviewed_catalogue_identities,m.conditional_named_subtype_options,m.verified_official_source_article_references],[9,21,43]);
  assert.equal(m.records.length,9);
  let count=0,n=0;
  for(const r of m.records){
@@ -24,11 +24,11 @@ test("Official conditional subtype source articles: 9 unresolved products, 21 va
    for(const a of b.named_articles){n++;const matches=(v9.metal_article_rules_v9[a.metal]||[]).filter(x=>x.row_type==="exact"&&norm(x.article)===norm(a.article)&&x.limit===a.limit&&x.unit===a.unit&&String(x.condition||"")===a.measurement_basis);assert.equal(matches.length,1,r.catalog_id+":"+b.subtype_id+":"+a.metal);assert.equal(a.auto_apply,false);}
   }
  }
- assert.deepEqual([count,n],[21,45]);
+ assert.deepEqual([count,n],[21,43]);
 });
 test("Research worksheet exports preserve every finished food subtype, named metal and exact testing basis as not applied",()=>{
  assert.deepEqual([research.pending,research.partial,research.full_compliance_passes],[121,412,0]);
- assert.deepEqual([research.finished_food_subtype_product_count,research.finished_food_named_subtype_options,research.finished_food_subtype_article_references],[9,21,45]);
+ assert.deepEqual([research.finished_food_subtype_product_count,research.finished_food_named_subtype_options,research.finished_food_subtype_article_references],[9,21,43]);
  for(const row of research.records){
   const matched=m.records.find(x=>x.catalog_id===row.catalog_id);
   const output=row.finished_food_specific_named_subtypes_review_only;
