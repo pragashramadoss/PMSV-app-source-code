@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-10-11",
+  "catalog_id": "06-06-1-any-other-foodgrains",
+  "product_name": "Any other foodgrains",
+  "fssr": "2.4.6",
+  "clause": "2.4.6(15)",
+  "fcs": "06.1",
+  "source_standard": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf",
+  "source_contaminants": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "positive_first_source": true,
+  "complete_compliance_pass": false,
+  "proven_class": "Unprocessed whole or broken cereal, millet or pulse kernels under FSSR 2.4.6",
+  "matched_articles": [
+    {
+      "contaminant": "Aflatoxin B1",
+      "source_group": "aflatoxin_b1",
+      "unit": "µg/kg",
+      "limit": 10,
+      "articles": [
+        "Cereal and cereal products",
+        "Pulses"
+      ]
+    },
+    {
+      "contaminant": "Total Aflatoxins",
+      "source_group": "total_aflatoxins",
+      "unit": "µg/kg",
+      "limit": 15,
+      "articles": [
+        "Cereal and cereal products",
+        "Pulses"
+      ]
+    }
+  ],
+  "still_pending": [
+    "Actual botanical grain species and a possible more specific foodgrain standard",
+    "Any metal article and its explicit buckwheat/canihua/quinoa exclusions",
+    "Pesticide MRL for the exact commodity, amendment applicability and actual sample results"
+  ],
+  "not_this_class": [
+    "Quinoa",
+    "Chia Seeds",
+    "Arrowroot",
+    "Papad",
+    "Biscuit",
+    "Milled food grains"
+  ],
+  "previous_partial": 414,
+  "previous_pending": 119,
+  "partial_after": 415,
+  "pending_after": 118
+}

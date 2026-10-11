@@ -43,6 +43,7 @@ function pmsvProofSourceMatch(r,db){
 function sourcePinned121ResearchProofHtml(p){
  const queue=sourcePriorityMetalDb?.unresolved_first_exact_catalog_ids;
  if(!p||!Array.isArray(queue)||!queue.includes(p.id))return '';
+ if(p.id==='06-06-1-any-other-foodgrains'&&typeof pmsvGrainProofValid==='function'&&pmsvGrainProofValid(p))return '';
  // A historic first-source queue is still archived at 121. A positively
  // source-matched Ayurveda recipe must not be shown as currently unresolved
  // if its independent official article/recipe source gate validates.
