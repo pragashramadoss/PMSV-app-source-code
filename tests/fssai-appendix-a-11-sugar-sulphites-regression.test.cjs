@@ -59,7 +59,7 @@ test("9 sugar rows remain additive-only/no-additives; sugar forms are not collap
   assert.doesNotMatch(s,/must not exceed 50 mg\/kg in the end product/);
   assert.match(s,/(ADDITIVE PERMISSION ONLY|no additives permitted)/);
  }
- assert.equal(data.records.find(x=>x.catalog_id==="11-11-1-golden-syrup").source_limit,70);
+ assert.equal(data.records.find(x=>x.catalog_id==="11-11-3-golden-syrup").source_limit,70);
  assert.equal(data.records.find(x=>x.catalog_id==="11-11-1-dried-glucose-syrup").source_limit,20);
  assert.equal(data.records.find(x=>x.catalog_id==="11-11-1-khandsari-sugar").source_limit,150);
  assert.match(data.records.find(x=>x.catalog_id==="11-11-1-khandsari-sugar").category_and_subtype_qualification,/no additives permitted/);
