@@ -7,7 +7,7 @@ const source="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Re
 const norm=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
 const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
 const a=html.indexOf("function pendingContaminantReviewNotice(p){"),b=html.indexOf("function renderProductContaminants(){",a);
-const ctx=vm.createContext({contaminantsPendingReviewDb:m,esc:x=>String(x).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")});
+const ctx=vm.createContext({contaminantsDb:core,contaminantsPendingReviewDb:m,esc:x=>String(x).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")});
 vm.runInContext(html.slice(a,b),ctx);
 const show=x=>vm.runInContext("pendingContaminantReviewNotice("+JSON.stringify(x)+")",ctx);
 test("46 distinct still-unresolved products have source-row and applicability gates; 533=407+126 unchanged",()=>{
@@ -55,4 +55,20 @@ test("Named conditional articles visible ONLY for matching unresolved FSSR produ
   assert.doesNotMatch(show({...p,fssr:"changed-standard"}),/conditional named-article source checks/);
  }
  const untouched=catalog.find(p=>!m.records.some(r=>r.catalog_id===p.id));assert.ok(untouched);assert.equal(show(untouched),"");
+});
+
+test("Runtime official-source integrity fails closed when a named article limit is changed, missing or source unloaded",()=>{
+ const cube=catalog.find(x=>x.id==="11-11-1-cube-sugar");assert.ok(cube);
+ assert.match(show(cube),/source reference only — NOT APPLIED/);
+ const tamper=structuredClone(core),lead=tamper.metal_article_rules_v9.Lead.find(x=>x.article.startsWith("All types of sugars"));
+ assert.ok(lead);lead.limit=999;
+ ctx.contaminantsDb=tamper;
+ const changed=show(cube);
+ assert.match(changed,/Conditional named-article references WITHHELD/);
+ assert.doesNotMatch(changed,/source reference only — NOT APPLIED/);
+ assert.match(changed,/No numeric candidate is displayed/);
+ ctx.contaminantsDb=null;
+ assert.match(show(cube),/Conditional named-article references WITHHELD/);
+ ctx.contaminantsDb=core;
+ assert.match(show(cube),/source reference only — NOT APPLIED/);
 });
