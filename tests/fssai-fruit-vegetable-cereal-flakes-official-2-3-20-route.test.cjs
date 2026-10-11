@@ -9,14 +9,14 @@ const m=master.profiles.find(x=>x.id===id),c=master.catalog_products.find(x=>x.i
 test("FSSAI 2.3.20 exact-name standard routes same in 533 index and full product master; Breakfast Cereal remains separate",()=>{
  assert.equal(master.catalog_products.length,533);assert.equal(index.products.length,533);
  for(const x of [m,c,i,p,h])assert.equal(x.fssr,source);
- for(const x of [m,c,i]){assert.equal(x.rule_key,source);assert.match(x.rule_file,/chapter-2-3-fruit-vegetable-v1\\.json$/);assert.equal(x.microbiology_profile_key,"");assert.ok(!x.microbiology_candidates.some(y=>y.profile_key==="grain-03"));}
+ for(const x of [m,c,i]){assert.equal(x.rule_key,source);assert.match(x.rule_file,/chapter-2-3-fruit-vegetable-v1\.json$/);assert.equal(x.microbiology_profile_key,"");assert.ok(!x.microbiology_candidates.some(y=>y.profile_key==="grain-03"));}
  assert.equal(m.regulation_chapter,"2.3");assert.equal(m.standard_name,"Fruit/Vegetable, Cereal Flakes");
  assert.equal(index.products.find(x=>x.id==="06-06-3-breakfast-cereal").fssr,"2.4.35");
  assert.ok(ch24.standards.some(x=>x.key==="2.4.35"&&x.name==="Breakfast Cereal"));
  assert.equal(index.generated_from_blob.length,40);assert.notEqual(index.generated_from_blob,"2432fec2880d74df91b413df27b811625e108f4a");
 });
 test("Three Chapter 2.3.20 numeric FSSR quality limits; no contaminant or microbiology PASS",()=>{
- assert.ok(q);assert.equal(q.source_pdf_page_one_based,28);assert.match(q.source_url,/fssai\\.gov\\.in/);
+ assert.ok(q);assert.equal(q.source_pdf_page_one_based,28);assert.match(q.source_url,/fssai\.gov\.in/);
  assert.deepEqual(q.composition.map(x=>[x.parameter,x.operator,x.value]),[["Moisture","<=",6],["Acid insoluble ash","<=",0.5],["Starch","<=",25]]);
  assert.equal(q.full_compliance_assessment_enabled,false);assert.equal(q.numeric_evidence.compliance_assessment_enabled,false);
  assert.equal(p.auto_apply_numeric_limit,false);assert.equal(p.unconditional_compliance_pass,false);
