@@ -1224,6 +1224,7 @@ let contaminantsPendingReviewDb=null;
 let sourcePriorityMetalDb=null;
 let ayurvedaRecipeReviewDb=null;
 let fungiExactQualityDb=null;
+let fruitQuality11Db=null;
 let sugarSulphiteResiduesDb=null;
 let chapterQuality20Db=null;
 let sugarChromiumScopeDb=null;
@@ -1248,7 +1249,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-fungi-fssr-quality-v510';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-fruit-pickle-quality-v511';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10484,6 +10485,32 @@ function sourcePinnedChapterQualityHtml(p){
   +'<div class="tablewrap"><table><thead><tr><th>Quality/pack criterion</th><th>Source benchmark</th><th>Qualification</th></tr></thead><tbody>'
   +quality+medium+'</tbody></table></div><small>'+sources+'</small></details>';
 }
+function sourcePinnedFruitPickleQuality11Html(p){
+ if(!p||!fruitQuality11Db)return '';
+ const m=fruitQuality11Db,row=(m.records||[]).find(x=>x.catalog_id===p.id);
+ if(!row)return '';
+ const fail='<div class="notice"><b>FSSAI Chapter 2.3 quality source check withheld:</b> verified product identity, source rows or applicability flags mismatch. No numeric approval.</div>';
+ if(m.official_chapter_url!=='https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf'
+    ||m.reviewed_product_identities!==11||m.source_specific_quality_rows!==48
+    ||m.prior_partial_first_exact!==410||m.prior_unresolved_first_exact!==123
+    ||m.first_exact_contaminant_source_promotions!==0||m.finished_product_laboratory_passes!==0
+    ||m.mango_chutney_2_3_42_cannot_transfer_to_chutney_2_3_41!==true
+    ||row.product_name!==p.name||row.fssr!==p.fssr||row.fcs!==p.fcs
+    ||row.first_exact_contaminant_article_promoted!==false
+    ||row.finished_product_ctr_limit_applied!==false||row.overall_compliance_pass!==false)return fail;
+ const f=v=>{let s=JSON.stringify(v),n=2166136261;for(let i=0;i<s.length;i++)n=Math.imul(n^s.charCodeAt(i),16777619)>>>0;return n.toString(16).padStart(8,'0')};
+ if(m.quality_source_rows_fnv32!=='f043df66'||f(m.records)!=='f043df66')return fail;
+ const result=row.criteria.map(c=>{
+  const shown=c.operator==='qualitative'?esc(c.value)
+    :esc(c.operator)+' '+esc(c.value)+' '+esc(c.unit);
+  return '<tr><td>'+esc(c.parameter)+'</td><td>'+shown+'</td><td>'+esc(c.condition)+'</td></tr>';
+ }).join('');
+ return '<details style="margin:10px 0"><summary><b>FSSAI '+esc(p.fssr)+' — '+row.criteria.length+' product quality/process source checks (NOT a contaminant PASS)</b></summary>'
+  +'<p>Confirmed standard: <b>'+esc(p.name)+'</b>. Select the specified recipe or packing medium before applying a quality criterion, and verify the actual sample, analytical basis and current amendment. All numbers below are official Chapter 2.3 <b>quality/process criteria</b>, not contaminant limits.</p>'
+  +'<div class="tablewrap"><table><thead><tr><th>Quality criterion</th><th>Standard reference</th><th>Scope/condition</th></tr></thead><tbody>'+result+'</tbody></table></div>'
+  +'<p><b>Source exclusions:</b> Generic fruit/vegetable chutney is not the Mango Chutney contaminant article. Vegetable pulp is not automatically fruit pulp for Copper or Tin. Pickle brine/salt/vinegar requirements and the clause describing copper shall not be converted into a blanket chemical MRL. No compliance PASS.</p>'
+  +'<small><a href="'+esc(m.official_chapter_url)+'" target="_blank" rel="noopener">Official FSSAI Chapter 2.3</a> · <a href="'+esc(m.official_contaminants_url)+'" target="_blank" rel="noopener">Separate Version IX contaminants source</a></small></details>';
+}
 function sourcePinnedFungiQualitySourceReviewHtml(p){
  if(!p||!fungiExactQualityDb||!contaminantsDb)return '';
  const m=fungiExactQualityDb,row=(m.records||[]).find(x=>x.catalog_id===p.id);
@@ -10979,6 +11006,7 @@ function renderProductContaminants(){
        ||(p.id==='06-06-3-fruit-vegetable-cereal-flakes' && baseline.some(x=>
          String(x.source_basis||'').includes('exact FSSR 2.3.20 Fruit/Vegetable Cereal Flakes'))))
         ?'':pendingContaminantReviewNotice(p))
+   +sourcePinnedFruitPickleQuality11Html(p)
    +sourcePinnedFungiQualitySourceReviewHtml(p)
    +sourcePinnedAyurvedaRecipeB1ReviewHtml(p)
    +sourcePriorityMetalFallbackReviewHtml(p)
@@ -11090,6 +11118,11 @@ async function loadContaminantsDb(){
    const res=await fetch('./data/rules/contaminants-v9-core.json?v=437',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
+   try{
+     const source=await fetch('./data/rules/fssai-11-fruit-pickles-pastes-chutney-quality-2026-10-11.json?v=20261011-source48',{cache:'reload'});
+     if(!source.ok)throw new Error('Source-verified FSSAI 11 products chapter evidence missing');
+     fruitQuality11Db=await source.json();
+   }catch(e){fruitQuality11Db=null;}
    try{
      const result=await fetch('./data/rules/fssai-ten-edible-fungi-2-3-62-quality-and-ctr-gates-2026-10-11.json?v=20261011-fungi55',{cache:'reload'});
      if(!result.ok)throw new Error('FSSAI FSSR 2.3.62 fungi source file not available');
