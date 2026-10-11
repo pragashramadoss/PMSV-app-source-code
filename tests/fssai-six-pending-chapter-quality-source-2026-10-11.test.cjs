@@ -76,6 +76,7 @@ test("Wrong identity, FoSCoS code, source numeric value and unofficial domain fa
  for(const edit of [
   x=>x.records.find(r=>r.catalog_id===p.id).quality_criteria[0].value=999,
   x=>x.records.find(r=>r.catalog_id===p.id).source_standard_url="https://example.com/standard.pdf",
+  x=>x.records.find(r=>r.catalog_id===p.id).source_standard_url="https://www.fssai.gov.in/food-law/regulations/compendium/food-products-standards",
   x=>x.records.find(r=>r.catalog_id===p.id).full_lab_compliance_pass=true,
   x=>x.records[1].source_snapshot[1].immunoglobulins_g_igg_min_pct=12.5,
   x=>x.partial_exact_ctr=533
