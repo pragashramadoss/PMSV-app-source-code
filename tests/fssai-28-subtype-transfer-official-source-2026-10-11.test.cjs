@@ -76,7 +76,7 @@ test("Officially different product standards and chemical ash bases never collap
  assert.match(notice(byId.get(cube.catalog_id)),/NOT a contaminant or pesticide MRL/);
  const papads=rows.filter(r=>r.product_name==="Papad");
  assert.equal(papads.length,2);
- assert.deepEqual(papads.map(r=>r.fcs).sort(),["06.7","15.1"]);
+ assert.deepEqual(papads.map(r=>byId.get(r.catalog_id)?.fcs).sort(),["06.7","15.1"]);
  for(const id of ["06-06-4-macaroni-products-pasta-products","06-06-4-macaroni-products-instant-noodle","06-06-2-custard-powder","11-11-1-icing-sugar"]){
   assert.ok(rows.some(r=>r.catalog_id===id),id);
  }
