@@ -1235,6 +1235,7 @@ let fruitQuality11Db=null;
 let twoSubtypeMetalDb=null;
 let sugarSulphiteResiduesDb=null;
 let chapterQuality20Db=null;
+let sixPendingQualityDb=null;
 let sugarChromiumScopeDb=null;
 let eightCerealQualityDb=null;
 let spiceOleoresinResiduesDb=null;
@@ -1257,7 +1258,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-finished-form-research-selector-v517';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-six-quality-source-v518';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10504,6 +10505,79 @@ function sourcePinnedChapterQualityHtml(p){
   +'<div class="tablewrap"><table><thead><tr><th>Quality/pack criterion</th><th>Source benchmark</th><th>Qualification</th></tr></thead><tbody>'
   +quality+medium+'</tbody></table></div><small>'+sources+'</small></details>';
 }
+// Six previously first-CTR-source-unresolved products: exact FSSR QUALITY reference,
+// not a contaminant MRL, legislative clearance or laboratory result.
+function verifiedSixPendingChapterQuality(p){
+ const db=sixPendingQualityDb;
+ if(!p||!db||!Array.isArray(chapterRuleDbs)||!Array.isArray(db.records)||
+    db.records.length!==6||db.source_reviewed_identity_count!==6||
+    db.source_criteria_count!==49||db.catalogue_count!==533||
+    db.partial_exact_ctr!==412||db.pending_first_exact_ctr!==121||
+    db.full_compliance_passes!==0||db.all_quality_values_not_contaminant_mrl!==true||
+    db.identity_and_finished_form_confirmation_required!==true||
+    db.regulatory_amendments_and_sample_testing_still_required!==true)return null;
+ const actual=new Set();
+ let total=0;
+ for(const r of db.records){
+  if(!r.catalog_id||actual.has(r.catalog_id)||!r.product_name||!r.fssr||!r.fcs||
+     r.official_fssai_only!==true||r.source_scope!=='FSSR_product_specific_quality_only_NOT_CTR'||
+     r.confirmed_subtype!==false||r.auto_apply_to_contaminant_engine!==false||
+     r.full_lab_compliance_pass!==false||r.contaminant_pesticide_first_source_promoted!==false||
+     !/^https:\/\/(www\.)?fssai\.gov\.in\//.test(r.source_standard_url)||!Array.isArray(r.quality_criteria)||
+     r.quality_criteria.length===0)return null;
+  actual.add(r.catalog_id);
+  const sources=chapterRuleDbs.filter(c=>c.chapter===r.source_chapter)
+    .flatMap(c=>(c.standards||[]).filter(s=>s.key===r.source_rule_key&&s.name===r.source_rule_name));
+  if(sources.length!==1||r.source_rule_key!==r.fssr)return null;
+  const source=sources[0],sourceData=source.variants||source.composition;
+  if(!Array.isArray(sourceData)||JSON.stringify(sourceData)!==JSON.stringify(r.source_snapshot))return null;
+  if(r.source_rule_key==='2.1.23'){
+   const revision=source.verified_2025_igg_amendment;
+   if(!revision||revision.colostrum_igg_min_pct!==1.8||
+      revision.colostrum_powder_igg_min_pct!==8.5||
+      revision.effective_from!=='2025-05-01'||
+      revision.official_source_url!==r.source_standard_url||
+      revision.require_igg_specific_test!==true||
+      source.composition.some(v=>Object.prototype.hasOwnProperty.call(v,'immunoglobulins_min_pct')))return null;
+  }
+  for(const c of r.quality_criteria){
+   if(!Array.isArray(c.source_path)||c.source_path.length<2||!c.parameter||
+      !c.operator||!c.subtype||!c.unit)return null;
+   let ref=source;
+   for(const k of c.source_path){
+    if(ref===null||ref===undefined||!Object.prototype.hasOwnProperty.call(ref,k)){ref=undefined;break;}
+    ref=ref[k];
+   }
+   if(ref===undefined||JSON.stringify(ref)!==JSON.stringify(c.source_expected))return null;
+   if(c.operator==='range'){
+    if(!Array.isArray(c.value)||c.value.length!==2||!c.value.every(Number.isFinite))return null;
+   }else if(typeof c.value!=='number'&&typeof c.value!=='string')return null;
+   if(c.source_expected&&typeof c.source_expected==='object'&&!Array.isArray(c.source_expected)){
+    const s=c.source_expected;
+    if(c.parameter!==s.parameter||c.operator!==s.operator||c.unit!==s.unit||
+       JSON.stringify(c.value)!==JSON.stringify(c.operator==='range'?[s.min,s.max]:s.value))return null;
+   }else if(JSON.stringify(c.value)!==JSON.stringify(ref))return null;
+   total++;
+  }
+ }
+ if(total!==49)return null;
+ const row=db.records.find(r=>r.catalog_id===p.id);
+ if(!row)return null;
+ return row.product_name===p.name&&row.fssr===p.fssr&&row.fcs===p.fcs?row:null;
+}
+function sourcePinnedSixPendingChapterQualityHtml(p){
+ if(!p||!sixPendingQualityDb||!(sixPendingQualityDb.records||[]).some(r=>r.catalog_id===p.id))return '';
+ const row=verifiedSixPendingChapterQuality(p);
+ if(!row)return '<div class="notice"><b>FSSR quality references WITHHELD:</b> official source parameter, amended colostrum IgG, subtype, product identity, or source manifest failed verification. No contaminant MRL or numerical PASS applied.</div>';
+ const table=row.quality_criteria.map(c=>{
+  const val=c.operator==='range'?c.value[0]+' to '+c.value[1]:String(c.value);
+  return '<tr><td>'+esc(c.subtype)+'</td><td>'+esc(c.parameter)+'</td><td>'+esc(c.operator==='range'?'range':c.operator)+' '+esc(val)+' '+esc(c.unit)+'</td></tr>';
+ }).join('');
+ return '<details style="margin:10px 0"><summary><b>Official FSSR product quality — '+esc(row.product_name)+' (NOT contaminant MRLs)</b> · '+row.quality_criteria.length+' source criteria</summary>'
+  +'<p>Separate the exact finished variant and test basis before interpreting these identity/quality requirements. This product still awaits its first exact CTR source match. <b>No source promotion, contaminant compliance decision, pesticide clearance, or laboratory PASS.</b></p>'
+  +'<div class="tablewrap"><table><thead><tr><th>Product form</th><th>Quality parameter</th><th>Official source criterion</th></tr></thead><tbody>'+table+'</tbody></table></div>'
+  +'<small><a href="'+esc(row.source_standard_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter '+esc(row.source_chapter)+' · '+esc(row.fssr)+'</a> — subject to current amendment verification.</small></details>';
+}
 function sourcePinnedTwoSubtypeMetalEvidenceHtml(p){
  if(!p||!twoSubtypeMetalDb||!contaminantsDb)return '';
  const m=twoSubtypeMetalDb,row=(m.records||[]).find(r=>r.catalog_id===p.id);
@@ -11281,6 +11355,7 @@ function renderProductContaminants(){
    +sugarChromiumScopeHtml(p)
    +eightCerealQualityScopeHtml(p)
    +sourcePinnedChapterQualityHtml(p)
+   +sourcePinnedSixPendingChapterQualityHtml(p)
    +exactSupplementalResidueReviewHtml(p)
    +sourcePinnedCompositeOrSoupPartialHtml(p)
    +sourcePinnedBeverageConfectioneryNotsHtml(p)
@@ -11334,6 +11409,17 @@ function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
    +'<small><a href="'+official+'" target="_blank" rel="noopener noreferrer">Read the official FSSAI Gazette</a>. Watch-list inclusion does not itself prove product applicability or establish full compliance.</small></div>';
 }
 async function loadContaminantsDb(){
+ try{
+   const res=await fetch('./data/rules/fssai-six-pending-chapter-quality-source-2026-10-11.json?v=20261011-q49',{cache:'reload'});
+   if(!res.ok)throw new Error('Six pending FSSR quality sources unavailable');
+   const db=await res.json();
+   if(db.records?.length!==6||db.source_criteria_count!==49||
+      db.partial_exact_ctr!==412||db.pending_first_exact_ctr!==121||
+      db.full_compliance_passes!==0||db.all_quality_values_not_contaminant_mrl!==true)
+     throw new Error('Six pending quality source count mismatch');
+   sixPendingQualityDb=db;
+ }catch(e){sixPendingQualityDb=null;}
+
  try{
    const res=await fetch('./data/rules/fssai-eight-cereal-bakery-papad-quality-and-commodity-guards-2026-10-11.json?v=20261011-q19',{cache:'reload'});
    if(!res.ok)throw new Error('Eight-product FSSAI quality source review missing');
