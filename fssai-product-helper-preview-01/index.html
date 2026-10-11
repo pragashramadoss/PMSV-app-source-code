@@ -10357,6 +10357,20 @@ function pendingContaminantReviewNotice(p){
    +' · <a href="'+esc(fatSpread.official_ctr_ix_source)+'" target="_blank" rel="noopener noreferrer">FSSAI Nickel named source</a>. '
    +'Actual oil processing, phase and contaminant testing unresolved.</small></details>'
   :'';
+ const sagoHcn=record.official_cassava_sago_hcn_2026_10_11;
+ const sagoHcnValid=sagoHcn&&sagoHcn.catalog_id===p.id&&sagoHcn.product_name===p.name
+   &&sagoHcn.fssr===p.fssr&&sagoHcn.automatically_apply_to_every_named_catalogue_product===false
+   &&sagoHcn.legal_compliance_pass===false;
+ const sagoHcnHtml=sagoHcnValid
+  ?'<details style="margin:9px 0"><summary><b>11 October HCN 10 ppm — SAGO/TAPIOCA FLOUR CONDITIONAL ONLY, NOT APPLIED</b></summary>'
+   +'<p><b>FSSAI named NOTS source:</b> '+esc(sagoHcn.exact_ctr_article)+' — '+esc(sagoHcn.contaminant_name)
+   +' <b>'+esc(sagoHcn.conditional_reference_limit)+' '+esc(sagoHcn.unit)+'</b></p>'
+   +'<p>'+esc(sagoHcn.product_recipe_qualification)+'</p>'
+   +'<p>'+esc(sagoHcn.precise_disp)+'</p>'
+   +'<small><a href="'+esc(sagoHcn.fssai_product_standard_source)+'" target="_blank" rel="noopener noreferrer">Official Chapter 2.4</a>'
+   +' · <a href="'+esc(sagoHcn.fssai_version_ix_ctr_source)+'" target="_blank" rel="noopener noreferrer">Official Version IX NOTS</a>. '
+   +'Recipe, processing and test basis are unverified; not a universal product PASS.</small></details>'
+  :'';
  const candidate=record.specific_source_commodity_subtype_review_2026_10_10;
  const candidateHtml=candidate&&candidate.review_only===true&&candidate.automatically_applied===false
    ?'<details style="margin:9px 0"><summary><b>Official named commodity article — conditional, NOT APPLIED</b></summary>'
@@ -10404,6 +10418,7 @@ function pendingContaminantReviewNotice(p){
    +animalHtml
    +meatEggQualityHtml
    +fatSpreadHtml
+   +sagoHcnHtml
    +candidateHtml
    +discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
