@@ -30,7 +30,7 @@ test("Salt, fermentation, vinegar, impurities, extract and concentration must no
  assert.ok(get("salted").some(x=>x.parameter==="Salt"&&x.operator==="range"&&x.min===15&&x.max===18));
  assert.ok(get("fermented").some(x=>x.parameter==="Naturally occurring lactic acid"&&x.operator===">="&&x.value===1));
  assert.ok(get("pickled").some(x=>x.parameter==="Vinegar (as acetic acid)"&&x.value===2));
- assert.ok(get("extract_or_concentrate").some(x=>x.parameter.includes("concentrate identity")&&x.value===24&&x.operator===">="));
+ assert.ok(get("extract_or_concentrate").some(x=>x.parameter.includes("concentrate identity")&&x.value===24&&x.operator==="identity_target"));
  assert.ok(get("dried_concentrate").some(x=>x.parameter==="Water content"&&x.value===9));
  assert.ok(get("sterilized").some(x=>x.parameter==="Salt"&&x.value===2));
  assert.ok(get("oil_packed").some(x=>x.parameter==="Salt"&&x.value===1));

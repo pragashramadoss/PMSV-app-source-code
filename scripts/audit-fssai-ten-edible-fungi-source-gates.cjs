@@ -27,7 +27,7 @@ for(const record of d.records){
  assert.ok(record.criteria.length>=3);
  for(const row of record.criteria){
   assert.ok(row.parameter&&row.unit&&row.subtype);assert.ok(row.pdf_page_one_based>=98&&row.pdf_page_one_based<=103);
-  assert.ok(["<=",">=","range","absent"].includes(row.operator));
+  assert.ok(["<=",">=","range","absent","identity_target"].includes(row.operator));
   if(row.operator==="range")assert.ok(Number.isFinite(row.min)&&Number.isFinite(row.max)&&row.min<=row.max);
   else if(row.operator!=="absent")assert.ok(Number.isFinite(row.value));
  }
