@@ -1225,6 +1225,7 @@ let sourcePriorityMetalDb=null;
 let ayurvedaRecipeReviewDb=null;
 let fungiExactQualityDb=null;
 let fruitQuality11Db=null;
+let twoSubtypeMetalDb=null;
 let sugarSulphiteResiduesDb=null;
 let chapterQuality20Db=null;
 let sugarChromiumScopeDb=null;
@@ -1249,7 +1250,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-fruit-pickle-quality-v511';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-two-conditional-metal-first-sources-v512';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10485,6 +10486,38 @@ function sourcePinnedChapterQualityHtml(p){
   +'<div class="tablewrap"><table><thead><tr><th>Quality/pack criterion</th><th>Source benchmark</th><th>Qualification</th></tr></thead><tbody>'
   +quality+medium+'</tbody></table></div><small>'+sources+'</small></details>';
 }
+function sourcePinnedTwoSubtypeMetalEvidenceHtml(p){
+ if(!p||!twoSubtypeMetalDb||!contaminantsDb)return '';
+ const m=twoSubtypeMetalDb,row=(m.records||[]).find(r=>r.catalog_id===p.id);
+ if(!row)return '';
+ const fail='<div class="notice"><b>Exact subtype metal source evidence withheld:</b> official metal source, product identity or processing restriction mismatch. No contaminant limit applied.</div>';
+ if(m.source_version!==contaminantsDb.source_version||m.new_partial_count!==2
+    ||m.expected_partial_count_after!==412||m.expected_first_exact_pending_after!==121
+    ||m.official_ctr!=='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf'
+    ||row.product_name!==p.name||row.fssr!==p.fssr||row.fcs!==p.fcs
+    ||row.partially_identified_qualified_finished_forms!==true||row.exact_subtype_select_required!==true
+    ||row.unconditional_finished_product_limit_auto_apply!==false
+    ||row.full_contaminant_panel_complete!==false||row.lab_compliance_pass!==false)return fail;
+ const norm=x=>String(x||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+ const validated=row.branches.every(b=>b.numeric_auto_apply===false&&b.lab_result_pass===false
+   &&[['Lead',b.lead_article,b.lead_limit],['Arsenic',b.arsenic_article,b.arsenic_limit]].every(z=>{
+    if(!z[1])return z[2]===null;
+    return (contaminantsDb.metal_article_rules_v9?.[z[0]]||[])
+      .filter(r=>r.row_type==='exact'&&norm(r.article)===norm(z[1])&&Number(r.limit)===z[2]).length===1;
+   }));
+ if(!validated||row.branches.length!==2)return fail;
+ const rows=row.branches.map(b=>{
+  const src=b.lead_article
+   ?'<b>Lead:</b> '+esc(b.lead_limit)+' '+esc(b.lead_unit)+(b.arsenic_article?' · <b>Arsenic:</b> '+esc(b.arsenic_limit)+' '+esc(b.arsenic_unit):'')
+   :'<b>No named frozen-confection metal limit assigned to this dry mix.</b>';
+  return '<tr><td>'+esc(b.selector.replaceAll('_',' '))+'</td><td>'+src+' <b>NOT APPLIED</b></td><td>'+b.requires.map(esc).join('; ')+'</td></tr>';
+ }).join('');
+ return '<details style="margin:10px 0"><summary><b>FSSAI Version IX — exact named product-subtype metal evidence (PARTIAL ONLY)</b></summary>'
+   +'<p>The standardized FoSCoS entry combines more than one form. Source values below are strictly qualified <b>review references</b>, not automatically applicable finished-product limits. Confirm the actual form/botanical species and analytical basis before any sample decision.</p>'
+   +'<div class="tablewrap"><table><thead><tr><th>Confirm product subtype</th><th>Official source reference</th><th>Restrictions</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+   +'<p><b>Not a regulatory compliance PASS.</b> Other contaminants, pesticide/veterinary residues, amendments and lab results remain to be verified.</p>'
+   +'<small><a href="'+esc(m.official_ctr)+'" target="_blank" rel="noopener">Official FSSAI Version IX</a> · <a href="'+esc(row.chapter_source)+'" target="_blank" rel="noopener">Official product standard</a></small></details>';
+}
 function sourcePinnedFruitPickleQuality11Html(p){
  if(!p||!fruitQuality11Db)return '';
  const m=fruitQuality11Db,row=(m.records||[]).find(x=>x.catalog_id===p.id);
@@ -10580,7 +10613,7 @@ function sourcePinnedAyurvedaRecipeB1ReviewHtml(p){
 function sourcePriorityMetalFallbackReviewHtml(p){
  if(!p||!sourcePriorityMetalDb||!contaminantsDb||!contaminantsPendingReviewDb)return '';
  const m=sourcePriorityMetalDb;
- if(!Array.isArray(m.unresolved_first_exact_catalog_ids)||m.unresolved_first_exact_catalog_ids.length!==123||!m.unresolved_first_exact_catalog_ids.includes(p.id))return '';
+ if(!Array.isArray(m.unresolved_first_exact_catalog_ids)||m.unresolved_first_exact_catalog_ids.length!==121||!m.unresolved_first_exact_catalog_ids.includes(p.id))return '';
  const record=(contaminantsPendingReviewDb.records||[]).find(x=>x.catalog_id===p.id);
  const pinned=(m.unresolved_exact_product_identity_gates||[]).find(x=>x.catalog_id===p.id);
  if(!pinned||pinned.product_name!==p.name||String(pinned.fssr)!==String(p.fssr)||String(pinned.fcs)!==String(p.fcs)||
@@ -11006,6 +11039,7 @@ function renderProductContaminants(){
        ||(p.id==='06-06-3-fruit-vegetable-cereal-flakes' && baseline.some(x=>
          String(x.source_basis||'').includes('exact FSSR 2.3.20 Fruit/Vegetable Cereal Flakes'))))
         ?'':pendingContaminantReviewNotice(p))
+   +sourcePinnedTwoSubtypeMetalEvidenceHtml(p)
    +sourcePinnedFruitPickleQuality11Html(p)
    +sourcePinnedFungiQualitySourceReviewHtml(p)
    +sourcePinnedAyurvedaRecipeB1ReviewHtml(p)
@@ -11118,6 +11152,11 @@ async function loadContaminantsDb(){
    const res=await fetch('./data/rules/contaminants-v9-core.json?v=437',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
+   try{
+     const r=await fetch('./data/rules/fssai-v9-two-subtype-exact-metal-articles-2026-10-11.json?v=20261011-twoMetalFirst',{cache:'reload'});
+     if(!r.ok)throw new Error('Two official subtype metal articles unavailable');
+     twoSubtypeMetalDb=await r.json();
+   }catch(e){twoSubtypeMetalDb=null;}
    try{
      const source=await fetch('./data/rules/fssai-11-fruit-pickles-pastes-chutney-quality-2026-10-11.json?v=20261011-source48',{cache:'reload'});
      if(!source.ok)throw new Error('Source-verified FSSAI 11 products chapter evidence missing');
