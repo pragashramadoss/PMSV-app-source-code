@@ -5487,6 +5487,9 @@ async function loadAppendixCore(){
  populateProprietarySpecificFcs();
  renderProprietaryAppendixA();
  renderLegacyProductScopePages();
+ // Appendix A can finish after the contaminant master. Refresh the exact
+ // sugar source view once both source tables are available.
+ if(contaminantsDb&&sugarSulphiteResiduesDb)renderProductContaminants();
  refreshStandardLookupAudit();
 }
 
