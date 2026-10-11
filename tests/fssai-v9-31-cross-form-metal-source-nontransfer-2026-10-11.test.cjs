@@ -31,7 +31,7 @@ test("31 product/article nontransfer cases cover 26 unresolved real identities, 
  }
 });
 test("All 18 source references have exact FSSAI Version IX stored article and numeric value; no generic default rows",()=>{
- assert.match(core.source_version,/Version IX.*03\\.02\\.2026/);
+ assert.match(core.source_version,/Version IX.*03\.02\.2026/);
  assert.equal(m.source,"https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf");
  for(const x of m.named_source_rows){
   assert.ok(Number.isInteger(x.pdf_page_one_based)&&x.pdf_page_one_based>=2);
