@@ -28,6 +28,7 @@ const next10ExactSource=read("rules/fssai-next10-exact-source-candidate-2026-10-
 const appendixASugar=read("rules/fssai-sugar-sulphites-appendix-a-v3-2026-10-11.json");
 const appendixAV3=read("rules/appendix-a-v3-core.json");
 const chapterQuality20=read("rules/fssai-20-pending-exact-chapter-quality-2026-10-11.json");
+const eightCerealQuality=read("rules/fssai-eight-cereal-bakery-papad-quality-and-commodity-guards-2026-10-11.json");
 const nineSugarRefinedReview=read("rules/fssai-nine-sugar-refined-chromium-scope-2026-10-11.json");
 /* Exact FSSAI Chapter 2.16 source evidence. This is a standard-product
  * THC and cross-cutting CBD assessment, not a Version IX contaminant article,
@@ -2141,6 +2142,57 @@ for(const item of nineSugarRefinedReview.records){
  nineSugarReviewById.set(p.id,item);
 }
 assert.equal(nineSugarReviewById.size,9);
+// Chapter 2.4 Version 4 quality criteria are verified against the ACTUAL
+// product-standard numbers, but must not produce a contaminant/CTR PASS.
+assert.equal(eightCerealQuality.all_reviewed_products,8);
+assert.equal(eightCerealQuality.quality_review_product_count,6);
+assert.equal(eightCerealQuality.grain_exclusion_product_count,2);
+assert.equal(eightCerealQuality.qualified_quality_criteria_count,19);
+assert.equal(eightCerealQuality.source_contaminants,version9Source);
+assert.equal(eightCerealQuality.source_contaminants_version,contaminants.source_version);
+assert.equal(eightCerealQuality.added_first_exact_contaminant_coverage,0);
+assert.equal(eightCerealQuality.full_product_compliance_passes,0);
+const eightCerealQualityById=new Map();
+for(const row of eightCerealQuality.records){
+ const p=index.products.find(x=>x.id===row.catalog_id);
+ assert.ok(p&&p.name===row.product_name&&p.fssr===row.fssr&&p.fcs===row.fcs,row.catalog_id);
+ assert.ok(!eightCerealQualityById.has(p.id));
+ const chapter=chapterRecord(p),std=chapter.record,official=std.official_2025_qualified_quality;
+ assert.equal(std.name,row.chapter_standard_name);
+ assert.ok(chapter.sourceUrls.includes(row.official_source));
+ assert.ok(official&&official.official_source_url===row.official_source);
+ assert.equal(official.version,row.source_version);
+ assert.equal(official.exact_regulatory_quality_not_ctr,true);
+ assert.equal(official.laboratory_compliance_pass,false);
+ assert.equal(row.full_compliance_approved,false);
+ assert.equal(row.first_exact_contaminant_evidence_added,false);
+ assert.equal(row.apply_quality_limits_without_process_and_sample,false);
+ const scope=official.criteria.filter(x=>row.variants.includes(x.variant));
+ assert.equal(scope.length,row.criteria.length,p.id);
+ for(const q of row.criteria){
+  assert.ok(scope.some(x=>x.variant===q.variant&&x.parameter===q.parameter
+   &&x.operator===q.operator&&x.value===q.value&&x.unit===q.unit),p.id+": "+q.parameter);
+ }
+ if(p.name==="Macaroni Products (Instant noodle)"){
+   assert.equal(row.requires_fried_or_nonfried_confirmation,true);
+   assert.equal(new Set(row.criteria.map(x=>x.variant)).size,2);
+ }
+ eightCerealQualityById.set(p.id,row);
+}
+for(const row of eightCerealQuality.grain_exclusion_records){
+ const p=index.products.find(x=>x.id===row.catalog_id);
+ assert.ok(p&&p.name===row.product_name&&p.fssr===row.fssr&&p.fcs===row.fcs);
+ assert.ok(!eightCerealQualityById.has(p.id));
+ assert.equal(row.legal_source_url,version9Source);
+ assert.equal(row.auto_apply_source_limit,false);
+ assert.equal(row.first_exact_contaminant_evidence_added,false);
+ assert.equal(row.legal_approval,false);
+ const metal=contaminants.metal_article_rules_v9?.Lead||[];
+ assert.ok(metal.some(x=>x.article==='Cereal grains, except buckwheat, canihua and quinoa'
+      &&Number(x.limit)===0.2&&x.unit==='mg/kg'),"Quinoa exclusion requires official source row");
+ eightCerealQualityById.set(p.id,row);
+}
+assert.equal(eightCerealQualityById.size,8);
 assert.equal(index.products.length, 533);
 assert.equal(new Set(index.products.map(p=>p.id)).size, 533);
 assert.equal(special.routes.length, 58);
@@ -2224,6 +2276,14 @@ const products = index.products.map(p => {
     if(route.compliance_status === "complete" || route.compliance_pass_enabled === true) throw new Error("Special route incorrectly asserts compliance: " + p.id);
   }
   const contaminantEvidence=contaminantEvidenceForProduct(p);
+  const cerealQuality=eightCerealQualityById.get(p.id)||null;
+  if(cerealQuality){
+    assert.notEqual(contaminantEvidence.status,"some_exact_product_evidence_not_full_coverage",
+      "No cereal-group inference clears an unresolved product "+p.id);
+    tally("chapter_2_4_2025_quality_review_and_commodity_guard",
+      cerealQuality.criteria?"official_quality_only":"botanical_metal_or_aflatoxin_source_exclusion");
+    action.push("FSSAI Chapter 2.4 official numerical quality criteria or Version IX exact commodity exclusion mapped by FoSCoS product identity; neither constitutes first verified finished-product contaminant source evidence, pesticide MRL, or legal PASS.");
+  }
   const sugarChromiumReview=nineSugarReviewById.get(p.id)||null;
   if(sugarChromiumReview){
     assert.notEqual(contaminantEvidence.status,"some_exact_product_evidence_not_full_coverage",
@@ -2428,6 +2488,13 @@ const products = index.products.map(p => {
     microbiology_index_status:micro,
     direct_chapter_microbiology_criteria:chapterMicrobiologyRows,
     contaminant_evidence_index:contaminantEvidence,
+    chapter_2_4_quality_and_mrl_exclusion_review:cerealQuality?{
+      source_url:cerealQuality.official_source||cerealQuality.legal_source_url,
+      qualified_quality_criteria_count:cerealQuality.criteria?.length||0,
+      require_subtype_selection:cerealQuality.requires_fried_or_nonfried_confirmation===true,
+      botanical_exclusion:!!cerealQuality.disclaimer,
+      first_exact_contaminant_source_promoted:false,full_compliance_pass:false
+    }:null,
     refined_sugar_chromium_scope_review:sugarChromiumReview?{
       source_url:nineSugarRefinedReview.official_2026_contaminants_url,
       source_chapter_url:sugarChromiumReview.source_standard_url,
