@@ -258,6 +258,8 @@ jobs:
         run: node --test tests/fssai-current-417-116-rabbit-first-source-and-28-remaining-ui-2026-10-11.test.cjs
       - name: Verify 21 official veterinary tolerance rows and 64 rabbit casing and processed egg source links
         run: node --test tests/fssai-v9-veterinary-21-rows-64-article-links-2026-10-11.test.cjs
+      - name: Verify authoritative 533-product current 417 partial / 116 pending ledger and FSSAI 2024 colouring-foods quality corrections
+        run: node --test tests/fssai-current-533-417-116-source-ledger-and-2024-quality-2026-10-11.test.cjs
       - name: Upload per-product compliance evidence audit
         if: always()
         uses: actions/upload-artifact@v4
