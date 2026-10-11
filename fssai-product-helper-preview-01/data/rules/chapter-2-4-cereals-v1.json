@@ -1192,7 +1192,74 @@
         "edible soy flour",
         "other cereal flour standardized under 2.4"
       ],
-      "note": "Product-specific permitted optional ingredients and quality limits are retained in the source standard and must be applied before full validation."
+      "note": "Product-specific permitted optional ingredients and quality limits are retained in the source standard and must be applied before full validation.",
+      "official_2025_qualified_quality": {
+        "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf",
+        "version": "Version 4 (07.05.2025)",
+        "standard_name": "Pasta / Macaroni Products",
+        "pdf_pages_one_based": [
+          33,
+          34
+        ],
+        "exact_regulatory_quality_not_ctr": true,
+        "contaminant_and_pesticide_mrl_unchanged": true,
+        "laboratory_compliance_pass": false,
+        "source_reconciliation_required": true,
+        "criteria": [
+          {
+            "variant": "Pasta Products (not instant noodles)",
+            "parameter": "Moisture",
+            "operator": "<=",
+            "value": 12.5,
+            "unit": "%"
+          },
+          {
+            "variant": "Pasta Products (not instant noodles)",
+            "parameter": "Ash insoluble in dilute HCl",
+            "operator": "<=",
+            "value": 0.1,
+            "unit": "% on dry basis"
+          },
+          {
+            "variant": "Instant noodle — fried",
+            "parameter": "Moisture",
+            "operator": "<=",
+            "value": 10,
+            "unit": "% by mass"
+          },
+          {
+            "variant": "Instant noodle — fried",
+            "parameter": "Acid insoluble ash",
+            "operator": "<=",
+            "value": 0.3,
+            "unit": "% on dry matter basis"
+          },
+          {
+            "variant": "Instant noodle — fried",
+            "parameter": "Acid Value",
+            "operator": "<=",
+            "value": 2,
+            "unit": "as stated by FSSR (frying fat); analytical unit/method review required"
+          },
+          {
+            "variant": "Instant noodle — non-fried",
+            "parameter": "Moisture",
+            "operator": "<=",
+            "value": 13,
+            "unit": "% by mass"
+          },
+          {
+            "variant": "Instant noodle — non-fried",
+            "parameter": "Acid insoluble ash",
+            "operator": "<=",
+            "value": 0.3,
+            "unit": "% on dry matter basis"
+          }
+        ],
+        "requires_actual_processing_variant": true,
+        "noodle_seasoning_separately_labelled": true,
+        "starch_tuber_only_recipe_may_be_possible": true
+      }
     },
     {
       "key": "2.4.11(1)",
@@ -1512,7 +1579,36 @@
         "coconut products",
         "eggs"
       ],
-      "source_note": "Detailed ingredient and compositional provisions remain linked to clause 2.4.15(1)."
+      "source_note": "Detailed ingredient and compositional provisions remain linked to clause 2.4.15(1).",
+      "official_2025_qualified_quality": {
+        "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf",
+        "version": "Version 4 (07.05.2025)",
+        "standard_name": "Biscuit",
+        "pdf_pages_one_based": [
+          55,
+          56
+        ],
+        "exact_regulatory_quality_not_ctr": true,
+        "contaminant_and_pesticide_mrl_unchanged": true,
+        "laboratory_compliance_pass": false,
+        "source_reconciliation_required": true,
+        "criteria": [
+          {
+            "variant": "Biscuit and wafer biscuit (all baked variants)",
+            "parameter": "Acid insoluble ash in dilute HCl",
+            "operator": "<=",
+            "value": 0.1,
+            "unit": "% on dry mass basis"
+          },
+          {
+            "variant": "Biscuit and wafer biscuit (all baked variants)",
+            "parameter": "Acidity of extracted fat as oleic acid",
+            "operator": "<=",
+            "value": 2,
+            "unit": "%"
+          }
+        ]
+      }
     },
     {
       "key": "2.4.15(2)",
@@ -2191,7 +2287,50 @@
       ],
       "label_rules": [
         "Product name may include vernacular/common/traditional/major-ingredient name in addition to 'Papad'."
-      ]
+      ],
+      "official_2025_qualified_quality": {
+        "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf",
+        "version": "Version 4 (07.05.2025)",
+        "standard_name": "Papad / Papadam",
+        "pdf_pages_one_based": [
+          85
+        ],
+        "exact_regulatory_quality_not_ctr": true,
+        "contaminant_and_pesticide_mrl_unchanged": true,
+        "laboratory_compliance_pass": false,
+        "source_reconciliation_required": true,
+        "criteria": [
+          {
+            "variant": "Papad / Papadam",
+            "parameter": "Moisture",
+            "operator": "<=",
+            "value": 15,
+            "unit": "% by mass"
+          },
+          {
+            "variant": "Papad / Papadam",
+            "parameter": "Acid insoluble ash",
+            "operator": "<=",
+            "value": 0.25,
+            "unit": "% on dry mass basis"
+          },
+          {
+            "variant": "Papad / Papadam",
+            "parameter": "Alcoholic acidity as H2SO4",
+            "operator": "<=",
+            "value": 0.2,
+            "unit": "% on dry mass basis"
+          },
+          {
+            "variant": "Papad / Papadam",
+            "parameter": "Uric acid",
+            "operator": "<=",
+            "value": 100,
+            "unit": "mg/kg"
+          }
+        ],
+        "uric_acid_is_product_quality_not_ctr": true
+      }
     },
     {
       "key": "2.4.11(4)",
