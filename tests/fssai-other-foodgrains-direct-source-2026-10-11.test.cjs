@@ -24,7 +24,7 @@ test("Tampered source or chapter is rejected; no compliance PASS",()=>{
  const id=proof.catalog_id,original=ctx.contaminantsDb;
  ctx.contaminantsDb=JSON.parse(JSON.stringify(ctr));
  ctx.contaminantsDb.crop_contaminants.total_aflatoxins.rules.find(x=>x.article==="Pulses").limit=999;
- assert.match(show(id),/withheld/);assert.match(old(id),/First-source research withheld/);ctx.contaminantsDb=original;
+ assert.match(show(id),/withheld/);assert.match(old(id),/First exact-source evidence needed/);ctx.contaminantsDb=original;
  const prev=ctx.pmsvGrainProof;ctx.pmsvGrainProof=null;
  assert.match(old(id),/First exact-source evidence needed/);ctx.pmsvGrainProof=prev;
 });
