@@ -81,14 +81,18 @@ test("Fail closed on changed source value, wrong source URL, missing chapter and
  assert.equal(verify({...p,name:"Cocoa Powder"}),null);
  assert.ok(verify(p));
 });
-test("Generated readiness audit keeps 409/124 inventory and audits 20 quality-only products without false PASS",()=>{
+test("Generated readiness audit keeps 410/123 ledger; 20 quality reviews with one separate B1 partial",()=>{
  const report=read("audit-output/fssai-product-readiness-audit.json");
  assert.equal(report.products.length,533);
- assert.equal(report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,409);
+ assert.equal(report.summary.counts.contaminant_evidence.some_exact_product_evidence_not_full_coverage,410);
  assert.equal(report.summary.counts.chapter_fssr_2026_10_11_20_quality_only.exact_source_quality_not_ctr,20);
  for(const r of evidence.records){
   const p=report.products.find(x=>x.id===r.catalog_id);
-  assert.ok(p&&p.contaminant_evidence_index.status!=="some_exact_product_evidence_not_full_coverage",r.catalog_id);
+  assert.ok(p,r.catalog_id);
+  if(r.catalog_id==="06-06-3-fruit-vegetable-cereal-flakes"){
+    assert.equal(p.contaminant_evidence_index.status,"some_exact_product_evidence_not_full_coverage");
+    assert.equal(p.contaminant_evidence_index.exact_fruit_vegetable_cereal_flakes_composite_b1.limit,10);
+  }else assert.notEqual(p.contaminant_evidence_index.status,"some_exact_product_evidence_not_full_coverage",r.catalog_id);
   assert.equal(p.source_pinned_chapter_quality_review_2026_10_11.quality_numeric_rows,r.quality_criteria.length);
   assert.equal(p.source_pinned_chapter_quality_review_2026_10_11.qualified_packing_media_subtypes,r.qualified_packing_media_brix.length);
   assert.equal(p.source_pinned_chapter_quality_review_2026_10_11.lab_compliance_pass,false);
