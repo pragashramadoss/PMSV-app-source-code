@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-10-11",
+  "official_fssai_only": true,
+  "source_version": "Version IX (03.02.2026)",
+  "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "catalogue_total": 533,
+  "baseline_partial_count": 410,
+  "baseline_unresolved_count": 123,
+  "new_partial_catalogue_ids": [
+    "01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-",
+    "04-04-2-dehydrated-vegetables"
+  ],
+  "new_partial_count": 2,
+  "expected_partial_count_after": 412,
+  "expected_first_exact_pending_after": 121,
+  "automatic_compliance_pass": 0,
+  "complete_contaminant_assessments": 0,
+  "source_article_matches_are_variant_specific": true,
+  "dried_mix_frozen_inheritance_permitted": false,
+  "dehydrated_onion_5_mgkg_inheritance_permitted": false,
+  "records": [
+    {
+      "catalog_id": "01-01-7-ice-cream-kulfi-chocolate-ice-cream-softy-ice-cream-milk-ice-milk-lolly-and-dried-",
+      "product_name": "Ice Cream, Kulfi, Chocolate Ice Cream, Softy Ice-Cream, Milk Ice, Milk Lolly and Dried Ice Cream Mix",
+      "fssr": "2.1.14",
+      "fcs": "01.7",
+      "case_id": "ice_cream",
+      "chapter_source": "https://fssai.gov.in/upload/uploadfiles/files/2_%20Chapter%202_1%20(Dairy%20products%20and%20analogues).pdf",
+      "source_pdf": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "partially_identified_qualified_finished_forms": true,
+      "exact_subtype_select_required": true,
+      "unconditional_finished_product_limit_auto_apply": false,
+      "full_contaminant_panel_complete": false,
+      "lab_compliance_pass": false,
+      "branches": [
+        {
+          "selector": "ready_to_eat_frozen",
+          "lead_article": "Ice-cream, iced lollies and similar frozen confections",
+          "lead_limit": 1,
+          "lead_unit": "mg/kg",
+          "arsenic_article": "Ice-cream, iced lollies and similar frozen confections",
+          "arsenic_limit": 0.5,
+          "arsenic_unit": "mg/kg",
+          "official_lead_pdf_page_one_based": 4,
+          "official_arsenic_pdf_page_one_based": 9,
+          "numeric_auto_apply": false,
+          "lab_result_pass": false,
+          "requires": [
+            "Product is frozen and ready to eat, not merely a dry mix",
+            "Finished form is ice cream, kulfi, chocolate ice cream, softy, milk ice or milk lolly",
+            "Final product article and processing confirmed; amendments and lab methods reviewed"
+          ]
+        },
+        {
+          "selector": "dried_ice_cream_mix",
+          "lead_article": null,
+          "lead_limit": null,
+          "arsenic_article": null,
+          "arsenic_limit": null,
+          "numeric_auto_apply": false,
+          "lab_result_pass": false,
+          "requires": [
+            "Dried ice-cream mix is not ready-to-eat frozen confection",
+            "Do not use frozen article limits on dry premix",
+            "Determine applicable finished dry-mix or ingredient source separately"
+          ]
+        }
+      ]
+    },
+    {
+      "catalog_id": "04-04-2-dehydrated-vegetables",
+      "product_name": "Dehydrated Vegetables",
+      "fssr": "2.3.36",
+      "fcs": "04.2.2.2",
+      "case_id": "dehydrated_vegetables",
+      "chapter_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+      "source_pdf": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "partially_identified_qualified_finished_forms": true,
+      "exact_subtype_select_required": true,
+      "unconditional_finished_product_limit_auto_apply": false,
+      "full_contaminant_panel_complete": false,
+      "lab_compliance_pass": false,
+      "branches": [
+        {
+          "selector": "onion_only_dehydrated",
+          "lead_article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+          "lead_limit": 10,
+          "lead_unit": "mg/kg on dry matter basis",
+          "arsenic_article": null,
+          "arsenic_limit": null,
+          "numeric_auto_apply": false,
+          "lab_result_pass": false,
+          "official_lead_pdf_page_one_based": 3,
+          "requires": [
+            "Confirmed dried/dehydrated onion, not general vegetable",
+            "Lead 10 mg/kg on dry matter basis, not wet/as-sold basis",
+            "For onion mixtures determine actual regulatory food article and analytical basis"
+          ]
+        },
+        {
+          "selector": "non_onion_dehydrated_vegetables",
+          "lead_article": "Canned fish, canned meats, edible gelatin,meat extracts and hydrolysed protein, dried or dehydrated vegetables (other than onions)",
+          "lead_limit": 5,
+          "lead_unit": "mg/kg",
+          "arsenic_article": null,
+          "arsenic_limit": null,
+          "numeric_auto_apply": false,
+          "lab_result_pass": false,
+          "official_lead_pdf_page_one_based": 3,
+          "requires": [
+            "Confirmed dehydrated vegetable other than onion",
+            "Do not apply 5 mg/kg to onion ingredient or mixed onion-containing product without scope assessment",
+            "Separate arsenic/cadmium/pesticide and drying effects are still unverified"
+          ]
+        }
+      ]
+    }
+  ]
+}
