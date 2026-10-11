@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+"use strict";
+const test=require("node:test"),assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
+const root=path.resolve(__dirname,".."),read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const m=read("fssai-product-helper-preview-01/data/rules/contaminants-v9-unresolved-264-review-v1.json");
+const p=read("fssai-product-helper-preview-01/data/standard-search-index-v1.json").products.find(x=>x.id==="purified-vending-water");
+const r=m.records.find(r=>r.catalog_id===p.id),q=r.official_vending_purified_water_is10500_gate_2026_10_11;
+const h=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
+const a=h.indexOf("function pendingContaminantReviewNotice(p){"),b=h.indexOf("function renderProductContaminants(){",a);
+const ctx=vm.createContext({contaminantsPendingReviewDb:m,esc:s=>String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")});
+vm.runInContext(h.slice(a,b),ctx);
+const render=p=>vm.runInContext("pendingContaminantReviewNotice("+JSON.stringify(p)+")",ctx);
+test("FSSAI 2.10.9 purified vending water is legally not packaged drinking water, IS:10500 source only",()=>{
+ assert.equal(m.pending,126);assert.equal(m.verified_evidence_added,138);
+ assert.equal(q.catalog_id,p.id);assert.equal(q.product_name,p.name);assert.equal(q.fssr,p.fssr);
+ assert.equal(q.fssr,"2.10.9");
+ assert.equal(q.official_fssai_chapter_page_one_based,24);
+ assert.match(q.regulatory_identity,/OTHER THAN packaged drinking water and natural mineral water/);
+ assert.match(q.legal_composition_reference,/IS:10500/);
+ assert.match(q.excluded_wrong_routing,/0\.0001 mg\/L individually/);
+ assert.match(q.excluded_wrong_routing,/0\.0005 mg\/L total/);
+ assert.equal(q.treated_as_packaged_drinking_water,false);
+ assert.equal(q.referenced_is10500_text_fully_source_verified,false);
+ assert.equal(q.any_is10500_numeric_limit_copied_into_fssai_database,false);
+ assert.equal(q.packaged_water_pesticide_or_metal_limit_applied,false);
+ assert.equal(q.current_full_ctr_product_evidence_found,false);
+ assert.equal(q.finished_water_compliance_pass,false);
+ assert.equal(r.auto_apply_numeric_limit,false);
+ assert.equal(r.unconditional_compliance_pass,false);
+ assert.match(q.official_fssai_source,/^https:\/\/www\.fssai\.gov\.in/);
+ assert.equal(m.official_vending_water_misclassification_gate_summary_2026_10_11.packaged_water_limits_inherited,0);
+});
+test("Helper shows exact identity-bound warning and does not claim packaged water metals/pesticide PASS",()=>{
+ const output=render(p);
+ assert.match(output,/Purified vending water — NOT packaged water, IS:10500 REFERENCE/);
+ assert.match(output,/No numeric IS:10500 limits or packaged-water values are applied here/);
+ assert.match(output,/Do not inherit/);
+ assert.match(output,/0\.0001 mg\/L/);
+ assert.match(output,/0\.0005 mg\/L/);
+ assert.doesNotMatch(render({...p,name:"packaged water"}),/Purified vending water — NOT packaged water/);
+});
