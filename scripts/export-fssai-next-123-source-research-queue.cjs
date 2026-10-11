@@ -17,6 +17,8 @@ const tin=load(base+"rules/fssai-v9-tin-conditional-source-matrix-2026-10-11.jso
 const expanded=load(base+"rules/fssai-v9-expanded-identity-nontransfer-2026-10-11.json");
 const crossMetal=load(base+"rules/fssai-v9-cross-metal-matrix-2026-10-11.json");
 const metalBasis=load(base+"rules/fssai-v9-61-metal-article-testing-bases-2026-10-11.json");
+const foodSubtypes=load(base+"rules/fssai-v9-processed-food-exact-subtype-source-2026-10-11.json");
+const foodSubtypesById=new Map(foodSubtypes.records.map(r=>[r.catalog_id,r]));
 const metalBasisById=new Map(metalBasis.source_rows.map(x=>[x.id,x]));
 const crossMetalRows=new Map(crossMetal.source_rows.map(r=>[r.id,r]));
 const expandedRows=new Map([...cross.named_source_rows,...expanded.new_named_article_rows].map(s=>[s.id,s]));
@@ -146,6 +148,17 @@ const outputs=remaining.map((x,i)=>{
   required_qualifier:g.qualification,applies_to_finished_product:false,numeric_limit_applied:false,
   first_exact_source_promoted:false,compliance_pass:false};
  });
+ const verifiedSubtypes=foodSubtypesById.get(x.id);
+ if(verifiedSubtypes){
+  assert.equal(verifiedSubtypes.product_name,x.name);
+  assert.equal(verifiedSubtypes.fssr,x.fssr);
+  assert.equal(verifiedSubtypes.fcs,x.fcs);
+ }
+ const namedSubtypeReferences=verifiedSubtypes?verifiedSubtypes.forms.map(form=>({
+  subtype_id:form.subtype_id,label:form.label,qualifier:form.required_confirmation,
+  named_source_articles_review_only:form.named_articles,
+  auto_applied:false,first_exact_promoted:false,compliance_pass:false
+ })):[];
  const extracted=[];
  for(const [key,value] of Object.entries(old)){
   if(/2026_10_11|2026_10_10/.test(key)&&typeof value==="object")harvest(value,extracted);
@@ -160,6 +173,7 @@ const outputs=remaining.map((x,i)=>{
   named_article_references_review_only:articleGates,
   expanded_named_article_references_review_only:extended,
   cross_metal_nontransfer_references_review_only:crossMetalGates,
+  finished_food_specific_named_subtypes_review_only:namedSubtypeReferences,
   tin_named_article_references_review_only:tinArticleGates,
   generic_metal_precedence_references_review_only:metalArticlePriority,
   ayurveda_recipe_ingredient_source_review_only:recipeIngredientB1Review,
@@ -181,6 +195,9 @@ fs.writeFileSync(path.join(dir,"fssai-next-121-first-exact-source-research-queue
  expanded_source_rows:expanded.new_named_article_rows.length,
  expanded_nontransfer_cases:outputs.reduce((n,r)=>n+r.expanded_named_article_references_review_only.length,0),
  expanded_nontransfer_products:outputs.filter(r=>r.expanded_named_article_references_review_only.length>0).length,
+ finished_food_subtype_product_count:outputs.filter(x=>x.finished_food_specific_named_subtypes_review_only.length>0).length,
+ finished_food_named_subtype_options:outputs.reduce((n,x)=>n+x.finished_food_specific_named_subtypes_review_only.length,0),
+ finished_food_subtype_article_references:outputs.reduce((n,x)=>n+x.finished_food_specific_named_subtypes_review_only.reduce((j,f)=>j+f.named_source_articles_review_only.length,0),0),
  metal_measurement_source_rows:metalBasis.number_of_pinned_source_articles,
  metal_measurement_basis_qualified_rows:metalBasis.number_with_mandatory_measurement_basis,
  measurement_basis_scope_review_references:outputs.reduce((count,x)=>count+[...x.expanded_named_article_references_review_only,...x.cross_metal_nontransfer_references_review_only].filter(y=>y.source_testing_basis_review_only).length,0),

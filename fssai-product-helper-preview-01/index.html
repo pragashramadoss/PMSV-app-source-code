@@ -1224,6 +1224,7 @@ let contaminantsPendingReviewDb=null;
 let sourcePriorityMetalDb=null;
 let crossFormV9ScopeDb=null;
 let metalMeasurementBasisDb=null;
+let namedFoodSubtypesDb=null;
 let expandedV9ScopeDb=null;
 let crossMetalV9ScopeDb=null;
 let ayurvedaRecipeReviewDb=null;
@@ -1254,7 +1255,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-metal-testing-basis-v514';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-processed-food-subtype-review-v515';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10644,6 +10645,46 @@ function sourcePriorityMetalFallbackReviewHtml(p){
    +'<p><b>Methyl Mercury — All foods: '+esc(all.limit)+' '+esc(all.unit)+'</b>. This universal all-foods article is already handled separately and requires a speciated methyl-mercury measurement. It is distinct from total Mercury and is not a finished-product compliance PASS.</p>'
    +'<small><a href="'+esc(m.source)+'" target="_blank" rel="noopener">Official FSSAI Version IX Section 2.1</a> · Numeric compliance assessment NOT established.</small></details>';
 }
+function sourcePinnedFinishedFoodSubtypeReviewHtml(p){
+ if(!p||!namedFoodSubtypesDb||!contaminantsDb)return '';
+ const db=namedFoodSubtypesDb,row=(db.records||[]).find(x=>x.catalog_id===p.id);
+ if(!row)return '';
+ const official='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf';
+ const withheld='<div class="notice"><b>Finished-food named article review withheld:</b> subtype, source reference, testing basis, identity or legal qualification failed verification. No numeric limit applied.</div>';
+ if(db.regulatory_source!==official||db.version!==contaminantsDb.source_version||
+   db.catalogue_count!==533||db.partial_first_source!==412||db.pending_first_source!==121||
+   db.reviewed_catalogue_identities!==9||db.conditional_named_subtype_options!==21||
+   db.verified_official_source_article_references!==45||
+   db.first_exact_promotions!==0||db.full_compliance_passes!==0||
+   row.product_name!==p.name||row.fssr!==p.fssr||row.fcs!==p.fcs||
+   row.official_source!==official||row.exact_food_subtype_selector_required!==true||
+   row.first_exact_product_source_promoted!==false||
+   row.direct_finished_product_numeric_auto_application!==false||
+   row.fully_verified_regulatory_compliance!==false)return withheld;
+ const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+ const checked=(row.forms||[]).every(x=>
+  x.confirmed_by_product_selection===false&&x.numeric_finished_product_limit_applied===false&&
+  x.full_contaminant_panel_complete===false&&x.legal_or_lab_compliance_pass===false&&
+  x.required_confirmation?.length>70&&x.label?.length>9&&x.named_articles?.length>0&&
+  x.named_articles.every(r=>r.auto_apply===false&&r.compliance_pass===false&&
+    (contaminantsDb.metal_article_rules_v9[r.metal]||[]).filter(s=>
+       s.row_type==='exact'&&norm(s.article)===norm(r.article)&&
+       Number(s.limit)===r.limit&&s.unit===r.unit&&String(s.condition||'')===r.measurement_basis
+    ).length===1));
+ if(!checked)return withheld;
+ const entries=row.forms.map(x=>'<tr><td><b>'+esc(x.label)+'</b></td><td>'
+   +x.named_articles.map(r=>'<b>'+esc(r.metal)+'</b>: '+esc(r.limit)+' '+esc(r.unit)
+    +' — '+esc(r.article)+(r.measurement_basis?'<small><b>Basis:</b> '+esc(r.measurement_basis)+'</small>':'')
+    +'<small><b>NOT APPLIED</b> until exact finished-product match</small>').join('<hr>')
+   +'</td><td>'+esc(x.required_confirmation)+'</td></tr>').join('');
+ return '<details style="margin:10px 0"><summary><b>Specific FSSAI finished-food article candidates — '
+   +esc(row.forms.length)+' conditional form'+(row.forms.length===1?'':'s')+' (REVIEW ONLY)</b></summary>'
+   +'<p>These are <b>real named Version IX articles</b>, but this broad FoSCoS product entry has not established that the tested food is the named finished subtype. <b>All numeric references are withheld from the compliance engine</b> until recipe, food standard, packing form, sample basis and effective amendments are established. No source promotion or overall laboratory PASS is claimed.</p>'
+   +'<div class="tablewrap"><table><thead><tr><th>Potential finished subtype</th><th>Verified named source row — NOT APPLIED</th><th>What must be proved before use</th></tr></thead><tbody>'
+   +entries+'</tbody></table></div>'
+   +'<small><a href="'+esc(official)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX Section 2.1</a></small></details>';
+}
+
 function sourcePinnedExpandedMetalScopeHtml(p){
  if(!p||!sourcePriorityMetalDb||!Array.isArray(sourcePriorityMetalDb.unresolved_first_exact_catalog_ids)
   ||!sourcePriorityMetalDb.unresolved_first_exact_catalog_ids.includes(p.id))return '';
@@ -11115,6 +11156,7 @@ function renderProductContaminants(){
    +sourcePinnedAyurvedaRecipeB1ReviewHtml(p)
    +sourcePriorityMetalFallbackReviewHtml(p)
    +sourcePinnedExpandedMetalScopeHtml(p)
+   +sourcePinnedFinishedFoodSubtypeReviewHtml(p)
    +sourcePinnedSugarSulphitesHtml(p)
    +sugarChromiumScopeHtml(p)
    +eightCerealQualityScopeHtml(p)
@@ -11268,6 +11310,11 @@ async function loadContaminantsDb(){
      if(!res.ok)throw new Error('FSSAI source article measurement basis register unavailable');
      metalMeasurementBasisDb=await res.json();
    }catch(e){metalMeasurementBasisDb=null;}
+   try{
+     const res=await fetch('./data/rules/fssai-v9-processed-food-exact-subtype-source-2026-10-11.json?v=20261011-pf1',{cache:'reload'});
+     if(!res.ok)throw new Error('Finished food exact-subtype source references unavailable');
+     namedFoodSubtypesDb=await res.json();
+   }catch(e){namedFoodSubtypesDb=null;}
  }catch(e){
    contaminantsDb=null;
  }
