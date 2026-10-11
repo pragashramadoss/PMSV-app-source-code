@@ -155,6 +155,7 @@ for(const item of appendixASugar.records){
  if(item.scope==="finished_product_sulphite_residue_partial"){
    assert.ok(["11.1.6","11.1.6.1"].includes(p.fcs),"Unqualified finished residue product "+p.id);
    assert.equal(item.source_fcs,"11.1.6");
+   if(p.fcs==="11.1.6.1")assert.equal(appendixAV3.loaded_permission_sets["11.1.6.1"].status,"inherits_current_parent_rule");
    assert.equal(item.source_limit,50);
    assert.ok(source.entries.some(x=>/Residue shall not exceed 50 mg\/kg in the end product/.test(x.condition)),
       "Finished product residue statement missing "+p.id);
