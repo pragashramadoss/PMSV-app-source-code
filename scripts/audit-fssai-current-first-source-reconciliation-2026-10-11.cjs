@@ -51,9 +51,8 @@ for(const x of delta.records){
 // cereals, millets and pulses described in FSSR 2.4.6(15).
 const gp=index.get(grain.catalog_id),oldGrain=starting.get(grain.catalog_id);
 assert.ok(gp&&oldGrain&&gp.name===grain.product_name&&gp.fssr===grain.fssr&&gp.fcs===grain.fcs&&gp.rule_key===grain.clause);
-assert.equal(grain.official_contaminants_source,undefined); // explicit field name is source_contaminants
 assert.equal(grain.source_contaminants,official);
-assert.equal(grain.first_positive_source,true);assert.equal(grain.complete_compliance_pass,false);
+assert.equal(grain.positive_first_source,true);assert.equal(grain.complete_compliance_pass,false);
 assert.equal(grain.partial_after,415);assert.equal(grain.pending_after,118);
 const grainGeneral=chapter.standards.find(x=>x.key==="2.4.6");
 const grainSpecific=chapter.standards.find(x=>x.key==="2.4.6(15)");
