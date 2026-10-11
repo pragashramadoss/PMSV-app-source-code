@@ -10747,6 +10747,10 @@ function sourcePinnedEightPendingQualityHtml(p){
  if(!p||!eightPendingQualityDb)return '';
  const db=eightPendingQualityDb,row=(db.records||[]).find(x=>x.catalog_id===p.id);
  if(!row)return '';
+ // Six identities already have a complete existing chapter-quality UI; avoid duplicate panels.
+ // Retain all eight in the 61-criterion research/source-integrity manifest, but display
+ // new panels here only for the two jaggery standards not previously surfaced.
+ if(row.fssr!=='2.8.4(1)'&&row.fssr!=='2.8.4(2)')return '';
  const withheld='<div class="notice"><b>FSSAI chapter-quality source withheld:</b> named product, subtype, official standard, numeric criterion or amendment source integrity could not be reconciled. No contaminant limit or PASS was assigned.</div>';
  if(db.schema_version!=='1.0'||db.official_sources_only!==true||db.policy!=='QUALITY_STANDARD_ONLY_NOT_CTR_MRL'||
     db.catalogue_count!==533||db.partial_first_source!==412||db.first_exact_source_pending!==121||
