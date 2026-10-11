@@ -25,6 +25,8 @@ const crossFamilyNOTS=read("rules/fssai-25-beverage-confectionery-fungi-v9-sourc
 const batch40Source=read("rules/fssai-batch40-exact-commodity-and-conditional-scope-v1.json");
 const pending136FullReview=read("rules/fssai-full-136-identity-applicability-review-2026-10-10.json");
 const next10ExactSource=read("rules/fssai-next10-exact-source-candidate-2026-10-10.json");
+const appendixASugar=read("rules/fssai-sugar-sulphites-appendix-a-v3-2026-10-11.json");
+const appendixAV3=read("rules/appendix-a-v3-core.json");
 /* Exact FSSAI Chapter 2.16 source evidence. This is a standard-product
  * THC and cross-cutting CBD assessment, not a Version IX contaminant article,
  * an exemption from other contaminants or a complete compliance verdict. */
@@ -119,6 +121,49 @@ for(const [id,rows] of checkedSubtypeMetalRows){
  }
 }
 
+
+// Appendix A Table 11: the explicit finished-product sulphite residue ceiling
+// applies to jaggery and its named cane child. Other sugar entries are additive
+// permissions only; none is a generic CTR contaminant or a lab PASS.
+assert.equal(appendixASugar.records.length,11);
+assert.equal(appendixASugar.first_exact_finished_product_chemical_residue_evidence_count,2);
+assert.equal(appendixASugar.conditional_additive_or_no_additives_only_count,9);
+assert.equal(appendixASugar.full_contaminant_compliance_passes,0);
+assert.equal(appendixASugar.auto_apply_lab_compliance_limit,false);
+assert.equal(appendixASugar.official_appendix_a_source,appendixAV3.official_source.url);
+assert.ok(official(appendixASugar.official_appendix_a_source));
+const appendixASugarById=new Map();
+for(const item of appendixASugar.records){
+ const p=index.products.find(x=>x.id===item.catalog_id);
+ assert.ok(p&&p.name===item.product_name&&p.fssr===item.fssr&&p.fcs===item.fcs,
+   "Source-locked sugar product identity mismatch: "+item.catalog_id);
+ assert.ok(!appendixASugarById.has(p.id),"Duplicate sugar residue source: "+p.id);
+ assert.equal(item.official_source_url,appendixASugar.official_appendix_a_source);
+ assert.equal(item.sample_result_evaluated,false);
+ assert.equal(item.automatic_numeric_pass,false);
+ assert.equal(item.all_contaminants_residues_and_pesticides_verified,false);
+ const source=appendixAV3.loaded_permission_sets[item.source_fcs];
+ assert.ok(source&&source.table==="Table 11","Missing current Appendix A Table 11 row "+item.source_fcs);
+ if(item.source_limit===null){
+   assert.equal(item.scope,"no_additives_permitted_only");
+   assert.equal(source.status,"no_additives_permitted");
+ } else {
+   assert.equal(item.unit,"mg/kg");
+   assert.ok(source.entries.some(x=>x.name==="SULFITES"&&x.limit===item.source_limit+" mg/kg"),
+     "Current Appendix A source mismatch for "+p.id);
+ }
+ if(item.scope==="finished_product_sulphite_residue_partial"){
+   assert.ok(["11.1.6","11.1.6.1"].includes(p.fcs),"Unqualified finished residue product "+p.id);
+   assert.equal(item.source_fcs,"11.1.6");
+   assert.equal(item.source_limit,50);
+   assert.ok(source.entries.some(x=>/Residue shall not exceed 50 mg\/kg in the end product/.test(x.condition)),
+      "Finished product residue statement missing "+p.id);
+ } else {
+   assert.notEqual(item.scope,"finished_product_sulphite_residue_partial");
+ }
+ appendixASugarById.set(p.id,item);
+}
+assert.equal([...appendixASugarById.values()].filter(x=>x.scope==="finished_product_sulphite_residue_partial").length,2);
 
 const bySpecialKey = new Map(special.routes.map(r => [r.key, r]));
 const chapterCache = new Map();
@@ -1285,6 +1330,8 @@ function contaminantEvidenceForProduct(p){
  const crossFamilyNOTSArticle=crossFamilyById.get(p.id)||null;
  const batch40Article=batch40ById.get(p.id)||null;
  const next10SourceArticle=next10ById.get(p.id)||null;
+ const sugarSulphiteEvidence=appendixASugarById.get(p.id)||null;
+ const exactJaggeryFinishedResidue=sugarSulphiteEvidence?.scope==="finished_product_sulphite_residue_partial"?sugarSulphiteEvidence:null;
  const exactCoconutHexane=p.id===coconutHexaneSource.catalog_id?coconutHexaneSource:null;
  const goatMuscleVetEvidence=goatMuscleSource.product_ids.includes(p.id)?(()=>{
    const i=goatMuscleSource.product_ids.indexOf(p.id);
@@ -1685,6 +1732,7 @@ function contaminantEvidenceForProduct(p){
  if(crossFamilyNOTSArticle)explicitKinds.push("official_v9_identity_locked_non_alcoholic_beverage_or_confectionery_nots_partial");
  if(batch40Article)explicitKinds.push("official_v9_identity_locked_milk_sweet_juice_spice_or_beverage_source_partial");
  if(next10SourceArticle)explicitKinds.push("official_v9_partial_named_article_dried_dates_vanilla_spices_frozen_tea_flavourings");
+ if(exactJaggeryFinishedResidue)explicitKinds.push("official_appendix_a_v3_exact_jaggery_finished_product_sulphite_residue_partial");
  if(exactCoconutHexane)explicitKinds.push("official_fssr_2_4_13_4_exact_coconut_flour_hexane_residual_partial");
  // Only a conditional, user-confirmed subtype source: the combined FoSCoS
  // identity must remain pending even though two powder variants have FSSAI
@@ -1712,6 +1760,20 @@ function contaminantEvidenceForProduct(p){
    "no_exact_catalog_evidence_in_this_inventory";
  return {
    status,
+   exact_appendix_a_finished_product_sulphite_residue:exactJaggeryFinishedResidue?{
+     source_url:appendixASugar.official_appendix_a_source,source_table:"Appendix A Table 11",
+     finished_product_residue_max_mgkg:50,subtype:exactJaggeryFinishedResidue.fcs,
+     source_fcs:"11.1.6",compliance_pass:false,other_contaminants_verified:false
+   }:null,
+   chapter_11_appendix_a_sulphite_additive_permissions:sugarSulphiteEvidence?{
+     source_url:appendixASugar.official_appendix_a_source,
+     type:sugarSulphiteEvidence.scope,
+     source_fcs:sugarSulphiteEvidence.source_fcs,
+     limit:sugarSulphiteEvidence.source_limit,
+     unit:sugarSulphiteEvidence.unit,
+     identity_condition:sugarSulphiteEvidence.category_and_subtype_qualification,
+     automatic_finished_product_compliance_pass:false
+   }:null,
    exact_spice_oleoresin_solvent_residues:spiceOleoresinResidues,
    exact_goat_muscle_veterinary_drugs:goatMuscleVetEvidence,
    exact_composite_food_or_soup_source_v9:exactCompositeSource,
@@ -2035,6 +2097,15 @@ const products = index.products.map(p => {
     if(route.compliance_status === "complete" || route.compliance_pass_enabled === true) throw new Error("Special route incorrectly asserts compliance: " + p.id);
   }
   const contaminantEvidence=contaminantEvidenceForProduct(p);
+  if(contaminantEvidence.chapter_11_appendix_a_sulphite_additive_permissions){
+    const scope=contaminantEvidence.chapter_11_appendix_a_sulphite_additive_permissions.type;
+    tally("appendix_a_table_11_sugar_sulphites",scope);
+    if(contaminantEvidence.exact_appendix_a_finished_product_sulphite_residue){
+      action.push("Current FSSAI Appendix A Table 11: Gur/Jaggery finished-product sulphite residue maximum 50 mg/kg (Cane Gur inherits explicit parent rule). No lab result evaluated; metals, pesticides and other compliance remain open.");
+    } else {
+      action.push("Source-checked Appendix A Table 11 sugar additive permission/subtype check; NOT an exact CTR contaminant article or automatic chemical contaminant clearance.");
+    }
+  }
   const soybeanConditionalReview=soyReviewById.get(p.id)||null;
   if(soybeanConditionalReview){
     tally("chapter_2_4_soybean_total_aflatoxin_review","source_verified_conditional_not_auto_applied");
