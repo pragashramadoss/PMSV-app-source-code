@@ -1222,6 +1222,7 @@ let appendixCoreDb=null;
 let contaminantsDb=null;
 let contaminantsPendingReviewDb=null;
 let sourcePriorityMetalDb=null;
+let ayurvedaRecipeReviewDb=null;
 let sugarSulphiteResiduesDb=null;
 let chapterQuality20Db=null;
 let sugarChromiumScopeDb=null;
@@ -1246,7 +1247,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-metal-source-priority-v508';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-ayurveda-recipe-b1-v509';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10482,6 +10483,39 @@ function sourcePinnedChapterQualityHtml(p){
   +'<div class="tablewrap"><table><thead><tr><th>Quality/pack criterion</th><th>Source benchmark</th><th>Qualification</th></tr></thead><tbody>'
   +quality+medium+'</tbody></table></div><small>'+sources+'</small></details>';
 }
+function sourcePinnedAyurvedaRecipeB1ReviewHtml(p){
+ if(!p||!ayurvedaRecipeReviewDb||!contaminantsDb||!sourcePriorityMetalDb)return '';
+ const m=ayurvedaRecipeReviewDb;
+ const row=(m.records||[]).find(r=>r.catalog_id===p.id);
+ if(!row)return '';
+ if(row.product_name!==p.name||String(row.fssr)!==String(p.fssr)||String(row.fcs)!==String(p.fcs)
+    ||!sourcePriorityMetalDb.unresolved_first_exact_catalog_ids?.includes(p.id)
+    ||m.official_recipe_order!=="https://fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+    ||m.official_ctr_version_ix!=="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf"
+    ||m.reviewed_recipe_count!==9||m.mandatory_commodity_b1_overlap_candidates!==4
+    ||m.current_first_exact_pending!==123||m.current_partial_exact_evidence!==410
+    ||m.automatic_product_article_promotions!==0||m.finished_product_compliance_passes!==0
+    ||row.first_exact_product_article_cleared!==false
+    ||row.finished_product_numeric_limit_applied!==false||row.complete_regulatory_compliance_pass!==false)
+    return '<div class="notice"><b>Ayurveda recipe source evidence withheld:</b> product identity or official review status mismatch. No contaminant value applied.</div>';
+ const c=contaminantsDb.crop_contaminants;
+ const sourceOk=c?.aflatoxin_b1?.unit==='µg/kg'
+    &&contaminantsDb.source_version==='Version IX (03.02.2026)'
+    &&['Cereal and cereal products','Pulses','Food product containing any of the above mentioned food articles']
+      .every(a=>c.aflatoxin_b1.rules.filter(x=>x.article===a&&Number(x.limit)===10).length===1)
+    &&c?.total_aflatoxins?.unit==='µg/kg'
+    &&c.total_aflatoxins.rules.filter(x=>x.article==='Cereal and cereal products'&&Number(x.limit)===15).length===1
+    &&c.total_aflatoxins.rules.filter(x=>x.article==='Food product containing any of the above mentioned food articles'&&Number(x.limit)===20).length===1;
+ if(!sourceOk)return '<div class="notice"><b>Ayurveda recipe source evidence withheld:</b> FSSAI Version IX crop contaminant article, unit or value has changed. No contaminant value applied.</div>';
+ const common=row.has_b1_recipe_candidate&&row.reference_limit_ugkg===10;
+ if(row.has_b1_recipe_candidate&&!common)return '<div class="notice"><b>Ayurveda recipe evidence withheld:</b> unmatched Aflatoxin B1 source reference.</div>';
+ return '<details style="margin:10px 0"><summary><b>FSSAI Ayurveda Aahara — recipe ingredient and crop-to-product source review (NOT APPLIED)</b></summary>'
+  +'<p><b>Official recipe '+esc(row.official_recipe_id)+':</b> '+esc(row.recipe_ingredient_evidence)+'</p>'
+  +(common?'<p><b>Aflatoxin B1 10 µg/kg — OFFICIAL SOURCE REFERENCE, NOT APPLIED:</b> The cereal, pulse and related composite-food source rows share this B1 reference. The finished Ayurveda Aahara recipe needs its own article/sampling/process verification before legal MRL application.</p>'
+    :'<p>No exact Aflatoxin B1 finished-product article is established by this recipe entry.</p>')
+  +'<p><b>Source scope unresolved:</b> '+esc(row.qualification_required)+' Total Aflatoxins cereal/composite article references differ (15 versus 20 µg/kg) and neither is assigned automatically. No compliance PASS.</p>'
+  +'<small><a href="'+esc(m.official_recipe_order)+'" target="_blank" rel="noopener">Official FSSAI Ayurveda Aahara recipe order</a> · <a href="'+esc(m.official_ctr_version_ix)+'" target="_blank" rel="noopener">Official FSSAI Contaminants Version IX</a></small></details>';
+}
 function sourcePriorityMetalFallbackReviewHtml(p){
  if(!p||!sourcePriorityMetalDb||!contaminantsDb||!contaminantsPendingReviewDb)return '';
  const m=sourcePriorityMetalDb;
@@ -10911,6 +10945,7 @@ function renderProductContaminants(){
        ||(p.id==='06-06-3-fruit-vegetable-cereal-flakes' && baseline.some(x=>
          String(x.source_basis||'').includes('exact FSSR 2.3.20 Fruit/Vegetable Cereal Flakes'))))
         ?'':pendingContaminantReviewNotice(p))
+   +sourcePinnedAyurvedaRecipeB1ReviewHtml(p)
    +sourcePriorityMetalFallbackReviewHtml(p)
    +sourcePinnedSugarSulphitesHtml(p)
    +sugarChromiumScopeHtml(p)
@@ -11020,6 +11055,11 @@ async function loadContaminantsDb(){
    const res=await fetch('./data/rules/contaminants-v9-core.json?v=437',{cache:'reload'});
    if(!res.ok)throw new Error('HTTP '+res.status);
    contaminantsDb=await res.json();
+   try{
+     const r=await fetch('./data/rules/fssai-ayurveda-nine-recipe-b1-cross-article-source-review-2026-10-11.json?v=20261011-ayurveda9',{cache:'reload'});
+     if(!r.ok)throw new Error('Official Ayurveda Aahara recipe source review unavailable');
+     ayurvedaRecipeReviewDb=await r.json();
+   }catch(e){ayurvedaRecipeReviewDb=null;}
    try{
      const priority=await fetch('./data/rules/fssai-v9-metal-fallback-precedence-2026-10-11.json?v=20261011-mp',{cache:'reload'});
      if(!priority.ok)throw new Error('FSSAI metal source priority file unavailable');

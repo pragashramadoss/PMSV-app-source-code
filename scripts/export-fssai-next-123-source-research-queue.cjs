@@ -15,6 +15,7 @@ const audit=load("audit-output/fssai-product-readiness-audit.json").products;
 const cross=load(base+"rules/fssai-v9-31-cross-form-metal-source-nontransfer-2026-10-11.json");
 const tin=load(base+"rules/fssai-v9-tin-conditional-source-matrix-2026-10-11.json");
 const metalPriorityDb=load(base+"rules/fssai-v9-metal-fallback-precedence-2026-10-11.json");
+const ayurveda=load(base+"rules/fssai-ayurveda-nine-recipe-b1-cross-article-source-review-2026-10-11.json");
 const indexed=new Map(products.map(p=>[p.id,p]));
 const historic=new Map(source.map(p=>[p.catalog_id,p]));
 const examined=new Map(audit.map(p=>[p.id,p]));
@@ -75,6 +76,24 @@ const outputs=remaining.map((x,i)=>{
   named_product_article_precedence_checked:false,applicability_to_this_product_unconditionally_confirmed:false,
   counts_as_first_exact_product_article:false,applied_limit:false,compliance_pass:false
  }));
+ const verifiedRecipe=ayurveda.records.find(r=>r.catalog_id===x.id);
+ if(verifiedRecipe){
+  assert.equal(verifiedRecipe.product_name,x.name);
+  assert.equal(verifiedRecipe.fssr,x.fssr);
+  assert.equal(verifiedRecipe.fcs,x.fcs);
+  assert.equal(verifiedRecipe.first_exact_product_article_cleared,false);
+  assert.equal(verifiedRecipe.finished_product_numeric_limit_applied,false);
+ }
+ const recipeIngredientB1Review=verifiedRecipe?{
+  official_recipe:verifiedRecipe.official_recipe_id,ingredient_list:verifiedRecipe.recipe_ingredient_evidence,
+  official_source:verifiedRecipe.recipe_source,
+  relevant_crop_table_reference:verifiedRecipe.has_b1_recipe_candidate?{
+   analyte:"Aflatoxin B1",common_cereal_pulse_composite_reference_ugkg:10,
+   is_finished_product_limit:false,exact_finished_product_source_article_confirmed:false
+  }:null,
+  pending_scope:verifiedRecipe.qualification_required,
+  article_applied:false,first_exact_product_source_cleared:false,complete_compliance:false
+ }:null;
  const extracted=[];
  for(const [key,value] of Object.entries(old)){
   if(/2026_10_11|2026_10_10/.test(key)&&typeof value==="object")harvest(value,extracted);
@@ -89,13 +108,14 @@ const outputs=remaining.map((x,i)=>{
   named_article_references_review_only:articleGates,
   tin_named_article_references_review_only:tinArticleGates,
   generic_metal_precedence_references_review_only:metalArticlePriority,
+  ayurveda_recipe_ingredient_source_review_only:recipeIngredientB1Review,
   supporting_source_urls:(r.official_source_urls||[]).filter(u=>/^https:\/\/(www\.)?fssai\.gov\.in\//.test(u)).slice(0,10),
   required_evidence:["exact operative named article","identity and processing qualification","analytical/residue basis","effective amendment verification","sample measurement before compliance determination"],
   numeric_finished_product_limit_applied:false,first_exact_source_confirmed:false,full_compliance_pass:false,
   exemption_asserted:false};
 });
 const esc=x=>'"'+String(x??"").replaceAll('"','""')+'"';
-const cols=["priority","catalog_id","product","fssr","fcs","family","status","case_specific_questions","named_article_references_review_only","tin_named_article_references_review_only","generic_metal_precedence_references_review_only","official_fssai_ctr_source","numeric_finished_product_limit_applied","first_exact_source_confirmed","full_compliance_pass"];
+const cols=["priority","catalog_id","product","fssr","fcs","family","status","case_specific_questions","named_article_references_review_only","tin_named_article_references_review_only","generic_metal_precedence_references_review_only","ayurveda_recipe_ingredient_source_review_only","official_fssai_ctr_source","numeric_finished_product_limit_applied","first_exact_source_confirmed","full_compliance_pass"];
 const csv=[cols.join(","),...outputs.map(r=>cols.map(k=>esc(Array.isArray(r[k])?r[k].map(v=>typeof v==="string"?v:JSON.stringify(v)).join(" | "):r[k])).join(","))].join("\n")+"\n";
 const dir=path.join(root,"audit-output");
 fs.mkdirSync(dir,{recursive:true});
@@ -104,6 +124,8 @@ fs.writeFileSync(path.join(dir,"fssai-next-123-first-exact-source-research-queue
  JSON.stringify({snapshot:"2026-10-11",source:"generated-live-533-ledger",total:533,pending:123,partial:410,full_compliance_passes:0,
  guard_source_rows:cross.named_source_rows.length,scope_nontransfer_cases:cross.scope_guards.length,
  products_with_scope_nontransfer_cases:outputs.filter(x=>x.named_article_references_review_only.length>0).length,
+ ayurveda_recipe_reviews:outputs.filter(x=>x.ayurveda_recipe_ingredient_source_review_only!==null).length,
+ ayurveda_recipe_b1_overlap_candidates:outputs.filter(x=>x.ayurveda_recipe_ingredient_source_review_only?.relevant_crop_table_reference!==null&&x.ayurveda_recipe_ingredient_source_review_only!==null).length,
  metal_priority_source_rows:metalPriorityDb.rows.length,
  metal_default_precedence_reviews:outputs.reduce((n,x)=>n+x.generic_metal_precedence_references_review_only.filter(r=>r.row_type==="default").length,0),
  all_foods_methyl_mercury_research_references:outputs.reduce((n,x)=>n+x.generic_metal_precedence_references_review_only.filter(r=>r.row_type==="all_foods").length,0),
@@ -111,4 +133,4 @@ fs.writeFileSync(path.join(dir,"fssai-next-123-first-exact-source-research-queue
  tin_conditional_source_cases:tin.scope_guards.length,
  tin_products_with_conditional_source_cases:outputs.filter(x=>x.tin_named_article_references_review_only.length>0).length,
  records:outputs},null,2)+"\n");
-console.log("Generated 123 individual FSSAI source-verification worklists including 738 fallback priority and 123 universal-only checks; "+cross.scope_guards.length+" earlier metal and "+tin.scope_guards.length+" Tin nontransfer cases; 0 numeric approvals");
+console.log("Generated 123 individual FSSAI source-verification worklists including 9 Ayurveda recipe reviews, 4 B1 recipe overlap candidates; 738 fallback priority and 123 universal-only checks; "+cross.scope_guards.length+" earlier metal and "+tin.scope_guards.length+" Tin nontransfer cases; 0 numeric approvals");
