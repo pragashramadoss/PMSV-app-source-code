@@ -1222,6 +1222,7 @@ let appendixCoreDb=null;
 let contaminantsDb=null;
 let contaminantsPendingReviewDb=null;
 let sugarSulphiteResiduesDb=null;
+let chapterQuality20Db=null;
 let spiceOleoresinResiduesDb=null;
 let goatMuscleVeterinaryResiduesDb=null;
 let fourCompositeSourcesDb=null;
@@ -10246,6 +10247,59 @@ function sourcePinnedSugarSulphitesHtml(p){
    +'This permission is conditional on the correct product type, food use and notes, and does not establish full compliance. '
    +official+'.</div>';
 }
+// 20 exact FSSR product-identity QUALITY standards. Numbers shown are
+// source-locked quality benchmarks, NEVER CTR contaminant/pesticide MRLs.
+// Tampered or unavailable product-standard source must fail closed.
+function verifiedChapterQualityOnly(p){
+ if(!p||!chapterQuality20Db||!Array.isArray(chapterRuleDbs))return null;
+ const row=(chapterQuality20Db.records||[]).find(x=>x.catalog_id===p.id);
+ if(!row)return null;
+ if(row.product_name!==p.name||row.fssr!==p.fssr||row.fcs!==p.fcs||
+    row.automatic_numeric_pass!==false||row.other_contaminants_pesticides_not_verified!==true||
+    row.compliance_assessment_enabled!==false||row.lab_sample_not_evaluated!==true)return null;
+ const candidate=[];
+ for(const db of chapterRuleDbs)for(const rule of db.standards||[]){
+  if(rule.key===p.fssr&&rule.name===row.source_standard_name){
+    const qualified=rule.source_pinned_conditional_quality_v2_2024;
+    const source=qualified?qualified.source_url:(rule.numeric_evidence?.source_url||rule.source_url||db.official_sources?.[0]?.url);
+    if(source!==row.official_chapter_source)continue;
+    const official=String(source||'');
+    if(!/^https:\/\/(www\.)?fssai\.gov\.in\//.test(official))continue;
+    const criteria=qualified?qualified.qualified_quality_criteria:(rule.composition||[]);
+    const numeric=(criteria||[]).filter(x=>typeof x.value==='number'&&['<=','>='].includes(x.operator));
+    const media=qualified?qualified.packing_media_cutout_strength:[];
+    if(numeric.length!==row.quality_criteria.length||media.length!==row.qualified_packing_media_brix.length)continue;
+    if(!row.quality_criteria.every(x=>numeric.some(y=>x.parameter===y.parameter&&x.operator===y.operator&&x.value===y.value&&x.unit===y.unit)))continue;
+    if(!row.qualified_packing_media_brix.every(x=>media.some(y=>x.medium_family===y.medium_family
+       &&x.classification===y.classification&&x.cut_out_strength_min_brix===y.cut_out_strength_min_brix
+       &&x.cut_out_strength_max_brix===y.cut_out_strength_max_brix&&y.automatically_applied===false)))continue;
+    if(qualified&&(
+       qualified.not_a_ctr_contaminant_or_pesticide_limit!==true||
+       qualified.sample_results_not_evaluated!==true||
+       qualified.full_compliance_pass!==false))continue;
+    candidate.push(row);
+  }
+ }
+ return candidate.length===1?candidate[0]:null;
+}
+function sourcePinnedChapterQualityHtml(p){
+ if(!p||!chapterQuality20Db||!(chapterQuality20Db.records||[]).some(x=>x.catalog_id===p.id))return '';
+ const row=verifiedChapterQualityOnly(p);
+ if(!row)return '<div class="notice"><b>Exact FSSR quality reference WITHHELD.</b> The corresponding official source, product identity, clause, quality value or analytical unit did not reconcile. These are not contaminant limits.</div>';
+ const sources='<a href="'+esc(row.official_chapter_source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI '+esc(row.fssr)+' product standard</a>';
+ const quality=(row.quality_criteria||[]).map(x=>
+  '<tr><td>'+esc(x.parameter)+'</td><td>'+esc(x.operator)+' '+esc(String(x.value))+' '+esc(x.unit)
+  +'</td><td>'+esc(x.condition||'Confirm product variant, method, and basis.')+'</td></tr>').join('');
+ const medium=(row.qualified_packing_media_brix||[]).map(x=>
+   '<tr><td>'+esc(x.classification)+' ('+esc(x.medium_family)+')</td><td>'+esc(String(x.cut_out_strength_min_brix))
+    +(x.cut_out_strength_max_brix===null?' or more':'–'+esc(String(x.cut_out_strength_max_brix)))+' °Brix</td><td>Only after packing-medium family and sugar-added class confirmation.</td></tr>').join('');
+ return '<details style="margin:10px 0"><summary><b>Source-verified FSSR quality criteria for '+esc(row.product_name)+' — NOT CONTAMINANT MRLs</b> ('+
+  String(row.quality_criteria.length+row.qualified_packing_media_brix.length)+' source criteria)</summary>'
+  +'<p>Product-standard identity, quality, pack and processing requirements are separate from FSSAI Version IX metal, pesticide and toxin limits. '
+  +'Confirm subtype, pack medium, actual analytical results and current amendments. <b>No product-compliance PASS is issued.</b></p>'
+  +'<div class="tablewrap"><table><thead><tr><th>Quality/pack criterion</th><th>Source benchmark</th><th>Qualification</th></tr></thead><tbody>'
+  +quality+medium+'</tbody></table></div><small>'+sources+'</small></details>';
+}
 function pendingContaminantReviewNotice(p){
  if(!p||!contaminantsPendingReviewDb)return '';
  const record=(contaminantsPendingReviewDb.records||[]).find(r=>r.catalog_id===(p.id||p.profile_id));
@@ -10643,6 +10697,7 @@ function renderProductContaminants(){
  el.innerHTML=profileMsg
    +(verifiedSugarSulphiteReference(p)?.scope==='finished_product_sulphite_residue_partial'?'':pendingContaminantReviewNotice(p))
    +sourcePinnedSugarSulphitesHtml(p)
+   +sourcePinnedChapterQualityHtml(p)
    +exactSupplementalResidueReviewHtml(p)
    +sourcePinnedCompositeOrSoupPartialHtml(p)
    +sourcePinnedBeverageConfectioneryNotsHtml(p)
@@ -10696,6 +10751,17 @@ function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
    +'<small><a href="'+official+'" target="_blank" rel="noopener noreferrer">Read the official FSSAI Gazette</a>. Watch-list inclusion does not itself prove product applicability or establish full compliance.</small></div>';
 }
 async function loadContaminantsDb(){
+ try{
+   const res=await fetch('./data/rules/fssai-20-pending-exact-chapter-quality-2026-10-11.json?v=20261011-q75',{cache:'reload'});
+   if(!res.ok)throw new Error('FSSR chapter quality source review unavailable');
+   const d=await res.json();
+   if(d.product_count!==20||d.records?.length!==20||d.source_quality_rows!==75||
+      d.additional_fruit_salad_2024_source_criteria!==13||d.compliance_passes!==0||
+      d.automatic_contaminant_limits!==0||d.require_source_rule_runtime_match!==true)
+     throw new Error('20-product source-quality data integrity mismatch');
+   chapterQuality20Db=d;
+ }catch(e){chapterQuality20Db=null;}
+
  try{
    const res=await fetch('./data/rules/fssai-sugar-sulphites-appendix-a-v3-2026-10-11.json?v=20261011-11-sugar',{cache:'reload'});
    if(!res.ok)throw new Error('Source-checked sugar residue module unavailable');
