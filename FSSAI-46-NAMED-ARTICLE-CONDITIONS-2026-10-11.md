@@ -20,3 +20,7 @@ Audit conservation: **533 loaded products = 407 with partial exact evidence + 12
 Official FSSAI Version IX named-source article boundaries checked: Lead sugar ash row and refined sugar row (PDF page 2); Lead canned mushrooms and canned fruit cocktail (page 3); Lead dehydrated vegetable other than onion (page 3); Copper fruit pulp/cocoa powder (page 7); Arsenic fruit pulp/minarine (page 10 and page 9); Tin canned mushroom/food and fruit pulp (page 11). Separate source rows do not show applicability to any final recipe or package without evidence.
 
 This is a **source applicability batch, not closure of 126 outstanding cases**.
+
+## Runtime source-row integrity protection
+
+The 46-product panel now compares **every displayed reference's metal, exact named article, numeric value and units** against the currently loaded local official Version IX source database. If any row differs, the panel fails closed and withholds *all* conditional reference numbers for that selected product, rather than relying on cached or stale evidence-note values. This is an evidence-integrity protection and does not validate final-product applicability.
