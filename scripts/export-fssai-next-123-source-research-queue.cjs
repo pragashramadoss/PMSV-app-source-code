@@ -14,6 +14,8 @@ const source=load(base+"rules/contaminants-v9-unresolved-264-review-v1.json").re
 const audit=load("audit-output/fssai-product-readiness-audit.json").products;
 const cross=load(base+"rules/fssai-v9-31-cross-form-metal-source-nontransfer-2026-10-11.json");
 const tin=load(base+"rules/fssai-v9-tin-conditional-source-matrix-2026-10-11.json");
+const expanded=load(base+"rules/fssai-v9-expanded-identity-nontransfer-2026-10-11.json");
+const expandedRows=new Map([...cross.named_source_rows,...expanded.new_named_article_rows].map(s=>[s.id,s]));
 const metalPriorityDb=load(base+"rules/fssai-v9-metal-fallback-precedence-2026-10-11.json");
 const ayurveda=load(base+"rules/fssai-ayurveda-nine-recipe-b1-cross-article-source-review-2026-10-11.json");
 const fungiQuality=load(base+"rules/fssai-ten-edible-fungi-2-3-62-quality-and-ctr-gates-2026-10-11.json");
@@ -128,11 +130,15 @@ const outputs=remaining.map((x,i)=>{
   mango_chutney_or_fruit_pulp_metal_article_auto_inherited:false,
   product_compliance_pass:false
  }:null;
+ const extended=expanded.scope_guards.filter(g=>g.catalog_id===x.id).map(g=>{const a=expandedRows.get(g.reference_id);
+ assert.ok(a,"Unknown named row "+g.reference_id);
+ return {source_reference_id:g.reference_id,named_official_source_article:a.article,source_limit_review_only:a.limit,unit:a.unit,
+ required_applicability_or_exclusion:g.required_qualifier,is_applied:false,first_exact_source_promoted:false,compliance_pass:false};});
  const extracted=[];
  for(const [key,value] of Object.entries(old)){
   if(/2026_10_11|2026_10_10/.test(key)&&typeof value==="object")harvest(value,extracted);
  }
- const qs=[...articleGates.map(g=>g.required_applicability_or_exclusion),...tinArticleGates.map(g=>g.required_applicability_or_exclusion),...extracted,...pickDefaults(x.family)];
+ const qs=[...extended.map(g=>g.required_applicability_or_exclusion),...articleGates.map(g=>g.required_applicability_or_exclusion),...tinArticleGates.map(g=>g.required_applicability_or_exclusion),...extracted,...pickDefaults(x.family)];
  const questions=[...new Set(qs.map(clean).filter(v=>v.length>25))].slice(0,16);
  assert.ok(questions.length>=5,x.id);
  return {
@@ -140,6 +146,7 @@ const outputs=remaining.map((x,i)=>{
   status:"UNRESOLVED_FIRST_EXACT",official_fssai_ctr_source:cross.source,
   case_specific_questions:questions,
   named_article_references_review_only:articleGates,
+  expanded_named_article_references_review_only:extended,
   tin_named_article_references_review_only:tinArticleGates,
   generic_metal_precedence_references_review_only:metalArticlePriority,
   ayurveda_recipe_ingredient_source_review_only:recipeIngredientB1Review,
@@ -151,13 +158,16 @@ const outputs=remaining.map((x,i)=>{
   exemption_asserted:false};
 });
 const esc=x=>'"'+String(x??"").replaceAll('"','""')+'"';
-const cols=["priority","catalog_id","product","fssr","fcs","family","status","case_specific_questions","named_article_references_review_only","tin_named_article_references_review_only","generic_metal_precedence_references_review_only","ayurveda_recipe_ingredient_source_review_only","fungi_exact_quality_source_review_only","fruit_pickle_paste_quality_source_review_only","official_fssai_ctr_source","numeric_finished_product_limit_applied","first_exact_source_confirmed","full_compliance_pass"];
+const cols=["priority","catalog_id","product","fssr","fcs","family","status","case_specific_questions","named_article_references_review_only","expanded_named_article_references_review_only","tin_named_article_references_review_only","generic_metal_precedence_references_review_only","ayurveda_recipe_ingredient_source_review_only","fungi_exact_quality_source_review_only","fruit_pickle_paste_quality_source_review_only","official_fssai_ctr_source","numeric_finished_product_limit_applied","first_exact_source_confirmed","full_compliance_pass"];
 const csv=[cols.join(","),...outputs.map(r=>cols.map(k=>esc(Array.isArray(r[k])?r[k].map(v=>typeof v==="string"?v:JSON.stringify(v)).join(" | "):r[k])).join(","))].join("\n")+"\n";
 const dir=path.join(root,"audit-output");
 fs.mkdirSync(dir,{recursive:true});
 fs.writeFileSync(path.join(dir,"fssai-next-121-first-exact-source-research-queue.csv"),csv);
 fs.writeFileSync(path.join(dir,"fssai-next-121-first-exact-source-research-queue.json"),
  JSON.stringify({snapshot:"2026-10-11",source:"generated-live-533-ledger",total:533,pending:121,partial:412,full_compliance_passes:0,
+ expanded_source_rows:expanded.new_named_article_rows.length,
+ expanded_nontransfer_cases:outputs.reduce((n,r)=>n+r.expanded_named_article_references_review_only.length,0),
+ expanded_nontransfer_products:outputs.filter(r=>r.expanded_named_article_references_review_only.length>0).length,
  guard_source_rows:cross.named_source_rows.length,scope_nontransfer_cases:outputs.reduce((n,x)=>n+x.named_article_references_review_only.length,0),
  historical_scope_nontransfer_cases:cross.scope_guards.length,
  products_with_scope_nontransfer_cases:outputs.filter(x=>x.named_article_references_review_only.length>0).length,

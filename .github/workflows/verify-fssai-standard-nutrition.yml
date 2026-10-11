@@ -205,6 +205,8 @@ jobs:
         run: node --test tests/fssai-v9-metal-fallback-precedence-533-123-2026-10-11.test.cjs
       - name: Verify 13 named FSSAI tin articles and 61 no-transfer conditions
         run: node --test tests/fssai-v9-tin-conditional-123-source-matrix-2026-10-11.test.cjs
+      - name: Verify expanded 121-product named article nontransfer matrix
+        run: node --test tests/fssai-v9-expanded-identity-nontransfer-2026-10-11.test.cjs
       - name: Assert full 121-personalized-FSSAI-first-source worklists remain unresolved
         run: node --test tests/fssai-next-123-actionable-worklist-2026-10-11.test.cjs
       - name: Upload per-product compliance evidence audit
