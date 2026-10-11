@@ -244,6 +244,8 @@ jobs:
         run: node --test tests/fssai-three-canned-forms-official-source-proof-2026-10-11.test.cjs
       - name: Validate first source for FSSR 2.4.6(15) any other foodgrains
         run: node --test tests/fssai-other-foodgrains-direct-source-2026-10-11.test.cjs
+      - name: Verify 14 sugar, confection and processed-egg finished-form source gates
+        run: node --test tests/fssai-14-finished-matrix-source-gates-2026-10-11.test.cjs
       - name: Upload per-product compliance evidence audit
         if: always()
         uses: actions/upload-artifact@v4

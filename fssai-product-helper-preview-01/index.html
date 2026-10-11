@@ -1216,6 +1216,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}.tablewrap{overflow:aut
 <script src="./fssai-article-adjudications.js?v=20261011-decisions153"></script>
 <script src="./fssai-three-canned-subtype-sources.js?v=20261011-3canned"></script>
 <script src="./fssai-other-foodgrains-source.js?v=20261011-grain415"></script>
+<script src="./fssai-14-finished-form-gates.js?v=20261011-14matrix"></script>
 <script>
 // Initialize shared data state before selectors and renderers can read it.
 let regulatoryDb=null;
@@ -11448,6 +11449,7 @@ function renderProductContaminants(){
    +sourcePinnedAyurvedaRecipeB1ReviewHtml(p)
    +sourcePriorityMetalFallbackReviewHtml(p)
    +sourcePinnedExpandedMetalScopeHtml(p)
+   +(typeof pmsvFourteenSourceGatesHtml==='function'?pmsvFourteenSourceGatesHtml(p):'')
    +(typeof pmsvGrainProofHtml==='function'?pmsvGrainProofHtml(p):'')
    +(typeof sourcePinnedThreeCannedVariantProofHtml==='function'?sourcePinnedThreeCannedVariantProofHtml(p):'')
    +(typeof sourcePinnedLegalArticleAdjudicationHtml==='function'?sourcePinnedLegalArticleAdjudicationHtml(p):'')
@@ -11514,6 +11516,7 @@ function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
    +'<small><a href="'+official+'" target="_blank" rel="noopener noreferrer">Read the official FSSAI Gazette</a>. Watch-list inclusion does not itself prove product applicability or establish full compliance.</small></div>';
 }
 async function loadContaminantsDb(){
+ if(typeof pmsvLoadFourteenSourceRoutes==='function')await pmsvLoadFourteenSourceRoutes();
  if(typeof pmsvLoadGrainProof==='function')await pmsvLoadGrainProof();
  if(typeof pmsvLoadThreeCannedSubtypeProof==='function')await pmsvLoadThreeCannedSubtypeProof();
  if(typeof pmsvLoadArticleAdjudications==='function')await pmsvLoadArticleAdjudications();
