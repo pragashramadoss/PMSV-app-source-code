@@ -42,3 +42,24 @@ test("31 identity-specific official source conflicts are included in live 123-pr
  assert.equal(count,31);assert.equal(ids.size,26);
  assert.equal(x.products_with_scope_nontransfer_cases,26);
 });
+
+test("13 official Tin reference articles and 61 conditional cases survive in all 123 unresolved research worklists",()=>{
+ const tin=read("fssai-product-helper-preview-01/data/rules/fssai-v9-tin-conditional-source-matrix-2026-10-11.json");
+ assert.equal(x.tin_named_source_rows,13);
+ assert.equal(x.tin_conditional_source_cases,61);
+ assert.equal(x.tin_products_with_conditional_source_cases,36);
+ let count=0;
+ for(const p of x.records){
+  const expected=tin.scope_guards.filter(g=>g.catalog_id===p.catalog_id);
+  assert.equal(p.tin_named_article_references_review_only.length,expected.length,p.catalog_id);
+  for(const g of expected){
+   const row=p.tin_named_article_references_review_only.find(y=>y.source_reference_id===g.source_id);
+   assert.ok(row,p.catalog_id+" "+g.source_id);
+   assert.equal(row.required_applicability_or_exclusion,g.required_qualifier);
+   assert.equal(row.is_applied,false);
+   assert.equal(row.first_exact_source_confirmed,false);
+   count++;
+  }
+ }
+ assert.equal(count,61);
+});

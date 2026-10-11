@@ -13,6 +13,7 @@ const products=load(base+"standard-search-index-v1.json").products;
 const source=load(base+"rules/contaminants-v9-unresolved-264-review-v1.json").records;
 const audit=load("audit-output/fssai-product-readiness-audit.json").products;
 const cross=load(base+"rules/fssai-v9-31-cross-form-metal-source-nontransfer-2026-10-11.json");
+const tin=load(base+"rules/fssai-v9-tin-conditional-source-matrix-2026-10-11.json");
 const indexed=new Map(products.map(p=>[p.id,p]));
 const historic=new Map(source.map(p=>[p.catalog_id,p]));
 const examined=new Map(audit.map(p=>[p.id,p]));
@@ -61,11 +62,18 @@ const outputs=remaining.map((x,i)=>{
   required_applicability_or_exclusion:g.required_qualifier,
   is_applied:false
  }));
+ const tinArticleGates=tin.scope_guards.filter(g=>g.catalog_id===x.id).map(g=>({
+  source_reference_id:g.source_id,
+  named_official_source_article:tin.named_source_rows.find(s=>s.id===g.source_id)?.article||"",
+  source_limit_mgkg_review_only:tin.named_source_rows.find(s=>s.id===g.source_id)?.maximum_mg_per_kg,
+  unit:"mg/kg",required_applicability_or_exclusion:g.required_qualifier,
+  is_applied:false,first_exact_source_confirmed:false
+ }));
  const extracted=[];
  for(const [key,value] of Object.entries(old)){
   if(/2026_10_11|2026_10_10/.test(key)&&typeof value==="object")harvest(value,extracted);
  }
- const qs=[...articleGates.map(g=>g.required_applicability_or_exclusion),...extracted,...pickDefaults(x.family)];
+ const qs=[...articleGates.map(g=>g.required_applicability_or_exclusion),...tinArticleGates.map(g=>g.required_applicability_or_exclusion),...extracted,...pickDefaults(x.family)];
  const questions=[...new Set(qs.map(clean).filter(v=>v.length>25))].slice(0,16);
  assert.ok(questions.length>=5,x.id);
  return {
@@ -73,13 +81,14 @@ const outputs=remaining.map((x,i)=>{
   status:"UNRESOLVED_FIRST_EXACT",official_fssai_ctr_source:cross.source,
   case_specific_questions:questions,
   named_article_references_review_only:articleGates,
+  tin_named_article_references_review_only:tinArticleGates,
   supporting_source_urls:(r.official_source_urls||[]).filter(u=>/^https:\/\/(www\.)?fssai\.gov\.in\//.test(u)).slice(0,10),
   required_evidence:["exact operative named article","identity and processing qualification","analytical/residue basis","effective amendment verification","sample measurement before compliance determination"],
   numeric_finished_product_limit_applied:false,first_exact_source_confirmed:false,full_compliance_pass:false,
   exemption_asserted:false};
 });
 const esc=x=>'"'+String(x??"").replaceAll('"','""')+'"';
-const cols=["priority","catalog_id","product","fssr","fcs","family","status","case_specific_questions","named_article_references_review_only","official_fssai_ctr_source","numeric_finished_product_limit_applied","first_exact_source_confirmed","full_compliance_pass"];
+const cols=["priority","catalog_id","product","fssr","fcs","family","status","case_specific_questions","named_article_references_review_only","tin_named_article_references_review_only","official_fssai_ctr_source","numeric_finished_product_limit_applied","first_exact_source_confirmed","full_compliance_pass"];
 const csv=[cols.join(","),...outputs.map(r=>cols.map(k=>esc(Array.isArray(r[k])?r[k].map(v=>typeof v==="string"?v:JSON.stringify(v)).join(" | "):r[k])).join(","))].join("\n")+"\n";
 const dir=path.join(root,"audit-output");
 fs.mkdirSync(dir,{recursive:true});
@@ -88,5 +97,8 @@ fs.writeFileSync(path.join(dir,"fssai-next-123-first-exact-source-research-queue
  JSON.stringify({snapshot:"2026-10-11",source:"generated-live-533-ledger",total:533,pending:123,partial:410,full_compliance_passes:0,
  guard_source_rows:cross.named_source_rows.length,scope_nontransfer_cases:cross.scope_guards.length,
  products_with_scope_nontransfer_cases:outputs.filter(x=>x.named_article_references_review_only.length>0).length,
+ tin_named_source_rows:tin.named_source_rows.length,
+ tin_conditional_source_cases:tin.scope_guards.length,
+ tin_products_with_conditional_source_cases:outputs.filter(x=>x.tin_named_article_references_review_only.length>0).length,
  records:outputs},null,2)+"\n");
-console.log("Generated 123 individual FSSAI source-verification worklists; "+cross.scope_guards.length+" nontransfer cases; 0 numeric approvals");
+console.log("Generated 123 individual FSSAI source-verification worklists; "+cross.scope_guards.length+" earlier metal and "+tin.scope_guards.length+" Tin nontransfer cases; 0 numeric approvals");
