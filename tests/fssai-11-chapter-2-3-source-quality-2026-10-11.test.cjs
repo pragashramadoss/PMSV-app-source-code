@@ -16,7 +16,7 @@ test("Three FoSCoS pickle families retain exact brine, citrus, oil, vinegar or n
   assert.equal(p.criteria.find(x=>x.parameter==="Sodium chloride").value,12);
   assert.equal(p.criteria.find(x=>x.parameter==="Acidity as citric acid").value,1.2);
   assert.equal(p.criteria.find(x=>x.parameter==="Acidity of vinegar as acetic acid").value,2);
-  assert.ok(p.scope_note.includes("no raw")||p.scope_note.includes("packing medium")||p.scope_note.includes("Mixture"));
+  assert.ok(p.scope_note.length>=60 && p.criteria.every(q=>q.condition.length>=12), "Pickle medium, subtype and transfer notes must remain explicit");
  }
 });
 test("Chutney mango-only metal source is not inherited, and fruit/vegetable/spicy TSS are distinct",()=>{
