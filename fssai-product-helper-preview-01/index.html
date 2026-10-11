@@ -10487,7 +10487,9 @@ function sourcePriorityMetalFallbackReviewHtml(p){
  const m=sourcePriorityMetalDb;
  if(!Array.isArray(m.unresolved_first_exact_catalog_ids)||m.unresolved_first_exact_catalog_ids.length!==123||!m.unresolved_first_exact_catalog_ids.includes(p.id))return '';
  const record=(contaminantsPendingReviewDb.records||[]).find(x=>x.catalog_id===p.id);
- if(!record||record.product_name!==p.name||String(record.fssr)!==String(p.fssr)||String(record.fcs)!==String(p.fcs))return '';
+ const pinned=(m.unresolved_exact_product_identity_gates||[]).find(x=>x.catalog_id===p.id);
+ if(!pinned||pinned.product_name!==p.name||String(pinned.fssr)!==String(p.fssr)||String(pinned.fcs)!==String(p.fcs)||
+    !record||record.product_name!==p.name||String(record.fssr)!==String(p.fssr))return '';
  const withheld='<div class="notice"><b>Source article precedence review withheld due to source mismatch.</b> No fallback limit has been assigned; check the current official FSSAI source.</div>';
  const rows=m.rows||[];
  if(rows.length!==7||m.catalogue_count!==533||m.unresolved_first_exact_before!==123||
