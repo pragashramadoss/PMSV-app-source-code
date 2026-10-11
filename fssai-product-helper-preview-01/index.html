@@ -10387,6 +10387,19 @@ function pendingContaminantReviewNotice(p){
    +' · <a href="'+esc(chicory.official_ctr_ix_pdf)+'" target="_blank" rel="noopener noreferrer">Official CTR IX</a>. '
    +'Roasted/instant and regular/decaf, exact recipe and compliance are unresolved.</small></details>'
   :'';
+ const vending=record.official_vending_purified_water_is10500_gate_2026_10_11;
+ const vendingValid=vending&&vending.catalog_id===p.id&&vending.product_name===p.name
+  &&vending.fssr===p.fssr&&vending.treated_as_packaged_drinking_water===false
+  &&vending.packaged_water_pesticide_or_metal_limit_applied===false&&vending.finished_water_compliance_pass===false;
+ const vendingHtml=vendingValid
+  ?'<details style="margin:9px 0"><summary><b>11 October Purified vending water — NOT packaged water, IS:10500 REFERENCE</b></summary>'
+   +'<p>'+esc(vending.regulatory_identity)+'</p><p>'+esc(vending.legal_composition_reference)+'</p>'
+   +'<p><b>Do not inherit:</b> '+esc(vending.excluded_wrong_routing)+'</p>'
+   +'<p>'+esc(vending.critical_next_verification)+'</p>'
+   +'<small><a href="'+esc(vending.official_fssai_source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI 2.10.9</a>'
+   +' · <a href="'+esc(vending.official_version_ix_source)+'" target="_blank" rel="noopener noreferrer">Official CTR Version IX</a>. '
+   +'No numeric IS:10500 limits or packaged-water values are applied here.</small></details>'
+  :'';
  const candidate=record.specific_source_commodity_subtype_review_2026_10_10;
  const candidateHtml=candidate&&candidate.review_only===true&&candidate.automatically_applied===false
    ?'<details style="margin:9px 0"><summary><b>Official named commodity article — conditional, NOT APPLIED</b></summary>'
@@ -10436,6 +10449,7 @@ function pendingContaminantReviewNotice(p){
    +fatSpreadHtml
    +sagoHcnHtml
    +chicoryHtml
+   +vendingHtml
    +candidateHtml
    +discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
