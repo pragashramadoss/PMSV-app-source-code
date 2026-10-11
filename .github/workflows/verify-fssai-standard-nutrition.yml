@@ -252,6 +252,10 @@ jobs:
         run: node scripts/audit-fssai-34-finished-form-conditionals-2026-10-11.cjs
       - name: Verify 56 independently reviewed pending identities and their live fail-closed FSSAI scope panels
         run: node --test tests/fssai-56-cross-form-nontransfer-live-panels-2026-10-11.test.cjs
+      - name: Reconcile all 533 FSSAI identities to 417 partial source matches and 116 still pending
+        run: node scripts/audit-fssai-current-417-116-and-rabbit-veterinary-first-source-2026-10-11.cjs
+      - name: Verify official rabbit veterinary-tissue source and final 28-product evidence UI
+        run: node --test tests/fssai-current-417-116-rabbit-first-source-and-28-remaining-ui-2026-10-11.test.cjs
       - name: Upload per-product compliance evidence audit
         if: always()
         uses: actions/upload-artifact@v4
@@ -260,6 +264,7 @@ jobs:
           path: |
             audit-output/fssai-product-readiness-audit.json
             audit-output/fssai-contaminant-review-queue.md
+            audit-output/fssai-current-first-source-533-reconciliation-v2.json
             audit-output/fssai-contaminant-evidence-disposition-533.json
             audit-output/fssai-contaminant-evidence-disposition-summary.md
             audit-output/fssai-126-detailed-source-applicability-reconciliation.json
