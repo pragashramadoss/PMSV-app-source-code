@@ -33,14 +33,19 @@ test("31 product/article nontransfer cases cover 26 unresolved real identities, 
 test("All 18 source references have exact FSSAI Version IX stored article and numeric value; no generic default rows",()=>{
  assert.match(core.source_version,/Version IX.*03\.02\.2026/);
  assert.equal(m.source,"https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf");
+ const mismatch=[];
  for(const x of m.named_source_rows){
   assert.ok(Number.isInteger(x.pdf_page_one_based)&&x.pdf_page_one_based>=2);
   assert.ok(!/foods not specified/i.test(x.article));
-  const rows=(core.metal_article_rules_v9[x.metal]||[]).filter(y=>y.row_type==="exact"&&norm(y.article)===norm(x.article));
-  assert.equal(rows.length,1,"Official article missing/ambiguous "+x.id+" "+x.article);
-  assert.equal(Number(rows[0].limit),x.limit,x.id+" altered limit");
-  assert.equal(rows[0].unit,x.unit,x.id+" changed unit");
+  const all=core.metal_article_rules_v9[x.metal]||[];
+  const rows=all.filter(y=>y.row_type==="exact"&&norm(y.article)===norm(x.article));
+  if(rows.length!==1||Number(rows[0]?.limit)!==x.limit||rows[0]?.unit!==x.unit){
+   mismatch.push({id:x.id,wanted:{article:x.article,limit:x.limit,unit:x.unit},matches:rows,
+    likely:all.filter(y=>/milk|water|cocoa|fruit|tomato|onion|frozen|cream/i.test(y.article)).filter(y=>norm(y.article).includes(norm(x.article).slice(0,13))||norm(x.article).includes(norm(y.article).slice(0,11))).slice(0,6)});
+  }
  }
+ assert.deepEqual(mismatch,[],"Incorrect or missing core named-article source records");
+
 });
 test("Cross-family article violations cannot become literal first-exact product evidence",()=>{
  const pairs=[
