@@ -10410,7 +10410,17 @@ function pendingContaminantReviewNotice(p){
  const branchValid=branch&&branch.catalog_id===p.id&&branch.product_name===p.name&&branch.fssr===p.fssr
   &&branch.exact_finished_product_eligibility_verified===false&&branch.any_numeric_finished_product_limit_applied===false
   &&branch.full_regulatory_compliance_pass===false&&branch.conditional_or_excluded_source_rows.every(x=>x.automatically_assigned_as_finished_product_limit===false);
- const branchHtml=branchValid
+ const branchRowsSourceValidated=!!(branchValid&&typeof contaminantsDb!=='undefined'&&contaminantsDb
+   &&branch.conditional_or_excluded_source_rows.every(x=>{
+    const canonical=String(x.official_named_article||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+    return (contaminantsDb.metal_article_rules_v9?.[x.metal]||[]).some(y=>
+      y.row_type==='exact'
+      &&String(y.article||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()===canonical
+      &&Number(y.limit)===Number(x.official_reference_limit)&&String(y.unit)===String(x.unit));
+   }));
+ const branchHtml=branchValid&&!branchRowsSourceValidated
+  ?'<div class="notice"><b>Conditional named-article references WITHHELD.</b> The loaded official Version IX source table does not match these named article/metal/value/unit references or is not available. No numeric candidate is displayed. Source re-validation required; no compliance PASS.</div>'
+  :branchRowsSourceValidated
   ?'<details style="margin:9px 0"><summary><b>11 October conditional named-article source checks — NOT APPLIED</b></summary>'
    +'<p><b>Regulatory distinction:</b> '+esc(branch.branch_group.replaceAll('_',' '))+'. Only the official source rows below have been verified; finished-product applicability remains unverified.</p>'
    +'<ol style="padding-left:22px;margin:6px 0">'+branch.source_qualifying_questions.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol>'
