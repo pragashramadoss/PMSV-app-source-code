@@ -6,7 +6,7 @@ const ix=read(pre+"data/standard-search-index-v1.json").products,ledger=read("au
 const html=fs.readFileSync(path.join(root,pre,"index.html"),"utf8");
 const begin=html.indexOf("function sourcePinnedFinishedFoodSubtypeReviewHtml(p){"),end=html.indexOf("function sourcePinnedExpandedMetalScopeHtml(p){",begin+25);
 assert.ok(begin>0&&end>begin,"Exact subtype live screen function missing");
-const ctx=vm.createContext({namedFoodSubtypesDb:structuredClone(m),contaminantsDb:structuredClone(v9),
+const ctx=vm.createContext({namedFoodSubtypesDb:structuredClone(m),contaminantsDb:structuredClone(v9),pmsvFinishedFoodArticleResearchState:{catalog_id:'',subtype_id:''},
  esc:s=>String(s??"").replace(/[&<>"']/g,k=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[k]))});
 vm.runInContext(html.slice(begin,end),ctx);
 const product=id=>ix.find(p=>p.id===id),draw=p=>vm.runInContext("sourcePinnedFinishedFoodSubtypeReviewHtml("+JSON.stringify(p)+")",ctx),norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();

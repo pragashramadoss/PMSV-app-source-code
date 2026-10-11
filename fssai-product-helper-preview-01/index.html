@@ -1225,6 +1225,7 @@ let sourcePriorityMetalDb=null;
 let crossFormV9ScopeDb=null;
 let metalMeasurementBasisDb=null;
 let namedFoodSubtypesDb=null;
+let pmsvFinishedFoodArticleResearchState={catalog_id:'',subtype_id:''};
 let exactSevenQualityDb=null;
 let expandedV9ScopeDb=null;
 let crossMetalV9ScopeDb=null;
@@ -1256,7 +1257,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-seven-official-quality-routes-v516';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-finished-form-research-selector-v517';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -7449,6 +7450,13 @@ document.getElementById('productSubcategorySelect')?.addEventListener('change',(
 document.getElementById('productSelect')?.addEventListener('change',event=>{
  showSelectedCatalogProduct(findCatalogProductById(event.currentTarget.value));
 });
+document.getElementById('productContaminantResults')?.addEventListener('change',event=>{
+ const select=event.target;
+ if(select?.id!=='pmsvFinishedFoodArticleSubtype')return;
+ const p=selectedCatalogProductForContaminants();
+ if(!p||select.dataset.catalogId!==p.id)return;
+ if(setPmsvFinishedFoodArticleResearchSubtype(p.id,select.value))renderProductContaminants();
+});
 document.getElementById('contaminantPackageFormat')?.addEventListener('change',renderProductContaminants);
 document.getElementById('contaminantContainerMaterial')?.addEventListener('change',renderProductContaminants);
 document.getElementById('contaminantTinProductIdentity')?.addEventListener('change',renderProductContaminants);
@@ -10685,6 +10693,19 @@ function sourcePinnedSevenOfficialProductQualityHtml(p){
   +'<small><a href="'+esc(row.source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI product-standard chapter</a>. Full contaminant and pesticide coverage remains unresolved.</small></details>';
 }
 
+function setPmsvFinishedFoodArticleResearchSubtype(catalogId,subtypeId){
+ const p=selectedCatalogProductForContaminants();
+ if(!p||p.id!==catalogId)return false;
+ const row=(namedFoodSubtypesDb?.records||[]).find(r=>r.catalog_id===p.id);
+ if(!row||row.product_name!==p.name||row.fssr!==p.fssr||row.fcs!==p.fcs)return false;
+ // A selector records which FSSAI source candidate is being studied. It NEVER
+ // confirms product identity, legal applicability, analytical limits, or PASS.
+ const valid=subtypeId===''||subtypeId==='__none__'||row.forms.some(r=>r.subtype_id===subtypeId);
+ if(!valid)return false;
+ pmsvFinishedFoodArticleResearchState={catalog_id:p.id,subtype_id:subtypeId};
+ return true;
+}
+
 function sourcePinnedFinishedFoodSubtypeReviewHtml(p){
  if(!p||!namedFoodSubtypesDb||!contaminantsDb)return '';
  const db=namedFoodSubtypesDb,row=(db.records||[]).find(x=>x.catalog_id===p.id);
@@ -10712,7 +10733,21 @@ function sourcePinnedFinishedFoodSubtypeReviewHtml(p){
        Number(s.limit)===r.limit&&s.unit===r.unit&&String(s.condition||'')===r.measurement_basis
     ).length===1));
  if(!checked)return withheld;
- const entries=row.forms.map(x=>'<tr><td><b>'+esc(x.label)+'</b></td><td>'
+ const selected=pmsvFinishedFoodArticleResearchState.catalog_id===p.id
+   ?pmsvFinishedFoodArticleResearchState.subtype_id:'';
+ const selectedValid=selected===''||selected==='__none__'||row.forms.some(f=>f.subtype_id===selected);
+ if(!selectedValid)return withheld;
+ const rowsToShow=selected&&selected!=='__none__'?row.forms.filter(f=>f.subtype_id===selected):selected==='__none__'?[]:row.forms;
+ const selector='<div style="margin:10px 0"><label for="pmsvFinishedFoodArticleSubtype"><b>Choose the exact finished form for further source research (optional):</b></label>'
+   +'<select id="pmsvFinishedFoodArticleSubtype" data-catalog-id="'+esc(p.id)+'" aria-label="FSSAI finished food source candidate">'
+   +'<option value=""'+(!selected?' selected':'')+'>Show all conditional form references</option>'
+   +row.forms.map(f=>'<option value="'+esc(f.subtype_id)+'"'+(selected===f.subtype_id?' selected':'')+'>'+esc(f.label)+'</option>').join('')
+   +'<option value="__none__"'+(selected==='__none__'?' selected':'')+'>None of these named articles matches the finished product</option></select></div>';
+ const selectionNote=selected==='__none__'
+   ?'<div class="notice"><b>No listed named article selected.</b> Investigate a different official FSSAI food article. No numeric reference is assigned and this product remains unresolved.</div>'
+   :selected?'<div class="notice"><b>Research candidate selected — NOT confirmed as applicable.</b> Selecting this subtype does not verify its recipe, packaging, product standard, analytical basis, legal amendments or actual laboratory sample. No numeric compliance decision is issued.</div>'
+   :'<p>All possible named articles are shown for comparative research only; choose a subtype above to narrow the source references.</p>';
+ const entries=rowsToShow.map(x=>'<tr><td><b>'+esc(x.label)+'</b></td><td>'
    +x.named_articles.map(r=>'<b>'+esc(r.metal)+'</b>: '+esc(r.limit)+' '+esc(r.unit)
     +' — '+esc(r.article)+(r.measurement_basis?'<small><b>Basis:</b> '+esc(r.measurement_basis)+'</small>':'')
     +'<small><b>NOT APPLIED</b> until exact finished-product match</small>').join('<hr>')
@@ -10720,8 +10755,9 @@ function sourcePinnedFinishedFoodSubtypeReviewHtml(p){
  return '<details style="margin:10px 0"><summary><b>Specific FSSAI finished-food article candidates — '
    +esc(row.forms.length)+' conditional form'+(row.forms.length===1?'':'s')+' (REVIEW ONLY)</b></summary>'
    +'<p>These are <b>real named Version IX articles</b>, but this broad FoSCoS product entry has not established that the tested food is the named finished subtype. <b>All numeric references are withheld from the compliance engine</b> until recipe, food standard, packing form, sample basis and effective amendments are established. No source promotion or overall laboratory PASS is claimed.</p>'
-   +'<div class="tablewrap"><table><thead><tr><th>Potential finished subtype</th><th>Verified named source row — NOT APPLIED</th><th>What must be proved before use</th></tr></thead><tbody>'
-   +entries+'</tbody></table></div>'
+   +selector+selectionNote
+   +(selected==='__none__'?'':'<div class="tablewrap"><table><thead><tr><th>Potential finished subtype</th><th>Verified named source row — NOT APPLIED</th><th>What must be proved before use</th></tr></thead><tbody>')
+   +(selected==='__none__'?'':entries+'</tbody></table></div>')
    +'<small><a href="'+esc(official)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX Section 2.1</a></small></details>';
 }
 
