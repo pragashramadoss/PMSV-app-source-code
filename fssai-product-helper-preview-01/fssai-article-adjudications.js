@@ -49,5 +49,5 @@ function sourcePinnedLegalArticleAdjudicationHtml(p){
  const excluded=selected.filter(x=>x.legal_article_applicability==='DIRECT_FINISHED_ARTICLE_EXCLUDED').length;
  return '<details class="card" style="margin-top:12px"><summary><b>Verified applicability of candidate named articles</b> · '+excluded+
   ' source article'+(excluded===1?'':'s')+' ruled out for direct use</summary><div class="notice">This finding concerns only the named article, not a blanket exemption from contaminants. Other product-specific limits, pesticide residues and sample compliance remain open. Nothing here issues a compliance PASS.</div>'+
-  '<div class="tablewrap"><table><thead><tr><th>Source named article</th><th>Applicability decision</th><th>Positive proof / next action</th></tr></thead><tbody>'+lines.join('')+'</tbody></table></div></details>';
+  '<div class="tablewrap"><table><thead><tr><th>Source named article</th><th>Applicability decision</th><th>Positive proof / next action</th></tr></thead><tbody>'+lines+'</tbody></table></div></details>';
 }

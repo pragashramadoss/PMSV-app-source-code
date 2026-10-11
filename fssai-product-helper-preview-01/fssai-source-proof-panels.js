@@ -43,6 +43,16 @@ function pmsvProofSourceMatch(r,db){
 function sourcePinned121ResearchProofHtml(p){
  const queue=sourcePriorityMetalDb?.unresolved_first_exact_catalog_ids;
  if(!p||!Array.isArray(queue)||!queue.includes(p.id))return '';
+ // A historic first-source queue is still archived at 121. A positively
+ // source-matched Ayurveda recipe must not be shown as currently unresolved
+ // if its independent official article/recipe source gate validates.
+ if(typeof sourcePinnedAyurvedaCompositeB1Html==='function' &&
+    typeof pmsvAyurvedaCompositeB1Db!=='undefined' &&
+    pmsvAyurvedaCompositeB1Db?.records?.some(x=>x.catalog_id===p.id)){
+   const exact=sourcePinnedAyurvedaCompositeB1Html(p);
+   if(exact.includes('Positive FSSAI first-source match'))return '';
+ }
+
  const withheld='<div class="notice"><b>First-source research withheld:</b> the identity, source table, or review manifest is unavailable or inconsistent. No finished-product contaminant limit, exemption or PASS is inferred.</div>';
  const a=pmsvNext121ProofDb,b=pmsvNext29DossiersDb,c=contaminantsDb;
  const source='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf';
