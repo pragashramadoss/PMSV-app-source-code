@@ -43,6 +43,12 @@ test("The standalone machine-readable source-matrix reconciliation regenerates 1
  assert.equal(doc.separate_numeric_product_quality_values_2026_10_11,108);
  assert.equal(doc.dairy_analogue_identity_exclusion_guards_2026_10_11,8);
  assert.equal(doc.purified_vending_water_noninheritance_guards_2026_10_11,1);
+ assert.equal(doc.additional_product_conditional_named_article_reviews_2026_10_11,46);
+ assert.equal(doc.additional_official_named_metal_source_references_not_applied_2026_10_11,82);
+ assert.equal(doc.source_article_values_checked_against_loaded_v9,true);
+ assert.equal(doc.checkpoints.filter(p=>p.source_verified_conditional_named_articles_2026_10_11).length,46);
+ assert.equal(doc.checkpoints.reduce((n,p)=>n+(p.source_verified_conditional_named_articles_2026_10_11?.official_article_references_not_applied||0),0),82);
+ assert.ok(doc.checkpoints.every(p=>!p.source_verified_conditional_named_articles_2026_10_11||p.source_verified_conditional_named_articles_2026_10_11.product_compliance_pass===false));
  assert.ok(doc.checkpoints.every(p=>p.current_round_2026_10_11&&p.current_round_2026_10_11.source_qualifier_questions.length===5));
  assert.ok(doc.checkpoints.every(p=>p.current_round_2026_10_11.current_product_compliance_approved===false));
  assert.equal(doc.checkpoints.reduce((n,p)=>n+p.current_round_2026_10_11.named_numeric_source_article_references_review_only.length,0),15);
