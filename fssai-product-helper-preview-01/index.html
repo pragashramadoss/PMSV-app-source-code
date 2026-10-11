@@ -10406,6 +10406,20 @@ function pendingContaminantReviewNotice(p){
      +'<p><b>'+esc(candidate.pesticide)+'</b> · '+esc(candidate.source_article)+' · '+esc(String(candidate.source_mrl))+' '+esc(candidate.unit)+' — <b>review only</b>.</p>'
      +'<p>'+esc(candidate.condition)+'</p><small><a href="'+esc(candidate.official_ctr_url)+'" target="_blank" rel="noopener noreferrer">FSSAI Version IX</a></small></details>'
    :'';
+ const branch=record.conditional_article_branch_matrix_2026_10_11;
+ const branchValid=branch&&branch.catalog_id===p.id&&branch.product_name===p.name&&branch.fssr===p.fssr
+  &&branch.exact_finished_product_eligibility_verified===false&&branch.any_numeric_finished_product_limit_applied===false
+  &&branch.full_regulatory_compliance_pass===false&&branch.conditional_or_excluded_source_rows.every(x=>x.automatically_assigned_as_finished_product_limit===false);
+ const branchHtml=branchValid
+  ?'<details style="margin:9px 0"><summary><b>11 October conditional named-article source checks — NOT APPLIED</b></summary>'
+   +'<p><b>Regulatory distinction:</b> '+esc(branch.branch_group.replaceAll('_',' '))+'. Only the official source rows below have been verified; finished-product applicability remains unverified.</p>'
+   +'<ol style="padding-left:22px;margin:6px 0">'+branch.source_qualifying_questions.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol>'
+   +'<ul style="padding-left:20px;margin:6px 0">'+branch.conditional_or_excluded_source_rows.map(x=>'<li><b>'+esc(x.metal)+' — '+esc(x.official_named_article)+'</b>: '
+    +esc(x.official_reference_limit)+' '+esc(x.unit)+' <b>source reference only — NOT APPLIED</b>. '+esc(x.finished_product_qualification)
+    +(x.applicability.startsWith('prohibited_')||x.applicability.startsWith('explicitly_excluded')?' <b>Excluded transfer for the stated variant.</b>':'')+'</li>').join('')+'</ul>'
+   +'<small><a href="'+esc(branch.official_source_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Contaminants Regulations, Version IX</a>. '
+   +'Product-specific limits, all other substances, amendment status and sample compliance are unresolved. No automatic numeric PASS.</small></details>'
+  :'';
  const corrected=record.official_standard_route_correction_2026_10_11;
  const correctedValid=corrected&&corrected.exact_named_fssr===p.fssr
    &&corrected.official_named_product_verified===true
@@ -10464,7 +10478,7 @@ function pendingContaminantReviewNotice(p){
    +chicoryHtml
    +vendingHtml
    +candidateHtml
-   +correctedHtml+discrepancyHtml
+   +branchHtml+correctedHtml+discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
 }
 function renderProductContaminants(){
