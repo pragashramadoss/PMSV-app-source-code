@@ -14,6 +14,8 @@ assert.equal(m.rows.length,7);
 const ids=new Set(ix.map(x=>x.id));
 const pending=new Set(live.pending_product_details.map(x=>x.id));
 assert.equal(pending.size,123);
+assert.equal(m.unresolved_first_exact_catalog_id_count,123);
+assert.deepEqual(new Set(m.unresolved_first_exact_catalog_ids),pending,"Named source priority product gate must equal current 123 live first-exact gaps");
 for(const id of pending)assert.ok(ids.has(id));
 for(const row of m.rows){
  const all=core.metal_article_rules_v9[row.metal]||[];
