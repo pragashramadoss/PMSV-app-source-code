@@ -10245,6 +10245,21 @@ function pendingContaminantReviewNotice(p){
    +' · <a href="'+esc(chapter23.ctr_source_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX</a>. '
    +'No sample or complete MRL compliance established.</small></details>'
   :'';
+ const special=record.special_foscos_identity_matrix_2026_10_11;
+ const specialValid=special&&special.catalog_id===p.id&&special.product_name===p.name
+  &&String(special.fssr)===String(p.fssr)&&special.auto_apply_metal_mycotoxin_or_pesticide_limit===false
+  &&special.finished_product_compliance_result===false&&special.confirms_specific_ctr_product_article===false;
+ const specialHtml=specialValid
+  ?'<details style="margin:9px 0"><summary><b>11 October special FoSCoS product — mandatory ingredient and source qualifications (NOT APPLIED)</b></summary>'
+    +'<p>'+esc(special.exact_product_identity_required)+'</p>'
+    +'<ol style="padding-left:22px;margin:6px 0">'
+    +(special.five_required_ingredient_process_and_source_qualifiers||[]).map(x=>'<li>'+esc(x)+'</li>').join('')
+    +'</ol><p><b>Do not inherit:</b> '+esc(special.illegal_article_transfer_to_block)+'</p>'
+    +(special.specific_extra_safeguards||[]).map(x=>'<p>'+esc(x)+'</p>').join('')
+    +'<small><a href="'+esc(special.official_foscos_source)+'" target="_blank" rel="noopener noreferrer">Official FoSCoS products</a>'
+    +' · <a href="'+esc(special.official_ctr_source)+'" target="_blank" rel="noopener noreferrer">Official Version IX</a>. '
+    +'Product-specific contaminant limits and compliance remain unresolved.</small></details>'
+  :'';
  const candidate=record.specific_source_commodity_subtype_review_2026_10_10;
  const candidateHtml=candidate&&candidate.review_only===true&&candidate.automatically_applied===false
    ?'<details style="margin:9px 0"><summary><b>Official named commodity article — conditional, NOT APPLIED</b></summary>'
@@ -10285,6 +10300,7 @@ function pendingContaminantReviewNotice(p){
    +tailHtml
    +subtypeHtml
    +chapter23Html
+   +specialHtml
    +candidateHtml
    +discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
