@@ -3,6 +3,7 @@ const {test}=require("node:test"),assert=require("node:assert/strict"),fs=requir
 const root=path.resolve(__dirname,".."),load=f=>JSON.parse(fs.readFileSync(path.join(root,f),"utf8")),base="fssai-product-helper-preview-01/data/";
 const d=load(base+"rules/fssai-ten-edible-fungi-2-3-62-quality-and-ctr-gates-2026-10-11.json");
 const ix=load(base+"standard-search-index-v1.json").products, by=new Map(ix.map(x=>[x.id,x]));
+const ctr=load(base+"rules/contaminants-v9-core.json");
 test("Every Chapter 2.3.62 subtype has source-pinned exact quality, no assumed chemical MRL",()=>{
  assert.equal(d.verified_local_products,10);assert.equal(d.records.length,10);
  assert.ok(d.quality_source_rows>=50);assert.equal(d.first_exact_contaminant_source_promotions,0);
@@ -36,6 +37,12 @@ test("Salt, fermentation, vinegar, impurities, extract and concentration must no
  assert.ok(get("oil_packed").some(x=>x.parameter==="Salt"&&x.value===1));
 });
 test("FSSAI NOTS mushroom species and metal packaging conditions remain REVIEW ONLY",()=>{
+ for(const [metal,article,limit,unit] of [["Lead","Canned mushrooms",1,"mg/kg"],["Tin","Canned mushrooms",250,"mg/kg"]]){
+  const xs=ctr.metal_article_rules_v9[metal]||[];
+  assert.equal(xs.filter(r=>r.article===article&&Number(r.limit)===limit&&r.unit===unit).length,1,metal);
+ }
+ const a=ctr.naturally_occurring_toxic_substances.agaric_acid;
+ assert.equal(a.filter(r=>r.article==="Food containing mushrooms"&&r.limit===100&&r.unit==="ppm").length,1);
  assert.equal(d.conditional_contaminants.agaric_acid.article,"Food containing mushrooms");
  assert.equal(d.conditional_contaminants.agaric_acid.limit,100);
  assert.equal(d.conditional_contaminants.tin.article,"Canned mushrooms");

@@ -3,11 +3,12 @@ const {test}=require("node:test"),assert=require("node:assert/strict"),fs=requir
 const root=path.resolve(__dirname,".."),base="fssai-product-helper-preview-01/data/";
 const read=x=>JSON.parse(fs.readFileSync(path.join(root,x),"utf8"));
 const d=read(base+"rules/fssai-ten-edible-fungi-2-3-62-quality-and-ctr-gates-2026-10-11.json");
+const ctr=read(base+"rules/contaminants-v9-core.json");
 const index=read(base+"standard-search-index-v1.json").products,by=new Map(index.map(x=>[x.id,x]));
 const html=fs.readFileSync(path.join(root,"fssai-product-helper-preview-01/index.html"),"utf8");
 const a=html.indexOf("function sourcePinnedFungiQualitySourceReviewHtml(p){"),b=html.indexOf("function sourcePinnedAyurvedaRecipeB1ReviewHtml(p){",a+55);
 assert.ok(a>0&&b>a);
-const c=vm.createContext({fungiExactQualityDb:structuredClone(d),esc:x=>String(x).replace(/[&<>"']/g,k=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[k]))});
+const c=vm.createContext({fungiExactQualityDb:structuredClone(d),contaminantsDb:structuredClone(ctr),esc:x=>String(x).replace(/[&<>"']/g,k=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[k]))});
 vm.runInContext(html.slice(a,b),c);
 const draw=p=>vm.runInContext("sourcePinnedFungiQualitySourceReviewHtml("+JSON.stringify(p)+")",c);
 test("All 10 fungi product-identity screens show only their own FSSAI quality benchmarks",()=>{
@@ -37,6 +38,11 @@ test("Changed nominal quality numbers, source file fingerprint and approval flag
   assert.match(draw(p),/withheld/);
  }
  c.fungiExactQualityDb=initial;
+ const originalCore=c.contaminantsDb;
+ c.contaminantsDb=structuredClone(ctr);
+ c.contaminantsDb.metal_article_rules_v9.Tin.find(r=>r.article==="Canned mushrooms").limit=400;
+ assert.match(draw(p),/withheld/);
+ c.contaminantsDb=originalCore;
 });
 test("123 research worksheets include 55 fungi quality records and do not mark fungi CTR verified",()=>{
  const q=read("audit-output/fssai-next-123-first-exact-source-research-queue.json");

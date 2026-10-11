@@ -6,6 +6,7 @@ const base="fssai-product-helper-preview-01/data/";
 const d=load(base+"rules/fssai-ten-edible-fungi-2-3-62-quality-and-ctr-gates-2026-10-11.json");
 const ix=load(base+"standard-search-index-v1.json").products;
 const fungi=load(base+"rules/chapter-2-3-fungi-agaric-conditional-v1.json");
+const contaminantCore=load(base+"rules/contaminants-v9-core.json");
 const current=load("audit-output/fssai-live-first-source-ledger-533.json");
 const map=new Map(ix.map(x=>[x.id,x])),pending=new Set(current.pending_product_details.map(x=>x.id));
 assert.deepEqual([current.product_count,current.partial_first_source_evidence,current.unresolved_first_source_gaps],[533,410,123]);
@@ -14,6 +15,15 @@ assert.equal(d.records.reduce((n,x)=>n+x.criteria.length,0),d.quality_source_row
 assert.equal(new Set(d.records.map(x=>x.catalog_id)).size,10);
 assert.equal(d.official_chapter_source,"https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf");
 assert.equal(fungi.source_contaminants.limit,100);
+assert.equal(contaminantCore.source_version,"Version IX (03.02.2026)");
+const sourceCheck=(metal,article,limit,unit)=>{
+ const table=metal==="Agaric acid"?contaminantCore.naturally_occurring_toxic_substances.agaric_acid:(contaminantCore.metal_article_rules_v9[metal]||[]);
+ assert.equal(table.filter(x=>x.article===article&&Number(x.limit)===limit&&x.unit===unit).length,1,
+  "Official CTR Version IX source mismatch: "+metal+" / "+article);
+};
+sourceCheck("Agaric acid","Food containing mushrooms",100,"ppm");
+sourceCheck("Lead","Canned mushrooms",1,"mg/kg");
+sourceCheck("Tin","Canned mushrooms",250,"mg/kg");
 assert.equal(fungi.source_contaminants.unit,"ppm");
 assert.equal(fungi.records.length,10);
 for(const record of d.records){

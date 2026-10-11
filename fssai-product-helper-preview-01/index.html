@@ -10485,7 +10485,7 @@ function sourcePinnedChapterQualityHtml(p){
   +quality+medium+'</tbody></table></div><small>'+sources+'</small></details>';
 }
 function sourcePinnedFungiQualitySourceReviewHtml(p){
- if(!p||!fungiExactQualityDb)return '';
+ if(!p||!fungiExactQualityDb||!contaminantsDb)return '';
  const m=fungiExactQualityDb,row=(m.records||[]).find(x=>x.catalog_id===p.id);
  if(!row)return '';
  const withheld='<div class="notice"><b>FSSAI fungi source quality review withheld:</b> product identity, version or quality evidence mismatch. No source criterion applied.</div>';
@@ -10497,6 +10497,12 @@ function sourcePinnedFungiQualitySourceReviewHtml(p){
     ||row.first_exact_contaminant_article_matched!==false
     ||row.finished_product_ctr_numeric_limit_auto_apply!==false||row.complete_regulatory_compliance_pass!==false)
     return withheld;
+ const core=contaminantsDb;
+ const sourceRowsOk=core.source_version==='Version IX (03.02.2026)'
+   &&(core.naturally_occurring_toxic_substances?.agaric_acid||[]).filter(x=>x.article==='Food containing mushrooms'&&Number(x.limit)===100&&x.unit==='ppm').length===1
+   &&(core.metal_article_rules_v9?.Lead||[]).filter(x=>x.article==='Canned mushrooms'&&Number(x.limit)===1&&x.unit==='mg/kg').length===1
+   &&(core.metal_article_rules_v9?.Tin||[]).filter(x=>x.article==='Canned mushrooms'&&Number(x.limit)===250&&x.unit==='mg/kg').length===1;
+ if(!sourceRowsOk)return withheld;
  const rows=m.records||[];
  const fingerprint=val=>{let s=JSON.stringify(val),n=2166136261;for(let i=0;i<s.length;i++)n=Math.imul(n^s.charCodeAt(i),16777619)>>>0;return n.toString(16).padStart(8,'0')};
  if(fingerprint(rows)!=='a50fa66c'||m.quality_rows_fnv32_fingerprint!=='a50fa66c')return withheld;
