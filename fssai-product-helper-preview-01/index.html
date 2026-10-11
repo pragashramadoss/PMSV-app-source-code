@@ -1224,6 +1224,7 @@ let contaminantsPendingReviewDb=null;
 let sugarSulphiteResiduesDb=null;
 let chapterQuality20Db=null;
 let sugarChromiumScopeDb=null;
+let eightCerealQualityDb=null;
 let spiceOleoresinResiduesDb=null;
 let goatMuscleVeterinaryResiduesDb=null;
 let fourCompositeSourcesDb=null;
@@ -1244,7 +1245,7 @@ let fpc18Db=null;
 let chapterRuleDbs=[];
 let proprietaryEditingIngredientIndex=-1;
 let proprietaryConfirmedStandardId='';
-const PRODUCT_HELPER_UI_BUILD='2026-10-11-reconciled-b1-sugar-v505';
+const PRODUCT_HELPER_UI_BUILD='2026-10-11-cereal-pasta-biscuit-papad-v506';
 
 // Step 2 direct nearest-standard path.
 // This is intentionally bound near the top of the page so the finished-product-name
@@ -10243,6 +10244,79 @@ function exactEggStandardChemicalCriteriaHtml(p){
 // Cube Sugar, NOT a finished Cube Sugar MRL. Eight distinct sugar products
 // must not inherit it. Every identity, chapter and Version IX source row
 // must reconcile before even showing a reference number.
+// Official FSSAI Chapter 2.4 Version 4: exact product QUALITY benchmarks
+// + quinoa/chia commodity exclusion. These NEVER clear the finished-food
+// contaminant ledger, and their numbers fail closed if source tables drift.
+function verifiedEightCerealQualityScope(p){
+ if(!p||!eightCerealQualityDb||!contaminantsDb||!Array.isArray(chapterRuleDbs)||!standardSearchIndexDb)return null;
+ const src=eightCerealQualityDb;
+ if(src.all_reviewed_products!==8||src.qualified_quality_criteria_count!==19
+    ||src.added_first_exact_contaminant_coverage!==0||src.full_product_compliance_passes!==0
+    ||src.source_contaminants!==contaminantsDb.official_sources?.[0]?.url
+    ||src.source_contaminants_version!==contaminantsDb.source_version)return null;
+ const isStandard=(src.records||[]).find(x=>x.catalog_id===p.id);
+ const isExcluded=(src.grain_exclusion_records||[]).find(x=>x.catalog_id===p.id);
+ const x=isStandard||isExcluded;
+ if(!x||x.product_name!==p.name||x.fssr!==p.fssr||x.fcs!==p.fcs)return null;
+ const canonical=standardSearchIndexDb.products?.find(r=>r.id===p.id);
+ if(!canonical||canonical.name!==p.name||canonical.fssr!==p.fssr||canonical.fcs!==p.fcs)return null;
+ if(x.first_exact_contaminant_evidence_added!==false)return null;
+ if(isExcluded){
+  if(x.auto_apply_source_limit!==false||x.legal_approval!==false
+     ||x.legal_source_url!==src.source_contaminants)return null;
+  if(x.catalog_id==='06-06-1-quinoa'){
+   const exact=(contaminantsDb.metal_article_rules_v9?.Lead||[]).filter(r=>
+     r.article==='Cereal grains, except buckwheat, canihua and quinoa'
+     &&Number(r.limit)===0.2&&r.unit==='mg/kg');
+   if(exact.length!==1)return null;
+  }else if(x.catalog_id==='06-06-1-chia-seeds'){
+   const g=contaminantsDb.crop_contaminants?.aflatoxin_b1;
+   if(g?.unit!=='µg/kg'||!(g.rules||[]).some(r=>
+      /oilseeds/i.test(r.article)&&Number(r.limit)===10))return null;
+  }else return null;
+  return {kind:'exclusion',row:x};
+ }
+ if(x.full_compliance_approved!==false||x.apply_quality_limits_without_process_and_sample!==false)return null;
+ const found=chapterRuleDbs.filter(db=>(db.official_sources||[]).some(s=>s.url===src.source_standard))
+  .flatMap(db=>(db.standards||[]).filter(st=>st.key===p.fssr
+    &&st.name===x.chapter_standard_name));
+ if(found.length!==1||x.official_source!==src.source_standard)return null;
+ const official=found[0].official_2025_qualified_quality;
+ if(!official||official.official_source_url!==x.official_source
+   ||official.version!==x.source_version
+   ||official.exact_regulatory_quality_not_ctr!==true
+   ||official.laboratory_compliance_pass!==false)return null;
+ const original=official.criteria.filter(z=>x.variants.includes(z.variant));
+ if(original.length!==x.criteria.length||!x.criteria.every(z=>original.some(y=>
+   y.variant===z.variant&&y.parameter===z.parameter&&y.value===z.value
+   &&y.operator===z.operator&&y.unit===z.unit)))return null;
+ if(x.requires_fried_or_nonfried_confirmation===true
+   &&(p.id!=='06-06-4-macaroni-products-instant-noodle'
+      ||new Set(x.criteria.map(z=>z.variant)).size!==2))return null;
+ return {kind:'quality',row:x};
+}
+function eightCerealQualityScopeHtml(p){
+ if(!p||!eightCerealQualityDb)return '';
+ const known=[...(eightCerealQualityDb.records||[]),...(eightCerealQualityDb.grain_exclusion_records||[])]
+   .some(x=>x.catalog_id===p.id);
+ if(!known)return '';
+ const o=verifiedEightCerealQualityScope(p);
+ if(!o)return '<div class="notice"><b>Chapter 2.4 product standard source WITHHELD.</b> FoSCoS identity, source clause, value, processing mode or official regulation changed. No limit is applied.</div>';
+ const x=o.row;
+ if(o.kind==='exclusion')return '<details><summary><b>Official FSSAI commodity-source exclusion — NOT AUTO-APPLIED</b></summary><p>'
+   +esc(x.disclaimer)+'</p><p>Do not infer a missing regulatory duty or an automatic compliance PASS. Confirm precise plant/food article and operative amendments before assigning any legal limit.</p>'
+   +'<a href="'+esc(x.legal_source_url)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Version IX</a></details>';
+ const body=x.criteria.map(r=>
+  '<tr><td>'+esc(r.variant)+'</td><td>'+esc(r.parameter)+'</td><td>'+esc(r.operator)+' '+esc(String(r.value))+' '+esc(r.unit)+'</td></tr>').join('');
+ return '<details><summary><b>FSSAI '+esc(x.fssr)+' quality requirements — '+x.criteria.length+' source-pinned rows (NOT CTR MRLs)</b></summary>'
+  +(x.requires_fried_or_nonfried_confirmation
+    ?'<div class="notice"><b>Choose actual noodle processing:</b> Fried versus non-fried have DIFFERENT moisture/acid-value requirements. This reference table is NOT a selected subtype or a lab PASS.</div>'
+    :'<p>Only exact FoSCoS '+esc(x.fcs)+' product standard. Confirm formulation and analytical test results.</p>')
+  +'<div class="tablewrap"><table><thead><tr><th>FSSR form/subtype</th><th>Quality criterion</th><th>Limit, original units</th></tr></thead><tbody>'
+  +body+'</tbody></table></div>'
+  +'<p>These are FSSR quality/foreign-matter benchmarks, <b>not FSSAI CTR metal, aflatoxin or pesticide limits.</b> Verify all separate contaminant and microbiological obligations. No compliance PASS.</p>'
+  +'<a href="'+esc(x.official_source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter 2.4 Version 4 source</a></details>';
+}
 function verifiedSugarChromiumSourceScope(p){
  if(!p||!sugarChromiumScopeDb||!contaminantsDb||!Array.isArray(chapterRuleDbs))return null;
  const db=sugarChromiumScopeDb, row=(db.records||[]).find(x=>x.catalog_id===p.id);
@@ -10789,6 +10863,7 @@ function renderProductContaminants(){
         ?'':pendingContaminantReviewNotice(p))
    +sourcePinnedSugarSulphitesHtml(p)
    +sugarChromiumScopeHtml(p)
+   +eightCerealQualityScopeHtml(p)
    +sourcePinnedChapterQualityHtml(p)
    +exactSupplementalResidueReviewHtml(p)
    +sourcePinnedCompositeOrSoupPartialHtml(p)
@@ -10843,6 +10918,17 @@ function futureFssaiAmendmentWatchHtml(p,nowMs=Date.now()){
    +'<small><a href="'+official+'" target="_blank" rel="noopener noreferrer">Read the official FSSAI Gazette</a>. Watch-list inclusion does not itself prove product applicability or establish full compliance.</small></div>';
 }
 async function loadContaminantsDb(){
+ try{
+   const res=await fetch('./data/rules/fssai-eight-cereal-bakery-papad-quality-and-commodity-guards-2026-10-11.json?v=20261011-q19',{cache:'reload'});
+   if(!res.ok)throw new Error('Eight-product FSSAI quality source review missing');
+   const d=await res.json();
+   if(d.all_reviewed_products!==8||d.quality_review_product_count!==6
+      ||d.grain_exclusion_product_count!==2||d.qualified_quality_criteria_count!==19
+      ||d.added_first_exact_contaminant_coverage!==0||d.full_product_compliance_passes!==0)
+     throw new Error('Eight-product source quality integrity mismatch');
+   eightCerealQualityDb=d;
+ }catch(e){eightCerealQualityDb=null;}
+
  try{
    const res=await fetch('./data/rules/fssai-nine-sugar-refined-chromium-scope-2026-10-11.json?v=20261011-cr9',{cache:'reload'});
    if(!res.ok)throw new Error('Nine-product official sugar-metal source-scope review missing');
