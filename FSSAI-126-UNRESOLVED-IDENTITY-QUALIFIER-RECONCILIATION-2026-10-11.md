@@ -186,3 +186,33 @@
 **Required next steps for any individual product to progress to even partial exact source evidence**: verify an actual applicable operative FSSAI CTR or product-standard numeric article; confirm exact botanical/species/subtype, form, processing, packaging, analytical matrix, residue definition and current effective amendments. Record numeric data as conditional when applicability is not proved. No whole-panel/compliance approval without full analytical and regulatory reconciliation.
 
 **WordPress remains unchanged.**
+
+## Further source-checked sub-batches — October 11
+
+Additional audits after the 126-row identity reconciliation established the following **source-checked but application-conditional** content:
+
+| Additional check | Number | Legal interpretation |
+|---|---:|---|
+| Explicit five-field source checklist completed for each of 126 unresolved IDs | **630 individual qualification questions** | Each listed question is still an outstanding verification, not a completed compliance test. |
+| Verbatim official FSSAI numerical pesticide references for raw meat/egg commodities | **10** across 6 products | Shell-free egg basis, rabbit muscle/offal differences and actual processed-product applicability must be resolved first. |
+| Conditional Version IX Nickel row for **Fat spread** | **1** | 1.5 mg/kg applies to relevant hydrogenated/partially hydrogenated/interesterified vegetable-fat grouping only; FSSR also allows milk-fat or unhydrogenated-fat spreads. |
+| Conditional Version IX hydrocyanic acid NOTS row | **3** | 10 ppm named sago/cassava/tapioca/manihot flour **and their products**, only where the actual custard/pasta/instant-noodle recipe and process qualify. |
+| Additional exact Chapter 2.x **quality/composition** numeric entries | **86** | Twelve across lactose/salt substitutes/trehalose/dextrin/Pan Masala, 71 subtype-specific rabbit/egg, and three fat-spread. **None is a CTR pesticide or metal limit.** |
+| Dairy analogue finished-product identity exclusions | **8** | FSSR 2.1.1 legally excludes dairy analogues from milk-product identity; actual milk ingredients and other contaminant requirements remain separate obligations. |
+| New complete finished-product contaminant compliance passes | **0** | No missing laboratory result or legal article was guessed or replaced with a product-quality value. |
+
+**New documentation:**
+
+- [Rabbit and processed egg conditional pesticide references](FSSAI-6-RABBIT-EGG-PESTICIDE-CONDITIONAL-ARTICLES-2026-10-11.md).
+- [Cereal, sweetener and other-food subtype transfer audit](FSSAI-28-SUBTYPE-TRANSFER-SAFEGUARDS-2026-10-11.md).
+- [Fruit/vegetable source-qualifier matrix](FSSAI-43-FRUIT-VEGETABLE-QUALIFIER-MATRIX-2026-10-11.md).
+
+**Engineering safeguards:**
+
+- New evidence is identity-bound to exact catalogue IDs, product name and FSSR standard (fail-closed on mismatch). Review-only numeric candidates are never silently applied as actual finished-food results.
+- The additional source-gated regression suites for rabbit/egg pesticides and quality, fat-spread nickel, sago/tapioca hydrocyanic acid and the consolidated 126-product audit are wired into `.github/workflows/verify-fssai-standard-nutrition.yml`.
+- Summary invariants: **533 = 407 with partial evidence + 126 unresolved**, 630 pending qualifier questions, 14 numerically identified but **conditional** new source-reference rows, 86 independently classified composition/quality numeric entries, **zero compliance passes**.
+- See official [FSSAI Version IX CTR](https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf), [Chapter 2.4](https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf), [Chapter 2.5](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_5_Meat%20and%20Meat%20products(1).pdf) and [Chapter 2.2](https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats_oils_and_fat_emulsions.pdf).
+
+All added checks are still **source/analytical prerequisites**, not finished-product chemical-compliance decisions. WordPress has not been changed.
+
