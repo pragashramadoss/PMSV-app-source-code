@@ -10371,6 +10371,22 @@ function pendingContaminantReviewNotice(p){
    +' · <a href="'+esc(sagoHcn.fssai_version_ix_ctr_source)+'" target="_blank" rel="noopener noreferrer">Official Version IX NOTS</a>. '
    +'Recipe, processing and test basis are unverified; not a universal product PASS.</small></details>'
   :'';
+ const chicory=record.official_coffee_chicory_four_variants_2026_10_11;
+ const chicoryValid=chicory&&chicory.catalog_id===p.id&&chicory.product_name===p.name&&chicory.fssr===p.fssr
+  &&chicory.no_ctr_numeric_automatic_assignment===true&&chicory.no_finished_sample_compliance_pass===true;
+ const chicoryHtml=chicoryValid
+  ?'<details style="margin:9px 0"><summary><b>11 October Coffee-Chicory — FOUR SUBTYPES, SOURCE QUALITY ≠ OTA COMPLIANCE</b></summary>'
+   +'<p><b>Coffee-only OTA article, review only:</b> '+esc(chicory.official_ochratoxin_a_named_article)
+   +' — '+esc(chicory.conditional_reference_limit)+' '+esc(chicory.ota_unit)
+   +' (actual coffee/chicory finished-food applicability NOT verified).</p>'
+   +(chicory.variants||[]).map(v=>'<details style="margin:6px 0"><summary><b>'+esc(v.name)+' — QUALIFIED FORM ONLY</b></summary>'
+    +'<ul style="padding-left:22px;margin:6px 0">'+(v.quality_criteria||[]).map(x=>'<li>'+esc(x.parameter)
+     +' '+esc(x.operator)+' '+esc(x.value)+' '+esc(x.unit)+'; '+esc(x.basis)+' — <b>QUALITY NOT CONTAMINANT MRL</b></li>').join('')
+    +'</ul></details>').join('')
+   +'<small><a href="'+esc(chicory.official_chapter2_10_pdf)+'" target="_blank" rel="noopener noreferrer">Official Chapter 2.10</a>'
+   +' · <a href="'+esc(chicory.official_ctr_ix_pdf)+'" target="_blank" rel="noopener noreferrer">Official CTR IX</a>. '
+   +'Roasted/instant and regular/decaf, exact recipe and compliance are unresolved.</small></details>'
+  :'';
  const candidate=record.specific_source_commodity_subtype_review_2026_10_10;
  const candidateHtml=candidate&&candidate.review_only===true&&candidate.automatically_applied===false
    ?'<details style="margin:9px 0"><summary><b>Official named commodity article — conditional, NOT APPLIED</b></summary>'
@@ -10419,6 +10435,7 @@ function pendingContaminantReviewNotice(p){
    +meatEggQualityHtml
    +fatSpreadHtml
    +sagoHcnHtml
+   +chicoryHtml
    +candidateHtml
    +discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
