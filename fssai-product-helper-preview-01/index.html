@@ -10299,6 +10299,25 @@ function pendingContaminantReviewNotice(p){
    +'<small><a href="'+esc(analogue.official_chapter_source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter 2.1</a>'
    +' (PDF pages 1 and 5). No complete contaminant compliance established.</small></details>'
   :'';
+ const animalPesticides=record.official_2_5_animal_pesticide_candidates_2026_10_11;
+ const animalValid=animalPesticides&&animalPesticides.catalog_id===p.id&&animalPesticides.product_name===p.name
+   &&animalPesticides.fssr===p.fssr&&animalPesticides.numeric_limit_auto_applied===false
+   &&animalPesticides.product_compliance_result===false
+   &&animalPesticides.first_exact_finished_product_ctr_match_promoted===false;
+ const animalRows=animalValid?(animalPesticides.official_source_rows_conditional_not_applied||[]).filter(x=>
+   x.verified_against_official_pdf===true&&x.auto_apply_numeric_limit===false
+   &&x.authorizes_pesticide_compliance_pass===false):[];
+ const animalHtml=animalValid
+  ?'<details style="margin:9px 0"><summary><b>11 October FSSAI official rabbit/egg pesticide article references — CONDITIONAL, NOT APPLIED</b></summary>'
+   +'<p>'+esc(animalPesticides.product_form_and_processing_sample_gate)+'</p>'
+   +'<ul style="padding-left:22px;margin:6px 0">'
+   +animalRows.map(x=>'<li><b>'+esc(x.pesticide)+'</b> · '+esc(x.named_food_article)
+     +' · <b>reference '+esc(x.official_mrl)+' '+esc(x.unit)+'</b> · '+esc(x.scope_conditions)
+     +' <b>CONDITIONAL / NOT APPLIED</b></li>').join('')+'</ul>'
+   +'<small><a href="'+esc(animalPesticides.chapter_2_5_source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter 2.5</a>'
+   +' · <a href="'+esc(animalPesticides.source_ctr_ix)+'" target="_blank" rel="noopener noreferrer">Official FSSAI CTR IX</a>. '
+   +'No processing-factor, edible tissue, actual sample, other residue or current amendment clearance.</small></details>'
+  :'';
  const candidate=record.specific_source_commodity_subtype_review_2026_10_10;
  const candidateHtml=candidate&&candidate.review_only===true&&candidate.automatically_applied===false
    ?'<details style="margin:9px 0"><summary><b>Official named commodity article — conditional, NOT APPLIED</b></summary>'
@@ -10343,6 +10362,7 @@ function pendingContaminantReviewNotice(p){
    +remainderHtml
    +qualitySourceHtml
    +analogueHtml
+   +animalHtml
    +candidateHtml
    +discrepancyHtml
    +'<small>Reference: <a href="'+esc(record.official_source)+'" target="_blank" rel="noopener">FSSAI Contaminants Regulations Version IX (03.02.2026)</a>. Other contaminant, residue and amendment provisions may also apply. No missing numeric limit is assumed.</small></div>';
