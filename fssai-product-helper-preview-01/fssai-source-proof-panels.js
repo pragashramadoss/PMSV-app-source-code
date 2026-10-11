@@ -254,3 +254,100 @@ sourcePinned121ResearchProofHtml=function(p){
  }
  return pmsvBeforeFinalTwentyEightProofHtml(p)+pmsvFinalTwentyEightEvidenceHtml(p);
 };
+
+/* Source-pinned veterinary article expansion: 20 rows directly relevant to
+ * fresh/frozen edible rabbit tissue, conditional-only finished casing and
+ * processed-egg references. No laboratory or total compliance inference. */
+var pmsvVet64SourceDb=null;
+var pmsvVet64OriginalLoad=pmsvLoadPositiveSourceProof;
+pmsvLoadPositiveSourceProof=async function(){
+ await pmsvVet64OriginalLoad();
+ try{
+  const res=await fetch('./data/rules/fssai-v9-21-vet-article-source-64-links-2026-10-11.json?v=20261011-vet64',{cache:'reload'});
+  if(!res.ok)throw Error('FSSAI veterinary source expansion unavailable');
+  const d=await res.json();
+  if(d.products_total!==533||d.partial_first_source!==417||d.pending_first_source!==116||
+    d.new_first_source_promotions!==0||d.finished_food_approvals!==0||
+    d.scope_product_count!==7||d.records?.length!==7||
+    d.distinct_analyte_source_rows!==21||d.source_rows?.length!==21||
+    d.exact_rabbit_source_row_links!==40||d.conditional_casing_source_row_links!==20||
+    d.conditional_processed_egg_source_row_links!==4||
+    d.official_ctr!==contaminantsDb?.official_sources?.[0]?.url||
+    d.source_version!==contaminantsDb?.source_version||
+    new Set(d.records.map(r=>r.catalog_id)).size!==7)
+    throw Error('Veterinary source metadata mismatch');
+  pmsvVet64SourceDb=d;
+ }catch(e){pmsvVet64SourceDb=null;}
+};
+function pmsvVet64SourceValid(p){
+ const d=pmsvVet64SourceDb,c=contaminantsDb;
+ if(!p||!d||!c||!pmsvNext121ProofDb||
+    d.source_version!==c.source_version||
+    d.official_ctr!==c.official_sources?.[0]?.url||
+    d.partial_first_source!==417||d.pending_first_source!==116||
+    d.new_first_source_promotions!==0||d.finished_food_approvals!==0||
+    d.records?.length!==7||d.source_rows?.length!==21||
+    d.exact_rabbit_source_row_links!==40||
+    d.conditional_casing_source_row_links!==20||
+    d.conditional_processed_egg_source_row_links!==4)return false;
+ const r=d.records.find(x=>x.catalog_id===p.id);
+ if(!r||r.product_name!==p.name||String(r.fssr||'')!==String(p.fssr||'')||
+    String(r.fcs||'')!==String(p.fcs||'')||
+    r.numeric_auto_apply!==false||r.analytical_lot_pass!==false||
+    r.full_contaminant_pass!==false||
+    !sourcePriorityMetalDb?.unresolved_first_exact_catalog_ids?.includes(p.id))return false;
+ const chapter=(Array.isArray(chapterRuleDbs)?chapterRuleDbs:[]).find(x=>x?.chapter==='2.5');
+ if(!chapter||chapter.official_sources?.[0]?.url!==d.official_fssr||
+    !chapter.standards?.some(x=>x.key===p.fssr))return false;
+ const veterinary=c.antibiotic_and_pharmacological_substances?.veterinary_tolerance_limits;
+ if(veterinary?.completeness!=='complete'||veterinary.auto_apply!==false)return false;
+ if(new Set(d.source_rows.map(x=>x.key)).size!==21)return false;
+ const keys=new Map(d.source_rows.map(x=>[x.key,x]));
+ const direct=d.source_rows.filter(x=>x.key!=='vet-47-eggs');
+ if(direct.length!==20||direct.some(x=>!x.source_article.startsWith('All edible animal tissues')))return false;
+ if(r.route_type==='rabbit_exact_edible_tissue'){
+  if(r.first_source_already_positive!==true||r.source_rows_finished_tissue_applicable!==true||
+    r.source_article_keys.length!==20||p.fssr!=='2.5.2(6)'||
+    pmsvFinalTwentyEightDb?.positive_records?.some(x=>x.catalog_id===p.id)!==true||
+    !pmsvFinalTwentyEightSourceValid(p))return false;
+ }else if(r.route_type==='casing_ingredient_conditional'){
+  if(r.first_source_already_positive!==false||r.source_rows_finished_tissue_applicable!==false||
+    r.source_article_keys.length!==20||p.fssr!=='2.5.2(14)')return false;
+ }else if(r.route_type==='processed_egg_conditional'){
+  if(r.first_source_already_positive!==false||r.source_rows_finished_tissue_applicable!==false||
+    r.source_article_keys.length!==1||r.source_article_keys[0]!=='vet-47-eggs'||
+    !p.fssr?.startsWith('2.5.3('))return false;
+ }else return false;
+ return r.source_article_keys.every(key=>{
+  const x=keys.get(key);
+  const entry=veterinary.rows.find(z=>z.serial===x?.serial&&z.name===x.analyte);
+  return !!x&&x.limit===0.01&&x.unit==='mg/kg'&&
+    entry?.rows?.filter(y=>y.article===x.source_article&&Number(y.limit)===x.limit&&y.unit===x.unit).length===1;
+ });
+}
+function pmsvVet64ProofHtml(p){
+ const d=pmsvVet64SourceDb;
+ if(!p||!d?.records?.some(x=>x.catalog_id===p.id))return '';
+ if(!pmsvVet64SourceValid(p))return '<div class="notice"><b>Expanded veterinary reference withheld.</b> Product identity or official FSSAI numeric source does not match. No limit applied.</div>';
+ const r=d.records.find(x=>x.catalog_id===p.id),byKey=new Map(d.source_rows.map(x=>[x.key,x]));
+ const refs=r.source_article_keys.map(key=>byKey.get(key));
+ const verified=r.route_type==='rabbit_exact_edible_tissue';
+ const mode=verified?'Exact named veterinary source applicable to edible rabbit tissue — not a laboratory result':
+  'CONDITIONAL SOURCE REFERENCE ONLY — processing and legal article applicability unproven';
+ const bullets=refs.map(x=>'<li>'+esc(x.analyte)+': <b>'+esc(x.limit)+' '+esc(x.unit)+
+  '</b> — FSSAI veterinary serial '+esc(x.serial)+
+  ' <small>('+esc(x.source_article)+')</small></li>').join('');
+ return '<details class="card" style="margin-top:12px"><summary><b>Expanded FSSAI veterinary table — '+esc(refs.length)+
+  ' named references</b> · '+esc(r.route_type.replaceAll('_',' '))+'</summary>'+
+  '<div class="notice"><b>NOT A FINISHED-FOOD COMPLIANCE PASS.</b> '+esc(mode)+
+  '. Limits are displayed as authenticated statutory source evidence, not results of an analysis.</div>'+
+  '<p><b>Article conditions still to establish:</b> '+esc(r.requires)+'</p>'+
+  '<p><b>Prohibited transfer:</b> '+esc(r.forbidden_inheritance)+'</p>'+
+  '<ul>'+bullets+'</ul>'+
+  '<small><a href="'+esc(d.official_fssr)+'" target="_blank" rel="noopener noreferrer">Official FSSAI Chapter 2.5</a> · '+
+  '<a href="'+esc(d.official_ctr)+'" target="_blank" rel="noopener noreferrer">Official Version IX Veterinary Table</a></small></details>';
+}
+var pmsvVet64OriginalProofHtml=sourcePinned121ResearchProofHtml;
+sourcePinned121ResearchProofHtml=function(p){
+ return pmsvVet64OriginalProofHtml(p)+pmsvVet64ProofHtml(p);
+};
