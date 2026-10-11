@@ -103,6 +103,7 @@ on:
       - 'tests/fssai-nine-sugar-refined-chromium-scope-2026-10-11.test.cjs'
       - 'tests/fssai-eight-chapter-2-4-quality-exclusions-source-2026-10-11.test.cjs'
       - 'tests/fssai-v9-31-cross-form-metal-source-nontransfer-2026-10-11.test.cjs'
+      - 'tests/fssai-next-123-actionable-worklist-2026-10-11.test.cjs'
       - 'tests/fssai-final-161-comprehensive-evidence-regression.test.cjs'
       - 'tests/fssai-five-exact-composite-soup-coconut-source-regression.test.cjs'
       - 'tests/fssai-25-v9-nots-source-evidence.test.cjs'
@@ -153,6 +154,8 @@ jobs:
         run: node scripts/audit-fssai-evidence-ledger-conservation.cjs
       - name: Export 123 unresolved product source-research worksheet
         run: node scripts/export-fssai-next-123-source-research-queue.cjs
+      - name: Assert full 123-personalized-FSSAI-first-source worklists remain unresolved
+        run: node --test tests/fssai-next-123-actionable-worklist-2026-10-11.test.cjs
       - name: Upload per-product compliance evidence audit
         if: always()
         uses: actions/upload-artifact@v4
