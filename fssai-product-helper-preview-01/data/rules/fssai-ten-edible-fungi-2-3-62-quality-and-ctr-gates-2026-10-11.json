@@ -1,0 +1,625 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-10-11",
+  "source": "FSSAI Chapter 2.3, clause 2.3.62, Version 2 (04.11.2024)",
+  "official_chapter_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+  "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "verified_local_products": 10,
+  "quality_source_rows": 55,
+  "current_local_catalogue": 533,
+  "current_partial_exact_ctr": 410,
+  "current_pending_first_exact_ctr": 123,
+  "full_compliance_passes": 0,
+  "first_exact_contaminant_source_promotions": 0,
+  "source_quality_only": true,
+  "mandatory_qualifiers": [
+    "Species scientific and common name: 'fungi' does not imply Agaricus/mushrooms",
+    "Drying or packing process and stated variant",
+    "Food form, chemical basis, size and sample testing",
+    "Pack material: an airtight/sterilized container does not establish tinplate",
+    "Current effective amendments and product-specific contaminants"
+  ],
+  "conditional_contaminants": {
+    "agaric_acid": {
+      "article": "Food containing mushrooms",
+      "limit": 100,
+      "unit": "ppm",
+      "species_mushroom_status_unconfirmed": true,
+      "auto_apply": false
+    },
+    "tin": {
+      "article": "Canned mushrooms",
+      "limit": 250,
+      "unit": "mg/kg",
+      "tinplate_status_unconfirmed": true,
+      "auto_apply": false
+    },
+    "lead": {
+      "article": "Canned mushrooms",
+      "limit": 1,
+      "unit": "mg/kg",
+      "can_and_mushroom_status_unconfirmed": true,
+      "auto_apply": false
+    }
+  },
+  "records": [
+    {
+      "catalog_id": "04-04-2-quick-frozen-fungi",
+      "product_name": "Quick Frozen Fungi",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.1",
+      "process_variant": "quick_frozen",
+      "source_pdf": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "criteria": [
+        {
+          "parameter": "Thermal centre temperature",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C",
+          "subtype": "after thermal stabilisation",
+          "pdf_page_one_based": 101
+        },
+        {
+          "parameter": "Mineral impurities",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 101
+        },
+        {
+          "parameter": "Organic impurities of vegetable origin",
+          "operator": "<=",
+          "value": 0.02,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 101
+        },
+        {
+          "parameter": "Maggot damaged fungi, total",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 101
+        },
+        {
+          "parameter": "Maggot damaged fungi, serious",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 101
+        }
+      ],
+      "requires_confirmation_for_variant_specific_limits": true,
+      "first_exact_contaminant_article_matched": false,
+      "finished_product_ctr_numeric_limit_auto_apply": false,
+      "complete_regulatory_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-dried-fungi",
+      "product_name": "Dried fungi",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.2",
+      "process_variant": "dried",
+      "source_pdf": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "criteria": [
+        {
+          "parameter": "Water content",
+          "operator": "<=",
+          "value": 6,
+          "unit": "% m/m",
+          "subtype": "freeze dried",
+          "pdf_page_one_based": 98
+        },
+        {
+          "parameter": "Water content",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% m/m",
+          "subtype": "dried, other than freeze-dried and Shiitake",
+          "pdf_page_one_based": 98
+        },
+        {
+          "parameter": "Water content",
+          "operator": "<=",
+          "value": 13,
+          "unit": "% m/m",
+          "subtype": "dried Shiitake",
+          "pdf_page_one_based": 98
+        },
+        {
+          "parameter": "Mineral impurities",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 98
+        },
+        {
+          "parameter": "Organic impurities",
+          "operator": "<=",
+          "value": 0.02,
+          "unit": "% m/m",
+          "subtype": "other than Shiitake",
+          "pdf_page_one_based": 98
+        },
+        {
+          "parameter": "Organic impurities",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m",
+          "subtype": "Shiitake",
+          "pdf_page_one_based": 98
+        },
+        {
+          "parameter": "Maggot damage, fungi",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% of total damage",
+          "subtype": "base",
+          "pdf_page_one_based": 98
+        },
+        {
+          "parameter": "Maggot damage, serious",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% of total damage",
+          "subtype": "base",
+          "pdf_page_one_based": 98
+        },
+        {
+          "parameter": "Crushed fungi",
+          "operator": "<=",
+          "value": 6,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 98
+        },
+        {
+          "parameter": "Carbonized fungi",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 98
+        },
+        {
+          "parameter": "Damaged fungi",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 98
+        }
+      ],
+      "requires_confirmation_for_variant_specific_limits": true,
+      "first_exact_contaminant_article_matched": false,
+      "finished_product_ctr_numeric_limit_auto_apply": false,
+      "complete_regulatory_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-fungi-grits-and-fungi-powder",
+      "product_name": "Fungi Grits and Fungi Powder",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.2",
+      "process_variant": "grits_or_powder",
+      "source_pdf": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "criteria": [
+        {
+          "parameter": "Water content",
+          "operator": "<=",
+          "value": 13,
+          "unit": "% m/m",
+          "subtype": "grits",
+          "pdf_page_one_based": 99
+        },
+        {
+          "parameter": "Water content",
+          "operator": "<=",
+          "value": 9,
+          "unit": "% m/m",
+          "subtype": "powder",
+          "pdf_page_one_based": 99
+        },
+        {
+          "parameter": "Mineral impurities",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% m/m",
+          "subtype": "grits and powder",
+          "pdf_page_one_based": 99
+        }
+      ],
+      "requires_confirmation_for_variant_specific_limits": true,
+      "first_exact_contaminant_article_matched": false,
+      "finished_product_ctr_numeric_limit_auto_apply": false,
+      "complete_regulatory_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-fungi-extract-and-fungi-concentrate",
+      "product_name": "Fungi extract and Fungi Concentrate",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.2",
+      "process_variant": "extract_or_concentrate",
+      "source_pdf": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "criteria": [
+        {
+          "parameter": "Saltless extract (extract identity minimum)",
+          "operator": ">=",
+          "value": 7,
+          "unit": "% mass",
+          "subtype": "fungi extract",
+          "pdf_page_one_based": 102
+        },
+        {
+          "parameter": "Saltless extract (concentrate identity minimum)",
+          "operator": ">=",
+          "value": 24,
+          "unit": "% mass",
+          "subtype": "fungi concentrate",
+          "pdf_page_one_based": 102
+        },
+        {
+          "parameter": "Salt",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 102
+        },
+        {
+          "parameter": "Mineral impurities",
+          "operator": "absent",
+          "unit": "none",
+          "subtype": "base",
+          "pdf_page_one_based": 102
+        },
+        {
+          "parameter": "Organic impurities of vegetable origin",
+          "operator": "absent",
+          "unit": "none",
+          "subtype": "base",
+          "pdf_page_one_based": 102
+        }
+      ],
+      "requires_confirmation_for_variant_specific_limits": true,
+      "first_exact_contaminant_article_matched": false,
+      "finished_product_ctr_numeric_limit_auto_apply": false,
+      "complete_regulatory_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-dried-fungi-concentrate",
+      "product_name": "Dried Fungi Concentrate",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.2",
+      "process_variant": "dried_concentrate",
+      "source_pdf": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "criteria": [
+        {
+          "parameter": "Water content",
+          "operator": "<=",
+          "value": 9,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 103
+        },
+        {
+          "parameter": "Salt",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 103
+        },
+        {
+          "parameter": "Mineral impurities",
+          "operator": "absent",
+          "unit": "none",
+          "subtype": "base",
+          "pdf_page_one_based": 103
+        },
+        {
+          "parameter": "Organic impurities of vegetable origin",
+          "operator": "absent",
+          "unit": "none",
+          "subtype": "base",
+          "pdf_page_one_based": 103
+        }
+      ],
+      "requires_confirmation_for_variant_specific_limits": true,
+      "first_exact_contaminant_article_matched": false,
+      "finished_product_ctr_numeric_limit_auto_apply": false,
+      "complete_regulatory_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-fungi-in-olive-oil-and-other-vegetable-oils",
+      "product_name": "Fungi in olive oil and other vegetable oils",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.3",
+      "process_variant": "oil_packed",
+      "source_pdf": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "criteria": [
+        {
+          "parameter": "Salt",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 101
+        },
+        {
+          "parameter": "Mineral impurities",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 101
+        },
+        {
+          "parameter": "Organic impurities of vegetable origin",
+          "operator": "<=",
+          "value": 0.02,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 101
+        },
+        {
+          "parameter": "Maggot damaged fungi, total",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 101
+        },
+        {
+          "parameter": "Maggot damaged fungi, serious",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 101
+        }
+      ],
+      "requires_confirmation_for_variant_specific_limits": true,
+      "first_exact_contaminant_article_matched": false,
+      "finished_product_ctr_numeric_limit_auto_apply": false,
+      "complete_regulatory_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-salted-fungi-semi-processed-products",
+      "product_name": "Salted fungi (semi processed products)",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.3",
+      "process_variant": "salted",
+      "source_pdf": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "criteria": [
+        {
+          "parameter": "Salt",
+          "operator": "range",
+          "min": 15,
+          "max": 18,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 103
+        },
+        {
+          "parameter": "Mineral impurities",
+          "operator": "<=",
+          "value": 0.3,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 103
+        },
+        {
+          "parameter": "Organic impurities of vegetable origin",
+          "operator": "<=",
+          "value": 0.05,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 103
+        },
+        {
+          "parameter": "Maggot damaged fungi, total",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 103
+        },
+        {
+          "parameter": "Maggot damaged fungi, serious",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 103
+        }
+      ],
+      "requires_confirmation_for_variant_specific_limits": true,
+      "first_exact_contaminant_article_matched": false,
+      "finished_product_ctr_numeric_limit_auto_apply": false,
+      "complete_regulatory_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-sterilized-fungi",
+      "product_name": "Sterilized Fungi",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.4",
+      "process_variant": "sterilized",
+      "source_pdf": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "criteria": [
+        {
+          "parameter": "Salt",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 102
+        },
+        {
+          "parameter": "Mineral impurities",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 102
+        },
+        {
+          "parameter": "Organic impurities of vegetable origin",
+          "operator": "<=",
+          "value": 0.02,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 102
+        },
+        {
+          "parameter": "Maggot damaged fungi, total",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 102
+        },
+        {
+          "parameter": "Maggot damaged fungi, serious",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 102
+        }
+      ],
+      "requires_confirmation_for_variant_specific_limits": true,
+      "first_exact_contaminant_article_matched": false,
+      "finished_product_ctr_numeric_limit_auto_apply": false,
+      "complete_regulatory_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-pickled-fungi",
+      "product_name": "Pickled Fungi",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.7",
+      "process_variant": "pickled",
+      "source_pdf": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "criteria": [
+        {
+          "parameter": "Salt",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 100
+        },
+        {
+          "parameter": "Sugars",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 100
+        },
+        {
+          "parameter": "Vinegar (as acetic acid)",
+          "operator": "<=",
+          "value": 2,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 100
+        },
+        {
+          "parameter": "Mineral impurities",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 100
+        },
+        {
+          "parameter": "Organic impurities of vegetable origin",
+          "operator": "<=",
+          "value": 0.02,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 100
+        },
+        {
+          "parameter": "Maggot damaged fungi, total",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 100
+        },
+        {
+          "parameter": "Maggot damaged fungi, serious",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 100
+        }
+      ],
+      "requires_confirmation_for_variant_specific_limits": true,
+      "first_exact_contaminant_article_matched": false,
+      "finished_product_ctr_numeric_limit_auto_apply": false,
+      "complete_regulatory_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-fermented-fungi",
+      "product_name": "Fermented Fungi",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.7",
+      "process_variant": "fermented",
+      "source_pdf": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "criteria": [
+        {
+          "parameter": "Naturally occurring lactic acid",
+          "operator": ">=",
+          "value": 1,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 100
+        },
+        {
+          "parameter": "Salt",
+          "operator": "range",
+          "min": 3,
+          "max": 6,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 100
+        },
+        {
+          "parameter": "Mineral impurities",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 100
+        },
+        {
+          "parameter": "Organic impurities of vegetable origin",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 100
+        },
+        {
+          "parameter": "Maggot damaged fungi",
+          "operator": "<=",
+          "value": 4,
+          "unit": "% m/m",
+          "subtype": "base",
+          "pdf_page_one_based": 100
+        }
+      ],
+      "requires_confirmation_for_variant_specific_limits": true,
+      "first_exact_contaminant_article_matched": false,
+      "finished_product_ctr_numeric_limit_auto_apply": false,
+      "complete_regulatory_compliance_pass": false
+    }
+  ]
+}
