@@ -375,12 +375,12 @@ test("all 84 former identity-only route entries now have an official-source base
 });
 
 
-test("all 98 Chapter 2.3 product identities have source-scoped fail-closed pesticide reviews",()=>{
+test("all 99 Chapter 2.3 product identities have source-scoped fail-closed pesticide reviews",()=>{
  const db=JSON.parse(fs.readFileSync(path.join(dataRoot,"rules/contaminants-v9-core.json"),"utf8"));
  const chapterProducts=index.products.filter(p=>String(p.fssr||"").startsWith("2.3."));
  const rows=db.chapter_2_3_commodity_mrl_review_v1;
- assert.equal(chapterProducts.length,98);
- assert.equal(rows.length,98);
+ assert.equal(chapterProducts.length,99);
+ assert.equal(rows.length,99);
  assert.deepEqual(new Set(rows.map(r=>r.catalog_id)),new Set(chapterProducts.map(p=>p.id)));
  const articles=new Map();
  for(const pesticide of db.residue_mrls.pesticides)for(const row of pesticide.rows||[]){
@@ -422,7 +422,7 @@ test("tomato, coconut, mango, groundnut and potato Chapter 2.3 raw-ingredient re
 });
 
 
-test("Chapter 2.3 98-product review-only scope blocks exact-name pesticide auto approval",()=>{
+test("Chapter 2.3 99-product review-only scope blocks exact-name pesticide auto approval",()=>{
  const html=fs.readFileSync(path.join(dataRoot,"../index.html"),"utf8");
  const at=html.indexOf("function exactPesticideMrlRowsForProduct(p){");
  assert.ok(at>=0);
@@ -434,7 +434,7 @@ test("Chapter 2.3 98-product review-only scope blocks exact-name pesticide auto 
  vm.runInContext(fn,c);
  const rows=p=>Array.from(vm.runInContext("exactPesticideMrlRowsForProduct("+JSON.stringify(p)+")",c));
  const products=index.products.filter(p=>String(p.fssr||"").startsWith("2.3."));
- assert.equal(products.length,98);
+ assert.equal(products.length,99);
  for(const p of products)assert.deepEqual(rows(p),[],p.name+" must not be approved based on commodity name");
  // This deliberately colliding source commodity demonstrates that record ID, not name,
 // controls review-only scope, even where a future article says Tomato verbatim.

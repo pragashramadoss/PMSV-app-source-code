@@ -242,9 +242,9 @@ for(const id of driedFruitMalathion.excluded_catalog_ids)assert.ok(!driedFruitBy
 const fruitVegReviews=contaminants.chapter_2_3_commodity_mrl_review_v1||[];
 const fruitVegById=new Map(fruitVegReviews.map(x=>[x.catalog_id,x]));
 const chapter23Products=index.products.filter(p=>String(p.fssr||"").startsWith("2.3."));
-assert.equal(chapter23Products.length,98,"Chapter 2.3 catalogue count changed: reconcile review identities");
-assert.equal(fruitVegReviews.length,98,"Expected 98 Chapter 2.3 pesticide scope review records");
-assert.equal(fruitVegById.size,98,"Duplicate Chapter 2.3 review product ID");
+assert.equal(chapter23Products.length,99,"Chapter 2.3 catalogue count changed: reconcile review identities");
+assert.equal(fruitVegReviews.length,99,"Expected 99 Chapter 2.3 pesticide scope review records");
+assert.equal(fruitVegById.size,99,"Duplicate Chapter 2.3 review product ID");
 for(const product of chapter23Products)assert.ok(fruitVegById.has(product.id),"Missing Chapter 2.3 regulatory review: "+product.id);
 for(const row of fruitVegReviews){
  const product=index.products.find(x=>x.id===row.catalog_id);
@@ -262,9 +262,9 @@ for(const row of fruitVegReviews){
 const cerealReviews=contaminants.chapter_2_4_commodity_mrl_review_v1||[];
 const cerealById=new Map(cerealReviews.map(x=>[x.catalog_id,x]));
 const chapter24Products=index.products.filter(p=>String(p.fssr||"").startsWith("2.4."));
-assert.equal(cerealReviews.length,77,"Expected all 77 Chapter 2.4 review entries");
-assert.equal(cerealById.size,77,"Duplicate cereal product review");
-assert.equal(chapter24Products.length,77,"Chapter 2.4 catalogue count changed: inspect missing/new product identities");
+assert.equal(cerealReviews.length,76,"Expected all 76 Chapter 2.4 review entries");
+assert.equal(cerealById.size,76,"Duplicate cereal product review");
+assert.equal(chapter24Products.length,76,"Chapter 2.4 catalogue count changed: inspect missing/new product identities");
 for(const product of chapter24Products)assert.ok(cerealById.has(product.id),"Missing exact Chapter 2.4 review: "+product.id);
 for(const entry of cerealReviews){
  const product=index.products.find(p=>p.id===entry.catalog_id);

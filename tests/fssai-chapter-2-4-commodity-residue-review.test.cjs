@@ -26,10 +26,10 @@ const ctx=vm.createContext({
 vm.runInContext(s("function exactCerealCommodityReview(p){")+"\n"+s("function productCerealCommodityMrlReviewHtml(p){"),ctx);
 const run=(name,product)=>vm.runInContext(name+"("+JSON.stringify(product)+")",ctx);
 const get=fragment=>{const x=chapter.find(p=>p.name.toLowerCase().includes(fragment.toLowerCase()));assert.ok(x,"Missing product "+fragment);return {product:x,review:byId.get(x.id)};};
-test("exactly all 77 Chapter 2.4 identities are mapped to reference-only reviews",()=>{
- assert.equal(chapter.length,77);
- assert.equal(reviews.length,77);
- assert.equal(byId.size,77);
+test("exactly all 76 Chapter 2.4 identities are mapped to reference-only reviews",()=>{
+ assert.equal(chapter.length,76);
+ assert.equal(reviews.length,76);
+ assert.equal(byId.size,76);
  assert.deepEqual(new Set(byId.keys()),new Set(chapter.map(x=>x.id)));
  for(const row of reviews){
   assert.equal(row.auto_apply_commodity_mrl,false,row.catalog_id);

@@ -25590,24 +25590,6 @@
       "full_product_regulatory_approval": false
     },
     {
-      "catalog_id": "06-06-3-fruit-vegetable-cereal-flakes",
-      "product_name": "Fruit/Vegetable, Cereal Flakes",
-      "fssr": "2.4.35",
-      "rule_key": "2.4.35",
-      "scope": "processed_cereal_or_legume_food",
-      "candidate_commodity_articles": [],
-      "candidate_rows_in_loaded_official_source": 0,
-      "aflatoxin_reference_articles": [
-        "Cereal and cereal products"
-      ],
-      "qualifier_review": "Processed composite/fermented/finished foods require ingredient-specific, processing-factor and product article review; generic grain/family MRLs not automatically transferable.",
-      "source_basis": "FSSAI CTR Version IX (03.02.2026) · pesticide MRLs section 2.3.1 and crop contaminants section 2.2.1",
-      "scope_review_status": "identity_review_pending_no_safe_direct_pesticide_route",
-      "auto_apply_commodity_mrl": false,
-      "auto_apply_aflatoxin_category": false,
-      "full_product_regulatory_approval": false
-    },
-    {
       "catalog_id": "06-06-3-breakfast-cereal",
       "product_name": "Breakfast Cereal",
       "fssr": "2.4.35",
@@ -27880,6 +27862,25 @@
       "auto_apply_raw_ingredient_mrl": false,
       "full_product_regulatory_approval": false,
       "assessment_as_of": "2026-10-09"
+    },
+    {
+      "catalog_id": "06-06-3-fruit-vegetable-cereal-flakes",
+      "product_name": "Fruit/Vegetable, Cereal Flakes",
+      "fssr": "2.3.20",
+      "rule_key": "2.3.20",
+      "scope": "mixed_fruit_vegetable_cereal_dehydrated_flakes_not_breakfast_cereal",
+      "candidate_finished_product_pesticide_articles": [],
+      "raw_ingredient_article_references_only": [],
+      "raw_reference_rows_in_loaded_official_source": 0,
+      "review_status": "no_exact_finished_pesticide_article_verified",
+      "qualifier_review": "FSSR 2.3.20 uses fruit/vegetable pulp or puree, cereals, starch and sweetener as finished dried flakes, and is NOT Chapter 2.4.35 Breakfast Cereal. Identify botanical ingredients, concentration/processing factors, actual final matrix, packaging, precise pesticide residue definitions, and current amendments before applying any raw-crop MRL. No automatic cereal, fruit or vegetable pesticide or mycotoxin transfer.",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026) section 2.3.1 pesticides; distinct named FSSR 2.3.20 (quality only)",
+      "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_standard_url": "https://fssai.gov.in/upload/uploadfiles/files/4_%20Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+      "auto_apply_raw_ingredient_mrl": false,
+      "full_product_regulatory_approval": false,
+      "assessment_as_of": "2026-10-11",
+      "requires_fcs_appendix_reconciliation": true
     }
   ],
   "chapter_2_3_verified_groundnut_aflatoxin_v9": {
