@@ -34,7 +34,7 @@ test("533 = 407 partial + 126 unresolved; exactly 630 source qualifier fields an
  assert.equal(count,630);
  for(const [key,_,expected] of groups)assert.equal(data.records.filter(x=>x[key]).length,expected);
 });
-test("Exactly 14 new conditional official numeric contaminant source references remain NOT APPLIED",()=>{
+test("Exactly 15 new conditional official numeric contaminant source references remain NOT APPLIED",()=>{
  const animal=data.records.filter(x=>x.official_2_5_animal_pesticide_candidates_2026_10_11);
  const hcn=data.records.filter(x=>x.official_cassava_sago_hcn_2026_10_11);
  const fat=data.records.filter(x=>x.official_fssai_fat_spread_nickel_2026_10_11);
@@ -58,22 +58,35 @@ test("Exactly 14 new conditional official numeric contaminant source references 
   assert.equal(q.conditional_reference_limit,10);
   n++;
  }
+ const coffee=data.records.filter(x=>x.official_coffee_chicory_four_variants_2026_10_11);
+ assert.equal(coffee.length,1);
+ const ota=coffee[0].official_coffee_chicory_four_variants_2026_10_11;
+ assert.equal(ota.conditional_reference_limit,5);
+ assert.equal(ota.ota_unit,"µg/kg");
+ assert.equal(ota.ota_mixture_applicability_proven,false);
+ assert.equal(ota.no_ctr_numeric_automatic_assignment,true);
+ assert.equal(ota.no_finished_sample_compliance_pass,true);
+ n++;
  const f=fat[0].official_fssai_fat_spread_nickel_2026_10_11;
  assert.equal(f.auto_apply_nickel_numeric_mrl,false);
  assert.equal(f.all_legal_compliance_pass,false);
  assert.equal(f.conditional_nickel_mg_per_kg,1.5);
  n++;
- assert.equal(n,14);
+ assert.equal(n,15);
 });
-test("86 new official quality-criterion entries separated from contaminant numeric evidence",()=>{
+test("108 new official quality-criterion entries separated from contaminant numeric evidence",()=>{
  const other=data.records.filter(x=>x.verified_chapter_quality_only_2026_10_11);
  const animal=data.records.filter(x=>x.chapter_2_5_variant_quality_provisions_2026_10_11);
  const fat=data.records.filter(x=>x.official_fssai_fat_spread_nickel_2026_10_11);
  const otherCount=other.reduce((n,r)=>n+r.verified_chapter_quality_only_2026_10_11.quality_criteria.length,0);
  const animalCount=animal.reduce((n,r)=>n+r.chapter_2_5_variant_quality_provisions_2026_10_11.variants.reduce((a,v)=>a+v.quality_criteria.length,0),0);
  const fatCount=fat.reduce((n,r)=>n+r.official_fssai_fat_spread_nickel_2026_10_11.source_qualified_product_quality_criteria.length,0);
- assert.deepEqual([otherCount,animalCount,fatCount],[12,71,3]);
- assert.equal(otherCount+animalCount+fatCount,86);
+ const coffee=data.records.filter(r=>r.official_coffee_chicory_four_variants_2026_10_11);
+ assert.equal(coffee.length,1);
+ const coffeeCount=coffee[0].official_coffee_chicory_four_variants_2026_10_11.variants.reduce((n,v)=>n+v.quality_criteria.length,0);
+ assert.equal(coffeeCount,22);
+ assert.deepEqual([otherCount,animalCount,fatCount,coffeeCount],[12,71,3,22]);
+ assert.equal(otherCount+animalCount+fatCount+coffeeCount,108);
  for(const r of animal){
   assert.equal(r.chapter_2_5_variant_quality_provisions_2026_10_11.any_lab_sample_compliance_pass,false);
  }
