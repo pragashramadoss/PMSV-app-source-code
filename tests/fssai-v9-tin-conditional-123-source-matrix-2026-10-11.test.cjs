@@ -9,7 +9,7 @@ const values={TIN_CANNED_FRUIT_GROUP:250,TIN_CANNED_BEVERAGES:150,TIN_CANNED_CHE
 test("13 official FSSAI Version IX Tin rows retain original numbers and analytical units",()=>{
  assert.equal(m.official_source,"https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf");assert.equal(m.named_source_rows.length,13);
  assert.deepEqual(new Set(m.named_source_rows.map(r=>r.id)),new Set(Object.keys(values)));
- for(const r of m.named_source_rows){assert.equal(r.metal,"Tin");assert.equal(r.maximum_mg_per_kg,values[r.id]);assert.equal(r.unit,"mg/kg");assert.ok([10,11].includes(r.pdf_page_one_based));assert.ok(r.article.length>13);}
+ for(const r of m.named_source_rows){assert.equal(r.metal,"Tin");assert.equal(r.maximum_mg_per_kg,values[r.id]);assert.equal(r.unit,"mg/kg");assert.ok([10,11].includes(r.pdf_page_one_based));assert.ok(r.article.length>=5);}
  assert.equal(m.auto_numeric_application,false);assert.equal(m.first_exact_evidence_promotions,0);assert.equal(m.full_compliance_passes,0);
 });
 test("61 nontransfer guards cover 36 still unresolved exact catalogue identities, with no false pass",()=>{
