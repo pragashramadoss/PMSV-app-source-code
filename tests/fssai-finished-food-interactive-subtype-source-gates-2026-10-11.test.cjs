@@ -68,6 +68,23 @@ test("Cross-product selection and invented subtype cannot leak or bypass source 
  assert.match(draw(p),/Show all conditional form references/);
  assert.doesNotMatch(draw(p),/Research candidate selected — NOT confirmed as applicable/);
 });
+test("Full nine-product source manifest fails closed if totals are stale, another product becomes approved, or a source option is inserted",()=>{
+ const p=product("Thermally Processed Fruits");
+ const old=context.namedFoodSubtypesDb;
+ const cases=[
+  obj=>obj.records.find(r=>r.product_name==="Thermally Processed Vegetables").forms.push(structuredClone(obj.records.find(r=>r.product_name==="Thermally Processed Vegetables").forms[0])),
+  obj=>obj.records.find(r=>r.product_name==="Sterilized Fungi").forms[0].legal_or_lab_compliance_pass=true,
+  obj=>obj.records.pop(),
+  obj=>obj.records.find(r=>r.product_name==="Fruits and Vegetable Chutney").catalog_id="bad-id",
+  obj=>obj.verified_official_source_article_references=44
+ ];
+ for(const mutate of cases){
+  context.namedFoodSubtypesDb=structuredClone(source);mutate(context.namedFoodSubtypesDb);
+  assert.match(draw(p),/withheld/, "Manifest corruption must withhold even for another product");
+ }
+ context.namedFoodSubtypesDb=old;
+});
+
 test("Source data mutation or spoofed identity blocks selected form, never shows unverified limit",()=>{
  const p=product("Concentrated Vegetable Pulp/Puree with Preservatives for industrial use only");
  assert.ok(choose(p,"tomato_concentrate"));

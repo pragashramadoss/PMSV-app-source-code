@@ -10706,6 +10706,45 @@ function setPmsvFinishedFoodArticleResearchSubtype(catalogId,subtypeId){
  return true;
 }
 
+function pmsvFinishedFoodSubtypeManifestIntegrity(db){
+ if(!db||!contaminantsDb||!Array.isArray(db.records)||db.records.length!==9)return false;
+ const ids=new Set(),forms=new Set();
+ let formCount=0,sourceRefs=0;
+ const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+ for(const r of db.records){
+  if(ids.has(r.catalog_id)||!Array.isArray(r.forms)||r.forms.length<1||
+     !r.product_name||!r.fssr||!r.fcs||
+     r.official_source!==db.regulatory_source||
+     r.exact_food_subtype_selector_required!==true||
+     r.first_exact_product_source_promoted!==false||
+     r.direct_finished_product_numeric_auto_application!==false||
+     r.fully_verified_regulatory_compliance!==false)return false;
+  ids.add(r.catalog_id);
+  for(const form of r.forms){
+   const key=r.catalog_id+':'+form.subtype_id;
+   if(forms.has(key)||!form.subtype_id||form.subtype_id==='__none__'||
+      !Array.isArray(form.named_articles)||!form.named_articles.length||
+      !form.label||!form.required_confirmation||
+      form.confirmed_by_product_selection!==false||
+      form.numeric_finished_product_limit_applied!==false||
+      form.full_contaminant_panel_complete!==false||
+      form.legal_or_lab_compliance_pass!==false)return false;
+   forms.add(key);formCount++;
+   for(const x of form.named_articles){
+    sourceRefs++;
+    if(x.auto_apply!==false||x.compliance_pass!==false||
+       (contaminantsDb.metal_article_rules_v9[x.metal]||[]).filter(s=>
+        s.row_type==='exact'&&norm(s.article)===norm(x.article)&&
+        Number(s.limit)===x.limit&&s.unit===x.unit&&String(s.condition||'')===x.measurement_basis
+       ).length!==1)return false;
+   }
+  }
+ }
+ return ids.size===9&&forms.size===21&&formCount===db.conditional_named_subtype_options
+   &&sourceRefs===db.verified_official_source_article_references
+   &&sourceRefs===43&&db.reviewed_catalogue_identities===9;
+}
+
 function sourcePinnedFinishedFoodSubtypeReviewHtml(p){
  if(!p||!namedFoodSubtypesDb||!contaminantsDb)return '';
  const db=namedFoodSubtypesDb,row=(db.records||[]).find(x=>x.catalog_id===p.id);
@@ -10732,7 +10771,7 @@ function sourcePinnedFinishedFoodSubtypeReviewHtml(p){
        s.row_type==='exact'&&norm(s.article)===norm(r.article)&&
        Number(s.limit)===r.limit&&s.unit===r.unit&&String(s.condition||'')===r.measurement_basis
     ).length===1));
- if(!checked)return withheld;
+ if(!checked||!pmsvFinishedFoodSubtypeManifestIntegrity(db))return withheld;
  const selected=pmsvFinishedFoodArticleResearchState.catalog_id===p.id
    ?pmsvFinishedFoodArticleResearchState.subtype_id:'';
  const selectedValid=selected===''||selected==='__none__'||row.forms.some(f=>f.subtype_id===selected);
