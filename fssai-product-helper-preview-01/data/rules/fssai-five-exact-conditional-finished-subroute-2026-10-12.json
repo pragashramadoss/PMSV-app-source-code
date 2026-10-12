@@ -101,41 +101,43 @@
       "full_compliance_approval": false
     },
     {
-      "catalog_id": "04-04-1-fruits-and-vegetable-chutney",
-      "subtype": "Mango chutney",
-      "fssr": "2.3.41",
+      "catalog_id": "04-04-1-thermally-processed-fruits",
+      "subtype": "Canned mangoes (finished single-fruit article)",
+      "fssr": "2.3.1",
       "standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
-      "standard_pdf_page": 54,
-      "article": "Mango chutney",
+      "standard_pdf_page": 1,
+      "article": "Canned mangoes",
       "rows": [
         {
           "metal": "Lead",
-          "article": "Mango chutney",
+          "article": "Canned mangoes",
           "max": 1,
           "unit": "mg/kg",
-          "ctr_page": 4
+          "ctr_page": 3
         },
         {
           "metal": "Tin",
-          "article": "Mango Chutney",
+          "article": "Canned (citrus fruits, stone fruits, vegetables, fruit cocktail, mangoes, pineapple, raspberries, strawberries, tropical fruit salad)",
           "max": 250,
           "unit": "mg/kg",
-          "ctr_page": 11
+          "ctr_page": 10
         }
       ],
       "requirements": [
-        "Verify mango chutney declared finished-product identity and mango-based recipe",
-        "Exclude non-mango or mixed chutney not legally described as Mango Chutney",
-        "Verify finished-product sampling basis, appropriate packaging and all other regulatory articles"
+        "Verify actual marketed single-fruit CANNED MANGO pieces or halves rather than mixed fruit salad or mango pulp",
+        "Prove product and packing medium meet FSSR 2.3.1; confirm can, fruit species, sample and drained weight basis",
+        "Check distinct FSSR processed fruit/fruit-cocktail articles and all other applicable contaminant and pesticide requirements"
       ],
       "excluded": [
-        "tomato chutney",
-        "mixed vegetable chutney",
-        "non-mango chutney",
-        "mango ingredient in unrelated product"
+        "bottled thermally processed fruit",
+        "flexible pouch",
+        "aseptic pack",
+        "mango puree",
+        "fruit cocktail or mixed fruit salad",
+        "uncanned mango products"
       ],
-      "product_name": "Fruits and Vegetable Chutney",
-      "fcs": "04.1.2.6",
+      "product_name": "Thermally Processed Fruits",
+      "fcs": "04.1.2.4",
       "ctr_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
       "qualifying_conditional_subroute_only": true,
       "actual_lot_identity_verified": false,
@@ -236,5 +238,6 @@
   ],
   "no_auto_numeric_application": true,
   "no_lot_approval": true,
-  "nonqualifying_catalogue_variants_remain_unmatched": true
+  "nonqualifying_catalogue_variants_remain_unmatched": true,
+  "identity_classification_correction": "Mango Chutney is expressly standardized separately at FSSR 2.3.42, so broad FSSR 2.3.41 chutney is NOT promoted through the Mango Chutney CTR article."
 }

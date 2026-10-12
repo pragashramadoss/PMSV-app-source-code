@@ -55,9 +55,10 @@ test("Five positive official-article branches maintain precise legal distinction
  const names=m.promotions.map(x=>x.subtype);
  assert.ok(names.some(x=>x.includes("Canned fruit cocktail")));
  assert.ok(names.some(x=>x.includes("Canned carrots")));
- assert.ok(names.some(x=>x.includes("Mango chutney")));
+ assert.ok(names.some(x=>x.includes("Canned mangoes")));
  assert.ok(names.some(x=>x.includes("Canned mushrooms")));
  assert.ok(names.some(x=>x.includes("L(+)-tartaric acid")));
+ assert.ok(q.review_records.some(x=>x.catalog_id==="04-04-1-fruits-and-vegetable-chutney"),"General chutney remains pending: Mango Chutney has distinct FSSR 2.3.42");
  const tar=m.promotions.find(x=>x.catalog_id.includes("tartaric"));
  assert.deepEqual(tar.rows.map(x=>[x.metal,x.max]),[["Lead",2],["Arsenic",3]]);
  const fungi=m.promotions.find(x=>x.catalog_id.includes("sterilized-fungi"));

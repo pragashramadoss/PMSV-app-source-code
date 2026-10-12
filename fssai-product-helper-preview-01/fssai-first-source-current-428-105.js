@@ -2,8 +2,8 @@
 /* 428/105 current first-source evidence. Five conditional exact-named subroutes.
    No numeric auto-application, lot PASS, or full-regulatory clearance. */
 var pmsv2026Current428Manifest=null,pmsv2026Current428Ledger=null,pmsv2026Current105Queue=null;
-const pmsv2026Current428Digests=Object.freeze({"manifest":"4dba27ea1fb5a40d","ledger":"28727abf269d178a","queue":"45de544e571f3479"});
-const pmsv2026Current428Ids=Object.freeze(["04-04-1-thermally-processed-fruit-salad-cocktail-mix","04-04-2-thermally-processed-vegetables","04-04-1-fruits-and-vegetable-chutney","04-04-2-sterilized-fungi","99-99-1-acidity-regulators-l-tartaric-acid"]);
+const pmsv2026Current428Digests=Object.freeze({"manifest":"fe248b0036f00ee1","ledger":"3f6df6fc1037154b","queue":"337a0b2c90085a33"});
+const pmsv2026Current428Ids=Object.freeze(["04-04-1-thermally-processed-fruit-salad-cocktail-mix","04-04-2-thermally-processed-vegetables","04-04-1-thermally-processed-fruits","04-04-2-sterilized-fungi","99-99-1-acidity-regulators-l-tartaric-acid"]);
 function pmsv2026Current428Valid(){
  if(typeof pmsv2026Current423Valid!=="function"||!pmsv2026Current423Valid()||
     typeof pmsvReviewSnapshotDigest!=="function")return false;

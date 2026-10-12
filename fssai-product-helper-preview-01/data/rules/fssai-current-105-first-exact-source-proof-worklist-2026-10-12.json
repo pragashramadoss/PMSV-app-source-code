@@ -22,7 +22,7 @@
     "04-04-1-dry-fruits-and-nuts",
     "04-04-1-thermally-processed-fruit-salad-cocktail-mix",
     "04-04-2-thermally-processed-vegetables",
-    "04-04-1-fruits-and-vegetable-chutney",
+    "04-04-1-thermally-processed-fruits",
     "04-04-2-sterilized-fungi",
     "99-99-1-acidity-regulators-l-tartaric-acid"
   ],
@@ -583,40 +583,6 @@
       "evidence_state": "FSSAI_EXACT_FINISHED_ARTICLE_PROOF_REQUIRED"
     },
     {
-      "catalog_id": "04-04-1-thermally-processed-fruits",
-      "product_name": "Thermally Processed Fruits",
-      "fssr": "2.3.1",
-      "fcs": "04.1.2.4",
-      "current_review_group": "26 remaining product-specific evidence blockers",
-      "source_packet": "FSSAI_26_REMAINDER_EXCLUSIONS",
-      "regulatory_case": "canned_form_and_species",
-      "source_evidence_manifest": "fssai-product-helper-preview-01/data/rules/fssai-28-final-remainder-and-two-rabbit-veterinary-first-source-2026-10-11.json",
-      "official_finished_product_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
-      "official_contaminant_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
-      "proof_branches": [
-        {
-          "branch": "Exact finished-product evidence",
-          "required_evidence": [
-            "Identify species, raw versus pulp/paste versus processed fruit, added ingredients, water-loss and the actual analytical sample; never copy raw fruit MRLs."
-          ],
-          "source_article_candidates": [
-            "Source key: arsenic-fruit-pulp",
-            "Source key: pesticide-fruits-24d"
-          ]
-        }
-      ],
-      "referenced_articles_review_only": [
-        "arsenic-fruit-pulp",
-        "pesticide-fruits-24d"
-      ],
-      "forbidden_transfer": "Thermally processed food is not necessarily canned; a finished canned subtype cannot be inferred from the broader catalogue identity",
-      "first_exact_source_verified": false,
-      "numeric_finished_food_limit_auto_applied": false,
-      "finished_food_laboratory_pass": false,
-      "full_regulatory_compliance_approval": false,
-      "evidence_state": "FSSAI_EXACT_FINISHED_ARTICLE_PROOF_REQUIRED"
-    },
-    {
       "catalog_id": "04-04-1-fruit-cheese",
       "product_name": "Fruit Cheese",
       "fssr": "2.3.33",
@@ -648,6 +614,42 @@
         "tin_fruit_pulp"
       ],
       "forbidden_transfer": "Fruit pulp ingredient does not automatically mean finished fruit sweet qualifies as fruit-pulp article.",
+      "first_exact_source_verified": false,
+      "numeric_finished_food_limit_auto_applied": false,
+      "finished_food_laboratory_pass": false,
+      "full_regulatory_compliance_approval": false,
+      "evidence_state": "FSSAI_EXACT_FINISHED_ARTICLE_PROOF_REQUIRED"
+    },
+    {
+      "catalog_id": "04-04-1-fruits-and-vegetable-chutney",
+      "product_name": "Fruits and Vegetable Chutney",
+      "fssr": "2.3.41",
+      "fcs": "04.1.2.6",
+      "current_review_group": "20 fungal, fruit, tomato subtype matrix",
+      "source_packet": "FSSAI_20_FINISHED_FORM",
+      "regulatory_case": "chutney",
+      "source_evidence_manifest": "fssai-product-helper-preview-01/data/rules/fssai-20-fungi-fruit-tomato-exact-article-branches-2026-10-11.json",
+      "official_finished_product_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_contaminant_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "proof_branches": [
+        {
+          "branch": "Finished product is named Mango Chutney (declaration only)",
+          "required_evidence": [
+            "recipe and product name establish Mango Chutney rather than mixed chutney",
+            "confirm analytical finished-product basis and correct version",
+            "quality under FSSR 2.3.41 and packaging verified separately"
+          ],
+          "source_article_candidates": [
+            "Lead — Mango chutney",
+            "Tin — Mango Chutney"
+          ]
+        }
+      ],
+      "referenced_articles_review_only": [
+        "lead_mango_chutney",
+        "tin_mango_chutney"
+      ],
+      "forbidden_transfer": "Fruits and Vegetable Chutney does not automatically mean Mango Chutney.",
       "first_exact_source_verified": false,
       "numeric_finished_food_limit_auto_applied": false,
       "finished_food_laboratory_pass": false,
@@ -3426,6 +3428,6 @@
   ],
   "archive_112_count": 112,
   "archive_111_count": 111,
-  "latest_partial_subtype": "Five named conditional finished-subtypes from FSSR and CTR V IX; no general-category or lot compliance applicability",
+  "latest_partial_subtype": "Five official conditional finished subroutes: canned fruit cocktail, canned carrots, canned mangoes, canned mushrooms, and L(+) tartaric acid; not entire category",
   "archive_110_count": 110
 }

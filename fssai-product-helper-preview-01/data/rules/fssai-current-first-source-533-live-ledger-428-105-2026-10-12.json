@@ -2219,15 +2219,53 @@
       "product_name": "Thermally Processed Fruits",
       "fssr": "2.3.1",
       "fcs": "04.1.2.4",
-      "source_status": "FIRST_EXACT_SOURCE_PENDING",
-      "evidence_origin": "2026-10-11 legacy 121 matrix",
+      "source_status": "PARTIAL_EXACT_SOURCE_MATCH",
+      "evidence_origin": "2026-10-12 official positive conditional finished-article subtype",
       "review_group": "26 remaining product-specific evidence blockers",
-      "regulatory_coverage": "PARTIAL_OR_PENDING",
+      "regulatory_coverage": "PARTIAL_CONDITIONAL_SUBROUTE_ONLY",
       "complete_contaminant_panel": false,
       "product_compliance_approval": false,
       "sample_lab_pass": false,
-      "regulatory_source_verified_delta": null,
-      "missing_first_exact_evidence": true
+      "regulatory_source_verified_delta": {
+        "evidence_class": "official_fssr_named_conditional_finished_subtype",
+        "conditional_subtype": "Canned mangoes (finished single-fruit article)",
+        "source_article": "Canned mangoes",
+        "source_rows": [
+          {
+            "metal": "Lead",
+            "article": "Canned mangoes",
+            "max": 1,
+            "unit": "mg/kg",
+            "ctr_page": 3
+          },
+          {
+            "metal": "Tin",
+            "article": "Canned (citrus fruits, stone fruits, vegetables, fruit cocktail, mangoes, pineapple, raspberries, strawberries, tropical fruit salad)",
+            "max": 250,
+            "unit": "mg/kg",
+            "ctr_page": 10
+          }
+        ],
+        "identity_requirements": [
+          "Verify actual marketed single-fruit CANNED MANGO pieces or halves rather than mixed fruit salad or mango pulp",
+          "Prove product and packing medium meet FSSR 2.3.1; confirm can, fruit species, sample and drained weight basis",
+          "Check distinct FSSR processed fruit/fruit-cocktail articles and all other applicable contaminant and pesticide requirements"
+        ],
+        "excluded_other_forms": [
+          "bottled thermally processed fruit",
+          "flexible pouch",
+          "aseptic pack",
+          "mango puree",
+          "fruit cocktail or mixed fruit salad",
+          "uncanned mango products"
+        ],
+        "only_if_specific_finished_subtype_confirmed": true,
+        "actual_lot_identity_verified": false,
+        "numeric_finished_food_limit_auto_applied": false,
+        "other_contaminants_cleared": false,
+        "full_compliance_pass": false
+      },
+      "missing_first_exact_evidence": false
     },
     {
       "catalog_id": "04-04-1-thermally-processed-fruit-salad-cocktail-mix",
@@ -2316,51 +2354,15 @@
       "product_name": "Fruits and Vegetable Chutney",
       "fssr": "2.3.41",
       "fcs": "04.1.2.6",
-      "source_status": "PARTIAL_EXACT_SOURCE_MATCH",
-      "evidence_origin": "2026-10-12 official positive conditional finished-article subtype",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "evidence_origin": "2026-10-11 legacy 121 matrix",
       "review_group": "20 fungal, fruit, tomato subtype matrix",
-      "regulatory_coverage": "PARTIAL_CONDITIONAL_SUBROUTE_ONLY",
+      "regulatory_coverage": "PARTIAL_OR_PENDING",
       "complete_contaminant_panel": false,
       "product_compliance_approval": false,
       "sample_lab_pass": false,
-      "regulatory_source_verified_delta": {
-        "evidence_class": "official_fssr_named_conditional_finished_subtype",
-        "conditional_subtype": "Mango chutney",
-        "source_article": "Mango chutney",
-        "source_rows": [
-          {
-            "metal": "Lead",
-            "article": "Mango chutney",
-            "max": 1,
-            "unit": "mg/kg",
-            "ctr_page": 4
-          },
-          {
-            "metal": "Tin",
-            "article": "Mango Chutney",
-            "max": 250,
-            "unit": "mg/kg",
-            "ctr_page": 11
-          }
-        ],
-        "identity_requirements": [
-          "Verify mango chutney declared finished-product identity and mango-based recipe",
-          "Exclude non-mango or mixed chutney not legally described as Mango Chutney",
-          "Verify finished-product sampling basis, appropriate packaging and all other regulatory articles"
-        ],
-        "excluded_other_forms": [
-          "tomato chutney",
-          "mixed vegetable chutney",
-          "non-mango chutney",
-          "mango ingredient in unrelated product"
-        ],
-        "only_if_specific_finished_subtype_confirmed": true,
-        "actual_lot_identity_verified": false,
-        "numeric_finished_food_limit_auto_applied": false,
-        "other_contaminants_cleared": false,
-        "full_compliance_pass": false
-      },
-      "missing_first_exact_evidence": false
+      "regulatory_source_verified_delta": null,
+      "missing_first_exact_evidence": true
     },
     {
       "catalog_id": "04-04-1-mango-chutney",
