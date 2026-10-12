@@ -22,7 +22,7 @@ test("source-integrity predicates authenticate 533 identities, 116 missing-sourc
  assert.equal(c.pmsvCurrent32DocumentaryIntegrity(),true);
  assert.equal(l.records.length,533);
  assert.equal(d116.records.length,116);assert.equal(d32.records.length,32);
- assert.equal(c.pmsvCanonicalNamedFssaiSourceRefs.length,9);
+ assert.equal(vm.runInContext('pmsvCanonicalNamedFssaiSourceRefs',c).length,9);
  for(const x of d116.records){
   const html=c.pmsvCurrent116ProofChecklistHtml(index.get(x.catalog_id));
   assert.match(html,/Evidence needed to close this first-source gap/);
@@ -32,8 +32,8 @@ test("source-integrity predicates authenticate 533 identities, 116 missing-sourc
 });
 test("all nine authenticated article rows fail closed on in-memory number drift, even after a successful load",()=>{
  for(let i=0;i<9;i++){
-  const c=init(),[key,,,,]=c.pmsvCanonicalNamedFssaiSourceRefs[i];
-  const canonical=c.pmsvCanonicalNamedFssaiSourceRefs[i];
+  const c=init(),[key,,,,]=vm.runInContext('pmsvCanonicalNamedFssaiSourceRefs',c)[i];
+  const canonical=vm.runInContext('pmsvCanonicalNamedFssaiSourceRefs',c)[i];
   const group=c.pmsvCerealFruitSpiceSourceDb.source_article_rows.find(x=>x.key===key);
   const rule=group.refs.find(x=>x.core_key===canonical[3]);
   rule.limit+=0.01;
