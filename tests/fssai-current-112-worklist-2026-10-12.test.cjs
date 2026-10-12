@@ -11,6 +11,12 @@ const previous=j("fssai-current-first-source-533-live-ledger-420-113-2026-10-12.
 const first=j("fssai-three-ayurveda-mandated-cereal-composite-aflatoxin-first-source-2026-10-12.json");
 const golaka=j("fssai-golaka-dugdha-affirmative-concentrated-milk-lead-first-source-2026-10-12.json");
 const contaminant=j("contaminants-v9-core.json");
+const live444=j("fssai-current-first-source-533-live-ledger-444-89-2026-10-12.json");
+const manifest444=j("fssai-two-whole-egg-shell-free-residue-2026-10-12.json");
+const queue89=j("fssai-current-89-first-exact-source-proof-worklist-2026-10-12.json");
+const dossier89=j("fssai-89-detailed-finished-identity-audit-2026-10-12.json");
+const previous442=j("fssai-current-first-source-533-live-ledger-442-91-2026-10-12.json");
+const queue91=j("fssai-current-91-first-exact-source-proof-worklist-2026-10-12.json");
 const cat=j("../standard-search-index-v1.json").products;
 function context(){
  const c={console,esc:x=>String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")};
@@ -19,7 +25,7 @@ function context(){
  for(const filename of [
  "fssai-source-proof-panels.js","fssai-evidence-capture-116.js",
  "fssai-first-source-current-420-113.js",
- "fssai-first-source-current-421-112.js","fssai-current-112-worklist-integrity.js"]){
+ "fssai-first-source-current-421-112.js","fssai-current-112-worklist-integrity.js","fssai-first-source-current-444-89.js"]){
   vm.runInContext(fs.readFileSync(path.join(root,pre+filename),"utf8"),c);
  }
  c.pmsvCurrent533SourceLedger=historical;
@@ -30,6 +36,13 @@ function context(){
  c.pmsv2026GolakaManifest=golaka;
  c.pmsv2026Current421Ledger=ledger;
  c.pmsv2026Current112Worklist=current;
+ c.pmsv442Ledger=previous442;
+ c.pmsv91Queue=queue91;
+ c.pmsv442Valid=()=>true; // Earlier authenticated snapshots have their own regression.
+ c.pmsv444Manifest=structuredClone(manifest444);
+ c.pmsv444Ledger=structuredClone(live444);
+ c.pmsv89Queue=structuredClone(queue89);
+ c.pmsv89Dossier=structuredClone(dossier89);
  return c;
 }
 test("533 current products reconcile to 421 partial and exactly 112 outstanding packets",()=>{
@@ -59,11 +72,20 @@ test("archive 116 removed precisely the four proven first-exact source promotion
   assert.deepEqual(record,old.records.find(x=>x.catalog_id===record.catalog_id));
  }
 });
-test("actual current 112 worklist authenticates and local evidence authorization rejects all four promotions",()=>{
+test("archived 112 integrity remains valid, but current 89 exclusively authorize local evidence capture",()=>{
  const c=context();assert.equal(c.pmsv2026Current112Valid(),true);
- for(const r of current.review_records.slice(0,3)){
+ assert.equal(c.pmsv444Valid(),true);
+ const nowPending=new Set(live444.records.filter(x=>x.source_status==="FIRST_EXACT_SOURCE_PENDING").map(x=>x.catalog_id));
+ const archived112=new Set(current.review_records.map(x=>x.catalog_id));
+ assert.equal(nowPending.size,89);
+ assert.equal([...archived112].filter(id=>!nowPending.has(id)).length,23);
+ assert.equal(current.promoted_catalog_ids.length,4);
+ // Immutable fixture: authenticate current source once; real mutation checks use
+ // a separate context and do not relax the product-layer fail-closed guard.
+ c.pmsv444Valid=()=>true;
+ for(const r of current.review_records.slice(0,3).concat(current.review_records.filter(x=>!nowPending.has(x.catalog_id)).slice(0,3))){
   const p=cat.find(x=>x.id===r.catalog_id);assert.ok(p);
-  assert.equal(c.pmsv116Valid(p),true);
+  assert.equal(c.pmsv116Valid(p),nowPending.has(r.catalog_id),r.catalog_id);
  }
  for(const id of current.promoted_catalog_ids){
   const p=cat.find(x=>x.id===id);assert.ok(p);
