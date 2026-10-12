@@ -294,6 +294,8 @@ jobs:
         run: node --test tests/fssai-first-source-current-420-113-2026-10-12.test.cjs
       - name: Verify next affirmative Golaka condensed milk source and current 421 / 112
         run: node --test tests/fssai-first-source-current-421-112-2026-10-12.test.cjs
+      - name: Verify live 112 pending source packets and remove 4 resolved legacy collectors
+        run: node --test tests/fssai-current-112-worklist-2026-10-12.test.cjs
       - name: Verify 32 extra finished-form crop and toxic-substance source branches
         run: node --test tests/fssai-32-cereal-fruit-spice-exact-article-scope-2026-10-12.test.cjs
       - name: Verify fail-closed 533 inventory, 116 current worklists and 32 exact article branches
