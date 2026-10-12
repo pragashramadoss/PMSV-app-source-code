@@ -432,3 +432,94 @@ var pmsvOriginalCurrent533ProofHtml=sourcePinned121ResearchProofHtml;
 sourcePinned121ResearchProofHtml=function(p){
  return pmsvCurrent533SourceStatusHtml(p)+pmsvOriginalCurrent533ProofHtml(p);
 };
+
+
+/* Current 116-case source-proof closure worklist, 12 Oct 2026.
+ * Read-only operational evidence requests, NEVER an automatic contaminant
+ * limit assignment, product regulatory clearance or laboratory PASS. */
+var pmsvCurrent116ProofWorklist=null;
+var pmsvPriorLoadCurrent116=pmsvLoadPositiveSourceProof;
+pmsvLoadPositiveSourceProof=async function(){
+ await pmsvPriorLoadCurrent116();
+ pmsvCurrent116ProofWorklist=null;
+ try{
+  const response=await fetch('./data/rules/fssai-current-116-finished-article-proof-worklist-2026-10-12.json?v=20261012-proof116',{cache:'reload'});
+  if(!response.ok)throw Error('Current 116 evidence requirements unavailable');
+  const d=await response.json(),ledger=pmsvCurrent533SourceLedger,core=contaminantsDb;
+  if(!ledger||!core||d.schema_version!=='1.0'||d.catalogue!==533||
+    d.current_partial_exact!==417||d.current_pending_first_exact!==116||
+    d.full_compliance_approvals!==0||d.new_first_exact_promotions!==0||
+    d.numeric_auto_application!==false||d.records?.length!==116||
+    d.regulatory_basis!==core.official_sources?.[0]?.url||
+    d.source_version!==core.source_version||
+    d.source_policy!=='OFFICIAL_FSSAI_FOSCOS_ONLY'||
+    d.scope!=='OPERATIONAL_SOURCE_PROOF_WORKLIST_NOT_LEGAL_OR_LAB_COMPLIANCE')
+    throw Error('Current evidence closure metadata invalid');
+  const current=ledger.records.filter(x=>x.source_status==='FIRST_EXACT_SOURCE_PENDING');
+  const byId=new Map(current.map(x=>[x.catalog_id,x]));
+  if(byId.size!==116||new Set(d.records.map(x=>x.catalog_id)).size!==116||
+    Object.entries({'20 fungal, fruit, tomato subtype matrix':20,
+      '14 sugar, egg, confection subtype matrix':14,
+      '56 cross-form transfer exclusions':56,
+      '26 remaining product-specific evidence blockers':26})
+      .some(([name,n])=>d.review_group_counts?.[name]!==n||
+        d.records.filter(x=>x.current_review_group===name).length!==n)||
+    d.records.some(x=>{
+      const p=byId.get(x.catalog_id);
+      return !p||p.product_name!==x.product_name||
+        String(p.fssr||'')!==String(x.fssr||'')||
+        String(p.fcs||'')!==String(x.fcs||'')||
+        p.review_group!==x.current_review_group||
+        x.official_contaminant_source!==d.regulatory_basis||
+        !x.official_finished_product_source?.startsWith('https://')||
+        !x.official_finished_product_source.includes('fssai.gov.in')||
+        !x.source_evidence_manifest?.startsWith('fssai-product-helper-preview-01/data/rules/')||
+        !x.forbidden_transfer||!Array.isArray(x.proof_branches)||
+        x.proof_branches.length===0||
+        x.proof_branches.some(b=>!b.branch||!Array.isArray(b.required_evidence)||
+          b.required_evidence.length===0||b.required_evidence.some(v=>typeof v!=='string'||!v))||
+        x.first_exact_source_verified!==false||
+        x.numeric_finished_food_limit_auto_applied!==false||
+        x.finished_food_laboratory_pass!==false||
+        x.full_regulatory_compliance_approval!==false||
+        x.evidence_state!=='FSSAI_EXACT_FINISHED_ARTICLE_PROOF_REQUIRED';
+    }))throw Error('Source closure rows do not reconcile against live 533 identity ledger');
+  pmsvCurrent116ProofWorklist=d;
+ }catch(e){pmsvCurrent116ProofWorklist=null;}
+};
+function pmsvCurrent116ProofChecklistHtml(p){
+ const d=pmsvCurrent116ProofWorklist,ledger=pmsvCurrent533SourceLedger;
+ if(!p||!d||!ledger)return '';
+ const item=d.records.find(x=>x.catalog_id===p.id);
+ if(!item)return '';
+ if(!pmsvCurrent533SourceProofValid(p)||item.product_name!==p.name||
+    String(item.fssr||'')!==String(p.fssr||'')||
+    String(item.fcs||'')!==String(p.fcs||'')||
+    !ledger.records.some(x=>x.catalog_id===p.id&&x.source_status==='FIRST_EXACT_SOURCE_PENDING')||
+    item.first_exact_source_verified!==false||
+    item.numeric_finished_food_limit_auto_applied!==false||
+    item.finished_food_laboratory_pass!==false||
+    item.full_regulatory_compliance_approval!==false||
+    !item.proof_branches?.length)
+   return '<div class="notice"><b>Source-proof worklist withheld:</b> identity or verification state mismatch. No compliance result may be inferred.</div>';
+ const tasks=item.proof_branches.map(b=>
+   '<li><b>'+esc(b.branch)+'</b><ul>'+
+   b.required_evidence.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>'+
+   (b.source_article_candidates?.length?
+    '<small>Possible official source articles / reference IDs — NOT APPLIED: '+
+    b.source_article_candidates.map(esc).join('; ')+'</small>':
+    '<small>No direct candidate source article has been established for this form.</small>')+
+   '</li>').join('');
+ return '<details class="card" style="margin-top:12px"><summary><b>Evidence needed to close this first-source gap</b> — '+
+   esc(item.regulatory_case.replaceAll('_',' '))+'</summary>'+
+   '<div class="notice"><b>FIRST EXACT MATCH UNRESOLVED — NO LIMIT OR PASS APPLIED.</b> '+
+   'Product variant, species, processing and analytical matrix must be evidenced against the official finished-food article.</div>'+
+   '<ol>'+tasks+'</ol><p><b>Do not transfer:</b> '+esc(item.forbidden_transfer)+'</p>'+
+   '<p><small>The above is a research checklist only. Current FSSAI edition, actual batch documentation, sample basis, other contaminants and amendments require independent review.</small></p>'+
+   '<small><a href="'+esc(item.official_finished_product_source)+'" target="_blank" rel="noopener noreferrer">Official FSSAI/FoSCoS product source</a> · '+
+   '<a href="'+esc(item.official_contaminant_source)+'" target="_blank" rel="noopener noreferrer">FSSAI Version IX contaminant source</a></small></details>';
+}
+var pmsvBeforeProof116CurrentStatus=pmsvCurrent533SourceStatusHtml;
+pmsvCurrent533SourceStatusHtml=function(p){
+ return pmsvBeforeProof116CurrentStatus(p)+pmsvCurrent116ProofChecklistHtml(p);
+};
