@@ -131,6 +131,7 @@ pmsvLoadPositiveSourceProof=async function(){
  }catch(_){pmsv450Source=null;pmsv450Ledger=null;pmsv83Queue=null;}
 };
 function pmsv450Html(p){
+ if(p&&typeof pmsv457Valid==="function"&&pmsv457Valid())return "";
  if(!p)return "";
  if(!pmsv450Valid())
   return '<div class="notice"><b>Latest 450/83 official source integrity unavailable.</b> No contaminant limit or compliance PASS.</div>';
