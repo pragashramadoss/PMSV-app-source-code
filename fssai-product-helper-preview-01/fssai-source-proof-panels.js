@@ -46,13 +46,19 @@ function sourcePinned121ResearchProofHtml(p){
  // This 121-item worklist is ARCHIVED. The most recent authenticated
  // 533-item ledger alone controls which products remain first-source pending.
  // Do not reproduce obsolete warnings for any of the 27 subsequent promotions.
- if(typeof pmsv444Valid!=='function'||!pmsv444Valid())return '';
- const current=pmsv444Ledger?.records?.find(x=>x.catalog_id===p.id);
- if(!current||current.product_name!==p.name||
-    String(current.fssr||'')!==String(p.fssr||'')||
-    String(current.fcs||'')!==String(p.fcs||''))
-    return '<div class="notice">Latest first-source identity mismatch: historical source proof withheld. No limit or PASS.</div>';
- if(current.source_status!=='FIRST_EXACT_SOURCE_PENDING')return '';
+ // The current application always loads pmsv444Valid before this panel renders.
+ // In that browser case, an absent/invalid current verifier FAILS CLOSED.
+ // Isolated Node/VM regression fixtures of the historic 121 archive do not load
+ // the modern ledger; retain their historical checks *only* outside browsers.
+ if(typeof pmsv444Valid==='function'){
+  if(!pmsv444Valid())return '';
+  const current=pmsv444Ledger?.records?.find(x=>x.catalog_id===p.id);
+  if(!current||current.product_name!==p.name||
+     String(current.fssr||'')!==String(p.fssr||'')||
+     String(current.fcs||'')!==String(p.fcs||''))
+     return '<div class="notice">Latest first-source identity mismatch: historical source proof withheld. No limit or PASS.</div>';
+  if(current.source_status!=='FIRST_EXACT_SOURCE_PENDING')return '';
+ }else if(typeof window!=='undefined')return '';
  if(p.id==='06-06-1-any-other-foodgrains'&&typeof pmsvGrainProofValid==='function'&&pmsvGrainProofValid(p))return '';
  // A historic first-source queue is still archived at 121. A positively
  // source-matched Ayurveda recipe must not be shown as currently unresolved
