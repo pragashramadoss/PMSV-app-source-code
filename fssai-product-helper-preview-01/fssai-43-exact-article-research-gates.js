@@ -5,7 +5,7 @@
  * first-source promotion, lot PASS or approval. */
 var pmsv43ConditionalSource=null;
 var pmsv43ArticleSelections=Object.create(null);
-const pmsv43ManifestDigest="f661cd87ca2cb5d0";
+const pmsv43ManifestDigest="052b57e48c0ba97f";
 function pmsv43ReviewDigest(x){
  const s=JSON.stringify(x);if(typeof s!=="string")return "";
  let a=0x811c9dc5,b=0x9747b28c;
