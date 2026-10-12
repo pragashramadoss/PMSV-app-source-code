@@ -280,6 +280,8 @@ jobs:
             audit-output/fssai-ten-edible-fungi-quality-vs-ctr-review.json
             audit-output/fssai-11-fruit-pickle-sauce-source-quality.json
           if-no-files-found: warn
+      - name: Verify 43 exact official CTR named-article conditional routes across current 116 cases
+        run: node --test tests/fssai-43-current-116-named-source-adjudication-2026-10-12.test.cjs
       - name: Check nine official FSSR identity standards, 22 subtypes and 111 finished-product quality requirements
         run: node --test tests/fssai-nine-quality-22-forms-111-criteria-official-source-2026-10-12.test.cjs
       - name: Verify 681 documentary review snapshots and suppress stale 121 first-source results
