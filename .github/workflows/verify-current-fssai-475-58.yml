@@ -1,0 +1,24 @@
+name: Verify current FSSAI 475/58 first sources (fast)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/**'
+      - 'tests/fssai-first-source-current-475-58-2026-10-12.test.cjs'
+      - '.github/workflows/verify-current-fssai-475-58.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 12 positive article gates, 533 identity conservation and 58 open dossiers
+        run: node --test tests/fssai-first-source-current-475-58-2026-10-12.test.cjs
+      - name: Syntax-check current first-source panels
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-first-source-current-475-58.js
+          node --check fssai-product-helper-preview-01/fssai-first-source-current-463-70.js

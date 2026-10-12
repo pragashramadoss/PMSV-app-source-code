@@ -1,0 +1,649 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-10-12",
+  "source_policy": "OFFICIAL_FSSAI_ONLY",
+  "source_version": "Version IX (03.02.2026)",
+  "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "official_chapter_23": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+  "official_foscos": "https://foscos.fssai.gov.in/standard-product",
+  "source_class": "TWELVE_EXPLICIT_MUSHROOM_CANNED_OR_CROP_FINISHED_SUBROUTES",
+  "baseline": {
+    "catalogue": 533,
+    "partial_exact": 463,
+    "first_source_pending": 70
+  },
+  "latest": {
+    "catalogue": 533,
+    "partial_exact": 475,
+    "first_source_pending": 58,
+    "full_compliance_approvals": 0
+  },
+  "named_conditionally_qualified_routes": 12,
+  "route_count_by_family": {
+    "mushroom": 2,
+    "canned": 2,
+    "qualifying_crop": 8
+  },
+  "auto_apply_finished_limits": false,
+  "finished_lot_identity_unverified": true,
+  "any_lab_pass": false,
+  "any_full_compliance_pass": false,
+  "products": [
+    {
+      "catalog_id": "04-04-2-fungi-extract-and-fungi-concentrate",
+      "product_name": "Fungi extract and Fungi Concentrate",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.2",
+      "source_family": "VERIFIED_MUSHROOM_SPECIES_ONLY_NOTS",
+      "named_qualified_finished_article": "Food containing mushrooms",
+      "conditional_fssr_subroute": "2.3.62",
+      "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_standard_pdf_page_1_based": 102,
+      "finished_subroute_identity": "Mushroom-species-derived fungi extract or concentrate, not all edible fungi",
+      "source_article_candidates": [
+        {
+          "contaminant": "Agaric acid",
+          "article": "Food containing mushrooms",
+          "limit": 100,
+          "unit": "ppm",
+          "analytical_basis": "Finished mushroom-containing food; NOT mushroom-species-free edible fungi",
+          "ctr_pdf_zero_index": 14
+        }
+      ],
+      "positive_source_basis": [
+        "Identify the actual finished article: Mushroom-species-derived fungi extract or concentrate, not all edible fungi.",
+        "Verify genus, species and raw mushroom input, finished extract matrix, and extraction concentration; FSSR includes other edible fungi that must not be labelled mushrooms.",
+        "Match every relevant listed source article to finished goods and latest FSSR/FoSCoS identity; obtain positive recipe, species or canning records rather than infer from the broad category.",
+        "Confirm source scope, analytical basis, matrix/sample, effective date, processing and any more-specific official product limit before applying source values.",
+        "Actual lot recipe/species/container, testing and the full applicable contaminant panel remain unverified. No numerical auto-application or regulatory PASS."
+      ],
+      "negative_transfer_controls": [
+        "Generic edible fungi or non-mushroom microorganisms silently classified as mushrooms",
+        "FSSR 2.3.62 fungi extract quality criteria used as direct toxin measurements",
+        "Mushroom extract assumed identical to fresh/canned whole mushrooms",
+        "Unconfirmed genus/species labels or mixed species treated as positive identity",
+        "Any inherited canned mushroom lead or tin rule for a non-canned extract",
+        "Automatic agaric acid lot PASS or complete contaminant panel"
+      ],
+      "conditional_named_article_verified": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_recipe_or_ingredient_identity_verified": false,
+      "processing_equivalence_confirmed": false,
+      "source_limits_auto_applied": false,
+      "actual_laboratory_results_verified": false,
+      "all_contaminants_reviewed": false,
+      "full_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-dried-fungi-concentrate",
+      "product_name": "Dried Fungi Concentrate",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.2",
+      "source_family": "VERIFIED_MUSHROOM_SPECIES_ONLY_NOTS",
+      "named_qualified_finished_article": "Food containing mushrooms",
+      "conditional_fssr_subroute": "2.3.62",
+      "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_standard_pdf_page_1_based": 102,
+      "finished_subroute_identity": "Mushroom-species-derived dried fungi concentrate, not every fungus",
+      "source_article_candidates": [
+        {
+          "contaminant": "Agaric acid",
+          "article": "Food containing mushrooms",
+          "limit": 100,
+          "unit": "ppm",
+          "analytical_basis": "Finished mushroom-containing food; NOT mushroom-species-free edible fungi",
+          "ctr_pdf_zero_index": 14
+        }
+      ],
+      "positive_source_basis": [
+        "Identify the actual finished article: Mushroom-species-derived dried fungi concentrate, not every fungus.",
+        "Confirm underlying extract or concentrate was produced from an edible mushroom species and survives as the finished dried product; do not transfer an unspecified fungi article.",
+        "Match every relevant listed source article to finished goods and latest FSSR/FoSCoS identity; obtain positive recipe, species or canning records rather than infer from the broad category.",
+        "Confirm source scope, analytical basis, matrix/sample, effective date, processing and any more-specific official product limit before applying source values.",
+        "Actual lot recipe/species/container, testing and the full applicable contaminant panel remain unverified. No numerical auto-application or regulatory PASS."
+      ],
+      "negative_transfer_controls": [
+        "Generic edible fungi or non-mushroom microorganisms silently classified as mushrooms",
+        "FSSR 2.3.62 fungi extract quality criteria used as direct toxin measurements",
+        "Mushroom extract assumed identical to fresh/canned whole mushrooms",
+        "Unconfirmed genus/species labels or mixed species treated as positive identity",
+        "Any inherited canned mushroom lead or tin rule for a non-canned extract",
+        "Automatic agaric acid lot PASS or complete contaminant panel"
+      ],
+      "conditional_named_article_verified": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_recipe_or_ingredient_identity_verified": false,
+      "processing_equivalence_confirmed": false,
+      "source_limits_auto_applied": false,
+      "actual_laboratory_results_verified": false,
+      "all_contaminants_reviewed": false,
+      "full_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-coconut-milk-non-dairy",
+      "product_name": "Coconut Milk (Non-Dairy)",
+      "fssr": "2.3.51",
+      "fcs": "04.1.2.8",
+      "source_family": "VERIFIED_COMMERCIAL_CAN_FINISHED_TIN",
+      "named_qualified_finished_article": "Canned foods other than beverages",
+      "conditional_fssr_subroute": "2.3.51",
+      "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_standard_pdf_page_1_based": 77,
+      "finished_subroute_identity": "Genuinely commercially canned and heat-preserved liquid coconut milk or light coconut milk",
+      "source_article_candidates": [
+        {
+          "contaminant": "Tin",
+          "article": "Canned foods other than beverages",
+          "limit": 250,
+          "unit": "mg/kg",
+          "analytical_basis": "Actual finished commercially canned non-beverage food, metal can and thermal preservation documented",
+          "ctr_pdf_zero_index": 10
+        }
+      ],
+      "positive_source_basis": [
+        "Identify the actual finished article: Genuinely commercially canned and heat-preserved liquid coconut milk or light coconut milk.",
+        "Prove sealed food CAN container with commercial canned-food preservation process and the final liquid coconut-milk identity; shelf-stable cartons, pouches, glass and mere hermetic closure are not proof.",
+        "Match every relevant listed source article to finished goods and latest FSSR/FoSCoS identity; obtain positive recipe, species or canning records rather than infer from the broad category.",
+        "Confirm source scope, analytical basis, matrix/sample, effective date, processing and any more-specific official product limit before applying source values.",
+        "Actual lot recipe/species/container, testing and the full applicable contaminant panel remain unverified. No numerical auto-application or regulatory PASS."
+      ],
+      "negative_transfer_controls": [
+        "Glass, carton, flexible pouch or any hermetically sealed pack treated as commercial CAN",
+        "Coconut palm product mistaken for animal milk or a dairy analogue",
+        "Coconut milk/cream confused with crude coconut oil or oilseed commodity",
+        "Heat processed but not canned packaging automatically matched to canned food",
+        "Canned foods tin article extended to lead/arsenic without exact separate source",
+        "Automatic finished-lot tin test value, regulatory PASS or full contaminant approval"
+      ],
+      "conditional_named_article_verified": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_recipe_or_ingredient_identity_verified": false,
+      "processing_equivalence_confirmed": false,
+      "source_limits_auto_applied": false,
+      "actual_laboratory_results_verified": false,
+      "all_contaminants_reviewed": false,
+      "full_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-coconut-cream-non-dairy",
+      "product_name": "Coconut cream (Non-Dairy)",
+      "fssr": "2.3.52",
+      "fcs": "04.1.2.8",
+      "source_family": "VERIFIED_COMMERCIAL_CAN_FINISHED_TIN",
+      "named_qualified_finished_article": "Canned foods other than beverages",
+      "conditional_fssr_subroute": "2.3.52",
+      "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_standard_pdf_page_1_based": 79,
+      "finished_subroute_identity": "Genuinely commercially canned and heat-preserved liquid coconut cream or its concentrate",
+      "source_article_candidates": [
+        {
+          "contaminant": "Tin",
+          "article": "Canned foods other than beverages",
+          "limit": 250,
+          "unit": "mg/kg",
+          "analytical_basis": "Actual finished commercially canned non-beverage food, metal can and thermal preservation documented",
+          "ctr_pdf_zero_index": 10
+        }
+      ],
+      "positive_source_basis": [
+        "Identify the actual finished article: Genuinely commercially canned and heat-preserved liquid coconut cream or its concentrate.",
+        "Prove actual metal food can, sealed thermal preservation and coconut cream finished form; distinguish coconut milk, cream powder, aseptic carton and unprocessed coconut kernel.",
+        "Match every relevant listed source article to finished goods and latest FSSR/FoSCoS identity; obtain positive recipe, species or canning records rather than infer from the broad category.",
+        "Confirm source scope, analytical basis, matrix/sample, effective date, processing and any more-specific official product limit before applying source values.",
+        "Actual lot recipe/species/container, testing and the full applicable contaminant panel remain unverified. No numerical auto-application or regulatory PASS."
+      ],
+      "negative_transfer_controls": [
+        "Glass, carton, flexible pouch or any hermetically sealed pack treated as commercial CAN",
+        "Coconut palm product mistaken for animal milk or a dairy analogue",
+        "Coconut milk/cream confused with crude coconut oil or oilseed commodity",
+        "Heat processed but not canned packaging automatically matched to canned food",
+        "Canned foods tin article extended to lead/arsenic without exact separate source",
+        "Automatic finished-lot tin test value, regulatory PASS or full contaminant approval"
+      ],
+      "conditional_named_article_verified": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_recipe_or_ingredient_identity_verified": false,
+      "processing_equivalence_confirmed": false,
+      "source_limits_auto_applied": false,
+      "actual_laboratory_results_verified": false,
+      "all_contaminants_reviewed": false,
+      "full_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-frozen-curried-vegetables-ready-to-eat-vegetables",
+      "product_name": "Frozen Curried Vegetables/Ready-to-Eat Vegetables",
+      "fssr": "2.3.39",
+      "fcs": "04.2.2.8",
+      "source_family": "VERIFIED_LISTED_CROP_FINISHED_COMPOSITE",
+      "named_qualified_finished_article": "Food product containing any of the above mentioned food articles",
+      "conditional_fssr_subroute": "2.3.39",
+      "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_standard_pdf_page_1_based": 53,
+      "finished_subroute_identity": "Frozen curried vegetables containing proven named pulses, cereals, spices or oilseed oils",
+      "source_article_candidates": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 20,
+          "unit": "µg/kg",
+          "analytical_basis": "Actual finished composite food including positively identified listed crop; cannot inherit raw crop limit",
+          "ctr_pdf_zero_index": 13
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 10,
+          "unit": "µg/kg",
+          "analytical_basis": "Same positively proven composite final food and FSSAI source article; no implied lab result",
+          "ctr_pdf_zero_index": 13
+        }
+      ],
+      "positive_source_basis": [
+        "Identify the actual finished article: Frozen curried vegetables containing proven named pulses, cereals, spices or oilseed oils.",
+        "FSSR allows legumes, cereals, pulses, spices and vegetable oils, but none is mandatory in every recipe; verify real ingredient and sampled frozen matrix at -18°C.",
+        "Match every relevant listed source article to finished goods and latest FSSR/FoSCoS identity; obtain positive recipe, species or canning records rather than infer from the broad category.",
+        "Confirm source scope, analytical basis, matrix/sample, effective date, processing and any more-specific official product limit before applying source values.",
+        "Actual lot recipe/species/container, testing and the full applicable contaminant panel remain unverified. No numerical auto-application or regulatory PASS."
+      ],
+      "negative_transfer_controls": [
+        "Food name or optional FSSR formulation ingredient alone considered affirmative crop ingredient proof",
+        "Only fruit, vegetables, roots or unlisted seeds assumed to be named cereals, nuts, oilseeds or spices",
+        "Raw pulse/cereal/seed/oil contaminant threshold copied directly to finished processed composite",
+        "Optional sauce, filling, seasoning, oil or recipe component claimed present without exact lot BOM evidence",
+        "FSSR quality criteria or input ingredient tests used as finished contaminant lab results",
+        "Partial named source promoted to automatic final product numerical PASS"
+      ],
+      "conditional_named_article_verified": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_recipe_or_ingredient_identity_verified": false,
+      "processing_equivalence_confirmed": false,
+      "source_limits_auto_applied": false,
+      "actual_laboratory_results_verified": false,
+      "all_contaminants_reviewed": false,
+      "full_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-thermally-processed-curried-vegetables-ready-to-eat-vegetables",
+      "product_name": "Thermally processed Curried Vegetables/Ready to Eat Vegetables",
+      "fssr": "2.3.4",
+      "fcs": "04.2.2.8",
+      "source_family": "VERIFIED_LISTED_CROP_FINISHED_COMPOSITE",
+      "named_qualified_finished_article": "Food product containing any of the above mentioned food articles",
+      "conditional_fssr_subroute": "2.3.4",
+      "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_standard_pdf_page_1_based": 10,
+      "finished_subroute_identity": "Thermally processed curried vegetables containing proven named pulses, cereals, spices or oilseed oils",
+      "source_article_candidates": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 20,
+          "unit": "µg/kg",
+          "analytical_basis": "Actual finished composite food including positively identified listed crop; cannot inherit raw crop limit",
+          "ctr_pdf_zero_index": 13
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 10,
+          "unit": "µg/kg",
+          "analytical_basis": "Same positively proven composite final food and FSSAI source article; no implied lab result",
+          "ctr_pdf_zero_index": 13
+        }
+      ],
+      "positive_source_basis": [
+        "Identify the actual finished article: Thermally processed curried vegetables containing proven named pulses, cereals, spices or oilseed oils.",
+        "FSSR permits pulses, cereals, spices and oils, but mere thermal treatment, vegetable identity and rigid packaging do not prove a qualifying named ingredient.",
+        "Match every relevant listed source article to finished goods and latest FSSR/FoSCoS identity; obtain positive recipe, species or canning records rather than infer from the broad category.",
+        "Confirm source scope, analytical basis, matrix/sample, effective date, processing and any more-specific official product limit before applying source values.",
+        "Actual lot recipe/species/container, testing and the full applicable contaminant panel remain unverified. No numerical auto-application or regulatory PASS."
+      ],
+      "negative_transfer_controls": [
+        "Food name or optional FSSR formulation ingredient alone considered affirmative crop ingredient proof",
+        "Only fruit, vegetables, roots or unlisted seeds assumed to be named cereals, nuts, oilseeds or spices",
+        "Raw pulse/cereal/seed/oil contaminant threshold copied directly to finished processed composite",
+        "Optional sauce, filling, seasoning, oil or recipe component claimed present without exact lot BOM evidence",
+        "FSSR quality criteria or input ingredient tests used as finished contaminant lab results",
+        "Partial named source promoted to automatic final product numerical PASS"
+      ],
+      "conditional_named_article_verified": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_recipe_or_ingredient_identity_verified": false,
+      "processing_equivalence_confirmed": false,
+      "source_limits_auto_applied": false,
+      "actual_laboratory_results_verified": false,
+      "all_contaminants_reviewed": false,
+      "full_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-pickles-made-from-fruits",
+      "product_name": "Pickles (made from Fruits)",
+      "fssr": "2.3.43",
+      "fcs": "04.1.2.3",
+      "source_family": "VERIFIED_LISTED_CROP_FINISHED_COMPOSITE",
+      "named_qualified_finished_article": "Food product containing any of the above mentioned food articles",
+      "conditional_fssr_subroute": "2.3.43",
+      "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_standard_pdf_page_1_based": 55,
+      "finished_subroute_identity": "Fruit pickle actually containing a qualifying listed spice, nut or named vegetable oil",
+      "source_article_candidates": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 20,
+          "unit": "µg/kg",
+          "analytical_basis": "Actual finished composite food including positively identified listed crop; cannot inherit raw crop limit",
+          "ctr_pdf_zero_index": 13
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 10,
+          "unit": "µg/kg",
+          "analytical_basis": "Same positively proven composite final food and FSSAI source article; no implied lab result",
+          "ctr_pdf_zero_index": 13
+        }
+      ],
+      "positive_source_basis": [
+        "Identify the actual finished article: Fruit pickle actually containing a qualifying listed spice, nut or named vegetable oil.",
+        "FSSR may permit edible oil, spice and nuts, but actual fruit-only pickle or brine does not qualify without bill-of-material proof; cucumber pickle Pb/Tin source also needs cucumber identity.",
+        "Match every relevant listed source article to finished goods and latest FSSR/FoSCoS identity; obtain positive recipe, species or canning records rather than infer from the broad category.",
+        "Confirm source scope, analytical basis, matrix/sample, effective date, processing and any more-specific official product limit before applying source values.",
+        "Actual lot recipe/species/container, testing and the full applicable contaminant panel remain unverified. No numerical auto-application or regulatory PASS."
+      ],
+      "negative_transfer_controls": [
+        "Food name or optional FSSR formulation ingredient alone considered affirmative crop ingredient proof",
+        "Only fruit, vegetables, roots or unlisted seeds assumed to be named cereals, nuts, oilseeds or spices",
+        "Raw pulse/cereal/seed/oil contaminant threshold copied directly to finished processed composite",
+        "Optional sauce, filling, seasoning, oil or recipe component claimed present without exact lot BOM evidence",
+        "FSSR quality criteria or input ingredient tests used as finished contaminant lab results",
+        "Partial named source promoted to automatic final product numerical PASS"
+      ],
+      "conditional_named_article_verified": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_recipe_or_ingredient_identity_verified": false,
+      "processing_equivalence_confirmed": false,
+      "source_limits_auto_applied": false,
+      "actual_laboratory_results_verified": false,
+      "all_contaminants_reviewed": false,
+      "full_compliance_pass": false
+    },
+    {
+      "catalog_id": "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
+      "product_name": "Dried fruits/vegetables/nut based mouth fresheners",
+      "fssr": "",
+      "fcs": "05.2.4.1",
+      "source_family": "VERIFIED_LISTED_CROP_FINISHED_COMPOSITE",
+      "named_qualified_finished_article": "Food product containing any of the above mentioned food articles",
+      "conditional_fssr_subroute": "FoSCoS 05.2.4.1",
+      "official_standard_url": "https://foscos.fssai.gov.in/standard-product",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_standard_pdf_page_1_based": null,
+      "finished_subroute_identity": "Nut, betelnut, oilseed or spice-containing named finished mouth freshener, not unspecified dried fruit",
+      "source_article_candidates": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 20,
+          "unit": "µg/kg",
+          "analytical_basis": "Actual finished composite food including positively identified listed crop; cannot inherit raw crop limit",
+          "ctr_pdf_zero_index": 13
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 10,
+          "unit": "µg/kg",
+          "analytical_basis": "Same positively proven composite final food and FSSAI source article; no implied lab result",
+          "ctr_pdf_zero_index": 13
+        }
+      ],
+      "positive_source_basis": [
+        "Identify the actual finished article: Nut, betelnut, oilseed or spice-containing named finished mouth freshener, not unspecified dried fruit.",
+        "Verify this specific 05.2.4.1 finished mouth-freshener BOM contains nuts or one of the named spices, pulses, oilseeds or arecanut; dried fruit alone is not necessarily dried fig.",
+        "Match every relevant listed source article to finished goods and latest FSSR/FoSCoS identity; obtain positive recipe, species or canning records rather than infer from the broad category.",
+        "Confirm source scope, analytical basis, matrix/sample, effective date, processing and any more-specific official product limit before applying source values.",
+        "Actual lot recipe/species/container, testing and the full applicable contaminant panel remain unverified. No numerical auto-application or regulatory PASS."
+      ],
+      "negative_transfer_controls": [
+        "Food name or optional FSSR formulation ingredient alone considered affirmative crop ingredient proof",
+        "Only fruit, vegetables, roots or unlisted seeds assumed to be named cereals, nuts, oilseeds or spices",
+        "Raw pulse/cereal/seed/oil contaminant threshold copied directly to finished processed composite",
+        "Optional sauce, filling, seasoning, oil or recipe component claimed present without exact lot BOM evidence",
+        "FSSR quality criteria or input ingredient tests used as finished contaminant lab results",
+        "Partial named source promoted to automatic final product numerical PASS"
+      ],
+      "conditional_named_article_verified": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_recipe_or_ingredient_identity_verified": false,
+      "processing_equivalence_confirmed": false,
+      "source_limits_auto_applied": false,
+      "actual_laboratory_results_verified": false,
+      "all_contaminants_reviewed": false,
+      "full_compliance_pass": false
+    },
+    {
+      "catalog_id": "05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2",
+      "product_name": "Other traditional mouth fresheners not covered under 5.2.4.1 and 5.2.4.2",
+      "fssr": "",
+      "fcs": "05.2.4.3",
+      "source_family": "VERIFIED_LISTED_CROP_FINISHED_COMPOSITE",
+      "named_qualified_finished_article": "Food product containing any of the above mentioned food articles",
+      "conditional_fssr_subroute": "FoSCoS 05.2.4.3",
+      "official_standard_url": "https://foscos.fssai.gov.in/standard-product",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_standard_pdf_page_1_based": null,
+      "finished_subroute_identity": "Other traditional mouth freshener positively containing named betelnut, nut or listed spice",
+      "source_article_candidates": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 20,
+          "unit": "µg/kg",
+          "analytical_basis": "Actual finished composite food including positively identified listed crop; cannot inherit raw crop limit",
+          "ctr_pdf_zero_index": 13
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 10,
+          "unit": "µg/kg",
+          "analytical_basis": "Same positively proven composite final food and FSSAI source article; no implied lab result",
+          "ctr_pdf_zero_index": 13
+        }
+      ],
+      "positive_source_basis": [
+        "Identify the actual finished article: Other traditional mouth freshener positively containing named betelnut, nut or listed spice.",
+        "Generic traditional mouth-freshener name is not an ingredient standard; require actual arecanut/betelnut or qualifying listed nut, spice or oilseed, not inferred saunf or unfamiliar seed.",
+        "Match every relevant listed source article to finished goods and latest FSSR/FoSCoS identity; obtain positive recipe, species or canning records rather than infer from the broad category.",
+        "Confirm source scope, analytical basis, matrix/sample, effective date, processing and any more-specific official product limit before applying source values.",
+        "Actual lot recipe/species/container, testing and the full applicable contaminant panel remain unverified. No numerical auto-application or regulatory PASS."
+      ],
+      "negative_transfer_controls": [
+        "Food name or optional FSSR formulation ingredient alone considered affirmative crop ingredient proof",
+        "Only fruit, vegetables, roots or unlisted seeds assumed to be named cereals, nuts, oilseeds or spices",
+        "Raw pulse/cereal/seed/oil contaminant threshold copied directly to finished processed composite",
+        "Optional sauce, filling, seasoning, oil or recipe component claimed present without exact lot BOM evidence",
+        "FSSR quality criteria or input ingredient tests used as finished contaminant lab results",
+        "Partial named source promoted to automatic final product numerical PASS"
+      ],
+      "conditional_named_article_verified": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_recipe_or_ingredient_identity_verified": false,
+      "processing_equivalence_confirmed": false,
+      "source_limits_auto_applied": false,
+      "actual_laboratory_results_verified": false,
+      "all_contaminants_reviewed": false,
+      "full_compliance_pass": false
+    },
+    {
+      "catalog_id": "18-18-2-fruit-and-vegetable-based-snacks-and-savouries",
+      "product_name": "Fruit and vegetable based snacks & savouries",
+      "fssr": "",
+      "fcs": "18.2.2",
+      "source_family": "VERIFIED_LISTED_CROP_FINISHED_COMPOSITE",
+      "named_qualified_finished_article": "Food product containing any of the above mentioned food articles",
+      "conditional_fssr_subroute": "FoSCoS 18.2.2",
+      "official_standard_url": "https://foscos.fssai.gov.in/standard-product",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_standard_pdf_page_1_based": null,
+      "finished_subroute_identity": "Fruit or vegetable based snack containing a verified listed spice, pulse or oilseed oil",
+      "source_article_candidates": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 20,
+          "unit": "µg/kg",
+          "analytical_basis": "Actual finished composite food including positively identified listed crop; cannot inherit raw crop limit",
+          "ctr_pdf_zero_index": 13
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 10,
+          "unit": "µg/kg",
+          "analytical_basis": "Same positively proven composite final food and FSSAI source article; no implied lab result",
+          "ctr_pdf_zero_index": 13
+        }
+      ],
+      "positive_source_basis": [
+        "Identify the actual finished article: Fruit or vegetable based snack containing a verified listed spice, pulse or oilseed oil.",
+        "Verify finished snack recipe and oil/seasoning identity; fruit, vegetable and starch alone cannot automatically inherit listed crop-aflatoxin articles.",
+        "Match every relevant listed source article to finished goods and latest FSSR/FoSCoS identity; obtain positive recipe, species or canning records rather than infer from the broad category.",
+        "Confirm source scope, analytical basis, matrix/sample, effective date, processing and any more-specific official product limit before applying source values.",
+        "Actual lot recipe/species/container, testing and the full applicable contaminant panel remain unverified. No numerical auto-application or regulatory PASS."
+      ],
+      "negative_transfer_controls": [
+        "Food name or optional FSSR formulation ingredient alone considered affirmative crop ingredient proof",
+        "Only fruit, vegetables, roots or unlisted seeds assumed to be named cereals, nuts, oilseeds or spices",
+        "Raw pulse/cereal/seed/oil contaminant threshold copied directly to finished processed composite",
+        "Optional sauce, filling, seasoning, oil or recipe component claimed present without exact lot BOM evidence",
+        "FSSR quality criteria or input ingredient tests used as finished contaminant lab results",
+        "Partial named source promoted to automatic final product numerical PASS"
+      ],
+      "conditional_named_article_verified": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_recipe_or_ingredient_identity_verified": false,
+      "processing_equivalence_confirmed": false,
+      "source_limits_auto_applied": false,
+      "actual_laboratory_results_verified": false,
+      "all_contaminants_reviewed": false,
+      "full_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-quick-frozen-fried-potatoes",
+      "product_name": "Quick Frozen Fried Potatoes",
+      "fssr": "2.3.60",
+      "fcs": "04.2.2.8",
+      "source_family": "VERIFIED_LISTED_CROP_FINISHED_COMPOSITE",
+      "named_qualified_finished_article": "Food product containing any of the above mentioned food articles",
+      "conditional_fssr_subroute": "2.3.60",
+      "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_standard_pdf_page_1_based": 91,
+      "finished_subroute_identity": "Oil-fried frozen potatoes demonstrably retaining qualifying named oilseed-derived oil or spices",
+      "source_article_candidates": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 20,
+          "unit": "µg/kg",
+          "analytical_basis": "Actual finished composite food including positively identified listed crop; cannot inherit raw crop limit",
+          "ctr_pdf_zero_index": 13
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 10,
+          "unit": "µg/kg",
+          "analytical_basis": "Same positively proven composite final food and FSSAI source article; no implied lab result",
+          "ctr_pdf_zero_index": 13
+        }
+      ],
+      "positive_source_basis": [
+        "Identify the actual finished article: Oil-fried frozen potatoes demonstrably retaining qualifying named oilseed-derived oil or spices.",
+        "FSSR permits frying in edible oil/fat OR water blanching; confirm the actual fried subroute, identified oilseed oil or spice and its retained presence in the finished product.",
+        "Match every relevant listed source article to finished goods and latest FSSR/FoSCoS identity; obtain positive recipe, species or canning records rather than infer from the broad category.",
+        "Confirm source scope, analytical basis, matrix/sample, effective date, processing and any more-specific official product limit before applying source values.",
+        "Actual lot recipe/species/container, testing and the full applicable contaminant panel remain unverified. No numerical auto-application or regulatory PASS."
+      ],
+      "negative_transfer_controls": [
+        "Food name or optional FSSR formulation ingredient alone considered affirmative crop ingredient proof",
+        "Only fruit, vegetables, roots or unlisted seeds assumed to be named cereals, nuts, oilseeds or spices",
+        "Raw pulse/cereal/seed/oil contaminant threshold copied directly to finished processed composite",
+        "Optional sauce, filling, seasoning, oil or recipe component claimed present without exact lot BOM evidence",
+        "FSSR quality criteria or input ingredient tests used as finished contaminant lab results",
+        "Partial named source promoted to automatic final product numerical PASS"
+      ],
+      "conditional_named_article_verified": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_recipe_or_ingredient_identity_verified": false,
+      "processing_equivalence_confirmed": false,
+      "source_limits_auto_applied": false,
+      "actual_laboratory_results_verified": false,
+      "all_contaminants_reviewed": false,
+      "full_compliance_pass": false
+    },
+    {
+      "catalog_id": "12-12-6-culinary-pastes",
+      "product_name": "Culinary Pastes",
+      "fssr": "2.3.28",
+      "fcs": "12.6.3",
+      "source_family": "VERIFIED_LISTED_CROP_FINISHED_COMPOSITE",
+      "named_qualified_finished_article": "Food product containing any of the above mentioned food articles",
+      "conditional_fssr_subroute": "2.3.28",
+      "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "official_standard_pdf_page_1_based": 34,
+      "finished_subroute_identity": "Culinary paste with actual listed spice or oilseed oil, not ginger-only or generic fruit paste",
+      "source_article_candidates": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 20,
+          "unit": "µg/kg",
+          "analytical_basis": "Actual finished composite food including positively identified listed crop; cannot inherit raw crop limit",
+          "ctr_pdf_zero_index": 13
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "article": "Food product containing any of the above mentioned food articles",
+          "limit": 10,
+          "unit": "µg/kg",
+          "analytical_basis": "Same positively proven composite final food and FSSAI source article; no implied lab result",
+          "ctr_pdf_zero_index": 13
+        }
+      ],
+      "positive_source_basis": [
+        "Identify the actual finished article: Culinary paste with actual listed spice or oilseed oil, not ginger-only or generic fruit paste.",
+        "FSSR permits spices and condiments, but the paste name is not proof; confirm actual qualifying spice or named oilseed oil in final batch and avoid assigning sauce-only saffrole limits to every paste.",
+        "Match every relevant listed source article to finished goods and latest FSSR/FoSCoS identity; obtain positive recipe, species or canning records rather than infer from the broad category.",
+        "Confirm source scope, analytical basis, matrix/sample, effective date, processing and any more-specific official product limit before applying source values.",
+        "Actual lot recipe/species/container, testing and the full applicable contaminant panel remain unverified. No numerical auto-application or regulatory PASS."
+      ],
+      "negative_transfer_controls": [
+        "Food name or optional FSSR formulation ingredient alone considered affirmative crop ingredient proof",
+        "Only fruit, vegetables, roots or unlisted seeds assumed to be named cereals, nuts, oilseeds or spices",
+        "Raw pulse/cereal/seed/oil contaminant threshold copied directly to finished processed composite",
+        "Optional sauce, filling, seasoning, oil or recipe component claimed present without exact lot BOM evidence",
+        "FSSR quality criteria or input ingredient tests used as finished contaminant lab results",
+        "Partial named source promoted to automatic final product numerical PASS"
+      ],
+      "conditional_named_article_verified": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_recipe_or_ingredient_identity_verified": false,
+      "processing_equivalence_confirmed": false,
+      "source_limits_auto_applied": false,
+      "actual_laboratory_results_verified": false,
+      "all_contaminants_reviewed": false,
+      "full_compliance_pass": false
+    }
+  ]
+}
