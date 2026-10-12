@@ -52,6 +52,8 @@ test("Entire 111 queue crosswalk reconciles 87 referenced products, 24 no refere
 });
 test("Every row is verified against the actual loaded FSSAI source table; never implies product applicability",()=>{
  const ctx=context();
+ const unverified=m.references.filter(x=>x.source_id&&!vm.runInContext("pmsvProofSourceMatch("+JSON.stringify({id:x.source_id,type:x.type,analyte:x.analyte,article:x.article,limit:x.limit,unit:x.unit,official_condition:x.official_condition})+",contaminantsDb)",ctx)).map(x=>({key:x.key,type:x.type,article:x.article,limit:x.limit,unit:x.unit}));
+ console.log("LIVE_111_CROSSWALK_DIAGNOSTIC",JSON.stringify({digest:vm.runInContext("pmsvReviewSnapshotDigest(pmsvLive111ReferenceDb)",ctx),unverified}));
  assert.equal(vm.runInContext("pmsvLive111ReferenceValid()",ctx),true);
  for(const x of m.references)assert.equal(x.finished_article_applicability_verified,false);
  for(const r of q.review_records){
