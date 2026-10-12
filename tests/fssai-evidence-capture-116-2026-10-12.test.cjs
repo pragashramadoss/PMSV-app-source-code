@@ -39,6 +39,10 @@ function make(){
 test("current 89 pending products retain protected local collection; all 444 partials are hidden",()=>{
  const {ctx}=make(),pending=new Set(live.records.filter(x=>x.source_status==="FIRST_EXACT_SOURCE_PENDING").map(x=>x.catalog_id));
  assert.equal(ctx.pmsv444Valid(),true);
+ // Keep the authenticated ledger immutable in this bulk rendering test.
+ // The separate mutation test below invokes the REAL integrity verifier.
+ // Avoid repeating four full JSON digest checks for each of 116 archived views.
+ ctx.pmsv444Valid=()=>true;
  assert.equal(products.length,533);assert.equal(pending.size,89);
  assert.equal(live.records.filter(x=>x.source_status==="PARTIAL_EXACT_SOURCE_MATCH").length,444);
  const archived=new Set(work.records.map(x=>x.catalog_id));
@@ -93,6 +97,8 @@ test("altered archived packet and current ledger invalidate collection, without 
 test("promoted 27 old cases cannot receive archived collector markings",()=>{
  const {ctx}=make(),promoted=work.records.filter(x=>live.records.some(y=>y.catalog_id===x.catalog_id&&y.source_status==="PARTIAL_EXACT_SOURCE_MATCH"));
  assert.equal(promoted.length,27);
+ assert.equal(ctx.pmsv444Valid(),true);
+ ctx.pmsv444Valid=()=>true; // separately mutation-tested above
  for(const r of promoted){
   assert.equal(ctx.pmsv116SetBranch(r.catalog_id,0),false);
   assert.equal(ctx.pmsv116Note(r.catalog_id,"stale note"),false);
