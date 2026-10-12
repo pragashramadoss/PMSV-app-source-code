@@ -288,6 +288,8 @@ jobs:
         run: node --test tests/fssai-681-review-snapshot-and-historic-queue-2026-10-12.test.cjs
       - name: Verify 116 current product-specific evidence closure packets
         run: node --test tests/fssai-current-116-worklist-live-closure-2026-10-12.test.cjs
+      - name: Verify all 116 local-only first-source evidence checklists
+        run: node --test tests/fssai-evidence-capture-116-2026-10-12.test.cjs
       - name: Verify 32 extra finished-form crop and toxic-substance source branches
         run: node --test tests/fssai-32-cereal-fruit-spice-exact-article-scope-2026-10-12.test.cjs
       - name: Verify fail-closed 533 inventory, 116 current worklists and 32 exact article branches
