@@ -119,7 +119,7 @@ function pmsv493Html(p){
  let h='<details class="card" style="margin-top:12px"><summary><b>Current FSSAI first-source ledger — 493 partial / 40 pending</b> · '+
  e(r.source_status==="PARTIAL_EXACT_SOURCE_MATCH"?"PARTIAL CONDITIONAL SOURCE":"FIRST EXACT SOURCE PENDING")+
  '</summary><div class="notice">533 catalogue identities · 493 partial named conditional sources · 40 pending · ZERO finished-lot or compliance PASS.</div>';
- const x=pmsv493Manifest.products.find(y=>y.catalog_id===p.id),prior=pmsv475Manifest?.products?.find(y=>y.catalog_id===p.id);
+ const x=pmsv493Manifest.products.find(y=>y.catalog_id===p.id),prior=(typeof pmsv475Manifest!=="undefined"&&pmsv475Manifest?.products||[]).find(y=>y.catalog_id===p.id);
  const review=x||prior;
  if(review){
   h+='<p><b>CONDITIONAL legal source (not a batch conclusion):</b> '+e(review.finished_subroute_identity)+
