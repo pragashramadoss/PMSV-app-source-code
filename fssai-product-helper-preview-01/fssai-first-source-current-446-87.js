@@ -113,6 +113,7 @@ pmsvLoadPositiveSourceProof=async function(){
  }catch(_){pmsv446Source=null;pmsv446Ledger=null;pmsv87Queue=null;}
 };
 function pmsv446Html(p){
+ if(p&&typeof pmsv450Valid==="function"&&pmsv450Valid())return "";
  if(!p)return "";
  if(!pmsv446Valid())return '<div class="notice">Latest 446/87 named source integrity unavailable; no numeric limits or compliance PASS.</div>';
  const r=pmsv446Ledger.records.find(x=>x.catalog_id===p.id);

@@ -63,6 +63,7 @@ pmsvLoadPositiveSourceProof=async function(){
  }catch(_){pmsv52Dossiers=null;}
 };
 function pmsv52Html(p){
+ if(p&&typeof pmsv450Valid==="function"&&pmsv450Valid()&&pmsv450Ids.includes(p.id))return "";
  if(p&&typeof pmsv446Valid==="function"&&pmsv446Valid()&&pmsv446PromotedIds.includes(p.id))return "";
  if(!p||!pmsv89Queue?.review_records?.some(x=>x.catalog_id===p.id)||
   pmsv89Dossier?.audited_records?.some(x=>x.catalog_id===p.id))return "";

@@ -106,8 +106,8 @@ function pmsvMay2026Panel(p){
     String(meta.fcs||"")!==String(p.fcs||""))
   return '<div class="notice">Future amendment catalogue identity mismatch; evidence withheld.</div>';
  const entry=pmsv89FinalProof.cases.find(x=>x.catalog_id===p.id);
- const promotedNew=typeof pmsv446Valid==="function"&&pmsv446Valid()&&
-   pmsv446PromotedIds.includes(p.id);
+ const promotedNew=(typeof pmsv450Valid==="function"&&pmsv450Valid()&&pmsv450Ids.includes(p.id))||
+   (typeof pmsv446Valid==="function"&&pmsv446Valid()&&pmsv446PromotedIds.includes(p.id));
  if((!entry||promotedNew)&&!meta.may_2026_amendment_watch_ids.length)return "";
  let h='<details class="card" style="margin-top:12px"><summary><b>FSSAI 2026 legal-effective-date & exact-source audit</b></summary>';
  if(meta.may_2026_amendment_watch_ids.length){
