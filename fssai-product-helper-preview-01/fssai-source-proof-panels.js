@@ -630,3 +630,137 @@ var pmsvPreviousCerealFruitSpiceCurrentStatusHtml=pmsvCurrent533SourceStatusHtml
 pmsvCurrent533SourceStatusHtml=function(p){
  return pmsvPreviousCerealFruitSpiceCurrentStatusHtml(p)+pmsvCerealFruitSpiceSourceHtml(p);
 };
+
+
+/* Deep source-integrity check: source rows are checked AGAIN at rendering time.
+ * A successful prior load is not sufficient when a loaded source row or
+ * identity record changes. This is a documentary reference, never a PASS. */
+const pmsvCanonicalNamedFssaiSourceRefs=[
+ ['cereal','crop','Cereal and cereal products','total_aflatoxins',15,'µg/kg'],
+ ['cereal','crop','Cereal and cereal products','aflatoxin_b1',10,'µg/kg'],
+ ['composite','crop','Food product containing any of the above mentioned food articles','total_aflatoxins',20,'µg/kg'],
+ ['composite','crop','Food product containing any of the above mentioned food articles','aflatoxin_b1',10,'µg/kg'],
+ ['nuts','crop','Nuts, ready to eat','total_aflatoxins',15,'µg/kg'],
+ ['nuts','crop','Nuts, ready to eat','aflatoxin_b1',10,'µg/kg'],
+ ['spices','crop','Spices/Spice Mix','total_aflatoxins',30,'µg/kg'],
+ ['spices','crop','Spices/Spice Mix','aflatoxin_b1',15,'µg/kg'],
+ ['cassava','nots','Sago, Cassava flour, Tapioca flour, Manihot flour and their products','hydrocyanic_acid',10,'ppm']
+];
+function pmsvValidOfficialFssaiUrl(url){
+ return typeof url==='string'&&/^https:\/\/(?:[a-z0-9-]+\.)*fssai\.gov\.in\/[^<>"'\s]+$/i.test(url);
+}
+function pmsvCurrent116DocumentaryIntegrity(){
+ const d=pmsvCurrent116ProofWorklist,l=pmsvCurrent533SourceLedger,c=contaminantsDb;
+ if(!d||!l||!c||d.catalogue!==533||d.current_partial_exact!==417||
+    d.current_pending_first_exact!==116||d.records?.length!==116||
+    l.records?.length!==533||l.partial_exact!==417||l.first_source_pending!==116||
+    d.full_compliance_approvals!==0||d.new_first_exact_promotions!==0||
+    d.numeric_auto_application!==false||
+    d.scope!=='OPERATIONAL_SOURCE_PROOF_WORKLIST_NOT_LEGAL_OR_LAB_COMPLIANCE'||
+    d.regulatory_basis!==c.official_sources?.[0]?.url||
+    d.source_version!==c.source_version||
+    !pmsvValidOfficialFssaiUrl(d.regulatory_basis))return false;
+ const pending=new Map(l.records.filter(x=>x.source_status==='FIRST_EXACT_SOURCE_PENDING')
+   .map(x=>[x.catalog_id,x]));
+ const groups={'20 fungal, fruit, tomato subtype matrix':20,
+  '14 sugar, egg, confection subtype matrix':14,
+  '56 cross-form transfer exclusions':56,
+  '26 remaining product-specific evidence blockers':26};
+ if(pending.size!==116||new Set(d.records.map(x=>x.catalog_id)).size!==116||
+    Object.entries(groups).some(([g,n])=>d.review_group_counts?.[g]!==n||
+      d.records.filter(x=>x.current_review_group===g).length!==n))return false;
+ return d.records.every(x=>{
+  const p=pending.get(x.catalog_id);
+  return !!p&&p.product_name===x.product_name&&
+   String(p.fssr||'')===String(x.fssr||'')&&
+   String(p.fcs||'')===String(x.fcs||'')&&
+   p.review_group===x.current_review_group&&
+   x.official_contaminant_source===d.regulatory_basis&&
+   pmsvValidOfficialFssaiUrl(x.official_finished_product_source)&&
+   x.source_evidence_manifest?.startsWith('fssai-product-helper-preview-01/data/rules/')&&
+   x.first_exact_source_verified===false&&
+   x.numeric_finished_food_limit_auto_applied===false&&
+   x.finished_food_laboratory_pass===false&&
+   x.full_regulatory_compliance_approval===false&&
+   x.evidence_state==='FSSAI_EXACT_FINISHED_ARTICLE_PROOF_REQUIRED'&&
+   typeof x.forbidden_transfer==='string'&&x.forbidden_transfer.length>0&&
+   Array.isArray(x.proof_branches)&&x.proof_branches.length>0&&
+   x.proof_branches.every(b=>typeof b.branch==='string'&&b.branch.length>0&&
+    Array.isArray(b.required_evidence)&&b.required_evidence.length>0&&
+    b.required_evidence.every(t=>typeof t==='string'&&t.length>0)&&
+    Array.isArray(b.source_article_candidates)&&
+    b.source_article_candidates.every(v=>typeof v==='string'));
+ });
+}
+function pmsvCurrent32DocumentaryIntegrity(){
+ const d=pmsvCerealFruitSpiceSourceDb,l=pmsvCurrent533SourceLedger,c=contaminantsDb;
+ if(!d||!l||!c||d.records?.length!==32||d.distinct_current_pending_reviewed!==32||
+    d.current_catalogue!==533||d.current_partial!==417||d.current_pending!==116||
+    d.first_source_promotions!==0||d.full_compliance_passes!==0||
+    d.source_version!==c.source_version||
+    d.official_contaminants_source!==c.official_sources?.[0]?.url||
+    d.study_scope!=='EXACT_ARTICLE_SOURCES_WITH_FINISHED_FORM_SELECTION_REQUIRED'||
+    d.official_sources_only!==true||
+    !pmsvValidOfficialFssaiUrl(d.official_contaminants_source)||
+    d.source_article_rows?.length!==5||
+    new Set(d.records.map(x=>x.catalog_id)).size!==32)return false;
+ const source=new Map(d.source_article_rows.map(x=>[x.key,x]));
+ if(source.size!==5)return false;
+ // Independent canonical numbers and articles, not merely matching two
+ // altered copies of the same JSON file.
+ for(const [key,kind,article,coreKey,limit,unit] of pmsvCanonicalNamedFssaiSourceRefs){
+  const x=source.get(key);
+  const saved=x?.refs?.find(v=>v.core_key===coreKey);
+  if(!x||x.kind!==kind||x.article!==article||
+     x.refs.length!==(key==='cassava'?1:2)||
+     !saved||saved.limit!==limit||saved.unit!==unit||
+     (kind==='crop'&&!['Aflatoxin B1','Total Aflatoxins'].includes(saved.analyte))||
+     (kind==='nots'&&saved.analyte!=='Hydrocyanic acid'))return false;
+  const core=kind==='crop'?c.crop_contaminants?.[coreKey]:c.naturally_occurring_toxic_substances?.[coreKey];
+  const rows=kind==='crop'?core?.rules:core;
+  if(kind==='crop'&&core?.unit!==unit)return false;
+  if(!Array.isArray(rows)||rows.filter(y=>y.article===article&&
+       Number(y.limit)===limit&&(kind==='crop'||y.unit===unit)).length!==1)return false;
+ }
+ const pending=new Map(l.records.filter(x=>x.source_status==='FIRST_EXACT_SOURCE_PENDING')
+   .map(x=>[x.catalog_id,x]));
+ if(pending.size!==116||
+    Object.entries({cereals:9,fruits:9,spice:3,source_exclusions:11})
+      .some(([g,n])=>d.review_groups?.[g]!==n||
+        d.records.filter(x=>x.article_family_review===g).length!==n))return false;
+ return d.records.every(x=>{
+  const p=pending.get(x.catalog_id);
+  return !!p&&p.product_name===x.product_name&&
+    String(p.fssr||'')===String(x.fssr||'')&&
+    String(p.fcs||'')===String(x.fcs||'')&&
+    x.official_contaminants_source===d.official_contaminants_source&&
+    pmsvValidOfficialFssaiUrl(x.official_product_source)&&
+    x.status==='CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION'&&
+    x.positive_finished_article_verified===false&&
+    x.unconditional_limit_application===false&&
+    x.complete_regulatory_pass===false&&x.analytical_lot_pass===false&&
+    typeof x.explicit_exclusion==='string'&&x.explicit_exclusion.length>0&&
+    Array.isArray(x.selectable_branches)&&x.selectable_branches.length>0&&
+    new Set(x.selectable_branches.map(b=>b.id)).size===x.selectable_branches.length&&
+    x.selectable_branches.every(b=>b.id&&b.id.endsWith('_UNVERIFIED')||
+      b.id==='related_articles_explicitly_excluded')&&
+    x.selectable_branches.every(b=>b.label&&b.positive_proof?.length>0&&
+      b.positive_proof.every(t=>typeof t==='string'&&t.length>0)&&
+      b.not_automatically_applicable&&Array.isArray(b.source_keys)&&
+      b.source_keys.every(k=>source.has(k)));
+ });
+}
+var pmsvPreIntegrity116ProofHtml=pmsvCurrent116ProofChecklistHtml;
+pmsvCurrent116ProofChecklistHtml=function(p){
+ if(!p||!pmsvCurrent116ProofWorklist?.records?.some(x=>x.catalog_id===p.id))return '';
+ if(!pmsvCurrent116DocumentaryIntegrity())
+   return '<div class="notice"><b>Source-proof worklist withheld.</b> One or more current 116-product identities, source URLs, review branches, totals or compliance flags are inconsistent. No values applied.</div>';
+ return pmsvPreIntegrity116ProofHtml(p);
+};
+var pmsvPreIntegrity32Html=pmsvCerealFruitSpiceSourceHtml;
+pmsvCerealFruitSpiceSourceHtml=function(p){
+ if(!p||!pmsvCerealFruitSpiceSourceDb?.records?.some(x=>x.catalog_id===p.id))return '';
+ if(!pmsvCurrent32DocumentaryIntegrity())
+   return '<div class="notice"><b>Conditional article withheld.</b> A named official FSSAI value, unit, source identity, review branch or non-PASS safeguard changed. No values applied.</div>';
+ return pmsvPreIntegrity32Html(p);
+};
