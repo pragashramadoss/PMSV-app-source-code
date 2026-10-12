@@ -21,7 +21,17 @@ function pmsv_wp_install() {
     foreach($rows as $n)pmsv_wp_insert($n);
     update_option('pmsv_wp_schema',3,false);
 }
+// Editorial exclusion: user-confirmed off-topic telecom report (12 October 2026).
+// Keep the stored row for recovery, but never expose or reinsert this story.
+function pmsv_wp_news_excluded($n) {
+    $u=wp_parse_url((string)($n['url']??''));
+    if(!is_array($u))return false;
+    $host=strtolower((string)($u['host']??''));
+    return in_array($host,['rediff.com','www.rediff.com','m.rediff.com'],true)
+        && ($u['path']??'')==='/news/report/absurd-hypocrisy-elon-musk-escalates-attack-on-ambani/20261011.htm';
+}
 function pmsv_wp_insert($n) {
+    if(pmsv_wp_news_excluded($n))return 0;
     global $wpdb; $t=pmsv_wp_table('news');
     $result=$wpdb->query($wpdb->prepare("INSERT IGNORE INTO $t (id,url_hash,title_hash,published,first_seen,payload) VALUES (%s,%s,%s,%s,%s,%s)",$n['id'],hash('sha256',$n['url']),hash('sha256',strtolower($n['title'])),$n['published'],$n['firstSeen'],wp_json_encode($n)));
     if($result===false)throw new RuntimeException('Archive insert failed');return $result;
@@ -64,7 +74,7 @@ function pmsv_wp_archive() {
     global $wpdb;$t=pmsv_wp_table('news');$rows=$wpdb->get_col("SELECT payload FROM $t ORDER BY published DESC");
     if($wpdb->last_error)throw new RuntimeException('Archive read failed');
     $news=array_map(fn($r)=>pmsv_wp_with_summary(json_decode($r,true,512,JSON_THROW_ON_ERROR)),$rows);
-    $news=array_values(array_filter($news,fn($n)=>($n['tab']??'')!=='blogs'));
+    $news=array_values(array_filter($news,fn($n)=>($n['tab']??'')!=='blogs'&&!pmsv_wp_news_excluded($n)));
     $news=array_merge($news,pmsv_wp_native_blogs());
     usort($news,fn($a,$b)=>strcmp($b['published'],$a['published'])?:strcmp($a['title'],$b['title']));return $news;
 }
