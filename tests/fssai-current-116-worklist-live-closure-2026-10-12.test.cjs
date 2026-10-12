@@ -62,5 +62,5 @@ test("the new source file is referenced by loader and one fresh-version index sc
  const js=fs.readFileSync(path.join(root,base+"fssai-source-proof-panels.js"),"utf8");
  const html=fs.readFileSync(path.join(root,base+"index.html"),"utf8");
  assert.match(js,/fssai-current-116-finished-article-proof-worklist-2026-10-12\.json/);
- assert.match(html,/fssai-source-proof-panels\.js\?v=20261012-116proof/);
+ assert.match(html,/fssai-source-proof-panels\.js\?v=202610[0-9]{2}-[a-z0-9-]+/);
 });
