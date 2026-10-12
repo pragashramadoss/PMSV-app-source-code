@@ -1,4 +1,4 @@
-# PMSV FSSAI Helper — 31 finished-food category / input-source adjudications (12 October 2026)
+# PMSV FSSAI Helper — 32 finished-food category / input-source adjudications (12 October 2026)
 
 Committed to GitHub `gh-pages`; **WordPress unchanged**.
 
@@ -26,4 +26,4 @@ Sources:
 - [Official FSSR Chapter 2.4 Version 3](https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals%20and%20Cereal%20products(1).pdf)
 - [FoSCoS standard-product identities](https://fcstraining.fssai.gov.in/standard-product)
 
-New live manifest: `fssai-product-helper-preview-01/data/rules/fssai-2026-10-12-thirtyone-cereal-fruit-spice-identity-source-branches.json`. Regression: `tests/fssai-31-cereal-fruit-spice-exact-article-scope-2026-10-12.test.cjs`. Existing audit report and all 533 original records unchanged.
+New live manifest: `fssai-product-helper-preview-01/data/rules/fssai-2026-10-12-thirtytwo-cereal-fruit-spice-identity-source-branches.json`. Regression: `tests/fssai-32-cereal-fruit-spice-exact-article-scope-2026-10-12.test.cjs`. Existing audit report and all 533 original records unchanged.

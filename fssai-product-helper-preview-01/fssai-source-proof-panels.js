@@ -534,26 +534,26 @@ pmsvLoadPositiveSourceProof=async function(){
  await pmsvPriorCerealFruitSpiceLoader();
  pmsvCerealFruitSpiceSourceDb=null;
  try{
-  const r=await fetch('./data/rules/fssai-2026-10-12-thirtyone-cereal-fruit-spice-identity-source-branches.json?v=20261012-subtype31',{cache:'reload'});
+  const r=await fetch('./data/rules/fssai-2026-10-12-thirtytwo-cereal-fruit-spice-identity-source-branches.json?v=20261012-subtype31',{cache:'reload'});
   if(!r.ok)throw Error('FSSAI product subtype articles unavailable');
   const d=await r.json(),current=pmsvCurrent533SourceLedger,c=contaminantsDb;
   if(!current||!c||d.schema_version!=='1.0'||d.current_catalogue!==533||
     d.current_partial!==417||d.current_pending!==116||
-    d.distinct_current_pending_reviewed!==31||d.records?.length!==31||
+    d.distinct_current_pending_reviewed!==32||d.records?.length!==32||
     d.source_article_rows?.length!==5||d.first_source_promotions!==0||
     d.full_compliance_passes!==0||
     d.official_contaminants_source!==c.official_sources?.[0]?.url||
     d.source_version!==c.source_version||
     d.study_scope!=='EXACT_ARTICLE_SOURCES_WITH_FINISHED_FORM_SELECTION_REQUIRED'||
     d.official_sources_only!==true||
-    new Set(d.records.map(x=>x.catalog_id)).size!==31)throw Error('Regulatory subtype manifest mismatch');
+    new Set(d.records.map(x=>x.catalog_id)).size!==32)throw Error('Regulatory subtype manifest mismatch');
   const keys=new Map(d.source_article_rows.map(x=>[x.key,x]));
   if(keys.size!==5||Object.entries({cereals:9,fruits:9,spice:3,source_exclusions:11})
     .some(([key,n])=>d.review_groups?.[key]!==n||
       d.records.filter(x=>x.article_family_review===key).length!==n))throw Error('Subtype group reconciliation failed');
   const v9=c.crop_contaminants,nots=c.naturally_occurring_toxic_substances;
   for(const x of keys.values()){
-    if(!x.article||!x.refs?.length)return;
+    if(!x.article||!x.refs?.length)throw Error('Malformed official source reference');
     for(const ref of x.refs){
       const arr=x.kind==='crop'?v9?.[ref.core_key]?.rules:nots?.[ref.core_key];
       if((arr||[]).filter(y=>y.article===x.article&&Number(y.limit)===ref.limit&&

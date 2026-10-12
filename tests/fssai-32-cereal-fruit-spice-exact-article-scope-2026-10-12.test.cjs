@@ -1,18 +1,18 @@
 "use strict";
 const {test}=require("node:test"),assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
 const root=path.resolve(__dirname,".."),base="fssai-product-helper-preview-01/",read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
-const packet=read(base+"data/rules/fssai-2026-10-12-thirtyone-cereal-fruit-spice-identity-source-branches.json");
+const packet=read(base+"data/rules/fssai-2026-10-12-thirtytwo-cereal-fruit-spice-identity-source-branches.json");
 const ledger=read(base+"data/rules/fssai-current-first-source-533-live-ledger-417-116-2026-10-11.json");
 const core=read(base+"data/rules/contaminants-v9-core.json");
 const index=read(base+"data/standard-search-index-v1.json").products,byId=new Map(index.map(x=>[x.id,x]));
-test("31 source scope cases conserve 533 = 417+116, without any unsupported first-source promotion",()=>{
- assert.equal(packet.records.length,31);
+test("32 source scope cases conserve 533 = 417+116, without any unsupported first-source promotion",()=>{
+ assert.equal(packet.records.length,32);
  assert.deepEqual(packet.review_groups,{cereals:9,fruits:9,spice:3,source_exclusions:11});
  assert.equal(packet.current_catalogue,533);assert.equal(packet.current_partial,417);assert.equal(packet.current_pending,116);
  assert.equal(packet.first_source_promotions,0);assert.equal(packet.full_compliance_passes,0);
  assert.equal(packet.source_version,core.source_version);assert.equal(packet.official_contaminants_source,core.official_sources[0].url);
  const pending=new Set(ledger.records.filter(x=>x.source_status==="FIRST_EXACT_SOURCE_PENDING").map(x=>x.catalog_id));
- assert.equal(pending.size,116);assert.equal(new Set(packet.records.map(x=>x.catalog_id)).size,31);
+ assert.equal(pending.size,116);assert.equal(new Set(packet.records.map(x=>x.catalog_id)).size,32);
  for(const x of packet.records){
   assert.ok(pending.has(x.catalog_id));
   const p=byId.get(x.catalog_id);assert.ok(p);
@@ -71,5 +71,5 @@ test("index cache-bust, script, data and scheduled verifier agree",()=>{
  const html=fs.readFileSync(path.join(root,base+"index.html"),"utf8");
  assert.match(html,/fssai-source-proof-panels\.js\?v=20261012-scope31/);
  const js=fs.readFileSync(path.join(root,base+"fssai-source-proof-panels.js"),"utf8");
- assert.match(js,/fssai-2026-10-12-thirtyone-cereal-fruit-spice-identity-source-branches\.json/);
+ assert.match(js,/fssai-2026-10-12-thirtytwo-cereal-fruit-spice-identity-source-branches\.json/);
 });
