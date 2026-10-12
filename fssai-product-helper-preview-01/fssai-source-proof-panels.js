@@ -523,3 +523,110 @@ var pmsvBeforeProof116CurrentStatus=pmsvCurrent533SourceStatusHtml;
 pmsvCurrent533SourceStatusHtml=function(p){
  return pmsvBeforeProof116CurrentStatus(p)+pmsvCurrent116ProofChecklistHtml(p);
 };
+
+
+/* Version IX source-article decision branches for 31 otherwise pending identities.
+   Read-only operator declaration, never legal proof or a laboratory approval. */
+var pmsvCerealFruitSpiceSourceDb=null;
+var pmsvCerealFruitSpiceChoices=Object.create(null);
+var pmsvPriorCerealFruitSpiceLoader=pmsvLoadPositiveSourceProof;
+pmsvLoadPositiveSourceProof=async function(){
+ await pmsvPriorCerealFruitSpiceLoader();
+ pmsvCerealFruitSpiceSourceDb=null;
+ try{
+  const r=await fetch('./data/rules/fssai-2026-10-12-thirtyone-cereal-fruit-spice-identity-source-branches.json?v=20261012-subtype31',{cache:'reload'});
+  if(!r.ok)throw Error('FSSAI product subtype articles unavailable');
+  const d=await r.json(),current=pmsvCurrent533SourceLedger,c=contaminantsDb;
+  if(!current||!c||d.schema_version!=='1.0'||d.current_catalogue!==533||
+    d.current_partial!==417||d.current_pending!==116||
+    d.distinct_current_pending_reviewed!==31||d.records?.length!==31||
+    d.source_article_rows?.length!==5||d.first_source_promotions!==0||
+    d.full_compliance_passes!==0||
+    d.official_contaminants_source!==c.official_sources?.[0]?.url||
+    d.source_version!==c.source_version||
+    d.study_scope!=='EXACT_ARTICLE_SOURCES_WITH_FINISHED_FORM_SELECTION_REQUIRED'||
+    d.official_sources_only!==true||
+    new Set(d.records.map(x=>x.catalog_id)).size!==31)throw Error('Regulatory subtype manifest mismatch');
+  const keys=new Map(d.source_article_rows.map(x=>[x.key,x]));
+  if(keys.size!==5||Object.entries({cereals:9,fruits:9,spice:3,source_exclusions:11})
+    .some(([key,n])=>d.review_groups?.[key]!==n||
+      d.records.filter(x=>x.article_family_review===key).length!==n))throw Error('Subtype group reconciliation failed');
+  const v9=c.crop_contaminants,nots=c.naturally_occurring_toxic_substances;
+  for(const x of keys.values()){
+    if(!x.article||!x.refs?.length)return;
+    for(const ref of x.refs){
+      const arr=x.kind==='crop'?v9?.[ref.core_key]?.rules:nots?.[ref.core_key];
+      if((arr||[]).filter(y=>y.article===x.article&&Number(y.limit)===ref.limit&&
+        (x.kind!=='nots'||y.unit===ref.unit)).length!==1 ||
+        (x.kind==='crop'&&v9[ref.core_key].unit!==ref.unit))
+        throw Error('FSSAI source article changed');
+    }
+  }
+  const unresolved=new Map(current.records.filter(x=>x.source_status==='FIRST_EXACT_SOURCE_PENDING').map(x=>[x.catalog_id,x]));
+  for(const x of d.records){
+    const p=unresolved.get(x.catalog_id);
+    if(!p||p.product_name!==x.product_name||
+      String(p.fssr||'')!==String(x.fssr||'')||
+      String(p.fcs||'')!==String(x.fcs||'')||
+      !x.official_product_source?.startsWith('https://')||
+      !x.official_product_source.includes('fssai.gov.in')||
+      x.official_contaminants_source!==d.official_contaminants_source||
+      x.status!=='CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION'||
+      x.positive_finished_article_verified!==false||
+      x.unconditional_limit_application!==false||
+      x.complete_regulatory_pass!==false||x.analytical_lot_pass!==false||
+      !x.explicit_exclusion||!x.selectable_branches?.length ||
+      x.selectable_branches.some(b=>!b.label||!b.positive_proof?.length||
+        !b.not_automatically_applicable||
+        b.source_keys.some(k=>!keys.has(k))))throw Error('Product subtype must not inherit an unverified source');
+  }
+  pmsvCerealFruitSpiceSourceDb=d;
+ }catch(e){pmsvCerealFruitSpiceSourceDb=null;}
+};
+function pmsvSelectCerealFruitSpiceBranch(v){
+ const p=typeof selectedCatalogProductForContaminants==='function'?selectedCatalogProductForContaminants():null;
+ const rec=pmsvCerealFruitSpiceSourceDb?.records?.find(x=>x.catalog_id===p?.id);
+ if(!rec||!['unverified',...rec.selectable_branches.map(x=>x.id)].includes(v))return;
+ pmsvCerealFruitSpiceChoices[p.id]=v;
+ if(typeof renderProductContaminants==='function')renderProductContaminants();
+}
+function pmsvCerealFruitSpiceSourceHtml(p){
+ const d=pmsvCerealFruitSpiceSourceDb;
+ if(!p||!d?.records?.some(x=>x.catalog_id===p.id))return '';
+ const rec=d.records.find(x=>x.catalog_id===p.id);
+ if(!pmsvCurrent533SourceProofValid(p)||p.name!==rec.product_name||
+    String(p.fssr||'')!==String(rec.fssr||'')||
+    String(p.fcs||'')!==String(rec.fcs||'')||
+    !pmsvCurrent533SourceLedger?.records?.some(x=>x.catalog_id===p.id&&x.source_status==='FIRST_EXACT_SOURCE_PENDING')||
+    rec.positive_finished_article_verified!==false||
+    rec.unconditional_limit_application!==false||
+    rec.complete_regulatory_pass!==false||rec.analytical_lot_pass!==false)
+   return '<div class="notice"><b>Conditional article withheld.</b> Finished identity or current source mismatch. No compliance decision.</div>';
+ const selected=pmsvCerealFruitSpiceChoices[p.id]||'unverified',
+   branch=rec.selectable_branches.find(x=>x.id===selected);
+ if(selected!=='unverified'&&!branch)return '<div class="notice"><b>Conditional subtype withheld.</b> Invalid article classification.</div>';
+ const options=[{id:'unverified',label:'Finished article, composition and source scope NOT VERIFIED'},...rec.selectable_branches]
+   .map(x=>'<option value="'+esc(x.id)+'"'+(selected===x.id?' selected':'')+'>'+esc(x.label)+'</option>').join('');
+ const byKey=new Map(d.source_article_rows.map(x=>[x.key,x]));
+ const named=branch?.source_keys.flatMap(key=>{
+    const x=byKey.get(key);return x?x.refs.map(v=>esc(v.analyte)+': '+esc(v.limit)+' '+esc(v.unit)+' ('+esc(x.article)+')'):[];
+ })||[];
+ const detail=branch?
+   '<div class="notice"><b>UNVERIFIED OPERATOR SELECTION — OFFICIAL REFERENCE NOT APPLIED.</b> '+
+   (named.length?named.join('; '):'No named source established for the finished form.')+'</div>'+
+   '<ul>'+branch.positive_proof.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'+
+   '<p><b>Do not transfer:</b> '+esc(branch.not_automatically_applicable)+'</p>':
+   '<div class="notice"><b>No source article selected.</b> Recipe, legal food article and analytical basis are not independently verified.</div>';
+ return '<details class="card" style="margin-top:12px"><summary><b>Finished-food subtype: source article distinction</b> — '+
+   esc(rec.article_family_review.replaceAll('_',' '))+'</summary>'+
+   '<p><b>Source-locked conditional review only.</b> '+esc(rec.explicit_exclusion)+'</p>'+
+   '<label for="pmsvCerealFruitSpiceBranch">Select a research hypothesis (NOT legal confirmation)</label>'+
+   '<select id="pmsvCerealFruitSpiceBranch" onchange="pmsvSelectCerealFruitSpiceBranch(this.value)">'+options+'</select>'+
+   detail+'<small><a href="'+esc(rec.official_product_source)+'" target="_blank" rel="noopener noreferrer">Official product identity</a> · '+
+   '<a href="'+esc(rec.official_contaminants_source)+'" target="_blank" rel="noopener noreferrer">FSSAI Version IX source articles</a></small>'+
+   '<p><small>No source reference is automatically a finished-product limit; no sample, laboratory result or compliance PASS is inferred.</small></p></details>';
+}
+var pmsvPreviousCerealFruitSpiceCurrentStatusHtml=pmsvCurrent533SourceStatusHtml;
+pmsvCurrent533SourceStatusHtml=function(p){
+ return pmsvPreviousCerealFruitSpiceCurrentStatusHtml(p)+pmsvCerealFruitSpiceSourceHtml(p);
+};

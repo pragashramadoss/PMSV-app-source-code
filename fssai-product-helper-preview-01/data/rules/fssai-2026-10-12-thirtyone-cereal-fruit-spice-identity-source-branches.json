@@ -1,0 +1,1312 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-10-12",
+  "official_sources_only": true,
+  "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "source_version": "Version IX (03.02.2026)",
+  "current_catalogue": 533,
+  "current_partial": 417,
+  "current_pending": 116,
+  "first_source_promotions": 0,
+  "full_compliance_passes": 0,
+  "study_scope": "EXACT_ARTICLE_SOURCES_WITH_FINISHED_FORM_SELECTION_REQUIRED",
+  "distinct_current_pending_reviewed": 32,
+  "review_groups": {
+    "cereals": 9,
+    "fruits": 9,
+    "spice": 3,
+    "source_exclusions": 11
+  },
+  "source_article_rows": [
+    {
+      "key": "cereal",
+      "kind": "crop",
+      "article": "Cereal and cereal products",
+      "refs": [
+        {
+          "analyte": "Total Aflatoxins",
+          "core_key": "total_aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg"
+        },
+        {
+          "analyte": "Aflatoxin B1",
+          "core_key": "aflatoxin_b1",
+          "limit": 10,
+          "unit": "µg/kg"
+        }
+      ]
+    },
+    {
+      "key": "composite",
+      "kind": "crop",
+      "article": "Food product containing any of the above mentioned food articles",
+      "refs": [
+        {
+          "analyte": "Total Aflatoxins",
+          "core_key": "total_aflatoxins",
+          "limit": 20,
+          "unit": "µg/kg"
+        },
+        {
+          "analyte": "Aflatoxin B1",
+          "core_key": "aflatoxin_b1",
+          "limit": 10,
+          "unit": "µg/kg"
+        }
+      ]
+    },
+    {
+      "key": "nuts",
+      "kind": "crop",
+      "article": "Nuts, ready to eat",
+      "refs": [
+        {
+          "analyte": "Total Aflatoxins",
+          "core_key": "total_aflatoxins",
+          "limit": 15,
+          "unit": "µg/kg"
+        },
+        {
+          "analyte": "Aflatoxin B1",
+          "core_key": "aflatoxin_b1",
+          "limit": 10,
+          "unit": "µg/kg"
+        }
+      ]
+    },
+    {
+      "key": "spices",
+      "kind": "crop",
+      "article": "Spices/Spice Mix",
+      "refs": [
+        {
+          "analyte": "Total Aflatoxins",
+          "core_key": "total_aflatoxins",
+          "limit": 30,
+          "unit": "µg/kg"
+        },
+        {
+          "analyte": "Aflatoxin B1",
+          "core_key": "aflatoxin_b1",
+          "limit": 15,
+          "unit": "µg/kg"
+        }
+      ]
+    },
+    {
+      "key": "cassava",
+      "kind": "nots",
+      "article": "Sago, Cassava flour, Tapioca flour, Manihot flour and their products",
+      "refs": [
+        {
+          "analyte": "Hydrocyanic acid",
+          "core_key": "hydrocyanic_acid",
+          "limit": 10,
+          "unit": "ppm"
+        }
+      ]
+    }
+  ],
+  "records": [
+    {
+      "catalog_id": "06-06-2-custard-powder",
+      "product_name": "Custard powder",
+      "fssr": "2.4.9",
+      "fcs": "06.2.1",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "cereals",
+      "official_product_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals%20and%20Cereal%20products(1).pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "cereal_product_source_scope_UNVERIFIED",
+          "label": "Finished food may legally be a cereal product",
+          "source_keys": [
+            "cereal"
+          ],
+          "positive_proof": [
+            "Full ingredient recipe showing qualifying cereal content, not solely tapioca or other tuber-derived starch.",
+            "Official finished-article classification as 'cereal and cereal products', not a mere ingredient level match.",
+            "Complete analytical batch, operative regulation and correct FSSAI sampling basis."
+          ],
+          "not_automatically_applicable": "FSSR Chapter 2.4 listing alone does not prove the finished article falls within this CTR source when non-cereal base flours are permitted."
+        },
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        },
+        {
+          "id": "cassava_or_tapioca_finished_product_UNVERIFIED",
+          "label": "Finished article may be a cassava/tapioca/sago-flour product",
+          "source_keys": [
+            "cassava"
+          ],
+          "positive_proof": [
+            "Identify Manihot/tapioca-derived flour or sago product and finished-form standard with recipe evidence.",
+            "Prove CTR phrase 'and their products' applies to the finished formulated food, not merely any trace of modified starch.",
+            "Source-confirmed hydrocyanic acid method, sample matrix and laboratory evidence."
+          ],
+          "not_automatically_applicable": "Arrowroot, water chestnut, potato, maize and their starches are not automatically cassava/tapioca."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "FSSR cereal chapter scope does not establish a mandatory cereal recipe for all pasta, noodles or custard; papad, biscuits and Indian sweets may use non-cereal or mixed bases. Cereal 15 vs composite 20 µg/kg total aflatoxins must not be interchanged."
+    },
+    {
+      "catalog_id": "06-06-4-macaroni-products-pasta-products",
+      "product_name": "Macaroni Products (Pasta Products)",
+      "fssr": "2.4.10",
+      "fcs": "06.4.2",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "cereals",
+      "official_product_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals%20and%20Cereal%20products(1).pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "cereal_product_source_scope_UNVERIFIED",
+          "label": "Finished food may legally be a cereal product",
+          "source_keys": [
+            "cereal"
+          ],
+          "positive_proof": [
+            "Full ingredient recipe showing qualifying cereal content, not solely tapioca or other tuber-derived starch.",
+            "Official finished-article classification as 'cereal and cereal products', not a mere ingredient level match.",
+            "Complete analytical batch, operative regulation and correct FSSAI sampling basis."
+          ],
+          "not_automatically_applicable": "FSSR Chapter 2.4 listing alone does not prove the finished article falls within this CTR source when non-cereal base flours are permitted."
+        },
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        },
+        {
+          "id": "cassava_or_tapioca_finished_product_UNVERIFIED",
+          "label": "Finished article may be a cassava/tapioca/sago-flour product",
+          "source_keys": [
+            "cassava"
+          ],
+          "positive_proof": [
+            "Identify Manihot/tapioca-derived flour or sago product and finished-form standard with recipe evidence.",
+            "Prove CTR phrase 'and their products' applies to the finished formulated food, not merely any trace of modified starch.",
+            "Source-confirmed hydrocyanic acid method, sample matrix and laboratory evidence."
+          ],
+          "not_automatically_applicable": "Arrowroot, water chestnut, potato, maize and their starches are not automatically cassava/tapioca."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "FSSR cereal chapter scope does not establish a mandatory cereal recipe for all pasta, noodles or custard; papad, biscuits and Indian sweets may use non-cereal or mixed bases. Cereal 15 vs composite 20 µg/kg total aflatoxins must not be interchanged."
+    },
+    {
+      "catalog_id": "06-06-4-macaroni-products-instant-noodle",
+      "product_name": "Macaroni Products (Instant noodle)",
+      "fssr": "2.4.10",
+      "fcs": "06.4.3",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "cereals",
+      "official_product_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals%20and%20Cereal%20products(1).pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "cereal_product_source_scope_UNVERIFIED",
+          "label": "Finished food may legally be a cereal product",
+          "source_keys": [
+            "cereal"
+          ],
+          "positive_proof": [
+            "Full ingredient recipe showing qualifying cereal content, not solely tapioca or other tuber-derived starch.",
+            "Official finished-article classification as 'cereal and cereal products', not a mere ingredient level match.",
+            "Complete analytical batch, operative regulation and correct FSSAI sampling basis."
+          ],
+          "not_automatically_applicable": "FSSR Chapter 2.4 listing alone does not prove the finished article falls within this CTR source when non-cereal base flours are permitted."
+        },
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        },
+        {
+          "id": "cassava_or_tapioca_finished_product_UNVERIFIED",
+          "label": "Finished article may be a cassava/tapioca/sago-flour product",
+          "source_keys": [
+            "cassava"
+          ],
+          "positive_proof": [
+            "Identify Manihot/tapioca-derived flour or sago product and finished-form standard with recipe evidence.",
+            "Prove CTR phrase 'and their products' applies to the finished formulated food, not merely any trace of modified starch.",
+            "Source-confirmed hydrocyanic acid method, sample matrix and laboratory evidence."
+          ],
+          "not_automatically_applicable": "Arrowroot, water chestnut, potato, maize and their starches are not automatically cassava/tapioca."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "FSSR cereal chapter scope does not establish a mandatory cereal recipe for all pasta, noodles or custard; papad, biscuits and Indian sweets may use non-cereal or mixed bases. Cereal 15 vs composite 20 µg/kg total aflatoxins must not be interchanged."
+    },
+    {
+      "catalog_id": "06-06-7-papad",
+      "product_name": "Papad",
+      "fssr": "2.4.40",
+      "fcs": "06.7",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "cereals",
+      "official_product_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals%20and%20Cereal%20products(1).pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "cereal_product_source_scope_UNVERIFIED",
+          "label": "Finished food may legally be a cereal product",
+          "source_keys": [
+            "cereal"
+          ],
+          "positive_proof": [
+            "Full ingredient recipe showing qualifying cereal content, not solely tapioca or other tuber-derived starch.",
+            "Official finished-article classification as 'cereal and cereal products', not a mere ingredient level match.",
+            "Complete analytical batch, operative regulation and correct FSSAI sampling basis."
+          ],
+          "not_automatically_applicable": "FSSR Chapter 2.4 listing alone does not prove the finished article falls within this CTR source when non-cereal base flours are permitted."
+        },
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "FSSR cereal chapter scope does not establish a mandatory cereal recipe for all pasta, noodles or custard; papad, biscuits and Indian sweets may use non-cereal or mixed bases. Cereal 15 vs composite 20 µg/kg total aflatoxins must not be interchanged."
+    },
+    {
+      "catalog_id": "15-15-1-papad",
+      "product_name": "Papad",
+      "fssr": "2.4.40",
+      "fcs": "15.1",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "cereals",
+      "official_product_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals%20and%20Cereal%20products(1).pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "cereal_product_source_scope_UNVERIFIED",
+          "label": "Finished food may legally be a cereal product",
+          "source_keys": [
+            "cereal"
+          ],
+          "positive_proof": [
+            "Full ingredient recipe showing qualifying cereal content, not solely tapioca or other tuber-derived starch.",
+            "Official finished-article classification as 'cereal and cereal products', not a mere ingredient level match.",
+            "Complete analytical batch, operative regulation and correct FSSAI sampling basis."
+          ],
+          "not_automatically_applicable": "FSSR Chapter 2.4 listing alone does not prove the finished article falls within this CTR source when non-cereal base flours are permitted."
+        },
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "FSSR cereal chapter scope does not establish a mandatory cereal recipe for all pasta, noodles or custard; papad, biscuits and Indian sweets may use non-cereal or mixed bases. Cereal 15 vs composite 20 µg/kg total aflatoxins must not be interchanged."
+    },
+    {
+      "catalog_id": "07-07-2-biscuit",
+      "product_name": "Biscuit",
+      "fssr": "2.4.15(1)",
+      "fcs": "07.2.1",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "cereals",
+      "official_product_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals%20and%20Cereal%20products(1).pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "cereal_product_source_scope_UNVERIFIED",
+          "label": "Finished food may legally be a cereal product",
+          "source_keys": [
+            "cereal"
+          ],
+          "positive_proof": [
+            "Full ingredient recipe showing qualifying cereal content, not solely tapioca or other tuber-derived starch.",
+            "Official finished-article classification as 'cereal and cereal products', not a mere ingredient level match.",
+            "Complete analytical batch, operative regulation and correct FSSAI sampling basis."
+          ],
+          "not_automatically_applicable": "FSSR Chapter 2.4 listing alone does not prove the finished article falls within this CTR source when non-cereal base flours are permitted."
+        },
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "FSSR cereal chapter scope does not establish a mandatory cereal recipe for all pasta, noodles or custard; papad, biscuits and Indian sweets may use non-cereal or mixed bases. Cereal 15 vs composite 20 µg/kg total aflatoxins must not be interchanged."
+    },
+    {
+      "catalog_id": "07-07-2-wafer-biscuit",
+      "product_name": "Wafer Biscuit",
+      "fssr": "2.4.15(1)",
+      "fcs": "07.2.2",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "cereals",
+      "official_product_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals%20and%20Cereal%20products(1).pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "cereal_product_source_scope_UNVERIFIED",
+          "label": "Finished food may legally be a cereal product",
+          "source_keys": [
+            "cereal"
+          ],
+          "positive_proof": [
+            "Full ingredient recipe showing qualifying cereal content, not solely tapioca or other tuber-derived starch.",
+            "Official finished-article classification as 'cereal and cereal products', not a mere ingredient level match.",
+            "Complete analytical batch, operative regulation and correct FSSAI sampling basis."
+          ],
+          "not_automatically_applicable": "FSSR Chapter 2.4 listing alone does not prove the finished article falls within this CTR source when non-cereal base flours are permitted."
+        },
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "FSSR cereal chapter scope does not establish a mandatory cereal recipe for all pasta, noodles or custard; papad, biscuits and Indian sweets may use non-cereal or mixed bases. Cereal 15 vs composite 20 µg/kg total aflatoxins must not be interchanged."
+    },
+    {
+      "catalog_id": "18-18-2-cereal-or-pulses-flour-starch-based-snacks-and-savouries",
+      "product_name": "Cereal or pulses flour/ Starch based snacks & savouries",
+      "fssr": "",
+      "fcs": "18.2.1",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "cereals",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "cereal_product_source_scope_UNVERIFIED",
+          "label": "Finished food may legally be a cereal product",
+          "source_keys": [
+            "cereal"
+          ],
+          "positive_proof": [
+            "Full ingredient recipe showing qualifying cereal content, not solely tapioca or other tuber-derived starch.",
+            "Official finished-article classification as 'cereal and cereal products', not a mere ingredient level match.",
+            "Complete analytical batch, operative regulation and correct FSSAI sampling basis."
+          ],
+          "not_automatically_applicable": "FSSR Chapter 2.4 listing alone does not prove the finished article falls within this CTR source when non-cereal base flours are permitted."
+        },
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "FSSR cereal chapter scope does not establish a mandatory cereal recipe for all pasta, noodles or custard; papad, biscuits and Indian sweets may use non-cereal or mixed bases. Cereal 15 vs composite 20 µg/kg total aflatoxins must not be interchanged."
+    },
+    {
+      "catalog_id": "18-18-1-starch-based-sweets",
+      "product_name": "Starch based Sweets",
+      "fssr": "",
+      "fcs": "18.1.2.3",
+      "existing_current_group": "14 sugar, egg, confection subtype matrix",
+      "article_family_review": "cereals",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "cereal_product_source_scope_UNVERIFIED",
+          "label": "Finished food may legally be a cereal product",
+          "source_keys": [
+            "cereal"
+          ],
+          "positive_proof": [
+            "Full ingredient recipe showing qualifying cereal content, not solely tapioca or other tuber-derived starch.",
+            "Official finished-article classification as 'cereal and cereal products', not a mere ingredient level match.",
+            "Complete analytical batch, operative regulation and correct FSSAI sampling basis."
+          ],
+          "not_automatically_applicable": "FSSR Chapter 2.4 listing alone does not prove the finished article falls within this CTR source when non-cereal base flours are permitted."
+        },
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "FSSR cereal chapter scope does not establish a mandatory cereal recipe for all pasta, noodles or custard; papad, biscuits and Indian sweets may use non-cereal or mixed bases. Cereal 15 vs composite 20 µg/kg total aflatoxins must not be interchanged."
+    },
+    {
+      "catalog_id": "18-18-1-dry-fruit-and-nuts-based-sweets",
+      "product_name": "Dry Fruit and nuts based Sweets",
+      "fssr": "",
+      "fcs": "18.1.3",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "fruits",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Dried fruits, tree nuts, oilseeds, coconut, isolated seed and multi-ingredient sweets are distinct legal food articles. Dried fig, ready-to-eat nut and oilseed limits cannot transfer to a whole mixture without actual botanical and final-use proof."
+    },
+    {
+      "catalog_id": "18-18-1-fruit-and-vegetables-based-sweets",
+      "product_name": "Fruit and Vegetables based Sweets",
+      "fssr": "",
+      "fcs": "18.1.5",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "fruits",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Dried fruits, tree nuts, oilseeds, coconut, isolated seed and multi-ingredient sweets are distinct legal food articles. Dried fig, ready-to-eat nut and oilseed limits cannot transfer to a whole mixture without actual botanical and final-use proof."
+    },
+    {
+      "catalog_id": "18-18-2-fruit-and-vegetable-based-snacks-and-savouries",
+      "product_name": "Fruit and vegetable based snacks & savouries",
+      "fssr": "",
+      "fcs": "18.2.2",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "fruits",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Dried fruits, tree nuts, oilseeds, coconut, isolated seed and multi-ingredient sweets are distinct legal food articles. Dried fig, ready-to-eat nut and oilseed limits cannot transfer to a whole mixture without actual botanical and final-use proof."
+    },
+    {
+      "catalog_id": "04-04-1-dry-fruits-and-nuts",
+      "product_name": "Dry fruits and Nuts",
+      "fssr": "2.3.47(5)",
+      "fcs": "04.1.2.2",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "fruits",
+      "official_product_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        },
+        {
+          "id": "single_ready_to_eat_nut_UNVERIFIED",
+          "label": "Product may be an actual ready-to-eat nut rather than fruit/nut mixture",
+          "source_keys": [
+            "nuts"
+          ],
+          "positive_proof": [
+            "Positive botanical species and direct ready-to-eat nut identity; a mixed dried-fruit, coconut or seed product is insufficient.",
+            "Actual final form and whether for further processing; other produce and tree nut subclasses excluded.",
+            "Correct current CTR and laboratory lot evidence."
+          ],
+          "not_automatically_applicable": "A composite, coconut, seed, dried fruit or processed sweet cannot inherit 'Nuts, ready to eat' just because nuts may be present."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Dried fruits, tree nuts, oilseeds, coconut, isolated seed and multi-ingredient sweets are distinct legal food articles. Dried fig, ready-to-eat nut and oilseed limits cannot transfer to a whole mixture without actual botanical and final-use proof."
+    },
+    {
+      "catalog_id": "04-04-1-desiccated-coconut",
+      "product_name": "Desiccated Coconut",
+      "fssr": "2.3.45",
+      "fcs": "04.1.2.2",
+      "existing_current_group": "26 remaining product-specific evidence blockers",
+      "article_family_review": "fruits",
+      "official_product_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Dried fruits, tree nuts, oilseeds, coconut, isolated seed and multi-ingredient sweets are distinct legal food articles. Dried fig, ready-to-eat nut and oilseed limits cannot transfer to a whole mixture without actual botanical and final-use proof."
+    },
+    {
+      "catalog_id": "04-04-1-edible-dried-seeds-obtained-from-fruits",
+      "product_name": "Edible Dried Seeds obtained from Fruits",
+      "fssr": "",
+      "fcs": "04.1.2.2",
+      "existing_current_group": "26 remaining product-specific evidence blockers",
+      "article_family_review": "fruits",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Dried fruits, tree nuts, oilseeds, coconut, isolated seed and multi-ingredient sweets are distinct legal food articles. Dried fig, ready-to-eat nut and oilseed limits cannot transfer to a whole mixture without actual botanical and final-use proof."
+    },
+    {
+      "catalog_id": "04-04-2-edible-dried-seeds-obtained-from-vegetables",
+      "product_name": "Edible Dried Seeds obtained from Vegetables",
+      "fssr": "",
+      "fcs": "04.2.2.2",
+      "existing_current_group": "26 remaining product-specific evidence blockers",
+      "article_family_review": "fruits",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Dried fruits, tree nuts, oilseeds, coconut, isolated seed and multi-ingredient sweets are distinct legal food articles. Dried fig, ready-to-eat nut and oilseed limits cannot transfer to a whole mixture without actual botanical and final-use proof."
+    },
+    {
+      "catalog_id": "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
+      "product_name": "Dried fruits/vegetables/nut based mouth fresheners",
+      "fssr": "",
+      "fcs": "05.2.4.1",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "fruits",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Dried fruits, tree nuts, oilseeds, coconut, isolated seed and multi-ingredient sweets are distinct legal food articles. Dried fig, ready-to-eat nut and oilseed limits cannot transfer to a whole mixture without actual botanical and final-use proof."
+    },
+    {
+      "catalog_id": "05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2",
+      "product_name": "Other traditional mouth fresheners not covered under 5.2.4.1 and 5.2.4.2",
+      "fssr": "",
+      "fcs": "05.2.4.3",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "fruits",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Dried fruits, tree nuts, oilseeds, coconut, isolated seed and multi-ingredient sweets are distinct legal food articles. Dried fig, ready-to-eat nut and oilseed limits cannot transfer to a whole mixture without actual botanical and final-use proof."
+    },
+    {
+      "catalog_id": "12-12-2-seasoning",
+      "product_name": "Seasoning",
+      "fssr": "2.9.31",
+      "fcs": "12.2.2",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "spice",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "finished_spice_mix_UNVERIFIED",
+          "label": "Finished food may be a legally classified spice or spice mix",
+          "source_keys": [
+            "spices"
+          ],
+          "positive_proof": [
+            "Ingredient declarations proving qualifying spices, botanicals, and the finished product's precise legal classification.",
+            "Distinguish standardized spice/spice-mix finished article from seasoning, culinary paste, pan masala or confectionery.",
+            "Source edition, recipe proportions, other contaminant controls and laboratory data."
+          ],
+          "not_automatically_applicable": "The spice-mix 30/15 µg/kg pair cannot transfer from a spice ingredient to arbitrary seasoning/other mixed food."
+        },
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Seasoning, culinary pastes and pan masala cannot inherit the spice-mix aflatoxin article solely because one spice ingredient is present."
+    },
+    {
+      "catalog_id": "12-12-6-culinary-pastes",
+      "product_name": "Culinary Pastes",
+      "fssr": "2.3.28",
+      "fcs": "12.6.3",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "spice",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "finished_spice_mix_UNVERIFIED",
+          "label": "Finished food may be a legally classified spice or spice mix",
+          "source_keys": [
+            "spices"
+          ],
+          "positive_proof": [
+            "Ingredient declarations proving qualifying spices, botanicals, and the finished product's precise legal classification.",
+            "Distinguish standardized spice/spice-mix finished article from seasoning, culinary paste, pan masala or confectionery.",
+            "Source edition, recipe proportions, other contaminant controls and laboratory data."
+          ],
+          "not_automatically_applicable": "The spice-mix 30/15 µg/kg pair cannot transfer from a spice ingredient to arbitrary seasoning/other mixed food."
+        },
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Seasoning, culinary pastes and pan masala cannot inherit the spice-mix aflatoxin article solely because one spice ingredient is present."
+    },
+    {
+      "catalog_id": "100-100-pan-masala",
+      "product_name": "Pan Masala",
+      "fssr": "2.11.5",
+      "fcs": "100",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "spice",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "finished_spice_mix_UNVERIFIED",
+          "label": "Finished food may be a legally classified spice or spice mix",
+          "source_keys": [
+            "spices"
+          ],
+          "positive_proof": [
+            "Ingredient declarations proving qualifying spices, botanicals, and the finished product's precise legal classification.",
+            "Distinguish standardized spice/spice-mix finished article from seasoning, culinary paste, pan masala or confectionery.",
+            "Source edition, recipe proportions, other contaminant controls and laboratory data."
+          ],
+          "not_automatically_applicable": "The spice-mix 30/15 µg/kg pair cannot transfer from a spice ingredient to arbitrary seasoning/other mixed food."
+        },
+        {
+          "id": "contains_listed_commodity_UNVERIFIED",
+          "label": "Finished food may contain a listed cereal, nut, pulse, oilseed or spice",
+          "source_keys": [
+            "composite"
+          ],
+          "positive_proof": [
+            "Quantified finished recipe and named commodity from the official CTR aflatoxin list.",
+            "Formal finished-product article classification and distinction from primary cereal/nut article.",
+            "Applicable processing, residue basis and laboratory records."
+          ],
+          "not_automatically_applicable": "The 20 µg/kg total-aflatoxin composite reference is NOT interchangeable with the 15 µg/kg cereal or nut reference."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Seasoning, culinary pastes and pan masala cannot inherit the spice-mix aflatoxin article solely because one spice ingredient is present."
+    },
+    {
+      "catalog_id": "06-06-2-arrowroot",
+      "product_name": "Arrowroot",
+      "fssr": "2.4.14",
+      "fcs": "06.2.2",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "source_exclusions",
+      "official_product_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals%20and%20Cereal%20products(1).pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "related_articles_explicitly_excluded",
+          "label": "No positive named finished article established from this source family",
+          "source_keys": [],
+          "positive_proof": [
+            "Obtain an official finished-identity article before any numeric contaminant is assigned.",
+            "Reconcile legal process, species, additive or composition requirements; preserve original product standard separately."
+          ],
+          "not_automatically_applicable": "Do not inherit a similarly named unrelated raw-food or ingredient source."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Arrowroot is not Manihot cassava or tapioca; the hydrocyanic-acid source is not a general root-starch limit."
+    },
+    {
+      "catalog_id": "06-06-2-water-chestnut-flour-singhare-ka-atta",
+      "product_name": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+      "fssr": "2.3.64",
+      "fcs": "06.2.1",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "source_exclusions",
+      "official_product_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "related_articles_explicitly_excluded",
+          "label": "No positive named finished article established from this source family",
+          "source_keys": [],
+          "positive_proof": [
+            "Obtain an official finished-identity article before any numeric contaminant is assigned.",
+            "Reconcile legal process, species, additive or composition requirements; preserve original product standard separately."
+          ],
+          "not_automatically_applicable": "Do not inherit a similarly named unrelated raw-food or ingredient source."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Water chestnut flour FSSR 2.3.64 is not a tree-nut or cereal article by name; FSSR quality parameters are not aflatoxin limits."
+    },
+    {
+      "catalog_id": "06-06-1-quinoa",
+      "product_name": "Quinoa",
+      "fssr": "2.4.6",
+      "fcs": "06.1",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "source_exclusions",
+      "official_product_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals%20and%20Cereal%20products(1).pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "related_articles_explicitly_excluded",
+          "label": "No positive named finished article established from this source family",
+          "source_keys": [],
+          "positive_proof": [
+            "Obtain an official finished-identity article before any numeric contaminant is assigned.",
+            "Reconcile legal process, species, additive or composition requirements; preserve original product standard separately."
+          ],
+          "not_automatically_applicable": "Do not inherit a similarly named unrelated raw-food or ingredient source."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Quinoa is explicitly excluded from particular Version IX cereal-grain metals; FSSR pseudocereal identity is not a free license to inherit all cereal products rules."
+    },
+    {
+      "catalog_id": "06-06-1-chia-seeds",
+      "product_name": "Chia Seeds",
+      "fssr": "2.4.6",
+      "fcs": "06.1",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "source_exclusions",
+      "official_product_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals%20and%20Cereal%20products(1).pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "related_articles_explicitly_excluded",
+          "label": "No positive named finished article established from this source family",
+          "source_keys": [],
+          "positive_proof": [
+            "Obtain an official finished-identity article before any numeric contaminant is assigned.",
+            "Reconcile legal process, species, additive or composition requirements; preserve original product standard separately."
+          ],
+          "not_automatically_applicable": "Do not inherit a similarly named unrelated raw-food or ingredient source."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Chia botanical seed cannot inherit the oilseed aflatoxin article without explicit positive legally relevant commodity identity."
+    },
+    {
+      "catalog_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "product_name": "Dry Mixtures of Cocoa and Sugars",
+      "fssr": "2.7.6",
+      "fcs": "05.1.1",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "source_exclusions",
+      "official_product_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "related_articles_explicitly_excluded",
+          "label": "No positive named finished article established from this source family",
+          "source_keys": [],
+          "positive_proof": [
+            "Obtain an official finished-identity article before any numeric contaminant is assigned.",
+            "Reconcile legal process, species, additive or composition requirements; preserve original product standard separately."
+          ],
+          "not_automatically_applicable": "Do not inherit a similarly named unrelated raw-food or ingredient source."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "A cocoa-and-sugar powder mixture is not cocoa powder itself; its cocoa-powder Lead/Copper limits cannot transfer."
+    },
+    {
+      "catalog_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "fssr": "2.7.8",
+      "fcs": "05.1.1",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "source_exclusions",
+      "official_product_source": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "related_articles_explicitly_excluded",
+          "label": "No positive named finished article established from this source family",
+          "source_keys": [],
+          "positive_proof": [
+            "Obtain an official finished-identity article before any numeric contaminant is assigned.",
+            "Reconcile legal process, species, additive or composition requirements; preserve original product standard separately."
+          ],
+          "not_automatically_applicable": "Do not inherit a similarly named unrelated raw-food or ingredient source."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Cocoa mass/liquor/cake are distinct from standardized cocoa powder; no Cocoa Powder Lead or Copper transfer."
+    },
+    {
+      "catalog_id": "04-04-2-cocoa-beans",
+      "product_name": "Cocoa Beans",
+      "fssr": "2.3.54",
+      "fcs": "04.2.2.7",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "source_exclusions",
+      "official_product_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "related_articles_explicitly_excluded",
+          "label": "No positive named finished article established from this source family",
+          "source_keys": [],
+          "positive_proof": [
+            "Obtain an official finished-identity article before any numeric contaminant is assigned.",
+            "Reconcile legal process, species, additive or composition requirements; preserve original product standard separately."
+          ],
+          "not_automatically_applicable": "Do not inherit a similarly named unrelated raw-food or ingredient source."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Cocoa beans are not cocoa powder and not automatically an oilseed or ready-to-eat tree-nut commodity."
+    },
+    {
+      "catalog_id": "12-12-10-vegetable-protein-products",
+      "product_name": "Vegetable Protein Products",
+      "fssr": "2.3.59",
+      "fcs": "12.10",
+      "existing_current_group": "56 cross-form transfer exclusions",
+      "article_family_review": "source_exclusions",
+      "official_product_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "related_articles_explicitly_excluded",
+          "label": "No positive named finished article established from this source family",
+          "source_keys": [],
+          "positive_proof": [
+            "Obtain an official finished-identity article before any numeric contaminant is assigned.",
+            "Reconcile legal process, species, additive or composition requirements; preserve original product standard separately."
+          ],
+          "not_automatically_applicable": "Do not inherit a similarly named unrelated raw-food or ingredient source."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Vegetable protein and processed soy matrices are not raw soybeans, intact pulses, or automatically oilseed/composite finished food."
+    },
+    {
+      "catalog_id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "product_name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "fssr": "2.11.8",
+      "fcs": "99.7",
+      "existing_current_group": "26 remaining product-specific evidence blockers",
+      "article_family_review": "source_exclusions",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "related_articles_explicitly_excluded",
+          "label": "No positive named finished article established from this source family",
+          "source_keys": [],
+          "positive_proof": [
+            "Obtain an official finished-identity article before any numeric contaminant is assigned.",
+            "Reconcile legal process, species, additive or composition requirements; preserve original product standard separately."
+          ],
+          "not_automatically_applicable": "Do not inherit a similarly named unrelated raw-food or ingredient source."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Dextrin-derived soluble fibre is not automatically a cereal food just because its input may originate from starch."
+    },
+    {
+      "catalog_id": "100-100-royal-jelly",
+      "product_name": "Royal Jelly",
+      "fssr": "2.8.3(3)",
+      "fcs": "100",
+      "existing_current_group": "26 remaining product-specific evidence blockers",
+      "article_family_review": "source_exclusions",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "related_articles_explicitly_excluded",
+          "label": "No positive named finished article established from this source family",
+          "source_keys": [],
+          "positive_proof": [
+            "Obtain an official finished-identity article before any numeric contaminant is assigned.",
+            "Reconcile legal process, species, additive or composition requirements; preserve original product standard separately."
+          ],
+          "not_automatically_applicable": "Do not inherit a similarly named unrelated raw-food or ingredient source."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Royal jelly is not beeswax, honey, a tree nut or a cereal product."
+    },
+    {
+      "catalog_id": "12-12-1-salt-substitutes",
+      "product_name": "Salt Substitutes",
+      "fssr": "2.9.30(6)",
+      "fcs": "12.1.2",
+      "existing_current_group": "26 remaining product-specific evidence blockers",
+      "article_family_review": "source_exclusions",
+      "official_product_source": "https://fcstraining.fssai.gov.in/standard-product",
+      "official_contaminants_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_basis": "FSSAI CTR Version IX (03.02.2026), §2.2.1; current FSSR/FoSCoS identity",
+      "status": "CONDITIONAL_ONLY_NO_FIRST_SOURCE_PROMOTION",
+      "selectable_branches": [
+        {
+          "id": "related_articles_explicitly_excluded",
+          "label": "No positive named finished article established from this source family",
+          "source_keys": [],
+          "positive_proof": [
+            "Obtain an official finished-identity article before any numeric contaminant is assigned.",
+            "Reconcile legal process, species, additive or composition requirements; preserve original product standard separately."
+          ],
+          "not_automatically_applicable": "Do not inherit a similarly named unrelated raw-food or ingredient source."
+        }
+      ],
+      "positive_finished_article_verified": false,
+      "unconditional_limit_application": false,
+      "complete_regulatory_pass": false,
+      "analytical_lot_pass": false,
+      "explicit_exclusion": "Salt substitutes are not 'Salt, food grade' under the metals table solely by similarity of function."
+    }
+  ]
+}
