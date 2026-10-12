@@ -25,7 +25,7 @@ test("All 76 official FSSR source values trace to exact standard and subtype pat
  }assert.equal(n,76);
 });
 test("Separate cocoa cake/mass cocoa butter and 9 cocoa dry naming conditions",()=>{
- assert.ok(get("2.7.8").quality_rows.some(x=>x.parameter.includes("cocoa butter")&&x.variant.includes("Mass")));
+ assert.ok(get("2.7.8").quality_rows.some(x=>x.parameter.replace(/_/g," ").includes("cocoa butter")&&x.variant.includes("Mass")));
  assert.equal(get("2.7.6").conditional_subtypes.nine_conditional_descriptions.length,9);
  assert.equal(get("2.7.6").quality_rows.find(x=>x.parameter.includes("wet basis")).value,32);
 });
