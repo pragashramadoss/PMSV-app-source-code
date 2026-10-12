@@ -37,10 +37,10 @@ for(const x of q.review_records){
 const archiveUI=src(base+"fssai-source-proof-panels.js");
 const localUI=src(base+"fssai-evidence-capture-116.js");
 const latestUI=src(base+"fssai-first-source-current-444-89.js");
-assert.match(archiveUI,/const current=pmsv444Ledger\\?\\.records\\?\\.find/);
-assert.match(archiveUI,/current\\.source_status!=='FIRST_EXACT_SOURCE_PENDING'/);
-assert.match(localUI,/typeof pmsv444Valid!==|"function"/);
-assert.match(localUI,/current\\.source_status==="FIRST_EXACT_SOURCE_PENDING"/);
-assert.match(latestUI,/if\\(current\\.source_status==="PARTIAL_EXACT_SOURCE_MATCH"\\)return "";/);
-assert.ok(!latestUI.includes("if(pmsv444Ids.includes(p.id))return \"\";"));
+assert.ok(archiveUI.includes("const current=pmsv444Ledger?.records?.find"));
+assert.ok(archiveUI.includes("current.source_status!=='FIRST_EXACT_SOURCE_PENDING'"));
+assert.ok(localUI.includes('typeof pmsv444Valid!=="function"'));
+assert.ok(localUI.includes('current.source_status==="FIRST_EXACT_SOURCE_PENDING"'));
+assert.ok(latestUI.includes('if(current.source_status==="PARTIAL_EXACT_SOURCE_MATCH")return "";'));
+assert.ok(!latestUI.includes('if(pmsv444Ids.includes(p.id))return "";'));
 console.log("PASS: 533/444/89 current source ledger; 27 archived pending panels suppressed; 89 collectors preserved; 0 regulatory/lab PASS.");

@@ -4,6 +4,9 @@ on:
     branches: [gh-pages]
     paths:
       - 'fssai-product-helper-preview-01/fssai-first-source-current-*.js'
+      - 'fssai-product-helper-preview-01/fssai-source-proof-panels.js'
+      - 'fssai-product-helper-preview-01/fssai-evidence-capture-116.js'
+      - 'scripts/audit-fssai-current-89-ui-regression.cjs'
       - 'fssai-product-helper-preview-01/data/rules/fssai-current-*-first-exact-source-proof-worklist-2026-10-12.json'
       - 'fssai-product-helper-preview-01/data/rules/fssai-current-first-source-533-live-ledger-*.json'
       - 'fssai-product-helper-preview-01/data/rules/fssai-five-exact-conditional-finished-subroute-2026-10-12.json'
@@ -42,6 +45,11 @@ jobs:
           node --check fssai-product-helper-preview-01/fssai-first-source-current-442-91.js
           node --check fssai-product-helper-preview-01/fssai-first-source-current-444-89.js
           node --check fssai-product-helper-preview-01/fssai-2026-may-533-89-effective-date.js
+      - name: Verify 89 pending and 27 archived-to-partial UI transitions
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-source-proof-panels.js
+          node --check fssai-product-helper-preview-01/fssai-evidence-capture-116.js
+          node scripts/audit-fssai-current-89-ui-regression.cjs
       - name: Verify 423, 428 and 437 source-ledger integrity, disjoint IDs and fail-closed controls
         run: |
           node --test tests/fssai-first-source-current-423-110-2026-10-12.test.cjs
