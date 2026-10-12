@@ -50,7 +50,8 @@ function sourcePinned121ResearchProofHtml(p){
  const current=pmsv444Ledger?.records?.find(x=>x.catalog_id===p.id);
  if(!current||current.product_name!==p.name||
     String(current.fssr||'')!==String(p.fssr||'')||
-    String(current.fcs||'')!==String(p.fcs||''))return '';
+    String(current.fcs||'')!==String(p.fcs||''))
+    return '<div class="notice">Latest first-source identity mismatch: historical source proof withheld. No limit or PASS.</div>';
  if(current.source_status!=='FIRST_EXACT_SOURCE_PENDING')return '';
  if(p.id==='06-06-1-any-other-foodgrains'&&typeof pmsvGrainProofValid==='function'&&pmsvGrainProofValid(p))return '';
  // A historic first-source queue is still archived at 121. A positively
