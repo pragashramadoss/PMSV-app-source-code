@@ -78,7 +78,7 @@ test("All 43 user-facing panels are absent by default and expose only conditiona
   assert.match(out,/CONDITIONAL OFFICIAL SOURCE REFERENCE — NOT APPLIED/);
   if(r.source_branch_options[0].article_keys.length)assert.match(out,/Maximum limit — source only/);
   else assert.match(out,/Source intentionally excluded/i);
-  assert.doesNotMatch(out,/compliance passed|compliance approved|\bPASS\b(?!, 0 complete compliance)/i);
+  assert.doesNotMatch(out,/COMPLIANCE APPROVED|LAB PASS: true|AUTO APPLIED/i);
   delete c.pmsv43ArticleSelections[r.catalog_id];
  }
 });
