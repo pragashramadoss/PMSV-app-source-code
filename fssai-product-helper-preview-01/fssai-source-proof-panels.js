@@ -43,6 +43,14 @@ function pmsvProofSourceMatch(r,db){
 function sourcePinned121ResearchProofHtml(p){
  const queue=sourcePriorityMetalDb?.unresolved_first_exact_catalog_ids;
  if(!p||!Array.isArray(queue)||!queue.includes(p.id))return '';
+ // The 121-item research archive must never overrule the current authenticated
+ // 533-item ledger. Suppress obsolete pending warnings for five source-matched
+ // products and let the current-status UI report any ledger mismatch.
+ if(pmsvCurrent533SourceLedger&&typeof pmsvCurrent533SourceProofValid==='function'){
+  if(!pmsvCurrent533SourceProofValid(p))return '';
+  const current=pmsvCurrent533SourceLedger.records.find(x=>x.catalog_id===p.id);
+  if(!current||current.source_status!=='FIRST_EXACT_SOURCE_PENDING')return '';
+ }
  if(p.id==='06-06-1-any-other-foodgrains'&&typeof pmsvGrainProofValid==='function'&&pmsvGrainProofValid(p))return '';
  // A historic first-source queue is still archived at 121. A positively
  // source-matched Ayurveda recipe must not be shown as currently unresolved
@@ -763,4 +771,48 @@ pmsvCerealFruitSpiceSourceHtml=function(p){
  if(!pmsvCurrent32DocumentaryIntegrity())
    return '<div class="notice"><b>Conditional article withheld.</b> A named official FSSAI value, unit, source identity, review branch or non-PASS safeguard changed. No values applied.</div>';
  return pmsvPreIntegrity32Html(p);
+};
+
+/* PMSV 2026-10-12 681-record audit lock: 533 ledger + 116 outstanding
+ * evidence packets + 32 conditional source branches. These fingerprints
+ * detect altered/reordered local review records after load; they are NOT
+ * a digital signature, official-source verification, or regulatory PASS. */
+const pmsvReviewSnapshotDigests=Object.freeze({
+ ledger:'1cf824cba2bc4000',
+ work:'59abdc38eeafd59f',
+ branches:'dbfcd1896fe71720'
+});
+function pmsvReviewSnapshotDigest(x){
+ const s=JSON.stringify(x);
+ if(typeof s!=='string')return '';
+ let a=0x811c9dc5,b=0x9747b28c;
+ for(let i=0;i<s.length;i++){
+  const ch=s.charCodeAt(i);
+  a=Math.imul(a^ch,16777619);
+  b=Math.imul(b^ch,2246822519);
+ }
+ return (a>>>0).toString(16).padStart(8,'0')+
+   (b>>>0).toString(16).padStart(8,'0');
+}
+function pmsvReviewSnapshotIntact(kind,document){
+ const expected=pmsvReviewSnapshotDigests[kind];
+ return typeof expected==='string'&&expected.length===16&&
+   !!document&&pmsvReviewSnapshotDigest(document)===expected;
+}
+var pmsvBeforeSnapshotLedgerProof=pmsvCurrent533SourceProofValid;
+pmsvCurrent533SourceProofValid=function(p){
+ return pmsvReviewSnapshotIntact('ledger',pmsvCurrent533SourceLedger)&&
+   pmsvBeforeSnapshotLedgerProof(p);
+};
+var pmsvBeforeSnapshotWorkProof=pmsvCurrent116DocumentaryIntegrity;
+pmsvCurrent116DocumentaryIntegrity=function(){
+ return pmsvReviewSnapshotIntact('ledger',pmsvCurrent533SourceLedger)&&
+   pmsvReviewSnapshotIntact('work',pmsvCurrent116ProofWorklist)&&
+   pmsvBeforeSnapshotWorkProof();
+};
+var pmsvBeforeSnapshot32Proof=pmsvCurrent32DocumentaryIntegrity;
+pmsvCurrent32DocumentaryIntegrity=function(){
+ return pmsvReviewSnapshotIntact('ledger',pmsvCurrent533SourceLedger)&&
+   pmsvReviewSnapshotIntact('branches',pmsvCerealFruitSpiceSourceDb)&&
+   pmsvBeforeSnapshot32Proof();
 };
