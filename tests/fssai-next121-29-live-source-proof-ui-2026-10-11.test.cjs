@@ -11,7 +11,7 @@ const ctx=vm.createContext({contaminantsDb:core,sourcePriorityMetalDb:priority,e
 vm.runInContext(moduleJs,ctx);ctx.pmsvNext121ProofDb=proof;ctx.pmsvNext29DossiersDb=extra;
 const byId=new Map(inventory.map(x=>[x.id,x])),display=p=>vm.runInContext("sourcePinned121ResearchProofHtml("+JSON.stringify(p)+")",ctx);
 test("121 actual FoSCoS products display new live source proof, while already evidenced products do not",()=>{
- assert.match(html,/fssai-source-proof-panels\.js\?v=20261011-live121/);
+ assert.match(html,/fssai-source-proof-panels\.js\?v=(?:20261011-live121|20261012-116proof)/);
  assert.match(html,/await pmsvLoadPositiveSourceProof\(\)/);
  assert.match(html,/typeof sourcePinned121ResearchProofHtml==='function'/);
  for(const r of proof.records){
