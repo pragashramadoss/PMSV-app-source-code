@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-10-12",
+  "source_policy": "OFFICIAL_FSSAI_FOSCOS_ONLY",
+  "purpose": "ONE_ADDITIONAL_PROCESS_QUALIFIED_EXACT_NICKEL_SOURCE_LINK_NO_FINISHED_PRODUCT_PASS",
+  "baseline": {
+    "catalogue": 533,
+    "partial_exact": 437,
+    "first_source_pending": 96
+  },
+  "current": {
+    "catalogue": 533,
+    "partial_exact": 438,
+    "first_source_pending": 95,
+    "full_approvals": 0
+  },
+  "promotion": {
+    "catalog_id": "02-02-2-fat-spread",
+    "product_name": "Fat spread",
+    "fssr": "2.2.5(3)",
+    "fcs": "02.2.2",
+    "source_policy": "FSSAI_OFFICIAL_ONLY",
+    "source_version": "Version IX (03.02.2026)",
+    "fssr_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_2_Fats%20oils%20and%20fat%20emulsions.pdf",
+    "ctr_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "fssr_product_standard": "2.2.5(3) FAT SPREAD",
+    "fssr_pdf_page_one_based": 46,
+    "ctr_chapter": "2.1.1",
+    "ctr_pdf_page_one_based": 13,
+    "ctr_article": "All hydrogenated, partially hydrogenated, interesterified vegetable oils and fats such as vanaspati, table margarine, bakery and industrial margarine, bakery shortening, fat spread and partially hydrogenated margarine, bakery shortening, fat spread and partially hydrogenated soyabean oil",
+    "contaminant": "Nickel",
+    "maximum": 1.5,
+    "unit": "mg/kg",
+    "qualifying_subroute": "Confirmed mixed or vegetable fat spread made with a legally qualifying hydrogenated, partially hydrogenated or interesterified vegetable-fat process",
+    "positive_fssr_named_subtype": true,
+    "confirmed_qualifying_actual_lot": false,
+    "processing_qualifier_confirmed": false,
+    "lab_result_available": false,
+    "numeric_finished_food_limit_auto_applied": false,
+    "complete_contaminant_panel": false,
+    "full_legal_compliance_pass": false,
+    "source_quality_only": [
+      {
+        "name": "Fat (m/m)",
+        "min": 40,
+        "max": 80,
+        "unit": "%"
+      },
+      {
+        "name": "Moisture (m/m)",
+        "min": 16,
+        "max": 56,
+        "unit": "%"
+      },
+      {
+        "name": "Trans fatty acids in mixed or vegetable fat spread",
+        "max": 2,
+        "unit": "% by weight, effective 01.01.2022"
+      }
+    ],
+    "other_article_condition": "Low-fat 'Minarine' is a distinct legal source article, not interchangeable with all Fat Spread at 40-80% fat; Lead/Arsenic 0.1 mg/kg Minarine must NOT be transferred to generic Fat Spread",
+    "excluded": [
+      "pure milk-fat spread",
+      "vegetable spread made solely from unhydrogenated refined oils",
+      "mixed spread without qualifying vegetable-fat processing",
+      "unspecified fat spread",
+      "Minarine article assumed solely from broad Fat Spread identity"
+    ],
+    "manufacturer_evidence_needed": [
+      "FSSR fat-spread subtype: milk, mixed or vegetable and 40-80% fat product specification",
+      "Actual vegetable oils/fat constituents with documented hydrogenation or interesterification process, not mere presence of refined vegetable oil",
+      "Final product label and actual finished-lot analytical matrix; apply current effective amendments and correct method",
+      "Separately evaluate Minarine identity, lead/arsenic, other metals, pesticide residues, additive, microbiological and quality standards"
+    ],
+    "regulatory_amendment_effectivity_recheck_required": true
+  },
+  "all_promotion_conditions_are_lot_unverified": true,
+  "explicitly_no_unconditional_fat_spread_pass": true,
+  "full_regulatory_compliance_approvals": 0
+}

@@ -8,6 +8,8 @@ on:
       - 'fssai-product-helper-preview-01/data/rules/fssai-current-first-source-533-live-ledger-*.json'
       - 'fssai-product-helper-preview-01/data/rules/fssai-five-exact-conditional-finished-subroute-2026-10-12.json'
       - 'fssai-product-helper-preview-01/data/rules/fssai-nine-mushroom-containing-exact-named-subroutes-2026-10-12.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-fat-spread-nickel-first-source-2026-10-12.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-95-current-pending-finished-food-evidence-dossiers-2026-10-12.json'
       - 'fssai-product-helper-preview-01/index.html'
       - 'tests/fssai-first-source-current-*.test.cjs'
       - '.github/workflows/verify-fssai-current-first-source-fast.yml'
@@ -29,8 +31,10 @@ jobs:
         run: |
           node --check fssai-product-helper-preview-01/fssai-first-source-current-428-105.js
           node --check fssai-product-helper-preview-01/fssai-first-source-current-437-96.js
+          node --check fssai-product-helper-preview-01/fssai-first-source-current-438-95.js
       - name: Verify 423, 428 and 437 source-ledger integrity, disjoint IDs and fail-closed controls
         run: |
           node --test tests/fssai-first-source-current-423-110-2026-10-12.test.cjs
           node --test tests/fssai-first-source-current-428-105-2026-10-12.test.cjs
           node --test tests/fssai-first-source-current-437-96-2026-10-12.test.cjs
+          node --test tests/fssai-first-source-current-438-95-2026-10-12.test.cjs
