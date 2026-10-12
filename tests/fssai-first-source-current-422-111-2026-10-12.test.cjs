@@ -7,6 +7,7 @@ const legacy=read("fssai-current-first-source-533-live-ledger-417-116-2026-10-11
 const ledger420=read("fssai-current-first-source-533-live-ledger-420-113-2026-10-12.json");
 const ledger421=read("fssai-current-first-source-533-live-ledger-421-112-2026-10-12.json");
 const ledger422=read("fssai-current-first-source-533-live-ledger-422-111-2026-10-12.json");
+const ledger444=read("fssai-current-first-source-533-live-ledger-444-89-2026-10-12.json");
 const list116=read("fssai-current-116-finished-article-proof-worklist-2026-10-12.json");
 const list112=read("fssai-current-112-first-exact-source-proof-worklist-2026-10-12.json");
 const list111=read("fssai-current-111-first-exact-source-proof-worklist-2026-10-12.json");
@@ -121,8 +122,16 @@ test("full current 422/111 runtime guard, displayed record and evidence collecto
  assert.doesNotMatch(h,/421 first-source partial/);
  assert.equal(c.pmsv116Valid(p),false);
  assert.equal(c.pmsv116GetAuthorized(p.id),null);
- const remaining=list111.review_records[0],q=products.find(x=>x.id===remaining.catalog_id);
- assert.ok(q);
+ // Historic 422/111 source panels are under test, but the live evidence
+ // collector must use only the latest 444/89 status. Preserve that boundary
+ // without loading a newer HTML wrapper over this archived 422 view.
+ const remaining=list111.review_records.find(x=>ledger444.records.some(y=>
+  y.catalog_id===x.catalog_id&&y.source_status==="FIRST_EXACT_SOURCE_PENDING"));
+ assert.ok(remaining);
+ const q=products.find(x=>x.id===remaining.catalog_id);assert.ok(q);
+ assert.equal(ledger444.records.filter(x=>x.source_status==="FIRST_EXACT_SOURCE_PENDING").length,89);
+ c.pmsv444Ledger=ledger444;
+ c.pmsv444Valid=()=>true; // Full authenticated 444 checks run in dedicated test.
  assert.equal(c.pmsv116Valid(q),true);
  const pending=c.sourcePinned121ResearchProofHtml(q);
  assert.match(pending,/111 pending first exact article/);
