@@ -1,0 +1,24 @@
+name: Verify current FSSAI 463/70 first sources (fast)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/**'
+      - 'tests/fssai-first-source-current-463-70-2026-10-12.test.cjs'
+      - '.github/workflows/verify-current-fssai-463-70.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify current six Chapter 2.4 ingredient-qualified source branches and 463/70 conservation
+        run: node --test tests/fssai-first-source-current-463-70-2026-10-12.test.cjs
+      - name: Syntax-check current and immediately preceding source panels
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-first-source-current-463-70.js
+          node --check fssai-product-helper-preview-01/fssai-first-source-current-457-76.js
