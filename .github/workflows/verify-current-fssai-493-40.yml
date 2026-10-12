@@ -1,0 +1,24 @@
+name: Verify current FSSAI 493/40 conditional article gates (fast)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/**'
+      - 'tests/fssai-first-source-current-493-40-2026-10-12.test.cjs'
+      - '.github/workflows/verify-current-fssai-493-40.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 18 source-only routes and 493 partial 40 pending conservation
+        run: node --test tests/fssai-first-source-current-493-40-2026-10-12.test.cjs
+      - name: Syntax-check current 493 and upstream 475 source panels
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-first-source-current-493-40.js
+          node --check fssai-product-helper-preview-01/fssai-first-source-current-475-58.js
