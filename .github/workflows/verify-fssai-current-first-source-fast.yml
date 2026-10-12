@@ -10,6 +10,8 @@ on:
       - 'fssai-product-helper-preview-01/data/rules/fssai-nine-mushroom-containing-exact-named-subroutes-2026-10-12.json'
       - 'fssai-product-helper-preview-01/data/rules/fssai-fat-spread-nickel-first-source-2026-10-12.json'
       - 'fssai-product-helper-preview-01/data/rules/fssai-four-sugar-high-ash-conditional-source-2026-10-12.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-two-whole-egg-shell-free-residue-2026-10-12.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-89-detailed-finished-identity-audit-2026-10-12.json'
       - 'fssai-product-helper-preview-01/data/rules/fssai-91-remaining-sugar-ash-evidence-decisions-2026-10-12.json'
       - 'fssai-product-helper-preview-01/data/rules/fssai-95-current-pending-finished-food-evidence-dossiers-2026-10-12.json'
       - 'fssai-product-helper-preview-01/index.html'
@@ -35,6 +37,7 @@ jobs:
           node --check fssai-product-helper-preview-01/fssai-first-source-current-437-96.js
           node --check fssai-product-helper-preview-01/fssai-first-source-current-438-95.js
           node --check fssai-product-helper-preview-01/fssai-first-source-current-442-91.js
+          node --check fssai-product-helper-preview-01/fssai-first-source-current-444-89.js
       - name: Verify 423, 428 and 437 source-ledger integrity, disjoint IDs and fail-closed controls
         run: |
           node --test tests/fssai-first-source-current-423-110-2026-10-12.test.cjs
@@ -42,3 +45,4 @@ jobs:
           node --test tests/fssai-first-source-current-437-96-2026-10-12.test.cjs
           node --test tests/fssai-first-source-current-438-95-2026-10-12.test.cjs
           node --test tests/fssai-first-source-current-442-91-2026-10-12.test.cjs
+          node --test tests/fssai-first-source-current-444-89-2026-10-12.test.cjs
