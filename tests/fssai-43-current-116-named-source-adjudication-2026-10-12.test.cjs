@@ -59,7 +59,7 @@ test("43 case options preserve critical cannot-inherit boundaries",()=>{
  assert.ok(keys("04-04-2-pickles-made-from-vegetables-or-other-edible-plant-material-including-mushrooms","cucumber_pickle").includes("tin_pickled_cucumber"));
  assert.ok(!keys("04-04-2-fermented-fungi","actual_mushroom").includes("lead_canned_mushroom"));
  assert.deepEqual(keys("11-11-1-dried-glucose-syrup","high_ash_article_excluded"),[]);
- assert.match(d.records.find(x=>x.catalog_id==="11-11-1-dried-glucose-syrup").source_branch_options[0].excludes,/>1%/);
+ assert.match(d.records.find(x=>x.catalog_id==="11-11-1-dried-glucose-syrup").source_branch_options[0].excludes,/Never show a 5 mg\\/kg conditional high-ash lead row/);
  assert.deepEqual(keys("18-18-1-indian-confections","actual_confectionery"),["hydrocyan_confectionery"]);
  assert.equal(keys("18-18-1-starch-based-sweets","hard_boiled_candy").length,5);
  assert.ok(!keys("12-12-2-seasoning","verified_pure_spice_mix").includes("aflatoxins_composite"));
