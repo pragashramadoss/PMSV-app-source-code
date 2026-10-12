@@ -1,0 +1,1057 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-10-12",
+  "source_policy": "FSSAI_ONLY",
+  "scope": "15_CURRENT_CTR_PENDING_FINISHED_PRODUCT_FSSR_QUALITY_SOURCE_RECORDS",
+  "catalogue": 533,
+  "partial_source": 493,
+  "first_exact_source_pending": 40,
+  "approved_finished_products": 0,
+  "first_ctr_promotions": 0,
+  "quality_product_count": 15,
+  "quality_source_row_count": 76,
+  "cocoa_naming_branches": 9,
+  "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "records": [
+    {
+      "catalog_id": "04-04-1-seedless-tamarind",
+      "product_name": "Seedless Tamarind",
+      "fssr": "2.3.49",
+      "fcs": "04.1.2.8",
+      "source_rule_file": "chapter-2-3-fruit-vegetable-v1.json",
+      "source_rule_key": "2.3.49",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+      "positive_finished_identity_needed": "Mature seedless Tamarindus indica, not generic tamarind pulp",
+      "quality_rows": [
+        {
+          "parameter": "Moisture content",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% by mass",
+          "variant": "Seedless Tamarind",
+          "condition": "",
+          "source_json_path": "composition.0.value"
+        },
+        {
+          "parameter": "Organic extraneous matter",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% w/w",
+          "variant": "Seedless Tamarind",
+          "condition": "",
+          "source_json_path": "composition.1.value"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 6,
+          "unit": "% w/w on dry basis",
+          "variant": "Seedless Tamarind",
+          "condition": "",
+          "source_json_path": "composition.2.value"
+        },
+        {
+          "parameter": "Acid-insoluble ash",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% w/w on dry basis",
+          "variant": "Seedless Tamarind",
+          "condition": "",
+          "source_json_path": "composition.3.value"
+        },
+        {
+          "parameter": "Crude fibre",
+          "operator": "<=",
+          "value": 9,
+          "unit": "% w/w on dry basis",
+          "variant": "Seedless Tamarind",
+          "condition": "",
+          "source_json_path": "composition.4.value"
+        },
+        {
+          "parameter": "Tamarind seeds",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% by mass",
+          "variant": "Seedless Tamarind",
+          "condition": "",
+          "source_json_path": "composition.5.value"
+        }
+      ],
+      "conditional_subtypes": {},
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-coconut-milk-powder",
+      "product_name": "COCONUT MILK POWDER",
+      "fssr": "2.3.63",
+      "fcs": "04.1.2.8",
+      "source_rule_file": "chapter-2-3-fruit-vegetable-v1.json",
+      "source_rule_key": "2.3.63",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+      "positive_finished_identity_needed": "Coconut-milk-derived food powder, not dairy milk powder",
+      "quality_rows": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 2.5,
+          "unit": "% m/m",
+          "variant": "COCONUT MILK POWDER",
+          "condition": "",
+          "source_json_path": "composition.0.value"
+        },
+        {
+          "parameter": "Fat on dry basis",
+          "operator": ">=",
+          "value": 60,
+          "unit": "% m/m",
+          "variant": "COCONUT MILK POWDER",
+          "condition": "",
+          "source_json_path": "composition.1.value"
+        },
+        {
+          "parameter": "Free fatty acids of extracted fat as lauric acid",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "% m/m",
+          "variant": "COCONUT MILK POWDER",
+          "condition": "",
+          "source_json_path": "composition.2.value"
+        },
+        {
+          "parameter": "Bulk density",
+          "operator": ">=",
+          "value": 0.3,
+          "unit": "g/ml",
+          "variant": "COCONUT MILK POWDER",
+          "condition": "",
+          "source_json_path": "composition.3.min"
+        },
+        {
+          "parameter": "Bulk density",
+          "operator": "<=",
+          "value": 0.45,
+          "unit": "g/ml",
+          "variant": "COCONUT MILK POWDER",
+          "condition": "",
+          "source_json_path": "composition.3.max"
+        }
+      ],
+      "conditional_subtypes": {},
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "04-04-1-catechu-edible",
+      "product_name": "Catechu (Edible)",
+      "fssr": "2.11.2",
+      "fcs": "04.1.2.2",
+      "source_rule_file": "chapter-2-11-other-food-products-v1.json",
+      "source_rule_key": "2.11.2",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/12_%20Chapter%202_11%20(Other%20food%20product%20and%20%20ingredients).pdf",
+      "positive_finished_identity_needed": "Edible aqueous catechu heartwood extract; Bhatti Katha basis only when subtype proven",
+      "quality_rows": [
+        {
+          "parameter": "Loss on drying at 100°C to constant weight",
+          "operator": "<=",
+          "value": 16,
+          "unit": "% by weight",
+          "variant": "Catechu (Edible)",
+          "condition": "",
+          "source_json_path": "composition.0.value"
+        },
+        {
+          "parameter": "Water-insoluble residue",
+          "operator": "<=",
+          "value": 25,
+          "unit": "% by weight",
+          "variant": "Catechu (Edible)",
+          "condition": "",
+          "source_json_path": "composition.1.value"
+        },
+        {
+          "parameter": "Alcohol-insoluble residue in 90% alcohol",
+          "operator": "<=",
+          "value": 30,
+          "unit": "% by weight",
+          "variant": "Catechu (Edible)",
+          "condition": "",
+          "source_json_path": "composition.2.value"
+        },
+        {
+          "parameter": "Total ash on dry basis",
+          "operator": "<=",
+          "value": 8,
+          "unit": "%",
+          "variant": "Catechu (Edible)",
+          "condition": "",
+          "source_json_path": "composition.3.value"
+        },
+        {
+          "parameter": "Ash insoluble in HCl on dry basis",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "%",
+          "variant": "Catechu (Edible)",
+          "condition": "",
+          "source_json_path": "composition.4.value"
+        },
+        {
+          "parameter": "Ash insoluble in dilute HCl — Bhatti Katha",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "% dry basis",
+          "variant": "Catechu (Edible)",
+          "condition": "",
+          "source_json_path": "composition.5.value"
+        }
+      ],
+      "conditional_subtypes": {},
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "product_name": "Dry Mixtures of Cocoa and Sugars",
+      "fssr": "2.7.6",
+      "fcs": "05.1.1",
+      "source_rule_file": "chapter-2-7-sweets-confectionery-v1.json",
+      "source_rule_key": "2.7.6",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+      "positive_finished_identity_needed": "Finished cocoa-and-sugar dry blend with nine conditional naming classifications",
+      "quality_rows": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 7,
+          "unit": "% by mass",
+          "variant": "Dry Mixtures of Cocoa and Sugars",
+          "condition": "",
+          "source_json_path": "composition.0.value"
+        },
+        {
+          "parameter": "Chocolate powder: cocoa powder wet basis",
+          "operator": ">=",
+          "value": 32,
+          "unit": "%",
+          "variant": "Chocolate powder only",
+          "condition": "",
+          "source_json_path": "chocolate_powder_rule.cocoa_powder_min_pct_wet_basis"
+        },
+        {
+          "parameter": "Chocolate powder: cocoa powder dry matter",
+          "operator": ">=",
+          "value": 29,
+          "unit": "%",
+          "variant": "Chocolate powder only",
+          "condition": "",
+          "source_json_path": "chocolate_powder_rule.cocoa_powder_min_pct_dry_matter_basis"
+        }
+      ],
+      "conditional_subtypes": {
+        "nine_conditional_descriptions": [
+          {
+            "cocoa_powder_content_min_pct": 25,
+            "cocoa_butter_level": ">=20% m/m",
+            "designation": "Sweetened Cocoa / Sweetened Cocoa Powder / Drinking Chocolate"
+          },
+          {
+            "cocoa_powder_content_min_pct": 25,
+            "cocoa_butter_level": ">=10% and <20% m/m",
+            "designation": "Sweetened Cocoa, Fat-reduced / Sweetened Cocoa Powder, Fat-reduced / Fat-Reduced Drinking Chocolate"
+          },
+          {
+            "cocoa_powder_content_min_pct": 25,
+            "cocoa_butter_level": "<10% m/m",
+            "designation": "Sweetened Cocoa, Highly Fat-reduced / Sweetened Cocoa Powder, Highly Fat-reduced / Highly Fat-Reduced Drinking Chocolate"
+          },
+          {
+            "cocoa_powder_content_min_pct": 20,
+            "cocoa_powder_content_max_exclusive_pct": 25,
+            "cocoa_butter_level": ">=20% m/m",
+            "designation": "Sweetened Cocoa Mix / Sweetened Mixture with Cocoa"
+          },
+          {
+            "cocoa_powder_content_min_pct": 20,
+            "cocoa_powder_content_max_exclusive_pct": 25,
+            "cocoa_butter_level": ">=10% and <20% m/m",
+            "designation": "Sweetened Cocoa Mix, Fat-reduced / Sweetened Mixture with Cocoa, Fat-reduced"
+          },
+          {
+            "cocoa_powder_content_min_pct": 20,
+            "cocoa_powder_content_max_exclusive_pct": 25,
+            "cocoa_butter_level": "<10% m/m",
+            "designation": "Sweetened Cocoa Mix, Highly Fat-reduced / Sweetened Mixture with Cocoa, Highly Fat-reduced"
+          },
+          {
+            "cocoa_powder_content_max_exclusive_pct": 20,
+            "cocoa_butter_level": ">=20% m/m",
+            "designation": "Sweetened Cocoa-flavoured Mix"
+          },
+          {
+            "cocoa_powder_content_max_exclusive_pct": 20,
+            "cocoa_butter_level": ">=10% and <20% m/m",
+            "designation": "Sweetened Cocoa-flavoured Mix, Fat-reduced"
+          },
+          {
+            "cocoa_powder_content_max_exclusive_pct": 20,
+            "cocoa_butter_level": "<10% m/m",
+            "designation": "Sweetened Cocoa-flavoured Mix, Highly Fat-reduced"
+          }
+        ]
+      },
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "fssr": "2.7.8",
+      "fcs": "05.1.1",
+      "source_rule_file": "chapter-2-7-sweets-confectionery-v1.json",
+      "source_rule_key": "2.7.8",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+      "positive_finished_identity_needed": "Mass versus cocoa press-cake physical identity and fat-free analysis",
+      "quality_rows": [
+        {
+          "parameter": "moisture max pct",
+          "operator": "<=",
+          "value": 10,
+          "unit": "%",
+          "variant": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "condition": "",
+          "source_json_path": "variants.0.moisture_max_pct"
+        },
+        {
+          "parameter": "cocoa shell and germ max pct fat free dry matter",
+          "operator": "<=",
+          "value": 5,
+          "unit": "%",
+          "variant": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "condition": "",
+          "source_json_path": "variants.0.cocoa_shell_and_germ_max_pct_fat_free_dry_matter"
+        },
+        {
+          "parameter": "cocoa shell max pct alkali free",
+          "operator": "<=",
+          "value": 1.75,
+          "unit": "%",
+          "variant": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "condition": "",
+          "source_json_path": "variants.0.cocoa_shell_max_pct_alkali_free"
+        },
+        {
+          "parameter": "cocoa_butter_pct_range lower",
+          "operator": ">=",
+          "value": 47,
+          "unit": "%",
+          "variant": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "condition": "",
+          "source_json_path": "variants.0.cocoa_butter_pct_range.0"
+        },
+        {
+          "parameter": "cocoa_butter_pct_range upper",
+          "operator": "<=",
+          "value": 60,
+          "unit": "%",
+          "variant": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "condition": "",
+          "source_json_path": "variants.0.cocoa_butter_pct_range.1"
+        },
+        {
+          "parameter": "alkalinity total ash as k2o max pct moisture fat free",
+          "operator": "<=",
+          "value": 12,
+          "unit": "%",
+          "variant": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "condition": "",
+          "source_json_path": "variants.0.alkalinity_total_ash_as_k2o_max_pct_moisture_fat_free"
+        },
+        {
+          "parameter": "acid insoluble ash max pct moisture fat free",
+          "operator": "<=",
+          "value": 1,
+          "unit": "%",
+          "variant": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "condition": "",
+          "source_json_path": "variants.0.acid_insoluble_ash_max_pct_moisture_fat_free"
+        },
+        {
+          "parameter": "crude fibre max pct moisture fat free",
+          "operator": "<=",
+          "value": 7,
+          "unit": "%",
+          "variant": "Cocoa Mass / Cocoa or Chocolate Liquor",
+          "condition": "",
+          "source_json_path": "variants.0.crude_fibre_max_pct_moisture_fat_free"
+        },
+        {
+          "parameter": "moisture max pct",
+          "operator": "<=",
+          "value": 10,
+          "unit": "%",
+          "variant": "Cocoa Cake",
+          "condition": "",
+          "source_json_path": "variants.1.moisture_max_pct"
+        },
+        {
+          "parameter": "cocoa shell and germ max pct fat free dry matter",
+          "operator": "<=",
+          "value": 5,
+          "unit": "%",
+          "variant": "Cocoa Cake",
+          "condition": "",
+          "source_json_path": "variants.1.cocoa_shell_and_germ_max_pct_fat_free_dry_matter"
+        },
+        {
+          "parameter": "cocoa shell max pct alkali free",
+          "operator": "<=",
+          "value": 4.5,
+          "unit": "%",
+          "variant": "Cocoa Cake",
+          "condition": "",
+          "source_json_path": "variants.1.cocoa_shell_max_pct_alkali_free"
+        },
+        {
+          "parameter": "alkalinity total ash as k2o max pct moisture fat free",
+          "operator": "<=",
+          "value": 12,
+          "unit": "%",
+          "variant": "Cocoa Cake",
+          "condition": "",
+          "source_json_path": "variants.1.alkalinity_total_ash_as_k2o_max_pct_moisture_fat_free"
+        },
+        {
+          "parameter": "acid insoluble ash max pct moisture fat free",
+          "operator": "<=",
+          "value": 1,
+          "unit": "%",
+          "variant": "Cocoa Cake",
+          "condition": "",
+          "source_json_path": "variants.1.acid_insoluble_ash_max_pct_moisture_fat_free"
+        },
+        {
+          "parameter": "crude fibre max pct moisture fat free",
+          "operator": "<=",
+          "value": 7,
+          "unit": "%",
+          "variant": "Cocoa Cake",
+          "condition": "",
+          "source_json_path": "variants.1.crude_fibre_max_pct_moisture_fat_free"
+        }
+      ],
+      "conditional_subtypes": {},
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "06-06-2-carob-powder",
+      "product_name": "Carob Powder",
+      "fssr": "2.11.7",
+      "fcs": "06.2.1",
+      "source_rule_file": "chapter-2-11-other-food-products-v1.json",
+      "source_rule_key": "2.11.7",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/12_%20Chapter%202_11%20(Other%20food%20product%20and%20%20ingredients).pdf",
+      "positive_finished_identity_needed": "Roasted carob pod powder, not cocoa powder",
+      "quality_rows": [
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 1.2,
+          "unit": "% by weight",
+          "variant": "Carob Powder",
+          "condition": "",
+          "source_json_path": "composition.0.value"
+        },
+        {
+          "parameter": "Acid-insoluble matter",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% by weight",
+          "variant": "Carob Powder",
+          "condition": "",
+          "source_json_path": "composition.1.value"
+        },
+        {
+          "parameter": "Tannin content",
+          "operator": ">=",
+          "value": 0.1,
+          "unit": "%",
+          "variant": "Carob Powder",
+          "condition": "",
+          "source_json_path": "composition.2.min"
+        },
+        {
+          "parameter": "Tannin content",
+          "operator": "<=",
+          "value": 0.15,
+          "unit": "%",
+          "variant": "Carob Powder",
+          "condition": "",
+          "source_json_path": "composition.2.max"
+        }
+      ],
+      "conditional_subtypes": {},
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "06-06-2-water-chestnut-flour-singhare-ka-atta",
+      "product_name": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+      "fssr": "2.3.64",
+      "fcs": "06.2.1",
+      "source_rule_file": "chapter-2-3-fruit-vegetable-v1.json",
+      "source_rule_key": "2.3.64",
+      "official_source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "positive_finished_identity_needed": "Trapa water chestnut flour, not tapioca starch; uric acid operator unresolved",
+      "quality_rows": [
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 12,
+          "unit": "% m/m",
+          "variant": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+          "condition": "",
+          "source_json_path": "composition.0.value"
+        },
+        {
+          "parameter": "Alcoholic acidity as H2SO4 with 90% alcohol",
+          "operator": "<=",
+          "value": 0.18,
+          "unit": "% on dry basis",
+          "variant": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+          "condition": "",
+          "source_json_path": "composition.1.value"
+        },
+        {
+          "parameter": "Acid-insoluble ash in dilute HCl",
+          "operator": "<=",
+          "value": 0.5,
+          "unit": "% m/m",
+          "variant": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+          "condition": "",
+          "source_json_path": "composition.2.value"
+        },
+        {
+          "parameter": "Protein on dry basis",
+          "operator": ">=",
+          "value": 9,
+          "unit": "% m/m",
+          "variant": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+          "condition": "",
+          "source_json_path": "composition.3.value"
+        },
+        {
+          "parameter": "Uric acid (no comparator in official source table)",
+          "operator": "source_value_only_no_auto_check",
+          "value": null,
+          "unit": "mg/kg",
+          "variant": "Water chestnut flour",
+          "condition": "100 mg/kg; unknown comparison",
+          "source_json_path": "conditional_requirements.0.source_text"
+        }
+      ],
+      "conditional_subtypes": {},
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "11-11-1-edible-lactose",
+      "product_name": "Edible Lactose",
+      "fssr": "2.1.20",
+      "fcs": "11.1.4",
+      "source_rule_file": "chapter-2-1-dairy-v1.json",
+      "source_rule_key": "2.1.20",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/2_%20Chapter%202_1%20(Dairy%20products%20and%20analogues).pdf",
+      "positive_finished_identity_needed": "Edible lactose purity and acidity, not liquid or powdered milk",
+      "quality_rows": [
+        {
+          "parameter": "moisture max pct",
+          "operator": "<=",
+          "value": 6,
+          "unit": "%",
+          "variant": "Edible Lactose",
+          "condition": "",
+          "source_json_path": "composition.0.moisture_max_pct"
+        },
+        {
+          "parameter": "lactose db min pct",
+          "operator": ">=",
+          "value": 99,
+          "unit": "%",
+          "variant": "Edible Lactose",
+          "condition": "",
+          "source_json_path": "composition.0.lactose_db_min_pct"
+        },
+        {
+          "parameter": "sulphated ash max pct",
+          "operator": "<=",
+          "value": 0.3,
+          "unit": "pH",
+          "variant": "Edible Lactose",
+          "condition": "",
+          "source_json_path": "composition.0.sulphated_ash_max_pct"
+        },
+        {
+          "parameter": "ph min",
+          "operator": ">=",
+          "value": 4.5,
+          "unit": "pH",
+          "variant": "Edible Lactose",
+          "condition": "",
+          "source_json_path": "composition.0.ph_min"
+        },
+        {
+          "parameter": "ph max",
+          "operator": "<=",
+          "value": 7,
+          "unit": "pH",
+          "variant": "Edible Lactose",
+          "condition": "",
+          "source_json_path": "composition.0.ph_max"
+        }
+      ],
+      "conditional_subtypes": {},
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "12-12-1-salt-substitutes",
+      "product_name": "Salt Substitutes",
+      "fssr": "2.9.30(6)",
+      "fcs": "12.1.2",
+      "source_rule_file": "chapter-2-9-salt-spices-condiments-v1.json",
+      "source_rule_key": "2.9.30(6)",
+      "official_source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt_Spices_Condiments%20and%20related%20products.pdf",
+      "positive_finished_identity_needed": "Low-sodium salt substitute; magnesium cation subrule conditional",
+      "quality_rows": [
+        {
+          "parameter": "Sodium",
+          "operator": "<=",
+          "value": 120,
+          "unit": "mg/100 g mixture",
+          "variant": "Salt Substitutes",
+          "condition": "",
+          "source_json_path": "composition_rules.0.value"
+        },
+        {
+          "parameter": "Colloidal silica and/or calcium silicate",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% m/m individually or combined",
+          "variant": "Salt Substitutes",
+          "condition": "",
+          "source_json_path": "composition_rules.1.value"
+        },
+        {
+          "parameter": "Phosphorus",
+          "operator": "<=",
+          "value": 4,
+          "unit": "% m/m where applicable",
+          "variant": "Salt Substitutes",
+          "condition": "",
+          "source_json_path": "composition_rules.2.value"
+        },
+        {
+          "parameter": "Ammonium ion",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% m/m where applicable",
+          "variant": "Salt Substitutes",
+          "condition": "",
+          "source_json_path": "composition_rules.3.value"
+        },
+        {
+          "parameter": "Choline",
+          "operator": "<=",
+          "value": 3,
+          "unit": "% m/m where applicable",
+          "variant": "Salt Substitutes",
+          "condition": "",
+          "source_json_path": "composition_rules.4.value"
+        },
+        {
+          "parameter": "Magnesium ion (Mg²⁺) as share of total relevant cations",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% m/m of total specified cations",
+          "variant": "Only magnesium salt mixtures under clause 2.9.30(6)(1)(b), mixed with permitted magnesium-free substitutes",
+          "condition": "",
+          "source_json_path": "composition_rules.5.value"
+        }
+      ],
+      "conditional_subtypes": {},
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "99-99-1-colouring-foods",
+      "product_name": "Colouring foods",
+      "fssr": "2.3.65",
+      "fcs": "99.1",
+      "source_rule_file": "chapter-2-3-fruit-vegetable-v1.json",
+      "source_rule_key": "2.3.65",
+      "official_source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "positive_finished_identity_needed": "Aqueous nonselectively extracted colouring food; liquid/powder separate",
+      "quality_rows": [
+        {
+          "parameter": "Total solids",
+          "operator": ">=",
+          "value": 45,
+          "unit": "g/100 g",
+          "variant": "Liquid colouring foods",
+          "condition": "",
+          "source_json_path": "variant_composition.0.composition.0.value"
+        },
+        {
+          "parameter": "Marker pigment",
+          "operator": ">=",
+          "value": 0.5,
+          "unit": "%",
+          "variant": "Liquid colouring foods",
+          "condition": "",
+          "source_json_path": "variant_composition.0.composition.1.value"
+        },
+        {
+          "parameter": "Added nutritive sugars",
+          "operator": "<=",
+          "value": 20,
+          "unit": "% by weight of final liquid product",
+          "variant": "Liquid colouring foods",
+          "condition": "",
+          "source_json_path": "variant_composition.0.composition.2.value"
+        },
+        {
+          "parameter": "Total solids",
+          "operator": ">=",
+          "value": 90,
+          "unit": "g/100 g",
+          "variant": "Powder colouring foods",
+          "condition": "",
+          "source_json_path": "variant_composition.1.composition.0.value"
+        },
+        {
+          "parameter": "Marker pigment",
+          "operator": ">=",
+          "value": 1,
+          "unit": "%",
+          "variant": "Powder colouring foods",
+          "condition": "",
+          "source_json_path": "variant_composition.1.composition.1.value"
+        }
+      ],
+      "conditional_subtypes": {
+        "colouring_food_definitions": [
+          "Colouring foods are obtained by aqueous extraction of regularly consumed fruits, vegetables, spices or herbs, without selective pigment extraction.",
+          "Do not substitute Appendix A food-colour additive permissions for the colouring-food ingredient standard.",
+          "The 2024 clause requires aqueous extraction of regularly consumed fruit, vegetables, spices or herbs with no selective extraction of pigments.",
+          "Colouring foods must retain essential source-food characteristics and have primary colouring function; they are not automatically the CTR metal article for food colours other than caramel.",
+          "Finished liquid product: total solids at least 45 g/100g, pigment marker at least 0.5%; finished powder: at least 90 g/100g solids and 1% pigment marker."
+        ]
+      },
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "100-100-silver-leaf-chandi-ka-warq",
+      "product_name": "SILVER LEAF (Chandi-ka-warq)",
+      "fssr": "2.11.4",
+      "fcs": "100",
+      "source_rule_file": "chapter-2-11-other-food-products-v1.json",
+      "source_rule_key": "2.11.4",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/12_%20Chapter%202_11%20(Other%20food%20product%20and%20%20ingredients).pdf",
+      "positive_finished_identity_needed": "Silver food-decoration sheet, not metallic-colour additive",
+      "quality_rows": [
+        {
+          "parameter": "Silver-foil weight",
+          "operator": "<=",
+          "value": 2.8,
+          "unit": "g/m²",
+          "variant": "Silver Leaf (Chandi-ka-warq)",
+          "condition": "",
+          "source_json_path": "composition.0.value"
+        },
+        {
+          "parameter": "Silver fineness",
+          "operator": ">=",
+          "value": 999,
+          "unit": "parts per 1000",
+          "variant": "Silver Leaf (Chandi-ka-warq)",
+          "condition": "",
+          "source_json_path": "composition.1.value"
+        }
+      ],
+      "conditional_subtypes": {},
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+      "product_name": "Cow or Buffalo Colostrum and Colostrum Products",
+      "fssr": "2.1.23",
+      "fcs": "100",
+      "source_rule_file": "chapter-2-1-dairy-v1.json",
+      "source_rule_key": "2.1.23",
+      "official_source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
+      "positive_finished_identity_needed": "Liquid/powder colostrum, 2025 IgG-specific amendments",
+      "quality_rows": [
+        {
+          "parameter": "moisture max pct",
+          "operator": "<=",
+          "value": 80,
+          "unit": "%",
+          "variant": "Colostrum",
+          "condition": "",
+          "source_json_path": "composition.0.moisture_max_pct"
+        },
+        {
+          "parameter": "protein min pct",
+          "operator": ">=",
+          "value": 7,
+          "unit": "%",
+          "variant": "Colostrum",
+          "condition": "",
+          "source_json_path": "composition.0.protein_min_pct"
+        },
+        {
+          "parameter": "fat min pct",
+          "operator": ">=",
+          "value": 4,
+          "unit": "%",
+          "variant": "Colostrum",
+          "condition": "",
+          "source_json_path": "composition.0.fat_min_pct"
+        },
+        {
+          "parameter": "lactoferrin min pct",
+          "operator": ">=",
+          "value": 0.2,
+          "unit": "%",
+          "variant": "Colostrum",
+          "condition": "",
+          "source_json_path": "composition.0.lactoferrin_min_pct"
+        },
+        {
+          "parameter": "immunoglobulins g igg min pct",
+          "operator": ">=",
+          "value": 1.8,
+          "unit": "%",
+          "variant": "Colostrum",
+          "condition": "",
+          "source_json_path": "composition.0.immunoglobulins_g_igg_min_pct"
+        },
+        {
+          "parameter": "moisture max pct",
+          "operator": "<=",
+          "value": 4,
+          "unit": "%",
+          "variant": "Colostrum Powder",
+          "condition": "",
+          "source_json_path": "composition.1.moisture_max_pct"
+        },
+        {
+          "parameter": "protein min pct",
+          "operator": ">=",
+          "value": 40,
+          "unit": "%",
+          "variant": "Colostrum Powder",
+          "condition": "",
+          "source_json_path": "composition.1.protein_min_pct"
+        },
+        {
+          "parameter": "fat min pct",
+          "operator": ">=",
+          "value": 17.5,
+          "unit": "%",
+          "variant": "Colostrum Powder",
+          "condition": "",
+          "source_json_path": "composition.1.fat_min_pct"
+        },
+        {
+          "parameter": "total ash db max pct",
+          "operator": "<=",
+          "value": 9,
+          "unit": "%",
+          "variant": "Colostrum Powder",
+          "condition": "",
+          "source_json_path": "composition.1.total_ash_db_max_pct"
+        },
+        {
+          "parameter": "lactoferrin min pct",
+          "operator": ">=",
+          "value": 1.2,
+          "unit": "%",
+          "variant": "Colostrum Powder",
+          "condition": "",
+          "source_json_path": "composition.1.lactoferrin_min_pct"
+        },
+        {
+          "parameter": "immunoglobulins g igg min pct",
+          "operator": ">=",
+          "value": 8.5,
+          "unit": "%",
+          "variant": "Colostrum Powder",
+          "condition": "",
+          "source_json_path": "composition.1.immunoglobulins_g_igg_min_pct"
+        }
+      ],
+      "conditional_subtypes": {
+        "igg_specific_2025": {
+          "official_source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
+          "source_version": "Version 3 (07.05.2025)",
+          "source_clause": "2.1.23",
+          "effective_from": "2025-05-01",
+          "colostrum_igg_min_pct": 1.8,
+          "colostrum_powder_igg_min_pct": 8.5,
+          "require_igg_specific_test": true,
+          "legacy_total_immunoglobulins_powder_12_5_superseded": true,
+          "quality_only_not_contaminant_mrl": true,
+          "complete_compliance_pass": false,
+          "note": "2025 FSSAI amendment number 83 replaces the general immunoglobulins parameter by IgG in both colostrum and colostrum powder. Never evaluate an IgG requirement from a total-immunoglobulins laboratory result."
+        }
+      },
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "product_name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "fssr": "2.11.8",
+      "fcs": "99.7",
+      "source_rule_file": "chapter-2-11-other-food-products-v1.json",
+      "source_rule_key": "2.11.8",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/12_%20Chapter%202_11%20(Other%20food%20product%20and%20%20ingredients).pdf",
+      "positive_finished_identity_needed": "Soluble dextrin fibre polymerization and non-GM source",
+      "quality_rows": [
+        {
+          "parameter": "Average degree of polymerisation",
+          "operator": ">=",
+          "value": 12,
+          "unit": "see official source",
+          "variant": "Dietary Fibre (Dextrin-soluble fibre)",
+          "condition": "",
+          "source_json_path": "composition.0.min"
+        },
+        {
+          "parameter": "Average degree of polymerisation",
+          "operator": "<=",
+          "value": 25,
+          "unit": "see official source",
+          "variant": "Dietary Fibre (Dextrin-soluble fibre)",
+          "condition": "",
+          "source_json_path": "composition.0.max"
+        }
+      ],
+      "conditional_subtypes": {},
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "99-99-1-trehalose",
+      "product_name": "Trehalose",
+      "fssr": "3.3.4",
+      "fcs": "99.1",
+      "source_rule_file": "chapter-3-substances-added-v1.json",
+      "source_rule_key": "3.3.4",
+      "official_source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%203_Substances%20added%20to%20food%281%29.pdf",
+      "positive_finished_identity_needed": "Trehalose GMP purity and infant-food exclusion",
+      "quality_rows": [
+        {
+          "parameter": "Loss on drying",
+          "operator": "<=",
+          "value": 1.5,
+          "unit": "%",
+          "variant": "Trehalose",
+          "condition": "",
+          "source_json_path": "purity_requirements.0.value"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 0.05,
+          "unit": "%",
+          "variant": "Trehalose",
+          "condition": "",
+          "source_json_path": "purity_requirements.1.value"
+        }
+      ],
+      "conditional_subtypes": {
+        "trehalose_permission": {
+          "level": "GMP",
+          "product_scope": "All food categories except infant food",
+          "exclusion": "Infant food",
+          "condition": "The standard specifications of the food product prescribed under the Food Safety and Standards Regulations must not be altered."
+        }
+      },
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    },
+    {
+      "catalog_id": "06-06-2-arrowroot",
+      "product_name": "Arrowroot",
+      "fssr": "2.4.14",
+      "fcs": "06.2.2",
+      "source_rule_file": "chapter-2-4-cereals-v1.json",
+      "source_rule_key": "2.4.14",
+      "official_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4%20%28Cereals%20and%20Cereal%20products%29%281%29.pdf",
+      "positive_finished_identity_needed": "Purified arrowroot from Maranta/Curcuma, not tapioca/palm sago",
+      "quality_rows": [],
+      "conditional_subtypes": {
+        "arrowroot_identity": [
+          {
+            "name": "Arrowroot",
+            "definition": "Separated and purified starch from Maranta arundinacea or Curcuma angustifolia."
+          }
+        ]
+      },
+      "quality_only_not_ctr": true,
+      "first_exact_ctr_article_pending": true,
+      "finished_lot_verified": false,
+      "automatic_mrl_assignment": false,
+      "full_regulatory_pass": false
+    }
+  ]
+}

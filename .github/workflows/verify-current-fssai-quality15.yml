@@ -1,0 +1,22 @@
+name: Verify 15 exact official FSSR quality products (fast)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/**'
+      - 'tests/fssai-current-fifteen-quality-2026-10-12.test.cjs'
+      - '.github/workflows/verify-current-fssai-quality15.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Cross-check 76 source values in 15 pending quality products
+        run: node --test tests/fssai-current-fifteen-quality-2026-10-12.test.cjs
+      - name: Syntax-check FSSR panel
+        run: node --check fssai-product-helper-preview-01/fssai-current-fifteen-quality.js
