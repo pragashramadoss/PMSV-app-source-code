@@ -13,15 +13,15 @@
   "products_with_named_references": 87,
   "products_without_named_references": 24,
   "distinct_raw_candidate_labels": 29,
-  "distinct_named_source_rows": 28,
-  "ambiguous_reference_labels": 1,
+  "distinct_named_source_rows": 32,
+  "ambiguous_reference_labels": 0,
   "article_reference_links": 114,
   "new_automatic_product_promotions": 0,
   "finished_product_numeric_auto_applied": false,
   "laboratory_pass": false,
   "compliance_pass": false,
   "read_only_crosswalk": true,
-  "interpretation": "An authenticated CTR table row is NOT positive evidence that it applies to a named finished product. It is a reference for further species/form/recipe/packaging/analytical proof.",
+  "interpretation": "FSSAI Version IX contains four distinct source rows for hard boiled sugar confectionery (Lead 2, Copper 5, Arsenic 1, Tin 5 mg/kg). This is NOT proof that FoSCoS Category 18 Indian Confections or starch sweets are legally hard-boiled sugar confectionery.",
   "references": [
     {
       "key": "lead-packaged-water",
@@ -338,9 +338,47 @@
     },
     {
       "key": "Hard boiled sugar confectionery",
-      "state": "AMBIGUOUS_ANALYTE_NOT_RESOLVED",
-      "numeric_reference_displayed": false,
-      "finished_article_applicability_verified": false
+      "state": "OFFICIAL_MULTI_ANALYTE_SOURCE_ROWS_REFERENCE_ONLY",
+      "numeric_reference_displayed": true,
+      "finished_article_applicability_verified": false,
+      "source_rows": [
+        {
+          "source_id": "hard-sugar-lead",
+          "type": "metal",
+          "analyte": "Lead",
+          "article": "Hard boiled sugar confectionery",
+          "limit": 2,
+          "unit": "mg/kg",
+          "finished_article_applicability_verified": false
+        },
+        {
+          "source_id": "hard-sugar-copper",
+          "type": "metal",
+          "analyte": "Copper",
+          "article": "Hard boiled sugar confectionery",
+          "limit": 5,
+          "unit": "mg/kg",
+          "finished_article_applicability_verified": false
+        },
+        {
+          "source_id": "hard-sugar-arsenic",
+          "type": "metal",
+          "analyte": "Arsenic",
+          "article": "Hard boiled sugar confectionery",
+          "limit": 1,
+          "unit": "mg/kg",
+          "finished_article_applicability_verified": false
+        },
+        {
+          "source_id": "hard-sugar-tin",
+          "type": "metal",
+          "analyte": "Tin",
+          "article": "Hard boiled sugar confectionery",
+          "limit": 5,
+          "unit": "mg/kg",
+          "finished_article_applicability_verified": false
+        }
+      ]
     },
     {
       "key": "lead-tartaric",
@@ -366,5 +404,7 @@
       "numeric_reference_displayed": true,
       "finished_article_applicability_verified": false
     }
-  ]
+  ],
+  "multi_analyte_reference_labels": 1,
+  "multi_analyte_source_rows": 4
 }

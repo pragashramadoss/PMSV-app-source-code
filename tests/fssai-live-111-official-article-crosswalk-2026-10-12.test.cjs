@@ -41,17 +41,19 @@ test("Current 533/422/111 legal status conserved and no reassignment",()=>{
  assert.equal(m.finished_product_numeric_auto_applied,false);
  assert.equal(m.laboratory_pass,false);assert.equal(m.compliance_pass,false);
 });
-test("Entire 111 queue crosswalk reconciles 87 referenced products, 24 no references, 114 candidate links, 28 named rows, 1 ambiguous row",()=>{
+test("Entire 111 queue crosswalk reconciles 87 referenced products, 24 no references, 114 candidate links, 32 authenticated named rows, no ambiguous references",()=>{
  const refs=[...new Set(q.review_records.flatMap(x=>x.referenced_articles_review_only||[]))];
  assert.equal(refs.length,29);
  assert.equal(q.review_records.filter(x=>x.referenced_articles_review_only.length).length,87);
  assert.equal(q.review_records.reduce((n,x)=>n+x.referenced_articles_review_only.length,0),114);
  assert.equal(m.references.length,29);
  assert.equal(m.references.filter(x=>x.source_id).length,28);
+ assert.equal(m.references.find(x=>x.key==="Hard boiled sugar confectionery").source_rows.length,4);
  assert.equal(m.references.filter(x=>!x.source_id).length,1);
+ assert.equal(m.distinct_named_source_rows,32);assert.equal(m.ambiguous_reference_labels,0);
  assert.deepEqual(new Set(m.references.map(x=>x.key)),new Set(refs));
  assert.equal(m.references.find(x=>x.key==="Hard boiled sugar confectionery").state,
-   "AMBIGUOUS_ANALYTE_NOT_RESOLVED");
+   "OFFICIAL_MULTI_ANALYTE_SOURCE_ROWS_REFERENCE_ONLY");
 });
 test("Every row is verified against the actual loaded FSSAI source table; never implies product applicability",()=>{
  const ctx=context();
@@ -108,4 +110,18 @@ test("Live extension integrated after canonical 422/111 source ledger",()=>{
  assert.ok(old>0&&newer>old);
  const yml=fs.readFileSync(path.join(root,".github/workflows/verify-fssai-standard-nutrition.yml"),"utf8");
  assert.match(yml,/fssai-live-111-official-article-crosswalk-2026-10-12\.test\.cjs/);
+});
+
+test("Hard-boiled sugar confectionery references all four exact Version IX metal rows without assigning Indian sweet applicability",()=>{
+ const ctx=context(), multi=m.references.find(x=>x.key==="Hard boiled sugar confectionery");
+ assert.deepEqual(multi.source_rows.map(x=>x.analyte),["Lead","Copper","Arsenic","Tin"]);
+ assert.deepEqual(multi.source_rows.map(x=>x.limit),[2,5,1,5]);
+ for(const x of multi.source_rows)assert.equal(x.finished_article_applicability_verified,false);
+ const row=ledger.records.find(x=>x.catalog_id==="18-18-1-indian-confections");
+ const html=vm.runInContext("pmsvLive111ReferencesHtml("+JSON.stringify({id:row.catalog_id,name:row.product_name,fssr:row.fssr,fcs:row.fcs})+")",ctx);
+ for(const key of ["Lead","Copper","Arsenic","Tin"])assert.match(html,new RegExp(key));
+ assert.match(html,/NOT APPLIED TO THIS FINISHED PRODUCT/);
+ ctx.pmsvLive111ReferenceDb=structuredClone(m);
+ ctx.pmsvLive111ReferenceDb.references.find(x=>x.key==="Hard boiled sugar confectionery").source_rows[1].limit=99;
+ assert.equal(vm.runInContext("pmsvLive111ReferenceValid()",ctx),false);
 });

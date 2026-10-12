@@ -3,7 +3,7 @@
  * A valid source row IS NOT finished-product applicability. Never a numeric PASS.
  * Current records and their 422/111 digest remain the canonical legal status. */
 var pmsvLive111ReferenceDb=null;
-const pmsvLive111ReferenceDigest="3fad961daf32b41e";
+const pmsvLive111ReferenceDigest="4432cdcc6a208bf1";
 function pmsvLive111ReferenceValid(){
  const m=pmsvLive111ReferenceDb,q=pmsv2026Current111Queue,c=contaminantsDb;
  if(typeof pmsv2026Current422Valid!=="function"||!pmsv2026Current422Valid()||
@@ -20,8 +20,9 @@ function pmsvLive111ReferenceValid(){
    m.products_with_named_references!==87||
    m.products_without_named_references!==24||
    m.distinct_raw_candidate_labels!==29||
-   m.distinct_named_source_rows!==28||
-   m.ambiguous_reference_labels!==1||
+   m.distinct_named_source_rows!==32||
+   m.ambiguous_reference_labels!==0||
+   m.multi_analyte_reference_labels!==1||m.multi_analyte_source_rows!==4||
    m.article_reference_links!==114||
    m.new_automatic_product_promotions!==0||
    m.finished_product_numeric_auto_applied!==false||
@@ -30,7 +31,7 @@ function pmsvLive111ReferenceValid(){
    q.review_records?.length!==111||m.references?.length!==29)return false;
  const refs=new Map(m.references.map(x=>[x.key,x]));
  if(refs.size!==29)return false;
- let products=0,links=0,matched=0,blocked=0;
+ let products=0,links=0,matched=0,blocked=0,rowCount=0;
  for(const r of q.review_records){
   if(r.first_exact_source_verified!==false||
     r.numeric_finished_food_limit_auto_applied!==false||
@@ -44,12 +45,17 @@ function pmsvLive111ReferenceValid(){
  }
  for(const ref of m.references){
   if(ref.finished_article_applicability_verified!==false)return false;
-  if(ref.state==="AMBIGUOUS_ANALYTE_NOT_RESOLVED"){
-   blocked++;
+  if(ref.state==="OFFICIAL_MULTI_ANALYTE_SOURCE_ROWS_REFERENCE_ONLY"){
+   matched++;
    if(ref.key!=="Hard boiled sugar confectionery"||
-      ref.numeric_reference_displayed!==false||
-      ref.source_id!==undefined||ref.limit!==undefined||
-      ref.analyte!==undefined)return false;
+      ref.numeric_reference_displayed!==true||ref.source_id!==undefined||
+      ref.source_rows?.length!==4||
+      JSON.stringify(ref.source_rows.map(x=>x.analyte))!==JSON.stringify(["Lead","Copper","Arsenic","Tin"])||
+      JSON.stringify(ref.source_rows.map(x=>x.limit))!==JSON.stringify([2,5,1,5])||
+      ref.source_rows.some(x=>x.finished_article_applicability_verified!==false||
+        x.article!==ref.key||x.unit!=="mg/kg"||x.type!=="metal"||
+        !pmsvProofSourceMatch(x,c)))return false;
+   rowCount+=4;
   }else{
    matched++;
    if(ref.state!=="OFFICIAL_NAMED_ROW_REFERENCE_ONLY"||
@@ -61,10 +67,11 @@ function pmsvLive111ReferenceValid(){
        article:ref.article,limit:ref.limit,unit:ref.unit,
        official_condition:ref.official_condition
       },c))return false;
+   rowCount++;
   }
  }
  return products===87&&111-products===24&&links===114&&
-   matched===28&&blocked===1;
+   matched===29&&blocked===0&&rowCount===32;
 }
 var pmsvLive111PreviousLoad=pmsvLoadPositiveSourceProof;
 pmsvLoadPositiveSourceProof=async function(){
@@ -89,7 +96,10 @@ function pmsvLive111ReferencesHtml(p){
  const names=row.referenced_articles_review_only||[];
  const body=names.length?'<ul>'+names.map(key=>{
   const x=refs.get(key);
-  if(!x.source_id)return '<li>'+esc(key)+' — <b>analyte undefined; numeric evidence withheld</b>.</li>';
+  if(x.source_rows)return x.source_rows.map(r=>'<li><b>'+esc(r.analyte)+'</b> — '+
+   esc(r.article)+': '+esc(String(r.limit))+' '+esc(r.unit)+
+   ' <b>OFFICIAL SOURCE ROW ONLY — NOT APPLIED TO THIS FINISHED PRODUCT</b></li>').join("");
+  if(!x.source_id)return '<li>'+esc(key)+' — <b>analyte not authenticated; numeric reference withheld</b>.</li>';
   const basis=key==="Eggs"?" (shell-free egg basis; not processed-egg powder)":x.analyte==="Copper"&&/Tomato puree/.test(x.article)?" (dried tomato solids basis)":"";
   return '<li><b>'+esc(x.analyte)+'</b> — '+esc(x.article)+
    ': '+esc(String(x.limit))+' '+esc(x.unit)+esc(basis)+
