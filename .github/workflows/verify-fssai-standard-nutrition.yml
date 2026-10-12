@@ -172,6 +172,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Fail-fast current 111 finished-product decision gate checks
+        run: node --test tests/fssai-current-111-decision-gates-2026-10-12.test.cjs
       - name: Fail-fast current 111 source crosswalk regression
         run: node --test tests/fssai-live-111-official-article-crosswalk-2026-10-12.test.cjs
       - name: Verify all official FSSAI regulatory route links
