@@ -478,6 +478,78 @@
       "regulation": "2.1.1",
       "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
       "source_status": "EXACT_OFFICIAL_ARTICLE_TEXT_CONFIRMED_NOT_PRODUCT_APPLICABILITY"
+    },
+    {
+      "key": "aflatoxins_composite",
+      "analyte": "Total Aflatoxins",
+      "article": "Food product containing any of the above mentioned food articles",
+      "limit": 20,
+      "unit": "µg/kg",
+      "page_1based": 14,
+      "basis": "CTR commodity/finished food article must be individually proven; confirm product form and final-ingredient category",
+      "regulation": "2.2.1(1)",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_status": "EXACT_OFFICIAL_ARTICLE_TEXT_CONFIRMED_NOT_PRODUCT_APPLICABILITY"
+    },
+    {
+      "key": "b1_composite",
+      "analyte": "Aflatoxin B1",
+      "article": "Food product containing any of the above mentioned food articles",
+      "limit": 10,
+      "unit": "µg/kg",
+      "page_1based": 14,
+      "basis": "CTR commodity/finished food article must be individually proven; confirm product form and final-ingredient category",
+      "regulation": "2.2.1(1)",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_status": "EXACT_OFFICIAL_ARTICLE_TEXT_CONFIRMED_NOT_PRODUCT_APPLICABILITY"
+    },
+    {
+      "key": "aflatoxins_spices",
+      "analyte": "Total Aflatoxins",
+      "article": "Spices/Spice Mix",
+      "limit": 30,
+      "unit": "µg/kg",
+      "page_1based": 14,
+      "basis": "CTR commodity/finished food article must be individually proven; confirm product form and final-ingredient category",
+      "regulation": "2.2.1(1)",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_status": "EXACT_OFFICIAL_ARTICLE_TEXT_CONFIRMED_NOT_PRODUCT_APPLICABILITY"
+    },
+    {
+      "key": "b1_spices",
+      "analyte": "Aflatoxin B1",
+      "article": "Spices/Spice Mix",
+      "limit": 15,
+      "unit": "µg/kg",
+      "page_1based": 14,
+      "basis": "CTR commodity/finished food article must be individually proven; confirm product form and final-ingredient category",
+      "regulation": "2.2.1(1)",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_status": "EXACT_OFFICIAL_ARTICLE_TEXT_CONFIRMED_NOT_PRODUCT_APPLICABILITY"
+    },
+    {
+      "key": "aflatoxins_rte_nuts",
+      "analyte": "Total Aflatoxins",
+      "article": "Nuts: Ready to eat",
+      "limit": 15,
+      "unit": "µg/kg",
+      "page_1based": 14,
+      "basis": "CTR commodity/finished food article must be individually proven; confirm product form and final-ingredient category",
+      "regulation": "2.2.1(1)",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_status": "EXACT_OFFICIAL_ARTICLE_TEXT_CONFIRMED_NOT_PRODUCT_APPLICABILITY"
+    },
+    {
+      "key": "b1_rte_nuts",
+      "analyte": "Aflatoxin B1",
+      "article": "Nuts: Ready to eat",
+      "limit": 10,
+      "unit": "µg/kg",
+      "page_1based": 14,
+      "basis": "CTR commodity/finished food article must be individually proven; confirm product form and final-ingredient category",
+      "regulation": "2.2.1(1)",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_status": "EXACT_OFFICIAL_ARTICLE_TEXT_CONFIRMED_NOT_PRODUCT_APPLICABILITY"
     }
   ],
   "records": [
@@ -1892,6 +1964,171 @@
       "automatic_finished_limit_application": false,
       "full_compliance_pass": false,
       "lot_pass": false
+    },
+    {
+      "catalog_id": "100-100-pan-masala",
+      "product_name": "Pan Masala",
+      "fssr": "2.11.5",
+      "fcs": "100",
+      "review_group": "nut_spice",
+      "source_branch_options": [
+        {
+          "key": "finished_pan_masala_containing_arecanut",
+          "label": "Exact final commodity identity and source article condition to confirm",
+          "article_keys": [
+            "aflatoxins_composite",
+            "b1_composite"
+          ],
+          "positive_evidence": [
+            "FSSAI finished Pan Masala recipe explicitly includes arecanut/betelnut; document final mixed article rather than treating it as raw arecanut.",
+            "Verify CTR Version IX row, final analytical matrix, current amendments and laboratory test records."
+          ],
+          "excludes": "Arecanut or Betelnut primary article 15 µg/kg total is not automatically the final blended Pan Masala limit.",
+          "applicability": "CONDITIONAL_PENDING_ACTUAL_LOT_AND_LEGAL_FINISHED_ARTICLE_PROOF"
+        }
+      ],
+      "requires_nonmatching_product_guard": "Do not transfer isolated raw crop, spice or nut limits to a generic processed mixed final food.",
+      "common_required_evidence": [
+        "Finished-product formula and specific named crop commodity proof.",
+        "Actual final class (primary nut/spice or composite food), sampling and test records.",
+        "Legal article scope / status review before using numeric contaminant values."
+      ],
+      "current_first_exact_source_pending": true,
+      "automatic_finished_limit_application": false,
+      "full_compliance_pass": false,
+      "lot_pass": false
+    },
+    {
+      "catalog_id": "05-05-2-dried-fruits-vegetables-nut-based-mouth-fresheners",
+      "product_name": "Dried fruits/vegetables/nut based mouth fresheners",
+      "fssr": "",
+      "fcs": "05.2.4.1",
+      "review_group": "nut_spice",
+      "source_branch_options": [
+        {
+          "key": "verified_nut_mix",
+          "label": "Exact final commodity identity and source article condition to confirm",
+          "article_keys": [
+            "aflatoxins_composite",
+            "b1_composite"
+          ],
+          "positive_evidence": [
+            "Record nut species and finished blend, ingredient share, proof finished food contains a named nut commodity.",
+            "Verify CTR Version IX row, final analytical matrix, current amendments and laboratory test records."
+          ],
+          "excludes": "Do not transfer a ready-to-eat single nut limit to a multi-ingredient mouth freshener.",
+          "applicability": "CONDITIONAL_PENDING_ACTUAL_LOT_AND_LEGAL_FINISHED_ARTICLE_PROOF"
+        }
+      ],
+      "requires_nonmatching_product_guard": "Do not transfer isolated raw crop, spice or nut limits to a generic processed mixed final food.",
+      "common_required_evidence": [
+        "Finished-product formula and specific named crop commodity proof.",
+        "Actual final class (primary nut/spice or composite food), sampling and test records.",
+        "Legal article scope / status review before using numeric contaminant values."
+      ],
+      "current_first_exact_source_pending": true,
+      "automatic_finished_limit_application": false,
+      "full_compliance_pass": false,
+      "lot_pass": false
+    },
+    {
+      "catalog_id": "05-05-2-other-traditional-mouth-fresheners-not-covered-under-5-2-4-1-and-5-2-4-2",
+      "product_name": "Other traditional mouth fresheners not covered under 5.2.4.1 and 5.2.4.2",
+      "fssr": "",
+      "fcs": "05.2.4.3",
+      "review_group": "nut_spice",
+      "source_branch_options": [
+        {
+          "key": "verified_betelnut_or_nut_mix",
+          "label": "Exact final commodity identity and source article condition to confirm",
+          "article_keys": [
+            "aflatoxins_composite",
+            "b1_composite"
+          ],
+          "positive_evidence": [
+            "Document finished formulation containing arecanut, betelnut, ready-to-eat nut, spice or oilseed.",
+            "Verify CTR Version IX row, final analytical matrix, current amendments and laboratory test records."
+          ],
+          "excludes": "Do not assume every mouth freshener contains listed aflatoxin commodities.",
+          "applicability": "CONDITIONAL_PENDING_ACTUAL_LOT_AND_LEGAL_FINISHED_ARTICLE_PROOF"
+        }
+      ],
+      "requires_nonmatching_product_guard": "Do not transfer isolated raw crop, spice or nut limits to a generic processed mixed final food.",
+      "common_required_evidence": [
+        "Finished-product formula and specific named crop commodity proof.",
+        "Actual final class (primary nut/spice or composite food), sampling and test records.",
+        "Legal article scope / status review before using numeric contaminant values."
+      ],
+      "current_first_exact_source_pending": true,
+      "automatic_finished_limit_application": false,
+      "full_compliance_pass": false,
+      "lot_pass": false
+    },
+    {
+      "catalog_id": "12-12-2-seasoning",
+      "product_name": "Seasoning",
+      "fssr": "2.9.31",
+      "fcs": "12.2.2",
+      "review_group": "nut_spice",
+      "source_branch_options": [
+        {
+          "key": "verified_pure_spice_mix",
+          "label": "Exact final commodity identity and source article condition to confirm",
+          "article_keys": [
+            "aflatoxins_spices",
+            "b1_spices"
+          ],
+          "positive_evidence": [
+            "Demonstrate actual finished FSSAI Spice/Spice Mix product and ingredient specification; otherwise treat composite mixture separately.",
+            "Verify CTR Version IX row, final analytical matrix, current amendments and laboratory test records."
+          ],
+          "excludes": "A salt-, MSG- or flavouring-based seasoning is not automatically Spices/Spice Mix.",
+          "applicability": "CONDITIONAL_PENDING_ACTUAL_LOT_AND_LEGAL_FINISHED_ARTICLE_PROOF"
+        }
+      ],
+      "requires_nonmatching_product_guard": "Do not transfer isolated raw crop, spice or nut limits to a generic processed mixed final food.",
+      "common_required_evidence": [
+        "Finished-product formula and specific named crop commodity proof.",
+        "Actual final class (primary nut/spice or composite food), sampling and test records.",
+        "Legal article scope / status review before using numeric contaminant values."
+      ],
+      "current_first_exact_source_pending": true,
+      "automatic_finished_limit_application": false,
+      "full_compliance_pass": false,
+      "lot_pass": false
+    },
+    {
+      "catalog_id": "12-12-6-culinary-pastes",
+      "product_name": "Culinary Pastes",
+      "fssr": "2.3.28",
+      "fcs": "12.6.3",
+      "review_group": "nut_spice",
+      "source_branch_options": [
+        {
+          "key": "verified_spice_containing_composite",
+          "label": "Exact final commodity identity and source article condition to confirm",
+          "article_keys": [
+            "aflatoxins_composite",
+            "b1_composite"
+          ],
+          "positive_evidence": [
+            "Document the exact named spice commodity and whether wet culinary paste is treated as a food product containing listed spice.",
+            "Verify CTR Version IX row, final analytical matrix, current amendments and laboratory test records."
+          ],
+          "excludes": "A wet paste is not a dried spice mix, and the dry spice 30/15 µg/kg pair must not be borrowed.",
+          "applicability": "CONDITIONAL_PENDING_ACTUAL_LOT_AND_LEGAL_FINISHED_ARTICLE_PROOF"
+        }
+      ],
+      "requires_nonmatching_product_guard": "Do not transfer isolated raw crop, spice or nut limits to a generic processed mixed final food.",
+      "common_required_evidence": [
+        "Finished-product formula and specific named crop commodity proof.",
+        "Actual final class (primary nut/spice or composite food), sampling and test records.",
+        "Legal article scope / status review before using numeric contaminant values."
+      ],
+      "current_first_exact_source_pending": true,
+      "automatic_finished_limit_application": false,
+      "full_compliance_pass": false,
+      "lot_pass": false
     }
   ],
   "group_counts": {
@@ -1902,6 +2139,7 @@
     "pickles": 1,
     "sugars": 8,
     "sweets": 4,
-    "additives": 3
+    "additives": 3,
+    "nut_spice": 5
   }
 }
