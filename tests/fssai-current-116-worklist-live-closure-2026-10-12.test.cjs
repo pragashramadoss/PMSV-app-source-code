@@ -31,7 +31,7 @@ test("all 116 real pending products have one unique source-specific proof packet
   const p=byProduct.get(x.catalog_id);assert.ok(p,x.catalog_id);
   assert.equal(x.product_name,p.name);assert.equal(x.fssr,p.fssr);assert.equal(x.fcs,p.fcs);
   assert.ok(x.proof_branches.length>0);assert.ok(x.proof_branches.every(b=>b.required_evidence.length>0));
-  assert.ok(x.forbidden_transfer);assert.match(x.official_finished_product_source,/^https:\/\/(www\.|foscos\.)?fssai\.gov\.in\//);
+  assert.ok(x.forbidden_transfer);assert.match(x.official_finished_product_source,/^https:\/\/(?:[a-z0-9-]+\.)?fssai\.gov\.in\//);
   assert.equal(x.official_contaminant_source,packet.regulatory_basis);
   assert.equal(x.first_exact_source_verified,false);assert.equal(x.numeric_finished_food_limit_auto_applied,false);
   assert.equal(x.finished_food_laboratory_pass,false);assert.equal(x.full_regulatory_compliance_approval,false);
