@@ -172,6 +172,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Fail-fast current 111 source crosswalk regression
+        run: node --test tests/fssai-live-111-official-article-crosswalk-2026-10-12.test.cjs
       - name: Verify all official FSSAI regulatory route links
         run: node scripts/verify-fssai-regulatory-routes.cjs
       - name: Generate all 533 regulatory evidence readiness records

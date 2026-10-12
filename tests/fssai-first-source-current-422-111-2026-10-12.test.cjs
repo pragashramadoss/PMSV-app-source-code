@@ -38,6 +38,9 @@ function ctx(){
  c.pmsv2026Current422Manifest=sugandhit;
  c.pmsv2026Current422Ledger=ledger422;
  c.pmsv2026Current111Queue=list111;
+ // The historical 121 source panel needs unrelated globals absent from this focused VM.
+ // Stub only its old HTML wrapper; the full 422/111 ledger and product checks stay live.
+ c.pmsv2026Prior422Html=()=>"";
  return c;
 }
 test("422/111 ledger reconciles exactly one new recipe first-source match against 421/112",()=>{
