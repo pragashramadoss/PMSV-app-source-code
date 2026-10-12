@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-10-12",
+  "source_policy": "OFFICIAL_FSSAI_ONLY",
+  "source_version": "Version IX (03.02.2026)",
+  "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "source_class": "NAMED_FINISHED_PRODUCT_CONDITIONAL_SUBROUTE_ONLY",
+  "previous": {
+    "catalogue": 533,
+    "partial_exact": 444,
+    "first_source_pending": 89
+  },
+  "latest": {
+    "catalogue": 533,
+    "partial_exact": 446,
+    "first_source_pending": 87,
+    "full_compliance_approvals": 0
+  },
+  "no_actual_lot_identity_verified": true,
+  "no_numeric_limit_auto_assignment": true,
+  "no_full_product_compliance_pass": true,
+  "products": [
+    {
+      "catalog_id": "04-04-1-fruits-and-vegetable-chutney",
+      "product_name": "Fruits and Vegetable Chutney",
+      "fssr": "2.3.41",
+      "fcs": "04.1.2.6",
+      "qualified_form": "Mango Chutney",
+      "qualified_fssr": "2.3.42",
+      "article": "Mango chutney",
+      "contaminant": "Lead",
+      "source_limit": 1,
+      "unit": "mg/kg",
+      "additional_article": "Mango Chutney",
+      "additional_contaminant": "Tin",
+      "additional_limit": 250,
+      "additional_unit": "mg/kg",
+      "analytical_basis": "as-sold named Mango Chutney; product-specific sample basis to confirm",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "condition": "The actual product, not merely an ingredient, must be Mango Chutney under §2.3.42: sound Mangifera indica processed and cooked with nutritive sweeteners; the FSSR requires at least 50% total soluble solids, at least 40% fruit, and pH not exceeding 4.6. General mixed chutney under §2.3.41 is not the named contaminant article.",
+      "required_evidence": [
+        "Finished lot and label prove Mango Chutney under FSSR §2.3.42 (not generic mixed fruit/vegetable chutney)",
+        "Mango identity, recipe, cooking, 50% minimum soluble solids, 40% minimum fruit, pH <=4.6 and pack records",
+        "Finished-product lead and tin sampling/method/analytical basis and operative amendments",
+        "Other contaminant, pesticide, microbiological, packaging and labelling obligations separately assessed",
+        "Actual batch-specific laboratory results before issuing any sample or regulatory PASS"
+      ],
+      "negative_controls": [
+        "General Fruits and Vegetable Chutney §2.3.41",
+        "Mixed or vegetable-only chutney",
+        "Recipe with mango ingredient but no §2.3.42 finished-article verification",
+        "Transfer of pulp/juice metal or fresh fruit MRL to finished chutney",
+        "Assumed packaging-specific tin performance",
+        "Automatic laboratory or whole-product compliance PASS"
+      ],
+      "named_article_verified": true,
+      "actual_finished_lot_subtype_confirmed": false,
+      "actual_finished_lot_lab_result_confirmed": false,
+      "numeric_finished_food_limit_auto_applied": false,
+      "other_contaminants_complete": false,
+      "lab_pass": false,
+      "full_compliance_pass": false
+    },
+    {
+      "catalog_id": "12-12-2-seasoning",
+      "product_name": "Seasoning",
+      "fssr": "2.9.31",
+      "fcs": "12.2.2",
+      "qualified_form": "Dry curry powder or mix masala",
+      "qualified_fssr": "2.9.31; must independently meet named dry curry powder / mix masala finished form",
+      "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+      "contaminant": "Lead",
+      "source_limit": 10,
+      "unit": "mg/kg on dry matter basis",
+      "analytical_basis": "dry matter basis; not FSSR acid-insoluble ash result",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9%20%28Salt%20Spices%2C%20Condiments%20and%20related%20products%29.pdf",
+      "condition": "The finished seasoning must itself be dry curry powder or mix masala, verified by its recipe and process. FSSR §2.9.31 includes wet pastes, vegetable/protein/dairy/sugar mixtures and other seasonings; generic seasoning cannot inherit this named dry spice-mix lead article.",
+      "required_evidence": [
+        "Actual marketed finished product matches named dry curry powder or mix masala and not generic seasoning §2.9.31",
+        "Documented spices, herbs, other formula ingredients, dry milling and moisture/process conditions",
+        "Laboratory lead result on a dry-matter basis, not a total ash or HCl-insoluble ash basis",
+        "Current CTR/FSSR amendments and other applicable contaminant/residue articles independently reviewed",
+        "Real lot records and complete assessment before any numeric application or compliance PASS"
+      ],
+      "negative_controls": [
+        "Wet seasoning, tomato/ginger/garlic paste or sauce",
+        "Mixed seasoning with yeast/protein, dairy or sweeteners but no finished dry-mix-masala identity",
+        "Ingredient-level spice limit transferred to an unidentified composite",
+        "Dry matter confused with total ash or acid-insoluble ash",
+        "Assumed absence of other contaminants",
+        "Automatic laboratory or full-product compliance PASS"
+      ],
+      "named_article_verified": true,
+      "actual_finished_lot_subtype_confirmed": false,
+      "actual_finished_lot_lab_result_confirmed": false,
+      "numeric_finished_food_limit_auto_applied": false,
+      "other_contaminants_complete": false,
+      "lab_pass": false,
+      "full_compliance_pass": false
+    }
+  ]
+}
