@@ -88,3 +88,16 @@ test("Helper has properly closed external script tag and displays no compliance 
  assert.match(js,/No new first-source clearance/);
  assert.match(js,/does not automatically activate a new product limit/);
 });
+
+test("New 446/87 named-source promotions do not retain stale archived 89 pending panel",()=>{
+ const c=ctx();c.pmsv446Valid=()=>true;
+ c.pmsv446PromotedIds=["04-04-1-fruits-and-vegetable-chutney","12-12-2-seasoning"];
+ for(const id of c.pmsv446PromotedIds){
+  const r=l.records.find(x=>x.catalog_id===id);
+  assert.equal(r.source_status,"FIRST_EXACT_SOURCE_PENDING");
+  assert.equal(c.pmsvMay2026Panel({id:r.catalog_id,name:r.product_name,fssr:r.fssr,fcs:r.fcs}),"");
+ }
+ c.pmsv446Valid=()=>false;
+ const r=l.records.find(x=>x.catalog_id==="04-04-1-fruits-and-vegetable-chutney");
+ assert.match(c.pmsvMay2026Panel({id:r.catalog_id,name:r.product_name,fssr:r.fssr,fcs:r.fcs}),/Current source status: FIRST EXACT SOURCE PENDING/);
+});
