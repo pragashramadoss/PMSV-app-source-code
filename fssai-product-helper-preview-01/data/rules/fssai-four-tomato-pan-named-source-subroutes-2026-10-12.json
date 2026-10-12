@@ -1,0 +1,268 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-10-12",
+  "source_policy": "OFFICIAL_FSSAI_ONLY",
+  "source_version": "Version IX (03.02.2026)",
+  "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "official_product_standards": [
+    "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+    "https://fssai.gov.in/upload/uploadfiles/files/12_%20Chapter%202_11%20%28Other%20food%20product%20and%20%20ingredients%29.pdf"
+  ],
+  "scope": "STRICT_CONDITIONAL_FINISHED_PRODUCT_OR_QUALIFIED_RECIPE_SOURCE_ONLY",
+  "baseline": {
+    "catalogue": 533,
+    "partial_exact": 446,
+    "first_source_pending": 87
+  },
+  "latest": {
+    "catalogue": 533,
+    "partial_exact": 450,
+    "first_source_pending": 83,
+    "full_compliance_approvals": 0
+  },
+  "positive_subroute_count": 4,
+  "actual_lot_identity_verified": false,
+  "any_numeric_finished_food_limit_auto_applied": false,
+  "any_complete_compliance_pass": false,
+  "products": [
+    {
+      "catalog_id": "concentrated-vegetable-pulp-puree",
+      "product_name": "Thermally Processed Concentrated Vegetable Juice Pulp/ Puree",
+      "fssr": "2.3.13",
+      "fcs": "14.1.2.4",
+      "source_case": "vegetable_puree",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_policy": "OFFICIAL_FSSAI_ONLY",
+      "qualified_subtype_named_source_only": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_lot_composition_verified": false,
+      "analytical_basis_verified": false,
+      "actual_lot_lab_result_verified": false,
+      "source_values_not_numeric_auto_application": true,
+      "no_full_contaminant_panel": true,
+      "no_full_compliance_pass": true,
+      "source_family": "ACTUAL_PROCESSED_TOMATO_CONCENTRATE_SUBROUTE",
+      "legal_fssr": "2.3.13",
+      "qualified_named_product_standard": "2.3.14",
+      "official_fssr": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+      "conditional_article": "Processed tomato concentrates and tomato puree or paste",
+      "named_ctr_articles": [
+        {
+          "metal": "Lead",
+          "article": "Processed tomato concentrates",
+          "limit": 1.5,
+          "unit": "mg/kg",
+          "basis": "listed finished processed tomato concentrate; source ppm"
+        },
+        {
+          "metal": "Tin",
+          "article": "Processed tomato concentrates",
+          "limit": 250,
+          "unit": "mg/kg",
+          "basis": "listed finished processed tomato concentrate; source ppm"
+        },
+        {
+          "metal": "Copper",
+          "article": "Tomato puree, paste, powder, and cocktails",
+          "limit": 100,
+          "unit": "mg/kg",
+          "basis": "ON DRIED TOMATO SOLIDS BASIS, NOT AS-SOLD WET PRODUCT"
+        }
+      ],
+      "concentration_thresholds": {
+        "tomato_puree_min_total_soluble_solids_percent": 9,
+        "tomato_paste_min_total_soluble_solids_percent": 25
+      },
+      "require_positive_finished_tomato_identity": true,
+      "legal_definition": "FSSR §2.3.13/§2.3.17 permits fruit or vegetable concentrated puree. A specific finished TOMATO puree/paste must additionally be identifiable under §2.3.14. Industrial preservative, container form, doubled soluble-solids concentration and permitted additions require lot-specific review; the general category is not automatically tomato.",
+      "required_positive_evidence": [
+        "Production lot botanical identity proves ONLY ripe tomatoes, not general vegetable blend; §2.3.14 finished tomato puree/paste identity independently established",
+        "Finished soluble-solids assay proves >=9% tomato puree or >=25% tomato paste plus §2.3.13/§2.3.17 doubled solids where applicable",
+        "Lab result/report calculates Copper 100 mg/kg ON DRIED TOMATO SOLIDS BASIS, not mg/kg as-sold; establish tomato dry-solids correction",
+        "Lead 1.5 mg/kg and Tin 250 mg/kg named processed tomato concentrate articles require actual finished concentration and sample basis",
+        "Verify permitted preservatives/thermal treatment, pack fill, operative amendments, contamination panel and lot test; no automatic PASS"
+      ],
+      "negative_controls": [
+        "Mixed vegetable puree and carrot/beetroot/ginger pastes are not named tomato puree or paste",
+        "Food category FSSR §2.3.13/16/17 cannot automatically be replaced by §2.3.14",
+        "Industrial use with preservatives is not blanket evidence that actual finished article is tomato concentrate",
+        "Copper on dried tomato solids is not mg/kg as-sold wet product",
+        "Lead and Tin on processed tomato concentrate cannot be assigned to nonconcentrated §2.3.16",
+        "A first named source does not establish a complete contaminant panel or an actual lot PASS"
+      ]
+    },
+    {
+      "catalog_id": "04-04-2-vegetable-pulp-puree-with-preservatives-for-industrial-use-only",
+      "product_name": "Vegetable Pulp/Puree with Preservatives for Industrial Use only",
+      "fssr": "2.3.16",
+      "fcs": "04.2.2.6",
+      "source_case": "vegetable_puree",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_policy": "OFFICIAL_FSSAI_ONLY",
+      "qualified_subtype_named_source_only": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_lot_composition_verified": false,
+      "analytical_basis_verified": false,
+      "actual_lot_lab_result_verified": false,
+      "source_values_not_numeric_auto_application": true,
+      "no_full_contaminant_panel": true,
+      "no_full_compliance_pass": true,
+      "source_family": "ACTUAL_TOMATO_PUREE_ONLY_SUBROUTE",
+      "legal_fssr": "2.3.16",
+      "qualified_named_product_standard": "2.3.14",
+      "official_fssr": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+      "conditional_article": "Tomato puree (copper-only initial route, not assumed processed concentrate)",
+      "named_ctr_articles": [
+        {
+          "metal": "Copper",
+          "article": "Tomato puree, paste, powder, and cocktails",
+          "limit": 100,
+          "unit": "mg/kg",
+          "basis": "ON DRIED TOMATO SOLIDS BASIS, NOT AS-SOLD WET PRODUCT"
+        }
+      ],
+      "concentration_thresholds": {
+        "tomato_puree_min_total_soluble_solids_percent": 9,
+        "tomato_paste_min_total_soluble_solids_percent": 25
+      },
+      "require_positive_finished_tomato_identity": true,
+      "legal_definition": "FSSR §2.3.16 permits industrial-preserved fruit/vegetable puree without defining a processed tomato concentrate. The copper article is qualified only if the actual finished product independently meets §2.3.14 Tomato Puree criteria; Pb/Tin processed tomato concentrate articles are NOT promoted for this un-concentrated category.",
+      "required_positive_evidence": [
+        "Confirm §2.3.16 actual finished tomato puree rather than blended vegetable puree and legally match §2.3.14 tomato puree finished form",
+        "Verify tomato source, mechanical processing, any preservatives (Appendix A), pack and whether puree reaches >=9% total soluble solids",
+        "Copper 100 mg/kg is ON DRIED TOMATO SOLIDS BASIS, requiring analytical conversion; not as-sold wet-product concentration",
+        "Do not apply Lead 1.5 / Tin 250 processed tomato concentrates automatically: §2.3.16 does not require concentration",
+        "Verify further metal and contaminant articles, current amendments and actual lot lab results, without whole-product PASS"
+      ],
+      "negative_controls": [
+        "Mixed vegetable puree and carrot/beetroot/ginger pastes are not named tomato puree or paste",
+        "Food category FSSR §2.3.13/16/17 cannot automatically be replaced by §2.3.14",
+        "Industrial use with preservatives is not blanket evidence that actual finished article is tomato concentrate",
+        "Copper on dried tomato solids is not mg/kg as-sold wet product",
+        "Lead and Tin on processed tomato concentrate cannot be assigned to nonconcentrated §2.3.16",
+        "A first named source does not establish a complete contaminant panel or an actual lot PASS"
+      ]
+    },
+    {
+      "catalog_id": "04-04-2-concentrated-vegetable-pulp-puree-with-preservatives-for-industrial-use-only",
+      "product_name": "Concentrated Vegetable Pulp/Puree with Preservatives for industrial use only",
+      "fssr": "2.3.17",
+      "fcs": "04.2.2.6",
+      "source_case": "vegetable_puree",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_policy": "OFFICIAL_FSSAI_ONLY",
+      "qualified_subtype_named_source_only": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_lot_composition_verified": false,
+      "analytical_basis_verified": false,
+      "actual_lot_lab_result_verified": false,
+      "source_values_not_numeric_auto_application": true,
+      "no_full_contaminant_panel": true,
+      "no_full_compliance_pass": true,
+      "source_family": "ACTUAL_PROCESSED_TOMATO_CONCENTRATE_SUBROUTE",
+      "legal_fssr": "2.3.17",
+      "qualified_named_product_standard": "2.3.14",
+      "official_fssr": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3%20%28Fruit%20%26%20Vegetable%20products%29.pdf",
+      "conditional_article": "Processed tomato concentrates and tomato puree or paste",
+      "named_ctr_articles": [
+        {
+          "metal": "Lead",
+          "article": "Processed tomato concentrates",
+          "limit": 1.5,
+          "unit": "mg/kg",
+          "basis": "listed finished processed tomato concentrate; source ppm"
+        },
+        {
+          "metal": "Tin",
+          "article": "Processed tomato concentrates",
+          "limit": 250,
+          "unit": "mg/kg",
+          "basis": "listed finished processed tomato concentrate; source ppm"
+        },
+        {
+          "metal": "Copper",
+          "article": "Tomato puree, paste, powder, and cocktails",
+          "limit": 100,
+          "unit": "mg/kg",
+          "basis": "ON DRIED TOMATO SOLIDS BASIS, NOT AS-SOLD WET PRODUCT"
+        }
+      ],
+      "concentration_thresholds": {
+        "tomato_puree_min_total_soluble_solids_percent": 9,
+        "tomato_paste_min_total_soluble_solids_percent": 25
+      },
+      "require_positive_finished_tomato_identity": true,
+      "legal_definition": "FSSR §2.3.13/§2.3.17 permits fruit or vegetable concentrated puree. A specific finished TOMATO puree/paste must additionally be identifiable under §2.3.14. Industrial preservative, container form, doubled soluble-solids concentration and permitted additions require lot-specific review; the general category is not automatically tomato.",
+      "required_positive_evidence": [
+        "Production lot botanical identity proves ONLY ripe tomatoes, not general vegetable blend; §2.3.14 finished tomato puree/paste identity independently established",
+        "Finished soluble-solids assay proves >=9% tomato puree or >=25% tomato paste plus §2.3.13/§2.3.17 doubled solids where applicable",
+        "Lab result/report calculates Copper 100 mg/kg ON DRIED TOMATO SOLIDS BASIS, not mg/kg as-sold; establish tomato dry-solids correction",
+        "Lead 1.5 mg/kg and Tin 250 mg/kg named processed tomato concentrate articles require actual finished concentration and sample basis",
+        "Verify permitted preservatives/thermal treatment, pack fill, operative amendments, contamination panel and lot test; no automatic PASS"
+      ],
+      "negative_controls": [
+        "Mixed vegetable puree and carrot/beetroot/ginger pastes are not named tomato puree or paste",
+        "Food category FSSR §2.3.13/16/17 cannot automatically be replaced by §2.3.14",
+        "Industrial use with preservatives is not blanket evidence that actual finished article is tomato concentrate",
+        "Copper on dried tomato solids is not mg/kg as-sold wet product",
+        "Lead and Tin on processed tomato concentrate cannot be assigned to nonconcentrated §2.3.16",
+        "A first named source does not establish a complete contaminant panel or an actual lot PASS"
+      ]
+    },
+    {
+      "catalog_id": "100-100-pan-masala",
+      "product_name": "Pan Masala",
+      "fssr": "2.11.5",
+      "fcs": "100",
+      "source_case": "other_cross_form",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_policy": "OFFICIAL_FSSAI_ONLY",
+      "qualified_subtype_named_source_only": true,
+      "actual_finished_lot_identity_verified": false,
+      "actual_lot_composition_verified": false,
+      "analytical_basis_verified": false,
+      "actual_lot_lab_result_verified": false,
+      "source_values_not_numeric_auto_application": true,
+      "no_full_contaminant_panel": true,
+      "no_full_compliance_pass": true,
+      "source_family": "PAN_MASALA_ACTUAL_BETELNUT_CONTAINING_COMPOSITE_ONLY",
+      "legal_fssr": "2.11.5",
+      "official_fssr": "https://fssai.gov.in/upload/uploadfiles/files/12_%20Chapter%202_11%20%28Other%20food%20product%20and%20%20ingredients%29.pdf",
+      "conditional_article": "Food product containing any of the above mentioned food articles",
+      "trigger_ingredient": "Arecanut or Betelnut",
+      "require_positive_recipe_ingredient": true,
+      "legal_definition": "FSSR 2.11.5 states Pan Masala MAY contain betelnut; betelnut is NOT mandatory. Aflatoxin composite-product source operates only if actual finished Pan Masala contains a qualifying source commodity and falls within that named article.",
+      "named_ctr_articles": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "article": "Food product containing any of the above mentioned food articles (including arecanut or betelnut)",
+          "limit": 20,
+          "unit": "µg/kg",
+          "basis": "qualifying actual arecanut/betelnut containing finished food; not unconditional Pan Masala"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "article": "Food product containing any of the above mentioned food articles (including arecanut or betelnut)",
+          "limit": 10,
+          "unit": "µg/kg",
+          "basis": "qualifying actual arecanut/betelnut containing finished food; not unconditional Pan Masala"
+        }
+      ],
+      "required_positive_evidence": [
+        "Actual finished Pan Masala formulation and bill of materials establish arecanut/betelnut as an ingredient; 'may contain' does not mean must contain",
+        "Supplier declarations and botanical identity tie betelnut to CTR 'Arecanut or Betelnut' article",
+        "Apply named composite-food aflatoxin total and B1 only after confirming scope and full finished matrix; separately assess other ingredient-specific constraints",
+        "Confirm operative CTR/FSSR amendments and legal testing/sample basis in the finished product",
+        "Actual production lot results and other mycotoxins/metals/pesticides prior to any complete compliance conclusion"
+      ],
+      "negative_controls": [
+        "Pan Masala without arecanut/betelnut cannot claim this route by its product name alone",
+        "Arecanut ingredient-only Total Aflatoxins 15 µg/kg is not the named finished composite-food 20 µg/kg",
+        "Arecanut ingredient-only B1 10 µg/kg is distinct from the composite article even where numbers coincide",
+        "FSSR total ash <=8% (dry basis) and acid-insoluble ash <=0.5% (dry basis) are not mycotoxin tests",
+        "No substitution of spices, coconut or sweeteners to invent a betelnut-based finished product",
+        "No automatic contaminant or laboratory PASS"
+      ]
+    }
+  ]
+}
