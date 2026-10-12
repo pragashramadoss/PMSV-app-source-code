@@ -99,6 +99,7 @@ pmsvLoadPositiveSourceProof=async function(){
  }catch(_){pmsv444Manifest=null;pmsv444Ledger=null;pmsv89Queue=null;pmsv89Dossier=null;}
 };
 function pmsv444Html(p){
+ if(p&&typeof pmsv446Valid==="function"&&pmsv446Valid())return "";
  if(!p)return "";
  if(!pmsv444Valid())return '<div class="notice">Latest 444/89 FSSAI evidence integrity unavailable. No legal numerical assignment or PASS.</div>';
  const r=pmsv444Ledger.records.find(x=>x.catalog_id===p.id);
