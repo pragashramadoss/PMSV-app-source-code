@@ -10,7 +10,7 @@ function pmsv2026Current428Valid(){
  const m=pmsv2026Current428Manifest,d=pmsv2026Current428Ledger,q=pmsv2026Current105Queue,
        old=pmsv2026Current423Ledger,prev=pmsv2026Current110Queue,c=contaminantsDb;
  if(!m||!d||!q||!old||!prev||!c||
-    pmsvReviewSnapshotDigest(m)!==pmsv2026Current428Digests.man||
+    pmsvReviewSnapshotDigest(m)!==pmsv2026Current428Digests.manifest||
     pmsvReviewSnapshotDigest(d)!==pmsv2026Current428Digests.ledger||
     pmsvReviewSnapshotDigest(q)!==pmsv2026Current428Digests.queue||
     m.source_policy!=="OFFICIAL_FSSAI_FOSCOS_ONLY"||
