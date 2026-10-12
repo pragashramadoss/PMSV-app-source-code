@@ -1,0 +1,673 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-10-12",
+  "source_policy": "OFFICIAL_FSSAI_ONLY",
+  "source_scope": "FINISHED_PRODUCT_QUALITY_STANDARDS_DISTINCT_FROM_CONTAMINANTS",
+  "official_fssr": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+  "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "catalogue": 533,
+  "partial_named_contaminant_sources": 457,
+  "first_source_pending": 76,
+  "reviewed_pending_products": 16,
+  "quality_criteria_count": 46,
+  "full_regulatory_passes": 0,
+  "auto_contaminant_limit_assignment": false,
+  "records": [
+    {
+      "catalog_id": "04-04-2-fungi-extract-and-fungi-concentrate",
+      "product_name": "Fungi extract and Fungi Concentrate",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.2",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 101,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Saltless extract (fungi extract)",
+          "op": "equal-to-standard",
+          "value": 7,
+          "unit": "%",
+          "basis": "saltless extract",
+          "condition": "Extract subtype only"
+        },
+        {
+          "name": "Saltless extract (fungi concentrate)",
+          "op": "equal-to-standard",
+          "value": 24,
+          "unit": "%",
+          "basis": "saltless extract",
+          "condition": "Concentrate subtype only"
+        },
+        {
+          "name": "Sodium chloride",
+          "op": "max",
+          "value": 20,
+          "unit": "% m/m",
+          "basis": "finished fungi concentrate",
+          "condition": "Concentrate subtype"
+        },
+        {
+          "name": "Mineral impurities",
+          "op": "absent",
+          "value": 0,
+          "unit": "presence",
+          "basis": "finished fungi concentrate",
+          "condition": ""
+        },
+        {
+          "name": "Organic vegetable impurities",
+          "op": "absent",
+          "value": 0,
+          "unit": "presence",
+          "basis": "finished fungi concentrate",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Identify the actual §2.3.62 fungi extract versus concentrate subtype; record saltless extract result and edible fungi species.",
+      "forbidden_contaminant_transfer": "Canned Agaricus mushrooms and raw edible fungi metals do not automatically cover fungi extracts after concentration."
+    },
+    {
+      "catalog_id": "04-04-2-dried-fungi-concentrate",
+      "product_name": "Dried Fungi Concentrate",
+      "fssr": "2.3.62",
+      "fcs": "04.2.2.2",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 102,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Water content",
+          "op": "max",
+          "value": 9,
+          "unit": "% m/m",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Sodium chloride",
+          "op": "max",
+          "value": 5,
+          "unit": "% m/m",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Mineral impurities",
+          "op": "absent",
+          "value": 0,
+          "unit": "presence",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Organic vegetable impurities",
+          "op": "absent",
+          "value": 0,
+          "unit": "presence",
+          "basis": "finished product",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Confirm dried product is produced from fungi extract/concentrate and record water and salt tests.",
+      "forbidden_contaminant_transfer": "Salt limits for liquid fungi concentrate (20%) cannot be transferred to dried fungi concentrate (5%)."
+    },
+    {
+      "catalog_id": "04-04-2-cocoa-beans",
+      "product_name": "Cocoa Beans",
+      "fssr": "2.3.54",
+      "fcs": "04.2.2.7",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 83,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Moisture content",
+          "op": "max",
+          "value": 8,
+          "unit": "% m/m",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Mouldy beans",
+          "op": "max",
+          "value": 4,
+          "unit": "% by count",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Slaty beans",
+          "op": "max",
+          "value": 8,
+          "unit": "% by count",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Insect damaged beans",
+          "op": "max",
+          "value": 2,
+          "unit": "% by count",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Germinated and flat beans",
+          "op": "max",
+          "value": 4,
+          "unit": "% by count",
+          "basis": "finished product",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Confirm fermented/dried Theobroma cacao whole beans, defect sampling by count and not cocoa powder.",
+      "forbidden_contaminant_transfer": "Cocoa-powder lead 5 mg/kg on dry fat-free matter basis is not the incoming whole cocoa-bean article."
+    },
+    {
+      "catalog_id": "04-04-1-fruit-cheese",
+      "product_name": "Fruit Cheese",
+      "fssr": "2.3.33",
+      "fcs": "04.1.2.5",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 38,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Total soluble solids",
+          "op": "min",
+          "value": 65,
+          "unit": "% m/m",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Prepared fruit content",
+          "op": "min",
+          "value": 45,
+          "unit": "% by weight",
+          "basis": "original fruit in final product",
+          "condition": "Except strawberry/raspberry"
+        },
+        {
+          "name": "Strawberry/raspberry fruit content",
+          "op": "min",
+          "value": 25,
+          "unit": "% by weight",
+          "basis": "original prepared strawberry or raspberry",
+          "condition": "ONLY named fruit exception"
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Confirm fruit cheese is cooked pulp/puree setting upon cooling, with fruit-specific minimum content.",
+      "forbidden_contaminant_transfer": "Fruit pulp input does not make this cooked, set fruit cheese legally identical to unchanged fruit pulp for CTR metal limits."
+    },
+    {
+      "catalog_id": "04-04-1-fruit-bar-toffee",
+      "product_name": "Fruit Bar/Toffee",
+      "fssr": "2.3.19",
+      "fcs": "04.1.2.8",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 27,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Moisture",
+          "op": "max",
+          "value": 20,
+          "unit": "% m/m",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Total soluble solids",
+          "op": "min",
+          "value": 75,
+          "unit": "% m/m",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Fruit content",
+          "op": "min",
+          "value": 25,
+          "unit": "% m/m",
+          "basis": "finished product",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Confirm dehydrated sheet prepared from fruit pulp/puree; measure moisture, solids and finished-product fruit fraction.",
+      "forbidden_contaminant_transfer": "Not automatically hard-boiled sugar confectionery or ordinary liquid fruit pulp; FSSR §2.3.19 applies."
+    },
+    {
+      "catalog_id": "04-04-1-date-paste",
+      "product_name": "Date Paste",
+      "fssr": "2.3.56",
+      "fcs": "04.1.2.8",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 87,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Moisture",
+          "op": "max",
+          "value": 20,
+          "unit": "% by weight",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Total ash",
+          "op": "max",
+          "value": 1.2,
+          "unit": "% by weight",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Acid-insoluble ash",
+          "op": "max",
+          "value": 0.1,
+          "unit": "% by weight",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Food additives",
+          "op": "absent",
+          "value": 0,
+          "unit": "permitted additions",
+          "basis": "finished date paste",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Verify pitted sound dates of Phoenix palm; no additives allowed; test total ash separately from acid-insoluble ash.",
+      "forbidden_contaminant_transfer": "Date paste is not automatically dried fig, fruit pulp or raw date commodity contaminant article."
+    },
+    {
+      "catalog_id": "04-04-1-murabba",
+      "product_name": "Murabba",
+      "fssr": "2.3.25",
+      "fcs": "04.1.2.7",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 31,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Total soluble solids",
+          "op": "min",
+          "value": 65,
+          "unit": "% m/m",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Fruit content",
+          "op": "min",
+          "value": 55,
+          "unit": "% m/m",
+          "basis": "finished fruit murabba",
+          "condition": "Fruit-containing product subtype"
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Confirm fruit murabba preserved by sweetener impregnation (not fruit jam or pulp).",
+      "forbidden_contaminant_transfer": "TSS and fruit content quality standards do not authorize raw-fruit pesticide or fruit-pulp arsenic inheritance."
+    },
+    {
+      "catalog_id": "04-04-1-candied-crystallised-and-glazed-fruit-vegetable-rhizome-fruit-peel",
+      "product_name": "Candied, Crystallised And Glazed Fruit / Vegetable / Rhizome / Fruit Peel",
+      "fssr": "2.3.26",
+      "fcs": "04.1.2.7",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 32,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Total sugars",
+          "op": "min",
+          "value": 70,
+          "unit": "% w/w",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Reducing sugar / total sugar",
+          "op": "min",
+          "value": 25,
+          "unit": "% of total sugars",
+          "basis": "analytical ratio; NOT % product mass",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Distinguish candied, crystallized and glazed fruit/vegetable/rhizome/peel; verify sugar denominator.",
+      "forbidden_contaminant_transfer": "Reducing sugar >=25% of total sugars is NOT a 25% total product reducing-sugar concentration or an HBC candy limit."
+    },
+    {
+      "catalog_id": "04-04-1-pickles-made-from-fruits",
+      "product_name": "Pickles (made from Fruits)",
+      "fssr": "2.3.43",
+      "fcs": "04.1.2.3",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 55,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Drained weight",
+          "op": "min",
+          "value": 60,
+          "unit": "%",
+          "basis": "fruit pickles in brine/citrus/oil/vinegar",
+          "condition": "Depends on selected medium"
+        },
+        {
+          "name": "Sodium chloride (in brine)",
+          "op": "min",
+          "value": 12,
+          "unit": "%",
+          "basis": "brine-pickled subroute only",
+          "condition": ""
+        },
+        {
+          "name": "Acidity as citric acid",
+          "op": "min",
+          "value": 1.2,
+          "unit": "%",
+          "basis": "citrus juice subroute only",
+          "condition": ""
+        },
+        {
+          "name": "Acidity as acetic acid",
+          "op": "min",
+          "value": 2,
+          "unit": "%",
+          "basis": "vinegar subroute only",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Identify brine, oil, citrus juice, vinegar or no-medium subtype; never impose all subtype minima simultaneously.",
+      "forbidden_contaminant_transfer": "Pickled fruit does not automatically inherit raw fruit arsenic/MRLs or pickled cucumber-specific metal limits."
+    },
+    {
+      "catalog_id": "04-04-1-frozen-fruits-fruit-products",
+      "product_name": "Frozen Fruits/Fruit Products",
+      "fssr": "2.3.37",
+      "fcs": "04.1.2.1",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 40,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Thermal centre temperature after stabilization",
+          "op": "max",
+          "value": -18,
+          "unit": "°C",
+          "basis": "finished frozen fruit",
+          "condition": "Freeze process completion"
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Verify fruit commodity, blanching if required and final thermal-centre temperature.",
+      "forbidden_contaminant_transfer": "Raw-fruit pesticide MRL requires processing factors/finished fruit form and cannot be auto-applied."
+    },
+    {
+      "catalog_id": "04-04-2-frozen-vegetables",
+      "product_name": "Frozen Vegetables",
+      "fssr": "2.3.38",
+      "fcs": "04.2.2.1",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 40,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Thermal centre temperature after stabilization",
+          "op": "max",
+          "value": -18,
+          "unit": "°C",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Peroxidase test",
+          "op": "negative",
+          "value": 0,
+          "unit": "detectable activity",
+          "basis": "finished product",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Verify fresh cleaned and blanched vegetable, peroxidase negativity and freezer centre temperature.",
+      "forbidden_contaminant_transfer": "Frozen vegetable is not dehydrated non-onion vegetable or a canned vegetable without explicit proof."
+    },
+    {
+      "catalog_id": "04-04-2-frozen-curried-vegetables-ready-to-eat-vegetables",
+      "product_name": "Frozen Curried Vegetables/Ready-to-Eat Vegetables",
+      "fssr": "2.3.39",
+      "fcs": "04.2.2.8",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 52,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Thermal centre temperature after stabilization",
+          "op": "max",
+          "value": -18,
+          "unit": "°C",
+          "basis": "finished product",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Confirm cooked/frozen mixed food recipe and -18°C at thermal centre after stabilization, plus Appendix B.",
+      "forbidden_contaminant_transfer": "Mixed frozen curried RTE vegetables are not dried vegetable lead articles."
+    },
+    {
+      "catalog_id": "04-04-2-quick-frozen-fried-potatoes",
+      "product_name": "Quick Frozen Fried Potatoes",
+      "fssr": "2.3.60",
+      "fcs": "04.2.2.8",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 92,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Thermal centre temperature after stabilization",
+          "op": "max",
+          "value": -18,
+          "unit": "°C",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Cross-section strip dimension",
+          "op": "min",
+          "value": 4,
+          "unit": "mm",
+          "basis": "4-sided strips measured frozen",
+          "condition": ""
+        },
+        {
+          "name": "Moisture",
+          "op": "max",
+          "value": 78,
+          "unit": "% m/m",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "FFA of extracted oil as oleic acid",
+          "op": "max",
+          "value": 1.5,
+          "unit": "% m/m",
+          "basis": "finished product",
+          "condition": ""
+        },
+        {
+          "name": "Burnt frying defects",
+          "op": "max",
+          "value": 0.5,
+          "unit": "% m/m",
+          "basis": "finished product",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Check fried/precooked or blanched strips, cross-sectional style, thermal-centre freezing, FFA and frying defects.",
+      "forbidden_contaminant_transfer": "Raw potatoes and non-onion dehydrated vegetables are not the same frozen-fried potato matrix."
+    },
+    {
+      "catalog_id": "04-04-2-ginger-paste",
+      "product_name": "Ginger paste",
+      "fssr": "2.3.28",
+      "fcs": "04.2.2.6",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 33,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Total soluble solids",
+          "op": "min",
+          "value": 3,
+          "unit": "% m/m",
+          "basis": "salt-free basis",
+          "condition": "Ginger paste row ONLY"
+        },
+        {
+          "name": "Acidity as acetic acid",
+          "op": "min",
+          "value": 1,
+          "unit": "% m/m",
+          "basis": "ginger paste row ONLY",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Use exact ginger paste row, not culinary paste/sauce 8% TSS row; caramel is the only permitted added colour.",
+      "forbidden_contaminant_transfer": "Ginger paste is not dried vegetable and its 3% salt-free TSS must not be replaced with culinary paste 8%."
+    },
+    {
+      "catalog_id": "12-12-6-culinary-pastes",
+      "product_name": "Culinary Pastes",
+      "fssr": "2.3.28",
+      "fcs": "12.6.3",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 33,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Total soluble solids",
+          "op": "min",
+          "value": 8,
+          "unit": "% m/m",
+          "basis": "salt-free basis",
+          "condition": "Generic culinary paste/sauce only; NOT ginger paste"
+        },
+        {
+          "name": "Acidity as acetic acid",
+          "op": "min",
+          "value": 1,
+          "unit": "% m/m",
+          "basis": "generic culinary paste/sauce only",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Confirm generic culinary paste (or exact ginger/chilli/fruit vegetable sauce exception) before choosing the 8% or other subtype criterion.",
+      "forbidden_contaminant_transfer": "Ginger paste has a different 3% TSS floor; do not force generic culinary paste or dried vegetable criteria."
+    },
+    {
+      "catalog_id": "04-04-2-thermally-processed-curried-vegetables-ready-to-eat-vegetables",
+      "product_name": "Thermally processed Curried Vegetables/Ready to Eat Vegetables",
+      "fssr": "2.3.4",
+      "fcs": "04.2.2.8",
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "source_pdf_page_zero_index": 8,
+      "verified_quality_source_only": true,
+      "first_named_contaminant_source_still_pending": true,
+      "quality_criteria": [
+        {
+          "name": "Minimum fill of rigid container",
+          "op": "min",
+          "value": 90,
+          "unit": "% of water capacity",
+          "basis": "when packed in rigid containers",
+          "condition": ""
+        }
+      ],
+      "actual_lot_testing_verified": false,
+      "product_compliance_approval": false,
+      "contaminant_numeric_limit_auto_applied": false,
+      "positive_product_identification_to_verify": "Verify thermally processed curried mixed recipe and hermetically appropriate packaging; check 90% rigid fill.",
+      "forbidden_contaminant_transfer": "Thermally processed RTE curry is not frozen curry §2.3.39 or dehydrated vegetable lead source."
+    }
+  ]
+}
