@@ -298,6 +298,8 @@ jobs:
         run: node --test tests/fssai-current-112-worklist-2026-10-12.test.cjs
       - name: Check 422 partial vs 111 pending official Sugandhit rice recipe and closed proof queue
         run: node --test tests/fssai-first-source-current-422-111-2026-10-12.test.cjs
+      - name: Check current 111 official source crosswalk and suppress stale pending panels
+        run: node --test tests/fssai-live-111-official-article-crosswalk-2026-10-12.test.cjs
       - name: Verify 32 extra finished-form crop and toxic-substance source branches
         run: node --test tests/fssai-32-cereal-fruit-spice-exact-article-scope-2026-10-12.test.cjs
       - name: Verify fail-closed 533 inventory, 116 current worklists and 32 exact article branches
