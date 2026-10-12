@@ -56,3 +56,13 @@ test("Current quality panel included after old 24 and required in CI",()=>{
  assert.ok(h.indexOf("fssai-current-fifteen-quality.js")>h.indexOf("fssai-current-24-quality-status-guard.js"));
  assert.match(w,/fssai-current-fifteen-quality-2026-10-12\.test\.cjs/);
 });
+
+test("Current official FSSR Chapter 2.3 (Version 2, 04-11-2024) backs all four products without changing source criteria",()=>{
+ const ids=["04-04-1-seedless-tamarind","04-04-1-coconut-milk-powder","06-06-2-water-chestnut-flour-singhare-ka-atta","99-99-1-colouring-foods"];
+ const v2="https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf";
+ for(const id of ids){const p=d.records.find(z=>z.catalog_id===id);assert.ok(p,id);assert.equal(p.official_source_url,v2,id);assert.equal(p.first_exact_ctr_article_pending,true);assert.equal(p.automatic_mrl_assignment,false);assert.equal(p.full_regulatory_pass,false);}
+ assert.equal(get("2.3.49").quality_rows.length,6);
+ assert.deepEqual(get("2.3.63").quality_rows.filter(z=>z.parameter==="Bulk density").map(z=>z.value),[0.3,0.45]);
+ assert.equal(get("2.3.64").quality_rows.find(z=>z.parameter.startsWith("Uric acid")).operator,"source_value_only_no_auto_check");
+ assert.equal(get("2.3.65").quality_rows.find(z=>z.parameter==="Added nutritive sugars").value,20);
+});
