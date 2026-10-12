@@ -23,6 +23,8 @@ function context(){
 test("All 52 new product-qualifier dossiers and 37 audited records partition exactly the live 89",()=>{
  assert.equal(products.length,533);assert.equal(q.review_records.length,89);
  assert.equal(audit.audited_records.length,37);assert.equal(d.records.length,52);
+ assert.ok(d.records.some(x=>x.official_product_source.includes("fcstraining.fssai.gov.in")));
+
  assert.equal(context().pmsv52Valid(),true);
  const pending=new Set(ledger.records.filter(x=>x.source_status==="FIRST_EXACT_SOURCE_PENDING").map(x=>x.catalog_id));
  const ids=new Set([...audit.audited_records,...d.records].map(x=>x.catalog_id));
@@ -35,7 +37,7 @@ test("All 52 are individually grounded in source-specific evidence blockers, nev
   assert.ok(qrow);assert.equal(r.forbidden_transfer,qrow.forbidden_transfer);
   assert.deepEqual(r.reference_articles_comparison_only,qrow.referenced_articles_review_only);
   assert.deepEqual(r.positive_proof_to_obtain,qrow.proof_branches.flatMap(x=>x.required_evidence));
-  assert.match(r.official_product_source,/^https:\/\/(?:www\.|foscos\.)?fssai\.gov\.in\//);
+  assert.match(r.official_product_source,/^https:\/\/(?:www\.|foscos\.|fcstraining\.)?fssai\.gov\.in\//);
   assert.equal(r.status,"FIRST_EXACT_SOURCE_PENDING");
   for(const flag of ["first_exact_source_verified","actual_finished_matrix_verified","operative_amendments_rechecked","automatic_numeric_limit_applied","laboratory_pass","full_regulatory_compliance"])assert.equal(r[flag],false);
  }

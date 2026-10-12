@@ -22,7 +22,7 @@ function pmsv52Valid(){
  if(waiting.size!==89||work.size!==89||audited.size!==37||
     [...audited].some(id=>!waiting.has(id)))return false;
  const official=url=>typeof url==="string"&&
-  /^https:\/\/(?:(?:www|foscos)\.)?fssai\.gov\.in\//i.test(url);
+  /^https:\/\/(?:(?:www|foscos|fcstraining)\.)?fssai\.gov\.in\//i.test(url);
  for(const r of d.records){
   const p=waiting.get(r.catalog_id),w=work.get(r.catalog_id);
   if(!p||!w||audited.has(r.catalog_id)||seen.has(r.catalog_id)||
