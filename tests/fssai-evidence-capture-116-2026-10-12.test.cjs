@@ -43,7 +43,12 @@ test("current 89 pending products retain protected local collection; all 444 par
  assert.equal(live.records.filter(x=>x.source_status==="PARTIAL_EXACT_SOURCE_MATCH").length,444);
  const archived=new Set(work.records.map(x=>x.catalog_id));
  assert.equal(archived.size,116);assert.equal([...archived].filter(id=>!pending.has(id)).length,27);
- for(const p of products){
+ const archivedIds=new Set(work.records.map(x=>x.catalog_id));
+ assert.equal(products.filter(p=>!archivedIds.has(p.id)).length,417);
+ // Verify all 533 ledger statuses by set equality, but render only the 116
+ // archived entries: the other 417 never had a legacy evidence collector.
+ assert.deepEqual(new Set([...pending].filter(id=>archivedIds.has(id))),pending);
+ for(const p of products.filter(p=>archivedIds.has(p.id))){
   const html=ctx.pmsvCurrent116ProofChecklistHtml(p);
   if(pending.has(p.id)){
    assert.match(html,/Collect missing first-source evidence/);
