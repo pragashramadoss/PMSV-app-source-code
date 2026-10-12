@@ -1,0 +1,22 @@
+name: Verify 24 FSSR quality panels against current 493/40 first-source (fast)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/**'
+      - 'tests/fssai-current-24-quality-status-guard-2026-10-12.test.cjs'
+      - '.github/workflows/verify-current-fssai-quality24-status.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check 24 authoritative current statuses and 13 stale warning corrections
+        run: node --test tests/fssai-current-24-quality-status-guard-2026-10-12.test.cjs
+      - name: Syntax-check quality panel source status gate
+        run: node --check fssai-product-helper-preview-01/fssai-current-24-quality-status-guard.js
