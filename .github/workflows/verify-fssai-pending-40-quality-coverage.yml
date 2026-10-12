@@ -1,0 +1,18 @@
+name: Verify current FSSAI 40 pending quality-source coverage
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/**'
+      - 'tests/fssai-current-40-quality-coverage-26-14-2026-10-12.test.cjs'
+      - '.github/workflows/verify-fssai-pending-40-quality-coverage.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check fssai-product-helper-preview-01/fssai-pending-40-quality-coverage.js
+      - run: node --test tests/fssai-current-40-quality-coverage-26-14-2026-10-12.test.cjs
