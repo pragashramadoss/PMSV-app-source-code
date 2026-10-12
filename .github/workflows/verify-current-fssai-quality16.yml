@@ -1,0 +1,22 @@
+name: Verify current FSSAI 16 quality-only source dossiers
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/**'
+      - 'tests/fssai-current-16-finished-quality-not-contaminant-2026-10-12.test.cjs'
+      - '.github/workflows/verify-current-fssai-quality16.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 16 current pending FSSR finished quality standards
+        run: node --test tests/fssai-current-16-finished-quality-not-contaminant-2026-10-12.test.cjs
+      - name: Check source module syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current-16-finished-quality-not-contaminant.js
