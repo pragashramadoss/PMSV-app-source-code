@@ -69,7 +69,7 @@ test("live panel renders only review-only source candidates and is fail-closed o
 });
 test("index cache-bust, script, data and scheduled verifier agree",()=>{
  const html=fs.readFileSync(path.join(root,base+"index.html"),"utf8");
- assert.match(html,/fssai-source-proof-panels\.js\?v=20261012-scope31/);
+ assert.match(html,/fssai-source-proof-panels\.js\?v=20261012-scope32/);
  const js=fs.readFileSync(path.join(root,base+"fssai-source-proof-panels.js"),"utf8");
  assert.match(js,/fssai-2026-10-12-thirtytwo-cereal-fruit-spice-identity-source-branches\.json/);
 });
