@@ -15,3 +15,5 @@ Official FSSR Chapter 2.3: https://www.fssai.gov.in/upload/uploadfiles/files/Cha
 Official CTR IX: https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf
 
 All other 2.1/2.4/2.9/2.11/3.3.4 official PDF links are attached individually to the dossiers. The source digest is 3a2b893c43c93d3f (local integrity check, not legal certification).
+
+Source-currency correction verified 12 October: Seedless Tamarind (2.3.49) and Coconut Milk Powder (2.3.63) now hyperlink the official FSSR Chapter 2.3 **Version 2 (04.11.2024)** PDF, consistent with Water Chestnut Flour (2.3.64) and Colouring Foods (2.3.65). Verified all four statutory numeric tables; no numeric criterion altered. Source-integrity digest refreshed; full 493/40 source ledger and zero approvals unchanged.
