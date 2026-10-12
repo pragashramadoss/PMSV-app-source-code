@@ -99,7 +99,7 @@ function pmsv442Html(p){
  '<div class="notice">533 identities · 442 partial first sources · 91 pending · 0 full laboratory/compliance PASS.</div>';
  const x=pmsv442Source.promotions.find(x=>x.catalog_id===p.id);
  if(x)return intro+'<p><b>Conditional official sugar article:</b> '+esc(x.subtype)+'</p>'+
- '<p><b>CTR Version IX Lead 5 mg/kg</b> requires finished-product <b>sulphated ash greater than 1%</b>; this lot's ash, identity and lead result are NOT verified and no numeric limit was assigned.</p>'+
+ '<p><b>CTR Version IX Lead 5 mg/kg</b> requires finished-product <b>sulphated ash greater than 1%</b>; actual lot ash, identity and lead result are NOT verified and no numeric limit was assigned.</p>'+
  '<p><b>Required evidence:</b> '+x.proof.map(esc).join('; ')+'</p>'+
  '<p><b>Never substitute:</b> '+esc(x.distinct)+'</p>'+
  '<small><a href="'+esc(x.official_product_standard)+'" target="_blank" rel="noopener noreferrer">Official FSSR 2.8</a> · '+
