@@ -1,5 +1,6 @@
 "use strict";
-// PMSV 116 current pending first-source cases. Local evidence gathering ONLY.
+// Archived 116-case collector, shown ONLY for products still pending in current 89.
+// Historic local storage keys intentionally retained so analyst notes are not lost.
 // A checked box does NOT confirm source applicability, legal compliance,
 // contaminant limits, lab testing, or promotion to first-exact-match.
 var pmsv116LocalKey="pmsv:fssai:pending-proof:v1:";
@@ -9,9 +10,18 @@ function pmsv116Rec(p){
   String(x.fssr||"")===String(p.fssr||"")&&String(x.fcs||"")===String(p.fcs||""))||null;
 }
 function pmsv116Valid(p){
- return !!pmsv116Rec(p)&&
- typeof pmsvCurrent116DocumentaryIntegrity==="function"&&pmsvCurrent116DocumentaryIntegrity()&&
- pmsvCurrent533SourceLedger?.records?.some(x=>x.catalog_id===p.id&&x.source_status==="FIRST_EXACT_SOURCE_PENDING");
+ const original=pmsv116Rec(p);
+ if(!original||
+    typeof pmsvCurrent116DocumentaryIntegrity!=="function"||
+    !pmsvCurrent116DocumentaryIntegrity()||
+    typeof pmsv444Valid!=="function"||!pmsv444Valid())return false;
+ const current=pmsv444Ledger?.records?.find(x=>x.catalog_id===p.id);
+ return !!current&&current.product_name===p.name&&
+    String(current.fssr||"")===String(p.fssr||"")&&
+    String(current.fcs||"")===String(p.fcs||"")&&
+    current.source_status==="FIRST_EXACT_SOURCE_PENDING"&&
+    current.sample_lab_pass===false&&
+    current.product_compliance_approval===false;
 }
 function pmsv116Safe(x){
  return typeof esc==="function"?esc(x):String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
@@ -121,7 +131,7 @@ function pmsv116LocalEvidenceHtml(p){
  const r=pmsv116Rec(p);
  if(!r)return "";
  if(!pmsv116Valid(p))
-  return '<div class="notice"><b>116-product local evidence collector withheld.</b> Ledger/source integrity check failed; no limit or PASS applied.</div>';
+  return '<div class="notice"><b>Current first-source evidence collector withheld.</b> Ledger/source integrity check failed; no limit or PASS applied.</div>';
  return '<details class="card" style="margin-top:12px"><summary><b>Collect missing first-source evidence</b> — '+pmsv116Safe(r.product_name)+
   '</summary><div id="pmsv116-collector" data-product-id="'+pmsv116Safe(r.catalog_id)+'">'+pmsv116Markup(r)+'</div></details>';
 }

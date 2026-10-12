@@ -43,14 +43,15 @@ function pmsvProofSourceMatch(r,db){
 function sourcePinned121ResearchProofHtml(p){
  const queue=sourcePriorityMetalDb?.unresolved_first_exact_catalog_ids;
  if(!p||!Array.isArray(queue)||!queue.includes(p.id))return '';
- // The 121-item research archive must never overrule the current authenticated
- // 533-item ledger. Suppress obsolete pending warnings for five source-matched
- // products and let the current-status UI report any ledger mismatch.
- if(pmsvCurrent533SourceLedger&&typeof pmsvCurrent533SourceProofValid==='function'){
-  if(!pmsvCurrent533SourceProofValid(p))return '';
-  const current=pmsvCurrent533SourceLedger.records.find(x=>x.catalog_id===p.id);
-  if(!current||current.source_status!=='FIRST_EXACT_SOURCE_PENDING')return '';
- }
+ // This 121-item worklist is ARCHIVED. The most recent authenticated
+ // 533-item ledger alone controls which products remain first-source pending.
+ // Do not reproduce obsolete warnings for any of the 27 subsequent promotions.
+ if(typeof pmsv444Valid!=='function'||!pmsv444Valid())return '';
+ const current=pmsv444Ledger?.records?.find(x=>x.catalog_id===p.id);
+ if(!current||current.product_name!==p.name||
+    String(current.fssr||'')!==String(p.fssr||'')||
+    String(current.fcs||'')!==String(p.fcs||''))return '';
+ if(current.source_status!=='FIRST_EXACT_SOURCE_PENDING')return '';
  if(p.id==='06-06-1-any-other-foodgrains'&&typeof pmsvGrainProofValid==='function'&&pmsvGrainProofValid(p))return '';
  // A historic first-source queue is still archived at 121. A positively
  // source-matched Ayurveda recipe must not be shown as currently unresolved

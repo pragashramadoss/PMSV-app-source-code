@@ -135,6 +135,15 @@ var pmsvBefore444Local=pmsvCurrent116ProofChecklistHtml;
 pmsvCurrent116ProofChecklistHtml=function(p){
  if(!p)return "";
  if(!pmsv444Valid())return '<div class="notice">Latest 444/89 source integrity unavailable. No compliance PASS.</div>';
- if(pmsv444Ids.includes(p.id))return "";
+ const current=pmsv444Ledger?.records?.find(x=>x.catalog_id===p.id);
+ if(!current||current.product_name!==p.name||
+    String(current.fssr||"")!==String(p.fssr||"")||
+    String(current.fcs||"")!==String(p.fcs||""))
+    return '<div class="notice">Latest identity/source reconciliation unavailable. No compliance PASS.</div>';
+ // All 27 products promoted after the archived 116-case snapshot must be
+ // removed from old evidence-collection panels, not just the latest two eggs.
+ if(current.source_status==="PARTIAL_EXACT_SOURCE_MATCH")return "";
+ if(current.source_status!=="FIRST_EXACT_SOURCE_PENDING")
+    return '<div class="notice">Unrecognized official-source status; no PASS.</div>';
  return pmsvBefore444Local(p);
 };
