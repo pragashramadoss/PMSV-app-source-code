@@ -35,7 +35,7 @@ test("Exact fruit bar, cheese, date paste, murabba and candied sugar denominator
  assert.equal(val("04-04-1-date-paste","Acid-insoluble ash").value,0.1);
  assert.equal(val("04-04-1-murabba","Fruit content").value,55);
  const sugar=val("04-04-1-candied-crystallised-and-glazed-fruit-vegetable-rhizome-fruit-peel","Reducing sugar / total sugar");
- assert.equal(sugar.value,25);assert.match(sugar.basis,/total sugars/);
+ assert.equal(sugar.value,25);assert.match(sugar.unit,/total sugars/);assert.match(sugar.basis,/NOT % product mass/);
 });
 test("Frozen vegetables peroxidase NEGATIVE and minus 18 thermal centre; ginger paste not culinary paste",()=>{
  const f=record("04-04-2-frozen-vegetables");
