@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "assessed_on": "2026-10-13",
+  "source_policy": "OFFICIAL_FSSAI_ONLY",
+  "type": "CONDITIONAL_CTR_CHROMIUM_REFINED_SUGAR_SOURCE_NOT_COMPLIANCE",
+  "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "baseline": {
+    "catalogue": 533,
+    "partial": 497,
+    "pending": 36
+  },
+  "effective": {
+    "catalogue": 533,
+    "partial": 498,
+    "pending": 35
+  },
+  "positive_first_named_source_routes": 1,
+  "finished_lots_verified": 0,
+  "automatically_assigned_limits": 0,
+  "product_compliance_approvals": 0,
+  "routes": [
+    {
+      "catalog_id": "11-11-1-cube-sugar",
+      "product_name": "Cube Sugar",
+      "fssr": "2.8.1(5)",
+      "fcs": "11.1.5",
+      "route_family": "COMPRESSED_REFINED_CRYSTALLISED_SUGAR_CUBES",
+      "legal_match_status": "CONDITIONALLY_NAMED_REFINED_SUGAR_CHROMIUM_ONLY",
+      "reference_legal_article": "Refined sugar",
+      "fssr_identity_clause": "2.8.1(5) CUBE SUGAR",
+      "fssr_pdf_page": 3,
+      "fssr_positive_identity": "Cube sugar consists of white cube/cuboid blocks manufactured from refined crystallised sugar, with sucrose at least 99.7% by weight, moisture at most 0.25%, and total ash at most 0.03%. Permitted additives may be present, requiring actual formula review.",
+      "ctr_clause": "2.1.1 Chromium — Refined sugar",
+      "ctr_pdf_page": 13,
+      "article_source_values": [
+        {
+          "contaminant": "Chromium",
+          "exact_ctr_article": "Refined sugar",
+          "limit": 0.02,
+          "unit": "mg/kg",
+          "official_pdf_page": 13,
+          "source_only_not_assigned": true
+        }
+      ],
+      "subroute": "Only unblended plain cube/cuboid sugar manufactured solely by shaping refined crystallised sugar; if any additives, colour or other ingredients are used, obtain a separate positive finished article ruling.",
+      "required_positive_proofs": [
+        "Confirm as-sold finished food standard FSSR 2.8.1(5) and manufacturing route from documented refined crystallised sugar input.",
+        "Obtain batch process/recipe showing pressed sugar cubes versus composite, coated, coloured or flavoured confection.",
+        "Obtain qualified legal documentation that the Chromium CTR named article 'Refined sugar' applies to the marketed sugar cubes rather than only the loose refined sugar raw material.",
+        "Verify the actual finished lot and analytical sample matrix for chromium; this source panel cannot generate an analytical pass.",
+        "For any lead refined-white-sugar article, obtain measured sulphated ash and exact source-qualified marketed refined-white-sugar subtype independently."
+      ],
+      "specific_prohibited_transfers": [
+        "Do not use chromium 0.02 mg/kg for Misri (which can derive from any sugar or palmyrah juice).",
+        "Do not equate FSSR cube sugar total ash 0.03% with CTR lead sulphated ash 0.03%.",
+        "Do not automatically apply CTR lead refined white sugar <=0.5 mg/kg because the cube is white or contains >=99.7% sucrose.",
+        "Do not move stored sugar source-ingredient test results into a pressed finished cube test without verification.",
+        "Do not assume additives, coloured cubes, flavoured cubes or composite candies are the same named CTR refined sugar article.",
+        "Do not activate any future rule, claim full contaminant compliance or approve a production lot from this source mapping."
+      ],
+      "official_product_standard": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20(Sweetening%20agents%20including%20Honey).pdf",
+      "official_contaminants": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "actual_marketed_subroute_verified": false,
+      "recipe_batch_verified": false,
+      "legal_finished_article_scope_adjudicated": false,
+      "finished_sulphated_ash_measured": false,
+      "chromium_lab_result_verified": false,
+      "numeric_limits_auto_assigned": false,
+      "full_regulatory_approval": false
+    }
+  ]
+}
