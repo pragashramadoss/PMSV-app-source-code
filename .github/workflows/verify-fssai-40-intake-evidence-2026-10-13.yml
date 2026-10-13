@@ -1,0 +1,20 @@
+name: Verify PMSV current 40 documentary source closure requests
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-current40-evidence-intake-2026-10-13.js'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current40-evidence-intake-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/fssai-current40-evidence-intake-2026-10-13.test.cjs'
+      - '.github/workflows/verify-fssai-40-intake-evidence-2026-10-13.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check fssai-product-helper-preview-01/fssai-current40-evidence-intake-2026-10-13.js
+      - run: node --test tests/fssai-current40-evidence-intake-2026-10-13.test.cjs
