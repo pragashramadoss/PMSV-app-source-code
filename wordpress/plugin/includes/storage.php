@@ -21,14 +21,16 @@ function pmsv_wp_install() {
     foreach($rows as $n)pmsv_wp_insert($n);
     update_option('pmsv_wp_schema',3,false);
 }
-// Editorial exclusion: user-confirmed off-topic telecom report (12 October 2026).
+// Editorial exclusions: user-confirmed off-topic reports (12–13 October 2026).
 // Keep the stored row for recovery, but never expose or reinsert this story.
 function pmsv_wp_news_excluded($n) {
     $u=wp_parse_url((string)($n['url']??''));
     if(!is_array($u))return false;
     $host=strtolower((string)($u['host']??''));
-    return in_array($host,['rediff.com','www.rediff.com','m.rediff.com'],true)
-        && ($u['path']??'')==='/news/report/absurd-hypocrisy-elon-musk-escalates-attack-on-ambani/20261011.htm';
+    return (in_array($host,['rediff.com','www.rediff.com','m.rediff.com'],true)
+        && ($u['path']??'')==='/news/report/absurd-hypocrisy-elon-musk-escalates-attack-on-ambani/20261011.htm')
+        || (in_array($host,['ndtv.com','www.ndtv.com'],true)
+        && ($u['path']??'')==='/world-news/16-year-old-girl-allegedly-groped-by-robot-in-germany-police-seize-machine-12177408');
 }
 function pmsv_wp_insert($n) {
     if(pmsv_wp_news_excluded($n))return 0;
