@@ -1,0 +1,615 @@
+{
+  "packet": "PMSV FSSAI Helper — Official-source subtype evidence, 2026-10-13",
+  "purpose": "RESEARCH PACKET ONLY. Not a replacement for the 533-product ledger; rows describe conditional subtype routes and may overlap prior reviewed products.",
+  "source_portals": {
+    "current_compendium": "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards",
+    "amendments": "https://fssai.gov.in/food-law/regulations/amendments/food-products-standards",
+    "official_variants_reference": "https://fctest.fssai.gov.in/assets/docs/Final_Track%20change_Clubbing%20in%20the%20list%20of%20Standardized%20Food%20Products%20having%20variants%20%28types%20%20subtypes%29%20DFA%2034233.pdf"
+  },
+  "quality_warning": "The 2022 source is historical. Before promoting a product to current exact-source evidence, confirm all subsequent official FSSAI amendments and the active finished-product facts. Official 2025 variants list is a mapping aid, not a regulation. No compliance PASS is inferred.",
+  "method": "Positive finished-product identity/formulation/processing/physical-form test; no raw-ingredient contaminant leakage; separate quality/contaminant/additive/microbiological checks.",
+  "baseline_reference_not_reverified": {
+    "products": 533,
+    "conditional_matches": 498,
+    "first_source_gaps": 35
+  },
+  "rows_reviewed": 37,
+  "conditional_routes": 35,
+  "exclusion_routes": 2,
+  "ledger_mutated": false,
+  "wordpress_mutated": false,
+  "records": [
+    {
+      "code": "CUBE_SUGAR",
+      "identity": "Cube sugar",
+      "source_clause": "2.8.1(5)",
+      "positive_condition": "refined crystallised sugar formed into cube/cuboid blocks",
+      "avoid_inference": "Do not substitute refined sugar 2.8.1(2) merely because it is the input",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 341
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "MISRI",
+      "identity": "Misri",
+      "source_clause": "2.8.2",
+      "positive_condition": "candy form of sugar or palmyrah juice",
+      "avoid_inference": "Do not inherit cube-sugar quality values",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 341
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "DRIED_GLUCOSE_SYRUP",
+      "identity": "Dried glucose syrup",
+      "source_clause": "2.8.7",
+      "positive_condition": "coarse/fine hygroscopic white-to-cream powder",
+      "avoid_inference": "Do not borrow dextrose 2.8.5 or wet syrup parameters",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 348
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "DEXTROSE",
+      "identity": "Dextrose",
+      "source_clause": "2.8.5",
+      "positive_condition": "dextrose, not an unspecified glucose syrup",
+      "avoid_inference": "Do not misapply dried-glucose-syrup article",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 348
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "GOLDEN_SYRUP",
+      "identity": "Golden syrup",
+      "source_clause": "2.8.6",
+      "positive_condition": "syrup obtained by inversion of sugar",
+      "avoid_inference": "Keep separate from dried glucose syrup",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 348
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "REFINED_SUGAR",
+      "identity": "Refined sugar",
+      "source_clause": "2.8.1(2)",
+      "positive_condition": "white crystallised sugar obtained by refining plantation white sugar",
+      "avoid_inference": "Not automatically cube sugar",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 340
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "KHANDSARI_DESI",
+      "identity": "Khandsari sugar — desi",
+      "source_clause": "2.8.1(3)",
+      "positive_condition": "khandsari prepared by open-pan process; desi variety",
+      "avoid_inference": "Do not borrow khandsari sulphur variety limits",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 340
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "KHANDSARI_SULPHUR",
+      "identity": "Khandsari sugar — sulphur",
+      "source_clause": "2.8.1(3)",
+      "positive_condition": "khandsari prepared by open-pan process; sulphur variety",
+      "avoid_inference": "Do not borrow desi variety limits",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 340
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "HARD_BOILED_CONFECTIONERY",
+      "identity": "Hard-boiled sugar confectionery",
+      "source_clause": "2.7.1",
+      "positive_condition": "sugar-based composite boiled confectionery",
+      "avoid_inference": "Do not apply plain-sugar grades to finished confectionery",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 330
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "TOFFEE",
+      "identity": "Toffee",
+      "source_clause": "2.7.1",
+      "positive_condition": "sugar-boiled composite toffee",
+      "avoid_inference": "Check finished formulation; no automatic chocolate article",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 330
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "MILK_TOFFEE",
+      "identity": "Milk toffee",
+      "source_clause": "2.7.1",
+      "positive_condition": "milk toffee within sugar-boiled confectionery definition",
+      "avoid_inference": "Need milk-derived constituents; check distinct requirements",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 330
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "CENTRE_FILLED_SUGAR_CONFECTIONERY",
+      "identity": "Centre-filled sugar confectionery",
+      "source_clause": "2.7.1",
+      "positive_condition": "sugar-boiled confectionery with liquid/semi-solid/solid centre",
+      "avoid_inference": "Centre filling does not itself prove another finished-product category",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 330
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "DRIED_WHOLE_EGG",
+      "identity": "Dried whole egg powder",
+      "source_clause": "2.5.3(3)",
+      "positive_condition": "dried whole egg liquid derived from hens' eggs",
+      "avoid_inference": "Keep separate from dried yolk/white specifications",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 288
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "DRIED_EGG_YOLK",
+      "identity": "Dried egg yolk powder",
+      "source_clause": "2.5.3(3)",
+      "positive_condition": "dried hen egg yolk",
+      "avoid_inference": "Do not inherit whole-egg/whey or liquid-egg limits",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 288
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "DRIED_EGG_WHITE",
+      "identity": "Dried egg white powder",
+      "source_clause": "2.5.3(3)",
+      "positive_condition": "dried hen egg white",
+      "avoid_inference": "Use white-specific composition only",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 288
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "FROZEN_WHOLE_EGG",
+      "identity": "Frozen whole egg product",
+      "source_clause": "2.5.3(2)",
+      "positive_condition": "frozen whole liquid egg",
+      "avoid_inference": "Not dried egg powder or pickled egg",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 287
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "FROZEN_EGG_YOLK",
+      "identity": "Frozen egg yolk product",
+      "source_clause": "2.5.3(2)",
+      "positive_condition": "frozen egg yolk",
+      "avoid_inference": "Not dried egg powder or pickled egg",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 287
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "FROZEN_EGG_WHITE",
+      "identity": "Frozen egg white product",
+      "source_clause": "2.5.3(2)",
+      "positive_condition": "frozen egg white",
+      "avoid_inference": "Not dried egg powder or pickled egg",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 287
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "LIQUID_WHOLE_EGG",
+      "identity": "Liquid whole egg product",
+      "source_clause": "2.5.3(4)",
+      "positive_condition": "liquid whole hen egg",
+      "avoid_inference": "Not frozen or dried egg products",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 288
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "LIQUID_EGG_YOLK",
+      "identity": "Liquid egg yolk product",
+      "source_clause": "2.5.3(4)",
+      "positive_condition": "liquid hen egg yolk",
+      "avoid_inference": "Not frozen or dried egg products",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 288
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "LIQUID_EGG_WHITE",
+      "identity": "Liquid egg white product",
+      "source_clause": "2.5.3(4)",
+      "positive_condition": "liquid hen egg white",
+      "avoid_inference": "Not frozen or dried egg products",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 288
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "ROASTED_GROUND_COFFEE_CHICORY",
+      "identity": "Roasted and ground coffee–chicory mixture",
+      "source_clause": "2.10.4(1)",
+      "positive_condition": "roasted ground coffee blended with roasted ground chicory",
+      "avoid_inference": "Do not inherit instant variety values",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 394
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "INSTANT_COFFEE_CHICORY",
+      "identity": "Instant coffee–chicory mixture",
+      "source_clause": "2.10.4(2)",
+      "positive_condition": "instant/free-flowing or granulated coffee-chicory mixture",
+      "avoid_inference": "Do not inherit roasted-ground values",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 394
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "DECAF_ROASTED_COFFEE_CHICORY",
+      "identity": "Decaffeinated roasted and ground coffee–chicory",
+      "source_clause": "2.10.4(3)",
+      "positive_condition": "decaffeinated roasted ground variant",
+      "avoid_inference": "Do not inherit caffeinated caffeine minima",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 395
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "DECAF_INSTANT_COFFEE_CHICORY",
+      "identity": "Decaffeinated instant coffee–chicory",
+      "source_clause": "2.10.4(4)",
+      "positive_condition": "decaffeinated instant variety",
+      "avoid_inference": "Do not inherit caffeinated caffeine minima",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 395
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "FROZEN_VEGETABLES",
+      "identity": "Frozen vegetables — general",
+      "source_clause": "2.3.38",
+      "positive_condition": "sound clean vegetables washed, blanched and frozen; final product reaches prescribed frozen condition",
+      "avoid_inference": "Never inherit thermally processed canned vegetable article",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 156
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "FROZEN_BEANS",
+      "identity": "Frozen beans",
+      "source_clause": "2.3.38.A",
+      "positive_condition": "qualifying bean species/blanched frozen pods",
+      "avoid_inference": "Verify exact species and physical presentation; general frozen veg alone insufficient",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 156
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "FROZEN_CAULIFLOWER",
+      "identity": "Frozen cauliflower",
+      "source_clause": "2.3.38 (check subtype article)",
+      "positive_condition": "frozen cauliflower",
+      "avoid_inference": "Cross-check any more specific 2.3.38 subtype before using generic values",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 156
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "FROZEN_SPINACH",
+      "identity": "Frozen spinach",
+      "source_clause": "2.3.38 (check subtype article)",
+      "positive_condition": "frozen spinach",
+      "avoid_inference": "Cross-check any more specific subtype before final source-match",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 156
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "FROZEN_PEAS",
+      "identity": "Frozen peas",
+      "source_clause": "2.3.38 (check subtype article)",
+      "positive_condition": "frozen peas",
+      "avoid_inference": "Cross-check any more specific subtype before final source-match",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 156
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "THERMALLY_PROCESSED_FRUITS",
+      "identity": "Thermally processed fruits",
+      "source_clause": "2.3.1",
+      "positive_condition": "heat treated fruit within sealed suitable packing medium",
+      "avoid_inference": "Freezing alone is not sufficient; confirm finished heat-processed article",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 138
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "THERMALLY_PROCESSED_FRUIT_MIX",
+      "identity": "Thermally processed fruit salad/cocktail/mix",
+      "source_clause": "2.3.2",
+      "positive_condition": "mixture of fruits in liquid packing medium thermally processed",
+      "avoid_inference": "Do not conflate with plain thermally processed single-fruit forms",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 139
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "THERMALLY_PROCESSED_VEGETABLES",
+      "identity": "Thermally processed vegetables",
+      "source_clause": "2.3.3",
+      "positive_condition": "vegetables cooked/heat processed in applicable sealed form",
+      "avoid_inference": "Do not inherit frozen-vegetable standard",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 140
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "DRIED_FUNGI",
+      "identity": "Dried edible fungi",
+      "source_clause": "2.3.62",
+      "positive_condition": "edible fungi product in dried form from specified edible fungi",
+      "avoid_inference": "Do not treat raw mushroom or other vegetable as same form",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 196
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "STERILISED_FUNGI",
+      "identity": "Sterilised edible fungi",
+      "source_clause": "2.3.62",
+      "positive_condition": "sterilised edible fungi finished product",
+      "avoid_inference": "Check finished species and processing; not automatically canned mushroom",
+      "result": "conditional_reference_only",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 196
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "PICKLED_EGGS",
+      "identity": "Pickled eggs",
+      "source_clause": "unverified",
+      "positive_condition": "egg product preserved by pickling",
+      "avoid_inference": "2.5.3(3) dried egg powder is an EXCLUSION, not a positive matching article",
+      "result": "blocked_requires_exact_finished_article",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 288
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    },
+    {
+      "code": "COCOA_BEANS",
+      "identity": "Cocoa beans",
+      "source_clause": "unverified",
+      "positive_condition": "raw or processed cocoa beans as finished traded article",
+      "avoid_inference": "2.7.4 chocolate is an EXCLUSION, not cocoa-bean finished-product source",
+      "result": "blocked_requires_exact_finished_article",
+      "source": {
+        "regulation": "FSS (Food Products Standards and Food Additives) Regulations, 2011",
+        "compendium_version": "Version XXIV, 01 July 2022 (historic source; recheck amendments)",
+        "pdf_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_30_06_2022.pdf",
+        "pdf_zero_based_page": 333
+      },
+      "completed_compliance_review": false,
+      "contaminant_limit_assigned": false
+    }
+  ]
+}
