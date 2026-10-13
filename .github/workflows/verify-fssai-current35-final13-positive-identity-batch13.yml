@@ -1,0 +1,26 @@
+name: Verify FSSAI current 35 final 13 identity dossiers Batch 13
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-final13-positive-identity-evidence-batch13-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-final13-positive-identity-evidence-batch13-2026-10-13.js'
+      - 'tests/fssai-current35-final13-positive-identity-evidence-batch13-2026-10-13.test.cjs'
+      - '.github/workflows/verify-fssai-current35-final13-positive-identity-batch13.yml'
+      - 'fssai-product-helper-preview-01/index.html'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 13 identities, 65 mandatory gates and no unsupported approvals
+        run: node --test tests/fssai-current35-final13-positive-identity-evidence-batch13-2026-10-13.test.cjs
+      - name: Check panel syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-final13-positive-identity-evidence-batch13-2026-10-13.js
