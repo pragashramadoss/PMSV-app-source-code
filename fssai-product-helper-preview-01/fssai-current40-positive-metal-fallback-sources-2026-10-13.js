@@ -109,7 +109,7 @@ function pmsvCurrent40FallbackHtml(p){
  if(!r||r.product_name!==p.name||String(r.fssr||"")!==String(p.fssr||"")||
  String(r.fcs||"")!==String(p.fcs||""))
  return '<div class="notice">Fallback evidence product ID mismatch — no numeric assignment.</div>';
- const escf=v=>typeof esc==="function"?esc(String(v)):String(v).replace(/[&<>"']/g,z=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;":"&quot;","'":"&#39;"}[z]));
+ const escf=v=>typeof esc==="function"?esc(String(v)):String(v).replace(/[&<>"']/g,z=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[z]));
  const rows=d.fallback_metal_rows;
  let h='<details class="card" style="margin-top:12px"><summary><b>Official positive source pathway — Foods not specified</b> · '+escf(r.product_name)+'</summary>'+
  '<div class="notice"><b>Six real CTR IX source rows, but NO limits assigned to this product.</b> Article-specific exclusion, chemical monographs and actual finished form must be adjudicated first. Current named finished article is STILL PENDING.</div>'+
