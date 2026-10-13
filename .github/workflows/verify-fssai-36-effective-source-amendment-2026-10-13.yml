@@ -1,0 +1,20 @@
+name: Verify current FSSAI 36 source decisions and May amendment date
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current36-source-and-december-amendment-guard-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/fssai-current36-effective-source-triage-2026-10-13.js'
+      - 'tests/fssai-current36-effective-source-triage-2026-10-13.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-36-effective-source-amendment-2026-10-13.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check fssai-product-helper-preview-01/fssai-current36-effective-source-triage-2026-10-13.js
+      - run: node --test tests/fssai-current36-effective-source-triage-2026-10-13.test.cjs
