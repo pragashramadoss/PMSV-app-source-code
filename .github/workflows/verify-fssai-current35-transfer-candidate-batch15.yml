@@ -1,0 +1,26 @@
+name: Verify FSSAI 35-case document-transfer and conditional gates Batch15
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-review-transfer-conditional-claims-batch15-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-review-transfer-conditional-claims-batch15-2026-10-13.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/fssai-current35-review-transfer-conditional-claims-batch15-2026-10-13.test.cjs'
+      - '.github/workflows/verify-fssai-current35-transfer-candidate-batch15.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 35-case cross-device JSON and no false positive CTR clearance
+        run: node --test tests/fssai-current35-review-transfer-conditional-claims-batch15-2026-10-13.test.cjs
+      - name: Check browser module syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-review-transfer-conditional-claims-batch15-2026-10-13.js
