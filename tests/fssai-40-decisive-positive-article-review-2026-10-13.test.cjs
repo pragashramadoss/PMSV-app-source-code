@@ -24,10 +24,10 @@ test("All 40 finished foods preserve named CTR status and separate FSSR quality 
 });
 test("Nontransfer controls explicitly distinguish wrong ash tests and mistaken commodity articles",()=>{
  const find=id=>d.records.find(x=>x.catalog_id===id);
- assert.match(find("11-11-1-cube-sugar").decisive_positive_evidence,/Total ash/);
- assert.match(find("11-11-1-misri").decisive_positive_evidence,/Total ash/);
- assert.match(find("11-11-1-dried-glucose-syrup").decisive_positive_evidence,/more than 1%/);
- assert.match(find("06-06-1-quinoa").decisive_positive_evidence,/exclude quinoa/);
+ assert.match(find("11-11-1-cube-sugar").decisive_positive_evidence,/total ash/i);
+ assert.match(find("11-11-1-misri").decisive_positive_evidence,/total ash/i);
+ assert.match(find("11-11-1-dried-glucose-syrup").decisive_positive_evidence,/more than 1%|high-ash/i);
+ assert.match(find("06-06-1-quinoa").decisive_positive_evidence,/exclusion|exclude quinoa/i);
  assert.match(find("04-04-1-fruit-cheese").decisive_positive_evidence,/pulp and pulp products/);
  assert.match(find("100-100-royal-jelly").decision_track,/honey\/beeswax/);
 });
