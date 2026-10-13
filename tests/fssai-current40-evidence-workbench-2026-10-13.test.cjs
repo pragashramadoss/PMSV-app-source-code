@@ -30,7 +30,7 @@ test("Source statements preserve distinctions in quinoa, chia, cube sugar, misri
 });
 test("Four manually received documents still mean NO regulatory article match or pass",()=>{
  const {c,mem}=ctx(),x=intake.intake_records[0];
- mem.set(c.pmsv40WorkbenchStorageKey,JSON.stringify({[x.catalog_id]:{documents:[true,true,true,true],reference:"Ref ID",note:"Not validated"}}));
+ mem.set("pmsv40:review-receipts:v1",JSON.stringify({[x.catalog_id]:{documents:[true,true,true,true],reference:"Ref ID",note:"Not validated"}}));
  const v=c.pmsv40WorkbenchExportCase(x.catalog_id);
  assert.equal(v.receipt_count,4);
  assert.equal(v.status,"FIRST_EXACT_SOURCE_PENDING");
@@ -51,7 +51,7 @@ test("Local receipt event saves without altering canonical legal status",()=>{
 });
 test("Corrupt local or official source records fail closed",()=>{
  const {c,mem}=ctx();
- mem.set(c.pmsv40WorkbenchStorageKey,JSON.stringify({fake:{documents:[true,true,true,true],product_regulatory_approval:true}}));
+ mem.set("pmsv40:review-receipts:v1",JSON.stringify({fake:{documents:[true,true,true,true],product_regulatory_approval:true}}));
  assert.equal(Object.keys(c.pmsv40WorkbenchRead()).length,0);
  for(const f of [x=>x.dossiers[0].id="fabricated",x=>x.dossiers[1].sources=["https://evil.example","https://evil.example"],x=>x.lot_passes=1]){
   const z=ctx().c;f(z.pmsv40WorkbenchSources);assert.equal(z.pmsv40WorkbenchValid(),false);
