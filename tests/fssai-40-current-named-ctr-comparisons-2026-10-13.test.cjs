@@ -71,6 +71,27 @@ test("Preview HTML has comparisons only, no automatic compliance PASS for all fo
   else assert.match(h,/not an exemption/);
  }
 });
+test("Five direct FSSR product definitions are sourced, separated from contaminant-article matching and shown without an automatic PASS",()=>{
+ const ids=["11-11-1-cube-sugar","11-11-1-misri","04-04-1-frozen-fruits-fruit-products","04-04-2-frozen-vegetables","coffee-chicory-mixture"];
+ const x=ctx();assert.equal(x.pmsv40CtrComparisonsValid(),true);
+ assert.equal(d.records.filter(y=>y.finished_standard_evidence).length,5);
+ for(const id of ids){
+  const z=d.records.find(y=>y.catalog_id===id),s=z.finished_standard_evidence;
+  assert.ok(s,id);assert.equal(s.evidence_type,"EXACT_FSSR_FINISHED_STANDARD_NOT_CTR_MATCH");
+  assert.equal(s.first_named_ctr_promoted,false);assert.equal(s.automatic_contaminant_limit,false);
+  assert.equal(s.independently_verified_lot,false);assert.match(s.official_fssr_url,/^https:\/\/www\.fssai\.gov\.in\/upload\//);
+  const h=x.sourcePinned121ResearchProofHtml(p(z));
+  assert.match(h,/Direct FSSR finished-product evidence/);
+  assert.match(h,/Legal contaminant matching still required/);
+  assert.match(h,/COMPARISON ONLY — NO PRODUCT LIMIT ASSIGNED/);
+ }
+ const cube=d.records.find(z=>z.catalog_id==="11-11-1-cube-sugar").finished_standard_evidence;
+ assert.match(cube.ctr_transfer_gate,/total ash.*NOT proof.*sulphated-ash/i);
+ const frozen=d.records.find(z=>z.catalog_id==="04-04-2-frozen-vegetables").finished_standard_evidence;
+ assert.ok(frozen.documented_requirements.some(x=>/Peroxidase.*negative/.test(x)));
+ const bad=ctx();bad.pmsv40CtrComparisons.records.find(z=>z.catalog_id==="11-11-1-cube-sugar").finished_standard_evidence.automatic_contaminant_limit=true;
+ assert.equal(bad.pmsv40CtrComparisonsValid(),false);
+});
 test("Fail-closed on source limit, universal value, fake product, mislabelled comparison, missing upstream, wrong queue",()=>{
  for(const k of ["limit","universal","identity","applied","upstream","queue","approval"]){
   const c=ctx();
