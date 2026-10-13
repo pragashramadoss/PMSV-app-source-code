@@ -1,0 +1,73 @@
+{
+  "as_of": "2026-10-13",
+  "scope": "PMSV Current FSSAI Helper first-named-CTR source pending product verification — Batch 9",
+  "source_legal_basis": [
+    "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_5_Meat%20and%20Meat%20products(1).pdf",
+    "https://www.fssai.gov.in/upload/notifications/2018/11/5bfd0a04c4d4bGazette_Notification_Children_Supplement_26_11_2018.pdf",
+    "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf"
+  ],
+  "current_ledger": {
+    "products": 533,
+    "conditional_first_sources": 498,
+    "still_first_named_source_pending": 35,
+    "full_compliance_approvals": 0,
+    "blob_sha": "db7bf5b3c4e918bc06c1373c5e0abc54e24840bf"
+  },
+  "screened_35": true,
+  "new_fully_proven_exact_named_source_matches": 0,
+  "three_conditional_routes": [
+    {
+      "id": "10-10-3-pickled-eggs",
+      "requires": "Genuinely processed and canned pickled eggs, not a sealed jar, pouch, or ingredient-only comparison",
+      "reference": "CTR Tin — canned foods other than beverages, 250 mg/kg; reference only"
+    },
+    {
+      "id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "requires": "Actual finished premix contains a legally listed cereal/nut/oilseed/pulse/spice etc. and is within the composite-food scope",
+      "reference": "CTR total aflatoxins 20 µg/kg and B1 10 µg/kg; reference only"
+    },
+    {
+      "id": "formulated-supplements-children",
+      "requires": "Age >24 to 36 months and actual formula includes a legally listed crop; ingredients are permitted, not mandatory",
+      "reference": "CTR total aflatoxins 20 µg/kg and B1 10 µg/kg; reference only"
+    }
+  ],
+  "candidate_routes_require_positive_gates": 12,
+  "remaining_pending_without_new_candidate": 32,
+  "files": {
+    "source_evidence_json": "fssai-product-helper-preview-01/data/rules/fssai-current35-positive-named-ctr-candidate-gates-batch9-2026-10-13.json",
+    "source_evidence_sha": "46c0637198fd0072e14fe7e898baa607d9094e47",
+    "interface_script": "fssai-product-helper-preview-01/fssai-current35-positive-source-gates-batch9-2026-10-13.js",
+    "script_sha": "1d78cabd31a3b2b6de3a0fadacb0d1dc241e85d0",
+    "html_index": "fssai-product-helper-preview-01/index.html",
+    "html_sha": "1a2d8ee6792d6099de28c6fa12b7f84a98923af9",
+    "regression_test": "tests/fssai-current35-positive-source-batch9-2026-10-13.test.cjs",
+    "test_sha": "9c0730650db11053b9c5d6af82da8089b00999db",
+    "workflow": ".github/workflows/verify-fssai-current35-positive-source-batch9.yml",
+    "workflow_sha": "e4f7979f4a108457f9ef4875c30cfdd78f7a1265"
+  },
+  "checks": {
+    "saved_all_seven_files": true,
+    "all_pending_35_IDs_unchanged": true,
+    "new_three_original_IDs": true,
+    "three_cases_with_4_positive_evidence_gates": true,
+    "published_figures_never_assigned": true,
+    "original_533_source_ledger_unmodified": true,
+    "only_3_candidate_UI_cards": true,
+    "source_integrity_pin": true,
+    "added_six_regression_tests": true,
+    "CI_workflow_saved": true,
+    "WordPress_untouched": true
+  },
+  "functional_simulation": {
+    "three_new_cards_rendered": true,
+    "other_32_cards_unchanged": true,
+    "tampered_article_identity_or_limit_rejected": true
+  },
+  "official_scope_policy": "DO_NOT_PROMOTE_UNTIL_EXACT_ACTUAL_FINISHED_IDENTITY_RECIPE_PROCESS_PACKAGING_SCOPE_LAB_AND_LEGAL_REVIEW_ARE_PROVEN",
+  "source_ledger_modified": false,
+  "WordPress_production_modified": false,
+  "GitHub_Actions_CI_success_independently_confirmed": false,
+  "public_GitHub_Pages_browser_render_confirmed": false
+}
