@@ -6,6 +6,7 @@ on:
       - 'fssai-product-helper-preview-01/**'
       - 'tests/fssai-current-40-quality-coverage-26-14-2026-10-12.test.cjs'
       - 'tests/fssai-four-new-current-quality-2026-10-13.test.cjs'
+      - 'tests/fssai-ten-pending-source-decisions-2026-10-13.test.cjs'
       - '.github/workflows/verify-fssai-pending-40-quality-coverage.yml'
   workflow_dispatch:
 jobs:
@@ -17,4 +18,5 @@ jobs:
         with: {node-version: '22'}
       - run: node --check fssai-product-helper-preview-01/fssai-pending-40-quality-coverage.js
       - run: node --check fssai-product-helper-preview-01/fssai-four-new-pending-quality-2026-10-13.js
-      - run: node --test tests/fssai-current-40-quality-coverage-26-14-2026-10-12.test.cjs tests/fssai-four-new-current-quality-2026-10-13.test.cjs
+      - run: node --check fssai-product-helper-preview-01/fssai-ten-pending-source-decisions-2026-10-13.js
+      - run: node --test tests/fssai-current-40-quality-coverage-26-14-2026-10-12.test.cjs tests/fssai-four-new-current-quality-2026-10-13.test.cjs tests/fssai-ten-pending-source-decisions-2026-10-13.test.cjs
