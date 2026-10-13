@@ -30,7 +30,9 @@ function pmsv_wp_news_excluded($n) {
     return (in_array($host,['rediff.com','www.rediff.com','m.rediff.com'],true)
         && ($u['path']??'')==='/news/report/absurd-hypocrisy-elon-musk-escalates-attack-on-ambani/20261011.htm')
         || (in_array($host,['ndtv.com','www.ndtv.com'],true)
-        && ($u['path']??'')==='/world-news/16-year-old-girl-allegedly-groped-by-robot-in-germany-police-seize-machine-12177408');
+        && ($u['path']??'')==='/world-news/16-year-old-girl-allegedly-groped-by-robot-in-germany-police-seize-machine-12177408')
+        || (in_array($host,['hindustantimes.com','www.hindustantimes.com'],true)
+        && ($u['path']??'')==='/india-news/economist-jean-dr-ze-slams-heavy-security-at-cjp-protest-alleges-threat-to-voting-rights-101791626633786.html');
 }
 function pmsv_wp_insert($n) {
     if(pmsv_wp_news_excluded($n))return 0;
