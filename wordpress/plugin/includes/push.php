@@ -34,6 +34,13 @@ function pmsv_wp_change_push($remove) {
     if($remove)$result=$wpdb->query($wpdb->prepare("DELETE FROM $t WHERE id=%s AND token_hash=%s",$id,$token));
     else $result=$wpdb->query($wpdb->prepare("INSERT IGNORE INTO $t (id,endpoint,token_hash,seen_at,retry_at) VALUES (%s,%s,%s,%d,0)",$id,$d['endpoint'],$token,$now));
     if($result===false)throw new RuntimeException('Subscription write failed');
+    // Same-origin, HttpOnly cookie lets the service worker retrieve only this browser's
+    // private queued answer alerts. The push itself remains payload-free.
+    if($remove){
+        $wpdb->delete(pmsv_wp_table('question_watchers'),['device_id'=>$id],['%s']);
+        $wpdb->delete(pmsv_wp_table('push_alerts'),['device_id'=>$id],['%s']);
+        pmsv_wp_push_device_cookie('',0);
+    }else pmsv_wp_push_device_cookie($id.'.'.pmsv_wp_device_signature($id,$token),time()+90*DAY_IN_SECONDS);
     return pmsv_wp_reply(['enabled'=>!$remove]);
 }
 function pmsv_wp_vapid($endpoint,$keys) {
@@ -137,4 +144,86 @@ function pmsv_wp_dispatch() {
     }
     $remaining=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $t WHERE seen_at<%d AND retry_at<=%d",$cutoff,(int)floor(microtime(true)*1000)));
     return compact('accepted','failed','remaining');
+}
+
+/**
+ * Discussion answer alerts reuse the registered VAPID subscription and never
+ * send sensitive data to the third-party push provider.
+ */
+function pmsv_wp_device_signature($id,$token_hash) {
+    return hash_hmac('sha256',$id.'|'.$token_hash,wp_salt('secure_auth'));
+}
+function pmsv_wp_push_device_cookie($value,$expiry) {
+    setcookie('pmsv_push_device',$value,[
+        'expires'=>$expiry,'path'=>'/','secure'=>is_ssl(),
+        'httponly'=>true,'samesite'=>'Strict'
+    ]);
+}
+function pmsv_wp_forum_verified_device($endpoint,$token) {
+    if(!pmsv_wp_endpoint($endpoint)||!is_string($token)||strlen($token)<32||strlen($token)>150)return null;
+    global $wpdb;
+    $id=pmsv_wp_digest($endpoint);
+    $expected=pmsv_wp_digest($token);
+    $stored=$wpdb->get_var($wpdb->prepare("SELECT token_hash FROM ".pmsv_wp_table('devices')." WHERE id=%s",$id));
+    return is_string($stored)&&hash_equals($stored,$expected)?$id:null;
+}
+function pmsv_wp_push_cookie_device() {
+    $cookie=$_COOKIE['pmsv_push_device']??'';
+    if(!is_string($cookie)||!preg_match('/^([a-f0-9]{64})\\.([a-f0-9]{64})$/D',$cookie,$parts))return null;
+    global $wpdb;
+    $id=$parts[1];
+    $token_hash=$wpdb->get_var($wpdb->prepare("SELECT token_hash FROM ".pmsv_wp_table('devices')." WHERE id=%s",$id));
+    if(!is_string($token_hash))return null;
+    return hash_equals(pmsv_wp_device_signature($id,$token_hash),$parts[2])?$id:null;
+}
+function pmsv_wp_forum_push_inbox() {
+    $id=pmsv_wp_push_cookie_device();
+    if(!$id)return pmsv_wp_reply(['alert'=>null]);
+    global $wpdb;
+    $alerts=pmsv_wp_table('push_alerts');$q=pmsv_wp_table('questions');
+    // Old failed deliveries should not turn a later daily news push into an old alert.
+    $wpdb->query($wpdb->prepare("DELETE FROM $alerts WHERE created_at < %d",time()-DAY_IN_SECONDS));
+    $row=$wpdb->get_row($wpdb->prepare(
+        "SELECT a.id,a.question_id,a.answer_id,q.title FROM $alerts a JOIN $q q ON q.id=a.question_id WHERE a.device_id=%s AND q.status='published' ORDER BY a.id ASC LIMIT 1",$id
+    ),ARRAY_A);
+    if($wpdb->last_error)throw new RuntimeException('Discussion inbox unavailable');
+    if(!$row)return pmsv_wp_reply(['alert'=>null]);
+    $wpdb->delete($alerts,['id'=>(int)$row['id'],'device_id'=>$id],['%d','%s']);
+    $title=wp_strip_all_tags($row['title']);
+    return pmsv_wp_reply(['alert'=>[
+        'title'=>'PMSV Discussions — New answer',
+        'body'=>'Someone answered: '.mb_substr($title,0,110),
+        'url'=>pmsv_wp_base().'/discussions/'.(int)$row['question_id'].'#answer-'.(int)$row['answer_id'],
+        'tag'=>'pmsv-answer-'.(int)$row['answer_id']
+    ]]);
+}
+function pmsv_wp_forum_push_answer($question_id,$answer_id) {
+    global $wpdb;
+    $watch=pmsv_wp_table('question_watchers');$devices=pmsv_wp_table('devices');
+    $alerts=pmsv_wp_table('push_alerts');
+    $rows=$wpdb->get_results($wpdb->prepare(
+        "SELECT d.id,d.endpoint FROM $watch w INNER JOIN $devices d ON w.device_id=d.id WHERE w.question_id=%d LIMIT 5",$question_id
+    ),ARRAY_A);
+    if(!$rows||$wpdb->last_error)return;
+    $keys=pmsv_wp_keys();
+    foreach($rows as $row){
+        if(!pmsv_wp_endpoint($row['endpoint']))continue;
+        $wpdb->insert($alerts,[
+            'device_id'=>$row['id'],'question_id'=>$question_id,
+            'answer_id'=>$answer_id,'created_at'=>time()
+        ],['%s','%d','%d','%d']);
+        if(!$wpdb->insert_id)continue;
+        $pending_id=(int)$wpdb->insert_id;
+        $r=wp_safe_remote_post($row['endpoint'],[
+            'timeout'=>6,'redirection'=>0,
+            'headers'=>['Authorization'=>pmsv_wp_vapid($row['endpoint'],$keys),'TTL'=>'86400','Urgency'=>'normal','Content-Length'=>'0'],
+            'body'=>''
+        ]);
+        $code=is_wp_error($r)?0:wp_remote_retrieve_response_code($r);
+        if(in_array($code,[404,410],true)){
+            $wpdb->delete($devices,['id'=>$row['id']],['%s']);
+            $wpdb->delete($watch,['device_id'=>$row['id']],['%s']);
+        }
+        if($code<200||$code>=300)$wpdb->delete($alerts,['id'=>$pending_id],['%d']);
+    }
 }
