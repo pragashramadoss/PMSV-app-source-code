@@ -1,0 +1,148 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-10-13",
+  "policy": "ONLY_OFFICIAL_FSSAI_POSITIVE_FINISHED_CLASS_SOURCE",
+  "source_version": "Version IX (03.02.2026)",
+  "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "previous_ledger": "fssai-current-first-source-533-live-ledger-493-40-2026-10-12.json",
+  "previous_queue": "fssai-current-40-first-exact-source-proof-worklist-2026-10-12.json",
+  "baseline": {
+    "catalogue": 533,
+    "partial_exact": 493,
+    "first_source_pending": 40
+  },
+  "latest": {
+    "catalogue": 533,
+    "partial_exact": 495,
+    "first_source_pending": 38
+  },
+  "route_count": 2,
+  "first_source_category": "CONDITIONAL_NAMED_FSSR_CTR_SOURCE_ONLY",
+  "actual_market_form_verified": false,
+  "auto_limit_application": false,
+  "actual_lot_lab_passes": 0,
+  "full_compliance_approvals": 0,
+  "routes": [
+    {
+      "catalog_id": "06-06-1-quinoa",
+      "product_name": "Quinoa",
+      "fssr": "2.4.6",
+      "fcs": "06.1",
+      "source_family": "STANDARDIZED_CEREAL_CHAPTER_QUINOA_CONDITIONAL_AFLATOXIN",
+      "finished_subroute_identity": "Only as FSSR 2.4.6(18) standardized cleaned, de-saponified Chenopodium quinoa grain, unblended and sold as quinoa grain; not processed quinoa flour, a composite breakfast cereal or a quinoa ingredient inside unrelated recipes.",
+      "named_qualified_finished_article": "Cereal and cereal products — limited to aflatoxin crop-contaminant assessment of qualifying standardized quinoa grain",
+      "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_4%20%28Cereals%20and%20Cereal%20products%29%281%29.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "primary_official_evidence": "FSSR Chapter 2.4, 2.4.6(18) standardizes Quinoa as a dried matured grain; CTR IX §2.2.1 uses 'Cereal and cereal products' for total aflatoxins and aflatoxin B1 (PDF page 14), without the explicit quinoa exclusion found in §2.1.1 cereal-grain metal rows.",
+      "source_article_candidates": [
+        {
+          "contaminant": "Total Aflatoxins",
+          "article": "Cereal and cereal products",
+          "limit": 15,
+          "unit": "µg/kg",
+          "analytical_basis": "finished standardized quinoa grain; conditional class determination; analytical identity and latest amendments to be checked"
+        },
+        {
+          "contaminant": "Aflatoxin B1",
+          "article": "Cereal and cereal products",
+          "limit": 10,
+          "unit": "µg/kg",
+          "analytical_basis": "finished standardized quinoa grain; conditional class determination; analytical identity and latest amendments to be checked"
+        }
+      ],
+      "positive_source_basis": [
+        "FSSR Chapter 2.4 explicitly places standardized quinoa grain in Cereals and Cereal Products, clause 2.4.6(18).",
+        "CTR IX §2.2.1 has separate named Cereal and cereal products total aflatoxins and aflatoxin B1 articles.",
+        "CTR's grain-metal quinoa exclusions do not appear in those named crop-contaminant entries; exceptions remain analyte-specific.",
+        "This source route is conditional on marketed finished form actually being the standardized unblended quinoa grain.",
+        "Do not infer that raw ingredient test data, processing factors or a processed quinoa recipe are equivalent to this finished article."
+      ],
+      "negative_transfer_controls": [
+        "Never inherit the CTR lead or cadmium 'cereal grains except ... quinoa' article.",
+        "Do not borrow 2,4-D MRL for 'milled food grains' for quinoa without independent residue proof.",
+        "Do not classify chia seed as cereal just because it is in the same FSSR chapter.",
+        "Do not classify quinoa composite foods as unblended quinoa grain.",
+        "Do not infer passing aflatoxin results, laboratory sampling, or total regulatory clearance.",
+        "Aflatoxin category interpretation for an actual marketed product requires regulator-reviewed current applicability evidence."
+      ],
+      "physical_marketed_identity_verified": false,
+      "recipe_or_ingredient_verified": false,
+      "legal_scope_fully_adjudicated": false,
+      "processing_equivalence_confirmed": false,
+      "lab_results_verified": false,
+      "automatic_limit_application": false,
+      "complete_compliance_pass": false
+    },
+    {
+      "catalog_id": "04-04-2-frozen-vegetables",
+      "product_name": "Frozen Vegetables",
+      "fssr": "2.3.38",
+      "fcs": "04.2.2.1",
+      "source_family": "PLAIN_FROZEN_WHOLE_VEGETABLE_CONDITIONAL_METAL",
+      "finished_subroute_identity": "Only plain, washed/blanched and frozen vegetable portions retaining vegetable identity; separate classification required for curried/seasoned mixtures, sauces, milk-solids additions, composite ready-to-eat dishes and species-specific lead/cadmium categories.",
+      "named_qualified_finished_article": "Vegetables — only conditionally for plain frozen vegetables retaining the vegetable matrix and not the separate named processed/mixture class",
+      "official_standard_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "official_ctr": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "primary_official_evidence": "FSSR 2.3.38 defines washed, blanched and frozen vegetables as the product, including individually quick-frozen portions; CTR IX §2.1.1 lists named broad 'Vegetables' articles for Cu, As, Cr, Ni and Sb, while some other metals have subtype-specific and processed-food rows.",
+      "source_article_candidates": [
+        {
+          "contaminant": "Copper",
+          "article": "Vegetables",
+          "limit": 30,
+          "unit": "mg/kg",
+          "analytical_basis": "plain marketed frozen vegetable matrix, conditional confirmation required"
+        },
+        {
+          "contaminant": "Arsenic",
+          "article": "Vegetables",
+          "limit": 1.1,
+          "unit": "mg/kg",
+          "analytical_basis": "plain marketed frozen vegetable matrix, conditional confirmation required"
+        },
+        {
+          "contaminant": "Chromium",
+          "article": "Vegetables",
+          "limit": 1,
+          "unit": "mg/kg",
+          "analytical_basis": "plain marketed frozen vegetable matrix, conditional confirmation required"
+        },
+        {
+          "contaminant": "Nickel",
+          "article": "Vegetables",
+          "limit": 1,
+          "unit": "mg/kg",
+          "analytical_basis": "plain marketed frozen vegetable matrix, conditional confirmation required"
+        },
+        {
+          "contaminant": "Antimony",
+          "article": "Vegetables",
+          "limit": 1,
+          "unit": "mg/kg",
+          "analytical_basis": "plain marketed frozen vegetable matrix, conditional confirmation required"
+        }
+      ],
+      "positive_source_basis": [
+        "FSSR Chapter 2.3 standard 2.3.38 expressly calls washed, blanched and frozen vegetables a finished marketed product.",
+        "CTR IX §2.1.1, Copper 'Vegetables' appears on PDF page 8 at 30 mg/kg.",
+        "CTR IX §2.1.1, Arsenic 'Vegetables' appears on PDF page 10 at 1.1 mg/kg.",
+        "CTR IX §2.1.1, Chromium, Nickel and Antimony 'Vegetables' appear on PDF page 13 at 1 mg/kg each.",
+        "The conditional subroute applies only if actual final product is plain vegetable portions rather than a mixed/seasoned finished preparation."
+      ],
+      "negative_transfer_controls": [
+        "Do not transfer the lead or cadmium raw vegetable subtype without identifying exact vegetable species and legal form.",
+        "Do not inherit unrelated canned vegetables, vegetables puree or processed tomato concentrate entries.",
+        "Do not apply a plain vegetable entry to salted, spiced, dairy-containing, curried or mixed composite meals without category proof.",
+        "Do not use plant-ingredient limits as finished composite food limits.",
+        "Do not auto-convert any regulatory numerical value into a lab acceptance PASS.",
+        "Actual product species, processing, marketed form and sampling basis remain unverified."
+      ],
+      "physical_marketed_identity_verified": false,
+      "recipe_or_ingredient_verified": false,
+      "legal_scope_fully_adjudicated": false,
+      "processing_equivalence_confirmed": false,
+      "lab_results_verified": false,
+      "automatic_limit_application": false,
+      "complete_compliance_pass": false
+    }
+  ]
+}

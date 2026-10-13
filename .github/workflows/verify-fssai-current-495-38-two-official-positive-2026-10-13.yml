@@ -1,0 +1,22 @@
+name: Verify FSSAI 495/38 conditional named sources (official)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-current-first-source-495-38.js'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-two-quinoa-frozen-conditional-named-source-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current-first-source-533-live-ledger-495-38-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current-38-first-exact-source-proof-worklist-2026-10-13.json'
+      - 'tests/fssai-current-495-38-two-official-positive-routes-2026-10-13.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current-495-38-two-official-positive-2026-10-13.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check fssai-product-helper-preview-01/fssai-current-first-source-495-38.js
+      - run: node --test tests/fssai-current-495-38-two-official-positive-routes-2026-10-13.test.cjs
