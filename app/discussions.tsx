@@ -1,7 +1,7 @@
 'use client';
 import {useEffect,useMemo,useState} from 'react';
 import {BookOpen,Newspaper,ShieldCheck,FileText,MessagesSquare,MessageCircleQuestion,ArrowLeft,Send,Flag,Search,Shield,BadgeCheck,TrendingUp} from 'lucide-react';
-import AppNotifications from './app-notifications';
+import AppNotifications,{subscribeToDiscussionAnswers} from './app-notifications';
 
 type Question={
  id:string;title:string;body:string;category:'food-safety'|'quality'|'process-excellence';
@@ -57,6 +57,7 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
  const [name,setName]=useState('');
  const [title,setTitle]=useState('');
  const [body,setBody]=useState('');
+ const [notifyOnAnswer,setNotifyOnAnswer]=useState(true);
  const [answerName,setAnswerName]=useState('');
  const [answerBody,setAnswerBody]=useState('');
  const [previewView,setPreviewView]=useState<'list'|'ask'|'topic'|'detail'>('list');
@@ -97,9 +98,13 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
   finally{setLoading(false)}
  }
  useEffect(()=>{load()},[endpoint]);
+ useEffect(()=>{
+  if(!detail||typeof window==='undefined'||!/^#answer-[0-9]+$/.test(location.hash))return;
+  document.getElementById(location.hash.slice(1))?.scrollIntoView({block:'start',behavior:'smooth'});
+ },[detail]);
 
  function resetAskForm(){
-  setCategory('food-safety');setName('');setTitle('');setBody('');setMessage('');
+  setCategory('food-safety');setName('');setTitle('');setBody('');setNotifyOnAnswer(true);setMessage('');
  }
 
   async function ask(e:React.FormEvent){
@@ -112,9 +117,14 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
    return;
   }
   try{
-   const r=await fetch(route('/api/discussions'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,title,body,category})});
+   // If checked, request browser permission from the user's submit gesture.
+   const device=notifyOnAnswer?await subscribeToDiscussionAnswers():null;
+   const r=await fetch(route('/api/discussions'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+    name,title,body,category,notifyOnAnswer:Boolean(device),
+    notifyEndpoint:device?.endpoint,notifyToken:device?.token
+   })});
    const data=await r.json();if(!r.ok)throw new Error(data.error||'Unable to post question.');
-   location.href=route('/discussions/'+data.id);
+   location.href=route('/discussions/'+data.id+(notifyOnAnswer&&!data.notifying?'?answerAlerts=off':''));
   }catch(e){setMessage(e instanceof Error?e.message:'Unable to post question.');setSubmitting(false)}
  }
  async function answer(e:React.FormEvent){
@@ -160,6 +170,7 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
  if(questionId||(isPreview()&&previewView==='detail')){
   return <Shell detail={Boolean(questionId)}>{isPreview()&&previewView==='detail'&&<button type="button" className="discussion-back preview-back" onClick={()=>{setPreviewView(previewReturnView);setQuestions(readPreviewStore().map(x=>x.question).sort((a,b)=>b.lastActivityAt.localeCompare(a.lastActivityAt)));setAnswerName('');setAnswerBody('');}}><ArrowLeft size={17}/>All discussions</button>}<div className="heading-row"><div><h1>Discussion</h1><p className="intro">Food safety, quality and process excellence Q&amp;A.</p></div></div>
    {message&&<p className="discussion-message">{message}</p>}
+   {typeof window!=='undefined'&&new URLSearchParams(location.search).get('answerAlerts')==='off'&&<p className="discussion-message">Question posted, but answer alerts could not be saved for this device.</p>}
    {reportNotice&&<p className="discussion-report-notice">{reportNotice}</p>}
    {loading?<p className="discussion-loading">Loading discussion…</p>:detail?<><article className="question-detail">
     <div className="discussion-meta"><span className={'discussion-category '+detail.question.category}>{categoryLabel(detail.question.category)}</span><span>{dateLabel(detail.question.createdAt)}</span></div>
@@ -167,7 +178,7 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
    </article>
    <section className="answers-section"><h2>{detail.answers.length} {detail.answers.length===1?'Answer':'Answers'}</h2>
     {detail.answers.length===0&&<p className="discussion-empty">No answers yet. Be the first to respond.</p>}
-    {detail.answers.map(a=><article className="answer-card" key={a.id}><p>{a.body}</p><div className="answer-meta"><span><strong>{a.name}</strong><span>{dateLabel(a.createdAt)}</span></span><ReportControl type="answer" id={a.id}/></div></article>)}
+    {detail.answers.map(a=><article className="answer-card" id={'answer-'+a.id} key={a.id}><p>{a.body}</p><div className="answer-meta"><span><strong>{a.name}</strong><span>{dateLabel(a.createdAt)}</span></span><ReportControl type="answer" id={a.id}/></div></article>)}
    </section>
    <section className="answer-form-card"><h2>Your answer</h2><form onSubmit={answer}>
     <label>Display name<input required minLength={2} maxLength={40} value={answerName} onChange={e=>setAnswerName(e.target.value)} placeholder="Your name"/></label>
@@ -200,6 +211,7 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
     <label>Display name<input required minLength={2} maxLength={40} value={name} onChange={e=>setName(e.target.value)} placeholder="Your name"/></label>
     <label>Question title<input required minLength={12} maxLength={180} value={title} onChange={e=>setTitle(e.target.value)} placeholder="Example: How should allergen changeover validation be designed?"/></label>
     <label>Details<textarea required minLength={20} maxLength={3000} value={body} onChange={e=>setBody(e.target.value)} placeholder="Add enough context for professionals to answer clearly…"/></label>
+    <label className="discussion-notify-option"><input type="checkbox" checked={notifyOnAnswer} onChange={e=>setNotifyOnAnswer(e.target.checked)}/><span><strong>Notify me when someone answers</strong><small>Get a PMSV device notification. Your browser may ask for permission when you post. No login required.</small></span></label>
     <p className="discussion-rule">Only Food Safety, Quality and Process Excellence questions are accepted. Text only; no links or advertisements.</p>
     <button type="submit" disabled={submitting}><Send size={17}/>{submitting?'Posting…':'Post question'}</button>
    </form></section>
