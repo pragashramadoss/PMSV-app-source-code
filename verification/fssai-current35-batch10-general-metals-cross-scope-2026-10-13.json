@@ -1,0 +1,123 @@
+{
+  "kind": "PMSV_CURRENT35_FSSAI_CTR_UNIVERSAL_GENERIC_METAL_AUDIT_B10",
+  "schema_version": "1.0",
+  "date": "2026-10-13",
+  "source_policy": "Only official FSSAI / FoSCoS for regulatory source applicability",
+  "CTR_version": "IX (03.02.2026)",
+  "primary_official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "CTR_may_2026_amendment": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+  "amendment_commencement": "2026-12-01",
+  "amendment_not_used_in_october": true,
+  "current_catalogue": {
+    "total": 533,
+    "conditional_named_source": 498,
+    "first_exact_named_source_pending": 35,
+    "full_product_compliance_approved": 0,
+    "canonical_ledger_path": "fssai-product-helper-preview-01/data/rules/fssai-current-first-source-533-live-ledger-498-35-2026-10-13.json",
+    "canonical_ledger_blob_sha": "db7bf5b3c4e918bc06c1373c5e0abc54e24840bf"
+  },
+  "audit_counts": {
+    "actual_unique_pending_products": 35,
+    "universal_allfoods_named_regulatory_row": 1,
+    "metal_specific_generic_fallback_rows": 6,
+    "current_metal_scope_references": 7,
+    "product_legal_scope_checks": 245,
+    "new_first_exact_named_food_source_promotions": 0,
+    "finished_food_legal_limit_auto_assignments": 0,
+    "validated_current_product_labs": 0,
+    "fully_approved_products": 0
+  },
+  "distinction": "All foods applies as wording of methylmercury legal article; Foods not specified is a metal-specific generic fallback that requires reviewing any competing more specific entry. Neither supplies complete finished-product compliance.",
+  "prior_3_conditional_candidates_retained": true,
+  "source_data": {
+    "path": "fssai-product-helper-preview-01/data/rules/fssai-current35-default-metals-and-allfoods-batch10-2026-10-13.json",
+    "blob_sha": "a37ded390d0f39e2b9dc8c71fa1e5e7a17b135e9",
+    "entries": [
+      {
+        "metal": "Lead",
+        "article": "Foods not specified",
+        "value": 2.5,
+        "unit": "mg/kg",
+        "page_zero_based": 3,
+        "scope": "METAL_SPECIFIC_DEFAULT_AFTER_EXACT_ROW_CHECK"
+      },
+      {
+        "metal": "Copper",
+        "article": "Foods not specified",
+        "value": 30,
+        "unit": "mg/kg",
+        "page_zero_based": 6,
+        "scope": "METAL_SPECIFIC_DEFAULT_AFTER_EXACT_ROW_CHECK"
+      },
+      {
+        "metal": "Arsenic",
+        "article": "Foods not specified",
+        "value": 1.1,
+        "unit": "mg/kg",
+        "page_zero_based": 8,
+        "scope": "METAL_SPECIFIC_DEFAULT_AFTER_EXACT_ROW_CHECK"
+      },
+      {
+        "metal": "Tin",
+        "article": "Foods not specified",
+        "value": 250,
+        "unit": "mg/kg",
+        "page_zero_based": 10,
+        "scope": "METAL_SPECIFIC_DEFAULT_AFTER_EXACT_ROW_CHECK"
+      },
+      {
+        "metal": "Cadmium",
+        "article": "Foods not specified",
+        "value": 1.5,
+        "unit": "mg/kg",
+        "page_zero_based": 11,
+        "scope": "METAL_SPECIFIC_DEFAULT_AFTER_EXACT_ROW_CHECK"
+      },
+      {
+        "metal": "Mercury",
+        "article": "Foods not specified",
+        "value": 1,
+        "unit": "mg/kg",
+        "page_zero_based": 11,
+        "scope": "METAL_SPECIFIC_DEFAULT_AFTER_EXACT_ROW_CHECK"
+      },
+      {
+        "metal": "Methyl Mercury (calculated as the element)",
+        "article": "All foods",
+        "value": 0.25,
+        "unit": "mg/kg",
+        "page_zero_based": 11,
+        "scope": "EXPLICIT_ALL_FOODS_ARTICLE"
+      }
+    ]
+  },
+  "github_pages_panel": {
+    "path": "fssai-product-helper-preview-01/fssai-current35-general-metal-source-batch10-2026-10-13.js",
+    "sha": "d9ff675f47f8a1df75aa7a2332f34ea23b5d3743",
+    "index_html": "fssai-product-helper-preview-01/index.html",
+    "index_sha": "3107c5d0a7d06311a26b22d8c2dab52ee2f64be7",
+    "panels_collapsed_by_default": true
+  },
+  "regression_test": {
+    "path": "tests/fssai-current35-general-metal-scope-batch10-2026-10-13.test.cjs",
+    "sha": "3034633d4d2a69ba84ae15b8308379a26a7d8cf1",
+    "assertions_groups": 6
+  },
+  "workflow": {
+    "path": ".github/workflows/verify-fssai-current35-general-metal-batch10.yml",
+    "sha": "b2b78758ed7e161b8dce27b05e9b5a97fb46986f"
+  },
+  "verification": {
+    "eight_files_fetched_and_checked": true,
+    "all_35_IDs_match_queue_and_ledger": true,
+    "original_three_conditional_routes_unchanged": true,
+    "all_245_checks_are_nonassigning": true,
+    "JS_functional_simulation_passed": true,
+    "source_value_tampering_rejected": true,
+    "external_GitHub_Actions_pass_confirmed": false,
+    "public_GitHub_Pages_browser_check": false
+  },
+  "WordPress_production_modified": false,
+  "canonical_ledger_mutated": false,
+  "next_focus": "Obtain actual evidence for named-article scope in 3 conditional routes (canned pickled eggs; qualifying functional premix; qualifying formulated child supplement). Independently adjudicate specific metal entries for the other 32 before using a Foods not specified fallback."
+}
