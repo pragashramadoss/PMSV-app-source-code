@@ -8,17 +8,18 @@ function pmsvPending40QualityCoverage(){
     typeof pmsvQuality16Valid!=="function"||!pmsvQuality16Valid()||
     typeof pmsvQuality8Valid!=="function"||!pmsvQuality8Valid()||
     typeof pmsvQuality24CurrentStatusValid!=="function"||!pmsvQuality24CurrentStatusValid()||
-    typeof pmsvQ15Valid!=="function"||!pmsvQ15Valid())return null;
+    typeof pmsvQ15Valid!=="function"||!pmsvQ15Valid()||
+    typeof pmsvQ4Valid!=="function"||!pmsvQ4Valid())return null;
  const q=pmsv40Queue,l=pmsv493Ledger,
-   a=pmsvQuality16Data,b=pmsvQuality8Data,c=pmsvQ15Data;
- if(!q||!l||!a||!b||!c||
+   a=pmsvQuality16Data,b=pmsvQuality8Data,c=pmsvQ15Data,d=pmsvQ4Data;
+ if(!q||!l||!a||!b||!c||!d||
    q.review_records?.length!==40||l.records?.length!==533||
    l.partial_exact!==493||l.first_source_pending!==40||
-   a.records?.length!==16||b.records?.length!==8||c.records?.length!==15)return null;
+   a.records?.length!==16||b.records?.length!==8||c.records?.length!==15||d.records?.length!==4)return null;
  const joined=new Map([...a.records.map(x=>[x.catalog_id,"Q16"]),
    ...b.records.map(x=>[x.catalog_id,"Q8"]),
-   ...c.records.map(x=>[x.catalog_id,"Q15"])]);
- if(joined.size!==39)return null;
+   ...c.records.map(x=>[x.catalog_id,"Q15"]),...d.records.map(x=>[x.catalog_id,"Q4"])]);
+ if(joined.size!==43)return null;
  const live=new Map(l.records.map(x=>[x.catalog_id,x])),set=new Set(),report=new Map();
  let withQuality=0;
  for(const x of q.review_records){
@@ -28,7 +29,7 @@ function pmsvPending40QualityCoverage(){
      String(x.fcs||"")!==String(z.fcs||""))return null;
    const origin=joined.get(x.catalog_id)||null;
    if(origin){
-     const source=origin==="Q16"?a.records:origin==="Q8"?b.records:c.records;
+     const source=origin==="Q16"?a.records:origin==="Q8"?b.records:origin==="Q15"?c.records:d.records;
      const s=source.find(y=>y.catalog_id===x.catalog_id);
      if(!s||s.product_name!==x.product_name||
         String(s.fssr||"")!==String(x.fssr||"")||
@@ -38,7 +39,7 @@ function pmsvPending40QualityCoverage(){
    report.set(x.catalog_id,{name:x.product_name,fssr:x.fssr,fcs:x.fcs,quality_module:origin});
    set.add(x.catalog_id);
  }
- if(set.size!==40||withQuality!==26||40-withQuality!==14)return null;
+ if(set.size!==40||withQuality!==30||40-withQuality!==10)return null;
  return report;
 }
 function pmsvPending40QualityCoverageHtml(p){
@@ -57,9 +58,9 @@ function pmsvPending40QualityCoverageHtml(p){
  return '<details class="card" style="margin-top:12px"><summary><b>Current 40-pending source coverage</b> · '+(available?"Quality reference linked":"Quality source review required")+'</summary>'+
  '<div class="notice"><b>FIRST EXACT CONTAMINANT ARTICLE STILL PENDING.</b> No numerical CTR limit auto-assigned; no finished lot verified or product approval.</div>'+
  '<p><b>Quality reference:</b> '+safe(status)+'</p>'+
- '<p><b>Source review:</b> '+(available?"Open the product-specific FSSR quality panel above to see values and conditions.":"Verify the precise finished-food identity, FSSR clause, subtypes, analytical bases and official amendment date before recording any limits.")+'</p>'+
+ '<p><b>Source review:</b> '+(available?"Open the product-specific FSSR quality panel on this page to see values and conditions.":"Verify the precise finished-food identity, FSSR clause, subtypes, analytical bases and official amendment date before recording any limits.")+'</p>'+
  '<p><b>Independent legal review:</b> Official CTR Version IX finished-article metal/toxin/pesticide applicability and actual laboratory results remain necessary.</p>'+
- '<small>Current first-source queue: 40; separate FSSR quality references linked: 26; not yet linked: 14. Source evidence only, not regulatory PASS.</small></details>';
+ '<small>Current first-source queue: 40; separate FSSR quality references linked: 30; not yet linked: 10. Source evidence only, not regulatory PASS.</small></details>';
 }
 var pmsvBeforePending40QualityCoveragePanel=sourcePinned121ResearchProofHtml;
-sourcePinned121ResearchProofHtml=function(p){return pmsvPending40QualityCoverageHtml(p)+pmsvBeforePending40QualityCoveragePanel(p)};
+sourcePinned121ResearchProofHtml=function(p){return pmsvPending40QualityCoverageHtml(p)+pmsvQ4Html(p)+pmsvBeforePending40QualityCoveragePanel(p)};
