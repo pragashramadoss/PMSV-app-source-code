@@ -67,7 +67,7 @@ function pmsvQ4Html(p){
  const r=pmsvQ4Data.records.find(x=>x.catalog_id===p.id);
  if(!r||r.product_name!==p.name||String(r.fssr||"")!==String(p.fssr||"")||
  String(r.fcs||"")!==String(p.fcs||""))return '<div class="notice">FSSR quality identity mismatch; no result or PASS.</div>';
- const e=s=>typeof esc==="function"?esc(String(s)):String(s).replace(/[&<>"']/g,z=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;":"&quot;","'":"&#39;"}[z]));
+ const e=s=>typeof esc==="function"?esc(String(s)):String(s).replace(/[&<>"']/g,z=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[z]));
  return '<details class="card" style="margin-top:12px"><summary><b>Verified finished-product FSSR quality dossier</b> · '+e(r.official_chapter)+'</summary>'+
   '<div class="notice"><b>QUALITY STANDARD ONLY.</b> The exact CTR named contaminant article is still pending. No lot, laboratory PASS or full approval.</div>'+
   '<p><b>Official clause:</b> '+e(r.official_chapter)+' · '+e(r.source_pages)+'</p>'+
