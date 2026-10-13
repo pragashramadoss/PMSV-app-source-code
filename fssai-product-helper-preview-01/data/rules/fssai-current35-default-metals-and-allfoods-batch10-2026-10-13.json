@@ -1,0 +1,2621 @@
+{
+  "kind": "PMSV_CURRENT35_CTR_UNIVERSAL_AND_DEFAULT_COVERAGE_BATCH10",
+  "schema_version": "1.0",
+  "as_of": "2026-10-13",
+  "source_policy": "ONLY_FSSAI_OFFICIAL",
+  "research_purpose": "Prevent false claims that the 35 unsourced named finished-article cases have no applicable contaminant rule; distinguish metal-specific 'Foods not specified' from the methylmercury 'All foods' article.",
+  "ctr_version": "IX (03.02.2026)",
+  "ctr_primary_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "source_date_effective_basis": "CTR Version IX on 13 October 2026; May 2026 changes with prospective start are not imported.",
+  "may_2026_future_amendment": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+  "future_commencement": "2026-12-01",
+  "future_article_auto_applied": false,
+  "baseline": {
+    "catalogue": 533,
+    "partial_first_sources": 498,
+    "pending_first_exact": 35,
+    "live_ledger_file": "fssai-product-helper-preview-01/data/rules/fssai-current-first-source-533-live-ledger-498-35-2026-10-13.json",
+    "blob_sha": "db7bf5b3c4e918bc06c1373c5e0abc54e24840bf"
+  },
+  "rule_count": 7,
+  "generic_defaults_count": 6,
+  "all_foods_clause_count": 1,
+  "cases_screened": 35,
+  "case_rule_checks_total": 245,
+  "official_rule_rows": [
+    {
+      "id": "PB_DEFAULT",
+      "metal": "Lead",
+      "legal_article": "Foods not specified",
+      "published_reference_value": 2.5,
+      "unit": "mg/kg",
+      "pdf_page_zero_based": 3,
+      "scope_type": "METAL_SPECIFIC_DEFAULT_AFTER_EXACT_ROW_CHECK",
+      "decision": "Do not use unless the finished food lacks a more specific Lead article under the current legal table.",
+      "official_primary_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "numeric_finished_product_limit_automatically_assigned": false,
+      "analytical_result_verified": false
+    },
+    {
+      "id": "CU_DEFAULT",
+      "metal": "Copper",
+      "legal_article": "Foods not specified",
+      "published_reference_value": 30,
+      "unit": "mg/kg",
+      "pdf_page_zero_based": 6,
+      "scope_type": "METAL_SPECIFIC_DEFAULT_AFTER_EXACT_ROW_CHECK",
+      "decision": "Do not use until the named Copper articles and their sample bases have been checked.",
+      "official_primary_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "numeric_finished_product_limit_automatically_assigned": false,
+      "analytical_result_verified": false
+    },
+    {
+      "id": "AS_DEFAULT",
+      "metal": "Arsenic",
+      "legal_article": "Foods not specified",
+      "published_reference_value": 1.1,
+      "unit": "mg/kg",
+      "pdf_page_zero_based": 8,
+      "scope_type": "METAL_SPECIFIC_DEFAULT_AFTER_EXACT_ROW_CHECK",
+      "decision": "Do not use until the named Arsenic food/substance articles have been checked.",
+      "official_primary_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "numeric_finished_product_limit_automatically_assigned": false,
+      "analytical_result_verified": false
+    },
+    {
+      "id": "SN_DEFAULT",
+      "metal": "Tin",
+      "legal_article": "Foods not specified",
+      "published_reference_value": 250,
+      "unit": "mg/kg",
+      "pdf_page_zero_based": 10,
+      "scope_type": "METAL_SPECIFIC_DEFAULT_AFTER_EXACT_ROW_CHECK",
+      "decision": "Canned food and other tin-specific named articles must be evaluated first; packaging affects scope.",
+      "official_primary_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "numeric_finished_product_limit_automatically_assigned": false,
+      "analytical_result_verified": false
+    },
+    {
+      "id": "CD_DEFAULT",
+      "metal": "Cadmium",
+      "legal_article": "Foods not specified",
+      "published_reference_value": 1.5,
+      "unit": "mg/kg",
+      "pdf_page_zero_based": 11,
+      "scope_type": "METAL_SPECIFIC_DEFAULT_AFTER_EXACT_ROW_CHECK",
+      "decision": "Do not substitute this default for a specifically named cadmium food/commodity.",
+      "official_primary_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "numeric_finished_product_limit_automatically_assigned": false,
+      "analytical_result_verified": false
+    },
+    {
+      "id": "HG_DEFAULT",
+      "metal": "Mercury",
+      "legal_article": "Foods not specified",
+      "published_reference_value": 1,
+      "unit": "mg/kg",
+      "pdf_page_zero_based": 11,
+      "scope_type": "METAL_SPECIFIC_DEFAULT_AFTER_EXACT_ROW_CHECK",
+      "decision": "This total-Mercury row is different from Methyl Mercury and may have food-specific competitors.",
+      "official_primary_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "numeric_finished_product_limit_automatically_assigned": false,
+      "analytical_result_verified": false
+    },
+    {
+      "id": "MEHG_ALL",
+      "metal": "Methyl Mercury (calculated as the element)",
+      "legal_article": "All foods",
+      "published_reference_value": 0.25,
+      "unit": "mg/kg",
+      "pdf_page_zero_based": 11,
+      "scope_type": "EXPLICIT_ALL_FOODS_ARTICLE",
+      "decision": "The legal table expressly says All foods. This is not a finished-product-specific first named article and does not establish a test PASS.",
+      "official_primary_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "numeric_finished_product_limit_automatically_assigned": false,
+      "analytical_result_verified": false
+    }
+  ],
+  "product_checks": [
+    {
+      "rank": 1,
+      "catalog_id": "purified-vending-water",
+      "product_name": "Drinking Water (Purified) sold through vending machine",
+      "fssr": "2.10.9",
+      "fcs": "14.1.1",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "catalog_id": "coffee-chicory-mixture",
+      "product_name": "Coffee-Chicory Mixture",
+      "fssr": "2.10.4",
+      "fcs": "14.1.5",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "catalog_id": "formulated-supplements-children",
+      "product_name": "Formulated supplements for children",
+      "fssr": null,
+      "fcs": "13.2",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [
+        "CHILD_SUPPLEMENT_WITH_LISTED_CROP"
+      ],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "catalog_id": "04-04-1-frozen-fruits-fruit-products",
+      "product_name": "Frozen Fruits/Fruit Products",
+      "fssr": "2.3.37",
+      "fcs": "04.1.2.1",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "catalog_id": "04-04-1-catechu-edible",
+      "product_name": "Catechu (Edible)",
+      "fssr": "2.11.2",
+      "fcs": "04.1.2.2",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "catalog_id": "04-04-1-seedless-tamarind",
+      "product_name": "Seedless Tamarind",
+      "fssr": "2.3.49",
+      "fcs": "04.1.2.8",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "catalog_id": "04-04-1-coconut-milk-powder",
+      "product_name": "COCONUT MILK POWDER",
+      "fssr": "2.3.63",
+      "fcs": "04.1.2.8",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "catalog_id": "04-04-2-cocoa-beans",
+      "product_name": "Cocoa Beans",
+      "fssr": "2.3.54",
+      "fcs": "04.2.2.7",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "catalog_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "product_name": "Dry Mixtures of Cocoa and Sugars",
+      "fssr": "2.7.6",
+      "fcs": "05.1.1",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "catalog_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "fssr": "2.7.8",
+      "fcs": "05.1.1",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "catalog_id": "06-06-1-chia-seeds",
+      "product_name": "Chia Seeds",
+      "fssr": "2.4.6",
+      "fcs": "06.1",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "catalog_id": "06-06-2-carob-powder",
+      "product_name": "Carob Powder",
+      "fssr": "2.11.7",
+      "fcs": "06.2.1",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 13,
+      "catalog_id": "06-06-2-arrowroot",
+      "product_name": "Arrowroot",
+      "fssr": "2.4.14",
+      "fcs": "06.2.2",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 14,
+      "catalog_id": "06-06-2-water-chestnut-flour-singhare-ka-atta",
+      "product_name": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+      "fssr": "2.3.64",
+      "fcs": "06.2.1",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 15,
+      "catalog_id": "08-08-4-animal-casings",
+      "product_name": "Animal Casings",
+      "fssr": "2.5.2(14)",
+      "fcs": "08.4",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 16,
+      "catalog_id": "10-10-2-egg-powder",
+      "product_name": "Egg powder",
+      "fssr": "2.5.3(3)",
+      "fcs": "10.2.3",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 17,
+      "catalog_id": "10-10-3-pickled-eggs",
+      "product_name": "Pickled Eggs",
+      "fssr": "2.5.3(5)",
+      "fcs": "10.3",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [
+        "CANNED_PICKLED_EGGS_TIN"
+      ],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 18,
+      "catalog_id": "11-11-1-dried-glucose-syrup",
+      "product_name": "Dried Glucose Syrup",
+      "fssr": "2.8.7",
+      "fcs": "11.1.3.1",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 19,
+      "catalog_id": "11-11-1-edible-lactose",
+      "product_name": "Edible Lactose",
+      "fssr": "2.1.20",
+      "fcs": "11.1.4",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 20,
+      "catalog_id": "11-11-1-misri",
+      "product_name": "Misri",
+      "fssr": "2.8.2",
+      "fcs": "11.1.5",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 21,
+      "catalog_id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
+      "product_name": "Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized",
+      "fssr": "FSS (FPS&FA) Regulations",
+      "fcs": "11.6",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 22,
+      "catalog_id": "12-12-1-salt-substitutes",
+      "product_name": "Salt Substitutes",
+      "fssr": "2.9.30(6)",
+      "fcs": "12.1.2",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 23,
+      "catalog_id": "99-99-1-trehalose",
+      "product_name": "Trehalose",
+      "fssr": "3.3.4",
+      "fcs": "99.1",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 24,
+      "catalog_id": "99-99-1-sajji-khar",
+      "product_name": "Sajji Khar",
+      "fssr": null,
+      "fcs": "99.1",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 25,
+      "catalog_id": "99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-",
+      "product_name": "Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations",
+      "fssr": "FSS (FPS&FA) Regulations",
+      "fcs": "99.1",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 26,
+      "catalog_id": "99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
+      "product_name": "Additives VA-VF of Nutraceutical Regulations excluding those already standardised",
+      "fssr": null,
+      "fcs": "99.1",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 27,
+      "catalog_id": "99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
+      "product_name": "Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations",
+      "fssr": null,
+      "fcs": "99.2",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 28,
+      "catalog_id": "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
+      "product_name": "Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations",
+      "fssr": null,
+      "fcs": "99.7",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 29,
+      "catalog_id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "product_name": "Mixtures/preparations/premix of functional ingredients",
+      "fssr": null,
+      "fcs": "99.7",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [
+        "FUNCTIONAL_PREMIX_WITH_LISTED_CROP"
+      ],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 30,
+      "catalog_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+      "product_name": "Cow or Buffalo Colostrum and Colostrum Products",
+      "fssr": "2.1.23",
+      "fcs": "100",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 31,
+      "catalog_id": "100-100-royal-jelly",
+      "product_name": "Royal Jelly",
+      "fssr": "2.8.3(3)",
+      "fcs": "100",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 32,
+      "catalog_id": "100-100-silver-leaf-chandi-ka-warq",
+      "product_name": "SILVER LEAF (Chandi-ka-warq)",
+      "fssr": "2.11.4",
+      "fcs": "100",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 33,
+      "catalog_id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
+      "product_name": "14.3 - Narikela Ksheerika (Milky Coconut Delight)",
+      "fssr": null,
+      "fcs": null,
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 34,
+      "catalog_id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+      "product_name": "14.7 - Ksheerapaka (Mystic Milk Quartet)",
+      "fssr": null,
+      "fcs": null,
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    },
+    {
+      "rank": 35,
+      "catalog_id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "product_name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "fssr": "2.11.8",
+      "fcs": "99.7",
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "pending_named_ctr_routes": [],
+      "named_article_first_source_verified": false,
+      "metal_specific_legal_reconciliation_completed": false,
+      "current_laboratory_results_verified": false,
+      "full_regulatory_compliance_approval": false,
+      "rule_checks": [
+        {
+          "reference_row": "PB_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CU_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "AS_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "SN_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "CD_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "HG_DEFAULT",
+          "source_status": "DEFAULT_ARTICLE_REQUIRES_METAL_SPECIFIC_SCOPE_REVIEW",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        },
+        {
+          "reference_row": "MEHG_ALL",
+          "source_status": "GENERAL_ALL_FOODS_SCOPE_VISIBLE_NOT_PRODUCT_CLEARANCE",
+          "limit_active_as_product_threshold": false,
+          "named_finished_product_match_approved": false,
+          "finished_lot_lab_pass": false,
+          "no_specific_competing_article_confirmed": false
+        }
+      ]
+    }
+  ],
+  "global_all_foods_scope_explicitly_stated_by_CTR": true,
+  "generic_fallbacks_are_not_finished_product_specific_named_article_matches": true,
+  "all_35_still_need_metal_specific_priority_review": true,
+  "full_contaminant_panels_cleared": 0,
+  "first_source_promotions": 0,
+  "automated_numeric_limit_assignments": 0,
+  "sample_lot_lab_passes": 0,
+  "finished_food_compliance_approvals": 0,
+  "original_ledger_mutated": false,
+  "WordPress_production_mutated": false
+}
