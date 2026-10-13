@@ -59,6 +59,15 @@ jobs:
       - name: Verify daily notification selection
         run: php wordpress/tests/daily-digest.php
 
+      - name: Verify discussion notifications syntax
+        run: |
+          php -l wordpress/plugin/includes/storage.php
+          php -l wordpress/plugin/includes/push.php
+          php -l wordpress/plugin/pmsv-app.php
+          grep -q 'pmsv_wp_forum_push_answer' wordpress/plugin/includes/storage.php
+          grep -q 'pmsv_wp_forum_push_inbox' wordpress/plugin/includes/push.php
+          grep -q 'Notify me when someone answers' app/discussions.tsx
+
       - name: Build WordPress production
         run: node wordpress/build.mjs
 
