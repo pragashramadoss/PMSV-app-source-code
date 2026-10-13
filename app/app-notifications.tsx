@@ -64,6 +64,19 @@ async function prepareGrantedSubscription(){
  return {reg,sub,token};
 }
 
+// Called only from the question form's submit gesture. Permission is never requested
+// silently, and the existing PMSV VAPID/device subscription is reused.
+export async function subscribeToDiscussionAnswers():Promise<{endpoint:string;token:string}>{
+ if(!window.isSecureContext||!('Notification' in window)||!('serviceWorker' in navigator)||!('PushManager' in window))
+  throw Error('This browser does not support answer notifications.');
+ const permission=Notification.permission==='granted'?'granted':await Notification.requestPermission();
+ if(permission!=='granted')throw Error('Allow PMSV notifications, or untick the answer-alert checkbox to post without them.');
+ localStorage.removeItem('pmsv-push-preference');
+ const subscription=await prepareGrantedSubscription();
+ if(!subscription)throw Error('Could not activate notifications. Untick the answer-alert checkbox to post without them.');
+ return {endpoint:subscription.sub.endpoint,token:subscription.token};
+}
+
 export default function AppNotifications(){
  const [open,setOpen]=useState(false),[enabled,setEnabled]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[supported,setSupported]=useState(false),[installed,setInstalled]=useState(false),[install,setInstall]=useState<InstallEvent|null>(null);
 
