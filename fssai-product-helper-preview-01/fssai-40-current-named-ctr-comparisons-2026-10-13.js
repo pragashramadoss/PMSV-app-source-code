@@ -3,7 +3,7 @@
  * no numeric finish-food assignment; independent universal reference is not a named route.
  */
 var pmsv40CtrComparisons=null;
-const pmsv40CtrDigest="29345457fc8e1d18";
+const pmsv40CtrDigest="07cc38ca651063bf";
 function pmsv40CtrComparisonsValid(){
  if(typeof pmsv493Valid!=="function"||!pmsv493Valid()||
     typeof pmsv40LegalGatesValid!=="function"||!pmsv40LegalGatesValid()||
@@ -60,6 +60,16 @@ function pmsv40CtrComparisonsValid(){
         t.numeric_limit_auto_assigned!==false)return false;
      keys.add(t.source_row_key);comparisons++;
    }
+   const mustHave=new Set(["11-11-1-cube-sugar","11-11-1-misri","04-04-1-frozen-fruits-fruit-products","04-04-2-frozen-vegetables","coffee-chicory-mixture"]);
+   const s=x.finished_standard_evidence;
+   if(mustHave.has(x.catalog_id)){
+     if(!s||s.evidence_type!=="EXACT_FSSR_FINISHED_STANDARD_NOT_CTR_MATCH"||
+        !s.official_fssr_url?.startsWith("https://www.fssai.gov.in/upload/")||
+        !s.standard_clause||!s.printed_page||!s.finished_identity_statement||
+        !Array.isArray(s.documented_requirements)||s.documented_requirements.length<2||
+        !s.ctr_transfer_gate||s.independently_verified_lot!==false||
+        s.automatic_contaminant_limit!==false||s.first_named_ctr_promoted!==false)return false;
+   }else if(s)return false;
    seen.add(x.catalog_id);
  }
  return comparisons===50&&withRow===36&&noRow===4&&seen.size===40;
@@ -96,6 +106,11 @@ function pmsv40CtrComparisonsHtml(p){
  }else h+='<p>No safely comparable individually named numeric row is pinned for this broad legal identity. This is not an exemption.</p>';
  h+='<p><b>Why transfer is blocked:</b> '+e(x.negative_finished_article_rule)+'</p>'+
     '<p><b>Positive evidence required:</b> '+e(x.positive_evidence_required)+'</p>'+
+    (x.finished_standard_evidence ? '<div class="notice"><b>Direct FSSR finished-product evidence (not a CTR article or test result)</b>'+
+      '<p>FSSR '+e(x.finished_standard_evidence.standard_clause)+' · printed p.'+e(x.finished_standard_evidence.printed_page)+': '+e(x.finished_standard_evidence.finished_identity_statement)+'</p>'+
+      '<p><b>Regulatory quality conditions:</b> '+x.finished_standard_evidence.documented_requirements.map(e).join('; ')+'</p>'+
+      '<p><b>Legal contaminant matching still required:</b> '+e(x.finished_standard_evidence.ctr_transfer_gate)+'</p>'+
+      '<small><a target="_blank" rel="noopener noreferrer" href="'+e(x.finished_standard_evidence.official_fssr_url)+'">Official FSSAI FSSR finished-product standard</a></small></div>' : '')+
     '<p><b>Universal rule is not the missing named product article:</b> CTR IX §2.1.1 lists '+e(d.universal_regulation_reference.contaminant)+
     ' for '+e(d.universal_regulation_reference.article)+': '+e(d.universal_regulation_reference.limit)+
     ' '+e(d.universal_regulation_reference.unit)+' (PDF p.12). Review actual food scope and analytical requirements separately; no auto-application or laboratory PASS.</p>'+
