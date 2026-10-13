@@ -4,7 +4,7 @@
  */
 var pmsvB8Data=null;
 const pmsvB8DataUrl="./data/rules/fssai-remaining19-product-identity-gates-batch8-2026-10-13.json";
-const pmsvB8DigestExpected="3353d07d93f2f9a2";
+const pmsvB8DigestExpected="c1f54c5228b015ad";
 const pmsvB8CTR="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf";
 function pmsvB8Digest(o){
  const s=JSON.stringify(o);let a=0x811c9dc5,b=0x9747b28c;
