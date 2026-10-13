@@ -1,0 +1,29 @@
+name: Verify 19 remaining FSSR and FoSCoS identity gates
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'fssai-product-helper-preview-01/fssai-current35-remaining19-batch8-2026-10-13.js'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-remaining19-product-identity-gates-batch8-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-fssr-vs-ctr-exclusion-batch7-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current-35-first-exact-source-proof-worklist-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current-first-source-533-live-ledger-498-35-2026-10-13.json'
+      - 'tests/fssai-current35-remaining19-batch8-2026-10-13.test.cjs'
+      - '.github/workflows/verify-fssai-current35-remaining19-batch8.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check 19 source categories against 533-product current ledger
+        run: node --test tests/fssai-current35-remaining19-batch8-2026-10-13.test.cjs
+      - name: Check script syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-remaining19-batch8-2026-10-13.js
