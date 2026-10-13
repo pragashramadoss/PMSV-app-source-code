@@ -1,0 +1,22 @@
+name: Verify official FSSAI 497/36 conditional source matches
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-current-first-source-497-36.js'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-two-fruit-cheese-colouring-foods-conditional-source-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current-first-source-533-live-ledger-497-36-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current-36-first-exact-source-proof-worklist-2026-10-13.json'
+      - 'tests/fssai-current-497-36-two-conditional-products-2026-10-13.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current-497-36-two-official-sources.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check fssai-product-helper-preview-01/fssai-current-first-source-497-36.js
+      - run: node --test tests/fssai-current-497-36-two-conditional-products-2026-10-13.test.cjs
