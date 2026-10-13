@@ -1,0 +1,25 @@
+name: Verify 35 current FSSAI CTR source gaps (Batch 4)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'fssai-product-helper-preview-01/fssai-current35-ctr-legal-gates-batch4-2026-10-13.js'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-exact-ctr-article-gates-batch4-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current-35-first-exact-source-proof-worklist-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current-first-source-533-live-ledger-498-35-2026-10-13.json'
+      - 'verification/fssai-*'
+      - 'tests/fssai-current35-ctr-gates-batch4-2026-10-13.test.cjs'
+      - '.github/workflows/verify-current35-ctr-source-batch4.yml'
+  workflow_dispatch:
+jobs:
+  confirm-no-unsupported-pass:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check exact first-source identity mapping and exclusions
+        run: node --test tests/fssai-current35-ctr-gates-batch4-2026-10-13.test.cjs
