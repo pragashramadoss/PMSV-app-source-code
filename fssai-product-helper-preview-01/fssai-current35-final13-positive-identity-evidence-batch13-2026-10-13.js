@@ -62,7 +62,7 @@ function pmsvB13Html(p){
  if(x.product_name!==p.name||String(x.fssr||"")!==String(p.fssr||"")||
     String(x.fcs||"")!==String(p.fcs||""))
   return '<div class="notice">Product identity mismatch. No contaminant limit or legal PASS.</div>';
- const e=v=>String(v??"").replace(/[&<>"']/g,z=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;":"&quot;","'":"&#39;"}[z]));
+ const e=v=>String(v??"").replace(/[&<>"']/g,z=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[z]));
  return '<details class="card" style="margin-top:12px">'+
  '<summary><b>Batch 13 · final 13 positive identity evidence</b> — '+e(x.source_tier.replace(/_/g," ").toLowerCase())+'</summary>'+
  '<div class="notice"><b>Exact CTR source still pending.</b> Official product identity is not a legal contaminant limit, laboratory result or finished-lot PASS.</div>'+
