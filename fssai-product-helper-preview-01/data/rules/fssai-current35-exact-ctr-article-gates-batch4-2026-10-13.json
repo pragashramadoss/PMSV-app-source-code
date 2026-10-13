@@ -28,7 +28,7 @@
   "finished_lab_tests_verified": 0,
   "full_regulatory_passes": 0,
   "master_ledger_mutated": false,
-  "application_ui_mutated": false,
+  "application_ui_mutated": true,
   "cases": [
     {
       "rank": 1,
@@ -1513,5 +1513,13 @@
       },
       "finished_compliance_pass": false
     }
-  ]
+  ],
+  "ui_integration": {
+    "module": "fssai-product-helper-preview-01/fssai-current35-ctr-legal-gates-batch4-2026-10-13.js",
+    "entrypoint": "fssai-product-helper-preview-01/index.html",
+    "source_only": true,
+    "fail_closed": true,
+    "workflow": ".github/workflows/verify-current35-ctr-source-batch4.yml",
+    "deployment": "GitHub Pages branch source updated; public build not independently confirmed"
+  }
 }
