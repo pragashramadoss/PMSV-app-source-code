@@ -1,0 +1,2879 @@
+{
+  "kind": "PMSV_CURRENT35_NONMETAL_CTR_NAMED_SCOPE_REVIEW_BATCH11",
+  "schema_version": "1.0",
+  "as_of": "2026-10-13",
+  "source_policy": "OFFICIAL_FSSAI_FOSCOS_ONLY",
+  "legal_basis": "FSSAI Contaminants Toxins and Residues Version IX (03.02.2026), s2.2.1; note source descriptions are screening references, not approvals",
+  "official_CTR_current_version": "IX (03.02.2026)",
+  "official_ctr_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "future_amendment_effective_on": "2026-12-01",
+  "future_amendment_auto_applied": false,
+  "baseline": {
+    "catalogue": 533,
+    "conditional_first_source_matches": 498,
+    "first_exact_source_pending": 35,
+    "compliance_approvals": 0
+  },
+  "canonical_worklist": "fssai-current-35-first-exact-source-proof-worklist-2026-10-13.json",
+  "rule_count": 8,
+  "product_count": 35,
+  "scope_reviews": 280,
+  "source_rows": [
+    {
+      "id": "AF_TOTAL",
+      "name": "Total aflatoxins",
+      "section": "2.2.1",
+      "p": 13,
+      "scope": "Cereal/cereal products, dried figs, arecanut, nuts, oilseeds/oil, pulses, spices/spice mixes, or food products containing listed articles",
+      "decision": "Actual finished commodity or proven listed ingredients and correct processed form required.",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "finished_article_application_approved": false
+    },
+    {
+      "id": "AF_B1",
+      "name": "Aflatoxin B1",
+      "section": "2.2.1",
+      "p": 13,
+      "scope": "Cereals, dried figs, arecanut, nuts, oilseeds/oil, pulses, spices/spice mixes, and food containing them",
+      "decision": "Determine whether the actual marketed article or verified ingredients meet one of the listed categories.",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "finished_article_application_approved": false
+    },
+    {
+      "id": "AF_M1",
+      "name": "Aflatoxin M1",
+      "section": "2.2.1",
+      "p": 13,
+      "scope": "Milk (liquid), skimmed milk powder, whole milk powder",
+      "decision": "Milk-derived, coconut-milk-named, colostrum or composite products are not automatically one of these finished forms.",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "finished_article_application_approved": false
+    },
+    {
+      "id": "OCHRATOXIN_A",
+      "name": "Ochratoxin A",
+      "section": "2.2.1",
+      "p": 14,
+      "scope": "Wheat, wheat bran, rye, barley, coffee",
+      "decision": "Named commodity does not automatically encompass its compounded beverage, powder, premix or processed derivatives.",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "finished_article_application_approved": false
+    },
+    {
+      "id": "PATULIN",
+      "name": "Patulin",
+      "section": "2.2.1",
+      "p": 14,
+      "scope": "Apple juice; apple juice used as an ingredient in other beverages",
+      "decision": "Whole/frozen fruit is not apple juice; ingredient and final-beverage identity both require documentary evidence.",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "finished_article_application_approved": false
+    },
+    {
+      "id": "DON",
+      "name": "Deoxynivalenol",
+      "section": "2.2.1",
+      "p": 14,
+      "scope": "Wheat, wheat bran, barley",
+      "decision": "Do not equate any cereal, generic grain flour or multi-ingredient premix with the named commodities.",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "finished_article_application_approved": false
+    },
+    {
+      "id": "AGARIC_ACID",
+      "name": "Agaric acid",
+      "section": "2.2.1",
+      "p": 14,
+      "scope": "Food containing mushrooms; alcoholic beverages",
+      "decision": "Require actual mushroom ingredient and finished-recipe evidence, not a generic fungi or premix label.",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "finished_article_application_approved": false
+    },
+    {
+      "id": "HYDROCYANIC_ACID",
+      "name": "Hydrocyanic acid",
+      "section": "2.2.1",
+      "p": 14,
+      "scope": "Nougat, marzipan/similar products, canned stone fruits, confectionery, stone fruit juices, sago/cassava/tapioca/Manihot flours and products, alcoholic beverages",
+      "decision": "Verify the finished confectionery/juice/plant-flour identity; arrowroot is not named cassava or tapioca.",
+      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "finished_article_application_approved": false
+    }
+  ],
+  "cases": [
+    {
+      "rank": 1,
+      "catalog_id": "purified-vending-water",
+      "product_name": "Drinking Water (Purified) sold through vending machine",
+      "fssr": "2.10.9",
+      "fcs": "14.1.1",
+      "regulatory_case": "other_cross_form",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Dispensing purified water from a vending machine does not by itself establish that the marketed finished article is packaged drinking water.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 2,
+      "catalog_id": "coffee-chicory-mixture",
+      "product_name": "Coffee-Chicory Mixture",
+      "fssr": "2.10.4",
+      "fcs": "14.1.5",
+      "regulatory_case": "other_cross_form",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "COFFEE_CHICORY_MIXTURE_GAP",
+          "evidence_question": "Check whether the marketed composite falls within the legal coffee article; coffee as one ingredient is not proof.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "APPLE_JUICE_BEVERAGE_EVIDENCE_REQUIRED",
+          "evidence_question": "Only consider after proving apple juice as an ingredient of another beverage, or apple juice as such.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "WHEAT_OR_BARLEY_FORMULATION_REQUIRED",
+          "evidence_question": "Request exact wheat/wheat bran/barley content and legal applicability to the marketed composite.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_RECIPE_NEEDED",
+          "evidence_question": "Obtain formulation and mushroom-species evidence; do not presume edible fungi or mushroom inclusion.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "FSSAI distinguishes dried or roasted chicory and coffee beans in individual metal source articles; a compounded coffee-chicory mixture must not automatically receive a single-ingredient limit.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 3,
+      "catalog_id": "formulated-supplements-children",
+      "product_name": "Formulated supplements for children",
+      "fssr": "",
+      "fcs": "13.2",
+      "regulatory_case": "special_nutritional_preparation",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "LISTED_INGREDIENT_AND_FINISHED_SCOPE_PROOF",
+          "evidence_question": "Require complete recipe, ingredient identity, and legal review of food-containing-listed-article entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "LISTED_INGREDIENT_AND_FINISHED_SCOPE_PROOF",
+          "evidence_question": "Require complete recipe, ingredient identity, and legal review of food-containing-listed-article entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "POTENTIAL_COFFEE_OR_CEREAL_INGREDIENT",
+          "evidence_question": "Request complete formulation; assess only an expressly named wheat/wheat bran/rye/barley/coffee article.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "APPLE_JUICE_BEVERAGE_EVIDENCE_REQUIRED",
+          "evidence_question": "Only consider after proving apple juice as an ingredient of another beverage, or apple juice as such.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "WHEAT_OR_BARLEY_FORMULATION_REQUIRED",
+          "evidence_question": "Request exact wheat/wheat bran/barley content and legal applicability to the marketed composite.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_RECIPE_NEEDED",
+          "evidence_question": "Obtain formulation and mushroom-species evidence; do not presume edible fungi or mushroom inclusion.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Formulated supplements for children are not the same article as infant formula",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 4,
+      "catalog_id": "04-04-1-frozen-fruits-fruit-products",
+      "product_name": "Frozen Fruits/Fruit Products",
+      "fssr": "2.3.37",
+      "fcs": "04.1.2.1",
+      "regulatory_case": "frozen_vs_raw",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "FROZEN_FRUIT_NOT_APPLE_JUICE",
+          "evidence_question": "No apple-juice article is proven; verify a juice-based final article rather than a frozen whole or prepared fruit.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "CONFECTIONERY_OR_FRUIT_SUBTYPE_GATE",
+          "evidence_question": "Determine whether the as-sold product legally qualifies as confectionery, marzipan, canned stone fruit or stone fruit juice.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "A raw-fruit MRL reference is not an automatic finished processed-food assessment for fried, frozen, cooked or mixed vegetables and pastes. For vegetable-only goods it is a negative comparison, not a candidate.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 5,
+      "catalog_id": "04-04-1-catechu-edible",
+      "product_name": "Catechu (Edible)",
+      "fssr": "2.11.2",
+      "fcs": "04.1.2.2",
+      "regulatory_case": "catechu_not_colour",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Edible catechu is not a generic dye or tannic-acid purity material",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 6,
+      "catalog_id": "04-04-1-seedless-tamarind",
+      "product_name": "Seedless Tamarind",
+      "fssr": "2.3.49",
+      "fcs": "04.1.2.8",
+      "regulatory_case": "fruit_confection",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "CONFECTIONERY_OR_FRUIT_SUBTYPE_GATE",
+          "evidence_question": "Determine whether the as-sold product legally qualifies as confectionery, marzipan, canned stone fruit or stone fruit juice.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Fruit ingredient content, fruit drying, added sugar or fruit peel does not on its own prove finished pulp/pulp product or untreated raw-fruit pesticide commodity identity.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 7,
+      "catalog_id": "04-04-1-coconut-milk-powder",
+      "product_name": "COCONUT MILK POWDER",
+      "fssr": "2.3.63",
+      "fcs": "04.1.2.8",
+      "regulatory_case": "coconut_form",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NON_DAIRY_NAME_NOT_MILK",
+          "evidence_question": "Obtain formulation and determine whether any actual dairy ingredient meets an expressly listed finished form; coconut milk name does not prove it.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "A coconut emulsion or powder is non-dairy. The metal article for 'Milks' is not an article for coconut milk; processing changes the raw coconut matrix.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 8,
+      "catalog_id": "04-04-2-cocoa-beans",
+      "product_name": "Cocoa Beans",
+      "fssr": "2.3.54",
+      "fcs": "04.2.2.7",
+      "regulatory_case": "cocoa_form",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "CONFECTIONERY_OR_FRUIT_SUBTYPE_GATE",
+          "evidence_question": "Determine whether the as-sold product legally qualifies as confectionery, marzipan, canned stone fruit or stone fruit juice.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "The official cocoa-powder Lead source uses a dry fat-free basis. Whole beans, cocoa mass/liquor, cocoa cake and mixed cocoa-sugar food are not automatically cocoa powder.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 9,
+      "catalog_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "product_name": "Dry Mixtures of Cocoa and Sugars",
+      "fssr": "2.7.6",
+      "fcs": "05.1.1",
+      "regulatory_case": "cocoa_form",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "LISTED_INGREDIENT_AND_FINISHED_SCOPE_PROOF",
+          "evidence_question": "Require complete recipe, ingredient identity, and legal review of food-containing-listed-article entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "LISTED_INGREDIENT_AND_FINISHED_SCOPE_PROOF",
+          "evidence_question": "Require complete recipe, ingredient identity, and legal review of food-containing-listed-article entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "POTENTIAL_COFFEE_OR_CEREAL_INGREDIENT",
+          "evidence_question": "Request complete formulation; assess only an expressly named wheat/wheat bran/rye/barley/coffee article.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "APPLE_JUICE_BEVERAGE_EVIDENCE_REQUIRED",
+          "evidence_question": "Only consider after proving apple juice as an ingredient of another beverage, or apple juice as such.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "WHEAT_OR_BARLEY_FORMULATION_REQUIRED",
+          "evidence_question": "Request exact wheat/wheat bran/barley content and legal applicability to the marketed composite.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_RECIPE_NEEDED",
+          "evidence_question": "Obtain formulation and mushroom-species evidence; do not presume edible fungi or mushroom inclusion.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "CONFECTIONERY_OR_FRUIT_SUBTYPE_GATE",
+          "evidence_question": "Determine whether the as-sold product legally qualifies as confectionery, marzipan, canned stone fruit or stone fruit juice.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "The official cocoa-powder Lead source uses a dry fat-free basis. Whole beans, cocoa mass/liquor, cocoa cake and mixed cocoa-sugar food are not automatically cocoa powder.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 10,
+      "catalog_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "fssr": "2.7.8",
+      "fcs": "05.1.1",
+      "regulatory_case": "cocoa_form",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "CONFECTIONERY_OR_FRUIT_SUBTYPE_GATE",
+          "evidence_question": "Determine whether the as-sold product legally qualifies as confectionery, marzipan, canned stone fruit or stone fruit juice.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "The official cocoa-powder Lead source uses a dry fat-free basis. Whole beans, cocoa mass/liquor, cocoa cake and mixed cocoa-sugar food are not automatically cocoa powder.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 11,
+      "catalog_id": "06-06-1-chia-seeds",
+      "product_name": "Chia Seeds",
+      "fssr": "2.4.6",
+      "fcs": "06.1",
+      "regulatory_case": "milled_processing",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "OILSEED_COMMODITY_CLASSIFICATION",
+          "evidence_question": "Confirm this finished chia seed is legally within the cited oilseeds/oil article; verify ready-to-eat or further-processing subcategory.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "OILSEED_COMMODITY_CLASSIFICATION",
+          "evidence_question": "Confirm this finished chia seed is legally within the cited oilseeds/oil article; verify ready-to-eat or further-processing subcategory.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "OTHER_GRAIN_OR_SEED_NOT_NAMED_WHEAT",
+          "evidence_question": "No wheat, wheat bran or barley finished-article identity may be inferred from this item.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "The named 2,4-D residue row addresses 'Milled food grains'; a formulated, baked, fried, seed, pseudocereal or composite final food is not automatically this commodity.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 12,
+      "catalog_id": "06-06-2-carob-powder",
+      "product_name": "Carob Powder",
+      "fssr": "2.11.7",
+      "fcs": "06.2.1",
+      "regulatory_case": "carob_not_cocoa",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "OTHER_GRAIN_OR_SEED_NOT_NAMED_WHEAT",
+          "evidence_question": "No wheat, wheat bran or barley finished-article identity may be inferred from this item.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_PLANT_FLOUR_IDENTITY_MISMATCH",
+          "evidence_question": "Arrowroot, water chestnut and carob are not automatically cassava, tapioca, sago or Manihot products.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Carob powder is a distinct botanical material and is not cocoa powder or cocoa cake.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 13,
+      "catalog_id": "06-06-2-arrowroot",
+      "product_name": "Arrowroot",
+      "fssr": "2.4.14",
+      "fcs": "06.2.2",
+      "regulatory_case": "milled_processing",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "CEREAL_IDENTITY_NOT_INFERRED",
+          "evidence_question": "Do not classify these flours as wheat/cereal or oilseed merely because the food form is flour.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "CEREAL_IDENTITY_NOT_INFERRED",
+          "evidence_question": "Do not classify these flours as wheat/cereal or oilseed merely because the food form is flour.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "OTHER_GRAIN_OR_SEED_NOT_NAMED_WHEAT",
+          "evidence_question": "No wheat, wheat bran or barley finished-article identity may be inferred from this item.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_PLANT_FLOUR_IDENTITY_MISMATCH",
+          "evidence_question": "Arrowroot, water chestnut and carob are not automatically cassava, tapioca, sago or Manihot products.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "The named 2,4-D residue row addresses 'Milled food grains'; a formulated, baked, fried, seed, pseudocereal or composite final food is not automatically this commodity.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 14,
+      "catalog_id": "06-06-2-water-chestnut-flour-singhare-ka-atta",
+      "product_name": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+      "fssr": "2.3.64",
+      "fcs": "06.2.1",
+      "regulatory_case": "milled_processing",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "CEREAL_IDENTITY_NOT_INFERRED",
+          "evidence_question": "Do not classify these flours as wheat/cereal or oilseed merely because the food form is flour.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "CEREAL_IDENTITY_NOT_INFERRED",
+          "evidence_question": "Do not classify these flours as wheat/cereal or oilseed merely because the food form is flour.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "OTHER_GRAIN_OR_SEED_NOT_NAMED_WHEAT",
+          "evidence_question": "No wheat, wheat bran or barley finished-article identity may be inferred from this item.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_PLANT_FLOUR_IDENTITY_MISMATCH",
+          "evidence_question": "Arrowroot, water chestnut and carob are not automatically cassava, tapioca, sago or Manihot products.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "The named 2,4-D residue row addresses 'Milled food grains'; a formulated, baked, fried, seed, pseudocereal or composite final food is not automatically this commodity.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 15,
+      "catalog_id": "08-08-4-animal-casings",
+      "product_name": "Animal Casings",
+      "fssr": "2.5.2(14)",
+      "fcs": "08.4",
+      "regulatory_case": "tissue_processed_casing",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Animal casings cannot inherit muscle-meat veterinary residue MRLs without tissue match",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 16,
+      "catalog_id": "10-10-2-egg-powder",
+      "product_name": "Egg powder",
+      "fssr": "2.5.3(3)",
+      "fcs": "10.2.3",
+      "regulatory_case": "egg",
+      "existing_review_group": "14 sugar, egg, confection subtype matrix",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "The 2,4-D Eggs MRL is on shell-free edible raw egg basis. Drying, splitting yolk/albumen, freezing, processing and pickling cannot silently inherit the unadjusted concentration.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 17,
+      "catalog_id": "10-10-3-pickled-eggs",
+      "product_name": "Pickled Eggs",
+      "fssr": "2.5.3(5)",
+      "fcs": "10.3",
+      "regulatory_case": "egg",
+      "existing_review_group": "14 sugar, egg, confection subtype matrix",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "The 2,4-D Eggs MRL is on shell-free edible raw egg basis. Drying, splitting yolk/albumen, freezing, processing and pickling cannot silently inherit the unadjusted concentration.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 18,
+      "catalog_id": "11-11-1-dried-glucose-syrup",
+      "product_name": "Dried Glucose Syrup",
+      "fssr": "2.8.7",
+      "fcs": "11.1.3.1",
+      "regulatory_case": "sugar",
+      "existing_review_group": "14 sugar, egg, confection subtype matrix",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Dried Glucose Syrup FSSR 2.8.7 requires sulphated ash ≤1%; this conditional >1% Lead article cannot be a compliant exact source.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 19,
+      "catalog_id": "11-11-1-edible-lactose",
+      "product_name": "Edible Lactose",
+      "fssr": "2.1.20",
+      "fcs": "11.1.4",
+      "regulatory_case": "milk_special",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "DERIVED_MILK_NOT_NAMED_FORM",
+          "evidence_question": "Establish the precise liquid-milk or skim/whole-milk-powder article independently; derivation from milk is insufficient.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Colostrum, isolated lactose, and compound recipes are not demonstrated to be the legal finished article 'Milks' by their trade descriptions.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 20,
+      "catalog_id": "11-11-1-misri",
+      "product_name": "Misri",
+      "fssr": "2.8.2",
+      "fcs": "11.1.5",
+      "regulatory_case": "sugar",
+      "existing_review_group": "14 sugar, egg, confection subtype matrix",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "CONFECTIONERY_OR_FRUIT_SUBTYPE_GATE",
+          "evidence_question": "Determine whether the as-sold product legally qualifies as confectionery, marzipan, canned stone fruit or stone fruit juice.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Ash in FSSR product identity is often total/acid insoluble; do not silently equate it with measured sulphated ash >1%.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 21,
+      "catalog_id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
+      "product_name": "Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized",
+      "fssr": "FSS (FPS&FA) Regulations",
+      "fcs": "11.6",
+      "regulatory_case": "polyol_specific_not_generic_sorbitol",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Polyols collectively are not sorbitol alone",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 22,
+      "catalog_id": "12-12-1-salt-substitutes",
+      "product_name": "Salt Substitutes",
+      "fssr": "2.9.30(6)",
+      "fcs": "12.1.2",
+      "regulatory_case": "salt_substitute_not_nacl",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Salt substitutes are not automatically pure food-grade salt",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 23,
+      "catalog_id": "99-99-1-trehalose",
+      "product_name": "Trehalose",
+      "fssr": "3.3.4",
+      "fcs": "99.1",
+      "regulatory_case": "trehalose_not_high_ash_sugar",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Trehalose is not automatically a high-sulphated-ash sugar",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 24,
+      "catalog_id": "99-99-1-sajji-khar",
+      "product_name": "Sajji Khar",
+      "fssr": "",
+      "fcs": "99.1",
+      "regulatory_case": "mixed_traditional_alkali",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Sajji Khar is not automatically purified sodium hydroxide or sodium carbonate",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 25,
+      "catalog_id": "99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-",
+      "product_name": "Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations",
+      "fssr": "FSS (FPS&FA) Regulations",
+      "fcs": "99.1",
+      "regulatory_case": "multi_additive_identity_required",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "A general additive category is not one chemical purity article",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 26,
+      "catalog_id": "99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
+      "product_name": "Additives VA-VF of Nutraceutical Regulations excluding those already standardised",
+      "fssr": "",
+      "fcs": "99.1",
+      "regulatory_case": "multi_additive_identity_required",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Nutraceutical Schedule VA-VF grouping is not a single product contaminant article",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 27,
+      "catalog_id": "99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
+      "product_name": "Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations",
+      "fssr": "",
+      "fcs": "99.2",
+      "regulatory_case": "enzyme_preparation",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "LISTED_INGREDIENT_AND_FINISHED_SCOPE_PROOF",
+          "evidence_question": "Require complete recipe, ingredient identity, and legal review of food-containing-listed-article entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "LISTED_INGREDIENT_AND_FINISHED_SCOPE_PROOF",
+          "evidence_question": "Require complete recipe, ingredient identity, and legal review of food-containing-listed-article entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Enzyme preparations require enzyme and production-route purity review, not blanket additive rows",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 28,
+      "catalog_id": "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
+      "product_name": "Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations",
+      "fssr": "",
+      "fcs": "99.7",
+      "regulatory_case": "multi_functional_ingredient",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_RECIPE_NEEDED",
+          "evidence_question": "Obtain formulation and mushroom-species evidence; do not presume edible fungi or mushroom inclusion.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Nutraceutical ingredient-schedule group cannot receive a single universal metal/MRL article",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 29,
+      "catalog_id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "product_name": "Mixtures/preparations/premix of functional ingredients",
+      "fssr": "",
+      "fcs": "99.7",
+      "regulatory_case": "multi_functional_ingredient",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "LISTED_INGREDIENT_AND_FINISHED_SCOPE_PROOF",
+          "evidence_question": "Require complete recipe, ingredient identity, and legal review of food-containing-listed-article entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "LISTED_INGREDIENT_AND_FINISHED_SCOPE_PROOF",
+          "evidence_question": "Require complete recipe, ingredient identity, and legal review of food-containing-listed-article entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "POTENTIAL_COFFEE_OR_CEREAL_INGREDIENT",
+          "evidence_question": "Request complete formulation; assess only an expressly named wheat/wheat bran/rye/barley/coffee article.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "APPLE_JUICE_BEVERAGE_EVIDENCE_REQUIRED",
+          "evidence_question": "Only consider after proving apple juice as an ingredient of another beverage, or apple juice as such.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "WHEAT_OR_BARLEY_FORMULATION_REQUIRED",
+          "evidence_question": "Request exact wheat/wheat bran/barley content and legal applicability to the marketed composite.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_RECIPE_NEEDED",
+          "evidence_question": "Obtain formulation and mushroom-species evidence; do not presume edible fungi or mushroom inclusion.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Functional ingredient premix cannot inherit one ingredient's contaminant article for the mixture",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 30,
+      "catalog_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+      "product_name": "Cow or Buffalo Colostrum and Colostrum Products",
+      "fssr": "2.1.23",
+      "fcs": "100",
+      "regulatory_case": "milk_special",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "DERIVED_MILK_NOT_NAMED_FORM",
+          "evidence_question": "Establish the precise liquid-milk or skim/whole-milk-powder article independently; derivation from milk is insufficient.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Colostrum, isolated lactose, and compound recipes are not demonstrated to be the legal finished article 'Milks' by their trade descriptions.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 31,
+      "catalog_id": "100-100-royal-jelly",
+      "product_name": "Royal Jelly",
+      "fssr": "2.8.3(3)",
+      "fcs": "100",
+      "regulatory_case": "royal_jelly_not_honey",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Royal jelly is not honey, beeswax or a generic sugar",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 32,
+      "catalog_id": "100-100-silver-leaf-chandi-ka-warq",
+      "product_name": "SILVER LEAF (Chandi-ka-warq)",
+      "fssr": "2.11.4",
+      "fcs": "100",
+      "regulatory_case": "other_cross_form",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "The FSSR 2.11.4 edible silver leaf is a metal-leaf finished article, not the same legal metal-contaminant matrix as silver-coated sweets.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 33,
+      "catalog_id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
+      "product_name": "14.3 - Narikela Ksheerika (Milky Coconut Delight)",
+      "fssr": "",
+      "fcs": "",
+      "regulatory_case": "milk_special",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "LISTED_INGREDIENT_AND_FINISHED_SCOPE_PROOF",
+          "evidence_question": "Require complete recipe, ingredient identity, and legal review of food-containing-listed-article entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "LISTED_INGREDIENT_AND_FINISHED_SCOPE_PROOF",
+          "evidence_question": "Require complete recipe, ingredient identity, and legal review of food-containing-listed-article entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NON_DAIRY_NAME_NOT_MILK",
+          "evidence_question": "Obtain formulation and determine whether any actual dairy ingredient meets an expressly listed finished form; coconut milk name does not prove it.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "CONFECTIONERY_OR_FRUIT_SUBTYPE_GATE",
+          "evidence_question": "Determine whether the as-sold product legally qualifies as confectionery, marzipan, canned stone fruit or stone fruit juice.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Colostrum, isolated lactose, and compound recipes are not demonstrated to be the legal finished article 'Milks' by their trade descriptions.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 34,
+      "catalog_id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+      "product_name": "14.7 - Ksheerapaka (Mystic Milk Quartet)",
+      "fssr": "",
+      "fcs": "",
+      "regulatory_case": "milk_special",
+      "existing_review_group": "56 cross-form transfer exclusions",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "LISTED_INGREDIENT_AND_FINISHED_SCOPE_PROOF",
+          "evidence_question": "Require complete recipe, ingredient identity, and legal review of food-containing-listed-article entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "LISTED_INGREDIENT_AND_FINISHED_SCOPE_PROOF",
+          "evidence_question": "Require complete recipe, ingredient identity, and legal review of food-containing-listed-article entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "DERIVED_MILK_NOT_NAMED_FORM",
+          "evidence_question": "Establish the precise liquid-milk or skim/whole-milk-powder article independently; derivation from milk is insufficient.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "CONFECTIONERY_OR_FRUIT_SUBTYPE_GATE",
+          "evidence_question": "Determine whether the as-sold product legally qualifies as confectionery, marzipan, canned stone fruit or stone fruit juice.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Colostrum, isolated lactose, and compound recipes are not demonstrated to be the legal finished article 'Milks' by their trade descriptions.",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    },
+    {
+      "rank": 35,
+      "catalog_id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "product_name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "fssr": "2.11.8",
+      "fcs": "99.7",
+      "regulatory_case": "soluble_dextrin_not_raw_starch",
+      "existing_review_group": "26 remaining product-specific evidence blockers",
+      "source_state": "FIRST_EXACT_SOURCE_PENDING",
+      "review_checks": [
+        {
+          "row": "AF_TOTAL",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_B1",
+          "gate": "DIRECT_OR_COMPOSITE_ARTICLE_PROOF_REQUIRED",
+          "evidence_question": "Verify the FSSAI listed commodity and its processing/end-use identity, rather than use category similarity.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AF_M1",
+          "gate": "NO_POSITIVE_NAMED_FORM_PROVEN",
+          "evidence_question": "Require the marketed item itself to meet a named milk form; ingredient references alone do not establish application.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "OCHRATOXIN_A",
+          "gate": "DIRECT_NAMED_ARTICLE_NOT_ESTABLISHED",
+          "evidence_question": "Neither similar botanical materials nor processed derivatives should inherit the named commodity entry.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "PATULIN",
+          "gate": "NOT_NAMED_APPLE_JUICE_ARTICLE",
+          "evidence_question": "No patulin numeric threshold can be assigned to this product from a generic fruit or mixed-food description.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "DON",
+          "gate": "NOT_NAMED_WHEAT_BRAN_BARLEY",
+          "evidence_question": "Do not substitute any flour, grain or botanical analogue for the listed commodities.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "AGARIC_ACID",
+          "gate": "MUSHROOM_INGREDIENT_NOT_PROVEN",
+          "evidence_question": "Agaric-acid mushroom article requires proven mushroom inclusion or actual alcoholic beverage status.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        },
+        {
+          "row": "HYDROCYANIC_ACID",
+          "gate": "NAMED_FINISHED_PROCESS_GATE",
+          "evidence_question": "No hydrocyanic-acid row is applied absent explicit finished-article proof for a named category.",
+          "finished_product_article_match_verified": false,
+          "lot_analytical_pass": false,
+          "numeric_limit_applied": false
+        }
+      ],
+      "prohibition_on_transfer": "Soluble dextrin fibre cannot automatically inherit high-ash starch conversion or sugar metal limits",
+      "verified_finished_article": false,
+      "compliance_approved": false
+    }
+  ],
+  "summary": {
+    "new_named_article_source_promotions": 0,
+    "applied_finished_product_contaminant_limits": 0,
+    "verified_laboratory_results": 0,
+    "full_contaminant_panels_cleared": 0,
+    "full_regulatory_approvals": 0,
+    "wordpress_modified": false,
+    "canonical_ledger_modified": false
+  }
+}
