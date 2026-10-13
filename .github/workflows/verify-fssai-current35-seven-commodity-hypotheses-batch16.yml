@@ -1,0 +1,26 @@
+name: Verify current 35 seven specific commodity legal hypotheses (Batch16)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-seven-named-commodity-research-batch16-2026-10-13.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-seven-named-commodity-research-batch16-2026-10-13.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/fssai-current35-seven-commodity-hypotheses-batch16-2026-10-13.test.cjs'
+      - '.github/workflows/verify-fssai-current35-seven-commodity-hypotheses-batch16.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Seven source hypotheses and source no-transfer guards
+        run: node --test tests/fssai-current35-seven-commodity-hypotheses-batch16-2026-10-13.test.cjs
+      - name: Syntax check browser legal-source panel
+        run: node --check fssai-product-helper-preview-01/fssai-current35-seven-named-commodity-research-batch16-2026-10-13.js
