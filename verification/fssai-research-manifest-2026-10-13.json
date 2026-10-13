@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-13",
+  "title": "PMSV FSSAI subtype-evidence packet manifest",
+  "purpose": "Track official-source conditionally mapped research routes without implying legal compliance or master-ledger reconciliation.",
+  "packets": [
+    {
+      "path": "verification/fssai-finished-product-conditional-research-2026-10-13.json",
+      "routes": 37,
+      "chapter_focus": "mixed sugar, egg, coffee, mushroom, fruit, confectionery",
+      "status": "research"
+    },
+    {
+      "path": "verification/fssai-product-subtype-evidence-batch2-2026-10-13.json",
+      "routes": 46,
+      "chapter_focus": "chocolate, cocoa, sweetened cocoa, fruit, analogue labelling",
+      "status": "research"
+    },
+    {
+      "path": "verification/fssai-product-subtype-evidence-batch3-2026-10-13.json",
+      "routes": 96,
+      "chapter_focus": "cereal/bakery/soy 55, edible fats/oils 41",
+      "status": "research"
+    }
+  ],
+  "totals": {
+    "research_routes": 179,
+    "exact_identity_duplicates_across_packets": 0,
+    "new_finished_product_compliance_approvals": 0,
+    "source_ledger_promotions": 0
+  },
+  "unreconciled_external_baseline": {
+    "product_records": 533,
+    "conditional_matches": 498,
+    "first_source_gaps": 35,
+    "verification_state": "historical user-workflow count not read/verified in this run"
+  },
+  "next_required_actions": [
+    "Locate original 533-product identity/first-source gap register.",
+    "Reconcile evidence routes by immutable product identity IDs rather than fuzzy product names.",
+    "For each candidate, verify current Gazette amendments and exact finished-product process/composition.",
+    "Verify additives, contaminants, pesticide residues and microbiological criteria independently.",
+    "Only after full positive identity evidence promote source status; otherwise keep pending."
+  ],
+  "site_live_product_helper_modified": false,
+  "original_master_ledger_modified": false
+}
