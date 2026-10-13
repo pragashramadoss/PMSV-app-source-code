@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "scope": "PMSV FSSAI Helper current first CTR source gaps; actual product IDs and hosted research",
+  "as_of": "2026-10-13",
+  "authority": "Official FSSAI/FoSCoS, CTR Version IX (03.02.2026)",
+  "ctr_pdf": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "future_amendment": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+  "future_amendment_effective_date": "2026-12-01",
+  "authoritative_ledger": {
+    "path": "fssai-product-helper-preview-01/data/rules/fssai-current-first-source-533-live-ledger-498-35-2026-10-13.json",
+    "sha": "db7bf5b3c4e918bc06c1373c5e0abc54e24840bf",
+    "products": 533,
+    "partial_exact_source": 498,
+    "pending_first_exact_source": 35,
+    "full_compliance_approvals": 0
+  },
+  "batches": [
+    {
+      "batch": 4,
+      "path": "fssai-product-helper-preview-01/data/rules/fssai-current35-exact-ctr-article-gates-batch4-2026-10-13.json",
+      "sha": "e2b5784b6538ab47b7a9fb472b2ca1d9ca714301",
+      "details": "35 positive legal article questions, 140 original document requests",
+      "confirmed_source_promotions": 0
+    },
+    {
+      "batch": 5,
+      "path": "fssai-product-helper-preview-01/data/rules/fssai-current35-proof-intake-batch5-2026-10-13.json",
+      "sha": "3cef8f635ec697bab13eed92f95406fbfd2404f2",
+      "details": "35 cases grouped as 11 legal scope, 9 identity, 7 process/matrix, 8 specific substance; 140 local receipt fields",
+      "confirmed_source_promotions": 0
+    },
+    {
+      "batch": 6,
+      "path": "fssai-product-helper-preview-01/data/rules/fssai-current35-ctr-explicit-article-crosscheck-batch6-2026-10-13.json",
+      "sha": "4b4313346595587b98f03745dfea897b3ffae68a",
+      "details": "31 official CTR reference rows (28 named and three generic fallback); 45 cross-product comparisons; 27 cases have named candidates, one generic-only, seven no candidate from targeted scan",
+      "confirmed_source_promotions": 0
+    }
+  ],
+  "comparison_totals": {
+    "case_id_alignment_verified": true,
+    "current_open_ids": 35,
+    "ctr_reference_entries": 31,
+    "named_entries": 28,
+    "generic_entries": 3,
+    "case_reference_comparisons": 45,
+    "case_with_named_candidate": 27,
+    "generic_only_cases": 1,
+    "without_selected_candidate": 7,
+    "promoted_first_sources": 0,
+    "finished_numeric_limits_activated": 0,
+    "sample_lab_results_verified": 0,
+    "regulatory_compliance_approvals": 0
+  },
+  "integrity_results": {
+    "record_readback_verified": true,
+    "script_functional_simulation_35_of_35": true,
+    "negative_tamper_tests_passed": true,
+    "github_actions_run_status": "NOT_VERIFIED",
+    "public_github_pages_browser_check": "NOT_VERIFIED",
+    "wordpress_site_unchanged": true
+  },
+  "next_instructions": [
+    "Acquire actual product identity/formulation/process or official legal applicability confirmation for selected first-source candidate; do not promote from comparison alone.",
+    "Retain 35 pending where no exact finished-article source is demonstrably applicable.",
+    "Check current source amendment and effective date before activation.",
+    "After a genuinely proven change, update the actual 533-row ledger and dependent manifest/worklist together and run all related CI tests."
+  ],
+  "research_routes_are_not_finished_food_compliance": true
+}
