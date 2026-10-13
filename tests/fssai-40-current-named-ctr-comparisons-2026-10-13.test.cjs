@@ -71,10 +71,10 @@ test("Preview HTML has comparisons only, no automatic compliance PASS for all fo
   else assert.match(h,/not an exemption/);
  }
 });
-test("Five direct FSSR product definitions are sourced, separated from contaminant-article matching and shown without an automatic PASS",()=>{
- const ids=["11-11-1-cube-sugar","11-11-1-misri","04-04-1-frozen-fruits-fruit-products","04-04-2-frozen-vegetables","coffee-chicory-mixture"];
+test("Fifteen direct FSSR product definitions are sourced, separated from contaminant-article matching and shown without an automatic PASS",()=>{
+ const ids=["coffee-chicory-mixture","formulated-supplements-children","04-04-1-frozen-fruits-fruit-products","04-04-1-fruit-cheese","04-04-2-frozen-vegetables","04-04-2-cocoa-beans","06-06-1-quinoa","06-06-1-chia-seeds","08-08-4-animal-casings","10-10-2-egg-powder","10-10-3-pickled-eggs","11-11-1-dried-glucose-syrup","11-11-1-cube-sugar","11-11-1-misri","100-100-royal-jelly"];
  const x=ctx();assert.equal(x.pmsv40CtrComparisonsValid(),true);
- assert.equal(d.records.filter(y=>y.finished_standard_evidence).length,5);
+ assert.equal(d.records.filter(y=>y.finished_standard_evidence).length,15);
  for(const id of ids){
   const z=d.records.find(y=>y.catalog_id===id),s=z.finished_standard_evidence;
   assert.ok(s,id);assert.equal(s.evidence_type,"EXACT_FSSR_FINISHED_STANDARD_NOT_CTR_MATCH");
