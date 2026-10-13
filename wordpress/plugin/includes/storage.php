@@ -19,7 +19,7 @@ function pmsv_wp_install() {
     // Only a question author's verified device can subscribe to its replies.
     dbDelta("CREATE TABLE $watchers (question_id bigint unsigned NOT NULL, device_id char(64) NOT NULL, created_at bigint NOT NULL, PRIMARY KEY (question_id,device_id), KEY device_id (device_id)) $charset;");
     // One pending answer alert per device; avoid personal notification data in the push envelope.
-    dbDelta("CREATE TABLE $alerts (device_id char(64) NOT NULL, question_id bigint unsigned NOT NULL, answer_id bigint unsigned NOT NULL, created_at bigint NOT NULL, PRIMARY KEY (device_id)) $charset;");
+    dbDelta("CREATE TABLE $alerts (id bigint unsigned NOT NULL AUTO_INCREMENT, device_id char(64) NOT NULL, question_id bigint unsigned NOT NULL, answer_id bigint unsigned NOT NULL, created_at bigint NOT NULL, PRIMARY KEY (id), KEY device_created (device_id,created_at)) $charset;");
     // Seed is a read-only export of real news, never sample data. Re-activation cannot overwrite newer records.
     $rows=json_decode(file_get_contents(PMSV_WP_DIR.'archive-seed.json'),true,512,JSON_THROW_ON_ERROR);
     foreach($rows as $n)pmsv_wp_insert($n);
