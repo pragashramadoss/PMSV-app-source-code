@@ -3,7 +3,7 @@
  * no numeric finish-food assignment; independent universal reference is not a named route.
  */
 var pmsv40CtrComparisons=null;
-const pmsv40CtrDigest="07cc38ca651063bf";
+const pmsv40CtrDigest="294494492155bbce";
 function pmsv40CtrComparisonsValid(){
  if(typeof pmsv493Valid!=="function"||!pmsv493Valid()||
     typeof pmsv40LegalGatesValid!=="function"||!pmsv40LegalGatesValid()||
@@ -60,7 +60,7 @@ function pmsv40CtrComparisonsValid(){
         t.numeric_limit_auto_assigned!==false)return false;
      keys.add(t.source_row_key);comparisons++;
    }
-   const mustHave=new Set(["11-11-1-cube-sugar","11-11-1-misri","04-04-1-frozen-fruits-fruit-products","04-04-2-frozen-vegetables","coffee-chicory-mixture"]);
+   const mustHave=new Set(["coffee-chicory-mixture","formulated-supplements-children","04-04-1-frozen-fruits-fruit-products","04-04-1-fruit-cheese","04-04-2-frozen-vegetables","04-04-2-cocoa-beans","06-06-1-quinoa","06-06-1-chia-seeds","08-08-4-animal-casings","10-10-2-egg-powder","10-10-3-pickled-eggs","11-11-1-dried-glucose-syrup","11-11-1-cube-sugar","11-11-1-misri","100-100-royal-jelly"]);
    const s=x.finished_standard_evidence;
    if(mustHave.has(x.catalog_id)){
      if(!s||s.evidence_type!=="EXACT_FSSR_FINISHED_STANDARD_NOT_CTR_MATCH"||
