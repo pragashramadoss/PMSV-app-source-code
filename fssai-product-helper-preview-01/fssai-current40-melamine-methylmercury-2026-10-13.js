@@ -83,7 +83,7 @@ function pmsv40MelamineUniversalHtml(p){
  const d=pmsv40MelamineUniversalData,x=d.identity_specific_crosschecks.find(y=>y.catalog_id===p.id);
  if(!x||x.product_name!==p.name||String(x.fssr||"")!==String(p.fssr||"")||
     String(x.fcs||"")!==String(p.fcs||""))return '<div class="notice">Identity mismatch: no source inheritance or approval.</div>';
- const e=v=>typeof esc==="function"?esc(String(v)):String(v).replace(/[&<>"']/g,z=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;":"&#39;"}[z]));
+ const e=v=>String(v).replace(/[&<>"']/g,z=>({"&":"&amp;","<":"&lt;",">":"&gt;",[String.fromCharCode(34)]:"&quot;",[String.fromCharCode(39)]:"&#39;"}[z]));
  return '<details class="card" style="margin-top:12px"><summary><b>Further official CTR contaminant evidence: melamine and methylmercury</b></summary>'+
  '<div class="notice"><b>Legal source comparison only.</b> The separate named finished-product CTR article remains PENDING. These provisions are not a lot test, assigned product limit, or compliance approval.</div>'+
  '<div class="tablewrap"><table><thead><tr><th>Official FSSAI CTR IX provision</th><th>Regulatory threshold (conditional scope)</th></tr></thead><tbody>'+
