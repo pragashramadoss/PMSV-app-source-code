@@ -41,14 +41,22 @@ test("exactly the 35 current pending catalogue identities are covered",()=>{
     assert.equal(a.product_compliance_pass,false);
   }
 });
-test("31 exact CTR reference rows produce 45 unassigned comparisons, seven explicit no-candidate cases",()=>{
+test("28 named CTR rows and three generic fallback rows produce 45 unassigned comparisons",()=>{
   assert.equal(data.named_article_rows.length,31);
+  assert.equal(data.explicit_named_reference_rows,28);
+  assert.equal(data.generic_fallback_rows,3);
+  assert.equal(data.named_article_rows.filter(x=>x.article_class==="GENERIC_NOT_NAMED").length,3);
+  assert.equal(data.case_comparisons_coverage.potential_named_article_cases,27);
+  assert.equal(data.case_comparisons_coverage.generic_fallback_only_cases,1);
   assert.equal(new Set(data.named_article_rows.map(x=>x.key)).size,31);
   assert.equal(data.case_comparisons_count,45);
   assert.equal(data.product_cases.reduce((n,x)=>n+x.compared_article_keys.length,0),45);
   assert.equal(data.case_comparisons_coverage.with_comparisons,28);
   assert.equal(data.case_comparisons_coverage.no_comparisons,7);
   assert.equal(data.product_cases.filter(x=>x.compared_article_keys.length===0).length,7);
+  const fallbackOnly=data.product_cases.filter(x=>x.review_class==="GENERIC_FALLBACK_COMPARISON_ONLY");
+  assert.equal(fallbackOnly.length,1);
+  assert.equal(fallbackOnly[0].catalog_id,"04-04-1-catechu-edible");
   for(const r of data.named_article_rows){
     assert.equal(r.official_source,data.official_ctr);
     assert.equal(r.reference_only_not_assigned,true);
@@ -69,6 +77,7 @@ test("all 35 visible cards are research-only and no product or source is approve
     assert.match(html,/Batch 6/);
     assert.match(html,/FIRST EXACT SOURCE STILL PENDING/);
     assert.match(html,/None has been applied as a finished-product threshold/);
+    if(p.catalog_id==="04-04-1-catechu-edible")assert.match(html,/Generic fallback comparison only/);
     assert.doesNotMatch(html,/product compliant|regulatory PASS granted/i);
   }
   const other=c.pmsvB6Html({id:"outside-35",name:"Other",fssr:"",fcs:""});
