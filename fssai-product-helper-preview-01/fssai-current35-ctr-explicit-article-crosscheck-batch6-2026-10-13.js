@@ -5,7 +5,7 @@
  */
 var pmsvB6Evidence=null;
 const pmsvB6Path="./data/rules/fssai-current35-ctr-explicit-article-crosscheck-batch6-2026-10-13.json";
-const pmsvB6Hash="7827940da3fe3b5c";
+const pmsvB6Hash="583c90c60d3737c9";
 const pmsvB6CTR="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf";
 function pmsvB6Digest(o){
   const s=JSON.stringify(o);let a=0x811c9dc5,b=0x9747b28c;
@@ -22,6 +22,9 @@ function pmsvB6Valid(){
     d.current_source_ledger?.first_exact_source_pending!==35||
     d.official_ctr!==pmsvB6CTR||d.may_amendment_effective!=="2026-12-01"||
     d.named_article_rows?.length!==31||d.product_cases?.length!==35||
+    d.explicit_named_reference_rows!==28||d.generic_fallback_rows!==3||
+    d.case_comparisons_coverage?.potential_named_article_cases!==27||
+    d.case_comparisons_coverage?.generic_fallback_only_cases!==1||
     d.case_comparisons_count!==45||d.case_comparisons_coverage?.with_comparisons!==28||
     d.case_comparisons_coverage?.no_comparisons!==7||
     d.first_exact_source_promotions!==0||d.official_legal_scope_adjudications!==0||
@@ -33,7 +36,9 @@ function pmsvB6Valid(){
     if(rows.has(r?.key)||!r?.exact_ctr_article||!r.contaminant||
       !Number.isFinite(r.published_limit)||!Number.isInteger(r.pdf_page_zero_based)||
       r.pdf_page_zero_based<0||r.pdf_page_zero_based>55||
-      r.official_source!==pmsvB6CTR||r.reference_only_not_assigned!==true||
+      r.official_source!==pmsvB6CTR||
+      r.article_class!==(r.key.endsWith("_FALLBACK")?"GENERIC_NOT_NAMED":"EXPLICIT_NAMED_CTR_ROW_CONDITIONAL")||
+      r.reference_only_not_assigned!==true||
       r.legal_finished_scope_confirmed!==false||r.lab_result_verified!==false)return false;
     rows.set(r.key,r);
   }
@@ -50,7 +55,11 @@ function pmsvB6Valid(){
       x.analytical_matrix_confirmed!==false||
       x.live_threshold_activation!==false||x.laboratory_pass!==false||
       x.product_compliance_pass!==false||!Array.isArray(x.compared_article_keys)||
-      (x.compared_article_keys.length===0?x.review_class!=="NO_POSITIVE_NAMED_CTR_ARTICLE_IN_THIS_TARGETED_REVIEW":x.review_class!=="EXACT_NAMED_CTR_ARTICLE_COMPARISON_ONLY")||
+      (x.compared_article_keys.length===0
+        ? x.review_class!=="NO_POSITIVE_NAMED_CTR_ARTICLE_IN_THIS_TARGETED_REVIEW"
+        : (x.compared_article_keys.every(k=>rows.get(k)?.article_class==="GENERIC_NOT_NAMED")
+          ?x.review_class!=="GENERIC_FALLBACK_COMPARISON_ONLY"
+          :x.review_class!=="EXACT_NAMED_CTR_ARTICLE_COMPARISON_ONLY"))||
       x.compared_article_keys.some(k=>!rows.has(k)))return false;
     comparisons+=x.compared_article_keys.length;
     if(x.compared_article_keys.length===0)without++;
@@ -82,16 +91,18 @@ function pmsvB6Html(p){
   })[c]);
   const entries=new Map(pmsvB6Evidence.named_article_rows.map(r=>[r.key,r]));
   const comparisons=x.compared_article_keys.map(k=>entries.get(k));
+  const genericOnly=x.review_class==='GENERIC_FALLBACK_COMPARISON_ONLY';
   let table="";
   if(comparisons.length){
     table='<div class="tablewrap"><table><thead><tr><th>Contaminant</th><th>Official CTR article</th><th>Published reference only — NOT an assigned limit</th><th>Why it cannot be transferred automatically</th></tr></thead><tbody>'+
       comparisons.map(z=>'<tr><td>'+escape(z.contaminant)+'</td><td>'+escape(z.exact_ctr_article)+'</td>'+
       '<td>'+escape(z.published_limit)+' '+escape(z.unit)+' · PDF p.'+(z.pdf_page_zero_based+1)+' (viewer)</td>'+
-      '<td>'+escape(z.scope_boundary)+'</td></tr>').join("")+'</tbody></table></div>';
+      '<td>'+(z.article_class==="GENERIC_NOT_NAMED"?"GENERIC FALLBACK — not an exact named source. ":"Named reference, legal scope unverified. ")+escape(z.scope_boundary)+'</td></tr>').join("")+'</tbody></table></div>';
   }else table='<p><b>No named article candidate established in this targeted comparison.</b> This is not evidence that no other provision applies.</p>';
   return '<details class="card" style="margin-top:12px"><summary><b>Batch 6 · official CTR article comparisons</b> · '+comparisons.length+
     ' research row(s), 0 approvals</summary>'+
     '<div class="notice"><b>FIRST EXACT SOURCE STILL PENDING.</b> These values only quote the official regulation. None has been applied as a finished-product threshold. No laboratory test or compliance PASS.</div>'+
+    (genericOnly?'<div class="notice"><b>Generic fallback comparison only.</b> No first exact named source article identified.</div>':"")+
     table+'<p><b>Evidence still needed:</b> '+escape(x.first_decisive_question)+'</p>'+
     '<small><a href="'+escape(pmsvB6CTR)+'" target="_blank" rel="noopener noreferrer">Official CTR Version IX (03.02.2026)</a> · May 2026 amendment starts 01.12.2026; not automatically enabled.</small>'+
     '</details>';
