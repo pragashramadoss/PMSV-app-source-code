@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) exit;
 function pmsv_wp_table($suffix) { global $wpdb; return $wpdb->prefix.'pmsv_app_'.$suffix; }
 function pmsv_wp_install() {
     global $wpdb; require_once ABSPATH.'wp-admin/includes/upgrade.php'; $charset=$wpdb->get_charset_collate();
-    $news=pmsv_wp_table('news');$devices=pmsv_wp_table('devices');$limits=pmsv_wp_table('limits');$questions=pmsv_wp_table('questions');$answers=pmsv_wp_table('answers');$reports=pmsv_wp_table('reports');
+    $news=pmsv_wp_table('news');$devices=pmsv_wp_table('devices');$limits=pmsv_wp_table('limits');$questions=pmsv_wp_table('questions');$answers=pmsv_wp_table('answers');$reports=pmsv_wp_table('reports');$watchers=pmsv_wp_table('question_watchers');$alerts=pmsv_wp_table('push_alerts');
     dbDelta("CREATE TABLE $news (id varchar(100) NOT NULL, url_hash char(64) NOT NULL, title_hash char(64) NOT NULL, published varchar(10) NOT NULL, first_seen varchar(32) NOT NULL, payload longtext NOT NULL, PRIMARY KEY (id), KEY url_hash (url_hash), KEY title_hash (title_hash), KEY published (published)) $charset;");
     // Preserve separate source records even when they share a document URL.
     $indexes=$wpdb->get_results("SHOW INDEX FROM $news");
@@ -16,10 +16,14 @@ function pmsv_wp_install() {
     dbDelta("CREATE TABLE $questions (id bigint unsigned NOT NULL AUTO_INCREMENT, author varchar(80) NOT NULL, title varchar(190) NOT NULL, body text NOT NULL, category varchar(32) NOT NULL, created_at bigint NOT NULL, last_activity bigint NOT NULL, status varchar(20) NOT NULL DEFAULT 'published', fingerprint char(64) NOT NULL, PRIMARY KEY (id), KEY status_activity (status,last_activity), KEY category (category)) $charset;");
     dbDelta("CREATE TABLE $answers (id bigint unsigned NOT NULL AUTO_INCREMENT, question_id bigint unsigned NOT NULL, author varchar(80) NOT NULL, body text NOT NULL, created_at bigint NOT NULL, status varchar(20) NOT NULL DEFAULT 'published', fingerprint char(64) NOT NULL, PRIMARY KEY (id), KEY question_status (question_id,status), KEY created_at (created_at)) $charset;");
     dbDelta("CREATE TABLE $reports (id bigint unsigned NOT NULL AUTO_INCREMENT, target_type varchar(12) NOT NULL, target_id bigint unsigned NOT NULL, reason varchar(32) NOT NULL, created_at bigint NOT NULL, fingerprint char(64) NOT NULL, status varchar(20) NOT NULL DEFAULT 'open', PRIMARY KEY (id), UNIQUE KEY target_reporter (target_type,target_id,fingerprint), KEY target_status (target_type,target_id,status), KEY created_at (created_at)) $charset;");
+    // Only a question author's verified device can subscribe to its replies.
+    dbDelta("CREATE TABLE $watchers (question_id bigint unsigned NOT NULL, device_id char(64) NOT NULL, created_at bigint NOT NULL, PRIMARY KEY (question_id,device_id), KEY device_id (device_id)) $charset;");
+    // One pending answer alert per device; avoid personal notification data in the push envelope.
+    dbDelta("CREATE TABLE $alerts (device_id char(64) NOT NULL, question_id bigint unsigned NOT NULL, answer_id bigint unsigned NOT NULL, created_at bigint NOT NULL, PRIMARY KEY (device_id)) $charset;");
     // Seed is a read-only export of real news, never sample data. Re-activation cannot overwrite newer records.
     $rows=json_decode(file_get_contents(PMSV_WP_DIR.'archive-seed.json'),true,512,JSON_THROW_ON_ERROR);
     foreach($rows as $n)pmsv_wp_insert($n);
-    update_option('pmsv_wp_schema',3,false);
+    update_option('pmsv_wp_schema',4,false);
 }
 // Editorial exclusions: user-confirmed off-topic reports (12–13 October 2026).
 // Keep the stored row for recovery, but never expose or reinsert this story.
@@ -198,7 +202,19 @@ function pmsv_wp_forum_create_question() {
     global $wpdb;$q=pmsv_wp_table('questions');$now=time();
     $ok=$wpdb->insert($q,['author'=>$name,'title'=>$title,'body'=>$body,'category'=>$category,'created_at'=>$now,'last_activity'=>$now,'status'=>'published','fingerprint'=>pmsv_wp_forum_fingerprint()],['%s','%s','%s','%s','%d','%d','%s','%s']);
     if(!$ok)throw new RuntimeException('Question insert failed');
-    return pmsv_wp_reply(['id'=>(string)$wpdb->insert_id],201);
+    $id=(int)$wpdb->insert_id;
+    $notifying=false;
+    if(($d['notifyOnAnswer']??false)===true){
+        // Notification consent is tied to the current browser's registered push endpoint and token.
+        $device=pmsv_wp_forum_verified_device($d['notifyEndpoint']??null,$d['notifyToken']??null);
+        if($device){
+            $watchers=pmsv_wp_table('question_watchers');
+            $saved=$wpdb->insert($watchers,['question_id'=>$id,'device_id'=>$device,'created_at'=>$now],['%d','%s','%d']);
+            if($saved===false)throw new RuntimeException('Answer-alert subscription failed');
+            $notifying=true;
+        }
+    }
+    return pmsv_wp_reply(['id'=>(string)$id,'notifying'=>$notifying],201);
 }
 function pmsv_wp_forum_create_answer($id) {
     if(!pmsv_wp_origin())return pmsv_wp_reply(['error'=>'Please post from the PMSV app.'],403);
@@ -210,8 +226,12 @@ function pmsv_wp_forum_create_answer($id) {
     global $wpdb;$a=pmsv_wp_table('answers');$q=pmsv_wp_table('questions');$now=time();
     $ok=$wpdb->insert($a,['question_id'=>$id,'author'=>$name,'body'=>$body,'created_at'=>$now,'status'=>'published','fingerprint'=>pmsv_wp_forum_fingerprint()],['%d','%s','%s','%d','%s','%s']);
     if(!$ok)throw new RuntimeException('Answer insert failed');
+    $answer_id=(int)$wpdb->insert_id;
     $wpdb->update($q,['last_activity'=>$now],['id'=>$id],['%d'],['%d']);
-    return pmsv_wp_reply(['id'=>(string)$wpdb->insert_id],201);
+    // A provider failure must never block the posted answer.
+    try{pmsv_wp_forum_push_answer($id,$answer_id);}
+    catch(Throwable $e){error_log('PMSV discussion answer notification could not be delivered');}
+    return pmsv_wp_reply(['id'=>(string)$answer_id],201);
 }
 
 function pmsv_wp_forum_create_report() {
