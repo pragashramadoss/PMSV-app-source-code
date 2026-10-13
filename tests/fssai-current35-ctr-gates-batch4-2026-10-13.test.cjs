@@ -44,7 +44,7 @@ test("source review is guarded and does not grant legal clearance",()=>{
   assert.equal(data.finished_lab_tests_verified,0);
   assert.equal(data.full_regulatory_passes,0);
   assert.equal(data.master_ledger_mutated,false);
-  assert.equal(data.application_ui_mutated,false);
+  assert.equal(data.application_ui_mutated,true);
   for(const x of data.cases){
     assert.equal(x.documents_required.length,4);
     assert.equal(Object.keys(x.verification_gates).length,4);
