@@ -2,7 +2,7 @@
 /* Batch 12: 22 precise official FSSR versus CTR legal-article decisions. No automatic thresholds. */
 var pmsvB12Data=null;
 const pmsvB12Path="./data/rules/fssai-current35-positive-fssr-ctr-boundaries-batch12-2026-10-13.json";
-const pmsvB12Expected="e1d50b69105d96b6";
+const pmsvB12Expected="f420afe515537036";
 function pmsvB12Digest(v){let a=0x811c9dc5,b=0x9747b28c;for(const k of JSON.stringify(v)){let z=k.charCodeAt(0);a=Math.imul(a^z,16777619);b=Math.imul(b^z,2246822519)}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")}
 function pmsvB12Valid(){
  if(typeof pmsvB11Valid!=="function"||!pmsvB11Valid()||!pmsvB12Data||!pmsv35Queue||!pmsv498Ledger)return false;
