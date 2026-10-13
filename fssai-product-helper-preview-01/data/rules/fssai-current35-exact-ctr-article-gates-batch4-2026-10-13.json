@@ -1,0 +1,1517 @@
+{
+  "kind": "PMSV_CURRENT_35_FINISHED_CTR_ARTICLE_DECISION_BATCH4",
+  "schema_version": "1.0",
+  "created_on": "2026-10-13",
+  "scope": "Exact 35 current FIRST_EXACT_SOURCE_PENDING catalogue IDs, not a further set of generic products",
+  "authoritative_snapshot": {
+    "ledger_file": "fssai-product-helper-preview-01/data/rules/fssai-current-first-source-533-live-ledger-498-35-2026-10-13.json",
+    "ledger_sha": "db7bf5b3c4e918bc06c1373c5e0abc54e24840bf",
+    "queue_file": "fssai-product-helper-preview-01/data/rules/fssai-current-35-first-exact-source-proof-worklist-2026-10-13.json",
+    "queue_sha": "69ed94bc6efefea3d07a9aad431dec6c17229a00",
+    "total": 533,
+    "partial": 498,
+    "pending": 35
+  },
+  "regulatory_sources": {
+    "CTR_version_IX": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "contaminant_amendment_2026_effective_2026_12_01": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+    "FSSAI_official_compendium": "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+  },
+  "evidence_rule": "A similar ingredient name or a generic food category is not an affirmative finished-article CTR match. No threshold, lab PASS, or legal clearance without explicit positive scope evidence.",
+  "current_ctr_scope_checks_completed": 35,
+  "official_product_status_reviewed": 35,
+  "reference_links_to_prior_179_routes": 18,
+  "required_original_documents": 140,
+  "required_positive_evidence_flags": 140,
+  "named_finished_ctr_article_promotions": 0,
+  "finished_numeric_limits_activated": 0,
+  "finished_lab_tests_verified": 0,
+  "full_regulatory_passes": 0,
+  "master_ledger_mutated": false,
+  "application_ui_mutated": false,
+  "cases": [
+    {
+      "rank": 1,
+      "catalog_id": "purified-vending-water",
+      "product_name": "Drinking Water (Purified) sold through vending machine",
+      "fssr": "2.10.9",
+      "fcs": "14.1.1",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Packaged drinking water (other than natural mineral water)",
+        "pdf_page_zero_based": 4,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Water sold via vending machine is not demonstrated to be pre-packaged drinking water.",
+        "decisive_positive_proof": "Packaging/dispensing facts, source-water standard and current legal interpretation.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other_than_Dairy_and_Fruits_Vegetables_based.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Document actual dispensing, collection point, IS 10500 criteria and legal article; packaged-water metal limits cannot transfer.",
+      "documents_required": [
+        "Exact FSSR/FoSCoS finished identity and product specification",
+        "Current formulation/process/packaging evidence",
+        "Signed CTR IX exact article and analytical basis",
+        "Lot traceability and suitable laboratory testing"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 2,
+      "catalog_id": "coffee-chicory-mixture",
+      "product_name": "Coffee-Chicory Mixture",
+      "fssr": "2.10.4",
+      "fcs": "14.1.5",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Chicory (dried or roasted) / coffee beans (Copper)",
+        "pdf_page_zero_based": 6,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Two named source ingredients do not establish a metal limit for a processed blend.",
+        "decisive_positive_proof": "Roasted versus instant subtype, ingredient percentages, legal blend applicability and analysis basis.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Prove roast/instant subtype, proportions and exact named coffee-versus-blend metal/ochratoxin article.",
+      "documents_required": [
+        "Actual food and cocoa/coffee matrix and fat state declaration",
+        "Batch formulation and processing/fat-removal record",
+        "Final product sampling and dry fat-free basis where prescribed",
+        "Signed CTR IX legal-article comparison for actual finished material"
+      ],
+      "research_crosslinks": [
+        {
+          "packet_index": 1,
+          "record_key": "ROASTED_GROUND_COFFEE_CHICORY",
+          "reference_identity": "Roasted and ground coffee–chicory mixture",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        },
+        {
+          "packet_index": 1,
+          "record_key": "INSTANT_COFFEE_CHICORY",
+          "reference_identity": "Instant coffee–chicory mixture",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        },
+        {
+          "packet_index": 1,
+          "record_key": "DECAF_ROASTED_COFFEE_CHICORY",
+          "reference_identity": "Decaffeinated roasted and ground coffee–chicory",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        },
+        {
+          "packet_index": 1,
+          "record_key": "DECAF_INSTANT_COFFEE_CHICORY",
+          "reference_identity": "Decaffeinated instant coffee–chicory",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        }
+      ],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 3,
+      "catalog_id": "formulated-supplements-children",
+      "product_name": "Formulated supplements for children",
+      "fssr": null,
+      "fcs": "13.2",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Infant milk substitutes / infant foods (Lead)",
+        "pdf_page_zero_based": 3,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Broad children's formulated supplements are not automatically infant formula or infant food.",
+        "decisive_positive_proof": "Actual intended age, governing special regulations, dosage and ingredient monographs.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_4%20%28Cereals%20and%20Cereal%20products%29%281%29.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Verify target age, full ingredient formula, special regulation and finished form",
+      "documents_required": [
+        "Exact FSSR/FoSCoS finished identity and product specification",
+        "Current formulation/process/packaging evidence",
+        "Signed CTR IX exact article and analytical basis",
+        "Lot traceability and suitable laboratory testing"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 4,
+      "catalog_id": "04-04-1-frozen-fruits-fruit-products",
+      "product_name": "Frozen Fruits/Fruit Products",
+      "fssr": "2.3.37",
+      "fcs": "04.1.2.1",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Fruit commodity entries (Lead) and pesticide crop commodities",
+        "pdf_page_zero_based": 2,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Frozen fruit is not automatically covered by an unprocessed fruit article.",
+        "decisive_positive_proof": "Fruit species, freezing/process details, processing factor authority and sample basis.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Establish each actual fruit/vegetable commodity, processing treatment, composition, regulatory pesticide scope and an authorized processing factor before computing any finished-product residue conclusion.",
+      "documents_required": [
+        "Botanical species and marketed product standard",
+        "Complete processing/preservation and packaging records",
+        "Final sample matrix and any justified processing factors",
+        "Official source clause establishing a finished article, not simply the raw crop"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 5,
+      "catalog_id": "04-04-1-catechu-edible",
+      "product_name": "Catechu (Edible)",
+      "fssr": "2.11.2",
+      "fcs": "04.1.2.2",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Foods not specified (Lead); no independently named catechu article established",
+        "pdf_page_zero_based": 3,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "A generic fall-back is not a first exact named finished-article match.",
+        "decisive_positive_proof": "Botanical source, degree of purification, exact CTR entry and named analytical matrix.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fssai.gov.in/upload/uploadfiles/files/12_%20Chapter%202_11%20(Other%20food%20product%20and%20%20ingredients).pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Identify botanical source, extraction, food grade and specified catechu product article",
+      "documents_required": [
+        "Botanical species and marketed product standard",
+        "Complete processing/preservation and packaging records",
+        "Final sample matrix and any justified processing factors",
+        "Official source clause establishing a finished article, not simply the raw crop"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 6,
+      "catalog_id": "04-04-1-seedless-tamarind",
+      "product_name": "Seedless Tamarind",
+      "fssr": "2.3.49",
+      "fcs": "04.1.2.8",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Pulp and pulp products of any fruit (Copper)",
+        "pdf_page_zero_based": 6,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Seedless tamarind is not necessarily tamarind pulp, cooked concentrate or prepared fruit pulp.",
+        "decisive_positive_proof": "Exact fruit form, seed removal operation, added ingredients, legal fruit-pulp classification.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Confirm exact finished product (fruit pulp, fruit bar, preserve, candied peel, raw/dried fruit or mixed confection), the source article's processing scope and product-specific analytical matrix.",
+      "documents_required": [
+        "Botanical species and marketed product standard",
+        "Complete processing/preservation and packaging records",
+        "Final sample matrix and any justified processing factors",
+        "Official source clause establishing a finished article, not simply the raw crop"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 7,
+      "catalog_id": "04-04-1-coconut-milk-powder",
+      "product_name": "COCONUT MILK POWDER",
+      "fssr": "2.3.63",
+      "fcs": "04.1.2.8",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Milks (Lead)",
+        "pdf_page_zero_based": 4,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Non-dairy coconut-milk powder is not dairy milk despite its product name.",
+        "decisive_positive_proof": "Coconut substrate, non-dairy additives, drying formulation, correct named CTR article.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Confirm coconut kernel, maltodextrin/caseinate ingredients and finished non-dairy analytical scope.",
+      "documents_required": [
+        "Botanical species and marketed product standard",
+        "Complete processing/preservation and packaging records",
+        "Final sample matrix and any justified processing factors",
+        "Official source clause establishing a finished article, not simply the raw crop"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 8,
+      "catalog_id": "04-04-2-cocoa-beans",
+      "product_name": "Cocoa Beans",
+      "fssr": "2.3.54",
+      "fcs": "04.2.2.7",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Cocoa powder (Lead)",
+        "pdf_page_zero_based": 2,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "A cocoa bean is not cocoa powder and has no dry-fat-free-powder basis merely by processing potential.",
+        "decisive_positive_proof": "Marketed raw bean form and separately named finished CTR entry.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Do not transfer 5 mg/kg lead on dry fat-free substance; prove named bean article.",
+      "documents_required": [
+        "Actual food and cocoa/coffee matrix and fat state declaration",
+        "Batch formulation and processing/fat-removal record",
+        "Final product sampling and dry fat-free basis where prescribed",
+        "Signed CTR IX legal-article comparison for actual finished material"
+      ],
+      "research_crosslinks": [
+        {
+          "packet_index": 1,
+          "record_key": "COCOA_BEANS",
+          "reference_identity": "Cocoa beans",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        }
+      ],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 9,
+      "catalog_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "product_name": "Dry Mixtures of Cocoa and Sugars",
+      "fssr": "2.7.6",
+      "fcs": "05.1.1",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Cocoa powder (Lead)",
+        "pdf_page_zero_based": 2,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Sweetened cocoa/sugar drink mixtures are not cocoa powder, and cocoa-powder composition basis does not transfer.",
+        "decisive_positive_proof": "Cocoa content, sugar percentage, marketed dry mix form, directly named CTR product entry.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Confirm whether the final tested food is cocoa powder, cocoa liquor, cake, beans or mixture and document the legally prescribed dry fat-free substance analytical basis.",
+      "documents_required": [
+        "Finished food identity and current FSSR standard/subtype",
+        "Actual manufacturing raw-material identity and process record",
+        "Lot-specific ash result identifying total ash versus sulphated ash where relevant",
+        "Written exact CTR IX named-article applicability determination with page and legal basis"
+      ],
+      "research_crosslinks": [
+        {
+          "packet_index": 2,
+          "record_key": "B2-017",
+          "reference_identity": "Sweetened cocoa / drinking chocolate (standard)",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        },
+        {
+          "packet_index": 2,
+          "record_key": "B2-018",
+          "reference_identity": "Sweetened cocoa, fat-reduced / drinking chocolate",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        },
+        {
+          "packet_index": 2,
+          "record_key": "B2-019",
+          "reference_identity": "Sweetened cocoa, highly fat-reduced / drinking chocolate",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        }
+      ],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 10,
+      "catalog_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "fssr": "2.7.8",
+      "fcs": "05.1.1",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Cocoa powder (Lead and Copper)",
+        "pdf_page_zero_based": 2,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Cocoa mass/liquor and press cake are distinct from cocoa powder, including fat content and analysis basis.",
+        "decisive_positive_proof": "Separate cocoa mass versus cake lot, fat percentage, finished named article.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Determine cocoa mass/liquor/cake form and fat percentage before assigning cocoa-powder dry fat-free basis.",
+      "documents_required": [
+        "Actual food and cocoa/coffee matrix and fat state declaration",
+        "Batch formulation and processing/fat-removal record",
+        "Final product sampling and dry fat-free basis where prescribed",
+        "Signed CTR IX legal-article comparison for actual finished material"
+      ],
+      "research_crosslinks": [
+        {
+          "packet_index": 2,
+          "record_key": "B2-015",
+          "reference_identity": "Cocoa mass / cocoa liquor",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        },
+        {
+          "packet_index": 2,
+          "record_key": "B2-016",
+          "reference_identity": "Cocoa press cake",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        }
+      ],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 11,
+      "catalog_id": "06-06-1-chia-seeds",
+      "product_name": "Chia Seeds",
+      "fssr": "2.4.6",
+      "fcs": "06.1",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Cereal grains excluding buckwheat, canihua and quinoa (Lead)",
+        "pdf_page_zero_based": 2,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Chia is a Salvia seed and cannot be classified as cereal grain merely by FoSCoS category placement.",
+        "decisive_positive_proof": "Species, seed form, exact commodity classification and toxin/metal scope.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_4%20%28Cereals%20and%20Cereal%20products%29%281%29.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Substantiate botanical and legal crop category for crop toxins; chapter placement alone is insufficient.",
+      "documents_required": [
+        "Botanical species and marketed product standard",
+        "Complete processing/preservation and packaging records",
+        "Final sample matrix and any justified processing factors",
+        "Official source clause establishing a finished article, not simply the raw crop"
+      ],
+      "research_crosslinks": [
+        {
+          "packet_index": 3,
+          "record_key": "FSSAI-B3-016",
+          "reference_identity": "Chia seeds",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        }
+      ],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 12,
+      "catalog_id": "06-06-2-carob-powder",
+      "product_name": "Carob Powder",
+      "fssr": "2.11.7",
+      "fcs": "06.2.1",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Cocoa powder (Lead)",
+        "pdf_page_zero_based": 2,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Carob powder is Ceratonia-derived, not cocoa powder.",
+        "decisive_positive_proof": "Botanical species evidence and directly named carob/plant powder article.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fssai.gov.in/upload/uploadfiles/files/12_%20Chapter%202_11%20(Other%20food%20product%20and%20%20ingredients).pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Verify Ceratonia siliqua plant source and FSSR 2.11.7 identity; do not inherit cocoa-powder lead/copper",
+      "documents_required": [
+        "Actual food and cocoa/coffee matrix and fat state declaration",
+        "Batch formulation and processing/fat-removal record",
+        "Final product sampling and dry fat-free basis where prescribed",
+        "Signed CTR IX legal-article comparison for actual finished material"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 13,
+      "catalog_id": "06-06-2-arrowroot",
+      "product_name": "Arrowroot",
+      "fssr": "2.4.14",
+      "fcs": "06.2.2",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Milled food grains (pesticide commodity rows)",
+        "pdf_page_zero_based": 17,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Arrowroot rhizome starch is not wheat/rice/maize grain meal.",
+        "decisive_positive_proof": "Rhizome species, refined-starch identity and exact commodity/processed MRL basis.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4%20%28Cereals%20and%20Cereal%20products%29%281%29.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Document botanical species, whole/kernel/flour identity, exact milled-food-grains MRL scope, transformation or processing factor, analytical sample basis and applicable amendments.",
+      "documents_required": [
+        "Botanical species and marketed product standard",
+        "Complete processing/preservation and packaging records",
+        "Final sample matrix and any justified processing factors",
+        "Official source clause establishing a finished article, not simply the raw crop"
+      ],
+      "research_crosslinks": [
+        {
+          "packet_index": 3,
+          "record_key": "FSSAI-B3-023",
+          "reference_identity": "Arrowroot starch",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        }
+      ],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 14,
+      "catalog_id": "06-06-2-water-chestnut-flour-singhare-ka-atta",
+      "product_name": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+      "fssr": "2.3.64",
+      "fcs": "06.2.1",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Milled food grains (pesticide commodity rows)",
+        "pdf_page_zero_based": 17,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Water-chestnut flour is derived from Trapa species, not a named milled cereal.",
+        "decisive_positive_proof": "Trapa species, milling process, named contaminant and pesticide commodity.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Identify Trapa species and find directly named contaminant source for milled water chestnut.",
+      "documents_required": [
+        "Botanical species and marketed product standard",
+        "Complete processing/preservation and packaging records",
+        "Final sample matrix and any justified processing factors",
+        "Official source clause establishing a finished article, not simply the raw crop"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 15,
+      "catalog_id": "08-08-4-animal-casings",
+      "product_name": "Animal Casings",
+      "fssr": "2.5.2(14)",
+      "fcs": "08.4",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Meat/offal / animal tissue articles",
+        "pdf_page_zero_based": 4,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Prepared intestine/casing matrix is not evidenced to be edible meat or offal as sold.",
+        "decisive_positive_proof": "Animal species, natural/collagen/synthetic casing, processing and testing matrix.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_5_Meat%20and%20Meat%20products%281%29.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Identify source animal species, intestine/collagen tissue, processing and residue/sample matrix",
+      "documents_required": [
+        "Animal species and product tissue/secretion/egg fraction",
+        "Final preservation/drying/pickling or concentration process",
+        "Residue analyte, tissue matrix and sampling basis",
+        "Exact finished food article and any verified MRL extrapolation rule"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 16,
+      "catalog_id": "10-10-2-egg-powder",
+      "product_name": "Egg powder",
+      "fssr": "2.5.3(3)",
+      "fcs": "10.2.3",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Eggs (pesticide residues, shell-free basis)",
+        "pdf_page_zero_based": 16,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Whole/yolk/white dried powder has concentration and matrix changes versus raw shell-free eggs.",
+        "decisive_positive_proof": "Subtype, species, dehydration mass balance, legal MRL processing rule.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_5_Meat%20and%20Meat%20products(1).pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Document whole/white/yolk subtype, species, concentration factor and proper finished sample basis.",
+      "documents_required": [
+        "Animal species and product tissue/secretion/egg fraction",
+        "Final preservation/drying/pickling or concentration process",
+        "Residue analyte, tissue matrix and sampling basis",
+        "Exact finished food article and any verified MRL extrapolation rule"
+      ],
+      "research_crosslinks": [
+        {
+          "packet_index": 1,
+          "record_key": "DRIED_WHOLE_EGG",
+          "reference_identity": "Dried whole egg powder",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        },
+        {
+          "packet_index": 1,
+          "record_key": "DRIED_EGG_YOLK",
+          "reference_identity": "Dried egg yolk powder",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        },
+        {
+          "packet_index": 1,
+          "record_key": "DRIED_EGG_WHITE",
+          "reference_identity": "Dried egg white powder",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        }
+      ],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 17,
+      "catalog_id": "10-10-3-pickled-eggs",
+      "product_name": "Pickled Eggs",
+      "fssr": "2.5.3(5)",
+      "fcs": "10.3",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Eggs (pesticide residues, shell-free basis)",
+        "pdf_page_zero_based": 16,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Pickled eggs may incorporate brine, acid and other materials absent from raw eggs.",
+        "decisive_positive_proof": "Shell-free fraction, species, brine process, residue basis and named processed-egg legal entry.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_5_Meat%20and%20Meat%20products(1).pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Document species, pickling and egg fraction; do not apply raw egg MRL to composite pack.",
+      "documents_required": [
+        "Animal species and product tissue/secretion/egg fraction",
+        "Final preservation/drying/pickling or concentration process",
+        "Residue analyte, tissue matrix and sampling basis",
+        "Exact finished food article and any verified MRL extrapolation rule"
+      ],
+      "research_crosslinks": [
+        {
+          "packet_index": 1,
+          "record_key": "PICKLED_EGGS",
+          "reference_identity": "Pickled eggs",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        }
+      ],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 18,
+      "catalog_id": "11-11-1-dried-glucose-syrup",
+      "product_name": "Dried Glucose Syrup",
+      "fssr": "2.8.7",
+      "fcs": "11.1.3.1",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Starch conversion products with sulphated ash exceeding 1.0% (Lead)",
+        "pdf_page_zero_based": 3,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "A compliant dried glucose syrup is not automatically the specifically high-ash starch conversion product.",
+        "decisive_positive_proof": "Measured sulphated ash (not total ash), production route and legal grouping.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20(Sweetening%20agents%20including%20Honey).pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "A compliant dried glucose syrup cannot use the named high-ash starch conversion lead article.",
+      "documents_required": [
+        "Finished food identity and current FSSR standard/subtype",
+        "Actual manufacturing raw-material identity and process record",
+        "Lot-specific ash result identifying total ash versus sulphated ash where relevant",
+        "Written exact CTR IX named-article applicability determination with page and legal basis"
+      ],
+      "research_crosslinks": [
+        {
+          "packet_index": 1,
+          "record_key": "DRIED_GLUCOSE_SYRUP",
+          "reference_identity": "Dried glucose syrup",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        }
+      ],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 19,
+      "catalog_id": "11-11-1-edible-lactose",
+      "product_name": "Edible Lactose",
+      "fssr": "2.1.20",
+      "fcs": "11.1.4",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Milks (Lead) / anhydrous dextrose and refined sugar (Lead)",
+        "pdf_page_zero_based": 4,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Isolated lactose is a milk-derived sugar, not marketed milk, dextrose or refined white sugar.",
+        "decisive_positive_proof": "Chemical identity/grade, FSSR 2.1.20 and a directly qualified CTR lactose article.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fssai.gov.in/upload/uploadfiles/files/2_%20Chapter%202_1%20(Dairy%20products%20and%20analogues).pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Authenticate actual finished milk or nonmilk identity, concentration ratio where required, ingredients and current operative standard; do not transfer a raw milk limit to a mixed recipe.",
+      "documents_required": [
+        "Finished food identity and current FSSR standard/subtype",
+        "Actual manufacturing raw-material identity and process record",
+        "Lot-specific ash result identifying total ash versus sulphated ash where relevant",
+        "Written exact CTR IX named-article applicability determination with page and legal basis"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 20,
+      "catalog_id": "11-11-1-misri",
+      "product_name": "Misri",
+      "fssr": "2.8.2",
+      "fcs": "11.1.5",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Refined white sugar (Lead) / high-sulphated-ash sugars (Lead)",
+        "pdf_page_zero_based": 1,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Misri can be made from various sugars or palmyrah juice; total ash is not sulphated ash.",
+        "decisive_positive_proof": "Starting sugar, crystallization and measured sulphated ash of finished misri.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20(Sweetening%20agents%20including%20Honey).pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Total ash ≤0.4% cannot establish refined sugar or high-sulphated-ash CTR source.",
+      "documents_required": [
+        "Exact FSSR/FoSCoS finished identity and product specification",
+        "Current formulation/process/packaging evidence",
+        "Signed CTR IX exact article and analytical basis",
+        "Lot traceability and suitable laboratory testing"
+      ],
+      "research_crosslinks": [
+        {
+          "packet_index": 1,
+          "record_key": "MISRI",
+          "reference_identity": "Misri",
+          "reference_status": "historical conditional research only, not current named CTR evidence"
+        }
+      ],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 21,
+      "catalog_id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
+      "product_name": "Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized",
+      "fssr": "FSS (FPS&FA) Regulations",
+      "fcs": "11.6",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Sorbitol (Lead)",
+        "pdf_page_zero_based": 5,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Sorbitol is a named polyol, but a broad class 'polyols permitted under Appendix A' does not identify the ingredient.",
+        "decisive_positive_proof": "Single INS/CAS identification, food-grade monograph and direct named CTR entry.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fcstraining.fssai.gov.in/standard-product",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "INS/CAS and purity monograph needed before considering sorbitol-specific nickel/lead articles.",
+      "documents_required": [
+        "Finished food identity and current FSSR standard/subtype",
+        "Actual manufacturing raw-material identity and process record",
+        "Lot-specific ash result identifying total ash versus sulphated ash where relevant",
+        "Written exact CTR IX named-article applicability determination with page and legal basis"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 22,
+      "catalog_id": "12-12-1-salt-substitutes",
+      "product_name": "Salt Substitutes",
+      "fssr": "2.9.30(6)",
+      "fcs": "12.1.2",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Salt, food grade (Lead)",
+        "pdf_page_zero_based": 5,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "K/Mg-containing salt substitutes cannot inherit NaCl food-grade salt article.",
+        "decisive_positive_proof": "NaCl/KCl/Mg salt ratios, substitutions, specification and legal composite salt entry.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt_Spices_Condiments%20and%20related%20products.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Identify potassium, magnesium, sodium fractions and composite salt-substitute article",
+      "documents_required": [
+        "Exact FSSR/FoSCoS finished identity and product specification",
+        "Current formulation/process/packaging evidence",
+        "Signed CTR IX exact article and analytical basis",
+        "Lot traceability and suitable laboratory testing"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 23,
+      "catalog_id": "99-99-1-trehalose",
+      "product_name": "Trehalose",
+      "fssr": "3.3.4",
+      "fcs": "99.1",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Starch conversion products with sulphated ash exceeding 1.0% (Lead)",
+        "pdf_page_zero_based": 3,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Trehalose does not automatically satisfy the high-ash starch-conversion qualifier.",
+        "decisive_positive_proof": "Molecular identity, source, purification and sulphated ash test.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%203_Substances%20added%20to%20food%281%29.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Identify chemical trehalose form, standard 3.3.4, measured sulphated ash and actual named lead article",
+      "documents_required": [
+        "Finished food identity and current FSSR standard/subtype",
+        "Actual manufacturing raw-material identity and process record",
+        "Lot-specific ash result identifying total ash versus sulphated ash where relevant",
+        "Written exact CTR IX named-article applicability determination with page and legal basis"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 24,
+      "catalog_id": "99-99-1-sajji-khar",
+      "product_name": "Sajji Khar",
+      "fssr": null,
+      "fcs": "99.1",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Sodium hydroxide / salt food grade (Lead)",
+        "pdf_page_zero_based": 5,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Traditional sajji khar alkali is not pure sodium hydroxide or sodium chloride.",
+        "decisive_positive_proof": "Constituent chemical profile, manufacturing route and relevant food-grade monograph.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fcstraining.fssai.gov.in/standard-product",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Establish traditional alkali source, major constituents, preparation and separate purity standard",
+      "documents_required": [
+        "Exact chemical INS/CAS or biological origin, or complete formula for mixtures",
+        "Current incorporated FSSAI purity/identity monograph or Appendix A/schedule entry",
+        "Actual grade, substance function, process and intended use",
+        "Applicable CTR IX food/chemical article and Indian Pharmacopoeia review where relevant"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 25,
+      "catalog_id": "99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-",
+      "product_name": "Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations",
+      "fssr": "FSS (FPS&FA) Regulations",
+      "fcs": "99.1",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Individually named food additive articles (Lead)",
+        "pdf_page_zero_based": 5,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Appendix A permission is not an identity; dozens of unrelated additives require distinct monographs.",
+        "decisive_positive_proof": "Exact INS/CAS, additive identity, grade and current entry.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fcstraining.fssai.gov.in/standard-product",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Identify INS/CAS number, individual additive monograph, grade, concentration and use",
+      "documents_required": [
+        "Exact chemical INS/CAS or biological origin, or complete formula for mixtures",
+        "Current incorporated FSSAI purity/identity monograph or Appendix A/schedule entry",
+        "Actual grade, substance function, process and intended use",
+        "Applicable CTR IX food/chemical article and Indian Pharmacopoeia review where relevant"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 26,
+      "catalog_id": "99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
+      "product_name": "Additives VA-VF of Nutraceutical Regulations excluding those already standardised",
+      "fssr": null,
+      "fcs": "99.1",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Individually named additive or ingredient articles (Lead)",
+        "pdf_page_zero_based": 5,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Nutraceutical schedule additives cannot be assigned the contaminant limit of a different additive.",
+        "decisive_positive_proof": "Exact schedule, chemical identity, legal food use and applicable contaminant row.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fcstraining.fssai.gov.in/standard-product",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Identify legal schedule entry, ingredient chemical form and finished use",
+      "documents_required": [
+        "Exact chemical INS/CAS or biological origin, or complete formula for mixtures",
+        "Current incorporated FSSAI purity/identity monograph or Appendix A/schedule entry",
+        "Actual grade, substance function, process and intended use",
+        "Applicable CTR IX food/chemical article and Indian Pharmacopoeia review where relevant"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 27,
+      "catalog_id": "99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
+      "product_name": "Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations",
+      "fssr": null,
+      "fcs": "99.2",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Specific enzyme or enzyme-preparation constituent monographs",
+        "pdf_page_zero_based": 0,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "No universal enzyme-preparation contaminant article can be inferred from a broad category.",
+        "decisive_positive_proof": "EC number, producing microorganism, formulation, purification and legal purity monograph.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fcstraining.fssai.gov.in/standard-product",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Identify enzyme EC number, microorganism origin, formulation, processing aid and purification route",
+      "documents_required": [
+        "Exact chemical INS/CAS or biological origin, or complete formula for mixtures",
+        "Current incorporated FSSAI purity/identity monograph or Appendix A/schedule entry",
+        "Actual grade, substance function, process and intended use",
+        "Applicable CTR IX food/chemical article and Indian Pharmacopoeia review where relevant"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 28,
+      "catalog_id": "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
+      "product_name": "Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations",
+      "fssr": null,
+      "fcs": "99.7",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Specific source constituent/food monograph (no generic schedule-wide row)",
+        "pdf_page_zero_based": 0,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Schedule IV/VI/VIII lists are not one named finished ingredient.",
+        "decisive_positive_proof": "Name, grade, composition, individual regulatory article and source.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fcstraining.fssai.gov.in/standard-product",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Identify the exact Schedule IV, VI or VIII entry and substance, grade and composition",
+      "documents_required": [
+        "Exact chemical INS/CAS or biological origin, or complete formula for mixtures",
+        "Current incorporated FSSAI purity/identity monograph or Appendix A/schedule entry",
+        "Actual grade, substance function, process and intended use",
+        "Applicable CTR IX food/chemical article and Indian Pharmacopoeia review where relevant"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 29,
+      "catalog_id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "product_name": "Mixtures/preparations/premix of functional ingredients",
+      "fssr": null,
+      "fcs": "99.7",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Named crop contaminant or individual ingredient article",
+        "pdf_page_zero_based": 15,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "A premix with multiple plant components cannot inherit a single crop's raw commodity MRL.",
+        "decisive_positive_proof": "Finished premix composition, ingredient proportions, sourcing, residue rules and processing basis.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fcstraining.fssai.gov.in/standard-product",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Obtain complete recipe and source crops before claiming finished listed-crop aflatoxin scope.",
+      "documents_required": [
+        "Exact chemical INS/CAS or biological origin, or complete formula for mixtures",
+        "Current incorporated FSSAI purity/identity monograph or Appendix A/schedule entry",
+        "Actual grade, substance function, process and intended use",
+        "Applicable CTR IX food/chemical article and Indian Pharmacopoeia review where relevant"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 30,
+      "catalog_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+      "product_name": "Cow or Buffalo Colostrum and Colostrum Products",
+      "fssr": "2.1.23",
+      "fcs": "100",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Milks (Lead with concentration-factor condition)",
+        "pdf_page_zero_based": 4,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Cow/buffalo colostrum and derived products are separate identity; concentration rule cannot be assumed.",
+        "decisive_positive_proof": "Species, colostrum vs regular milk, liquid vs dry form and formal legal classification.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Record cow/buffalo, concentration/powder state, and prove legally applicable milks article.",
+      "documents_required": [
+        "Animal species and product tissue/secretion/egg fraction",
+        "Final preservation/drying/pickling or concentration process",
+        "Residue analyte, tissue matrix and sampling basis",
+        "Exact finished food article and any verified MRL extrapolation rule"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 31,
+      "catalog_id": "100-100-royal-jelly",
+      "product_name": "Royal Jelly",
+      "fssr": "2.8.3(3)",
+      "fcs": "100",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Honey / other bee-derived products (not a demonstrated royal-jelly article)",
+        "pdf_page_zero_based": 0,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Royal jelly is a bee gland secretion and is not honey.",
+        "decisive_positive_proof": "Raw/processed royal jelly type and directly named article or appropriate independent standard.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20(Sweetening%20agents%20including%20Honey).pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Confirm natural bee-gland secretion, raw type and filtration-only status; do not transfer honey/beeswax articles.",
+      "documents_required": [
+        "Animal species and product tissue/secretion/egg fraction",
+        "Final preservation/drying/pickling or concentration process",
+        "Residue analyte, tissue matrix and sampling basis",
+        "Exact finished food article and any verified MRL extrapolation rule"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 32,
+      "catalog_id": "100-100-silver-leaf-chandi-ka-warq",
+      "product_name": "SILVER LEAF (Chandi-ka-warq)",
+      "fssr": "2.11.4",
+      "fcs": "100",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Foods not specified (Lead)",
+        "pdf_page_zero_based": 3,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "A generic fallback and silver elemental content are not a verified finished silver-leaf contaminant article.",
+        "decisive_positive_proof": "FSSR 2.11.4 identity, purity/leaf manufacture, applicable metal method and exact legal row.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fssai.gov.in/upload/uploadfiles/files/12_%20Chapter%202_11%20(Other%20food%20product%20and%20%20ingredients).pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Find exact FSSR finished-product identity and directly applicable Version IX article, purity test, analytical measurement basis and current amendments.",
+      "documents_required": [
+        "Exact chemical INS/CAS or biological origin, or complete formula for mixtures",
+        "Current incorporated FSSAI purity/identity monograph or Appendix A/schedule entry",
+        "Actual grade, substance function, process and intended use",
+        "Applicable CTR IX food/chemical article and Indian Pharmacopoeia review where relevant"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 33,
+      "catalog_id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
+      "product_name": "14.3 - Narikela Ksheerika (Milky Coconut Delight)",
+      "fssr": null,
+      "fcs": null,
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Milks (Lead)",
+        "pdf_page_zero_based": 4,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Coconut-based Narikela Ksheerika is a multi-ingredient recipe, not automatically dairy milk.",
+        "decisive_positive_proof": "Ayurveda Aahara Schedule D preparation/ingredients, proportion and qualifying finished-food rule.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://foscos.fssai.gov.in/standard-product",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Prove coconut/milk recipe and Schedule D requirements before any raw-milk article.",
+      "documents_required": [
+        "Botanical species and marketed product standard",
+        "Complete processing/preservation and packaging records",
+        "Final sample matrix and any justified processing factors",
+        "Official source clause establishing a finished article, not simply the raw crop"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 34,
+      "catalog_id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+      "product_name": "14.7 - Ksheerapaka (Mystic Milk Quartet)",
+      "fssr": null,
+      "fcs": null,
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Milks (Lead)",
+        "pdf_page_zero_based": 4,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Ksheerapaka recipe may use dairy but multi-herb formulation does not become unprocessed milk.",
+        "decisive_positive_proof": "Ingredients, milk-water-herb proportions, processing and Schedule D scope.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://foscos.fssai.gov.in/standard-product",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Prove milk/water/plant proportions, processing and Schedule D before assuming dairy CTR source.",
+      "documents_required": [
+        "Exact approved Ayurveda Aahara recipe index and ingredient proportions",
+        "Batch recipe and actual finished food form",
+        "Schedule D and applicable CTR scope adjudication",
+        "Finished product sampling and analytical report"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    },
+    {
+      "rank": 35,
+      "catalog_id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "product_name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "fssr": "2.11.8",
+      "fcs": "99.7",
+      "latest_authoritative_status": "FIRST_EXACT_SOURCE_PENDING",
+      "current_ctr_article_test": {
+        "named_article_examined": "Starch-conversion products with >1.0% sulphated ash (Lead)",
+        "pdf_page_zero_based": 3,
+        "legal_scope_result": "INSUFFICIENT_EVIDENCE_FOR_DIRECT_FINISHED_ARTICLE_MATCH",
+        "not_equivalent_because": "Purified soluble dextrin/dietary fibre is not automatically high-ash starch conversion product.",
+        "decisive_positive_proof": "Raw starch, degree of polymerisation, hydrolysis process, ash and direct finished article.",
+        "reference_only": true,
+        "limit_assigned": false
+      },
+      "current_FSSR_document": "https://fssai.gov.in/upload/uploadfiles/files/12_%20Chapter%202_11%20(Other%20food%20product%20and%20%20ingredients).pdf",
+      "current_CTR_document": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "registered_current_case_proof": "Verify starch source, hydrolysis method, degree of polymerisation and actual sulphated ash",
+      "documents_required": [
+        "Exact chemical INS/CAS or biological origin, or complete formula for mixtures",
+        "Current incorporated FSSAI purity/identity monograph or Appendix A/schedule entry",
+        "Actual grade, substance function, process and intended use",
+        "Applicable CTR IX food/chemical article and Indian Pharmacopoeia review where relevant"
+      ],
+      "research_crosslinks": [],
+      "december_2026_amendment": {
+        "original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+        "status_as_of_review": "NOT_YET_EFFECTIVE",
+        "automatic_application": false
+      },
+      "verification_gates": {
+        "named_article_legal_scope_signed": false,
+        "finished_product_identity_or_process_documented": false,
+        "correct_analytical_matrix_and_processing_factor_confirmed": false,
+        "finished_lot_laboratory_result_checked": false
+      },
+      "finished_compliance_pass": false
+    }
+  ]
+}
