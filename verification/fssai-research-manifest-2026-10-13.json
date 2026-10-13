@@ -26,7 +26,13 @@
     "research_routes": 179,
     "exact_identity_duplicates_across_packets": 0,
     "new_finished_product_compliance_approvals": 0,
-    "source_ledger_promotions": 0
+    "source_ledger_promotions": 0,
+    "reconciled_open_case_reviews": 35,
+    "open_case_document_requests": 140,
+    "open_case_positive_evidence_gates": 140,
+    "match_to_current_533_catalogue_verified": true,
+    "current_ledger_partial": 498,
+    "current_ledger_pending": 35
   },
   "unreconciled_external_baseline": {
     "product_records": 533,
@@ -42,5 +48,24 @@
     "Only after full positive identity evidence promote source status; otherwise keep pending."
   ],
   "site_live_product_helper_modified": false,
-  "original_master_ledger_modified": false
+  "original_master_ledger_modified": false,
+  "batch4_current35_ledger_reconciliation": {
+    "review_file": "fssai-product-helper-preview-01/data/rules/fssai-current35-exact-ctr-article-gates-batch4-2026-10-13.json",
+    "actual_current_ledger": "fssai-product-helper-preview-01/data/rules/fssai-current-first-source-533-live-ledger-498-35-2026-10-13.json",
+    "checks_on_actual_pending_catalog_ids": 35,
+    "required_original_documents": 140,
+    "positive_evidence_gates": 140,
+    "cross_references_into_prior_research_routes": 18,
+    "number_of_new_product_identities": 0,
+    "new_ctr_article_source_promotions": 0,
+    "complete_regulatory_approvals": 0,
+    "status": "ALL_35_REMAIN_FIRST_EXACT_SOURCE_PENDING",
+    "source_ui_module": "fssai-product-helper-preview-01/fssai-current35-ctr-legal-gates-batch4-2026-10-13.js",
+    "test_file": "tests/fssai-current35-ctr-gates-batch4-2026-10-13.test.cjs",
+    "ci_workflow": ".github/workflows/verify-current35-ctr-source-batch4.yml",
+    "all_regulatory_values_are_source_comparisons_not_finished_product_limits": true,
+    "may_2026_gazette_activation": "2026-12-01 only; not applicable as of 2026-10-13",
+    "github_pages_publish_result": "NOT_INDEPENDENTLY_VERIFIED",
+    "live_wordpress_site_modified": false
+  }
 }
