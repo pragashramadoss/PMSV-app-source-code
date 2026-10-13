@@ -26,6 +26,7 @@ function sandbox(store=memoryStore()){
  const sb={
  pmsvB13Valid:()=>true,pmsvB12Data:b12,pmsvB13Data:b13,pmsv35Queue:q,
  pmsvB5Data:b5,pmsvB9Data:b9,pmsv498Ledger:ledger,
+ pmsvB5StorageKey:"pmsv:ctr:current35:received-documents:v1",
  pmsvLoadPositiveSourceProof:async()=>{},sourcePinned121ResearchProofHtml:()=>"",
  pmsvB5Read:()=>JSON.parse(store.getItem("pmsv:ctr:current35:received-documents:v1")||"{}"),
  pmsvB5Persist:v=>{try{store.setItem("pmsv:ctr:current35:received-documents:v1",JSON.stringify(v));return true}catch(_){return false}},
