@@ -1,0 +1,777 @@
+{
+  "kind": "PMSV_BATCH20_REVIEW_DRAFT_LAWFUL_SOURCE_RISK_AUDIT",
+  "schema_version": "1.0",
+  "as_of": "2026-10-14",
+  "scope": "GH_PAGES_PREVIEW_ONLY",
+  "official_sources_only": true,
+  "ctr_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "catalogue": 533,
+  "partial": 498,
+  "first_exact_pending": 35,
+  "review_cases": 35,
+  "reference_rows": 7,
+  "case_specific_nontransfer_rules": 13,
+  "official_metal_rows": [
+    {
+      "id": "PB_DEFAULT",
+      "metal": "Lead",
+      "article": "Foods not specified",
+      "value": 2.5,
+      "unit": "mg/kg",
+      "page": 3,
+      "automatic_limit": false
+    },
+    {
+      "id": "CU_DEFAULT",
+      "metal": "Copper",
+      "article": "Foods not specified",
+      "value": 30,
+      "unit": "mg/kg",
+      "page": 6,
+      "automatic_limit": false
+    },
+    {
+      "id": "AS_DEFAULT",
+      "metal": "Arsenic",
+      "article": "Foods not specified",
+      "value": 1.1,
+      "unit": "mg/kg",
+      "page": 8,
+      "automatic_limit": false
+    },
+    {
+      "id": "SN_DEFAULT",
+      "metal": "Tin",
+      "article": "Foods not specified",
+      "value": 250,
+      "unit": "mg/kg",
+      "page": 10,
+      "automatic_limit": false
+    },
+    {
+      "id": "CD_DEFAULT",
+      "metal": "Cadmium",
+      "article": "Foods not specified",
+      "value": 1.5,
+      "unit": "mg/kg",
+      "page": 11,
+      "automatic_limit": false
+    },
+    {
+      "id": "HG_DEFAULT",
+      "metal": "Mercury",
+      "article": "Foods not specified",
+      "value": 1,
+      "unit": "mg/kg",
+      "page": 11,
+      "automatic_limit": false
+    },
+    {
+      "id": "MEHG_ALL",
+      "metal": "Methyl Mercury (calculated as the element)",
+      "article": "All foods",
+      "value": 0.25,
+      "unit": "mg/kg",
+      "page": 11,
+      "automatic_limit": false
+    }
+  ],
+  "article_warning_rules": [
+    {
+      "id": "COCOA_POWDER_NOT_WHOLE_COCOA",
+      "ids": [
+        "04-04-2-cocoa-beans",
+        "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+        "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+        "06-06-2-carob-powder"
+      ],
+      "phrases": [
+        "cocoa powder"
+      ],
+      "severity": "ARTICLE_SCOPE_CHALLENGE",
+      "reason": "Cocoa-powder-specific dry-fat-free/fat-free metal provisions must not transfer to whole beans, sweetened cocoa mixtures, mass, cake or carob by analogy."
+    },
+    {
+      "id": "DAIRY_MILK_NOT_DIFFERENT_FINISHED_FOOD",
+      "ids": [
+        "04-04-1-coconut-milk-powder",
+        "11-11-1-edible-lactose",
+        "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+        "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
+        "102-102-1-14-7-ksheerapaka-mystic-milk-quartet"
+      ],
+      "phrases": [
+        "milks",
+        "whole milk powder",
+        "skimmed milk powder",
+        "milk (liquid)"
+      ],
+      "severity": "ARTICLE_SCOPE_CHALLENGE",
+      "reason": "Plain milk or milk-powder CTR row is not proof of the marketed coconut, lactose, colostrum or Ayurveda composite article."
+    },
+    {
+      "id": "PACKAGED_WATER_NOT_VENDED",
+      "ids": [
+        "purified-vending-water"
+      ],
+      "phrases": [
+        "packaged drinking water",
+        "natural mineral water"
+      ],
+      "severity": "ARTICLE_SCOPE_CHALLENGE",
+      "reason": "FSSR 2.10.9 vending water is not automatically prepacked/mineral water for legal sampling and concentration."
+    },
+    {
+      "id": "CEREAL_NOT_NUT_SEED_RHIZOME",
+      "ids": [
+        "06-06-1-chia-seeds",
+        "06-06-2-arrowroot",
+        "06-06-2-water-chestnut-flour-singhare-ka-atta"
+      ],
+      "phrases": [
+        "cereal grains",
+        "milled cereal",
+        "wheat flour"
+      ],
+      "severity": "ARTICLE_SCOPE_CHALLENGE",
+      "reason": "Chia seeds, purified arrowroot rhizome starch and Trapa water-chestnut flour are not cereal grains by category label."
+    },
+    {
+      "id": "SALT_NOT_SUBSTITUTE",
+      "ids": [
+        "12-12-1-salt-substitutes"
+      ],
+      "phrases": [
+        "salt, food grade",
+        "common salt",
+        "iron fortified common salt"
+      ],
+      "severity": "ARTICLE_SCOPE_CHALLENGE",
+      "reason": "Common NaCl salt is a distinct marketed product from a formulated substitute."
+    },
+    {
+      "id": "SORBITOL_NOT_ALL_POLYOLS",
+      "ids": [
+        "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th"
+      ],
+      "phrases": [
+        "sorbitol"
+      ],
+      "severity": "ARTICLE_SCOPE_CHALLENGE",
+      "reason": "A sorbitol named-chemical monograph is not an exact source for all unspecified polyols."
+    },
+    {
+      "id": "HONEY_NOT_ROYAL_JELLY",
+      "ids": [
+        "100-100-royal-jelly"
+      ],
+      "phrases": [
+        "honey",
+        "beeswax"
+      ],
+      "severity": "ARTICLE_SCOPE_CHALLENGE",
+      "reason": "Royal jelly is distinct from honey and beeswax."
+    },
+    {
+      "id": "GLUCOSE_LOW_ASH_NOT_HIGH_ASH",
+      "ids": [
+        "11-11-1-dried-glucose-syrup"
+      ],
+      "phrases": [
+        "starch conversion products with a sulphated ash",
+        "sulphated ash content exceeding 1.0",
+        "sulphated ash exceeding 1.0"
+      ],
+      "severity": "ARTICLE_SCOPE_CONTRADICTION",
+      "reason": "Compliant FSSR 2.8.7 dried glucose syrup has sulphated ash ≤1.0%; the high-ash CTR clause requires >1.0%."
+    },
+    {
+      "id": "COFFEE_BLEND_NOT_PLAIN_COFFEE",
+      "ids": [
+        "coffee-chicory-mixture"
+      ],
+      "phrases": [
+        "coffee"
+      ],
+      "match": "EXACT",
+      "severity": "CONDITIONAL_LEGAL_SCOPE",
+      "reason": "Ochratoxin A commodity 'coffee' may not cover the finished coffee–chicory blend without a positive legal scope decision."
+    },
+    {
+      "id": "EGG_PICKLE_CANNING_PROOF",
+      "ids": [
+        "10-10-3-pickled-eggs"
+      ],
+      "phrases": [
+        "canned foods",
+        "canned food"
+      ],
+      "severity": "CONDITIONAL_DOCUMENT_PROOF",
+      "reason": "Canned-food tin provision needs actual commercial canning proof, not merely jar or pouch packaging."
+    },
+    {
+      "id": "FRUIT_RAW_COMMODITY_TO_PROCESSED",
+      "ids": [
+        "04-04-1-frozen-fruits-fruit-products",
+        "04-04-1-seedless-tamarind"
+      ],
+      "phrases": [
+        "assorted subtropical fruits",
+        "berries and other small fruits",
+        "pome fruits"
+      ],
+      "severity": "CONDITIONAL_PROCESSED_COMMODITY",
+      "reason": "Raw fruit commodity limits require species, final processing and legal sample-basis reconciliation before applying to frozen/seedless finished food."
+    },
+    {
+      "id": "TREHALOSE_OLD_USE_BANDS",
+      "ids": [
+        "99-99-1-trehalose"
+      ],
+      "phrases": [
+        "0.5-10.0 per cent",
+        "0.5-20.0 per cent",
+        "5.0-7.5 per cent"
+      ],
+      "severity": "SUPERSEDED_SOURCE_WARNING",
+      "reason": "The current FSSR trehalose use basis is GMP except infant food; historical percentage bands must not be reused."
+    },
+    {
+      "id": "UNSPECIFIED_PREMIX_COMPONENT",
+      "ids": [
+        "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+        "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica"
+      ],
+      "phrases": [
+        "cereal grains",
+        "nuts",
+        "oilseeds",
+        "milks"
+      ],
+      "severity": "CONDITIONAL_INGREDIENT_SCOPE",
+      "reason": "An individual crop or ingredient threshold is not a confirmed finished-premix limit without exact constituent and composite legal review."
+    }
+  ],
+  "cases": [
+    {
+      "rank": 1,
+      "catalog_id": "purified-vending-water",
+      "product_name": "Drinking Water (Purified) sold through vending machine",
+      "fssr": "2.10.9",
+      "fcs": "14.1.1",
+      "legal_blocker": "LEGAL_SCOPE",
+      "rule_ids": [
+        "PACKAGED_WATER_NOT_VENDED"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 2,
+      "catalog_id": "coffee-chicory-mixture",
+      "product_name": "Coffee-Chicory Mixture",
+      "fssr": "2.10.4",
+      "fcs": "14.1.5",
+      "legal_blocker": "LEGAL_SCOPE",
+      "rule_ids": [
+        "COFFEE_BLEND_NOT_PLAIN_COFFEE"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 3,
+      "catalog_id": "formulated-supplements-children",
+      "product_name": "Formulated supplements for children",
+      "fssr": "",
+      "fcs": "13.2",
+      "legal_blocker": "PRODUCT_IDENTITY",
+      "rule_ids": [],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 4,
+      "catalog_id": "04-04-1-frozen-fruits-fruit-products",
+      "product_name": "Frozen Fruits/Fruit Products",
+      "fssr": "2.3.37",
+      "fcs": "04.1.2.1",
+      "legal_blocker": "PROCESS_MATRIX",
+      "rule_ids": [
+        "FRUIT_RAW_COMMODITY_TO_PROCESSED"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 5,
+      "catalog_id": "04-04-1-catechu-edible",
+      "product_name": "Catechu (Edible)",
+      "fssr": "2.11.2",
+      "fcs": "04.1.2.2",
+      "legal_blocker": "PRODUCT_IDENTITY",
+      "rule_ids": [],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 6,
+      "catalog_id": "04-04-1-seedless-tamarind",
+      "product_name": "Seedless Tamarind",
+      "fssr": "2.3.49",
+      "fcs": "04.1.2.8",
+      "legal_blocker": "PRODUCT_IDENTITY",
+      "rule_ids": [
+        "FRUIT_RAW_COMMODITY_TO_PROCESSED"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 7,
+      "catalog_id": "04-04-1-coconut-milk-powder",
+      "product_name": "COCONUT MILK POWDER",
+      "fssr": "2.3.63",
+      "fcs": "04.1.2.8",
+      "legal_blocker": "PRODUCT_IDENTITY",
+      "rule_ids": [
+        "DAIRY_MILK_NOT_DIFFERENT_FINISHED_FOOD"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 8,
+      "catalog_id": "04-04-2-cocoa-beans",
+      "product_name": "Cocoa Beans",
+      "fssr": "2.3.54",
+      "fcs": "04.2.2.7",
+      "legal_blocker": "LEGAL_SCOPE",
+      "rule_ids": [
+        "COCOA_POWDER_NOT_WHOLE_COCOA"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 9,
+      "catalog_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "product_name": "Dry Mixtures of Cocoa and Sugars",
+      "fssr": "2.7.6",
+      "fcs": "05.1.1",
+      "legal_blocker": "PROCESS_MATRIX",
+      "rule_ids": [
+        "COCOA_POWDER_NOT_WHOLE_COCOA"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 10,
+      "catalog_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "fssr": "2.7.8",
+      "fcs": "05.1.1",
+      "legal_blocker": "PROCESS_MATRIX",
+      "rule_ids": [
+        "COCOA_POWDER_NOT_WHOLE_COCOA"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 11,
+      "catalog_id": "06-06-1-chia-seeds",
+      "product_name": "Chia Seeds",
+      "fssr": "2.4.6",
+      "fcs": "06.1",
+      "legal_blocker": "LEGAL_SCOPE",
+      "rule_ids": [
+        "CEREAL_NOT_NUT_SEED_RHIZOME"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 12,
+      "catalog_id": "06-06-2-carob-powder",
+      "product_name": "Carob Powder",
+      "fssr": "2.11.7",
+      "fcs": "06.2.1",
+      "legal_blocker": "LEGAL_SCOPE",
+      "rule_ids": [
+        "COCOA_POWDER_NOT_WHOLE_COCOA"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 13,
+      "catalog_id": "06-06-2-arrowroot",
+      "product_name": "Arrowroot",
+      "fssr": "2.4.14",
+      "fcs": "06.2.2",
+      "legal_blocker": "LEGAL_SCOPE",
+      "rule_ids": [
+        "CEREAL_NOT_NUT_SEED_RHIZOME"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 14,
+      "catalog_id": "06-06-2-water-chestnut-flour-singhare-ka-atta",
+      "product_name": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+      "fssr": "2.3.64",
+      "fcs": "06.2.1",
+      "legal_blocker": "LEGAL_SCOPE",
+      "rule_ids": [
+        "CEREAL_NOT_NUT_SEED_RHIZOME"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 15,
+      "catalog_id": "08-08-4-animal-casings",
+      "product_name": "Animal Casings",
+      "fssr": "2.5.2(14)",
+      "fcs": "08.4",
+      "legal_blocker": "PRODUCT_IDENTITY",
+      "rule_ids": [],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 16,
+      "catalog_id": "10-10-2-egg-powder",
+      "product_name": "Egg powder",
+      "fssr": "2.5.3(3)",
+      "fcs": "10.2.3",
+      "legal_blocker": "PROCESS_MATRIX",
+      "rule_ids": [],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 17,
+      "catalog_id": "10-10-3-pickled-eggs",
+      "product_name": "Pickled Eggs",
+      "fssr": "2.5.3(5)",
+      "fcs": "10.3",
+      "legal_blocker": "PROCESS_MATRIX",
+      "rule_ids": [
+        "EGG_PICKLE_CANNING_PROOF"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 18,
+      "catalog_id": "11-11-1-dried-glucose-syrup",
+      "product_name": "Dried Glucose Syrup",
+      "fssr": "2.8.7",
+      "fcs": "11.1.3.1",
+      "legal_blocker": "PROCESS_MATRIX",
+      "rule_ids": [
+        "GLUCOSE_LOW_ASH_NOT_HIGH_ASH"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 19,
+      "catalog_id": "11-11-1-edible-lactose",
+      "product_name": "Edible Lactose",
+      "fssr": "2.1.20",
+      "fcs": "11.1.4",
+      "legal_blocker": "LEGAL_SCOPE",
+      "rule_ids": [
+        "DAIRY_MILK_NOT_DIFFERENT_FINISHED_FOOD"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 20,
+      "catalog_id": "11-11-1-misri",
+      "product_name": "Misri",
+      "fssr": "2.8.2",
+      "fcs": "11.1.5",
+      "legal_blocker": "PROCESS_MATRIX",
+      "rule_ids": [],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 21,
+      "catalog_id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
+      "product_name": "Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized",
+      "fssr": "FSS (FPS&FA) Regulations",
+      "fcs": "11.6",
+      "legal_blocker": "SUBSTANCE_ID",
+      "rule_ids": [
+        "SORBITOL_NOT_ALL_POLYOLS"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 22,
+      "catalog_id": "12-12-1-salt-substitutes",
+      "product_name": "Salt Substitutes",
+      "fssr": "2.9.30(6)",
+      "fcs": "12.1.2",
+      "legal_blocker": "PRODUCT_IDENTITY",
+      "rule_ids": [
+        "SALT_NOT_SUBSTITUTE"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 23,
+      "catalog_id": "99-99-1-trehalose",
+      "product_name": "Trehalose",
+      "fssr": "3.3.4",
+      "fcs": "99.1",
+      "legal_blocker": "SUBSTANCE_ID",
+      "rule_ids": [
+        "TREHALOSE_OLD_USE_BANDS"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 24,
+      "catalog_id": "99-99-1-sajji-khar",
+      "product_name": "Sajji Khar",
+      "fssr": "",
+      "fcs": "99.1",
+      "legal_blocker": "SUBSTANCE_ID",
+      "rule_ids": [],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 25,
+      "catalog_id": "99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-",
+      "product_name": "Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations",
+      "fssr": "FSS (FPS&FA) Regulations",
+      "fcs": "99.1",
+      "legal_blocker": "SUBSTANCE_ID",
+      "rule_ids": [],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 26,
+      "catalog_id": "99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
+      "product_name": "Additives VA-VF of Nutraceutical Regulations excluding those already standardised",
+      "fssr": "",
+      "fcs": "99.1",
+      "legal_blocker": "SUBSTANCE_ID",
+      "rule_ids": [],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 27,
+      "catalog_id": "99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
+      "product_name": "Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations",
+      "fssr": "",
+      "fcs": "99.2",
+      "legal_blocker": "SUBSTANCE_ID",
+      "rule_ids": [],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 28,
+      "catalog_id": "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
+      "product_name": "Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations",
+      "fssr": "",
+      "fcs": "99.7",
+      "legal_blocker": "SUBSTANCE_ID",
+      "rule_ids": [
+        "UNSPECIFIED_PREMIX_COMPONENT"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 29,
+      "catalog_id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "product_name": "Mixtures/preparations/premix of functional ingredients",
+      "fssr": "",
+      "fcs": "99.7",
+      "legal_blocker": "PRODUCT_IDENTITY",
+      "rule_ids": [
+        "UNSPECIFIED_PREMIX_COMPONENT"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 30,
+      "catalog_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+      "product_name": "Cow or Buffalo Colostrum and Colostrum Products",
+      "fssr": "2.1.23",
+      "fcs": "100",
+      "legal_blocker": "LEGAL_SCOPE",
+      "rule_ids": [
+        "DAIRY_MILK_NOT_DIFFERENT_FINISHED_FOOD"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 31,
+      "catalog_id": "100-100-royal-jelly",
+      "product_name": "Royal Jelly",
+      "fssr": "2.8.3(3)",
+      "fcs": "100",
+      "legal_blocker": "LEGAL_SCOPE",
+      "rule_ids": [
+        "HONEY_NOT_ROYAL_JELLY"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 32,
+      "catalog_id": "100-100-silver-leaf-chandi-ka-warq",
+      "product_name": "SILVER LEAF (Chandi-ka-warq)",
+      "fssr": "2.11.4",
+      "fcs": "100",
+      "legal_blocker": "LEGAL_SCOPE",
+      "rule_ids": [],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 33,
+      "catalog_id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
+      "product_name": "14.3 - Narikela Ksheerika (Milky Coconut Delight)",
+      "fssr": "",
+      "fcs": "",
+      "legal_blocker": "PRODUCT_IDENTITY",
+      "rule_ids": [
+        "DAIRY_MILK_NOT_DIFFERENT_FINISHED_FOOD"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 34,
+      "catalog_id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+      "product_name": "14.7 - Ksheerapaka (Mystic Milk Quartet)",
+      "fssr": "",
+      "fcs": "",
+      "legal_blocker": "PRODUCT_IDENTITY",
+      "rule_ids": [
+        "DAIRY_MILK_NOT_DIFFERENT_FINISHED_FOOD"
+      ],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    },
+    {
+      "rank": 35,
+      "catalog_id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "product_name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "fssr": "2.11.8",
+      "fcs": "99.7",
+      "legal_blocker": "SUBSTANCE_ID",
+      "rule_ids": [],
+      "source_status": "FIRST_EXACT_SOURCE_PENDING",
+      "independent_verification": false,
+      "numeric_limit_assigned": false,
+      "lot_pass": false
+    }
+  ],
+  "general_source_policy": "The metal-specific Foods not specified entries are fallback references after exact article priority review, not a blanket first named-product source; methyl mercury All foods is a cross-food analyte reference only.",
+  "review_states": [
+    "NOT_STARTED",
+    "INCOMPLETE_DRAFT",
+    "NEEDS_ARTICLE_CHALLENGE_REVIEW",
+    "DOCUMENTARY_DRAFT_UNVERIFIED"
+  ],
+  "amendment_effective": "2026-12-01",
+  "future_amendment_enabled": false,
+  "results": {
+    "new_first_exact_matches": 0,
+    "new_active_limits": 0,
+    "verified_lot_results": 0,
+    "full_compliance_passes": 0,
+    "canonical_ledger_modified": false,
+    "wordpress_modified": false
+  }
+}

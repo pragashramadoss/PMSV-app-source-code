@@ -1,0 +1,26 @@
+name: Verify FSSAI 35-source reviewer audit Batch20
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-review-draft-source-audit-batch20-2026-10-14.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-review-draft-source-audit-batch20-2026-10-14.js'
+      - 'tests/fssai-current35-review-draft-source-audit-batch20-2026-10-14.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-review-audit-batch20.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit thirty-five source dossiers and false article transfers
+        run: node --test tests/fssai-current35-review-draft-source-audit-batch20-2026-10-14.test.cjs
+      - name: Check JavaScript syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-review-draft-source-audit-batch20-2026-10-14.js
