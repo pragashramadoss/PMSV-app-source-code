@@ -83,6 +83,10 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   assert.equal(info.old,base.value,"Preflight must not overwrite reviewer drafts");
   assert(info.changed>=1,"Preflight should identify conflict with an existing draft");
   assert.equal(info.approved,0);
+  // Batch24 requires explicit case selection before confirming any restore.
+  assert.equal(await confirmBtn.isDisabled(),true,"No import should be preselected");
+  await page.locator('[data-pmsv-b24-case="99-99-1-trehalose"]').check();
+  assert.equal(await confirmBtn.isEnabled(),true);
   // Modify saved evidence between preview and confirm: must be rejected.
   await page.evaluate(()=>localStorage.setItem(pmsvB14StorageKey,localStorage.getItem(pmsvB14StorageKey)+" "));
   await confirmBtn.click();
@@ -91,6 +95,8 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   // New preview then explicit consent succeeds; generic metal fallback remains flagged.
   await previewBtn.click();
   await page.waitForFunction(()=>pmsvB23LastResult==="PREVIEW_READY");
+  assert.equal(await confirmBtn.isDisabled(),true);
+  await page.locator('[data-pmsv-b24-case="99-99-1-trehalose"]').check();
   await confirmBtn.click();
   await page.waitForFunction(()=>pmsvB23LastResult==="IMPORTED_UNVERIFIED");
   const result=await page.evaluate(()=>({
