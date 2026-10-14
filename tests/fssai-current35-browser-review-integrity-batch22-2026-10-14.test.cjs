@@ -23,11 +23,11 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    }catch(_){await sleep(200)}
   }
   assert(ready,"Static PMSV preview did not start");
-  // Product standards load their regulatory data lazily on entering the standard route.
-  // Call the same public loader used by the real product-standard UI, then verify the full chain.
-  await page.waitForFunction(()=>typeof loadContaminantsDb==="function"&&
-    typeof pmsvB22Ready==="function",null,{timeout:30000});
-  await page.evaluate(async()=>await loadContaminantsDb());
+  // Wait for the single-flight startup/catch-up sequence. Do not call a second
+  // concurrent loadContaminantsDb(), which would clear in-flight source data.
+  await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&
+    (pmsvB22StartupState==="READY"||pmsvB22StartupState==="INTEGRITY_BLOCKED"),
+    null,{timeout:90000});
   const diagnostic=await page.evaluate(()=>({
     early36:typeof pmsvCurrent36TriageValid==="function"&&pmsvCurrent36TriageValid(),
     early497:typeof pmsv497Valid==="function"&&pmsv497Valid(),
@@ -46,6 +46,7 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
     b11:typeof pmsvB11Valid==="function"&&pmsvB11Valid(),
     b12:typeof pmsvB12Valid==="function"&&pmsvB12Valid(),
     b13:typeof pmsvB13Valid==="function"&&pmsvB13Valid(),
+    startup:pmsvB22StartupState,
     b14:typeof pmsvB14Valid==="function"&&pmsvB14Valid(),
     b15:typeof pmsvB15Valid==="function"&&pmsvB15Valid(),
     b17:typeof pmsvB17Valid==="function"&&pmsvB17Valid(),

@@ -76,6 +76,31 @@ function pmsvB22ReloadForm(){
  node.outerHTML=refreshed;
  pmsvB22Sync();return true;
 }
+/* The inline page starts loading contaminants before later script tags finish
+ * registering the full source-proof chain. Wait for that initial load to settle,
+ * then make ONE sequential catch-up pass if the B14-B21 chain was not installed
+ * at the earlier invocation time. No overlapping load/reset races. */
+var pmsvB22StartupState="WAITING";
+async function pmsvB22AfterStartup(){
+ if(pmsvB22StartupState!=="WAITING")return;
+ pmsvB22StartupState="RUNNING";
+ try{
+  if(typeof pmsvContaminantsLoadPromise!=="undefined")await pmsvContaminantsLoadPromise;
+  if(typeof pmsvB21Valid==="function"&&!pmsvB21Valid()){
+   await pmsvLoadPositiveSourceProof();
+  }
+  pmsvB22StartupState=pmsvB22Ready()?"READY":"INTEGRITY_BLOCKED";
+  pmsvB22Sync();
+ }catch(error){
+  pmsvB22Stats.lastError=String(error?.message||error);
+  pmsvB22StartupState="INTEGRITY_BLOCKED";
+ }
+}
+if(typeof document!=="undefined"&&document.addEventListener){
+ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",pmsvB22AfterStartup,{once:true});
+ else pmsvB22AfterStartup();
+}
+
 const pmsvB22PriorLoad=pmsvLoadPositiveSourceProof;
 pmsvLoadPositiveSourceProof=async function(){
  await pmsvB22PriorLoad();
