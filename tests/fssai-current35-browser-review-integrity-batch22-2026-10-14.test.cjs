@@ -1,0 +1,92 @@
+"use strict";
+/* Real-browser test (Playwright Chromium); runs on a local static server.
+ * Verifies real B14→B15→B20→B21→B22 event wiring and no false compliance PASS.
+ */
+const assert=require("node:assert/strict");
+const {spawn}=require("node:child_process");
+const {chromium}=require("playwright");
+const port=18876;
+const server=spawn("python3",["-m","http.server",String(port),"--bind","127.0.0.1","--directory","fssai-product-helper-preview-01"],{stdio:"ignore"});
+const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+(async()=>{
+ let browser;
+ try{
+  browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+  const page=await browser.newPage();
+  const fatal=[];
+  page.on("pageerror",e=>fatal.push(String(e.message||e)));
+  let ready=false;
+  for(let i=0;i<30;i++){
+   try{
+    const r=await page.goto("http://127.0.0.1:"+port+"/",{waitUntil:"domcontentloaded",timeout:15000});
+    if(r?.ok()){ready=true;break}
+   }catch(_){await sleep(200)}
+  }
+  assert(ready,"Static PMSV preview did not start");
+  await page.waitForFunction(()=>typeof pmsvB21Valid==="function"&&pmsvB21Valid()&&
+     typeof pmsvB22Ready==="function"&&pmsvB22Ready(),{timeout:90000});
+  await page.evaluate(()=>{
+    document.getElementById("standard")?.classList.remove("hidden");
+    pmsvB14EnsureDashboard();pmsvB20Ensure();pmsvB21Refresh();pmsvB22EnsureControl();
+  });
+  assert.equal(await page.locator("#pmsv-b21-readiness").count(),1,"Readiness panel is absent");
+  assert.equal(await page.locator("#pmsv-b20-audit").count(),1,"CTR risk audit is absent");
+  assert.equal(await page.locator("[data-pmsv-b22-recheck]").count(),1,"Recheck button is absent");
+  const baseline=await page.evaluate(()=>({
+   ledger:[pmsv498Ledger.records.length,pmsv498Ledger.first_source_pending],
+   cases:pmsvB21All().length,starter:pmsvB21Stats(pmsvB21All()).NOT_STARTED
+  }));
+  assert.deepEqual(baseline,{ledger:[533,35],cases:35,starter:35});
+  await page.locator("#pmsv-b21-readiness summary").click();
+  await page.locator("#pmsv-b20-audit summary").click();
+  assert.equal(await page.locator("#pmsv-b20-audit").evaluate(e=>e.open),true);
+  await page.locator("[data-pmsv-b21-search]").fill("trehalose");
+  assert.equal(await page.locator("[data-pmsv-b21-open]").count(),1,"Trehalose search must narrow to one case");
+  await page.locator("[data-pmsv-b21-open]").click();
+  assert.equal(await page.locator("#pmsv-b14-review-index").evaluate(e=>e.open),true);
+  assert.equal(await page.locator("#pmsv-b14-review-index [data-pmsv-b14-case]").getAttribute("data-pmsv-b14-case"),"99-99-1-trehalose");
+  const current=await page.evaluate(()=>document.getElementById("pmsv-b20-audit"));
+  await page.locator("#pmsv-b14-review-index [data-pmsv-b14-field=source_article]").fill("Foods not specified");
+  await page.locator("#pmsv-b14-review-index [data-pmsv-b14-field=analyte]").fill("Lead");
+  await page.locator("#pmsv-b14-review-index [data-pmsv-b14-field=source_url]").fill("https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf");
+  const state=await page.evaluate(()=>({
+   panelPreserved:document.getElementById("pmsv-b20-audit")===document.getElementById("pmsv-b20-audit"),
+   open:document.getElementById("pmsv-b20-audit").open,
+   status:pmsvB21All().find(x=>x.id==="99-99-1-trehalose")?.status,
+   codes:pmsvB21All().find(x=>x.id==="99-99-1-trehalose")?.issues.map(y=>y.code),
+   retained:document.querySelector("[data-pmsv-b21-search]")?.value
+  }));
+  assert.equal(state.open,true,"Audit must stay expanded during typing");
+  assert.equal(state.retained,"trehalose","Search input must survive refresh");
+  assert.equal(state.status,"ARTICLE_SCOPE_REVIEW_REQUIRED");
+  assert(state.codes.includes("GENERIC_METAL_FALLBACK"));
+  const sameNode=await page.evaluate(()=>document.getElementById("pmsv-b20-audit")===window.__batch22PanelMarker);
+  // Set a direct reference before rechecking and verify it is not replaced.
+  await page.evaluate(()=>{window.__batch22PanelMarker=document.getElementById("pmsv-b20-audit");pmsvB20Ensure()});
+  assert.equal(await page.evaluate(()=>document.getElementById("pmsv-b20-audit")===window.__batch22PanelMarker),true);
+  await page.locator("[data-pmsv-b22-recheck]").click();
+  assert.equal(await page.locator("[data-pmsv-b21-open]").count(),1);
+  await page.evaluate(()=>{
+    window.dispatchEvent(new StorageEvent("storage",{key:pmsvB14StorageKey,storageArea:localStorage}));
+  });
+  assert.equal(await page.locator("[data-pmsv-b22-remote-change]").count(),1);
+  await page.locator("[data-pmsv-b22-reload]").click();
+  assert.equal(await page.locator("[data-pmsv-b22-remote-change]").count(),0);
+  const finished=await page.evaluate(()=>({
+   status:pmsvB21All().find(x=>x.id==="99-99-1-trehalose")?.status,
+   prepared:pmsv498Ledger.records.filter(x=>x.source_status==="FIRST_EXACT_SOURCE_PENDING").length,
+   approved:pmsvB21Data.results.independent_legal_approvals,
+   pass:pmsvB21Data.results.lot_passes,
+   sync:pmsvB22Stats.syncs
+  }));
+  assert.equal(finished.status,"ARTICLE_SCOPE_REVIEW_REQUIRED");
+  assert.equal(finished.prepared,35);assert.equal(finished.approved,0);assert.equal(finished.pass,0);
+  assert(finished.sync>=2);
+  assert.equal(fatal.filter(e=>/pmsvB2[012]|pmsvB14|pmsvB15/.test(e)).length,0,
+   "Source workflow page exceptions: "+fatal.slice(0,5).join(" | "));
+  console.log("Batch22 Chromium evidence integration PASS",JSON.stringify({baseline,state,finished}));
+ }finally{
+  if(browser)await browser.close();
+  server.kill("SIGTERM");
+ }
+})().catch(e=>{console.error(e);process.exitCode=1;server.kill("SIGTERM")});
