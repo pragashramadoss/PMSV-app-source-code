@@ -40,7 +40,8 @@ test("two direct FSSR/CTR contradictions are the vending-water and dried-glucose
  assert.deepEqual(hard.map(x=>x.catalog_id),["purified-vending-water","11-11-1-dried-glucose-syrup"]);
  assert.match(hard[0].identity_evidence,/other than packaged drinking water/);
  assert.match(hard[1].identity_evidence,/at most 1\.0%/);
- assert.match(hard[1].excluded_auto_transfer_reason,/exceeding 1\.0%/);
+ assert.match(hard[1].identity_evidence,/exceeding 1\.0%/);
+ assert.match(hard[1].excluded_auto_transfer_reason,/high-ash named article/);
 });
 test("all 16 cited FSSR identities preserve exact CTR key mapping without assigning any limits",()=>{
  const c=context(),keys=new Set(b6.named_article_rows.map(x=>x.key));
