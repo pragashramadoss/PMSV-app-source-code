@@ -23,8 +23,24 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    }catch(_){await sleep(200)}
   }
   assert(ready,"Static PMSV preview did not start");
-  await page.waitForFunction(()=>typeof pmsvB21Valid==="function"&&pmsvB21Valid()&&
-     typeof pmsvB22Ready==="function"&&pmsvB22Ready(),{timeout:90000});
+  // Product standards load their regulatory data lazily on entering the standard route.
+  // Call the same public loader used by the real product-standard UI, then verify the full chain.
+  await page.waitForFunction(()=>typeof loadContaminantsDb==="function"&&
+    typeof pmsvB22Ready==="function",null,{timeout:30000});
+  await page.evaluate(async()=>await loadContaminantsDb());
+  const diagnostic=await page.evaluate(()=>({
+    b14:typeof pmsvB14Valid==="function"&&pmsvB14Valid(),
+    b15:typeof pmsvB15Valid==="function"&&pmsvB15Valid(),
+    b17:typeof pmsvB17Valid==="function"&&pmsvB17Valid(),
+    b18:typeof pmsvB18Valid==="function"&&pmsvB18Valid(),
+    b19:typeof pmsvB19Valid==="function"&&pmsvB19Valid(),
+    b20:typeof pmsvB20Valid==="function"&&pmsvB20Valid(),
+    b21:typeof pmsvB21Valid==="function"&&pmsvB21Valid(),
+    ready:typeof pmsvB22Ready==="function"&&pmsvB22Ready(),
+    warnings:typeof pmsvB22Stats==="object"?pmsvB22Stats.lastError:""
+  }));
+  console.log("B22 real-browser regulatory-loader diagnostic",JSON.stringify(diagnostic));
+  assert(diagnostic.ready,"Regulatory source chain invalid after the actual loader: "+JSON.stringify(diagnostic));
   await page.evaluate(()=>{
     document.getElementById("standard")?.classList.remove("hidden");
     pmsvB14EnsureDashboard();pmsvB20Ensure();pmsvB21Refresh();pmsvB22EnsureControl();
