@@ -29,6 +29,18 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
     typeof pmsvB22Ready==="function",null,{timeout:30000});
   await page.evaluate(async()=>await loadContaminantsDb());
   const diagnostic=await page.evaluate(()=>({
+    queue:typeof pmsv35Queue!=="undefined"&&!!pmsv35Queue,
+    ledger:typeof pmsv498Ledger!=="undefined"&&!!pmsv498Ledger,
+    b4:typeof pmsvCurrent35Batch4Valid==="function"&&pmsvCurrent35Batch4Valid(),
+    b5:typeof pmsvB5Valid==="function"&&pmsvB5Valid(),
+    b6:typeof pmsvB6Valid==="function"&&pmsvB6Valid(),
+    b7:typeof pmsvB7Valid==="function"&&pmsvB7Valid(),
+    b8:typeof pmsvB8Valid==="function"&&pmsvB8Valid(),
+    b9:typeof pmsvB9Valid==="function"&&pmsvB9Valid(),
+    b10:typeof pmsvB10Valid==="function"&&pmsvB10Valid(),
+    b11:typeof pmsvB11Valid==="function"&&pmsvB11Valid(),
+    b12:typeof pmsvB12Valid==="function"&&pmsvB12Valid(),
+    b13:typeof pmsvB13Valid==="function"&&pmsvB13Valid(),
     b14:typeof pmsvB14Valid==="function"&&pmsvB14Valid(),
     b15:typeof pmsvB15Valid==="function"&&pmsvB15Valid(),
     b17:typeof pmsvB17Valid==="function"&&pmsvB17Valid(),
