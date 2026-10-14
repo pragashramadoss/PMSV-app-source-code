@@ -73,7 +73,7 @@ test("altered ID, status, documentary slot, official source and future date all 
    const {c}=environment(altered);
    assert.equal(c.pmsvB5Valid(),false,kind);
    const html=c.pmsvB5Html(product(batch.cases[0]));
-   assert.match(html,/source status remains unchanged/);
+   assert.match(html,/FIRST EXACT SOURCE PENDING status remains unchanged/);
  }
 });
 test("marking an original received changes only browser-local receipt state",()=>{
