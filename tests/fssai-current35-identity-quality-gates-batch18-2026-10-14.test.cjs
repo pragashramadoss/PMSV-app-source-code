@@ -34,7 +34,7 @@ test("Eight official product definitions do not become metal/toxin or pesticide 
  assert.match(by["06-06-2-carob-powder"].distinction_from_ctr,/not a sulphated-ash result/);
  assert.match(by["99-99-7-dietary-fibre-dextrin-soluble-fibre"].positive_fssr_identity_quality,/12–25/);
  assert.match(by["06-06-2-arrowroot"].positive_fssr_identity_quality,/rhizomes/);
- assert.match(by["06-06-2-water-chestnut-flour-singhare-ka-atta"].incorrect_transfer,/atta/);
+ assert.match(by["06-06-2-water-chestnut-flour-singhare-ka-atta"].forbidden_automatic_article_transfer,/atta/);
  assert.match(by["04-04-1-coconut-milk-powder"].positive_fssr_identity_quality,/caseinate/);
  assert.match(by["04-04-2-cocoa-beans"].distinction_from_ctr,/NOT an aflatoxin/);
  assert.equal(d.focus_8.reduce((n,x)=>n+x.proof_requirements.length,0),32);
