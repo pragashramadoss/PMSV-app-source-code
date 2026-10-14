@@ -29,6 +29,11 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
     typeof pmsvB22Ready==="function",null,{timeout:30000});
   await page.evaluate(async()=>await loadContaminantsDb());
   const diagnostic=await page.evaluate(()=>({
+    early36:typeof pmsvCurrent36TriageValid==="function"&&pmsvCurrent36TriageValid(),
+    early497:typeof pmsv497Valid==="function"&&pmsv497Valid(),
+    early498:typeof pmsv498Valid==="function"&&pmsv498Valid(),
+    prior497:typeof pmsv497Ledger!=="undefined"&&!!pmsv497Ledger,
+    prior36:typeof pmsv36Queue!=="undefined"&&!!pmsv36Queue,
     queue:typeof pmsv35Queue!=="undefined"&&!!pmsv35Queue,
     ledger:typeof pmsv498Ledger!=="undefined"&&!!pmsv498Ledger,
     b4:typeof pmsvCurrent35Batch4Valid==="function"&&pmsvCurrent35Batch4Valid(),
