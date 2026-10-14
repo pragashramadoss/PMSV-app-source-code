@@ -1,0 +1,29 @@
+name: Verify FSSAI selective 35-case transfer in Chromium (Batch24)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-current35-selective-transfer-batch24-2026-10-14.js'
+      - 'tests/fssai-current35-selective-transfer-batch24-2026-10-14.test.cjs'
+      - '.github/workflows/verify-fssai-current35-selective-transfer-batch24.yml'
+      - 'fssai-product-helper-preview-01/index.html'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  selective-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium test runner
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify selective restore JS syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-selective-transfer-batch24-2026-10-14.js
+      - name: Verify actual selective evidence restore in Chromium
+        run: node tests/fssai-current35-selective-transfer-batch24-2026-10-14.test.cjs
