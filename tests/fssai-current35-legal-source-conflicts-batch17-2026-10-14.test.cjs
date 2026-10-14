@@ -8,12 +8,12 @@ const b14=read("fssai-current35-adjudication-workbench-batch14-2026-10-13.json")
 const queue=read("fssai-current-35-first-exact-source-proof-worklist-2026-10-13.json");
 const ledger=read("fssai-current-first-source-533-live-ledger-498-35-2026-10-13.json");
 const code=fs.readFileSync(root+"fssai-current35-legal-source-conflicts-batch17-2026-10-14.js","utf8");
+function digest(obj){const s=JSON.stringify(obj);let a=0x811c9dc5,b=0x9747b28c;for(let i=0;i<s.length;i++){const z=s.charCodeAt(i);a=Math.imul(a^z,16777619);b=Math.imul(b^z,2246822519);}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0");}
 function ctx(){
- const s={pmsvB16Valid:()=>true,pmsvB16Data:b16,pmsvB14Data:b14,pmsv35Queue:queue,pmsv498Ledger:ledger,
+ const s={pmsvB16Valid:()=>true,pmsvB16Digest:digest,pmsvB16Data:b16,pmsvB14Data:b14,pmsv35Queue:queue,pmsv498Ledger:ledger,
  pmsvLoadPositiveSourceProof:async()=>{},sourcePinned121ResearchProofHtml:()=>"",
  pmsvB14Esc:x=>String(x??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))};
- vm.createContext(s);vm.runInContext(fs.readFileSync(root+"fssai-current35-seven-named-commodity-research-batch16-2026-10-13.js","utf8").replace("const pmsvB16PriorLoad=pmsvLoadPositiveSourceProof;","const pmsvB16PriorLoad=pmsvLoadPositiveSourceProof;"),s);
- s.pmsvB16Data=b16;
+ vm.createContext(s);
  vm.runInContext(code,s);s.pmsvB17Data=data;return s;
 }
 test("Batch 17 canonical 533/498/35 and 0 approvals",()=>{
