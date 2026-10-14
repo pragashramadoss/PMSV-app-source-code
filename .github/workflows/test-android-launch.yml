@@ -62,7 +62,7 @@ jobs:
             sleep 5
             adb logcat -d > /tmp/pmsv-deeplink-logcat.txt
             grep -q "Process: com.pmsvgroup.foodsafety" /tmp/pmsv-deeplink-logcat.txt && grep -q "FATAL EXCEPTION" /tmp/pmsv-deeplink-logcat.txt && exit 1 || true
-            adb shell dumpsys package com.pmsvgroup.foodsafety | grep "versionCode=3"
-            adb shell dumpsys package com.pmsvgroup.foodsafety | grep "versionName=1.0.2"
+            adb shell dumpsys package com.pmsvgroup.foodsafety | grep "versionCode=4"
+            adb shell dumpsys package com.pmsvgroup.foodsafety | grep "versionName=1.0.3"
             adb shell dumpsys package com.pmsvgroup.foodsafety | grep "android.permission.POST_NOTIFICATIONS"
             adb shell dumpsys package com.pmsvgroup.foodsafety | grep -A 12 "runtime permissions:" | grep "android.permission.POST_NOTIFICATIONS: granted=true"
