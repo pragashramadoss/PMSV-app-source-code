@@ -1,0 +1,26 @@
+name: Verify FSSAI current35 quality versus contaminant source matrix (Batch18)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-identity-quality-gates-batch18-2026-10-14.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-identity-quality-gates-batch18-2026-10-14.js'
+      - 'tests/fssai-current35-identity-quality-gates-batch18-2026-10-14.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-identity-quality-batch18.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate 24 pending and eight FSSR quality versus CTR cases
+        run: node --test tests/fssai-current35-identity-quality-gates-batch18-2026-10-14.test.cjs
+      - name: Validate JavaScript syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-identity-quality-gates-batch18-2026-10-14.js
