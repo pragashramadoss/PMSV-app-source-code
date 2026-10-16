@@ -107,7 +107,7 @@ function pmsvB57PlusTable(){
  return'<tr><td>'+e(c.rank)+'</td><td>'+e(c.priority)+'</td><td><b>'+e(c.product_name)+'</b><small> · '+e(c.analyte)+'</small></td>'+
  '<td>'+e(g.request_id)+'</td><td>'+e(g.gate_code.replaceAll("_"," "))+'</td>'+
  '<td>'+e(num)+' / '+e(g.checkpoint_ids.length)+' triage draft(s) · 0 verified</td>'+
- '<td><button type="button" data-pmsv-b57-select="'+e(g.request_id)+'">Inspect checkpoints</button></td></tr>';
+ '<td><button type="button" data-pmsv-b57plus-select="'+e(g.request_id)+'">Inspect checkpoints</button></td></tr>';
  }).join("");
 }
 function pmsvB57PlusDetail(){
@@ -118,10 +118,10 @@ function pmsvB57PlusDetail(){
  const rows=template.checkpoints.map((x,i)=>{
   const key=g.request_id+"/"+x.id,entry=pmsvB57PlusEntry(key);
   return'<tr><td>'+e(i+1)+'</td><td><b>'+e(x.id.split("__").at(-1).replaceAll("_"," "))+'</b><small> '+e(x.question)+'</small></td>'+
-   '<td><select data-pmsv-b57-key="'+e(key)+'" data-pmsv-b57-property="triage_status">'+
+   '<td><select data-pmsv-b57plus-key="'+e(key)+'" data-pmsv-b57plus-property="triage_status">'+
    pmsvB57PlusStatuses.map(s=>'<option value="'+e(s)+'"'+(entry.triage_status===s?" selected":"")+'>'+e(s.replaceAll("_"," "))+'</option>').join("")+
    '</select></td>'+
-   '<td><input type="text" maxlength="160" data-pmsv-b57-key="'+e(key)+'" data-pmsv-b57-property="follow_up_note" placeholder="Non-sensitive reviewer follow-up" value="'+e(entry.follow_up_note)+'"></td></tr>';
+   '<td><input type="text" maxlength="160" data-pmsv-b57plus-key="'+e(key)+'" data-pmsv-b57plus-property="follow_up_note" placeholder="Non-sensitive reviewer follow-up" value="'+e(entry.follow_up_note)+'"></td></tr>';
  }).join("");
  return '<div class="notice"><b>'+e(g.request_id)+' · '+e(c.product_name)+'</b>. All checkpoints are preparatory. Triage cannot authenticate a source, approve a legal limit, validate laboratory scope or release a lot.</div>'+
  '<p><b>Legacy original documentary evidence needed:</b> '+e(g.inherited_original_evidence_request)+'</p>'+
@@ -131,7 +131,7 @@ function pmsvB57PlusDetail(){
  '<div class="notice">Any status or note below is temporary <b>review planning only</b>. Do not enter confidential BOMs, sensitive individual identifiers, test-report contents or proprietary method validation files. A reported reference is not authenticated. No PASS state is available.</div>'+
  '<div class="tablewrap" style="max-height:450px;overflow:auto"><table><thead><tr><th>#</th><th>Verification question</th><th>Planning triage (not PASS)</th><th>Short follow-up note</th></tr></thead><tbody>'+
  rows+'</tbody></table></div>'+
- '<p><button type="button" data-pmsv-b57-clear-gate>Clear only this gate\u2019s temporary triage</button></p>'+
+ '<p><button type="button" data-pmsv-b57plus-clear-gate>Clear only this gate\u2019s temporary triage</button></p>'+
  '<p><b>Applicable source pointers:</b> <a href="https://fssai.gov.in/food-law/notifications?notification=gazette-notification" target="_blank" rel="noopener noreferrer">FSSAI notification index (30 Sep 2026 lab Gazette)</a> · '+
  '<a href="https://nabl-india.org/faq/" target="_blank" rel="noopener noreferrer">NABL scope FAQ</a> · '+
  '<a href="https://nablwp.qci.org.in/laboratorysearchone" target="_blank" rel="noopener noreferrer">NABL laboratory search</a>. Verify exact sources rather than relying on the links alone.</p>';
@@ -143,22 +143,22 @@ function pmsvB57PlusPanel(){
  '<summary><b>Batch57 · Original-source, lab-scope & signoff checks</b> — 1,470 unverified checkpoints across 175 gates</summary>'+
  '<div class="notice"><b>All 35 CTR cases OPEN.</b> 1,470 source/document/laboratory and lot verification questions; <b>0 actual authentications, CTR approvals, accredited method signoffs or lot passes.</b> These are checklists awaiting independent external evidence, not completed inspections.</div>'+
  '<p><b>Source freshness exception:</b> FSSAI lists a <b>30 September 2026</b> NABL-accredited laboratory Gazette in its notification index. The food laboratories page also references a 7 September laboratory list. Recheck the *named* lab and its current NABL certificate and specific matrix/analyte accreditation scope; neither list by itself validates testing capability.</p>'+
- '<p><label>Priority <select data-pmsv-b57-priority><option value="ALL">All priorities (175)</option><option value="P0">P0 (65 gates)</option><option value="P1">P1 (110 gates)</option></select></label> '+
- '<label>Gate focus <select data-pmsv-b57-gate><option value="ALL">All 175 evidence gates</option>'+
+ '<p><label>Priority <select data-pmsv-b57plus-priority><option value="ALL">All priorities (175)</option><option value="P0">P0 (65 gates)</option><option value="P1">P1 (110 gates)</option></select></label> '+
+ '<label>Gate focus <select data-pmsv-b57plus-gate><option value="ALL">All 175 evidence gates</option>'+
  options.map(x=>'<option value="'+e(x.gate_code)+'">'+e(x.gate_code.replaceAll("_"," "))+' ('+e(x.checkpoints.length*35)+' checks)</option>').join("")+
  '</select></label> '+
- '<label>Review drafts <select data-pmsv-b57-review><option value="ALL">All gates</option><option value="NOT_REVIEWED">No triage drafts</option><option value="DRAFT_ONLY">Has temporary triage drafts</option></select></label> '+
- '<label>Search <input type="search" data-pmsv-b57-search placeholder="Cocoa, Sajji, Lead, PMSV44-01-04" /></label></p>'+
- '<p><button type="button" data-pmsv-b57-export="BLANK">Download blank 1,470-checkpoint CSV</button> '+
- '<button type="button" data-pmsv-b57-export="JSON">Export session triage JSON</button> '+
- '<button type="button" data-pmsv-b57-export="CSV">Export reported triage CSV</button> '+
- '<button type="button" data-pmsv-b57-clear-all>Clear all temporary triage</button></p>'+
- '<p><label>Restore session triage metadata <input type="file" accept=".json,application/json" data-pmsv-b57-import /></label></p>'+
- '<p data-pmsv-b57-feedback>Local JSON imports accept only known checkpoints, unverified triage statuses and no legal approval flags. No automatic upload or persistence.</p>'+
- '<p data-pmsv-b57-count>175 gates · 1,470 checks · 0 authenticated results</p>'+
+ '<label>Review drafts <select data-pmsv-b57plus-review><option value="ALL">All gates</option><option value="NOT_REVIEWED">No triage drafts</option><option value="DRAFT_ONLY">Has temporary triage drafts</option></select></label> '+
+ '<label>Search <input type="search" data-pmsv-b57plus-search placeholder="Cocoa, Sajji, Lead, PMSV44-01-04" /></label></p>'+
+ '<p><button type="button" data-pmsv-b57plus-export="BLANK">Download blank 1,470-checkpoint CSV</button> '+
+ '<button type="button" data-pmsv-b57plus-export="JSON">Export session triage JSON</button> '+
+ '<button type="button" data-pmsv-b57plus-export="CSV">Export reported triage CSV</button> '+
+ '<button type="button" data-pmsv-b57plus-clear-all>Clear all temporary triage</button></p>'+
+ '<p><label>Restore session triage metadata <input type="file" accept=".json,application/json" data-pmsv-b57plus-import /></label></p>'+
+ '<p data-pmsv-b57plus-feedback>Local JSON imports accept only known checkpoints, unverified triage statuses and no legal approval flags. No automatic upload or persistence.</p>'+
+ '<p data-pmsv-b57plus-count>175 gates · 1,470 checks · 0 authenticated results</p>'+
  '<div class="tablewrap" style="max-height:500px;overflow:auto"><table><thead><tr><th>#</th><th>Priority</th><th>Product</th><th>Original ID</th><th>Evidence area</th><th>Draft review</th><th>Actions</th></tr></thead>'+
- '<tbody data-pmsv-b57-rows>'+pmsvB57PlusTable()+'</tbody></table></div>'+
- '<div data-pmsv-b57-detail></div></details>';
+ '<tbody data-pmsv-b57plus-rows>'+pmsvB57PlusTable()+'</tbody></table></div>'+
+ '<div data-pmsv-b57plus-detail></div></details>';
 }
 function pmsvB57PlusRefresh(withDetail){
  if(!pmsvB57PlusValid()||typeof document==="undefined")return;
@@ -166,12 +166,12 @@ function pmsvB57PlusRefresh(withDetail){
  if(!anchor)return;
  let panel=document.getElementById("pmsv-b57-source-lab-authentication");
  if(!panel){anchor.insertAdjacentHTML("beforebegin",pmsvB57PlusPanel());return;}
- const rows=panel.querySelector("[data-pmsv-b57-rows]");if(rows)rows.innerHTML=pmsvB57PlusTable();
- const count=panel.querySelector("[data-pmsv-b57-count]");
+ const rows=panel.querySelector("[data-pmsv-b57plus-rows]");if(rows)rows.innerHTML=pmsvB57PlusTable();
+ const count=panel.querySelector("[data-pmsv-b57plus-count]");
  if(count)count.textContent=pmsvB57PlusFiltered().length+" gate(s) shown · "+
  Object.keys(pmsvB57PlusDrafts).filter(key=>pmsvB57PlusHasDraft(key)).length+
  " temporary check draft(s) · 0 independently authenticated / PASS";
- if(withDetail){const detail=panel.querySelector("[data-pmsv-b57-detail]");if(detail)detail.innerHTML=pmsvB57PlusDetail();}
+ if(withDetail){const detail=panel.querySelector("[data-pmsv-b57plus-detail]");if(detail)detail.innerHTML=pmsvB57PlusDetail();}
 }
 function pmsvB57PlusExportObject(){
  if(!pmsvB57PlusValid())return null;
@@ -237,7 +237,7 @@ function pmsvB57PlusDownload(mode){
  a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1100);
 }
 function pmsvB57PlusFeedback(msg){
- const el=document.querySelector("[data-pmsv-b57-feedback]");if(el)el.textContent=msg;
+ const el=document.querySelector("[data-pmsv-b57plus-feedback]");if(el)el.textContent=msg;
 }
 const pmsvB57PlusPriorLoad=pmsvLoadPositiveSourceProof;
 pmsvLoadPositiveSourceProof=async function(){
@@ -253,10 +253,10 @@ pmsvLoadPositiveSourceProof=async function(){
 if(typeof document!=="undefined"){
  document.addEventListener("input",ev=>{
   const t=ev.target;
-  if(t?.matches?.("[data-pmsv-b57-search]")){
+  if(t?.matches?.("[data-pmsv-b57plus-search]")){
    pmsvB57PlusSearch=String(t.value||"").slice(0,140);pmsvB57PlusRefresh(false);
-  }else if(t?.matches?.('[data-pmsv-b57-property="follow_up_note"]')){
-   const key=t.getAttribute("data-pmsv-b57-key");
+  }else if(t?.matches?.('[data-pmsv-b57plus-property="follow_up_note"]')){
+   const key=t.getAttribute("data-pmsv-b57plus-key");
    if(!pmsvB57PlusCheck(key))return;
    const draft=pmsvB57PlusDrafts[key]||{...pmsvB57PlusEntry(key)};
    draft.follow_up_note=String(t.value||"").slice(0,160);pmsvB57PlusDrafts[key]=draft;
@@ -265,20 +265,20 @@ if(typeof document!=="undefined"){
  });
  document.addEventListener("change",async ev=>{
   const t=ev.target;if(!t)return;
-  if(t.matches?.("[data-pmsv-b57-priority]")&&["ALL","P0","P1"].includes(t.value)){
+  if(t.matches?.("[data-pmsv-b57plus-priority]")&&["ALL","P0","P1"].includes(t.value)){
    pmsvB57PlusPriority=t.value;pmsvB57PlusRefresh(false);
-  }else if(t.matches?.("[data-pmsv-b57-gate]")&&
+  }else if(t.matches?.("[data-pmsv-b57plus-gate]")&&
     (t.value==="ALL"||pmsvB57PlusData?.gate_checkpoint_templates.some(x=>x.gate_code===t.value))){
    pmsvB57PlusGate=t.value;pmsvB57PlusRefresh(false);
-  }else if(t.matches?.("[data-pmsv-b57-review]")&&
+  }else if(t.matches?.("[data-pmsv-b57plus-review]")&&
    ["ALL","NOT_REVIEWED","DRAFT_ONLY"].includes(t.value)){
    pmsvB57PlusReview=t.value;pmsvB57PlusRefresh(false);
-  }else if(t.matches?.('[data-pmsv-b57-property="triage_status"]')){
-   const key=t.getAttribute("data-pmsv-b57-key");
+  }else if(t.matches?.('[data-pmsv-b57plus-property="triage_status"]')){
+   const key=t.getAttribute("data-pmsv-b57plus-key");
    if(!pmsvB57PlusCheck(key)||!pmsvB57PlusStatuses.includes(t.value))return;
    const draft=pmsvB57PlusDrafts[key]||{...pmsvB57PlusEntry(key)};
    draft.triage_status=t.value;pmsvB57PlusDrafts[key]=draft;pmsvB57PlusRefresh(false);
-  }else if(t.matches?.("[data-pmsv-b57-import]")){
+  }else if(t.matches?.("[data-pmsv-b57plus-import]")){
    const f=t.files?.[0];if(!f)return;
    if(f.size>850000){pmsvB57PlusFeedback("Rejected: oversized source-review draft file. No change.");t.value="";return;}
    try{
@@ -290,16 +290,16 @@ if(typeof document!=="undefined"){
   }
  });
  document.addEventListener("click",ev=>{
-  const btn=ev.target?.closest?.("[data-pmsv-b57-select]");
-  if(btn){pmsvB57PlusSelected=btn.getAttribute("data-pmsv-b57-select");pmsvB57PlusRefresh(true);return;}
-  const exp=ev.target?.closest?.("[data-pmsv-b57-export]");
-  if(exp){pmsvB57PlusDownload(exp.getAttribute("data-pmsv-b57-export"));return;}
-  if(ev.target?.closest?.("[data-pmsv-b57-clear-gate]")){
+  const btn=ev.target?.closest?.("[data-pmsv-b57plus-select]");
+  if(btn){pmsvB57PlusSelected=btn.getAttribute("data-pmsv-b57plus-select");pmsvB57PlusRefresh(true);return;}
+  const exp=ev.target?.closest?.("[data-pmsv-b57plus-export]");
+  if(exp){pmsvB57PlusDownload(exp.getAttribute("data-pmsv-b57plus-export"));return;}
+  if(ev.target?.closest?.("[data-pmsv-b57plus-clear-gate]")){
    const v=pmsvB57PlusFindGate(pmsvB57PlusSelected);
    if(v)for(const id of v.g.checkpoint_ids)delete pmsvB57PlusDrafts[v.g.request_id+"/"+id];
    pmsvB57PlusRefresh(true);return;
   }
-  if(ev.target?.closest?.("[data-pmsv-b57-clear-all]")){
+  if(ev.target?.closest?.("[data-pmsv-b57plus-clear-all]")){
    pmsvB57PlusDrafts=Object.create(null);pmsvB57PlusRefresh(true);
    pmsvB57PlusFeedback("All temporary source and lab check drafts cleared.");
   }
