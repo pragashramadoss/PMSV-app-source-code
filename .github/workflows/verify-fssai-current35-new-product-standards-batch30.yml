@@ -1,0 +1,30 @@
+name: Verify FSSAI cocoa and salt standards (Batch30)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-next3-exact-fssr-product-standards-batch30-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-next3-exact-fssr-product-standards-batch30-2026-10-16.js'
+      - 'tests/fssai-current35-next3-exact-fssr-product-standards-batch30-2026-10-16.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-new-product-standards-batch30.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  b30-cocoa-and-salt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Validate Batch30 script syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-next3-exact-fssr-product-standards-batch30-2026-10-16.js
+      - name: Test 25 source criteria, 3 official FSSR articles and unchanged CTR queue
+        run: node tests/fssai-current35-next3-exact-fssr-product-standards-batch30-2026-10-16.test.cjs
