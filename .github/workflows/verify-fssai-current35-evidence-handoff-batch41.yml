@@ -1,0 +1,30 @@
+name: Verify PMSV 140 evidence-request handoff (Batch41)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-evidence-intake-handoff-batch41-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-evidence-intake-handoff-batch41-2026-10-16.js'
+      - 'tests/fssai-current35-evidence-handoff-batch41-2026-10-16.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-evidence-handoff-batch41.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-batch41:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser for functional export and clipboard tests
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify review-workbench script syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-evidence-intake-handoff-batch41-2026-10-16.js
+      - name: Test 35 case evidence handoffs, CSV export and clipboard in Chromium
+        run: node tests/fssai-current35-evidence-handoff-batch41-2026-10-16.test.cjs
