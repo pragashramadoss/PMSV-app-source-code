@@ -27,7 +27,7 @@ assert.deepEqual(d.legislation_commencements.map(x=>({id:x.id,date:x.commencemen
  {id:"FUTURE_LAB_2027",date:"2027-04-01",status:"PUBLISHED_NOT_IN_FORCE",primary:false}
 ]);
 assert(d.legislation_commencements[1].disposition.includes("not apply those new legal obligations early"));
-assert(d.legislation_commencements[1].disposition.includes("private routine QA"));
+assert(d.legislation_commencements[1].disposition.includes("routine internal QA"));
 assert(d.analysis_method_groups.every(x=>x.official_methods_portal==="https://fssai.gov.in/food-testing/manuals-methods-analysis"));
 assert(d.analysis_method_groups.find(x=>x.family==="TRACE_METALS").source_hint.includes("Metals%20and%20Minerals.pdf"));
 const refs=new Map(b26.cases.map(x=>[x.catalog_id,x])), seen=new Set();
