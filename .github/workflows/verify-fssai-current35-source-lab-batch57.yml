@@ -1,0 +1,31 @@
+name: Verify FSSAI Batch57 source/lab authenticity 1470-point review
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-source-method-lab-authentication-batch57-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-source-method-lab-authentication-batch57-2026-10-16.js'
+      - 'tests/fssai-current35-source-method-lab-authentication-batch57-2026-10-16.test.cjs'
+      - 'FSSAI-CURRENT35-BATCH57-1470-SOURCE-LAB-SIGNOFF-REVIEW-2026-10-16.md'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-source-lab-batch57.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-batch57:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Syntax check Batch57 source and laboratory verification panel
+        run: node --check fssai-product-helper-preview-01/fssai-current35-source-method-lab-authentication-batch57-2026-10-16.js
+      - name: Verify 35 cases 175 gates 1470 verification questions and no-PASS exports
+        run: node tests/fssai-current35-source-method-lab-authentication-batch57-2026-10-16.test.cjs
