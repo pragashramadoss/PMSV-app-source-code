@@ -1,0 +1,1369 @@
+{
+  "schema_version": "1.0",
+  "kind": "PMSV_CURRENT35_ANALYTICAL_METHOD_SCOPE_EXCEPTIONS_BATCH39",
+  "as_of": "2026-10-16",
+  "deployment": "GITHUB_PAGES_PREVIEW_ONLY",
+  "official_primary_manual": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+  "key_conclusions": [
+    "09.001:2024 excludes foods at or above 40% fat and milk powder; approximate method capability for Pb 0.4 mg/kg and Cu 3 mg/kg is NOT validated lab LOQ.",
+    "09.005:2024 includes Pb ICP-MS around 0.04 mg/kg DRY matter, not automatically current food legal limit nor as-sold weight basis.",
+    "09.006:2024 chromium/nutrition scope is restricted; Ni is internal standard for Cr/Mo and NOT a tested contaminant in the method.",
+    "09.003:2024 includes nickel in element wavelength table; lab must prove actual matrix applicability and required LOQ.",
+    "FSSAI 0.010:2023 covers selected dairy/nutritional minerals but not lead; dairy matrix membership does NOT equal lead applicability."
+  ],
+  "counts": {
+    "catalogue": 533,
+    "conditional_first_source_matches": 498,
+    "exact_ctr_cases_pending": 35,
+    "screened_analytical_packets": 35,
+    "metal_records": 27,
+    "other_records": 8,
+    "specific_exception_records": 13,
+    "generic_method_validation_records": 22,
+    "verified_primary_method_cards": 5,
+    "method_select_approved": 0,
+    "legal_ctr_approvals": 0,
+    "lot_laboratory_passes": 0,
+    "wordpress_changed": false
+  },
+  "source_provenance": {
+    "pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+    "methods_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+    "source_page_zero_based": [
+      2,
+      12,
+      27,
+      33,
+      57
+    ],
+    "scope_checked": true,
+    "all_lab_results_unknown": true,
+    "source_is_not_product_ctr_approval": true
+  },
+  "method_cards": [
+    {
+      "id": "FSSAI_09_001_2024",
+      "method_no": "FSSAI 09.001:2024",
+      "manual_page_zero_based": 2,
+      "title": "Microwave digestion with AAS",
+      "target_analytes": [
+        "Lead",
+        "Copper"
+      ],
+      "matrix_scope": "Lead and cadmium GFAAS; copper, zinc, iron FAAS for a variety of foods. Excludes >=40% fat foods and milk powder.",
+      "documented_approx_capability_mg_per_kg": {
+        "Lead": 0.4,
+        "Copper": 3
+      },
+      "capability_is_not_verified_lab_loq": true,
+      "exclusions": [
+        "Fat content >=40%",
+        "Milk powder"
+      ],
+      "limitation": "Sensitivity figures are approximate method capabilities and not legal limits or a particular laboratory's accredited LOQ.",
+      "source_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "primary_text_and_page_verified": true,
+      "automatic_method_assignment": false,
+      "actual_lab_validation_confirmed": false
+    },
+    {
+      "id": "FSSAI_09_003_2024",
+      "method_no": "FSSAI 09.003:2024",
+      "manual_page_zero_based": 12,
+      "title": "Microwave digestion plus ICP-AES",
+      "target_analytes": [
+        "Lead",
+        "Copper",
+        "Chromium",
+        "Nickel"
+      ],
+      "matrix_scope": "Multi-element ICP-AES method; element wavelength listing includes Ni/Cr/Pb/Cu. Lab must substantiate actual validated detection capability and matrix.",
+      "documented_approx_capability_mg_per_kg": null,
+      "capability_is_not_verified_lab_loq": true,
+      "exclusions": [],
+      "limitation": "Appearance in ICP-AES wavelength table does not mean all low regulatory contaminant limits can be measured reliably.",
+      "source_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "primary_text_and_page_verified": true,
+      "automatic_method_assignment": false,
+      "actual_lab_validation_confirmed": false
+    },
+    {
+      "id": "FSSAI_09_005_2024",
+      "method_no": "FSSAI 09.005:2024",
+      "manual_page_zero_based": 27,
+      "title": "Pressure digestion with ICP-MS",
+      "target_analytes": [
+        "Lead"
+      ],
+      "matrix_scope": "Arsenic, cadmium, mercury and lead determination for a variety of foods. Pb capability approximately 0.04 mg/kg dry matter; matrix/basis verified for as-sold sample.",
+      "documented_approx_capability_mg_per_kg": {
+        "Lead": 0.04
+      },
+      "capability_is_not_verified_lab_loq": true,
+      "exclusions": [],
+      "limitation": "Dry-matter analytical capability is not automatically comparable to a wet-weight, fat-free, reconstituted or ingredient-specific CTR threshold.",
+      "source_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "primary_text_and_page_verified": true,
+      "automatic_method_assignment": false,
+      "actual_lab_validation_confirmed": false
+    },
+    {
+      "id": "FSSAI_09_006_2024",
+      "method_no": "FSSAI 09.006:2024",
+      "manual_page_zero_based": 33,
+      "title": "ICP-MS chromium, selenium, molybdenum in infant/adult nutritional products",
+      "target_analytes": [
+        "Chromium"
+      ],
+      "matrix_scope": "Infant formula and adult nutritional products only; chromium is analyte, nickel and tellurium are internal standards.",
+      "documented_approx_capability_mg_per_kg": {
+        "Chromium": 0.06
+      },
+      "capability_is_not_verified_lab_loq": true,
+      "exclusions": [
+        "Ordinary confectionery and Misri outside demonstrated scope"
+      ],
+      "limitation": "Nickel as an internal standard does NOT make nickel a target contaminant result; chromium scope does not cover ordinary Misri.",
+      "source_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "primary_text_and_page_verified": true,
+      "automatic_method_assignment": false,
+      "actual_lab_validation_confirmed": false
+    },
+    {
+      "id": "FSSAI_0_010_2023",
+      "method_no": "FSSAI 0.010:2023",
+      "manual_page_zero_based": 57,
+      "title": "Trace minerals in dairy products and infant/nutritional formula",
+      "target_analytes": [
+        "Copper",
+        "Chromium"
+      ],
+      "matrix_scope": "Minerals including copper in listed dairy/nutritional products; chromium excluded for dairy products. Lead not included in this analytical target list.",
+      "documented_approx_capability_mg_per_kg": null,
+      "capability_is_not_verified_lab_loq": true,
+      "exclusions": [
+        "Lead not a listed analyte",
+        "Chromium excluded in dairy product scope"
+      ],
+      "limitation": "Never label a milk-method mineral panel as an approved lead method.",
+      "source_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "primary_text_and_page_verified": true,
+      "automatic_method_assignment": false,
+      "actual_lab_validation_confirmed": false
+    }
+  ],
+  "case_gates": [
+    {
+      "rank": 1,
+      "catalog_id": "purified-vending-water",
+      "product_name": "Drinking Water (Purified) sold through vending machine",
+      "fssr": "2.10.9",
+      "fcs": "14.1.1",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "LEGAL_SCOPE",
+      "source_ctr_comparator": "Packaged drinking water (other than mineral water)",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "WATER_FORM_DISTINCTION"
+      ],
+      "specific_reason": "Water dispensed from a vending machine needs water-method scope and a legal drinking-water versus packaged-water assessment. A generic food digest method is not automatically valid.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 2,
+      "catalog_id": "coffee-chicory-mixture",
+      "product_name": "Coffee-Chicory Mixture",
+      "fssr": "2.10.4",
+      "fcs": "14.1.5",
+      "reviewed_analyte": "Ochratoxin A",
+      "analyte_family": "MYCOTOXINS",
+      "prior_blocker": "LEGAL_SCOPE",
+      "source_ctr_comparator": "Coffee",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Toxin name, food and fat/moisture state, validated extraction/recovery, method-specific LOQ, relevant current FSSAI mycotoxins manual and signed CTR applicability required.",
+      "candidate_method_ids_for_manual_check_only": [],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": null,
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 3,
+      "catalog_id": "formulated-supplements-children",
+      "product_name": "Formulated supplements for children",
+      "fssr": "",
+      "fcs": "13.2",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "PRODUCT_IDENTITY",
+      "source_ctr_comparator": "Infant formula / infant foods",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "INFANT_VS_CHILD_NUTRITION"
+      ],
+      "specific_reason": "Age, intended use and final product class must be established first; 09.006 measures chromium, not the current lead comparator, and infant-formula category does not automatically follow.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 4,
+      "catalog_id": "04-04-1-frozen-fruits-fruit-products",
+      "product_name": "Frozen Fruits/Fruit Products",
+      "fssr": "2.3.37",
+      "fcs": "04.1.2.1",
+      "reviewed_analyte": "Residues",
+      "analyte_family": "UNSPECIFIED_RESIDUE",
+      "prior_blocker": "PROCESS_MATRIX",
+      "source_ctr_comparator": "Fruits and vegetables / processed fruit comparators",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "No target chemical identified: first determine residue family and substance before selecting any method, MRL or screening assay.",
+      "candidate_method_ids_for_manual_check_only": [],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": null,
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 5,
+      "catalog_id": "04-04-1-catechu-edible",
+      "product_name": "Catechu (Edible)",
+      "fssr": "2.11.2",
+      "fcs": "04.1.2.2",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "PRODUCT_IDENTITY",
+      "source_ctr_comparator": "Chemicals not otherwise specified used as ingredients",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 6,
+      "catalog_id": "04-04-1-seedless-tamarind",
+      "product_name": "Seedless Tamarind",
+      "fssr": "2.3.49",
+      "fcs": "04.1.2.8",
+      "reviewed_analyte": "Copper",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "PRODUCT_IDENTITY",
+      "source_ctr_comparator": "Pulp and pulp products of any fruit",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "COPPER_SENSITIVITY_AND_PULP"
+      ],
+      "specific_reason": "Method 09.001 lists approximate copper capability of 3 mg/kg, not a lab LOQ. Verify seedless pulp/form, method detection below applicable limit and whole-to-pulp legal comparator.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_003_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 7,
+      "catalog_id": "04-04-1-coconut-milk-powder",
+      "product_name": "COCONUT MILK POWDER",
+      "fssr": "2.3.63",
+      "fcs": "04.1.2.8",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "PRODUCT_IDENTITY",
+      "source_ctr_comparator": "Milks (with dehydration factor)",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "MILK_POWDER_EXCLUSION_SCREEN",
+        "POWDER_MATRIX"
+      ],
+      "specific_reason": "Determine true coconut/non-dairy composition, fat content and matrix. 09.001 excludes dairy milk powder and high-fat food; whether its exclusions apply to this commercial coconut matrix requires laboratory evidence.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 8,
+      "catalog_id": "04-04-2-cocoa-beans",
+      "product_name": "Cocoa Beans",
+      "fssr": "2.3.54",
+      "fcs": "04.2.2.7",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "LEGAL_SCOPE",
+      "source_ctr_comparator": "Cocoa powder (dry fat-free basis)",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "WHOLE_COCOA_NOT_POWDER"
+      ],
+      "specific_reason": "Whole cocoa beans must not adopt cocoa-powder CTR article or dry fat-free reporting basis. Verify whole-bean sample preparation, bean origin and legal article.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 9,
+      "catalog_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "product_name": "Dry Mixtures of Cocoa and Sugars",
+      "fssr": "2.7.6",
+      "fcs": "05.1.1",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "PROCESS_MATRIX",
+      "source_ctr_comparator": "Cocoa powder (dry fat-free basis)",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "COCOA_SUGAR_MIXED_MATRIX",
+        "POTENTIAL_HIGH_FAT"
+      ],
+      "specific_reason": "Complete cocoa/sugar/fat proportion and as-sold moisture basis required before interpreting 09.001 fat exclusion or dry fat-free basis.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 10,
+      "catalog_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "fssr": "2.7.8",
+      "fcs": "05.1.1",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "PROCESS_MATRIX",
+      "source_ctr_comparator": "Cocoa powder (dry fat-free basis)",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "COCOA_MASS_FAT_DETERMINATION",
+        "POTENTIAL_HIGH_FAT"
+      ],
+      "specific_reason": "Determine cocoa mass/liquor versus cocoa cake and actual fat %. 09.001 cannot be used if >=40% fat; no cocoa-powder contaminant row transferred.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 11,
+      "catalog_id": "06-06-1-chia-seeds",
+      "product_name": "Chia Seeds",
+      "fssr": "2.4.6",
+      "fcs": "06.1",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "LEGAL_SCOPE",
+      "source_ctr_comparator": "Cereal grains (specified exclusions)",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 12,
+      "catalog_id": "06-06-2-carob-powder",
+      "product_name": "Carob Powder",
+      "fssr": "2.11.7",
+      "fcs": "06.2.1",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "LEGAL_SCOPE",
+      "source_ctr_comparator": "Cocoa powder (dry fat-free basis)",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 13,
+      "catalog_id": "06-06-2-arrowroot",
+      "product_name": "Arrowroot",
+      "fssr": "2.4.14",
+      "fcs": "06.2.2",
+      "reviewed_analyte": "Pesticide MRLs",
+      "analyte_family": "PESTICIDE_RESIDUES",
+      "prior_blocker": "LEGAL_SCOPE",
+      "source_ctr_comparator": "Milled food grains",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Name each pesticide and residue definition, actual commodity, validated GC-MS or LC-MS method and individual MRL; broad 'pesticide residues' is not one measured analyte.",
+      "candidate_method_ids_for_manual_check_only": [],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": null,
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 14,
+      "catalog_id": "06-06-2-water-chestnut-flour-singhare-ka-atta",
+      "product_name": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+      "fssr": "2.3.64",
+      "fcs": "06.2.1",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "LEGAL_SCOPE",
+      "source_ctr_comparator": "Cereal grains (specified exclusions)",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 15,
+      "catalog_id": "08-08-4-animal-casings",
+      "product_name": "Animal Casings",
+      "fssr": "2.5.2(14)",
+      "fcs": "08.4",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "PRODUCT_IDENTITY",
+      "source_ctr_comparator": "Meat of cattle/sheep/pig",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 16,
+      "catalog_id": "10-10-2-egg-powder",
+      "product_name": "Egg powder",
+      "fssr": "2.5.3(3)",
+      "fcs": "10.2.3",
+      "reviewed_analyte": "Pesticide MRLs",
+      "analyte_family": "PESTICIDE_RESIDUES",
+      "prior_blocker": "PROCESS_MATRIX",
+      "source_ctr_comparator": "Eggs (shell-free basis)",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Name each pesticide and residue definition, actual commodity, validated GC-MS or LC-MS method and individual MRL; broad 'pesticide residues' is not one measured analyte.",
+      "candidate_method_ids_for_manual_check_only": [],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": null,
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 17,
+      "catalog_id": "10-10-3-pickled-eggs",
+      "product_name": "Pickled Eggs",
+      "fssr": "2.5.3(5)",
+      "fcs": "10.3",
+      "reviewed_analyte": "Pesticide MRLs",
+      "analyte_family": "PESTICIDE_RESIDUES",
+      "prior_blocker": "PROCESS_MATRIX",
+      "source_ctr_comparator": "Eggs (shell-free basis)",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Name each pesticide and residue definition, actual commodity, validated GC-MS or LC-MS method and individual MRL; broad 'pesticide residues' is not one measured analyte.",
+      "candidate_method_ids_for_manual_check_only": [],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": null,
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 18,
+      "catalog_id": "11-11-1-dried-glucose-syrup",
+      "product_name": "Dried Glucose Syrup",
+      "fssr": "2.8.7",
+      "fcs": "11.1.3.1",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "PROCESS_MATRIX",
+      "source_ctr_comparator": "Solid glucose / starch conversion products above 1% sulphated ash",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 19,
+      "catalog_id": "11-11-1-edible-lactose",
+      "product_name": "Edible Lactose",
+      "fssr": "2.1.20",
+      "fcs": "11.1.4",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "LEGAL_SCOPE",
+      "source_ctr_comparator": "Milks (with dehydration factor)",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 20,
+      "catalog_id": "11-11-1-misri",
+      "product_name": "Misri",
+      "fssr": "2.8.2",
+      "fcs": "11.1.5",
+      "reviewed_analyte": "Chromium",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "PROCESS_MATRIX",
+      "source_ctr_comparator": "Refined sugar",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "CHROMIUM_SCOPE_NOT_MISRI"
+      ],
+      "specific_reason": "09.006 chromium method scope is infant/nutritional products, not sugar crystals; request actual validated chromium method (e.g., verified 09.003 if sensitivity sufficient) and a signed sugar comparator determination.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_003_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 21,
+      "catalog_id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
+      "product_name": "Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized",
+      "fssr": "FSS (FPS&FA) Regulations",
+      "fcs": "11.6",
+      "reviewed_analyte": "Nickel",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "SUBSTANCE_ID",
+      "source_ctr_comparator": "Sorbitol",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "NICKEL_INTERNAL_STANDARD_TRAP",
+        "CHEMICAL_SUBSTANCE_ID"
+      ],
+      "specific_reason": "Nickel in 09.006 is an internal standard, not the analyte. A named polyol and Ni-validated method with adequate LOQ are needed; 09.003 wavelength mention is not proof of accuracy.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_003_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 22,
+      "catalog_id": "12-12-1-salt-substitutes",
+      "product_name": "Salt Substitutes",
+      "fssr": "2.9.30(6)",
+      "fcs": "12.1.2",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "PRODUCT_IDENTITY",
+      "source_ctr_comparator": "Salt, food grade",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 23,
+      "catalog_id": "99-99-1-trehalose",
+      "product_name": "Trehalose",
+      "fssr": "3.3.4",
+      "fcs": "99.1",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "SUBSTANCE_ID",
+      "source_ctr_comparator": "All types of sugars with sulphated ash exceeding 1.0%",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 24,
+      "catalog_id": "99-99-1-sajji-khar",
+      "product_name": "Sajji Khar",
+      "fssr": "",
+      "fcs": "99.1",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "SUBSTANCE_ID",
+      "source_ctr_comparator": "Sodium hydroxide",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 25,
+      "catalog_id": "99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-",
+      "product_name": "Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations",
+      "fssr": "FSS (FPS&FA) Regulations",
+      "fcs": "99.1",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "SUBSTANCE_ID",
+      "source_ctr_comparator": "Sorbitol / individually named additives",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 26,
+      "catalog_id": "99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
+      "product_name": "Additives VA-VF of Nutraceutical Regulations excluding those already standardised",
+      "fssr": "",
+      "fcs": "99.1",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "SUBSTANCE_ID",
+      "source_ctr_comparator": "Individually named additives / chemicals",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 27,
+      "catalog_id": "99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
+      "product_name": "Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations",
+      "fssr": "",
+      "fcs": "99.2",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "SUBSTANCE_ID",
+      "source_ctr_comparator": "Chemicals not otherwise specified used as ingredients",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 28,
+      "catalog_id": "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
+      "product_name": "Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations",
+      "fssr": "",
+      "fcs": "99.7",
+      "reviewed_analyte": "Aflatoxins",
+      "analyte_family": "MYCOTOXINS",
+      "prior_blocker": "SUBSTANCE_ID",
+      "source_ctr_comparator": "Food containing listed crop articles",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Toxin name, food and fat/moisture state, validated extraction/recovery, method-specific LOQ, relevant current FSSAI mycotoxins manual and signed CTR applicability required.",
+      "candidate_method_ids_for_manual_check_only": [],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": null,
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 29,
+      "catalog_id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "product_name": "Mixtures/preparations/premix of functional ingredients",
+      "fssr": "",
+      "fcs": "99.7",
+      "reviewed_analyte": "Aflatoxins",
+      "analyte_family": "MYCOTOXINS",
+      "prior_blocker": "PRODUCT_IDENTITY",
+      "source_ctr_comparator": "Food containing listed crop articles",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Toxin name, food and fat/moisture state, validated extraction/recovery, method-specific LOQ, relevant current FSSAI mycotoxins manual and signed CTR applicability required.",
+      "candidate_method_ids_for_manual_check_only": [],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": null,
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 30,
+      "catalog_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+      "product_name": "Cow or Buffalo Colostrum and Colostrum Products",
+      "fssr": "2.1.23",
+      "fcs": "100",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "LEGAL_SCOPE",
+      "source_ctr_comparator": "Milks (with dehydration factor)",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "DAIRY_LEAD_NOT_MINERAL_PANEL"
+      ],
+      "specific_reason": "FSSAI dairy method 0.010:2023 is a mineral panel that omits lead. Ask for separate validated lead test and colostrum product form and legal article.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 31,
+      "catalog_id": "100-100-royal-jelly",
+      "product_name": "Royal Jelly",
+      "fssr": "2.8.3(3)",
+      "fcs": "100",
+      "reviewed_analyte": "Antibiotics",
+      "analyte_family": "VETERINARY_DRUG_RESIDUES",
+      "prior_blocker": "LEGAL_SCOPE",
+      "source_ctr_comparator": "Honey (honey antibiotic-production context)",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "HONEY_VS_ROYAL_JELLY_ANTIBIOTIC"
+      ],
+      "specific_reason": "Royal jelly is not automatically honey; name the antibiotic compound, actual bee-source matrix and species-specific residue method and legal scope.",
+      "candidate_method_ids_for_manual_check_only": [],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": null,
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 32,
+      "catalog_id": "100-100-silver-leaf-chandi-ka-warq",
+      "product_name": "SILVER LEAF (Chandi-ka-warq)",
+      "fssr": "2.11.4",
+      "fcs": "100",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "LEGAL_SCOPE",
+      "source_ctr_comparator": "Foods not specified (metal-specific fallback)",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 33,
+      "catalog_id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
+      "product_name": "14.3 - Narikela Ksheerika (Milky Coconut Delight)",
+      "fssr": "",
+      "fcs": "",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "PRODUCT_IDENTITY",
+      "source_ctr_comparator": "Milks (with dehydration factor)",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "AYURVEDA_MILK_BLENDING_AND_FAT"
+      ],
+      "specific_reason": "Prove real coconut/milk recipe and fat %, sample basis, correct matrix method, regulatory article and licensing; an official recipe does not validate method or commercial formulation.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 34,
+      "catalog_id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+      "product_name": "14.7 - Ksheerapaka (Mystic Milk Quartet)",
+      "fssr": "",
+      "fcs": "",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "PRODUCT_IDENTITY",
+      "source_ctr_comparator": "Milks (with dehydration factor)",
+      "focus": "MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY",
+      "check_tags": [
+        "BUFFALO_MILK_FLOWER_MATRIX"
+      ],
+      "specific_reason": "Buffalo milk and flower infusion require actual batch formula, botanical identity, fat %, method validation and dry/fresh reporting basis; ordinary milk limits are not automatically assigned.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    },
+    {
+      "rank": 35,
+      "catalog_id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "product_name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "fssr": "2.11.8",
+      "fcs": "99.7",
+      "reviewed_analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "prior_blocker": "SUBSTANCE_ID",
+      "source_ctr_comparator": "Solid glucose / starch conversion products above 1% sulphated ash",
+      "focus": "STANDARD_METHOD_VALIDATION_STILL_REQUIRED",
+      "check_tags": [
+        "VERIFY_MATRIX_AND_LOQ"
+      ],
+      "specific_reason": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "candidate_method_ids_for_manual_check_only": [
+        "FSSAI_09_001_2024",
+        "FSSAI_09_005_2024"
+      ],
+      "method_candidate_not_approval": true,
+      "lab_request": [
+        "Manufacturer/product supplier true as-sold matrix and key formulation, fat and moisture basis",
+        "Lab-proposed exact analyte method number with applicable scope, method version, analyst competence and actual matrix verification",
+        "Analyte-specific original LOQ, recovery, blank/control samples and sensitivity comparison with SIGNED current legal article limit",
+        "Lab NABL accreditation scope, traceable sample ID, original signed result, unit, uncertainty and sampling history",
+        "Regulatory reviewer signs operative legal article selection and reporting basis separately; no inferred comparator"
+      ],
+      "official_primary_method_pdf": "https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf",
+      "official_method_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+      "marketed_matrix_documents_received": false,
+      "legal_article_approved": false,
+      "method_selected_and_validated": false,
+      "measured_quantitative_result_entered": false,
+      "regulatory_pass": false
+    }
+  ],
+  "results": {
+    "canonical_ledger_unchanged": true,
+    "b38_packet_count_retained": 35,
+    "method_approvals_auto_added": 0,
+    "legal_scope_pass_auto_added": 0,
+    "actual_lot_pass_auto_added": 0,
+    "wordpress_unchanged": true
+  },
+  "note": "Screens 35 dossiers for wrong instrument target, matrix exclusion, insufficient sensitivity and reporting-basis mismatch, not actual batch compliance. The published method approximate capability is not a laboratory-reported LOQ or a current CTR legal limit."
+}
