@@ -4,9 +4,9 @@
    Session drafts are private in memory; no automatic network send or browser persistence. */
 var pmsvB57Data=null,pmsvB57Case="FIRST",pmsvB57Gate="ALL",pmsvB57Priority="ALL",pmsvB57Search="";
 var pmsvB57Selected="",pmsvB57Drafts=Object.create(null);
-const pmsvB57Path="./data/rules/fssai-current35-authentication-scope-preflight-batch57-2026-10-16.json";
-const pmsvB57Expected="9f64e82f4bb7e85a";
-const pmsvB57Stages=["UNASSESSED","REFERENCE_REPORTED_UNVERIFIED","SOURCE_OR_SCOPE_GAP_IDENTIFIED","NOT_APPLICABLE_REQUIRES_SIGNED_REASON"];
+var pmsvB57Path="./data/rules/fssai-current35-authentication-scope-preflight-batch57-2026-10-16.json";
+var pmsvB57Expected="9f64e82f4bb7e85a";
+var pmsvB57Stages=["UNASSESSED","REFERENCE_REPORTED_UNVERIFIED","SOURCE_OR_SCOPE_GAP_IDENTIFIED","NOT_APPLICABLE_REQUIRES_SIGNED_REASON"];
 function pmsvB57Valid(){
  if(typeof pmsvB56Valid!=="function"||!pmsvB56Valid()||typeof pmsvB14Digest!=="function"||
  !pmsvB57Data||pmsvB14Digest(pmsvB57Data)!==pmsvB57Expected)return false;
@@ -237,7 +237,7 @@ function pmsvB57Download(mode){
 function pmsvB57Feedback(v){
  const el=document.querySelector("[data-pmsv-b57-feedback]");if(el)el.textContent=v;
 }
-const pmsvB57EarlierLoader=pmsvLoadPositiveSourceProof;
+var pmsvB57EarlierLoader=pmsvLoadPositiveSourceProof;
 pmsvLoadPositiveSourceProof=async function(){
  await pmsvB57EarlierLoader();pmsvB57Data=null;
  try{
