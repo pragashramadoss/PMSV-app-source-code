@@ -161,7 +161,7 @@ function pmsvB43Refresh(){
 const pmsvB43OldCSV=pmsvB41CSV;
 pmsvB41CSV=function(rows){
  if(!pmsvB43Valid())return "";
- const disclaimer=pmsvB43Data.csv_export_amendment.proposed_lab_method_disclaimer;
+ const disclaimer=pmsvB43Data.csv_export_amendment.proposed_lab_method_disclaimer+" Source: "+pmsvB43Data.csv_export_amendment.source_notice;
  /* B42 must sanitize legacy codes FIRST. B42 intentionally replaces the method-note field
     altogether. Append consultation provenance AFTER that substitution so both CSV columns retain it. */
  const sanitized=pmsvB42SanitizeRequests(rows);
