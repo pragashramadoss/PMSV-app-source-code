@@ -1,0 +1,70 @@
+"use strict";
+const assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path"),{spawn}=require("node:child_process"),{chromium}=require("playwright");
+const b="fssai-product-helper-preview-01",base=path.join(b,"data/rules"),rd=n=>JSON.parse(fs.readFileSync(path.join(base,n),"utf8"));
+const d=rd("fssai-current35-additional10-fssr-identity-batch49-2026-10-16.json");
+const prev=rd("fssai-current35-exact-fssr-identity-primary-source-batch48-2026-10-16.json");
+const script=fs.readFileSync(path.join(b,"fssai-current35-additional10-fssr-identity-batch49-2026-10-16.js"),"utf8"),
+ index=fs.readFileSync(path.join(b,"index.html"),"utf8");
+function digest(o){let a=0x811c9dc5,b=0x9747b28c;for(const x of JSON.stringify(o)){let z=x.charCodeAt(0);a=Math.imul(a^z,16777619);b=Math.imul(b^z,2246822519)}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")}
+assert(script.includes('const pmsvB49Expected="'+digest(d)+'"'));
+assert(index.includes('fssai-current35-additional10-fssr-identity-batch49-2026-10-16.js?v=20261016-b49'));
+assert.deepEqual([d.live_counts.catalogue,d.live_counts.conditional_first_source,d.live_counts.first_exact_ctr_pending,d.research_counts.batch48_verified_identity,d.research_counts.batch49_new_identity,d.research_counts.cumulative_distinct_published_identities,d.research_counts.remaining_new_identity_source_pending,d.research_counts.representative_lot_passes],[533,498,35,14,10,24,11,0]);
+const original=new Map(prev.case_dossiers.map(x=>[x.catalogue_id,x]));
+let new10=0,old14=0,untouched11=0;const seen=new Set(),pages=new Set();
+for(const x of d.identity_screens){
+ const p=original.get(x.catalogue_id);assert(p);
+ assert(!seen.has(x.catalogue_id));seen.add(x.catalogue_id);
+ assert.equal(x.unchanged_legal_article_gate,p.inherited_legal_gate);
+ assert.equal(x.legal_ctr_article_and_maximum_verified,false);
+ assert.equal(x.manufacturer_identity_and_recipe_received,false);
+ assert.equal(x.validated_lab_method_confirmed,false);
+ assert.equal(x.actual_tested_lot_pass,false);
+ if(x.new_batch49_source){new10++;const s=x.new_batch49_source;
+ assert(!p.identity_primary_clauses.length);
+ assert.equal(s.official_source_page_visually_checked,true);
+ assert(s.source_url.startsWith("https://www.fssai.gov.in/")||s.source_url.startsWith("https://stg-old.fssai.gov.in/"));
+ assert(s.contaminant_comparator_not_automatically_applicable.length>25);
+ pages.add(s.source_url);
+ }else if(x.retained_batch48_reference)old14++;else untouched11++;
+}
+assert.deepEqual([new10,old14,untouched11,seen.size,pages.size],[10,14,11,35,6]);
+assert(d.identity_screens.find(x=>x.rank===10).new_batch49_source.published_product_identity_fact.includes("47–60%"));
+assert(d.identity_screens.find(x=>x.rank===22).new_batch49_source.published_product_identity_fact.includes("120 mg"));
+assert(d.identity_screens.find(x=>x.rank===31).new_batch49_source.published_product_identity_fact.includes("worker bees"));
+const port=18949,srv=spawn("python3",["-m","http.server",String(port),"--bind","127.0.0.1","--directory",b],{stdio:"ignore"});
+const nap=x=>new Promise(r=>setTimeout(r,x));
+(async()=>{let browser;try{
+ browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+ const page=await browser.newPage({acceptDownloads:true}),errors=[];page.on("pageerror",e=>errors.push(e.message));
+ let started=false;
+ for(let j=0;j<50;j++)try{const r=await page.goto("http://127.0.0.1:"+port+"/",{waitUntil:"domcontentloaded",timeout:15000});if(r?.ok()){started=true;break}}catch(_){await nap(220)}
+ assert(started,"server unavailable");
+ await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+ assert(await page.evaluate(()=>pmsvB49Valid()),"integrity failed");
+ await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();pmsvB49Refresh()});
+ const panel=page.locator("#pmsv-b49-identity-additions");
+ await panel.evaluate(el=>el.open=true);
+ assert.equal(await panel.locator("[data-pmsv-b49-rows] tr").count(),10);
+ await panel.locator("[data-pmsv-b49-group]").selectOption("PRIOR");
+ assert.equal(await panel.locator("[data-pmsv-b49-rows] tr").count(),14);
+ await panel.locator("[data-pmsv-b49-group]").selectOption("OPEN");
+ assert.equal(await panel.locator("[data-pmsv-b49-rows] tr").count(),11);
+ await panel.locator("[data-pmsv-b49-group]").selectOption("ALL");
+ assert.equal(await panel.locator("[data-pmsv-b49-rows] tr").count(),35);
+ await panel.locator("[data-pmsv-b49-group]").selectOption("NEW");
+ await panel.locator("[data-pmsv-b49-search]").fill("Cocoa mass");
+ assert.equal(await panel.locator("[data-pmsv-b49-rows] tr").count(),1);
+ await panel.locator("[data-pmsv-b49-view]").click();
+ const detail=await panel.locator("[data-pmsv-b49-detail]").innerText();
+ assert.match(detail,/47.60%|47–60%/);
+ const draft=await page.evaluate(()=>pmsvB49Draft(pmsvB49Rows()[0]));
+ assert(draft.includes("NOT SENT")&&draft.includes("NO actual lot PASS"));
+ await panel.locator("[data-pmsv-b49-search]").fill("");
+ const promised=page.waitForEvent("download");await panel.locator('[data-pmsv-b49-export="ALL"]').click();
+ const dl=await promised,csv=fs.readFileSync(await dl.path(),"utf8");
+ assert.equal(csv.trim().split(/\r?\n/).length,36);
+ assert(csv.includes("2.5.3(5)"));
+ assert(!csv.includes("PASSED_REGULATORY"));
+ assert.equal(errors.filter(x=>/pmsvB49/.test(x)).length,0,errors.join("\n"));
+ console.log("B49 PASS: 10 new verified published FSSR identities + 14 retained / 11 others; 35 legal holds; CSV, six chapters, zero lot approval.");
+}finally{if(browser)await browser.close();srv.kill("SIGTERM")}})().catch(e=>{console.error(e);process.exitCode=1;srv.kill("SIGTERM")});
