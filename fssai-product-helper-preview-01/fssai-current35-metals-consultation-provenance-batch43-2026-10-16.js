@@ -162,13 +162,18 @@ const pmsvB43OldCSV=pmsvB41CSV;
 pmsvB41CSV=function(rows){
  if(!pmsvB43Valid())return "";
  const disclaimer=pmsvB43Data.csv_export_amendment.proposed_lab_method_disclaimer;
- const adjusted=rows.map(r=>{
+ /* B42 must sanitize legacy codes FIRST. B42 intentionally replaces the method-note field
+    altogether. Append consultation provenance AFTER that substitution so both CSV columns retain it. */
+ const sanitized=pmsvB42SanitizeRequests(rows);
+ const adjusted=sanitized.map(r=>{
   if(r.workstream!=="LAB_METHOD_AND_SCOPE")return r;
   return {...r,
    method_candidate_or_validation_note:disclaimer+" "+String(r.method_candidate_or_validation_note||""),
    required_evidence:String(r.required_evidence||"")+" "+disclaimer};
  });
- return pmsvB43OldCSV(adjusted);
+ /* B42's preserved original B41 CSV formatter is called only after B43/B42 integrity and
+    explicit method sanitization; it retains CSV injection protection and fixed 17 columns. */
+ return pmsvB42OldCSV(adjusted);
 };
 const pmsvB43OldDraft=pmsvB41RequestText;
 pmsvB41RequestText=function(r){
