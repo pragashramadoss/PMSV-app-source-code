@@ -1,0 +1,30 @@
+name: Verify 22 remaining FSSAI finished-article comparators (Batch28)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-remaining22-source-compare-batch28-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-remaining22-source-compare-batch28-2026-10-16.js'
+      - 'tests/fssai-current35-remaining22-source-compare-batch28-2026-10-16.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-remaining22-batch28.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  published-rows-and-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Playwright Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify script syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-remaining22-source-compare-batch28-2026-10-16.js
+      - name: Validate statutory comparator identities and browser review
+        run: node tests/fssai-current35-remaining22-source-compare-batch28-2026-10-16.test.cjs
