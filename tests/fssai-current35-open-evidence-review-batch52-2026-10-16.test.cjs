@@ -54,7 +54,7 @@ try{
  assert.equal(await p.locator("[data-pmsv-b52-rows] tr").count(),1);
  await p.locator("[data-pmsv-b52-select]").click();
  assert.equal(await p.locator("[data-pmsv-b52-detail] tbody tr").count(),5);
- assert.match(await p.locator("[data-pmsv-b52-detail]").innerText(),/specific Sajji Khar rows have NOT been rechecked/i);
+ assert.match(await p.locator("[data-pmsv-b52-detail]").innerText(),/exact Sajji Khar rows have NOT been rechecked/i);
  assert.equal((await page.evaluate(()=>pmsvB52Request(pmsvB52Data.cases.find(x=>x.rank===24)))).match(/NOT RECEIVED/g).length,5);
  const dlP=page.waitForEvent("download");await p.locator("[data-pmsv-b52-export]").click();
  const dl=await dlP,csv=fs.readFileSync(await dl.path(),"utf8");
