@@ -2,24 +2,24 @@
 /* Batch57: 1470 documentary source and laboratory review prompts, NOT approved checks.
    Browser memory only; do not enter actual confidential contents or patient/individual data.
    Triaged flags are NEVER evidence authenticity, legal approval or lot PASS. */
-var pmsvB57Data=null,pmsvB57Selected="",pmsvB57Priority="ALL",pmsvB57Gate="ALL",
- pmsvB57Review="ALL",pmsvB57Search="",pmsvB57Drafts=Object.create(null);
-const pmsvB57Path="./data/rules/fssai-current35-source-method-lab-authentication-batch57-2026-10-16.json";
-const pmsvB57Expected="baaae4be109a37db";
-const pmsvB57Statuses=["NOT_REVIEWED_NO_EVIDENCE","REFERENCE_TO_CHECK_NOT_AUTHENTICATED","GAP_OR_CONFLICT_REQUIRES_FOLLOWUP"];
-const pmsvB57ExportFields=["check_key","triage_status","follow_up_note","regulatory_approval"];
-function pmsvB57Valid(){
+var pmsvB57PlusData=null,pmsvB57PlusSelected="",pmsvB57PlusPriority="ALL",pmsvB57PlusGate="ALL",
+ pmsvB57PlusReview="ALL",pmsvB57PlusSearch="",pmsvB57PlusDrafts=Object.create(null);
+const pmsvB57PlusPath="./data/rules/fssai-current35-source-method-lab-authentication-batch57-2026-10-16.json";
+const pmsvB57PlusExpected="baaae4be109a37db";
+const pmsvB57PlusStatuses=["NOT_REVIEWED_NO_EVIDENCE","REFERENCE_TO_CHECK_NOT_AUTHENTICATED","GAP_OR_CONFLICT_REQUIRES_FOLLOWUP"];
+const pmsvB57PlusExportFields=["check_key","triage_status","follow_up_note","regulatory_approval"];
+function pmsvB57PlusValid(){
  if(typeof pmsvB56Valid!=="function"||!pmsvB56Valid()||
-  typeof pmsvB14Digest!=="function"||!pmsvB57Data||
-  pmsvB14Digest(pmsvB57Data)!==pmsvB57Expected)return false;
- const d=pmsvB57Data,t=d.totals;
+  typeof pmsvB14Digest!=="function"||!pmsvB57PlusData||
+  pmsvB14Digest(pmsvB57PlusData)!==pmsvB57PlusExpected)return false;
+ const d=pmsvB57PlusData,t=d.totals;
  if(d.kind!=="PMSV_BATCH57_ALL35_175_GATE_1470_POINT_SOURCE_LAB_AUTHENTICATION_WORKBENCH"||
   d.as_of!=="2026-10-16"||d.environment!=="GITHUB_PAGES_FSSAI_PREVIEW_ONLY"||
   d.imported_batch56_source_digest!=="005621e8f737f08d"||
   d.gate_checkpoint_templates?.length!==5||d.case_dossiers?.length!==35||
   d.source_documents?.length!==8||d.allowed_draft_triage_statuses?.length!==3||
   d.prohibited_conclusions?.length!==7||
-  pmsvB57Statuses.some((s,i)=>d.allowed_draft_triage_statuses[i]?.code!==s)||
+  pmsvB57PlusStatuses.some((s,i)=>d.allowed_draft_triage_statuses[i]?.code!==s)||
   t.catalogue!==533||t.conditional_source_matches!==498||t.open_ctr_legal_cases!==35||
   t.p0!==13||t.p1!==22||t.gate_count!==175||t.gate_templates!==5||
   t.per_case_checkpoint_count!==42||t.authentication_points!==1470||
@@ -76,50 +76,50 @@ function pmsvB57Valid(){
   d.source_documents.some(s=>s.id==="FSSAI_GAZETTE_NOTIFICATION_INDEX"&&s.notice_date==="2026-09-30")&&
   d.source_documents.some(s=>s.id==="NABL_SCOPE_FAQ");
 }
-function pmsvB57AllGates(){
- return pmsvB57Data?.case_dossiers?.flatMap(c=>c.gates.map(g=>({c,g})))||[];
+function pmsvB57PlusAllGates(){
+ return pmsvB57PlusData?.case_dossiers?.flatMap(c=>c.gates.map(g=>({c,g})))||[];
 }
-function pmsvB57FindGate(id){return pmsvB57AllGates().find(x=>x.g.request_id===id);}
-function pmsvB57Check(key){
+function pmsvB57PlusFindGate(id){return pmsvB57PlusAllGates().find(x=>x.g.request_id===id);}
+function pmsvB57PlusCheck(key){
  if(typeof key!=="string")return null;
- const slash=key.indexOf("/"),id=key.slice(0,slash),qid=key.slice(slash+1),v=pmsvB57FindGate(id);
+ const slash=key.indexOf("/"),id=key.slice(0,slash),qid=key.slice(slash+1),v=pmsvB57PlusFindGate(id);
  if(slash<1||!v||!v.g.checkpoint_ids.includes(qid))return null;
- const q=pmsvB57Data.gate_checkpoint_templates.find(x=>x.gate_code===v.g.gate_code)?.checkpoints.find(x=>x.id===qid);
+ const q=pmsvB57PlusData.gate_checkpoint_templates.find(x=>x.gate_code===v.g.gate_code)?.checkpoints.find(x=>x.id===qid);
  return q?{...v,q,key}:null;
 }
-function pmsvB57Entry(key){return pmsvB57Drafts[key]||{check_key:key,triage_status:"NOT_REVIEWED_NO_EVIDENCE",follow_up_note:"",regulatory_approval:false};}
-function pmsvB57HasDraft(key){const x=pmsvB57Drafts[key];return !!x&&(x.triage_status!=="NOT_REVIEWED_NO_EVIDENCE"||x.follow_up_note!=="");}
-function pmsvB57Filtered(){
- if(!pmsvB57Valid())return [];
- const q=pmsvB57Search.toLowerCase().trim();
- return pmsvB57AllGates().filter(({c,g})=>
- (pmsvB57Priority==="ALL"||c.priority===pmsvB57Priority)&&
- (pmsvB57Gate==="ALL"||g.gate_code===pmsvB57Gate)&&
+function pmsvB57PlusEntry(key){return pmsvB57PlusDrafts[key]||{check_key:key,triage_status:"NOT_REVIEWED_NO_EVIDENCE",follow_up_note:"",regulatory_approval:false};}
+function pmsvB57PlusHasDraft(key){const x=pmsvB57PlusDrafts[key];return !!x&&(x.triage_status!=="NOT_REVIEWED_NO_EVIDENCE"||x.follow_up_note!=="");}
+function pmsvB57PlusFiltered(){
+ if(!pmsvB57PlusValid())return [];
+ const q=pmsvB57PlusSearch.toLowerCase().trim();
+ return pmsvB57PlusAllGates().filter(({c,g})=>
+ (pmsvB57PlusPriority==="ALL"||c.priority===pmsvB57PlusPriority)&&
+ (pmsvB57PlusGate==="ALL"||g.gate_code===pmsvB57PlusGate)&&
  (!q||[c.product_name,c.analyte,c.rank,c.catalogue_id,g.request_id,g.gate_code].some(t=>String(t).toLowerCase().includes(q)))&&
- (pmsvB57Review==="ALL"||
-  (pmsvB57Review==="NOT_REVIEWED"&&g.checkpoint_ids.every(id=>!pmsvB57HasDraft(g.request_id+"/"+id)))||
-  (pmsvB57Review==="DRAFT_ONLY"&&g.checkpoint_ids.some(id=>pmsvB57HasDraft(g.request_id+"/"+id)))));
+ (pmsvB57PlusReview==="ALL"||
+  (pmsvB57PlusReview==="NOT_REVIEWED"&&g.checkpoint_ids.every(id=>!pmsvB57PlusHasDraft(g.request_id+"/"+id)))||
+  (pmsvB57PlusReview==="DRAFT_ONLY"&&g.checkpoint_ids.some(id=>pmsvB57PlusHasDraft(g.request_id+"/"+id)))));
 }
-function pmsvB57Table(){
+function pmsvB57PlusTable(){
  const e=pmsvB14Esc;
- return pmsvB57Filtered().map(({c,g})=>{
- const num=g.checkpoint_ids.filter(id=>pmsvB57HasDraft(g.request_id+"/"+id)).length;
+ return pmsvB57PlusFiltered().map(({c,g})=>{
+ const num=g.checkpoint_ids.filter(id=>pmsvB57PlusHasDraft(g.request_id+"/"+id)).length;
  return'<tr><td>'+e(c.rank)+'</td><td>'+e(c.priority)+'</td><td><b>'+e(c.product_name)+'</b><small> · '+e(c.analyte)+'</small></td>'+
  '<td>'+e(g.request_id)+'</td><td>'+e(g.gate_code.replaceAll("_"," "))+'</td>'+
  '<td>'+e(num)+' / '+e(g.checkpoint_ids.length)+' triage draft(s) · 0 verified</td>'+
  '<td><button type="button" data-pmsv-b57-select="'+e(g.request_id)+'">Inspect checkpoints</button></td></tr>';
  }).join("");
 }
-function pmsvB57Detail(){
- if(!pmsvB57Valid())return "";
- const e=pmsvB14Esc,found=pmsvB57FindGate(pmsvB57Selected);
+function pmsvB57PlusDetail(){
+ if(!pmsvB57PlusValid())return "";
+ const e=pmsvB14Esc,found=pmsvB57PlusFindGate(pmsvB57PlusSelected);
  if(!found)return "";
- const {c,g}=found,template=pmsvB57Data.gate_checkpoint_templates.find(x=>x.gate_code===g.gate_code);
+ const {c,g}=found,template=pmsvB57PlusData.gate_checkpoint_templates.find(x=>x.gate_code===g.gate_code);
  const rows=template.checkpoints.map((x,i)=>{
-  const key=g.request_id+"/"+x.id,entry=pmsvB57Entry(key);
+  const key=g.request_id+"/"+x.id,entry=pmsvB57PlusEntry(key);
   return'<tr><td>'+e(i+1)+'</td><td><b>'+e(x.id.split("__").at(-1).replaceAll("_"," "))+'</b><small> '+e(x.question)+'</small></td>'+
    '<td><select data-pmsv-b57-key="'+e(key)+'" data-pmsv-b57-property="triage_status">'+
-   pmsvB57Statuses.map(s=>'<option value="'+e(s)+'"'+(entry.triage_status===s?" selected":"")+'>'+e(s.replaceAll("_"," "))+'</option>').join("")+
+   pmsvB57PlusStatuses.map(s=>'<option value="'+e(s)+'"'+(entry.triage_status===s?" selected":"")+'>'+e(s.replaceAll("_"," "))+'</option>').join("")+
    '</select></td>'+
    '<td><input type="text" maxlength="160" data-pmsv-b57-key="'+e(key)+'" data-pmsv-b57-property="follow_up_note" placeholder="Non-sensitive reviewer follow-up" value="'+e(entry.follow_up_note)+'"></td></tr>';
  }).join("");
@@ -136,9 +136,9 @@ function pmsvB57Detail(){
  '<a href="https://nabl-india.org/faq/" target="_blank" rel="noopener noreferrer">NABL scope FAQ</a> · '+
  '<a href="https://nablwp.qci.org.in/laboratorysearchone" target="_blank" rel="noopener noreferrer">NABL laboratory search</a>. Verify exact sources rather than relying on the links alone.</p>';
 }
-function pmsvB57Panel(){
- if(!pmsvB57Valid())return "";
- const e=pmsvB14Esc,options=pmsvB57Data.gate_checkpoint_templates;
+function pmsvB57PlusPanel(){
+ if(!pmsvB57PlusValid())return "";
+ const e=pmsvB14Esc,options=pmsvB57PlusData.gate_checkpoint_templates;
  return '<details id="pmsv-b57-source-lab-authentication" class="card" style="margin-bottom:12px">'+
  '<summary><b>Batch57 · Original-source, lab-scope & signoff checks</b> — 1,470 unverified checkpoints across 175 gates</summary>'+
  '<div class="notice"><b>All 35 CTR cases OPEN.</b> 1,470 source/document/laboratory and lot verification questions; <b>0 actual authentications, CTR approvals, accredited method signoffs or lot passes.</b> These are checklists awaiting independent external evidence, not completed inspections.</div>'+
@@ -157,65 +157,65 @@ function pmsvB57Panel(){
  '<p data-pmsv-b57-feedback>Local JSON imports accept only known checkpoints, unverified triage statuses and no legal approval flags. No automatic upload or persistence.</p>'+
  '<p data-pmsv-b57-count>175 gates · 1,470 checks · 0 authenticated results</p>'+
  '<div class="tablewrap" style="max-height:500px;overflow:auto"><table><thead><tr><th>#</th><th>Priority</th><th>Product</th><th>Original ID</th><th>Evidence area</th><th>Draft review</th><th>Actions</th></tr></thead>'+
- '<tbody data-pmsv-b57-rows>'+pmsvB57Table()+'</tbody></table></div>'+
+ '<tbody data-pmsv-b57-rows>'+pmsvB57PlusTable()+'</tbody></table></div>'+
  '<div data-pmsv-b57-detail></div></details>';
 }
-function pmsvB57Refresh(withDetail){
- if(!pmsvB57Valid()||typeof document==="undefined")return;
+function pmsvB57PlusRefresh(withDetail){
+ if(!pmsvB57PlusValid()||typeof document==="undefined")return;
  const anchor=document.getElementById("pmsv-b56-evidence-reference-review")||document.getElementById("pmsv-b55-unified-closure");
  if(!anchor)return;
  let panel=document.getElementById("pmsv-b57-source-lab-authentication");
- if(!panel){anchor.insertAdjacentHTML("beforebegin",pmsvB57Panel());return;}
- const rows=panel.querySelector("[data-pmsv-b57-rows]");if(rows)rows.innerHTML=pmsvB57Table();
+ if(!panel){anchor.insertAdjacentHTML("beforebegin",pmsvB57PlusPanel());return;}
+ const rows=panel.querySelector("[data-pmsv-b57-rows]");if(rows)rows.innerHTML=pmsvB57PlusTable();
  const count=panel.querySelector("[data-pmsv-b57-count]");
- if(count)count.textContent=pmsvB57Filtered().length+" gate(s) shown · "+
- Object.keys(pmsvB57Drafts).filter(key=>pmsvB57HasDraft(key)).length+
+ if(count)count.textContent=pmsvB57PlusFiltered().length+" gate(s) shown · "+
+ Object.keys(pmsvB57PlusDrafts).filter(key=>pmsvB57PlusHasDraft(key)).length+
  " temporary check draft(s) · 0 independently authenticated / PASS";
- if(withDetail){const detail=panel.querySelector("[data-pmsv-b57-detail]");if(detail)detail.innerHTML=pmsvB57Detail();}
+ if(withDetail){const detail=panel.querySelector("[data-pmsv-b57-detail]");if(detail)detail.innerHTML=pmsvB57PlusDetail();}
 }
-function pmsvB57ExportObject(){
- if(!pmsvB57Valid())return null;
- const records=Object.keys(pmsvB57Drafts).sort().map(key=>pmsvB57Drafts[key]);
+function pmsvB57PlusExportObject(){
+ if(!pmsvB57PlusValid())return null;
+ const records=Object.keys(pmsvB57PlusDrafts).sort().map(key=>pmsvB57PlusDrafts[key]);
  return{kind:"PMSV_B57_DRAFT_ONLY_SOURCE_LAB_TRIAGE",
- version:"1.0",pinned_source_digest:pmsvB57Expected,
+ version:"1.0",pinned_source_digest:pmsvB57PlusExpected,
  records,verified_cases:0,legal_approvals:0,validated_lab_methods:0,lot_passes:0};
 }
-function pmsvB57Import(s){
- if(!pmsvB57Valid()||typeof s!=="string"||s.length>850000)return false;
+function pmsvB57PlusImport(s){
+ if(!pmsvB57PlusValid()||typeof s!=="string"||s.length>850000)return false;
  try{
   const o=JSON.parse(s),keys=["kind","version","pinned_source_digest","records",
    "verified_cases","legal_approvals","validated_lab_methods","lot_passes"];
   if(!o||typeof o!=="object"||Array.isArray(o)||
    Object.keys(o).length!==keys.length||keys.some(k=>!Object.prototype.hasOwnProperty.call(o,k))||
    o.kind!=="PMSV_B57_DRAFT_ONLY_SOURCE_LAB_TRIAGE"||o.version!=="1.0"||
-   o.pinned_source_digest!==pmsvB57Expected||!Array.isArray(o.records)||o.records.length>1470||
+   o.pinned_source_digest!==pmsvB57PlusExpected||!Array.isArray(o.records)||o.records.length>1470||
    o.verified_cases!==0||o.legal_approvals!==0||
    o.validated_lab_methods!==0||o.lot_passes!==0)return false;
   const drafts=Object.create(null);
   for(const x of o.records){
    if(!x||typeof x!=="object"||Array.isArray(x)||
-    Object.keys(x).length!==pmsvB57ExportFields.length||
-    pmsvB57ExportFields.some(k=>!Object.prototype.hasOwnProperty.call(x,k))||
-    !pmsvB57Check(x.check_key)||Object.prototype.hasOwnProperty.call(drafts,x.check_key)||
-    !pmsvB57Statuses.includes(x.triage_status)||
+    Object.keys(x).length!==pmsvB57PlusExportFields.length||
+    pmsvB57PlusExportFields.some(k=>!Object.prototype.hasOwnProperty.call(x,k))||
+    !pmsvB57PlusCheck(x.check_key)||Object.prototype.hasOwnProperty.call(drafts,x.check_key)||
+    !pmsvB57PlusStatuses.includes(x.triage_status)||
     typeof x.follow_up_note!=="string"||x.follow_up_note.length>160||
     x.regulatory_approval!==false)return false;
    drafts[x.check_key]={...x};
   }
-  pmsvB57Drafts=drafts;pmsvB57Refresh(true);return true;
+  pmsvB57PlusDrafts=drafts;pmsvB57PlusRefresh(true);return true;
  }catch(_){return false;}
 }
-function pmsvB57CSV(mode){
- if(!pmsvB57Valid())return "";
+function pmsvB57PlusCSV(mode){
+ if(!pmsvB57PlusValid())return "";
  const quote=v=>{let s=String(v??"");if(/^\s*[=+@-]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';};
  const cols=["rank","priority","product","analyte","source_gate_id","gate_code",
   "owner_role_only","checkpoint_id","question","triage_planning_not_verified",
   "follow_up_note","evidence_authenticity_verified","legal_article_approved","lab_scope_approved","lot_pass"];
  const rows=[];
- for(const {c,g} of pmsvB57AllGates()){
-  const defs=pmsvB57Data.gate_checkpoint_templates.find(x=>x.gate_code===g.gate_code).checkpoints;
+ for(const {c,g} of pmsvB57PlusAllGates()){
+  const defs=pmsvB57PlusData.gate_checkpoint_templates.find(x=>x.gate_code===g.gate_code).checkpoints;
   for(const q of defs){
-   const key=g.request_id+"/"+q.id,draft=pmsvB57Drafts[key];
+   const key=g.request_id+"/"+q.id,draft=pmsvB57PlusDrafts[key];
    if(mode==="CSV"&&!draft)continue;
    rows.push([c.rank,c.priority,c.product_name,c.analyte,g.request_id,g.gate_code,
    g.owner_role,q.id,q.question,
@@ -225,9 +225,9 @@ function pmsvB57CSV(mode){
  }
  return[cols.map(quote).join(","),...rows.map(row=>row.map(quote).join(","))].join("\r\n")+"\r\n";
 }
-function pmsvB57Download(mode){
- if(!pmsvB57Valid())return;
- const content=mode==="JSON"?JSON.stringify(pmsvB57ExportObject(),null,2)+"\n":pmsvB57CSV(mode);
+function pmsvB57PlusDownload(mode){
+ if(!pmsvB57PlusValid())return;
+ const content=mode==="JSON"?JSON.stringify(pmsvB57PlusExportObject(),null,2)+"\n":pmsvB57PlusCSV(mode);
  const name=mode==="JSON"?"PMSV-B57-SESSION-UNVERIFIED-CHECK-TRIAGE.json":
   mode==="BLANK"?"PMSV-B57-1470-SOURCE-LAB-VERIFICATION-PROMPTS-BLANK.csv":
    "PMSV-B57-REPORTED-CHECK-TRIAGE-NOT-APPROVED.csv";
@@ -236,72 +236,72 @@ function pmsvB57Download(mode){
  const a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);
  a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1100);
 }
-function pmsvB57Feedback(msg){
+function pmsvB57PlusFeedback(msg){
  const el=document.querySelector("[data-pmsv-b57-feedback]");if(el)el.textContent=msg;
 }
-const pmsvB57PriorLoad=pmsvLoadPositiveSourceProof;
+const pmsvB57PlusPriorLoad=pmsvLoadPositiveSourceProof;
 pmsvLoadPositiveSourceProof=async function(){
- await pmsvB57PriorLoad();pmsvB57Data=null;
+ await pmsvB57PlusPriorLoad();pmsvB57PlusData=null;
  try{
-  const r=await fetch(pmsvB57Path+"?v=20261016-b57",{cache:"reload"});
+  const r=await fetch(pmsvB57PlusPath+"?v=20261016-b57",{cache:"reload"});
   if(!r.ok)throw Error("Batch57 data not found");
-  pmsvB57Data=await r.json();
-  if(!pmsvB57Valid())throw Error("B57 source digest/ancestor gate integrity mismatch");
-  pmsvB57Refresh(true);
- }catch(_){pmsvB57Data=null;}
+  pmsvB57PlusData=await r.json();
+  if(!pmsvB57PlusValid())throw Error("B57 source digest/ancestor gate integrity mismatch");
+  pmsvB57PlusRefresh(true);
+ }catch(_){pmsvB57PlusData=null;}
 };
 if(typeof document!=="undefined"){
  document.addEventListener("input",ev=>{
   const t=ev.target;
   if(t?.matches?.("[data-pmsv-b57-search]")){
-   pmsvB57Search=String(t.value||"").slice(0,140);pmsvB57Refresh(false);
+   pmsvB57PlusSearch=String(t.value||"").slice(0,140);pmsvB57PlusRefresh(false);
   }else if(t?.matches?.('[data-pmsv-b57-property="follow_up_note"]')){
    const key=t.getAttribute("data-pmsv-b57-key");
-   if(!pmsvB57Check(key))return;
-   const draft=pmsvB57Drafts[key]||{...pmsvB57Entry(key)};
-   draft.follow_up_note=String(t.value||"").slice(0,160);pmsvB57Drafts[key]=draft;
-   pmsvB57Refresh(false);
+   if(!pmsvB57PlusCheck(key))return;
+   const draft=pmsvB57PlusDrafts[key]||{...pmsvB57PlusEntry(key)};
+   draft.follow_up_note=String(t.value||"").slice(0,160);pmsvB57PlusDrafts[key]=draft;
+   pmsvB57PlusRefresh(false);
   }
  });
  document.addEventListener("change",async ev=>{
   const t=ev.target;if(!t)return;
   if(t.matches?.("[data-pmsv-b57-priority]")&&["ALL","P0","P1"].includes(t.value)){
-   pmsvB57Priority=t.value;pmsvB57Refresh(false);
+   pmsvB57PlusPriority=t.value;pmsvB57PlusRefresh(false);
   }else if(t.matches?.("[data-pmsv-b57-gate]")&&
-    (t.value==="ALL"||pmsvB57Data?.gate_checkpoint_templates.some(x=>x.gate_code===t.value))){
-   pmsvB57Gate=t.value;pmsvB57Refresh(false);
+    (t.value==="ALL"||pmsvB57PlusData?.gate_checkpoint_templates.some(x=>x.gate_code===t.value))){
+   pmsvB57PlusGate=t.value;pmsvB57PlusRefresh(false);
   }else if(t.matches?.("[data-pmsv-b57-review]")&&
    ["ALL","NOT_REVIEWED","DRAFT_ONLY"].includes(t.value)){
-   pmsvB57Review=t.value;pmsvB57Refresh(false);
+   pmsvB57PlusReview=t.value;pmsvB57PlusRefresh(false);
   }else if(t.matches?.('[data-pmsv-b57-property="triage_status"]')){
    const key=t.getAttribute("data-pmsv-b57-key");
-   if(!pmsvB57Check(key)||!pmsvB57Statuses.includes(t.value))return;
-   const draft=pmsvB57Drafts[key]||{...pmsvB57Entry(key)};
-   draft.triage_status=t.value;pmsvB57Drafts[key]=draft;pmsvB57Refresh(false);
+   if(!pmsvB57PlusCheck(key)||!pmsvB57PlusStatuses.includes(t.value))return;
+   const draft=pmsvB57PlusDrafts[key]||{...pmsvB57PlusEntry(key)};
+   draft.triage_status=t.value;pmsvB57PlusDrafts[key]=draft;pmsvB57PlusRefresh(false);
   }else if(t.matches?.("[data-pmsv-b57-import]")){
    const f=t.files?.[0];if(!f)return;
-   if(f.size>850000){pmsvB57Feedback("Rejected: oversized source-review draft file. No change.");t.value="";return;}
+   if(f.size>850000){pmsvB57PlusFeedback("Rejected: oversized source-review draft file. No change.");t.value="";return;}
    try{
-    const yes=pmsvB57Import(await f.text());
-    pmsvB57Feedback(yes?"Restored local review triage drafts only — zero legal/lot approvals.":
+    const yes=pmsvB57PlusImport(await f.text());
+    pmsvB57PlusFeedback(yes?"Restored local review triage drafts only — zero legal/lot approvals.":
       "Rejected: invalid source ID, positive approval flag or unsupported schema. No changes.");
-   }catch(_){pmsvB57Feedback("Could not read the selected JSON file; no changes.");}
+   }catch(_){pmsvB57PlusFeedback("Could not read the selected JSON file; no changes.");}
    t.value="";
   }
  });
  document.addEventListener("click",ev=>{
   const btn=ev.target?.closest?.("[data-pmsv-b57-select]");
-  if(btn){pmsvB57Selected=btn.getAttribute("data-pmsv-b57-select");pmsvB57Refresh(true);return;}
+  if(btn){pmsvB57PlusSelected=btn.getAttribute("data-pmsv-b57-select");pmsvB57PlusRefresh(true);return;}
   const exp=ev.target?.closest?.("[data-pmsv-b57-export]");
-  if(exp){pmsvB57Download(exp.getAttribute("data-pmsv-b57-export"));return;}
+  if(exp){pmsvB57PlusDownload(exp.getAttribute("data-pmsv-b57-export"));return;}
   if(ev.target?.closest?.("[data-pmsv-b57-clear-gate]")){
-   const v=pmsvB57FindGate(pmsvB57Selected);
-   if(v)for(const id of v.g.checkpoint_ids)delete pmsvB57Drafts[v.g.request_id+"/"+id];
-   pmsvB57Refresh(true);return;
+   const v=pmsvB57PlusFindGate(pmsvB57PlusSelected);
+   if(v)for(const id of v.g.checkpoint_ids)delete pmsvB57PlusDrafts[v.g.request_id+"/"+id];
+   pmsvB57PlusRefresh(true);return;
   }
   if(ev.target?.closest?.("[data-pmsv-b57-clear-all]")){
-   pmsvB57Drafts=Object.create(null);pmsvB57Refresh(true);
-   pmsvB57Feedback("All temporary source and lab check drafts cleared.");
+   pmsvB57PlusDrafts=Object.create(null);pmsvB57PlusRefresh(true);
+   pmsvB57PlusFeedback("All temporary source and lab check drafts cleared.");
   }
  });
 }
