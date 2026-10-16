@@ -3,7 +3,7 @@
  * This research cannot activate contaminant limits or claim laboratory PASS. */
 var pmsvB26Data=null,pmsvB26Text="",pmsvB26Filter="ALL";
 const pmsvB26Path="./data/rules/fssai-current35-exact-article-adjudication-batch26-2026-10-16.json";
-const pmsvB26Expected="434add7121edda5c";
+const pmsvB26Expected="202df59a7ff0ca3f";
 function pmsvB26Valid(){
  if(!pmsvB26Data||typeof pmsvB21Valid!=="function"||!pmsvB21Valid()||
  typeof pmsvB14Digest!=="function"||pmsvB14Digest(pmsvB26Data)!==pmsvB26Expected||
