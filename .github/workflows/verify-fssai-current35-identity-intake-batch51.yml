@@ -1,0 +1,31 @@
+name: Verify FSSAI Batch51 seven material identity intake and 35 CTR holds
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-seven-material-identity-intake-batch51-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-seven-material-identity-intake-batch51-2026-10-16.js'
+      - 'tests/fssai-current35-seven-material-identity-intake-batch51-2026-10-16.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'FSSAI-CURRENT35-BATCH51-SEVEN-MATERIAL-EVIDENCE-INTAKE-2026-10-16.md'
+      - '.github/workflows/verify-fssai-current35-identity-intake-batch51.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-batch51:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: JavaScript syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-seven-material-identity-intake-batch51-2026-10-16.js
+      - name: Verify source-lock, case entry, privacy and exports in Chromium
+        run: node tests/fssai-current35-seven-material-identity-intake-batch51-2026-10-16.test.cjs
