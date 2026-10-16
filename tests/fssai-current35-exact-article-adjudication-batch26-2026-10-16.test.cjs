@@ -73,6 +73,7 @@ const sleep=n=>new Promise(r=>setTimeout(r,n));
    passes:pmsvB26Data.results.lot_passes
   }));
   assert.deepEqual(status,{catalogue:533,conditional:498,pending:35,rows:35,legal:0,passes:0});
+  await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();pmsvB26Refresh();});
   const panel=page.locator("#pmsv-b26-exact-article-adjudication");
   await panel.locator("summary").first().click();
   await panel.locator("[data-pmsv-b26-search]").fill("silver leaf");
