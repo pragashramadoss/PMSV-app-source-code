@@ -123,6 +123,7 @@ const delay=n=>new Promise(done=>setTimeout(done,n));
   assert.equal(await panel.locator("[data-pmsv-b37-cases] tr").count(),35);
   const future=panel.locator("[data-pmsv-b37-future-rows]");
   assert.equal(await future.locator("tr").count(),8);
+  await panel.locator("details").first().locator("summary").click();
   await panel.locator("[data-pmsv-b37-future]").fill("arsenic");
   assert.equal(await future.locator("tr").count(),1);
   await panel.locator("[data-pmsv-b37-future]").fill("");
