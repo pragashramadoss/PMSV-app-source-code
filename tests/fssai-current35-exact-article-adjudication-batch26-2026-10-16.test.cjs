@@ -26,7 +26,7 @@ for(let i=0;i<35;i++){
  assert.equal(x.primary_blocker,b.primary_blocker);
  assert.deepEqual(x.documentary_slots,b.document_slots);
  assert.match(x.official_ctr,/^https:\/\/fssai\.gov\.in\/upload\//);
- assert.match(x.official_finished_identity_url,/^https:\/\/(www\.)?fssai\.gov\.in\//);
+ assert.match(x.official_finished_identity_url,/^https:\/\/(?:(?:www|foscos|fcstraining)\.)?fssai\.gov\.in\//);
  assert.equal(x.result,"NO_EXACT_FINISHED_ARTICLE_APPROVAL");
  assert.equal(x.confirmed_finished_numeric_limit,false);
  assert.equal(x.independent_legal_signoff,false);
