@@ -42,6 +42,7 @@ try{
  assert(await page.evaluate(()=>pmsvB45Valid()),"Batch45/B44 upstream digest not valid");
  await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();pmsvB45Refresh()});
  const panel=page.locator("#pmsv-b45-lab-preflight");
+ await panel.evaluate(el=>el.open=true);
  assert.equal(await panel.locator("[data-pmsv-b45-rows] tr").count(),35);
  assert.match(await panel.innerText(),/not a statutory lab method adoption|NOT a statutory lab method adoption/i);
  await panel.locator("[data-pmsv-b45-family]").selectOption("METALS");
