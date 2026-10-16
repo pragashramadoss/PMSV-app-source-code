@@ -1,0 +1,32 @@
+name: Verify FSSAI current35 effective-date and method source routing (Batch46)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-2027-effective-method-guard-batch46-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-2027-effective-method-guard-batch46-2026-10-16.js'
+      - 'tests/fssai-current35-2027-effective-method-guard-batch46-2026-10-16.test.cjs'
+      - 'tests/fssai-current35-lab-preflight-batch45-2026-10-16.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'FSSAI-CURRENT35-BATCH46-FUTURE-EFFECTIVE-LAB-AMENDMENT-2026-10-16.md'
+      - '.github/workflows/verify-fssai-current35-effective-method-batch46.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-current-and-future-scope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-2027-effective-method-guard-batch46-2026-10-16.js
+      - name: Browser regression with 35 law date and source maps
+        run: node tests/fssai-current35-2027-effective-method-guard-batch46-2026-10-16.test.cjs
