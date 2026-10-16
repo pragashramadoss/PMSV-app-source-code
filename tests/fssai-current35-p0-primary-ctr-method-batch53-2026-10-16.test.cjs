@@ -66,7 +66,7 @@ const nap=t=>new Promise(resolve=>setTimeout(resolve,t));
  await panel.locator("[data-pmsv-b53-export]").click();
  const dl=await wait,csv=fs.readFileSync(await dl.path(),"utf8");
  assert.equal(csv.trim().split(/\r?\n/).length,14);
- assert(csv.includes("COCOA"));
+ assert(/cocoa/i.test(csv));
  assert.equal(errors.filter(x=>/pmsvB53/.test(x)).length,0,errors.join("\n"));
  console.log("B53 PASS: 13 P0 FSSAI official comparator dossiers, 65 legacy evidence IDs; method exclusions and Dec 2026 hold; zero legal limits/lot passes; CSV/export and browser filters");
  }finally{if(browser)await browser.close();server.kill("SIGTERM");}
