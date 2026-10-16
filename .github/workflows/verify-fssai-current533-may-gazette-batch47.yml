@@ -1,0 +1,32 @@
+name: Verify FSSAI May2026 CTR Gazette live 533 reconciliation (Batch47)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-2026-may-gazette-current533-reconciled-batch47-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-2026-may-gazette-current533-reconciled-batch47-2026-10-16.js'
+      - 'tests/fssai-2026-may-gazette-current533-reconciled-batch47-2026-10-16.test.cjs'
+      - 'fssai-product-helper-preview-01/fssai-2026-may-533-89-effective-date.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'FSSAI-CURRENT533-BATCH47-PRIMARY-GAZETTE-RECONCILIATION-2026-10-16.md'
+      - '.github/workflows/verify-fssai-current533-may-gazette-batch47.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-gazette-reconciled:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify JavaScript syntax
+        run: node --check fssai-product-helper-preview-01/fssai-2026-may-gazette-current533-reconciled-batch47-2026-10-16.js
+      - name: Verify 533 ledger, Gazette, 31 watches and CSV in Chromium
+        run: node tests/fssai-2026-may-gazette-current533-reconciled-batch47-2026-10-16.test.cjs
