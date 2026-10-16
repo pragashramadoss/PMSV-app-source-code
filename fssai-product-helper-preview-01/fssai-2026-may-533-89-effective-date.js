@@ -106,10 +106,15 @@ function pmsvMay2026Panel(p){
     String(meta.fcs||"")!==String(p.fcs||""))
   return '<div class="notice">Future amendment catalogue identity mismatch; evidence withheld.</div>';
  const entry=pmsv89FinalProof.cases.find(x=>x.catalog_id===p.id);
+ // Historical 89-case dossier is for context; never show its stale pending label over live 498/35.
+ const currentLive=(typeof pmsv498Ledger!=="undefined"&&
+   pmsv498Ledger?.records?.length===533&&pmsv498Ledger?.first_source_pending===35)?
+   pmsv498Ledger.records.find(x=>x.catalog_id===p.id):null;
  const promotedNew=(typeof pmsv457Valid==="function"&&pmsv457Valid()&&pmsv457PromotedIds.includes(p.id))||
    (typeof pmsv450Valid==="function"&&pmsv450Valid()&&pmsv450Ids.includes(p.id))||
    (typeof pmsv446Valid==="function"&&pmsv446Valid()&&pmsv446PromotedIds.includes(p.id));
- if((!entry||promotedNew)&&!meta.may_2026_amendment_watch_ids.length)return "";
+ const activePending=currentLive?currentLive.source_status==="FIRST_EXACT_SOURCE_PENDING":!promotedNew;
+ if((!entry||!activePending)&&!meta.may_2026_amendment_watch_ids.length)return "";
  let h='<details class="card" style="margin-top:12px"><summary><b>FSSAI 2026 legal-effective-date & exact-source audit</b></summary>';
  if(meta.may_2026_amendment_watch_ids.length){
   const a=pmsvMay2026Register.changes.filter(x=>meta.may_2026_amendment_watch_ids.includes(x.id));
@@ -118,7 +123,7 @@ function pmsvMay2026Panel(p){
    '<p>Current Version IX limits remain unchanged by this audit. On or after the effective date, reverify exact finished article, sampling conditions, official amendments and laboratory evidence.</p>'+
    '<p><a href="'+esc(pmsvMay2026Scope.official_gazette)+'" target="_blank" rel="noopener noreferrer">Official FSSAI May 2026 Gazette PDF</a></p>';
  }
- if(entry&&!promotedNew){
+ if(entry&&activePending){
   h+='<p><b>Current source status: FIRST EXACT SOURCE PENDING.</b> No new first-source clearance.</p>'+
      '<p><b>Finished-product decision:</b> '+entry.product_specific_decision.map(esc).join("; ")+'</p>'+
      '<p><b>Required evidence:</b> '+entry.required_supplier_packet.map(esc).join("; ")+'</p>'+
