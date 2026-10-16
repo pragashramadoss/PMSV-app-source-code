@@ -1,0 +1,803 @@
+{
+  "schema_version": "1.0",
+  "kind": "PMSV_BATCH51_7_UNRESOLVED_MATERIAL_IDENTITY_EVIDENCE_INTAKE_AND_35_GATE_LINEAGE",
+  "as_of": "2026-10-16",
+  "environment": "GITHUB_PAGES_FSSAI_PREVIEW_ONLY",
+  "source_policy": "FSSAI_PRIMARY_AND_OFFICIAL_COMPILATION_WITH_EVIDENCE_GRADING_NO_SOURCE_PROMOTION",
+  "regulator_source_notes": "FSSAI compendia and FoSCoS classification are guidance/registrations; notified original law and amendments govern. No proprietary submission allowed directly to public repository. Review of 1 Sept NSF status PDF's specific Sajji rows still outstanding.",
+  "confidentiality": {
+    "storage": "BROWSER_MEMORY_ONLY_NO_LOCALSTORAGE_NO_UPLOAD_OR_NETWORK_FROM_BATCH51_WIDGET",
+    "export": "USER_INITIATED_ONLY_EXPORT_MAY_INCLUDE_SENSITIVE_INPUT",
+    "execution": "ENTRY_COMPLETENESS_IS_NOT_EVIDENCE_VALIDATION",
+    "approval": "NO_AUTOMATIC_REGULATORY_OR_LAB_PASS",
+    "integrity": "FAIL_CLOSED_IF_EXISTING_BATCH50_OR_BASELINE_MISMATCH",
+    "dates": "2026-10-16"
+  },
+  "counts": {
+    "catalogue": 533,
+    "conditionally_matched": 498,
+    "ctr_article_pending": 35,
+    "named_product_identity_or_recipe_references": 28,
+    "individual_material_identity_pending": 7,
+    "material_intake_profiles": 7,
+    "mandatory_data_fields": 28,
+    "current_entered_fields_in_static_repository": 0,
+    "current_signed_ctr_limit_approvals": 0,
+    "current_validated_method_approvals": 0,
+    "actual_lot_passes": 0,
+    "unverified_prior_175_requests_unchanged": 175,
+    "unverified_prior_280_lab_guidance_points_unchanged": 280,
+    "unverified_prior_210_2027_law_questions_unchanged": 210,
+    "wordpress_changed": false
+  },
+  "official_sources": [
+    {
+      "source_id": "FCS_CATEGORY_99",
+      "url": "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "grade": "OFFICIAL_FOSCOS_CATEGORY_COMPILATION_VISUALLY_CHECKED_PDF_PAGE9",
+      "what_it_proves": "FCS 99.1 additive, 99.2 enzyme/preparations, 99.4 processing aids and 99.7 functional ingredients are distinct categories, not commodity contaminant limits.",
+      "not_proved": "Individual INS/CAS/EC, GMP conditions, product-specific legal maximum or lot PASS"
+    },
+    {
+      "source_id": "FCS_STANDARDIZED_PRODUCTS",
+      "url": "https://fcstraining.fssai.gov.in/standard-product",
+      "grade": "OFFICIAL_CATEGORY_REGISTRY_SEARCH_RESULT",
+      "what_it_proves": "FoSCoS contains broad FCS class names and separate standardized products; existing registry entry Sajji Khar is NOT by itself an approval decision.",
+      "not_proved": "Current individual lawful status for a specific manufacturer and substance"
+    },
+    {
+      "source_id": "FSSR_APPENDIX_A_C",
+      "url": "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards",
+      "grade": "OFFICIAL_FSSAI_COMPENDIUM_INDEX",
+      "what_it_proves": "FSSAI publishes separate Appendix A, B, C; compendium explicitly states notified original amendments prevail.",
+      "not_proved": "Exact permitted additive or selected method without provision-level check"
+    },
+    {
+      "source_id": "APPENDIX_C_2022_GMM",
+      "url": "https://fssai.gov.in/upload/notifications/2022/10/635f6a08b7c16Gazette_Notification_Processing_Aids_31_10_2022.pdf",
+      "grade": "OFFICIAL_2022_NOTIFIED_AMENDMENT_TEXT_INDEXED",
+      "what_it_proves": "Additional Table 11A for enzymes derived from GMM references enzyme, production organism, donor organism and purpose, where that table applies.",
+      "not_proved": "All enzyme formulations fall into Table11A or automatically have lead maxima"
+    },
+    {
+      "source_id": "NON_SPECIFIED_LATEST_INDEX",
+      "url": "https://www.fssai.gov.in/standards/non-specified-food",
+      "grade": "OFFICIAL_FSSAI_PORTAL_INDEX_OBSERVED_2026_10_16",
+      "what_it_proves": "FSSAI lists NSF&FI application status as at 01.09.2026, newer than June document used in Batch50.",
+      "not_proved": "Specific Sajji Khar outcome in September PDF: document contents not individually checked here"
+    },
+    {
+      "source_id": "NON_SPECIFIED_JUNE_ORIGINAL",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Status_of_Application_as_on_03_06_2026.pdf",
+      "grade": "PRIOR_OFFICIAL_JUNE_PDF_CASE_SPECIFIC_FINDING_RETENTIVE",
+      "what_it_proves": "Older Sajji Khar applications appeared in closed/withdrawn list as of June 2026; not product-wide ban.",
+      "not_proved": "Their September 2026 status or current legal status of other applicants"
+    },
+    {
+      "source_id": "NUTRA_2022_DIRECTION_CONTEXT",
+      "url": "https://www.fssai.gov.in/upload/advisories/2022/03/6243ef28079ceDirection_Nutra_30_03_2022.pdf",
+      "grade": "OFFICIAL_2022_DIRECTION_HISTORICAL_CONTEXT_ONLY",
+      "what_it_proves": "Shows that older nutraceutical schedule names need operative legal crosswalk.",
+      "not_proved": "Current applicability or limits for unspecified ingredients"
+    }
+  ],
+  "seven_material_cases": [
+    {
+      "rank": 21,
+      "catalogue_id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
+      "product_name": "Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized",
+      "analyte": "Nickel",
+      "food_category_class": "FCS_11_6_POLYOLS",
+      "evidence_pathway": "NICKEL_INDIVIDUAL_POLYOL",
+      "source_ids": [
+        "FCS_CATEGORY_99",
+        "FCS_STANDARDIZED_PRODUCTS",
+        "FSSR_APPENDIX_A_C"
+      ],
+      "blocker": "Identify each INS/CAS, salt/isomer, mixture percentage and current specific food-grade monograph before Ni method and limit review.",
+      "fields": [
+        {
+          "code": "ins_cas_identity",
+          "label": "Exact polyol identity (INS/CAS)",
+          "instruction": "Identify the individual compound; never 'polyol' alone.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "grade_sales_form",
+          "label": "Grade and marketed form",
+          "instruction": "Single purified polyol versus commercially blended sweetener; intended category.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "blend_composition",
+          "label": "Blend constituents and relative proportion",
+          "instruction": "Supplier-approved composition or secure document reference; do not enter confidential formula into a public repository.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "nickel_legal_monograph",
+          "label": "Applicable Ni limit, named purity monograph and method source",
+          "instruction": "Exact current FSSAI food-grade provision for this polyol plus accredited matrix method.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        }
+      ],
+      "original_evidence_state": "UMBRELLA_FSS_CHEMICAL_NOT_IDENTIFIED",
+      "primary_source_confirmed_for_exact_sold_substance": false,
+      "current_signed_ctr_limit": false,
+      "validated_lab_method": false,
+      "actual_sample_pass": false,
+      "earlier_batch50_legal_gate": "PMSV44-21-03",
+      "approved_or_released": false
+    },
+    {
+      "rank": 24,
+      "catalogue_id": "99-99-1-sajji-khar",
+      "product_name": "Sajji Khar",
+      "analyte": "Lead",
+      "food_category_class": "FCS_99_1_ADDITIVE_SUBSTANCE",
+      "evidence_pathway": "SAJJI_KHAR_PRODUCT_AUTHORITY",
+      "source_ids": [
+        "FCS_STANDARDIZED_PRODUCTS",
+        "NON_SPECIFIED_LATEST_INDEX",
+        "NON_SPECIFIED_JUNE_ORIGINAL"
+      ],
+      "blocker": "Obtain manufacturer's exact Sajji Khar chemical composition/CAS, manufacturing route, license/permission and governing food standard or authorization.",
+      "fields": [
+        {
+          "code": "chemical_formula_identity",
+          "label": "Sajji Khar exact chemical(s) / CAS",
+          "instruction": "Include carbonate/bicarbonate composition and processing, not only traditional trade name.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "supplier_product_authority",
+          "label": "Supplier's product-specific lawful basis",
+          "instruction": "Food-business licence plus published standard/approval as relevant; license alone is not chemical approval.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "current_application_check",
+          "label": "Approval/application check against latest register",
+          "instruction": "September 2026 official index is newer than June 2026 cited entries; verify product/applicant-specific outcome.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "lead_comparator_method",
+          "label": "Exact applicable lead article and matrix method",
+          "instruction": "A category entry or rejected application is not a numeric lead maximum.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        }
+      ],
+      "original_evidence_state": "THREE_APPLICATION_RECORDS_CLOSED_WITHDRAWN_NOT_A_BLANKET_PROHIBITION",
+      "primary_source_confirmed_for_exact_sold_substance": false,
+      "current_signed_ctr_limit": false,
+      "validated_lab_method": false,
+      "actual_sample_pass": false,
+      "earlier_batch50_legal_gate": "PMSV44-24-03",
+      "approved_or_released": false
+    },
+    {
+      "rank": 25,
+      "catalogue_id": "99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-",
+      "product_name": "Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations",
+      "analyte": "Lead",
+      "food_category_class": "FCS_99_1_ADDITIVE_SUBSTANCE",
+      "evidence_pathway": "LEAD_INDIVIDUAL_ADDITIVE",
+      "source_ids": [
+        "FCS_CATEGORY_99",
+        "FSSR_APPENDIX_A_C"
+      ],
+      "blocker": "Name each INS/CAS additive, grade, analytical purity monograph, intended technological function, FCS category and applicable metal impurities.",
+      "fields": [
+        {
+          "code": "ins_cas_additive",
+          "label": "Specific food additive and INS/CAS",
+          "instruction": "No generic Appendix A umbrella to lead limit transfer.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "technological_use_category",
+          "label": "Technological function and food category",
+          "instruction": "Identify permitted FCS use and actual finished-food role.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "purity_and_grade_monograph",
+          "label": "Current individual grade/purity monograph",
+          "instruction": "Trace exact FSSAI published additive entry/amendments, including impurities.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "lead_article_method",
+          "label": "Specific lead impurity basis and matrix test",
+          "instruction": "Legal limit and approved analytical sample matrix need signed evidence.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        }
+      ],
+      "original_evidence_state": "UMBRELLA_INS_CAS_IDENTITY_MISSING",
+      "primary_source_confirmed_for_exact_sold_substance": false,
+      "current_signed_ctr_limit": false,
+      "validated_lab_method": false,
+      "actual_sample_pass": false,
+      "earlier_batch50_legal_gate": "PMSV44-25-03",
+      "approved_or_released": false
+    },
+    {
+      "rank": 26,
+      "catalogue_id": "99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
+      "product_name": "Additives VA-VF of Nutraceutical Regulations excluding those already standardised",
+      "analyte": "Lead",
+      "food_category_class": "FCS_99_1_ADDITIVE_SUBSTANCE",
+      "evidence_pathway": "NUTRA_SCHEDULE_LAW_STATUS",
+      "source_ids": [
+        "FCS_CATEGORY_99",
+        "NUTRA_2022_DIRECTION_CONTEXT",
+        "FSSR_APPENDIX_A_C"
+      ],
+      "blocker": "Provide each named additive, original schedule/section, operative 2022/2024/2026 legal instrument and specification for metal impurity.",
+      "fields": [
+        {
+          "code": "named_nutra_additive",
+          "label": "Exact nutraceutical additive name / ID",
+          "instruction": "Identify substance rather than legacy VA-VF heading.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "original_schedule_clause",
+          "label": "Legacy schedule and specific entry",
+          "instruction": "Record old schedule wording and instrument date.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "current_operative_authority",
+          "label": "Current operative regulation / amendment and effective date",
+          "instruction": "Historical 2016 schedule names may not represent current authority.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "metal_spec_matrix",
+          "label": "Specific impurity monograph and lead sample matrix",
+          "instruction": "No blanket VA-VF heavy-metal comparator.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        }
+      ],
+      "original_evidence_state": "OPERATIVE_SCHEDULE_STATUS_AND_SUBSTANCE_UNRESOLVED",
+      "primary_source_confirmed_for_exact_sold_substance": false,
+      "current_signed_ctr_limit": false,
+      "validated_lab_method": false,
+      "actual_sample_pass": false,
+      "earlier_batch50_legal_gate": "PMSV44-26-03",
+      "approved_or_released": false
+    },
+    {
+      "rank": 27,
+      "catalogue_id": "99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
+      "product_name": "Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations",
+      "analyte": "Lead",
+      "food_category_class": "FCS_99_2_ENZYME_PREPARATION",
+      "evidence_pathway": "ENZYME_EC_SOURCE_ROLE",
+      "source_ids": [
+        "FCS_CATEGORY_99",
+        "FSSR_APPENDIX_A_C",
+        "APPENDIX_C_2022_GMM"
+      ],
+      "blocker": "Obtain EC number, enzyme specific activity, source and donor organisms, GMO status, carrier ingredients, use as processing aid or ingredient, and monograph.",
+      "fields": [
+        {
+          "code": "enzyme_ec_activity",
+          "label": "Named enzyme with EC number",
+          "instruction": "EC number and activity units identify enzyme action.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "production_donor_organism",
+          "label": "Production organism and donor/source",
+          "instruction": "Include GMM status as declared; do not automatically treat all enzymes as Table 11A.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "use_carrier_form",
+          "label": "Technological use, residual role and carriers",
+          "instruction": "Ingredient vs processing aid, medium/carrier, function and proposed product.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "monograph_metal_assay",
+          "label": "Applicable enzyme-grade purity and lead-method reference",
+          "instruction": "Specify authoritative table entry, matrix and accredited method separately.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        }
+      ],
+      "original_evidence_state": "ENZYME_IDENTITY_AND_ROLE_NOT_PROVIDED",
+      "primary_source_confirmed_for_exact_sold_substance": false,
+      "current_signed_ctr_limit": false,
+      "validated_lab_method": false,
+      "actual_sample_pass": false,
+      "earlier_batch50_legal_gate": "PMSV44-27-03",
+      "approved_or_released": false
+    },
+    {
+      "rank": 28,
+      "catalogue_id": "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
+      "product_name": "Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations",
+      "analyte": "Aflatoxins",
+      "food_category_class": "FCS_99_7_FUNCTIONAL_INGREDIENTS",
+      "evidence_pathway": "MYCOTOXIN_NAMED_NUTRA_INGREDIENT",
+      "source_ids": [
+        "FCS_CATEGORY_99",
+        "NUTRA_2022_DIRECTION_CONTEXT"
+      ],
+      "blocker": "List each botanical/chemical ingredient, plant part/source crop, proportion, historical schedule entry, current legal basis and named mycotoxin.",
+      "fields": [
+        {
+          "code": "named_ingredient_species",
+          "label": "Exact ingredient, plant species and used part",
+          "instruction": "Actual botanical name, plant part or chemical identity.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "schedule_current_crosswalk",
+          "label": "Original IV/VI/VIII row and current legal crosswalk",
+          "instruction": "Cite notified operative schedules and amendments, not FCS umbrella name.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "origin_processing_lot",
+          "label": "Origin/crop and actual processed lot form",
+          "instruction": "Record harvest/geography if relevant, heat/extraction/drying and sampled matrix.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "aflatoxin_comparator",
+          "label": "Named aflatoxin analyte, legal article and method",
+          "instruction": "Total aflatoxins vs B1 is not interchangeable; defined limit and LOQ.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        }
+      ],
+      "original_evidence_state": "SUBSTANCE_AND_OPERATIVE_SCHEDULE_UNKNOWN",
+      "primary_source_confirmed_for_exact_sold_substance": false,
+      "current_signed_ctr_limit": false,
+      "validated_lab_method": false,
+      "actual_sample_pass": false,
+      "earlier_batch50_legal_gate": "PMSV44-28-03",
+      "approved_or_released": false
+    },
+    {
+      "rank": 29,
+      "catalogue_id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "product_name": "Mixtures/preparations/premix of functional ingredients",
+      "analyte": "Aflatoxins",
+      "food_category_class": "FCS_99_7_FUNCTIONAL_INGREDIENTS",
+      "evidence_pathway": "PREMIX_COMPLETE_BOM_MYOTOXIN",
+      "source_ids": [
+        "FCS_CATEGORY_99",
+        "NUTRA_2022_DIRECTION_CONTEXT"
+      ],
+      "blocker": "Supply full BOM, % by mass, origins of nuts/spices/seeds/cereals, final food form, moisture/fat, the named mycotoxin and signed applicable article.",
+      "fields": [
+        {
+          "code": "premix_component_identity",
+          "label": "Full BOM component identities / secure reference",
+          "instruction": "Exact named ingredients and proportions; keep proprietary details off public GitHub.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "as_sold_finished_form",
+          "label": "As-sold marketed form, function and label category",
+          "instruction": "Ingredient premix or ready-to-consume finished food; dry/aqueous, fat/moisture.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "aflatoxin_contributors",
+          "label": "Specific crop ingredient(s) and toxin(s)",
+          "instruction": "Identify actual nuts/crops/spices and B1 versus total aflatoxins.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        },
+        {
+          "code": "legal_article_sample_basis",
+          "label": "Signed final-product CTR article and sample-preparation method",
+          "instruction": "Individual ingredient exceedances cannot be assumed equal a finished premix limit.",
+          "mandatory_for_draft": true,
+          "entry_value_provenance": "USER_CLAIM_ONLY_UNVERIFIED"
+        }
+      ],
+      "original_evidence_state": "MIXTURE_BOM_AND_PRODUCT_STATUS_MISSING",
+      "primary_source_confirmed_for_exact_sold_substance": false,
+      "current_signed_ctr_limit": false,
+      "validated_lab_method": false,
+      "actual_sample_pass": false,
+      "earlier_batch50_legal_gate": "PMSV44-29-03",
+      "approved_or_released": false
+    }
+  ],
+  "full_35_ctr_worklist": [
+    {
+      "catalogue_id": "purified-vending-water",
+      "rank": 1,
+      "product_name": "Drinking Water (Purified) sold through vending machine",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-01-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "coffee-chicory-mixture",
+      "rank": 2,
+      "product_name": "Coffee-Chicory Mixture",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-02-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "formulated-supplements-children",
+      "rank": 3,
+      "product_name": "Formulated supplements for children",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-03-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "04-04-1-frozen-fruits-fruit-products",
+      "rank": 4,
+      "product_name": "Frozen Fruits/Fruit Products",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-04-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "04-04-1-catechu-edible",
+      "rank": 5,
+      "product_name": "Catechu (Edible)",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-05-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "04-04-1-seedless-tamarind",
+      "rank": 6,
+      "product_name": "Seedless Tamarind",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-06-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "04-04-1-coconut-milk-powder",
+      "rank": 7,
+      "product_name": "COCONUT MILK POWDER",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-07-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "04-04-2-cocoa-beans",
+      "rank": 8,
+      "product_name": "Cocoa Beans",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-08-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "rank": 9,
+      "product_name": "Dry Mixtures of Cocoa and Sugars",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-09-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "rank": 10,
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-10-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "06-06-1-chia-seeds",
+      "rank": 11,
+      "product_name": "Chia Seeds",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-11-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "06-06-2-carob-powder",
+      "rank": 12,
+      "product_name": "Carob Powder",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-12-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "06-06-2-arrowroot",
+      "rank": 13,
+      "product_name": "Arrowroot",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-13-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "06-06-2-water-chestnut-flour-singhare-ka-atta",
+      "rank": 14,
+      "product_name": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-14-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "08-08-4-animal-casings",
+      "rank": 15,
+      "product_name": "Animal Casings",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-15-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "10-10-2-egg-powder",
+      "rank": 16,
+      "product_name": "Egg powder",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-16-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "10-10-3-pickled-eggs",
+      "rank": 17,
+      "product_name": "Pickled Eggs",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-17-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "11-11-1-dried-glucose-syrup",
+      "rank": 18,
+      "product_name": "Dried Glucose Syrup",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-18-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "11-11-1-edible-lactose",
+      "rank": 19,
+      "product_name": "Edible Lactose",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-19-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "11-11-1-misri",
+      "rank": 20,
+      "product_name": "Misri",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-20-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
+      "rank": 21,
+      "product_name": "Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized",
+      "source_identity_known": false,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-21-03",
+      "included_in_seven_intake": true,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "12-12-1-salt-substitutes",
+      "rank": 22,
+      "product_name": "Salt Substitutes",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-22-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "99-99-1-trehalose",
+      "rank": 23,
+      "product_name": "Trehalose",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-23-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "99-99-1-sajji-khar",
+      "rank": 24,
+      "product_name": "Sajji Khar",
+      "source_identity_known": false,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-24-03",
+      "included_in_seven_intake": true,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-",
+      "rank": 25,
+      "product_name": "Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations",
+      "source_identity_known": false,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-25-03",
+      "included_in_seven_intake": true,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
+      "rank": 26,
+      "product_name": "Additives VA-VF of Nutraceutical Regulations excluding those already standardised",
+      "source_identity_known": false,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-26-03",
+      "included_in_seven_intake": true,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
+      "rank": 27,
+      "product_name": "Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations",
+      "source_identity_known": false,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-27-03",
+      "included_in_seven_intake": true,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
+      "rank": 28,
+      "product_name": "Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations",
+      "source_identity_known": false,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-28-03",
+      "included_in_seven_intake": true,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "rank": 29,
+      "product_name": "Mixtures/preparations/premix of functional ingredients",
+      "source_identity_known": false,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-29-03",
+      "included_in_seven_intake": true,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+      "rank": 30,
+      "product_name": "Cow or Buffalo Colostrum and Colostrum Products",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-30-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "100-100-royal-jelly",
+      "rank": 31,
+      "product_name": "Royal Jelly",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-31-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "100-100-silver-leaf-chandi-ka-warq",
+      "rank": 32,
+      "product_name": "SILVER LEAF (Chandi-ka-warq)",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-32-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
+      "rank": 33,
+      "product_name": "14.3 - Narikela Ksheerika (Milky Coconut Delight)",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-33-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+      "rank": 34,
+      "product_name": "14.7 - Ksheerapaka (Mystic Milk Quartet)",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-34-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    },
+    {
+      "catalogue_id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "rank": 35,
+      "product_name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "source_identity_known": true,
+      "exact_ctr_legal_article_pending": true,
+      "legal_gate": "PMSV44-35-03",
+      "included_in_seven_intake": false,
+      "lot_pass": false
+    }
+  ],
+  "results": {
+    "public_repo_contains_no_entered_commercial_secret": true,
+    "all_seven_remain_unresolved": true,
+    "source_classes_do_not_equal_regulatory_approval": true,
+    "original_35_legal_ctr_cases_open": true,
+    "old_june_sajji_register_not_misrepresented_as_september": true,
+    "no_source_limit_or_lab_pass_promotions": true,
+    "no_foreground_browser_auto_submission": true,
+    "no_automatic_future_legislation_activation": true,
+    "wordpress_unmodified": true
+  }
+}
