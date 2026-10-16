@@ -104,7 +104,7 @@ function pmsvB43Cases(){
  if(!pmsvB43Valid())return [];
  const q=pmsvB43Query.toLowerCase().trim();
  return pmsvB43Data.affected_cases.filter(c=>
- (pmsvB43Group==="ALL"||c.family===pmsvB43Group)&&
+ (pmsvB43Group==="ALL"||(pmsvB43Group==="TRACE_METALS"&&c.family==="TRACE_METALS")||(pmsvB43Group==="NONMETAL"&&c.family!=="TRACE_METALS"))&&
  (!q||[c.catalog_id,c.product_name,c.analyte,c.statement_for_lab].some(s=>String(s).toLowerCase().includes(q))));
 }
 function pmsvB43Panel(){
