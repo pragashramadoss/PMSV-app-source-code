@@ -124,6 +124,8 @@ pmsvB41Rows=function(){
  const raw=pmsvB42OldB41Rows();
  return raw.replace(/FSSAI_09_\d{3}_2024|\b09\.\d{3}(?::2024)?\b/g,"[method-code conflict]");
 };
+const pmsvB42OldB41Product=pmsvB41Product;
+pmsvB41Product=function(p){return pmsvB42Valid()?pmsvB42Scrub(pmsvB42OldB41Product(p)):"<div class=\"notice\">Batch42 manual audit unavailable. Method suggestions withheld.</div>"};
 const pmsvB42OldB41Detail=pmsvB41Detail;
 pmsvB41Detail=function(){
  if(!pmsvB42Valid())return "Await method identity source cross-check.";
