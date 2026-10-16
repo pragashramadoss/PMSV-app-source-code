@@ -1,0 +1,3359 @@
+{
+  "schema_version": "1.0",
+  "kind": "PMSV_CURRENT35_NONSTATUTORY_LAB_PREFLIGHT_BATCH45",
+  "as_of": "2026-10-16",
+  "environment": "GH_PAGES_PREVIEW_ONLY",
+  "review_state": "DOCUMENTARY_PREFLIGHT_ONLY_ALL_OPEN",
+  "official_raft_guidance": {
+    "url": "https://fssai.gov.in/upload/uploadfiles/files/Validation%20Guidelines%2005_06_2025.pdf",
+    "title": "FSSAI Handbook on Rapid Analytical Food Testing (RAFT), Volume 2.0 — method/kit validation guidance (05 June 2025)",
+    "location": "Chapter 29, pp. 8–12 (PDF pages 13–17, zero based)",
+    "scope": "Validation criteria for methods/kits seeking FSSAI RAFT scheme approval; not a new mandatory metals manual, not laboratory accreditation, not an operative CTR limit",
+    "published_guidance_is_legal_adoption": false,
+    "published_guidance_is_lab_validation": false
+  },
+  "current_metal_methods_index": "https://www.fssai.gov.in/food-testing/manuals-methods-analysis",
+  "method_consultation_notice": "https://fssai.gov.in/upload/uploadfiles/files/Notice%20for%20comments_26062024.pdf",
+  "legal_ctr_source": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "policy": "Eight suggested supporting-evidence checks sit INSIDE pre-existing Batch44 LAB_MATRIX_METHOD_AND_LOQ and LOT_COA_AND_INDEPENDENT_SIGNOFF gates. They are NOT independent official legal mandates or 280 new sent requests. No test or release authority.",
+  "checks": [
+    {
+      "code": "EXACT_METHOD_AUTHORITY",
+      "label": "Full procedure and source authority",
+      "template": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+      "guide_only": true,
+      "official_raft_guidance_not_a_binding_approval": true
+    },
+    {
+      "code": "SALE_FORM_AND_MATRIX",
+      "label": "As-sold matrix, processing and sampling",
+      "template": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix.",
+      "guide_only": true,
+      "official_raft_guidance_not_a_binding_approval": true
+    },
+    {
+      "code": "TARGET_ANALYTE_IDENTITY",
+      "label": "Exact analyte and chemical species",
+      "template": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit.",
+      "guide_only": true,
+      "official_raft_guidance_not_a_binding_approval": true
+    },
+    {
+      "code": "SELECTIVITY_AND_INTERFERENCES",
+      "label": "Selectivity and matrix interference",
+      "template": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+      "guide_only": true,
+      "official_raft_guidance_not_a_binding_approval": true
+    },
+    {
+      "code": "CALIBRATION_AND_RANGE",
+      "label": "Calibration and reportable range",
+      "template": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+      "guide_only": true,
+      "official_raft_guidance_not_a_binding_approval": true
+    },
+    {
+      "code": "MATRIX_LOD_LOQ",
+      "label": "Matrix-specific LOD and LOQ",
+      "template": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established.",
+      "guide_only": true,
+      "official_raft_guidance_not_a_binding_approval": true
+    },
+    {
+      "code": "RECOVERY_PRECISION_QC",
+      "label": "Recovery, blanks, precision and uncertainty",
+      "template": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+      "guide_only": true,
+      "official_raft_guidance_not_a_binding_approval": true
+    },
+    {
+      "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+      "label": "Lab accreditation, CoA and lot trail",
+      "template": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+      "guide_only": true,
+      "official_raft_guidance_not_a_binding_approval": true
+    }
+  ],
+  "counts": {
+    "catalogue": 533,
+    "conditional_matches": 498,
+    "pending_ctr": 35,
+    "metal_cases": 27,
+    "nonmetal_cases": 8,
+    "laboratory_preflight_dossiers": 35,
+    "suggested_points_per_dossier": 8,
+    "suggested_points_total": 280,
+    "existing_five_gate_requests_unchanged": 175,
+    "evidence_received": 0,
+    "laboratories_contacted": 0,
+    "lab_matrix_validation_confirmed": 0,
+    "ctr_legal_limit_signed": 0,
+    "lot_passes": 0,
+    "wordpress_changed": false
+  },
+  "cases": [
+    {
+      "rank": 1,
+      "catalogue_id": "purified-vending-water",
+      "product_name": "Drinking Water (Purified) sold through vending machine",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.10.9",
+      "fcs": "14.1.1",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-01-04",
+      "inherited_lot_gate_id": "PMSV44-01-05",
+      "matrix_context": "Water dispensed from a vending machine needs water-method scope and a legal drinking-water versus packaged-water assessment. A generic food digest method is not automatically valid.",
+      "legal_scope_context": "Need sale format (dispensed cup/bottle), water source, whether item is legally packaged drinking water and sample taken from tap/outlet.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-01-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-01-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Water dispensed from a vending machine needs water-method scope and a legal drinking-water versus packaged-water assessment. A generic food digest method is not automatically valid.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-01-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need sale format (dispensed cup/bottle), water source, whether item is legally packaged drinking water and sample taken from tap/outlet.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-01-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-01-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-01-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-01-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-01-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "catalogue_id": "coffee-chicory-mixture",
+      "product_name": "Coffee-Chicory Mixture",
+      "analyte": "Ochratoxin A",
+      "analyte_family": "MYCOTOXINS",
+      "fssr": "2.10.4",
+      "fcs": "14.1.5",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-02-04",
+      "inherited_lot_gate_id": "PMSV44-02-05",
+      "matrix_context": "Toxin name, food and fat/moisture state, validated extraction/recovery, method-specific LOQ, relevant current FSSAI mycotoxins manual and signed CTR applicability required.",
+      "legal_scope_context": "Need actual coffee/chicory percentages, roasted or soluble form and signed applicability of coffee OTA article to final blend.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-02-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-02-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Toxin name, food and fat/moisture state, validated extraction/recovery, method-specific LOQ, relevant current FSSAI mycotoxins manual and signed CTR applicability required.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-02-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need actual coffee/chicory percentages, roasted or soluble form and signed applicability of coffee OTA article to final blend.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-02-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-02-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-02-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-02-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-02-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "catalogue_id": "formulated-supplements-children",
+      "product_name": "Formulated supplements for children",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "",
+      "fcs": "13.2",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-03-04",
+      "inherited_lot_gate_id": "PMSV44-03-05",
+      "matrix_context": "Age, intended use and final product class must be established first; 09.006 measures chromium, not the current lead comparator, and infant-formula category does not automatically follow.",
+      "legal_scope_context": "Need target age range, product label, FSMP/FSDU status, manufacturer designation and ready-to-use versus powder basis.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-03-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-03-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Age, intended use and final product class must be established first; 09.006 measures chromium, not the current lead comparator, and infant-formula category does not automatically follow.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-03-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need target age range, product label, FSMP/FSDU status, manufacturer designation and ready-to-use versus powder basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-03-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-03-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-03-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-03-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-03-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "catalogue_id": "04-04-1-frozen-fruits-fruit-products",
+      "product_name": "Frozen Fruits/Fruit Products",
+      "analyte": "Residues",
+      "analyte_family": "UNSPECIFIED_RESIDUE",
+      "fssr": "2.3.37",
+      "fcs": "04.1.2.1",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-04-04",
+      "inherited_lot_gate_id": "PMSV44-04-05",
+      "matrix_context": "No target chemical identified: first determine residue family and substance before selecting any method, MRL or screening assay.",
+      "legal_scope_context": "Need fruit species, specific crop pesticide(s), fresh/frozen/processed status and pesticide-specific commodity MRL; shell-free eggs row shown as a contrasting example only.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-04-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-04-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: No target chemical identified: first determine residue family and substance before selecting any method, MRL or screening assay.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-04-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need fruit species, specific crop pesticide(s), fresh/frozen/processed status and pesticide-specific commodity MRL; shell-free eggs row shown as a contrasting example only. Identify the actual pesticide or other residue substance(s) before requesting test scope or MRL.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-04-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-04-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-04-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-04-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-04-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "catalogue_id": "04-04-1-catechu-edible",
+      "product_name": "Catechu (Edible)",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.11.2",
+      "fcs": "04.1.2.2",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-05-04",
+      "inherited_lot_gate_id": "PMSV44-05-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need exact edible catechu species/process, whether pure ingredient/extract vs chemical additive; 'chemicals other' not presumed.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-05-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-05-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-05-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need exact edible catechu species/process, whether pure ingredient/extract vs chemical additive; 'chemicals other' not presumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-05-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-05-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-05-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-05-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-05-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "catalogue_id": "04-04-1-seedless-tamarind",
+      "product_name": "Seedless Tamarind",
+      "analyte": "Copper",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.3.49",
+      "fcs": "04.1.2.8",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-06-04",
+      "inherited_lot_gate_id": "PMSV44-06-05",
+      "matrix_context": "Method 09.001 lists approximate copper capability of 3 mg/kg, not a lab LOQ. Verify seedless pulp/form, method detection below applicable limit and whole-to-pulp legal comparator.",
+      "legal_scope_context": "Need to know whole deseeded pulp flesh vs manufactured fruit pulp, water content, salt/preservative additions and origin.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-06-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-06-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Method 09.001 lists approximate copper capability of 3 mg/kg, not a lab LOQ. Verify seedless pulp/form, method detection below applicable limit and whole-to-pulp legal comparator.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-06-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need to know whole deseeded pulp flesh vs manufactured fruit pulp, water content, salt/preservative additions and origin.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-06-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-06-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-06-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-06-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-06-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "catalogue_id": "04-04-1-coconut-milk-powder",
+      "product_name": "COCONUT MILK POWDER",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.3.63",
+      "fcs": "04.1.2.8",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-07-04",
+      "inherited_lot_gate_id": "PMSV44-07-05",
+      "matrix_context": "Determine true coconut/non-dairy composition, fat content and matrix. 09.001 excludes dairy milk powder and high-fat food; whether its exclusions apply to this commercial coconut matrix requires laboratory evidence.",
+      "legal_scope_context": "Need coconut vs dairy protein/fat sources, dehydration concentration factor and registered category; non-dairy coconut powder is not ordinary milk.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-07-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-07-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Determine true coconut/non-dairy composition, fat content and matrix. 09.001 excludes dairy milk powder and high-fat food; whether its exclusions apply to this commercial coconut matrix requires laboratory evidence.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-07-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need coconut vs dairy protein/fat sources, dehydration concentration factor and registered category; non-dairy coconut powder is not ordinary milk.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-07-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-07-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-07-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-07-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-07-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "catalogue_id": "04-04-2-cocoa-beans",
+      "product_name": "Cocoa Beans",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.3.54",
+      "fcs": "04.2.2.7",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-08-04",
+      "inherited_lot_gate_id": "PMSV44-08-05",
+      "matrix_context": "Whole cocoa beans must not adopt cocoa-powder CTR article or dry fat-free reporting basis. Verify whole-bean sample preparation, bean origin and legal article.",
+      "legal_scope_context": "Need beans raw/roasted whole or nibs, fat and moisture; powder-specific dry fat-free metal basis not transferred.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-08-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-08-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Whole cocoa beans must not adopt cocoa-powder CTR article or dry fat-free reporting basis. Verify whole-bean sample preparation, bean origin and legal article.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-08-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need beans raw/roasted whole or nibs, fat and moisture; powder-specific dry fat-free metal basis not transferred.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-08-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-08-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-08-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-08-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-08-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "catalogue_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "product_name": "Dry Mixtures of Cocoa and Sugars",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.7.6",
+      "fcs": "05.1.1",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-09-04",
+      "inherited_lot_gate_id": "PMSV44-09-05",
+      "matrix_context": "Complete cocoa/sugar/fat proportion and as-sold moisture basis required before interpreting 09.001 fat exclusion or dry fat-free basis.",
+      "legal_scope_context": "Need cocoa solids%, sugar%, fat%, packing state and whether finished mix can legally be read as cocoa powder.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-09-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-09-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Complete cocoa/sugar/fat proportion and as-sold moisture basis required before interpreting 09.001 fat exclusion or dry fat-free basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-09-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need cocoa solids%, sugar%, fat%, packing state and whether finished mix can legally be read as cocoa powder.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-09-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-09-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-09-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-09-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-09-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "catalogue_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.7.8",
+      "fcs": "05.1.1",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-10-04",
+      "inherited_lot_gate_id": "PMSV44-10-05",
+      "matrix_context": "Determine cocoa mass/liquor versus cocoa cake and actual fat %. 09.001 cannot be used if >=40% fat; no cocoa-powder contaminant row transferred.",
+      "legal_scope_context": "Need cocoa mass/liquor vs press cake vs de-oiled powder, fat% and dry/fat-free conversion method.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-10-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-10-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Determine cocoa mass/liquor versus cocoa cake and actual fat %. 09.001 cannot be used if >=40% fat; no cocoa-powder contaminant row transferred.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-10-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need cocoa mass/liquor vs press cake vs de-oiled powder, fat% and dry/fat-free conversion method.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-10-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-10-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-10-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-10-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-10-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "catalogue_id": "06-06-1-chia-seeds",
+      "product_name": "Chia Seeds",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.4.6",
+      "fcs": "06.1",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-11-04",
+      "inherited_lot_gate_id": "PMSV44-11-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need botanical chia identity and use; cereal grain label does not make Salvia hispanica a cereal.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-11-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-11-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-11-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need botanical chia identity and use; cereal grain label does not make Salvia hispanica a cereal.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-11-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-11-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-11-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-11-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-11-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "catalogue_id": "06-06-2-carob-powder",
+      "product_name": "Carob Powder",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.11.7",
+      "fcs": "06.2.1",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-12-04",
+      "inherited_lot_gate_id": "PMSV44-12-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need carob botanical source, powder composition; bean/seed powder is not cocoa powder.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-12-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-12-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-12-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need carob botanical source, powder composition; bean/seed powder is not cocoa powder.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-12-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-12-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-12-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-12-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-12-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 13,
+      "catalogue_id": "06-06-2-arrowroot",
+      "product_name": "Arrowroot",
+      "analyte": "Pesticide MRLs",
+      "analyte_family": "PESTICIDE_RESIDUES",
+      "fssr": "2.4.14",
+      "fcs": "06.2.2",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-13-04",
+      "inherited_lot_gate_id": "PMSV44-13-05",
+      "matrix_context": "Name each pesticide and residue definition, actual commodity, validated GC-MS or LC-MS method and individual MRL; broad 'pesticide residues' is not one measured analyte.",
+      "legal_scope_context": "Need botanical root source, milled starch vs grain origin; relevant named pesticide and processed-starch residue interpretation.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-13-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-13-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Name each pesticide and residue definition, actual commodity, validated GC-MS or LC-MS method and individual MRL; broad 'pesticide residues' is not one measured analyte.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-13-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need botanical root source, milled starch vs grain origin; relevant named pesticide and processed-starch residue interpretation.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-13-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-13-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-13-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-13-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-13-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 14,
+      "catalogue_id": "06-06-2-water-chestnut-flour-singhare-ka-atta",
+      "product_name": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.3.64",
+      "fcs": "06.2.1",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-14-04",
+      "inherited_lot_gate_id": "PMSV44-14-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need botanical water chestnut source and dried flour basis; word atta does not establish cereal grain identity.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-14-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-14-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-14-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need botanical water chestnut source and dried flour basis; word atta does not establish cereal grain identity.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-14-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-14-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-14-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-14-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-14-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 15,
+      "catalogue_id": "08-08-4-animal-casings",
+      "product_name": "Animal Casings",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.5.2(14)",
+      "fcs": "08.4",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-15-04",
+      "inherited_lot_gate_id": "PMSV44-15-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need species, intestinal versus muscle tissue and processing brine; meat fat row cannot be assigned solely on animal source.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-15-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-15-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-15-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need species, intestinal versus muscle tissue and processing brine; meat fat row cannot be assigned solely on animal source.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-15-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-15-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-15-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-15-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-15-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 16,
+      "catalogue_id": "10-10-2-egg-powder",
+      "product_name": "Egg powder",
+      "analyte": "Pesticide MRLs",
+      "analyte_family": "PESTICIDE_RESIDUES",
+      "fssr": "2.5.3(3)",
+      "fcs": "10.2.3",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-16-04",
+      "inherited_lot_gate_id": "PMSV44-16-05",
+      "matrix_context": "Name each pesticide and residue definition, actual commodity, validated GC-MS or LC-MS method and individual MRL; broad 'pesticide residues' is not one measured analyte.",
+      "legal_scope_context": "Need pesticide identity, whole egg or yolk/white, dryer concentration ratio and whether shell-free-basis correction is legally required.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-16-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-16-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Name each pesticide and residue definition, actual commodity, validated GC-MS or LC-MS method and individual MRL; broad 'pesticide residues' is not one measured analyte.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-16-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need pesticide identity, whole egg or yolk/white, dryer concentration ratio and whether shell-free-basis correction is legally required.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-16-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-16-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-16-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-16-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-16-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 17,
+      "catalogue_id": "10-10-3-pickled-eggs",
+      "product_name": "Pickled Eggs",
+      "analyte": "Pesticide MRLs",
+      "analyte_family": "PESTICIDE_RESIDUES",
+      "fssr": "2.5.3(5)",
+      "fcs": "10.3",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-17-04",
+      "inherited_lot_gate_id": "PMSV44-17-05",
+      "matrix_context": "Name each pesticide and residue definition, actual commodity, validated GC-MS or LC-MS method and individual MRL; broad 'pesticide residues' is not one measured analyte.",
+      "legal_scope_context": "Need pesticide and species, edible egg proportion, pickling brine concentration and shell-free basis.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-17-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-17-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Name each pesticide and residue definition, actual commodity, validated GC-MS or LC-MS method and individual MRL; broad 'pesticide residues' is not one measured analyte.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-17-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need pesticide and species, edible egg proportion, pickling brine concentration and shell-free basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-17-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-17-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-17-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-17-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-17-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 18,
+      "catalogue_id": "11-11-1-dried-glucose-syrup",
+      "product_name": "Dried Glucose Syrup",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.8.7",
+      "fcs": "11.1.3.1",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-18-04",
+      "inherited_lot_gate_id": "PMSV44-18-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need dried DE value, sulphated ash % and finished state; high-ash article only if actual ash criterion and category satisfied.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-18-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-18-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-18-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need dried DE value, sulphated ash % and finished state; high-ash article only if actual ash criterion and category satisfied.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-18-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-18-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-18-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-18-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-18-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 19,
+      "catalogue_id": "11-11-1-edible-lactose",
+      "product_name": "Edible Lactose",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.1.20",
+      "fcs": "11.1.4",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-19-04",
+      "inherited_lot_gate_id": "PMSV44-19-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need pure lactose ingredient identity, purity and legal classification; milk-derived chemical not automatically dehydrated milk.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-19-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-19-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-19-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need pure lactose ingredient identity, purity and legal classification; milk-derived chemical not automatically dehydrated milk.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-19-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-19-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-19-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-19-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-19-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 20,
+      "catalogue_id": "11-11-1-misri",
+      "product_name": "Misri",
+      "analyte": "Chromium",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.8.2",
+      "fcs": "11.1.5",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-20-04",
+      "inherited_lot_gate_id": "PMSV44-20-05",
+      "matrix_context": "09.006 chromium method scope is infant/nutritional products, not sugar crystals; request actual validated chromium method (e.g., verified 09.003 if sensitivity sufficient) and a signed sugar comparator determination.",
+      "legal_scope_context": "Need crystal sugar origin, refined/pressed vs rock sugar identity and tested ash; chromium row names refined sugar.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-20-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-20-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: 09.006 chromium method scope is infant/nutritional products, not sugar crystals; request actual validated chromium method (e.g., verified 09.003 if sensitivity sufficient) and a signed sugar comparator determination.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-20-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need crystal sugar origin, refined/pressed vs rock sugar identity and tested ash; chromium row names refined sugar.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-20-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-20-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-20-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-20-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-20-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 21,
+      "catalogue_id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
+      "product_name": "Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized",
+      "analyte": "Nickel",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "FSS (FPS&FA) Regulations",
+      "fcs": "11.6",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-21-04",
+      "inherited_lot_gate_id": "PMSV44-21-05",
+      "matrix_context": "Nickel in 09.006 is an internal standard, not the analyte. A named polyol and Ni-validated method with adequate LOQ are needed; 09.003 wavelength mention is not proof of accuracy.",
+      "legal_scope_context": "Need individual INS/CAS polyol; sorbitol Ni row cannot apply to xylitol/erythritol blend.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-21-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-21-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Nickel in 09.006 is an internal standard, not the analyte. A named polyol and Ni-validated method with adequate LOQ are needed; 09.003 wavelength mention is not proof of accuracy.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-21-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need individual INS/CAS polyol; sorbitol Ni row cannot apply to xylitol/erythritol blend.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-21-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-21-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-21-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-21-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-21-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 22,
+      "catalogue_id": "12-12-1-salt-substitutes",
+      "product_name": "Salt Substitutes",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.9.30(6)",
+      "fcs": "12.1.2",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-22-04",
+      "inherited_lot_gate_id": "PMSV44-22-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need salt substitute composition and sodium chloride %, KCl components and individual standards before ordinary food salt metal row.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-22-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-22-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-22-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need salt substitute composition and sodium chloride %, KCl components and individual standards before ordinary food salt metal row.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-22-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-22-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-22-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-22-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-22-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 23,
+      "catalogue_id": "99-99-1-trehalose",
+      "product_name": "Trehalose",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "3.3.4",
+      "fcs": "99.1",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-23-04",
+      "inherited_lot_gate_id": "PMSV44-23-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need trehalose grade, purity, actual sulphated ash and whether named high-ash sugar formulation applies.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-23-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-23-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-23-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need trehalose grade, purity, actual sulphated ash and whether named high-ash sugar formulation applies.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-23-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-23-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-23-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-23-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-23-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 24,
+      "catalogue_id": "99-99-1-sajji-khar",
+      "product_name": "Sajji Khar",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "",
+      "fcs": "99.1",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-24-04",
+      "inherited_lot_gate_id": "PMSV44-24-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need actual Sajji Khar carbonate/alkali composition, supplier lawful status; closed novel food application not authority.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-24-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-24-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-24-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need actual Sajji Khar carbonate/alkali composition, supplier lawful status; closed novel food application not authority.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-24-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-24-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-24-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-24-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-24-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 25,
+      "catalogue_id": "99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-",
+      "product_name": "Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "FSS (FPS&FA) Regulations",
+      "fcs": "99.1",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-25-04",
+      "inherited_lot_gate_id": "PMSV44-25-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need individual INS/CAS additive, grade, impurity monograph, usage category, not umbrella class.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-25-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-25-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-25-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need individual INS/CAS additive, grade, impurity monograph, usage category, not umbrella class.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-25-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-25-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-25-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-25-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-25-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 26,
+      "catalogue_id": "99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
+      "product_name": "Additives VA-VF of Nutraceutical Regulations excluding those already standardised",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "",
+      "fcs": "99.1",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-26-04",
+      "inherited_lot_gate_id": "PMSV44-26-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need 2016/2021 schedule VA–VF exact entry crosswalk to operative 2022/2024 nutraceutical sources.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-26-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-26-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-26-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need 2016/2021 schedule VA–VF exact entry crosswalk to operative 2022/2024 nutraceutical sources.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-26-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-26-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-26-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-26-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-26-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 27,
+      "catalogue_id": "99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
+      "product_name": "Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "",
+      "fcs": "99.2",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-27-04",
+      "inherited_lot_gate_id": "PMSV44-27-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need enzyme EC, donor organism, source, carrier and processing role; generic chemicals comparator not proof.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-27-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-27-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-27-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need enzyme EC, donor organism, source, carrier and processing role; generic chemicals comparator not proof.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-27-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-27-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-27-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-27-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-27-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 28,
+      "catalogue_id": "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
+      "product_name": "Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations",
+      "analyte": "Aflatoxins",
+      "analyte_family": "MYCOTOXINS",
+      "fssr": "",
+      "fcs": "99.7",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-28-04",
+      "inherited_lot_gate_id": "PMSV44-28-05",
+      "matrix_context": "Toxin name, food and fat/moisture state, validated extraction/recovery, method-specific LOQ, relevant current FSSAI mycotoxins manual and signed CTR applicability required.",
+      "legal_scope_context": "Need named ingredient and source crop; old Schedules IV/VI/VIII not a ready-to-use classification for 2022 nutraceutical.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-28-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-28-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Toxin name, food and fat/moisture state, validated extraction/recovery, method-specific LOQ, relevant current FSSAI mycotoxins manual and signed CTR applicability required.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-28-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need named ingredient and source crop; old Schedules IV/VI/VIII not a ready-to-use classification for 2022 nutraceutical.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-28-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-28-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-28-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-28-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-28-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 29,
+      "catalogue_id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "product_name": "Mixtures/preparations/premix of functional ingredients",
+      "analyte": "Aflatoxins",
+      "analyte_family": "MYCOTOXINS",
+      "fssr": "",
+      "fcs": "99.7",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-29-04",
+      "inherited_lot_gate_id": "PMSV44-29-05",
+      "matrix_context": "Toxin name, food and fat/moisture state, validated extraction/recovery, method-specific LOQ, relevant current FSSAI mycotoxins manual and signed CTR applicability required.",
+      "legal_scope_context": "Need complete premix BOM % and crop/seed/nut/spice ingredients with actual toxin class and testing basis.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-29-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-29-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Toxin name, food and fat/moisture state, validated extraction/recovery, method-specific LOQ, relevant current FSSAI mycotoxins manual and signed CTR applicability required.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-29-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need complete premix BOM % and crop/seed/nut/spice ingredients with actual toxin class and testing basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-29-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-29-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-29-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-29-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-29-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 30,
+      "catalogue_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+      "product_name": "Cow or Buffalo Colostrum and Colostrum Products",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.1.23",
+      "fcs": "100",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-30-04",
+      "inherited_lot_gate_id": "PMSV44-30-05",
+      "matrix_context": "FSSAI dairy method 0.010:2023 is a mineral panel that omits lead. Ask for separate validated lead test and colostrum product form and legal article.",
+      "legal_scope_context": "Need colostrum source, pure vs formulated concentrate and dehydration factor, distinct from ordinary milk.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-30-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-30-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: FSSAI dairy method 0.010:2023 is a mineral panel that omits lead. Ask for separate validated lead test and colostrum product form and legal article.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-30-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need colostrum source, pure vs formulated concentrate and dehydration factor, distinct from ordinary milk.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-30-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-30-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-30-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-30-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-30-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 31,
+      "catalogue_id": "100-100-royal-jelly",
+      "product_name": "Royal Jelly",
+      "analyte": "Antibiotics",
+      "analyte_family": "VETERINARY_DRUG_RESIDUES",
+      "fssr": "2.8.3(3)",
+      "fcs": "100",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-31-04",
+      "inherited_lot_gate_id": "PMSV44-31-05",
+      "matrix_context": "Royal jelly is not automatically honey; name the antibiotic compound, actual bee-source matrix and species-specific residue method and legal scope.",
+      "legal_scope_context": "Need honey vs royal jelly classification, drug chemical and bee-production evidence; animal tissue/honey mapping conditional.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-31-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-31-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Royal jelly is not automatically honey; name the antibiotic compound, actual bee-source matrix and species-specific residue method and legal scope.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-31-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need honey vs royal jelly classification, drug chemical and bee-production evidence; animal tissue/honey mapping conditional.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-31-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-31-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-31-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-31-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-31-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 32,
+      "catalogue_id": "100-100-silver-leaf-chandi-ka-warq",
+      "product_name": "SILVER LEAF (Chandi-ka-warq)",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.11.4",
+      "fcs": "100",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-32-04",
+      "inherited_lot_gate_id": "PMSV44-32-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need actual edible silver foil substance purity and current distinct FSSR metal spec; fallback foods not specified not automatic.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-32-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-32-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-32-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need actual edible silver foil substance purity and current distinct FSSR metal spec; fallback foods not specified not automatic.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-32-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-32-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-32-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-32-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-32-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 33,
+      "catalogue_id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
+      "product_name": "14.3 - Narikela Ksheerika (Milky Coconut Delight)",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "",
+      "fcs": "",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-33-04",
+      "inherited_lot_gate_id": "PMSV44-33-05",
+      "matrix_context": "Prove real coconut/milk recipe and fat %, sample basis, correct matrix method, regulatory article and licensing; an official recipe does not validate method or commercial formulation.",
+      "legal_scope_context": "Need approved Ayurveda Aahara product identity, coconut/milk recipe and real marketed form; classical recipe not milk article.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-33-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-33-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Prove real coconut/milk recipe and fat %, sample basis, correct matrix method, regulatory article and licensing; an official recipe does not validate method or commercial formulation.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-33-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need approved Ayurveda Aahara product identity, coconut/milk recipe and real marketed form; classical recipe not milk article.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-33-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-33-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-33-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-33-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-33-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 34,
+      "catalogue_id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+      "product_name": "14.7 - Ksheerapaka (Mystic Milk Quartet)",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "",
+      "fcs": "",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "inherited_lab_gate_id": "PMSV44-34-04",
+      "inherited_lot_gate_id": "PMSV44-34-05",
+      "matrix_context": "Buffalo milk and flower infusion require actual batch formula, botanical identity, fat %, method validation and dry/fresh reporting basis; ordinary milk limits are not automatically assigned.",
+      "legal_scope_context": "Need buffalo milk, aromatic flower, sugar/water composition and licencing; dairy content alone is not finished milk article.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-34-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-34-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Buffalo milk and flower infusion require actual batch formula, botanical identity, fat %, method validation and dry/fresh reporting basis; ordinary milk limits are not automatically assigned.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-34-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need buffalo milk, aromatic flower, sugar/water composition and licencing; dairy content alone is not finished milk article.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-34-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-34-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-34-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-34-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-34-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    },
+    {
+      "rank": 35,
+      "catalogue_id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "product_name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "fssr": "2.11.8",
+      "fcs": "99.7",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "inherited_lab_gate_id": "PMSV44-35-04",
+      "inherited_lot_gate_id": "PMSV44-35-05",
+      "matrix_context": "Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+      "legal_scope_context": "Need actual fibre dextrin chemical identity vs solid glucose, ash %, purity and exact finished ingredient.",
+      "status": "NOT_RECEIVED_NOT_REVIEWED",
+      "real_laboratory_contacted": false,
+      "method_approved": false,
+      "ctr_article_approved": false,
+      "lot_pass": false,
+      "checklist": [
+        {
+          "id": "PMSV45-35-01",
+          "code": "EXACT_METHOD_AUTHORITY",
+          "label": "Full procedure and source authority",
+          "requested_proof": "Obtain entire official method title, publication/version, page and regulator adoption or applicable laboratory method decision. Bare FSSAI 09.xxx numbers are unsafe where 2024 manuals disagree.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-35-02",
+          "code": "SALE_FORM_AND_MATRIX",
+          "label": "As-sold matrix, processing and sampling",
+          "requested_proof": "Document the marketed food's actual formulation, preparation, dry/wet basis, fat/moisture and sampled form; demonstrate the lab method includes that exact matrix. Case-specific caution: Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-35-03",
+          "code": "TARGET_ANALYTE_IDENTITY",
+          "label": "Exact analyte and chemical species",
+          "requested_proof": "Identify the legally relevant analyte and (where relevant) chemical species and reporting basis. Do not silently substitute total element for species-specific limit. Case-specific caution: Need actual fibre dextrin chemical identity vs solid glucose, ash %, purity and exact finished ingredient.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-35-04",
+          "code": "SELECTIVITY_AND_INTERFERENCES",
+          "label": "Selectivity and matrix interference",
+          "requested_proof": "Obtain analytical specificity evidence, target versus interference, and matrix-specific suppression/enhancement assessment.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-35-05",
+          "code": "CALIBRATION_AND_RANGE",
+          "label": "Calibration and reportable range",
+          "requested_proof": "Obtain dated traceable calibrator/standard details, linear or justified calibration model and a validated concentration range encompassing the legally reviewed action level.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-35-06",
+          "code": "MATRIX_LOD_LOQ",
+          "label": "Matrix-specific LOD and LOQ",
+          "requested_proof": "Obtain actual laboratory/matrix LOD, LOQ, units and raw validation basis; compare LOQ to a separately signed applicable CTR maximum only after legal scope is established. Case-specific caution: LOQ cannot be judged without signed applicable CTR article and reporting basis.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-35-07",
+          "code": "RECOVERY_PRECISION_QC",
+          "label": "Recovery, blanks, precision and uncertainty",
+          "requested_proof": "Obtain method and reagent blanks, matrix spike/CRM where suitable, recovery, replicate precision, carryover assessment and documented uncertainty appropriate to the procedure.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        },
+        {
+          "id": "PMSV45-35-08",
+          "code": "ACCREDITED_SCOPE_AND_LOT_TRACE",
+          "label": "Lab accreditation, CoA and lot trail",
+          "requested_proof": "Obtain exact laboratory accreditation scope for method/analyte/matrix, report signatory, sample collection and chain of custody, lot identity, signed results and separate legal reviewer sign-off.",
+          "state": "NOT_RECEIVED_NOT_REVIEWED",
+          "approved": false,
+          "guide_only": true
+        }
+      ]
+    }
+  ],
+  "results": {
+    "no_actual_evidence_received": true,
+    "no_method_adoption_inferred": true,
+    "no_new_ctr_limit_inferred": true,
+    "no_regulatory_pass": true,
+    "prior_175_unsent_unchanged": true,
+    "wordpress_unchanged": true
+  }
+}
