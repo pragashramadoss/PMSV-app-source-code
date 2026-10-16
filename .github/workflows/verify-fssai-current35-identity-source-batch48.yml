@@ -1,0 +1,30 @@
+name: Verify FSSAI 14 primary FSSR identity proofs, 35 CTR holds (Batch48)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-exact-fssr-identity-primary-source-batch48-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-exact-fssr-identity-primary-source-batch48-2026-10-16.js'
+      - 'tests/fssai-current35-exact-fssr-identity-primary-source-batch48-2026-10-16.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-identity-source-batch48.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-verify-fssr-identity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Chromium dependencies
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check JS syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-exact-fssr-identity-primary-source-batch48-2026-10-16.js
+      - name: Inspect 14 exact FSSR sources, 21 other CTR holds and exports in browser
+        run: node tests/fssai-current35-exact-fssr-identity-primary-source-batch48-2026-10-16.test.cjs
