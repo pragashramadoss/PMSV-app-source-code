@@ -1,0 +1,31 @@
+name: Verify FSSAI Batch54 all 22 P1 cases and 110 evidence holds
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-p1-twentytwo-evidence-review-batch54-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-p1-twentytwo-evidence-review-batch54-2026-10-16.js'
+      - 'tests/fssai-current35-p1-22-110-evidence-batch54-2026-10-16.test.cjs'
+      - 'FSSAI-CURRENT35-BATCH54-P1-22-110-EVIDENCE-REVIEW-2026-10-16.md'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-p1-batch54.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-batch54:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Syntax-check reviewer workbench
+        run: node --check fssai-product-helper-preview-01/fssai-current35-p1-twentytwo-evidence-review-batch54-2026-10-16.js
+      - name: Verify P1 document lineage, regulatory exclusions, filters and CSV export
+        run: node tests/fssai-current35-p1-22-110-evidence-batch54-2026-10-16.test.cjs
