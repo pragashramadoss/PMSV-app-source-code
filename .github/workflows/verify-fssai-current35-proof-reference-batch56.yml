@@ -1,0 +1,31 @@
+name: Verify FSSAI Batch56 35-case 175-gate evidence-reference triage
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-175-proof-reference-triage-batch56-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-175-proof-reference-triage-batch56-2026-10-16.js'
+      - 'tests/fssai-current35-proof-reference-triage-batch56-2026-10-16.test.cjs'
+      - 'FSSAI-CURRENT35-BATCH56-175-EVIDENCE-REFERENCE-REVIEW-2026-10-16.md'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-proof-reference-batch56.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-batch56:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Syntax check Batch56 script
+        run: node --check fssai-product-helper-preview-01/fssai-current35-175-proof-reference-triage-batch56-2026-10-16.js
+      - name: Verify 35-case and 175 original requests, evidence reference import/export and zero-PASS controls
+        run: node tests/fssai-current35-proof-reference-triage-batch56-2026-10-16.test.cjs
