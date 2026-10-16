@@ -1,0 +1,31 @@
+name: Verify FSSAI Batch52 35 cases and 175 open evidence gates
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-175-open-evidence-gates-batch52-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-175-open-evidence-gates-batch52-2026-10-16.js'
+      - 'tests/fssai-current35-open-evidence-review-batch52-2026-10-16.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'FSSAI-CURRENT35-BATCH52-ALL35-175-DOCUMENTARY-GATES-2026-10-16.md'
+      - '.github/workflows/verify-fssai-current35-review-batch52.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-batch52:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: JavaScript syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-175-open-evidence-gates-batch52-2026-10-16.js
+      - name: Verify all 35 source-gated cases, UNSENT evidence and browser behaviour
+        run: node tests/fssai-current35-open-evidence-review-batch52-2026-10-16.test.cjs
