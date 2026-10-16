@@ -237,16 +237,20 @@ function pmsvB57Download(mode){
 function pmsvB57Feedback(v){
  const el=document.querySelector("[data-pmsv-b57-feedback]");if(el)el.textContent=v;
 }
-var pmsvB57EarlierLoader=pmsvLoadPositiveSourceProof;
-pmsvLoadPositiveSourceProof=async function(){
- await pmsvB57EarlierLoader();pmsvB57Data=null;
- try{
-  const r=await fetch(pmsvB57Path+"?v=20261016-b57",{cache:"reload"});
-  if(!r.ok)throw Error("Missing B57 dataset");pmsvB57Data=await r.json();
-  if(!pmsvB57Valid())throw Error("Batch57 immutable source/lineage check failed");
-  pmsvB57Refresh(true);
- }catch(_){pmsvB57Data=null;}
-};
+/* Freeze the prior loader in a private closure: duplicate module evaluations
+   must not overwrite one shared global and recursively call themselves. */
+(function(){
+ const previousLoader=pmsvLoadPositiveSourceProof;
+ pmsvLoadPositiveSourceProof=async function(){
+  await previousLoader();pmsvB57Data=null;
+  try{
+   const r=await fetch(pmsvB57Path+"?v=20261016-b57",{cache:"reload"});
+   if(!r.ok)throw Error("Missing B57 dataset");pmsvB57Data=await r.json();
+   if(!pmsvB57Valid())throw Error("Batch57 immutable source/lineage check failed");
+   pmsvB57Refresh(true);
+  }catch(_){pmsvB57Data=null;}
+ };
+})();
 if(typeof document!=="undefined"){
  document.addEventListener("input",ev=>{
   const t=ev.target;
