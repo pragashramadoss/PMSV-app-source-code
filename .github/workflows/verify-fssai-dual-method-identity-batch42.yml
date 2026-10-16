@@ -1,0 +1,30 @@
+name: Verify FSSAI duplicate 2024 method IDs and sanitized evidence requests (Batch42)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-dual-manual-method-conflict-batch42-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-dual-manual-method-conflict-batch42-2026-10-16.js'
+      - 'tests/fssai-current35-dual-manual-method-conflict-batch42-2026-10-16.test.cjs'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-dual-method-identity-batch42.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-batch42:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium for source-conflict release guard
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Validate Batch42 preview JavaScript syntax
+        run: node --check fssai-product-helper-preview-01/fssai-current35-dual-manual-method-conflict-batch42-2026-10-16.js
+      - name: Test conflicting method-number holds and safe CSV export in Chromium
+        run: node tests/fssai-current35-dual-manual-method-conflict-batch42-2026-10-16.test.cjs
