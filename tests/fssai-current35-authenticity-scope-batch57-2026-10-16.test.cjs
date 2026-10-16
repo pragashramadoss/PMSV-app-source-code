@@ -8,7 +8,7 @@ const js=fs.readFileSync(path.join(root,"fssai-current35-authentication-scope-pr
 const html=fs.readFileSync(path.join(root,"index.html"),"utf8");
 function digest(o){let a=0x811c9dc5,b=0x9747b28c;for(const ch of JSON.stringify(o)){let z=ch.charCodeAt(0);a=Math.imul(a^z,16777619);b=Math.imul(b^z,2246822519)}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")}
 assert.equal(d.inherited_batch56_digest,digest(b56));
-assert(js.includes('const pmsvB57Expected="'+digest(d)+'"'),"B57 digest mismatch");
+assert(js.includes('var pmsvB57Expected="'+digest(d)+'"'),"B57 digest mismatch");
 assert(html.includes("fssai-current35-authentication-scope-preflight-batch57-2026-10-16.js?v=20261016-b57"),"B57 script not integrated");
 assert.equal(d.kind,"PMSV_BATCH57_ALL35_FIVE_GATE_1295_SOURCE_AUTHENTICITY_LAB_SCOPE_PREFLIGHT");
 assert.equal(d.baseline_totals.catalogue,533);
