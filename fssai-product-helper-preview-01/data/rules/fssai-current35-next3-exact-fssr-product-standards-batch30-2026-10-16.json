@@ -1,0 +1,321 @@
+{
+  "schema_version": "1.0",
+  "kind": "PMSV_CURRENT35_ADDITIONAL_THREE_EXACT_FSSR_STANDARDS_BATCH30",
+  "as_of": "2026-10-16",
+  "stage": "GH_PAGES_PREVIEW_ONLY",
+  "current_official_fssr_compendium_version": "CH_2_7_V1_2023_09_01_AND_CH_2_9_V4_2025_08_01",
+  "legal_caveat": "FSSAI compendia are reference consolidations. Original notified Gazette text prevails if discrepancies arise.",
+  "ctr_reference": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "counts": {
+    "catalogue": 533,
+    "conditional_source_references": 498,
+    "pending_exact_ctr_first_sources": 35,
+    "previous_b29_named_fssr_standards": 7,
+    "new_named_fssr_standards": 3,
+    "total_named_fssr_research_standards": 10,
+    "source_quality_rules_checked": 25,
+    "ctr_source_promotions": 0,
+    "actual_lot_passes": 0,
+    "wordPress_mutations": 0
+  },
+  "rules_fallible_if_variant_unknown": true,
+  "cases": [
+    {
+      "catalog_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "product_name": "Dry Mixtures of Cocoa and Sugars",
+      "fssr": "2.7.6",
+      "fcs": "05.1.1",
+      "official_clause": "2.7.6",
+      "official_fssr_source": "https://stg-old.fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20(Sweets%20and%20Confectionary).pdf",
+      "official_pdf_pages_zero_based": [
+        9,
+        10,
+        11
+      ],
+      "identity_note": "Dry cocoa/sugar mixtures intended for direct consumption; product naming depends on cocoa powder mass proportion and fat class.",
+      "follow_up_evidence": "Finished product recipe, cocoa powder origin, dry-basis cocoa proportion, actual cocoa powder fat class and moisture COA.",
+      "requirements": [
+        {
+          "parameter": "Moisture",
+          "comparison": "max",
+          "value": 7,
+          "unit": "% m/m",
+          "finished_form": "All dry cocoa and sugar mixes",
+          "analytical_basis": "On as-sold dry mix",
+          "qualification": "Published direct requirement"
+        },
+        {
+          "parameter": "Cocoa powder content",
+          "comparison": "min",
+          "value": 25,
+          "unit": "% m/m",
+          "finished_form": "Sweetened cocoa / sweetened cocoa powder / drinking chocolate product designation",
+          "analytical_basis": "Finished dry mixture",
+          "qualification": "Threshold for this designation, not all dry mixes"
+        },
+        {
+          "parameter": "Cocoa powder content",
+          "comparison": "min",
+          "value": 20,
+          "unit": "% m/m",
+          "finished_form": "Sweetened cocoa mix / sweetened mixture with cocoa product designation",
+          "analytical_basis": "Finished dry mixture",
+          "qualification": "Separate permitted designation; not universal minimum"
+        },
+        {
+          "parameter": "Cocoa powder content",
+          "comparison": "max_exclusive",
+          "value": 20,
+          "unit": "% m/m",
+          "finished_form": "Sweetened cocoa-flavoured mix designation",
+          "analytical_basis": "Finished dry mixture",
+          "qualification": "Upper boundary for this designation"
+        },
+        {
+          "parameter": "Cocoa powder in chocolate powder",
+          "comparison": "min",
+          "value": 32,
+          "unit": "% w/w",
+          "finished_form": "Chocolate powder designation",
+          "analytical_basis": "As-sold chocolate powder",
+          "qualification": "The alternative dry matter equivalent in source is 29% w/w; do not combine bases"
+        },
+        {
+          "parameter": "Cocoa powder in chocolate powder (dry basis)",
+          "comparison": "min",
+          "value": 29,
+          "unit": "% w/w dry matter",
+          "finished_form": "Chocolate powder designation",
+          "analytical_basis": "Dry-matter equivalent",
+          "qualification": "Use only with validated dry matter analytical calculation"
+        }
+      ],
+      "exactly_named_fssr_standard_identified": true,
+      "finished_product_identity_verified": false,
+      "actual_batch_test_pass": false,
+      "ctr_scope_verified": false,
+      "approved_finished_ctr_limit": false
+    },
+    {
+      "catalog_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "fssr": "2.7.8",
+      "fcs": "05.1.1",
+      "official_clause": "2.7.8",
+      "official_fssr_source": "https://stg-old.fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20(Sweets%20and%20Confectionary).pdf",
+      "official_pdf_pages_zero_based": [
+        12,
+        13
+      ],
+      "identity_note": "Cocoa mass/liquor derives from grinding cocoa nibs, whereas cocoa cake comes from removing fat from nibs or mass.",
+      "follow_up_evidence": "Correct identity mass/liquor versus cake; cocoa-shell and germ fraction, fat-free dry-matter conversion, alkali basis and cocoa butter COA.",
+      "requirements": [
+        {
+          "parameter": "Moisture content",
+          "comparison": "max",
+          "value": 10,
+          "unit": "% m/m",
+          "finished_form": "Cocoa mass/liquor",
+          "analytical_basis": "As-sold product",
+          "qualification": "Mass/liquor column"
+        },
+        {
+          "parameter": "Moisture content",
+          "comparison": "max",
+          "value": 10,
+          "unit": "% m/m",
+          "finished_form": "Cocoa cake",
+          "analytical_basis": "As-sold product",
+          "qualification": "Cake column"
+        },
+        {
+          "parameter": "Cocoa shell and germ",
+          "comparison": "max",
+          "value": 5,
+          "unit": "% by weight",
+          "finished_form": "Cocoa mass/liquor",
+          "analytical_basis": "Fat-free dry matter",
+          "qualification": "Shell/germ fraction; not total husk on raw weight"
+        },
+        {
+          "parameter": "Cocoa shell and germ",
+          "comparison": "max",
+          "value": 5,
+          "unit": "% by weight",
+          "finished_form": "Cocoa cake",
+          "analytical_basis": "Fat-free dry matter",
+          "qualification": "Shell/germ fraction; not total husk on raw weight"
+        },
+        {
+          "parameter": "Cocoa shell (alkali-free basis)",
+          "comparison": "max",
+          "value": 1.75,
+          "unit": "% by weight",
+          "finished_form": "Cocoa mass/liquor",
+          "analytical_basis": "Alkali-free basis, cocoa shell only",
+          "qualification": "Not the 5% shell-plus-germ basis"
+        },
+        {
+          "parameter": "Cocoa shell (alkali-free basis)",
+          "comparison": "max",
+          "value": 4.5,
+          "unit": "% by weight",
+          "finished_form": "Cocoa cake",
+          "analytical_basis": "Alkali-free basis, cocoa shell only",
+          "qualification": "Cake-specific standard"
+        },
+        {
+          "parameter": "Cocoa butter",
+          "comparison": "min",
+          "value": 47,
+          "unit": "% by weight",
+          "finished_form": "Cocoa mass/liquor",
+          "analytical_basis": "As-sold cocoa mass",
+          "qualification": "Cocoa cake column is marked not applicable"
+        },
+        {
+          "parameter": "Cocoa butter",
+          "comparison": "max",
+          "value": 60,
+          "unit": "% by weight",
+          "finished_form": "Cocoa mass/liquor",
+          "analytical_basis": "As-sold cocoa mass",
+          "qualification": "Cocoa cake column is marked not applicable"
+        },
+        {
+          "parameter": "Total ash alkalinity as K2O",
+          "comparison": "max",
+          "value": 12,
+          "unit": "% by weight",
+          "finished_form": "Cocoa mass/liquor and cocoa cake",
+          "analytical_basis": "Moisture and fat-free basis",
+          "qualification": "Both variants"
+        },
+        {
+          "parameter": "Acid-insoluble ash",
+          "comparison": "max",
+          "value": 1,
+          "unit": "% by weight",
+          "finished_form": "Cocoa mass/liquor and cocoa cake",
+          "analytical_basis": "Moisture and fat-free basis",
+          "qualification": "Both variants"
+        },
+        {
+          "parameter": "Crude fibre",
+          "comparison": "max",
+          "value": 7,
+          "unit": "% by weight",
+          "finished_form": "Cocoa mass/liquor and cocoa cake",
+          "analytical_basis": "Moisture and fat-free basis",
+          "qualification": "Both variants"
+        }
+      ],
+      "exactly_named_fssr_standard_identified": true,
+      "finished_product_identity_verified": false,
+      "actual_batch_test_pass": false,
+      "ctr_scope_verified": false,
+      "approved_finished_ctr_limit": false
+    },
+    {
+      "catalog_id": "12-12-1-salt-substitutes",
+      "product_name": "Salt Substitutes",
+      "fssr": "2.9.30(6)",
+      "fcs": "12.1.2",
+      "official_clause": "2.9.30(6)",
+      "official_fssr_source": "https://stg-old.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt_Spices_Condiments%20and%20related%20products.pdf",
+      "official_pdf_pages_zero_based": [
+        36,
+        37
+      ],
+      "identity_note": "Salt substitute composition standards regulate permitted mineral salts, additives and label declarations separately from food-grade sodium chloride.",
+      "follow_up_evidence": "Final salt-substitute formula and COA: elemental sodium, phosphorus, ammonium, magnesium cation share, choline, anti-caking content and label disclosures.",
+      "requirements": [
+        {
+          "parameter": "Sodium in finished salt substitute",
+          "comparison": "max",
+          "value": 120,
+          "unit": "mg/100 g",
+          "finished_form": "All salt substitutes",
+          "analytical_basis": "As-sold salt-substitute mixture",
+          "qualification": "This is product composition, not CTR metal limit"
+        },
+        {
+          "parameter": "Phosphorus in permitted substitution mixture",
+          "comparison": "max",
+          "value": 4,
+          "unit": "% m/m",
+          "finished_form": "6(1)(a) and 6(1)(b) permitted mineral salt combinations",
+          "analytical_basis": "As-sold salt-substitute mixture",
+          "qualification": "Composition-specific, not universally applicable to every 6(1) item"
+        },
+        {
+          "parameter": "Ammonium NH4+",
+          "comparison": "max",
+          "value": 3,
+          "unit": "% m/m",
+          "finished_form": "6(1)(a) ammonium-containing substitution mixtures",
+          "analytical_basis": "As-sold salt-substitute mixture",
+          "qualification": "Ammonium salt case only"
+        },
+        {
+          "parameter": "Magnesium cation share",
+          "comparison": "max",
+          "value": 20,
+          "unit": "% of K+, Ca++ and NH4+ cations",
+          "finished_form": "6(1)(b) magnesium salts combined with permitted Mg-free substitute ingredients",
+          "analytical_basis": "Specified cation total basis",
+          "qualification": "Not 20% of whole finished substitute by mass"
+        },
+        {
+          "parameter": "Choline content",
+          "comparison": "max",
+          "value": 3,
+          "unit": "% m/m",
+          "finished_form": "6(1)(c) choline salts blended with permitted substitutes",
+          "analytical_basis": "As-sold salt-substitute mixture",
+          "qualification": "Only if choline component is present"
+        },
+        {
+          "parameter": "Colloidal silica / calcium silicate",
+          "comparison": "max",
+          "value": 1,
+          "unit": "% m/m combined",
+          "finished_form": "Optional anti-caking material permitted under 6(2)(a)",
+          "analytical_basis": "As-sold salt-substitute mixture",
+          "qualification": "Individually or in combination"
+        },
+        {
+          "parameter": "Mandatory low-sodium identity statement",
+          "comparison": "required",
+          "value": null,
+          "unit": "label declaration",
+          "finished_form": "All salt substitutes",
+          "analytical_basis": "Actual label text",
+          "qualification": "Low sodium salt substitute or low sodium dietetic salt"
+        },
+        {
+          "parameter": "Quantitative cation declaration",
+          "comparison": "required",
+          "value": null,
+          "unit": "label declaration",
+          "finished_form": "All salt substitutes",
+          "analytical_basis": "Actual label text",
+          "qualification": "Na, K, Ca, Mg, NH4, choline per 100 g m/m"
+        }
+      ],
+      "exactly_named_fssr_standard_identified": true,
+      "finished_product_identity_verified": false,
+      "actual_batch_test_pass": false,
+      "ctr_scope_verified": false,
+      "approved_finished_ctr_limit": false
+    }
+  ],
+  "results": {
+    "legal_product_identity_reference_found_for": 3,
+    "independent_ctr_scope_decisions": 0,
+    "verified_actual_lots": 0,
+    "canonical_ledger_modified": false,
+    "wordpress_modified": false
+  },
+  "instruction": "Standards and conditions apply only if the actual finished article matches the specified variant. These numerical values are FSSR compositional/quality limits, NOT CTR contaminant thresholds. Use no compliance PASS."
+}
