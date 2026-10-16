@@ -1,0 +1,64 @@
+"use strict";
+const assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path"),{spawn}=require("node:child_process"),{chromium}=require("playwright");
+const b="fssai-product-helper-preview-01",dir=path.join(b,"data/rules");
+const read=n=>JSON.parse(fs.readFileSync(path.join(dir,n),"utf8"));
+const d=read("fssai-current35-exact-fssr-identity-primary-source-batch48-2026-10-16.json");
+const old=read("fssai-current35-five-gate-readiness-batch44-2026-10-16.json");
+const js=fs.readFileSync(path.join(b,"fssai-current35-exact-fssr-identity-primary-source-batch48-2026-10-16.js"),"utf8");
+const html=fs.readFileSync(path.join(b,"index.html"),"utf8");
+function digest(o){let a=0x811c9dc5,b=0x9747b28c;for(const ch of JSON.stringify(o)){let z=ch.charCodeAt(0);a=Math.imul(a^z,16777619);b=Math.imul(b^z,2246822519)}return (a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")}
+assert(js.includes('const pmsvB48Expected="'+digest(d)+'"'));
+assert(html.includes("fssai-current35-exact-fssr-identity-primary-source-batch48-2026-10-16.js?v=20261016-b48"));
+assert.equal(d.kind,"PMSV_CURRENT35_FSSR_IDENTITY_CTR_NONTRANSFER_PRIMARY_SOURCE_BATCH48");
+assert.deepEqual([d.counts.catalog,d.counts.conditional_source_matches,d.counts.first_exact_ctr_pending,d.counts.direct_published_identity_clauses,d.counts.untouched_pending_cases,d.counts.distinct_pdf_chapters,d.counts.actual_lot_passes],[533,498,35,14,21,5,0]);
+const m=new Map(old.case_gate_dossiers.map(x=>[x.catalogue_id,x]));
+let known=0;
+for(const c of d.case_dossiers){const o=m.get(c.catalogue_id);assert(o);
+ assert.equal(c.inherited_legal_gate,o.new_five_gate_ids[2]);
+ assert.equal(c.commercial_product_identity_verified,false);assert.equal(c.actual_legal_ctr_article_verified,false);
+ assert.equal(c.lot_lab_pass,false);
+ if(c.identity_primary_clauses.length){known++;const s=c.identity_primary_clauses[0];
+ assert.equal(s.fssr_clause,c.fssr);assert.equal(s.source_verified_published_text,true);
+ assert(s.source_url.startsWith("https://")&&s.false_ctr_analogy_to_block.length>25);}
+}
+assert.equal(known,14);assert.equal(d.case_dossiers.length,35);
+const pick=r=>d.case_dossiers.find(x=>x.rank===r).identity_primary_clauses[0];
+assert(/IS:10500/.test(pick(1).primary_identity_finding));
+assert(/51%/.test(pick(2).primary_identity_finding));
+assert(/caseinate/.test(pick(7).primary_identity_finding));
+assert(/60%/.test(pick(7).primary_identity_finding));
+assert(/1.0%/.test(pick(18).primary_identity_finding));
+assert(/not sulphated/.test(pick(20).false_ctr_analogy_to_block));
+const port=18948,srv=spawn("python3",["-m","http.server",String(port),"--bind","127.0.0.1","--directory",b],{stdio:"ignore"});
+const sleep=n=>new Promise(r=>setTimeout(r,n));
+(async()=>{let browser;
+try{browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+ const pg=await browser.newPage({acceptDownloads:true}),errs=[];pg.on("pageerror",e=>errs.push(e.message));
+ let loaded=false;for(let k=0;k<40;k++)try{const r=await pg.goto("http://127.0.0.1:"+port+"/",{waitUntil:"domcontentloaded",timeout:15000});if(r?.ok()){loaded=true;break}}catch(_){await sleep(200)}
+ assert(loaded);
+ await pg.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+ assert(await pg.evaluate(()=>pmsvB48Valid()),"B48 source integrity not valid");
+ await pg.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();pmsvB48Refresh()});
+ const panel=pg.locator("#pmsv-b48-primary-identity");await panel.evaluate(el=>el.open=true);
+ assert.equal(await panel.locator("[data-pmsv-b48-rows] tr").count(),14);
+ await panel.locator("[data-pmsv-b48-group]").selectOption("REMAINING");
+ assert.equal(await panel.locator("[data-pmsv-b48-rows] tr").count(),21);
+ await panel.locator("[data-pmsv-b48-group]").selectOption("ALL");
+ assert.equal(await panel.locator("[data-pmsv-b48-rows] tr").count(),35);
+ await panel.locator("[data-pmsv-b48-group]").selectOption("VERIFIED");
+ await panel.locator("[data-pmsv-b48-search]").fill("Coconut Milk Powder");
+ assert.equal(await panel.locator("[data-pmsv-b48-rows] tr").count(),1);
+ await panel.locator("[data-pmsv-b48-inspect]").click();
+ assert.match(await panel.locator("[data-pmsv-b48-detail]").innerText(),/caseinate/i);
+ const draft=await pg.evaluate(()=>pmsvB48Draft(pmsvB48Rows()[0]));
+ assert(draft.includes("UNSENT / UNAPPROVED"));assert(draft.includes("CTR"));
+ await panel.locator("[data-pmsv-b48-search]").fill("");
+ const promise=pg.waitForEvent("download");await panel.locator('[data-pmsv-b48-export="ALL"]').click();
+ const download=await promise,csv=fs.readFileSync(await download.path(),"utf8");
+ assert.equal(csv.trim().split(/\r?\n/).length,36);
+ assert(csv.includes("NAMED_PUBLISHED_FSSR_CLAUSE_DIRECTLY_CHECKED"));
+ assert(!csv.includes("PASSED_REGULATORY"));
+ assert.equal(errs.filter(x=>/pmsvB48/.test(x)).length,0,errs.join("\n"));
+ console.log("B48 CHROMIUM VERIFIED: 14 primary FSSR identity routes + 21 unchanged, 35 open CTR, coconut caseinate/water/carob nontransfer, all CSV safe; zero PASS");
+}finally{if(browser)await browser.close();srv.kill("SIGTERM");}
+})().catch(e=>{console.error(e);process.exitCode=1;srv.kill("SIGTERM")});
