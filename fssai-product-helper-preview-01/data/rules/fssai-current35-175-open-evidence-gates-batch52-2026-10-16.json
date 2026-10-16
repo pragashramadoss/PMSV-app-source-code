@@ -1,0 +1,2524 @@
+{
+  "schema_version": "1.0",
+  "kind": "PMSV_BATCH52_35_CASE_175_UNSENT_GATE_REVIEW_AND_SOURCE_FRESHNESS",
+  "as_of": "2026-10-16",
+  "environment": "GITHUB_PAGES_FSSAI_PREVIEW_ONLY",
+  "source_policy": "PUBLIC_SOURCE_POINTERS_ONLY_NO_UNVERIFIED_CTR_APPROVAL",
+  "latest_non_specified_portal": "https://www.fssai.gov.in/standards/non-specified-food",
+  "latest_non_specified_register_date": "2026-09-01",
+  "prior_checked_sajji_register": "https://fssai.gov.in/upload/uploadfiles/files/Status_of_Application_as_on_03_06_2026.pdf",
+  "prior_checked_sajji_register_date": "2026-06-03",
+  "source_freshness_caution": "The FSSAI official portal indexes an application register as of 1 Sep 2026, but the latest PDF's specific Sajji Khar rows have not been inspected in this batch. June closed/withdrawn application names prove neither blanket approval nor blanket prohibition. Obtain exact applicant/authorization and recheck September PDF.",
+  "counts": {
+    "catalogue": 533,
+    "conditional_first_source_matches": 498,
+    "current_ctr_article_cases_pending": 35,
+    "previously_sourced_named_identity_references": 28,
+    "umbrella_material_identity_cases": 7,
+    "five_gate_requests": 175,
+    "gate_requests_per_case": 5,
+    "requests_sent": 0,
+    "case_documents_received": 0,
+    "signed_ctr_article_approvals": 0,
+    "matrix_approved_methods": 0,
+    "lot_passes": 0,
+    "previously_retained_advisory_lab_points": 280,
+    "previously_retained_future_law_prompts": 210,
+    "wordpress_changed": false
+  },
+  "gate_definitions": [
+    {
+      "code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+      "label": "Official method source and precedence",
+      "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+      "dependency": "NONE_INDEPENDENT",
+      "domain": "REGULATORY_METHOD"
+    },
+    {
+      "code": "COMMERCIAL_ARTICLE_IDENTITY",
+      "label": "Exact marketed product form",
+      "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+      "dependency": "NONE_INDEPENDENT",
+      "domain": "PRODUCT_IDENTITY"
+    },
+    {
+      "code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+      "label": "Current legal article and chemical",
+      "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+      "dependency": "COMMERCIAL_ARTICLE_IDENTITY",
+      "domain": "REGULATORY_SCOPE"
+    },
+    {
+      "code": "LAB_MATRIX_METHOD_AND_LOQ",
+      "label": "Matrix-validated laboratory assay",
+      "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+      "dependency": "SOURCE_VERSION_AND_METHOD_AUTHORITY;COMMERCIAL_ARTICLE_IDENTITY;LEGAL_CTR_ARTICLE_AND_ANALYTE",
+      "domain": "LABORATORY_METHOD"
+    },
+    {
+      "code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+      "label": "Actual traceable lot and separate reviewer decision",
+      "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+      "dependency": "COMMERCIAL_ARTICLE_IDENTITY;LEGAL_CTR_ARTICLE_AND_ANALYTE;LAB_MATRIX_METHOD_AND_LOQ",
+      "domain": "LOT_VERIFICATION"
+    }
+  ],
+  "cases": [
+    {
+      "rank": 1,
+      "catalogue_id": "purified-vending-water",
+      "product_name": "Drinking Water (Purified) sold through vending machine",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-01-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-01-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-01-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Drinking Water (Purified) sold through vending machine marketed form, signed BOM and physical sample; Need sale format (dispensed cup/bottle), water source, whether item is legally packaged drinking water and sample taken from tap/outlet. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-01-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Drinking Water (Purified) sold through vending machine, Lead and any other legally relevant substances; do not borrow 'Packaged drinking water (other than mineral water)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-01-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Drinking Water (Purified) sold through vending machine matrix; Water dispensed from a vending machine needs water-method scope and a legal drinking-water versus packaged-water assessment. A generic food digest method is not automatically valid. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-01-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Drinking Water (Purified) sold through vending machine through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "catalogue_id": "coffee-chicory-mixture",
+      "product_name": "Coffee-Chicory Mixture",
+      "analyte": "Ochratoxin A",
+      "analyte_family": "MYCOTOXINS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-02-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-02-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "No FSSAI metals method applies by implication; establish the correct named Ochratoxin A non-metal analyte method, official source and actual laboratory use. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-02-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Coffee-Chicory Mixture marketed form, signed BOM and physical sample; Need actual coffee/chicory percentages, roasted or soluble form and signed applicability of coffee OTA article to final blend. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-02-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Coffee-Chicory Mixture, Ochratoxin A and any other legally relevant substances; do not borrow 'Coffee' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-02-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Ochratoxin A on the actual Coffee-Chicory Mixture matrix; Toxin name, food and fat/moisture state, validated extraction/recovery, method-specific LOQ, relevant current FSSAI mycotoxins manual and signed CTR applicability required. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-02-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Coffee-Chicory Mixture through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "catalogue_id": "formulated-supplements-children",
+      "product_name": "Formulated supplements for children",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-03-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-03-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-03-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Formulated supplements for children marketed form, signed BOM and physical sample; Need target age range, product label, FSMP/FSDU status, manufacturer designation and ready-to-use versus powder basis. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-03-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Formulated supplements for children, Lead and any other legally relevant substances; do not borrow 'Infant formula / infant foods' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-03-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Formulated supplements for children matrix; Age, intended use and final product class must be established first; 09.006 measures chromium, not the current lead comparator, and infant-formula category does not automatically follow. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-03-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Formulated supplements for children through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "catalogue_id": "04-04-1-frozen-fruits-fruit-products",
+      "product_name": "Frozen Fruits/Fruit Products",
+      "analyte": "Residues",
+      "analyte_family": "UNSPECIFIED_RESIDUE",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-04-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-04-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "No FSSAI metals method applies by implication; establish the correct named Residues non-metal analyte method, official source and actual laboratory use. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-04-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Frozen Fruits/Fruit Products marketed form, signed BOM and physical sample; Need fruit species, specific crop pesticide(s), fresh/frozen/processed status and pesticide-specific commodity MRL; shell-free eggs row shown as a contrasting example only. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-04-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Frozen Fruits/Fruit Products, Residues and any other legally relevant substances; do not borrow 'Fruits and vegetables / processed fruit comparators' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-04-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Residues on the actual Frozen Fruits/Fruit Products matrix; No target chemical identified: first determine residue family and substance before selecting any method, MRL or screening assay. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-04-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Frozen Fruits/Fruit Products through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "catalogue_id": "04-04-1-catechu-edible",
+      "product_name": "Catechu (Edible)",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-05-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-05-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-05-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Catechu (Edible) marketed form, signed BOM and physical sample; Need exact edible catechu species/process, whether pure ingredient/extract vs chemical additive; 'chemicals other' not presumed. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-05-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Catechu (Edible), Lead and any other legally relevant substances; do not borrow 'Chemicals not otherwise specified used as ingredients' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-05-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Catechu (Edible) matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-05-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Catechu (Edible) through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "catalogue_id": "04-04-1-seedless-tamarind",
+      "product_name": "Seedless Tamarind",
+      "analyte": "Copper",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-06-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-06-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Copper. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-06-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Seedless Tamarind marketed form, signed BOM and physical sample; Need to know whole deseeded pulp flesh vs manufactured fruit pulp, water content, salt/preservative additions and origin. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-06-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Seedless Tamarind, Copper and any other legally relevant substances; do not borrow 'Pulp and pulp products of any fruit' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-06-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Copper on the actual Seedless Tamarind matrix; Method 09.001 lists approximate copper capability of 3 mg/kg, not a lab LOQ. Verify seedless pulp/form, method detection below applicable limit and whole-to-pulp legal comparator. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-06-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Seedless Tamarind through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "catalogue_id": "04-04-1-coconut-milk-powder",
+      "product_name": "COCONUT MILK POWDER",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-07-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-07-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-07-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual COCONUT MILK POWDER marketed form, signed BOM and physical sample; Need coconut vs dairy protein/fat sources, dehydration concentration factor and registered category; non-dairy coconut powder is not ordinary milk. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-07-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for COCONUT MILK POWDER, Lead and any other legally relevant substances; do not borrow 'Milks (with dehydration factor)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-07-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual COCONUT MILK POWDER matrix; Determine true coconut/non-dairy composition, fat content and matrix. 09.001 excludes dairy milk powder and high-fat food; whether its exclusions apply to this commercial coconut matrix requires laboratory evidence. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-07-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of COCONUT MILK POWDER through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "catalogue_id": "04-04-2-cocoa-beans",
+      "product_name": "Cocoa Beans",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-08-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-08-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-08-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Cocoa Beans marketed form, signed BOM and physical sample; Need beans raw/roasted whole or nibs, fat and moisture; powder-specific dry fat-free metal basis not transferred. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-08-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Cocoa Beans, Lead and any other legally relevant substances; do not borrow 'Cocoa powder (dry fat-free basis)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-08-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Cocoa Beans matrix; Whole cocoa beans must not adopt cocoa-powder CTR article or dry fat-free reporting basis. Verify whole-bean sample preparation, bean origin and legal article. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-08-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Cocoa Beans through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "catalogue_id": "05-05-1-dry-mixtures-of-cocoa-and-sugars",
+      "product_name": "Dry Mixtures of Cocoa and Sugars",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-09-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-09-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-09-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Dry Mixtures of Cocoa and Sugars marketed form, signed BOM and physical sample; Need cocoa solids%, sugar%, fat%, packing state and whether finished mix can legally be read as cocoa powder. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-09-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Dry Mixtures of Cocoa and Sugars, Lead and any other legally relevant substances; do not borrow 'Cocoa powder (dry fat-free basis)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-09-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Dry Mixtures of Cocoa and Sugars matrix; Complete cocoa/sugar/fat proportion and as-sold moisture basis required before interpreting 09.001 fat exclusion or dry fat-free basis. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-09-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Dry Mixtures of Cocoa and Sugars through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "catalogue_id": "05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake",
+      "product_name": "Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-10-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-10-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-10-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake marketed form, signed BOM and physical sample; Need cocoa mass/liquor vs press cake vs de-oiled powder, fat% and dry/fat-free conversion method. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-10-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake, Lead and any other legally relevant substances; do not borrow 'Cocoa powder (dry fat-free basis)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-10-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake matrix; Determine cocoa mass/liquor versus cocoa cake and actual fat %. 09.001 cannot be used if >=40% fat; no cocoa-powder contaminant row transferred. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-10-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Cocoa mass or Cocoa/Chocolate Liquor and Cocoa Cake through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "catalogue_id": "06-06-1-chia-seeds",
+      "product_name": "Chia Seeds",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-11-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-11-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-11-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Chia Seeds marketed form, signed BOM and physical sample; Need botanical chia identity and use; cereal grain label does not make Salvia hispanica a cereal. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-11-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Chia Seeds, Lead and any other legally relevant substances; do not borrow 'Cereal grains (specified exclusions)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-11-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Chia Seeds matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-11-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Chia Seeds through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "catalogue_id": "06-06-2-carob-powder",
+      "product_name": "Carob Powder",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-12-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-12-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-12-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Carob Powder marketed form, signed BOM and physical sample; Need carob botanical source, powder composition; bean/seed powder is not cocoa powder. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-12-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Carob Powder, Lead and any other legally relevant substances; do not borrow 'Cocoa powder (dry fat-free basis)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-12-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Carob Powder matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-12-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Carob Powder through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 13,
+      "catalogue_id": "06-06-2-arrowroot",
+      "product_name": "Arrowroot",
+      "analyte": "Pesticide MRLs",
+      "analyte_family": "PESTICIDE_RESIDUES",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-13-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-13-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "No FSSAI metals method applies by implication; establish the correct named Pesticide MRLs non-metal analyte method, official source and actual laboratory use. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-13-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Arrowroot marketed form, signed BOM and physical sample; Need botanical root source, milled starch vs grain origin; relevant named pesticide and processed-starch residue interpretation. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-13-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Arrowroot, Pesticide MRLs and any other legally relevant substances; do not borrow 'Milled food grains' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-13-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Pesticide MRLs on the actual Arrowroot matrix; Name each pesticide and residue definition, actual commodity, validated GC-MS or LC-MS method and individual MRL; broad 'pesticide residues' is not one measured analyte. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-13-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Arrowroot through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 14,
+      "catalogue_id": "06-06-2-water-chestnut-flour-singhare-ka-atta",
+      "product_name": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-14-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-14-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-14-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual WATER CHESTNUT FLOUR (SINGHARE KA ATTA) marketed form, signed BOM and physical sample; Need botanical water chestnut source and dried flour basis; word atta does not establish cereal grain identity. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-14-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for WATER CHESTNUT FLOUR (SINGHARE KA ATTA), Lead and any other legally relevant substances; do not borrow 'Cereal grains (specified exclusions)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-14-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual WATER CHESTNUT FLOUR (SINGHARE KA ATTA) matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-14-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of WATER CHESTNUT FLOUR (SINGHARE KA ATTA) through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 15,
+      "catalogue_id": "08-08-4-animal-casings",
+      "product_name": "Animal Casings",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-15-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-15-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-15-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Animal Casings marketed form, signed BOM and physical sample; Need species, intestinal versus muscle tissue and processing brine; meat fat row cannot be assigned solely on animal source. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-15-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Animal Casings, Lead and any other legally relevant substances; do not borrow 'Meat of cattle/sheep/pig' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-15-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Animal Casings matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-15-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Animal Casings through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 16,
+      "catalogue_id": "10-10-2-egg-powder",
+      "product_name": "Egg powder",
+      "analyte": "Pesticide MRLs",
+      "analyte_family": "PESTICIDE_RESIDUES",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-16-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-16-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "No FSSAI metals method applies by implication; establish the correct named Pesticide MRLs non-metal analyte method, official source and actual laboratory use. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-16-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Egg powder marketed form, signed BOM and physical sample; Need pesticide identity, whole egg or yolk/white, dryer concentration ratio and whether shell-free-basis correction is legally required. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-16-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Egg powder, Pesticide MRLs and any other legally relevant substances; do not borrow 'Eggs (shell-free basis)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-16-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Pesticide MRLs on the actual Egg powder matrix; Name each pesticide and residue definition, actual commodity, validated GC-MS or LC-MS method and individual MRL; broad 'pesticide residues' is not one measured analyte. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-16-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Egg powder through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 17,
+      "catalogue_id": "10-10-3-pickled-eggs",
+      "product_name": "Pickled Eggs",
+      "analyte": "Pesticide MRLs",
+      "analyte_family": "PESTICIDE_RESIDUES",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-17-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-17-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "No FSSAI metals method applies by implication; establish the correct named Pesticide MRLs non-metal analyte method, official source and actual laboratory use. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-17-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Pickled Eggs marketed form, signed BOM and physical sample; Need pesticide and species, edible egg proportion, pickling brine concentration and shell-free basis. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-17-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Pickled Eggs, Pesticide MRLs and any other legally relevant substances; do not borrow 'Eggs (shell-free basis)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-17-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Pesticide MRLs on the actual Pickled Eggs matrix; Name each pesticide and residue definition, actual commodity, validated GC-MS or LC-MS method and individual MRL; broad 'pesticide residues' is not one measured analyte. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-17-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Pickled Eggs through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 18,
+      "catalogue_id": "11-11-1-dried-glucose-syrup",
+      "product_name": "Dried Glucose Syrup",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-18-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-18-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-18-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Dried Glucose Syrup marketed form, signed BOM and physical sample; Need dried DE value, sulphated ash % and finished state; high-ash article only if actual ash criterion and category satisfied. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-18-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Dried Glucose Syrup, Lead and any other legally relevant substances; do not borrow 'Solid glucose / starch conversion products above 1% sulphated ash' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-18-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Dried Glucose Syrup matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-18-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Dried Glucose Syrup through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 19,
+      "catalogue_id": "11-11-1-edible-lactose",
+      "product_name": "Edible Lactose",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-19-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-19-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-19-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Edible Lactose marketed form, signed BOM and physical sample; Need pure lactose ingredient identity, purity and legal classification; milk-derived chemical not automatically dehydrated milk. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-19-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Edible Lactose, Lead and any other legally relevant substances; do not borrow 'Milks (with dehydration factor)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-19-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Edible Lactose matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-19-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Edible Lactose through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 20,
+      "catalogue_id": "11-11-1-misri",
+      "product_name": "Misri",
+      "analyte": "Chromium",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-20-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-20-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Chromium. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-20-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Misri marketed form, signed BOM and physical sample; Need crystal sugar origin, refined/pressed vs rock sugar identity and tested ash; chromium row names refined sugar. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-20-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Misri, Chromium and any other legally relevant substances; do not borrow 'Refined sugar' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-20-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Chromium on the actual Misri matrix; 09.006 chromium method scope is infant/nutritional products, not sugar crystals; request actual validated chromium method (e.g., verified 09.003 if sensitivity sufficient) and a signed sugar comparator determination. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-20-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Misri through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 21,
+      "catalogue_id": "11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th",
+      "product_name": "Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized",
+      "analyte": "Nickel",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": false,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-21-03",
+      "seven_material_intake": true,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain exact chemical/material identity and manufacturer-specific lawful-basis evidence; then obtain signed current CTR legal article.",
+      "gates": [
+        {
+          "request_id": "PMSV44-21-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Nickel. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-21-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized marketed form, signed BOM and physical sample; Need individual INS/CAS polyol; sorbitol Ni row cannot apply to xylitol/erythritol blend. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-21-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized, Nickel and any other legally relevant substances; do not borrow 'Sorbitol' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-21-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Nickel on the actual Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized matrix; Nickel in 09.006 is an internal standard, not the analyte. A named polyol and Ni-validated method with adequate LOQ are needed; 09.003 wavelength mention is not proof of accuracy. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-21-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 22,
+      "catalogue_id": "12-12-1-salt-substitutes",
+      "product_name": "Salt Substitutes",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-22-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-22-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-22-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Salt Substitutes marketed form, signed BOM and physical sample; Need salt substitute composition and sodium chloride %, KCl components and individual standards before ordinary food salt metal row. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-22-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Salt Substitutes, Lead and any other legally relevant substances; do not borrow 'Salt, food grade' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-22-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Salt Substitutes matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-22-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Salt Substitutes through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 23,
+      "catalogue_id": "99-99-1-trehalose",
+      "product_name": "Trehalose",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-23-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-23-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-23-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Trehalose marketed form, signed BOM and physical sample; Need trehalose grade, purity, actual sulphated ash and whether named high-ash sugar formulation applies. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-23-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Trehalose, Lead and any other legally relevant substances; do not borrow 'All types of sugars with sulphated ash exceeding 1.0%' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-23-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Trehalose matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-23-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Trehalose through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 24,
+      "catalogue_id": "99-99-1-sajji-khar",
+      "product_name": "Sajji Khar",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": false,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-24-03",
+      "seven_material_intake": true,
+      "status_register_row_unverified": true,
+      "immediate_next_action": "Obtain exact chemical/material identity and manufacturer-specific lawful-basis evidence; then obtain signed current CTR legal article.",
+      "gates": [
+        {
+          "request_id": "PMSV44-24-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-24-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Sajji Khar marketed form, signed BOM and physical sample; Need actual Sajji Khar carbonate/alkali composition, supplier lawful status; closed novel food application not authority. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-24-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Sajji Khar, Lead and any other legally relevant substances; do not borrow 'Sodium hydroxide' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-24-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Sajji Khar matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-24-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Sajji Khar through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 25,
+      "catalogue_id": "99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-",
+      "product_name": "Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": false,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-25-03",
+      "seven_material_intake": true,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain exact chemical/material identity and manufacturer-specific lawful-basis evidence; then obtain signed current CTR legal article.",
+      "gates": [
+        {
+          "request_id": "PMSV44-25-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-25-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations marketed form, signed BOM and physical sample; Need individual INS/CAS additive, grade, impurity monograph, usage category, not umbrella class. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-25-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations, Lead and any other legally relevant substances; do not borrow 'Sorbitol / individually named additives' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-25-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-25-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 26,
+      "catalogue_id": "99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
+      "product_name": "Additives VA-VF of Nutraceutical Regulations excluding those already standardised",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": false,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-26-03",
+      "seven_material_intake": true,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain exact chemical/material identity and manufacturer-specific lawful-basis evidence; then obtain signed current CTR legal article.",
+      "gates": [
+        {
+          "request_id": "PMSV44-26-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-26-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Additives VA-VF of Nutraceutical Regulations excluding those already standardised marketed form, signed BOM and physical sample; Need 2016/2021 schedule VA–VF exact entry crosswalk to operative 2022/2024 nutraceutical sources. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-26-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Additives VA-VF of Nutraceutical Regulations excluding those already standardised, Lead and any other legally relevant substances; do not borrow 'Individually named additives / chemicals' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-26-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Additives VA-VF of Nutraceutical Regulations excluding those already standardised matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-26-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Additives VA-VF of Nutraceutical Regulations excluding those already standardised through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 27,
+      "catalogue_id": "99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
+      "product_name": "Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": false,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-27-03",
+      "seven_material_intake": true,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain exact chemical/material identity and manufacturer-specific lawful-basis evidence; then obtain signed current CTR legal article.",
+      "gates": [
+        {
+          "request_id": "PMSV44-27-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-27-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations marketed form, signed BOM and physical sample; Need enzyme EC, donor organism, source, carrier and processing role; generic chemicals comparator not proof. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-27-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations, Lead and any other legally relevant substances; do not borrow 'Chemicals not otherwise specified used as ingredients' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-27-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-27-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 28,
+      "catalogue_id": "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
+      "product_name": "Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations",
+      "analyte": "Aflatoxins",
+      "analyte_family": "MYCOTOXINS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": false,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-28-03",
+      "seven_material_intake": true,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain exact chemical/material identity and manufacturer-specific lawful-basis evidence; then obtain signed current CTR legal article.",
+      "gates": [
+        {
+          "request_id": "PMSV44-28-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "No FSSAI metals method applies by implication; establish the correct named Aflatoxins non-metal analyte method, official source and actual laboratory use. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-28-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations marketed form, signed BOM and physical sample; Need named ingredient and source crop; old Schedules IV/VI/VIII not a ready-to-use classification for 2022 nutraceutical. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-28-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations, Aflatoxins and any other legally relevant substances; do not borrow 'Food containing listed crop articles' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-28-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Aflatoxins on the actual Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations matrix; Toxin name, food and fat/moisture state, validated extraction/recovery, method-specific LOQ, relevant current FSSAI mycotoxins manual and signed CTR applicability required. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-28-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 29,
+      "catalogue_id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "product_name": "Mixtures/preparations/premix of functional ingredients",
+      "analyte": "Aflatoxins",
+      "analyte_family": "MYCOTOXINS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": false,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-29-03",
+      "seven_material_intake": true,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain exact chemical/material identity and manufacturer-specific lawful-basis evidence; then obtain signed current CTR legal article.",
+      "gates": [
+        {
+          "request_id": "PMSV44-29-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "No FSSAI metals method applies by implication; establish the correct named Aflatoxins non-metal analyte method, official source and actual laboratory use. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-29-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Mixtures/preparations/premix of functional ingredients marketed form, signed BOM and physical sample; Need complete premix BOM % and crop/seed/nut/spice ingredients with actual toxin class and testing basis. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-29-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Mixtures/preparations/premix of functional ingredients, Aflatoxins and any other legally relevant substances; do not borrow 'Food containing listed crop articles' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-29-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Aflatoxins on the actual Mixtures/preparations/premix of functional ingredients matrix; Toxin name, food and fat/moisture state, validated extraction/recovery, method-specific LOQ, relevant current FSSAI mycotoxins manual and signed CTR applicability required. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-29-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Mixtures/preparations/premix of functional ingredients through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 30,
+      "catalogue_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+      "product_name": "Cow or Buffalo Colostrum and Colostrum Products",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-30-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-30-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-30-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Cow or Buffalo Colostrum and Colostrum Products marketed form, signed BOM and physical sample; Need colostrum source, pure vs formulated concentrate and dehydration factor, distinct from ordinary milk. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-30-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Cow or Buffalo Colostrum and Colostrum Products, Lead and any other legally relevant substances; do not borrow 'Milks (with dehydration factor)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-30-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Cow or Buffalo Colostrum and Colostrum Products matrix; FSSAI dairy method 0.010:2023 is a mineral panel that omits lead. Ask for separate validated lead test and colostrum product form and legal article. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-30-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Cow or Buffalo Colostrum and Colostrum Products through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 31,
+      "catalogue_id": "100-100-royal-jelly",
+      "product_name": "Royal Jelly",
+      "analyte": "Antibiotics",
+      "analyte_family": "VETERINARY_DRUG_RESIDUES",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-31-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-31-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "No FSSAI metals method applies by implication; establish the correct named Antibiotics non-metal analyte method, official source and actual laboratory use. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-31-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Royal Jelly marketed form, signed BOM and physical sample; Need honey vs royal jelly classification, drug chemical and bee-production evidence; animal tissue/honey mapping conditional. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-31-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Royal Jelly, Antibiotics and any other legally relevant substances; do not borrow 'Honey (honey antibiotic-production context)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-31-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Antibiotics on the actual Royal Jelly matrix; Royal jelly is not automatically honey; name the antibiotic compound, actual bee-source matrix and species-specific residue method and legal scope. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-31-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Royal Jelly through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 32,
+      "catalogue_id": "100-100-silver-leaf-chandi-ka-warq",
+      "product_name": "SILVER LEAF (Chandi-ka-warq)",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-32-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-32-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-32-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual SILVER LEAF (Chandi-ka-warq) marketed form, signed BOM and physical sample; Need actual edible silver foil substance purity and current distinct FSSR metal spec; fallback foods not specified not automatic. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-32-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for SILVER LEAF (Chandi-ka-warq), Lead and any other legally relevant substances; do not borrow 'Foods not specified (metal-specific fallback)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-32-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual SILVER LEAF (Chandi-ka-warq) matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-32-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of SILVER LEAF (Chandi-ka-warq) through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 33,
+      "catalogue_id": "102-102-1-14-3-narikela-ksheerika-milky-coconut-delight",
+      "product_name": "14.3 - Narikela Ksheerika (Milky Coconut Delight)",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-33-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-33-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-33-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual 14.3 - Narikela Ksheerika (Milky Coconut Delight) marketed form, signed BOM and physical sample; Need approved Ayurveda Aahara product identity, coconut/milk recipe and real marketed form; classical recipe not milk article. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-33-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for 14.3 - Narikela Ksheerika (Milky Coconut Delight), Lead and any other legally relevant substances; do not borrow 'Milks (with dehydration factor)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-33-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual 14.3 - Narikela Ksheerika (Milky Coconut Delight) matrix; Prove real coconut/milk recipe and fat %, sample basis, correct matrix method, regulatory article and licensing; an official recipe does not validate method or commercial formulation. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-33-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of 14.3 - Narikela Ksheerika (Milky Coconut Delight) through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 34,
+      "catalogue_id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+      "product_name": "14.7 - Ksheerapaka (Mystic Milk Quartet)",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P0_SPECIFIC_METHOD_RISK",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-34-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-34-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-34-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual 14.7 - Ksheerapaka (Mystic Milk Quartet) marketed form, signed BOM and physical sample; Need buffalo milk, aromatic flower, sugar/water composition and licencing; dairy content alone is not finished milk article. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-34-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for 14.7 - Ksheerapaka (Mystic Milk Quartet), Lead and any other legally relevant substances; do not borrow 'Milks (with dehydration factor)' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-34-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual 14.7 - Ksheerapaka (Mystic Milk Quartet) matrix; Buffalo milk and flower infusion require actual batch formula, botanical identity, fat %, method validation and dry/fresh reporting basis; ordinary milk limits are not automatically assigned. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-34-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of 14.7 - Ksheerapaka (Mystic Milk Quartet) through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    },
+    {
+      "rank": 35,
+      "catalogue_id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "product_name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "analyte": "Lead",
+      "analyte_family": "TRACE_METALS",
+      "priority": "P1_ORDINARY_SCOPE_GATING",
+      "product_standard_identity_source_known": true,
+      "real_commercial_identity_verified": false,
+      "case_owner_assignment": "NOT_ASSIGNED_IN_REPOSITORY",
+      "current_ctr_legal_article_signed": false,
+      "matrix_method_validated": false,
+      "lot_pass": false,
+      "upstream_legal_gate": "PMSV44-35-03",
+      "seven_material_intake": false,
+      "status_register_row_unverified": false,
+      "immediate_next_action": "Obtain signed actual as-sold commercial form/formulation and applicable current CTR commodity/analyte mapping; published product-standard identity alone is insufficient.",
+      "gates": [
+        {
+          "request_id": "PMSV44-35-01",
+          "gate_code": "SOURCE_VERSION_AND_METHOD_AUTHORITY",
+          "label": "Official method source and precedence",
+          "owner_role": "FSSAI_QA_DIVISION_AND_LAB_DIRECTOR",
+          "requested_evidence": "The 52-page consultation Metals & Minerals manual is NOT verified as final; the other 61-page Trace Elements 09.xxx methods collide. Request exact full PDF and any relevant FSSAI adopted-method order for Lead. Identify method manual title/date/PDF URL, full procedure title, finalisation and adoption/supersession order; resolve conflicting 2024 09.xxx identifiers.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-35-02",
+          "gate_code": "COMMERCIAL_ARTICLE_IDENTITY",
+          "label": "Exact marketed product form",
+          "owner_role": "MANUFACTURER_OR_SUPPLIER_QA",
+          "requested_evidence": "Prove actual Dietary Fibre (Dextrin-soluble fibre) marketed form, signed BOM and physical sample; Need actual fibre dextrin chemical identity vs solid glucose, ash %, purity and exact finished ingredient. Obtain signed formulation/market label, actual product category and processed, fat, moisture, wet/dry/reconstitution basis of the commercial sample.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-35-03",
+          "gate_code": "LEGAL_CTR_ARTICLE_AND_ANALYTE",
+          "label": "Current legal article and chemical",
+          "owner_role": "REGULATORY_AFFAIRS_LEGAL",
+          "requested_evidence": "Resolve exact legal CTR article for Dietary Fibre (Dextrin-soluble fibre), Lead and any other legally relevant substances; do not borrow 'Solid glucose / starch conversion products above 1% sulphated ash' from a merely similar article. Apply currently effective original CTR and amendments to the exact sold finished article and named analyte, without transferring comparator product rows.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-35-04",
+          "gate_code": "LAB_MATRIX_METHOD_AND_LOQ",
+          "label": "Matrix-validated laboratory assay",
+          "owner_role": "LABORATORY_TECHNICAL_MANAGER",
+          "requested_evidence": "The proposed test must quantify Lead on the actual Dietary Fibre (Dextrin-soluble fibre) matrix; Confirm target element, actual matrix and legal reporting basis. For lead review 09.005 and 09.001 scope/approx capability; no lab method assumed. Also provide method/version, FSSAI source precedence where relevant, laboratory's NABL/accreditation scope and validated LOQ. Confirm named method title and original PDF, method version, test analyte, sample matrix, accredited scope, batch blanks/recovery and LOQ below an independently signed applicable legal threshold.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        },
+        {
+          "request_id": "PMSV44-35-05",
+          "gate_code": "LOT_COA_AND_INDEPENDENT_SIGNOFF",
+          "label": "Actual traceable lot and separate reviewer decision",
+          "owner_role": "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER",
+          "requested_evidence": "Trace sample lot of Dietary Fibre (Dextrin-soluble fibre) through procurement/production, sampling/COA, results, uncertainty, legal numeric basis and signed independent disposition. Obtain original representative sample chain-of-custody, signed report, quantified result, uncertainty, legally correct basis and separate reviewer decision.",
+          "task_state": "UNSENT_NO_DOCUMENT_RECEIVED",
+          "document_received": false,
+          "signed_review_completed": false
+        }
+      ]
+    }
+  ],
+  "results": {
+    "all_35_have_five_open_documentary_gates": true,
+    "no_legal_or_lot_approvals": true,
+    "source_freshness_not_misrepresented": true,
+    "word_press_unchanged": true
+  }
+}
