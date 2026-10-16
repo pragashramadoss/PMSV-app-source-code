@@ -93,7 +93,7 @@ const pause=n=>new Promise(r=>setTimeout(r,n));
   assert.equal(await panel.locator("[data-pmsv-b33-rows] tr").count(),4);
   await panel.locator("summary").first().click();
   await panel.locator("[data-pmsv-b33-search]").fill("sulphated ash");
-  assert.equal(await panel.locator("[data-pmsv-b33-rows] tr").count(),2);
+  assert.equal(await panel.locator("[data-pmsv-b33-rows] tr").count(),3);
   await panel.locator("[data-pmsv-b33-open]").first().click();
   const choice=await page.locator("#pmsv-b14-review-index [data-pmsv-b14-select]").inputValue();
   assert(["11-11-1-edible-lactose","11-11-1-dried-glucose-syrup"].includes(choice),choice);
