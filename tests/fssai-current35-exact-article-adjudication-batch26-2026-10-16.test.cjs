@@ -64,6 +64,7 @@ const sleep=n=>new Promise(r=>setTimeout(r,n));
   await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&
    ["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
   assert(await page.evaluate(()=>pmsvB26Valid()),"B26 official source identity verification blocked");
+  assert(await page.evaluate(()=>pmsvB27Valid()),"B27 statutory CTR rows not integrity validated");
   const status=await page.evaluate(()=>({
    catalogue:pmsv498Ledger.records.length,
    conditional:pmsv498Ledger.partial_exact,
@@ -73,7 +74,7 @@ const sleep=n=>new Promise(r=>setTimeout(r,n));
    passes:pmsvB26Data.results.lot_passes
   }));
   assert.deepEqual(status,{catalogue:533,conditional:498,pending:35,rows:35,legal:0,passes:0});
-  await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();pmsvB26Refresh();});
+  await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();pmsvB26Refresh();pmsvB27Refresh();});
   const panel=page.locator("#pmsv-b26-exact-article-adjudication");
   await panel.locator("summary").first().click();
   await panel.locator("[data-pmsv-b26-search]").fill("silver leaf");
@@ -89,6 +90,22 @@ const sleep=n=>new Promise(r=>setTimeout(r,n));
   assert(proof.x.legal_scope_obstacle.includes("different fat/matrix"));
   assert.equal(proof.x.confirmed_finished_numeric_limit,false);
   assert.equal(proof.result,35);
+  const sourcePanel=page.locator("#pmsv-b27-current-source-rows");
+  assert.equal(await sourcePanel.locator("[data-pmsv-b27-rows] tr").count(),17);
+  await sourcePanel.locator("summary").first().click();
+  await sourcePanel.locator("[data-pmsv-b27-search]").fill("sorbitol");
+  assert.equal(await sourcePanel.locator("[data-pmsv-b27-rows] tr").count(),3);
+  await sourcePanel.locator("[data-pmsv-b27-search]").fill("");
+  assert.equal(await sourcePanel.locator("[data-pmsv-b27-rows] tr").count(),17);
+  const statutory=await page.evaluate(()=>({
+   total:pmsvB27Data.rows.length,
+   cases:new Set(pmsvB27Data.rows.flatMap(x=>x.catalog_ids)).size,
+   noApproved:pmsvB27Data.rows.every(x=>x.finished_product_scope_verified===false&&
+    x.regulatory_limit_auto_assigned===false&&x.lot_conformity_verified===false),
+   cocoaComparisons:pmsvB27Linked("05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake").length,
+   pending:pmsv498Ledger.first_source_pending
+  }));
+  assert.deepEqual(statutory,{total:17,cases:13,noApproved:true,cocoaComparisons:2,pending:35});
   assert.equal(errors.filter(s=>/pmsvB26/.test(s)).length,0,errors.join(" / "));
   console.log("B26 VERIFIED 35 exact CTR research comparators and browser actions",JSON.stringify(status));
  }finally{if(browser)await browser.close();server.kill("SIGTERM")}
