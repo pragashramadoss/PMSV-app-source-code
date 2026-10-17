@@ -100,6 +100,15 @@ The same manual lists **FSSAI 07.017** and **07.018** for **ochratoxin in barley
 
 The [2018 notified FSSR children’s formulated supplements Gazette](https://www.fssai.gov.in/upload/notifications/2018/11/5bfd0a04c4d4bGazette_Notification_Children_Supplement_26_11_2018.pdf) is an original product-standard reference for the article **formulated supplements for children above 24 months until 36 months**, rather than a default infant formula. This provides a source for determining the proposed commercial product class, but is **not** a legal lead threshold, age proof for a particular branded product or official permission to apply an infant-food lead value. Verify the actual intended-age, recipe, reconstitution and marketing category with the manufacturer plus applicable later legal amendments.
 
+## Precisely scoped Ayurveda Aahara Category A licensing — cases #33 and #34
+
+The original [FSSAI FoSCoS Order of 1 September 2025](https://www.fssai.gov.in/upload/advisories/2025/09/68b67efa6f47520250902103601289.pdf) introduced a distinct **Ayurveda Aahara Kind of Business** under manufacturer, with **Central Licence** eligibility. It distinguishes **Category A (102.1)** listed recipes from **Category B (102.2)**:
+
+- For a **listed Category A recipe**, a manufacturer may select the standardized list product **without a separate HQ product approval letter**. This does **not** waive the applicable licence or actual recipe-composition requirements.
+- An FSSAI HQ approval letter is separately required **if a Category A disease-risk-reduction claim is used**.
+- The Order states a prior FSSAI HQ product approval for **Category B**; do not automatically transfer that requirement to the listed Category A recipes.
+- The two cases here—**Narikela Ksheerika #33** and **Ksheerapaka #34**—are listed as Category A recipes by the 25 July 2025 order. Their **actual marketed manufacturers' licence, recipes, applicable lead article and traceable laboratory results remain unavailable**. No Pb standard is decided by the licence order.
+
 ## June 2026 actual non-specified food application statuses — cases #23 / #24
 
 The [original June 3, 2026 NSF/FI status register](https://fssai.gov.in/upload/uploadfiles/files/Status_of_Application_as_on_03_06_2026.pdf) contains the following records under the explicitly titled **"Closed / Withdrawn"** subsection:
