@@ -19,7 +19,8 @@ function valid(){
  if(!window.pmsvB59CTRSourceCrosswalk?.valid()||
   typeof window.pmsvB59CTRSourceCrosswalk.getAllCases!=="function"||
   typeof pmsvB14Digest!=="function"||!dataset||
-  pmsvB14Digest(dataset)!==expected||!pmsvB56Valid())return false;
+  /* B72: ancestor required by the immediate validated predecessor; no gate bypass. */
+ pmsvB14Digest(dataset)!==expected)return false;
  const d=dataset,t=d.totals;
  if(d.kind!=="PMSV_BATCH60_PENDING20_OPERATIVE_SCOPE_TRIAGE_NO_APPROVAL"||
     d.as_of!=="2026-10-17"||d.environment!=="GITHUB_PAGES_FSSAI_PREVIEW_ONLY"||

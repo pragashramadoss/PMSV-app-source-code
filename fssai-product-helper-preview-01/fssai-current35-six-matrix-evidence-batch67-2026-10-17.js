@@ -5,8 +5,8 @@ const source="./data/rules/fssai-current35-six-matrix-evidence-batch67-2026-10-1
 const pinned="05ddea87850b1e3e";
 const groups={OTA_COFFEE_BLEND:"Ochratoxin: coffee/chicory",PESTICIDE_FROZEN_FRUIT:"Residues: frozen fruits",PESTICIDE_ARROWROOT:"MRL: arrowroot starch",PESTICIDE_EGG_POWDER:"MRL: dehydrated eggs",PESTICIDE_PICKLED_EGGS:"MRL: pickled eggs",ANTIBIOTIC_ROYAL_JELLY:"Antibiotics: royal jelly"};
 function valid(){
- if(!window.pmsvB59CTRSourceCrosswalk?.valid()||!window.pmsvB60LegalScope?.valid()||
- !window.pmsvB66NutraIngredientAudit?.valid()||typeof window.pmsvB59CTRSourceCrosswalk.getAllCases!=="function"||
+ /* B72: ancestor required by the immediate validated predecessor; no gate bypass. */
+ if(!window.pmsvB66NutraIngredientAudit?.valid()||typeof window.pmsvB59CTRSourceCrosswalk.getAllCases!=="function"||
  typeof pmsvB14Digest!=="function"||!data||pmsvB14Digest(data)!==pinned)return false;
  const t=data.totals,c=data.controls,originals=window.pmsvB59CTRSourceCrosswalk.getAllCases();
  if(data.kind!=="PMSV_BATCH67_6_EXACT_ANALYTE_MATRIX_NONTRANSFER"||data.surface!=="GITHUB_PAGES_FSSAI_PREVIEW_ONLY"||

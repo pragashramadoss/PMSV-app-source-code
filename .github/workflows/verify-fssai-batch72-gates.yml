@@ -1,0 +1,48 @@
+name: Verify FSSAI Batch72 transitive source safety and full opt-in
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-current35-reference-row-nontransfer-batch59-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/fssai-current35-remaining20-legal-scope-review-batch60-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/fssai-current35-original-gazette-subjects-batch61-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/fssai-current35-vending-children-polyols-batch64-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/fssai-current35-nutra-ingredient-scope-batch66-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/fssai-current35-six-matrix-evidence-batch67-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/fssai-current35-remaining12-p1-lead-batch68-2026-10-17.js'
+      - 'tests/fssai-batch72-transitive-gates.test.cjs'
+      - '.github/workflows/verify-fssai-batch72-gates.yml'
+      - 'FSSAI-CURRENT35-BATCH72-PERFORMANCE-2026-10-17.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  batch72-source-validator-deduplication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify changed sources and tests parse
+        run: |
+          for f in fssai-product-helper-preview-01/fssai-current35-*batch{59,60,61,63,64,66,67,68}*.js; do
+            node --check "$f"
+          done
+          node --check tests/fssai-batch72-transitive-gates.test.cjs
+          node --check tests/fssai-batch71-full-extended-research.test.cjs
+      - name: Verify ancestor transitivity and unchanged holds
+        run: |
+          node tests/fssai-batch72-transitive-gates.test.cjs
+          node tests/fssai-current35-batch69-all35-source-coverage.test.cjs
+      - name: Full real-browser optional research regression and negative gates
+        run: node tests/fssai-batch71-full-extended-research.test.cjs
+        timeout-minutes: 9
+      - name: Verify browser failed-source behavior
+        run: node tests/fssai-batch71-fail-closed.test.cjs

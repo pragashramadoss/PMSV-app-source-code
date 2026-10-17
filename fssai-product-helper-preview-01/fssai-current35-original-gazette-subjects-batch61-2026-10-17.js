@@ -7,7 +7,8 @@ const source="./data/rules/fssai-current35-original-gazette-subjects-batch61-202
 const digest="6150a34a1cdf8019";
 const allowedScope=["ALL","CTR","IDENTITY","PENDING"];
 function valid(){
- if(!window.pmsvB60LegalScope?.valid()||!window.pmsvB59CTRSourceCrosswalk?.valid()||
+ /* B72: ancestor required by the immediate validated predecessor; no gate bypass. */
+ if(!window.pmsvB60LegalScope?.valid()||
   typeof window.pmsvB59CTRSourceCrosswalk.getAllCases!=="function"||
   typeof pmsvB14Digest!=="function"||!doc||pmsvB14Digest(doc)!==digest)return false;
  const t=doc.totals,ps=window.pmsvB59CTRSourceCrosswalk.getAllCases();

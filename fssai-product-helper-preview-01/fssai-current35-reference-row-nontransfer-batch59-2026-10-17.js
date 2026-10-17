@@ -7,10 +7,8 @@ var data=null,priority="ALL",research="ALL",search="";
 const endpoint="./data/rules/fssai-current35-reference-row-nontransfer-batch59-2026-10-17.json";
 const pinned="6791743a07c12e4f";
 function valid(){
- if(typeof pmsvB56Valid!=="function"||!pmsvB56Valid()||
-    typeof pmsvB57PlusValid!=="function"||!pmsvB57PlusValid()||
-    typeof pmsvB57Valid!=="function"||!pmsvB57Valid()||
-    !window.pmsvB58OwnerOutreach||!window.pmsvB58OwnerOutreach.valid()||
+ /* B72: ancestor required by the immediate validated predecessor; no gate bypass. */
+ if(!window.pmsvB58OwnerOutreach?.valid()||
     typeof pmsvB14Digest!=="function"||!data||pmsvB14Digest(data)!==pinned)return false;
  const t=data.totals,prior=new Map(pmsvB56Data.cases.map(c=>[c.catalogue_id,c]));
  if(data.kind!=="PMSV_BATCH59_OFFICIAL_CTR_REFERENCE_EXCERPT_CROSSWALK_NONTRANSFER"||

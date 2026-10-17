@@ -6,8 +6,8 @@ let data=null,family="ALL",query="";
 const url="./data/rules/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.json";
 const pin="140fc87db12ae89a";
 function valid(){
+ /* B72: ancestor required by the immediate validated predecessor; no gate bypass. */
  if(!window.pmsvB62IdentitySupersession?.valid()||
-    !window.pmsvB59CTRSourceCrosswalk?.valid()||
     typeof pmsvB14Digest!=="function"||!data||pmsvB14Digest(data)!==pin)return false;
  const t=data.totals,held=window.pmsvB59CTRSourceCrosswalk.getAllCases(),
   old=new Map(held.map(c=>[c.rank,c]));

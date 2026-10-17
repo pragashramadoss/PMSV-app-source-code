@@ -11,8 +11,8 @@ const groups={LEAD_INDIVIDUAL_CHEMICAL:"Additives: specific substance and purity
  AFLATOXIN_RAW_INGREDIENT:"Aflatoxins: source crop ingredient",
  AFLATOXIN_PREMIX:"Aflatoxins: actual mixed ingredient BOM"};
 function valid(){
+ /* B72: ancestor required by the immediate validated predecessor; no gate bypass. */
  if(!window.pmsvB65FourFoodMatrices?.valid()||
-  !window.pmsvB59CTRSourceCrosswalk?.valid()||
   !window.pmsvB60LegalScope?.valid()||
   typeof window.pmsvB59CTRSourceCrosswalk.getAllCases!=="function"||
   typeof pmsvB14Digest!=="function"||!data||pmsvB14Digest(data)!==pinned)return false;

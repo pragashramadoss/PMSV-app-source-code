@@ -6,7 +6,8 @@ let data=null,focus="ALL",query="";
 const path="./data/rules/fssai-current35-vending-children-polyols-batch64-2026-10-17.json";
 const digest="49f3f66b4e31f0e0";
 function valid(){
- if(!window.pmsvB63CocoaMisri?.valid()||!window.pmsvB59CTRSourceCrosswalk?.valid()||
+ /* B72: ancestor required by the immediate validated predecessor; no gate bypass. */
+ if(!window.pmsvB63CocoaMisri?.valid()||
   typeof pmsvB14Digest!=="function"||!data||pmsvB14Digest(data)!==digest)return false;
  const t=data.totals,prior=window.pmsvB59CTRSourceCrosswalk.getAllCases();
  if(data.kind!=="PMSV_BATCH64_THREE_P0_ACTUAL_ORIGINAL_LAW_AND_DRAFT_SEPARATION"||

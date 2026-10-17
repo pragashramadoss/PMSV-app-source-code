@@ -10,8 +10,8 @@ CONDITIONAL_SUGAR_SALT_CHEMICAL:"Specific sugar / salt / chemical",
 EDIBLE_METAL_FIBRE:"Edible silver and dietary fibre"};
 const expected=[5,11,12,14,15,18,19,22,23,24,32,35];
 function valid(){
- if(!window.pmsvB59CTRSourceCrosswalk?.valid()||!window.pmsvB60LegalScope?.valid()||
- !window.pmsvB67SixMatrixEvidence?.valid()||
+ /* B72: ancestor required by the immediate validated predecessor; no gate bypass. */
+ if(!window.pmsvB67SixMatrixEvidence?.valid()||
  typeof window.pmsvB59CTRSourceCrosswalk.getAllCases!=="function"||
  typeof pmsvB14Digest!=="function"||!data||pmsvB14Digest(data)!==pinned)return false;
  const t=data.totals,f=data.control_flags,originals=window.pmsvB59CTRSourceCrosswalk.getAllCases();
