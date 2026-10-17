@@ -33,7 +33,7 @@ for(const c of rows){
  assert.equal(c.rank,before.rank);assert.equal(c.rank,originalCase.rank);
  assert.equal(c.product,before.product_name);assert.equal(c.analyte,before.analyte);
  assert.equal(c.priority,before.priority);assert.equal(c.priority,originalCase.priority);
- assert.equal(c.quoted_other_article_only,before.reference?.source_article||"");
+ assert.equal(c.related_2026_original_comparator_cannot_transfer,before.reference?.source_article||"");
  assert.equal(c.release,"HELD");assert.equal(c.current_assigned_legal_limit,"NOT_SIGNED");
  assert.equal(c.current_lab_method_scope,"NOT_SIGNED");
  assert.equal(c.actual_market_material,"NOT_AUTHENTICATED");
@@ -71,7 +71,7 @@ for(const c of rows){
 assert.equal(p0,13);assert.equal(p1,22);assert.equal(lead,24);
 assert.equal(identityFound,28);assert.equal(identityMissing,7);assert.equal(unnamed,7);
 assert.equal(ids.size,175);assert.equal(ready,70);assert.equal(dependent,105);
-assert.equal(rows.filter(x=>x.quoted_other_article_only!=="").length,15);
+assert.equal(rows.filter(x=>x.related_2026_original_comparator_cannot_transfer!=="").length,15);
 const b18=rows.find(x=>x.rank===18),b21=rows.find(x=>x.rank===21);
 assert.equal(b18.high_ash_lead_row_incompatible_with_standard_conforming_DGS,true);
 assert.equal(b21.sorbitol_nickel_limit_excluded_from_generic_group_by_label,true);
