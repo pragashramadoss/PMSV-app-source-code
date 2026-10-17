@@ -100,6 +100,15 @@ The same manual lists **FSSAI 07.017** and **07.018** for **ochratoxin in barley
 
 The [2018 notified FSSR children’s formulated supplements Gazette](https://www.fssai.gov.in/upload/notifications/2018/11/5bfd0a04c4d4bGazette_Notification_Children_Supplement_26_11_2018.pdf) is an original product-standard reference for the article **formulated supplements for children above 24 months until 36 months**, rather than a default infant formula. This provides a source for determining the proposed commercial product class, but is **not** a legal lead threshold, age proof for a particular branded product or official permission to apply an infant-food lead value. Verify the actual intended-age, recipe, reconstitution and marketing category with the manufacturer plus applicable later legal amendments.
 
+## June 2026 actual non-specified food application statuses — cases #23 / #24
+
+The [original June 3, 2026 NSF/FI status register](https://fssai.gov.in/upload/uploadfiles/files/Status_of_Application_as_on_03_06_2026.pdf) contains the following records under the explicitly titled **"Closed / Withdrawn"** subsection:
+
+- **Sajji Khar/Papad Khar**: application **77/Std/PA/FSSAI/2020** (Mahavir Traders), **78/Std/PA/FSSAI/2020** (Yash International), **25/Std/PA/FSSAI/2021** (Tushar Enterprises), **39/Std/PA/FSSAI/2021** (Majmuntol Impex), on PDF pp.52–53. The section itself groups "closed" and "withdrawn"; it **does not** say that every Sajji Khar formulation is rejected/prohibited or specify which outcome in the binary heading occurred in each file.
+- **Trehalose**: application **56/Std/PA/FSSAI/2020** (DuPont Danisco India) also appears in that same section, PDF p.53; it is likewise neither blanket approval nor blanket prohibition.
+
+For both cases, the user's actual commercial supplier/applicant must be matched to the **newer September 2026** public NSF register, current permissions/ingredient standards and specific FSSR/CTR article before deciding product legality or contaminant limit. Their 35-case contaminant status remains HELD.
+
 ## Later 2025–26 regulatory changes relevant to case closure
 
 **Case #2, coffee–chicory**: the [notified 2025 First Amendment to FSSAI Labelling and Display Regulations](https://www.fssai.gov.in/upload/notifications/2025/08/689d8d163d422coffee%20chicory_gazette.pdf), **effective 1 July 2026**, requires the coffee/chicory percentage declaration on the front of the commercial pack. Before deciding applicability of the separately named 2024 **coffee** OTA contaminant article, request this finished package label, actual coffee/chicory blend percentage and instant-versus-ground form. The new label rule is **not an OTA limit**.
