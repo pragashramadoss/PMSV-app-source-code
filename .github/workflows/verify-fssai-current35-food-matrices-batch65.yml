@@ -1,0 +1,33 @@
+name: Verify FSSAI Batch65 food matrix integrity
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-food-matrix-classification-batch65-2026-10-17.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-food-matrix-classification-batch65-2026-10-17.js'
+      - 'tests/fssai-current35-food-matrix-batch65-2026-10-17.test.cjs'
+      - 'FSSAI-CURRENT35-BATCH65-FOUR-FOOD-MATRICES-2026-10-17.md'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-food-matrices-batch65.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  batch65-component-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium for isolated UI component test
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Validate Batch65 JS and test syntax
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-current35-food-matrix-classification-batch65-2026-10-17.js
+          node --check tests/fssai-current35-food-matrix-batch65-2026-10-17.test.cjs
+      - name: Verify four P0 food identity source gates and isolated interactive component
+        run: node tests/fssai-current35-food-matrix-batch65-2026-10-17.test.cjs
