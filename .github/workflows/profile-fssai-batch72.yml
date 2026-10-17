@@ -1,0 +1,27 @@
+name: Profile FSSAI Batch72 extended review timing
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'tests/fssai-batch72-extended-timing-profile.cjs'
+      - '.github/workflows/profile-fssai-batch72.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  profile-only-not-a-compliance-pass:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check test syntax
+        run: node --check tests/fssai-batch72-extended-timing-profile.cjs
+      - name: Measure optional 35-case evidence loading (not legal compliance)
+        run: node tests/fssai-batch72-extended-timing-profile.cjs
