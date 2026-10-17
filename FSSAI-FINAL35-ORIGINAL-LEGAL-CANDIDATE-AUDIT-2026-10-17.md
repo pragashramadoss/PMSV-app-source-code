@@ -26,6 +26,14 @@ The FSSAI published OTA crop-contaminant entry names coffee (not automatically a
 | NICKEL POLYOL IDENTITY | 1 |
 | ANTIBIOTIC BEE MATRIX | 1 |
 
+## Original Gazette verification completed for two research subjects
+
+**Rank 2 — Coffee–Chicory Mixture, Ochratoxin A.** The actual original [FSSAI 17 October 2024 Gazette, English page 17](https://fssai.gov.in/upload/uploadfiles/files/2_Notification%20dt%2017_10_2024.pdf#page=17) came into force on **1 April 2025**. It amends the Ochratoxin A table to name *wheat, wheat bran, rye, barley, coffee* at **5 µg/kg**. This is now an **authenticated original source for the coffee comparator**, not merely a compendium citation. It does **not** expressly name finished coffee–chicory mixture: the blend's actual legal applicability remains UNSIGNED.
+
+**Rank 31 — Royal Jelly, antibiotics.** The [same original Gazette, English page 18](https://fssai.gov.in/upload/uploadfiles/files/2_Notification%20dt%2017_10_2024.pdf#page=18) authenticates section 2.3.2 concerning honey-production antimicrobial misuse and the honey MRPL table. It does **not** expressly establish a universal royal-jelly MRPL. No approved royal-jelly case numeric rule or lot result follows.
+
+**Correction to earlier generic wording:** “0 exact source laws researched” would be misleading. At least **two relevant original Gazette topic provisions have now been directly inspected and authenticated**. Exactly **zero of the 35 product-specific legal applicability decisions** and **zero lot releases** are verified.
+
 ## Priority closure directions
 **P0 = 13:** resolve marketed product form and legal class first for vending water, special children's formula, tamarind, coconut milk powder, cocoa bean/mix/mass, misri, polyols, colostrum, royal jelly and two Ayurveda Aahara specialties. No unsupported lead, copper, chromium, nickel or antibiotics extrapolation.
 
