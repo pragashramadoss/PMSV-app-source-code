@@ -1,0 +1,37 @@
+name: Verify FSSAI Batch76 35 held case dossiers
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-batch76-case-dossier-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/fssai-batch76-case-dossier.test.cjs'
+      - 'tests/fssai-batch75-original-evidence-queue.test.cjs'
+      - '.github/workflows/verify-fssai-batch76-dossier.yml'
+      - 'FSSAI-CURRENT35-BATCH76-CASE-DOSSIERS-2026-10-17.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dossiers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Syntax checks
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-batch76-case-dossier-2026-10-17.js
+          node --check tests/fssai-batch76-case-dossier.test.cjs
+      - name: Verify case-by-case evidence handoff and forged-proof rejection
+        run: node tests/fssai-batch76-case-dossier.test.cjs
+      - name: Verify original Batch75 queue and role dependency counts
+        run: node tests/fssai-batch75-original-evidence-queue.test.cjs
+      - name: Verify original B59 source count, unchanged 35 cases and 175 IDs
+        run: node tests/fssai-current35-batch69-all35-source-coverage.test.cjs
