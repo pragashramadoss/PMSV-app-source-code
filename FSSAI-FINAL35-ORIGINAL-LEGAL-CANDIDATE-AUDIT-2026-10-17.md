@@ -9,6 +9,16 @@ The official FSSAI CTR Version VIII (April 2025) contains **Lead: “Foods not s
 
 The FSSAI published OTA crop-contaminant entry names coffee (not automatically a coffee–chicory final mixture). The aflatoxin table includes named constituent foods and products containing them, but only where the actual formulation supports that identity. Pesticide limits are determined **pesticide × commodity** and sometimes sample-preparation/processed-matrix rules. FSSR product-quality properties such as 999/1000 purity for silver leaf are **not** the same as a lead concentration threshold.
 
+## Original 2011 metal-contaminant notification independently inspected
+
+The [original FSSAI 1 August 2011 Contaminants, Toxins and Residues notification](https://fssai.gov.in/upload/uploadfiles/files/Contaminants_Regulations.pdf) was read directly, including the text and page images.
+
+- **Original PDF p.2:** Regulation 2.1.1 includes **Lead → “Foods not specified” → 2.5 mg/kg**, and the separate special high-sulphated-ash sugar/starch-conversion entry. The individual as-marketed food must first be excluded from all applicable named rows.
+- **Original PDF p.3:** The **Copper → “Foods not specified” → 30 mg/kg** provision is distinct from the named **pulp and pulp products of any fruit → 5 mg/kg**. Seedless tamarind's actual commercial physical form is decisive; do not select either number without supplier identity and signed interpretation.
+- The official **2025 Version VIII compendium** displays both fallback rows, and the **2026 Version IX** source is indexed but full direct inspection could not be completed here. Relevant intervening Gazette amendments and the actual food category remain a mandatory independent check.
+
+This authenticates two *original legal text provisions*, **not** legal applicability to 18 flagged dossiers, not an approved case numeric limit, and certainly not a lab PASS.
+
 ## Updated legal research classification
 
 | Legal question | Cases |
