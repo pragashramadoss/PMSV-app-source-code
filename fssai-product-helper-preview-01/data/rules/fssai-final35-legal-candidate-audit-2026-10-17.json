@@ -1013,7 +1013,7 @@
       "analyte": "Nickel",
       "scope_question_type": "NICKEL_POLYOL_IDENTITY",
       "regulatory_candidate_NOT_APPROVED": "SORBITOL_ROW_NOT_GENERIC",
-      "exact_source_decision_question": "Nickel named sorbitol entry (if operative) cannot be assigned to generic xylitol/erythritol/polyols or blends. Original 29 Nov 2017 notified FSSR Sorbitol product standard directly supplies nickel ≤2 mg/kg and lead ≤1 mg/kg FOR SORBITOL INS420 CAS50-70-4 only; cannot transfer to other polyols or a mixed polyol group. Authenticated exact formula and commodity identity still needed.",
+      "exact_source_decision_question": "Nickel named sorbitol entry (if operative) cannot be assigned to generic xylitol/erythritol/polyols or blends. Original 29 Nov 2017 notified FSSR Sorbitol product standard directly supplies nickel ≤2 mg/kg and lead ≤1 mg/kg FOR SORBITOL INS420 CAS50-70-4 only; cannot transfer to other polyols or a mixed polyol group. Authenticated exact formula and commodity identity still needed. The official FoSCoS row for this umbrella explicitly says 'excluding those already standardized'; sorbitol is individually standardized under FSSR 3.2.16. Thus importing sorbitol-specific 2 mg/kg Ni into this grouped non-standardized-polyols category is especially unsupported by its own stated scope.",
       "first_missing_authoritative_manufacturer_proof": "Individual exact INS/CAS identities and supplier batch grades; nickel-specific validated method.",
       "closure_priority_lane": "P0_NICKEL_SPECIFIC",
       "official_source_research_URL": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
@@ -1056,7 +1056,12 @@
       "individual_named_polyol_sorbitol_nickel_max_mgkg": 2,
       "individual_named_polyol_sorbitol_lead_max_mgkg": 1,
       "individual_named_polyol_sorbitol_source_status": "AUTHENTICATED_ORIGINAL_FSSR_PURITY_STANDARD_SPECIFICALLY_FOR_SORBITOL",
-      "individual_named_polyol_source_does_NOT_apply_to_all_polyols": true
+      "individual_named_polyol_source_does_NOT_apply_to_all_polyols": true,
+      "group_category_exact_title_excludes_already_standardized_polyols": true,
+      "sorbitol_is_an_individually_standardized_product_under_FSSR": true,
+      "sorbitol_nickel_limit_excluded_from_generic_group_by_label": true,
+      "source_level_default_nickel_2_transfer_disposition": "REJECT_GENERIC_POLYOL_TRANSFER_FROM_SORBITOL",
+      "group_product_standard_FoSCOS_source": "https://fcstraining.fssai.gov.in/standard-product"
     },
     {
       "rank": 22,
@@ -1791,6 +1796,8 @@
     "authoritative_standard": "FSSR 3.2.16 named sorbitol",
     "is_group_approval": false,
     "commercial_ingredient_identity_confirmed": false,
-    "lot_pass": false
+    "lot_pass": false,
+    "group_entry_explicitly_excludes_already_standardized": true,
+    "sorbitol_should_NOT_be_a_default_member_of_group": true
   }
 }

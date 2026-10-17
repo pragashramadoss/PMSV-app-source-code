@@ -68,6 +68,8 @@ FSSR **2.8.7 Dried Glucose Syrup**, as published in FSSAI's [2021 product-standa
 
 The [original FSSAI 29 November 2017 vertical-standards Gazette](https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Vertical_Standards_29_11_2017%281%29.pdf) notifies a named **Sorbitol** food-substance standard (INS **420**, CAS **50-70-4**), requiring **Nickel ≤2.0 mg/kg** and **Lead ≤1.0 mg/kg** as *sorbitol-grade purity characteristics*. This is a **real original published numeric monograph for one compound**. It does **not** automatically impose 2 mg/kg nickel on a generic listed **“polyols excluding standardized ones”** FoSCoS group, or on other polyols/mixtures.
 
+**Further exact catalogue exclusion:** the [official FoSCoS standardized product registry](https://fcstraining.fssai.gov.in/standard-product) calls this grouped polyol article **'excluding those already standardized'**, while original 2017 FSSR specifically standardizes Sorbitol under 3.2.16. The 2 mg/kg Ni sorbitol monograph therefore cannot be a default for that grouped category, even before actual ingredient identification. This is a positive *non-transfer source-level disposition*, not a lot release.
+
 **Case decision improved:** original substance-specific purity law is *authenticated for sorbitol only*; the entire grouped case remains **HELD** until the manufacturer identifies the exact purchased polyol(s), current standards and actual test lot. The numeric 2.0 mg/kg figure is **not** falsely promoted to an approved case-wide CTR contaminant limit.
 
 ## More appropriate published lead assay candidate — pressure digestion + ICP-MS
