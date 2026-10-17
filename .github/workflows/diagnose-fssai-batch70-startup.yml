@@ -1,0 +1,27 @@
+name: Diagnose FSSAI Batch70 exact startup bottleneck
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'tests/fssai-preview-startup-batch70-deep-probe-2026-10-17.cjs'
+      - '.github/workflows/diagnose-fssai-batch70-startup.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  startup-readonly-diagnostics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify probe syntax
+        run: node --check tests/fssai-preview-startup-batch70-deep-probe-2026-10-17.cjs
+      - name: Report full-preview loading checkpoints, never claim compliance pass
+        run: node tests/fssai-preview-startup-batch70-deep-probe-2026-10-17.cjs
