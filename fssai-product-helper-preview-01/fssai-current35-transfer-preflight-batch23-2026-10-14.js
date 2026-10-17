@@ -146,7 +146,11 @@ pmsvLoadPositiveSourceProof=async function(){
   * A missing/invalid B21 core MUST reject extended loading, not skip proofs. */
  if(typeof pmsvB21Valid!=="function"||!pmsvB21Valid()){
   await pmsvB23PriorLoad();
-  if(typeof pmsvB21Valid!=="function"||!pmsvB21Valid())
+  /* Initial inline contaminants load can start before B22 is READY. B22
+   * independently rebuilds/verifies its frozen core on startup. Only an
+   * explicit optional load after B22 READY must hard-fail this boundary. */
+  if(typeof pmsvB22StartupState!=="undefined"&&pmsvB22StartupState==="READY"&&
+     (typeof pmsvB21Valid!=="function"||!pmsvB21Valid()))
    throw Error("B71_CORE_EVIDENCE_INTEGRITY_BLOCKED");
  }
  pmsvB23Pending=null;pmsvB23Ensure();

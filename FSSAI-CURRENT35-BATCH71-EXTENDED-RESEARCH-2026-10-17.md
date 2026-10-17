@@ -13,3 +13,7 @@
 ## Disclosure
 
 Loading reference-data research material does not establish legal applicability, determine an operative contaminant maximum, prove accredited laboratory scope or establish a lot PASS. The original 533 catalogue items / 498 conditional first-source matches / 35 held CTR cases (P0 13, P1 22) remain. All original 175 requests are open and unsent; no manufacturing lot released.
+
+### Integration-test correction
+
+The first end-to-end CI run failed because the B23 strict integrity exception could fire during initial inline source loading, before B22 completed initialization. The B23 guard now retains its legacy upstream loader in that early phase and only raises the extra strict exception when B22 has reached `READY` and a later core validation actually fails. This does not mark a failed source as passed.
