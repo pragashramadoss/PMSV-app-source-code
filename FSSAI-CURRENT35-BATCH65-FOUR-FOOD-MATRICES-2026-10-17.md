@@ -43,6 +43,7 @@ These four records are now source-specific and identify the next original legal 
 - UI: `fssai-product-helper-preview-01/fssai-current35-food-matrix-classification-batch65-2026-10-17.js`
 - Tests: `tests/fssai-current35-food-matrix-batch65-2026-10-17.test.cjs`
 - Workflow: `.github/workflows/verify-fssai-current35-food-matrices-batch65.yml`
+- Non-blocking startup diagnostic: `tests/fssai-preview-startup-diagnostic-batch65-2026-10-17.cjs`. Outputs page errors and preview startup state; its completion is NOT a full integration pass.
 - The static cross-check preserves Batch59 and Batch64 dataset digests, all four original case IDs, 20 request IDs and zero-limit/zero-PASS outcomes.
 - The Batch65 Chromium test uses a **lightweight isolated panel host** with faithful, pinned read-only source datasets. It tests filtering, searching, CSV output, and no false case approvals; **it is not a full-app end-to-end startup test**.
 - Existing Batch63 and Batch64 **full helper-page Chromium smoke tests fail at their shared `pmsvB22StartupState` startup wait** after their static checks; this **remains an unresolved integration issue** and is not hidden by successful isolated tests. It requires follow-up debugging before claiming the entire GitHub preview starts successfully.
