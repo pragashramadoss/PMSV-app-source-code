@@ -1,0 +1,40 @@
+name: Verify FSSAI Batch70 core-first startup integrity
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-current35-browser-review-integrity-batch22-2026-10-14.js'
+      - 'fssai-product-helper-preview-01/fssai-current35-core-startup-batch70-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/fssai-batch70-core-startup.test.cjs'
+      - 'tests/fssai-batch70-research-fail-closed.test.cjs'
+      - '.github/workflows/verify-fssai-core-startup-batch70.yml'
+      - 'FSSAI-CURRENT35-BATCH70-CORE-STARTUP-2026-10-17.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  core-first-startup-and-evidence-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Syntax validation
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-current35-browser-review-integrity-batch22-2026-10-14.js
+          node --check fssai-product-helper-preview-01/fssai-current35-core-startup-batch70-2026-10-17.js
+          node --check tests/fssai-batch70-core-startup.test.cjs
+          node --check tests/fssai-batch70-research-fail-closed.test.cjs
+      - name: Verify browser core startup from actual full preview
+        run: node tests/fssai-batch70-core-startup.test.cjs
+      - name: Verify optional research is fail closed
+        run: node tests/fssai-batch70-research-fail-closed.test.cjs
+      - name: Assert all 35 source cases and 175 requests still held
+        run: node tests/fssai-current35-batch69-all35-source-coverage.test.cjs

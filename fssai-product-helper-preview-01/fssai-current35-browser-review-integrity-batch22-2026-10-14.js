@@ -80,6 +80,11 @@ function pmsvB22ReloadForm(){
  * registering the full source-proof chain. Wait for that initial load to settle,
  * then make ONE sequential catch-up pass if the B14-B21 chain was not installed
  * at the earlier invocation time. No overlapping load/reset races. */
+/* Batch70: core B14–B21 startup uses a frozen reference to the loader as it
+ * existed at B22 registration, BEFORE B23–B68 add expensive research overlays.
+ * Full research panels load only on explicit request via the B70 audit control.
+ * This changes no source or legal signoff rule. */
+const pmsvB22CoreProofLoader=pmsvLoadPositiveSourceProof;
 var pmsvB22StartupState="WAITING";
 async function pmsvB22AfterStartup(){
  if(pmsvB22StartupState!=="WAITING")return;
@@ -87,7 +92,7 @@ async function pmsvB22AfterStartup(){
  try{
   if(typeof pmsvContaminantsLoadPromise!=="undefined")await pmsvContaminantsLoadPromise;
   if(typeof pmsvB21Valid==="function"&&!pmsvB21Valid()){
-   await pmsvLoadPositiveSourceProof();
+   await pmsvB22CoreProofLoader();
   }
   pmsvB22StartupState=pmsvB22Ready()?"READY":"INTEGRITY_BLOCKED";
   pmsvB22Sync();
