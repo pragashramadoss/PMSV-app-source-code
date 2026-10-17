@@ -90,6 +90,16 @@ The existing signed-source B48, B49, B50 research was **reconciled case-by-case*
 
 Examples of **named published identities, not compliance determinations:** vended purified water FSSR 2.10.9; coffee–chicory mixture 2.10.4; seedless tamarind 2.3.49; coconut milk powder 2.3.63; cocoa beans 2.3.54; dried glucose syrup 2.8.7; misri 2.8.2; edible lactose 2.1.20; silver leaf 2.11.4; colostrum 2.1.23. The actual manufacturer's specification, intended age/use, form and representative lot **remain unauthenticated for all 35**. An identity standard **never constitutes** a pollutant/contaminant ceiling.
 
+## Mycotoxin analytical methods reviewed against actual product matrices — cases #2, #28, #29
+
+The official [FSSAI revised Mycotoxins manual, July 2021](https://fssai.gov.in/upload/uploadfiles/files/Order_Manual_Analysis_Mycotoxins_20_07_2021.pdf), published table of contents (PDF pp.5–6), supplies **FSSAI 07.009:2020** for AFB1 and total aflatoxins by immunoaffinity cleanup/HPLC fluorescence and **FSSAI 07.015:2020** for B1/B2/G1/G2 in foods other than the already named matrices. These are **method-development candidates** for cases **28** (specific nutraceutical ingredient) and **29** (functional ingredient premix), subject to actual material and matrix method performance.
+
+The same manual lists **FSSAI 07.017** and **07.018** for **ochratoxin in barley**, and **07.019** for OTA/aflatoxins in **cereals and processed cereals**. These **must not be treated as verified coffee-chicory blend OTA assays** (case #2). An independently accredited method in roasted/soluble coffee-chicory actual matrix is required. Crucially, the manual explicitly states that the respective laboratory is responsible for verifying the selected method’s **on-site performance**. Neither an authoritative manual nor a validated method alone determines a legal contaminant ceiling or a lot PASS.
+
+## Child formulation original product standard — case #3
+
+The [2018 notified FSSR children’s formulated supplements Gazette](https://www.fssai.gov.in/upload/notifications/2018/11/5bfd0a04c4d4bGazette_Notification_Children_Supplement_26_11_2018.pdf) is an original product-standard reference for the article **formulated supplements for children above 24 months until 36 months**, rather than a default infant formula. This provides a source for determining the proposed commercial product class, but is **not** a legal lead threshold, age proof for a particular branded product or official permission to apply an infant-food lead value. Verify the actual intended-age, recipe, reconstitution and marketing category with the manufacturer plus applicable later legal amendments.
+
 ## Priority closure directions
 **P0 = 13:** resolve marketed product form and legal class first for vending water, special children's formula, tamarind, coconut milk powder, cocoa bean/mix/mass, misri, polyols, colostrum, royal jelly and two Ayurveda Aahara specialties. No unsupported lead, copper, chromium, nickel or antibiotics extrapolation.
 
