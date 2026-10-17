@@ -5,7 +5,7 @@
    No email, API write, browser storage, source documents, specimen or release recorded. */
 var data=null,priority="ALL",research="ALL",search="";
 const endpoint="./data/rules/fssai-current35-reference-row-nontransfer-batch59-2026-10-17.json";
-const pinned="5383797121693d4a";
+const pinned="6791743a07c12e4f";
 function valid(){
  if(typeof pmsvB56Valid!=="function"||!pmsvB56Valid()||
     typeof pmsvB57PlusValid!=="function"||!pmsvB57PlusValid()||
@@ -23,6 +23,9 @@ function valid(){
   t.original_gazette_authenticated_for_case!==0||t.documents_received!==0||
   t.wordpress_changed!==false||data.cases?.length!==35||
   data.official_compendium_url!=="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf"||
+  data.future_gazette_source?.commencement_date!=="2026-12-01"||
+  data.future_gazette_source?.effective_as_of_review!==false||
+  data.future_gazette_source?.case_specific_limit_signed!==false||
   data.immutable_safety?.zero_product_pass!==true||
   data.immutable_safety?.no_numeric_comparator_applied_to_case!==true)return false;
  const seen=new Set();let compare=0,pending=0,p0=0,p1=0,gates=new Set();
@@ -77,7 +80,7 @@ function panel(){
   '<summary><b>Batch59 · Exact CTR source-row non-transfer</b> — 35 open cases / 15 research comparators</summary>'+
   '<div class="notice"><b>All 35 cases remain on hold.</b> Official FSSAI compendium references are not substitute legal approvals. The numerical figures below are the published <b>other-article comparison values only</b>, never the approved maximum for the selected product.</div>'+
   '<p>Version IX (3 February 2026) of the official FSSAI CTR compendium was compared against 15 potentially confusing catalogue entries. In all 15, actual as-sold article identity or original operative Gazette is unresolved. The remaining 20 records have no comparator selected <b>in this batch</b>, not a negative legal finding.</p>'+
-  '<p>Check original operative notifications through the <a target="_blank" rel="noopener noreferrer" href="https://fssai.gov.in/food-law/regulations/amendments/contaminants-toxins">FSSAI CTR amendment archive</a> before applying any legal limit. Individual lab notification / NABL scope and lot controls are separately required.</p>'+
+  '<p>The <a target="_blank" rel="noopener noreferrer" href="https://fssai.gov.in/upload/uploadfiles/files/272840.pdf#page=4">original 2026 CTR amendment Gazette (page 4)</a> expressly starts <b>1 December 2026</b>, and is therefore <b>not applied</b> to this 17 October 2026 review. Check other original operative notifications through the <a target="_blank" rel="noopener noreferrer" href="https://fssai.gov.in/food-law/regulations/amendments/contaminants-toxins">FSSAI amendment archive</a> before applying any case limit. Individual lab/NABL scope and lot controls remain required.</p>'+
   '<div class="checker-grid">'+
   '<div class="field"><label>Priority</label><select data-pmsv-b59-priority>'+
   options(priority,[["ALL","All 35 cases"],["P0","P0 (13)"],["P1","P1 (22)"]])+'</select></div>'+
