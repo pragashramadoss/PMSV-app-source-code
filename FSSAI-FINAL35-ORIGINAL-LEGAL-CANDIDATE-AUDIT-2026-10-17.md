@@ -60,6 +60,16 @@ FSSAI's official [notices for public comments](https://www.fssai.gov.in/food-law
 
 **Correction to earlier generic wording:** “0 exact source laws researched” would be misleading. At least **two relevant original Gazette topic provisions have now been directly inspected and authenticated**. Exactly **zero of the 35 product-specific legal applicability decisions** and **zero lot releases** are verified.
 
+## Explicit source-level decision — Dried Glucose Syrup (case #18)
+
+FSSR **2.8.7 Dried Glucose Syrup**, as published in FSSAI's [2021 product-standards compendium](https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_12_11_2021.pdf), imposes **sulphated ash no more than 1.0%** and **total solids at least 93%**. The original CTR lead table's special **starch conversion products** category applies only when **sulphated ash exceeds 1.0%**. The two conditions do **not** overlap for a product conforming to the Dried Glucose Syrup product standard. Consequently **the special high-ash lead row is excluded for a standards-conforming finished Dried Glucose Syrup** as a *source-level classification conclusion*. This is narrower than approving a substitute lead limit: first authenticate that the commercial lot indeed meets FSSR 2.8.7, then identify the correct operative lead provision, lab method and actual lot report.
+
+## More appropriate published lead assay candidate — pressure digestion + ICP-MS
+
+Both [Trace Elements](https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf) and [Metals and Minerals](https://www.fssai.gov.in/upload/uploadfiles/files/Manual%20of%20Methods%20of%20Analysis%20of%20Foods-%20Metals%20and%20Minerals.pdf) describe pressure digestion + **ICP-MS to quantify lead in foods** with **published Pb scope approximately 0.04 mg/kg dry matter**, indexed as **FSSAI 09.005:2024** and **09.004:2024** respectively. This is much more sensitive on paper than the proposed ICP-OES 09.001 Pb LOQ 6 mg/kg, and may be a **sensible laboratory shortlist candidate for the 24 lead cases**.
+
+**It is NOT approved for any individual case here:** exact notified/current method adoption order remains unresolved, and that dry-matter performance does not establish actual laboratory **achieved LOQ in fat-rich cocoa, coconut, dairy, compound solids, dissolved sugars or vended water**. The low-concentration source is not an automatic <0.02 mg/kg wet-material clearance. Request the current official complete manual title, laboratory accreditation, actual analyte/matrix scope, LOQ and recovery before assigning a method or claiming a PASS.
+
 ## Product identity research: verified published standards versus actual marketed material
 
 The existing signed-source B48, B49, B50 research was **reconciled case-by-case** with all 35 entries in this final register. **28 cases** have an identified named published FSSR product standard or other official specific product-identity source. **Seven cases do not have a directly named product standard at the grouped-catalogue level** and require exact commercial ingredient/product identification before sourcing a specific standard. The newly identified source group contains four B50 additions.
