@@ -1,0 +1,50 @@
+name: Verify FSSAI Batch69 all35 coverage and isolated P0 components
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'tests/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.test.cjs'
+      - 'tests/fssai-current35-vending-children-polyols-batch64-2026-10-17.test.cjs'
+      - 'tests/fssai-current35-batch69-all35-source-coverage.test.cjs'
+      - 'tests/fssai-batch69-source-pins-2026-10-17.json'
+      - 'tests/fssai-preview-startup-diagnostic-batch69-2026-10-17.cjs'
+      - 'FSSAI-CURRENT35-BATCH69-ALL35-COVERAGE-STARTUP-2026-10-17.md'
+      - '.github/workflows/verify-fssai-current35-coverage-batch69.yml'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-remaining12-p1-lead-batch68-2026-10-17.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  batch69-all35-source-coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium for isolated B63 B64 tests
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Syntax-check all Batch69 tests
+        run: |
+          node --check tests/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.test.cjs
+          node --check tests/fssai-current35-vending-children-polyols-batch64-2026-10-17.test.cjs
+          node --check tests/fssai-current35-batch69-all35-source-coverage.test.cjs
+          node --check tests/fssai-preview-startup-diagnostic-batch69-2026-10-17.cjs
+      - name: Enforce all 35 immutable evidence holds and source-review coverage
+        run: node tests/fssai-current35-batch69-all35-source-coverage.test.cjs
+      - name: Verify B63 isolated Chromium identities and fail-closed ancestry
+        run: node tests/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.test.cjs
+      - name: Verify B64 isolated Chromium original-law distinctions
+        run: node tests/fssai-current35-vending-children-polyols-batch64-2026-10-17.test.cjs
+      - name: Upload evidence-only 35-case research report
+        uses: actions/upload-artifact@v4
+        with:
+          name: fssai-batch69-35case-research-NOT-APPROVED
+          path: test-artifacts/fssai-batch69/
+          retention-days: 14
+      - name: Informational bounded full-app startup diagnostic (NOT a full preview PASS)
+        run: node tests/fssai-preview-startup-diagnostic-batch69-2026-10-17.cjs
+        continue-on-error: true

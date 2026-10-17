@@ -29,5 +29,5 @@ jobs:
         run: |
           node --check fssai-product-helper-preview-01/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.js
           node --check tests/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.test.cjs
-      - name: Verify four P0 identity standards, 20 original gates and zero contamination approvals
+      - name: Verify four P0 identities in isolated Chromium, 20 original gates and no approvals
         run: node tests/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.test.cjs

@@ -29,5 +29,5 @@ jobs:
         run: |
           node --check fssai-product-helper-preview-01/fssai-current35-vending-children-polyols-batch64-2026-10-17.js
           node --check tests/fssai-current35-vending-children-polyols-batch64-2026-10-17.test.cjs
-      - name: Original final vs draft audit / Chromium 35-case no-release safeguards
+      - name: Isolated Chromium final vs draft audit and 15 original evidence holds
         run: node tests/fssai-current35-vending-children-polyols-batch64-2026-10-17.test.cjs

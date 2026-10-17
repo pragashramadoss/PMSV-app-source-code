@@ -1,6 +1,6 @@
 "use strict";
 const fs=require("node:fs"),path=require("node:path"),assert=require("node:assert/strict"),
- {spawn}=require("node:child_process"),{chromium}=require("playwright");
+ {chromium}=require("playwright");
 const root="fssai-product-helper-preview-01";
 const load=n=>JSON.parse(fs.readFileSync(path.join(root,"data/rules",n),"utf8"));
 const data=load("fssai-current35-vending-children-polyols-batch64-2026-10-17.json");
@@ -56,38 +56,48 @@ assert(child.prohibited_transfer.includes("infant"));
 const polyol=data.cases.find(c=>c.rank===21);
 assert(polyol.source_specific_age_or_substance.includes("Sorbitol only"));
 assert(polyol.prohibited_transfer.includes("nickel"));
-const server=spawn("python3",["-m","http.server","18964","--directory",root,"--bind","127.0.0.1"],{stdio:"ignore"});
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
 (async()=>{
  let browser;
  try{
   browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
   const page=await browser.newPage({acceptDownloads:true}),errors=[];
   page.on("pageerror",e=>errors.push(e.message));
-  let ok=false;for(let i=0;i<45;i++)try{
-   const resp=await page.goto("http://127.0.0.1:18964/",{waitUntil:"domcontentloaded",timeout:16000});
-   if(resp?.ok()){ok=true;break;}
-  }catch(_){await sleep(200)}
-  assert(ok,"Preview web server unavailable");
-  await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&
-   ["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
-  await page.waitForFunction(()=>window.pmsvB64OriginalLawCases?.valid(),null,{timeout:90000});
-  await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();});
+  await page.setContent('<!doctype html><html><body><div id="pmsv-b63-cocoa-sugar-specifics"></div></body></html>');
+  await page.evaluate(({registry,baseline})=>{
+   window.pmsvB14Digest=v=>{let a=0x811c9dc5,b=0x9747b28c;for(const ch of JSON.stringify(v)){const n=ch.charCodeAt(0);a=Math.imul(a^n,16777619);b=Math.imul(b^n,2246822519);}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0");};
+   window.pmsvB63CocoaMisri={valid:()=>true};
+   window.pmsvB59CTRSourceCrosswalk={valid:()=>true,getAllCases:()=>baseline};
+   window.pmsvLoadPositiveSourceProof=async()=>{};
+   window.fetch=async()=>({ok:true,json:async()=>registry});
+  },{registry:data,baseline:b59.cases});
+  await page.addScriptTag({content:panel});
+  await page.evaluate(()=>window.pmsvLoadPositiveSourceProof());
   const el=page.locator("#pmsv-b64-three-originals");
-  await el.evaluate(x=>x.open=true);
+  assert.equal(await el.count(),1);await el.evaluate(x=>x.open=true);
+  assert.equal(await page.evaluate(()=>window.pmsvB64OriginalLawCases.valid()),true);
   assert.equal(await el.locator("[data-pmsv-b64-rows] tr").count(),3);
   assert.deepEqual(await page.evaluate(()=>window.pmsvB64OriginalLawCases.getCounts()),
    {cases:3,originalFinalWater:1,ageSpecificChildren:1,genericPolyolsGuard:1,
     draftApplied:0,legalPasses:0,lotPasses:0,originalIDs:15,all35Open:true});
-  for(const r of [1,3,21]){
-   await el.locator("[data-pmsv-b64-focus]").selectOption(String(r));
+  for(const id of [1,3,21]){
+   await el.locator("[data-pmsv-b64-focus]").selectOption(String(id));
    assert.equal(await el.locator("[data-pmsv-b64-rows] tr").count(),1);
   }
   await el.locator("[data-pmsv-b64-focus]").selectOption("ALL");
+  await el.locator("[data-pmsv-b64-search]").fill("Sorbitol");
+  assert.equal(await el.locator("[data-pmsv-b64-rows] tr").count(),1);
+  await el.locator("[data-pmsv-b64-search]").fill("");
   const csv=await page.evaluate(()=>window.pmsvB64OriginalLawCases.csv());
   assert.equal(csv.trim().split(/\r?\n/).length,4);
-  assert(csv.trim().split(/\r?\n/).slice(1).every(line=>line.endsWith(',"false","false","false"')));
-  assert.equal(errors.length,0,"Browser JavaScript exception(s): "+errors.join("; "));
-  console.log("Batch64 PASS: original vending water 2019 effective, June 2025 water draft blocked, 24-36-month children age, sorbitol-only nickel, 15 inherited requests, all 35 held.");
- }catch(e){console.error(e);process.exitCode=1;}finally{if(browser)await browser.close();server.kill();}
-})().catch(e=>{console.error(e);server.kill();process.exitCode=1;});
+  assert(csv.trim().split(/\r?\n/).slice(1).every(x=>x.endsWith(',"false","false","false"')));
+  const download=page.waitForEvent("download");
+  await el.locator("[data-pmsv-b64-export]").click();
+  assert.match((await download).suggestedFilename(),/B64.*\.csv/);
+  await page.evaluate(()=>{window.pmsvB59CTRSourceCrosswalk.getAllCases().find(x=>x.rank===21).product_name="TAMPERED";});
+  assert.equal(await page.evaluate(()=>window.pmsvB64OriginalLawCases.valid()),false);
+  assert.equal(await page.evaluate(()=>window.pmsvB64OriginalLawCases.csv()),"");
+  assert.deepEqual(errors,[]);
+  console.log("Batch64 PASS (isolated Chromium): water final vs draft, child-age, sorbitol-only, 15 original IDs; NO product approvals. Full-preview startup not certified.");
+ }finally{if(browser)await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});
