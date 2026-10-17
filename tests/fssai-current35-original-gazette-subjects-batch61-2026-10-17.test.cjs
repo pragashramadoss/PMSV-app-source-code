@@ -34,7 +34,7 @@ assert.equal(gaz.get("CTR24").commencement_status_or_date,"2025-04-01");
 assert.equal(gaz.get("CTR24").effective_as_of_2026_10_17,true);
 assert.equal(gaz.get("CTR26").commencement_status_or_date,"2026-12-01");
 assert.equal(gaz.get("CTR26").effective_as_of_2026_10_17,false);
-assert.equal(gaz.get("CTR24").verification,"OFFICIAL_FSSAI_ORIGINAL_ENGLISH_PDF_PAGES_DIRECTLY_INSPECTED");
+assert.equal(gaz.get("CTR24").verification,"FSSAI_ORIGINAL_ENGLISH_PDF_PAGES_DIRECTLY_INSPECTED");
 assert.equal(gaz.get("CTR20").verification,"FSSAI_ORIGINAL_GAZETTE_INDEXED_FULL_PAGES_NOT_READ");
 const allIDs=new Set(),selected=new Set(),same=new Set();let identity=0,ctr=0,p0=0,p1=0,partB60=0;
 for(const c of d.cases){
