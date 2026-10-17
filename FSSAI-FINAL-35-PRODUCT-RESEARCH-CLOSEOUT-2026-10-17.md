@@ -1,5 +1,7 @@
 # FSSAI Product Helper — FINAL 35 product desk-review disposition register
 
+**Substantive source-based legal-candidate cross-check:** [35-case follow-on legal audit](./FSSAI-FINAL35-ORIGINAL-LEGAL-CANDIDATE-AUDIT-2026-10-17.md) and [complete case CSV](./fssai-product-helper-preview-01/data/rules/fssai-final35-legal-candidate-audit-2026-10-17.csv). Existing held status is unchanged; food/chemical fallback rows have only been classified as legal-review candidates, never case-specific maximums.
+
 **As of 17 October 2026 | Scope: 35 CTR applicability review cases, not the entire 533-item catalogue.**
 **Definitive research disposition: 35/35 reviewed; zero regulatory approvals, lab signoffs or releases.** No more exploratory preview UI batches are necessary to summarize these cases.
 
