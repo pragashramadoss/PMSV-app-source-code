@@ -5,8 +5,8 @@ const root="fssai-product-helper-preview-01";
 const b59=fs.readFileSync(root+"/fssai-current35-reference-row-nontransfer-batch59-2026-10-17.js","utf8");
 const idx=fs.readFileSync(root+"/index.html","utf8");
 assert(b59.includes("window.pmsvB59CTRSourceCrosswalk.valid()?data.cases.map("));
-assert(idx.indexOf("batch73-validation-graph")>idx.indexOf("remaining12-p1-lead-batch68"));
-assert(idx.indexOf("batch73-validation-graph")<idx.indexOf("core-startup-batch70"));
+assert(idx.indexOf("fssai-current35-validation-graph-batch73")>idx.indexOf("fssai-current35-remaining12-p1-lead-batch68"));
+assert(idx.indexOf("fssai-current35-validation-graph-batch73")<idx.indexOf("fssai-current35-core-startup-batch70"));
 const server=spawn("python3",["-m","http.server","18973","--directory",root,"--bind","127.0.0.1"],{stdio:"ignore"});
 const nap=n=>new Promise(r=>setTimeout(r,n));
 (async()=>{
