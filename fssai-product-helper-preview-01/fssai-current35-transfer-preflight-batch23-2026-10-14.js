@@ -141,7 +141,14 @@ function pmsvB23Confirm(){
 }
 const pmsvB23PriorLoad=pmsvLoadPositiveSourceProof;
 pmsvLoadPositiveSourceProof=async function(){
- await pmsvB23PriorLoad();
+ /* Batch71: When B22 already completed and B21 still validates the full
+  * original review chain, do not reload B14–B21 and reset live reviewer forms.
+  * A missing/invalid B21 core MUST reject extended loading, not skip proofs. */
+ if(typeof pmsvB21Valid!=="function"||!pmsvB21Valid()){
+  await pmsvB23PriorLoad();
+  if(typeof pmsvB21Valid!=="function"||!pmsvB21Valid())
+   throw Error("B71_CORE_EVIDENCE_INTEGRITY_BLOCKED");
+ }
  pmsvB23Pending=null;pmsvB23Ensure();
 };
 if(typeof document!=="undefined"&&document.addEventListener){

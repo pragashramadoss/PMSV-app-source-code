@@ -1,7 +1,8 @@
 (function(){"use strict";
 /* Batch70: core-first preview startup; explicit, fail-closed extended research loading.
  * All 35 CTR cases and 175 original documentary gates remain open. */
-let state="NOT_REQUESTED", error="", requested=false, startedAt=0, completedAt=0;
+let state="NOT_REQUESTED", error="", requested=false, startedAt=0, completedAt=0, progress=0;
+let progressInterval=null;
 const panels=[
  "pmsv-b63-cocoa-sugar-specifics","pmsv-b64-three-originals",
  "pmsv-b65-four-matrix-classifications","pmsv-b66-nutra-source-audit",
@@ -10,7 +11,7 @@ const panels=[
 const fullSourceLoader=pmsvLoadPositiveSourceProof; // Batch68 top-level, not core-only
 function safeState(){
  const core=typeof pmsvB22StartupState==="undefined"?"NOT_STARTED":String(pmsvB22StartupState);
- return {core,extended:state,error,startedAt,completedAt,requestsSent:0,
+ return {core,extended:state,error,startedAt,completedAt,sourcePanelsVisible:progress,requestsSent:0,
   caseApprovals:0,labPasses:0,productReleases:0,all35Held:true};
 }
 function panel(){
@@ -27,7 +28,7 @@ function panel(){
 function status(){
  const el=document.getElementById("pmsv-b70-startup-gates");if(!el)return;
  el.querySelector("[data-pmsv-b70-core]").textContent=safeState().core;
- const pretty={NOT_REQUESTED:"Not requested",LOADING:"Loading and checking original source identities",
+ const pretty={NOT_REQUESTED:"Not requested",LOADING:"Research source checks in progress ("+progress+"/"+panels.length+" panels visible, not approved)",
   READY:"Research panels loaded — NOT regulatory approved",
   INTEGRITY_BLOCKED:"Blocked: one or more source integrity checks failed"}[state]||state;
  el.querySelector("[data-pmsv-b70-state]").textContent=pretty;
@@ -76,14 +77,31 @@ async function request(){
  if(typeof pmsvB22StartupState==="undefined"||pmsvB22StartupState!=="READY"){
   error="Core B22 source validation is not READY";state="INTEGRITY_BLOCKED";status();return false;
  }
- requested=true;error="";state="LOADING";startedAt=Date.now();status();
+ requested=true;error="";progress=0;state="LOADING";startedAt=Date.now();status();
+ progressInterval=setInterval(()=>{
+  progress=panels.filter(id=>!!document.getElementById(id)).length;
+  status();
+ },1500);
  try{
   await fullSourceLoader();
-  if(!researchValid())throw Error("Required B59/B63–B68 dataset or 175 source gate validation failed");
-  state="READY";completedAt=Date.now();status();return true;
+  if(!researchValid()){
+   const missing=[["B21",typeof pmsvB21Valid==="function"&&pmsvB21Valid()],
+    ["B59",window.pmsvB59CTRSourceCrosswalk?.valid()],
+    ["B63",window.pmsvB63CocoaMisri?.valid()],
+    ["B64",window.pmsvB64OriginalLawCases?.valid()],
+    ["B65",window.pmsvB65FourFoodMatrices?.valid()],
+    ["B66",window.pmsvB66NutraIngredientAudit?.valid()],
+    ["B67",window.pmsvB67SixMatrixEvidence?.valid()],
+    ["B68",window.pmsvB68RemainingLeadP1?.valid()]]
+    .filter(([,ok])=>!ok).map(([id])=>id);
+   throw Error("Extended evidence integrity blocked: "+(missing.join(",")||"35-case source hold/panel mismatch"));
+  }
+  progress=panels.length;state="READY";completedAt=Date.now();status();return true;
  }catch(e){
   error=String(e?.message||e).slice(0,240);
   state="INTEGRITY_BLOCKED";status();return false;
+ }finally{
+  if(progressInterval!==null){clearInterval(progressInterval);progressInterval=null;}
  }
 }
 document.addEventListener("click",e=>{

@@ -1,0 +1,40 @@
+name: Verify FSSAI Batch71 full extended evidence workflow
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-current35-transfer-preflight-batch23-2026-10-14.js'
+      - 'fssai-product-helper-preview-01/fssai-current35-core-startup-batch70-2026-10-17.js'
+      - 'tests/fssai-batch71-full-extended-research.test.cjs'
+      - 'tests/fssai-batch71-fail-closed.test.cjs'
+      - '.github/workflows/verify-fssai-batch71-extended-integration.yml'
+      - 'FSSAI-CURRENT35-BATCH71-EXTENDED-RESEARCH-2026-10-17.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-b71-full-opt-in-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Syntax check
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-current35-transfer-preflight-batch23-2026-10-14.js
+          node --check fssai-product-helper-preview-01/fssai-current35-core-startup-batch70-2026-10-17.js
+          node --check tests/fssai-batch71-full-extended-research.test.cjs
+          node --check tests/fssai-batch71-fail-closed.test.cjs
+      - name: Verify core integrity and full B23–B68 opt-in browser loading
+        run: node tests/fssai-batch71-full-extended-research.test.cjs
+        timeout-minutes: 8
+      - name: Verify failed source and B22 invalidity do not authorize approval
+        run: node tests/fssai-batch71-fail-closed.test.cjs
+      - name: Preserve all 35 unresolved cases and 175 immutable requests
+        run: node tests/fssai-current35-batch69-all35-source-coverage.test.cjs
