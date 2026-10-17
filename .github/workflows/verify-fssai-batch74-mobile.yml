@@ -1,0 +1,39 @@
+name: Verify FSSAI Batch74 mobile research experience
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-batch74-mobile-evidence-review-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/fssai-batch74-mobile-real-browser.test.cjs'
+      - 'tests/fssai-batch74-fail-closed.test.cjs'
+      - '.github/workflows/verify-fssai-batch74-mobile.yml'
+      - 'FSSAI-CURRENT35-BATCH74-MOBILE-REVIEW-2026-10-17.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preview-mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Syntax checks
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-batch74-mobile-evidence-review-2026-10-17.js
+          node --check tests/fssai-batch74-mobile-real-browser.test.cjs
+          node --check tests/fssai-batch74-fail-closed.test.cjs
+      - name: Verify preview-only mobile interface fails closed
+        run: node tests/fssai-batch74-fail-closed.test.cjs
+      - name: Verify real-page six-panel opt-in mobile journey
+        run: node tests/fssai-batch74-mobile-real-browser.test.cjs
+        timeout-minutes: 9
+      - name: Verify unchanged original cases and evidence requests
+        run: node tests/fssai-current35-batch69-all35-source-coverage.test.cjs
