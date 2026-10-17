@@ -1,0 +1,27 @@
+name: Verify final FSSAI 35 substantive closeout
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-final35-legal-candidate-audit-2026-10-17.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-final35-legal-candidate-audit-2026-10-17.csv'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-final35-product-disposition-2026-10-17.json'
+      - 'FSSAI-FINAL35-ORIGINAL-LEGAL-CANDIDATE-AUDIT-2026-10-17.md'
+      - 'tests/fssai-final35-research-integrity.test.cjs'
+      - '.github/workflows/verify-fssai-final35-research-integrity.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-cases-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check final verifier script syntax
+        run: node --check tests/fssai-final35-research-integrity.test.cjs
+      - name: Cross-verify original cases, proof IDs, legal source and full CSV
+        run: node tests/fssai-final35-research-integrity.test.cjs
