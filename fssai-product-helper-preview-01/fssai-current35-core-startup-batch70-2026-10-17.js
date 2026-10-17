@@ -12,7 +12,7 @@ const fullSourceLoader=pmsvLoadPositiveSourceProof; // Batch68 top-level, not co
 function safeState(){
  const core=typeof pmsvB22StartupState==="undefined"?"NOT_STARTED":String(pmsvB22StartupState);
  return {core,extended:state,error,startedAt,completedAt,sourcePanelsVisible:progress,requestsSent:0,
-  caseApprovals:0,labPasses:0,productReleases:0,all35Held:true};
+  caseApprovals:0,labPasses:0,productReleases:0,all35Held:state==="READY"};
 }
 function panel(){
  return '<details id="pmsv-b70-startup-gates" class="card" style="margin-bottom:12px">'+
@@ -21,7 +21,8 @@ function panel(){
  '<p><b>Core startup:</b> <span data-pmsv-b70-core>Checking…</span>. '+
  '<b>Extended research panels:</b> <span data-pmsv-b70-state>Not requested</span>.</p>'+
  '<p>The base product-standard screens can load independently of the much larger optional documentary review workbench. Select the button to load the extensive research panels. This is read-only and sends no owner requests.</p>'+
- '<p><button type="button" data-pmsv-b70-load>Load extended FSSAI evidence panels</button></p>'+
+ '<p><button type="button" data-pmsv-b70-load>Load extended FSSAI evidence panels</button> '+
+ '<button type="button" class="secondary-btn" data-pmsv-b74-recheck>Recheck loaded source integrity</button></p>'+
  '<p class="countline" data-pmsv-b70-message>No legal approvals, lab passes, or product releases.</p>'+
  '</details>';
 }
@@ -104,10 +105,32 @@ async function request(){
   if(progressInterval!==null){clearInterval(progressInterval);progressInterval=null;}
  }
 }
+/* Batch74: a previously READY source is not trusted after the next user
+ * inquiry. Verify every underlying signed research source and 175 request IDs
+ * afresh. The B73 per-call cache never spans events or asynchronous turns. */
+function recheck(){
+ if(state!=="READY")return false;
+ let ok=false;
+ try{ok=researchValid()===true;}catch(_){ok=false;}
+ if(!ok){
+  state="INTEGRITY_BLOCKED";
+  error="B74 recheck: source, 35-case hold, 175 immutable requests or mandatory review panel is no longer valid";
+  progress=0;
+  status();
+  return false;
+ }
+ status();
+ return true;
+}
+function verifiedState(){
+ if(state==="READY")recheck();
+ return safeState();
+}
 document.addEventListener("click",e=>{
  if(e.target?.closest?.("[data-pmsv-b70-load]"))void request();
+ if(e.target?.closest?.("[data-pmsv-b74-recheck]"))recheck();
 });
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});
 else install();
-window.pmsvB70ExtendedResearch={getState:safeState,request,researchValid,install};
+window.pmsvB70ExtendedResearch={getState:verifiedState,request,researchValid,install,recheck};
 })();
