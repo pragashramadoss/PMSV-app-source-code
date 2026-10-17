@@ -1,0 +1,43 @@
+name: Verify FSSAI Batch73 synchronous source verification
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-current35-validation-graph-batch73-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/fssai-current35-reference-row-nontransfer-batch59-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/fssai-batch73-full-review.test.cjs'
+      - 'tests/fssai-batch73-no-stale-cache.test.cjs'
+      - '.github/workflows/verify-fssai-batch73-validation-graph.yml'
+      - 'FSSAI-CURRENT35-BATCH73-VALIDATION-PERFORMANCE-2026-10-17.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validated-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check syntax
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-current35-validation-graph-batch73-2026-10-17.js
+          node --check fssai-product-helper-preview-01/fssai-current35-reference-row-nontransfer-batch59-2026-10-17.js
+          node --check tests/fssai-batch73-full-review.test.cjs
+          node --check tests/fssai-batch73-no-stale-cache.test.cjs
+      - name: Check independent mutations cannot reuse validation cache
+        run: node tests/fssai-batch73-no-stale-cache.test.cjs
+      - name: Verify all 35 held cases and 175 immutable source gates
+        run: node tests/fssai-current35-batch69-all35-source-coverage.test.cjs
+      - name: Verify real full preview and measure extended loading time
+        run: node tests/fssai-batch73-full-review.test.cjs
+        timeout-minutes: 8
+      - name: Confirm historical ancestor proof graph remains present
+        run: node tests/fssai-batch72-transitive-gates.test.cjs
