@@ -1,0 +1,792 @@
+{
+  "schema_version": "1.0",
+  "kind": "PMSV_BATCH60_PENDING20_OPERATIVE_SCOPE_TRIAGE_NO_APPROVAL",
+  "as_of": "2026-10-17",
+  "environment": "GITHUB_PAGES_FSSAI_PREVIEW_ONLY",
+  "prior_batch59_document_digest": "6791743a07c12e4f",
+  "mandate": "Resolve what the official source TEXT says for all 20; do not infer product-specific application without manufacturer identity and operative Gazette.",
+  "source_authenticity_limits": "Compendium is official but not independently operative statutory Gazette. FoSCoS catalogue is product naming not proof of an actual lot. Older FPSFA compendium supports identity text but must be checked against latest chapter/original amendment for legal authority.",
+  "primary_ctr_compendium": {
+    "url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "as_of_version": "IX 03.02.2026",
+    "reviewed_sections": [
+      {
+        "name": "2.1.1 Lead named foods and generic fallback",
+        "pdf_page_1_based": 4
+      },
+      {
+        "name": "2.2.1 Total Aflatoxins and B1 and containing-product wording",
+        "pdf_page_1_based": 14
+      },
+      {
+        "name": "2.3.1 Named pesticide/food pair and sample basis",
+        "pdf_page_1_based": 16
+      },
+      {
+        "name": "2.3.1 unfixed MRL note",
+        "pdf_page_1_based": 39
+      },
+      {
+        "name": "2.3.2 Antibiotic veterinary/honey scopes",
+        "pdf_page_1_based": 40
+      }
+    ]
+  },
+  "explicit_interpretation_boundaries": [
+    "Foods not specified fallback is in source but not automatically selected when a more specific article may apply.",
+    "Pesticide 0.01 mg/kg note for unfixed MRL is not a default test panel nor a verified processed-product decision.",
+    "Aflatoxin total and aflatoxin B1 use different legal rows; containing-product provisions require actual identity and ingredients.",
+    "Honey antibiotic MRPL does not automatically cover royal jelly.",
+    "Specific FPSFA product identity or ingredient class membership does not itself fix a case-specific CTR limit."
+  ],
+  "totals": {
+    "catalogue": 533,
+    "conditional_source_matches": 498,
+    "open_ctr_cases": 35,
+    "previous_batch59_nontransfer_comparators": 15,
+    "reviewed_remaining_prior_no_comparator": 20,
+    "case_specific_numeric_legal_approvals": 0,
+    "official_text_routing_research_completed": 20,
+    "covered_existing_immutable_gate_ids": 100,
+    "p0_open_covered": 1,
+    "p1_open_covered": 19,
+    "legacy_original_request_ids_all": 175,
+    "preparatory_unsent": 70,
+    "dependent_unsent": 105,
+    "original_documents_received": 0,
+    "original_authentic_case_gazettes": 0,
+    "case_specific_original_coa_received": 0,
+    "laboratory_method_matrix_scope_approved": 0,
+    "lot_pass": 0,
+    "wordpress_changed": false
+  },
+  "groups": {
+    "ANTIBIOTIC_SCOPE_DIFFERENCE": 1,
+    "PESTICIDE_EXACT_FOOD": 4,
+    "LEAD_COMMODITY_IDENTITY": 9,
+    "LEAD_CLASS_NEEDS_INDIVIDUAL": 4,
+    "AFLATOXIN_NAMED_INGREDIENT": 2
+  },
+  "cases": [
+    {
+      "rank": 31,
+      "catalogue_id": "100-100-royal-jelly",
+      "product_name": "Royal Jelly",
+      "priority": "P0",
+      "analyte": "Antibiotics",
+      "original_legal_gate": "PMSV44-31-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-31-01",
+        "PMSV44-31-02",
+        "PMSV44-31-03",
+        "PMSV44-31-04",
+        "PMSV44-31-05"
+      ],
+      "group": "ANTIBIOTIC_SCOPE_DIFFERENCE",
+      "textually_supported_scope": "CTR 2.3.2: seafood, specified veterinary meat/milk/poultry/eggs, and honey misuse-testing MRPL",
+      "research_finding_not_compliance_decision": "The antibiotic MRPL table expressly discusses honey production; royalty of bee origin does not establish royal jelly is honey. Likewise aquatic and animal tissue veterinary tolerance rows are not automatically royal-jelly standards.",
+      "next_exact_external_evidence_needed": "Confirm royal jelly as actual bee secretion (not honey blend), exact regulated antibiotic, manufacturer apiary treatment/CoA, and original operative bee-product rule if any. Do not transplant honey MRPL.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FPSFA_LATEST_CHAPTER_INDEX",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 4,
+      "catalogue_id": "04-04-1-frozen-fruits-fruit-products",
+      "product_name": "Frozen Fruits/Fruit Products",
+      "priority": "P1",
+      "analyte": "Residues",
+      "original_legal_gate": "PMSV44-04-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-04-01",
+        "PMSV44-04-02",
+        "PMSV44-04-03",
+        "PMSV44-04-04",
+        "PMSV44-04-05"
+      ],
+      "group": "PESTICIDE_EXACT_FOOD",
+      "textually_supported_scope": "CTR 2.3.1, named pesticide × food table; PDF p.16, p.39",
+      "research_finding_not_compliance_decision": "The CTR sets pesticide MRLs by individual pesticide and specified food. A generic 'fruits' entry for a named pesticide does not automatically settle every frozen fruit mix or product.",
+      "next_exact_external_evidence_needed": "Obtain actual frozen fruit species, processing/ingredients, intended as-sold matrix and nominated pesticide list; compare named MRL to exact food and the note on unfixed MRL after Legal signoff.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 5,
+      "catalogue_id": "04-04-1-catechu-edible",
+      "product_name": "Catechu (Edible)",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-05-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-05-01",
+        "PMSV44-05-02",
+        "PMSV44-05-03",
+        "PMSV44-05-04",
+        "PMSV44-05-05"
+      ],
+      "group": "LEAD_COMMODITY_IDENTITY",
+      "textually_supported_scope": "CTR 2.1.1 lead: named articles and 'foods not specified'; FPSFA chapter 2.3 product identity",
+      "research_finding_not_compliance_decision": "Edible catechu is an identified product listing, but it is not itself identical to betelnut or a catechu-containing pan masala. Lead's generic fallback cannot be selected before deciding whether a specific article applies.",
+      "next_exact_external_evidence_needed": "Authenticate catechu source plant, extracted/raw form, ingredient vs finished status, controlled specification and original amended CTR lead commodity schedule.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY",
+        "FSSAI_FPSFA_LATEST_CHAPTER_INDEX"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 11,
+      "catalogue_id": "06-06-1-chia-seeds",
+      "product_name": "Chia Seeds",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-11-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-11-01",
+        "PMSV44-11-02",
+        "PMSV44-11-03",
+        "PMSV44-11-04",
+        "PMSV44-11-05"
+      ],
+      "group": "LEAD_COMMODITY_IDENTITY",
+      "textually_supported_scope": "CTR 2.1.1 lead table, PDF pp.2–6; FoSCoS Chia Seeds product listing",
+      "research_finding_not_compliance_decision": "A FoSCoS product identity entry for chia seeds does not establish that it is cereal grain, pulse, nut, oilseed or other named legal lead article. No exact lead comparator signed.",
+      "next_exact_external_evidence_needed": "Obtain Salvia hispanica seed identity, raw/hulled/milled form and current original metal-contaminant clause; ask Legal to check named article vs true fallback.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 12,
+      "catalogue_id": "06-06-2-carob-powder",
+      "product_name": "Carob Powder",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-12-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-12-01",
+        "PMSV44-12-02",
+        "PMSV44-12-03",
+        "PMSV44-12-04",
+        "PMSV44-12-05"
+      ],
+      "group": "LEAD_COMMODITY_IDENTITY",
+      "textually_supported_scope": "FPSFA 2.11.7 carob powder identity, CTR 2.1.1 lead table",
+      "research_finding_not_compliance_decision": "Official FPSFA identifies carob powder from roasted carob pods. Carob is not cocoa; cocoa powder's lead expression on dry fat-free basis cannot transfer.",
+      "next_exact_external_evidence_needed": "Get actual roasted carob specification, identity and original operative lead article; do not use CTR cocoa powder row or its dry fat-free conversion.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_20_12_2022.pdf",
+        "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FPSFA_2022_HISTORIC_COMPENDIUM",
+        "FSSAI_FPSFA_LATEST_CHAPTER_INDEX"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 13,
+      "catalogue_id": "06-06-2-arrowroot",
+      "product_name": "Arrowroot",
+      "priority": "P1",
+      "analyte": "Pesticide MRLs",
+      "original_legal_gate": "PMSV44-13-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-13-01",
+        "PMSV44-13-02",
+        "PMSV44-13-03",
+        "PMSV44-13-04",
+        "PMSV44-13-05"
+      ],
+      "group": "PESTICIDE_EXACT_FOOD",
+      "textually_supported_scope": "CTR 2.3.1 named pesticide-food MRL table, PDF pp.16–39; product source Arrowroot",
+      "research_finding_not_compliance_decision": "Arrowroot is a root-derived material; named potato/cassava/food grain pesticides do not automatically apply to purified arrowroot flour or starch. MRL scope is pesticide- and commodity-specific.",
+      "next_exact_external_evidence_needed": "Obtain actual botanical species, arrowroot starch/flour processing, pesticide residue panel and a signed relevant crop/processed-food mapping; inspect the 0.01 mg/kg unfixed-MRL note without treating it as a universal fixed product limit.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 14,
+      "catalogue_id": "06-06-2-water-chestnut-flour-singhare-ka-atta",
+      "product_name": "WATER CHESTNUT FLOUR (SINGHARE KA ATTA)",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-14-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-14-01",
+        "PMSV44-14-02",
+        "PMSV44-14-03",
+        "PMSV44-14-04",
+        "PMSV44-14-05"
+      ],
+      "group": "LEAD_COMMODITY_IDENTITY",
+      "textually_supported_scope": "2020 FPSFA Tenth Amendment: water chestnut flour; CTR lead named articles",
+      "research_finding_not_compliance_decision": "Original FPSFA amendment history identifies a standard for water chestnut flour (Singhare ka atta). Product identity standard is not itself a lead maximum; cereal flour or canned chestnut entry cannot be borrowed.",
+      "next_exact_external_evidence_needed": "Authenticate botanical species, actual flour processing/form and original specific lead applicability; keep canned-chestnut lead rule separate.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fssai.gov.in/food-law/regulations/amendments/food-products-standards",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FPSFA_ORIGINAL_AMENDMENTS_INDEX",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 15,
+      "catalogue_id": "08-08-4-animal-casings",
+      "product_name": "Animal Casings",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-15-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-15-01",
+        "PMSV44-15-02",
+        "PMSV44-15-03",
+        "PMSV44-15-04",
+        "PMSV44-15-05"
+      ],
+      "group": "LEAD_COMMODITY_IDENTITY",
+      "textually_supported_scope": "2020 FPSFA Tenth Amendment: animal casings; CTR lead meat/offal/gelatin provisions",
+      "research_finding_not_compliance_decision": "Animal casings have an FPSFA product-standard history. Their material (cleaned natural casing, prepared casing or artificial analogue) is not necessarily meat, edible offal or gelatin for CTR lead limits.",
+      "next_exact_external_evidence_needed": "Obtain animal species, collagen/natural/artificial origin, composition and marketed form; then signed direct CTR article or fallback review.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fssai.gov.in/food-law/regulations/amendments/food-products-standards",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FPSFA_ORIGINAL_AMENDMENTS_INDEX",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 16,
+      "catalogue_id": "10-10-2-egg-powder",
+      "product_name": "Egg powder",
+      "priority": "P1",
+      "analyte": "Pesticide MRLs",
+      "original_legal_gate": "PMSV44-16-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-16-01",
+        "PMSV44-16-02",
+        "PMSV44-16-03",
+        "PMSV44-16-04",
+        "PMSV44-16-05"
+      ],
+      "group": "PESTICIDE_EXACT_FOOD",
+      "textually_supported_scope": "CTR 2.3.1: named pesticide Eggs (shell-free basis) provisions; 2020 FPSFA egg powder product standard",
+      "research_finding_not_compliance_decision": "At least one pesticide row expressly mentions eggs on a shell-free basis; that is not a blanket MRL for all pesticides or a solved dry egg-powder limit. Dehydration may change result basis.",
+      "next_exact_external_evidence_needed": "Get exact egg powder grade, species, source lot, drying/concentration factor, each target pesticide, and method-specific as-sold/egg basis decision signed by Legal and Lab.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fssai.gov.in/food-law/regulations/amendments/food-products-standards",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FPSFA_ORIGINAL_AMENDMENTS_INDEX",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 17,
+      "catalogue_id": "10-10-3-pickled-eggs",
+      "product_name": "Pickled Eggs",
+      "priority": "P1",
+      "analyte": "Pesticide MRLs",
+      "original_legal_gate": "PMSV44-17-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-17-01",
+        "PMSV44-17-02",
+        "PMSV44-17-03",
+        "PMSV44-17-04",
+        "PMSV44-17-05"
+      ],
+      "group": "PESTICIDE_EXACT_FOOD",
+      "textually_supported_scope": "CTR 2.3.1: specified food/pesticide pairs, including Eggs for selected pesticides; 2020 FPSFA pickled-eggs standard",
+      "research_finding_not_compliance_decision": "Pickled eggs are processed eggs in brine; an 'Eggs' MRL for a named pesticide does not alone settle matrix basis (egg vs brine vs whole pack) or concentration and composite ingredients.",
+      "next_exact_external_evidence_needed": "Obtain packed product composition, egg/brine fraction, as-sold sampling basis, named pesticide and current originally-notified MRL with processing-factor review.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fssai.gov.in/food-law/regulations/amendments/food-products-standards",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FPSFA_ORIGINAL_AMENDMENTS_INDEX",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 19,
+      "catalogue_id": "11-11-1-edible-lactose",
+      "product_name": "Edible Lactose",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-19-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-19-01",
+        "PMSV44-19-02",
+        "PMSV44-19-03",
+        "PMSV44-19-04",
+        "PMSV44-19-05"
+      ],
+      "group": "LEAD_COMMODITY_IDENTITY",
+      "textually_supported_scope": "CTR 2.1.1 lead: Milks, Secondary milk products and ingredient-specific rows",
+      "research_finding_not_compliance_decision": "Edible lactose is a purified milk-derived sugar, but that does not make it liquid milk, secondary milk product, refined white sugar or dextrose monohydrate under CTR 2.1.1.",
+      "next_exact_external_evidence_needed": "Obtain source/purity chemical identity, processing form, current FPSFA lactose standard, and RA determination of any exact named CTR article before considering fallback.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FPSFA_LATEST_CHAPTER_INDEX"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 23,
+      "catalogue_id": "99-99-1-trehalose",
+      "product_name": "Trehalose",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-23-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-23-01",
+        "PMSV44-23-02",
+        "PMSV44-23-03",
+        "PMSV44-23-04",
+        "PMSV44-23-05"
+      ],
+      "group": "LEAD_COMMODITY_IDENTITY",
+      "textually_supported_scope": "CTR 2.1.1 lead: sugars/sugar syrups and individually named chemicals; FoSCoS Trehalose",
+      "research_finding_not_compliance_decision": "Trehalose is a distinct disaccharide, and merely being sweet does not prove it falls under CTR refined sugar, glucose, or high-ash sugar provisions. Actual substance identity and standard needed.",
+      "next_exact_external_evidence_needed": "Obtain exact trehalose grade, CAS, purity, manufacturer form and a signed original CTR article review, including whether a named chemical row exists.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY",
+        "FSSAI_FPSFA_LATEST_CHAPTER_INDEX"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 24,
+      "catalogue_id": "99-99-1-sajji-khar",
+      "product_name": "Sajji Khar",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-24-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-24-01",
+        "PMSV44-24-02",
+        "PMSV44-24-03",
+        "PMSV44-24-04",
+        "PMSV44-24-05"
+      ],
+      "group": "LEAD_CLASS_NEEDS_INDIVIDUAL",
+      "textually_supported_scope": "FoSCoS Sajji Khar class entry; CTR 2.1.1 named alkalis/chemicals and fallback",
+      "research_finding_not_compliance_decision": "The commercial name Sajji Khar alone does not prove chemical identity or allow substitution of sodium hydroxide, salt or other specific chemical lead limits.",
+      "next_exact_external_evidence_needed": "Obtain controlled chemical/mineral composition, CAS/INS as applicable, processing grade, manufacturer CoA and current notification before comparator selection.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 25,
+      "catalogue_id": "99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-",
+      "product_name": "Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-25-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-25-01",
+        "PMSV44-25-02",
+        "PMSV44-25-03",
+        "PMSV44-25-04",
+        "PMSV44-25-05"
+      ],
+      "group": "LEAD_CLASS_NEEDS_INDIVIDUAL",
+      "textually_supported_scope": "FPSFA Appendix A additive classes; CTR lead individually named additives",
+      "research_finding_not_compliance_decision": "Appendix A lists permitted additives/uses, not one universal lead specification for the entire open FoSCoS additive category. Distinct substances have distinct rows and purity requirements.",
+      "next_exact_external_evidence_needed": "Require individual additive name, INS/CAS, composition, grade, legal permission, exact original CTR or relevant mandatory purity monograph for that additive.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FPSFA_LATEST_CHAPTER_INDEX",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 26,
+      "catalogue_id": "99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
+      "product_name": "Additives VA-VF of Nutraceutical Regulations excluding those already standardised",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-26-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-26-01",
+        "PMSV44-26-02",
+        "PMSV44-26-03",
+        "PMSV44-26-04",
+        "PMSV44-26-05"
+      ],
+      "group": "LEAD_CLASS_NEEDS_INDIVIDUAL",
+      "textually_supported_scope": "Nutraceutical Regulations Schedule VA–VF additive group; CTR lead named chemicals",
+      "research_finding_not_compliance_decision": "The grouped FoSCoS Schedule VA–VF listing is not a specific chemical article. One selected preservative/colour/stabiliser lead row cannot be applied to all nutraceutical additives.",
+      "next_exact_external_evidence_needed": "Require exact named additive and part of Schedule VA–VF, full ingredient/compound identity, marketed form, governing original regulation and exact article-specific metal rule.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fssai.gov.in/food-law/regulations"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY",
+        "FSSAI_REGULATORY_INDEX"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 27,
+      "catalogue_id": "99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
+      "product_name": "Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-27-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-27-01",
+        "PMSV44-27-02",
+        "PMSV44-27-03",
+        "PMSV44-27-04",
+        "PMSV44-27-05"
+      ],
+      "group": "LEAD_CLASS_NEEDS_INDIVIDUAL",
+      "textually_supported_scope": "FPSFA additive/processing-aid and enzyme descriptions; CTR lead 2.1.1 chemical monograph proviso",
+      "research_finding_not_compliance_decision": "A generic enzyme preparation can include active enzymes, carriers and processing aids. CTR chemical and Indian Pharmacopoeia provisos are specific and do not grant one lead limit to all enzymes.",
+      "next_exact_external_evidence_needed": "Identify enzyme EC number, organism/source, active preparation, carrier and regulatory function; authenticate exact product and any relevant monograph/source precedences.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY",
+        "FSSAI_FPSFA_LATEST_CHAPTER_INDEX"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 28,
+      "catalogue_id": "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
+      "product_name": "Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations",
+      "priority": "P1",
+      "analyte": "Aflatoxins",
+      "original_legal_gate": "PMSV44-28-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-28-01",
+        "PMSV44-28-02",
+        "PMSV44-28-03",
+        "PMSV44-28-04",
+        "PMSV44-28-05"
+      ],
+      "group": "AFLATOXIN_NAMED_INGREDIENT",
+      "textually_supported_scope": "CTR 2.2.1: total aflatoxins vs aflatoxin B1; named cereal/nut/oilseed/pulse/spice and foods containing them",
+      "research_finding_not_compliance_decision": "CTR has separate total-aflatoxin and B1 entries with distinct named foods and 'food product containing any of above' wording. A grouped nutraceutical ingredient schedule is not itself one of those proven commodities.",
+      "next_exact_external_evidence_needed": "Identify the exact Schedule IV/VI/VIII ingredient, botanical part, as-sold state and crop source; assess whether it is among the CTR named articles or a containing product for each aflatoxin definition.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 29,
+      "catalogue_id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "product_name": "Mixtures/preparations/premix of functional ingredients",
+      "priority": "P1",
+      "analyte": "Aflatoxins",
+      "original_legal_gate": "PMSV44-29-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-29-01",
+        "PMSV44-29-02",
+        "PMSV44-29-03",
+        "PMSV44-29-04",
+        "PMSV44-29-05"
+      ],
+      "group": "AFLATOXIN_NAMED_INGREDIENT",
+      "textually_supported_scope": "CTR 2.2.1: aflatoxin crop groups and products containing those ingredients; named analytes",
+      "research_finding_not_compliance_decision": "The 'food product containing any of the above' provision may be material to functional premixes, but without authenticated BOM and ingredient proportions one cannot apply it or choose total versus B1.",
+      "next_exact_external_evidence_needed": "Obtain ingredient identities and percent composition of the functional premix, constituent crop forms and signed determination whether CTR containing-product language applies for total and B1.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fcstraining.fssai.gov.in/standard-product"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FOSCOS_PRODUCT_REGISTRY"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 32,
+      "catalogue_id": "100-100-silver-leaf-chandi-ka-warq",
+      "product_name": "SILVER LEAF (Chandi-ka-warq)",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-32-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-32-01",
+        "PMSV44-32-02",
+        "PMSV44-32-03",
+        "PMSV44-32-04",
+        "PMSV44-32-05"
+      ],
+      "group": "LEAD_COMMODITY_IDENTITY",
+      "textually_supported_scope": "FPSFA 2.11.4 Silver Leaf (Chandi-ka-warq) product standard; CTR lead named metals table",
+      "research_finding_not_compliance_decision": "FPSFA's silver-leaf identity/quality provisions (including silver purity and animal-origin restrictions) are distinct from a legal lead maximum. A food colour, metal foil or general food CTR row cannot be transferred automatically.",
+      "next_exact_external_evidence_needed": "Authenticate edible silver fineness, production aids, physical form and actual product identity; obtain an exact original CTR or notified purity/contaminant specification specifically applicable to edible silver.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_20_12_2022.pdf",
+        "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FPSFA_2022_HISTORIC_COMPENDIUM",
+        "FSSAI_FPSFA_LATEST_CHAPTER_INDEX"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    },
+    {
+      "rank": 35,
+      "catalogue_id": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+      "product_name": "Dietary Fibre (Dextrin-soluble fibre)",
+      "priority": "P1",
+      "analyte": "Lead",
+      "original_legal_gate": "PMSV44-35-03",
+      "immutable_five_original_request_ids": [
+        "PMSV44-35-01",
+        "PMSV44-35-02",
+        "PMSV44-35-03",
+        "PMSV44-35-04",
+        "PMSV44-35-05"
+      ],
+      "group": "LEAD_COMMODITY_IDENTITY",
+      "textually_supported_scope": "FPSFA 2.11.8 Dietary Fibre (Dextrin-soluble fibre), CTR lead 2.1.1 named food/chemical rows",
+      "research_finding_not_compliance_decision": "Official FPSFA gives a dextrinification-based fibre identity; this is not automatically digestible dextrin, starch, maltodextrin or a named CTR lead substance.",
+      "next_exact_external_evidence_needed": "Authenticate dextrin-soluble fibre process, DP/purity and as-sold composition; determine any exact lead commodity/article or appropriate fallback from operative originals.",
+      "authoritative_research_urls": [
+        "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "https://fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Additives_Regulations_20_12_2022.pdf",
+        "https://fssai.gov.in/food-law/regulations/compendium/food-products-standards"
+      ],
+      "source_types": [
+        "FSSAI_CTR_IX_COMPILED_REFERENCE",
+        "FSSAI_FPSFA_2022_HISTORIC_COMPENDIUM",
+        "FSSAI_FPSFA_LATEST_CHAPTER_INDEX"
+      ],
+      "source_review_result": "LEGAL_SCOPE_ROUTING_RESEARCH_ONLY",
+      "exact_case_specific_operative_gazette_verified": false,
+      "exact_marketed_product_or_substance_identity_authenticated": false,
+      "legally_applicable_numeric_maximum_signed": false,
+      "original_method_and_nabl_scope_verified": false,
+      "original_lot_coa_received": false,
+      "case_released": false
+    }
+  ],
+  "original_gazette_boundary": {
+    "url": "https://fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+    "commencement": "2026-12-01",
+    "effective_on_review_date": false
+  },
+  "controls": {
+    "readonly": true,
+    "draft_not_approval": true,
+    "automatic_legal_limits_disabled": true,
+    "case_applied_limits": 0,
+    "case_releases": 0,
+    "can_send_evidence_requests": false,
+    "wordpress_untouched": true
+  }
+}
