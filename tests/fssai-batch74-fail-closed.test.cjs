@@ -5,7 +5,7 @@ const script=fs.readFileSync("fssai-product-helper-preview-01/fssai-batch74-mobi
 (async()=>{const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
  try{
   const page=await browser.newPage({viewport:{width:375,height:812}});
-  await page.setContent('<html><head></head><body><details id="pmsv-b70-startup-gates"><span data-pmsv-b70-state>Not requested</span><span data-pmsv-b70-core>READY</span><p data-pmsv-b70-message>HEL D</p></details></body></html>');
+  await page.setContent('<html><head></head><body><details id="pmsv-b70-startup-gates" open><span data-pmsv-b70-state>Not requested</span><span data-pmsv-b70-core>READY</span><p data-pmsv-b70-message>HEL D</p></details></body></html>');
   await page.evaluate(()=>{window.fixture={core:"READY",extended:"NOT_REQUESTED"};
    window.pmsvB70ExtendedResearch={getState:()=>({...window.fixture})};});
   await page.addScriptTag({content:script});

@@ -1,0 +1,41 @@
+name: Verify FSSAI Batch75 original evidence queue
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-batch75-original-evidence-workqueue-2026-10-17.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/fssai-batch75-original-evidence-queue.test.cjs'
+      - 'tests/fssai-batch74-fail-closed.test.cjs'
+      - 'tests/fssai-batch74-mobile-real-browser.test.cjs'
+      - '.github/workflows/verify-fssai-batch75-queue.yml'
+      - 'FSSAI-CURRENT35-BATCH75-OPEN-EVIDENCE-2026-10-17.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  queue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Static syntax and unchanged source protection
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-batch75-original-evidence-workqueue-2026-10-17.js
+          node --check tests/fssai-batch75-original-evidence-queue.test.cjs
+          node --check tests/fssai-batch74-mobile-real-browser.test.cjs
+          node tests/fssai-current35-batch69-all35-source-coverage.test.cjs
+      - name: Test source tampering, queued requests, priority filter and CSV safety
+        run: node tests/fssai-batch75-original-evidence-queue.test.cjs
+      - name: Test mobile integrity and nav fail-closed
+        run: node tests/fssai-batch74-fail-closed.test.cjs
+      - name: Test real preview full opt-in and 390px mobile navigation
+        run: node tests/fssai-batch74-mobile-real-browser.test.cjs
+        timeout-minutes: 9

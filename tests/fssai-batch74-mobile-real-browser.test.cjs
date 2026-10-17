@@ -33,6 +33,10 @@ const nap=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    source:window.pmsvB70ExtendedResearch.getState(),
    cases:window.pmsvB59CTRSourceCrosswalk.getAllCases()
   }));
+  // The research navigation is nested in the Product standard tab and a
+  // disclosure, both closed by default. Open them before testing visibility.
+  await page.locator('button[data-tab="standard"]').click();
+  await page.locator("#pmsv-b70-startup-gates").evaluate(el=>{el.open=true;});
   assert.equal(after.source.extended,"READY");
   assert.equal(after.mobile.panelsVisible,6);
   assert.equal(after.mobile.linksEnabled,true);
