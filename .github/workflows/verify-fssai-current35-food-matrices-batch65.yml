@@ -6,6 +6,7 @@ on:
       - 'fssai-product-helper-preview-01/data/rules/fssai-current35-food-matrix-classification-batch65-2026-10-17.json'
       - 'fssai-product-helper-preview-01/fssai-current35-food-matrix-classification-batch65-2026-10-17.js'
       - 'tests/fssai-current35-food-matrix-batch65-2026-10-17.test.cjs'
+      - 'tests/fssai-preview-startup-diagnostic-batch65-2026-10-17.cjs'
       - 'FSSAI-CURRENT35-BATCH65-FOUR-FOOD-MATRICES-2026-10-17.md'
       - 'fssai-product-helper-preview-01/index.html'
       - '.github/workflows/verify-fssai-current35-food-matrices-batch65.yml'
@@ -31,3 +32,6 @@ jobs:
           node --check tests/fssai-current35-food-matrix-batch65-2026-10-17.test.cjs
       - name: Verify four P0 food identity source gates and isolated interactive component
         run: node tests/fssai-current35-food-matrix-batch65-2026-10-17.test.cjs
+      - name: Diagnostic only - full preview startup, not evidence of a passing integration
+        run: node tests/fssai-preview-startup-diagnostic-batch65-2026-10-17.cjs
+        continue-on-error: true
