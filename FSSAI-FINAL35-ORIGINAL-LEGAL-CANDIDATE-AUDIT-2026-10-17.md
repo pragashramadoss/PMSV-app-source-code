@@ -60,6 +60,14 @@ FSSAI's official [notices for public comments](https://www.fssai.gov.in/food-law
 
 **Correction to earlier generic wording:** “0 exact source laws researched” would be misleading. At least **two relevant original Gazette topic provisions have now been directly inspected and authenticated**. Exactly **zero of the 35 product-specific legal applicability decisions** and **zero lot releases** are verified.
 
+## Product identity research: verified published standards versus actual marketed material
+
+The existing signed-source B48, B49, B50 research was **reconciled case-by-case** with all 35 entries in this final register. **28 cases** have an identified named published FSSR product standard or other official specific product-identity source. **Seven cases do not have a directly named product standard at the grouped-catalogue level** and require exact commercial ingredient/product identification before sourcing a specific standard. The newly identified source group contains four B50 additions.
+
+**Seven lacking direct named product standards:** #21 Polyols permitted under Appendix-A of FSS(FPS&FA) Regulations,2011 excluding those already standardized; #24 Sajji Khar; #25 Additives permitted under Appendix-A of FSS (FPS&FA) Regulations, 2011 and other food safety standards regulations excluding those already standardized and additives of Nutraceutical Regulations; #26 Additives VA-VF of Nutraceutical Regulations excluding those already standardised; #27 Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations; #28 Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations; #29 Mixtures/preparations/premix of functional ingredients.
+
+Examples of **named published identities, not compliance determinations:** vended purified water FSSR 2.10.9; coffee–chicory mixture 2.10.4; seedless tamarind 2.3.49; coconut milk powder 2.3.63; cocoa beans 2.3.54; dried glucose syrup 2.8.7; misri 2.8.2; edible lactose 2.1.20; silver leaf 2.11.4; colostrum 2.1.23. The actual manufacturer's specification, intended age/use, form and representative lot **remain unauthenticated for all 35**. An identity standard **never constitutes** a pollutant/contaminant ceiling.
+
 ## Priority closure directions
 **P0 = 13:** resolve marketed product form and legal class first for vending water, special children's formula, tamarind, coconut milk powder, cocoa bean/mix/mass, misri, polyols, colostrum, royal jelly and two Ayurveda Aahara specialties. No unsupported lead, copper, chromium, nickel or antibiotics extrapolation.
 
