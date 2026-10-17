@@ -100,6 +100,12 @@ The same manual lists **FSSAI 07.017** and **07.018** for **ochratoxin in barley
 
 The [2018 notified FSSR children’s formulated supplements Gazette](https://www.fssai.gov.in/upload/notifications/2018/11/5bfd0a04c4d4bGazette_Notification_Children_Supplement_26_11_2018.pdf) is an original product-standard reference for the article **formulated supplements for children above 24 months until 36 months**, rather than a default infant formula. This provides a source for determining the proposed commercial product class, but is **not** a legal lead threshold, age proof for a particular branded product or official permission to apply an infant-food lead value. Verify the actual intended-age, recipe, reconstitution and marketing category with the manufacturer plus applicable later legal amendments.
 
+## Category-specific fallback rule: Indian Sweets/Snacks ≠ Ayurveda Aahara (#33–34)
+
+The directly inspected original [22 July 2021 FSSAI Direction for Indian Sweets and Indian Snacks & Savouries](https://fssai.gov.in/upload/advisories/2021/07/60fa3d363276cDirection_Indian_Sweets_Snacks_22_07_2021.pdf), **PDF p.2, paragraph 4(f)**, instructs that heavy-metal and pesticide limits for **products covered by new FoSCoS Food Product Category 18** follow *“Foods not specified”* under CTR 2011. This is an explicit, category-specific administrative direction, not a universal finding for unrelated product categories.
+
+Both **Narikela Ksheerika** and **Ksheerapaka** here are represented as **Category 102.1 Ayurveda Aahara Category A** under later FSSAI/Ayurveda rules. **Do not transplant the Category 18 direction to Category 102** without legal authority, even if the prepared recipes resemble Indian sweets. The 2011 original generic metal text remains a separate legal candidate requiring exact-category applicability determination. No approved Pb level or lot PASS recorded.
+
 ## Precisely scoped Ayurveda Aahara Category A licensing — cases #33 and #34
 
 The original [FSSAI FoSCoS Order of 1 September 2025](https://www.fssai.gov.in/upload/advisories/2025/09/68b67efa6f47520250902103601289.pdf) introduced a distinct **Ayurveda Aahara Kind of Business** under manufacturer, with **Central Licence** eligibility. It distinguishes **Category A (102.1)** listed recipes from **Category B (102.2)**:
