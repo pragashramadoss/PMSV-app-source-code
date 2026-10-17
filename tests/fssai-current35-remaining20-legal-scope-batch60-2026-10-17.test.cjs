@@ -79,7 +79,12 @@ const nap=t=>new Promise(r=>setTimeout(r,t));
   assert(started,"Local FSSAI preview server did not start");
   await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&
    ["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
-  await page.waitForFunction(()=>window.pmsvB60LegalScope?.valid(),null,{timeout:90000});
+    // Batch72: B70 intentionally defers B23-B68 overlays. Load only after
+  // verified core startup, as a real reviewer would, with no mocked FSSAI data.
+  assert.equal(await page.evaluate(()=>pmsvB22StartupState),"READY");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,
+    "Extended source data must pass original source/lab/lot guards");
+await page.waitForFunction(()=>window.pmsvB60LegalScope?.valid(),null,{timeout:90000});
   await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();});
   const panel=page.locator("#pmsv-b60-operative-text-review");
   await panel.evaluate(x=>x.open=true);
