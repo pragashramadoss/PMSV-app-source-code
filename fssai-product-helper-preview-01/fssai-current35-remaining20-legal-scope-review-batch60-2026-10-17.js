@@ -17,6 +17,7 @@ function valid(){
  if(typeof pmsvB59CTRSourceCrosswalk==="undefined"&&
    !window.pmsvB59CTRSourceCrosswalk)return false;
  if(!window.pmsvB59CTRSourceCrosswalk?.valid()||
+  typeof window.pmsvB59CTRSourceCrosswalk.getAllCases!=="function"||
   typeof pmsvB14Digest!=="function"||!dataset||
   pmsvB14Digest(dataset)!==expected||!pmsvB56Valid())return false;
  const d=dataset,t=d.totals;
@@ -61,14 +62,7 @@ function valid(){
    ANTIBIOTIC_SCOPE_DIFFERENCE:1}).every(([k,n])=>found[k]===n&&d.groups[k]===n);
 }
 function pmsvB59CTRSourceCrosswalkSource(){
- /* The underlying B59 source is validated via its existing read-only interface;
-    the selected B60 ids must all exist in B56 and not be in B59 reference set.
-    The B59 .filtered() method may reflect user filter state, so DO NOT rely on it. */
- const f=window.pmsvB59CTRSourceCrosswalk;
- return f.getAllCases ? f.getAllCases() : pmsvB56Data.cases.map(c=>({
-  ...c,reference:dataset?.cases?.some(x=>x.catalogue_id===c.catalogue_id)?null:{in_prior_batch59:true},
-  original_request_ids:c.gates.map(g=>g.request_id)
- }));
+ return window.pmsvB59CTRSourceCrosswalk.getAllCases();
 }
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function filtered(){
