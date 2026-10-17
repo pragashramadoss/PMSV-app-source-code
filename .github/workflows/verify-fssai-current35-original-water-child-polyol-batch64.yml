@@ -1,0 +1,33 @@
+name: Verify FSSAI Batch64 original water child polyol scopes
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-vending-children-polyols-batch64-2026-10-17.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-vending-children-polyols-batch64-2026-10-17.js'
+      - 'tests/fssai-current35-vending-children-polyols-batch64-2026-10-17.test.cjs'
+      - 'FSSAI-CURRENT35-BATCH64-ORIGINAL-WATER-CHILD-POLYOL-2026-10-17.md'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-original-water-child-polyol-batch64.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-batch64:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium browser tests
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check Batch64 JavaScript and regression syntax
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-current35-vending-children-polyols-batch64-2026-10-17.js
+          node --check tests/fssai-current35-vending-children-polyols-batch64-2026-10-17.test.cjs
+      - name: Original final vs draft audit / Chromium 35-case no-release safeguards
+        run: node tests/fssai-current35-vending-children-polyols-batch64-2026-10-17.test.cjs
