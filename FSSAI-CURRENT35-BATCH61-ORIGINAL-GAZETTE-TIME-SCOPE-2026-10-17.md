@@ -43,7 +43,7 @@ When these originals are visually checked, assess any subsequent supersession be
 
 | Held case | Original FSSAI source subject | Limited source conclusion | Still missing |
 |---|---|---|---|
-| #2 Coffee–Chicory Mixture / OTA | CTR 2024 p.17 “coffee” | Named coffee OTC article is operative; mixture not named | Commercial BOM; signed interpretation of mixture classification |
+| #2 Coffee–Chicory Mixture / OTA | CTR 2024 p.17 “coffee” | Named coffee OTA article is operative; mixture not named | Commercial BOM; signed interpretation of mixture classification |
 | #31 Royal Jelly / Antibiotics | CTR 2024 p.18 honey MRPL | Honey-specific misuse control not automatically royal jelly | Bee product identity, actual antibiotic and original legal scope |
 | #7 Coconut Milk Powder / Lead | FPSFA 2020 Third, non-dairy powder | Actual FPSFA product subject established, NOT liquid dairy | Signed exact CTR lead article |
 | #11 Chia Seeds / Lead | FPSFA 2020 Third | Chia is an identity-standard subject, not automatically cereal/pulse | Botanical/processing form, exact metal article |
