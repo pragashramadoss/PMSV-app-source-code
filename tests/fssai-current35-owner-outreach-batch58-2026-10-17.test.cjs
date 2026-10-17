@@ -54,6 +54,7 @@ const nap=t=>new Promise(r=>setTimeout(r,t));
   await page.waitForFunction(()=>typeof window.pmsvB58OwnerOutreach!=="undefined"&&
     document.getElementById("pmsv-b58-owner-packets"),null,{timeout:90000});
   assert(await page.evaluate(()=>window.pmsvB58OwnerOutreach.valid()),"B58 ancestry validation blocked");
+  await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();window.pmsvB58OwnerOutreach.valid()});
   const p=page.locator("#pmsv-b58-owner-packets");
   await p.evaluate(el=>el.open=true);
   assert.equal(await p.locator("[data-pmsv-b58-rows] tr").count(),70);
