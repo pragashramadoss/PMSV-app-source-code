@@ -31,6 +31,10 @@ Two FSSAI-hosted documents use *the same numerical method identifier for materia
 
 This explicit safety block is added to **every one of the 35 source-research cases**, including correctly routing the OTA/aflatoxin/pesticide/antibiotic cases **away from metal methods**. **Zero laboratory-method approvals or product releases** were entered.
 
+### Consultation provenance of the second manual — verify before adopting
+
+FSSAI's official [notices for public comments](https://www.fssai.gov.in/food-law/notifications?notification=notice-for-comments) list the **26 June 2024** notice inviting stakeholder feedback on *Manual of Methods of Analysis of Foods — Metals and Minerals* and *Sweets & Confectionery*. It says these were recommended/approved by the **Scientific Panel**, which is **not, alone, an authenticated final Authority adoption/supersession order**. Both PDFs may be hosted on an official domain yet differ in procedural authority. Thus this review **does not assert that both versions are equally operative**. Obtain the Authority's notified/current laboratory-method index and actual adoption documents before selecting a procedure. In particular, the publication of the ICP-OES manual for comments must **not** trigger an automatic analytical-method substitution.
+
 ## Updated legal research classification
 
 | Legal question | Cases |
