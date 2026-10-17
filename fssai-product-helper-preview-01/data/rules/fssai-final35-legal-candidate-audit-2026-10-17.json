@@ -1013,7 +1013,7 @@
       "analyte": "Nickel",
       "scope_question_type": "NICKEL_POLYOL_IDENTITY",
       "regulatory_candidate_NOT_APPROVED": "SORBITOL_ROW_NOT_GENERIC",
-      "exact_source_decision_question": "Nickel named sorbitol entry (if operative) cannot be assigned to generic xylitol/erythritol/polyols or blends.",
+      "exact_source_decision_question": "Nickel named sorbitol entry (if operative) cannot be assigned to generic xylitol/erythritol/polyols or blends. Original 29 Nov 2017 notified FSSR Sorbitol product standard directly supplies nickel ≤2 mg/kg and lead ≤1 mg/kg FOR SORBITOL INS420 CAS50-70-4 only; cannot transfer to other polyols or a mixed polyol group. Authenticated exact formula and commodity identity still needed.",
       "first_missing_authoritative_manufacturer_proof": "Individual exact INS/CAS identities and supplier batch grades; nickel-specific validated method.",
       "closure_priority_lane": "P0_NICKEL_SPECIFIC",
       "official_source_research_URL": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
@@ -1028,8 +1028,8 @@
       "actual_lot_CoA": "NOT_RECEIVED",
       "release": "HELD",
       "note_on_source_recency": "FSSAI CTR IX Feb 2026 searchable metadata; exact table passage and Gazette must be inspected",
-      "original_notice_topic_authenticated": false,
-      "original_notice_evidence": "NOT_DETERMINED_FOR_THIS_CASE",
+      "original_notice_topic_authenticated": true,
+      "original_notice_evidence": "https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Vertical_Standards_29_11_2017%281%29.pdf",
       "original_notice_applies_to_actual_finished_product": false,
       "original_2011_metals_notification": "https://fssai.gov.in/upload/uploadfiles/files/Contaminants_Regulations.pdf",
       "original_2011_metals_clause_found": "REFERENCE_ONLY",
@@ -1049,7 +1049,14 @@
       "published_FSSR_specific_identity_finding": "Grouped product class or incomplete exact named published standard; requires source-level identity and as-sold substance classification.",
       "published_identity_NOT_actual_sold_product_confirmation": true,
       "fssr_identity_research_b48_b49_b50": "CROSS_CHECKED_2026_10_17",
-      "potential_suitable_ICPMS_Pb_primary_method": "NOT_EVALUATED_FOR_NON_Pb"
+      "potential_suitable_ICPMS_Pb_primary_method": "NOT_EVALUATED_FOR_NON_Pb",
+      "individual_named_polyol_sorbitol_original_gazette": "https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Vertical_Standards_29_11_2017%281%29.pdf",
+      "individual_named_polyol_sorbitol_INS": "420",
+      "individual_named_polyol_sorbitol_CAS": "50-70-4",
+      "individual_named_polyol_sorbitol_nickel_max_mgkg": 2,
+      "individual_named_polyol_sorbitol_lead_max_mgkg": 1,
+      "individual_named_polyol_sorbitol_source_status": "AUTHENTICATED_ORIGINAL_FSSR_PURITY_STANDARD_SPECIFICALLY_FOR_SORBITOL",
+      "individual_named_polyol_source_does_NOT_apply_to_all_polyols": true
     },
     {
       "rank": 22,
@@ -1775,5 +1782,15 @@
     "marketed_actual_product_identities_authenticated": 0,
     "legal_contaminant_articles_approved": 0,
     "lot_results_received": 0
+  },
+  "individual_sorbitol_gazette_verified": {
+    "case_rank": 21,
+    "source": "https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Vertical_Standards_29_11_2017%281%29.pdf",
+    "nickel_mg_per_kg": 2,
+    "lead_mg_per_kg": 1,
+    "authoritative_standard": "FSSR 3.2.16 named sorbitol",
+    "is_group_approval": false,
+    "commercial_ingredient_identity_confirmed": false,
+    "lot_pass": false
   }
 }
