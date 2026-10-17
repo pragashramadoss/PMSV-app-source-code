@@ -1,0 +1,33 @@
+name: Verify FSSAI Batch63 cocoa and Misri legal identity
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.js'
+      - 'tests/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.test.cjs'
+      - 'FSSAI-CURRENT35-BATCH63-COCOA-MISRI-IDENTITY-2026-10-17.md'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-cocoa-misri-batch63.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-batch63:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check new JavaScript and test syntax
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.js
+          node --check tests/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.test.cjs
+      - name: Verify four P0 identity standards, 20 original gates and zero contamination approvals
+        run: node tests/fssai-current35-cocoa-sugar-identity-batch63-2026-10-17.test.cjs
