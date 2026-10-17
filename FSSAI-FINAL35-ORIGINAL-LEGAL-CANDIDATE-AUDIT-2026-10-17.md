@@ -19,6 +19,18 @@ The [original FSSAI 1 August 2011 Contaminants, Toxins and Residues notification
 
 This authenticates two *original legal text provisions*, **not** legal applicability to 18 flagged dossiers, not an approved case numeric limit, and certainly not a lab PASS.
 
+## Major verified analytical method collision — 2024 FSSAI manuals
+
+Two FSSAI-hosted documents use *the same numerical method identifier for materially different procedures*, and the repository has not established an official precedence/adoption/supersession order.
+
+1. [**Trace Elements** manual (https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf)](https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf), PDF p.3, lists **FSSAI 09.001:2024 = microwave digestion + AAS** (FAAS for Cu/Zn/Fe, GFAAS for Pb/Cd), with approximate Pb capability **0.4 mg/kg**. This named method expressly **excludes food ≥40% fat and milk powder**.
+2. [**Metals and Minerals** manual (https://www.fssai.gov.in/upload/uploadfiles/files/Manual%20of%20Methods%20of%20Analysis%20of%20Foods-%20Metals%20and%20Minerals.pdf)](https://www.fssai.gov.in/upload/uploadfiles/files/Manual%20of%20Methods%20of%20Analysis%20of%20Foods-%20Metals%20and%20Minerals.pdf), PDF p.3, lists **FSSAI 09.001:2024 = microwave digestion + ICP-OES**, with published quantification limits **Pb 6, Cu 0.3, Cr 5, Ni 3 mg/kg**. Its text permits additional matrices only upon suitable performance demonstration.
+3. Other code collisions exist: **Cr/Se/Mo by ICP-MS in infant/nutritional foods** is listed as **09.006** in the Trace Elements manual, **09.005** in Metals and Minerals. In the second manual, **09.006 refers to iodine** instead. Neither Cr method thereby covers misri or Ni in generic polyols.
+4. The published Pb **6 mg/kg** ICP-OES LOQ is above the **2.5 mg/kg** historic generic lead-candidate limit: such a method as published cannot determine compliance at that threshold. Published Cr LOQ **5 mg/kg** is far above named refined-sugar Cr comparator **0.02 mg/kg**; published Ni LOQ **3 mg/kg** is above named sorbitol Ni comparator **2 mg/kg**. These are *comparison cautions*, not grants of applicability of those legal limits to Misri or all polyols.
+5. This increases the need for **specific high-fat cocoa mass and coconut milk powder** checks. Full method title, operative adoption notification and laboratory-accredited **achieved** LOQ/matrix performance are required; a report quoting only “FSSAI 09.001:2024” is too ambiguous.
+
+This explicit safety block is added to **every one of the 35 source-research cases**, including correctly routing the OTA/aflatoxin/pesticide/antibiotic cases **away from metal methods**. **Zero laboratory-method approvals or product releases** were entered.
+
 ## Updated legal research classification
 
 | Legal question | Cases |
