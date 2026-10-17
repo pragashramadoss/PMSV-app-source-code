@@ -119,7 +119,9 @@ function recheck(){
   status();
   return false;
  }
- status();
+ // On successful revalidation do not rewrite the status DOM: observers
+ // must not trigger another expensive verifiedState() call in a loop.
+ // Every explicit READY read still validates the full signed source graph.
  return true;
 }
 function verifiedState(){
