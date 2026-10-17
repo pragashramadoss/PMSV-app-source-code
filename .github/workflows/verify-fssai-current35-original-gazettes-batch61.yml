@@ -1,0 +1,33 @@
+name: Verify FSSAI Batch61 original Gazettes and source subjects
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-original-gazette-subjects-batch61-2026-10-17.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-original-gazette-subjects-batch61-2026-10-17.js'
+      - 'tests/fssai-current35-original-gazette-subjects-batch61-2026-10-17.test.cjs'
+      - 'FSSAI-CURRENT35-BATCH61-ORIGINAL-GAZETTE-TIME-SCOPE-2026-10-17.md'
+      - 'fssai-product-helper-preview-01/index.html'
+      - '.github/workflows/verify-fssai-current35-original-gazettes-batch61.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-batch61:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium test dependencies
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check Batch61 panel and test JavaScript syntax
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-current35-original-gazette-subjects-batch61-2026-10-17.js
+          node --check tests/fssai-current35-original-gazette-subjects-batch61-2026-10-17.test.cjs
+      - name: Verify 35 immutable cases, 175 gates, original-law dates and browser behavior
+        run: node tests/fssai-current35-original-gazette-subjects-batch61-2026-10-17.test.cjs
