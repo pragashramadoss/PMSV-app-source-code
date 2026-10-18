@@ -7,6 +7,7 @@ on:
       - 'fssai-product-helper-preview-01/fssai-p0-original-source-briefs-2026-10-18.js'
       - 'fssai-product-helper-preview-01/index.html'
       - 'tests/fssai-p0-original-source-briefs.test.cjs'
+      - 'tests/fssai-p0-original-source-real-preview.test.cjs'
       - '.github/workflows/verify-fssai-p0-original-source-briefs.yml'
   workflow_dispatch:
 permissions:
@@ -28,7 +29,10 @@ jobs:
         run: |
           node --check fssai-product-helper-preview-01/fssai-p0-original-source-briefs-2026-10-18.js
           node --check tests/fssai-p0-original-source-briefs.test.cjs
+          node --check tests/fssai-p0-original-source-real-preview.test.cjs
       - name: Verify 13 original official source evidence briefs with prior 65 request IDs
         run: node tests/fssai-p0-original-source-briefs.test.cjs
+      - name: Verify full mobile FSSAI core and extended original-source evidence
+        run: node tests/fssai-p0-original-source-real-preview.test.cjs
       - name: Verify original all35 inventory
         run: node tests/fssai-current35-batch69-all35-source-coverage.test.cjs
