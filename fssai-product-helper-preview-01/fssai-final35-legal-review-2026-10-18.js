@@ -23,7 +23,7 @@ function install(){
  if(document.getElementById("pmsv-final35-legal-review"))return true;
  const previous=document.getElementById("pmsv-b76-case-dossier");if(!previous)return false;
  const d=document.createElement("details");d.id="pmsv-final35-legal-review";d.className="card";
- d.innerHTML='<summary><b>35 pending products · substantive legal review (HELD)</b></summary><p>All 35 products have completed legal-source desk review, not regulatory approval. View the exact remaining legal question and first missing manufacturer proof. No numerical contaminant limits are assigned.</p><p><button type="button" data-f35-load>Load verified 35 products</button> <button type="button" data-f35-export disabled>Export filtered research CSV</button></p><p data-f35-status role="status" aria-live="polite">First load extended FSSAI evidence panels.</p><div class="checker-grid"><div class="field"><label>Priority</label><select data-f35-priority><option value="ALL">All 35</option><option value="P0">P0 · 13</option><option value="P1">P1 · 22</option></select></div><div class="field"><label>Named published product identity</label><select data-f35-identity><option value="ALL">All</option><option value="YES">Named identity · 28</option><option value="NO">Grouped / unidentified · 7</option></select></div></div><div class="field"><label>Search by product, analyte or outstanding legal question</label><input type="search" data-f35-search placeholder="Cocoa, lead, Ayurveda…" maxlength="120"></div><div class="tablewrap" style="max-height:580px;overflow:auto" role="region" tabindex="0" aria-label="35 HELD product legal source reviews"><table style="min-width:880px"><thead><tr><th>Case</th><th>Product / analyte</th><th>Unresolved legal applicability and FSSAI source</th><th>Published product identity</th><th>First missing commercial proof</th></tr></thead><tbody data-f35-rows></tbody></table></div><p class="countline">175 original documentary requests remain NOT SENT / NOT RECEIVED. No original signed legal applicability, accredited method scope, actual representative lot CoA, product PASS or release. Do not upload confidential files into this public preview.</p>';
+ d.innerHTML='<summary><b>35 pending products · substantive legal review (HELD)</b></summary><p>All 35 products have completed legal-source desk review, not regulatory approval. View the exact remaining legal question and first missing manufacturer proof. No numerical contaminant limits are assigned.</p><p><button type="button" data-f35-load>Load verified 35 products</button> <button type="button" data-f35-export disabled>Export filtered research CSV</button></p><p data-f35-status role="status" aria-live="polite">First load extended FSSAI evidence panels.</p><div class="checker-grid"><div class="field"><label>Priority</label><select data-f35-priority><option value="ALL">All 35</option><option value="P0">P0 · 13</option><option value="P1">P1 · 22</option></select></div><div class="field"><label>Named published product identity</label><select data-f35-identity><option value="ALL">All</option><option value="YES">Named identity · 28</option><option value="NO">Grouped / unidentified · 7</option></select></div></div><div class="field"><label>Test/analyte family</label><select data-f35-analyte><option value="ALL">All analytes (35)</option></select></div><div class="field"><label>Search by product, analyte or outstanding legal question</label><input type="search" data-f35-search placeholder="Cocoa, lead, Ayurveda…" maxlength="120"></div><div class="tablewrap" style="max-height:580px;overflow:auto" role="region" tabindex="0" aria-label="35 HELD product legal source reviews"><table style="min-width:1160px"><thead><tr><th>Case</th><th>Product / analyte</th><th>Unresolved legal applicability and FSSAI source</th><th>Published product identity</th><th>First missing commercial proof</th><th>Analytical-method / matrix safety</th></tr></thead><tbody data-f35-rows></tbody></table></div><p class="countline">175 original documentary requests remain NOT SENT / NOT RECEIVED. No original signed legal applicability, accredited method scope, actual representative lot CoA, product PASS or release. Do not upload confidential files into this public preview.</p>';
  previous.insertAdjacentElement("afterend",d);return true;
 }
 function block(message){
@@ -36,22 +36,35 @@ function rows(){
  const d=document.getElementById("pmsv-final35-legal-review"),
   p=d.querySelector("[data-f35-priority]").value,
   i=d.querySelector("[data-f35-identity]").value,
+  a=d.querySelector("[data-f35-analyte]").value,
   q=d.querySelector("[data-f35-search]").value.trim().toLowerCase();
- return audit.rows.filter(r=>(p==="ALL"||r.priority===p)&&(i==="ALL"||(i==="YES"&&r.published_named_product_standard_located)||(i==="NO"&&!r.published_named_product_standard_located))&&(!q||[r.rank,r.product,r.analyte,r.scope_question_type,r.exact_source_decision_question,r.first_missing_authoritative_manufacturer_proof].some(x=>String(x??"").toLowerCase().includes(q))));
+ return audit.rows.filter(r=>(p==="ALL"||r.priority===p)&&(i==="ALL"||(i==="YES"&&r.published_named_product_standard_located)||(i==="NO"&&!r.published_named_product_standard_located))&&(a==="ALL"||r.analyte===a)&&(!q||[r.rank,r.product,r.analyte,r.scope_question_type,r.exact_source_decision_question,r.first_missing_authoritative_manufacturer_proof,r.explicit_analytical_guard].some(x=>String(x??"").toLowerCase().includes(q)))).sort((x,y)=>x.priority.localeCompare(y.priority)||x.rank-y.rank);
 }
 function render(){
  if(!install())return false;if(!verified()){block();return false}
- const d=document.getElementById("pmsv-final35-legal-review"),body=d.querySelector("[data-f35-rows]"),filtered=rows();body.replaceChildren();
+ const d=document.getElementById("pmsv-final35-legal-review"),body=d.querySelector("[data-f35-rows]"),analyte=d.querySelector("[data-f35-analyte]");
+ if(analyte.options.length===1){for(const a of [...new Set(audit.rows.map(x=>x.analyte))].sort()){const op=document.createElement("option");op.value=a;op.textContent=a+" ("+audit.rows.filter(x=>x.analyte===a).length+")";analyte.appendChild(op)}}
+ const filtered=rows();body.replaceChildren();
  const make=(tag,s)=>{const e=document.createElement(tag);e.textContent=String(s);return e};
  for(const r of filtered){
   const tr=document.createElement("tr"),product=make("td",r.product),question=make("td",r.exact_source_decision_question),identity=make("td",r.published_named_product_standard_located?"Named identity reference found (commercial material not verified)":"Grouped article: exact substance not confirmed");
   product.appendChild(make("small",r.analyte+" · "+r.case_id));
   const link=make("a","Official FSSAI research source");link.href=r.official_source_research_URL;link.target="_blank";link.rel="noopener noreferrer";question.appendChild(link);
   if(r.published_FSSR_identity_clause)identity.appendChild(make("small","FSSR "+r.published_FSSR_identity_clause));
-  for(const td of [make("td",r.priority+" #"+r.rank),product,question,identity,make("td",r.first_missing_authoritative_manufacturer_proof)])tr.appendChild(td);
+  const status=make("small",r.original_notice_topic_authenticated===true?
+   "Original Gazette topic located; this finished-product applicability NOT signed":
+   "Operative original Gazette applicability NOT signed");
+ question.appendChild(status);
+ const lab=make("td","Laboratory method and matrix scope NOT SIGNED");
+ const disclosure=document.createElement("details");
+ disclosure.appendChild(make("summary","Review analyte/matrix method caveat"));
+ disclosure.appendChild(make("p",r.explicit_analytical_guard));
+ disclosure.appendChild(make("small","Method adoption: "+r.laboratory_required_method_adoption_status+"; matrix: "+r.laboratory_required_matrix_scope_status+"; achieved LOQ: "+r.laboratory_actual_LOQ+". No PASS."));
+ lab.appendChild(disclosure);
+ for(const td of [make("td",r.priority+" #"+r.rank),product,question,identity,make("td",r.first_missing_authoritative_manufacturer_proof),lab])tr.appendChild(td);
   body.appendChild(tr);
  }
- d.querySelector("[data-f35-status]").textContent="Desk review verified: "+filtered.length+" of 35 listed · 13 P0 / 22 P1 · 28 named / 7 grouped · 175 original proof IDs OPEN · 0 approvals.";
+ d.querySelector("[data-f35-status]").textContent="Desk review verified: "+filtered.length+" of 35 listed · 13 P0 / 22 P1 · 28 named / 7 grouped · 9 analyte groups · 175 original proof IDs OPEN · 0 approvals.";
  d.querySelector("[data-f35-export]").disabled=false;return true
 }
 async function load(){
@@ -64,8 +77,8 @@ async function load(){
 function csv(){
  if(!verified())return"";
  const escape=x=>{let s=String(x??"");if(/^\s*[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"'};
- const lines=[["rank","priority","case_id","product","analyte","unresolved_legal_question","first_missing_commercial_proof","published_named_identity","five_original_request_IDs","source_URL","legal_approval","lab_scope","original_lot_CoA","release"]];
- for(const r of rows())lines.push([r.rank,r.priority,r.case_id,r.product,r.analyte,r.exact_source_decision_question,r.first_missing_authoritative_manufacturer_proof,r.published_named_product_standard_located,r.original_documentary_request_IDs,r.official_source_research_URL,"NOT_SIGNED","NOT_SIGNED","NOT_RECEIVED","HELD"]);
+ const lines=[["rank","priority","case_id","product","analyte","legal_question_type","legal_candidate_NOT_APPROVED","unresolved_legal_question","first_missing_commercial_proof","published_named_identity","FSSR_identity_clause","original_gazette_topic_authenticated","analytical_method_matrix_guard","laboratory_method_adoption_state","laboratory_matrix_scope_state","laboratory_actual_LOQ","five_original_request_IDs","source_URL","legal_approval","lab_scope","original_lot_CoA","release"]];
+ for(const r of rows())lines.push([r.rank,r.priority,r.case_id,r.product,r.analyte,r.scope_question_type,r.regulatory_candidate_NOT_APPROVED,r.exact_source_decision_question,r.first_missing_authoritative_manufacturer_proof,r.published_named_product_standard_located,r.published_FSSR_identity_clause,r.original_notice_topic_authenticated,r.explicit_analytical_guard,r.laboratory_required_method_adoption_status,r.laboratory_required_matrix_scope_status,r.laboratory_actual_LOQ,r.original_documentary_request_IDs,r.official_source_research_URL,"NOT_SIGNED","NOT_SIGNED","NOT_RECEIVED","HELD"]);
  return lines.map(r=>r.map(escape).join(",")).join("\r\n")+"\r\n"
 }
 function exportFile(){
@@ -75,7 +88,7 @@ function exportFile(){
 }
 document.addEventListener("click",e=>{if(e.target?.closest?.("[data-f35-load]"))load();else if(e.target?.closest?.("[data-f35-export]"))exportFile()});
 document.addEventListener("input",e=>{if(e.target?.matches?.("[data-f35-search]"))render()});
-document.addEventListener("change",e=>{if(e.target?.matches?.("[data-f35-priority],[data-f35-identity]"))render()});
+document.addEventListener("change",e=>{if(e.target?.matches?.("[data-f35-priority],[data-f35-identity],[data-f35-analyte]"))render()});
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
 window.pmsvFinal35LegalReview=Object.freeze({install,load,render,csv,verified});
 })();
