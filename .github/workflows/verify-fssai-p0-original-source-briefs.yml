@@ -1,0 +1,34 @@
+name: Verify P0 13 original CTR source briefs
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-final35-p0-original-notice-briefs-2026-10-18.json'
+      - 'fssai-product-helper-preview-01/fssai-p0-original-source-briefs-2026-10-18.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/fssai-p0-original-source-briefs.test.cjs'
+      - '.github/workflows/verify-fssai-p0-original-source-briefs.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: JS syntax
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-p0-original-source-briefs-2026-10-18.js
+          node --check tests/fssai-p0-original-source-briefs.test.cjs
+      - name: Verify 13 original official source evidence briefs with prior 65 request IDs
+        run: node tests/fssai-p0-original-source-briefs.test.cjs
+      - name: Verify original all35 inventory
+        run: node tests/fssai-current35-batch69-all35-source-coverage.test.cjs

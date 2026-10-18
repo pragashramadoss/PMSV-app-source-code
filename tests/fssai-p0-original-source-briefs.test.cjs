@@ -1,0 +1,42 @@
+"use strict";
+const assert=require("node:assert/strict"),fs=require("node:fs"),{chromium}=require("playwright");
+const root="fssai-product-helper-preview-01/";
+const data=JSON.parse(fs.readFileSync(root+"data/rules/fssai-final35-p0-original-notice-briefs-2026-10-18.json","utf8"));
+const prior=JSON.parse(fs.readFileSync(root+"data/rules/fssai-current35-reference-row-nontransfer-batch59-2026-10-17.json","utf8"));
+const src=fs.readFileSync(root+"fssai-p0-original-source-briefs-2026-10-18.js","utf8");
+assert(fs.readFileSync(root+"index.html","utf8").includes("fssai-p0-original-source-briefs-2026-10-18.js"));
+assert.equal(data.rows.length,13);assert.equal(prior.cases.length,35);
+assert(!/(localStorage|sessionStorage|indexedDB|sendBeacon|WebSocket|XMLHttpRequest)/.test(src));
+const digest=v=>{let a=0x811c9dc5,b=0x9747b28c;const s=JSON.stringify(v);for(let i=0;i<s.length;i++){const z=s.charCodeAt(i);a=Math.imul(a^z,16777619);b=Math.imul(b^z,2246822519)}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")};
+assert.equal(digest(data),"e34faa108ef56619");
+const m=new Map(prior.cases.map(x=>[x.catalogue_id,x]));
+assert.equal(new Set(data.rows.map(x=>x.case_id)).size,13);
+for(const x of data.rows){const z=m.get(x.case_id);assert(z);assert.equal(z.rank,x.rank);assert.equal(z.priority,"P0");assert.equal(x.original_documentary_request_IDs,z.original_request_ids.join(" | "));assert.equal(x.release,"HELD")}
+(async()=>{const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});try{
+ const page=await browser.newPage({viewport:{width:390,height:844}});
+ await page.setContent('<html><body><details id="pmsv-final35-legal-review" open><div class="tablewrap"></div></details></body></html>');
+ await page.evaluate(({data,prior})=>{
+  window.fixture={data,prior,ready:false,valid:true};
+  window.pmsvB14Digest=v=>{let a=0x811c9dc5,b=0x9747b28c;const s=JSON.stringify(v);for(let i=0;i<s.length;i++){const z=s.charCodeAt(i);a=Math.imul(a^z,16777619);b=Math.imul(b^z,2246822519)}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")};
+  window.pmsvFinal35LegalReview={verified:()=>fixture.ready};
+  window.pmsvB59CTRSourceCrosswalk={valid:()=>fixture.valid,getAllCases:()=>fixture.prior.cases};
+  window.fetch=async()=>({ok:true,json:async()=>fixture.data});
+ },{data,prior});
+ await page.addScriptTag({content:src});
+ assert.equal(await page.locator("#pmsv-p0-original-notices").count(),1);
+ assert.equal(await page.evaluate(()=>pmsvP0OriginalSourceBriefs.load()),false);
+ await page.evaluate(()=>{fixture.ready=true});
+ assert.equal(await page.evaluate(()=>pmsvP0OriginalSourceBriefs.load()),true);
+ assert.equal(await page.locator("[data-p0-original-rows] tr").count(),13);
+ assert.equal(await page.locator("[data-p0-original-rows] a").count(),13);
+ const csv=await page.evaluate(()=>pmsvP0OriginalSourceBriefs.csv());
+ assert.equal(csv.split("\r\n").filter(Boolean).length,14);
+ assert(csv.includes("NOT_SENT")&&csv.includes("NOT_RECEIVED")&&csv.includes("HELD"));
+ await page.evaluate(()=>{fixture.prior.cases[0].rank=999});
+ assert.equal(await page.evaluate(()=>pmsvP0OriginalSourceBriefs.render()),false);
+ assert.equal(await page.locator("[data-p0-original-rows] tr").count(),0);
+ await page.evaluate(()=>{fixture.prior.cases[0].rank=1;fixture.data.rows[0].release="PASS"});
+ assert.equal(await page.evaluate(()=>pmsvP0OriginalSourceBriefs.load()),false);
+ assert.equal(await page.locator("[data-p0-original-export]").isDisabled(),true);
+ console.log("P0_ORIGINAL_SOURCE_13_PASS 13 P0, 65 original gate IDs, original legal pages, unsent export, fail-close");
+}finally{await browser.close()}})().catch(e=>{console.error("P0_ORIGINAL_SOURCE_13_FAIL",e);process.exitCode=1});
