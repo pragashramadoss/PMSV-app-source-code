@@ -152,11 +152,11 @@ function b84CSV(){
  if(!verified())return"";
  const byRank=new Map(audit.rows.map(x=>[x.rank,x]));
  if(byRank.size!==35||B84_SCOPE.length!==23)return"";
- const esc=v=>{let s=String(v??"");if(/^\\s*[=+@\\-\\t\\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"'};
+ const esc=v=>{let s=String(v??"");if(/^\s*[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"'};
  const a=[["case_rank","original_case_id","case_product","case_analyte","source_comparator_analyte","official_named_article","published_amount_NOT_APPLIED","unit","FSSAI_reference_page","why_not_transferable","market_evidence_needed","case_legal_applicability","lot_release"]];
  for(const x of B84_SCOPE){const r=byRank.get(x[0]);if(!r)return"";
  a.push([r.rank,r.case_id,r.product,r.analyte,x[1],x[2],x[3],x[4],B84_CTR+"#page="+x[5],x[6],x[7],"NOT_SIGNED","HELD"])}
- return a.map(x=>x.map(esc).join(",")).join("\\r\\n")+"\\r\\n"
+ return a.map(x=>x.map(esc).join(",")).join("\r\n")+"\r\n"
 }
 function b84Export(){
  if(!b84Render())return false;
