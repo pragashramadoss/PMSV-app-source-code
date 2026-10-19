@@ -23,13 +23,13 @@ function install(){
  if(document.getElementById("pmsv-final35-legal-review"))return true;
  const previous=document.getElementById("pmsv-b76-case-dossier");if(!previous)return false;
  const d=document.createElement("details");d.id="pmsv-final35-legal-review";d.className="card";
- d.innerHTML='<summary><b>35 public-source reviews completed · legal/lot verification OPEN</b></summary><p>All 533 catalogue entries have a documented first-source research disposition: 498 conditional reference matches plus these 35 individually researched cases without a confirmed applicable exact contaminant article. This completes the public-source review queue, NOT product-specific legal applicability, laboratory validation or lot approval. The 35 require identity/scope evidence before a number can be assigned.</p><p><button type="button" data-f35-load>Open 35 source-research dossiers</button> <button type="button" data-f35-export disabled>Export filtered research CSV</button></p><p data-f35-status role="status" aria-live="polite">First load extended FSSAI evidence panels.</p><div class="checker-grid"><div class="field"><label>Priority</label><select data-f35-priority><option value="ALL">All 35</option><option value="P0">P0 · 13</option><option value="P1">P1 · 22</option></select></div><div class="field"><label>Named published product identity</label><select data-f35-identity><option value="ALL">All</option><option value="YES">Named identity · 28</option><option value="NO">Grouped / unidentified · 7</option></select></div></div><div class="field"><label>Test/analyte family</label><select data-f35-analyte><option value="ALL">All analytes (35)</option></select></div><div class="field"><label>Search by product, analyte or outstanding legal question</label><input type="search" data-f35-search placeholder="Cocoa, lead, Ayurveda…" maxlength="120"></div><div class="tablewrap" style="max-height:580px;overflow:auto" role="region" tabindex="0" aria-label="35 HELD product legal source reviews"><table style="min-width:1160px"><thead><tr><th>Case</th><th>Product / analyte</th><th>Unresolved legal applicability and FSSAI source</th><th>Published product identity</th><th>First missing commercial proof</th><th>Analytical-method / matrix safety</th></tr></thead><tbody data-f35-rows></tbody></table></div><p class="countline">175 original documentary requests remain NOT SENT / NOT RECEIVED. No original signed legal applicability, accredited method scope, actual representative lot CoA, product PASS or release. Do not upload confidential files into this public preview.</p>';
+ d.innerHTML='<summary><b>35 public-source reviews completed · legal/lot verification OPEN</b></summary><p>All 533 catalogue entries have a documented first-source research disposition: 498 conditional reference matches plus these 35 individually researched cases without a confirmed applicable exact contaminant article. This completes the public-source review queue, NOT product-specific legal applicability, laboratory validation or lot approval. The 35 require identity/scope evidence before a number can be assigned.</p><p><button type="button" data-f35-load>Open 35 source-research dossiers</button> <button type="button" data-f35-export disabled>Export filtered research CSV</button> <button type="button" data-f35-ledger-export disabled>Export all 533 source-status records</button></p><p data-f35-status role="status" aria-live="polite">First load extended FSSAI evidence panels.</p><div class="checker-grid"><div class="field"><label>Priority</label><select data-f35-priority><option value="ALL">All 35</option><option value="P0">P0 · 13</option><option value="P1">P1 · 22</option></select></div><div class="field"><label>Named published product identity</label><select data-f35-identity><option value="ALL">All</option><option value="YES">Named identity · 28</option><option value="NO">Grouped / unidentified · 7</option></select></div></div><div class="field"><label>Test/analyte family</label><select data-f35-analyte><option value="ALL">All analytes (35)</option></select></div><div class="field"><label>Search by product, analyte or outstanding legal question</label><input type="search" data-f35-search placeholder="Cocoa, lead, Ayurveda…" maxlength="120"></div><div class="tablewrap" style="max-height:580px;overflow:auto" role="region" tabindex="0" aria-label="35 HELD product legal source reviews"><table style="min-width:1160px"><thead><tr><th>Case</th><th>Product / analyte</th><th>Unresolved legal applicability and FSSAI source</th><th>Published product identity</th><th>First missing commercial proof</th><th>Analytical-method / matrix safety</th></tr></thead><tbody data-f35-rows></tbody></table></div><p class="countline">175 original documentary requests remain NOT SENT / NOT RECEIVED. No original signed legal applicability, accredited method scope, actual representative lot CoA, product PASS or release. Do not upload confidential files into this public preview.</p>';
  previous.insertAdjacentElement("afterend",d);return true;
 }
 function block(message){
  const d=document.getElementById("pmsv-final35-legal-review");if(!d)return;
  d.querySelector("[data-f35-status]").textContent=message||"Source integrity blocked; all cases HELD.";
- d.querySelector("[data-f35-export]").disabled=true;d.querySelector("[data-f35-rows]").replaceChildren();b84Clear();
+ d.querySelector("[data-f35-export]").disabled=true;d.querySelector("[data-f35-ledger-export]").disabled=true;d.querySelector("[data-f35-rows]").replaceChildren();b84Clear();
 }
 function rows(){
  if(!verified())return[];
@@ -65,7 +65,7 @@ function render(){
   body.appendChild(tr);
  }
  d.querySelector("[data-f35-status]").textContent="Public-source review verified: "+filtered.length+" of 35 listed · 13 P0 / 22 P1 · 28 named / 7 grouped · 9 analyte groups · 175 original proof IDs OPEN · 0 approvals.";
- d.querySelector("[data-f35-export]").disabled=false;b84Render();return true
+ d.querySelector("[data-f35-export]").disabled=false;d.querySelector("[data-f35-ledger-export]").disabled=false;b84Render();return true
 }
 async function load(){
  if(busy)return false;if(!install()||!stateOK()){audit=null;block("Load extended FSSAI evidence panels and verify them first.");return false}
@@ -81,16 +81,63 @@ function csv(){
  for(const r of rows())lines.push([r.rank,r.priority,r.case_id,r.product,r.analyte,r.scope_question_type,r.regulatory_candidate_NOT_APPROVED,r.exact_source_decision_question,r.first_missing_authoritative_manufacturer_proof,r.published_named_product_standard_located,r.published_FSSR_identity_clause,r.original_notice_topic_authenticated,r.explicit_analytical_guard,r.laboratory_required_method_adoption_status,r.laboratory_required_matrix_scope_status,r.laboratory_actual_LOQ,r.original_documentary_request_IDs,r.official_source_research_URL,"NOT_SIGNED","NOT_SIGNED","NOT_RECEIVED","HELD"]);
  return lines.map(r=>r.map(escape).join(",")).join("\r\n")+"\r\n"
 }
-function exportFile(){
- if(!render())return false;const content=csv();if(!content)return false;
- const u=URL.createObjectURL(new Blob(["\uFEFF"+content],{type:"text/csv;charset=utf-8"})),a=document.createElement("a");
- a.href=u;a.download="PMSV-35-PENDING-SUBSTANTIVE-LEGAL-REVIEW-HELD.csv";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);return true
+/* Batch86: verified, product-level, 533-record machine-readable export. Source mapping
+   is not an analyte clearance. Immutable baseline and held-case join must both agree. */
+function ledgerCsv(){
+ if(!verified()||typeof pmsv498Valid!=="function"||!pmsv498Valid()||!pmsv498Ledger)return"";
+ const all=pmsv498Ledger.records;
+ if(!Array.isArray(all)||all.length!==533||pmsv498Ledger.catalogue!==533||
+ pmsv498Ledger.partial_exact!==498||pmsv498Ledger.first_source_pending!==35)return"";
+ const held=new Map(audit.rows.map(r=>[r.case_id,r]));
+ if(held.size!==35)return"";
+ let partial=0,pending=0;
+ const seen=new Set();
+ const values=[["catalog_id","product_name","fssr_identity_reference","fscs_code","first_source_status","desk_research","exact_legal_applicability","contaminant_panel_complete","signed_case_limit","lab_result_pass","lot_release","case_priority","case_analyte","case_research_question","first_manufacturer_evidence","official_research_source"]];
+ const escape=x=>{let v=String(x??"");if(/^\s*[=+@\-\t\r]/.test(v))v="'"+v;return '"'+v.replaceAll('"','""')+'"'};
+ for(const r of all){
+  if(!r||!r.catalog_id||seen.has(r.catalog_id)||!r.product_name||
+   r.product_compliance_approval!==false||r.sample_lab_pass!==false||
+   r.complete_contaminant_panel!==false)return"";
+  seen.add(r.catalog_id);
+  const p=held.get(r.catalog_id);
+  if(r.source_status==="PARTIAL_EXACT_SOURCE_MATCH"){
+   if(p)return"";partial++;
+  }else if(r.source_status==="FIRST_EXACT_SOURCE_PENDING"){
+   if(!p||p.product!==r.product_name||p.release!=="HELD"||
+    p.current_assigned_legal_limit!=="NOT_SIGNED")return"";
+   pending++;held.delete(r.catalog_id);
+  }else return"";
+  values.push([r.catalog_id,r.product_name,r.fssr,r.fcs,r.source_status,
+   p?"ORIGINAL_SOURCE_DESK_REVIEW_COMPLETED":"CONDITIONAL_FIRST_SOURCE_REFERENCE",
+   p?"SOURCE_SCOPE_REQUIRES_ADJUDICATION":"REFERENCE_ONLY_NOT_COMPLIANCE",
+   "NO","NOT_SIGNED","NOT_VERIFIED","HELD",
+   p?.priority||"",p?.analyte||"",p?.exact_source_decision_question||"",
+   p?.first_missing_authoritative_manufacturer_proof||"",p?.official_source_research_URL||""]);
+ }
+ if(partial!==498||pending!==35||held.size!==0||seen.size!==533||values.length!==534)return"";
+ return values.map(row=>row.map(escape).join(",")).join("\r\n")+"\r\n";
 }
-document.addEventListener("click",e=>{if(e.target?.closest?.("[data-f35-load]"))load();else if(e.target?.closest?.("[data-f35-export]"))exportFile()});
+function downloadCSV(content,fileName){
+ if(!content||!verified())return false;
+ const u=window.URL.createObjectURL(new Blob(["\uFEFF"+content],{type:"text/csv;charset=utf-8"}));
+ const a=document.createElement("a");a.href=u;a.download=fileName;
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>window.URL.revokeObjectURL(u),1000);
+ return true
+}
+function exportFile(){
+ if(!render())return false;
+ return downloadCSV(csv(),"PMSV-35-FILTERED-LEGAL-SOURCE-REVIEW-HELD.csv")
+}
+function exportAll533(){
+ if(!render())return false;
+ return downloadCSV(ledgerCsv(),"PMSV-533-FIRST-SOURCE-STATUS-NOT-COMPLIANCE.csv")
+}
+document.addEventListener("click",e=>{if(e.target?.closest?.("[data-f35-load]"))load();else if(e.target?.closest?.("[data-f35-export]"))exportFile();else if(e.target?.closest?.("[data-f35-ledger-export]"))exportAll533()});
 document.addEventListener("input",e=>{if(e.target?.matches?.("[data-f35-search]"))render()});
 document.addEventListener("change",e=>{if(e.target?.matches?.("[data-f35-priority],[data-f35-identity],[data-f35-analyte]"))render()});
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
-window.pmsvFinal35LegalReview=Object.freeze({install,load,render,csv,verified});
+window.pmsvFinal35LegalReview=Object.freeze({install,load,render,csv,ledgerCsv,verified});
 
 /* Batch84: 23 original food-article numeric comparators. Source-only reference,
    never a legal determination for the 35 named cases, and never a lot PASS. */
@@ -116,6 +163,10 @@ function b84Panel(){
  output.textContent="Verify 35 original cases first. No legal scope determination.";d.appendChild(output);
  const button=document.createElement("button");button.type="button";button.dataset.b84Export="";button.disabled=true;
  button.textContent="Export all 35 original-law scope decisions (NOT APPLIED)";d.appendChild(button);
+ const focus=document.createElement("button");focus.type="button";focus.dataset.b86Focus="";
+ focus.textContent="Show selected case in the 35-case review";focus.style.marginLeft="8px";focus.disabled=true;d.appendChild(focus);
+ const reset=document.createElement("button");reset.type="button";reset.dataset.b86Reset="";
+ reset.textContent="Show all 35 cases";reset.style.marginLeft="8px";reset.disabled=true;d.appendChild(reset);
  const caution=document.createElement("p");caution.textContent="Source: FSSAI February 2026 CTR Version IX reference consolidation. Before legal adoption check original Gazette notifications, effective dates, more specific entries and the actual marketed product. No documents uploaded, no email sent, no numeric compliance decisions.";
  d.appendChild(caution);
  const region=host.querySelector(".tablewrap");if(!region)return null;
@@ -125,7 +176,8 @@ function b84Clear(){
  const d=b84Panel();if(!d)return;
  const out=d.querySelector("[data-b84-result]");out.replaceChildren();
  out.textContent="Source chain unverified: no article applicability or numeric PASS.";
- d.querySelector("[data-b84-export]").disabled=true
+ d.querySelector("[data-b84-export]").disabled=true;
+ d.querySelector("[data-b86-focus]").disabled=true;d.querySelector("[data-b86-reset]").disabled=true
 }
 function b84Render(){
  const d=b84Panel();if(!d)return false;
@@ -149,7 +201,7 @@ function b84Render(){
  link.target="_blank";link.rel="noopener noreferrer";
  link.textContent="Inspect official FSSAI CTR Version IX reference page "+x[5];
  out.appendChild(link);out.appendChild(make("p","Status: CASE HELD · no legally adopted limit, validated matrix method, original lot CoA or product release."));
- d.querySelector("[data-b84-export]").disabled=false;return true
+ d.querySelector("[data-b84-export]").disabled=false;d.querySelector("[data-b86-focus]").disabled=false;d.querySelector("[data-b86-reset]").disabled=false;return true
 }
 function b84CSV(){
  if(!verified())return"";
@@ -168,10 +220,34 @@ function b84Export(){
  const a=document.createElement("a");a.href=url;a.download="PMSV-35-CTR-ORIGINAL-ARTICLE-SCOPE-NOT-APPLIED.csv";
  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>window.URL.revokeObjectURL(url),1000);return true
 }
+/* Explicit action only: do not surprise users by silently changing the filtered review. */
+function b86Focus(){
+ if(!verified()||!b84Render())return false;
+ const d=document.getElementById("pmsv-final35-legal-review");
+ const selected=d?.querySelector("[data-b84-case]")?.value;
+ const r=audit.rows.find(x=>String(x.rank)===selected);
+ if(!r)return false;
+ d.querySelector("[data-f35-priority]").value="ALL";
+ d.querySelector("[data-f35-identity]").value="ALL";
+ d.querySelector("[data-f35-analyte]").value="ALL";
+ d.querySelector("[data-f35-search]").value=r.case_id;
+ const result=render();
+ if(result){d.open=true;const tr=d.querySelector("[data-f35-rows] tr");tr?.scrollIntoView({block:"nearest",behavior:"auto"});}
+ return result&&rows().length===1
+}
+function b86Reset(){
+ if(!verified())return false;
+ const d=document.getElementById("pmsv-final35-legal-review");if(!d)return false;
+ d.querySelector("[data-f35-priority]").value="ALL";
+ d.querySelector("[data-f35-identity]").value="ALL";
+ d.querySelector("[data-f35-analyte]").value="ALL";
+ d.querySelector("[data-f35-search]").value="";
+ return render()&&rows().length===35
+}
 document.addEventListener("change",e=>{if(e.target?.matches?.("[data-b84-case]"))b84Render()});
-document.addEventListener("click",e=>{if(e.target?.closest?.("[data-b84-export]"))b84Export()});
+document.addEventListener("click",e=>{if(e.target?.closest?.("[data-b84-export]"))b84Export();else if(e.target?.closest?.("[data-b86-focus]"))b86Focus();else if(e.target?.closest?.("[data-b86-reset]"))b86Reset()});
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",b84Panel,{once:true});else b84Panel();
 window.pmsvB84NamedArticleScope=Object.freeze({render:b84Render,csv:b84CSV,
- get:()=>B84_SCOPE.map(x=>x.slice()),getAll:()=>B85_ALL_SCOPE.map(x=>x.slice()),verified:()=>verified()});
+ get:()=>B84_SCOPE.map(x=>x.slice()),getAll:()=>B85_ALL_SCOPE.map(x=>x.slice()),focus:b86Focus,reset:b86Reset,verified:()=>verified()});
 
 })();
