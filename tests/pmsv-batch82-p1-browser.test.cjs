@@ -26,6 +26,8 @@ const src=fs.readFileSync(root+"fssai-batch82-p1-original-evidence-desk-2026-10-
  assert.equal(await p.evaluate(()=>pmsvB82P1Evidence.load()),true);
  assert.equal(await p.locator("[data-pmsv-b82-rows] tr").count(),22);
  assert.equal(await p.locator("[data-pmsv-b82-rows] details").count(),22);
+ await p.locator("#pmsv-b82-p1-workbench").evaluate(el=>{el.open=true;});
+ assert.equal(await p.locator("#pmsv-b82-p1-workbench").evaluate(el=>el.open),true);
  assert.equal((await p.evaluate(()=>pmsvB82P1Evidence.csv("CASES"))).trim().split("\r\n").length,23);
  assert.equal((await p.evaluate(()=>pmsvB82P1Evidence.csv("REQUESTS"))).trim().split("\r\n").length,111);
  const originalCSV=await p.evaluate(()=>pmsvB82P1Evidence.csv("REQUESTS"));
@@ -39,6 +41,21 @@ const src=fs.readFileSync(root+"fssai-batch82-p1-original-evidence-desk-2026-10-
  await p.locator('[data-pmsv-b82-filter="identity"]').selectOption("NAMED");
  assert.equal(await p.locator("[data-pmsv-b82-rows] tr").count(),16);
  await p.locator('[data-pmsv-b82-filter="identity"]').selectOption("ALL");
+ for(const role of ["FSSAI_QA_DIVISION_AND_LAB_DIRECTOR","MANUFACTURER_OR_SUPPLIER_QA","REGULATORY_AFFAIRS_LEGAL","LABORATORY_TECHNICAL_MANAGER","SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER"]){
+  await p.locator('[data-pmsv-b82-filter="owner"]').selectOption(role);
+  assert.equal(await p.locator("[data-pmsv-b82-rows] tr").count(),22);
+  assert.equal(await p.locator("[data-pmsv-b82-rows] details li").count(),22);
+  const reqCSV=await p.evaluate(()=>pmsvB82P1Evidence.csv("REQUESTS"));
+  assert.equal(reqCSV.trim().split("\\r\\n").length,23);
+  assert(reqCSV.includes(role));
+  assert((await p.locator("[data-pmsv-b82-status]").textContent()).includes("22 unsent requests in this view"));
+ }
+ await p.locator('[data-pmsv-b82-filter="group"]').selectOption("TRACE_METALS");
+ assert.equal((await p.evaluate(()=>pmsvB82P1Evidence.csv("REQUESTS"))).trim().split("\\r\\n").length,16);
+ await p.locator('[data-pmsv-b82-filter="group"]').selectOption("ALL");
+ await p.locator('[data-pmsv-b82-filter="owner"]').selectOption("ALL");
+ assert.equal(await p.locator("[data-pmsv-b82-rows] details li").count(),110);
+ assert.equal((await p.evaluate(()=>pmsvB82P1Evidence.csv("REQUESTS"))).trim().split("\\r\\n").length,111);
  await p.locator("[data-pmsv-b82-search]").fill("Coffee-Chicory");
  assert.equal(await p.locator("[data-pmsv-b82-rows] tr").count(),1);
  assert.equal((await p.evaluate(()=>pmsvB82P1Evidence.csv("REQUESTS"))).trim().split("\r\n").length,6);

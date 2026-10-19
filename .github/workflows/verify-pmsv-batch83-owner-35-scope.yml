@@ -1,0 +1,36 @@
+name: Verify PMSV Batch83 original 35 and five role-specific P1 worklists
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-batch82-p1-original-evidence-desk-2026-10-19.js'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-batch82-p1-22-original-evidence-desk-2026-10-19.json'
+      - 'tests/pmsv-batch82-p1-browser.test.cjs'
+      - 'tests/pmsv-batch83-35-owner-scope-regression.test.cjs'
+      - '.github/workflows/verify-pmsv-batch83-owner-35-scope.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  owner-worklists:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify JS syntax and 175 original evidence IDs, source non-transfer
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-batch82-p1-original-evidence-desk-2026-10-19.js
+          node --check tests/pmsv-batch82-p1-browser.test.cjs
+          node --check tests/pmsv-batch83-35-owner-scope-regression.test.cjs
+          node tests/pmsv-batch81-original-evidence-continuity.test.cjs
+          node tests/pmsv-batch82-p1-original-evidence.test.cjs
+          node tests/pmsv-batch83-35-owner-scope-regression.test.cjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify real 390px browser, five owner selections, tamper fail-closed
+        run: node tests/pmsv-batch82-p1-browser.test.cjs

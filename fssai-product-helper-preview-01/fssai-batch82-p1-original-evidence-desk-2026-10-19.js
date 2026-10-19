@@ -121,6 +121,7 @@ function fail(message){
  d.querySelector("[data-pmsv-b82-rows]").replaceChildren();
  d.querySelectorAll("[data-pmsv-b82-export]").forEach(x=>x.disabled=true);
 }
+function visibleRequests(x){return owner==="ALL"?x.documentary_requests:x.documentary_requests.filter(g=>g.owner_role===owner)}
 function filtered(){
  if(!verified())return[];
  const term=search.toLocaleLowerCase().trim();
@@ -151,9 +152,10 @@ function render(){
   legal.appendChild(link("FSSAI research URL (not signed applicability)",x.current_research_url));
   method.appendChild(node("div",x.laboratory_matrix_method_proof_needed));
   method.appendChild(node("small","0 accredited scope / 0 lab results / 0 signed legal limits"));
-  const details=node("details"),summary=node("summary","5 original IDs · 0 sent · 0 received");details.appendChild(summary);
+  const chosen=visibleRequests(x);
+  const details=node("details"),summary=node("summary",chosen.length+" original evidence ID"+(chosen.length===1?"":"s")+" · 0 sent · 0 received");details.appendChild(summary);
   const list=node("ol");
-  for(const g of x.documentary_requests){
+  for(const g of chosen){
    const li=node("li"),name=node("b",g.request_id+" · "+g.gate_code);li.appendChild(name);
    li.appendChild(node("small","Owner: "+g.owner_role+" · NOT_SENT / NOT_RECEIVED / NOT_AUTHENTICATED"));
    li.appendChild(node("div",g.required_evidence));list.appendChild(li);
@@ -162,8 +164,9 @@ function render(){
   for(const item of [a,identityCell,legal,method,requests])tr.appendChild(item);
   body.appendChild(tr);
  }
- d.querySelector("[data-pmsv-b82-status]").textContent=filtered().length+
-  " P1 cases shown / 22 held · 110 unique original request IDs in full dataset · "+
+ const shown=filtered(),visibleRequestCount=shown.reduce((n,x)=>n+visibleRequests(x).length,0);
+ d.querySelector("[data-pmsv-b82-status]").textContent=shown.length+
+  " P1 cases shown / 22 held · "+visibleRequestCount+" unsent requests in this view (110 original IDs in full dataset) · "+
   "0 requests sent · 0 legal/lab approvals · 0 CoAs or lot releases.";
  d.querySelectorAll("[data-pmsv-b82-export]").forEach(b=>b.disabled=false);
  return true;
@@ -201,7 +204,7 @@ function csv(kind="CASES"){
   rows=[["rank","case_id","product","analyte","original_request_id","gate_code","owner_role",
    "required_document","request_sent","document_received","authentic_evidence","legal_limit_approved",
    "accredited_method_approved","original_lot_CoA_received","release"]];
-  for(const c of cases)for(const g of c.documentary_requests)rows.push([
+  for(const c of cases)for(const g of visibleRequests(c))rows.push([
    c.rank,c.case_id,c.product,c.analyte,g.request_id,g.gate_code,g.owner_role,
    g.required_evidence,false,false,false,false,false,false,"HELD"]);
  }
