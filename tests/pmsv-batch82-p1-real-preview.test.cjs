@@ -24,7 +24,12 @@ const sleep=t=>new Promise(r=>setTimeout(r,t));
  assert.equal(await page.evaluate(()=>pmsvB82P1Evidence.load()),true);
  await page.locator('button[data-tab="standard"]').click();
  await page.locator("#pmsv-final35-legal-review").evaluate(el=>{el.open=true});
- await page.locator("#pmsv-b82-p1-workbench").evaluate(el=>{el.open=true});
+ await page.locator("#pmsv-b82-p1-workbench").evaluate(el=>{
+  // Disclosure panels are deeply nested in the real preview, unlike the synthetic test.
+  // Open ancestors as a user would; hidden select controls must never be tested while collapsed.
+  for(let n=el;n;n=n.parentElement)if(n.tagName==="DETAILS")n.open=true;
+ });
+ assert.equal(await page.locator('[data-pmsv-b82-filter="group"]').isVisible(),true,"Owner panel filters must be visible in the real mobile preview");
  assert.equal(await page.locator("#pmsv-b82-p1-workbench [data-pmsv-b82-rows] tr").count(),22);
  assert.equal(await page.locator("#pmsv-b82-p1-workbench [data-pmsv-b82-rows] details").count(),22);
  assert.equal(await page.locator("[data-pmsv-b82-filter='group'] option").count(),5);

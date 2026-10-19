@@ -1,0 +1,25 @@
+name: Verify PMSV 533 source-review outcomes without regulatory approval
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-final35-legal-review-2026-10-18.js'
+      - 'fssai-product-helper-preview-01/fssai-current-first-source-498-35.js'
+      - 'tests/pmsv-public-source-review-completion.test.cjs'
+      - '.github/workflows/verify-pmsv-source-review-closeout.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  closeout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          node --check fssai-product-helper-preview-01/fssai-final35-legal-review-2026-10-18.js
+          node --check fssai-product-helper-preview-01/fssai-current-first-source-498-35.js
+          node tests/pmsv-public-source-review-completion.test.cjs

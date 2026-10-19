@@ -1,0 +1,28 @@
+"use strict";
+/* Public-source research complete does not imply legal/lot compliance. */
+const assert=require("node:assert/strict"),fs=require("node:fs");
+const root="fssai-product-helper-preview-01/";
+const a=fs.readFileSync(root+"fssai-final35-legal-review-2026-10-18.js","utf8");
+const b=fs.readFileSync(root+"fssai-current-first-source-498-35.js","utf8");
+const c=fs.readFileSync("tests/pmsv-batch82-p1-real-preview.test.cjs","utf8");
+const read=name=>JSON.parse(fs.readFileSync(root+"data/rules/"+name+".json","utf8"));
+const q=read("fssai-final35-legal-candidate-audit-2026-10-17");
+const l=read("fssai-current-first-source-533-live-ledger-498-35-2026-10-13");
+assert.equal(l.records.length,533);
+assert.equal(l.records.filter(x=>x.source_status==="PARTIAL_EXACT_SOURCE_MATCH").length,498);
+assert.equal(l.records.filter(x=>x.source_status==="FIRST_EXACT_SOURCE_PENDING").length,35);
+assert.equal(q.rows.length,35);
+const closed=new Set(q.rows.map(x=>x.case_id));
+assert.equal(closed.size,35);
+assert(l.records.filter(x=>x.source_status==="FIRST_EXACT_SOURCE_PENDING").every(x=>closed.has(x.catalog_id)));
+assert.equal(q.totals.regulatory_approvals,0);
+assert.equal(q.totals.original_lot_coas,0);
+assert.equal(q.totals.lot_releases,0);
+assert(a.includes("35 public-source reviews completed · legal/lot verification OPEN"));
+assert(a.includes("All 533 catalogue entries have a documented first-source research disposition"));
+assert(a.includes("NOT product-specific legal applicability"));
+assert(b.includes("35 researched, exact applicability open"));
+assert(b.includes("RESEARCHED · EXACT CONTAMINANT ARTICLE PENDING"));
+assert(c.includes('if(n.tagName==="DETAILS")n.open=true'));
+assert(!a.includes("Load verified 35 products"));
+console.log("SOURCE-RESEARCH CLOSEOUT PASS: all 533 catalogue entries have first-source outcomes; 35 reviewed cases still require legal/lab/lot evidence, 0 releases.");

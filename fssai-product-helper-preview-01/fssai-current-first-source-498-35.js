@@ -124,9 +124,9 @@ function pmsv498LatestHtml(p){
  const e=v=>String(v).replace(/[&<>"']/g,z=>({"&":"&amp;","<":"&lt;",">":"&gt;",[String.fromCharCode(34)]:"&quot;",[String.fromCharCode(39)]:"&#39;"}[z]));
  const x=pmsv498Manifest.routes.find(y=>y.catalog_id===p.id);
  const y=pmsv35Triage.cases.find(y=>y.catalog_id===p.id);
- let out='<details open class="card" style="margin-top:12px"><summary><b>Current effective FSSAI source ledger — 498 partial / 35 pending</b> · '+
- (record.source_status==="PARTIAL_EXACT_SOURCE_MATCH"?"PARTIAL SOURCE":"FIRST NAMED SOURCE PENDING")+'</summary>'+
- '<div class="notice"><b>533 catalogue identities.</b> Conditional source evidence only. No actual finished-lot source identity, lab PASS or complete regulatory clearance.</div>';
+ let out='<details open class="card" style="margin-top:12px"><summary><b>FSSAI source research: 498 conditional articles / 35 researched, exact applicability open</b> · '+
+ (record.source_status==="PARTIAL_EXACT_SOURCE_MATCH"?"PARTIAL SOURCE":"RESEARCHED · EXACT CONTAMINANT ARTICLE PENDING")+'</summary>'+
+ '<div class="notice"><b>533 catalogue identities reviewed at the first-source level (498 conditional reference matches, 35 with completed open-case desk research). Exact contaminant applicability still open for 35. No finished-lot identity, lab PASS or complete regulatory clearance.</div>';
  if(x){
   out+='<p><b>New conditional article:</b> Chromium — Refined sugar, 0.02 mg/kg (source reference only, not applied to this product).</p>'+
   '<p><b>Finished product restriction:</b> '+e(x.subroute)+'</p>'+
