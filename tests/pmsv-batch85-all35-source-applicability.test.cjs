@@ -5,7 +5,7 @@ const src=fs.readFileSync(root+"fssai-final35-legal-review-2026-10-18.js","utf8"
 const original=JSON.parse(fs.readFileSync(root+"data/rules/fssai-final35-legal-candidate-audit-2026-10-17.json","utf8"));
 const begin=src.indexOf("const B85_SCOPE=Object.freeze(");
 assert(begin>0,"Missing Batch85 legal-scope records");
-const end=src.indexOf(");",begin);
+const end=src.indexOf(");\nconst B85_ALL_SCOPE",begin);
 const b85=JSON.parse(src.slice(begin+"const B85_SCOPE=Object.freeze(".length,end));
 const b84begin=src.indexOf("const B84_SCOPE=Object.freeze("),b84end=src.indexOf(");",b84begin);
 const b84=JSON.parse(src.slice(b84begin+"const B84_SCOPE=Object.freeze(".length,b84end));
