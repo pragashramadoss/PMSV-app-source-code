@@ -1,0 +1,28 @@
+name: Verify PMSV Batch85 all 35 FSSAI source scope and 12 explicit no-limit cases
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-final35-legal-review-2026-10-18.js'
+      - 'tests/pmsv-batch85-all35-source-applicability.test.cjs'
+      - 'tests/fssai-final35-real-preview.test.cjs'
+      - '.github/workflows/verify-pmsv-batch85-all35-original-source-scope.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-source-scope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check 35 original cases with 12 NULL applicable limits
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-final35-legal-review-2026-10-18.js
+          node --check tests/pmsv-batch85-all35-source-applicability.test.cjs
+          node tests/pmsv-batch84-23-official-named-article-comparators.test.cjs
+          node tests/pmsv-batch85-all35-source-applicability.test.cjs
+          node tests/pmsv-public-source-review-completion.test.cjs
