@@ -46,16 +46,16 @@ const src=fs.readFileSync(root+"fssai-batch82-p1-original-evidence-desk-2026-10-
   assert.equal(await p.locator("[data-pmsv-b82-rows] tr").count(),22);
   assert.equal(await p.locator("[data-pmsv-b82-rows] details li").count(),22);
   const reqCSV=await p.evaluate(()=>pmsvB82P1Evidence.csv("REQUESTS"));
-  assert.equal(reqCSV.trim().split("\\r\\n").length,23);
+  assert.equal(reqCSV.trim().split("\r\n").length,23);
   assert(reqCSV.includes(role));
   assert((await p.locator("[data-pmsv-b82-status]").textContent()).includes("22 unsent requests in this view"));
  }
  await p.locator('[data-pmsv-b82-filter="group"]').selectOption("TRACE_METALS");
- assert.equal((await p.evaluate(()=>pmsvB82P1Evidence.csv("REQUESTS"))).trim().split("\\r\\n").length,16);
+ assert.equal((await p.evaluate(()=>pmsvB82P1Evidence.csv("REQUESTS"))).trim().split("\r\n").length,16);
  await p.locator('[data-pmsv-b82-filter="group"]').selectOption("ALL");
  await p.locator('[data-pmsv-b82-filter="owner"]').selectOption("ALL");
  assert.equal(await p.locator("[data-pmsv-b82-rows] details li").count(),110);
- assert.equal((await p.evaluate(()=>pmsvB82P1Evidence.csv("REQUESTS"))).trim().split("\\r\\n").length,111);
+ assert.equal((await p.evaluate(()=>pmsvB82P1Evidence.csv("REQUESTS"))).trim().split("\r\n").length,111);
  await p.locator("[data-pmsv-b82-search]").fill("Coffee-Chicory");
  assert.equal(await p.locator("[data-pmsv-b82-rows] tr").count(),1);
  assert.equal((await p.evaluate(()=>pmsvB82P1Evidence.csv("REQUESTS"))).trim().split("\r\n").length,6);
