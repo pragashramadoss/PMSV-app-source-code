@@ -1,0 +1,39 @@
+name: Verify PMSV Batch82 P1 22 dossiers and 110 original requests
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-batch82-p1-22-original-evidence-desk-2026-10-19.json'
+      - 'fssai-product-helper-preview-01/fssai-batch82-p1-original-evidence-desk-2026-10-19.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/pmsv-batch82-p1-original-evidence.test.cjs'
+      - 'tests/pmsv-batch82-p1-browser.test.cjs'
+      - 'tests/pmsv-batch82-p1-real-preview.test.cjs'
+      - '.github/workflows/verify-pmsv-batch82-p1-evidence.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-p1-original:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static syntax and immutable 110 request provenance
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-batch82-p1-original-evidence-desk-2026-10-19.js
+          node --check tests/pmsv-batch82-p1-original-evidence.test.cjs
+          node --check tests/pmsv-batch82-p1-browser.test.cjs
+          node --check tests/pmsv-batch82-p1-real-preview.test.cjs
+          node tests/pmsv-batch82-p1-original-evidence.test.cjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify P1 fake-source and false-approval fail-close in mobile UI
+        run: node tests/pmsv-batch82-p1-browser.test.cjs
+      - name: Verify real PMSV full preview with original 22 P1 source dossiers
+        run: node tests/pmsv-batch82-p1-real-preview.test.cjs
