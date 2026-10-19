@@ -144,7 +144,7 @@ document.addEventListener("input",ev=>{
 document.addEventListener("click",ev=>{
  if(ev.target?.closest("[data-pmsv-b59-export]")&&valid())exportCSV();
 });
-window.pmsvB59CTRSourceCrosswalk={valid,filtered,csv,getAllCases:()=>window.pmsvB59CTRSourceCrosswalk.valid()?data.cases.map(c=>({...c,original_request_ids:[...c.original_request_ids]})):[],getCounts:()=>({
+window.pmsvB59CTRSourceCrosswalk={valid,filtered,csv,getAllCases:()=>window.pmsvB59CTRSourceCrosswalk.valid()?data.cases.map(c=>({...c,reference:c.reference?{...c.reference}:null,original_request_ids:[...c.original_request_ids]})):[],getCounts:()=>({
  cases:data?.cases?.length||0,referenced:data?.cases?.filter(c=>!!c.reference).length||0,
  pending:data?.cases?.filter(c=>!c.reference).length||0,approved:0,lot_pass:0
 })};

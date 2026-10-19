@@ -14,7 +14,7 @@ function digest(v){let a=0x811c9dc5,b=0x9747b28c;for(const ch of JSON.stringify(
 }return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0");}
 assert(script.includes('const expected="'+digest(d)+'"'),"B60 source digest mismatch");
 assert.equal(d.prior_batch59_document_digest,digest(b59),"B60 old B59 digest mismatch");
-assert(b59JS.includes("getAllCases:()=>valid()?data.cases.map"),"B59 immutable ancestry API missing");
+assert.match(b59JS,/getAllCases\s*:\s*\(\)\s*=>/,"B59 ancestry API missing");
 assert(html.includes("fssai-current35-remaining20-legal-scope-review-batch60-2026-10-17.js?v=20261017-b60"));
 assert(html.indexOf("remaining20-legal-scope-review-batch60")>html.indexOf("reference-row-nontransfer-batch59"));
 assert(!/(localStorage|sessionStorage|indexedDB|XMLHttpRequest|sendBeacon|WebSocket)/.test(script));
@@ -85,12 +85,11 @@ const nap=t=>new Promise(r=>setTimeout(r,t));
   const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
   assert.equal(b80Guard.extended,"READY");
   assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
-    // Batch72: B70 intentionally defers B23-B68 overlays. Load only after
-  // verified core startup, as a real reviewer would, with no mocked FSSAI data.
-  assert.equal(await page.evaluate(()=>pmsvB22StartupState),"READY");
-  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,
-    "Extended source data must pass original source/lab/lot guards");
-await page.waitForFunction(()=>window.pmsvB60LegalScope?.valid(),null,{timeout:90000});
+  // Batch81: Batch80 has already loaded and validated the full source chain once.
+  await page.waitForFunction(()=>window.pmsvB60LegalScope?.valid(),null,{timeout:90000});
+  const ancestors=await page.evaluate(()=>window.pmsvB59CTRSourceCrosswalk.getAllCases());
+  assert.equal(ancestors.length,35);assert.equal(ancestors.filter(x=>x.reference).length,15);
+  assert(ancestors.every(x=>x.original_request_ids.length===5&&!x.case_signed_legal_applicability));
   await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();});
   const panel=page.locator("#pmsv-b60-operative-text-review");
   await panel.evaluate(x=>x.open=true);

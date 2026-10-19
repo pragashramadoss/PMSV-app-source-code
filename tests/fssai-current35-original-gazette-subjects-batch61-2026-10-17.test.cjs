@@ -85,12 +85,8 @@ const nap=x=>new Promise(r=>setTimeout(r,x));
   const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
   assert.equal(b80Guard.extended,"READY");
   assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
-    // Batch72: B70 intentionally defers B23-B68 overlays. Load only after
-  // verified core startup, as a real reviewer would, with no mocked FSSAI data.
-  assert.equal(await page.evaluate(()=>pmsvB22StartupState),"READY");
-  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,
-    "Extended source data must pass original source/lab/lot guards");
-await page.waitForFunction(()=>window.pmsvB61OriginalGazette?.valid(),null,{timeout:90000});
+  // Batch81: Batch80 has already loaded and validated the full source chain once.
+  await page.waitForFunction(()=>window.pmsvB61OriginalGazette?.valid(),null,{timeout:90000});
   await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();});
   const panel=page.locator("#pmsv-b61-original-gazette-audit");
   await panel.evaluate(el=>el.open=true);

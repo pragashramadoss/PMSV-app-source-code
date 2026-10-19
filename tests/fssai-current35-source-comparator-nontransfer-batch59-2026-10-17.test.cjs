@@ -83,12 +83,19 @@ const nap=t=>new Promise(done=>setTimeout(done,t));
   const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
   assert.equal(b80Guard.extended,"READY");
   assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
-    // Batch72: B70 intentionally defers B23-B68 overlays. Load only after
-  // verified core startup, as a real reviewer would, with no mocked FSSAI data.
-  assert.equal(await page.evaluate(()=>pmsvB22StartupState),"READY");
-  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,
-    "Extended source data must pass original source/lab/lot guards");
-await page.waitForFunction(()=>window.pmsvB59CTRSourceCrosswalk?.valid(),null,{timeout:90000});
+  // Batch81: Batch80 has already loaded and validated the full source chain once.
+  await page.waitForFunction(()=>window.pmsvB59CTRSourceCrosswalk?.valid(),null,{timeout:90000});
+  // Returned ancestry must be defensive copies, never mutable source evidence.
+  const isolation=await page.evaluate(()=>{
+   const api=window.pmsvB59CTRSourceCrosswalk;
+   const preview=api.getAllCases(),r=preview.find(x=>x.reference);
+   const title=r.reference.source_article,reqCount=r.original_request_ids.length;
+   r.reference.source_article="MODIFIED BY CONSUMER";r.original_request_ids.pop();
+   const again=api.getAllCases().find(x=>x.catalogue_id===r.catalogue_id);
+   return {sourceValid:api.valid(),referenceUnchanged:again.reference.source_article===title,
+    requestsUnchanged:again.original_request_ids.length===reqCount};
+  });
+  assert.deepEqual(isolation,{sourceValid:true,referenceUnchanged:true,requestsUnchanged:true});
   await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();});
   const panel=page.locator("#pmsv-b59-ctr-nontransfer");
   await panel.evaluate(el=>el.open=true);

@@ -1,0 +1,33 @@
+name: Verify PMSV Batch81 original source and all 175 evidence IDs (fast)
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-175-proof-reference-triage-batch56-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-reference-row-nontransfer-batch59-2026-10-17.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-remaining20-legal-scope-review-batch60-2026-10-17.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-final35-p0-original-notice-briefs-2026-10-18.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-final35-legal-candidate-audit-2026-10-17.json'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-p1-twentytwo-evidence-review-batch54-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/fssai-current35-reference-row-nontransfer-batch59-2026-10-17.js'
+      - 'tests/fssai-current35-source-comparator-nontransfer-batch59-2026-10-17.test.cjs'
+      - 'tests/fssai-current35-remaining20-legal-scope-batch60-2026-10-17.test.cjs'
+      - 'tests/fssai-current35-original-gazette-subjects-batch61-2026-10-17.test.cjs'
+      - 'tests/pmsv-batch81-original-evidence-continuity.test.cjs'
+      - '.github/workflows/verify-pmsv-batch81-original-evidence.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-evidence-continuity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check
+        run: node --check tests/pmsv-batch81-original-evidence-continuity.test.cjs
+      - name: Verify 35 original held cases and 175 immutable documentary gates
+        run: node tests/pmsv-batch81-original-evidence-continuity.test.cjs
