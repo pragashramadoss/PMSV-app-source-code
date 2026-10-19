@@ -54,6 +54,12 @@ const nap=t=>new Promise(r=>setTimeout(r,t));
  let open=false;for(let k=0;k<40;k++)try{const z=await page.goto("http://127.0.0.1:"+port+"/",{waitUntil:"domcontentloaded",timeout:15000});if(z?.ok()){open=true;break}}catch(_){await nap(200)}
  assert(open,"server start failed");
  await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80: test explicit opt-in full evidence loading, not deprecated eager startup.
+  assert.equal(await page.evaluate(()=>window.pmsvB22StartupState),"READY","Core integrity fail-closed");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Full documentary evidence chain must validate");
+  const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
  assert(await page.evaluate(()=>pmsvB47Valid()),"B47 preview source/ledger verification failed");
  await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();pmsvB47Refresh()});
  const panel=page.locator("#pmsv-b47-may-gazette");await panel.evaluate(el=>el.open=true);

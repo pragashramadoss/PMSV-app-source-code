@@ -39,6 +39,12 @@ try{
  let open=false;for(let i=0;i<40;i++)try{let r=await page.goto("http://127.0.0.1:18945/",{waitUntil:"domcontentloaded",timeout:15000});if(r?.ok()){open=true;break;}}catch(_){await sleep(200)}
  assert(open,"browser server did not start");
  await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80: test explicit opt-in full evidence loading, not deprecated eager startup.
+  assert.equal(await page.evaluate(()=>window.pmsvB22StartupState),"READY","Core integrity fail-closed");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Full documentary evidence chain must validate");
+  const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
  assert(await page.evaluate(()=>pmsvB45Valid()),"Batch45/B44 upstream digest not valid");
  await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();pmsvB45Refresh()});
  const panel=page.locator("#pmsv-b45-lab-preflight");

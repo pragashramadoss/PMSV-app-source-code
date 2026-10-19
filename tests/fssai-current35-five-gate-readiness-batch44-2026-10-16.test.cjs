@@ -100,6 +100,12 @@ const nap=t=>new Promise(done=>setTimeout(done,t));
   assert(opened,"FSSAI browser preview cannot start");
   await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&
    ["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80: test explicit opt-in full evidence loading, not deprecated eager startup.
+  assert.equal(await page.evaluate(()=>window.pmsvB22StartupState),"READY","Core integrity fail-closed");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Full documentary evidence chain must validate");
+  const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
   assert(await page.evaluate(()=>pmsvB44Valid()),"Batch44 source integrity or upstream 533 catalogue check failed");
   await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();pmsvB44Refresh()});
   const panel=page.locator("#pmsv-b44-five-gate-readiness");

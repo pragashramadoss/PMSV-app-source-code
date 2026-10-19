@@ -79,6 +79,12 @@ const nap=t=>new Promise(r=>setTimeout(r,t));
   assert(started,"Local FSSAI preview server did not start");
   await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&
    ["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80: extended review is opt-in; verify source chain and zero regulatory approvals.
+  assert.equal(await page.evaluate(()=>window.pmsvB22StartupState),"READY","Core integrity fail-closed");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Extended documentary source integrity must validate");
+  const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
     // Batch72: B70 intentionally defers B23-B68 overlays. Load only after
   // verified core startup, as a real reviewer would, with no mocked FSSAI data.
   assert.equal(await page.evaluate(()=>pmsvB22StartupState),"READY");

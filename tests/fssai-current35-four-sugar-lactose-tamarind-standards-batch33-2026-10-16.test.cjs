@@ -78,6 +78,13 @@ const pause=n=>new Promise(r=>setTimeout(r,n));
   assert(loaded,"PMSV preview server unavailable");
   await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&
     ["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80 migration: the live preview intentionally defers extended documentary research.
+  // Explicitly load and revalidate the real source chain before legacy deep-panel assertions.
+  assert.equal(await page.evaluate(()=>window.pmsvB22StartupState),"READY","Fail closed when core source integrity is blocked");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Full evidence research must load and validate");
+  const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
   assert(await page.evaluate(()=>pmsvB33Valid()),"B33 integrity or upstream check failed");
   const status=await page.evaluate(()=>({
     products:pmsvB33Data.cases.length,requirements:pmsvB33Data.cases.flatMap(x=>x.quality_criteria).length,

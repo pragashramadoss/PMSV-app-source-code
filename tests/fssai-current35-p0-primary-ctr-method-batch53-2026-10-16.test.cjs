@@ -44,6 +44,12 @@ const nap=t=>new Promise(resolve=>setTimeout(resolve,t));
  let ok=false;for(let i=0;i<50;i++)try{const r=await page.goto("http://127.0.0.1:"+port+"/",{waitUntil:"domcontentloaded",timeout:15000});if(r?.ok()){ok=true;break}}catch(_){await nap(200)}
  assert(ok,"local preview server did not start");
  await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80: test explicit opt-in full evidence loading, not deprecated eager startup.
+  assert.equal(await page.evaluate(()=>window.pmsvB22StartupState),"READY","Core integrity fail-closed");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Full documentary evidence chain must validate");
+  const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
  assert(await page.evaluate(()=>pmsvB53Valid()),"Batch53 source/gate integrity failed");
  await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();pmsvB53Refresh(true)});
  const panel=page.locator("#pmsv-b53-p0-matrix-review");await panel.evaluate(el=>el.open=true);

@@ -62,6 +62,12 @@ const nap=t=>new Promise(r=>setTimeout(r,t));
   for(let i=0;i<45;i++){try{let resp=await page.goto("http://127.0.0.1:18962/",{waitUntil:"domcontentloaded",timeout:16000});if(resp?.ok()){ready=true;break;}}catch(_){await nap(200)}}
   assert(ready,"Local preview didn't respond");
   await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80: extended review is opt-in; verify source chain and zero regulatory approvals.
+  assert.equal(await page.evaluate(()=>window.pmsvB22StartupState),"READY","Core integrity fail-closed");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Extended documentary source integrity must validate");
+  const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
   await page.waitForFunction(()=>window.pmsvB62IdentitySupersession?.valid(),null,{timeout:90000});
   await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();});
   const p=page.locator("#pmsv-b62-supersession-review");await p.evaluate(el=>el.open=true);

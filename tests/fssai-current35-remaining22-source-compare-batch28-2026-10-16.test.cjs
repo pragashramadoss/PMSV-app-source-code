@@ -80,6 +80,13 @@ const sleep=n=>new Promise(r=>setTimeout(r,n));
   assert(loaded,"FSSAI helper preview did not respond");
   await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&
    ["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80 migration: the live preview intentionally defers extended documentary research.
+  // Explicitly load and revalidate the real source chain before legacy deep-panel assertions.
+  assert.equal(await page.evaluate(()=>window.pmsvB22StartupState),"READY","Fail closed when core source integrity is blocked");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Full evidence research must load and validate");
+  const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
   assert(await page.evaluate(()=>pmsvB28Valid()),"Batch 28 source/case integrity blocked");
   const live=await page.evaluate(()=>({
    ledger:pmsv498Ledger.records.length,

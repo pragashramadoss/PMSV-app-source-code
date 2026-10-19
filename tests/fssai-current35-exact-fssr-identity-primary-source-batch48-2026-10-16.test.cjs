@@ -37,6 +37,12 @@ try{browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
  let loaded=false;for(let k=0;k<40;k++)try{const r=await pg.goto("http://127.0.0.1:"+port+"/",{waitUntil:"domcontentloaded",timeout:15000});if(r?.ok()){loaded=true;break}}catch(_){await sleep(200)}
  assert(loaded);
  await pg.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80: test explicit opt-in full evidence loading, not deprecated eager startup.
+  assert.equal(await pg.evaluate(()=>window.pmsvB22StartupState),"READY","Core integrity fail-closed");
+  assert.equal(await pg.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Full documentary evidence chain must validate");
+  const b80Guard=await pg.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
  assert(await pg.evaluate(()=>pmsvB48Valid()),"B48 source integrity not valid");
  await pg.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();pmsvB48Refresh()});
  const panel=pg.locator("#pmsv-b48-primary-identity");await panel.evaluate(el=>el.open=true);

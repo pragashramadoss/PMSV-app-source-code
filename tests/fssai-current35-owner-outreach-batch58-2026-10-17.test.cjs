@@ -51,6 +51,12 @@ const nap=t=>new Promise(r=>setTimeout(r,t));
   assert(ok,"Local preview did not start");
   await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&
    ["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80: test explicit opt-in full evidence loading, not deprecated eager startup.
+  assert.equal(await page.evaluate(()=>window.pmsvB22StartupState),"READY","Core integrity fail-closed");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Full documentary evidence chain must validate");
+  const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
   await page.waitForFunction(()=>typeof window.pmsvB58OwnerOutreach!=="undefined"&&
     document.getElementById("pmsv-b58-owner-packets"),null,{timeout:90000});
   assert(await page.evaluate(()=>window.pmsvB58OwnerOutreach.valid()),"B58 ancestry validation blocked");

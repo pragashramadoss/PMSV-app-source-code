@@ -79,6 +79,12 @@ const pause=x=>new Promise(done=>setTimeout(done,x));
   assert(loaded,"FSSAI preview server unavailable");
   await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&
    ["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80: extended documentary evidence is intentionally user-requested, not startup-loaded.
+  assert.equal(await page.evaluate(()=>window.pmsvB22StartupState),"READY","Fail closed when core integrity blocks");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Full source chain must load and validate");
+  const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
   assert(await page.evaluate(()=>pmsvB36Valid()),"Batch36 legal source integrity or upstream failed");
   const state=await page.evaluate(()=>({
    reviewed:pmsvB36Data.cases.length,

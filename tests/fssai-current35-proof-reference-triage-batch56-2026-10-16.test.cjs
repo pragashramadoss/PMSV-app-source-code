@@ -63,6 +63,12 @@ const nap=n=>new Promise(r=>setTimeout(r,n));
   assert(okay,"preview server unavailable");
   await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&
     ["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80: test explicit opt-in full evidence loading, not deprecated eager startup.
+  assert.equal(await page.evaluate(()=>window.pmsvB22StartupState),"READY","Core integrity fail-closed");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Full documentary evidence chain must validate");
+  const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
   assert(await page.evaluate(()=>pmsvB56Valid()),"B56 digest/lineage validation failed");
   await page.evaluate(()=>{document.getElementById("standard")?.classList.remove("hidden");pmsvB14EnsureDashboard();pmsvB56Refresh(true)});
   const panel=page.locator("#pmsv-b56-evidence-reference-review");await panel.evaluate(x=>x.open=true);

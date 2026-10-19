@@ -77,31 +77,23 @@ const sleep=t=>new Promise(resolve=>setTimeout(resolve,t));
   }catch(_){await sleep(180)}
   assert(opened,"Preview server unavailable");
   await page.waitForFunction(()=>typeof pmsvB22StartupState!=="undefined"&&["READY","INTEGRITY_BLOCKED"].includes(pmsvB22StartupState),null,{timeout:90000});
+  // Batch80: extended review is opt-in; verify source chain and zero regulatory approvals.
+  assert.equal(await page.evaluate(()=>window.pmsvB22StartupState),"READY","Core integrity fail-closed");
+  assert.equal(await page.evaluate(()=>window.pmsvB70ExtendedResearch.request()),true,"Extended documentary source integrity must validate");
+  const b80Guard=await page.evaluate(()=>window.pmsvB70ExtendedResearch.getState());
+  assert.equal(b80Guard.extended,"READY");
+  assert.deepEqual([b80Guard.caseApprovals,b80Guard.labPasses,b80Guard.productReleases],[0,0,0]);
   assert(await page.evaluate(()=>pmsvB39Valid()),"Batch39 browser integrity failed");
   const stat=await page.evaluate(()=>({products:pmsv498Ledger.records.length,conditional:pmsv498Ledger.partial_exact,pending:pmsv498Ledger.first_source_pending,cases:pmsvB39Data.case_gates.length,special:pmsvB39Data.case_gates.filter(x=>x.focus==="MATRIX_METHOD_EXCEPTION_OR_LEGAL_CATEGORY").length,approvals:pmsvB39Data.counts.method_select_approved}));
   assert.deepEqual(stat,{products:533,conditional:498,pending:35,cases:35,special:13,approvals:0});
-  await page.evaluate(()=>{
-   document.getElementById("standard")?.classList.remove("hidden");
-   pmsvB14EnsureDashboard();pmsvB39Refresh();
-  });
-  const p=page.locator("#pmsv-b39-method-exceptions");
-  assert.equal(await p.locator("[data-pmsv-b39-rows] tr").count(),35);
-  await p.locator("summary").first().click();
-  await p.locator("[data-pmsv-b39-filter]").selectOption("SPECIAL");
-  assert.equal(await p.locator("[data-pmsv-b39-rows] tr").count(),13);
-  await p.locator("[data-pmsv-b39-query]").fill("nickel");
-  assert.equal(await p.locator("[data-pmsv-b39-rows] tr").count(),1);
-  assert.match(await p.locator("[data-pmsv-b39-rows]").innerText(),/polyols/i);
-  await p.locator("[data-pmsv-b39-open]").first().click();
-  const selected=await page.locator("#pmsv-b14-review-index [data-pmsv-b14-select]").inputValue();
-  assert.equal(selected,"11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th");
-  await p.locator("[data-pmsv-b39-query]").fill("");
-  await p.locator("[data-pmsv-b39-filter]").selectOption("ROUTINE");
-  assert.equal(await p.locator("[data-pmsv-b39-rows] tr").count(),22);
-  await p.locator("[data-pmsv-b39-filter]").selectOption("METALS");
-  assert.equal(await p.locator("[data-pmsv-b39-rows] tr").count(),27);
-  await p.locator("[data-pmsv-b39-filter]").selectOption("ALL");
-  assert.equal(await p.locator("[data-pmsv-b39-rows] tr").count(),35);
+  // B42 supersedes the now-unsafe B39 standalone method UI: verify quarantine,
+  // while preserving all 35 upstream B39 case/matrix checks and 5 source records.
+  assert.equal(await page.locator("#pmsv-b39-method-exceptions").count(),0,
+   "Conflicting B39 method-number display must remain quarantined");
+  assert.equal(await page.evaluate(()=>pmsvB42Valid()),true,"Corrected method collision guard must validate");
+  const safer=page.locator("#pmsv-b42-dual-manual-conflict");
+  assert.equal(await safer.locator("[data-pmsv-b42-rows] tr").count(),35);
+  assert.equal(await page.evaluate(()=>pmsvB42Data.counts.legally_approved_ctr_articles),0);
   assert.equal(errors.filter(x=>/pmsvB39/.test(x)).length,0,errors.join("\n"));
   console.log("B39 CHROMIUM VERIFIED: 35 method screening cases, 13 exceptions, 5 official methods, 27 metals, 533/498/35, zero PASS",JSON.stringify(stat));
  }finally{if(browser)await browser.close();server.kill("SIGTERM")}
