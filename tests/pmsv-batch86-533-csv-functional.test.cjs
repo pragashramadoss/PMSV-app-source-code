@@ -23,6 +23,8 @@ assert(source.includes('seen.size!==533||values.length!==534'));
 assert(source.includes('held.size!==0'));
 assert(source.includes('pmsv498Valid()'));
 assert(source.includes("function b86Focus()")&&source.includes("function b86Reset()"));
+assert(source.includes("[r.rank,r.case_id,r.product,r.analyte,r.scope_question_type"));
+
 assert(source.includes('pmsvFinal35LegalReview=Object.freeze({install,load,render,csv,ledgerCsv,verified})'));
 const browser=fs.readFileSync("tests/fssai-final35-real-preview.test.cjs","utf8");
 assert(browser.includes('PMSV-533-FIRST-SOURCE-STATUS-NOT-COMPLIANCE.csv'));
