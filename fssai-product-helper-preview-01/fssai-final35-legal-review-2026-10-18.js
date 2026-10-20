@@ -405,7 +405,7 @@ function install(){
  d.appendChild(make("p","Not loaded. Source integrity must be verified before records are visible.",{"data-b87-count":"","role":"status","aria-live":"polite"}));
  const wrap=make("div",undefined,{class:"pmsv-b87-scroller",role:"region",tabindex:"0","aria-label":"533 product source research status table"});
  const table=make("table");const header=make("thead"),tr=make("tr");
- ["Product / ID","FSSR / FoSCoS identity","First-source research status","Held-case action"].forEach(s=>tr.appendChild(make("th",s)));
+ ["Product / ID","FSSR / FoSCoS identity","First-source research status","Open / review"].forEach(s=>tr.appendChild(make("th",s)));
  header.appendChild(tr);table.appendChild(header);
  table.appendChild(make("tbody",undefined,{"data-b87-rows":""}));wrap.appendChild(table);d.appendChild(wrap);
  const nav=make("div",undefined,{class:"pmsv-b87-pages"});
@@ -468,8 +468,13 @@ function render(){
   const state=make("td",r.case?"DESK SOURCE RESEARCH CLOSED · REGULATORY AND LOT VERIFICATION HELD":"CONDITIONAL FIRST-SOURCE REFERENCE · NOT COMPLIANCE");
   if(r.case)state.appendChild(make("small",r.case.priority+" · "+r.case.analyte+" · 5 original proof requests OPEN"));
   const action=make("td");
-  if(r.case)action.appendChild(make("button","View held case",{type:"button","data-b87-focus":String(r.case.rank),"data-b87-case":r.catalog_id}));
-  else action.textContent="No case-level legal or lot approval";
+  action.appendChild(make("button","Open in product checker",{
+    type:"button","data-b90-open-product":r.catalog_id,
+    "aria-label":"Select "+r.product_name+" in main product checker"}));
+  if(r.case)action.appendChild(make("button","View held case",{
+    type:"button","data-b87-focus":String(r.case.rank),"data-b87-case":r.catalog_id}));
+  if(!r.case)action.appendChild(make("small","Conditional source reference only; no case-level approval"));
+  
   [id,identity,state,action].forEach(td=>tr.appendChild(td));body.appendChild(tr);
  }
  host.querySelector("[data-b87-count]").textContent=list.length+" of 533 products matched · all 533 source dispositions accounted for · 35 of 35 source desk reviews CLOSED · 0 unresearched desk-review cases · 35 external legal/lot verification HELD · zero signed limits, method/lot approvals or releases.";
@@ -524,6 +529,56 @@ function exportCSV(){
  document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>window.URL.revokeObjectURL(url),1000);return true;
 }
+/* Batch90: enable real product-standard work from the verified source catalogue.
+   No automatic assessment, recipe edits, limit assignment or PASS. */
+function openInProductChecker(catalogId){
+ const all=verify();
+ if(!ready||!verifyResearchCloseout(all)||!catalogId||
+    typeof productCatalog!=="function"||typeof showSelectedCatalogProduct!=="function"||
+    typeof openTab!=="function")return false;
+ const record=all.find(x=>x.catalog_id===catalogId);
+ if(!record)return false;
+ const product=productCatalog().find(x=>x?.id===catalogId&&
+     x.name===record.product_name&&
+     String(x.fssr??"")===record.fssr&&
+     String(x.fcs??"")===record.fcs);
+ if(!product)return false;
+ const selected=document.getElementById("selectedProductCard"),
+       detail=document.getElementById("selectedProductDetails"),
+       actions=document.getElementById("selectedProductActions");
+ if(!selected||!detail||!actions)return false;
+ showSelectedCatalogProduct(product);
+ if(selected.classList.contains("hidden")||!detail.textContent.includes(record.product_name))
+   return false;
+ const note=make("div",record.case
+    ?"Official-source desk review: CLOSED (20 October 2026). Finished-product legal scope, accredited method and representative lot evidence: HELD. No approved limit, no laboratory PASS, no lot release."
+    :"Official first-source reference: CONDITIONAL ONLY. Finished-product legal scope, full contaminant panel and representative lot evidence: NOT VERIFIED. No compliance approval.",
+    {class:"notice","data-b90-status":"","role":"status"});
+ detail.appendChild(note);
+ if(record.case){
+  const reviewed=closeout.cases.find(x=>x.case_id===catalogId);
+  if(!reviewed)return false;
+  const why=make("div",undefined,{class:"notice","data-b90-legal-scope":""});
+  why.appendChild(make("b","Unresolved source/article applicability — "+reviewed.analyte));
+  why.appendChild(make("p",reviewed.regulatory_reason_not_transferred));
+  why.appendChild(make("p","First original commercial proof needed: "+reviewed.first_commercial_document_needed));
+  const link=make("a","Official FSSAI source comparator (NOT an applied limit)",{
+     href:reviewed.official_ctr_source,target:"_blank",rel:"noopener noreferrer"});
+  why.appendChild(link);detail.appendChild(why);
+  const dossier=make("button","Return to held source dossier",{
+     type:"button",class:"btn-secondary","data-b90-back-case":catalogId,
+     "data-b90-rank":String(record.case.rank)});
+  actions.appendChild(dossier);
+ }
+ const back=make("button","Back to source catalogue",{
+     type:"button",class:"btn-secondary","data-b90-back":""});
+ actions.appendChild(back);
+ // The user's current formulation/assessment remains unchanged until they
+ // explicitly click the main product card's standard/formulation action.
+ openTab("product",{updateHash:true,save:true});
+ selected.scrollIntoView({behavior:"auto",block:"start"});
+ return true;
+}
 function focus(rank,caseId){
  const all=verify();if(!all)return blocked("Case-link source integrity failed.");
  if(!all.some(x=>x.catalog_id===caseId&&x.case?.rank===rank))return false;
@@ -542,9 +597,22 @@ document.addEventListener("click",e=>{
  else if(b.hasAttribute("data-b87-prev")){page=Math.max(0,page-1);render()}
  else if(b.hasAttribute("data-b87-next")){page++;render()}
  else if(b.hasAttribute("data-b87-focus"))focus(Number(b.dataset.b87Focus),b.dataset.b87Case);
+ else if(b.hasAttribute("data-b90-open-product"))openInProductChecker(b.dataset.b90OpenProduct);
+});
+document.addEventListener("click",e=>{
+ const b=e.target?.closest?.("#selectedProductActions button");if(!b)return;
+ if(b.hasAttribute("data-b90-back")){
+  openTab("standard",{updateHash:true,save:true});
+  document.getElementById("pmsv-b87-catalogue")?.scrollIntoView({block:"start",behavior:"auto"});
+ }else if(b.hasAttribute("data-b90-back-case")){
+  if(focus(Number(b.dataset.b90Rank),b.dataset.b90BackCase)){
+   openTab("standard",{updateHash:true,save:true});
+   document.getElementById("pmsv-final35-legal-review")?.scrollIntoView({block:"start",behavior:"auto"});
+  }
+ }
 });
 document.addEventListener("input",e=>{if(e.target?.matches?.("#pmsv-b87-catalogue [data-b87-search]")){page=0;render()}});
 document.addEventListener("change",e=>{if(e.target?.matches?.("#pmsv-b87-catalogue [data-b87-status]")){page=0;render()}});
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
-window.pmsvB87Catalogue=Object.freeze({load,render,csv,verify:()=>!!verify(),focus,closedResearchSummary,closureVerified:()=>verifyResearchCloseout(verify())});
+window.pmsvB87Catalogue=Object.freeze({load,render,csv,verify:()=>!!verify(),focus,openInProductChecker,closedResearchSummary,closureVerified:()=>verifyResearchCloseout(verify())});
 })();
