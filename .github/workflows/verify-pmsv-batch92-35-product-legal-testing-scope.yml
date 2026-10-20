@@ -1,0 +1,22 @@
+name: Verify PMSV Batch92 35 individual legal and testing scopes
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/pmsv-final35-legal-test-scope-review-batch92-2026-10-20.json'
+      - 'PMSV-FINAL35-LEGAL-TESTING-APPROVAL-READINESS-2026-10-20.csv'
+      - 'tests/pmsv-batch92-35-product-legal-testing-scope.test.cjs'
+      - '.github/workflows/verify-pmsv-batch92-35-product-legal-testing-scope.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  legal-and-lab-gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests/pmsv-batch92-35-product-legal-testing-scope.test.cjs
