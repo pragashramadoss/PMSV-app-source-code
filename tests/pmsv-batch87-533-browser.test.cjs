@@ -14,6 +14,7 @@ const nap=n=>new Promise(r=>setTimeout(r,n));
  assert.equal(await p.evaluate(()=>pmsvB87Catalogue.verify()),false);
  await p.locator('button[data-tab="standard"]').click();
  await p.evaluate(()=>window.pmsvB70ExtendedResearch.request());
+ await p.locator("#pmsv-b70-startup-gates").evaluate(el=>{el.open=true});
  assert.equal(await p.evaluate(()=>window.pmsvB87Catalogue.load()),true);
  const pane=p.locator("#pmsv-b87-catalogue");await pane.evaluate(el=>{el.open=true});
  assert.equal(await pane.locator("[data-b87-rows] tr").count(),50);
