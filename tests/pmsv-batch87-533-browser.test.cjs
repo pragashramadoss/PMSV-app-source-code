@@ -16,15 +16,31 @@ const nap=n=>new Promise(r=>setTimeout(r,n));
  await p.evaluate(()=>window.pmsvB70ExtendedResearch.request());
  await p.locator("#pmsv-b70-startup-gates").evaluate(el=>{el.open=true});
  assert.equal(await p.evaluate(()=>window.pmsvB87Catalogue.load()),true);
+ const summary=await p.evaluate(()=>window.pmsvB87Catalogue.closedResearchSummary());
+ assert.deepEqual(summary,{catalogue:533,source_first_reference:498,
+   public_source_desk_research_closed:35,public_source_desk_research_open:0,
+   external_legal_and_lot_verification_held:35,signed_product_limits:0,
+   validated_lab_lot_pass:0,product_releases:0});
+ assert.equal(await p.evaluate(()=>pmsvB87Catalogue.closureVerified()),true);
  const pane=p.locator("#pmsv-b87-catalogue");await pane.evaluate(el=>{el.open=true});
  assert.equal(await pane.locator("[data-b87-rows] tr").count(),50);
  assert((await pane.locator("[data-b87-count]").textContent()).includes("533 of 533"));
+ assert((await pane.locator("[data-b87-count]").textContent()).includes("0 unresearched desk-review cases"));
  assert.equal((await p.evaluate(()=>pmsvB87Catalogue.csv())).trim().split("\r\n").length,534);
+ const fullCSV=await p.evaluate(()=>pmsvB87Catalogue.csv());
+ assert.equal((fullCSV.match(/"CLOSED_PUBLIC_SOURCE_DESK_RESEARCH"/g)||[]).length,35);
+ assert.equal((fullCSV.match(/"CONDITIONAL_FIRST_SOURCE_REFERENCE_RECORDED"/g)||[]).length,498);
  await pane.locator("[data-b87-next]").click();
  assert((await pane.locator("[data-b87-page]").textContent()).includes("51–100"));
  await pane.locator("[data-b87-status]").selectOption("FIRST_EXACT_SOURCE_PENDING");
  assert.equal(await pane.locator("[data-b87-rows] tr").count(),35);
  assert.equal((await p.evaluate(()=>pmsvB87Catalogue.csv())).trim().split("\r\n").length,36);
+ const heldCSV=await p.evaluate(()=>pmsvB87Catalogue.csv());
+ assert.equal((heldCSV.match(/"CLOSED_PUBLIC_SOURCE_DESK_RESEARCH"/g)||[]).length,35);
+ assert.equal((heldCSV.match(/"EXTERNAL_EVIDENCE_HELD"/g)||[]).length,35);
+ assert(heldCSV.includes("source_desk_research_disposition"));
+ assert(heldCSV.includes("original_evidence_request_ids"));
+ assert(!heldCSV.includes('"PASS"'));
  assert.equal(await pane.locator("[data-b87-focus]").count(),35);
  const dl=p.waitForEvent("download",{timeout:12000});
  await pane.locator("[data-b87-export]").click();

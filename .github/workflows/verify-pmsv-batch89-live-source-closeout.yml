@@ -1,0 +1,29 @@
+name: Verify PMSV Batch89 live final35 research closeout
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-final35-legal-review-2026-10-18.js'
+      - 'tests/pmsv-batch89-live-source-closure.test.cjs'
+      - 'tests/pmsv-batch87-533-integrity.test.cjs'
+      - 'tests/pmsv-batch87-533-browser.test.cjs'
+      - '.github/workflows/verify-pmsv-batch89-live-source-closeout.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  research-closeout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate complete 35 closeout and 533 source provenance
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-final35-legal-review-2026-10-18.js
+          node tests/pmsv-batch88-source-closeout.test.cjs
+          node tests/pmsv-batch89-live-source-closure.test.cjs
+          node tests/pmsv-batch87-533-integrity.test.cjs
+          node tests/pmsv-public-source-review-completion.test.cjs
