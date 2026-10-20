@@ -4,12 +4,25 @@
 const FILE="./data/rules/pmsv-final35-legal-test-scope-review-batch92-2026-10-20.json";
 const PIN="aa456a9cb3ca2d2b",ID="pmsv-b93-legal-lab";
 const TESTS={"Lead":24,"Ochratoxin A":1,"Residues":1,"Copper":1,"Pesticide MRLs":3,"Chromium":1,"Nickel":1,"Aflatoxins":2,"Antibiotics":1};
-let data=null,loaded=false,selected="";
+let data=null,loaded=false,selected="",snapshotOK=false;
 function el(tag,text,attrs){
  const d=document.createElement(tag);
  if(text!==undefined)d.textContent=String(text);
  Object.entries(attrs||{}).forEach(([k,v])=>d.setAttribute(k,String(v)));
  return d;
+}
+/* Data is verified once on explicit loading and then frozen. No mutable
+   product source or approval state is exposed to downstream UI handlers.
+   This avoids repeatedly recomputing the full 533+175 audit on each click. */
+function freezeVerifiedSource(v){
+ for(const r of v.records){
+  Object.freeze(r.original_evidence_request_ids);
+  Object.freeze(r);
+ }
+ Object.freeze(v.records);
+ Object.freeze(v.totals.analyteCounts);
+ Object.freeze(v.totals);
+ return Object.freeze(v);
 }
 const host=()=>document.getElementById(ID);
 function say(t){const e=host()?.querySelector("[data-b93-status]");if(e)e.textContent=t}
@@ -122,7 +135,7 @@ function install(){
  document.head.appendChild(style);return true;
 }
 function rows(){
- if(!loaded||!valid(data))return null;
+ if(!loaded||!snapshotOK)return null;
  const h=host(),tier=h.querySelector('[data-b93-filter="priority"]').value,
  analyte=h.querySelector('[data-b93-filter="analyte"]').value,
  query=h.querySelector("[data-b93-search]").value.trim().toLowerCase();
@@ -132,7 +145,7 @@ function rows(){
  .sort((a,b)=>a.priority.localeCompare(b.priority)||a.rank-b.rank);
 }
 function detail(id){
- if(!loaded||!valid(data))return false;
+ if(!loaded||!snapshotOK)return false;
  const r=data.records.find(x=>x.catalogue_id===id),box=host()?.querySelector("[data-b93-details]");
  if(!r||!box)return false;
  selected=id;box.replaceChildren();
@@ -158,7 +171,7 @@ function detail(id){
  box.appendChild(actions);return true;
 }
 function block(message){
- loaded=false;data=null;selected="";
+ loaded=false;data=null;selected="";snapshotOK=false;
  const h=host();
  h?.querySelector("[data-b93-rows]")?.replaceChildren();
  h?.querySelector("[data-b93-details]")?.replaceChildren();
@@ -197,7 +210,7 @@ async function load(){
   if(!res.ok)return block("Technical scope data unavailable.");
   const incoming=await res.json();
   if(!valid(incoming))return block("Product scope proof or status integrity failed.");
-  data=incoming;loaded=true;selected=data.records[0].catalogue_id;
+  data=freezeVerifiedSource(incoming);loaded=true;snapshotOK=true;selected=data.records[0].catalogue_id;
   host().open=true;return render();
  }catch(_){return block("Technical source loading failed. All approvals HELD.")}
 }
@@ -209,7 +222,7 @@ function csv(){
  return list.map(x=>x.map(quote).join(",")).join("\r\n")+"\r\n";
 }
 function rfq(id){
- if(!loaded||!valid(data))return "";
+ if(!loaded||!snapshotOK)return "";
  const r=data.records.find(x=>x.catalogue_id===id);if(!r)return "";
  return [
  "PMSV DRAFT ONLY · NOT SENT · NOT A SIGNED REGULATORY OR LABORATORY APPROVAL",
@@ -234,7 +247,7 @@ function download(s,file,type){
  setTimeout(()=>URL.revokeObjectURL(u),1000);return true;
 }
 async function evidence(){
- if(!loaded||!valid(data)||!selected)return false;
+ if(!loaded||!snapshotOK||!selected)return false;
  const ok=await window.pmsvB91EvidenceRegister?.load?.();
  if(!ok)return say("Five-request evidence register unavailable; commercial product still HELD."),false;
  const h=document.getElementById("pmsv-b91-evidence-register");
@@ -247,16 +260,16 @@ document.addEventListener("click",e=>{
  const b=e.target?.closest?.("#"+ID+" button");if(!b)return;
  if(b.hasAttribute("data-b93-load"))load();
  else if(b.hasAttribute("data-b93-csv"))download(csv(),"PMSV-B93-FILTERED-35-LEGAL-TEST-READINESS-HELD.csv","text/csv");
- else if(b.hasAttribute("data-b94-requests")&&loaded&&valid(data)){
+ else if(b.hasAttribute("data-b94-requests")&&loaded&&snapshotOK){
   const a=el("a",undefined,{href:"./data/rules/PMSV-B94-175-ORIGINAL-UNSENT-EVIDENCE-REQUESTS-2026-10-20.csv",download:"PMSV-B94-175-ORIGINAL-UNSENT-EVIDENCE-REQUESTS-2026-10-20.csv"});
   document.body.appendChild(a);a.click();a.remove();
- }else if(b.hasAttribute("data-b94-forms")&&loaded&&valid(data)){
+ }else if(b.hasAttribute("data-b94-forms")&&loaded&&snapshotOK){
   const a=el("a",undefined,{href:"../PMSV-B94-35-COMMERCIAL-PRODUCT-APPROVAL-SIGNOFF-FORMS-HELD-2026-10-20.csv",download:"PMSV-B94-35-COMMERCIAL-PRODUCT-APPROVAL-SIGNOFF-FORMS-HELD-2026-10-20.csv"});
   document.body.appendChild(a);a.click();a.remove();
  }
  else if(b.hasAttribute("data-b93-case"))detail(b.dataset.b93Case);
  else if(b.hasAttribute("data-b93-action")){
-  if(b.dataset.b93Action==="checker"&&valid(data))window.pmsvB87Catalogue?.openInProductChecker?.(selected);
+  if(b.dataset.b93Action==="checker"&&snapshotOK)window.pmsvB87Catalogue?.openInProductChecker?.(selected);
   else if(b.dataset.b93Action==="evidence")setTimeout(()=>{void evidence()},0);
   else if(b.dataset.b93Action==="rfq"&&selected)
    download(rfq(selected),"PMSV-B93-CASE-"+String(data.records.find(r=>r.catalogue_id===selected)?.rank||0).padStart(2,"0")+"-UNSENT-LEGAL-LAB-RFQ.txt","text/plain");
@@ -265,5 +278,5 @@ document.addEventListener("click",e=>{
 document.addEventListener("input",e=>{if(e.target?.matches?.("#"+ID+" [data-b93-search]"))render()});
 document.addEventListener("change",e=>{if(e.target?.matches?.("#"+ID+" [data-b93-filter]"))render()});
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
-window.pmsvB93LegalLab=Object.freeze({install,load,render,csv,rfq,detail,valid:()=>loaded&&valid(data)});
+window.pmsvB93LegalLab=Object.freeze({install,load,render,csv,rfq,detail,valid:()=>loaded&&snapshotOK});
 })();

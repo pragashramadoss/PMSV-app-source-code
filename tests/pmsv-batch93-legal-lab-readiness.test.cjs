@@ -32,6 +32,12 @@ assert(js.includes("typeof productCatalog"));
 assert(js.includes("r.product_approval!=="));
 assert(js.includes("original_evidence_request_ids.join"));
 assert(js.includes("window.pmsvB91EvidenceRegister"));
+assert(js.includes("freezeVerifiedSource(incoming)"));
+assert(js.includes("pmsvB14Digest(v)!==PIN"));
+assert(js.includes("Object.freeze(v.records)"));
+assert(js.includes("snapshotOK=false"));
+assert(!js.includes("valid(data)"));
+
 assert(js.includes("openInProductChecker"));
 assert(js.includes("No authenticated original supplier documents"));
 assert(!js.includes("localStorage.setItem"));
