@@ -1,0 +1,42 @@
+"use strict";
+const assert=require("node:assert/strict"),{spawn}=require("node:child_process"),{chromium}=require("playwright");
+const server=spawn("python3",["-m","http.server","18991","--directory","fssai-product-helper-preview-01","--bind","127.0.0.1"],{stdio:"ignore"});
+const nap=n=>new Promise(r=>setTimeout(r,n));
+(async()=>{let browser;
+ try{
+  browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+  const p=await browser.newPage({viewport:{width:390,height:844}});
+  let opened=false;for(let i=0;i<40;i++){try{const r=await p.goto("http://127.0.0.1:18991/",{waitUntil:"domcontentloaded",timeout:15000});if(r?.ok()){opened=true;break}}catch(_){await nap(200)}}
+  assert(opened);
+  await p.waitForFunction(()=>["READY","INTEGRITY_BLOCKED"].includes(window.pmsvB22StartupState),null,{timeout:60000});
+  assert.equal(await p.evaluate(()=>pmsvB22StartupState),"READY");
+  await p.locator('button[data-tab="standard"]').click();
+  await p.evaluate(()=>window.pmsvB70ExtendedResearch.request());
+  await p.locator("#pmsv-b70-startup-gates").evaluate(el=>{el.open=true});
+  assert.equal(await p.evaluate(()=>pmsvB91EvidenceRegister.load()),true);
+  assert.equal(await p.evaluate(()=>pmsvB91EvidenceRegister.validate().length),35);
+  const before=await p.evaluate(()=>pmsvB91EvidenceRegister.exportCSV());
+  assert.equal(before.trim().split("\r\n").length,176);
+  assert.equal(await p.evaluate(()=>pmsvB91EvidenceRegister.count()),0);
+  const ids=await p.evaluate(()=>pmsvB91EvidenceRegister.validate()[0].rows.map(r=>r.request_id));
+  assert.equal(ids.length,5);
+  assert.equal(await p.evaluate(id=>pmsvB91EvidenceRegister.capture(id,"evidence_reference","SUPPLIER-REF-123"),ids[0]),true);
+  assert.equal(await p.evaluate(()=>pmsvB91EvidenceRegister.count()),1);
+  const payload=await p.evaluate(()=>pmsvB91EvidenceRegister.exportCSV());
+  assert(payload.includes("SUPPLIER-REF-123"));
+  assert.equal(await p.evaluate(()=>pmsvB91EvidenceRegister.importCSV(pmsvB91EvidenceRegister.exportCSV()).ok),true);
+  assert.equal(await p.evaluate(()=>pmsvB91EvidenceRegister.count()),1);
+  assert.equal(await p.evaluate(s=>pmsvB91EvidenceRegister.importCSV(s).ok,payload.replace("SUPPLIER-REF-123","=HYPERLINK(1)")),false);
+  assert.equal(await p.evaluate(()=>pmsvB91EvidenceRegister.count()),1);
+  const tampered=payload.replace(ids[0],"BAD-ORIGINAL-PROOF");
+  assert.equal(await p.evaluate(s=>pmsvB91EvidenceRegister.importCSV(s).ok,tampered),false);
+  assert.equal(await p.evaluate(()=>pmsvB91EvidenceRegister.count()),1);
+  assert.equal(await p.evaluate(()=>pmsvB91EvidenceRegister.capture("UNKNOWN","evidence_reference","X")),false);
+  await p.locator("#pmsv-b91-evidence-register").evaluate(el=>el.open=true);
+  assert.equal(await p.locator("#pmsv-b91-evidence-register .pmsv-b91-gate").count(),5);
+  assert((await p.locator("#pmsv-b91-evidence-register [data-b91-summary]").textContent()).includes("35 commercial cases HELD"));
+  assert((await p.locator("#pmsv-b91-evidence-register").textContent()).includes("No electronic signature"));
+  assert.equal(await p.evaluate(()=>pmsvB87Catalogue.closedResearchSummary().product_releases),0);
+  console.log("B91 BROWSER PASS: mobile 35 cases/175 proof IDs; local metadata roundtrip; tampered case and formula rejected; no approvals.");
+ }finally{if(browser)await browser.close();server.kill("SIGTERM")}
+})().catch(e=>{console.error(e);process.exitCode=1;server.kill("SIGTERM")});
