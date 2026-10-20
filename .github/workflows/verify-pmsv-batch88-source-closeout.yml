@@ -1,0 +1,25 @@
+name: Verify PMSV Batch88 35 final source research closeout
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/data/rules/fssai-final35-desk-research-complete-batch88-2026-10-20.json'
+      - 'tests/pmsv-batch88-source-closeout.test.cjs'
+      - '.github/workflows/verify-pmsv-batch88-source-closeout.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  final-source-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 35 case identities, 175 original evidence requests, nontransfer and no product PASS
+        run: |
+          node tests/pmsv-batch88-source-closeout.test.cjs
+          node tests/pmsv-batch85-all35-source-applicability.test.cjs
+          node tests/pmsv-batch86-533-csv-functional.test.cjs
