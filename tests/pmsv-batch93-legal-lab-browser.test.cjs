@@ -39,12 +39,20 @@ async function open(p){
   let dl=p.waitForEvent("download",{timeout:12000});
   await root.locator("[data-b93-csv]").click();
   assert.equal((await dl).suggestedFilename(),"PMSV-B93-FILTERED-35-LEGAL-TEST-READINESS-HELD.csv");
+  const proofDownload=p.waitForEvent("download",{timeout:15000});
+  await root.locator("[data-b94-requests]").click();
+  assert.equal((await proofDownload).suggestedFilename(),"PMSV-B94-175-ORIGINAL-UNSENT-EVIDENCE-REQUESTS-2026-10-20.csv");
+  const formsDownload=p.waitForEvent("download",{timeout:15000});
+  await root.locator("[data-b94-forms]").click();
+  assert.equal((await formsDownload).suggestedFilename(),"PMSV-B94-35-COMMERCIAL-PRODUCT-APPROVAL-SIGNOFF-FORMS-HELD-2026-10-20.csv");
   await root.locator("[data-b93-rows] [data-b93-case]").first().click();
   assert((await root.locator("[data-b93-details]").textContent()).includes("Lot CoA NOT RECEIVED"));
   dl=p.waitForEvent("download",{timeout:12000});
   await root.locator('[data-b93-action="rfq"]').click();
   assert((await dl).suggestedFilename().includes("UNSENT-LEGAL-LAB-RFQ"));
-  await root.locator('[data-b93-action="evidence"]').click();
+  // Evidence workbench may redraw its parent while verifying; do not wait on moving button.
+  await root.locator('[data-b93-action="evidence"]').evaluate(el=>el.click());
+  await p.waitForFunction(()=>document.querySelectorAll("#pmsv-b91-evidence-register .pmsv-b91-gate").length===5,null,{timeout:90000});
   assert.equal(await p.locator("#pmsv-b91-evidence-register .pmsv-b91-gate").count(),5);
   assert.equal(await p.evaluate(()=>pmsvB87Catalogue.closedResearchSummary().product_releases),0);
   assert.equal(errors.length,0);

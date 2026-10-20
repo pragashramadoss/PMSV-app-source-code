@@ -93,6 +93,8 @@ function install(){
  const controls=el("div",undefined,{class:"b93-controls"});
  controls.appendChild(el("button","Verify and open 35 product dossiers",{type:"button","data-b93-load":""}));
  controls.appendChild(el("button","Export filtered readiness CSV",{type:"button","data-b93-csv":"",disabled:"disabled"}));
+ controls.appendChild(el("button","Download 175 original unsent evidence requests",{type:"button","data-b94-requests":"",disabled:"disabled"}));
+ controls.appendChild(el("button","Download 35 held commercial signoff forms",{type:"button","data-b94-forms":"",disabled:"disabled"}));
  box.appendChild(controls);
  const filters=el("div",undefined,{class:"b93-filters"});
  for(const [attr,label,options] of [
@@ -161,6 +163,8 @@ function block(message){
  h?.querySelector("[data-b93-rows]")?.replaceChildren();
  h?.querySelector("[data-b93-details]")?.replaceChildren();
  if(h?.querySelector("[data-b93-csv]"))h.querySelector("[data-b93-csv]").disabled=true;
+ if(h?.querySelector("[data-b94-requests]"))h.querySelector("[data-b94-requests]").disabled=true;
+ if(h?.querySelector("[data-b94-forms]"))h.querySelector("[data-b94-forms]").disabled=true;
  say(message||"Source integrity unavailable. Product approvals remain HELD.");return false;
 }
 function render(){
@@ -178,6 +182,8 @@ function render(){
  if(!records.some(r=>r.catalogue_id===selected))selected=records[0]?.catalogue_id||"";
  if(selected)detail(selected);else h.querySelector("[data-b93-details]").replaceChildren();
  h.querySelector("[data-b93-csv]").disabled=false;
+ h.querySelector("[data-b94-requests]").disabled=false;
+ h.querySelector("[data-b94-forms]").disabled=false;
  say(records.length+" of 35 technical dossiers shown · research 35/35 CLOSED · 0/35 legal, method or lot approvals · all commercial cases HELD.");
  return true;
 }
@@ -241,10 +247,17 @@ document.addEventListener("click",e=>{
  const b=e.target?.closest?.("#"+ID+" button");if(!b)return;
  if(b.hasAttribute("data-b93-load"))load();
  else if(b.hasAttribute("data-b93-csv"))download(csv(),"PMSV-B93-FILTERED-35-LEGAL-TEST-READINESS-HELD.csv","text/csv");
+ else if(b.hasAttribute("data-b94-requests")&&loaded&&valid(data)){
+  const a=el("a",undefined,{href:"./data/rules/PMSV-B94-175-ORIGINAL-UNSENT-EVIDENCE-REQUESTS-2026-10-20.csv",download:"PMSV-B94-175-ORIGINAL-UNSENT-EVIDENCE-REQUESTS-2026-10-20.csv"});
+  document.body.appendChild(a);a.click();a.remove();
+ }else if(b.hasAttribute("data-b94-forms")&&loaded&&valid(data)){
+  const a=el("a",undefined,{href:"../PMSV-B94-35-COMMERCIAL-PRODUCT-APPROVAL-SIGNOFF-FORMS-HELD-2026-10-20.csv",download:"PMSV-B94-35-COMMERCIAL-PRODUCT-APPROVAL-SIGNOFF-FORMS-HELD-2026-10-20.csv"});
+  document.body.appendChild(a);a.click();a.remove();
+ }
  else if(b.hasAttribute("data-b93-case"))detail(b.dataset.b93Case);
  else if(b.hasAttribute("data-b93-action")){
   if(b.dataset.b93Action==="checker"&&valid(data))window.pmsvB87Catalogue?.openInProductChecker?.(selected);
-  else if(b.dataset.b93Action==="evidence")evidence();
+  else if(b.dataset.b93Action==="evidence")setTimeout(()=>{void evidence()},0);
   else if(b.dataset.b93Action==="rfq"&&selected)
    download(rfq(selected),"PMSV-B93-CASE-"+String(data.records.find(r=>r.catalogue_id===selected)?.rank||0).padStart(2,"0")+"-UNSENT-LEGAL-LAB-RFQ.txt","text/plain");
  }
