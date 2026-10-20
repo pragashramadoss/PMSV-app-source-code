@@ -1,0 +1,44 @@
+"use strict";
+const assert=require("node:assert/strict"),{spawn}=require("node:child_process"),{chromium}=require("playwright");
+const server=spawn("python3",["-m","http.server","18987","--directory","fssai-product-helper-preview-01","--bind","127.0.0.1"],{stdio:"ignore"});
+const nap=n=>new Promise(r=>setTimeout(r,n));
+(async()=>{let browser;
+ try{
+ browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+ const p=await browser.newPage({viewport:{width:390,height:844}});
+ const errors=[];p.on("pageerror",e=>errors.push(e.message));
+ let opened=false;for(let i=0;i<35;i++)try{const r=await p.goto("http://127.0.0.1:18987/",{waitUntil:"domcontentloaded",timeout:12000});if(r?.ok()){opened=true;break}}catch(_){await nap(200)}
+ assert(opened);
+ await p.waitForFunction(()=>["READY","INTEGRITY_BLOCKED"].includes(window.pmsvB22StartupState),null,{timeout:60000});
+ assert.equal(await p.evaluate(()=>pmsvB22StartupState),"READY");
+ assert.equal(await p.evaluate(()=>pmsvB87Catalogue.verify()),false);
+ await p.locator('button[data-tab="standard"]').click();
+ await p.evaluate(()=>window.pmsvB70ExtendedResearch.request());
+ assert.equal(await p.evaluate(()=>window.pmsvB87Catalogue.load()),true);
+ const pane=p.locator("#pmsv-b87-catalogue");await pane.evaluate(el=>{el.open=true});
+ assert.equal(await pane.locator("[data-b87-rows] tr").count(),50);
+ assert((await pane.locator("[data-b87-count]").textContent()).includes("533 of 533"));
+ assert.equal((await p.evaluate(()=>pmsvB87Catalogue.csv())).trim().split("\r\n").length,534);
+ await pane.locator("[data-b87-next]").click();
+ assert((await pane.locator("[data-b87-page]").textContent()).includes("51–100"));
+ await pane.locator("[data-b87-status]").selectOption("FIRST_EXACT_SOURCE_PENDING");
+ assert.equal(await pane.locator("[data-b87-rows] tr").count(),35);
+ assert.equal((await p.evaluate(()=>pmsvB87Catalogue.csv())).trim().split("\r\n").length,36);
+ assert.equal(await pane.locator("[data-b87-focus]").count(),35);
+ const dl=p.waitForEvent("download",{timeout:12000});
+ await pane.locator("[data-b87-export]").click();
+ assert.equal((await dl).suggestedFilename(),"PMSV-B87-FILTERED-533-SOURCE-STATUS-NOT-COMPLIANCE.csv");
+ await pane.locator("[data-b87-focus]").first().click();
+ assert.equal(await p.locator("#pmsv-final35-legal-review [data-f35-rows] tr").count(),1);
+ await pane.locator("[data-b87-status]").selectOption("PARTIAL_EXACT_SOURCE_MATCH");
+ assert.equal((await p.evaluate(()=>pmsvB87Catalogue.csv())).trim().split("\r\n").length,499);
+ await pane.locator("[data-b87-search]").fill("this-phrase-does-not-occur-anywhere");
+ assert.equal(await pane.locator("[data-b87-rows] tr").count(),0);
+ await pane.locator("[data-b87-search]").fill("");
+ assert.equal(await pane.locator("[data-b87-rows] tr").count(),50);
+ const dimensions=await pane.evaluate(el=>({width:el.getBoundingClientRect().width,viewport:innerWidth}));
+ assert(dimensions.width<=dimensions.viewport);
+ assert.deepEqual(errors,[]);
+ console.log("B87_BROWSER_PASS: 390px, all533, held35, conditional498, filter, download, cross-linked case.");
+ }finally{if(browser)await browser.close();server.kill()}
+})().catch(e=>{console.error(e);process.exitCode=1;server.kill()});

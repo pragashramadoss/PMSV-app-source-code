@@ -1,0 +1,36 @@
+name: Verify PMSV Batch87 all-533 searchable FSSAI source catalogue
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-final35-legal-review-2026-10-18.js'
+      - 'tests/pmsv-batch87-533-integrity.test.cjs'
+      - 'tests/pmsv-batch87-533-browser.test.cjs'
+      - '.github/workflows/verify-pmsv-batch87-533-catalogue.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-catalogue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check source status invariants and JS syntax
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-final35-legal-review-2026-10-18.js
+          node tests/pmsv-batch87-533-integrity.test.cjs
+          node tests/pmsv-batch84-23-official-named-article-comparators.test.cjs
+          node tests/pmsv-batch85-all35-source-applicability.test.cjs
+          node tests/pmsv-batch86-533-csv-functional.test.cjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Real full-preview 390px browser and CSV verification
+        run: |
+          node tests/pmsv-batch87-533-browser.test.cjs
+          node tests/fssai-final35-real-preview.test.cjs

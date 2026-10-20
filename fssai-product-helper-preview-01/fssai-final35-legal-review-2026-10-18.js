@@ -251,3 +251,215 @@ window.pmsvB84NamedArticleScope=Object.freeze({render:b84Render,csv:b84CSV,
  get:()=>B84_SCOPE.map(x=>x.slice()),getAll:()=>B85_ALL_SCOPE.map(x=>x.slice()),focus:b86Focus,reset:b86Reset,verified:()=>verified()});
 
 })();
+
+/* Batch87 — searchable, verified 533-item research-status catalogue.
+   Uses only the pinned existing B86/B59 data and explicit user-initiated loading.
+   No legal limits, uploads, persistent user state, document send or lot release. */
+(function(){"use strict";
+const PAGE=50, HELD="FIRST_EXACT_SOURCE_PENDING", PARTIAL="PARTIAL_EXACT_SOURCE_MATCH";
+let page=0, ready=false;
+const make=(tag,s,attrs)=>{
+ const n=document.createElement(tag);
+ if(s!==undefined)n.textContent=String(s);
+ for(const [k,v] of Object.entries(attrs||{}))n.setAttribute(k,v);
+ return n;
+};
+function verify(){
+ try{
+  const s=window.pmsvB70ExtendedResearch?.getState?.();
+  if(s?.core!=="READY"||s.extended!=="READY"||s.all35Held!==true||
+     s.caseApprovals!==0||s.labPasses!==0||s.productReleases!==0||
+     !window.pmsvFinal35LegalReview?.verified?.()||
+     typeof pmsv498Valid!=="function"||!pmsv498Valid()||
+     !window.pmsvB59CTRSourceCrosswalk?.valid?.())return null;
+  const ledger=pmsv498Ledger;
+  const cases=window.pmsvB59CTRSourceCrosswalk.getAllCases?.();
+  if(ledger?.catalogue!==533||ledger.partial_exact!==498||
+     ledger.first_source_pending!==35||ledger.full_compliance_approvals!==0||
+     ledger.records?.length!==533||cases?.length!==35)return null;
+  const held=new Map(),proof=new Set();let p0=0,p1=0;
+  for(const c of cases){
+   if(!c?.catalogue_id||held.has(c.catalogue_id)||
+      !Array.isArray(c.original_request_ids)||c.original_request_ids.length!==5||
+      c.case_signed_legal_applicability!==false||
+      c.actual_market_material_authenticated!==false||
+      c.method_and_lab_scope_approved!==false||c.representative_lot_pass!==false)return null;
+   if(c.priority==="P0")p0++;else if(c.priority==="P1")p1++;else return null;
+   for(const id of c.original_request_ids){if(!id||proof.has(id))return null;proof.add(id)}
+   held.set(c.catalogue_id,c);
+  }
+  if(p0!==13||p1!==22||proof.size!==175)return null;
+  const seen=new Set(),items=[];let partial=0,pending=0;
+  for(const r of ledger.records){
+   if(!r?.catalog_id||seen.has(r.catalog_id)||!r.product_name||
+      r.product_compliance_approval!==false||
+      r.complete_contaminant_panel!==false||r.sample_lab_pass!==false)return null;
+   seen.add(r.catalog_id);
+   const c=held.get(r.catalog_id);
+   if(r.source_status===PARTIAL){if(c)return null;partial++}
+   else if(r.source_status===HELD){
+    if(!c||c.product_name!==r.product_name||
+       !c.analyte||!Number.isInteger(c.rank))return null;
+    pending++;held.delete(r.catalog_id)
+   }else return null;
+   items.push({catalog_id:r.catalog_id,product_name:r.product_name,
+      fssr:String(r.fssr??""),fcs:String(r.fcs??""),
+      source_status:r.source_status,case:c||null});
+  }
+  if(seen.size!==533||partial!==498||pending!==35||held.size!==0)return null;
+  return items.sort((a,b)=>a.product_name.localeCompare(b.product_name,"en")||
+    a.catalog_id.localeCompare(b.catalog_id,"en"));
+ }catch(_){return null}
+}
+function install(){
+ if(document.getElementById("pmsv-b87-catalogue"))return true;
+ const host=document.getElementById("pmsv-final35-legal-review");
+ if(!host)return false;
+ const d=make("details",undefined,{id:"pmsv-b87-catalogue",class:"card"});
+ d.appendChild(make("summary","Batch87 · Browse all 533 product source-research records"));
+ d.appendChild(make("p","Search the full FSSAI helper catalogue by product, catalogue ID, FSSR identity, FoSCoS code or held-case analyte. A source reference is NOT complete legal applicability, validated laboratory testing, product PASS or release."));
+ const tools=make("div",undefined,{class:"pmsv-b87-controls"});
+ const status=make("label","Source status");
+ const sel=make("select",undefined,{"data-b87-status":""});
+ [["ALL","All 533"],[PARTIAL,"498 conditional reference matches"],[HELD,"35 reviewed / legally HELD"]].forEach(([v,t])=>sel.appendChild(make("option",t,{value:v})));
+ status.appendChild(sel);tools.appendChild(status);
+ const q=make("label","Search product, ID, FSSR, FoSCoS or analyte");
+ q.appendChild(make("input",undefined,{type:"search","data-b87-search":"","maxlength":"120",placeholder:"Search 533 products"}));
+ tools.appendChild(q);d.appendChild(tools);
+ const actions=make("div",undefined,{class:"pmsv-b87-actions"});
+ const load=make("button","Verify sources and browse 533",{type:"button","data-b87-load":""});
+ const exportBtn=make("button","Export filtered product CSV",{type:"button","data-b87-export":""});
+ exportBtn.disabled=true;actions.append(load,exportBtn);d.appendChild(actions);
+ d.appendChild(make("p","Extended research and 35-case legal audits must validate first. No confidential supplier materials may be uploaded.",{class:"pmsv-b87-note"}));
+ d.appendChild(make("p","Not loaded. Source integrity must be verified before records are visible.",{"data-b87-count":"","role":"status","aria-live":"polite"}));
+ const wrap=make("div",undefined,{class:"pmsv-b87-scroller",role:"region",tabindex:"0","aria-label":"533 product source research status table"});
+ const table=make("table");const header=make("thead"),tr=make("tr");
+ ["Product / ID","FSSR / FoSCoS identity","First-source research status","Held-case action"].forEach(s=>tr.appendChild(make("th",s)));
+ header.appendChild(tr);table.appendChild(header);
+ table.appendChild(make("tbody",undefined,{"data-b87-rows":""}));wrap.appendChild(table);d.appendChild(wrap);
+ const nav=make("div",undefined,{class:"pmsv-b87-pages"});
+ const prev=make("button","Previous 50",{type:"button","data-b87-prev":""});
+ const next=make("button","Next 50",{type:"button","data-b87-next":""});
+ const location=make("span","",{"data-b87-page":""});
+ prev.disabled=true;next.disabled=true;nav.append(prev,location,next);d.appendChild(nav);
+ d.appendChild(make("p","All 533: legal applicability NOT SIGNED; complete contaminant panel NO; tested-lot PASS NOT VERIFIED; lot release HELD. Original 175 evidence requests remain open.",{class:"pmsv-b87-note"}));
+ host.insertAdjacentElement("afterend",d);
+ if(!document.getElementById("pmsv-b87-style")){
+  const style=make("style",`
+  #pmsv-b87-catalogue{max-width:100%;box-sizing:border-box;margin:12px 0;padding:12px;overflow-wrap:anywhere}
+  #pmsv-b87-catalogue summary{font-weight:750;cursor:pointer}
+  .pmsv-b87-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+  .pmsv-b87-controls label{font-size:12px;font-weight:700}
+  .pmsv-b87-controls input,.pmsv-b87-controls select{display:block;width:100%;max-width:100%;min-height:44px;margin-top:5px;padding:8px;border:1px solid #bac8db;border-radius:7px}
+  .pmsv-b87-actions,.pmsv-b87-pages{display:flex;flex-wrap:wrap;gap:9px;margin:13px 0;align-items:center}
+  .pmsv-b87-actions button,.pmsv-b87-pages button,#pmsv-b87-catalogue [data-b87-focus]{min-height:44px;white-space:normal}
+  .pmsv-b87-actions button:disabled,.pmsv-b87-pages button:disabled{opacity:.46}
+  .pmsv-b87-scroller{max-width:100%;overflow:auto;max-height:570px;overscroll-behavior-inline:contain}
+  .pmsv-b87-scroller table{min-width:760px}
+  .pmsv-b87-scroller td{vertical-align:top;overflow-wrap:anywhere}
+  .pmsv-b87-note{font-size:12px;line-height:1.5}
+  #pmsv-b87-catalogue :focus-visible{outline:3px solid #3759cf;outline-offset:2px}
+  @media(max-width:700px){.pmsv-b87-controls{grid-template-columns:minmax(0,1fr)}.pmsv-b87-actions button{flex:1 1 100%}}
+  `,{id:"pmsv-b87-style"});
+  document.head.appendChild(style);
+ }
+ return true;
+}
+function filtered(data){
+ const host=document.getElementById("pmsv-b87-catalogue");
+ if(!host)return[];
+ const status=host.querySelector("[data-b87-status]").value;
+ const q=host.querySelector("[data-b87-search]").value.trim().toLocaleLowerCase("en");
+ return data.filter(r=>(status==="ALL"||r.source_status===status)&&
+  (!q||[r.product_name,r.catalog_id,r.fssr,r.fcs,r.case?.analyte,
+      r.case?.priority,r.case?.rank].some(s=>String(s??"").toLocaleLowerCase("en").includes(q))));
+}
+function blocked(message){
+ ready=false;page=0;
+ const root=document.getElementById("pmsv-b87-catalogue");if(!root)return false;
+ root.querySelector("[data-b87-rows]").replaceChildren();
+ root.querySelector("[data-b87-count]").textContent=message||"Source validation failed. 0 records displayed, 0 approvals.";
+ root.querySelector("[data-b87-page]").textContent="";
+ for(const attr of ["data-b87-export","data-b87-prev","data-b87-next"])
+  root.querySelector("["+attr+"]").disabled=true;
+ return false;
+}
+function render(){
+ if(!install()||!ready)return false;
+ const all=verify();if(!all)return blocked("Source integrity unavailable or changed. All exports blocked; 35 cases remain HELD.");
+ const host=document.getElementById("pmsv-b87-catalogue"),list=filtered(all);
+ page=Math.min(page,Math.max(0,Math.ceil(list.length/PAGE)-1));
+ const body=host.querySelector("[data-b87-rows]");body.replaceChildren();
+ for(const r of list.slice(page*PAGE,(page+1)*PAGE)){
+  const tr=make("tr"),id=make("td",r.product_name);
+  id.appendChild(make("small","Catalogue ID: "+r.catalog_id));
+  const identity=make("td","FSSR: "+(r.fssr||"Not specified")+" · FoSCoS: "+(r.fcs||"Not specified"));
+  const state=make("td",r.case?"ORIGINAL-SOURCE REVIEWED · EXACT LEGAL SCOPE HELD":"CONDITIONAL FIRST-SOURCE REFERENCE · NOT COMPLIANCE");
+  if(r.case)state.appendChild(make("small",r.case.priority+" · "+r.case.analyte+" · 5 original proof requests OPEN"));
+  const action=make("td");
+  if(r.case)action.appendChild(make("button","View held case",{type:"button","data-b87-focus":String(r.case.rank),"data-b87-case":r.catalog_id}));
+  else action.textContent="No case-level legal or lot approval";
+  [id,identity,state,action].forEach(td=>tr.appendChild(td));body.appendChild(tr);
+ }
+ host.querySelector("[data-b87-count]").textContent=list.length+" of 533 products matched · 498 conditional source references / 35 legally HELD · zero signed limits, method/lot approvals or releases.";
+ host.querySelector("[data-b87-page]").textContent=list.length?"Showing "+(page*PAGE+1)+"–"+Math.min((page+1)*PAGE,list.length)+" of "+list.length:"0 matching products";
+ host.querySelector("[data-b87-prev]").disabled=page===0;
+ host.querySelector("[data-b87-next]").disabled=(page+1)*PAGE>=list.length;
+ host.querySelector("[data-b87-export]").disabled=false;
+ return true;
+}
+async function load(){
+ if(!install())return blocked("Preview module not installed.");
+ const root=document.getElementById("pmsv-b87-catalogue");root.open=true;
+ if(ready)return render();
+ blocked("Verifying official-source research and all 533 immutable catalogue records…");
+ try{
+  const state=window.pmsvB70ExtendedResearch?.getState?.();
+  if(state?.core!=="READY")return blocked("Core FSSAI research is not READY. Review source panels first.");
+  if(state.extended!=="READY")await window.pmsvB70ExtendedResearch.request();
+  if(!await window.pmsvFinal35LegalReview?.load?.())return blocked("35-case official legal research not validated; catalogue withheld.");
+  if(!verify())return blocked("First-source catalogue or 35-case evidence does not match; catalogue withheld.");
+  ready=true;page=0;return render();
+ }catch(_){return blocked("Unable to verify source data. All records withheld and cases HELD.")}
+}
+function csv(){
+ if(!ready)return"";
+ const all=verify();if(!all)return"";
+ const output=[["catalogue_id","product","FSSR_identity","FoSCoS_code","source_status","case_priority","case_analyte","source_scope_legal_approval","full_contaminant_panel","lot_pass","lot_release"]];
+ for(const r of filtered(all))output.push([r.catalog_id,r.product_name,r.fssr,r.fcs,
+   r.source_status,r.case?.priority??"",r.case?.analyte??"","NOT_SIGNED","NO","NOT_VERIFIED","HELD"]);
+ const quote=v=>{let s=String(v??"");if(/^\s*[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"'};
+ return output.map(row=>row.map(quote).join(",")).join("\r\n")+"\r\n";
+}
+function exportCSV(){
+ if(!render())return false;
+ const value=csv();if(!value)return blocked("Export source integrity failed.");
+ const url=window.URL.createObjectURL(new Blob(["\uFEFF"+value],{type:"text/csv;charset=utf-8"}));
+ const a=make("a",undefined,{href:url,download:"PMSV-B87-FILTERED-533-SOURCE-STATUS-NOT-COMPLIANCE.csv"});
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>window.URL.revokeObjectURL(url),1000);return true;
+}
+function focus(rank,caseId){
+ const all=verify();if(!all)return blocked("Case-link source integrity failed.");
+ if(!all.some(x=>x.catalog_id===caseId&&x.case?.rank===rank))return false;
+ const host=document.getElementById("pmsv-final35-legal-review");
+ const picker=host?.querySelector("#pmsv-b84-named-article-evidence [data-b84-case]");
+ if(!picker||![...picker.options].some(x=>x.value===String(rank)))return false;
+ picker.value=String(rank);
+ const success=window.pmsvB84NamedArticleScope?.focus?.();
+ if(success){host.open=true;document.getElementById("pmsv-b84-named-article-evidence").open=true;host.scrollIntoView({behavior:"auto",block:"start"})}
+ return success===true;
+}
+document.addEventListener("click",e=>{
+ const b=e.target?.closest?.("#pmsv-b87-catalogue button");if(!b)return;
+ if(b.hasAttribute("data-b87-load"))load();
+ else if(b.hasAttribute("data-b87-export"))exportCSV();
+ else if(b.hasAttribute("data-b87-prev")){page=Math.max(0,page-1);render()}
+ else if(b.hasAttribute("data-b87-next")){page++;render()}
+ else if(b.hasAttribute("data-b87-focus"))focus(Number(b.dataset.b87Focus),b.dataset.b87Case);
+});
+document.addEventListener("input",e=>{if(e.target?.matches?.("#pmsv-b87-catalogue [data-b87-search]")){page=0;render()}});
+document.addEventListener("change",e=>{if(e.target?.matches?.("#pmsv-b87-catalogue [data-b87-status]")){page=0;render()}});
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
+window.pmsvB87Catalogue=Object.freeze({load,render,csv,verify:()=>!!verify(),focus});
+})();
