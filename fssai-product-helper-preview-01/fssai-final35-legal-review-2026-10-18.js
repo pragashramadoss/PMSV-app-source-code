@@ -400,7 +400,8 @@ function install(){
  const actions=make("div",undefined,{class:"pmsv-b87-actions"});
  const load=make("button","Verify sources and browse 533",{type:"button","data-b87-load":""});
  const exportBtn=make("button","Export filtered product CSV",{type:"button","data-b87-export":""});
- exportBtn.disabled=true;actions.append(load,exportBtn);d.appendChild(actions);
+ const finalBtn=make("button","Download final 35 completed research decisions",{type:"button","data-b91-export-closeout":""});
+ exportBtn.disabled=true;finalBtn.disabled=true;actions.append(load,exportBtn,finalBtn);d.appendChild(actions);
  d.appendChild(make("p","Extended research and 35-case legal audits must validate first. No confidential supplier materials may be uploaded.",{class:"pmsv-b87-note"}));
  d.appendChild(make("p","Not loaded. Source integrity must be verified before records are visible.",{"data-b87-count":"","role":"status","aria-live":"polite"}));
  const wrap=make("div",undefined,{class:"pmsv-b87-scroller",role:"region",tabindex:"0","aria-label":"533 product source research status table"});
@@ -451,7 +452,7 @@ function blocked(message){
  root.querySelector("[data-b87-rows]").replaceChildren();
  root.querySelector("[data-b87-count]").textContent=message||"Source validation failed. 0 records displayed, 0 approvals.";
  root.querySelector("[data-b87-page]").textContent="";
- for(const attr of ["data-b87-export","data-b87-prev","data-b87-next"])
+ for(const attr of ["data-b87-export","data-b91-export-closeout","data-b87-prev","data-b87-next"])
   root.querySelector("["+attr+"]").disabled=true;
  return false;
 }
@@ -482,6 +483,7 @@ function render(){
  host.querySelector("[data-b87-prev]").disabled=page===0;
  host.querySelector("[data-b87-next]").disabled=(page+1)*PAGE>=list.length;
  host.querySelector("[data-b87-export]").disabled=false;
+ host.querySelector("[data-b91-export-closeout]").disabled=false;
  return true;
 }
 async function load(){
@@ -528,6 +530,52 @@ function exportCSV(){
  const a=make("a",undefined,{href:url,download:"PMSV-B87-FILTERED-533-SOURCE-STATUS-NOT-COMPLIANCE.csv"});
  document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>window.URL.revokeObjectURL(url),1000);return true;
+}
+/* Final 35-case research handoff: one source-verified, full evidence-reference CSV.
+   Named-article numerical comparisons must remain NOT APPLIED to finished SKUs. */
+function completed35CSV(){
+ if(!ready)return"";
+ const all=verify();
+ if(!verifyResearchCloseout(all))return"";
+ const original=new Map(all.filter(x=>x.case).map(x=>[x.catalog_id,x]));
+ if(original.size!==35)return"";
+ const seen=new Set(),requests=new Set();
+ const rows=[["case_rank","catalog_id","product","FSSR_identity","FoSCoS_code","priority","analyte",
+   "PUBLIC_SOURCE_DESK_RESEARCH_STATUS","LEGAL_SCOPE_STATUS","original_named_article_NOT_APPLIED",
+   "other_article_numeric_comparator_NOT_APPLIED","comparator_unit_NOT_APPLIED","FSSAI_official_source_page",
+   "source_article_nontransfer_reason","first_original_manufacturer_evidence_required",
+   "five_original_evidence_request_IDs","regulatory_source_limit_signed","lab_method_matrix_approved",
+   "original_representative_lot_CoA","QA_lot_release"]];
+ const quote=v=>{let x=String(v??"");if(/^[=+@\-\t\r]/.test(x.trimStart()))x="'"+x;return '"'+x.replaceAll('"','""')+'"'};
+ for(const c of [...closeout.cases].sort((a,b)=>a.rank-b.rank)){
+  const r=original.get(c.case_id);
+  if(!r?.case||c.source_desk_research!=="COMPLETE"||
+     c.actual_product_scope!=="NOT_AUTHENTICATED"||
+     c.applicable_legal_limit!=="NOT_SIGNED"||
+     c.lab_method_matrix!=="NOT_SIGNED"||
+     c.representative_lot_CoA!=="NOT_RECEIVED"||c.lot_release!=="HELD"||
+     seen.has(c.case_id)||!Array.isArray(c.original_evidence_request_ids)||
+     c.original_evidence_request_ids.length!==5)return"";
+  seen.add(c.case_id);
+  for(const id of c.original_evidence_request_ids){
+   if(!id||requests.has(id))return"";requests.add(id);
+  }
+  rows.push([c.rank,c.case_id,c.product,r.fssr,r.fcs,c.priority,c.analyte,
+   "COMPLETE_CLOSED_2026_10_20","UNVERIFIED_HELD",c.referenced_article,
+   c.published_value_NOT_APPLIED??"",c.published_value_NOT_APPLIED===null?"":c.unit_NOT_APPLIED,
+   c.official_ctr_source,c.regulatory_reason_not_transferred,c.first_commercial_document_needed,
+   c.original_evidence_request_ids.join(" | "),"NOT_SIGNED","NOT_SIGNED","NOT_RECEIVED","HELD"]);
+ }
+ if(seen.size!==35||requests.size!==175||rows.length!==36)return"";
+ return rows.map(row=>row.map(quote).join(",")).join("\r\n")+"\r\n";
+}
+function exportCompleted35(){
+ if(!render())return false;
+ const content=completed35CSV();if(!content)return false;
+ const objectUrl=window.URL.createObjectURL(new Blob(["\uFEFF"+content],{type:"text/csv;charset=utf-8"}));
+ const link=make("a",undefined,{href:objectUrl,download:"PMSV-FINAL35-RESEARCH-CLOSED-COMPLIANCE-HELD-2026-10-20.csv"});
+ document.body.appendChild(link);link.click();link.remove();
+ setTimeout(()=>window.URL.revokeObjectURL(objectUrl),1000);return true;
 }
 /* Batch90: enable real product-standard work from the verified source catalogue.
    No automatic assessment, recipe edits, limit assignment or PASS. */
@@ -594,6 +642,7 @@ document.addEventListener("click",e=>{
  const b=e.target?.closest?.("#pmsv-b87-catalogue button");if(!b)return;
  if(b.hasAttribute("data-b87-load"))load();
  else if(b.hasAttribute("data-b87-export"))exportCSV();
+ else if(b.hasAttribute("data-b91-export-closeout"))exportCompleted35();
  else if(b.hasAttribute("data-b87-prev")){page=Math.max(0,page-1);render()}
  else if(b.hasAttribute("data-b87-next")){page++;render()}
  else if(b.hasAttribute("data-b87-focus"))focus(Number(b.dataset.b87Focus),b.dataset.b87Case);
@@ -614,5 +663,5 @@ document.addEventListener("click",e=>{
 document.addEventListener("input",e=>{if(e.target?.matches?.("#pmsv-b87-catalogue [data-b87-search]")){page=0;render()}});
 document.addEventListener("change",e=>{if(e.target?.matches?.("#pmsv-b87-catalogue [data-b87-status]")){page=0;render()}});
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
-window.pmsvB87Catalogue=Object.freeze({load,render,csv,verify:()=>!!verify(),focus,openInProductChecker,closedResearchSummary,closureVerified:()=>verifyResearchCloseout(verify())});
+window.pmsvB87Catalogue=Object.freeze({load,render,csv,completed35CSV,verify:()=>!!verify(),focus,openInProductChecker,closedResearchSummary,closureVerified:()=>verifyResearchCloseout(verify())});
 })();

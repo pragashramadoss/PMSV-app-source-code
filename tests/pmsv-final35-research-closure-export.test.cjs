@@ -1,0 +1,46 @@
+"use strict";
+const assert=require("node:assert/strict"),fs=require("node:fs");
+const dir="fssai-product-helper-preview-01/";
+const ui=fs.readFileSync(dir+"fssai-final35-legal-review-2026-10-18.js","utf8");
+const legacy=fs.readFileSync(dir+"fssai-current-first-source-498-35.js","utf8");
+const closeout=JSON.parse(fs.readFileSync(dir+"data/rules/fssai-final35-desk-research-complete-batch88-2026-10-20.json","utf8"));
+const ledger=JSON.parse(fs.readFileSync(dir+"data/rules/fssai-current-first-source-533-live-ledger-498-35-2026-10-13.json","utf8"));
+assert.equal(ledger.records.length,533);
+assert.deepEqual([ledger.partial_exact,ledger.first_source_pending],[498,35]);
+assert.equal(closeout.cases.length,35);
+assert.equal(closeout.summary.desk_review_finished,35);
+assert.equal(closeout.summary.signed_case_limits,0);
+assert.equal(closeout.summary.lab_method_approvals,0);
+assert.equal(closeout.summary.regulatory_passes,0);
+assert.equal(closeout.summary.lot_releases,0);
+const ids=new Set(),requests=new Set(),ranks=new Set();
+let numeric=0,scopeOnly=0;
+for(const c of closeout.cases){
+ assert(!ids.has(c.case_id));ids.add(c.case_id);
+ assert(!ranks.has(c.rank));ranks.add(c.rank);
+ assert.equal(c.source_desk_research,"COMPLETE");
+ assert.equal(c.actual_product_scope,"NOT_AUTHENTICATED");
+ assert.equal(c.applicable_legal_limit,"NOT_SIGNED");
+ assert.equal(c.lab_method_matrix,"NOT_SIGNED");
+ assert.equal(c.lot_release,"HELD");
+ assert(c.official_ctr_source.startsWith("https://fssai.gov.in/"));
+ assert.equal(c.original_evidence_request_ids.length,5);
+ for(const id of c.original_evidence_request_ids){assert(!requests.has(id));requests.add(id)}
+ c.published_value_NOT_APPLIED===null?scopeOnly++:numeric++;
+}
+assert.deepEqual([ids.size,ranks.size,requests.size,numeric,scopeOnly],[35,35,175,23,12]);
+assert(ui.includes("function completed35CSV()"));
+assert(ui.includes('if(!verifyResearchCloseout(all))return"";'));
+assert(ui.includes("data-b91-export-closeout"));
+assert(ui.includes("window.pmsvB87Catalogue=Object.freeze({load,render,csv,completed35CSV,"));
+assert(ui.includes("PMSV-FINAL35-RESEARCH-CLOSED-COMPLIANCE-HELD-2026-10-20.csv"));
+assert(ui.includes("COMPLETE_CLOSED_2026_10_20"));
+assert(ui.includes("UNVERIFIED_HELD"));
+assert(ui.includes("original_named_article_NOT_APPLIED"));
+assert(ui.includes("five_original_evidence_request_IDs"));
+assert(ui.includes("requests.size!==175||rows.length!==36"));
+assert(legacy.includes("FSSAI public-source research: 533/533 reviewed · 35 cases researched"));
+assert(legacy.includes("DESK RESEARCH REVIEWED · LEGAL ARTICLE APPLICABILITY HELD"));
+assert(!legacy.includes("RESEARCHED · EXACT CONTAMINANT ARTICLE PENDING"));
+assert(!legacy.includes("35 researched, exact applicability open"));
+console.log("FINAL35 PASS: desk research closed with 35-row proof-preserving handoff; all legally unverified cases held.");

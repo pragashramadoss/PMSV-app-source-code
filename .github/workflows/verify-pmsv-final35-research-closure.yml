@@ -1,0 +1,30 @@
+name: Verify PMSV final 35 research closure and handoff
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/fssai-current-first-source-498-35.js'
+      - 'fssai-product-helper-preview-01/fssai-final35-legal-review-2026-10-18.js'
+      - 'tests/pmsv-final35-research-closure-export.test.cjs'
+      - 'tests/pmsv-public-source-review-completion.test.cjs'
+      - '.github/workflows/verify-pmsv-final35-research-closure.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  research-complete:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Confirm closure, source integrity and no compliance approvals
+        run: |
+          node --check fssai-product-helper-preview-01/fssai-current-first-source-498-35.js
+          node --check fssai-product-helper-preview-01/fssai-final35-legal-review-2026-10-18.js
+          node tests/pmsv-final35-research-closure-export.test.cjs
+          node tests/pmsv-public-source-review-completion.test.cjs
+          node tests/pmsv-batch88-source-closeout.test.cjs
+          node tests/pmsv-batch89-live-source-closure.test.cjs

@@ -5,7 +5,7 @@ const src=fs.readFileSync(root+"fssai-final35-legal-review-2026-10-18.js","utf8"
 const l=JSON.parse(fs.readFileSync(root+"data/rules/fssai-current-first-source-533-live-ledger-498-35-2026-10-13.json","utf8"));
 const a=JSON.parse(fs.readFileSync(root+"data/rules/fssai-final35-legal-candidate-audit-2026-10-17.json","utf8"));
 assert(src.includes("Batch87 — searchable, verified 533-item"));
-assert(src.includes("window.pmsvB87Catalogue=Object.freeze({load,render,csv,verify:()=>!!verify(),focus,openInProductChecker,closedResearchSummary,closureVerified:()=>verifyResearchCloseout(verify())})"));
+assert(src.includes("window.pmsvB87Catalogue=Object.freeze({load,render,csv,completed35CSV,verify:()=>!!verify(),focus,openInProductChecker,closedResearchSummary,closureVerified:()=>verifyResearchCloseout(verify())})"));
 assert(src.includes("B89_PIN=\"4d1590738e747a2a\""));
 assert(src.includes('public_source_desk_research_open:0'));
 assert(src.includes('external_legal_and_lot_verification_held:35'));

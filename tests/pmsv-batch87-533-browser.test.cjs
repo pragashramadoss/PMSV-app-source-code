@@ -22,6 +22,14 @@ const nap=n=>new Promise(r=>setTimeout(r,n));
    external_legal_and_lot_verification_held:35,signed_product_limits:0,
    validated_lab_lot_pass:0,product_releases:0});
  assert.equal(await p.evaluate(()=>pmsvB87Catalogue.closureVerified()),true);
+ const finished35=await p.evaluate(()=>pmsvB87Catalogue.completed35CSV());
+ assert.equal(finished35.trim().split("\r\n").length,36);
+ assert.equal((finished35.match(/"COMPLETE_CLOSED_2026_10_20"/g)||[]).length,35);
+ assert.equal((finished35.match(/"UNVERIFIED_HELD"/g)||[]).length,35);
+ assert.equal((finished35.match(/"NOT_SIGNED"/g)||[]).length,70);
+ const proofExport=p.waitForEvent("download",{timeout:15000});
+ await p.locator("#pmsv-b87-catalogue [data-b91-export-closeout]").evaluate(el=>el.click());
+ assert.equal((await proofExport).suggestedFilename(),"PMSV-FINAL35-RESEARCH-CLOSED-COMPLIANCE-HELD-2026-10-20.csv");
  const pane=p.locator("#pmsv-b87-catalogue");await pane.evaluate(el=>{el.open=true});
  assert.equal(await pane.locator("[data-b87-rows] tr").count(),50);
  assert((await pane.locator("[data-b87-count]").textContent()).includes("533 of 533"));
