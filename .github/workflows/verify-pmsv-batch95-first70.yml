@@ -1,0 +1,24 @@
+name: Verify PMSV Batch95 70 initial requests and 105 blockers
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'PMSV-BATCH95-70-IMMEDIATE-UNSENT-EVIDENCE-REQUESTS-2026-10-20.csv'
+      - 'PMSV-BATCH95-105-DOWNSTREAM-LEGAL-LAB-QA-BLOCKERS-2026-10-20.csv'
+      - 'fssai-product-helper-preview-01/data/rules/pmsv-batch95-35-first-evidence-sequence-2026-10-20.json'
+      - 'tests/pmsv-batch95-first70-sequence.test.cjs'
+      - '.github/workflows/verify-pmsv-batch95-first70.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-request-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 175 original IDs and no false approvals
+        run: node tests/pmsv-batch95-first70-sequence.test.cjs
