@@ -257,7 +257,10 @@ window.pmsvB84NamedArticleScope=Object.freeze({render:b84Render,csv:b84CSV,
    No legal limits, uploads, persistent user state, document send or lot release. */
 (function(){"use strict";
 const PAGE=50, HELD="FIRST_EXACT_SOURCE_PENDING", PARTIAL="PARTIAL_EXACT_SOURCE_MATCH";
-let page=0, ready=false;
+const B89_PIN="4d1590738e747a2a",B89_FILE="./data/rules/fssai-final35-desk-research-complete-batch88-2026-10-20.json";
+let page=0, ready=false, closeout=null;
+/* The legacy first-exact-source ledger is immutable. The research closure is a
+   separate, digest-verified final disposition; never translate it into compliance. */
 const make=(tag,s,attrs)=>{
  const n=document.createElement(tag);
  if(s!==undefined)n.textContent=String(s);
@@ -311,17 +314,85 @@ function verify(){
     a.catalog_id.localeCompare(b.catalog_id,"en"));
  }catch(_){return null}
 }
+function verifyResearchCloseout(all){
+ try{
+  if(!Array.isArray(all)||all.length!==533||!closeout||
+     typeof pmsvB14Digest!=="function"||pmsvB14Digest(closeout)!==B89_PIN||
+     closeout.kind!=="PMSV_FINAL35_SOURCE_DESK_RESEARCH_COMPLETE_NO_PRODUCT_APPROVAL"||
+     closeout.as_of!=="2026-10-20"||
+     closeout.future_CTR_amendment_effective!=="2026-12-01")return false;
+  const s=closeout.summary;
+  if(s?.catalogue!==533||s.source_conditional!==498||s.desk_review_finished!==35||
+     s.numeric_other_article_references_NOT_ADOPTED!==23||
+     s.no_single_numeric_article_identified!==12||
+     s.named_product_identity_sources!==28||s.grouped_product_categories!==7||
+     s.p0!==13||s.p1!==22||s.original_evidence_ids_not_received!==175||
+     s.signed_case_limits!==0||s.lab_method_approvals!==0||
+     s.commercial_lot_coas!==0||s.regulatory_passes!==0||s.lot_releases!==0||
+     closeout.cases?.length!==35)return false;
+  const cases=new Map(all.filter(x=>x.case).map(x=>[x.catalog_id,x]));
+  const comparisons=window.pmsvB84NamedArticleScope?.getAll?.();
+  if(cases.size!==35||comparisons?.length!==35)return false;
+  const originalComp=new Map(comparisons.map(x=>[x[0],x]));
+  if(originalComp.size!==35)return false;
+  const proof=new Set(),checked=new Set();
+  let numeric=0,noNumber=0,p0=0,p1=0;
+  for(const c of closeout.cases){
+   if(!c||checked.has(c.case_id)||!Number.isInteger(c.rank)||c.rank<1||c.rank>35)return false;
+   checked.add(c.case_id);
+   const previous=cases.get(c.case_id),x=originalComp.get(c.rank);
+   if(!previous?.case||!x||previous.case.rank!==c.rank||
+      previous.product_name!==c.product||previous.case.priority!==c.priority||
+      previous.case.analyte!==c.analyte||
+      c.comparator_analyte!==x[1]||c.referenced_article!==x[2]||
+      c.published_value_NOT_APPLIED!==x[3]||
+      c.unit_NOT_APPLIED!==(x[3]===null?null:x[4])||
+      c.official_ctr_page!==x[5]||
+      c.regulatory_reason_not_transferred!==x[6]||
+      c.first_commercial_document_needed!==x[7]||
+      c.source_desk_research!=="COMPLETE"||
+      c.actual_product_scope!=="NOT_AUTHENTICATED"||
+      c.applicable_legal_limit!=="NOT_SIGNED"||
+      c.lab_method_matrix!=="NOT_SIGNED"||
+      c.representative_lot_CoA!=="NOT_RECEIVED"||
+      c.regulatory_pass!=="NOT_DETERMINED"||
+      c.lot_release!=="HELD"||
+      !Array.isArray(c.original_evidence_request_ids)||
+      c.original_evidence_request_ids.length!==5||
+      c.original_evidence_request_ids.join("|")!==previous.case.original_request_ids.join("|"))
+     return false;
+   for(const id of c.original_evidence_request_ids){
+    if(!id||proof.has(id))return false;proof.add(id);
+   }
+   c.priority==="P0"?p0++:p1++;
+   if(c.published_value_NOT_APPLIED===null){
+    if(c.numeric_scope!=="NO_SINGLE_NUMERIC_ARTICLE_ESTABLISHED")return false;
+    noNumber++;
+   }else{
+    if(c.numeric_scope!=="DIFFERENT_NAMED_FOOD_ARTICLE_REFERENCE_ONLY")return false;
+    numeric++;
+   }
+  }
+  return checked.size===35&&proof.size===175&&numeric===23&&noNumber===12&&p0===13&&p1===22;
+ }catch(_){return false}
+}
+function closedResearchSummary(){
+ const all=verify();if(!verifyResearchCloseout(all))return null;
+ return Object.freeze({catalogue:533,source_first_reference:498,public_source_desk_research_closed:35,
+    public_source_desk_research_open:0,external_legal_and_lot_verification_held:35,
+    signed_product_limits:0,validated_lab_lot_pass:0,product_releases:0})
+}
 function install(){
  if(document.getElementById("pmsv-b87-catalogue"))return true;
  const host=document.getElementById("pmsv-final35-legal-review");
  if(!host)return false;
  const d=make("details",undefined,{id:"pmsv-b87-catalogue",class:"card"});
- d.appendChild(make("summary","Batch87 · Browse all 533 product source-research records"));
+ d.appendChild(make("summary","All 533 source reviews accounted for · 35 desk reviews CLOSED, compliance HELD"));
  d.appendChild(make("p","Search the full FSSAI helper catalogue by product, catalogue ID, FSSR identity, FoSCoS code or held-case analyte. A source reference is NOT complete legal applicability, validated laboratory testing, product PASS or release."));
  const tools=make("div",undefined,{class:"pmsv-b87-controls"});
  const status=make("label","Source status");
  const sel=make("select",undefined,{"data-b87-status":""});
- [["ALL","All 533"],[PARTIAL,"498 conditional reference matches"],[HELD,"35 reviewed / legally HELD"]].forEach(([v,t])=>sel.appendChild(make("option",t,{value:v})));
+ [["ALL","All 533"],[PARTIAL,"498 conditional references — not compliance"],[HELD,"35 source desk reviews CLOSED / legal verification HELD"]].forEach(([v,t])=>sel.appendChild(make("option",t,{value:v})));
  status.appendChild(sel);tools.appendChild(status);
  const q=make("label","Search product, ID, FSSR, FoSCoS or analyte");
  q.appendChild(make("input",undefined,{type:"search","data-b87-search":"","maxlength":"120",placeholder:"Search 533 products"}));
@@ -375,7 +446,7 @@ function filtered(data){
       r.case?.priority,r.case?.rank].some(s=>String(s??"").toLocaleLowerCase("en").includes(q))));
 }
 function blocked(message){
- ready=false;page=0;
+ ready=false;page=0;closeout=null;
  const root=document.getElementById("pmsv-b87-catalogue");if(!root)return false;
  root.querySelector("[data-b87-rows]").replaceChildren();
  root.querySelector("[data-b87-count]").textContent=message||"Source validation failed. 0 records displayed, 0 approvals.";
@@ -386,7 +457,7 @@ function blocked(message){
 }
 function render(){
  if(!install()||!ready)return false;
- const all=verify();if(!all)return blocked("Source integrity unavailable or changed. All exports blocked; 35 cases remain HELD.");
+ const all=verify();if(!verifyResearchCloseout(all))return blocked("Source research closure integrity unavailable. All exports blocked and 35 legal cases HELD.");
  const host=document.getElementById("pmsv-b87-catalogue"),list=filtered(all);
  page=Math.min(page,Math.max(0,Math.ceil(list.length/PAGE)-1));
  const body=host.querySelector("[data-b87-rows]");body.replaceChildren();
@@ -394,14 +465,14 @@ function render(){
   const tr=make("tr"),id=make("td",r.product_name);
   id.appendChild(make("small","Catalogue ID: "+r.catalog_id));
   const identity=make("td","FSSR: "+(r.fssr||"Not specified")+" · FoSCoS: "+(r.fcs||"Not specified"));
-  const state=make("td",r.case?"ORIGINAL-SOURCE REVIEWED · EXACT LEGAL SCOPE HELD":"CONDITIONAL FIRST-SOURCE REFERENCE · NOT COMPLIANCE");
+  const state=make("td",r.case?"DESK SOURCE RESEARCH CLOSED · REGULATORY AND LOT VERIFICATION HELD":"CONDITIONAL FIRST-SOURCE REFERENCE · NOT COMPLIANCE");
   if(r.case)state.appendChild(make("small",r.case.priority+" · "+r.case.analyte+" · 5 original proof requests OPEN"));
   const action=make("td");
   if(r.case)action.appendChild(make("button","View held case",{type:"button","data-b87-focus":String(r.case.rank),"data-b87-case":r.catalog_id}));
   else action.textContent="No case-level legal or lot approval";
   [id,identity,state,action].forEach(td=>tr.appendChild(td));body.appendChild(tr);
  }
- host.querySelector("[data-b87-count]").textContent=list.length+" of 533 products matched · 498 conditional source references / 35 legally HELD · zero signed limits, method/lot approvals or releases.";
+ host.querySelector("[data-b87-count]").textContent=list.length+" of 533 products matched · all 533 source dispositions accounted for · 35 of 35 source desk reviews CLOSED · 0 unresearched desk-review cases · 35 external legal/lot verification HELD · zero signed limits, method/lot approvals or releases.";
  host.querySelector("[data-b87-page]").textContent=list.length?"Showing "+(page*PAGE+1)+"–"+Math.min((page+1)*PAGE,list.length)+" of "+list.length:"0 matching products";
  host.querySelector("[data-b87-prev]").disabled=page===0;
  host.querySelector("[data-b87-next]").disabled=(page+1)*PAGE>=list.length;
@@ -418,16 +489,30 @@ async function load(){
   if(state?.core!=="READY")return blocked("Core FSSAI research is not READY. Review source panels first.");
   if(state.extended!=="READY")await window.pmsvB70ExtendedResearch.request();
   if(!await window.pmsvFinal35LegalReview?.load?.())return blocked("35-case official legal research not validated; catalogue withheld.");
-  if(!verify())return blocked("First-source catalogue or 35-case evidence does not match; catalogue withheld.");
+  const all=verify();
+  if(!all)return blocked("First-source catalogue or 35-case evidence does not match; catalogue withheld.");
+  const response=await fetch(B89_FILE+"?v=20261020-b89",{cache:"no-store"});
+  if(!response.ok)return blocked("Original 35-case source closure file unavailable; no research-closure claim.");
+  closeout=await response.json();
+  if(!verifyResearchCloseout(all))return blocked("Original 35-case source closure failed strict source/data integrity checks.");
   ready=true;page=0;return render();
  }catch(_){return blocked("Unable to verify source data. All records withheld and cases HELD.")}
 }
 function csv(){
  if(!ready)return"";
- const all=verify();if(!all)return"";
- const output=[["catalogue_id","product","FSSR_identity","FoSCoS_code","source_status","case_priority","case_analyte","source_scope_legal_approval","full_contaminant_panel","lot_pass","lot_release"]];
- for(const r of filtered(all))output.push([r.catalog_id,r.product_name,r.fssr,r.fcs,
-   r.source_status,r.case?.priority??"",r.case?.analyte??"","NOT_SIGNED","NO","NOT_VERIFIED","HELD"]);
+ const all=verify();if(!verifyResearchCloseout(all))return"";
+ const output=[["catalogue_id","product","FSSR_identity","FoSCoS_code","source_status_original_ledger","source_desk_research_disposition","compliance_verification","case_priority","case_analyte","applicable_limit","original_evidence_request_ids","source_scope_legal_approval","full_contaminant_panel","lot_pass","lot_release"]];
+ const final=new Map(closeout.cases.map(x=>[x.case_id,x]));
+ for(const r of filtered(all)){
+  const closure=final.get(r.catalog_id);
+  if(!!r.case!==!!closure)return"";
+  output.push([r.catalog_id,r.product_name,r.fssr,r.fcs,r.source_status,
+    closure?"CLOSED_PUBLIC_SOURCE_DESK_RESEARCH":"CONDITIONAL_FIRST_SOURCE_REFERENCE_RECORDED",
+    closure?"EXTERNAL_EVIDENCE_HELD":"REFERENCE_NOT_COMPLIANCE",
+    r.case?.priority??"",r.case?.analyte??"","NOT_SIGNED",
+    closure?closure.original_evidence_request_ids.join(" | "):"",
+    "NOT_SIGNED","NO","NOT_VERIFIED","HELD"]);
+ }
  const quote=v=>{let s=String(v??"");if(/^\s*[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"'};
  return output.map(row=>row.map(quote).join(",")).join("\r\n")+"\r\n";
 }
@@ -461,5 +546,5 @@ document.addEventListener("click",e=>{
 document.addEventListener("input",e=>{if(e.target?.matches?.("#pmsv-b87-catalogue [data-b87-search]")){page=0;render()}});
 document.addEventListener("change",e=>{if(e.target?.matches?.("#pmsv-b87-catalogue [data-b87-status]")){page=0;render()}});
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
-window.pmsvB87Catalogue=Object.freeze({load,render,csv,verify:()=>!!verify(),focus});
+window.pmsvB87Catalogue=Object.freeze({load,render,csv,verify:()=>!!verify(),focus,closedResearchSummary,closureVerified:()=>verifyResearchCloseout(verify())});
 })();
