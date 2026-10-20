@@ -1,0 +1,33 @@
+name: Verify PMSV Batch93 legal and lab readiness UI
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch93-legal-lab-readiness-ui-2026-10-20.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/pmsv-batch93-legal-lab-readiness.test.cjs'
+      - 'tests/pmsv-batch93-legal-lab-browser.test.cjs'
+      - '.github/workflows/verify-pmsv-batch93-legal-lab-readiness.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-35-dossiers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Source digest / evidence / syntax
+        run: |
+          node --check fssai-product-helper-preview-01/pmsv-batch93-legal-lab-readiness-ui-2026-10-20.js
+          node tests/pmsv-batch93-legal-lab-readiness.test.cjs
+          node tests/pmsv-batch92-35-product-legal-testing-scope.test.cjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Real 390px full-preview interaction / tamper regression
+        run: node tests/pmsv-batch93-legal-lab-browser.test.cjs
