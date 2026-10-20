@@ -68,7 +68,7 @@ test("Effective 498/35 panel first, earlier historical research accessible but c
  const c=ctx();const x=m.routes[0];
  const p={id:x.catalog_id,name:x.product_name,fssr:x.fssr,fcs:x.fcs};
  const h=c.sourcePinned121ResearchProofHtml(p);
- assert.match(h,/498 conditional articles \/ 35 researched, exact applicability open/);
+ assert.match(h,/533\/533 reviewed · 35 cases researched/);
  assert.match(h,/Chromium/);assert.match(h,/Historical FSSAI source research/);
  assert.match(h,/Archive/);
  assert.equal(c.pmsvCurrent116ProofChecklistHtml(p),"");

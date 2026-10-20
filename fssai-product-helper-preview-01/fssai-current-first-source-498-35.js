@@ -124,9 +124,9 @@ function pmsv498LatestHtml(p){
  const e=v=>String(v).replace(/[&<>"']/g,z=>({"&":"&amp;","<":"&lt;",">":"&gt;",[String.fromCharCode(34)]:"&quot;",[String.fromCharCode(39)]:"&#39;"}[z]));
  const x=pmsv498Manifest.routes.find(y=>y.catalog_id===p.id);
  const y=pmsv35Triage.cases.find(y=>y.catalog_id===p.id);
- let out='<details open class="card" style="margin-top:12px"><summary><b>FSSAI source research: 498 conditional articles / 35 researched, exact applicability open</b> · '+
- (record.source_status==="PARTIAL_EXACT_SOURCE_MATCH"?"PARTIAL SOURCE":"RESEARCHED · EXACT CONTAMINANT ARTICLE PENDING")+'</summary>'+
- '<div class="notice"><b>533 catalogue identities reviewed at the first-source level (498 conditional reference matches, 35 with completed open-case desk research). Exact contaminant applicability still open for 35. No finished-lot identity, lab PASS or complete regulatory clearance.</div>';
+ let out='<details open class="card" style="margin-top:12px"><summary><b>FSSAI public-source research: 533/533 reviewed · 35 cases researched</b> · '+
+ (record.source_status==="PARTIAL_EXACT_SOURCE_MATCH"?"PARTIAL SOURCE":"DESK RESEARCH REVIEWED · LEGAL ARTICLE APPLICABILITY HELD")+'</summary>'+
+ '<div class="notice"><b>All 533 catalogue identities have documented first-source dispositions: 498 conditional reference matches and 35 individually researched cases. Historical FIRST_EXACT_SOURCE_PENDING identifiers describe unresolved case-specific contaminant articles, NOT unfinished public-source desk research. The 35 desk reviews are complete; verify the final closeout in the 533-product catalogue. Exact legal applicability, representative lot evidence and product compliance remain HELD for all 35.</div>';
  if(x){
   out+='<p><b>New conditional article:</b> Chromium — Refined sugar, 0.02 mg/kg (source reference only, not applied to this product).</p>'+
   '<p><b>Finished product restriction:</b> '+e(x.subroute)+'</p>'+
