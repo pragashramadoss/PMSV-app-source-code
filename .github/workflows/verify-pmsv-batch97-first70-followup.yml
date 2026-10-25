@@ -1,0 +1,23 @@
+name: Verify PMSV Batch97 original 70 first-action follow-up
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch97-first70-followup-2026-10-25.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/pmsv-batch97-first70-followup.test.cjs'
+      - '.github/workflows/verify-pmsv-batch97-first70-followup.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  first70-immutable-followup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify strict original 70 proof IDs and local-only follow-up notes
+        run: node tests/pmsv-batch97-first70-followup.test.cjs
