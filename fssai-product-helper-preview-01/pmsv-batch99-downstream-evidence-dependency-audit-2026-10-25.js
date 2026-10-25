@@ -254,4 +254,13 @@ document.addEventListener("input",e=>{
 });
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
 window.pmsvB99DownstreamAudit=Object.freeze({sourceValid,rows,rowStatus,count,csv,load,install});
+/* Batch100 is loaded without editing the 900KB preview index or its original source ledger. */
+if(typeof document.createElement==="function"&&document.head?.appendChild&&
+   !document.getElementById("pmsv-b100-module")){
+ const script=document.createElement("script");
+ script.id="pmsv-b100-module";
+ script.src="./pmsv-batch100-independent-review-exception-register-2026-10-25.js?v=20261025-b100";
+ script.async=true;
+ document.head.appendChild(script);
+}
 })();

@@ -1,0 +1,24 @@
+name: Verify PMSV Batch100 105-gate independent reviewer exception register
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch100-independent-review-exception-register-2026-10-25.js'
+      - 'fssai-product-helper-preview-01/pmsv-batch99-downstream-evidence-dependency-audit-2026-10-25.js'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-175-proof-reference-triage-batch56-2026-10-16.json'
+      - 'tests/pmsv-batch100-reviewer-exceptions.test.cjs'
+      - '.github/workflows/verify-pmsv-batch100-reviewer-exceptions.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-bound-independent-issue-triage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify original HELD requests, source-bound review issues and fail-closed restore
+        run: node tests/pmsv-batch100-reviewer-exceptions.test.cjs
