@@ -48,12 +48,12 @@ assert(!/caseApprovals\s*:\s*[1-9]/.test(b100));
 let resolve;
 (async()=>{
  let resolveB98;
- window.pmsvB98Handoff={load:()=>new Promise(r=>{resolveB98=r})};
+ window.pmsvB98Handoff={loadVerifiedCases:()=>new Promise(r=>{resolveB98=r})};
  const auditFirst=window.pmsvB99DownstreamAudit.load();
  assert.equal(await window.pmsvB99DownstreamAudit.load(),false,"duplicate Batch99 audit suppressed");
  resolveB98(false);
  assert.equal(await auditFirst,false);
- window.pmsvB99DownstreamAudit={load:()=>new Promise(r=>{resolve=r})};
+ window.pmsvB99DownstreamAudit={loadVerifiedRows:()=>new Promise(r=>{resolve=r})};
  const first=window.pmsvB100Exceptions.load();
  assert.equal(await window.pmsvB100Exceptions.load(),false,"duplicate source-loading request suppressed");
  resolve(false);
