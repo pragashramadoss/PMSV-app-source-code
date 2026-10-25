@@ -1,0 +1,23 @@
+name: Verify PMSV Batch98 35-case source version and reviewer handoff
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch98-source-authentication-handoff-2026-10-25.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/pmsv-batch98-source-handoff.test.cjs'
+      - '.github/workflows/verify-pmsv-batch98-source-handoff.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  metadata-only-source-handoff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify source revision history, reviewer isolation and fail-closed import
+        run: node tests/pmsv-batch98-source-handoff.test.cjs
