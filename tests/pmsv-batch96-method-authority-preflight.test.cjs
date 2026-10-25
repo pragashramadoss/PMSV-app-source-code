@@ -51,7 +51,7 @@ assert.equal(api.sources.trace.startsWith("https://fssai.gov.in/"),true);
  const lead=cases.find(x=>x.analyte==="Lead");
  const nonmetal=cases.find(x=>x.analyte==="Ochratoxin A");
  const leadDraft=api.draft(lead),otherDraft=api.draft(nonmetal);
- assert.match(leadDraft,/Different 61-page Trace Elements 09.001 procedure/);
+ assert.match(leadDraft,/The 61-page 09.001 is an AAS procedure/);
  assert.match(leadDraft,/6 mg\/kg/);
  assert.match(leadDraft,/NOT SENT/);
  assert.match(otherDraft,/NON-METAL analyte/);
