@@ -1,0 +1,27 @@
+name: Verify PMSV Batch101 reviewer navigation and source-load resilience
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch99-downstream-evidence-dependency-audit-2026-10-25.js'
+      - 'fssai-product-helper-preview-01/pmsv-batch100-independent-review-exception-register-2026-10-25.js'
+      - 'tests/pmsv-batch101-reviewer-navigation.test.cjs'
+      - '.github/workflows/verify-pmsv-batch101-reviewer-navigation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-reviewer-navigation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check accessible panel placement and source-load reentrancy
+        run: node tests/pmsv-batch101-reviewer-navigation.test.cjs
+      - name: Regression check 105 original downstream request audit
+        run: node tests/pmsv-batch99-downstream-audit.test.cjs
+      - name: Regression check source-bound reviewer issue histories
+        run: node tests/pmsv-batch100-reviewer-exceptions.test.cjs

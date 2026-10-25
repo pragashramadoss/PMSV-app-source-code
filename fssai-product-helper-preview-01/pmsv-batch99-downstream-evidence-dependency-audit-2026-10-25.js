@@ -170,17 +170,35 @@ function render(){
   "No matching case under current filters.";
  say("Read-only audit refreshed from original held evidence ledger and current Batch98 local metadata. No compliance status upgraded.");
 }
+let loading=false;
 async function load(){
- say("Verifying 35 source cases and 105 downstream original request IDs…");
+ if(loading)return false;
+ loading=true;
+ const button=host()?.querySelector("[data-b99-load]");
+ if(button){button.disabled=true;button.textContent="Checking source prerequisites…";}
+ const started=Date.now();
+ say("Verifying 35 source cases and 105 downstream original request IDs. Extended research may take time; commercial decisions remain HELD.");
+ const timer=typeof setInterval==="function"?setInterval(()=>{
+  const p=document.getElementById("pmsv-b70-startup-gates");
+  const step=p?.querySelector("[data-pmsv-b70-state]")?.textContent?.trim()||
+   "official-source prerequisites in progress";
+  say("Verifying upstream sources: "+step.slice(0,140)+" · "+
+   Math.floor((Date.now()-started)/1000)+"s elapsed. No approvals or test PASS.");
+ },2000):null;
  try{
   if(!await window.pmsvB98Handoff?.load?.()||!sourceValid()){
-   ready=false;audit=[];say("Trusted source data unavailable; 105 audit blocked.");return false;
+   ready=false;audit=[];say("Trusted source data unavailable; load the Batch70 extended source panels and retry. 105 review gates stay HELD.");return false;
   }
   audit=rows();
   ready=audit.length===105&&new Set(audit.map(x=>x.request_id)).size===105;
   if(!ready){say("Original 105 request integrity failed.");return false}
   render();return true;
  }catch(_){ready=false;audit=[];say("Source verification failed; no export.");return false}
+ finally{
+  if(timer!==null)clearInterval(timer);
+  loading=false;
+  if(button){button.disabled=false;button.textContent="Verify and audit 105 downstream requests";}
+ }
 }
 function openSource(){
  if(!ready||!sourceValid()||!selected)return false;
@@ -199,6 +217,7 @@ function install(){
  h.appendChild(el("summary","Batch99 · 105 original downstream evidence dependencies / stale-source audit"));
  h.appendChild(el("p","A source-verified, read-only dependency review linked to Batch98 controlled-copy revisions. Manufacturer and method metadata, and self-reported reviewer handoff stages, can help prepare follow-ups but NEVER substitute for authenticated originals, a signed legally applicable limit, accredited matrix method, tested lot CoA or QA release. All 105 original downstream requests remain HELD."));
  h.appendChild(el("button","Verify and audit 105 downstream requests",{type:"button","data-b99-load":""}));
+ h.appendChild(el("p","On first use, the extended FSSAI source review may need to load; status is shown below. No document is treated as received.",{class:"notice"}));
  h.appendChild(el("p","Not loaded.",{role:"status","aria-live":"polite","data-b99-status":""}));
  h.appendChild(el("p","",{"data-b99-counts":""}));
  const controls=el("div",undefined,{class:"checker-grid"});
@@ -225,7 +244,8 @@ function install(){
  h.appendChild(document.createTextNode(" "));
  h.appendChild(el("button","Export selected 105-gate audit CSV",{type:"button","data-b99-export":""}));
  h.appendChild(el("p","No original document is uploaded, signed or verified here. This review cannot mark any of the 105 gates closed, and never changes the authoritative 175-request ledger."));
- anchor.insertAdjacentElement("afterend",h);
+ const reviewTop=document.getElementById("pmsv-b70-startup-gates")||anchor;
+ reviewTop.insertAdjacentElement("afterend",h);
  const css=el("style",undefined,{id:"pmsv-b99-css"});
  css.textContent="#pmsv-b99-downstream-audit{overflow-wrap:anywhere}#pmsv-b99-downstream-audit summary{font-weight:800;cursor:pointer}#pmsv-b99-downstream-audit label{display:block;margin:8px 0;font-weight:650}#pmsv-b99-downstream-audit input,#pmsv-b99-downstream-audit select{display:block;max-width:100%;width:100%;padding:9px;margin-top:4px;border:1px solid #b8c8e0;border-radius:7px}#pmsv-b99-downstream-audit button{margin:4px;white-space:normal}";
  document.head.appendChild(css);

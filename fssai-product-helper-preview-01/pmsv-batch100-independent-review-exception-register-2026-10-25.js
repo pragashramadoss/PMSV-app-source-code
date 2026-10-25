@@ -234,14 +234,39 @@ function form(){
  for(const k of FIELDS)x[k]=h.querySelector("[data-b100-field='"+k+"']")?.value?.trim()||"";
  return x;
 }
+let loading=false;
+function currentSourceStep(){
+ const panel=document.getElementById("pmsv-b70-startup-gates");
+ const step=panel?.querySelector("[data-pmsv-b70-state]")?.textContent?.trim()||
+  "upstream research checks are still in progress";
+ return step.slice(0,180);
+}
+function setLoading(enabled){
+ const b=host()?.querySelector("[data-b100-load]");
+ if(b){b.disabled=enabled;
+  b.textContent=enabled?"Verifying official-source research…":"Verify frozen source and load issue register";}
+}
 async function load(){
- status("Verifying original 35 cases and 105 dependent request/role identities…");
+ if(loading)return false;
+ loading=true;setLoading(true);
+ const start=Date.now();
+ status("Starting source verification. The first extended-research load may take a minute; all 35 commercial decisions remain HELD.");
+ const timer=typeof setInterval==="function"?setInterval(()=>{
+  const elapsed=Math.floor((Date.now()-start)/1000);
+  status("Verifying independent review source prerequisites: "+currentSourceStep()+
+   " · "+elapsed+"s elapsed. No evidence or approval has been transferred.");
+ },2000):null;
  try{
   if(!await window.pmsvB99DownstreamAudit?.load?.()||!sourceValid()){
-   loaded=false;status("Original source not verified; no issue entry or export.");return false;
+   loaded=false;
+   const prior=document.getElementById("pmsv-b99-downstream-audit")
+    ?.querySelector("[data-b99-status]")?.textContent?.trim()||"source not ready";
+   status("Original source not verified ("+prior.slice(0,160)+
+    "). Use the Batch70 extended-research loader, then retry. No issue entry/export.");return false;
   }
   loaded=true;render();return true;
- }catch(_){loaded=false;status("Source verification unavailable; no review output.");return false}
+ }catch(_){loaded=false;status("Source verification unavailable; no issue review output.");return false}
+ finally{if(timer!==null)clearInterval(timer);loading=false;setLoading(false)}
 }
 function field(h,key,text,tag,values){
  const label=n("label",text);let f;
@@ -262,6 +287,7 @@ function install(){
  h.appendChild(n("summary","Batch100 · Independent reviewer exception and source-revision register"));
  h.appendChild(n("p","For the same 105 original HELD dependent requests. Record only short local evidence-gap ticket references and unresolved actions. Issues are version-bound: a changed manufacturer or method source makes a prior entry STALE until an explicit new-revision acknowledgement. This is not document authentication, signed review or product release."));
  h.appendChild(n("button","Verify frozen source and load issue register",{type:"button","data-b100-load":""}));
+ h.appendChild(n("p","First use checks the extended FSSAI research sources and can take time; progress is shown here. Original evidence remains NOT RECEIVED.",{class:"notice"}));
  h.appendChild(n("p","Not loaded.",{role:"status","aria-live":"polite","data-b100-status":""}));
  h.appendChild(n("p","",{"data-b100-counts":""}));
  const choice=n("label","Original dependent evidence request");
