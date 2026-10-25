@@ -185,6 +185,8 @@ async function load(){
    Math.floor((Date.now()-started)/1000)+"s elapsed. No approvals or test PASS.");
  },2000):null;
  try{
+  // Keep the click responsive even if the source graph needs a full cold check.
+  await new Promise(resolve=>setTimeout(resolve,0));
   const verifiedCases=await window.pmsvB98Handoff?.loadVerifiedCases?.();
   if(!sourceValidFromCases(verifiedCases)){
    ready=false;audit=[];say("Trusted source data unavailable; load the Batch70 extended source panels and retry. 105 review gates stay HELD.");return false;

@@ -265,6 +265,8 @@ async function load(){
    " · "+elapsed+"s elapsed. No evidence or approval has been transferred.");
  },2000):null;
  try{
+  // Yield so the "Verifying..." state can paint and browser input can finish.
+  await new Promise(resolve=>setTimeout(resolve,0));
   const checked=await window.pmsvB99DownstreamAudit?.loadVerifiedRows?.();
   if(!validRows(checked)){
    loaded=false;
@@ -273,7 +275,12 @@ async function load(){
    status("Original source not verified ("+prior.slice(0,160)+
     "). Use the Batch70 extended-research loader, then retry. No issue entry/export.");return false;
   }
-  loaded=true;render(checked);return true;
+  loaded=true;render(checked);
+  status("Independent review register READY — 105 original dependent requests HELD; "+
+   "35 Regulatory / 35 Laboratory / 35 QA. Verified source inventory in "+
+   Math.max(0,Math.ceil((Date.now()-start)/1000))+
+   "s. No documents received, signed review, PASS or release.");
+  return true;
  }catch(_){loaded=false;status("Source verification unavailable; no issue review output.");return false}
  finally{if(timer!==null)clearInterval(timer);loading=false;setLoading(false)}
 }

@@ -14,7 +14,7 @@ const ROLES=[
 const STATES=["NOT_PREPARED","DRAFT_READY","SENT_SELF_REPORTED"];
 const DOC_KEYS=["ref","version","issue_date","sha256","origin_check_ref"];
 const H_KEYS=["state","reference","date"];
-let profiles=[],loaded=false,selected="",history=new Map(),lastMessage="";
+let profiles=[],loaded=false,loading=false,selected="",history=new Map(),lastMessage="";
 function node(tag,txt,attrs){
  const x=document.createElement(tag);if(txt!==undefined)x.textContent=String(txt);
  for(const [k,v] of Object.entries(attrs||{}))x.setAttribute(k,String(v));
@@ -321,8 +321,14 @@ function render(alreadyVerified=false){
  feedback(lastMessage||"Metadata-only in-memory review. Document hashes are byte fingerprints, not proof of issuer authenticity.");
 }
 async function load(){
+ if(loading)return false;
+ loading=true;
+ const button=host()?.querySelector("[data-b98-load]");
+ if(button)button.disabled=true;
  feedback("Verifying 35-case / 175-original-proof identities…");
  try{
+  // Return control to the click event loop before expensive original-source checks.
+  await new Promise(resolve=>setTimeout(resolve,0));
   const catalogue=window.pmsvB87Catalogue;
   // Reuse one freshly verified closure summary in this synchronous handoff.
   let summary=catalogue?.closedResearchSummary?.();
@@ -340,6 +346,10 @@ async function load(){
   lastMessage="Verified original case inventory. Controlled copies and issuer references still require independent human authentication.";
   render(true);return true;
  }catch(_){loaded=false;profiles=[];feedback("Source unavailable; outputs blocked.");return false}
+ finally{
+  loading=false;
+  if(button)button.disabled=false;
+ }
 }
 async function loadVerifiedCases(){
  return await load()?casesUnchecked():[];
