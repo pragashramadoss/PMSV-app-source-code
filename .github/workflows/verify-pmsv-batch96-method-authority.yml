@@ -1,0 +1,23 @@
+name: Verify PMSV Batch96 method authority and LOQ preflight
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch96-method-authority-preflight-2026-10-25.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/pmsv-batch96-method-authority-preflight.test.cjs'
+      - '.github/workflows/verify-pmsv-batch96-method-authority.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  method-source-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify original 175 gate data and source-specific LOQ cautions
+        run: node tests/pmsv-batch96-method-authority-preflight.test.cjs
