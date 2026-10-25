@@ -1,0 +1,32 @@
+name: Verify PMSV Batch103 single verified manufacturer-to-reviewer handoff
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch98-source-authentication-handoff-2026-10-25.js'
+      - 'fssai-product-helper-preview-01/pmsv-batch99-downstream-evidence-dependency-audit-2026-10-25.js'
+      - 'fssai-product-helper-preview-01/pmsv-batch100-independent-review-exception-register-2026-10-25.js'
+      - 'tests/pmsv-batch103-verified-handoff.test.cjs'
+      - '.github/workflows/verify-pmsv-batch103-verified-handoff.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-warm-cold-and-fail-closed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Batch103 warm and cold source-validation tests
+        run: node tests/pmsv-batch103-verified-handoff.test.cjs
+      - name: Batch102 single-pass and tamper regressions
+        run: node tests/pmsv-batch102-single-pass-evidence-guards.test.cjs
+      - name: Batch98–101 regressions
+        run: |
+          node tests/pmsv-batch98-source-handoff.test.cjs
+          node tests/pmsv-batch99-downstream-audit.test.cjs
+          node tests/pmsv-batch100-reviewer-exceptions.test.cjs
+          node tests/pmsv-batch101-reviewer-navigation.test.cjs

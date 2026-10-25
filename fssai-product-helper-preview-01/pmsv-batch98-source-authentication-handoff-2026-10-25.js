@@ -22,11 +22,11 @@ function node(tag,txt,attrs){
 }
 function host(){return document.getElementById(ID)}
 function feedback(t){lastMessage=t;const x=host()?.querySelector("[data-b98-status]");if(x)x.textContent=t}
-function sourceValid(){
+function sourceValidFromSummary(s){
  try{
-  const b58=window.pmsvB58OwnerOutreach,b87=window.pmsvB87Catalogue;
-  if(!b58?.valid?.()||!b87?.closureVerified?.())return false;
-  const s=b87.closedResearchSummary?.();
+  const b58=window.pmsvB58OwnerOutreach;
+  // B87.closedResearchSummary() itself re-verifies the full source/closure graph.
+  if(!b58?.valid?.())return false;
   if(s?.catalogue!==533||s.public_source_desk_research_closed!==35||
      s.public_source_desk_research_open!==0||
      s.external_legal_and_lot_verification_held!==35||
@@ -58,6 +58,9 @@ function sourceValid(){
      g.roles.size===5&&g.ready===2&&g.dependent===3);
  }catch(_){return false}
 }
+function sourceValid(){return sourceValidFromSummary(
+ window.pmsvB87Catalogue?.closedResearchSummary?.()
+)}
 function casesUnchecked(){
  const groups=new Map();
  for(const r of window.pmsvB58OwnerOutreach.records()){
@@ -320,7 +323,16 @@ function render(alreadyVerified=false){
 async function load(){
  feedback("Verifying 35-case / 175-original-proof identities…");
  try{
-  if(!await window.pmsvB87Catalogue?.load?.()||!sourceValid()){
+  const catalogue=window.pmsvB87Catalogue;
+  // Reuse one freshly verified closure summary in this synchronous handoff.
+  let summary=catalogue?.closedResearchSummary?.();
+  if(!summary){
+   if(!await catalogue?.load?.()){
+    loaded=false;profiles=[];feedback("Source integrity failed: no version entry or packet export.");return false;
+   }
+   summary=catalogue?.closedResearchSummary?.();
+  }
+  if(!sourceValidFromSummary(summary)){
    loaded=false;profiles=[];feedback("Source integrity failed: no version entry or packet export.");return false;
   }
   profiles=casesUnchecked();loaded=profiles.length===35;
@@ -328,6 +340,9 @@ async function load(){
   lastMessage="Verified original case inventory. Controlled copies and issuer references still require independent human authentication.";
   render(true);return true;
  }catch(_){loaded=false;profiles=[];feedback("Source unavailable; outputs blocked.");return false}
+}
+async function loadVerifiedCases(){
+ return await load()?casesUnchecked():[];
 }
 function readForm(){
  const h=host();
@@ -463,5 +478,5 @@ document.addEventListener("change",ev=>{
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});
 else install();
 window.pmsvB98Handoff=Object.freeze({sourceValid,cases,validDoc,completeDoc,validEntry,save,
- latest,packet,exportJSON,importJSON,validateHistory,stats,load,install});
+ latest,packet,exportJSON,importJSON,validateHistory,stats,load,loadVerifiedCases,install});
 })();

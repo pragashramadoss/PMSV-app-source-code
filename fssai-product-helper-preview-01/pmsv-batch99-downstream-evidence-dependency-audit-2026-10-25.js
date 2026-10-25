@@ -18,18 +18,12 @@ function el(tag,txt,attrs){
 }
 function host(){return document.getElementById(ID)}
 function say(t){const x=host()?.querySelector("[data-b99-status]");if(x)x.textContent=t}
-function sourceValid(){
+function sourceValidFromCases(b98cases){
  try{
-  const b58=window.pmsvB58OwnerOutreach,b98=window.pmsvB98Handoff,b87=window.pmsvB87Catalogue;
-  // Batch98.cases() independently verifies the same frozen 175 originals,
-  // 35 held identities, source closure and zero releases before returning data.
-  const b98cases=b98?.cases?.();
+  const b58=window.pmsvB58OwnerOutreach;
+  // Caller must pass cases just freshly verified by B98.loadVerifiedCases().
+  // Public sourceValid() never trusts caller-provided cases.
   if(!Array.isArray(b98cases)||b98cases.length!==35)return false;
-  const summary=b87?.closedResearchSummary?.();
-  if(summary?.catalogue!==533||summary.public_source_desk_research_closed!==35||
-    summary.external_legal_and_lot_verification_held!==35||
-    summary.product_releases!==0||summary.signed_product_limits!==0||
-    summary.validated_lab_lot_pass!==0)return false;
   const originals=b58?.records?.();
   if(!Array.isArray(originals)||originals.length!==175)return false;
   const seen=new Set(),groups=new Map(),counts=new Map();
@@ -56,6 +50,9 @@ function sourceValid(){
    ROLES.every(r=>counts.get(r)===35)&&
    [...groups.values()].every(g=>g.roles.size===5&&g.ready===2&&g.blocked===3);
  }catch(_){return false}
+}
+function sourceValid(){
+ return sourceValidFromCases(window.pmsvB98Handoff?.cases?.());
 }
 function rowStatus(r){
  const b98=window.pmsvB98Handoff,v=b98.latest(r.case_id),m=b98.completeDoc(v.manufacturer),
@@ -188,7 +185,8 @@ async function load(){
    Math.floor((Date.now()-started)/1000)+"s elapsed. No approvals or test PASS.");
  },2000):null;
  try{
-  if(!await window.pmsvB98Handoff?.load?.()||!sourceValid()){
+  const verifiedCases=await window.pmsvB98Handoff?.loadVerifiedCases?.();
+  if(!sourceValidFromCases(verifiedCases)){
    ready=false;audit=[];say("Trusted source data unavailable; load the Batch70 extended source panels and retry. 105 review gates stay HELD.");return false;
   }
   audit=rowsUnchecked();
@@ -201,6 +199,9 @@ async function load(){
   loading=false;
   if(button){button.disabled=false;button.textContent="Verify and audit 105 downstream requests";}
  }
+}
+async function loadVerifiedRows(){
+ return await load()?rowsUnchecked():[];
 }
 function openSource(){
  if(!ready||!sourceValid()||!selected)return false;
@@ -275,7 +276,7 @@ document.addEventListener("input",e=>{
  }
 });
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
-window.pmsvB99DownstreamAudit=Object.freeze({sourceValid,rows,rowStatus,count,csv,load,install});
+window.pmsvB99DownstreamAudit=Object.freeze({sourceValid,rows,rowStatus,count,csv,load,loadVerifiedRows,install});
 /* Batch100 is loaded without editing the 900KB preview index or its original source ledger. */
 if(typeof document.createElement==="function"&&document.head?.appendChild&&
    !document.getElementById("pmsv-b100-module")){

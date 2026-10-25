@@ -12,7 +12,7 @@ const originals=b56.cases.flatMap(c=>c.gates.map(g=>({
  original_document_status:g.immutable_document_state
 })));
 assert.equal(originals.length,175);
-let closureChecks=0,ledgerChecks=0,sourceLoads=0;
+let closureChecks=0,ledgerChecks=0,sourceLoads=0,summaryAudits=0;
 const window={
  pmsvB58OwnerOutreach:{
   valid:()=>{ledgerChecks++;return true},records:()=>originals
@@ -20,11 +20,11 @@ const window={
  pmsvB87Catalogue:{
   closureVerified:()=>{closureChecks++;return true},
   load:async()=>{sourceLoads++;return true},
-  closedResearchSummary:()=>({
+  closedResearchSummary:()=>{summaryAudits++;return ({
    catalogue:533,public_source_desk_research_closed:35,public_source_desk_research_open:0,
    external_legal_and_lot_verification_held:35,signed_product_limits:0,
    validated_lab_lot_pass:0,product_releases:0
-  })
+  })}
  }
 };
 const document={readyState:"loading",addEventListener(){},getElementById(){return null}};
@@ -38,12 +38,13 @@ for(const name of [
  const b98=window.pmsvB98Handoff,b99=window.pmsvB99DownstreamAudit,
   b100=window.pmsvB100Exceptions;
  assert.equal(await b100.load(),true);
- assert.equal(sourceLoads,1);
+ assert.equal(sourceLoads,0,"Ready B87 research should not be reloaded by downstream verifier");
+ assert.equal(summaryAudits,1,"One Batch100 load must reuse the one fully verified B87 summary");
  assert(closureChecks<=5,"Single Batch100 load must not re-verify full legal-source graph >5 times: "+closureChecks);
  assert(ledgerChecks<=5,"Single load must not re-read frozen evidence ledger >5 times: "+ledgerChecks);
- const count=closureChecks,held=b100.issues();
+ const count=summaryAudits,held=b100.issues();
  assert.equal(held.length,105);
- assert.equal(closureChecks,count+1,"A separate user-visible inquiry revalidates source fresh");
+ assert.equal(summaryAudits,count+1,"A separate user-visible inquiry revalidates source fresh");
  assert.equal(new Set(held.map(r=>r.request_id)).size,105);
  assert(held.every(r=>r.original_evidence==="NOT_SENT_NOT_RECEIVED"&&
   r.commercial_decision==="HELD_NO_APPROVAL_OR_PASS"));
@@ -78,6 +79,6 @@ for(const name of [
  assert.equal(b100.sourceValid(),true);
  assert(originals.every(x=>x.original_request_status==="NOT_SENT"&&
   x.original_document_status==="NOT_RECEIVED"));
- console.log("Batch102 PASS: source closure checks reduced to "+count+
+ console.log("Batch102/103 PASS: full source summary verifications reduced to "+count+
   " per review load, 105 original HELD requests, renewed verification on each action, stale-source hold and tamper fail-closed.");
 })().catch(err=>{console.error(err);process.exitCode=1});

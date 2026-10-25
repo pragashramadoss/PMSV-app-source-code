@@ -265,15 +265,14 @@ async function load(){
    " · "+elapsed+"s elapsed. No evidence or approval has been transferred.");
  },2000):null;
  try{
-  if(!await window.pmsvB99DownstreamAudit?.load?.()){
+  const checked=await window.pmsvB99DownstreamAudit?.loadVerifiedRows?.();
+  if(!validRows(checked)){
    loaded=false;
    const prior=document.getElementById("pmsv-b99-downstream-audit")
     ?.querySelector("[data-b99-status]")?.textContent?.trim()||"source not ready";
    status("Original source not verified ("+prior.slice(0,160)+
     "). Use the Batch70 extended-research loader, then retry. No issue entry/export.");return false;
   }
-  const checked=verifiedRows();
-  if(!validRows(checked)){loaded=false;status("105 source identities failed post-load reconciliation.");return false}
   loaded=true;render(checked);return true;
  }catch(_){loaded=false;status("Source verification unavailable; no issue review output.");return false}
  finally{if(timer!==null)clearInterval(timer);loading=false;setLoading(false)}
