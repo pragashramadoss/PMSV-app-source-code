@@ -21,15 +21,17 @@ function say(t){const x=host()?.querySelector("[data-b99-status]");if(x)x.textCo
 function sourceValid(){
  try{
   const b58=window.pmsvB58OwnerOutreach,b98=window.pmsvB98Handoff,b87=window.pmsvB87Catalogue;
-  if(!b58?.valid?.()||!b98?.sourceValid?.()||!b87?.closureVerified?.())return false;
-  const summary=b87.closedResearchSummary?.();
+  // Batch98.cases() independently verifies the same frozen 175 originals,
+  // 35 held identities, source closure and zero releases before returning data.
+  const b98cases=b98?.cases?.();
+  if(!Array.isArray(b98cases)||b98cases.length!==35)return false;
+  const summary=b87?.closedResearchSummary?.();
   if(summary?.catalogue!==533||summary.public_source_desk_research_closed!==35||
     summary.external_legal_and_lot_verification_held!==35||
     summary.product_releases!==0||summary.signed_product_limits!==0||
     summary.validated_lab_lot_pass!==0)return false;
-  const originals=b58.records(),b98cases=b98.cases();
-  if(!Array.isArray(originals)||originals.length!==175||
-     !Array.isArray(b98cases)||b98cases.length!==35)return false;
+  const originals=b58?.records?.();
+  if(!Array.isArray(originals)||originals.length!==175)return false;
   const seen=new Set(),groups=new Map(),counts=new Map();
   let prep=0,dependent=0;
   for(const r of originals){
@@ -87,8 +89,7 @@ function rowStatus(r){
   regulatory_handoff:reg,laboratory_handoff:lab,
   original_evidence:"NOT_SENT_NOT_RECEIVED",commercial_decision:"HELD_NO_APPROVAL_OR_PASS"};
 }
-function rows(){
- if(!sourceValid())return[];
+function rowsUnchecked(){
  const all=window.pmsvB58OwnerOutreach.records();
  return all.filter(r=>r.routing==="WAIT_FOR_UPSTREAM_EVIDENCE")
   .map(r=>Object.freeze({
@@ -99,6 +100,7 @@ function rows(){
   }))
   .sort((a,b)=>a.rank-b.rank||ROLES.indexOf(a.role)-ROLES.indexOf(b.role));
 }
+function rows(){return sourceValid()?rowsUnchecked():[]}
 function selection(){
  const needle=q.toLowerCase();
  return audit.filter(r=>(filter==="ALL"||filter===r.role)&&
@@ -120,7 +122,7 @@ function quote(v){
 }
 function csv(){
  if(!ready||!sourceValid())return"";
- audit=rows();
+ audit=rowsUnchecked();
  const keys=["rank","priority","case_id","product","analyte","request_id","role","gate",
   "original_evidence","source_revision","manufacturer_metadata","method_metadata",
   "regulatory_handoff","laboratory_handoff","blocker","dependency","next","commercial_decision"];
@@ -134,9 +136,9 @@ function download(content,filename){
  document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(u),1000);return true;
 }
-function render(){
- if(!ready||!sourceValid())return say("Immutable source verification failed; dashboard and export blocked.");
- audit=rows();
+function render(alreadyVerified=false){
+ if(!ready||(!alreadyVerified&&!sourceValid()))return say("Immutable source verification failed; dashboard and export blocked.");
+ audit=rowsUnchecked();
  if(audit.length!==105||new Set(audit.map(x=>x.request_id)).size!==105)
   return say("105-request reconciliation failed; outputs blocked.");
  const h=host();if(!h)return;
@@ -189,10 +191,10 @@ async function load(){
   if(!await window.pmsvB98Handoff?.load?.()||!sourceValid()){
    ready=false;audit=[];say("Trusted source data unavailable; load the Batch70 extended source panels and retry. 105 review gates stay HELD.");return false;
   }
-  audit=rows();
+  audit=rowsUnchecked();
   ready=audit.length===105&&new Set(audit.map(x=>x.request_id)).size===105;
   if(!ready){say("Original 105 request integrity failed.");return false}
-  render();return true;
+  render(true);return true;
  }catch(_){ready=false;audit=[];say("Source verification failed; no export.");return false}
  finally{
   if(timer!==null)clearInterval(timer);

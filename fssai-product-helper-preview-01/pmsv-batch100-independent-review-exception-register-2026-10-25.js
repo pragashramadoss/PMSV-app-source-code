@@ -23,19 +23,20 @@ function n(tag,txt,attrs){
 function host(){return document.getElementById(ID)}
 function status(t){message=t;const h=host();const el=h?.querySelector("[data-b100-status]");if(el)el.textContent=t}
 function originalRows(){
- const b=window.pmsvB99DownstreamAudit;
- return b?.sourceValid?.()?b.rows():[];
+ // Batch99.rows() does its own strict source validation; no duplicate precheck.
+ return window.pmsvB99DownstreamAudit?.rows?.()||[];
 }
-function sourceValid(){
- try{
-  const a=originalRows();
-  return a.length===105&&new Set(a.map(x=>x.request_id)).size===105&&
-    a.every(r=>ROLES.includes(r.role)&&r.original_evidence==="NOT_SENT_NOT_RECEIVED"&&
-      r.commercial_decision==="HELD_NO_APPROVAL_OR_PASS")&&
-    ROLES.every(role=>a.filter(r=>r.role===role).length===35);
- }catch(_){return false}
+function validRows(a){
+ return Array.isArray(a)&&a.length===105&&new Set(a.map(x=>x.request_id)).size===105&&
+  a.every(r=>ROLES.includes(r.role)&&r.original_evidence==="NOT_SENT_NOT_RECEIVED"&&
+   r.commercial_decision==="HELD_NO_APPROVAL_OR_PASS")&&
+  ROLES.every(role=>a.filter(r=>r.role===role).length===35);
 }
-function request(id){return originalRows().find(r=>r.request_id===id)}
+function verifiedRows(){
+ try{const a=originalRows();return validRows(a)?a:[]}catch(_){return[]}
+}
+function sourceValid(){return verifiedRows().length===105}
+function request(id,prechecked){return (prechecked||verifiedRows()).find(r=>r.request_id===id)}
 function docTuple(d){
  return [d.ref||"",d.version||"",d.issue_date||"",d.sha256||"",d.origin_check_ref||""];
 }
@@ -75,9 +76,8 @@ function validInput(x){
 }
 function latest(id){const h=histories.get(id)||[];return h[h.length-1]||null}
 function stale(r,x){return !!x&&x.source_snapshot!==snapshot(r)}
-function issues(){
- if(!loaded||!sourceValid())return[];
- return originalRows().map(r=>{
+function issuesUnchecked(list){
+ return list.map(r=>{
   const last=latest(r.request_id);
   return Object.freeze({...r,issue_revision:last?.entry_revision||0,
    issue_code:last?.issue_code||"NOT_RECORDED",
@@ -89,6 +89,7 @@ function issues(){
    commercial_decision:"HELD_NO_APPROVAL_OR_PASS"});
  });
 }
+function issues(){return loaded?issuesUnchecked(verifiedRows()):[]}
 function summary(){
  const a=issues();return{held:a.length,recorded:a.filter(x=>x.issue_revision>0).length,
   stale:a.filter(x=>x.source_binding==="STALE_RECHECK_REQUIRED").length,
@@ -97,8 +98,9 @@ function summary(){
   qa:a.filter(x=>x.role===ROLES[2]).length,approved:0};
 }
 function save(id,x,acknowledgeNewSource){
- if(!loaded||!sourceValid())return{ok:false,error:"Original 105-gate evidence integrity not verified"};
- const r=request(id),prev=latest(id);
+ const checked=loaded?verifiedRows():[];
+ if(!validRows(checked))return{ok:false,error:"Original 105-gate evidence integrity not verified"};
+ const r=request(id,checked),prev=latest(id);
  if(!r)return{ok:false,error:"Unknown original independent review request"};
  if(!validInput(x))return{ok:false,error:"Issue type, unresolved state or limited reference/action text invalid"};
  if(prev&&stale(r,prev)&&acknowledgeNewSource!==true)
@@ -114,7 +116,7 @@ function save(id,x,acknowledgeNewSource){
  if(prev&&!stale(r,prev)&&FIELDS.every(k=>prev[k]===x[k]))
   return{ok:true,unchanged:true,revision:prev.entry_revision};
  histories.set(id,[...(histories.get(id)||[]),entry]);
- render();
+ render(checked);
  status("Saved unresolved local issue revision "+rev+
   ". Original source remains NOT RECEIVED; no independent approval or release inferred.");
  return{ok:true,revision:rev,reanchored:!!prev&&prev.source_snapshot!==entry.source_snapshot};
@@ -127,8 +129,8 @@ function validEntry(x,r,i){
   validSnapshot(x.source_snapshot,r.role)&&validInput(Object.fromEntries(FIELDS.map(k=>[k,x[k]])));
 }
 function exportJSON(){
- if(!loaded||!sourceValid())return"";
- const a=originalRows();
+ const a=loaded?verifiedRows():[];
+ if(!validRows(a))return"";
  return JSON.stringify({
   kind:KIND,original_status:"105_DEPENDENT_HELD_35_CASES_NO_APPROVAL",
   exported_at:new Date().toISOString().slice(0,10),
@@ -137,11 +139,12 @@ function exportJSON(){
  },null,2)+"\n";
 }
 function importJSON(raw){
- if(!loaded||!sourceValid())return{ok:false,error:"Trusted source unavailable"};
+ const original=loaded?verifiedRows():[];
+ if(!validRows(original))return{ok:false,error:"Trusted source unavailable"};
  try{
   if(typeof raw!=="string"||raw.length>400000)throw Error("Oversized or invalid issue manifest");
   if(histories.size)throw Error("Existing local entries present; export them first and reload before importing");
-  const doc=JSON.parse(raw),original=originalRows(),ids=new Map(original.map(r=>[r.request_id,r]));
+  const doc=JSON.parse(raw),ids=new Map(original.map(r=>[r.request_id,r]));
   if(doc?.kind!==KIND||
     doc.original_status!=="105_DEPENDENT_HELD_35_CASES_NO_APPROVAL"||
     !isDate(doc.exported_at)||!doc.exported_at||
@@ -166,7 +169,7 @@ function importJSON(raw){
     throw Error("Issue history changed or invalid request/role/source");
    next.set(block.request_id,block.entries.map(x=>Object.freeze(x)));
   }
-  histories=next;render();
+  histories=next;render(original);
   status("Imported "+next.size+" local issue histories; all original evidence and commercial decisions remain HELD.");
   return{ok:true,requests:next.size};
  }catch(e){
@@ -181,11 +184,12 @@ function q(v){
  return '"'+s.replace(/"/g,'""')+'"';
 }
 function exportCSV(){
- if(!loaded||!sourceValid())return"";
+ const checked=loaded?verifiedRows():[];
+ if(!validRows(checked))return"";
  const names=["rank","priority","case_id","product","analyte","request_id","role",
   "issue_revision","issue_code","issue_stage","issue_criticality",
   "ticket_ref","next_action","review_by","source_binding","commercial_decision"];
- return [names,...issues().map(r=>names.map(k=>r[k]))]
+ return [names,...issuesUnchecked(checked).map(r=>names.map(k=>r[k]))]
   .map(a=>a.map(q).join(",")).join("\r\n")+"\r\n";
 }
 function download(s,name,type){
@@ -194,17 +198,21 @@ function download(s,name,type){
  const a=n("a",undefined,{href:url,download:name});document.body.appendChild(a);
  a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);return true;
 }
-function render(){
- if(!loaded||!sourceValid())return status("Original source integrity failed; Batch100 unavailable.");
+function render(prechecked){
+ const list=prechecked|| (loaded?verifiedRows():[]);
+ if(!loaded||!validRows(list))return status("Original source integrity failed; Batch100 unavailable.");
  const h=host();if(!h)return;
- const list=originalRows(),old=chosen;
+ const old=chosen;
  const pick=h.querySelector("[data-b100-case]");
  pick.replaceChildren();
  for(const r of list)pick.appendChild(n("option","#"+r.rank+" · "+r.product+
   " · "+(r.role===ROLES[0]?"Regulatory":r.role===ROLES[1]?"Laboratory":"QA"),{value:r.request_id}));
  if(!list.some(r=>r.request_id===old))chosen=list[0].request_id;
  pick.value=chosen;
- const r=request(chosen),x=latest(chosen),s=summary(),gap=window.pmsvB99DownstreamAudit.rowStatus(r);
+ const r=request(chosen,list),x=latest(chosen),allIssues=issuesUnchecked(list);
+ const s={held:list.length,recorded:allIssues.filter(y=>y.issue_revision>0).length,
+  stale:allIssues.filter(y=>y.source_binding==="STALE_RECHECK_REQUIRED").length},
+  gap=window.pmsvB99DownstreamAudit.rowStatus(r);
  h.querySelector("[data-b100-counts]").textContent=
   "105 HELD original requests · "+s.recorded+" local issue records · "+s.stale+
   " stale source-bound issues · 35 Regulatory / 35 Laboratory / 35 QA · 0 approved.";
@@ -257,14 +265,16 @@ async function load(){
    " · "+elapsed+"s elapsed. No evidence or approval has been transferred.");
  },2000):null;
  try{
-  if(!await window.pmsvB99DownstreamAudit?.load?.()||!sourceValid()){
+  if(!await window.pmsvB99DownstreamAudit?.load?.()){
    loaded=false;
    const prior=document.getElementById("pmsv-b99-downstream-audit")
     ?.querySelector("[data-b99-status]")?.textContent?.trim()||"source not ready";
    status("Original source not verified ("+prior.slice(0,160)+
     "). Use the Batch70 extended-research loader, then retry. No issue entry/export.");return false;
   }
-  loaded=true;render();return true;
+  const checked=verifiedRows();
+  if(!validRows(checked)){loaded=false;status("105 source identities failed post-load reconciliation.");return false}
+  loaded=true;render(checked);return true;
  }catch(_){loaded=false;status("Source verification unavailable; no issue review output.");return false}
  finally{if(timer!==null)clearInterval(timer);loading=false;setLoading(false)}
 }
@@ -316,7 +326,7 @@ function install(){
 document.addEventListener("click",e=>{
  const b=e.target?.closest?.("#"+ID+" button");if(!b)return;
  if(b.hasAttribute("data-b100-load")){void load();return}
- if(!loaded||!sourceValid())return status("Load and verify original evidence first.");
+ if(!loaded)return status("Load and verify original evidence first.");
  if(b.hasAttribute("data-b100-save")||b.hasAttribute("data-b100-new-revision")){
   const result=save(chosen,form(),b.hasAttribute("data-b100-new-revision"));
   if(!result.ok)status("Issue NOT saved: "+result.error);

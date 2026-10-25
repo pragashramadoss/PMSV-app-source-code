@@ -58,8 +58,7 @@ function sourceValid(){
      g.roles.size===5&&g.ready===2&&g.dependent===3);
  }catch(_){return false}
 }
-function cases(){
- if(!sourceValid())return [];
+function casesUnchecked(){
  const groups=new Map();
  for(const r of window.pmsvB58OwnerOutreach.records()){
   let g=groups.get(r.case_id);
@@ -76,6 +75,7 @@ function cases(){
   Object.freeze(c.requests);return Object.freeze(c);
  });
 }
+function cases(){return sourceValid()?casesUnchecked():[]}
 function emptyDoc(){return{ref:"",version:"",issue_date:"",sha256:"",origin_check_ref:""}}
 function emptyHandoff(){return{state:"NOT_PREPARED",reference:"",date:""}}
 function emptyEntry(){return{manufacturer:emptyDoc(),method:emptyDoc(),
@@ -154,7 +154,7 @@ function save(id,input){
  const versions=history.get(id)||[];
  if(versions.length>=20)return{ok:false,error:"Maximum 20 local revisions per case; export archive first"};
  history.set(id,[...versions,Object.freeze(next)]);
- render();
+ render(true);
  const message=next.revision_reset?
   "Source revision changed: both reviewer handoffs RESET to NOT PREPARED. Older revisions retained in exported history.":
   "Saved local revision "+next.revision+". Metadata and checks remain SELF-REPORTED and UNAUTHENTICATED.";
@@ -250,7 +250,7 @@ function importJSON(raw){
    if(c.versions.length)next.set(c.id,c.versions.map(v=>Object.freeze(v)));
   }
   if(seen.size!==35)throw Error("Incomplete case inventory");
-  history=next;render();
+  history=next;render(true);
   feedback("Imported "+next.size+" cases with locally recorded revisions. No original document, authentication or approval was imported.");
   return{ok:true,cases:next.size};
  }catch(err){
@@ -266,8 +266,8 @@ function saveDownload(text,filename,mime){
  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
  return true;
 }
-function stats(){
- if(!loaded||!sourceValid())return{revised:0,reg:0,lab:0};
+function stats(alreadyVerified=false){
+ if(!loaded||(!alreadyVerified&&!sourceValid()))return{revised:0,reg:0,lab:0};
  let revised=0,reg=0,lab=0;
  for(const c of profiles){
   const x=latest(c.id);if(x.revision)revised++;
@@ -276,15 +276,15 @@ function stats(){
  }
  return{revised,reg,lab};
 }
-function render(){
- if(!loaded||!sourceValid())return feedback("Source verification failed; edits and handoffs blocked.");
+function render(alreadyVerified=false){
+ if(!loaded||(!alreadyVerified&&!sourceValid()))return feedback("Source verification failed; edits and handoffs blocked.");
  const h=host();if(!h)return;
  const pick=h.querySelector("[data-b98-case]");pick.replaceChildren();
  for(const c of profiles)pick.appendChild(node("option",
   "#"+c.rank+" "+c.priority+" · "+c.product+" / "+c.analyte,{value:c.id}));
  if(!profiles.some(c=>c.id===selected))selected=profiles[0].id;
  pick.value=selected;
- const c=profiles.find(x=>x.id===selected),v=latest(selected),s=stats();
+ const c=profiles.find(x=>x.id===selected),v=latest(selected),s=stats(true);
  h.querySelector("[data-b98-counts]").textContent=
   "35 HELD cases · "+s.revised+" locally revised · "+s.reg+
   " Regulatory handoffs noted · "+s.lab+" Laboratory handoffs noted · 0 actual signed approvals.";
@@ -323,10 +323,10 @@ async function load(){
   if(!await window.pmsvB87Catalogue?.load?.()||!sourceValid()){
    loaded=false;profiles=[];feedback("Source integrity failed: no version entry or packet export.");return false;
   }
-  profiles=cases();loaded=profiles.length===35;
+  profiles=casesUnchecked();loaded=profiles.length===35;
   if(!loaded){feedback("Case reconciliation failed.");return false}
   lastMessage="Verified original case inventory. Controlled copies and issuer references still require independent human authentication.";
-  render();return true;
+  render(true);return true;
  }catch(_){loaded=false;profiles=[];feedback("Source unavailable; outputs blocked.");return false}
 }
 function readForm(){
