@@ -320,6 +320,29 @@ function render(alreadyVerified=false){
    "Laboratory handoff draft blocked until both manufacturer and method-authority metadata and external origin-check references are complete.";
  feedback(lastMessage||"Metadata-only in-memory review. Document hashes are byte fingerprints, not proof of issuer authenticity.");
 }
+/* Batch105: a cold browser can still be validating the B22 core when a
+ * reviewer requests the downstream 35-case handoff. Wait only for the
+ * existing verified core state, never bypass it or infer source approval. */
+async function waitForCoreValidation(){
+ const core=window.pmsvB70ExtendedResearch;
+ if(!core?.getState)return true; // B87 still independently enforces core/source integrity.
+ for(let elapsed=0;elapsed<=60;elapsed++){
+  let state;
+  try{state=core.getState()?.core}catch(_){state="UNAVAILABLE"}
+  if(state==="READY")return true;
+  if(!["WAITING","RUNNING","NOT_STARTED"].includes(state)){
+   feedback("Core FSSAI validation "+String(state||"UNAVAILABLE")+
+    "; original evidence handoff blocked. No approvals.");
+   return false;
+  }
+  if(elapsed===60)break;
+  feedback("Core FSSAI validation "+state+" ("+elapsed+
+   "s); waiting before original-source handoff. All 175 requests remain NOT RECEIVED.");
+  await new Promise(resolve=>setTimeout(resolve,1000));
+ }
+ feedback("Core FSSAI validation not READY after 60s; no reviewer handoff. Retry after core READY.");
+ return false;
+}
 async function load(){
  if(loading)return false;
  loading=true;
@@ -333,6 +356,9 @@ async function load(){
   // Reuse one freshly verified closure summary in this synchronous handoff.
   let summary=catalogue?.closedResearchSummary?.();
   if(!summary){
+   if(!await waitForCoreValidation()){
+    loaded=false;profiles=[];return false;
+   }
    if(!await catalogue?.load?.()){
     loaded=false;profiles=[];feedback("Source integrity failed: no version entry or packet export.");return false;
    }

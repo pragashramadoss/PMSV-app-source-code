@@ -245,7 +245,9 @@ function form(){
 let loading=false;
 function currentSourceStep(){
  const panel=document.getElementById("pmsv-b70-startup-gates");
- const step=panel?.querySelector("[data-pmsv-b70-state]")?.textContent?.trim()||
+ const core=panel?.querySelector("[data-pmsv-b70-core]")?.textContent?.trim();
+ const step=core&&core!=="READY"?"Core FSSAI source validation "+core+"; reviewer handoff waiting":
+  panel?.querySelector("[data-pmsv-b70-state]")?.textContent?.trim()||
   "upstream research checks are still in progress";
  return step.slice(0,180);
 }

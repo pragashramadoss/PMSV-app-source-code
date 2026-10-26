@@ -179,7 +179,9 @@ async function load(){
  say("Verifying 35 source cases and 105 downstream original request IDs. Extended research may take time; commercial decisions remain HELD.");
  const timer=typeof setInterval==="function"?setInterval(()=>{
   const p=document.getElementById("pmsv-b70-startup-gates");
-  const step=p?.querySelector("[data-pmsv-b70-state]")?.textContent?.trim()||
+  const core=p?.querySelector("[data-pmsv-b70-core]")?.textContent?.trim();
+  const step=core&&core!=="READY"?"Core FSSAI source validation "+core+"; reviewer handoff waiting":
+   p?.querySelector("[data-pmsv-b70-state]")?.textContent?.trim()||
    "official-source prerequisites in progress";
   say("Verifying upstream sources: "+step.slice(0,140)+" · "+
    Math.floor((Date.now()-started)/1000)+"s elapsed. No approvals or test PASS.");

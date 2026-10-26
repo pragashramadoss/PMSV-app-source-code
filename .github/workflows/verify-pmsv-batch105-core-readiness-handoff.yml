@@ -1,0 +1,33 @@
+name: Verify PMSV Batch105 bounded cold-core evidence reviewer handoff
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch98-source-authentication-handoff-2026-10-25.js'
+      - 'fssai-product-helper-preview-01/pmsv-batch99-downstream-evidence-dependency-audit-2026-10-25.js'
+      - 'fssai-product-helper-preview-01/pmsv-batch100-independent-review-exception-register-2026-10-25.js'
+      - 'tests/pmsv-batch105-core-readiness-handoff.test.cjs'
+      - '.github/workflows/verify-pmsv-batch105-core-readiness-handoff.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  core-readiness-reviewer-handoff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Cold core RUNNING to READY, blocked state and timeout
+        run: node tests/pmsv-batch105-core-readiness-handoff.test.cjs
+      - name: Recheck original 35, 175 and 105 source integrity gates
+        run: |
+          node tests/pmsv-batch104-event-dispatch-yield.test.cjs
+          node tests/pmsv-batch103-verified-handoff.test.cjs
+          node tests/pmsv-batch102-single-pass-evidence-guards.test.cjs
+          node tests/pmsv-batch101-reviewer-navigation.test.cjs
+          node tests/pmsv-batch100-reviewer-exceptions.test.cjs
+          node tests/pmsv-batch99-downstream-audit.test.cjs
+          node tests/pmsv-batch98-source-handoff.test.cjs
