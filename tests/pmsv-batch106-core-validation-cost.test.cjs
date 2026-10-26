@@ -69,7 +69,7 @@ b22Checks=0;
  assert.equal(b22.pmsvB22StartupState,"READY");
  assert.equal(proofLoads,0,"Already valid upstream data needs no reload");
  assert.equal(b22Checks,2,"Startup checks prior valid source and one final source decision, not a repeated sync graph");
- assert.equal(b22Refreshes,2);
+ assert.equal(b22Refreshes,3,"One refresh each for public sync, direct B20 action and startup");
  const stats=vm.runInContext("pmsvB22Stats",b22);
  assert(Number.isFinite(stats.core_start_ms)&&stats.core_start_ms>=0);
  assert(Number.isFinite(stats.core_proof_ms)&&stats.core_proof_ms>=0);
