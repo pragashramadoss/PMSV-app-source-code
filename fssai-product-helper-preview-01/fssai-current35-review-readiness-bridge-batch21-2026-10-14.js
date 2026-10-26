@@ -75,12 +75,17 @@ function pmsvB21Assess(id,form,received,risk){
  issues:challenge,source_url_direct_ctr:ctrDirect,
  next_action:next,documentary_approved:false,legal_source_approved:false,lab_pass:false};
 }
-function pmsvB21All(){
- if(!pmsvB21Valid())return [];
+/* Reuse a freshly passed B21 gate only within the same synchronous render.
+ * Standalone public inquiries remain independently source-verified. */
+function pmsvB21AllVerified(){
  const forms=pmsvB14Read(),records=pmsvB5Read(),audit=pmsvB20All();
  const byAudit=new Map(audit.map(x=>[x.id,x]));
  return pmsvB21Data.cases.map(x=>pmsvB21Assess(x.catalog_id,forms[x.catalog_id],
  records[x.catalog_id]?.received,byAudit.get(x.catalog_id)));
+}
+function pmsvB21All(){
+ if(!pmsvB21Valid())return [];
+ return pmsvB21AllVerified();
 }
 const pmsvB21Rank={ARTICLE_SCOPE_REVIEW_REQUIRED:0,REVIEW_PACKET_PREPARED_UNVERIFIED:1,EVIDENCE_INCOMPLETE:2,NOT_STARTED:3};
 function pmsvB21Sorted(all){
@@ -107,7 +112,7 @@ function pmsvB21TableRows(rows){
 }
 function pmsvB21DashboardHtml(){
  if(!pmsvB21Valid())return "";
- const all=pmsvB21All(),stats=pmsvB21Stats(all),visible=pmsvB21Filtered(pmsvB21Sorted(all));
+ const all=pmsvB21AllVerified(),stats=pmsvB21Stats(all),visible=pmsvB21Filtered(pmsvB21Sorted(all));
  return '<details class="card" id="pmsv-b21-readiness" style="margin-bottom:12px">'+
  '<summary><b>Batch21 · prioritize 35 actual legal-source evidence drafts</b></summary>'+
  '<div class="notice"><b>35 exact legal sources still pending.</b> Draft readiness never means regulatory article approved, numerics applied or lot passed. 3 prior conditional + 8 named research-only hypotheses, 24 without additional named hypotheses.</div>'+
@@ -127,7 +132,7 @@ function pmsvB21Refresh(){
  const host=document.getElementById("pmsv-b14-review-index")||document.getElementById("selectedProductStandardContent");
  if(!host)return;
  if(!root){host.insertAdjacentHTML("beforebegin",pmsvB21DashboardHtml());return}
- const all=pmsvB21All(),s=pmsvB21Stats(all),shown=pmsvB21Filtered(pmsvB21Sorted(all));
+ const all=pmsvB21AllVerified(),s=pmsvB21Stats(all),shown=pmsvB21Filtered(pmsvB21Sorted(all));
  const stats=root.querySelector("[data-pmsv-b21-stats]"),body=root.querySelector("[data-pmsv-b21-rows]"),
  count=root.querySelector("[data-pmsv-b21-found]");
  if(stats)stats.textContent=s.ARTICLE_SCOPE_REVIEW_REQUIRED+" source challenges · "+s.REVIEW_PACKET_PREPARED_UNVERIFIED+" prepared but unverified · "+s.EVIDENCE_INCOMPLETE+" incomplete · "+s.NOT_STARTED+" not started";

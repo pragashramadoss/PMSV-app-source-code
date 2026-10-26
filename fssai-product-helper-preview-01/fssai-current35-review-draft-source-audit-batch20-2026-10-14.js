@@ -49,8 +49,9 @@ function pmsvB20Valid(){
  }
  return checked===35&&knownRules.size===13;
 }
-function pmsvB20Analyze(id,form,receipts){
- if(!pmsvB20Valid())return null;
+/* Internal path for one already validated, synchronous B20 operation.
+ * External pmsvB20Analyze still checks the complete original source graph. */
+function pmsvB20AnalyzeVerified(id,form,receipts){
  const p=pmsvB20Data.cases.find(c=>c.catalog_id===id);if(!p)return null;
  const f=form||{},article=String(f.source_article||"").trim(),analyte=String(f.analyte||"").trim();
  const url=String(f.source_url||"").trim(),identity=String(f.finished_identity||"").trim();
@@ -80,11 +81,18 @@ function pmsvB20Analyze(id,form,receipts){
   issues.length||receiptCount<4?"INCOMPLETE_DRAFT":"DOCUMENTARY_DRAFT_UNVERIFIED";
  return {id,product_name:p.product_name,status,issues,receipts:receiptCount,legal_approval:false,lab_pass:false};
 }
-function pmsvB20All(){
- if(!pmsvB20Valid())return [];
+function pmsvB20Analyze(id,form,receipts){
+ if(!pmsvB20Valid())return null;
+ return pmsvB20AnalyzeVerified(id,form,receipts);
+}
+function pmsvB20AllVerified(){
  const entries=typeof pmsvB14Read==="function"?pmsvB14Read():{};
  const receipt=typeof pmsvB5Read==="function"?pmsvB5Read():{};
- return pmsvB20Data.cases.map(x=>pmsvB20Analyze(x.catalog_id,entries[x.catalog_id],receipt[x.catalog_id]?.received));
+ return pmsvB20Data.cases.map(x=>pmsvB20AnalyzeVerified(x.catalog_id,entries[x.catalog_id],receipt[x.catalog_id]?.received));
+}
+function pmsvB20All(){
+ if(!pmsvB20Valid())return [];
+ return pmsvB20AllVerified();
 }
 function pmsvB20Csv(rows){
  const q=x=>'"'+String(x??"").replaceAll('"','""').replace(/[\r\n]+/g," ")+'"';
@@ -93,7 +101,7 @@ function pmsvB20Csv(rows){
 }
 function pmsvB20Render(){
  if(!pmsvB20Valid())return "";
- const e=pmsvB14Esc,arr=pmsvB20All(),stats={NOT_STARTED:0,INCOMPLETE_DRAFT:0,NEEDS_ARTICLE_CHALLENGE_REVIEW:0,DOCUMENTARY_DRAFT_UNVERIFIED:0};
+ const e=pmsvB14Esc,arr=pmsvB20AllVerified(),stats={NOT_STARTED:0,INCOMPLETE_DRAFT:0,NEEDS_ARTICLE_CHALLENGE_REVIEW:0,DOCUMENTARY_DRAFT_UNVERIFIED:0};
  for(const x of arr)stats[x.status]++;
  return '<details class="card" id="pmsv-b20-audit" style="margin-bottom:12px">'+
  '<summary><b>Batch20 · audit actual first-source reviewer drafts</b> — '+stats.NEEDS_ARTICLE_CHALLENGE_REVIEW+' flagged</summary>'+

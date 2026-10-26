@@ -2,7 +2,7 @@
 /* PMSV Batch22: preserve live review controls and sync browser-local drafts.
  * Reviewer content stays on device; nothing grants a legal source or lab PASS.
  */
-const pmsvB22Stats={syncs:0,refreshes:0,lastError:""};
+const pmsvB22Stats={syncs:0,refreshes:0,lastError:"",core_start_ms:null,core_proof_ms:null};
 function pmsvB22Ready(){
  return typeof pmsvB21Valid==="function"&&pmsvB21Valid()&&
  typeof pmsvB20Render==="function"&&typeof pmsvB21Refresh==="function"&&
@@ -10,8 +10,10 @@ function pmsvB22Ready(){
 }
 /* Update only audit summary, counts and rows; NEVER replace an opened
  * <details> element during a keystroke in the evidence form. */
-pmsvB20Ensure=function(){
- if(typeof document==="undefined"||!pmsvB22Ready())return;
+/* Batch106: an already verified single operation may perform its audit DOM
+ * refresh without repeating the whole B14-B21 validation for each substep. */
+function pmsvB22RenderAuditVerified(){
+ if(typeof document==="undefined")return;
  const host=document.getElementById("pmsv-b14-review-index")||
             document.getElementById("selectedProductStandardContent");
  if(!host)return;
@@ -37,17 +39,25 @@ pmsvB20Ensure=function(){
   if(oldRows&&newRows)oldRows.innerHTML=newRows.innerHTML;
  }
  pmsvB22Stats.refreshes++;
- pmsvB21Refresh();
- pmsvB22EnsureControl();
-};
-function pmsvB22EnsureControl(){
- if(typeof document==="undefined"||!pmsvB22Ready())return;
+}
+function pmsvB22EnsureControlVerified(){
  const panel=document.getElementById("pmsv-b21-readiness");
  if(!panel||panel.querySelector("[data-pmsv-b22-recheck]"))return;
  const exportBtn=panel.querySelector("[data-pmsv-b21-export]");
  if(exportBtn)exportBtn.insertAdjacentHTML("afterend",
   ' <button type="button" class="secondary-btn" data-pmsv-b22-recheck>'+
   'Recheck saved evidence</button>');
+}
+/* Public event handlers and explicit refresh actions always revalidate. */
+pmsvB20Ensure=function(){
+ if(typeof document==="undefined"||!pmsvB22Ready())return;
+ pmsvB22RenderAuditVerified();
+ pmsvB21Refresh();
+ pmsvB22EnsureControlVerified();
+};
+function pmsvB22EnsureControl(){
+ if(typeof document==="undefined"||!pmsvB22Ready())return;
+ pmsvB22EnsureControlVerified();
 }
 function pmsvB22AnnounceOtherTab(){
  const b14=document.getElementById("pmsv-b14-review-index");
@@ -58,12 +68,15 @@ function pmsvB22AnnounceOtherTab(){
   'Review drafts were updated in another tab. The audit was refreshed; reload this evidence form to view those edits. '+
   '<button type="button" data-pmsv-b22-reload>Reload this form</button></p>');
 }
-function pmsvB22Sync(){
- if(!pmsvB22Ready())return false;
+function pmsvB22SyncVerified(){
  try{
-  pmsvB20Ensure();pmsvB21Refresh();pmsvB22EnsureControl();
+  pmsvB22RenderAuditVerified();pmsvB21Refresh();pmsvB22EnsureControlVerified();
   pmsvB22Stats.syncs++;return true;
  }catch(e){pmsvB22Stats.lastError=String(e?.message||e);return false}
+}
+function pmsvB22Sync(){
+ if(!pmsvB22Ready())return false;
+ return pmsvB22SyncVerified();
 }
 function pmsvB22ReloadForm(){
  if(!pmsvB22Ready()||typeof document==="undefined")return false;
@@ -89,16 +102,24 @@ var pmsvB22StartupState="WAITING";
 async function pmsvB22AfterStartup(){
  if(pmsvB22StartupState!=="WAITING")return;
  pmsvB22StartupState="RUNNING";
+ const started=Date.now();
  try{
   if(typeof pmsvContaminantsLoadPromise!=="undefined")await pmsvContaminantsLoadPromise;
+  const proofStarted=Date.now();
   if(typeof pmsvB21Valid==="function"&&!pmsvB21Valid()){
    await pmsvB22CoreProofLoader();
   }
-  pmsvB22StartupState=pmsvB22Ready()?"READY":"INTEGRITY_BLOCKED";
-  pmsvB22Sync();
+  pmsvB22Stats.core_proof_ms=Date.now()-proofStarted;
+  // One complete core integrity decision; the ensuing synchronous DOM
+  // refresh consumes that same decision instead of re-entering it.
+  const coreReady=pmsvB22Ready();
+  pmsvB22StartupState=coreReady?"READY":"INTEGRITY_BLOCKED";
+  if(coreReady)pmsvB22SyncVerified();
  }catch(error){
   pmsvB22Stats.lastError=String(error?.message||error);
   pmsvB22StartupState="INTEGRITY_BLOCKED";
+ }finally{
+  pmsvB22Stats.core_start_ms=Date.now()-started;
  }
 }
 if(typeof document!=="undefined"&&document.addEventListener){
