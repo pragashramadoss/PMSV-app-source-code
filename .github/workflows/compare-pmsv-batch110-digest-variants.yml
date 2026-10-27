@@ -1,0 +1,38 @@
+name: Compare PMSV Batch110 digest variants on same runner
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'tests/pmsv-batch110-same-runner-ab.test.cjs'
+      - '.github/workflows/compare-pmsv-batch110-digest-variants.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mobile-digest-comparison:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Safety and syntax
+        run: |
+          node --check tests/pmsv-batch110-same-runner-ab.test.cjs
+          node --test tests/pmsv-batch110-snapshot-string-cache.test.cjs
+      - name: Compare baseline and exact-cache at 1x and 4x CPU
+        run: node tests/pmsv-batch110-same-runner-ab.test.cjs
+        timeout-minutes: 12
+      - name: Retain raw paired timings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmsv-batch110-same-runner-AB
+          path: pmsv-batch110-same-runner-ab.json
+          if-no-files-found: ignore
+          retention-days: 14
