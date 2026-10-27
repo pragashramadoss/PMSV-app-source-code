@@ -47,10 +47,6 @@ async function measure(browser,variant,rate){
     return pmsvReviewSnapshotDigest(cloned)!==pmsvReviewSnapshotDigests.ledger&&
            pmsvReviewSnapshotIntact("ledger",cloned)===false;
    })(),
-   memo_hits:typeof pmsvWeakDigestHits==="undefined"?null:pmsvWeakDigestHits,
-   memo_misses:typeof pmsvWeakDigestMisses==="undefined"?null:pmsvWeakDigestMisses,
-   memo_invalidations:typeof pmsvWeakDigestInvalidations==="undefined"?null:
-     pmsvWeakDigestInvalidations,
    same_object_changed_rejected:(()=>{
     const cloned=structuredClone(pmsvCurrent533SourceLedger);
     const initiallyCorrect=pmsvReviewSnapshotDigest(cloned)===pmsvReviewSnapshotDigests.ledger;
@@ -62,7 +58,11 @@ async function measure(browser,variant,rate){
     const restored=pmsvReviewSnapshotDigest(cloned)===pmsvReviewSnapshotDigests.ledger&&
       pmsvReviewSnapshotIntact("ledger",cloned)===true;
     return initiallyCorrect&&invalid&&restored;
-   })()
+   })(),
+   memo_hits:typeof pmsvWeakDigestHits==="undefined"?null:pmsvWeakDigestHits,
+   memo_misses:typeof pmsvWeakDigestMisses==="undefined"?null:pmsvWeakDigestMisses,
+   memo_invalidations:typeof pmsvWeakDigestInvalidations==="undefined"?null:
+     pmsvWeakDigestInvalidations
   }));
   assert.equal(result.core,"READY");
   assert.equal(result.visible,"READY");assert.equal(result.cases,35);
