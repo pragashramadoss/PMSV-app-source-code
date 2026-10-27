@@ -790,9 +790,12 @@ const pmsvReviewSnapshotDigests=Object.freeze({
  work:'59abdc38eeafd59f',
  branches:'dbfcd1896fe71720'
 });
-function pmsvReviewSnapshotDigest(x){
- const s=JSON.stringify(x);
- if(typeof s!=='string')return '';
+/* Batch110: a three-kind content-exact cache. Every inquiry still
+ * serializes the complete current source. A changed field, row order or
+ * document forces a new full fingerprint before it can return true.
+ * This is an integrity fingerprint, not a digital signature. */
+const pmsvReviewSnapshotCache=new Map();
+function pmsvReviewSnapshotHashSerialized(s){
  let a=0x811c9dc5,b=0x9747b28c;
  for(let i=0;i<s.length;i++){
   const ch=s.charCodeAt(i);
@@ -802,10 +805,22 @@ function pmsvReviewSnapshotDigest(x){
  return (a>>>0).toString(16).padStart(8,'0')+
    (b>>>0).toString(16).padStart(8,'0');
 }
+function pmsvReviewSnapshotDigest(x){
+ const s=JSON.stringify(x);
+ return typeof s==='string'?pmsvReviewSnapshotHashSerialized(s):'';
+}
 function pmsvReviewSnapshotIntact(kind,document){
  const expected=pmsvReviewSnapshotDigests[kind];
- return typeof expected==='string'&&expected.length===16&&
-   !!document&&pmsvReviewSnapshotDigest(document)===expected;
+ if(typeof expected!=='string'||expected.length!==16||!document)return false;
+ // JSON serialization is intentionally repeated on EVERY inquiry so a
+ // later tamper cannot be hidden by object identity or stale validity.
+ const serialized=JSON.stringify(document);
+ if(typeof serialized!=='string')return false;
+ const cached=pmsvReviewSnapshotCache.get(kind);
+ if(cached&&cached.serialized===serialized)return cached.digest===expected;
+ const digest=pmsvReviewSnapshotHashSerialized(serialized);
+ pmsvReviewSnapshotCache.set(kind,{serialized,digest});
+ return digest===expected;
 }
 var pmsvBeforeSnapshotLedgerProof=pmsvCurrent533SourceProofValid;
 pmsvCurrent533SourceProofValid=function(p){

@@ -3,6 +3,8 @@ on:
   push:
     branches: [gh-pages]
     paths:
+      - 'fssai-product-helper-preview-01/fssai-source-proof-panels.js'
+      - 'tests/pmsv-batch110-snapshot-string-cache.test.cjs'
       - 'tests/pmsv-batch109-mobile-cold-profile.test.cjs'
       - '.github/workflows/profile-pmsv-batch109-mobile-cold.yml'
       - 'PMSV-BATCH109-MOBILE-STARTUP-PROFILE-2026-10-27.md'
@@ -25,6 +27,9 @@ jobs:
       - name: Syntax and source regression
         run: |
           node --check tests/pmsv-batch109-mobile-cold-profile.test.cjs
+          node --check fssai-product-helper-preview-01/fssai-source-proof-panels.js
+          node --test tests/pmsv-batch110-snapshot-string-cache.test.cjs
+          node --test tests/fssai-681-review-snapshot-and-historic-queue-2026-10-12.test.cjs
           node tests/pmsv-batch108-startup-state-display.test.cjs
           node tests/pmsv-batch107-cold-render-deferral.test.cjs
       - name: Run 1x and 4x CPU cold-start checks at 390px
