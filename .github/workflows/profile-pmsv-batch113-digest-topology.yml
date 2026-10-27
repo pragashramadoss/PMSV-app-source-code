@@ -1,0 +1,40 @@
+name: PMSV Batch113 map synchronous digest call topology
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'tests/pmsv-batch113-digest-topology.test.cjs'
+      - '.github/workflows/profile-pmsv-batch113-digest-topology.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  digest-topology:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Source-integrity regression and test syntax
+        run: |
+          node --check tests/pmsv-batch113-digest-topology.test.cjs
+          node tests/pmsv-batch110-snapshot-string-cache.test.cjs
+          node tests/fssai-681-review-snapshot-and-historic-queue-2026-10-12.test.cjs
+          node tests/fssai-current-111-decision-gates-2026-10-12.test.cjs
+      - name: Measure one real 390px core startup
+        run: node tests/pmsv-batch113-digest-topology.test.cjs
+        timeout-minutes: 8
+      - name: Retain synchronous-turn and object-call evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmsv-batch113-digest-topology
+          path: pmsv-batch113-digest-topology.json
+          if-no-files-found: ignore
+          retention-days: 14
