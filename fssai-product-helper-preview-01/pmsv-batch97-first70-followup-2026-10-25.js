@@ -346,6 +346,30 @@ document.addEventListener("input",event=>{
 });
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});
 else install();
+/* Batch117: explicitly opened 70-request self-reported follow-up workbench.
+ * Source evidence remains immutable, unsent and unapproved. */
+function focusRole(selectedRole){
+ if(!loaded||!sourceValid()||!["ALL",ROLE_SOURCE,ROLE_MAKER].includes(selectedRole))return false;
+ role=selectedRole;priority="ALL";q="";
+ const rows=selectedRows(),expected=selectedRole==="ALL"?70:35;
+ if(rows.length!==expected||rows.some(r=>selectedRole!=="ALL"&&r.role!==selectedRole||
+   r.source_request_status!=="NOT_SENT"||r.source_document_status!=="NOT_RECEIVED"))return false;
+ const el=host();if(!el)return false;
+ render();
+ const roleField=el.querySelector("[data-b97-role]"),priorityField=el.querySelector("[data-b97-priority]"),
+  searchField=el.querySelector("[data-b97-search]");
+ if(roleField)roleField.value=role;
+ if(priorityField)priorityField.value=priority;
+ if(searchField)searchField.value=q;
+ const view=el.closest?.("section.view");
+ if(view&&/^[a-z]+$/.test(view.id)){
+  const tab=document.querySelector('nav.tabs .tab[data-tab="'+view.id+'"]');
+  if(tab)tab.click();
+ }
+ el.open=true;
+ if(typeof el.scrollIntoView==="function")el.scrollIntoView({block:"start",behavior:"smooth"});
+ return true;
+}
 window.pmsvB97Followup=Object.freeze({sourceValid,records,validNote,capture,summary,
- csv,parseCSV,importCSV,load,install});
+ csv,parseCSV,importCSV,load,install,focusRole});
 })();

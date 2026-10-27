@@ -13,7 +13,7 @@ function say(message){
  if(el)el.textContent=String(message);
 }
 function lock(enabled){
- for(const button of host()?.querySelectorAll("[data-b116-owner]")||[])button.disabled=enabled;
+ for(const button of host()?.querySelectorAll("[data-b116-owner],[data-b116-track]")||[])button.disabled=enabled;
 }
 function install(){
  if(host())return true;
@@ -29,6 +29,7 @@ function install(){
   '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:9px">'+
   '<button type="button" data-b116-owner="'+SOURCE+'">35 source / method authority requests</button>'+
   '<button type="button" data-b116-owner="'+MAKER+'">35 manufacturer / supplier QA requests</button>'+
+  '<button type="button" data-b116-track>Track all 70 follow-ups</button>'+
   '</div>'+
   '<p class="countline" role="status" aria-live="polite" data-b116-message>Choose an owner to prepare a source-checked draft. Both owner groups remain unsent.</p>';
  anchor.insertAdjacentElement("afterend",panel);
@@ -66,11 +67,46 @@ async function open(owner){
   return false;
  }finally{busy=false;lock(false);}
 }
+async function track(){
+ if(busy)return false;
+ if(!install())return false;
+ busy=true;lock(true);
+ say("Loading verified first-70 follow-up notes; no messages will be sent…");
+ try{
+  const review=window.pmsvB70ExtendedResearch;
+  if(!review?.getState||!review?.request||!review?.recheck)
+   throw Error("Full evidence review loader unavailable");
+  const before=review.getState();
+  if(before?.extended==="LOADING")throw Error("Research is already loading; please retry");
+  if(before?.extended!=="READY"&&!await review.request())
+   throw Error("Extended FSSAI research did not pass integrity checks");
+  if(review.recheck()!==true)throw Error("Extended FSSAI source validation failed");
+  const f=window.pmsvB97Followup;
+  if(!f?.install||!f?.load||!f?.sourceValid||!f?.focusRole||!f?.summary)
+   throw Error("70-request follow-up register unavailable");
+  f.install();
+  if(!await f.load()||!f.sourceValid()||!f.focusRole("ALL"))
+   throw Error("Original 70-request follow-up register failed source or navigation checks");
+  const counts=f.summary(),total=["NOT_PREPARED","DRAFT_READY","SENT_SELF_REPORTED",
+   "RESPONSE_SELF_REPORTED"].reduce((sum,k)=>sum+(counts[k]||0),0);
+  if(total!==70)throw Error("Follow-up summary does not reconcile to 70 original requests");
+  say("Opened the 70-request local follow-up register. "+
+   counts.NOT_PREPARED+" not prepared; "+counts.DRAFT_READY+" drafts; "+
+   counts.SENT_SELF_REPORTED+" externally sent (SELF-REPORTED); "+
+   counts.RESPONSE_SELF_REPORTED+" responses (SELF-REPORTED). Export CSV before leaving. 35 cases remain HELD.");
+  return true;
+ }catch(error){
+  say("Blocked: "+String(error?.message||error).slice(0,180)+
+   ". No messaging, original-document receipt, legal/lab signoff or release.");
+  return false;
+ }finally{busy=false;lock(false);}
+}
 document.addEventListener("click",event=>{
  const b=event.target?.closest?.("[data-b116-owner]");
- if(b)void open(b.dataset.b116Owner);
+ if(b){void open(b.dataset.b116Owner);return}
+ if(event.target?.closest?.("[data-b116-track]"))void track();
 });
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});
 else install();
-window.pmsvB116First70Handoff=Object.freeze({open,install,roles:Object.freeze([SOURCE,MAKER])});
+window.pmsvB116First70Handoff=Object.freeze({open,track,install,roles:Object.freeze([SOURCE,MAKER])});
 })();

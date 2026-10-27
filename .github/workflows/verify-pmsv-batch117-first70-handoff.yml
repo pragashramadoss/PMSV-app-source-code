@@ -1,0 +1,29 @@
+name: Verify PMSV Batch117 70-request owner follow-up navigation
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'fssai-product-helper-preview-01/pmsv-batch116-owner-handoff-2026-10-27.js'
+      - 'fssai-product-helper-preview-01/pmsv-batch97-first70-followup-2026-10-25.js'
+      - 'tests/pmsv-batch117-first70-handoff.test.cjs'
+      - '.github/workflows/verify-pmsv-batch117-first70-handoff.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  followup-navigation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Confirm 35 plus 35 first-action follow-up and fail-closed review
+        run: |
+          node --check fssai-product-helper-preview-01/pmsv-batch116-owner-handoff-2026-10-27.js
+          node --check fssai-product-helper-preview-01/pmsv-batch97-first70-followup-2026-10-25.js
+          node --test tests/pmsv-batch117-first70-handoff.test.cjs
+          node --test tests/pmsv-batch116-owner-handoff.test.cjs
+          node --test tests/pmsv-batch97-first70-followup.test.cjs
