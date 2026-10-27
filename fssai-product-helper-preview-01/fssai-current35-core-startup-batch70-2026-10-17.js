@@ -128,6 +128,9 @@ function verifiedState(){
  if(state==="READY")recheck();
  return safeState();
 }
+// Batch108: the core loader is async; update a previously rendered
+// RUNNING label on the actual READY or INTEGRITY_BLOCKED transition.
+document.addEventListener("pmsv-core-startup-settled",status);
 document.addEventListener("click",e=>{
  if(e.target?.closest?.("[data-pmsv-b70-load]"))void request();
  if(e.target?.closest?.("[data-pmsv-b74-recheck]"))recheck();

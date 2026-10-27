@@ -125,6 +125,11 @@ async function pmsvB22AfterStartup(){
   pmsvB22StartupState="INTEGRITY_BLOCKED";
  }finally{
   pmsvB22Stats.core_start_ms=Date.now()-started;
+  // Batch108: signal the settled source verdict; UI listeners must read
+  // the actual core state and never treat an event as evidence approval.
+  if(typeof document!=="undefined"&&typeof document.dispatchEvent==="function"&&typeof Event==="function"){
+   document.dispatchEvent(new Event("pmsv-core-startup-settled"));
+  }
  }
 }
 if(typeof document!=="undefined"&&document.addEventListener){
