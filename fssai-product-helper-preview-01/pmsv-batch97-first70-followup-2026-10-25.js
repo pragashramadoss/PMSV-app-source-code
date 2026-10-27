@@ -11,6 +11,21 @@ const COLS=["case_id","request_id","priority","rank","role","gate","source_reque
  "source_document_status","operator_followup_state","outbound_reference","sent_date",
  "response_reference","response_date","next_followup_date"];
 let source=[],loaded=false,chosen="",priority="ALL",role="ALL",q="",notes=new Map();
+let lastSavedSnapshot="[]";
+function noteSnapshot(){
+ return JSON.stringify([...notes.entries()].sort((a,b)=>a[0].localeCompare(b[0])));
+}
+function needsExport(){return notes.size>0&&noteSnapshot()!==lastSavedSnapshot;}
+function backupIndicator(){
+ const label=host()?.querySelector("[data-b119-backup]");
+ if(label)label.textContent=needsExport()?
+  "UNSAVED LOCAL FOLLOW-UP NOTES — export the 70-row CSV before closing or reloading.":
+  notes.size>0?
+  "Local notes match your last imported/exported CSV. Nothing is uploaded or stored online.":
+  "No local follow-up notes need backup. Original 70 requests remain unsent.";
+}
+function markSaved(){lastSavedSnapshot=noteSnapshot();backupIndicator();}
+
 function node(tag,txt,attributes){
  const x=document.createElement(tag);
  if(txt!==undefined)x.textContent=String(txt);
@@ -100,6 +115,7 @@ function capture(id,n){
  if(!loaded||!sourceValid()||!source.some(r=>r.request_id===id)||!validNote(n))return false;
  if(n.operator_followup_state==="NOT_PREPARED")notes.delete(id);
  else notes.set(id,Object.freeze({...n}));
+ backupIndicator();
  render();
  status("Locally recorded as SELF-REPORTED follow-up only; no request was sent or document authenticated by PMSV. Export your CSV before leaving.");
  return true;
@@ -176,6 +192,7 @@ function importCSV(raw){
   }
   if(seen.size!==70)throw Error("All original 70 requests are required");
   notes=next;
+  markSaved();
   render();
   status("Imported "+notes.size+" self-reported workflow notes. No original evidence receipt, legal approval or lot release was verified.");
   return {ok:true,count:notes.size};
@@ -253,6 +270,7 @@ function install(){
  h.appendChild(node("button","Verify and load 70 original requests",{type:"button","data-b97-load":""}));
  h.appendChild(node("p","Not loaded; original requests all NOT SENT.",{role:"status","aria-live":"polite","data-b97-status":""}));
  h.appendChild(node("p","",{"data-b97-counts":""}));
+ h.appendChild(node("p","No local notes need backup.",{role:"status","aria-live":"polite","data-b119-backup":""}));
  const filters=node("div",undefined,{class:"checker-grid"});
  const lab=node("label","Priority");
  const p=node("select",undefined,{"data-b97-priority":""});
@@ -323,8 +341,11 @@ document.addEventListener("click",event=>{
   const next={};
   for(const k of Object.keys(empty()))next[k]=host().querySelector("[data-b97-field='"+k+"']")?.value||"";
   if(!capture(r.request_id,next))status("Invalid status/date/reference sequence. No change saved. Use reference IDs only; dates must be real, with sent date before response/follow-up.");
- }else if(b.hasAttribute("data-b97-export"))
-  download(csv(),"PMSV-B97-70-SELF-REPORTED-FOLLOWUP-UNVERIFIED.csv");
+ }else if(b.hasAttribute("data-b97-export")){
+  const content=csv();
+  if(download(content,"PMSV-B97-70-SELF-REPORTED-FOLLOWUP-UNVERIFIED.csv"))
+   markSaved();
+ }
  else if(b.hasAttribute("data-b97-template"))
   download(csv(true),"PMSV-B97-70-BLANK-FOLLOWUP-TEMPLATE.csv");
 });
@@ -371,6 +392,11 @@ function focusRole(selectedRole){
  if(typeof el.scrollIntoView==="function")el.scrollIntoView({block:"start",behavior:"smooth"});
  return true;
 }
+window.addEventListener?.("beforeunload",event=>{
+ if(!needsExport())return;
+ event.preventDefault();
+ event.returnValue="";
+});
 window.pmsvB97Followup=Object.freeze({sourceValid,records,validNote,capture,summary,
- csv,parseCSV,importCSV,load,install,focusRole});
+ csv,parseCSV,importCSV,load,install,focusRole,needsExport});
 })();

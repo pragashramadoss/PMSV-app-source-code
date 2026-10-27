@@ -1,0 +1,27 @@
+name: Verify PMSV Batch119 local unsaved first70 follow-ups
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch97-first70-followup-2026-10-25.js'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/pmsv-batch119-unsaved-followup-guard.test.cjs'
+      - '.github/workflows/verify-pmsv-batch119-unsaved-followup-guard.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unsaved-guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify local-only backup lifecycle, no data loss, and all 35 compliance holds
+        run: |
+          node --check fssai-product-helper-preview-01/pmsv-batch97-first70-followup-2026-10-25.js
+          node --test tests/pmsv-batch119-unsaved-followup-guard.test.cjs
+          node --test tests/pmsv-batch97-first70-followup.test.cjs
+          node --test tests/pmsv-batch118-next-action-queue.test.cjs
