@@ -7,9 +7,11 @@ const fs=require("node:fs"),{spawn}=require("node:child_process"),{chromium}=req
 const root="fssai-product-helper-preview-01",port=18986;
 const source=fs.readFileSync(root+"/fssai-source-proof-panels.js","utf8");
 const digestBlock="function pmsvReviewSnapshotDigest(x){\n const s=JSON.stringify(x);\n return typeof s==='string'?pmsvReviewSnapshotHashSerialized(s):'';\n}";
-const candidateDigestBlock="/* Batch115 candidate only: identity-indexed, EXACT-SERIALIZED-CONTENT WeakMap.\n * Every call still performs full JSON.stringify on the current object. The\n * stored fingerprint is reused ONLY if the latest serialization is identical.\n * No cross-identity transfer, version bypass, source approval or release. */\nconst pmsvWeakDigestMemo=new WeakMap();\nlet pmsvWeakDigestHits=0,pmsvWeakDigestMisses=0,pmsvWeakDigestInvalidations=0;\nfunction pmsvReviewSnapshotDigest(x){\n const s=JSON.stringify(x);\n if(typeof s!=='string')return '';\n const objectLike=x!==null&&(typeof x==='object'||typeof x==='function');\n const previous=objectLike?pmsvWeakDigestMemo.get(x):undefined;\n if(previous&&previous.serialized===s){\n  pmsvWeakDigestHits++;\n  return previous.digest;\n }\n if(previous)pmsvWeakDigestInvalidations++;\n const digest=pmsvReviewSnapshotHashSerialized(s);\n if(objectLike&&s.length<=1000000)pmsvWeakDigestMemo.set(x,{serialized:s,digest});\n pmsvWeakDigestMisses++;\n return digest;\n}";
-assert(source.includes(digestBlock),"Known source digest block must match exactly");
-const candidateSource=source.replace(digestBlock,candidateDigestBlock);
+const candidateDigestBlock="/* Batch115: identity-indexed, EXACT-SERIALIZED-CONTENT WeakMap.\n * Every call still performs full JSON.stringify on the current object. The\n * stored fingerprint is reused ONLY if the latest serialization is identical.\n * No cross-identity transfer, version bypass, source approval or release. */\nconst pmsvWeakDigestMemo=new WeakMap();\nlet pmsvWeakDigestHits=0,pmsvWeakDigestMisses=0,pmsvWeakDigestInvalidations=0;\nfunction pmsvReviewSnapshotDigest(x){\n const s=JSON.stringify(x);\n if(typeof s!=='string')return '';\n const objectLike=x!==null&&(typeof x==='object'||typeof x==='function');\n const previous=objectLike?pmsvWeakDigestMemo.get(x):undefined;\n if(previous&&previous.serialized===s){\n  pmsvWeakDigestHits++;\n  return previous.digest;\n }\n if(previous)pmsvWeakDigestInvalidations++;\n const digest=pmsvReviewSnapshotHashSerialized(s);\n if(objectLike&&s.length<=1000000)pmsvWeakDigestMemo.set(x,{serialized:s,digest});\n pmsvWeakDigestMisses++;\n return digest;\n}";
+const hasBaseline=source.includes(digestBlock),hasCandidate=source.includes(candidateDigestBlock);
+assert(hasBaseline||hasCandidate,"Known baseline or Batch115 shipped digest block must match");
+const baselineSource=hasBaseline?source:source.replace(candidateDigestBlock,digestBlock);
+const candidateSource=hasCandidate?source:source.replace(digestBlock,candidateDigestBlock);
 const server=spawn("python3",["-m","http.server",String(port),"--directory",root,"--bind","127.0.0.1"],{stdio:"ignore"});
 const nap=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 async function measure(browser,variant,rate){
@@ -17,7 +19,7 @@ async function measure(browser,variant,rate){
  const page=await ctx.newPage(),errors=[];
  page.on("pageerror",e=>errors.push(e.message));
  await page.route("**/fssai-source-proof-panels.js*",route=>route.fulfill({
-  status:200,contentType:"text/javascript; charset=utf-8",body:variant==="baseline"?source:candidateSource
+  status:200,contentType:"text/javascript; charset=utf-8",body:variant==="baseline"?baselineSource:candidateSource
  }));
  const cdp=await ctx.newCDPSession(page);
  await cdp.send("Emulation.setCPUThrottlingRate",{rate});

@@ -805,9 +805,26 @@ function pmsvReviewSnapshotHashSerialized(s){
  return (a>>>0).toString(16).padStart(8,'0')+
    (b>>>0).toString(16).padStart(8,'0');
 }
+/* Batch115: identity-indexed, EXACT-SERIALIZED-CONTENT WeakMap.
+ * Every call still performs full JSON.stringify on the current object. The
+ * stored fingerprint is reused ONLY if the latest serialization is identical.
+ * No cross-identity transfer, version bypass, source approval or release. */
+const pmsvWeakDigestMemo=new WeakMap();
+let pmsvWeakDigestHits=0,pmsvWeakDigestMisses=0,pmsvWeakDigestInvalidations=0;
 function pmsvReviewSnapshotDigest(x){
  const s=JSON.stringify(x);
- return typeof s==='string'?pmsvReviewSnapshotHashSerialized(s):'';
+ if(typeof s!=='string')return '';
+ const objectLike=x!==null&&(typeof x==='object'||typeof x==='function');
+ const previous=objectLike?pmsvWeakDigestMemo.get(x):undefined;
+ if(previous&&previous.serialized===s){
+  pmsvWeakDigestHits++;
+  return previous.digest;
+ }
+ if(previous)pmsvWeakDigestInvalidations++;
+ const digest=pmsvReviewSnapshotHashSerialized(s);
+ if(objectLike&&s.length<=1000000)pmsvWeakDigestMemo.set(x,{serialized:s,digest});
+ pmsvWeakDigestMisses++;
+ return digest;
 }
 function pmsvReviewSnapshotIntact(kind,document){
  const expected=pmsvReviewSnapshotDigests[kind];
