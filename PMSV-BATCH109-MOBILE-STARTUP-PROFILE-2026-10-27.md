@@ -12,7 +12,18 @@ This test does not load optional extended research, ask owners for evidence, tra
 
 ## Baseline results
 
-Pending CI. Timing will be reported after the first successful measured run, with runner-environment caveats. Passing means the genuine B22 source reached READY, not that any product passed a compliance review.
+Measured in GitHub Actions headless Chromium, 390 × 844 viewport with independent cold contexts (27 October 2026):
+
+| Condition | READY after navigation | B22 core time | Core proof checks | Last resource response |
+| --- | ---: | ---: | ---: | ---: |
+| Normal CPU | 9,507 ms | 9,302 ms | 8,511 ms | 609 ms |
+| CPU slowed 4× | 36,278 ms | 35,312 ms | 33,030 ms | 2,018 ms |
+
+Observed total slowdown: **3.82×**. Both runs loaded 250 resources, exactly 35 case-review buttons, visible `READY`, extended research `NOT_REQUESTED` and zero product releases. The proof-processing stage accounts for approximately **90%** of the time to READY in both runs. This identifies a CPU-bound verification path but does not isolate a particular integrity function or justify bypassing source checks. The data comes from CI hardware, not a claim about all physical Android devices.
+
+[Successful CI run and timing artifact](https://github.com/pragashramadoss/PMSV-app-source-code/actions/runs/40453536673). The artifact is retained by GitHub Actions for 14 days.
+
+Passing means the genuine B22 source reached READY, not that any product passed a compliance review.
 
 ## Fixed legal and source hold
 
