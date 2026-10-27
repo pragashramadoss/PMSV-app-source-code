@@ -190,7 +190,34 @@ document.addEventListener("click",function(ev){
   }else feedback("Clipboard unavailable. Select text in the read-only draft and copy manually.");
  }
 });
-window.pmsvB58OwnerOutreach={valid:valid,records:data,filtered:filtered,generateCSV:csv,
+/* Batch116: owner-directed, same-data navigation; never changes immutable evidence. */
+function focusRole(requestedRole){
+ if(requestedRole!=="FSSAI_QA_DIVISION_AND_LAB_DIRECTOR"&&
+    requestedRole!=="MANUFACTURER_OR_SUPPLIER_QA")return false;
+ if(!valid())return false;
+ role=requestedRole;priority="ALL";phase="READY";search="";
+ refresh();
+ var el=document.getElementById("pmsv-b58-owner-packets");
+ if(!el)return false;
+ var rows=filtered();
+ if(rows.length!==35||rows.some(x=>x.role!==role||
+    x.routing!=="REQUEST_PREPARATION_POSSIBLE"||
+    x.original_request_status!=="NOT_SENT"||
+    x.original_document_status!=="NOT_RECEIVED"))return false;
+ for(var pair of [["role",role],["priority",priority],["phase",phase],["search",search]]){
+  var field=el.querySelector("[data-pmsv-b58-"+pair[0]+"]");
+  if(field)field.value=pair[1];
+ }
+ var view=el.closest?.("section.view");
+ if(view&&/^[a-z]+$/.test(view.id)){
+  var tab=document.querySelector('nav.tabs .tab[data-tab="'+view.id+'"]');
+  if(tab)tab.click();
+ }
+ el.open=true;
+ if(typeof el.scrollIntoView==="function")el.scrollIntoView({block:"start",behavior:"smooth"});
+ return true;
+}
+window.pmsvB58OwnerOutreach={valid:valid,records:data,filtered:filtered,generateCSV:csv,focusRole:focusRole,
  getCounts:function(){return{cases:35,preparatory:data().filter(x=>x.routing==="REQUEST_PREPARATION_POSSIBLE").length,
  dependent:data().filter(x=>x.routing==="WAIT_FOR_UPSTREAM_EVIDENCE").length,
  actual_documents_received:0,approvals:0,lot_passes:0};}};
