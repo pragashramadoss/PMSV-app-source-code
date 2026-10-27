@@ -14,15 +14,16 @@ function pmsvB22Ready(){
  * refresh without repeating the whole B14-B21 validation for each substep. */
 function pmsvB22RenderAuditVerified(){
  if(typeof document==="undefined")return;
+ const auditHtml=typeof pmsvB20RenderVerified==="function"?pmsvB20RenderVerified():pmsvB20Render();
  const host=document.getElementById("pmsv-b14-review-index")||
             document.getElementById("selectedProductStandardContent");
  if(!host)return;
  const existing=document.getElementById("pmsv-b20-audit");
  if(!existing){
-  host.insertAdjacentHTML("beforebegin",pmsvB20Render());
+  host.insertAdjacentHTML("beforebegin",auditHtml);
  }else{
   const holder=document.createElement("div");
-  holder.innerHTML=pmsvB20Render();
+  holder.innerHTML=auditHtml;
   const fresh=holder.querySelector("#pmsv-b20-audit");
   if(!fresh)return;
   const oldSummary=existing.querySelector("summary"),
@@ -52,7 +53,7 @@ function pmsvB22EnsureControlVerified(){
 pmsvB20Ensure=function(){
  if(typeof document==="undefined"||!pmsvB22Ready())return;
  pmsvB22RenderAuditVerified();
- pmsvB21Refresh();
+ pmsvB22RefreshReadinessVerified();
  pmsvB22EnsureControlVerified();
 };
 function pmsvB22EnsureControl(){
@@ -68,9 +69,13 @@ function pmsvB22AnnounceOtherTab(){
   'Review drafts were updated in another tab. The audit was refreshed; reload this evidence form to view those edits. '+
   '<button type="button" data-pmsv-b22-reload>Reload this form</button></p>');
 }
+function pmsvB22RefreshReadinessVerified(){
+ if(typeof pmsvB21RefreshVerified==="function")pmsvB21RefreshVerified();
+ else pmsvB21Refresh();
+}
 function pmsvB22SyncVerified(){
  try{
-  pmsvB22RenderAuditVerified();pmsvB21Refresh();pmsvB22EnsureControlVerified();
+  pmsvB22RenderAuditVerified();pmsvB22RefreshReadinessVerified();pmsvB22EnsureControlVerified();
   pmsvB22Stats.syncs++;return true;
  }catch(e){pmsvB22Stats.lastError=String(e?.message||e);return false}
 }

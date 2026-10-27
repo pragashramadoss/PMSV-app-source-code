@@ -110,8 +110,7 @@ function pmsvB21TableRows(rows){
  '<td>'+e(x.status.replaceAll("_"," "))+'<small style="display:block">'+x.receipts+'/4 receipts · '+x.missing_fields.length+' fields missing</small></td>'+
  '<td>'+e(x.next_action)+'</td><td><button type="button" class="secondary-btn" data-pmsv-b21-open="'+e(x.id)+'">Open evidence</button></td></tr>').join("");
 }
-function pmsvB21DashboardHtml(){
- if(!pmsvB21Valid())return "";
+function pmsvB21DashboardHtmlVerified(){
  const all=pmsvB21AllVerified(),stats=pmsvB21Stats(all),visible=pmsvB21Filtered(pmsvB21Sorted(all));
  return '<details class="card" id="pmsv-b21-readiness" style="margin-bottom:12px">'+
  '<summary><b>Batch21 · prioritize 35 actual legal-source evidence drafts</b></summary>'+
@@ -126,18 +125,26 @@ function pmsvB21DashboardHtml(){
  '<tbody data-pmsv-b21-rows>'+pmsvB21TableRows(visible)+'</tbody></table></div>'+
  '<small data-pmsv-b21-found>'+visible.length+' of 35 cases shown. All reviews are browser-local; draft text is excluded from the CSV.</small></details>';
 }
-function pmsvB21Refresh(){
- if(typeof document==="undefined"||!pmsvB21Valid())return;
+function pmsvB21DashboardHtml(){
+ if(!pmsvB21Valid())return "";
+ return pmsvB21DashboardHtmlVerified();
+}
+function pmsvB21RefreshVerified(){
+ if(typeof document==="undefined")return;
  const root=document.getElementById("pmsv-b21-readiness");
  const host=document.getElementById("pmsv-b14-review-index")||document.getElementById("selectedProductStandardContent");
  if(!host)return;
- if(!root){host.insertAdjacentHTML("beforebegin",pmsvB21DashboardHtml());return}
+ if(!root){host.insertAdjacentHTML("beforebegin",pmsvB21DashboardHtmlVerified());return}
  const all=pmsvB21AllVerified(),s=pmsvB21Stats(all),shown=pmsvB21Filtered(pmsvB21Sorted(all));
  const stats=root.querySelector("[data-pmsv-b21-stats]"),body=root.querySelector("[data-pmsv-b21-rows]"),
  count=root.querySelector("[data-pmsv-b21-found]");
  if(stats)stats.textContent=s.ARTICLE_SCOPE_REVIEW_REQUIRED+" source challenges · "+s.REVIEW_PACKET_PREPARED_UNVERIFIED+" prepared but unverified · "+s.EVIDENCE_INCOMPLETE+" incomplete · "+s.NOT_STARTED+" not started";
  if(body)body.innerHTML=pmsvB21TableRows(shown);
  if(count)count.textContent=shown.length+" of 35 cases shown. This is not a compliance decision.";
+}
+function pmsvB21Refresh(){
+ if(!pmsvB21Valid())return;
+ pmsvB21RefreshVerified();
 }
 function pmsvB21Csv(rows){
  const quote=v=>'"'+String(v??"").replaceAll('"','""').replace(/[\r\n]+/g," ")+'"';
@@ -189,7 +196,8 @@ pmsvLoadPositiveSourceProof=async function(){
  try{const r=await fetch(pmsvB21Path+"?v=20261014-b21",{cache:"reload"});
   if(!r.ok)throw Error("Source readiness data unavailable");
   pmsvB21Data=await r.json();if(!pmsvB21Valid())throw Error("Source readiness integrity error");
-  pmsvB21Refresh();
+  // Batch107: avoid a second cold DOM/source scan before B22 final sync.
+  if(typeof pmsvB22StartupState==="undefined"||pmsvB22StartupState!=="RUNNING")pmsvB21Refresh();
  }catch(_){pmsvB21Data=null;}
 };
 if(typeof document!=="undefined"&&document.addEventListener){

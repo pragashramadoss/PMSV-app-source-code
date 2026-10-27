@@ -99,8 +99,7 @@ function pmsvB20Csv(rows){
  const head=["Catalogue ID","Product","Draft state - unverified","Evidence receipts (unverified)","Flag count","Flagged article/code issues","Legal approval","Lab PASS"];
  return [head,...rows.map(r=>[r.id,r.product_name,r.status,r.receipts,r.issues.length,r.issues.map(e=>e.code).join(" | "),"NO","NO"])].map(row=>row.map(q).join(",")).join("\r\n")+"\r\n";
 }
-function pmsvB20Render(){
- if(!pmsvB20Valid())return "";
+function pmsvB20RenderVerified(){
  const e=pmsvB14Esc,arr=pmsvB20AllVerified(),stats={NOT_STARTED:0,INCOMPLETE_DRAFT:0,NEEDS_ARTICLE_CHALLENGE_REVIEW:0,DOCUMENTARY_DRAFT_UNVERIFIED:0};
  for(const x of arr)stats[x.status]++;
  return '<details class="card" id="pmsv-b20-audit" style="margin-bottom:12px">'+
@@ -111,6 +110,10 @@ function pmsvB20Render(){
  '<div class="tablewrap"><table><thead><tr><th>Product</th><th>Review draft</th><th>Flags (not final legal judgement)</th></tr></thead><tbody>'+
  arr.map(x=>'<tr><td>'+e(x.product_name)+'</td><td>'+e(x.status.replaceAll("_"," "))+'</td><td>'+e(x.issues.map(z=>z.code).join(", ")||"—")+'</td></tr>').join("")+
  '</tbody></table></div><small>Official FSSAI CTR IX cross-reference; no user files leave this browser.</small></details>';
+}
+function pmsvB20Render(){
+ if(!pmsvB20Valid())return "";
+ return pmsvB20RenderVerified();
 }
 function pmsvB20Ensure(){
  if(typeof document==="undefined"||!pmsvB20Valid())return;
@@ -134,7 +137,8 @@ pmsvLoadPositiveSourceProof=async function(){
   if(!r.ok)throw Error("Missing Batch20 article audit");
   pmsvB20Data=await r.json();
   if(!pmsvB20Valid())throw Error("Invalid article-audit data");
-  pmsvB20Ensure();
+  // Batch107: initial core handoff renders once after B21 has been verified.
+  if(typeof pmsvB22StartupState==="undefined"||pmsvB22StartupState!=="RUNNING")pmsvB20Ensure();
  }catch(_){pmsvB20Data=null;}
 };
 if(typeof document!=="undefined"&&document.addEventListener){
