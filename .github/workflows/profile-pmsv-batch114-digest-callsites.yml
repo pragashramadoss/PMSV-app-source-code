@@ -1,0 +1,40 @@
+name: PMSV Batch114 sampled digest callsites and same-turn mutation safety
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'tests/pmsv-batch114-digest-callsites.test.cjs'
+      - '.github/workflows/profile-pmsv-batch114-digest-callsites.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  digest-callsites:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Source-integrity regression and test syntax
+        run: |
+          node --check tests/pmsv-batch114-digest-callsites.test.cjs
+          node tests/pmsv-batch110-snapshot-string-cache.test.cjs
+          node tests/fssai-681-review-snapshot-and-historic-queue-2026-10-12.test.cjs
+          node tests/fssai-current-111-decision-gates-2026-10-12.test.cjs
+      - name: Sample validation callers and verify immediate mutation detection
+        run: node tests/pmsv-batch114-digest-callsites.test.cjs
+        timeout-minutes: 8
+      - name: Retain read-only caller counts and mutation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmsv-batch114-digest-callsites
+          path: pmsv-batch114-digest-callsites.json
+          if-no-files-found: ignore
+          retention-days: 14
