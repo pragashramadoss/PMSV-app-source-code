@@ -48,3 +48,12 @@ For Batch112, rerun V8 CPU profiling *after* the content-exact cache and identif
 ## Regulatory boundary unchanged
 
 533 products; 498 conditional first-source references; 35 commercial cases **HELD**; 175 original evidence requests **NOT_SENT/NOT_RECEIVED**; 105 downstream dependencies **HELD**; zero legal-limit signoffs, laboratory lot approvals or product releases. No authority has been inferred from test success.
+
+## Full-suite compatibility repair and final verification
+
+The first full legacy verification exposed two pre-existing isolated Node VM test harnesses that extracted only `pmsvReviewSnapshotDigest` from the source module. After Batch110 introduced `pmsvReviewSnapshotHashSerialized`, these test harnesses could no longer execute the digest although the browser module loaded correctly. Batch111 updated only those two **test fixtures** to extract the helper and digest together:
+
+- `tests/fssai-current-111-decision-gates-2026-10-12.test.cjs`
+- `tests/fssai-live-111-official-article-crosswalk-2026-10-12.test.cjs`
+
+The complete **Verify PMSV FSSAI standard nutrition** workflow then passed, including the source, legal-scope, fail-closed, catalogue and browser syntax suites: [full successful verification](https://github.com/pragashramadoss/PMSV-app-source-code/actions/runs/40457533038). These repairs did not change application code or legal evidence.
