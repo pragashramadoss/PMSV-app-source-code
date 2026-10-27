@@ -19,8 +19,9 @@ function context(){
    pmsvCurrent116ProofChecklistHtml:()=>'<div>Old 116 local checklist</div>',
    esc:x=>String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")};
  vm.createContext(ctx);
+ // Include Batch110 helper dependency for the isolated VM digest extraction.
  for(const [a,b] of [["function pmsvProofSourceMatch","function sourcePinned121ResearchProofHtml"],
-  ["function pmsvReviewSnapshotDigest","function pmsvReviewSnapshotIntact"]]){
+  ["function pmsvReviewSnapshotHashSerialized","function pmsvReviewSnapshotIntact"]]){
   const start=proof.indexOf(a),end=proof.indexOf(b,start);
   assert.ok(start>0&&end>start);
   vm.runInContext(proof.slice(start,end),ctx);
