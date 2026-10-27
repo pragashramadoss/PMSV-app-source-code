@@ -1,0 +1,29 @@
+name: Verify PMSV Batch118 local first-70 next-action queue
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'fssai-product-helper-preview-01/pmsv-batch97-first70-followup-2026-10-25.js'
+      - 'fssai-product-helper-preview-01/pmsv-batch118-first70-next-actions-2026-10-27.js'
+      - 'tests/pmsv-batch118-next-action-queue.test.cjs'
+      - '.github/workflows/verify-pmsv-batch118-next-action-queue.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  first70-queue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check queue action ordering, tamper rejection and unchanged legal holds
+        run: |
+          node --check fssai-product-helper-preview-01/pmsv-batch118-first70-next-actions-2026-10-27.js
+          node --check fssai-product-helper-preview-01/pmsv-batch97-first70-followup-2026-10-25.js
+          node --test tests/pmsv-batch118-next-action-queue.test.cjs
+          node --test tests/pmsv-batch117-first70-handoff.test.cjs
+          node --test tests/pmsv-batch97-first70-followup.test.cjs

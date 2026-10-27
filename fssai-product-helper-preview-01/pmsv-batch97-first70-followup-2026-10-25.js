@@ -305,6 +305,7 @@ function install(){
  actions.appendChild(document.createTextNode(" "));
  actions.appendChild(node("button","Download 70-row blank template",{type:"button","data-b97-template":""}));
  h.appendChild(actions);
+ h.appendChild(node("button","Review next actions / due follow-ups",{type:"button","data-b118-open":""}));
  const importLabel=node("label","Import a previously exported 70-row CSV, entirely on this device");
  importLabel.appendChild(node("input",undefined,{type:"file",accept:".csv,text/csv","data-b97-import":""}));
  h.appendChild(importLabel);
