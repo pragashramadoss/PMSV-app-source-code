@@ -117,3 +117,32 @@ test("B97 action button and B118 script load only once",()=>{
  assert.equal(b56.totals.approved_ctr_articles,0);
  assert.equal(b56.totals.lot_passes,0);
 });
+
+test("Batch120 offline owner assignment template preserves 70 immutable requests with blank people and dispatch fields",()=>{
+ const s=scenario(),result=s.api.compute("2026-10-27");
+ const csv=s.api.assignmentCSV(result),parsed=notesApi().parseCSV(csv);
+ assert.equal(parsed.length,71);
+ assert.deepEqual(Array.from(parsed[0]),[
+  "priority","case_id","request_id","owner_role","next_action",
+  "named_internal_coordinator","verified_external_recipient","planned_dispatch_date",
+  "approved_dispatch_channel","internal_approval_reference",
+  "original_request_status","original_document_status","compliance_gate"
+ ]);
+ assert.equal(new Set(parsed.slice(1).map(row=>row[2])).size,70);
+ assert.equal(parsed.slice(1).filter(row=>row[3]==="FSSAI_QA_DIVISION_AND_LAB_DIRECTOR").length,35);
+ assert.equal(parsed.slice(1).filter(row=>row[3]==="MANUFACTURER_OR_SUPPLIER_QA").length,35);
+ assert.ok(parsed.slice(1).every(row=>row.length===13&&row.slice(5,10).every(x=>x==="")));
+ assert.ok(parsed.slice(1).every(row=>row[10]==="NOT_SENT"&&row[11]==="NOT_RECEIVED"));
+ assert.ok(parsed.slice(1).every(row=>row[12]==="ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"));
+ assert.ok(s.api.assignmentCSV().includes("PMSV44-01-01"));
+ assert.equal(s.api.assignmentCSV({valid:false,rows:[]}),"");
+});
+test("Batch120 worksheet button is displayed and never persists recipients in preview",()=>{
+ const s=scenario();assert.equal(s.api.render(),true);
+ const panel=s.getPanel();
+ const buttons=panel.children.filter(x=>x.tag==="div").flatMap(x=>x.children).filter(x=>x.tag==="button");
+ assert.ok(buttons.some(x=>x.dataset.b118Assignment!==undefined));
+ assert.ok(!code.includes("fetch("));
+ assert.ok(!/localStorage\.(?:getItem|setItem)/.test(code));
+ assert.ok(!code.includes("sendEmail"));
+});

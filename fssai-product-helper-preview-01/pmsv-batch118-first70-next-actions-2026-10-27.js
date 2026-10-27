@@ -83,7 +83,9 @@ function install(){
  const control=node("div");control.style.display="flex";control.style.gap="8px";control.style.flexWrap="wrap";
  const refresh=node("button","Refresh next actions");refresh.type="button";refresh.dataset.b118Refresh="";
  const download=node("button","Download next-action CSV");download.type="button";download.dataset.b118Csv="";
- control.appendChild(refresh);control.appendChild(download);h.appendChild(control);
+ const assign=node("button","Download 70-request owner assignment worksheet");assign.type="button";assign.dataset.b118Assignment="";
+ control.appendChild(refresh);control.appendChild(download);control.appendChild(assign);h.appendChild(control);
+ h.appendChild(node("p","Assignment worksheet: 35 method-authority and 35 manufacturer/supplier requests, with blank fields for an internal coordinator, verified recipient, target date, approval and channel. Complete offline; a plan or self-reported send is not evidence receipt, independent approval or product release."));
  const summary=node("p","Select Refresh to verify the current 70 local follow-up records.");
  summary.setAttribute("data-b118-summary","");summary.setAttribute("role","status");
  summary.setAttribute("aria-live","polite");h.appendChild(summary);
@@ -132,6 +134,32 @@ function csv(result=compute()){
   r.source_document_status,"ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"]);
  return[headings,...rows].map(x=>x.map(quote).join(",")).join("\r\n")+"\r\n";
 }
+/* Batch120: separate, offline-only owner-allocation worksheet. Deliberately leave
+ * personal names, recipient details and approval fields blank; never persist them
+ * to this public preview, and never modify the immutable 175 original requests. */
+function assignmentCSV(result=compute()){
+ if(!result.valid)return"";
+ const headings=["priority","case_id","request_id","owner_role","next_action",
+  "named_internal_coordinator","verified_external_recipient","planned_dispatch_date",
+  "approved_dispatch_channel","internal_approval_reference",
+  "original_request_status","original_document_status","compliance_gate"];
+ const quote=v=>{
+  let s=String(v??"");if(/^\s*[=+@-]/.test(s))s="'"+s;
+  return '"'+s.replaceAll('"','""')+'"';
+ };
+ const rows=result.rows.map(r=>[r.priority,r.case_id,r.request_id,r.role,r.action,
+  "","","","","",r.source_request_status,r.source_document_status,
+  "ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"]);
+ return[headings,...rows].map(x=>x.map(quote).join(",")).join("\r\n")+"\r\n";
+}
+function downloadAssignmentCSV(){
+ const contents=assignmentCSV();if(!contents)return false;
+ const url=URL.createObjectURL(new Blob(["\uFEFF"+contents],{type:"text/csv;charset=utf-8"}));
+ const a=node("a");a.href=url;
+ a.download="PMSV-B120-70-OWNER-ASSIGNMENT-OFFLINE-NOT-APPROVAL.csv";
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ return true;
+}
 function downloadCSV(){
  const contents=csv();if(!contents)return false;
  const url=URL.createObjectURL(new Blob(["\uFEFF"+contents],{type:"text/csv;charset=utf-8"}));
@@ -143,6 +171,7 @@ document.addEventListener("click",event=>{
  if(event.target?.closest?.("[data-b118-open]"))void render();
  else if(event.target?.closest?.("[data-b118-refresh]"))void render();
  else if(event.target?.closest?.("[data-b118-csv]"))void downloadCSV();
+ else if(event.target?.closest?.("[data-b118-assignment]"))void downloadAssignmentCSV();
 });
-window.pmsvB118NextActions=Object.freeze({compute,install,render,csv,localToday});
+window.pmsvB118NextActions=Object.freeze({compute,install,render,csv,assignmentCSV,localToday});
 })();
