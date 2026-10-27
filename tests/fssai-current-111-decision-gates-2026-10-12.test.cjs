@@ -24,7 +24,9 @@ function ctx(){
  };
  vm.createContext(c);
  const proof=fs.readFileSync(path.join(root,app+"fssai-source-proof-panels.js"),"utf8");
- const a=proof.indexOf("function pmsvReviewSnapshotDigest"),b=proof.indexOf("function pmsvReviewSnapshotIntact",a);
+ // Batch111 compatibility: extract the hash dependency together with digest.
+ // The browser loads both from the source module; the isolated VM must too.
+ const a=proof.indexOf("function pmsvReviewSnapshotHashSerialized"),b=proof.indexOf("function pmsvReviewSnapshotIntact",a);
  assert.ok(a>=0&&b>a);
  vm.runInContext(proof.slice(a,b),c);
  vm.runInContext(script,c);
