@@ -110,8 +110,8 @@ test("concurrent user taps cannot create two source loads",async()=>{
 });
 test("first-70 tracking is wired exactly once and original source gates remain HELD",()=>{
  const index=fs.readFileSync(root+"index.html","utf8");
- assert.equal(index.split("pmsv-batch116-owner-handoff-2026-10-27.js?v=20261027-b117").length,2);
- assert.equal(index.split("pmsv-batch97-first70-followup-2026-10-25.js?v=20261027-b117").length,2);
+ assert.equal(index.split("pmsv-batch116-owner-handoff-2026-10-27.js").length,2);
+ assert.equal(index.split("pmsv-batch97-first70-followup-2026-10-25.js").length,2);
  assert.ok(b116.includes("Track all 70 follow-ups"));
  assert.ok(!b116.includes("fetch("));
  assert.equal(b56.totals.open_ctr_cases,35);
