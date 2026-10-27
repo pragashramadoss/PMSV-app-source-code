@@ -1,0 +1,40 @@
+name: Profile PMSV Batch109 390px mobile cold startup
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'tests/pmsv-batch109-mobile-cold-profile.test.cjs'
+      - '.github/workflows/profile-pmsv-batch109-mobile-cold.yml'
+      - 'PMSV-BATCH109-MOBILE-STARTUP-PROFILE-2026-10-27.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mobile-cold-source-performance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium benchmark
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Syntax and source regression
+        run: |
+          node --check tests/pmsv-batch109-mobile-cold-profile.test.cjs
+          node tests/pmsv-batch108-startup-state-display.test.cjs
+          node tests/pmsv-batch107-cold-render-deferral.test.cjs
+      - name: Run 1x and 4x CPU cold-start checks at 390px
+        run: node tests/pmsv-batch109-mobile-cold-profile.test.cjs
+        timeout-minutes: 11
+      - name: Save timing output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmsv-batch109-mobile-cold-timing
+          path: pmsv-batch109-mobile-startup-metrics.json
+          if-no-files-found: ignore
+          retention-days: 14
