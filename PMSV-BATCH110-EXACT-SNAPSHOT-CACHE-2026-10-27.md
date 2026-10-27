@@ -25,7 +25,18 @@ The fingerprints are historical integrity snapshots, not cryptographic signature
 
 ## Mobile speed comparison
 
-Pending a clean CI run on the amended prototype. Compare with Batch109 baseline (normal 9.507 s; 4× slowdown 36.278 s) while noting differing CI runner load.
+A separate post-change CI run recorded 13.931 s normal and 57.108 s throttled on a different runner, slower than Batch109's 9.507 s and 36.278 s. Since runner variation was material, this alone was **not accepted** as evidence of speed improvement.
+
+A controlled A/B comparison then served the original digest and content-exact cache in four isolated mobile contexts on the **same runner**, alternating execution order. Results:
+
+| CPU condition | Original algorithm | Exact-content cache | Change |
+| --- | ---: | ---: | ---: |
+| Normal | 9,228 ms | 9,003 ms | 2.4% faster |
+| 4× CPU slowdown | 37,500 ms | 35,935 ms | 4.2% faster |
+
+All four runs reached true `READY`, displayed `READY`, loaded 35 case controls, kept extended research unloaded and recorded zero releases. The gain is modest; the wider cold-start bottleneck is not solved. The complete paired timing output is retained in [the A/B GitHub Actions run](https://github.com/pragashramadoss/PMSV-app-source-code/actions/runs/40455289178).
+
+The result justifies retaining the content-exact cache, but not claiming that mobile loading is now fast. Independent runs remain sensitive to CI-machine variability.
 
 ## Unchanged regulatory status
 
