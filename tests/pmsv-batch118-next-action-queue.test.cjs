@@ -206,3 +206,54 @@ test("Batch121 detailed brief is a local-only download with no recipient capture
  assert.ok(!/sessionStorage\.(?:getItem|setItem)/.test(code));
  assert.ok(!code.includes("sendEmail"));
 });
+
+test("Batch122 P0 handoff packet contains only the 13 priority cases and exactly 26 original requests",()=>{
+ const h=scenario(),result=h.api.compute("2026-10-28");
+ const csv=h.api.evidenceBriefCSV(result,"P0"),parsed=notesApi().parseCSV(csv);
+ assert.equal(parsed.length,27);
+ const rows=parsed.slice(1),originalP0=original.filter(({c})=>c.priority==="P0");
+ assert.equal(originalP0.length,26);
+ assert.equal(new Set(rows.map(r=>r[1])).size,13);
+ assert.equal(new Set(rows.map(r=>r[2])).size,26);
+ assert.equal(rows.filter(r=>r[3]==="FSSAI_QA_DIVISION_AND_LAB_DIRECTOR").length,13);
+ assert.equal(rows.filter(r=>r[3]==="MANUFACTURER_OR_SUPPLIER_QA").length,13);
+ const byId=new Map(originalP0.map(({c,g})=>[g.request_id,{c,g}]));
+ for(const r of rows){
+  const x=byId.get(r[2]);assert.ok(x);
+  assert.equal(r[0],"P0");
+  assert.equal(r[4],x.c.product_name);
+  assert.equal(r[5],x.c.analyte);
+  assert.equal(r[6],x.g.gate_code);
+  assert.equal(r[7],x.g.required_evidence);
+  assert.ok(r.slice(9,14).every(x=>x===""));
+  assert.deepEqual(Array.from(r.slice(14)),[
+   "NOT_SENT","NOT_RECEIVED","ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"
+  ]);
+ }
+ assert.equal(h.api.evidenceBriefCSV(result,"ALL").split("\r\n").length,72,
+  "Original Batch121 all-70 detailed export remains unchanged");
+});
+test("Batch122 P0 export fails closed for wrong filter, missing source or altered original case",()=>{
+ const h=scenario(),result=h.api.compute("2026-10-28");
+ assert.equal(h.api.evidenceBriefCSV(result,"P1"),"");
+ assert.equal(h.api.evidenceBriefCSV({valid:false,rows:[]}, "P0"),"");
+ assert.equal(scenario(undefined,{sourceValid:false}).api.evidenceBriefCSV(undefined,"P0"),"");
+ const data=original.map(({c,g})=>({case_id:c.catalogue_id,request_id:g.request_id,
+  priority:c.priority,rank:String(c.rank),role:g.owner_role,gate:g.gate_code,
+  product:c.product_name,analyte:c.analyte,evidence:g.required_evidence,
+  source_request_status:"NOT_SENT",source_document_status:"NOT_RECEIVED"}));
+ const altered=data.map(x=>({...x}));
+ altered.find(x=>x.priority==="P0").priority="P1";
+ assert.equal(scenario(undefined,{records:altered}).api.evidenceBriefCSV(undefined,"P0"),"");
+});
+test("Batch122 P0 button is present without network, storage or dispatch operations",()=>{
+ const h=scenario();assert.equal(h.api.render(),true);
+ const panel=h.getPanel();
+ const buttons=panel.children.filter(x=>x.tag==="div").flatMap(x=>x.children).filter(x=>x.tag==="button");
+ assert.ok(buttons.some(x=>x.dataset.b122P0!==undefined));
+ assert.ok(code.includes("PMSV-B122-P0-13-CASES-26-REQUESTS"));
+ assert.ok(!code.includes("fetch("));
+ assert.ok(!/localStorage\.(?:getItem|setItem)/.test(code));
+ assert.ok(!/sessionStorage\.(?:getItem|setItem)/.test(code));
+ assert.ok(!code.includes("sendEmail"));
+});
