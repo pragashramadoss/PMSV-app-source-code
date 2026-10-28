@@ -85,8 +85,9 @@ function install(){
  const download=node("button","Download next-action CSV");download.type="button";download.dataset.b118Csv="";
  const assign=node("button","Download 70-request owner assignment worksheet");assign.type="button";assign.dataset.b118Assignment="";
  const brief=node("button","Download detailed evidence requirements CSV");brief.type="button";brief.dataset.b121Brief="";
- control.appendChild(refresh);control.appendChild(download);control.appendChild(assign);control.appendChild(brief);h.appendChild(control);
- h.appendChild(node("p","Assignment worksheet: 35 method-authority and 35 manufacturer/supplier requests, with blank fields for an internal coordinator, verified recipient, target date, approval and channel. The detailed evidence CSV additionally includes the source-verified product, analyte, gate and exact documentary request text. Both downloads are local planning copies only; neither establishes evidence receipt, independent approval or product release."));
+ const p0=node("button","Download P0 urgent evidence packet (13 cases · 26 requests)");p0.type="button";p0.dataset.b122P0="";
+ control.appendChild(refresh);control.appendChild(download);control.appendChild(assign);control.appendChild(brief);control.appendChild(p0);h.appendChild(control);
+ h.appendChild(node("p","Assignment worksheet: 35 method-authority and 35 manufacturer/supplier requests, with blank fields for an internal coordinator, verified recipient, target date, approval and channel. The detailed evidence CSV additionally includes the source-verified product, analyte, gate and exact documentary request text. All downloads are local planning copies only. The P0 packet narrows this to the 13 highest-priority cases (26 original preparatory requests); none establishes evidence receipt, independent approval or product release."));
  const summary=node("p","Select Refresh to verify the current 70 local follow-up records.");
  summary.setAttribute("data-b118-summary","");summary.setAttribute("role","status");
  summary.setAttribute("aria-live","polite");h.appendChild(summary);
@@ -157,9 +158,9 @@ function assignmentCSV(result=compute()){
 /* Batch121: source-verified, detailed original evidence-brief CSV for allocation.
  * Treat the B97 source records as immutable; reject missing/mutated joins.
  * All recipient/approval fields remain blank and no data is persisted or sent. */
-function evidenceBriefCSV(result=compute()){
+function evidenceBriefCSV(result=compute(),priorityFilter="ALL"){
  const api=window.pmsvB97Followup;
- if(!result.valid||result.rows?.length!==70||!api?.sourceValid?.()||!api?.records)
+ if(!["ALL","P0"].includes(priorityFilter)||!result?.valid||result.rows?.length!==70||!api?.sourceValid?.()||!api?.records)
   return "";
  const source=api.records();
  if(!Array.isArray(source)||source.length!==70)return "";
@@ -182,8 +183,13 @@ function evidenceBriefCSV(result=compute()){
   let s=String(v??"");if(/^\s*[=+@-]/.test(s))s="'"+s;
   return '"'+s.replaceAll('"','""')+'"';
  };
+ const selected=priorityFilter==="P0"?result.rows.filter(r=>r.priority==="P0"):result.rows;
+ if(priorityFilter==="P0"&&(
+    selected.length!==26||new Set(selected.map(r=>r.case_id)).size!==13||
+    selected.filter(r=>r.role===SOURCE).length!==13||
+    selected.filter(r=>r.role===MAKER).length!==13))return "";
  const rows=[];
- for(const r of result.rows){
+ for(const r of selected){
   const x=byId.get(r.request_id);
   if(!x||x.case_id!==r.case_id||x.priority!==r.priority||x.rank!==r.rank||
      x.role!==r.role||x.gate!==r.gate||
@@ -194,6 +200,21 @@ function evidenceBriefCSV(result=compute()){
    "NOT_SENT","NOT_RECEIVED","ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"]);
  }
  return[headings,...rows].map(x=>x.map(quote).join(",")).join("\r\n")+"\r\n";
+}
+/* Batch122: P0 subset is derived only after full 70-source reconciliation.
+ * No evidence state, responsible person or approval is inferred. */
+function downloadP0EvidenceBriefCSV(){
+ const contents=evidenceBriefCSV(compute(),"P0");
+ if(!contents){
+  const sum=host()?.querySelector("[data-b118-summary]");
+  if(sum)sum.textContent="P0 export blocked: verify the full original 70-request source first. All 35 compliance cases remain HELD.";
+  return false;
+ }
+ const url=URL.createObjectURL(new Blob(["\uFEFF"+contents],{type:"text/csv;charset=utf-8"}));
+ const a=node("a");a.href=url;
+ a.download="PMSV-B122-P0-13-CASES-26-REQUESTS-OFFLINE-UNAPPROVED.csv";
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ return true;
 }
 function downloadEvidenceBriefCSV(){
  const contents=evidenceBriefCSV();if(!contents)return false;
@@ -224,6 +245,7 @@ document.addEventListener("click",event=>{
  else if(event.target?.closest?.("[data-b118-csv]"))void downloadCSV();
  else if(event.target?.closest?.("[data-b118-assignment]"))void downloadAssignmentCSV();
  else if(event.target?.closest?.("[data-b121-brief]"))void downloadEvidenceBriefCSV();
+ else if(event.target?.closest?.("[data-b122-p0]"))void downloadP0EvidenceBriefCSV();
 });
 window.pmsvB118NextActions=Object.freeze({compute,install,render,csv,assignmentCSV,evidenceBriefCSV,localToday});
 })();
