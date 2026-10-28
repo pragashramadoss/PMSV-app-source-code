@@ -158,10 +158,25 @@ function assignmentCSV(result=compute()){
 /* Batch121: source-verified, detailed original evidence-brief CSV for allocation.
  * Treat the B97 source records as immutable; reject missing/mutated joins.
  * All recipient/approval fields remain blank and no data is persisted or sent. */
+/* Batch123: do not trust a caller-supplied queue snapshot merely because it
+ * says valid. Re-derive action status and identity from the current, authenticated
+ * B97 70-row source at the same validated as-of date. A local status note remains
+ * SELF-REPORTED and never changes original documentary truth. */
+function matchesVerifiedQueue(result){
+ if(!result?.valid||typeof result.asOf!=="string"||
+    !Array.isArray(result.rows)||result.rows.length!==70)return false;
+ const fresh=compute(result.asOf);
+ if(!fresh.valid||fresh.rows.length!==70)return false;
+ const keys=["request_id","case_id","priority","rank","role","gate",
+  "source_request_status","source_document_status","operator_followup_state",
+  "outbound_reference","sent_date","response_reference","response_date",
+  "next_followup_date","action"];
+ return result.rows.every((r,i)=>r&&keys.every(k=>r[k]===fresh.rows[i][k]));
+}
 function evidenceBriefCSV(result=compute(),priorityFilter="ALL"){
  const api=window.pmsvB97Followup;
- if(!["ALL","P0"].includes(priorityFilter)||!result?.valid||result.rows?.length!==70||!api?.sourceValid?.()||!api?.records)
-  return "";
+ if(!["ALL","P0"].includes(priorityFilter)||!matchesVerifiedQueue(result)||
+    !api?.sourceValid?.()||!api?.records)return "";
  const source=api.records();
  if(!Array.isArray(source)||source.length!==70)return "";
  const byId=new Map();
