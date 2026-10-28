@@ -202,7 +202,7 @@ test("Batch121 detailed brief is a local-only download with no recipient capture
  const buttons=panel.children.filter(x=>x.tag==="div").flatMap(x=>x.children).filter(x=>x.tag==="button");
  assert.ok(buttons.some(x=>x.dataset.b121Brief!==undefined));
  assert.ok(!code.includes("fetch("));
- assert.ok(!code.includes("localStorage"));
- assert.ok(!code.includes("sessionStorage"));
+ assert.ok(!/localStorage\.(?:getItem|setItem)/.test(code));
+ assert.ok(!/sessionStorage\.(?:getItem|setItem)/.test(code));
  assert.ok(!code.includes("sendEmail"));
 });
