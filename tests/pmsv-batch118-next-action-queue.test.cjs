@@ -36,9 +36,14 @@ function scenario(raw=table(),opts={}){
  const document={addEventListener:()=>{},createElement:t=>new N(t),
   getElementById:id=>id==="pmsv-b97-first70-followup"?anchor:
    id==="pmsv-b118-first70-next-actions"?panel:null};
+ const sourceRows=original.map(({c,g})=>({case_id:c.catalogue_id,request_id:g.request_id,
+  priority:c.priority,rank:String(c.rank),role:g.owner_role,gate:g.gate_code,
+  product:c.product_name,analyte:c.analyte,evidence:g.required_evidence,
+  source_request_status:"NOT_SENT",source_document_status:"NOT_RECEIVED"}));
  const window={pmsvB97Followup:{
   sourceValid:()=>opts.sourceValid!==false,
-  csv:()=>raw,parseCSV:api.parseCSV,validNote:api.validNote
+  csv:()=>raw,parseCSV:api.parseCSV,validNote:api.validNote,
+  records:()=>opts.records===undefined?sourceRows:opts.records
  }};
  vm.runInNewContext(code,{document,window,console,Date,Blob,setTimeout,URL});
  return {api:window.pmsvB118NextActions,getPanel:()=>panel};
@@ -144,5 +149,60 @@ test("Batch120 worksheet button is displayed and never persists recipients in pr
  assert.ok(buttons.some(x=>x.dataset.b118Assignment!==undefined));
  assert.ok(!code.includes("fetch("));
  assert.ok(!/localStorage\.(?:getItem|setItem)/.test(code));
+ assert.ok(!code.includes("sendEmail"));
+});
+
+test("Batch121 detailed first-70 evidence brief carries exact product, analyte and request text without inventing approvals",()=>{
+ const s=scenario(),out=s.api.compute("2026-10-27");
+ const csv=s.api.evidenceBriefCSV(out),parsed=notesApi().parseCSV(csv);
+ assert.equal(parsed.length,71);
+ assert.deepEqual(Array.from(parsed[0]),[
+  "priority","case_id","request_id","owner_role","product_name",
+  "analyte","evidence_gate","original_evidence_requirement","next_action",
+  "named_internal_coordinator","verified_external_recipient","planned_dispatch_date",
+  "approved_dispatch_channel","internal_approval_reference",
+  "original_request_status","original_document_status","compliance_gate"
+ ]);
+ const rows=parsed.slice(1);
+ assert.equal(new Set(rows.map(x=>x[2])).size,70);
+ assert.equal(rows.filter(x=>x[0]==="P0").length,26);
+ assert.equal(rows.filter(x=>x[0]==="P1").length,44);
+ assert.equal(rows.filter(x=>x[3]==="FSSAI_QA_DIVISION_AND_LAB_DIRECTOR").length,35);
+ assert.equal(rows.filter(x=>x[3]==="MANUFACTURER_OR_SUPPLIER_QA").length,35);
+ const source=new Map(original.map(({c,g})=>[g.request_id,{c,g}]));
+ for(const r of rows){
+  const x=source.get(r[2]);assert.ok(x);
+  assert.equal(r[4],x.c.product_name);
+  assert.equal(r[5],x.c.analyte);
+  assert.equal(r[6],x.g.gate_code);
+  assert.equal(r[7],x.g.required_evidence);
+  assert.ok(r.slice(9,14).every(v=>v===""));
+  assert.deepEqual(Array.from(r.slice(14)),[
+   "NOT_SENT","NOT_RECEIVED","ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"
+  ]);
+ }
+ assert.equal(s.api.evidenceBriefCSV({valid:false,rows:[]}),"");
+});
+test("Batch121 missing, duplicate or mismatched source record fails closed",()=>{
+ const s=scenario(),source=original.map(({c,g})=>({case_id:c.catalogue_id,request_id:g.request_id,
+  priority:c.priority,rank:String(c.rank),role:g.owner_role,gate:g.gate_code,
+  product:c.product_name,analyte:c.analyte,evidence:g.required_evidence,
+  source_request_status:"NOT_SENT",source_document_status:"NOT_RECEIVED"}));
+ assert.equal(scenario(undefined,{records:source.slice(1)}).api.evidenceBriefCSV(),"");
+ assert.equal(scenario(undefined,{records:[...source.slice(0,69),source[0]]}).api.evidenceBriefCSV(),"");
+ const rankChanged=source.map(x=>({...x}));rankChanged[0].rank="99";
+ assert.equal(scenario(undefined,{records:rankChanged}).api.evidenceBriefCSV(),"");
+ const statusChanged=source.map(x=>({...x}));statusChanged[0].source_document_status="RECEIVED";
+ assert.equal(scenario(undefined,{records:statusChanged}).api.evidenceBriefCSV(),"");
+ assert.equal(scenario(undefined,{sourceValid:false}).api.evidenceBriefCSV(),"");
+});
+test("Batch121 detailed brief is a local-only download with no recipient capture",()=>{
+ const s=scenario();assert.equal(s.api.render(),true);
+ const panel=s.getPanel();
+ const buttons=panel.children.filter(x=>x.tag==="div").flatMap(x=>x.children).filter(x=>x.tag==="button");
+ assert.ok(buttons.some(x=>x.dataset.b121Brief!==undefined));
+ assert.ok(!code.includes("fetch("));
+ assert.ok(!code.includes("localStorage"));
+ assert.ok(!code.includes("sessionStorage"));
  assert.ok(!code.includes("sendEmail"));
 });
