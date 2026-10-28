@@ -42,7 +42,7 @@ function scenario(raw=table(),opts={}){
   source_request_status:"NOT_SENT",source_document_status:"NOT_RECEIVED"}));
  const window={pmsvB97Followup:{
   sourceValid:()=>opts.sourceValid!==false,
-  csv:()=>raw,parseCSV:api.parseCSV,validNote:api.validNote,
+  csv:()=>opts.liveCSV?opts.liveCSV():raw,parseCSV:api.parseCSV,validNote:api.validNote,
   records:()=>opts.records===undefined?sourceRows:opts.records
  }};
  vm.runInNewContext(code,{document,window,console,Date,Blob,setTimeout,URL});
@@ -256,4 +256,52 @@ test("Batch122 P0 button is present without network, storage or dispatch operati
  assert.ok(!/localStorage\.(?:getItem|setItem)/.test(code));
  assert.ok(!/sessionStorage\.(?:getItem|setItem)/.test(code));
  assert.ok(!code.includes("sendEmail"));
+});
+
+test("Batch123 rejects invented approval-like actions or changed operator states in supplied export snapshot",()=>{
+ const h=scenario(),snapshot=h.api.compute("2026-10-28");
+ assert.equal(snapshot.valid,true);
+ for(const change of [
+  r=>{r.action="LAB_AND_PRODUCT_APPROVED";},
+  r=>{r.operator_followup_state="RESPONSE_SELF_REPORTED";},
+  r=>{r.next_followup_date="2026-10-29";},
+  r=>{r.source_document_status="RECEIVED";},
+  r=>{r.case_id="substituted-product";}
+ ]){
+  const changed={...snapshot,rows:snapshot.rows.map(x=>({...x}))};
+  change(changed.rows[0]);
+  assert.equal(h.api.evidenceBriefCSV(changed,"ALL"),"");
+  assert.equal(h.api.evidenceBriefCSV(changed,"P0"),"");
+ }
+ const reordered={...snapshot,rows:[...snapshot.rows]};
+ [reordered.rows[0],reordered.rows[1]]=[reordered.rows[1],reordered.rows[0]];
+ assert.equal(h.api.evidenceBriefCSV(reordered,"ALL"),"");
+ assert.equal(h.api.evidenceBriefCSV(reordered,"P0"),"");
+ assert.ok(h.api.evidenceBriefCSV(snapshot,"ALL"));
+ assert.ok(h.api.evidenceBriefCSV(snapshot,"P0"));
+});
+test("Batch123 stale snapshot cannot override a more recent locally self-reported next action",()=>{
+ let current=table();
+ const h=scenario(current,{liveCSV:()=>current});
+ const old=h.api.compute("2026-10-28");
+ assert.equal(old.valid,true);
+ current=table((r,i)=>{if(i===0)r[8]="DRAFT_READY";});
+ assert.equal(h.api.evidenceBriefCSV(old,"ALL"),"");
+ assert.equal(h.api.evidenceBriefCSV(old,"P0"),"");
+ const fresh=h.api.compute("2026-10-28");
+ assert.equal(fresh.valid,true);
+ assert.equal(fresh.counts.DRAFT_READY_FOR_EXTERNAL_SEND,1);
+ assert.ok(h.api.evidenceBriefCSV(fresh,"ALL"));
+ assert.ok(h.api.evidenceBriefCSV(fresh,"P0"));
+ assert.ok(fresh.rows.every(r=>r.source_request_status==="NOT_SENT"&&r.source_document_status==="NOT_RECEIVED"));
+});
+test("Batch123 snapshots require a verified as-of date and complete original queue",()=>{
+ const h=scenario(),result=h.api.compute("2026-10-28");
+ const missingDate={...result};delete missingDate.asOf;
+ assert.equal(h.api.evidenceBriefCSV(missingDate,"ALL"),"");
+ const invalidDate={...result,asOf:"2026-02-30"};
+ assert.equal(h.api.evidenceBriefCSV(invalidDate,"P0"),"");
+ const tooShort={...result,rows:result.rows.slice(1)};
+ assert.equal(h.api.evidenceBriefCSV(tooShort,"P0"),"");
+ assert.equal(h.api.evidenceBriefCSV(result,"ALL").split("\r\n").length,72);
 });
