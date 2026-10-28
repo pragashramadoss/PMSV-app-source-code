@@ -84,8 +84,9 @@ function install(){
  const refresh=node("button","Refresh next actions");refresh.type="button";refresh.dataset.b118Refresh="";
  const download=node("button","Download next-action CSV");download.type="button";download.dataset.b118Csv="";
  const assign=node("button","Download 70-request owner assignment worksheet");assign.type="button";assign.dataset.b118Assignment="";
- control.appendChild(refresh);control.appendChild(download);control.appendChild(assign);h.appendChild(control);
- h.appendChild(node("p","Assignment worksheet: 35 method-authority and 35 manufacturer/supplier requests, with blank fields for an internal coordinator, verified recipient, target date, approval and channel. Complete offline; a plan or self-reported send is not evidence receipt, independent approval or product release."));
+ const brief=node("button","Download detailed evidence requirements CSV");brief.type="button";brief.dataset.b121Brief="";
+ control.appendChild(refresh);control.appendChild(download);control.appendChild(assign);control.appendChild(brief);h.appendChild(control);
+ h.appendChild(node("p","Assignment worksheet: 35 method-authority and 35 manufacturer/supplier requests, with blank fields for an internal coordinator, verified recipient, target date, approval and channel. The detailed evidence CSV additionally includes the source-verified product, analyte, gate and exact documentary request text. Both downloads are local planning copies only; neither establishes evidence receipt, independent approval or product release."));
  const summary=node("p","Select Refresh to verify the current 70 local follow-up records.");
  summary.setAttribute("data-b118-summary","");summary.setAttribute("role","status");
  summary.setAttribute("aria-live","polite");h.appendChild(summary);
@@ -152,6 +153,56 @@ function assignmentCSV(result=compute()){
   "ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"]);
  return[headings,...rows].map(x=>x.map(quote).join(",")).join("\r\n")+"\r\n";
 }
+
+/* Batch121: source-verified, detailed original evidence-brief CSV for allocation.
+ * Treat the B97 source records as immutable; reject missing/mutated joins.
+ * All recipient/approval fields remain blank and no data is persisted or sent. */
+function evidenceBriefCSV(result=compute()){
+ const api=window.pmsvB97Followup;
+ if(!result.valid||result.rows?.length!==70||!api?.sourceValid?.()||!api?.records)
+  return "";
+ const source=api.records();
+ if(!Array.isArray(source)||source.length!==70)return "";
+ const byId=new Map();
+ for(const x of source){
+  if(!x||typeof x.request_id!=="string"||byId.has(x.request_id)||
+     ![x.case_id,x.priority,x.rank,x.role,x.gate,x.product,x.analyte,x.evidence]
+       .every(v=>typeof v==="string"&&v.trim())||
+     x.source_request_status!=="NOT_SENT"||x.source_document_status!=="NOT_RECEIVED")
+   return "";
+  byId.set(x.request_id,x);
+ }
+ if(byId.size!==70)return "";
+ const headings=["priority","case_id","request_id","owner_role","product_name",
+  "analyte","evidence_gate","original_evidence_requirement","next_action",
+  "named_internal_coordinator","verified_external_recipient","planned_dispatch_date",
+  "approved_dispatch_channel","internal_approval_reference",
+  "original_request_status","original_document_status","compliance_gate"];
+ const quote=v=>{
+  let s=String(v??"");if(/^\s*[=+@-]/.test(s))s="'"+s;
+  return '"'+s.replaceAll('"','""')+'"';
+ };
+ const rows=[];
+ for(const r of result.rows){
+  const x=byId.get(r.request_id);
+  if(!x||x.case_id!==r.case_id||x.priority!==r.priority||x.rank!==r.rank||
+     x.role!==r.role||x.gate!==r.gate||
+     x.source_request_status!==r.source_request_status||
+     x.source_document_status!==r.source_document_status)return "";
+  rows.push([r.priority,r.case_id,r.request_id,r.role,x.product,x.analyte,
+   x.gate,x.evidence,r.action,"","","","","",
+   "NOT_SENT","NOT_RECEIVED","ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"]);
+ }
+ return[headings,...rows].map(x=>x.map(quote).join(",")).join("\r\n")+"\r\n";
+}
+function downloadEvidenceBriefCSV(){
+ const contents=evidenceBriefCSV();if(!contents)return false;
+ const url=URL.createObjectURL(new Blob(["\uFEFF"+contents],{type:"text/csv;charset=utf-8"}));
+ const a=node("a");a.href=url;
+ a.download="PMSV-B121-70-DETAILED-EVIDENCE-BRIEF-OFFLINE-UNAPPROVED.csv";
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ return true;
+}
 function downloadAssignmentCSV(){
  const contents=assignmentCSV();if(!contents)return false;
  const url=URL.createObjectURL(new Blob(["\uFEFF"+contents],{type:"text/csv;charset=utf-8"}));
@@ -172,6 +223,7 @@ document.addEventListener("click",event=>{
  else if(event.target?.closest?.("[data-b118-refresh]"))void render();
  else if(event.target?.closest?.("[data-b118-csv]"))void downloadCSV();
  else if(event.target?.closest?.("[data-b118-assignment]"))void downloadAssignmentCSV();
+ else if(event.target?.closest?.("[data-b121-brief]"))void downloadEvidenceBriefCSV();
 });
-window.pmsvB118NextActions=Object.freeze({compute,install,render,csv,assignmentCSV,localToday});
+window.pmsvB118NextActions=Object.freeze({compute,install,render,csv,assignmentCSV,evidenceBriefCSV,localToday});
 })();
