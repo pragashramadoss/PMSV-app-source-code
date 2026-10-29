@@ -334,7 +334,7 @@ test("Batch124 fails closed when authenticated original first-70 records are mis
  assert.equal(scenario(undefined,{records}).api.compute("2026-10-29").valid,false);
  const good=scenario(),result=good.api.compute("2026-10-29");
  assert.equal(result.valid,true);
- assert.equal(good.api.evidenceBriefCSV(result,"P0").split("\\r\\n").length,28);
+ assert.equal(good.api.evidenceBriefCSV(result,"P0").split("\r\n").length,28);
  assert.ok(result.rows.every(r=>r.source_request_status==="NOT_SENT"&&
   r.source_document_status==="NOT_RECEIVED"));
 });
