@@ -22,6 +22,8 @@ const context=vm.createContext({window,document,console,setTimeout});
 const b98=fs.readFileSync(root+"pmsv-batch98-source-authentication-handoff-2026-10-25.js","utf8");
 const b99=fs.readFileSync(root+"pmsv-batch99-downstream-evidence-dependency-audit-2026-10-25.js","utf8");
 vm.runInContext(b98,context);vm.runInContext(b99,context);
+const b97=fs.readFileSync(root+"pmsv-batch97-first70-followup-2026-10-25.js","utf8");
+vm.runInContext(b97,context);
 const review=window.pmsvB99DownstreamAudit,metadata=window.pmsvB98Handoff;
 assert(review&&metadata&&review.sourceValid());
 (async()=>{
@@ -68,5 +70,35 @@ assert(review&&metadata&&review.sourceValid());
  assert.equal(review.sourceValid(),true);
  assert(rows.every(x=>x.original_request_status==="NOT_SENT"&&
   x.original_document_status==="NOT_RECEIVED"));
+
+ // Batch126: original 105 BLOCKED reviewer workpapers and 39 P0 subset.
+ const parse=window.pmsvB97Followup.parseCSV;
+ const fullCSV=review.reviewWorksheetCSV("ALL");
+ assert(fullCSV);
+ const full=parse(fullCSV);
+ assert.equal(full.length,106);
+ assert.equal(full[0].length,23);
+ const entries=full.slice(1);
+ assert.equal(new Set(entries.map(x=>x[3])).size,105);
+ assert.equal(new Set(entries.map(x=>x[2])).size,35);
+ assert(entries.every(x=>x.length===23&&
+  x[13]==="BLOCKED_ORIGINAL_NOT_SENT_NOT_RECEIVED"&&
+  x.slice(14,22).every(v=>v==="")&&
+  x[22]==="ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"));
+ for(const role of ["REGULATORY_AFFAIRS_LEGAL","LABORATORY_TECHNICAL_MANAGER",
+  "SITE_QA_AND_INDEPENDENT_REGULATORY_REVIEWER"])
+  assert.equal(entries.filter(x=>x[6]===role).length,35);
+ const urgent=parse(review.reviewWorksheetCSV("P0"));
+ assert.equal(urgent.length,40);
+ assert.equal(new Set(urgent.slice(1).map(x=>x[2])).size,13);
+ assert(urgent.slice(1).every(x=>x[0]==="P0"));
+ assert.equal(review.reviewWorksheetCSV("P1"),"");
+ assert(fullCSV.includes("SOURCE_REVISION_RESET_REVIEW_REQUIRED"));
+ assert(b99.includes("data-b126-all")&&b99.includes("data-b126-p0"));
+ rows[0].original_document_status="RECEIVED";
+ assert.equal(review.reviewWorksheetCSV("ALL"),"");
+ assert.equal(review.reviewWorksheetCSV("P0"),"");
+ rows[0].original_document_status="NOT_RECEIVED";
+ assert.equal(review.sourceValid(),true);
  console.log("Batch99 PASS: 105 original downstream HELD gates, 35 per independent role, source-revision stale review detection, 0 legal/method/lot approvals.");
 })().catch(e=>{console.error(e);process.exitCode=1;});
