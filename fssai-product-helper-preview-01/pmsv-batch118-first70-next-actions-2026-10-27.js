@@ -106,8 +106,11 @@ function install(){
  const assign=node("button","Download 70-request owner assignment worksheet");assign.type="button";assign.dataset.b118Assignment="";
  const brief=node("button","Download detailed evidence requirements CSV");brief.type="button";brief.dataset.b121Brief="";
  const p0=node("button","Download P0 urgent evidence packet (13 cases · 26 requests)");p0.type="button";p0.dataset.b122P0="";
- control.appendChild(refresh);control.appendChild(download);control.appendChild(assign);control.appendChild(brief);control.appendChild(p0);h.appendChild(control);
+ const drafts=node("button","Download all 70 UNSENT evidence-request drafts");drafts.type="button";drafts.dataset.b125Drafts="";
+ const urgentDrafts=node("button","Download 26 urgent P0 UNSENT request drafts");urgentDrafts.type="button";urgentDrafts.dataset.b125P0Drafts="";
+ control.appendChild(refresh);control.appendChild(download);control.appendChild(assign);control.appendChild(brief);control.appendChild(p0);control.appendChild(drafts);control.appendChild(urgentDrafts);h.appendChild(control);
  h.appendChild(node("p","Assignment worksheet: 35 method-authority and 35 manufacturer/supplier requests, with blank fields for an internal coordinator, verified recipient, target date, approval and channel. The detailed evidence CSV additionally includes the source-verified product, analyte, gate and exact documentary request text. All downloads are local planning copies only. The P0 packet narrows this to the 13 highest-priority cases (26 original preparatory requests); none establishes evidence receipt, independent approval or product release."));
+ h.appendChild(node("p","Batch125 request drafts are OFFLINE templates only, with source-specific original evidence text and separate prompts for method-source and manufacturer/supplier owners. Recipients, internal coordinators and approval fields remain blank. PMSV does not send a request or verify its receipt."));
  const summary=node("p","Select Refresh to verify the current 70 local follow-up records.");
  summary.setAttribute("data-b118-summary","");summary.setAttribute("role","status");
  summary.setAttribute("aria-live","polite");h.appendChild(summary);
@@ -236,6 +239,73 @@ function evidenceBriefCSV(result=compute(),priorityFilter="ALL"){
  }
  return[headings,...rows].map(x=>x.map(quote).join(",")).join("\r\n")+"\r\n";
 }
+/* Batch125: prepare source-specific text for offline, separately authorised
+ * external requests. Each template is derived through the already verified B121
+ * detailed-source export. Nothing is sent, addressed, stored or approved here. */
+function requestDraftCSV(result=compute(),priorityFilter="ALL"){
+ if(!["ALL","P0"].includes(priorityFilter))return "";
+ const api=window.pmsvB97Followup;
+ const detail=evidenceBriefCSV(result,priorityFilter);
+ if(!detail||!api?.parseCSV)return "";
+ let sourceRows;
+ try{sourceRows=api.parseCSV(detail)}catch(_){return ""}
+ const expected=priorityFilter==="P0"?26:70;
+ if(sourceRows.length!==expected+1||sourceRows[0].length!==17)return "";
+ const headings=["priority","case_id","request_id","functional_recipient_role",
+  "product_name","analyte","evidence_gate","original_evidence_requirement",
+  "draft_email_subject","draft_email_body","named_internal_coordinator",
+  "verified_external_recipient","approved_dispatch_channel",
+  "internal_approval_reference","planned_dispatch_date",
+  "original_request_status","original_document_status","compliance_gate"];
+ const quote=v=>{
+  let s=String(v??"");if(/^\s*[=+@-]/.test(s))s="'"+s;
+  return '"'+s.replaceAll('"','""')+'"';
+ };
+ const rows=[];
+ for(const x of sourceRows.slice(1)){
+  if(x.length!==17||x[14]!=="NOT_SENT"||x[15]!=="NOT_RECEIVED"||
+     x[16]!=="ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"||
+     ![SOURCE,MAKER].includes(x[3])||
+     ![x[0],x[1],x[2],x[4],x[5],x[6],x[7]].every(v=>typeof v==="string"&&v.trim()))
+   return "";
+  const [p,caseId,requestId,role,product,analyte,gate,evidence]=x;
+  const recipient=role===SOURCE?"method/source authority":"manufacturer/supplier quality";
+  const roleInstructions=role===SOURCE?
+   "Please identify the operative original FSSAI legal publication, exact article and current amendment/effective-date chain; resolve any applicable method adoption, supersession or conflict; provide the original texts and matrix-appropriate analytical-method and laboratory-scope basis. If an article does not apply to this finished product, provide source-backed exclusion reasoning. Do not infer a numeric limit by analogy.":
+   "Please provide approved, revision-controlled finished-product identity and formulation or composition, applicable processing/pack classification, specifications, batch and material traceability, original CoAs and the analytical method/laboratory scope relevant to the requested evidence. Explicitly identify documents that are unavailable; do not substitute a similar product's records.";
+  const subject="PMSV FSSAI evidence request — UNSENT DRAFT — "+p+
+   " — "+product+" / "+analyte+" — "+requestId;
+  const body="Dear verified "+recipient+" recipient, "+
+   "This is an UNSENT DRAFT requiring internal dispatch approval. "+
+   "For original PMSV case "+caseId+" and request "+requestId+
+   ", product "+product+", analyte "+analyte+", evidence gate "+gate+
+   ", please provide the following original documentary evidence: "+evidence+" "+
+   roleInstructions+" Please include document title, issuing entity, version/date, "+
+   "verifiable source reference and any relevant annexures. Any response will undergo "+
+   "independent Regulatory, Laboratory and QA review; no product compliance or lot "+
+   "release is implied. Regards, [authorised internal coordinator].";
+  rows.push([p,caseId,requestId,role,product,analyte,gate,evidence,
+   subject,body,"","","","","","NOT_SENT","NOT_RECEIVED",
+   "ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"]);
+ }
+ if(rows.length!==expected||new Set(rows.map(x=>x[2])).size!==expected)return "";
+ return[headings,...rows].map(x=>x.map(quote).join(",")).join("\r\n")+"\r\n";
+}
+function downloadRequestDraftCSV(priorityFilter="ALL"){
+ const contents=requestDraftCSV(compute(),priorityFilter);
+ if(!contents){
+  const sum=host()?.querySelector("[data-b118-summary]");
+  if(sum)sum.textContent="Draft export blocked: original request identity or evidence source failed validation. All 35 cases HELD.";
+  return false;
+ }
+ const url=URL.createObjectURL(new Blob(["\uFEFF"+contents],{type:"text/csv;charset=utf-8"}));
+ const a=node("a");a.href=url;
+ a.download=priorityFilter==="P0"?
+  "PMSV-B125-P0-26-UNSENT-EVIDENCE-REQUEST-DRAFTS.csv":
+  "PMSV-B125-ALL70-UNSENT-EVIDENCE-REQUEST-DRAFTS.csv";
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ return true;
+}
 /* Batch122: P0 subset is derived only after full 70-source reconciliation.
  * No evidence state, responsible person or approval is inferred. */
 function downloadP0EvidenceBriefCSV(){
@@ -281,6 +351,8 @@ document.addEventListener("click",event=>{
  else if(event.target?.closest?.("[data-b118-assignment]"))void downloadAssignmentCSV();
  else if(event.target?.closest?.("[data-b121-brief]"))void downloadEvidenceBriefCSV();
  else if(event.target?.closest?.("[data-b122-p0]"))void downloadP0EvidenceBriefCSV();
+ else if(event.target?.closest?.("[data-b125-drafts]"))void downloadRequestDraftCSV("ALL");
+ else if(event.target?.closest?.("[data-b125-p0-drafts]"))void downloadRequestDraftCSV("P0");
 });
-window.pmsvB118NextActions=Object.freeze({compute,install,render,csv,assignmentCSV,evidenceBriefCSV,localToday});
+window.pmsvB118NextActions=Object.freeze({compute,install,render,csv,assignmentCSV,evidenceBriefCSV,requestDraftCSV,localToday});
 })();
