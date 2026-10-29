@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>PMSV FSSAI | 35-case regulatory review · 29 October 2026</title>
+<title>PMSV FSSAI | 35 held cases · documentary readiness · 29 October 2026</title>
 <style>
 :root{color-scheme:light;--bg:#f3f6fb;--ink:#14263e;--blue:#2850bf;--line:#d6e0ef;--muted:#50637d;--amber:#8a5200;--red:#a32929;--white:#fff}
 *{box-sizing:border-box}body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}
@@ -28,6 +28,7 @@ th{position:sticky;top:0;background:#eaf0ff;font-size:.83rem;z-index:1}td{font-s
 small{display:block;color:var(--muted);margin-top:5px}
 .status{color:var(--red);font-weight:800}.pill{display:inline-block;padding:2px 7px;border-radius:20px;background:#fff0d8;color:var(--amber);font-size:.74rem;font-weight:800}
 details{max-width:350px}summary{font-weight:750;cursor:pointer}details p{font-size:.82rem}
+.wide{min-width:1150px}.evidence{max-height:60vh}.tiny{font-size:.8rem;color:var(--muted)}.flag{color:#a32929;font-weight:800}.nowrap{white-space:nowrap}.gate{display:block;font-size:.76rem;color:var(--muted);margin-top:4px}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #ffa62b;outline-offset:3px}
 footer{font-size:.78rem;color:var(--muted);margin-top:22px}
 @media(max-width:740px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.controls{grid-template-columns:1fr}.card{padding:13px}}
@@ -36,8 +37,8 @@ footer{font-size:.78rem;color:var(--muted);margin-top:22px}
 <body>
 <header><div style="max-width:1160px;margin:auto">
 <a href="./index.html#standard">← Back to PMSV FSSAI Helper</a>
-<h1>All 35: public-source review and future amendment watch</h1>
-<p>Batch128 · 29 October 2026 · regulatory research tracking only — not a food product approval or lot release</p>
+<h1>All 35: regulatory research and documentary readiness</h1>
+<p>Batch128 + Batch134 · 29 October 2026 · regulatory research and historical evidence-request tracking only — not a food product approval or lot release</p>
 </div></header>
 <main>
 <section class="card" aria-label="Governing sources">
@@ -57,6 +58,29 @@ footer{font-size:.78rem;color:var(--muted);margin-top:22px}
 <div class="stat"><b id="hold">—</b><span>Commercial cases HELD / approvals 0</span></div>
 </div>
 </section>
+
+<section class="card" aria-labelledby="intakeTitle">
+<h2 id="intakeTitle">Batch134 · all 175 original documentary requests</h2>
+<p>This is an integrity-pinned, read-only register of 35 held commercial cases and their five <strong>original historical request IDs each</strong>. Every ID was listed as <strong>not received in the 20 October 2026 snapshot</strong>. Receipt after that date is <strong>not verified</strong> here; there is no live inbox, supplier document upload or approval connection.</p>
+<div class="stats" aria-label="Documentary readiness metrics">
+<div class="stat"><b id="requestTotal">—</b><span>Distinct original evidence request IDs</span></div>
+<div class="stat"><b id="routeMissing">—</b><span>Held cases missing original FSSR field · group route only</span></div>
+<div class="stat"><b id="newReceipts">—</b><span>New receipts verified since 20 October</span></div>
+<div class="stat"><b id="allHeld">—</b><span>Held cases, zero approvals / releases</span></div>
+</div>
+<div class="note"><strong>Two different tracking systems:</strong> The IDs ending -01 through -05 are legacy references whose underlying wording was not authenticated. The five suggested gates below are a new QA workflow; <strong>they are not a mapping of these legacy ID suffixes</strong> and none has been marked complete.</div>
+<h2 style="margin-top:19px">Five proposed commercial evidence gates</h2>
+<div class="scroll" style="max-height:none"><table aria-label="Suggested evidence gates, not tied to original request ID suffixes"><thead><tr><th>New gate</th><th>Suggested owner function</th><th>Minimum dossier evidence</th></tr></thead><tbody id="gates"></tbody></table></div>
+<h2 style="margin-top:19px">Search all original request IDs</h2>
+<div class="controls">
+<label>Request ID, product or analyte<input id="requestSearch" placeholder="e.g. PMSV44-03-01, cocoa, lead" disabled></label>
+<label>Priority<select id="requestPriority" disabled><option value="ALL">All priorities</option><option>P0</option><option>P1</option></select></label>
+<label>Original FSSR field<select id="requestRoute" disabled><option value="ALL">Both FSSR states</option><option value="MISSING">Missing · group route only</option><option value="PRESENT">Recorded FSSR available</option></select></label>
+</div>
+<div class="actions"><button id="exportRequests" disabled>Download filtered 175-request CSV</button><span id="requestCount" role="status"></span></div>
+<div class="scroll evidence" role="region" aria-label="Scrollable original documentary request register" tabindex="0"><table class="wide"><thead><tr><th>Original request ID</th><th>Case / priority</th><th>Commercial first-document question</th><th>Regulatory route</th><th>Document receipt · no current verification</th></tr></thead><tbody id="requestRows"></tbody></table></div>
+<p class="tiny">The recorded FSSR number is a catalogue entry, not a signed contaminant-limit applicability decision. A route-group reference for the eight empty FSSR fields is a navigation aid only. <a href="./pmsv-batch131-533-identity-qa.html">View the 533-record identity and route QA</a>.</p>
+</section>
 <section class="card">
 <h2>Full 35-case audit table</h2>
 <p>Filter by product, category, analyte, priority or source decision. The result contains the precise first evidence question and original request IDs for controlled follow-up.</p>
@@ -71,15 +95,16 @@ footer{font-size:.78rem;color:var(--muted);margin-top:22px}
 <span id="count" role="status"></span>
 </div>
 <div class="scroll" role="region" aria-label="Scrollable thirty-five product research case table" tabindex="0">
-<table><thead><tr><th>No. / Priority</th><th>Product / analyte</th><th>Published source finding</th><th>Why the comparator cannot be applied</th><th>First original evidence to obtain</th><th>Five original request IDs</th><th>Regulatory / lot disposition</th></tr></thead><tbody id="rows"></tbody></table>
+<table><thead><tr><th>No. / Priority</th><th>Product / analyte</th><th>Published source finding</th><th>Why the comparator cannot be applied</th><th>First original evidence to obtain</th><th>Original FSSR / research route</th><th>Five original request IDs</th><th>Regulatory / lot disposition</th></tr></thead><tbody id="rows"></tbody></table>
 </div>
 </section>
-<footer>Research snapshot from PMSV Batch88, verified against the unchanged 35-case closeout; future legal-effect watch added Batch128. No confidential external files are collected or transmitted by this page. Do not use this screen as a certificate, CoA, signed legal opinion, or release document.</footer>
+<footer>Research snapshot from PMSV Batch88, verified against the unchanged 35-case closeout; future legal-effect watch added Batch128; 175-request documentary readiness added Batch134. No confidential external files are collected or transmitted by this page. Do not use this screen as a certificate, CoA, signed legal opinion, or release document.</footer>
 </main>
 <script>
 (()=>{"use strict";
 const PATH="./data/rules/fssai-final35-desk-research-complete-batch88-2026-10-20.json",PIN="4d1590738e747a2a";
-let records=null;
+const INTAKE_PATH="./data/rules/pmsv-batch134-35-held-documentary-readiness-2026-10-29.json",INTAKE_PIN="79fa7beec3d59b37";
+let records=null,intake=null;
 const $=id=>document.getElementById(id);
 function digest(value){let a=0x811c9dc5,b=0x9747b28c;for(const ch of JSON.stringify(value)){const c=ch.charCodeAt(0);a=Math.imul(a^c,16777619);b=Math.imul(b^c,2246822519)}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")}
 function valid(d){
@@ -104,6 +129,39 @@ return ids.size===35&&rids.size===175&&p0===13&&p1===22&&other===23&&unresolved=
  s.original_evidence_ids_not_received===175&&s.signed_case_limits===0&&s.lab_method_approvals===0&&
  s.commercial_lot_coas===0&&s.regulatory_passes===0&&s.lot_releases===0;
 }
+function validIntake(o,d){
+ if(!o||digest(o)!==INTAKE_PIN||o.kind!=="PMSV_BATCH134_35_HELD_DOCUMENTARY_READINESS_NO_PRODUCT_APPROVAL"||
+ o.prior_closeout_digest!==PIN||o.legacy_id_semantics_authenticated!==false||
+ o.proposed_gates_are_separate_from_legacy_ids!==true||
+ !Array.isArray(o.cases)||o.cases.length!==35||!Array.isArray(o.requests)||o.requests.length!==175||
+ !Array.isArray(o.proposed_gates)||o.proposed_gates.length!==5)return false;
+ const s=o.summary||{};
+ if(s.catalogue!==533||s.cases!==35||s.p0!==13||s.p1!==22||
+ s.original_request_ids!==175||s.original_ids_not_received_at_2026_10_20!==175||
+ s.current_receipts_verified!==0||s.original_fssr_present!==27||s.original_fssr_missing_with_group_route!==8||
+ s.source_research_closed!==35||s.signed_limit_approvals!==0||s.method_matrix_approvals!==0||
+ s.regulatory_approvals!==0||s.lot_releases!==0||s.held!==35)return false;
+ const source=new Map(d.cases.map(c=>[c.case_id,c]));
+ const seen=new Set(),rids=new Set();let missing=0,matched=0;
+ for(const c of o.cases){
+  const x=source.get(c.case_id);
+  if(!x||x.rank!==c.rank||x.priority!==c.priority||x.product!==c.product||x.analyte!==c.analyte||
+   c.lot_release!=="HELD"||c.legal_limit!=="NOT_SIGNED"||c.laboratory_method_matrix!=="NOT_SIGNED"||
+   c.document_receipt_status!=="NOT_RECEIVED_AT_2026_10_20_SNAPSHOT_CURRENT_STATUS_UNVERIFIED"||
+   JSON.stringify(c.original_request_ids)!==JSON.stringify(x.original_evidence_request_ids)||seen.has(c.case_id))return false;
+  seen.add(c.case_id);
+  if(!c.recorded_fssr){missing++;if(!c.regulatory_route_group||!c.regulatory_route_source)return false}
+  else if(c.regulatory_route_group)return false;
+ }
+ for(const r of o.requests){
+  const c=source.get(r.case_id);
+  if(!c||!c.original_evidence_request_ids.includes(r.request_id)||r.case_rank!==c.rank||
+   r.priority!==c.priority||r.snapshot_2026_10_20!=="NOT_RECEIVED"||
+   r.current_receipt!=="NOT_VERIFIED"||r.request_wording_authenticated!==false||rids.has(r.request_id))return false;
+  rids.add(r.request_id);matched++;
+ }
+ return seen.size===35&&rids.size===175&&matched===175&&missing===8;
+}
 const cell=(tr,txt)=>{const td=document.createElement("td");td.textContent=txt;tr.appendChild(td);return td};
 const label=c=>c.numeric_scope==="DIFFERENT_NAMED_FOOD_ARTICLE_REFERENCE_ONLY"?"Different article — numerical reference NOT APPLIED":"No unique numerical article established";
 function matching(c){const q=$("search").value.toLocaleLowerCase("en").trim();return ($("priority").value==="ALL"||c.priority===$("priority").value)&&
@@ -118,6 +176,8 @@ for(const c of list){
  const product=cell(tr,c.product),small=document.createElement("small");small.textContent=c.analyte+" · "+c.case_id;product.appendChild(small);
  cell(tr,label(c));cell(tr,c.regulatory_reason_not_transferred);
  cell(tr,c.first_commercial_document_needed);
+ const route=intake.cases.find(x=>x.case_id===c.case_id);
+ cell(tr,route.recorded_fssr?("Recorded: "+route.recorded_fssr):("ORIGINAL FIELD BLANK · "+route.regulatory_route_label+" · group route only"));
  const proofs=cell(tr,c.original_evidence_request_ids.join(" · "));proofs.style.overflowWrap="anywhere";
  const hold=cell(tr,"HELD · no signed legal limit, validated method/matrix, original lot CoA or release");hold.className="status";
  body.appendChild(tr);
@@ -125,28 +185,73 @@ for(const c of list){
 $("count").textContent=list.length+" of 35 shown · all remain HELD";
 }
 function quote(v){let s=String(v??"");if(/^[\s]*[=+\-@\t\r]/.test(s))s="'"+s;return'"'+s.replaceAll('"','""')+'"'}
+function requestShown(){
+ if(!intake)return[];
+ const q=$("requestSearch").value.toLocaleLowerCase("en").trim(),p=$("requestPriority").value,route=$("requestRoute").value;
+ return intake.requests.filter(r=>{
+  const c=intake.cases.find(x=>x.case_id===r.case_id);
+  return(p==="ALL"||r.priority===p)&&(route==="ALL"||(route==="MISSING"?!c.recorded_fssr:!!c.recorded_fssr))&&
+   (!q||[r.request_id,r.case_id,r.product,r.analyte,r.first_commercial_document_needed,r.priority].some(x=>String(x??"").toLocaleLowerCase("en").includes(q)));
+ });
+}
+function renderRequests(){
+ const items=requestShown(),body=$("requestRows");body.replaceChildren();
+ for(const r of items){
+  const c=intake.cases.find(x=>x.case_id===r.case_id),tr=document.createElement("tr");
+  const id=cell(tr,r.request_id);id.className="nowrap";
+  const product=cell(tr,"#"+r.case_rank+" · "+r.priority+" · "+r.product);
+  const sub=document.createElement("small");sub.textContent=r.analyte;product.appendChild(sub);
+  cell(tr,c.first_commercial_document_needed);
+  const route=cell(tr,c.recorded_fssr?("Recorded "+c.recorded_fssr):("MISSING ORIGINAL FSSR · "+c.regulatory_route_label+" (not an assigned code)"));
+  if(!c.recorded_fssr)route.className="flag";
+  const received=cell(tr,"20 Oct snapshot: NOT RECEIVED · now: NOT VERIFIED");received.className="status";
+  const note=document.createElement("small");note.textContent="Opaque historical ID · no inferred gate or wording";received.appendChild(note);
+  body.appendChild(tr);
+ }
+ $("requestCount").textContent=items.length+" of 175 request IDs shown · current receipt status not verified";
+}
+function exportRequests(){
+ if(!intake)return;
+ const out=[["original_request_id","case_rank","case_id","priority","product","analyte","first_commercial_document_needed","original_fssr","group_route_not_fssr","legacy_request_wording_authenticated","status_in_2026_10_20_snapshot","current_document_receipt","regulatory_approval","lot_release"]];
+ for(const r of requestShown()){
+  const c=intake.cases.find(x=>x.case_id===r.case_id);
+  out.push([r.request_id,r.case_rank,r.case_id,r.priority,r.product,r.analyte,c.first_commercial_document_needed,c.recorded_fssr,c.regulatory_route_label||"","NO","NOT_RECEIVED","NOT_VERIFIED","NO","HELD"]);
+ }
+ downloadCSV(out,"PMSV-BATCH134-175-ORIGINAL-REQUESTS-HELD.csv");
+}
+function downloadCSV(out,name){
+ const blob=new Blob(["\uFEFF"+out.map(row=>row.map(quote).join(",")).join("\r\n")+"\r\n"],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
 function exportCSV(){
 if(!records)return;
 const out=[["case_rank","case_id","priority","product","analyte","desk_research","numeric_source_disposition","named_article_reference_NOT_APPLICABLE","source_ctr_page","nontransfer_reason","first_original_document_required","five_original_evidence_request_ids","2026_amendment_effective","2026_applicability_gate","applicable_limit","method_matrix","original_lot_CoA","lot_release"]];
 for(const c of shown())out.push([c.rank,c.case_id,c.priority,c.product,c.analyte,"CLOSED_SOURCE_RESEARCH",c.numeric_scope,c.referenced_article,c.official_ctr_page,c.regulatory_reason_not_transferred,c.first_commercial_document_needed,c.original_evidence_request_ids.join(" | "),"2026-12-01","RECHECK_ACTUAL_PRODUCT_SCOPE_NO_NUMERIC_TRANSFER","NOT_SIGNED","NOT_SIGNED","NOT_RECEIVED","HELD"]);
-const blob=new Blob(["\uFEFF"+out.map(row=>row.map(quote).join(",")).join("\r\n")+"\r\n"],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
-a.href=url;a.download="PMSV-BATCH128-35-CURRENT-FUTURE-REGULATORY-REVIEW-HELD.csv";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+downloadCSV(out,"PMSV-BATCH128-35-CURRENT-FUTURE-REGULATORY-REVIEW-HELD.csv");
 }
 (async()=>{
 try{
- const response=await fetch(PATH+"?v=20261029-b128",{cache:"no-store"});if(!response.ok)throw Error("Source unavailable");
- const data=await response.json();if(!valid(data))throw Error("35-case source integrity mismatch");
- records=Object.freeze(data.cases.map(c=>Object.freeze(c)));
+ const [response,responseIntake]=await Promise.all([fetch(PATH+"?v=20261029-b134",{cache:"no-store"}),fetch(INTAKE_PATH+"?v=20261029-b134",{cache:"no-store"})]);
+ if(!response.ok||!responseIntake.ok)throw Error("Source unavailable");
+ const [data,overlay]=await Promise.all([response.json(),responseIntake.json()]);
+ if(!valid(data)||!validIntake(overlay,data))throw Error("35-case or 175-request source integrity mismatch");
+ records=Object.freeze(data.cases.map(c=>Object.freeze(c)));intake=overlay;
  $("total").textContent="35/35";$("comparators").textContent="23";$("unresolved").textContent="12";$("hold").textContent="35";
+ $("requestTotal").textContent="175";$("routeMissing").textContent="8";$("newReceipts").textContent="0 verified";$("allHeld").textContent="35/35";
+ for(const gate of overlay.proposed_gates){
+  const tr=document.createElement("tr");cell(tr,gate.label);cell(tr,gate.owner_function);cell(tr,gate.minimum_evidence);$("gates").appendChild(tr);
+ }
  const analytes=[...new Set(records.map(c=>c.analyte))].sort();
  for(const x of analytes){const o=document.createElement("option");o.value=x;o.textContent=x;$("analyte").appendChild(o)}
- for(const id of ["search","priority","finding","analyte","export"])$(id).disabled=false;
+ for(const id of ["search","priority","finding","analyte","export","requestSearch","requestPriority","requestRoute","exportRequests"])$(id).disabled=false;
  for(const id of ["search","priority","finding","analyte"])$(id).addEventListener(id==="search"?"input":"change",render);
  $("export").addEventListener("click",exportCSV);
- $("status").textContent="Verified 35/35 original cases and 175 distinct documentary request IDs. Research concluded; regulatory/lot verification HELD.";
- render();
+ for(const id of ["requestSearch","requestPriority","requestRoute"])$(id).addEventListener(id==="requestSearch"?"input":"change",renderRequests);
+ $("exportRequests").addEventListener("click",exportRequests);
+ $("status").textContent="Verified 35/35 original research cases, 175 original documentary request IDs and eight missing-FSSR route flags. All commercial releases HELD.";
+ render();renderRequests();
 }catch(e){
- $("status").textContent="SOURCE VERIFICATION FAILED — nothing displayed or exportable; all commercial cases remain HELD.";
+ $("status").textContent="SOURCE VERIFICATION FAILED — no cases or requests displayed or exportable; all commercial cases remain HELD.";
  $("count").textContent="Review unavailable";console.warn("PMSV B128 source control",e.message);
 }
 })();
