@@ -1,0 +1,21 @@
+name: Verify PMSV Batch128 35-case source surveillance
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch128-35-regulatory-review.html'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-final35-desk-research-complete-batch88-2026-10-20.json'
+      - 'tests/pmsv-batch128-35-source-surveillance.test.cjs'
+      - '.github/workflows/verify-pmsv-batch128-35-source-surveillance.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify pinned source, safety controls and syntax
+        run: node --test tests/pmsv-batch128-35-source-surveillance.test.cjs
