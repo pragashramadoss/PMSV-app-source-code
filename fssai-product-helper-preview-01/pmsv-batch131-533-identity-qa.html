@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>PMSV FSSAI · All 533 identity source QA | Batch131</title>
+<style>
+:root{--navy:#16346d;--blue:#3457cd;--ink:#1a2940;--muted:#546781;--line:#dbe3ee;--bg:#f2f5fb;--red:#ac2424}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:22px 16px;color:white;background:linear-gradient(130deg,var(--navy),#466add)}header a{color:#fff}
+h1{font-size:clamp(1.5rem,3vw,2.1rem);margin:5px 0}h2{font-size:1.15rem;margin:0 0 8px}
+main{max-width:1190px;padding:0 12px 35px;margin:20px auto}
+.card{background:white;border:1px solid var(--line);border-radius:13px;padding:18px;margin:14px 0;box-shadow:0 2px 4px #152e6410}
+.muted,small{color:var(--muted)}small{display:block;margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.stat{padding:12px;border-radius:9px;background:#eef3ff}.stat b{font-size:1.6rem;display:block}.stat span{font-size:.78rem;color:var(--muted)}
+.note{padding:12px;background:#fff7e6;border-left:4px solid #bb8318;margin:12px 0}
+.hold{padding:12px;background:#fff2f2;border-left:4px solid var(--red);margin:12px 0}
+.controls{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin:15px 0}
+label{font-size:.82rem;font-weight:750}input,select{width:100%;display:block;min-height:42px;border:1px solid #bac6d9;border-radius:7px;padding:8px;margin-top:4px;background:#fff;font:inherit}
+button{border:0;border-radius:7px;background:var(--blue);color:white;padding:9px 13px;min-height:42px;font:inherit;font-weight:800}
+button:disabled,input:disabled,select:disabled{opacity:.5}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.scroller{overflow:auto;max-height:75vh;border:1px solid var(--line);border-radius:8px}table{border-collapse:collapse;width:100%;min-width:850px}
+th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{position:sticky;top:0;background:#e9effe;font-size:.8rem}
+td{font-size:.87rem}tr:nth-child(even){background:#f9fbff}
+.badge{display:inline-block;padding:3px 7px;margin:2px;background:#fff0d9;color:#704300;font-weight:750;border-radius:8px;font-size:.76rem}
+.pending{color:var(--red);font-weight:850}.footer{color:var(--muted);font-size:.8rem;margin:18px 0}
+a{color:#2850bd}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #f0a52d;outline-offset:2px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.controls{grid-template-columns:1fr}.card{padding:13px}}
+</style>
+</head>
+<body><header><div style="max-width:1190px;margin:auto">
+<a href="./index.html#standard">← PMSV FSSAI Helper</a>
+<h1>All 533 — identity and source-routing QA</h1>
+<p>Batch131 · 29 October 2026 · large-batch data completeness review, not product compliance certification</p>
+</div></header>
+<main>
+<section class="card">
+<h2>What this batch checks</h2>
+<p>Every original catalogue row is checked for an FSSR code stored in the ledger, a FoSCoS code stored in the ledger, and names repeated across distinct catalogue IDs. Repeated names can be legitimate across different classes; missing code fields can also be intentional. These are <strong>review prompts, not violations</strong>.</p>
+<div class="note"><b>Do not infer approval from an unflagged row.</b> All 498 first-source matches are conditional regulatory references. The 35 legacy pending rows had their published-law desk research closed in Batch88, but remain commercially HELD. There are zero signed SKU-specific legal limits, validated methods, CoAs, passes or releases.</div>
+<div class="hold"><b>Never automatically merge duplicated names, populate FSSR/FoSCoS identifiers, transfer numeric contaminant limits, or release lots.</b> An owner must authenticate the product identity against current original standards, formulation and intended sale classification.</div>
+<p>Official reference: <a href="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf" target="_blank" rel="noopener noreferrer">FSSAI CTR Version IX (3 February 2026)</a>; <a href="https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf" target="_blank" rel="noopener noreferrer">May 2026 amendment, operative 1 December 2026</a>. Neither reference automatically validates a commercial classification.</p>
+</section>
+<section class="card">
+<h2>Verified coverage</h2><p id="status" role="status" aria-live="polite">Validating both source snapshots…</p>
+<div class="stats">
+<div class="stat"><b id="total">—</b><span>Original catalogue rows checked</span></div>
+<div class="stat"><b id="flagged">—</b><span>Rows with ≥1 identity review flag</span></div>
+<div class="stat"><b id="missingFssr">—</b><span>FSSR field absent in ledger</span></div>
+<div class="stat"><b id="missingFcs">—</b><span>FoSCoS field absent in ledger</span></div>
+<div class="stat"><b id="nameRows">—</b><span>Duplicate-name rows (4 groups)</span></div>
+<div class="stat"><b id="conditional">—</b><span>Conditional first-source references</span></div>
+<div class="stat"><b id="held">—</b><span>Commercial cases HELD</span></div>
+<div class="stat"><b id="approved">—</b><span>Commercial approvals / releases</span></div>
+</div>
+</section>
+<section class="card">
+<h2>Review queue for all 533</h2>
+<div class="controls">
+<label>Search<input id="search" type="search" placeholder="Product, catalogue ID, FSSR, FoSCoS, review group" disabled></label>
+<label>Identity flag<select id="filter" disabled>
+<option value="FLAGGED">Flagged for review (102)</option>
+<option value="ALL">All 533</option>
+<option value="MISSING_FSSR">Missing stored FSSR code (86)</option>
+<option value="MISSING_FOSCOS">Missing stored FoSCoS code (10)</option>
+<option value="DUPLICATE_NAME">Repeated product-name rows (14)</option>
+<option value="NO_FLAG">No mechanical identity flag (431)</option>
+</select></label>
+<label>Source research state<select id="source" disabled>
+<option value="ALL">Both research states</option>
+<option value="PARTIAL_EXACT_SOURCE_MATCH">498 conditional references</option>
+<option value="FIRST_EXACT_SOURCE_PENDING">35 research closed / held</option>
+</select></label>
+</div>
+<div class="actions"><button id="export" disabled>Download filtered identity review CSV</button>
+<button id="prev" disabled>Previous 50</button><button id="next" disabled>Next 50</button><span id="count" role="status"></span></div>
+<div class="scroller" role="region" aria-label="Scroll the catalogue identity review rows" tabindex="0">
+<table><thead><tr><th>Product / stable catalogue ID</th><th>Stored FSSR code</th><th>Stored FoSCoS code</th><th>Identity review flags</th><th>First-source status</th><th>Source review group</th></tr></thead><tbody id="rows"></tbody></table>
+</div>
+</section>
+<p class="footer">Data-quality surveillance only. No FSSAI endorsement, violation finding, legal exemption, testing certification or product/lot release is represented. No proprietary external data is collected, saved or sent.</p>
+</main>
+<script>
+(()=>{"use strict";
+const LEDGER="./data/rules/fssai-current-first-source-533-live-ledger-498-35-2026-10-13.json",
+CLOSED="./data/rules/fssai-final35-desk-research-complete-batch88-2026-10-20.json",
+LEDGER_PIN="d142be820899eac5",CLOSED_PIN="4d1590738e747a2a",PAGE=50;
+const $=id=>document.getElementById(id);let rows=null,page=0;
+function digest(value){let a=0x811c9dc5,b=0x9747b28c;for(const ch of JSON.stringify(value)){const c=ch.charCodeAt(0);a=Math.imul(a^c,16777619);b=Math.imul(b^c,2246822519)}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")}
+function validate(l,c){
+if(digest(l)!==LEDGER_PIN||digest(c)!==CLOSED_PIN||!Array.isArray(l.records)||l.records.length!==533||
+l.catalogue!==533||l.partial_exact!==498||l.first_source_pending!==35||
+l.full_compliance_approvals!==0||c.cases?.length!==35||c.future_CTR_amendment_effective!=="2026-12-01"||
+c.summary?.desk_review_finished!==35||c.summary?.original_evidence_ids_not_received!==175||
+c.summary?.regulatory_passes!==0||c.summary?.lot_releases!==0)return null;
+const ids=new Set(),lookup=new Map(),caseIDs=new Set(c.cases.map(x=>x.case_id));let matched=0,pending=0;
+for(const r of l.records){
+if(!r.catalog_id||ids.has(r.catalog_id)||!r.product_name||r.product_compliance_approval!==false||
+r.sample_lab_pass!==false||r.complete_contaminant_panel!==false)return null;
+ids.add(r.catalog_id);lookup.set(r.catalog_id,r);
+if(r.source_status==="PARTIAL_EXACT_SOURCE_MATCH"){if(caseIDs.has(r.catalog_id))return null;matched++}
+else if(r.source_status==="FIRST_EXACT_SOURCE_PENDING"){if(!caseIDs.has(r.catalog_id))return null;pending++}
+else return null;
+}
+if(ids.size!==533||matched!==498||pending!==35||caseIDs.size!==35)return null;
+for(const x of c.cases){
+const r=lookup.get(x.case_id);
+if(!r||r.product_name!==x.product||x.source_desk_research!=="COMPLETE"||
+x.actual_product_scope!=="NOT_AUTHENTICATED"||x.applicable_legal_limit!=="NOT_SIGNED"||
+x.lab_method_matrix!=="NOT_SIGNED"||x.lot_release!=="HELD")return null;
+}
+return l.records;
+}
+function enrich(records){
+const byName=new Map();
+for(const r of records){const key=r.product_name.toLocaleLowerCase("en").trim().replace(/\s+/g," ");if(!byName.has(key))byName.set(key,[]);byName.get(key).push(r.catalog_id)}
+const nameGroups=[...byName.values()].filter(v=>v.length>1),repeat=new Set(nameGroups.flat());
+const all=records.map(r=>{
+const flags=[];
+if(!r.fssr)flags.push("MISSING_FSSR");
+if(!r.fcs)flags.push("MISSING_FOSCOS");
+if(repeat.has(r.catalog_id))flags.push("DUPLICATE_NAME");
+return Object.freeze({...r,flags:Object.freeze(flags)});
+});
+const missingFssr=all.filter(x=>x.flags.includes("MISSING_FSSR")).length,
+missingFcs=all.filter(x=>x.flags.includes("MISSING_FOSCOS")).length,
+duplicate=all.filter(x=>x.flags.includes("DUPLICATE_NAME")).length,
+flagged=all.filter(x=>x.flags.length>0).length;
+if(missingFssr!==86||missingFcs!==10||duplicate!==14||nameGroups.length!==4||
+flagged!==102||all.filter(x=>x.flags.length===0).length!==431)return null;
+return Object.freeze(all);
+}
+const sourceLabel=r=>r.source_status==="FIRST_EXACT_SOURCE_PENDING"?"DESK RESEARCH CLOSED · COMMERCIAL HELD":"CONDITIONAL FIRST-SOURCE REFERENCE · NOT COMPLIANCE";
+const humanFlag=x=>x==="MISSING_FSSR"?"FSSR code absent from this ledger":x==="MISSING_FOSCOS"?"FoSCoS code absent from this ledger":"Same name under multiple catalogue IDs; verify correct class";
+function filtered(){
+if(!rows)return[];
+const q=$("search").value.trim().toLocaleLowerCase("en"),f=$("filter").value,s=$("source").value;
+return rows.filter(r=>(s==="ALL"||r.source_status===s)&&
+(f==="ALL"||(f==="FLAGGED"&&r.flags.length>0)||(f==="NO_FLAG"&&r.flags.length===0)||r.flags.includes(f))&&
+(!q||[r.catalog_id,r.product_name,r.fssr,r.fcs,r.review_group,r.evidence_origin].some(v=>String(v??"").toLocaleLowerCase("en").includes(q))));
+}
+function addCell(tr,v){const cell=document.createElement("td");cell.textContent=String(v??"");tr.appendChild(cell);return cell}
+function render(){
+if(!rows)return;const selected=filtered();page=Math.min(page,Math.max(0,Math.ceil(selected.length/PAGE)-1));
+$("rows").replaceChildren();
+for(const r of selected.slice(page*PAGE,(page+1)*PAGE)){
+const tr=document.createElement("tr"),title=addCell(tr,r.product_name),sm=document.createElement("small");sm.textContent=r.catalog_id;title.appendChild(sm);
+addCell(tr,r.fssr||"Not recorded in ledger");addCell(tr,r.fcs||"Not recorded in ledger");
+const cell=addCell(tr,r.flags.length?r.flags.map(humanFlag).join(" · "):"No mechanical identity flag");
+if(r.flags.length)cell.className="pending";
+addCell(tr,sourceLabel(r));addCell(tr,r.review_group);$("rows").appendChild(tr);
+}
+$("prev").disabled=page===0;$("next").disabled=(page+1)*PAGE>=selected.length;
+$("count").textContent=selected.length+" of 533 matched · showing "+(selected.length?page*PAGE+1:0)+"–"+Math.min((page+1)*PAGE,selected.length)+" · page "+(page+1);
+}
+function quote(v){let s=String(v??"");if(/^\s*[=+\-@\t\r]/.test(s))s="'"+s;return'"'+s.replaceAll('"','""')+'"'}
+function exportCSV(){
+if(!rows)return;const array=[["catalog_id","product_name","stored_FSSR_code","stored_FoSCoS_code","review_flags_NOT_VIOLATIONS","source_status_original_ledger","research_closeout_if_35","review_group","original_evidence_origin","compliance_approval","commercial_lot_release"]];
+for(const r of filtered())array.push([r.catalog_id,r.product_name,r.fssr??"",r.fcs??"",r.flags.join(" | "),r.source_status,r.source_status==="FIRST_EXACT_SOURCE_PENDING"?"DESK_RESEARCH_CLOSED_2026_10_20":"CONDITIONAL_SOURCE_REFERENCE_ONLY",r.review_group,r.evidence_origin,"NOT_APPROVED","HELD"]);
+const b=new Blob(["\uFEFF"+array.map(r=>r.map(quote).join(",")).join("\r\n")+"\r\n"],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(b),a=document.createElement("a");
+a.href=url;a.download="PMSV-BATCH131-533-IDENTITY-QA-REVIEW-NOT-APPROVAL.csv";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+(async()=>{
+try{
+const [r1,r2]=await Promise.all([fetch(LEDGER+"?v=b131",{cache:"no-store"}),fetch(CLOSED+"?v=b131",{cache:"no-store"})]);
+if(!r1.ok||!r2.ok)throw Error("Original source snapshots unavailable");
+const [ledger,closeout]=await Promise.all([r1.json(),r2.json()]);
+const verified=validate(ledger,closeout);if(!verified)throw Error("Source data integrity mismatch");
+rows=enrich(verified);if(!rows)throw Error("Identity audit-count consistency mismatch");
+for(const [id,n] of [["total","533"],["flagged","102"],["missingFssr","86"],["missingFcs","10"],["nameRows","14"],["conditional","498"],["held","35"],["approved","0"]])$(id).textContent=n;
+for(const id of ["search","filter","source","export","prev","next"])$(id).disabled=false;
+for(const id of ["search","filter","source"])$(id).addEventListener(id==="search"?"input":"change",()=>{page=0;render()});
+$("prev").addEventListener("click",()=>{page=Math.max(0,page-1);render()});
+$("next").addEventListener("click",()=>{page++;render()});
+$("export").addEventListener("click",exportCSV);
+$("status").textContent="Both source snapshots verified: all 533 original rows and all 35 legal-research closeouts reconcile. 102 identity-review flags (not violations).";
+render();
+}catch(e){$("status").textContent="INTEGRITY VERIFICATION FAILED. No catalogue records or exports available. All commercial approvals remain blocked.";console.warn("PMSV B131",e.message)}
+})();
+})();
+</script>
+</body>
+</html>
