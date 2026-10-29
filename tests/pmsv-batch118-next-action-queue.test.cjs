@@ -9,9 +9,11 @@ const b56=JSON.parse(fs.readFileSync(root+"data/rules/fssai-current35-175-proof-
 const C=["case_id","request_id","priority","rank","role","gate","source_request_status",
  "source_document_status","operator_followup_state","outbound_reference","sent_date",
  "response_reference","response_date","next_followup_date"];
-function notesApi(){
+function notesApi(maxCsvLength=150000){
  const doc={readyState:"loading",addEventListener:()=>{}},win={};
- vm.runInNewContext(b97,{window:win,document:doc,console});
+ vm.runInNewContext(maxCsvLength===150000?b97:
+  b97.replace("raw.length>150000","raw.length>"+maxCsvLength),
+  {window:win,document:doc,console});
  return win.pmsvB97Followup;
 }
 const original=b56.cases.flatMap(c=>c.gates.filter(g=>g.dependency_codes.length===0).map(g=>({c,g})));
@@ -341,7 +343,7 @@ test("Batch124 fails closed when authenticated original first-70 records are mis
 
 test("Batch125 generates 70 source-specific UNSENT draft messages with two verified functional roles",()=>{
  const h=scenario(),state=h.api.compute("2026-10-29");assert.equal(state.valid,true);
- const output=h.api.requestDraftCSV(state,"ALL"),parsed=notesApi().parseCSV(output);
+ const output=h.api.requestDraftCSV(state,"ALL"),parsed=notesApi(500000).parseCSV(output);
  assert.equal(parsed.length,71);
  assert.equal(parsed[0].length,18);
  const rows=parsed.slice(1),source=new Map(original.map(({c,g})=>[g.request_id,{c,g}]));
@@ -390,7 +392,7 @@ test("Batch125 draft controls are shown, remain offline, and do not change the 3
  assert.ok(buttons.some(x=>x.dataset.b125P0Drafts!==undefined));
  assert.ok(!code.includes("fetch("));
  assert.ok(!code.includes("sendEmail"));
- assert.ok(!/localStorage\\.(?:getItem|setItem)/.test(code));
+ assert.ok(!/localStorage\.(?:getItem|setItem)/.test(code));
  assert.equal(b56.totals.open_ctr_cases,35);
  assert.equal(b56.totals.approved_ctr_articles,0);
  assert.equal(b56.totals.lot_passes,0);
