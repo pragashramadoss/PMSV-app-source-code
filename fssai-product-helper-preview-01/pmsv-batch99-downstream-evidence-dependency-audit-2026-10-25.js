@@ -126,6 +126,54 @@ function csv(){
  const a=[keys,...selection().map(r=>keys.map(k=>r[k]))];
  return a.map(x=>x.map(quote).join(",")).join("\r\n")+"\r\n";
 }
+/* Batch126: externally reviewed, entirely blank sign-off workpapers.
+ * The 105 original downstream gates are still BLOCKED; neither metadata nor a
+ * worksheet can constitute legal, laboratory, lot or QA approval. */
+function reviewWorksheetCSV(priorityFilter="ALL"){
+ if(!ready||!sourceValid()||!["ALL","P0"].includes(priorityFilter))return"";
+ const original=rowsUnchecked();
+ if(original.length!==105||new Set(original.map(x=>x.request_id)).size!==105||
+    original.some(x=>x.original_evidence!=="NOT_SENT_NOT_RECEIVED"||
+     x.commercial_decision!=="HELD_NO_APPROVAL_OR_PASS"))return"";
+ const cases=new Map(),roles=new Map();
+ for(const r of original){
+  const group=cases.get(r.case_id)||{priority:r.priority,roles:new Set()};
+  if(group.priority!==r.priority||group.roles.has(r.role))return"";
+  group.roles.add(r.role);cases.set(r.case_id,group);
+  roles.set(r.role,(roles.get(r.role)||0)+1);
+ }
+ if(cases.size!==35||ROLES.some(r=>roles.get(r)!==35)||
+    [...cases.values()].some(g=>g.roles.size!==3))return"";
+ const selected=priorityFilter==="P0"?original.filter(x=>x.priority==="P0"):original;
+ if(priorityFilter==="P0"&&(selected.length!==39||
+    new Set(selected.map(x=>x.case_id)).size!==13||
+    ROLES.some(role=>selected.filter(x=>x.role===role).length!==13)))return"";
+ const headings=["priority","rank","case_id","request_id","product_name","analyte",
+  "review_function","original_evidence_gate","exact_documentary_requirement",
+  "upstream_dependencies","local_source_revision_unverified","current_blocker",
+  "next_human_action","original_gate_state",
+  "authenticated_upstream_source_reference","signed_legal_applicability_reference",
+  "accredited_method_matrix_scope_reference","representative_lot_coa_reference",
+  "independent_reviewer_name","independent_review_date","signed_review_decision_reference",
+  "authorised_qa_disposition_reference","immutable_compliance_hold"];
+ const data=selected.map(r=>[r.priority,String(r.rank),r.case_id,r.request_id,r.product,
+  r.analyte,r.role,r.gate,r.evidence,r.dependency,r.source_revision,r.blocker,r.next,
+  "BLOCKED_ORIGINAL_NOT_SENT_NOT_RECEIVED","","","","","","","","",
+  "ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"]);
+ if(data.some(x=>x.length!==headings.length)||new Set(data.map(x=>x[3])).size!==data.length)
+  return"";
+ return[headings,...data].map(x=>x.map(quote).join(",")).join("\r\n")+"\r\n";
+}
+function downloadReviewWorksheet(priorityFilter="ALL"){
+ const content=reviewWorksheetCSV(priorityFilter);
+ if(!content){
+  say("Worksheet blocked: the original 105 downstream gates did not reconcile. All 35 cases remain HELD.");
+  return false;
+ }
+ return download(content,priorityFilter==="P0"?
+  "PMSV-B126-P0-39-BLOCKED-DOWNSTREAM-REVIEW-WORKSHEET.csv":
+  "PMSV-B126-ALL105-BLOCKED-DOWNSTREAM-REVIEW-WORKSHEET.csv");
+}
 function download(content,filename){
  if(!content)return false;
  const blob=new Blob(["\uFEFF"+content],{type:"text/csv;charset=utf-8"}),
@@ -250,6 +298,9 @@ function install(){
  h.appendChild(el("button","Open controlled-source case in Batch98",{type:"button","data-b99-open":""}));
  h.appendChild(document.createTextNode(" "));
  h.appendChild(el("button","Export selected 105-gate audit CSV",{type:"button","data-b99-export":""}));
+ h.appendChild(el("button","Download all 105 BLOCKED reviewer worksheets",{type:"button","data-b126-all":""}));
+ h.appendChild(el("button","Download 39 P0 BLOCKED reviewer worksheets",{type:"button","data-b126-p0":""}));
+ h.appendChild(el("p","Batch126 workpapers carry exact original evidence requirements and blockers. The eight offline source, reviewer, legal, laboratory, CoA and QA decision fields stay blank; no rows are approval-ready. Downloading does not dispatch a request, authenticate evidence, or close a case."));
  h.appendChild(el("p","No original document is uploaded, signed or verified here. This review cannot mark any of the 105 gates closed, and never changes the authoritative 175-request ledger."));
  const reviewTop=document.getElementById("pmsv-b70-startup-gates")||anchor;
  reviewTop.insertAdjacentElement("afterend",h);
@@ -261,6 +312,8 @@ document.addEventListener("click",e=>{
  const b=e.target?.closest?.("#"+ID+" button");if(!b)return;
  if(b.hasAttribute("data-b99-load")){void load();return}
  if(!ready||!sourceValid())return say("Source verification required before output.");
+ if(b.hasAttribute("data-b126-all")){void downloadReviewWorksheet("ALL");return}
+ if(b.hasAttribute("data-b126-p0")){void downloadReviewWorksheet("P0");return}
  if(b.hasAttribute("data-b99-export")){
   if(download(csv(),"PMSV-B99-105-DOWNSTREAM-HELD-EVIDENCE-AUDIT.csv"))
    say("CSV generated locally. All commercial approvals and releases remain HELD.");
@@ -280,7 +333,7 @@ document.addEventListener("input",e=>{
  }
 });
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
-window.pmsvB99DownstreamAudit=Object.freeze({sourceValid,rows,rowStatus,count,csv,load,loadVerifiedRows,install});
+window.pmsvB99DownstreamAudit=Object.freeze({sourceValid,rows,rowStatus,count,csv,reviewWorksheetCSV,load,loadVerifiedRows,install});
 /* Batch100 is loaded without editing the 900KB preview index or its original source ledger. */
 if(typeof document.createElement==="function"&&document.head?.appendChild&&
    !document.getElementById("pmsv-b100-module")){
