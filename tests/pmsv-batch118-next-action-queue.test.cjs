@@ -305,3 +305,36 @@ test("Batch123 snapshots require a verified as-of date and complete original que
  assert.equal(h.api.evidenceBriefCSV(tooShort,"P0"),"");
  assert.equal(h.api.evidenceBriefCSV(result,"ALL").split("\r\n").length,72);
 });
+
+test("Batch124 detects altered original case identity or evidence gate even with 70 intact IDs",()=>{
+ const mutations=[
+  ["case",table((r,i)=>{if(i===0)r[0]="SUBSTITUTED_CATALOGUE_ID";})],
+  ["evidence gate",table((r,i)=>{if(i===0)r[5]="SUBSTITUTED_EVIDENCE_GATE";})],
+  ["paired case",table((r,i)=>{if(i<2)r[0]="SAME_WRONG_CASE_ID";})],
+ ];
+ for(const [name,raw] of mutations){
+  const h=scenario(raw),result=h.api.compute("2026-10-29");
+  assert.equal(result.valid,false,name);
+  assert.match(result.error,/original|case|gate|mismatch/i,name);
+  assert.equal(h.api.csv(result),"",name);
+  assert.equal(h.api.assignmentCSV(result),"",name);
+  assert.equal(h.api.evidenceBriefCSV(result,"ALL"),"",name);
+  assert.equal(h.api.evidenceBriefCSV(result,"P0"),"",name);
+ }
+});
+test("Batch124 fails closed when authenticated original first-70 records are missing or changed",()=>{
+ assert.equal(scenario(undefined,{records:[]}).api.compute("2026-10-29").valid,false);
+ const records=original.map(({c,g})=>({
+  case_id:c.catalogue_id,request_id:g.request_id,priority:c.priority,
+  rank:String(c.rank),role:g.owner_role,gate:g.gate_code,
+  product:c.product_name,analyte:c.analyte,evidence:g.required_evidence,
+  source_request_status:"NOT_SENT",source_document_status:"NOT_RECEIVED"
+ }));
+ records[0]={...records[0],gate:"CHANGED_ORIGINAL_EVIDENCE_GATE"};
+ assert.equal(scenario(undefined,{records}).api.compute("2026-10-29").valid,false);
+ const good=scenario(),result=good.api.compute("2026-10-29");
+ assert.equal(result.valid,true);
+ assert.equal(good.api.evidenceBriefCSV(result,"P0").split("\\r\\n").length,28);
+ assert.ok(result.rows.every(r=>r.source_request_status==="NOT_SENT"&&
+  r.source_document_status==="NOT_RECEIVED"));
+});
