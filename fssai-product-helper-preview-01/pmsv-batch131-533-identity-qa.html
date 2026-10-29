@@ -56,6 +56,14 @@ a{color:#2850bd}a:focus-visible,button:focus-visible,input:focus-visible,select:
 <div class="stat"><b id="approved">—</b><span>Commercial approvals / releases</span></div>
 </div>
 </section>
+<section class="card" id="batch132">
+<h2>Batch132: ten official Ayurveda Aahara source routes</h2>
+<p>FSSAI's <a href="https://fcstraining.fssai.gov.in/standard-product" target="_blank" rel="noopener noreferrer">FoSCoS named-product listing</a> and <a href="https://www.fssai.gov.in/upload/advisories/2025/09/68b67efa6f47520250902103601289.pdf" target="_blank" rel="noopener noreferrer">Ayurveda Aahara Kind-of-Business order</a> identify these ten recipe names under <strong>102.1 — Ayurveda Aahara Category A</strong>. This is a source-reference candidate only: the original catalogue fields remain blank, and actual marketed formulation/licence applicability and all contaminant decisions still require verification.</p>
+<p id="b132status" role="status">Waiting for source verification…</p>
+<div class="scroller" role="region" aria-label="Ten published Ayurveda Aahara product route candidates" tabindex="0">
+<table><thead><tr><th>Named recipe</th><th>Ledger FoSCoS value</th><th>Official named-product source route</th><th>Commercial scope</th></tr></thead><tbody id="b132rows"></tbody></table>
+</div>
+</section>
 <section class="card">
 <h2>Review queue for all 533</h2>
 <div class="controls">
@@ -86,8 +94,9 @@ a{color:#2850bd}a:focus-visible,button:focus-visible,input:focus-visible,select:
 (()=>{"use strict";
 const LEDGER="./data/rules/fssai-current-first-source-533-live-ledger-498-35-2026-10-13.json",
 CLOSED="./data/rules/fssai-final35-desk-research-complete-batch88-2026-10-20.json",
-LEDGER_PIN="d142be820899eac5",CLOSED_PIN="4d1590738e747a2a",PAGE=50;
-const $=id=>document.getElementById(id);let rows=null,page=0;
+TRIAGE="./data/rules/pmsv-batch132-102-identity-source-triage-2026-10-29.json",
+LEDGER_PIN="d142be820899eac5",CLOSED_PIN="4d1590738e747a2a",TRIAGE_PIN="e4dffdcebe0f0eeb",PAGE=50;
+const $=id=>document.getElementById(id);let rows=null,page=0,triage=null,routeById=new Map();
 function digest(value){let a=0x811c9dc5,b=0x9747b28c;for(const ch of JSON.stringify(value)){const c=ch.charCodeAt(0);a=Math.imul(a^c,16777619);b=Math.imul(b^c,2246822519)}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")}
 function validate(l,c){
 if(digest(l)!==LEDGER_PIN||digest(c)!==CLOSED_PIN||!Array.isArray(l.records)||l.records.length!==533||
@@ -112,6 +121,70 @@ x.actual_product_scope!=="NOT_AUTHENTICATED"||x.applicable_legal_limit!=="NOT_SI
 x.lab_method_matrix!=="NOT_SIGNED"||x.lot_release!=="HELD")return null;
 }
 return l.records;
+}
+function validateTriage(t,base){
+if(!t||digest(t)!==TRIAGE_PIN||t.kind!=="PMSV_BATCH132_102_SOURCE_IDENTITY_TRIAGE_NO_APPROVAL"||
+ t.prior_ledger_sha!==LEDGER_PIN||t.prior_closeout_sha!==CLOSED_PIN||
+ t.summary?.original_catalogue!==533||t.summary?.original_fcs_blank!==10||
+ t.summary?.ayurveda_named_candidates!==10||t.summary?.ayurveda_conditional!==8||
+ t.summary?.ayurveda_commercial_held!==2||t.summary?.missing_fssr!==86||
+ t.summary?.duplicate_name_rows!==14||t.summary?.duplicate_name_groups!==4||
+ t.summary?.original_identity_flagged!==102||t.summary?.provisional_codes_written_to_ledger!==0||
+ t.summary?.commercial_approvals!==0)return false;
+const byId=new Map(base.map(r=>[r.catalog_id,r]));
+const candidate=t.ayurveda_foscos_source_candidates;
+if(!Array.isArray(candidate)||candidate.length!==10)return false;
+const found=new Set(),recipe=new Set(["12.1","13.1","14.1","14.2","14.3","14.4","14.5","14.6","14.7","15.1"]);let held=0,conditional=0;
+for(const x of candidate){
+ const r=byId.get(x.catalog_id);
+ if(!r||found.has(x.catalog_id)||r.fcs||x.original_fcs!==""||x.product_name!==r.product_name||
+ x.recipe_code!==r.product_name.match(/^\d+\.\d+/)?.[0]||!recipe.has(x.recipe_code)||
+ x.conditional_source_category!=="102.1"||x.source_category_name!=="Ayurveda Aahara Category A"||
+ x.source_confirmation!=="OFFICIAL_NAMED_PRODUCT_LIST_REFERENCE_ONLY"||
+ x.marketed_recipe_authenticated!==false||x.commercial_compliance_approval!==false||
+ x.commercial_lot_release!==false||x.source_status_original!==r.source_status)return false;
+ found.add(x.catalog_id);recipe.delete(x.recipe_code);
+ if(r.source_status==="FIRST_EXACT_SOURCE_PENDING")held++;else conditional++;
+}
+if(found.size!==10||recipe.size!==0||held!==2||conditional!==8||
+ base.filter(r=>!r.fcs).some(r=>!found.has(r.catalog_id)))return false;
+const groups=t.duplicate_name_groups;if(!Array.isArray(groups)||groups.length!==4)return false;
+const duplicateIDs=new Set();
+for(const g of groups){
+ if(g.same_fssr!==true||g.distinct_fcs!==true||!Array.isArray(g.rows)||g.rows.length<2)return false;
+ for(const x of g.rows){
+ const r=byId.get(x.catalog_id);
+ if(!r||duplicateIDs.has(x.catalog_id)||x.fssr!==r.fssr||x.fcs!==r.fcs||
+ r.product_name.toLocaleLowerCase("en").trim().replace(/\s+/g," ")!==g.normalized_name)return false;
+ duplicateIDs.add(x.catalog_id);
+ }
+}
+if(duplicateIDs.size!==14)return false;
+const families=t.missing_fssr_foscos_family_rollup;
+if(!Array.isArray(families)||families.length!==7)return false;
+const familyIDs=new Set();
+for(const group of families){
+ if(!Array.isArray(group.catalog_ids)||group.catalog_ids.length!==group.count)return false;
+ let heldCount=0;
+ for(const id of group.catalog_ids){
+ const r=byId.get(id),f=r?.fcs?r.fcs.split(".")[0]:"NOT_RECORDED";
+ if(!r||r.fssr||f!==group.foscos_family||familyIDs.has(id))return false;
+ familyIDs.add(id);if(r.source_status==="FIRST_EXACT_SOURCE_PENDING")heldCount++;
+ }
+ if(heldCount!==group.held)return false;
+}
+return familyIDs.size===86&&base.filter(r=>!r.fssr).length===86;
+}
+function renderTriage(){
+$("b132rows").replaceChildren();
+for(const x of triage.ayurveda_foscos_source_candidates){
+ const tr=document.createElement("tr");
+ addCell(tr,x.product_name);addCell(tr,"Not recorded in historical ledger");
+ addCell(tr,"102.1 · official named-product source reference only");
+ addCell(tr,x.source_status_original==="FIRST_EXACT_SOURCE_PENDING"?"DESK RESEARCH CLOSED · COMMERCIAL HELD":"CONDITIONAL SOURCE REFERENCE · NOT APPROVED");
+ $("b132rows").appendChild(tr);
+}
+$("b132status").textContent="Verified all 10 named source matches · 8 conditional source references, 2 commercially HELD · 0 changes to original codes or approvals.";
 }
 function enrich(records){
 const byName=new Map();
@@ -147,7 +220,7 @@ if(!rows)return;const selected=filtered();page=Math.min(page,Math.max(0,Math.cei
 $("rows").replaceChildren();
 for(const r of selected.slice(page*PAGE,(page+1)*PAGE)){
 const tr=document.createElement("tr"),title=addCell(tr,r.product_name),sm=document.createElement("small");sm.textContent=r.catalog_id;title.appendChild(sm);
-addCell(tr,r.fssr||"Not recorded in ledger");addCell(tr,r.fcs||"Not recorded in ledger");
+addCell(tr,r.fssr||"Not recorded in ledger");const fcsCell=addCell(tr,r.fcs||"Not recorded in ledger");if(!r.fcs&&routeById.has(r.catalog_id)){const n=document.createElement("small");n.textContent="Official named source lists 102.1 · not applied to commercial SKU";fcsCell.appendChild(n)}
 const cell=addCell(tr,r.flags.length?r.flags.map(humanFlag).join(" · "):"No mechanical identity flag");
 if(r.flags.length)cell.className="pending";
 addCell(tr,sourceLabel(r));addCell(tr,r.review_group);$("rows").appendChild(tr);
@@ -157,25 +230,28 @@ $("count").textContent=selected.length+" of 533 matched · showing "+(selected.l
 }
 function quote(v){let s=String(v??"");if(/^\s*[=+\-@\t\r]/.test(s))s="'"+s;return'"'+s.replaceAll('"','""')+'"'}
 function exportCSV(){
-if(!rows)return;const array=[["catalog_id","product_name","stored_FSSR_code","stored_FoSCoS_code","review_flags_NOT_VIOLATIONS","source_status_original_ledger","research_closeout_if_35","review_group","original_evidence_origin","compliance_approval","commercial_lot_release"]];
-for(const r of filtered())array.push([r.catalog_id,r.product_name,r.fssr??"",r.fcs??"",r.flags.join(" | "),r.source_status,r.source_status==="FIRST_EXACT_SOURCE_PENDING"?"DESK_RESEARCH_CLOSED_2026_10_20":"CONDITIONAL_SOURCE_REFERENCE_ONLY",r.review_group,r.evidence_origin,"NOT_APPROVED","HELD"]);
+if(!rows)return;const array=[["catalog_id","product_name","stored_FSSR_code","stored_FoSCoS_code","official_named_source_FoSCoS_candidate_NOT_APPLIED","review_flags_NOT_VIOLATIONS","source_status_original_ledger","research_closeout_if_35","review_group","original_evidence_origin","compliance_approval","commercial_lot_release"]];
+for(const r of filtered())array.push([r.catalog_id,r.product_name,r.fssr??"",r.fcs??"",routeById.has(r.catalog_id)?"102.1_SOURCE_REFERENCE_ONLY_NOT_APPLIED":"",r.flags.join(" | "),r.source_status,r.source_status==="FIRST_EXACT_SOURCE_PENDING"?"DESK_RESEARCH_CLOSED_2026_10_20":"CONDITIONAL_SOURCE_REFERENCE_ONLY",r.review_group,r.evidence_origin,"NOT_APPROVED","HELD"]);
 const b=new Blob(["\uFEFF"+array.map(r=>r.map(quote).join(",")).join("\r\n")+"\r\n"],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(b),a=document.createElement("a");
 a.href=url;a.download="PMSV-BATCH131-533-IDENTITY-QA-REVIEW-NOT-APPROVAL.csv";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 (async()=>{
 try{
-const [r1,r2]=await Promise.all([fetch(LEDGER+"?v=b131",{cache:"no-store"}),fetch(CLOSED+"?v=b131",{cache:"no-store"})]);
-if(!r1.ok||!r2.ok)throw Error("Original source snapshots unavailable");
-const [ledger,closeout]=await Promise.all([r1.json(),r2.json()]);
+const [r1,r2,r3]=await Promise.all([fetch(LEDGER+"?v=b132",{cache:"no-store"}),fetch(CLOSED+"?v=b132",{cache:"no-store"}),fetch(TRIAGE+"?v=b132",{cache:"no-store"})]);
+if(!r1.ok||!r2.ok||!r3.ok)throw Error("Source snapshots unavailable");
+const [ledger,closeout,sourceTriage]=await Promise.all([r1.json(),r2.json(),r3.json()]);
 const verified=validate(ledger,closeout);if(!verified)throw Error("Source data integrity mismatch");
+if(!validateTriage(sourceTriage,verified))throw Error("Batch132 official-source triage failed exact source-to-ledger checks");
+triage=sourceTriage;routeById=new Map(triage.ayurveda_foscos_source_candidates.map(x=>[x.catalog_id,x]));
 rows=enrich(verified);if(!rows)throw Error("Identity audit-count consistency mismatch");
+renderTriage();
 for(const [id,n] of [["total","533"],["flagged","102"],["missingFssr","86"],["missingFcs","10"],["nameRows","14"],["conditional","498"],["held","35"],["approved","0"]])$(id).textContent=n;
 for(const id of ["search","filter","source","export","prev","next"])$(id).disabled=false;
 for(const id of ["search","filter","source"])$(id).addEventListener(id==="search"?"input":"change",()=>{page=0;render()});
 $("prev").addEventListener("click",()=>{page=Math.max(0,page-1);render()});
 $("next").addEventListener("click",()=>{page++;render()});
 $("export").addEventListener("click",exportCSV);
-$("status").textContent="Both source snapshots verified: all 533 original rows and all 35 legal-research closeouts reconcile. 102 identity-review flags (not violations).";
+$("status").textContent="Three source snapshots verified: all 533 ledger rows, 35 research closeouts and ten named Ayurveda Aahara 102.1 source candidates. Original 102 identity flags unchanged; no approvals.";
 render();
 }catch(e){$("status").textContent="INTEGRITY VERIFICATION FAILED. No catalogue records or exports available. All commercial approvals remain blocked.";console.warn("PMSV B131",e.message)}
 })();

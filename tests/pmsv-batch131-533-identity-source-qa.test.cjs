@@ -53,3 +53,50 @@ assert.equal(closed.summary.signed_case_limits,0);
 assert.equal(closed.summary.regulatory_passes,0);
 assert.equal(closed.summary.lot_releases,0);
 console.log("PMSV Batch131 verified: all 533; 102 source-ledger identity flags; 35 held; 0 approvals.");
+
+// Batch132: named Ayurveda Aahara source references only; immutable legacy ledger is NOT mutated.
+const triage=JSON.parse(fs.readFileSync(root+"data/rules/pmsv-batch132-102-identity-source-triage-2026-10-29.json","utf8"));
+assert.equal(digest(triage),"e4dffdcebe0f0eeb");
+assert.equal(triage.kind,"PMSV_BATCH132_102_SOURCE_IDENTITY_TRIAGE_NO_APPROVAL");
+assert.equal(triage.prior_ledger_sha,"d142be820899eac5");
+assert.equal(triage.prior_closeout_sha,"4d1590738e747a2a");
+assert.equal(triage.summary.provisional_codes_written_to_ledger,0);
+assert.equal(triage.summary.commercial_approvals,0);
+assert.equal(triage.summary.original_identity_flagged,102);
+assert.equal(triage.summary.ayurveda_named_candidates,10);
+assert.match(html,/TRIAGE_PIN="e4dffdcebe0f0eeb"/);
+assert.match(html,/function validateTriage\(t,base\)/);
+assert.match(html,/digest\(t\)!==TRIAGE_PIN/);
+assert.match(html,/renderTriage\(\)/);
+assert.match(html,/102\.1_SOURCE_REFERENCE_ONLY_NOT_APPLIED/);
+assert.match(html,/Official named source lists 102\.1 · not applied to commercial SKU/);
+assert.match(html,/Three source snapshots verified/);
+const byId=new Map(ledger.records.map(x=>[x.catalog_id,x]));
+const expected=new Set(["12.1","13.1","14.1","14.2","14.3","14.4","14.5","14.6","14.7","15.1"]);
+let namedConditional=0,namedHeld=0;
+for(const r of triage.ayurveda_foscos_source_candidates){
+ const original=byId.get(r.catalog_id);
+ assert.ok(original&&!original.fcs);
+ assert.equal(r.product_name,original.product_name);
+ assert.ok(expected.delete(r.recipe_code));
+ assert.equal(r.conditional_source_category,"102.1");
+ assert.equal(r.source_confirmation,"OFFICIAL_NAMED_PRODUCT_LIST_REFERENCE_ONLY");
+ assert.equal(r.marketed_recipe_authenticated,false);
+ assert.equal(r.commercial_compliance_approval,false);
+ assert.equal(r.commercial_lot_release,false);
+ assert.equal(r.original_fcs,"");
+ if(original.source_status==="FIRST_EXACT_SOURCE_PENDING")namedHeld++;else namedConditional++;
+}
+assert.equal(expected.size,0);
+assert.deepEqual({namedConditional,namedHeld},{namedConditional:8,namedHeld:2});
+assert.equal(triage.duplicate_name_groups.length,4);
+for(const group of triage.duplicate_name_groups){
+ assert.equal(group.same_fssr,true);assert.equal(group.distinct_fcs,true);
+ assert.equal(new Set(group.rows.map(r=>r.fcs)).size,group.rows.length);
+}
+assert.equal(triage.duplicate_name_groups.reduce((a,x)=>a+x.rows.length,0),14);
+const miss=triage.missing_fssr_foscos_family_rollup;
+assert.equal(miss.reduce((a,x)=>a+x.count,0),86);
+assert.equal(miss.reduce((a,x)=>a+x.held,0),8);
+assert.equal(new Set(miss.flatMap(x=>x.catalog_ids)).size,86);
+console.log("PMSV Batch132 verified: 10 official named FoSCoS 102.1 source candidates; 4 distinct FCS duplicate groups; 86 FSSR blanks retained.");
