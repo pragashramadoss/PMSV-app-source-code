@@ -338,3 +338,60 @@ test("Batch124 fails closed when authenticated original first-70 records are mis
  assert.ok(result.rows.every(r=>r.source_request_status==="NOT_SENT"&&
   r.source_document_status==="NOT_RECEIVED"));
 });
+
+test("Batch125 generates 70 source-specific UNSENT draft messages with two verified functional roles",()=>{
+ const h=scenario(),state=h.api.compute("2026-10-29");assert.equal(state.valid,true);
+ const output=h.api.requestDraftCSV(state,"ALL"),parsed=notesApi().parseCSV(output);
+ assert.equal(parsed.length,71);
+ assert.equal(parsed[0].length,18);
+ const rows=parsed.slice(1),source=new Map(original.map(({c,g})=>[g.request_id,{c,g}]));
+ assert.equal(new Set(rows.map(x=>x[2])).size,70);
+ assert.equal(rows.filter(x=>x[0]==="P0").length,26);
+ assert.equal(rows.filter(x=>x[0]==="P1").length,44);
+ assert.equal(rows.filter(x=>x[3]==="FSSAI_QA_DIVISION_AND_LAB_DIRECTOR").length,35);
+ assert.equal(rows.filter(x=>x[3]==="MANUFACTURER_OR_SUPPLIER_QA").length,35);
+ for(const x of rows){
+  const data=source.get(x[2]);assert.ok(data);
+  assert.equal(x[1],data.c.catalogue_id);
+  assert.equal(x[4],data.c.product_name);
+  assert.equal(x[5],data.c.analyte);
+  assert.equal(x[6],data.g.gate_code);
+  assert.equal(x[7],data.g.required_evidence);
+  assert.match(x[8],/UNSENT DRAFT/);
+  assert.match(x[9],/UNSENT DRAFT/);
+  assert.ok(x[9].includes(x[7]),"draft retains full original evidence requirement");
+  assert.ok(x.slice(10,15).every(v=>v===""),"names and approvals not invented");
+  assert.deepEqual(Array.from(x.slice(15)),[
+   "NOT_SENT","NOT_RECEIVED","ALL35_HELD_NO_LEGAL_LAB_LOT_APPROVAL"
+  ]);
+  if(x[3]==="FSSAI_QA_DIVISION_AND_LAB_DIRECTOR")
+   assert.match(x[9],/legal publication/);
+  else assert.match(x[9],/revision-controlled finished-product identity/);
+ }
+});
+test("Batch125 P0 request drafts contain 13 cases, 26 rows, no release or recipient claims",()=>{
+ const h=scenario(),state=h.api.compute("2026-10-29");
+ const p0=h.api.requestDraftCSV(state,"P0"),rows=notesApi().parseCSV(p0).slice(1);
+ assert.equal(rows.length,26);
+ assert.equal(new Set(rows.map(x=>x[1])).size,13);
+ assert.ok(rows.every(x=>x[0]==="P0"));
+ assert.equal(rows.filter(x=>x[3]==="FSSAI_QA_DIVISION_AND_LAB_DIRECTOR").length,13);
+ assert.equal(rows.filter(x=>x[3]==="MANUFACTURER_OR_SUPPLIER_QA").length,13);
+ assert.equal(h.api.requestDraftCSV(state,"P1"),"");
+ assert.equal(h.api.requestDraftCSV({...state,rows:state.rows.slice(1)},"ALL"),"");
+ assert.equal(h.api.requestDraftCSV({...state,rows:state.rows.slice(1)},"P0"),"");
+ assert.equal(scenario(undefined,{sourceValid:false}).api.requestDraftCSV(undefined,"ALL"),"");
+});
+test("Batch125 draft controls are shown, remain offline, and do not change the 35 holds",()=>{
+ const h=scenario();assert.equal(h.api.render(),true);
+ const buttons=h.getPanel().children.filter(x=>x.tag==="div")
+  .flatMap(x=>x.children).filter(x=>x.tag==="button");
+ assert.ok(buttons.some(x=>x.dataset.b125Drafts!==undefined));
+ assert.ok(buttons.some(x=>x.dataset.b125P0Drafts!==undefined));
+ assert.ok(!code.includes("fetch("));
+ assert.ok(!code.includes("sendEmail"));
+ assert.ok(!/localStorage\\.(?:getItem|setItem)/.test(code));
+ assert.equal(b56.totals.open_ctr_cases,35);
+ assert.equal(b56.totals.approved_ctr_articles,0);
+ assert.equal(b56.totals.lot_passes,0);
+});
