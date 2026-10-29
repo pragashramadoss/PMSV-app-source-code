@@ -1,0 +1,20 @@
+name: Verify PMSV Batch131 533 identity QA
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch131-533-identity-qa.html'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'tests/pmsv-batch131-533-identity-source-qa.test.cjs'
+      - '.github/workflows/verify-pmsv-batch131-533-identity-qa.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify entire 533 ledger and all 35 held closures
+        run: node --test tests/pmsv-batch131-533-identity-source-qa.test.cjs
