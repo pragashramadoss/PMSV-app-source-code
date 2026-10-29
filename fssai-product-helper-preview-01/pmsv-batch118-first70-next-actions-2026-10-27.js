@@ -20,13 +20,30 @@ function compute(today=localToday()){
  if(!/^\d{4}-\d{2}-\d{2}$/.test(today)||
     Number.isNaN(new Date(today+"T00:00:00Z").getTime())||
     new Date(today+"T00:00:00Z").toISOString().slice(0,10)!==today||
-    !api?.sourceValid?.()||!api?.csv||!api?.parseCSV||!api?.validNote)
+    !api?.sourceValid?.()||!api?.csv||!api?.parseCSV||!api?.validNote||!api?.records)
   return{valid:false,error:"First-70 source validation or calendar date unavailable",rows:[]};
  try{
   const all=api.parseCSV(api.csv());
   if(all.length!==71||all[0].length!==SCHEMA.length||
      !SCHEMA.every((k,i)=>all[0][i]===k))
     throw Error("Original 70-request CSV schema mismatch");
+  /* Batch124: derive every immutable identity and evidence gate from the
+   * source-verified B97 records, not only from the operator-imported CSV.
+   * Otherwise a mismatched product, case or gate could reach a handoff sheet. */
+  const originals=api.records();
+  if(!Array.isArray(originals)||originals.length!==70)
+   throw Error("Original first-70 identity source unavailable");
+  const byOriginalId=new Map();
+  const immutable=["case_id","request_id","priority","rank","role","gate",
+   "source_request_status","source_document_status"];
+  for(const x of originals){
+   if(!x||typeof x.request_id!=="string"||!x.request_id||
+      byOriginalId.has(x.request_id)||!immutable.every(k=>typeof x[k]==="string")||
+      x.source_request_status!=="NOT_SENT"||
+      x.source_document_status!=="NOT_RECEIVED")
+    throw Error("Invalid or duplicate original immutable identity");
+   byOriginalId.set(x.request_id,x);
+  }
   const seen=new Set(),rows=[];let p0=0,p1=0,method=0,maker=0;
   for(const cells of all.slice(1)){
    if(cells.length!==SCHEMA.length)throw Error("Incomplete original request row");
@@ -41,6 +58,9 @@ function compute(today=localToday()){
       sent_date:r.sent_date,response_reference:r.response_reference,
       response_date:r.response_date,next_followup_date:r.next_followup_date
    }))throw Error("Original ID, role rank or self-reported note validation failed");
+   const original=byOriginalId.get(r.request_id);
+   if(!original||!immutable.every(k=>r[k]===original[k]))
+    throw Error("Original case, priority, rank, role or evidence gate mismatch");
    seen.add(r.request_id);
    if(r.priority==="P0")p0++;else p1++;
    if(r.role===SOURCE)method++;else maker++;
@@ -54,7 +74,7 @@ function compute(today=localToday()){
    else action="FUTURE_FOLLOWUP";
    rows.push(Object.freeze({...r,action}));
   }
-  if(seen.size!==70||p0!==26||p1!==44||method!==35||maker!==35)
+  if(seen.size!==70||seen.size!==byOriginalId.size||p0!==26||p1!==44||method!==35||maker!==35)
    throw Error("35+35 original requests and 13 P0 / 22 P1 cases did not reconcile");
   rows.sort((a,b)=>PRIORITY[a.action]-PRIORITY[b.action]||
    (a.priority==="P0"?0:1)-(b.priority==="P0"?0:1)||
