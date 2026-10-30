@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>PMSV FSSAI Batch138 | 27 trace-metal cases and 7 conflicting method IDs</title>
+<style>
+:root{--bg:#f3f6fb;--ink:#172943;--muted:#536680;--blue:#315ac7;--navy:#163064;--line:#d8e1ef;--red:#a32626;--amber:#8a5903;--green:#086349}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+header{background:linear-gradient(120deg,var(--navy),var(--blue));color:#fff;padding:24px 16px}header>div,main{max-width:1200px;margin:auto}header a{color:white}
+main{padding:17px 13px 44px}a{color:var(--blue);overflow-wrap:anywhere}h1{font-size:clamp(1.5rem,3vw,2.15rem);margin:6px 0}h2{font-size:1.15rem;margin:0 0 10px}p{margin:7px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px;margin:0 0 13px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.metric{background:#f0f4ff;border:1px solid var(--line);border-radius:9px;padding:12px}
+.metric strong{display:block;font-size:25px}.metric span{font-size:12px;color:var(--muted)}
+.danger{background:#fff3f3;border-left:4px solid var(--red);padding:12px;margin:12px 0}.note{background:#fff9e9;border-left:4px solid #c89325;padding:12px;margin:12px 0}
+.scroll{border:1px solid var(--line);border-radius:9px;overflow:auto;max-height:68vh}table{width:100%;min-width:980px;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left;font-size:12px}
+th{background:#ecf2fc;position:sticky;top:0;z-index:1;font-weight:800}
+tr:nth-child(even){background:#fbfcff}small{display:block;color:var(--muted);font-size:11px;line-height:1.45;margin-top:4px}
+.tag{display:inline-block;background:#fff1d9;color:var(--amber);border-radius:30px;padding:3px 8px;font-size:11px;font-weight:800}
+.hold{color:var(--red);font-weight:800}
+.controls{display:grid;grid-template-columns:minmax(190px,2fr) minmax(140px,1fr) minmax(155px,1fr);gap:9px}
+label{display:block;font-size:12px;font-weight:750;margin-bottom:4px}
+input,select{width:100%;border:1px solid #b3c2d6;padding:9px 10px;border-radius:8px;min-height:43px;font:inherit}
+button{font:inherit;color:white;background:var(--blue);border:0;border-radius:8px;padding:10px 13px;min-height:42px;font-weight:750;cursor:pointer}
+button:disabled,input:disabled,select:disabled{opacity:.48;cursor:not-allowed}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}
+.mono{font:11px/1.55 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+@media(max-width:790px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.controls{grid-template-columns:1fr}.card{padding:12px}}
+</style></head><body>
+<header><div>
+<a href="./index.html#product">← PMSV FSSAI Helper</a> · <a href="./pmsv-batch137-35-evidence-owner-handoff.html">All 35 evidence handoffs</a> · <a href="./pmsv-batch135-p0-evidence-method-triage.html">P0 cases</a> · <a href="./pmsv-batch136-p1-evidence-reconciliation.html">P1 cases</a>
+<h1>Batch 138 · Metals method authority conflict</h1>
+<p>30 October 2026 · 27 metal cases · 7 reused method IDs in two official FSSAI-hosted manuals</p>
+</div></header>
+<main>
+<section class="card">
+<h2>What the two original manuals actually establish</h2>
+<p>The FSSAI-hosted <a target="_blank" rel="noopener noreferrer" href="https://fssai.gov.in/upload/uploadfiles/files/MANUAL_FOR_ANALYSIS_OF_METALS_dt_18_04_2024.pdf">Trace Elements manual (61-page PDF)</a> and <a target="_blank" rel="noopener noreferrer" href="https://www.fssai.gov.in/upload/uploadfiles/files/Manual%20of%20Methods%20of%20Analysis%20of%20Foods-%20Metals%20and%20Minerals.pdf">Metals and Minerals manual (52-page PDF)</a> assign different analytical procedures to the same identifiers <b>FSSAI 09.001:2024 through FSSAI 09.007:2024</b>. Their actual tables of contents have been separately checked.</p>
+<div class="danger"><b>Method identity HOLD:</b> Never use a bare "FSSAI 09.xxx:2024" as a complete instruction. An acceptable laboratory proposal needs the source PDF and full method title, operative adoption or applicability decision, specific analyte/matrix, lab accreditation scope, demonstrated recovery/precision and the actual laboratory LOQ. Product legal limits and commercial release also require separate signed decisions.</div>
+<div class="note"><b>Illustrative performance mismatch — not product limits:</b> for identifier 09.001:2024, the Trace Elements procedure describes approximately 0.4 mg/kg Pb capability with exclusion of ≥40% fat foods and milk powder. The separate Metals and Minerals ICP-OES procedure lists Pb LOQ of 6 mg/kg. These are different procedure-level figures, neither is the specific lab's verified LOQ nor proof of fitness for a case.</div>
+<p id="sourceStatus" role="status" aria-live="polite">Verifying both pinned source registers before showing any method or case record…</p>
+</section>
+<section class="card"><div class="metrics">
+<div class="metric"><strong id="collisionCount">—</strong><span>Colliding method numbers</span></div>
+<div class="metric"><strong id="metalCases">—</strong><span>Metal cases awaiting method authority</span></div>
+<div class="metric"><strong id="otherCases">—</strong><span>Nonmetals (separate method routes)</span></div>
+<div class="metric"><strong id="remainingHold">—</strong><span>Total commercial cases HELD</span></div>
+</div></section>
+<section class="card">
+<h2>Seven 2024 method numbers that cannot safely be used alone</h2>
+<p>These are source descriptions, not approved procedure selections. Both manuals' URL and procedure titles must be present on the laboratory request.</p>
+<div class="scroll"><table><thead><tr><th>Shared identifier</th><th>Trace Elements manual describes</th><th>Metals and Minerals manual describes</th><th>Decision</th></tr></thead><tbody id="collisions"></tbody></table></div>
+<div class="actions"><button id="collisionExport" disabled>Export 7 method-identity conflicts</button></div>
+</section>
+<section class="card">
+<h2>Three additional Trace Elements method identifiers</h2>
+<p>09.008–09.010 appear in the Trace Elements manual's table of contents but not the Metals and Minerals manual's contents list. This does <b>not</b> prove withdrawal or current applicability; the regulator's adoption record and the laboratory's method verification remain required.</p>
+<div class="scroll" style="max-height:300px"><table style="min-width:650px"><thead><tr><th>Number</th><th>Trace Elements procedure</th><th>Authority state</th></tr></thead><tbody id="oneSided"></tbody></table></div>
+</section>
+<section class="card">
+<h2>27 affected trace-metal case dossiers</h2>
+<div class="controls">
+<div><label for="search">Search product, ID, analyte or blocker</label><input id="search" disabled placeholder="Search metal cases…"></div>
+<div><label for="priority">Priority</label><select id="priority" disabled><option value="ALL">All metal cases</option><option value="P0">P0</option><option value="P1">P1</option></select></div>
+<div><label for="analyte">Target analyte</label><select id="analyte" disabled><option value="ALL">All metals</option><option value="Lead">Lead</option><option value="Copper">Copper</option><option value="Chromium">Chromium</option><option value="Nickel">Nickel</option></select></div>
+</div>
+<div class="actions"><button id="casesExport" disabled>Export metal cases and lab preflight request</button></div>
+<p id="caseCount" role="status" aria-live="polite">Case records disabled until source verified</p>
+<div class="scroll">
+<table><thead><tr><th>Case and target</th><th>Method risk / existing evidence source</th><th>First commercial document</th><th>Preflight information required from laboratory</th><th>Legal/QA control</th></tr></thead><tbody id="caseRows"></tbody></table>
+</div>
+</section>
+<section class="card">
+<h2>Laboratory request preflight (no automatic assignments)</h2>
+<p>Ask for the method's full PDF title, edition/version, procedure title/page and official adoption basis, plus the laboratory's own SOP reference. Request exact analyte/species, as-tested product matrix and preprocessing, accredited scope, calibration range, matrix LOD/LOQ, spike/recovery, precision, blanks, measurement uncertainty, sampling and chain of custody. Only after regulatory affairs independently signs the operative product article/limit can the LOQ and results be evaluated for regulatory compliance.</p>
+<p>For Royal Jelly antibiotic residues and the other nonmetal cases, use an independently validated analyte-specific method route; they are <b>not</b> covered by the metals-method crosswalk.</p>
+</section>
+<footer style="font-size:12px;color:var(--muted)">Source manuscripts from 16 October 2026; commercial evidence receipt snapshot 20 October 2026. Pinned source integrity checks fail closed. This is a read-only lab method reconciliation, not a determination of regulatory precedence between manuals or commercial QA release.</footer>
+</main>
+<script>
+(function(){"use strict";
+const CONFLICT="./data/rules/fssai-current35-dual-manual-method-conflict-batch42-2026-10-16.json";
+const ORIGINAL="./data/rules/pmsv-batch134-35-held-documentary-readiness-2026-10-29.json";
+const PIN_CONFLICT="3ae26a20e1c30661",PIN_ORIGINAL="79fa7beec3d59b37";
+const $=id=>document.getElementById(id);
+let conflicts=null,traceOnly=null,joined=null;
+function digest(v){let a=0x811c9dc5,b=0x9747b28c;for(const ch of JSON.stringify(v)){const c=ch.charCodeAt(0);a=Math.imul(a^c,16777619);b=Math.imul(b^c,2246822519)}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")}
+function valid(d,o){
+ if(!d||!o||digest(d)!==PIN_CONFLICT||digest(o)!==PIN_ORIGINAL)return false;
+ if(d.counts.method_ids_colliding_across_official_hosted_manuals!==7||d.counts.additional_trace_only_method_numbers!==3||d.counts.trace_metals_on_method_version_hold!==27||d.counts.other_cases_on_compound_matrix_evidence_hold!==8||d.counts.all_cases_touched!==35)return false;
+ if(!Array.isArray(d.conflict_method_cards)||d.conflict_method_cards.length!==7||!Array.isArray(d.one_sided_trace_method_cards)||d.one_sided_trace_method_cards.length!==3||!Array.isArray(d.product_method_holds)||d.product_method_holds.length!==35)return false;
+ if(o.summary.cases!==35||o.summary.held!==35||o.summary.current_receipts_verified!==0||o.summary.lot_releases!==0||o.summary.method_matrix_approvals!==0)return false;
+ if(!Array.isArray(o.cases)||o.cases.length!==35||o.cases.some(c=>c.lot_release!=="HELD"||c.legal_limit!=="NOT_SIGNED"||c.laboratory_method_matrix!=="NOT_SIGNED"||c.representative_lot_CoA!=="NOT_RECEIVED"))return false;
+ const original=new Map(o.cases.map(c=>[c.case_id,c]));
+ if(original.size!==35)return false;
+ for(const c of d.product_method_holds){
+  const prev=original.get(c.catalog_id);if(!prev||prev.rank!==c.rank||prev.product!==c.product_name||prev.analyte!==c.analyte||prev.lot_release!=="HELD")return false;
+ }
+ if(d.product_method_holds.filter(c=>c.analyte_family==="TRACE_METALS"&&c.hold==="MANUAL_METHOD_NUMBER_CONFLICT_HOLD").length!==27)return false;
+ for(let i=0;i<7;i++){
+  const c=d.conflict_method_cards[i];if(c.method_number!=="FSSAI 09.00"+(i+1)+":2024"||c.method_identity_consistent_across_manuals!==false||c.source_priority_established!==false||c.allow_method_number_only!==false||!c.trace_elements_manual?.title||!c.metals_and_minerals_manual?.title)return false;
+ }
+ return true;
+}
+function cell(tr,value,cls){const td=document.createElement("td");td.textContent=String(value??"");if(cls)td.className=cls;tr.appendChild(td);return td}
+function renderComparators(){
+ const rows=$("collisions");rows.replaceChildren();
+ for(const c of conflicts){const tr=document.createElement("tr");
+  cell(tr,c.method_number,"mono");cell(tr,c.trace_elements_manual.title);cell(tr,c.metals_and_minerals_manual.title);cell(tr,"CONFLICT — do not select by code alone","hold");
+  rows.appendChild(tr)}
+ const traceRows=$("oneSided");traceRows.replaceChildren();
+ for(const c of traceOnly){const tr=document.createElement("tr");cell(tr,c.method_number,"mono");cell(tr,c.trace_elements_manual.title);cell(tr,"No same code listed in other manual; adoption NOT verified");traceRows.appendChild(tr)}
+}
+function filtered(){
+ if(!joined)return[];const q=$("search").value.toLowerCase().trim(),p=$("priority").value,a=$("analyte").value;
+ return joined.filter(({source,original})=>(p==="ALL"||original.priority===p)&&(a==="ALL"||source.analyte===a)&&(!q||[source.product_name,source.catalog_id,source.analyte,source.hold_reason,original.first_commercial_document_needed].some(x=>String(x??"").toLowerCase().includes(q))));
+}
+function renderCases(){
+ const list=filtered(),root=$("caseRows");root.replaceChildren();
+ for(const {source,original} of list){const tr=document.createElement("tr");
+  const t=cell(tr,"#"+source.rank+" · "+original.priority+" · "+source.product_name);
+  const id=document.createElement("small");id.textContent=source.catalog_id+" · "+source.analyte;t.appendChild(id);
+  cell(tr,source.hold_reason);
+  cell(tr,original.first_commercial_document_needed);
+  cell(tr,"Full source PDF + method title/edition/page + adoption proof; exact accredited analyte/matrix; verified LOQ, recovery, uncertainty, QC and signed sample CoA");
+  cell(tr,"HELD · legal article, matrix/method and commercial lot not signed","hold");
+  root.appendChild(tr);
+ }
+ $("caseCount").textContent=list.length+" of 27 trace-metal cases shown · all HELD · no laboratory method selected";
+}
+function quote(v){let s=String(v??"");if(/^[\s]*[=+\-@\t\r]/.test(s))s="'"+s;return'"'+s.replaceAll('"','""')+'"'}
+function csv(rows,name){const blob=new Blob(["\uFEFF"+rows.map(row=>row.map(quote).join(",")).join("\r\n")+"\r\n"],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function exportConflicts(){const rows=[["ambiguous_method_id","trace_elements_manual_procedure","metals_minerals_manual_procedure","trace_pdf_url","metals_pdf_url","manual_precedence_established","method_selected","lab_matrix_validation"]];
+ for(const c of conflicts)rows.push([c.method_number,c.trace_elements_manual.title,c.metals_and_minerals_manual.title,c.trace_elements_manual.url,c.metals_and_minerals_manual.url,"NO","NO","NO"]);
+ csv(rows,"PMSV-B138-7-OFFICIAL-METHOD-ID-COLLISIONS-UNRESOLVED.csv")}
+function exportCases(){const rows=[["case_rank","case_id","priority","product","analyte","first_document_needed","recorded_FSSR_or_blank","source_method_risk","manual_version_confirmed","official_adoption_proven","lab_accepted_method_reference_TO_FILL","full_method_title_version_page_TO_FILL","sample_matrix_TO_FILL","lab_scope_certificate_TO_FILL","matrix_LOQ_TO_FILL","spike_recovery_precision_uncertainty_TO_FILL","traceable_lot_CoA_TO_FILL","legal_article_signed","QA_lot_release"]];
+ for(const {source,original} of filtered())rows.push([source.rank,source.catalog_id,original.priority,source.product_name,source.analyte,original.first_commercial_document_needed,original.recorded_fssr,source.hold,"NO","NO","","","","","","","","NO","HELD"]);
+ csv(rows,"PMSV-B138-27-METALS-LAB-METHOD-PREFLIGHT-HELD.csv")}
+(async()=>{try{
+ const [r1,r2]=await Promise.all([fetch(CONFLICT+"?v=20261030-b138",{cache:"no-store"}),fetch(ORIGINAL+"?v=20261030-b138",{cache:"no-store"})]);
+ if(!r1.ok||!r2.ok)throw Error("Official source reconciliation registers unavailable");
+ const [d,o]=await Promise.all([r1.json(),r2.json()]);
+ if(!valid(d,o))throw Error("Source pin/integrity or HOLD invariant mismatch");
+ conflicts=Object.freeze(d.conflict_method_cards);traceOnly=Object.freeze(d.one_sided_trace_method_cards);
+ const map=new Map(o.cases.map(x=>[x.case_id,x]));
+ joined=Object.freeze(d.product_method_holds.filter(x=>x.analyte_family==="TRACE_METALS").map(source=>Object.freeze({source,original:map.get(source.catalog_id)})));
+ $("collisionCount").textContent="7";$("metalCases").textContent="27";$("otherCases").textContent="8";$("remainingHold").textContent="35";
+ for(const id of ["search","priority","analyte","collisionExport","casesExport"])$(id).disabled=false;
+ $("search").addEventListener("input",renderCases);$("priority").addEventListener("change",renderCases);$("analyte").addEventListener("change",renderCases);
+ $("collisionExport").addEventListener("click",exportConflicts);$("casesExport").addEventListener("click",exportCases);
+ $("sourceStatus").textContent="Verified both pinned source registers · 7 different shared method codes, 27 trace-metal cases and 35 commercial HOLDS. No method/limit approval.";
+ renderComparators();renderCases();
+}catch(e){$("sourceStatus").textContent="SOURCE VERIFICATION FAILED — comparisons, case records and downloads disabled. All 35 commercial cases remain HELD.";
+ console.warn("PMSV Batch138 method source integrity",e.message)}})();
+})();
+</script>
+</body></html>
