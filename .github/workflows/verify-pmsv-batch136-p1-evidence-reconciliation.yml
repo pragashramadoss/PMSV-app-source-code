@@ -1,0 +1,24 @@
+name: PMSV Batch136 P1 Documentary HOLD Safety
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch136-p1-evidence-reconciliation.html'
+      - 'fssai-product-helper-preview-01/pmsv-batch135-p0-evidence-method-triage.html'
+      - 'fssai-product-helper-preview-01/pmsv-batch128-35-regulatory-review.html'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'fssai-product-helper-preview-01/data/rules/pmsv-batch134-35-held-documentary-readiness-2026-10-29.json'
+      - 'tests/pmsv-batch136-p1-evidence-reconciliation.test.cjs'
+      - '.github/workflows/verify-pmsv-batch136-p1-evidence-reconciliation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  p1-documentary-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Check out audited branch
+        uses: actions/checkout@v4
+      - name: Verify 22 P1 source, 110 IDs, HOLD and page safeguards
+        run: node tests/pmsv-batch136-p1-evidence-reconciliation.test.cjs
