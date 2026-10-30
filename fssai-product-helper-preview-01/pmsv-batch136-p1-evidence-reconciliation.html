@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>PMSV FSSAI · P1 22-case evidence reconciliation · 30 October 2026</title>
+<style>
+:root{--bg:#f4f7fc;--ink:#182743;--blue:#3156c7;--navy:#172e60;--muted:#596b81;--line:#dae3f0;--danger:#a32929;--amber:#865100}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+a{color:var(--blue)}header{background:linear-gradient(115deg,var(--navy),var(--blue));color:white;padding:24px 16px}header a{color:white}
+header>div,main{max-width:1200px;margin:auto}main{padding:16px 14px 40px}
+h1{font-size:clamp(1.45rem,3vw,2rem);line-height:1.2;margin:6px 0 8px}h2{font-size:1.15rem;margin:0 0 10px}p{margin:7px 0}
+.card{background:white;border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:13px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.kpi{padding:13px;border-radius:10px;background:#f0f4ff;border:1px solid var(--line)}
+.kpi strong{display:block;font-size:25px;line-height:1.2}.kpi span{font-size:12px;color:var(--muted)}
+.warning{border-left:4px solid var(--danger);background:#fff3f3;padding:12px 13px;margin:12px 0}
+.note{border-left:4px solid #d2a03a;background:#fffaec;padding:11px 13px;margin:12px 0}
+.controls{display:grid;grid-template-columns:minmax(200px,2fr) repeat(2,minmax(140px,1fr));gap:9px}
+label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}
+input,select{border:1px solid #b4c3d7;border-radius:8px;width:100%;padding:10px;font:inherit;min-height:44px}
+button{background:var(--blue);border:0;color:white;padding:10px 13px;font-weight:750;border-radius:8px;min-height:42px;cursor:pointer}
+button:disabled{opacity:.48;cursor:not-allowed}.actions{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}
+.scroll{overflow:auto;max-height:76vh;border:1px solid var(--line);border-radius:9px}
+table{width:100%;min-width:1130px;border-collapse:collapse}th,td{padding:10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:12px;background:#edf2fc;position:sticky;top:0;z-index:1}td{font-size:13px}
+tr:nth-child(even){background:#fbfcff}
+small{display:block;font-size:11px;color:var(--muted);line-height:1.45;margin-top:5px}
+.hold{color:var(--danger);font-weight:850}.flag{color:var(--amber);font-weight:800}.mono{font:12px/1.5 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+footer{font-size:12px;color:var(--muted)}
+@media(max-width:750px){.controls{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:12px}}
+</style></head>
+<body>
+<header><div>
+<a href="./index.html#product">← FSSAI Helper</a> · <a href="./pmsv-batch128-35-regulatory-review.html">All 35 HOLD cases</a> · <a href="./pmsv-batch135-p0-evidence-method-triage.html">13 P0 cases</a>
+<h1>Batch 136 — 22 P1 evidence and legal-source reconciliation</h1>
+<p>30 October 2026 · read-only documentary workbench · no compliance certification or lot disposition</p>
+</div></header>
+<main>
+<section class="card">
+<h2>Source safeguards</h2>
+<p>Reads the pinned Batch134 register. Covers 22 P1 cases and 110 original request IDs. Original IDs are opaque: their exact historical wording has not been authenticated. The five gate headings below are proposed collection requirements, not decoded legacy request descriptions.</p>
+<div class="warning"><b>All P1 products remain HELD.</b> Regulatory desk review, published comparator articles and catalogue identity do not establish applicable signed limits, approved test methods, genuine lot certificates or authorised QA disposition.</div>
+<div class="note"><b>Effective-date safeguard:</b> Version IX of the FSSAI contaminants compendium (3 February 2026) is a research reference. The 25 May 2026 final amendment has a 1 December 2026 commencement. Check each operative gazette, date, food matrix and analyte before approving any limit. Do not adopt draft limits.</div>
+<p>Official sources: <a target="_blank" rel="noopener noreferrer" href="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf">FSSAI CTR Version IX</a> · <a target="_blank" rel="noopener noreferrer" href="https://fssai.gov.in/food-law/regulations/amendments/contaminants-toxins">FSSAI CTR amendments register</a>.</p>
+<p id="status" role="status" aria-live="polite">Checking pinned documentary evidence source…</p>
+</section>
+<section class="card"><div class="kpis">
+<div class="kpi"><strong id="total">—</strong><span>P1 cases, all HOLD</span></div>
+<div class="kpi"><strong id="lead">—</strong><span>Lead cases</span></div>
+<div class="kpi"><strong id="residue">—</strong><span>Residue cases</span></div>
+<div class="kpi"><strong id="mycotoxin">—</strong><span>Mycotoxin cases</span></div>
+</div><p id="additional" style="font-size:12px;color:var(--muted)"></p></section>
+<section class="card">
+<h2>Five required handoff gates (proposed)</h2>
+<div class="scroll" style="max-height:380px"><table style="min-width:720px"><thead><tr><th>Gate</th><th>Function</th><th>Evidence needed</th></tr></thead><tbody id="gates"></tbody></table></div>
+</section>
+<section class="card">
+<h2>22 P1 unresolved evidence actions</h2>
+<div class="controls">
+<div><label for="search">Search product, case ID, analyte, question or request ID</label><input id="search" placeholder="Search the P1 evidence queue" disabled></div>
+<div><label for="analyte">Source/analyte family</label><select id="analyte" disabled><option value="ALL">All families</option><option value="LEAD">Lead</option><option value="RESIDUES">Pesticide residues</option><option value="MYCOTOXINS">Mycotoxins</option></select></div>
+<div><label for="route">Original FSSR field</label><select id="route" disabled><option value="ALL">All P1</option><option value="MISSING">Original number blank</option><option value="PRESENT">Original number recorded</option></select></div>
+</div>
+<div class="actions"><button id="casesCsv" disabled>Download filtered P1 case CSV</button><button id="requestsCsv" disabled>Download original request-ID CSV</button></div>
+<p id="count" aria-live="polite">Verification pending — no data shown</p>
+<div class="scroll">
+<table><thead><tr><th>Case, analyte</th><th>Original standard / regulatory route</th><th>First original commercial document needed</th><th>Exact scope / method question</th><th>Original request IDs (not decoded)</th><th>Current status</th></tr></thead><tbody id="rows"></tbody></table>
+</div>
+</section>
+<footer>Evidence status: 20 October 2026 snapshot NOT RECEIVED; current receipt NOT VERIFIED. No site action marks an uploaded document as authentic, no limit/method is signed, and no lot is released. Manufacturer, laboratory, regulatory and QA evidence must be checked outside this read-only workbench.</footer>
+</main>
+<script>
+(function(){"use strict";
+const PATH="./data/rules/pmsv-batch134-35-held-documentary-readiness-2026-10-29.json",PIN="79fa7beec3d59b37";
+const $=id=>document.getElementById(id);
+let items=null,register=null;
+function digest(v){let a=0x811c9dc5,b=0x9747b28c;for(const ch of JSON.stringify(v)){const c=ch.charCodeAt(0);a=Math.imul(a^c,16777619);b=Math.imul(b^c,2246822519)}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")}
+function group(c){if(c.analyte==="Lead")return"LEAD";if(c.analyte==="Pesticide MRLs"||c.analyte==="Residues")return"RESIDUES";if(c.analyte==="Aflatoxins"||c.analyte==="Ochratoxin A")return"MYCOTOXINS";return"UNKNOWN"}
+function validate(d){
+ if(!d||digest(d)!==PIN||d.kind!=="PMSV_BATCH134_35_HELD_DOCUMENTARY_READINESS_NO_PRODUCT_APPROVAL")return false;
+ if(d.legacy_id_semantics_authenticated!==false||d.proposed_gates_are_separate_from_legacy_ids!==true)return false;
+ if(d.summary.catalogue!==533||d.summary.p0!==13||d.summary.p1!==22||d.summary.held!==35||d.summary.original_request_ids!==175||d.summary.current_receipts_verified!==0||d.summary.lot_releases!==0)return false;
+ if(!Array.isArray(d.cases)||d.cases.length!==35||!Array.isArray(d.requests)||d.requests.length!==175||!Array.isArray(d.proposed_gates)||d.proposed_gates.length!==5)return false;
+ const p1=d.cases.filter(c=>c.priority==="P1"),ids=new Set();
+ if(p1.length!==22||p1.filter(c=>group(c)==="LEAD").length!==15||p1.filter(c=>group(c)==="RESIDUES").length!==4||p1.filter(c=>group(c)==="MYCOTOXINS").length!==3||p1.filter(c=>!c.recorded_fssr).length!==5)return false;
+ for(const c of p1){
+  if(c.lot_release!=="HELD"||c.legal_limit!=="NOT_SIGNED"||c.laboratory_method_matrix!=="NOT_SIGNED"||c.representative_lot_CoA!=="NOT_RECEIVED"||c.original_request_ids?.length!==5)return false;
+  for(const id of c.original_request_ids){if(ids.has(id))return false;ids.add(id)}
+ }
+ if(ids.size!==110)return false;
+ const reqMap=new Map(d.requests.map(r=>[r.request_id,r]));
+ for(const c of p1)for(const id of c.original_request_ids){
+  const r=reqMap.get(id);if(!r||r.case_id!==c.case_id||r.priority!=="P1"||r.request_wording_authenticated!==false||r.snapshot_2026_10_20!=="NOT_RECEIVED"||r.current_receipt!=="NOT_VERIFIED")return false;
+ }
+ return true;
+}
+function cell(row,s,cls){const t=document.createElement("td");t.textContent=String(s??"");if(cls)t.className=cls;row.appendChild(t);return t}
+function filtered(){if(!items)return[];
+ const q=$("search").value.toLowerCase().trim(),family=$("analyte").value,route=$("route").value;
+ return items.filter(c=>(family==="ALL"||group(c)===family)&&(route==="ALL"||(route==="MISSING"?!c.recorded_fssr:!!c.recorded_fssr))&&
+ (!q||[c.product,c.case_id,c.analyte,c.final_legal_question,c.first_commercial_document_needed,...c.original_request_ids].some(v=>String(v??"").toLowerCase().includes(q))));
+}
+function render(){
+ const body=$("rows");body.replaceChildren();const list=filtered();
+ for(const c of list){
+  const tr=document.createElement("tr"),t=cell(tr,"#"+c.rank+" · "+c.product);
+  const sub=document.createElement("small");sub.textContent=c.case_id+" · "+c.analyte;t.appendChild(sub);
+  const route=c.recorded_fssr?("Recorded FSSR: "+c.recorded_fssr):("ORIGINAL FSSR BLANK · "+(c.regulatory_route_label||c.regulatory_route_group||"Regulatory route pending")+" (not a numeric FSSR code)");
+  cell(tr,route,c.recorded_fssr?"":"flag");
+  cell(tr,c.first_commercial_document_needed);
+  cell(tr,c.final_legal_question);
+  cell(tr,c.original_request_ids.join(" · "),"mono");
+  cell(tr,"HELD · receipt NOT VERIFIED · signed limit/method missing · lot CoA not received","hold");
+  body.appendChild(tr);
+ }
+ $("count").textContent=list.length+" of 22 P1 cases shown · all HELD · source questions are NOT compliance decisions";
+}
+function q(s){s=String(s??"");if(/^[\s]*[=+\-@\t\r]/.test(s))s="'"+s;return'"'+s.replaceAll('"','""')+'"'}
+function download(data,name){const b=new Blob(["\uFEFF"+data.map(r=>r.map(q).join(",")).join("\r\n")+"\r\n"],{type:"text/csv;charset=utf-8"}),u=URL.createObjectURL(b),a=document.createElement("a");
+ a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function exportCases(){
+ const rows=[["rank","case_id","product","analyte","analyte_family","original_FSSR_or_blank","regulatory_route_not_FSSR","first_commercial_document","legal_scope_method_question","original_request_ids_opaque","historical_receipt_as_of_2026_10_20","current_receipt","signed_limit","approved_method_matrix","commercial_lot_CoA","QA_release"]];
+ for(const c of filtered())rows.push([c.rank,c.case_id,c.product,c.analyte,group(c),c.recorded_fssr,c.regulatory_route_group||"",c.first_commercial_document_needed,c.final_legal_question,c.original_request_ids.join(" | "),"NOT_RECEIVED","NOT_VERIFIED","NOT_SIGNED","NOT_SIGNED","NOT_RECEIVED","HELD"]);
+ download(rows,"PMSV-BATCH136-P1-22-EVIDENCE-RECONCILIATION-HELD.csv");
+}
+function exportRequests(){
+ const rows=[["original_request_id","rank","case_id","product","analyte","original_wording_authenticated","commercial_document_first_needed","2026_10_20_receipt","current_receipt","signed_limit","approved_method_matrix","lot_release"]];
+ for(const c of filtered())for(const id of c.original_request_ids)rows.push([id,c.rank,c.case_id,c.product,c.analyte,"NO",c.first_commercial_document_needed,"NOT_RECEIVED","NOT_VERIFIED","NOT_SIGNED","NOT_SIGNED","HELD"]);
+ download(rows,"PMSV-BATCH136-P1-110-ORIGINAL-REQUEST-IDS-HELD.csv");
+}
+(async()=>{try{
+ const r=await fetch(PATH+"?v=20261030-b136",{cache:"no-store"});if(!r.ok)throw Error("Evidence register unavailable");
+ const d=await r.json();if(!validate(d))throw Error("Pinned source or required HOLD safety invariant mismatch");
+ register=d;items=Object.freeze(d.cases.filter(c=>c.priority==="P1").map(c=>Object.freeze(c)));
+ $("total").textContent="22";$("lead").textContent="15";$("residue").textContent="4";$("mycotoxin").textContent="3";
+ $("additional").textContent="110 distinct historical request IDs · 5 P1 original FSSR fields blank · 0 signed limits/methods or released lots";
+ for(const g of register.proposed_gates){const tr=document.createElement("tr");cell(tr,g.label);cell(tr,g.owner_function);cell(tr,g.minimum_evidence);$("gates").appendChild(tr)}
+ for(const id of ["search","analyte","route","casesCsv","requestsCsv"])$(id).disabled=false;
+ $("search").addEventListener("input",render);$("analyte").addEventListener("change",render);$("route").addEventListener("change",render);
+ $("casesCsv").addEventListener("click",exportCases);$("requestsCsv").addEventListener("click",exportRequests);
+ $("status").textContent="Pinned Batch134 source verified · P1 22/22 and 110 original IDs conserved. No current receipts authenticated; all HOLD.";
+ render();
+}catch(e){$("status").textContent="SOURCE VERIFICATION FAILED — no cases or CSV exports enabled. All original P1 cases remain HELD.";
+ console.warn("PMSV Batch136 source verification",e.message)}})();
+})();
+</script>
+</body></html>
