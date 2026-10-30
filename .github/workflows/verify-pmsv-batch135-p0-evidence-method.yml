@@ -1,0 +1,23 @@
+name: PMSV Batch135 P0 Evidence Method Safety
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch135-p0-evidence-method-triage.html'
+      - 'fssai-product-helper-preview-01/pmsv-batch128-35-regulatory-review.html'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'fssai-product-helper-preview-01/data/rules/pmsv-batch134-35-held-documentary-readiness-2026-10-29.json'
+      - 'tests/pmsv-batch135-p0-evidence-method-triage.test.cjs'
+      - '.github/workflows/verify-pmsv-batch135-p0-evidence-method.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-p0-hold-gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout verified gh-pages content
+        uses: actions/checkout@v4
+      - name: Verify safety invariants and page JavaScript
+        run: node tests/pmsv-batch135-p0-evidence-method-triage.test.cjs
