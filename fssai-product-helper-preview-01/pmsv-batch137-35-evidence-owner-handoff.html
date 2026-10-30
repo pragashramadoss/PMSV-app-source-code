@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>PMSV FSSAI | Batch137 · 35 cases / 175 documentary handoffs</title>
+<style>
+:root{--navy:#173263;--blue:#365fc9;--bg:#f4f7fc;--ink:#162640;--mute:#526782;--line:#d7e0ed;--danger:#a12626;--warn:#875600}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+header{background:linear-gradient(120deg,var(--navy),var(--blue));color:#fff;padding:25px 16px}
+header>div,main{max-width:1200px;margin:auto}header a{color:#fff}
+main{padding:16px 12px 40px}a{color:var(--blue)}h1{font-size:clamp(1.45rem,3vw,2.15rem);margin:7px 0}h2{font-size:1.13rem;margin:0 0 9px}
+p{margin:7px 0}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:13px}
+.danger{background:#fff3f2;border-left:4px solid var(--danger);padding:12px;margin:11px 0}.note{background:#fff9e9;border-left:4px solid #c99018;padding:12px;margin:11px 0}
+.metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.metric{background:#f0f4fe;border:1px solid var(--line);border-radius:9px;padding:11px}
+.metric strong{display:block;font-size:24px;line-height:1.25}.metric span{font-size:11px;color:var(--mute)}
+.controls{display:grid;grid-template-columns:minmax(170px,2fr) repeat(3,minmax(135px,1fr));gap:9px}
+label{display:block;font-size:12px;font-weight:760;margin-bottom:4px}
+input,select{font:inherit;border:1px solid #aebdd4;width:100%;border-radius:8px;min-height:42px;padding:8px 10px;background:#fff}
+button{font:inherit;border:0;border-radius:8px;background:var(--blue);color:#fff;min-height:42px;padding:9px 13px;font-weight:750;cursor:pointer}
+button:disabled,input:disabled,select:disabled{opacity:.48;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.scroll{overflow:auto;border:1px solid var(--line);border-radius:9px;max-height:72vh}
+table{border-collapse:collapse;min-width:1100px;width:100%}
+th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+th{position:sticky;top:0;background:#ebf1fb;font-size:12px;z-index:1}td{font-size:12px}tr:nth-child(even){background:#fafcff}
+.small{font-size:12px;color:var(--mute)}small{display:block;color:var(--mute);line-height:1.5;margin-top:4px}
+.held{color:var(--danger);font-weight:850}.flag{color:var(--warn);font-weight:800}
+.mono{font:11px/1.5 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+footer{font-size:12px;color:var(--mute)}
+@media(max-width:790px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.controls{grid-template-columns:1fr}.card{padding:12px}}
+</style></head><body>
+<header><div>
+<a href="./index.html#product">← PMSV FSSAI Helper</a> · <a href="./pmsv-batch128-35-regulatory-review.html">35 held cases</a> · <a href="./pmsv-batch135-p0-evidence-method-triage.html">13 P0</a> · <a href="./pmsv-batch136-p1-evidence-reconciliation.html">22 P1</a>
+<h1>Batch 137 · Evidence handoff register</h1>
+<p>30 October 2026 · 35 cases / 175 historical IDs / separate suggested owner-gate handoffs</p>
+</div></header>
+<main>
+<section class="card">
+<h2>Document-control safeguard</h2>
+<p>This read-only register reconciles the source-pinned 35 commercial cases, 175 historical documentary request IDs, and the five suggested evidence gates. The gate rows are an <b>independent owner handoff checklist</b> — not a translation of the opaque historical ID suffixes.</p>
+<div class="danger"><b>No regulatory or product release approvals.</b> The source register contains zero authenticated commercial dossiers, zero verified current receipts, zero signed legal limit decisions, zero approved laboratory test matrices and zero representative commercial lot CoAs. All 35 cases remain HELD.</div>
+<div class="note"><b>Dates matter.</b> The 20 October 2026 snapshot recorded original requests as not received. Today's actual document receipt is unverified. The 25 May 2026 FSSAI CTR amendment comes into force on 1 December 2026; verify the operative clause/effective date for every case, never transfer a named article to an unrelated product.</div>
+<p class="small"><a href="https://fssai.gov.in/food-law/regulations/amendments/contaminants-toxins" target="_blank" rel="noopener noreferrer">FSSAI official contaminants amendments</a> · <a href="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf" target="_blank" rel="noopener noreferrer">FSSAI CTR compendium Version IX</a></p>
+<p id="status" role="status" aria-live="polite">Verifying the source register before enabling any records or downloads…</p>
+</section>
+<section class="card">
+<div class="metrics">
+<div class="metric"><strong id="total">—</strong><span>Cases on HOLD</span></div>
+<div class="metric"><strong id="p0">—</strong><span>Priority P0</span></div>
+<div class="metric"><strong id="p1">—</strong><span>Priority P1</span></div>
+<div class="metric"><strong id="historical">—</strong><span>Original request IDs</span></div>
+<div class="metric"><strong id="missing">—</strong><span>Original FSSR number blank</span></div>
+</div>
+</section>
+<section class="card">
+<h2>Owner handoff: five independent documentary requirements per case</h2>
+<p class="small">The export has 175 proposed owner-gate rows (35 cases × 5 suggested gates). These proposed rows happen to total 175, but they are not matched 1:1 to the 175 legacy IDs. Keep both namespaces separate.</p>
+<div class="scroll" style="max-height:420px"><table style="min-width:740px"><thead><tr><th>Suggested gate</th><th>Owner function</th><th>Minimum supporting evidence</th></tr></thead><tbody id="gates"></tbody></table></div>
+</section>
+<section class="card">
+<h2>Filter 35-case documentary queue</h2>
+<div class="controls">
+<div><label for="search">Case, product, analyte, question or historical ID</label><input id="search" placeholder="Search all 35 cases…" disabled></div>
+<div><label for="priority">Priority</label><select id="priority" disabled><option value="ALL">All 35</option><option value="P0">P0 · 13</option><option value="P1">P1 · 22</option></select></div>
+<div><label for="analyte">Analyte family</label><select id="analyte" disabled><option value="ALL">All analytes</option><option value="METALS">Metals</option><option value="RESIDUES">Pesticide residues</option><option value="TOXINS">Mycotoxins</option><option value="ANTIBIOTICS">Antibiotics</option></select></div>
+<div><label for="fssr">Recorded FSSR</label><select id="fssr" disabled><option value="ALL">All</option><option value="MISSING">Number blank · 8</option><option value="PRESENT">Number recorded · 27</option></select></div>
+</div>
+<div class="actions">
+<button id="casesCsv" disabled>Export case-level handoff (35)</button>
+<button id="originalCsv" disabled>Export historical request-ID register (175)</button>
+<button id="ownerCsv" disabled>Export five-gate owner worksheet (175)</button>
+</div>
+<p id="count" role="status" aria-live="polite">Verification pending</p>
+<div class="scroll"><table><thead><tr><th>Priority / case</th><th>Analyte</th><th>Existing regulatory route</th><th>First original commercial document</th><th>Decision required before release</th><th>Historical IDs</th><th>Documentary / release status</th></tr></thead><tbody id="rows"></tbody></table></div>
+</section>
+<section class="card"><h2>How to use the exported worksheets</h2>
+<p>The historical-ID CSV preserves the original unverified request IDs and leaves <b>document reference, received date, evidence owner, verifier and disposition</b> blank for the owner to fill outside PMSV. The separate five-gate owner worksheet identifies the responsible function and expected supporting evidence. Do not treat either worksheet as an upload confirmation or regulatory sign-off.</p>
+</section>
+<footer>Controlled public informational workbench; no documents are uploaded or stored here. Downloaded worksheets are blank collection templates. Actual source authenticity, laboratory method suitability, legal interpretation, certificate review and signed QA release remain external responsibilities. Failure of the source pin disables all table records and exports.</footer>
+</main>
+<script>
+(function(){"use strict";
+const PATH="./data/rules/pmsv-batch134-35-held-documentary-readiness-2026-10-29.json",PIN="79fa7beec3d59b37";
+const $=id=>document.getElementById(id);let register=null,records=null;
+function digest(v){let a=0x811c9dc5,b=0x9747b28c;for(const ch of JSON.stringify(v)){const c=ch.charCodeAt(0);a=Math.imul(a^c,16777619);b=Math.imul(b^c,2246822519)}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")}
+function family(c){
+ if(["Lead","Copper","Chromium","Nickel","Arsenic","Cadmium","Tin","Mercury"].includes(c.analyte))return"METALS";
+ if(["Pesticide MRLs","Residues"].includes(c.analyte))return"RESIDUES";
+ if(["Aflatoxins","Ochratoxin A"].includes(c.analyte))return"TOXINS";
+ if(c.analyte==="Antibiotics")return"ANTIBIOTICS";
+ return"UNCLASSIFIED";
+}
+function valid(d){
+ if(!d||digest(d)!==PIN||d.kind!=="PMSV_BATCH134_35_HELD_DOCUMENTARY_READINESS_NO_PRODUCT_APPROVAL")return false;
+ if(d.legacy_id_semantics_authenticated!==false||d.proposed_gates_are_separate_from_legacy_ids!==true)return false;
+ if(!Array.isArray(d.cases)||d.cases.length!==35||!Array.isArray(d.requests)||d.requests.length!==175||!Array.isArray(d.proposed_gates)||d.proposed_gates.length!==5)return false;
+ if(d.summary.catalogue!==533||d.summary.cases!==35||d.summary.p0!==13||d.summary.p1!==22||d.summary.original_request_ids!==175||d.summary.current_receipts_verified!==0||d.summary.lot_releases!==0||d.summary.held!==35||d.summary.original_fssr_present!==27||d.summary.original_fssr_missing_with_group_route!==8)return false;
+ if(d.summary.signed_limit_approvals!==0||d.summary.method_matrix_approvals!==0||d.summary.regulatory_approvals!==0||d.summary.representative_commercial_lot_coas!==0)return false;
+ const ownerGates=new Set(d.proposed_gates.map(g=>g.gate));if(ownerGates.size!==5)return false;
+ const ids=new Set(),requestById=new Map(d.requests.map(r=>[r.request_id,r]));
+ if(requestById.size!==175)return false;
+ if(d.cases.filter(c=>c.priority==="P0").length!==13||d.cases.filter(c=>c.priority==="P1").length!==22)return false;
+ if(d.cases.filter(c=>!c.recorded_fssr).length!==8)return false;
+ for(const c of d.cases){
+  if(!["P0","P1"].includes(c.priority)||c.original_request_ids?.length!==5||c.lot_release!=="HELD"||c.legal_limit!=="NOT_SIGNED"||c.laboratory_method_matrix!=="NOT_SIGNED"||c.representative_lot_CoA!=="NOT_RECEIVED")return false;
+  if(c.document_receipt_status!=="NOT_RECEIVED_AT_2026_10_20_SNAPSHOT_CURRENT_STATUS_UNVERIFIED")return false;
+  if(!c.recorded_fssr&&(!c.regulatory_route_group||!c.regulatory_route_source))return false;
+  for(const id of c.original_request_ids){
+   if(ids.has(id))return false;ids.add(id);
+   const r=requestById.get(id);if(!r||r.case_id!==c.case_id||r.priority!==c.priority||r.request_wording_authenticated!==false||r.snapshot_2026_10_20!=="NOT_RECEIVED"||r.current_receipt!=="NOT_VERIFIED")return false;
+  }
+ }
+ return ids.size===175;
+}
+function cell(tr,value,cls){const td=document.createElement("td");td.textContent=String(value??"");if(cls)td.className=cls;tr.appendChild(td);return td}
+function shown(){if(!records)return[];const q=$("search").value.toLowerCase().trim(),p=$("priority").value,a=$("analyte").value,f=$("fssr").value;
+ return records.filter(c=>(p==="ALL"||c.priority===p)&&(a==="ALL"||family(c)===a)&&(f==="ALL"||(f==="MISSING"?!c.recorded_fssr:!!c.recorded_fssr))&&
+ (!q||[c.product,c.case_id,c.analyte,c.final_legal_question,c.first_commercial_document_needed,...c.original_request_ids].some(v=>String(v??"").toLowerCase().includes(q))));
+}
+function render(){const list=shown(),body=$("rows");body.replaceChildren();
+ for(const c of list){const tr=document.createElement("tr");
+  const v=cell(tr,"#"+c.rank+" · "+c.priority+" · "+c.product);const sub=document.createElement("small");sub.textContent=c.case_id;v.appendChild(sub);
+  cell(tr,c.analyte);
+  cell(tr,c.recorded_fssr?("Recorded FSSR "+c.recorded_fssr):("ORIGINAL NUMBER BLANK · "+(c.regulatory_route_label||c.regulatory_route_group)+" · group route only"),c.recorded_fssr?"":"flag");
+  cell(tr,c.first_commercial_document_needed);
+  cell(tr,c.final_legal_question);
+  cell(tr,c.original_request_ids.join(" · "),"mono");
+  cell(tr,"HELD · current receipt NOT VERIFIED · signed limit, method/matrix and CoA absent","held");
+  body.appendChild(tr);
+ }
+ $("count").textContent=list.length+" of 35 cases shown · all HELD · no automatic regulatory approvals";
+}
+function quote(v){let s=String(v??"");if(/^[\s]*[=+\-@\t\r]/.test(s))s="'"+s;return'"'+s.replaceAll('"','""')+'"'}
+function download(rows,name){const blob=new Blob(["\uFEFF"+rows.map(row=>row.map(quote).join(",")).join("\r\n")+"\r\n"],{type:"text/csv;charset=utf-8"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function exportCases(){const rows=[["case_rank","case_id","priority","product","analyte","original_FSSR_or_blank","regulatory_route_group_not_FSSR","first_commercial_document_needed","unresolved_legal_method_question","historical_request_IDs_opaque","2026_10_20_snapshot","current_receipt","signed_limit","approved_method_matrix","representative_lot_CoA","release"]];
+ for(const c of shown())rows.push([c.rank,c.case_id,c.priority,c.product,c.analyte,c.recorded_fssr,c.regulatory_route_group||"",c.first_commercial_document_needed,c.final_legal_question,c.original_request_ids.join(" | "),"NOT_RECEIVED","NOT_VERIFIED","NOT_SIGNED","NOT_SIGNED","NOT_RECEIVED","HELD"]);
+ download(rows,"PMSV-B137-35-CASE-CONTROLLED-HANDOFF.csv");
+}
+function exportOriginals(){const rows=[["historical_request_id","case_rank","case_id","priority","product","analyte","legacy_request_wording_authenticated","first_commercial_document_needed","2026_10_20_receipt","current_receipt","document_reference_TO_FILL","document_received_date_TO_FILL","responsible_owner_TO_FILL","independent_verifier_TO_FILL","review_decision_TO_FILL","lot_release"]];
+ for(const c of shown())for(const id of c.original_request_ids)rows.push([id,c.rank,c.case_id,c.priority,c.product,c.analyte,"NO",c.first_commercial_document_needed,"NOT_RECEIVED","NOT_VERIFIED","","","","","","HELD"]);
+ download(rows,"PMSV-B137-175-HISTORICAL-REQUEST-IDS-NOT-VERIFIED.csv");
+}
+function exportOwners(){const rows=[["suggested_gate_key_NOT_LEGACY_ID","case_rank","case_id","priority","product","analyte","responsible_function","minimum_evidence_required","source_request_ids_NOT_MAPPED_TO_GATE","document_reference_TO_FILL","received_date_TO_FILL","submitted_by_TO_FILL","reviewer_TO_FILL","legal_matrix_or_method_review_TO_FILL","review_decision_TO_FILL","qa_release_state"]];
+ for(const c of shown())for(const g of register.proposed_gates)rows.push([g.gate,c.rank,c.case_id,c.priority,c.product,c.analyte,g.owner_function,g.minimum_evidence,"OPAQUE_NOT_MAPPED","","","","","","","HELD"]);
+ download(rows,"PMSV-B137-175-PROPOSED-OWNER-GATES-NOT-LEGACY-IDS.csv");
+}
+(async()=>{try{
+ const response=await fetch(PATH+"?v=20261030-b137",{cache:"no-store"});if(!response.ok)throw Error("Pinned register unavailable");
+ const d=await response.json();if(!valid(d))throw Error("Pinned source mismatch or incomplete HOLD safeguards");
+ register=d;records=Object.freeze(d.cases.map(c=>Object.freeze(c)));
+ $("total").textContent="35";$("p0").textContent="13";$("p1").textContent="22";$("historical").textContent="175";$("missing").textContent="8";
+ for(const g of register.proposed_gates){const tr=document.createElement("tr");cell(tr,g.label);cell(tr,g.owner_function);cell(tr,g.minimum_evidence);$("gates").appendChild(tr)}
+ for(const id of ["search","priority","analyte","fssr","casesCsv","originalCsv","ownerCsv"])$(id).disabled=false;
+ $("search").addEventListener("input",render);for(const id of ["priority","analyte","fssr"])$(id).addEventListener("change",render);
+ $("casesCsv").addEventListener("click",exportCases);$("originalCsv").addEventListener("click",exportOriginals);$("ownerCsv").addEventListener("click",exportOwners);
+ $("status").textContent="SOURCE VERIFIED: 35 HELD cases, 175 opaque IDs, 5 separate proposed owner gates, 8 original FSSR fields blank. Zero releases.";
+ render();
+}catch(e){$("status").textContent="SOURCE VERIFICATION FAILED — all 35 cases remain HELD; records and CSV downloads disabled.";
+ console.warn("PMSV Batch137 pinned source",e.message)}})();
+})();
+</script>
+</body></html>
