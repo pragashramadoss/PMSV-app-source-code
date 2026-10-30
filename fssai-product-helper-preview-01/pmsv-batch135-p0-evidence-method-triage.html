@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>PMSV FSSAI · 13 P0 evidence and method exceptions · 30 Oct 2026</title>
+<style>
+:root{--navy:#172d59;--blue:#345bd1;--ink:#17243b;--muted:#576982;--line:#dce4f0;--bg:#f4f7fc;--red:#a62b2b;--amber:#855300}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:linear-gradient(115deg,var(--navy),var(--blue));color:#fff;padding:24px 16px}
+header a{color:#fff}main{max-width:1190px;margin:17px auto;padding:0 14px 42px}h1{font-size:clamp(1.45rem,3vw,2.1rem);margin:6px 0}h2{font-size:1.1rem;margin:0 0 10px}p{margin:6px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px;margin:12px 0}
+.alert{border-left:4px solid #c54c4c;background:#fff3f2;padding:12px 14px;margin:12px 0}
+.note{border-left:4px solid #c8942d;background:#fff9eb;padding:10px 13px;margin:10px 0}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.kpi{padding:12px;background:#f1f5fd;border:1px solid var(--line);border-radius:9px}
+.kpi strong{display:block;font-size:23px}.kpi span{font-size:12px;color:var(--muted)}
+.controls{display:grid;grid-template-columns:minmax(180px,2fr) minmax(180px,1fr);gap:10px}
+label{font-weight:700;font-size:12px}input,select{width:100%;border:1px solid #b7c5d9;border-radius:8px;padding:10px;font:inherit;min-height:43px}
+button{background:var(--blue);color:#fff;border:0;border-radius:8px;padding:10px 13px;font-weight:700;cursor:pointer;min-height:42px}
+button:disabled{opacity:.5;cursor:not-allowed}.buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tablewrap{overflow:auto;max-height:75vh;border:1px solid var(--line);border-radius:9px}
+table{width:100%;border-collapse:collapse;min-width:1000px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{position:sticky;top:0;background:#eaf0ff;font-size:12px}td{font-size:13px}
+small{display:block;color:var(--muted);line-height:1.45;margin-top:4px}
+.hold{font-weight:800;color:var(--red)}.mono{font:12px/1.45 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+footer{color:var(--muted);font-size:12px}a{color:var(--blue)}
+@media(max-width:700px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.controls{grid-template-columns:1fr}.card{padding:12px}}
+</style>
+</head>
+<body>
+<header><div style="max-width:1190px;margin:auto">
+<a href="./index.html#product">← FSSAI Helper</a> · <a href="./pmsv-batch128-35-regulatory-review.html">All 35 commercial holds</a>
+<h1>P0 exception workbench — 12 metals + Royal Jelly</h1>
+<p>Batch135 · 30 October 2026 · original documentary requirements and method-scope triage, not compliance or lot release</p>
+</div></header>
+<main>
+<section class="card">
+<h2>Scope and source integrity</h2>
+<p>This screen reads the existing Batch134 pinned 35-case documentary register. It displays only the 13 P0 items (12 metal-analyte cases and one Royal Jelly antibiotic case) and their 65 original opaque evidence-request IDs. The original request IDs do not certify which document type they represent.</p>
+<div class="alert"><b>Mandatory HOLD:</b> no authenticated commercial identity, signed operative legal limit, approved laboratory analyte/matrix/method/LOQ, representative commercial-lot CoA or independent QA release has been established. No limit is automatically borrowed from a differently named food.</div>
+<p class="note"><b>Effective-date control:</b> 25 May 2026 final contaminants amendment is effective from <b>1 December 2026</b>; keep future amendments and drafts outside current limits. Validate applicability and operative gazettes before signing any limit.</p>
+<p>Official references: <a href="https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf" target="_blank" rel="noopener noreferrer">FSSAI contaminants compendium (Version IX)</a> · <a href="https://fssai.gov.in/food-law/regulations/amendments/contaminants-toxins" target="_blank" rel="noopener noreferrer">Official amendment register</a>.</p>
+<div id="status" role="status" aria-live="polite">Verifying pinned source…</div>
+</section>
+<section class="card">
+<div class="kpis">
+<div class="kpi"><strong id="cases">—</strong><span>P0 cases (source verified)</span></div>
+<div class="kpi"><strong id="metals">—</strong><span>Metal cases</span></div>
+<div class="kpi"><strong id="antibiotics">—</strong><span>Royal Jelly antibiotic case</span></div>
+<div class="kpi"><strong id="requests">—</strong><span>Original request IDs</span></div>
+</div>
+</section>
+<section class="card">
+<h2>Required evidence gates · suggested handoff, not decoded legacy ID wording</h2>
+<div class="tablewrap"><table style="min-width:710px">
+<thead><tr><th>Gate</th><th>Responsible function</th><th>Minimum evidence</th></tr></thead><tbody id="gateRows"></tbody>
+</table></div>
+</section>
+<section class="card">
+<h2>Priority method and documentary review</h2>
+<div class="controls">
+<div><label for="search">Product, ID, analyte or question</label><input id="search" placeholder="Search P0 cases…" disabled></div>
+<div><label for="type">Review subset</label><select id="type" disabled><option value="ALL">All 13 P0 cases</option><option value="METALS">Metals (12)</option><option value="ANTIBIOTICS">Royal Jelly antibiotics (1)</option></select></div>
+</div>
+<div class="buttons"><button id="exportCases" disabled>Export filtered P0 case CSV</button><button id="exportIds" disabled>Export original request-ID CSV</button></div>
+<p id="count" aria-live="polite"></p>
+<div class="tablewrap"><table><thead><tr><th>Priority / product</th><th>Analyte and source-scope boundary</th><th>First original commercial document</th><th>Legal / method review decision needed</th><th>Historical evidence IDs</th><th>Current release</th></tr></thead><tbody id="rows"></tbody></table></div>
+</section>
+<footer>Read-only source-control aid. Historical 20 October receipt snapshot is NOT RECEIVED; document receipt as of 30 October is NOT VERIFIED. Source research closure does not authorize release. No WordPress or commercial QA record is changed by this page.</footer>
+</main>
+<script>
+(function(){"use strict";
+const PATH="./data/rules/pmsv-batch134-35-held-documentary-readiness-2026-10-29.json";
+const PIN="79fa7beec3d59b37";
+const $=id=>document.getElementById(id);
+let records=null,source=null;
+function digest(v){let a=0x811c9dc5,b=0x9747b28c;for(const ch of JSON.stringify(v)){const c=ch.charCodeAt(0);a=Math.imul(a^c,16777619);b=Math.imul(b^c,2246822519)}return(a>>>0).toString(16).padStart(8,"0")+(b>>>0).toString(16).padStart(8,"0")}
+function isMetals(c){return c.analyte!=="Antibiotics"}
+function valid(d){
+ if(!d||digest(d)!==PIN||d.kind!=="PMSV_BATCH134_35_HELD_DOCUMENTARY_READINESS_NO_PRODUCT_APPROVAL")return false;
+ if(d.legacy_id_semantics_authenticated!==false||d.proposed_gates_are_separate_from_legacy_ids!==true)return false;
+ if(d.summary.cases!==35||d.summary.held!==35||d.summary.original_request_ids!==175||d.summary.current_receipts_verified!==0||d.summary.lot_releases!==0)return false;
+ if(!Array.isArray(d.cases)||d.cases.length!==35||!Array.isArray(d.requests)||d.requests.length!==175||!Array.isArray(d.proposed_gates)||d.proposed_gates.length!==5)return false;
+ const p0=d.cases.filter(c=>c.priority==="P0"),ids=new Set();
+ if(p0.length!==13||p0.filter(isMetals).length!==12||p0.filter(c=>c.analyte==="Antibiotics"&&c.case_id==="100-100-royal-jelly").length!==1)return false;
+ for(const c of p0){
+  if(c.lot_release!=="HELD"||c.legal_limit!=="NOT_SIGNED"||c.laboratory_method_matrix!=="NOT_SIGNED"||c.original_request_ids.length!==5)return false;
+  for(const id of c.original_request_ids){if(ids.has(id))return false;ids.add(id)}
+ }
+ if(ids.size!==65)return false;
+ for(const id of ids){const r=d.requests.find(r=>r.request_id===id);if(!r||r.priority!=="P0"||r.request_wording_authenticated!==false||r.current_receipt!=="NOT_VERIFIED")return false}
+ return true;
+}
+function cell(tr,value,cls){const t=document.createElement("td");t.textContent=String(value??"");if(cls)t.className=cls;tr.appendChild(t);return t}
+function shown(){if(!records)return[];const q=$("search").value.toLowerCase().trim(),type=$("type").value;
+ return records.filter(c=>(type==="ALL"||(type==="METALS"&&isMetals(c))||(type==="ANTIBIOTICS"&&!isMetals(c)))&&
+ (!q||[c.product,c.case_id,c.analyte,c.final_legal_question,c.first_commercial_document_needed,...c.original_request_ids].some(s=>String(s??"").toLowerCase().includes(q))));
+}
+function render(){const data=shown(),body=$("rows");body.replaceChildren();
+ for(const c of data){const tr=document.createElement("tr");
+  const label=cell(tr,"#"+c.rank+" · "+c.product);const sp=document.createElement("small");sp.textContent=c.case_id;label.appendChild(sp);
+  cell(tr,c.analyte+" · exact named article NOT SIGNED");
+  cell(tr,c.first_commercial_document_needed);
+  cell(tr,c.final_legal_question);
+  cell(tr,c.original_request_ids.join(" · "),"mono");
+  cell(tr,"HELD · method/matrix NOT SIGNED · no verified lot CoA","hold");
+  body.appendChild(tr);
+ }
+ $("count").textContent=data.length+" of 13 P0 shown · no case released";
+}
+function quote(s){s=String(s??"");if(/^[\s]*[=+\-@\t\r]/.test(s))s="'"+s;return'"'+s.replaceAll('"','""')+'"'}
+function csv(rows,name){const b=new Blob(["\uFEFF"+rows.map(row=>row.map(quote).join(",")).join("\r\n")+"\r\n"],{type:"text/csv;charset=utf-8"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function exportCases(){const rows=[["rank","case_id","product","analyte","original_fssr_or_blank","first_commercial_document_needed","legal_method_question","original_request_ids_opaque","historical_receipt_as_of_2026_10_20","current_receipt","signed_limit","signed_lab_method_matrix","representative_lot_coa","lot_release"]];
+ for(const c of shown())rows.push([c.rank,c.case_id,c.product,c.analyte,c.recorded_fssr,c.first_commercial_document_needed,c.final_legal_question,c.original_request_ids.join(" | "),"NOT_RECEIVED","NOT_VERIFIED","NOT_SIGNED","NOT_SIGNED","NOT_RECEIVED","HELD"]);
+ csv(rows,"PMSV-BATCH135-P0-EVIDENCE-AND-METHOD-HELD.csv")}
+function exportIds(){const rows=[["original_request_id","case_id","priority","product","analyte","legacy_wording_authenticated","first_commercial_document_needed","snapshot_2026_10_20","current_document_receipt","lot_release"]];
+ for(const c of shown())for(const id of c.original_request_ids)rows.push([id,c.case_id,"P0",c.product,c.analyte,"NO",c.first_commercial_document_needed,"NOT_RECEIVED","NOT_VERIFIED","HELD"]);
+ csv(rows,"PMSV-BATCH135-P0-ORIGINAL-REQUEST-IDS-HELD.csv")}
+(async()=>{try{
+ const response=await fetch(PATH+"?v=20261030-b135",{cache:"no-store"});if(!response.ok)throw Error("Evidence source unavailable");
+ const d=await response.json();if(!valid(d))throw Error("Pinned evidence source integrity or safety gate mismatch");
+ source=d;records=Object.freeze(d.cases.filter(c=>c.priority==="P0").map(c=>Object.freeze(c)));
+ $("cases").textContent="13";$("metals").textContent="12";$("antibiotics").textContent="1";$("requests").textContent="65";
+ for(const g of source.proposed_gates){const tr=document.createElement("tr");cell(tr,g.label);cell(tr,g.owner_function);cell(tr,g.minimum_evidence);$("gateRows").appendChild(tr)}
+ for(const id of ["search","type","exportCases","exportIds"])$(id).disabled=false;
+ $("search").addEventListener("input",render);$("type").addEventListener("change",render);
+ $("exportCases").addEventListener("click",exportCases);$("exportIds").addEventListener("click",exportIds);
+ $("status").textContent="Verified pinned Batch134 · 13 P0 cases, 65 original request IDs, five separate evidence gates. All on HOLD.";
+ render();
+}catch(e){$("status").textContent="SOURCE VERIFICATION FAILED — all P0 cases remain HELD; no data or export permitted.";console.warn("Batch135 pinned source",e.message)}})();
+})();
+</script>
+</body></html>
