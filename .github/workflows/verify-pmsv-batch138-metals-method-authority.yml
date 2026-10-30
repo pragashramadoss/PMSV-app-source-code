@@ -1,0 +1,27 @@
+name: PMSV Batch138 Dual Metals Manual Authority Guard
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch138-metals-method-authority.html'
+      - 'fssai-product-helper-preview-01/pmsv-batch137-35-evidence-owner-handoff.html'
+      - 'fssai-product-helper-preview-01/pmsv-batch136-p1-evidence-reconciliation.html'
+      - 'fssai-product-helper-preview-01/pmsv-batch135-p0-evidence-method-triage.html'
+      - 'fssai-product-helper-preview-01/pmsv-batch128-35-regulatory-review.html'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'fssai-product-helper-preview-01/data/rules/fssai-current35-dual-manual-method-conflict-batch42-2026-10-16.json'
+      - 'fssai-product-helper-preview-01/data/rules/pmsv-batch134-35-held-documentary-readiness-2026-10-29.json'
+      - 'tests/pmsv-batch138-dual-manual-authority.test.cjs'
+      - '.github/workflows/verify-pmsv-batch138-metals-method-authority.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  method-authority-fail-closed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Check out FSSAI evidence branch
+        uses: actions/checkout@v4
+      - name: Verify two source pins, 7 colliding method IDs, 27 case HOLDS and links
+        run: node tests/pmsv-batch138-dual-manual-authority.test.cjs
