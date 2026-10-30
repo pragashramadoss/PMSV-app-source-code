@@ -1,0 +1,25 @@
+name: PMSV Batch137 35-Case Documentary Handoff Safety
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-product-helper-preview-01/pmsv-batch137-35-evidence-owner-handoff.html'
+      - 'fssai-product-helper-preview-01/pmsv-batch136-p1-evidence-reconciliation.html'
+      - 'fssai-product-helper-preview-01/pmsv-batch135-p0-evidence-method-triage.html'
+      - 'fssai-product-helper-preview-01/pmsv-batch128-35-regulatory-review.html'
+      - 'fssai-product-helper-preview-01/index.html'
+      - 'fssai-product-helper-preview-01/data/rules/pmsv-batch134-35-held-documentary-readiness-2026-10-29.json'
+      - 'tests/pmsv-batch137-35-evidence-owner-handoff.test.cjs'
+      - '.github/workflows/verify-pmsv-batch137-35-evidence-handoff.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  evidence-handoff-fail-closed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Check out documentary workbench
+        uses: actions/checkout@v4
+      - name: Check all original IDs, gate separation, link integrity, release HOLDS
+        run: node tests/pmsv-batch137-35-evidence-owner-handoff.test.cjs
