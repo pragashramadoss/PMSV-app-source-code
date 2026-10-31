@@ -230,8 +230,8 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
   'Original reference: '+(c.primaryUrl||''),'Secondary reference: '+(c.secondaryUrl||''),
   '','Evidence requirements: identity and formula; operative legal article; verified method with matrix and LOQ; traceable finished lot report; authorized QA record.'];
   download('PMSV_FSSAI_Review_'+c.priority+'.txt','text/plain;charset=utf-8',text.join('\n'));}
- function catalogueCSV(){let head=['priority','catalog_id','product','fssr','fcs','review_status','evidence_level','source_checkpoint_analyte','finding','non_transfer_warning','next_action','official_source'];
-  csv([head,...all.map(c=>[c.priority,c.id,c.product,c.fssr,c.fcs,c.reviewStatus,c.evidenceLevel,c.sourceCheck?.analyte||'',c.finding,c.nonTransfer,c.sourceCheck?.nextEvidence||c.nextAction,c.primaryUrl])],'PMSV_FSSAI_533_Product_Source_Register_31Oct2026.csv');}
+ function catalogueCSV(){let head=['catalogue_row','catalog_id','product','fssr','foscos_category','canonical_source_status','detailed_review_status','evidence_level','source_checkpoint_analyte','finding','non_transfer_warning','next_action','official_source','approval_status'];
+  csv([head,...all.map(c=>[c.priority,c.id,c.product,c.fssr,c.fcs,c.sourceStatus||'',c.reviewStatus,c.evidenceLevel,c.sourceCheck?.analyte||'',c.finding,c.nonTransfer,c.sourceCheck?.nextEvidence||c.nextAction,c.primaryUrl,'NOT_APPROVED'])],'PMSV_FSSAI_533_Product_Source_Register_31Oct2026.csv');}
  $('productSearch').addEventListener('input',filterList);$('productClass').addEventListener('change',filterList);$('productSort').addEventListener('change',filterList);
  $('productList').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if(!b)return;selected=b.dataset.id;filterList()});$('downloadCatalogue').addEventListener('click',catalogueCSV);
  const codes=methods.map(m=>m[0]);$('methodCode').innerHTML=codes.map(v=>`<option value="${esc(v)}">FSSAI ${esc(v)}</option>`).join('');
