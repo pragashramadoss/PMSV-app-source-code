@@ -160,6 +160,20 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 
 </script><script src="full-catalogue-533.js?v=20261031"></script>
 <script>
+(function(){
+  if(window.PMSV_CATALOGUE_STATS && Array.isArray(window.PMSV_CATALOGUE) && window.PMSV_CATALOGUE.length===533) return;
+  document.addEventListener('DOMContentLoaded',function(){
+    var actual=Array.isArray(window.PMSV_CATALOGUE)?window.PMSV_CATALOGUE.length:0;
+    var n=document.getElementById('productTotal');if(n)n.textContent=String(actual);
+    var b=document.querySelector('.hero-badges span');if(b)b.textContent='Catalogue asset unavailable — '+actual+' local reviews shown';
+    var panel=document.getElementById('finder');
+    if(panel){var warn=document.createElement('div');warn.className='alert';
+      warn.textContent='The complete 533-record source-status file did not load. This page is showing only its cached 123-detail fallback. Reload or open the original full catalogue link.';
+      panel.insertBefore(warn,panel.firstChild);}
+  });
+})();
+</script>
+<script>
 'use strict';
 (()=>{
  const all=Array.isArray(window.PMSV_CATALOGUE)?window.PMSV_CATALOGUE:[];
