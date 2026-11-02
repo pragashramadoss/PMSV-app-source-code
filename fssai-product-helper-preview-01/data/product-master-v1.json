@@ -31273,11 +31273,11 @@
       "microbiology_status": "conditional_appendix_b_variant_required",
       "microbiology_candidates": [
         {
-          "condition": "Raw frozen clam meat",
+          "condition": "Raw frozen clam meat not heat-shucked",
           "profile_key": "fish-05"
         },
         {
-          "condition": "Cooked / heat-shucked frozen clam meat",
+          "condition": "Frozen heat-shucked clam meat, including heat used solely to open shells; cooked identity must be assessed separately",
           "profile_key": "fish-06"
         }
       ],
@@ -31440,10 +31440,17 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
-      "microbiology_profile_key": "fish-10",
-      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_source_scope_review_r6",
       "microbiology_verified_on": "2026-10-04",
-      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route."
+      "microbiology_note": "Mapped to Appendix B Version 2 Fish/Fishery Products using the exact FSSAI product identity or an explicit Chapter 2.6 microbiology route.",
+      "microbiology_candidates": [
+        {
+          "condition": "Hot-smoked fish with complete protein coagulation and exact Appendix B definition confirmed",
+          "profile_key": "fish-10"
+        }
+      ],
+      "microbiology_notes": "Cold-smoked, smoke-flavoured and smoke-dried presentations are not automatically assigned fish-10. Resolve exact applicable category."
     },
     {
       "id": "09-09-2-pasteurized-fish-sausage",

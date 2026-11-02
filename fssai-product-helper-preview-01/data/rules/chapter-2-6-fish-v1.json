@@ -2,18 +2,26 @@
   "schema_version": "1.0",
   "chapter": "2.6",
   "title": "Fish and Fish Products",
-  "source_version": "Version 2 (04.11.2024)",
-  "source_verified_on": "2026-10-02",
+  "source_version": "Version 3 (07.05.2025)",
+  "source_verified_on": "2026-11-02",
   "official_sources": [
     {
       "authority": "FSSAI",
-      "title": "Chapter 2.6 — Fish and Fish Products, Version 2 (04.11.2024)",
-      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_6_Fish%20and%20Fish%20products.pdf"
+      "title": "Chapter 2.6 Fish and Fish Products, Version 3 (07.05.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_6_Fish_and_Fish_products.pdf",
+      "edition": "Version 3 (07.05.2025)",
+      "sha256": "e5975724499be68dd77b460fcccfb99fdbcbb56ab5048ca1028b2a51bec8c33c"
     },
     {
       "authority": "FSSAI / FoSCoS",
       "title": "View all FSSAI Standardized Food Products",
       "url": "https://foscos.fssai.gov.in/standard-product"
+    },
+    {
+      "authority": "FSSAI",
+      "title": "21 October 2024 final amendment; fish-oil substitution effective 1 May 2025",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/GAZETTE%20NOTIFICATION%20DATED%2021_10_2024_ammendments.pdf",
+      "sha256": "7658eb4ddc0b793ffb66d7cecf2ed3d9784727183f64a61fb584d5fd1018c2ad"
     }
   ],
   "common_rules": [
@@ -66,6 +74,12 @@
           "unit": "mg/kg"
         },
         {
+          "group": "Group II — Freshwater-origin finfish, crustaceans and molluscans",
+          "operator": "<=",
+          "value": 4,
+          "unit": "mg/kg"
+        },
+        {
           "group": "Group III — Lizard fishes and other marine fishes not covered under Group I",
           "operator": "<=",
           "value": 8,
@@ -78,8 +92,7 @@
           "unit": "mg/kg"
         }
       ],
-      "source_note": "The current consolidated table prints the Group II freshwater-origin row without a numeric value in the visible limit cell. PMSV therefore does not hard-code a Group II limit from inference; it remains pending source clarification before machine validation.",
-      "additional_rule": "For fish and fish products of marine origin other than those covered by the specified table groups, the chapter states a maximum naturally occurring formaldehyde limit of 100 ppm."
+      "source_note": "Version 3 PDF p55: the merged 4.0 mg/kg cell spans Groups I and II; p56 defines III=8 and IV=100. Group IV is frozen-stored marine fish products. No generic 100 ppm catch-all is stated in this captured source."
     }
   ],
   "standards": [
@@ -284,7 +297,9 @@
           "parameter": "Sodium chloride in brine-treated sardine and mackerel",
           "operator": "=",
           "value": 3.5,
-          "unit": "%"
+          "unit": "%",
+          "automatic_comparison": false,
+          "source_question": "Printed value/operator requires reconciliation; consult R6 normalized source record in the evidence package."
         },
         {
           "parameter": "Brine acidity as anhydrous citric acid",
@@ -340,13 +355,21 @@
           "parameter": "Smoke-dried product water activity",
           "operator": "<=",
           "value": 0.75,
-          "unit": "aw"
+          "unit": "aw",
+          "applies_when": {
+            "presentation": "smoke_dried"
+          }
         },
         {
-          "parameter": "Alternative smoke-dried moisture basis",
+          "parameter": "Parenthetical smoke-dried moisture; not an OR substitute",
           "operator": "<=",
           "value": 10,
-          "unit": "%"
+          "unit": "%",
+          "applies_when": {
+            "presentation": "smoke_dried"
+          },
+          "automatic_comparison": false,
+          "source_question": "Moisture-only substitution not established by source."
         }
       ],
       "label_rules": [
@@ -383,7 +406,9 @@
           "operator": "range",
           "min": 1,
           "max": 2,
-          "unit": "%"
+          "unit": "%",
+          "automatic_comparison": false,
+          "source_question": "Printed value/operator requires reconciliation; consult R6 normalized source record in the evidence package."
         }
       ],
       "process_rules": [
@@ -615,7 +640,9 @@
           "operator": "range",
           "min": 2.5,
           "max": 3,
-          "unit": "% by weight"
+          "unit": "% by weight",
+          "automatic_comparison": false,
+          "source_question": "Printed value/operator requires reconciliation; consult R6 normalized source record in the evidence package."
         },
         {
           "parameter": "Sodium chloride",
@@ -646,9 +673,11 @@
         },
         {
           "parameter": "Cold-storage temperature",
-          "operator": "<=",
           "value": -23,
-          "unit": "°C"
+          "unit": "°C",
+          "source_text": "not less than −23°C",
+          "automatic_comparison": false,
+          "source_question": "Direction requires original-source reconciliation; do not use as a warm-storage pass."
         }
       ],
       "composition": [
@@ -731,7 +760,8 @@
         }
       ],
       "quality_rules": [
-        "Soft and firm texture; reasonably uniform size; free from discoloration, deterioration, sand, shell pieces, filth and other foreign matter."
+        "Soft and firm texture; reasonably uniform size; free from discoloration, deterioration, sand, shell pieces, filth and other foreign matter.",
+        "Heat used only to open shells does not make cooked-clam identity; heat-shucked microbiology remains a separate decision."
       ],
       "additives": "Applicable FSSAI permissions",
       "microbiology": "Appendix B"
@@ -814,7 +844,9 @@
           "parameter": "Traditional-product pH",
           "operator": "range",
           "min": 5,
-          "max": 6.5
+          "max": 6.5,
+          "automatic_comparison": false,
+          "interpretation": "Described as typical, not an unconditional rejection threshold."
         },
         {
           "parameter": "pH when fermentation-assisting ingredients are used",
@@ -851,6 +883,25 @@
           "operator": "<=",
           "value": 10,
           "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Fish flesh in fish sticks only",
+          "operator": ">=",
+          "value": 50,
+          "unit": "%",
+          "basis": "average fish flesh / total stick weight",
+          "applies_when": {
+            "presentation": "fish_stick"
+          }
+        },
+        {
+          "parameter": "Fish stick thickness",
+          "operator": ">=",
+          "value": 10,
+          "unit": "mm",
+          "applies_when": {
+            "presentation": "fish_stick"
+          }
         }
       ],
       "label_rules": [
@@ -1055,17 +1106,32 @@
           "operator": "range",
           "min": 8,
           "max": 24,
-          "unit": "°C"
+          "unit": "°C",
+          "automatic_comparison": false,
+          "interpretation": "Descriptive physical range; not promoted to a mandatory composition limit."
         },
         {
           "parameter": "Melting temperature",
           "operator": "range",
           "min": 10,
           "max": 28,
-          "unit": "°C"
+          "unit": "°C",
+          "automatic_comparison": false,
+          "interpretation": "Descriptive physical range; not promoted to a mandatory composition limit."
         }
       ],
       "microbiology": "Convenience Fishery Products — Item 15 of Appendix B fish/fishery-product microbiological requirements"
     }
-  ]
+  ],
+  "r6_review_provenance": {
+    "date": "2026-11-02",
+    "source": {
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_6_Fish_and_Fish_products.pdf",
+      "edition": "Version 3 (07.05.2025)",
+      "sha256": "e5975724499be68dd77b460fcccfb99fdbcbb56ab5048ca1028b2a51bec8c33c"
+    },
+    "scope": "Core corrections applied; expanded 326-row registry and tested comparator retained in the separately supplied R6 evidence package. Not all current law.",
+    "current_law_complete": false,
+    "commercial_release_authorized": false
+  }
 }
