@@ -890,14 +890,18 @@
               "c": 3,
               "m": 30000,
               "M": 50000,
-              "unit": "cfu/ml"
+              "unit": "cfu/ml",
+              "r5_source_controls": {}
             },
             "coliform_count": {
               "n": 5,
               "c": 0,
               "m": "<10/ml",
               "M": null,
-              "unit": "cfu/ml"
+              "unit": "cfu/ml",
+              "r5_source_controls": {
+                "strict_upper": 10.0
+              }
             }
           },
           "safety": {
@@ -906,14 +910,22 @@
               "c": 0,
               "m": "Absent/25 ml",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "ml"
+              }
             },
             "listeria_monocytogenes": {
               "n": 5,
               "c": 0,
               "m": "Absent/25ml",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "ml"
+              }
             }
           }
         },
@@ -927,14 +939,18 @@
               "c": 3,
               "m": 50000,
               "M": 75000,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "coliform_count": {
               "n": 5,
               "c": 0,
               "m": "<10/g",
               "M": null,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {
+                "strict_upper": 10.0
+              }
             }
           },
           "safety": {
@@ -943,14 +959,22 @@
               "c": 0,
               "m": "Absent/25g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             },
             "listeria_monocytogenes": {
               "n": 5,
               "c": 0,
               "m": "Absent/25g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             }
           }
         },
@@ -982,28 +1006,38 @@
               "c": 3,
               "m": 500,
               "M": 1000,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "coliform_count": {
               "n": 5,
               "c": 0,
               "m": "<10/g",
               "M": null,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {
+                "strict_upper": 10.0
+              }
             },
             "staphylococcus_aureus": {
               "n": 5,
               "c": 0,
               "m": "<10/g",
               "M": null,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {
+                "strict_upper": 10.0
+              }
             },
             "yeast_and_mold_count": {
               "n": 5,
               "c": 0,
               "m": "<10/g",
               "M": null,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {
+                "strict_upper": 10.0
+              }
             }
           },
           "safety": {
@@ -1012,14 +1046,22 @@
               "c": 0,
               "m": "Absent/25g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             },
             "listeria_monocytogenes": {
               "n": 5,
               "c": 0,
               "m": "Absent/g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 1,
+                "test_portion_unit": "g"
+              }
             }
           },
           "notes": [
@@ -1036,35 +1078,47 @@
               "c": 3,
               "m": 25000,
               "M": 50000,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {
+                "required_scope": {
+                  "is_ripened_butter": false
+                }
+              }
             },
             "coliform_count": {
               "n": 5,
               "c": 2,
               "m": 10,
               "M": 20,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "staphylococcus_aureus": {
               "n": 5,
               "c": 2,
               "m": 10,
               "M": 50,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "yeast_and_mold_count": {
               "n": 5,
               "c": 3,
               "m": 20,
               "M": 50,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "escherichia_coli": {
               "n": 5,
               "c": 0,
               "m": "Absent/g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 1,
+                "test_portion_unit": "g"
+              }
             }
           },
           "safety": {
@@ -1073,14 +1127,22 @@
               "c": 0,
               "m": "Absent/25g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             },
             "listeria_monocytogenes": {
               "n": 5,
               "c": 0,
               "m": "Absent/g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 1,
+                "test_portion_unit": "g"
+              }
             }
           },
           "notes": [
@@ -1097,21 +1159,24 @@
               "c": 2,
               "m": 30000,
               "M": 50000,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "coliform_count": {
               "n": 5,
               "c": 2,
               "m": 10,
               "M": 50,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "staphylococcus_aureus": {
               "n": 5,
               "c": 2,
               "m": 10,
               "M": 100,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "yeast_and_mold_count": {
               "n": 5,
@@ -1119,7 +1184,12 @@
               "m": 50,
               "M": null,
               "unit": "cfu/g",
-              "notes": "The 50/g yeast and mould criterion applies only to casein powder."
+              "notes": "The 50/g yeast and mould criterion applies only to casein powder.",
+              "r5_source_controls": {
+                "required_scope": {
+                  "is_casein_powder": true
+                }
+              }
             }
           },
           "safety": {
@@ -1128,28 +1198,38 @@
               "c": 0,
               "m": "Absent/25g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             },
             "listeria_monocytogenes": {
               "n": 5,
               "c": 0,
               "m": "Absent/g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 1,
+                "test_portion_unit": "g"
+              }
             },
             "bacillus_cereus": {
               "n": 5,
               "c": 3,
               "m": 500,
               "M": 1000,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "sulphite_reducing_clostridia": {
               "n": 5,
               "c": 3,
               "m": 50,
               "M": 100,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             }
           },
           "notes": [
@@ -1388,28 +1468,35 @@
               "c": 3,
               "m": 100000,
               "M": 200000,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "coliform_count": {
               "n": 5,
               "c": 3,
               "m": 10,
               "M": 100,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "staphylococcus_aureus": {
               "n": 5,
               "c": 2,
               "m": 10,
               "M": 100,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "escherichia_coli": {
               "n": 5,
               "c": 0,
               "m": "Absent/g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 1,
+                "test_portion_unit": "g"
+              }
             }
           },
           "safety": {
@@ -1418,14 +1505,22 @@
               "c": 0,
               "m": "Absent/25g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             },
             "listeria_monocytogenes": {
               "n": 5,
               "c": 0,
               "m": "Absent/g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 1,
+                "test_portion_unit": "g"
+              }
             }
           }
         },
@@ -1439,21 +1534,28 @@
               "c": 2,
               "m": 25000,
               "M": 50000,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "coliform_count": {
               "n": 5,
               "c": 0,
               "m": "<10/g",
               "M": null,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {
+                "strict_upper": 10.0
+              }
             },
             "staphylococcus_aureus": {
               "n": 5,
               "c": 0,
               "m": "<10/g",
               "M": null,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {
+                "strict_upper": 10.0
+              }
             }
           },
           "safety": {
@@ -1462,14 +1564,22 @@
               "c": 0,
               "m": "Absent/25g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             },
             "listeria_monocytogenes": {
               "n": 5,
               "c": 0,
               "m": "Absent/25g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             }
           }
         },
@@ -1483,28 +1593,38 @@
               "c": 3,
               "m": 100,
               "M": 500,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "staphylococcus_aureus": {
               "n": 5,
               "c": 3,
               "m": 10,
               "M": 100,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "yeast_and_mold_count": {
               "n": 5,
               "c": 3,
               "m": 100,
               "M": 500,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {
+                "required_scope": {
+                  "is_mould_ripened": false
+                }
+              }
             },
             "escherichia_coli": {
               "n": 5,
               "c": 0,
               "m": "<10/g",
               "M": null,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {
+                "strict_upper": 10.0
+              }
             }
           },
           "safety": {
@@ -1513,14 +1633,22 @@
               "c": 0,
               "m": "Absent/25g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             },
             "listeria_monocytogenes": {
               "n": 5,
               "c": 0,
               "m": "Absent/25 g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             }
           },
           "notes": [
@@ -1537,28 +1665,35 @@
               "c": 2,
               "m": 10,
               "M": 100,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "staphylococcus_aureus": {
               "n": 5,
               "c": 2,
               "m": 10,
               "M": 100,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "yeast_and_mold_count": {
               "n": 5,
               "c": 3,
               "m": 50,
               "M": 100,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "escherichia_coli": {
               "n": 5,
               "c": 0,
               "m": "Absent/g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 1,
+                "test_portion_unit": "g"
+              }
             }
           },
           "safety": {
@@ -1567,14 +1702,22 @@
               "c": 0,
               "m": "Absent/25g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             },
             "listeria_monocytogenes": {
               "n": 5,
               "c": 0,
               "m": "Absent/g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 1,
+                "test_portion_unit": "g"
+              }
             }
           }
         },
@@ -1588,35 +1731,42 @@
               "c": 3,
               "m": 150000,
               "M": 350000,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "coliform_count": {
               "n": 5,
               "c": 3,
               "m": 10,
               "M": 100,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "staphylococcus_aureus": {
               "n": 5,
               "c": 3,
               "m": 10,
               "M": 100,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "yeast_and_mold_count": {
               "n": 5,
               "c": 3,
               "m": 50,
               "M": 150,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "escherichia_coli": {
               "n": 5,
               "c": 0,
               "m": "<10/g",
               "M": null,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {
+                "strict_upper": 10.0
+              }
             }
           },
           "safety": {
@@ -1625,14 +1775,22 @@
               "c": 0,
               "m": "Absent/25g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             },
             "listeria_monocytogenes": {
               "n": 5,
               "c": 0,
               "m": "Absent/g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 1,
+                "test_portion_unit": "g"
+              }
             }
           }
         },
@@ -1646,35 +1804,42 @@
               "c": 3,
               "m": 25000,
               "M": 75000,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "coliform_count": {
               "n": 5,
               "c": 2,
               "m": 50,
               "M": 100,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "staphylococcus_aureus": {
               "n": 5,
               "c": 3,
               "m": 10,
               "M": 100,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "yeast_and_mold_count": {
               "n": 5,
               "c": 3,
               "m": 10,
               "M": 50,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {}
             },
             "escherichia_coli": {
               "n": 5,
               "c": 0,
               "m": "<10/g",
               "M": null,
-              "unit": "cfu/g"
+              "unit": "cfu/g",
+              "r5_source_controls": {
+                "strict_upper": 10.0
+              }
             }
           },
           "safety": {
@@ -1683,14 +1848,22 @@
               "c": 0,
               "m": "Absent/25g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 25,
+                "test_portion_unit": "g"
+              }
             },
             "listeria_monocytogenes": {
               "n": 5,
               "c": 0,
               "m": "Absent/g",
               "M": null,
-              "unit": "qualitative"
+              "unit": "qualitative",
+              "r5_source_controls": {
+                "test_portion": 1,
+                "test_portion_unit": "g"
+              }
             }
           }
         }
@@ -1741,7 +1914,41 @@
         "Latest version of the reference test method shall apply. Where an ISO method adopted by BIS is specified, the latest ISO method or BIS equivalent, if available, shall apply.",
         "FSSAI Manual of Methods of Analysis of Foods (Microbiological Testing) may also be referred to along with the specified IS/ISO methods.",
         "Regulatory sampling follows the Appendix B sampling instructions, including the no-retesting/no-resampling provision stated in Version 2."
-      ]
+      ],
+      "r5_source_review": {
+        "date": "2026-11-02",
+        "scope": "Non-infant rows 1-7 and 9-14 only; exact stored sampling values independently matched; conditional and strict/portion controls added.",
+        "numeric_plans_checked": 66,
+        "additional_noncount_requirements": [
+          {
+            "category": "milk-03",
+            "requirement": "Commercial sterility",
+            "method": "IS 4238 Appendix C or D",
+            "source_pdf_pages": [
+              15
+            ]
+          },
+          {
+            "category": "milk-04",
+            "requirement": "Commercial sterility",
+            "method": "IS 4884",
+            "source_pdf_pages": [
+              15
+            ]
+          },
+          {
+            "category": "milk-05",
+            "requirement": "Accelerated storage test",
+            "method": "IS 1166 (latest version)",
+            "source_pdf_pages": [
+              18,
+              19
+            ]
+          }
+        ],
+        "current_law_complete": false,
+        "commercial_release_authorized": false
+      }
     },
     "spices": {
       "table_3a_title": "Microbiological Requirements for Spices and Herbs - Process Hygiene Criteria",
@@ -4442,12 +4649,6 @@
           ]
         },
         {
-          "catalog_id": "01-01-1-buttermilk-plain",
-          "profile_key": "milk-12",
-          "status": "mapped_exact_appendix_b_v2",
-          "note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
-        },
-        {
           "catalog_id": "01-01-1-flavoured-fermented-milk",
           "profile_key": "milk-12",
           "status": "mapped_exact_appendix_b_v2",
@@ -4756,6 +4957,67 @@
           "profile_key": "milk-14",
           "status": "mapped_exact_appendix_b_v2",
           "note": "Appendix B Table 2 expressly lists Khoa/Khoa based sweets."
+        },
+        {
+          "catalog_id": "01-01-3-milk-protein-concentrate",
+          "profile_key": "milk-07",
+          "status": "mapped_explicit_chapter_cross_reference",
+          "note": "Chapter 2.1.21(4), PDF page 75, explicitly refers this product to Appendix B requirements for milk powder. This is a regulatory cross-reference, not an inferred ingredient equivalence. Footnote 3 yeast/mould applies only to casein powder and is excluded.",
+          "exclude_criteria": [
+            "yeast_and_mold_count"
+          ],
+          "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
+          "source_clause": "2.1.21(4)",
+          "source_pdf_pages": [
+            75
+          ],
+          "current_law_complete": false
+        },
+        {
+          "catalog_id": "01-01-8-whey-protein-concentrate",
+          "profile_key": "milk-07",
+          "status": "mapped_explicit_chapter_cross_reference",
+          "note": "Chapter 2.1.22(4), PDF page 76, explicitly refers this product to Appendix B requirements for whey-based powder. This is a regulatory cross-reference, not an inferred ingredient equivalence. Footnote 3 yeast/mould applies only to casein powder and is excluded.",
+          "exclude_criteria": [
+            "yeast_and_mold_count"
+          ],
+          "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
+          "source_clause": "2.1.22(4)",
+          "source_pdf_pages": [
+            76
+          ],
+          "current_law_complete": false
+        },
+        {
+          "catalog_id": "01-01-5-dairy-permeate-powders",
+          "profile_key": "milk-07",
+          "status": "mapped_explicit_chapter_cross_reference",
+          "note": "Chapter 2.1.24(4), PDF page 81, explicitly refers this product to Appendix B requirements for milk powders. This is a regulatory cross-reference, not an inferred ingredient equivalence. Footnote 3 yeast/mould applies only to casein powder and is excluded.",
+          "exclude_criteria": [
+            "yeast_and_mold_count"
+          ],
+          "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
+          "source_clause": "2.1.24(4)",
+          "source_pdf_pages": [
+            81
+          ],
+          "current_law_complete": false
+        },
+        {
+          "catalog_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
+          "profile_key": "milk-07",
+          "status": "mapped_explicit_chapter_cross_reference",
+          "note": "Chapter 2.1.23(4), PDF page 78, explicitly refers this product to Appendix B requirements for milk powder. This is a regulatory cross-reference, not an inferred ingredient equivalence. Footnote 3 yeast/mould applies only to casein powder and is excluded.",
+          "exclude_criteria": [
+            "yeast_and_mold_count"
+          ],
+          "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
+          "source_clause": "2.1.23(4)",
+          "source_pdf_pages": [
+            78
+          ],
+          "current_law_complete": false,
+          "matrix_scope_note": "The chapter cross-reference is unqualified, including liquid and powdered colostrum. Preserve the source g-based test units/portions; liquid-matrix sampling and method suitability require explicit assessment. Never silently substitute ml or a liquid-milk table."
         }
       ],
       "conditional": [
@@ -5101,6 +5363,27 @@
               "message": "Appendix B footnote 3 limits the dried-group Yeast and Mold 50/g criterion to casein powder; it is excluded here."
             }
           ]
+        },
+        {
+          "catalog_id": "01-01-1-buttermilk-plain",
+          "status": "conditional_identity_required",
+          "note": "Do not assume a plain-buttermilk name establishes a fermented-milk identity. Confirm process, composition and actual product route.",
+          "options": [
+            {
+              "when": "Confirmed fermented-milk product/drink meeting Chapter 2.1.13 identity",
+              "profile_key": "milk-12"
+            },
+            {
+              "when": "Butter-churning residual liquid or identity not established",
+              "requires_source_scope_review": true
+            }
+          ],
+          "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
+          "source_clause": "2.1.13",
+          "source_pdf_pages": [
+            41
+          ],
+          "current_law_complete": false
         }
       ],
       "no_direct_table_mapping": [
@@ -5108,21 +5391,6 @@
           "catalog_id": "01-01-4-fermented-cultured-sour-cream",
           "status": "no_direct_table_mapping",
           "reason": "Appendix B Table 2 does not expressly identify fermented/cultured/sour cream as a separate product row. PMSV does not automatically equate it with the broader Fermented Milk Products row."
-        },
-        {
-          "catalog_id": "01-01-3-milk-protein-concentrate",
-          "status": "no_direct_table_mapping",
-          "reason": "Appendix B Table 2 row 7 does not expressly list Milk Protein Concentrate."
-        },
-        {
-          "catalog_id": "01-01-8-whey-protein-concentrate",
-          "status": "no_direct_table_mapping",
-          "reason": "Appendix B Table 2 lists 'Whey based Powder' but does not expressly identify Whey Protein Concentrate. PMSV does not treat the wording as equivalent without a direct FSSAI crosswalk."
-        },
-        {
-          "catalog_id": "01-01-5-dairy-permeate-powders",
-          "status": "no_direct_table_mapping",
-          "reason": "Appendix B Table 2 does not expressly list Dairy/Milk/Whey Permeate Powders."
         },
         {
           "catalog_id": "02-02-1-milk-fat",
@@ -5138,11 +5406,6 @@
           "catalog_id": "02-02-1-anhydrous-milk-fat",
           "status": "no_direct_table_mapping",
           "reason": "Appendix B Table 2 does not provide a direct Anhydrous Milk Fat product row."
-        },
-        {
-          "catalog_id": "100-100-cow-or-buffalo-colostrum-and-colostrum-products",
-          "status": "no_direct_table_mapping",
-          "reason": "Appendix B Table 2 does not expressly provide a Cow/Buffalo Colostrum product row."
         },
         {
           "catalog_id": "102-102-1-14-2-ksheerasara-sweetened-condensed-milk",
