@@ -1,0 +1,69 @@
+name: Apply meat and egg source review R4
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/apply-meat-eggs-r4-20261102.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply hash-checked data patches
+        run: |
+          python3 - <<'PY'
+          import base64,gzip,json,pathlib,hashlib,subprocess
+          # JSON data operations, never an executable compressed payload.
+          encoded='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'
+          raw=gzip.decompress(base64.b64decode(encoded,validate=True))
+          assert hashlib.sha256(raw).hexdigest()=='d38cf4b850f58dd2c3e6013eaffd86ff7780e823b57092ed663bbda14d610e0a'
+          patches=json.loads(raw)
+          allowed={'fssai-product-helper-preview-01/data/rules/chapter-2-5-meat-eggs-v1.json','fssai-product-helper-preview-01/data/rules/appendix-b-v2-core.json'}
+          assert len(patches)==2 and {p['path'] for p in patches}==allowed
+          out=pathlib.Path('r4-application-results');out.mkdir()
+          manifest=[]
+          for patch in patches:
+              path=pathlib.Path(patch['path'])
+              assert subprocess.check_output(['git','hash-object',str(path)],text=True).strip()==patch['before_git_blob'],'Changed preimage; reconcile before applying'
+              data=json.loads(path.read_text())
+              for op in patch['operations']:
+                  target=data
+                  for key in op['path'][:-1]:target=target[key]
+                  if op['op']=='set':target[op['path'][-1]]=op['value']
+                  elif op['op']=='remove':del target[op['path'][-1]]
+                  else:raise ValueError('unsupported data operation')
+              content=(json.dumps(data,ensure_ascii=False,indent=2)+'\n').encode()
+              assert hashlib.sha256(content).hexdigest()==patch['after_sha256'],'Output differs from locally tested repository module'
+              path.write_bytes(content);(out/path.name).write_bytes(content)
+              manifest.append({'path':str(path),'sha256':patch['after_sha256']})
+          root=pathlib.Path('fssai-product-helper-preview-01/data')
+          master=json.loads((root/'product-master-v1.json').read_text())
+          assert len(master['catalog_products'])==533 and len({p['id'] for p in master['catalog_products']})==533
+          chapter=json.loads((root/'rules/chapter-2-5-meat-eggs-v1.json').read_text())
+          assert len(chapter['standards'])==20
+          assert all(s['source_content_review']['current_law_complete'] is False for s in chapter['standards'])
+          micro=json.loads((root/'rules/appendix-b-v2-core.json').read_text())
+          for ident in ['08-08-3-meat-sausages-smoked','08-08-2-fermented-meat-products-whole-pieces-or-cuts']:
+              assert not any(p['catalog_id']==ident for p in micro['product_mappings']['meat']['exact'])
+              assert any(p['catalog_id']==ident for p in micro['product_mappings']['meat']['conditional'])
+          (out/'application-manifest.json').write_text(json.dumps({'scope':'Source-edition data corrections, no current-law/product approval; normalized transcript and comparison tests supplied in continuation package.','modules':manifest,'catalogue':533,'standards':20},indent=2))
+          print(json.dumps(manifest,indent=2))
+          PY
+      - name: Commit on audit branch only
+        run: |
+          test "${GITHUB_REF}" = 'refs/heads/audit/all-533-2026-11-02'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-product-helper-preview-01/data/rules/chapter-2-5-meat-eggs-v1.json fssai-product-helper-preview-01/data/rules/appendix-b-v2-core.json
+          git diff --cached --check
+          git commit -m 'Review meat and eggs: scope storage clauses and make smoked/whole-cut micro routes conditional'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - uses: actions/upload-artifact@v4
+        with:
+          name: meat-egg-review-r4-applied-20261102
+          path: r4-application-results/
+          retention-days: 3
+          if-no-files-found: error
