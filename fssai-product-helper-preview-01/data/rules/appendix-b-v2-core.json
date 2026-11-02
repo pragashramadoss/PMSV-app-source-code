@@ -3475,7 +3475,17 @@
       "poultry_salmonella_note": "For poultry meat, the Salmonella requirement applies to Salmonella enterica serovars Typhi, Typhimurium and Enteritidis.",
       "source_notes": [
         "Products under categories 1–5 are to be cooked to make safe before consumption."
-      ]
+      ],
+      "sampling_cautions": [
+        "Use actual final heat treatment and consumption state; smoking alone does not establish semi-cooked.",
+        "The 0–7°C chilled definition in Table 5 does not override a stricter product-specific Chapter 2.5 definition.",
+        "No poultry-only Campylobacter exception is inferred; the printed criteria remain on rows 4, 8 and 9.",
+        "Latest applicable method editions must be established independently; ISO-TS 17919 has a specifically described botulinum neurotoxin-producing clostridia target."
+      ],
+      "method_scope_notes": {
+        "yeast_and_mold_count": "ISO 21527-1 vs -2 is selected by the method water-activity scope; not an arbitrary interchange.",
+        "clostridium_botulinum": "Detailed method list prints ISO-TS 17919 (botulinum type A, B, E & F neurotoxin-producing clostridia); Table 5B short identifier is not a full validation."
+      }
     },
     "bakers_yeast": {
       "table_6a_title": "Microbiological Standards for Baker's Yeast - Process Hygiene Criteria",
@@ -3648,7 +3658,8 @@
             "Appendix B Table 8A and 8B prescribe no numerical microbiological criteria for Table Egg.",
             "The Table Egg category is regulated in accordance with Good Manufacturing Practices and the code of good hygiene practices under Schedule 4 of the Food Safety and Standards (Licensing and Registration of Food Businesses) Regulations, 2011."
           ],
-          "food_safety_not_applicable": true
+          "food_safety_not_applicable": true,
+          "source_scope_note": "N/A in these tables only. No assertion that food-safety obligations are inapplicable."
         },
         {
           "id": "egg-02",
@@ -6588,12 +6599,6 @@
           "note": "Exact raw marinated meat-product identity."
         },
         {
-          "catalog_id": "08-08-2-fermented-meat-products-whole-pieces-or-cuts",
-          "profile_key": "meat-06",
-          "status": "mapped_exact_appendix_b_v2",
-          "note": "Exact fermented meat-product identity."
-        },
-        {
           "catalog_id": "08-08-3-fermented-meat-products-comminuted",
           "profile_key": "meat-06",
           "status": "mapped_exact_appendix_b_v2",
@@ -6634,12 +6639,6 @@
           "profile_key": "meat-08",
           "status": "mapped_exact_appendix_b_v2",
           "note": "Exact cooked meat-sausage identity."
-        },
-        {
-          "catalog_id": "08-08-3-meat-sausages-smoked",
-          "profile_key": "meat-04",
-          "status": "mapped_exact_appendix_b_v2",
-          "note": "Exact smoked meat-sausage identity requiring the semi-cooked/smoked meat route."
         }
       ],
       "conditional": [
@@ -6729,10 +6728,10 @@
         {
           "catalog_id": "08-08-2-cured-or-pickled-and-cooked-or-smoked-meat-products-or-both-whole-pieces-or-cuts",
           "status": "variant_required",
-          "reason": "The combined product name spans cured/pickled, smoked/semi-cooked and cooked routes.",
+          "reason": "The combined product name spans cured/pickled, smoked/semi-cooked and cooked routes. Chapter ready-to-eat pickle wording and Table 5 categories 1–5 cooking footnote need reconciliation; do not choose row 5 for an RTE pickle solely by name.",
           "options": [
             {
-              "condition": "Cured/pickled product · not subsequently established as fully cooked",
+              "condition": "Cured/pickled product requiring cooking before consumption; ready-to-eat pickle not automatically assigned",
               "profile_key": "meat-05"
             },
             {
@@ -6742,16 +6741,21 @@
             {
               "condition": "Fully cooked product · minimum core temperature 75°C achieved",
               "profile_key": "meat-08"
+            },
+            {
+              "condition": "Ready-to-eat pickled product with unresolved Chapter/Table-5 scope",
+              "profile_key": "",
+              "message": "Specific source-scope assessment required"
             }
           ]
         },
         {
           "catalog_id": "08-08-3-cured-or-pickled-and-cooked-or-smoked-meat-products-or-both-comminuted",
           "status": "variant_required",
-          "reason": "The combined product name spans cured/pickled, smoked/semi-cooked and cooked routes.",
+          "reason": "The combined product name spans cured/pickled, smoked/semi-cooked and cooked routes. Chapter ready-to-eat pickle wording and Table 5 categories 1–5 cooking footnote need reconciliation; do not choose row 5 for an RTE pickle solely by name.",
           "options": [
             {
-              "condition": "Cured/pickled product · not subsequently established as fully cooked",
+              "condition": "Cured/pickled product requiring cooking before consumption; ready-to-eat pickle not automatically assigned",
               "profile_key": "meat-05"
             },
             {
@@ -6761,6 +6765,11 @@
             {
               "condition": "Fully cooked product · minimum core temperature 75°C achieved",
               "profile_key": "meat-08"
+            },
+            {
+              "condition": "Ready-to-eat pickled product with unresolved Chapter/Table-5 scope",
+              "profile_key": "",
+              "message": "Specific source-scope assessment required"
             }
           ]
         },
@@ -6811,6 +6820,43 @@
             {
               "condition": "Dry/dehydrated sausage",
               "profile_key": "meat-07"
+            }
+          ]
+        },
+        {
+          "catalog_id": "08-08-3-meat-sausages-smoked",
+          "status": "variant_required",
+          "reason": "Smoking does not establish the final heat-treatment state. Table 5 row 4 requires further heat treatment; row 8 is fully cooked.",
+          "options": [
+            {
+              "condition": "Partially heat-treated/smoked and requires further cooking",
+              "profile_key": "meat-04"
+            },
+            {
+              "condition": "Fully cooked; minimum core 75°C established",
+              "profile_key": "meat-08"
+            },
+            {
+              "condition": "Actual final heat treatment or intended consumption unresolved",
+              "profile_key": "",
+              "message": "No automatic Table 5 choice"
+            }
+          ]
+        },
+        {
+          "catalog_id": "08-08-2-fermented-meat-products-whole-pieces-or-cuts",
+          "status": "source_scope_review_required",
+          "reason": "Table 5 definition for fermented meat says chopped/ground. Whole pieces/cuts in this catalogue identity must not be called an exact source match.",
+          "options": [
+            {
+              "condition": "Documented competent assessment establishes applicable category despite identity-scope difference",
+              "profile_key": "meat-06",
+              "automatic_selection_allowed": false
+            },
+            {
+              "condition": "Whole-cut scope not resolved",
+              "profile_key": "",
+              "message": "Exact microbiology applicability not established"
             }
           ]
         }
