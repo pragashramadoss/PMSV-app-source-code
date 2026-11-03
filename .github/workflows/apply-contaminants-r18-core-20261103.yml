@@ -1,0 +1,32 @@
+name: Apply R18 contaminant source article candidate review
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/apply-contaminants-r18-core-20261103.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply preimage- and output-hash-checked source evidence metadata
+        run: python3 scripts/apply_contaminants_r18_core_20261103.py
+      - name: Commit only reviewed CTR metadata on the audit branch
+        shell: bash
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/audit/all-533-2026-11-02'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json
+          git diff --cached --check
+          git commit -m 'Add R18 conditional product-article evidence and review gates'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - uses: actions/upload-artifact@v4
+        with:
+          name: contaminants-r18-core-applied-20261103
+          path: contaminants-r18-core-applied/
+          if-no-files-found: error
+          retention-days: 3
